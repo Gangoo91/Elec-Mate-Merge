@@ -347,7 +347,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       contractor: string;
       supervisor: string;
     },
-    jobScale: 'domestic' | 'commercial' | 'industrial'
+    jobScale: 'domestic' | 'commercial' | 'industrial',
+    attachments?: Array<{ path: string; name: string; type: string; size: number }>
   ) => {
     // Mark session as having active generation
     sessionStorage.setItem('rams-generation-active', 'true');
@@ -361,8 +362,22 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     setShowCelebration(false);
     setCelebrationShown(false);
 
+    // Strip previewUrl (blob URL) before sending — backend only needs path/name/type/size.
+    const cleanAttachments = (attachments ?? []).map(({ path, name, type, size }) => ({
+      path,
+      name,
+      type,
+      size,
+    }));
+
     const { data, error } = await supabase.functions.invoke('rams-generator', {
-      body: { action: 'create', jobDescription, projectInfo, jobScale },
+      body: {
+        action: 'create',
+        jobDescription,
+        projectInfo,
+        jobScale,
+        attachments: cleanAttachments,
+      },
     });
 
     if (error || !data?.jobId) {
@@ -371,6 +386,30 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     }
 
     setCurrentJobId(data.jobId);
+    startPolling();
+  };
+
+  /**
+   * Retry just the failed agent on the current job — keeps the half that
+   * succeeded intact and patches in the missing piece. Used by the
+   * partial-completion banners so the user doesn't pay another full
+   * generation when only one half failed.
+   */
+  const handleRetryAgent = async (agent: 'hs' | 'method') => {
+    if (!currentJobId) return;
+    setGenerationStartTime(Date.now());
+    setShowResults(true);
+    const { data, error } = await supabase.functions.invoke('rams-generator', {
+      body: { action: 'retry-agent', jobId: currentJobId, agent },
+    });
+    if (error || !data?.jobId) {
+      toast({
+        title: 'Retry failed',
+        description: error?.message || data?.error || 'Could not retry',
+        variant: 'destructive',
+      });
+      return;
+    }
     startPolling();
   };
 
@@ -809,29 +848,38 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
             {ramsData && (
               <div id="rams-results">
-                {/* Show warning if method data is missing */}
+                {/* Show warning if method data is missing — offer agent-only retry */}
                 {!methodData && (
                   <div className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
                     <div className="flex items-start gap-3">
                       <AlertCircle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
                       <div className="flex-1">
                         <p className="text-sm font-semibold text-orange-400">
-                          Method Statement Generation Timed Out
+                          Method statement didn't generate
                         </p>
                         <p className="text-xs text-orange-400/70 mt-1">
-                          Your risk assessment is complete, but the method statement could not be
-                          generated. You can review and export the RAMS, or retry to generate the
-                          full document.
+                          Your risk assessment is complete. Retry just the method statement to
+                          patch this RAMS without regenerating the hazards.
                         </p>
-                        <Button
-                          variant="outline"
-                          onClick={handleStartOver}
-                          className="mt-3 border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
-                          size="sm"
-                        >
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Retry Full Generation
-                        </Button>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <Button
+                            variant="outline"
+                            onClick={() => handleRetryAgent('method')}
+                            className="border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
+                            size="sm"
+                          >
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Retry method statement
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            onClick={handleStartOver}
+                            className="text-orange-400/70 hover:text-orange-400"
+                            size="sm"
+                          >
+                            Start over instead
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -873,6 +921,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
                     // Update handled by internal state
                   }}
                   onRegenerate={handleStartOver}
+                  onRetryAgent={handleRetryAgent}
+                  isPartial={status === 'partial'}
                   rawHSResponse={job?.raw_hs_response}
                   rawInstallerResponse={job?.raw_installer_response}
                 />

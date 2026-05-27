@@ -8,6 +8,16 @@ import { useFloorPlanCloud } from '@/hooks/useFloorPlanCloud';
 import type { SavedRoom } from '@/hooks/useFloorPlanRooms';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 export interface SavedFloorPlan {
   id: string;
@@ -40,6 +50,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
   const [saveName, setSaveName] = useState('');
   const [showSaveInput, setShowSaveInput] = useState(false);
   const [cloudSyncing, setCloudSyncing] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<SavedFloorPlan | null>(null);
   const haptic = useHaptic();
   const { saveToCloud, loadFromCloud, deleteFromCloud } = useFloorPlanCloud();
 
@@ -96,12 +107,12 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
       .finally(() => setCloudSyncing(false));
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (plan: SavedFloorPlan) => {
     haptic.heavy();
-    const updated = plans.filter((p) => p.id !== id);
+    const updated = plans.filter((p) => p.id !== plan.id);
     setPlans(updated);
     persistPlans(updated);
-    deleteFromCloud(id); // Background cloud delete
+    deleteFromCloud(plan.id); // Background cloud delete
   };
 
   const totalRooms = (plan: SavedFloorPlan) => plan.rooms.length;
@@ -192,12 +203,13 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
                   </p>
                 </button>
 
-                {/* Delete */}
+                {/* Delete — bumped to 44px target with confirm */}
                 <button
-                  onClick={() => handleDelete(plan.id)}
-                  className="h-8 w-8 rounded-lg bg-white/[0.06] flex items-center justify-center touch-manipulation active:scale-90"
+                  onClick={() => setPendingDelete(plan)}
+                  aria-label={`Delete plan ${plan.name}`}
+                  className="h-11 w-11 rounded-lg bg-white/[0.06] flex items-center justify-center touch-manipulation active:scale-90 hover:bg-red-500/10 hover:text-red-400 text-white/60 transition-colors"
                 >
-                  <Trash2 className="h-3.5 w-3.5 text-white/50" />
+                  <Trash2 className="h-4 w-4" />
                 </button>
               </div>
             ))
@@ -216,6 +228,34 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
           </Button>
         </div>
       </SheetContent>
+
+      <AlertDialog open={!!pendingDelete} onOpenChange={(open) => !open && setPendingDelete(null)}>
+        <AlertDialogContent className="bg-elec-gray border-white/10">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete floor plan?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
+              "{pendingDelete?.name}" — {pendingDelete?.rooms.length ?? 0} room
+              {pendingDelete && pendingDelete.rooms.length !== 1 ? 's' : ''} ·{' '}
+              {pendingDelete?.rooms.reduce((sum, r) => sum + r.symbolIds.length, 0) ?? 0} items.
+              This deletes from cloud too and can't be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-white/20 text-white hover:bg-white/10 hover:text-white">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600 text-white"
+              onClick={() => {
+                if (pendingDelete) handleDelete(pendingDelete);
+                setPendingDelete(null);
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Sheet>
   );
 }

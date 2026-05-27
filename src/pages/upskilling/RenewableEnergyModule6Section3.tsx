@@ -410,6 +410,103 @@ export default function RenewableEnergyModule6Section3() {
 
           <SectionRule />
 
+          <ContentEyebrow>RCD selectivity, three-phase architecture & the Type B internals</ContentEyebrow>
+
+          <Pullquote>
+            Type B inside the device is a sum-of-current toroid plus a smooth-DC sensitive Hall-effect coil. Two detection mechanisms on one core.
+          </Pullquote>
+
+          <ConceptBlock
+            title="How a Type B RCD actually detects smooth DC"
+            plainEnglish="Inside a Type B RCD: a sum-of-current toroid (the conventional method, sums L and N currents to spot residual AC + pulsating DC) PLUS a Hall-effect coil oriented in the toroid (sensitive to smooth DC magnetic flux). The two detection methods feed a comparator; either triggering above threshold opens the contacts."
+            onSite="The installer doesn’t see this internal complexity — the device is just a packaged BS EN 62423 / 60947-2 product. But understanding the dual mechanism explains why Type B costs more (extra electronic detection coil + comparator) and why some test instruments can’t correctly verify it (they only generate AC waveforms; the smooth-DC path isn’t exercised). Manufacturer DoC declares conformity to BS EN 62423 or BS EN 60947-2 — keep the DoC in the cert evidence bundle."
+          >
+            <p>Type B internal detection:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Sum-of-current toroid</strong> — conventional method;
+                sums L and N currents through a toroidal core; net flux drives a secondary winding whose voltage is the residual current signal. Sensitive to AC + pulsating DC
+              </li>
+              <li>
+                <strong className="text-white">Hall-effect coil</strong> — additional sensor oriented in the same toroid; detects smooth DC magnetic flux directly. Sensitive to smooth DC fault current (the gap that Type AC and Type A miss)
+              </li>
+              <li>
+                <strong className="text-white">Comparator electronics</strong> — combines the two
+                detection signals; either triggering above threshold (30 mA on the primary; smaller smooth-DC threshold typically in the 6 mA region) opens the device contacts
+              </li>
+              <li>
+                <strong className="text-white">Threshold split</strong> — BS EN 62423 sets the
+                30 mA primary residual threshold; smooth-DC threshold separately specified to coordinate with the RDC-DD-DD coverage profile
+              </li>
+              <li>
+                <strong className="text-white">Test instrument
+                  requirement</strong> — Reg 643.1 instruments per BS EN 61557; specifically Type B-capable testers generate the smooth-DC test waveform. Megger MFT1731, Fluke 1664 FC, Kewtech KT64DL etc. Older AC / A-only testers cannot exercise the Hall-effect path
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Three-phase EV install RCD architecture"
+            plainEnglish="Three-phase 22 kW Mode 3 wallbox = 32 A per phase + neutral + PE. RCD architecture extends from single-phase: 4-pole Type B RCBO OR 4-pole Type A RCBO + RDC-DD in the (three-phase) wallbox. Same logic as single-phase; physical device count increases."
+            onSite="Three-phase wallbox brands (Easee Home 22 kW, EO Charging Genius, MyEnergi Zappi 22 kW, Tesla Wall Connector Gen 3) declare RCD architecture in their DoC. Choose the matching upstream device. Site verification of Zs becomes per-phase (each phase’s loop impedance independently); Reg 411 ADS verified against Table 41.3 for the device characteristic."
+          >
+            <p>Three-phase specifics:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">4-pole device</strong> — L1 + L2 + L3 + N
+                switched together. Both Type B RCBOs and Type A RCBOs available in 4-pole form
+              </li>
+              <li>
+                <strong className="text-white">Per-phase Zs measurement</strong> — Reg 411
+                disconnection time verified against each phase’s measured Zs vs Table 41.3
+              </li>
+              <li>
+                <strong className="text-white">Phase imbalance</strong> — three-phase wallboxes
+                deliver balanced load when charging (32 A on each phase simultaneously); the supply doesn’t experience large imbalance from the EV alone
+              </li>
+              <li>
+                <strong className="text-white">DNO notification</strong> — three-phase installs
+                often above G98 notification thresholds; require G98 / G99 notification + DNO approval before commissioning. Cert evidence bundle records the DNO correspondence
+              </li>
+              <li>
+                <strong className="text-white">Cost</strong> — 4-pole Type B RCBO typically
+                3-5× the cost of single-pole Type B; multiply through for 4 poles + the higher Type B premium = ~£400-£700 for a 4-pole Type B RCBO vs ~£150 for single-phase
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="RCD selectivity / discrimination on the EV circuit"
+            plainEnglish="Selectivity = the upstream device only operates if a downstream device fails to clear the fault first. On an EV install, the 30 mA dedicated RCBO should operate before any 100 mA / 300 mA main-incomer RCD upstream. Discrimination prevents nuisance whole-installation trips from EV-side faults."
+            onSite="Verify selectivity at commissioning: the 30 mA EV RCBO trips on a small earth fault; the 100 mA upstream stays closed. Where the customer has a 100 mA main-incomer RCD (common UK 2025-26 pattern on older / Hager-style consumer units), the EV install’s 30 mA RCBO should be properly selective. Modern type-S (selective / time-delayed) 100 mA devices upstream make this reliable."
+          >
+            <p>Selectivity considerations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Threshold ratio</strong> — upstream device threshold
+                ≥ 3× downstream. 30 mA EV RCBO + 100 mA main-incomer = 3.3× ratio — usually adequate
+              </li>
+              <li>
+                <strong className="text-white">Time delay</strong> — upstream type-S (Selective)
+                device adds a short trip delay (~30-300 ms) that lets the downstream device clear first
+              </li>
+              <li>
+                <strong className="text-white">Type compatibility</strong> — if downstream is Type B
+                (smooth-DC capable), upstream should also be at least Type A — otherwise smooth-DC fault current passes through both and trips the upstream first
+              </li>
+              <li>
+                <strong className="text-white">No upstream RCD scenario</strong> — modern consumer
+                units with all-RCBO arrangement (each circuit on its own RCBO, no main-incomer RCD) avoid the selectivity question entirely
+              </li>
+              <li>
+                <strong className="text-white">Commissioning verification</strong> — operate the
+                30 mA EV test button; confirm only the EV RCBO trips, not the upstream device. Record in cert evidence bundle
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
           <ContentEyebrow>AFDD and the Reg 722.421.1.7.201 exception</ContentEyebrow>
 
           <ConceptBlock

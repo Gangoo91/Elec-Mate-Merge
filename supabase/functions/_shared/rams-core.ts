@@ -109,6 +109,251 @@ function parseLenient(text: string): any {
   }
 }
 
+/**
+ * Incremental top-level-element extractor for a named JSON array.
+ *
+ * Given a running concatenated text buffer that's being built up chunk-by-
+ * chunk from a streamed JSON response, this extractor finds completed
+ * `{...}` elements at the top level of the named array (e.g. `risks` or
+ * `method_steps`) and yields each one as it closes.
+ *
+ * Used to write per-element partials (so the UI sees hazard count tick
+ * up live during generation) without having to fully parse the document
+ * until the stream completes.
+ */
+function makeIncrementalArrayExtractor(arrayKey: string) {
+  let buffer = '';
+  let arrayStart = -1;
+  let depth = 0;
+  let inStr = false;
+  let escape = false;
+  let elementStart = -1;
+  let nextScan = 0;
+
+  return {
+    /** Append a streamed chunk and return any newly-completed elements. */
+    push(chunk: string): any[] {
+      buffer += chunk;
+
+      if (arrayStart === -1) {
+        // Find the array opening — handles both " and unquoted keys defensively.
+        const m = buffer.match(
+          new RegExp(`"${arrayKey}"\\s*:\\s*\\[`, 'm')
+        );
+        if (!m) return [];
+        arrayStart = (m.index ?? 0) + m[0].length;
+        nextScan = arrayStart;
+      }
+
+      const found: any[] = [];
+      let i = nextScan;
+      while (i < buffer.length) {
+        const c = buffer[i];
+        if (escape) {
+          escape = false;
+          i++;
+          continue;
+        }
+        if (c === '\\') {
+          escape = true;
+          i++;
+          continue;
+        }
+        if (c === '"') {
+          inStr = !inStr;
+          i++;
+          continue;
+        }
+        if (inStr) {
+          i++;
+          continue;
+        }
+        if (c === '{') {
+          if (depth === 0) elementStart = i;
+          depth++;
+        } else if (c === '}') {
+          depth--;
+          if (depth === 0 && elementStart >= 0) {
+            const slice = buffer.slice(elementStart, i + 1);
+            try {
+              found.push(JSON.parse(slice));
+            } catch {
+              // Partial / malformed element — skip silently; full lenient
+              // parse runs on the final buffer too so nothing is lost.
+            }
+            elementStart = -1;
+          }
+        } else if (c === ']' && depth === 0) {
+          // End of the target array; stop scanning.
+          break;
+        }
+        i++;
+      }
+      nextScan = i;
+      return found;
+    },
+    fullText(): string {
+      return buffer;
+    },
+  };
+}
+
+/**
+ * Stream an OpenAI chat completion and surface each text delta to a
+ * callback. Returns the full concatenated text + finish_reason once the
+ * stream closes. The body MUST set stream: true.
+ */
+async function streamOpenAIChat(opts: {
+  apiKey: string;
+  body: Record<string, unknown>;
+  onContent: (delta: string) => void | Promise<void>;
+}): Promise<{ text: string; finishReason: string | null }> {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${opts.apiKey}`,
+      'Content-Type': 'application/json',
+      Accept: 'text/event-stream',
+    },
+    body: JSON.stringify({ ...opts.body, stream: true }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`OpenAI ${response.status}: ${errText.slice(0, 500)}`);
+  }
+  if (!response.body) {
+    throw new Error('OpenAI returned an empty stream');
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let leftover = '';
+  let fullText = '';
+  let finishReason: string | null = null;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = leftover + decoder.decode(value, { stream: true });
+    const events = chunk.split('\n\n');
+    leftover = events.pop() ?? '';
+
+    for (const evt of events) {
+      // Each event may be multi-line; only `data: ...` lines matter.
+      for (const line of evt.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        const payload = line.slice(6).trim();
+        if (payload === '[DONE]') continue;
+        try {
+          const j = JSON.parse(payload);
+          const choice = j?.choices?.[0];
+          const delta: string | undefined = choice?.delta?.content;
+          if (typeof delta === 'string' && delta.length > 0) {
+            fullText += delta;
+            await opts.onContent(delta);
+          }
+          if (choice?.finish_reason) finishReason = choice.finish_reason;
+        } catch {
+          // ignore individual malformed events; stream typically recovers
+        }
+      }
+    }
+  }
+  return { text: fullText, finishReason };
+}
+
+/**
+ * Run a vision pass over the uploaded attachments and return a
+ * compact hazards-context block to inject into the H&S agent prompt.
+ *
+ * Each image is sent to gpt-5.4-mini with a vision-capable system prompt
+ * instructing it to extract visible electrical / site hazards, with
+ * conservative honesty (no speculation when the image is ambiguous).
+ * Returns null if no images / all failed — callers should skip injection.
+ */
+async function runVisionPrepass(
+  supabase: any,
+  job: RAMSJobRow
+): Promise<string | null> {
+  const attachments = Array.isArray(job.attachments) ? job.attachments : [];
+  const images = attachments.filter((a) =>
+    (a.type ?? '').startsWith('image/')
+  );
+  if (images.length === 0) return null;
+
+  const apiKey = Deno.env.get('OPENAI_API_KEY');
+  if (!apiKey) return null;
+
+  // Sign each storage path so OpenAI Vision can fetch it.
+  const signed = await Promise.all(
+    images.map(async (a) => {
+      const { data } = await supabase.storage
+        .from('safety-photos')
+        .createSignedUrl(a.path, 60 * 10);
+      return data?.signedUrl ? { url: data.signedUrl, name: a.name } : null;
+    })
+  );
+  const urls = signed.filter((s): s is { url: string; name?: string } => !!s);
+  if (urls.length === 0) return null;
+
+  const systemPrompt = `You are a CMIOSH Chartered Health & Safety Practitioner. You are looking at site photos and / or drawings submitted with a RAMS brief. Extract a SHORT hazards-context block to feed to a downstream hazard-register author.
+
+Rules:
+- Only describe what is clearly visible. Do NOT speculate.
+- UK English. Imperative voice for any recommended actions.
+- Cite electrical / site hazards (exposed live parts, lost earthing, working at height, asbestos suspicion, dust, hot works, manual handling, public access, vehicle movement, fire load, confined space).
+- If image is ambiguous, say so plainly.
+- 4-8 bullet points per image, max. Lead each bullet with the hazard noun phrase.`;
+
+  // Single vision call combining all images keeps cost low. If any single
+  // image breaks the API, just skip the prepass — the H&S agent still runs.
+  const content: any[] = [
+    {
+      type: 'text',
+      text: `Extract visible hazards from these ${urls.length} site photo(s).`,
+    },
+  ];
+  for (const u of urls) {
+    content.push({
+      type: 'image_url',
+      image_url: { url: u.url, detail: 'high' },
+    });
+  }
+
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_completion_tokens: 1500,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content },
+        ],
+      }),
+    });
+    if (!response.ok) {
+      console.warn(
+        '[rams-core] vision prepass failed:',
+        response.status,
+        (await response.text()).slice(0, 300)
+      );
+      return null;
+    }
+    const j = await response.json();
+    const text = String(j?.choices?.[0]?.message?.content ?? '').trim();
+    return text.length > 0 ? text : null;
+  } catch (err) {
+    console.warn('[rams-core] vision prepass threw:', err);
+    return null;
+  }
+}
+
 type WorkType = 'domestic' | 'commercial' | 'industrial';
 
 interface RAMSJobRow {
@@ -118,11 +363,148 @@ interface RAMSJobRow {
   project_info: any;
   job_scale: WorkType | null;
   status: string;
+  attachments?: Array<{ path: string; name?: string; type?: string }> | null;
+  vision_context?: string | null;
 }
 
 /* ────────────────────────────────────────────────────────
    Public entry — called by rams-generator edge function
    ──────────────────────────────────────────────────────── */
+
+/**
+ * Re-run a single agent for an existing job and merge into the row.
+ * Used when one half of a partial RAMS failed and the user wants to
+ * patch it without regenerating the whole document.
+ */
+export async function runSingleAgent(
+  supabase: any,
+  jobId: string,
+  which: 'hs' | 'method'
+): Promise<void> {
+  const start = Date.now();
+  try {
+    const { data: job, error } = await supabase
+      .from('rams_generation_jobs')
+      .select('id, user_id, job_description, project_info, job_scale, status, rams_data, method_data')
+      .eq('id', jobId)
+      .maybeSingle();
+    if (error || !job) throw new Error(`Job not found: ${jobId}`);
+
+    await updateJob(supabase, jobId, {
+      status: 'processing',
+      progress: 20,
+      current_step:
+        which === 'hs'
+          ? 'Drafting the hazard register'
+          : 'Drafting the method statement',
+      error_message: null,
+      ...(which === 'hs'
+        ? { hs_agent_status: 'processing', hs_agent_progress: 0 }
+        : { installer_agent_status: 'processing', installer_agent_progress: 0 }),
+    });
+
+    const workType: WorkType = (job.job_scale ?? 'commercial') as WorkType;
+    const ragQuery = buildRagQuery(job);
+
+    // RAG only for the corpora this agent actually uses.
+    let bs7671Facets: BS7671Facet[] = [];
+    let safetyFacets: SafetyFacet[] = [];
+    let practical: PracticalWorkFacet[] = [];
+    if (which === 'hs') {
+      [bs7671Facets, safetyFacets] = await Promise.all([
+        searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
+        searchSafetyFacets(supabase, { query: ragQuery, matchCount: 18 }),
+      ]);
+    } else {
+      [bs7671Facets, practical] = await Promise.all([
+        searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
+        searchPracticalWorkV2(supabase, {
+          query: ragQuery,
+          matchCount: 16,
+          facetTypes: ['installation', 'testing', 'commissioning'],
+          appliesTo: [workType],
+        }),
+      ]);
+    }
+
+    if (await isCancelled(supabase, jobId)) return;
+
+    let result: any;
+    if (which === 'hs') {
+      result = await runHealthSafetyAgent(supabase, jobId, {
+        job,
+        workType,
+        bs7671Facets,
+        safetyFacets,
+      });
+    } else {
+      result = await runMethodStatementAgent(supabase, jobId, {
+        job,
+        workType,
+        bs7671Facets,
+        practical,
+      });
+    }
+
+    // Stitch the new agent output into the existing row. Determine the new
+    // overall status: if both halves now exist → complete; if only one →
+    // partial; otherwise failed.
+    const existingHs = which === 'hs' ? result : job.rams_data;
+    const existingMethod = which === 'method' ? result : job.method_data;
+    if (existingHs && existingMethod) {
+      mapMethodStepsToHazards(existingMethod, existingHs);
+    }
+
+    const both = !!existingHs && !!existingMethod;
+    const partial = !both && (!!existingHs || !!existingMethod);
+    const finalStatus = both ? 'complete' : partial ? 'partial' : 'failed';
+    const elapsedSeconds = Math.round((Date.now() - start) / 1000);
+
+    await updateJob(supabase, jobId, {
+      status: finalStatus,
+      progress: 100,
+      current_step:
+        finalStatus === 'complete'
+          ? `Patched in ${elapsedSeconds}s`
+          : finalStatus === 'partial'
+            ? 'Generated with gaps'
+            : 'Failed',
+      ...(which === 'hs'
+        ? {
+            rams_data: result,
+            hs_agent_status: 'complete',
+            hs_agent_progress: 100,
+          }
+        : {
+            method_data: result,
+            installer_agent_status: 'complete',
+            installer_agent_progress: 100,
+          }),
+      completed_at: new Date().toISOString(),
+    });
+
+    await writePartial(supabase, jobId, 'finalise', {
+      hsOk: !!existingHs,
+      methodOk: !!existingMethod,
+      elapsedSeconds,
+      hazardCount: existingHs?.risks?.length ?? 0,
+      stepCount: existingMethod?.method_steps?.length ?? existingMethod?.steps?.length ?? 0,
+      retried: which,
+    });
+  } catch (err: any) {
+    console.error(`[rams-core] runSingleAgent(${which}) fatal:`, err);
+    await updateJob(supabase, jobId, {
+      status: 'failed',
+      progress: 100,
+      current_step: 'Failed',
+      error_message: String(err?.message ?? err),
+      ...(which === 'hs'
+        ? { hs_agent_status: 'failed' }
+        : { installer_agent_status: 'failed' }),
+      completed_at: new Date().toISOString(),
+    }).catch(() => {});
+  }
+}
 
 export async function runRAMSGeneration(
   supabase: any,
@@ -132,7 +514,9 @@ export async function runRAMSGeneration(
   try {
     const { data: job, error } = await supabase
       .from('rams_generation_jobs')
-      .select('id, user_id, job_description, project_info, job_scale, status')
+      .select(
+        'id, user_id, job_description, project_info, job_scale, status, attachments'
+      )
       .eq('id', jobId)
       .maybeSingle();
     if (error || !job) throw new Error(`Job not found: ${jobId}`);
@@ -148,26 +532,35 @@ export async function runRAMSGeneration(
 
     if (await isCancelled(supabase, jobId)) return;
 
-    // 1. Parallel RAG across all three corpora.
+    // 1. Parallel RAG across all three corpora AND a vision pre-pass over
+    //    any uploaded photos / drawings. Vision is best-effort: if it fails
+    //    or there are no images, the H&S agent runs with text brief only.
     const workType: WorkType = (job.job_scale ?? 'commercial') as WorkType;
     const ragQuery = buildRagQuery(job);
 
-    const [bs7671Facets, safetyFacets, practical] = await Promise.all([
-      searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
-      searchSafetyFacets(supabase, { query: ragQuery, matchCount: 18 }),
-      searchPracticalWorkV2(supabase, {
-        query: ragQuery,
-        matchCount: 16,
-        facetTypes: ['installation', 'testing', 'commissioning'],
-        appliesTo: [workType],
-      }),
-    ]);
+    const [bs7671Facets, safetyFacets, practical, visionContext] =
+      await Promise.all([
+        searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
+        searchSafetyFacets(supabase, { query: ragQuery, matchCount: 18 }),
+        searchPracticalWorkV2(supabase, {
+          query: ragQuery,
+          matchCount: 16,
+          facetTypes: ['installation', 'testing', 'commissioning'],
+          appliesTo: [workType],
+        }),
+        runVisionPrepass(supabase, job),
+      ]);
+
+    if (visionContext) {
+      await updateJob(supabase, jobId, { vision_context: visionContext });
+    }
 
     await writePartial(supabase, jobId, 'rag', {
       bs7671FacetCount: bs7671Facets.length,
       safetyFacetCount: safetyFacets.length,
       practicalCount: practical.length,
       workType,
+      visionFindings: visionContext ? true : false,
     });
 
     if (await isCancelled(supabase, jobId)) return;
@@ -205,6 +598,7 @@ export async function runRAMSGeneration(
       workType,
       bs7671Facets,
       safetyFacets,
+      visionContext,
     }).then(async (r) => {
       await onAgentDone('hs');
       return r;
@@ -214,6 +608,7 @@ export async function runRAMSGeneration(
       workType,
       bs7671Facets,
       practical,
+      visionContext,
     }).then(async (r) => {
       await onAgentDone('method');
       return r;
@@ -366,6 +761,7 @@ interface HSAgentArgs {
   workType: WorkType;
   bs7671Facets: BS7671Facet[];
   safetyFacets: SafetyFacet[];
+  visionContext?: string | null;
 }
 
 async function runHealthSafetyAgent(
@@ -376,7 +772,7 @@ async function runHealthSafetyAgent(
   const apiKey = Deno.env.get('OPENAI_API_KEY');
   if (!apiKey) throw new Error('OPENAI_API_KEY not configured');
 
-  const { job, workType, bs7671Facets, safetyFacets } = args;
+  const { job, workType, bs7671Facets, safetyFacets, visionContext } = args;
   const pi = job.project_info ?? {};
 
   const systemPrompt = `You are a Senior Chartered Health & Safety Practitioner (CMIOSH) and NICEIC Approved Electrician. You are authoring a FORMAL RISK ASSESSMENT for an electrical installation job — a hazard register with scored risks, hierarchical control measures, residual risk and BS 7671 + HSE citations. This document is issued to the principal contractor, counter-signed before work commences, and retained in the project H&S file.
@@ -477,34 +873,57 @@ Hard rules:
     formatFacetsForPrompt(bs7671Facets),
     `\n# Safety facets (HSG / CDM / EAW / PUWER etc) — use ONLY these for HSE cites`,
     formatSafetyFacetsForPrompt(safetyFacets),
+    visionContext
+      ? `\n# Visible hazards from site photos — incorporate these into the register where relevant\n${visionContext}`
+      : '',
     `\n# Today's date`,
     new Date().toISOString().split('T')[0],
   ]
     .filter(Boolean)
     .join('\n');
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: MODEL,
-      max_completion_tokens: MAX_COMPLETION_TOKENS,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userBlock },
-      ],
-    }),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`OpenAI (H&S) ${response.status}: ${errText.slice(0, 500)}`);
+  // Stream the H&S response and tick the `hazards` partial up as each
+  // hazard completes in the running buffer. The UI subscribes to that
+  // partial via realtime and shows a live count.
+  const extractor = makeIncrementalArrayExtractor('risks');
+  let liveCount = 0;
+  let lastWritten = 0;
+  let text = '';
+  let finishReason: string | null = null;
+  try {
+    const result = await streamOpenAIChat({
+      apiKey,
+      body: {
+        model: MODEL,
+        max_completion_tokens: MAX_COMPLETION_TOKENS,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userBlock },
+        ],
+      },
+      onContent: async (delta) => {
+        const found = extractor.push(delta);
+        if (found.length) {
+          liveCount += found.length;
+          // Throttle writes so we don't hammer the realtime channel —
+          // emit every new element since the last write.
+          if (liveCount - lastWritten >= 1) {
+            await writePartial(supabase, jobId, 'hazards', {
+              count: liveCount,
+              streaming: true,
+            });
+            lastWritten = liveCount;
+          }
+        }
+      },
+    });
+    text = result.text;
+    finishReason = result.finishReason;
+  } catch (err) {
+    throw new Error(`OpenAI (H&S) stream failed: ${(err as Error).message}`);
   }
 
-  const j = await response.json();
-  const text = j?.choices?.[0]?.message?.content ?? '';
-  const finishReason = j?.choices?.[0]?.finish_reason;
   let parsed: any;
   try {
     parsed = parseLenient(text);
@@ -621,6 +1040,7 @@ interface MethodAgentArgs {
   workType: WorkType;
   bs7671Facets: BS7671Facet[];
   practical: PracticalWorkFacet[];
+  visionContext?: string | null;
 }
 
 async function runMethodStatementAgent(
@@ -631,7 +1051,7 @@ async function runMethodStatementAgent(
   const apiKey = Deno.env.get('OPENAI_API_KEY');
   if (!apiKey) throw new Error('OPENAI_API_KEY not configured');
 
-  const { job, workType, bs7671Facets, practical } = args;
+  const { job, workType, bs7671Facets, practical, visionContext } = args;
   const pi = job.project_info ?? {};
 
   const systemPrompt = `You are a Senior NICEIC Approved Electrician (AE-level) and JIB Gold Card holder. You are authoring the METHOD STATEMENT half of a formal RAMS — the step-by-step installation procedure for an electrical job. Each step is a discrete unit of work with quantified acceptance criteria, named tools, competencies required, BS 7671 cites where applicable, and safety requirements.
@@ -726,34 +1146,55 @@ Hard rules:
     formatFacetsForPrompt(bs7671Facets),
     `\n# Practical work facets (procedural patterns, tool patterns, common failures)`,
     formatPracticalWorkForPrompt(practical),
+    visionContext
+      ? `\n# Site photos — operatives can SEE these conditions on arrival; reflect them in step inputs / safety requirements\n${visionContext}`
+      : '',
     `\n# Today's date`,
     new Date().toISOString().split('T')[0],
   ]
     .filter(Boolean)
     .join('\n');
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: MODEL,
-      max_completion_tokens: MAX_COMPLETION_TOKENS,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userBlock },
-      ],
-    }),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`OpenAI (Method) ${response.status}: ${errText.slice(0, 500)}`);
+  // Stream the Method response and tick the `steps` partial up as each
+  // step completes in the running buffer.
+  const extractor = makeIncrementalArrayExtractor('method_steps');
+  let liveCount = 0;
+  let lastWritten = 0;
+  let text = '';
+  let finishReason: string | null = null;
+  try {
+    const result = await streamOpenAIChat({
+      apiKey,
+      body: {
+        model: MODEL,
+        max_completion_tokens: MAX_COMPLETION_TOKENS,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userBlock },
+        ],
+      },
+      onContent: async (delta) => {
+        const found = extractor.push(delta);
+        if (found.length) {
+          liveCount += found.length;
+          if (liveCount - lastWritten >= 1) {
+            await writePartial(supabase, jobId, 'steps', {
+              count: liveCount,
+              v2Count: liveCount,
+              streaming: true,
+            });
+            lastWritten = liveCount;
+          }
+        }
+      },
+    });
+    text = result.text;
+    finishReason = result.finishReason;
+  } catch (err) {
+    throw new Error(`OpenAI (Method) stream failed: ${(err as Error).message}`);
   }
 
-  const j = await response.json();
-  const text = j?.choices?.[0]?.message?.content ?? '';
-  const finishReason = j?.choices?.[0]?.finish_reason;
   let parsed: any;
   try {
     parsed = parseLenient(text);

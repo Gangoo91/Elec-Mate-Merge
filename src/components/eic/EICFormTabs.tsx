@@ -3,6 +3,7 @@ import { EICTabValue } from '@/hooks/useEICTabs';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import EICTabContent from './EICTabContent';
 import { EICObservation } from '@/hooks/useEICObservations';
+import { useEICValidation } from '@/hooks/useEICValidation';
 
 interface EICFormTabsProps {
   currentTab: EICTabValue;
@@ -121,12 +122,25 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
     certificate: isTabComplete('certificate'),
   };
 
+  // Per-tab error counts feed the SmartTabs red badge so sparkies can see
+  // at a glance which tab still has missing fields.
+  const eicValidation = useEICValidation(formData);
+  const errorCounts: Record<string, number> = eicValidation.errors.reduce(
+    (acc, rule) => {
+      const tab = rule.tab || 'certificate';
+      acc[tab] = (acc[tab] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
   return (
     <SmartTabs
       tabs={smartTabs}
       value={currentTab}
       onValueChange={handleTabChange}
       completedTabs={completedTabs}
+      errorCounts={errorCounts}
       showProgress
     />
   );

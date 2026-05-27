@@ -511,6 +511,62 @@ export default function RenewableEnergyModule6Section1() {
 
           <InlineCheck {...inlineChecks[3]} />
 
+          <SectionRule />
+
+          <ContentEyebrow>Cross-references — Section 722 inside the wider BS 7671</ContentEyebrow>
+
+          <Pullquote>
+            Section 722 is one chapter inside BS 7671. Sections 411, 415, 522, 537 still apply on the EV circuit. Section 722 ADDS to them, doesn’t REPLACE them.
+          </Pullquote>
+
+          <ConceptBlock
+            title="Section 722 and its cross-references to the rest of BS 7671"
+            plainEnglish="Section 722 doesn’t exist in isolation. The dedicated EV circuit also sits within Section 411 (ADS), Section 415 (additional protection — 30 mA RCD on socket-outlets etc.), Section 522 (external influences), Section 537 (isolation), Chapter 64 (initial verification), and Chapter 65 (periodic inspection). Section 722 adds EV-specific requirements ON TOP of those base requirements."
+            onSite="Reading Section 722 alone leaves gaps. The competent designer treats the EV circuit as a Reg 411 + 415 + 522 + 537 circuit FIRST, then layers the Section 722 specifics. Cert evidence bundle reflects this layered compliance: standard Part 4 + Part 5 + Part 6 entries PLUS the Section 722 supplements."
+          >
+            <p>The cross-reference map:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Section 411 (ADS)</strong> — automatic
+                disconnection of supply. Zs ≤ Table 41.3 value; RCD trip-time per Reg 411.3.3 / 411.4.5. The EV circuit’s Type A or Type B RCBO operates per Reg 411
+              </li>
+              <li>
+                <strong className="text-white">Section 415 (additional
+                  protection)</strong> — 30 mA RCD on socket-outlets ≤ 32 A (Reg 411.3.3). The EV circuit’s 30 mA threshold satisfies this even though the connector is a Type 2 not a BS 1363 socket
+              </li>
+              <li>
+                <strong className="text-white">Section 522 (external
+                  influences)</strong> — outdoor install IP / IK ratings (covered in §6.5). Reg 522.x assessment for water, mechanical impact, solar radiation, corrosion
+              </li>
+              <li>
+                <strong className="text-white">Section 537
+                  (isolation)</strong> — readily accessible, properly identified means of isolation (covered in §6.4). The dedicated RCBO + any external isolator satisfies Reg 537
+              </li>
+              <li>
+                <strong className="text-white">Chapter 64 (initial
+                  verification)</strong> — Reg 643 testing applies on the EV circuit at commissioning (covered in §6.8). IR test 500 V DC, RCD trip-time, ADS verification
+              </li>
+              <li>
+                <strong className="text-white">Chapter 65 (periodic
+                  inspection)</strong> — EICR procedure applies on the EV circuit (covered in §6.8). Standard intervals + Section 722-specific items overlaid
+              </li>
+              <li>
+                <strong className="text-white">Chapter 82 (PEI)</strong> — where the
+                EV is bidirectional (V2H / V2G), Chapter 82 applies. Most UK 2025-26 installs are unidirectional and don’t invoke Chapter 82; M10 covers V2G in depth
+              </li>
+              <li>
+                <strong className="text-white">Section 712 (PV)</strong> — where the
+                EV install coexists with PV (PV-tracking via §6.7), Section 712 governs the PV side. Two layered Sections (712 + 722) on one prosumer site
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 722.55 — Dedicated final circuit for each EV charging point"
+            clause="Each charging point shall be supplied by an individual final circuit dedicated to its supply, protected by an overcurrent protective device complying with the appropriate Standard."
+            meaning="Reg 722.55 is the structural requirement at the install level — every EV charging point gets its own dedicated final circuit. No sharing with lighting, socket-outlets, garage door openers, or any other load. The OCPD complies with the relevant standard (BS EN 61009 RCBO, BS EN 62423 Type B RCBO, BS EN 60898 MCB) at a rating matched to the wallbox’s rated current. Cert evidence bundle records the dedicated CU way + OCPD selection + the wallbox identification. Section 6.4 covers this in install detail. Multiple wallboxes = multiple dedicated circuits."
+          />
+
           <Scenario
             title="UK suburban customer — new wallbox install"
             situation="Midlands semi-detached, 2024 build, customer just bought an electric vehicle. Wants a wallbox installed on the driveway by the front door. Customer drives ~50 km/day average; works from home some days. Standard DNO single-phase 100 A supply; CU has spare ways. Customer has googled ‘Mode 3’ because they read it on the manufacturer’s charging guide."

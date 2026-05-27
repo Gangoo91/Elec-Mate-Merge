@@ -6,6 +6,7 @@ import {
   MW_TAB_LABEL,
   type MWTabId,
 } from '@/hooks/useMinorWorksValidation';
+import { scrollToField } from '@/utils/scrollToField';
 import { cn } from '@/lib/utils';
 
 interface MinorWorksValidationPanelProps {
@@ -34,10 +35,15 @@ const MinorWorksValidationPanel: React.FC<MinorWorksValidationPanelProps> = ({
   const validation = useMinorWorksValidation(formData);
   const [showWarnings, setShowWarnings] = useState(false);
 
-  const handleJump = (tab?: MWTabId) => {
+  // Jump to a tab and (optionally) flash the specific field that's missing.
+  // Tab-only header taps pass no field; row taps pass the rule's field name.
+  const handleJump = (tab?: MWTabId, field?: string) => {
     if (!tab || !onJumpToTab) return;
     onJumpToTab(tab);
-    if (typeof window !== 'undefined') {
+    if (field) {
+      // setTimeout inside scrollToField waits for the tab to mount.
+      scrollToField(field, 80);
+    } else if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -122,7 +128,7 @@ const MinorWorksValidationPanel: React.FC<MinorWorksValidationPanelProps> = ({
                     <button
                       key={rule.field}
                       type="button"
-                      onClick={() => handleJump(rule.tab)}
+                      onClick={() => handleJump(rule.tab, rule.field)}
                       className="w-full flex items-baseline gap-2 text-xs rounded-md px-1 py-0.5 hover:bg-white/[0.04] touch-manipulation transition-colors"
                     >
                       {RowContent}
@@ -180,7 +186,7 @@ const MinorWorksValidationPanel: React.FC<MinorWorksValidationPanelProps> = ({
                         <button
                           key={rule.field}
                           type="button"
-                          onClick={() => handleJump(rule.tab)}
+                          onClick={() => handleJump(rule.tab, rule.field)}
                           className="w-full flex items-baseline gap-2 text-xs rounded-md px-1 py-0.5 hover:bg-white/[0.04] touch-manipulation transition-colors"
                         >
                           {RowContent}

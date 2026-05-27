@@ -29,6 +29,10 @@ interface SmartTabsProps {
   breakpoint?: number; // Deprecated - we always show all tabs now
   /** Optional - map of tab values to completion status */
   completedTabs?: Record<string, boolean>;
+  /** Optional - per-tab error counts. Shows a small red badge on the tab label
+   *  when count > 0 and the tab is NOT currently active. Lets sparkies see at
+   *  a glance which tab has issues — paired with the validation panel above. */
+  errorCounts?: Record<string, number>;
   /** Optional - show overall progress bar */
   showProgress?: boolean;
 }
@@ -40,6 +44,7 @@ export const SmartTabs = ({
   onValueChange,
   className,
   completedTabs = {},
+  errorCounts = {},
   showProgress = false,
 }: SmartTabsProps) => {
   const isMobile = useIsMobile();
@@ -112,6 +117,8 @@ export const SmartTabs = ({
             {tabs.map((tab, index) => {
               const tabComplete = isTabComplete(tab);
               const isActive = tab.value === activeValue;
+              const errors = errorCounts[tab.value] || 0;
+              const showErrorBadge = errors > 0 && !isActive;
               return (
                 <button
                   key={tab.value}
@@ -134,7 +141,15 @@ export const SmartTabs = ({
                   </span>
                   <span className="text-white/25">·</span>
                   <span className="text-sm font-medium tracking-tight">{tab.label}</span>
-                  {tabComplete && !isActive && (
+                  {showErrorBadge && (
+                    <span
+                      aria-label={`${errors} missing`}
+                      className="ml-0.5 self-center h-4 min-w-4 px-1 rounded-full bg-red-500/90 text-white text-[9px] font-bold leading-none flex items-center justify-center tabular-nums"
+                    >
+                      {errors}
+                    </span>
+                  )}
+                  {tabComplete && !isActive && !showErrorBadge && (
                     <span
                       aria-label="completed"
                       className="h-1.5 w-1.5 rounded-full bg-green-400/80 ml-0.5 self-center"
@@ -181,6 +196,8 @@ export const SmartTabs = ({
           {tabs.map((tab, index) => {
             const tabComplete = isTabComplete(tab);
             const isActive = tab.value === activeValue;
+            const errors = errorCounts[tab.value] || 0;
+            const showErrorBadge = errors > 0 && !isActive;
             const displayLabel = tab.shortLabel || tab.label.split(' ')[0];
 
             return (
@@ -189,14 +206,16 @@ export const SmartTabs = ({
                 ref={isActive ? activeTabRef : null}
                 onClick={() => handleValueChange(tab.value)}
                 className={cn(
-                  'flex items-center justify-center gap-1 rounded-lg font-semibold touch-manipulation',
+                  'relative flex items-center justify-center gap-1 rounded-lg font-semibold touch-manipulation',
                   'active:scale-[0.98] transition-all duration-150',
                   'text-[11px] h-9 px-1 min-w-0',
                   isActive
                     ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : tabComplete
-                      ? 'bg-green-500/10 text-green-400 border border-green-500/30'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    : showErrorBadge
+                      ? 'bg-red-500/10 text-white border border-red-500/30'
+                      : tabComplete
+                        ? 'bg-green-500/10 text-green-400 border border-green-500/30'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
                 )}
               >
                 <span
@@ -204,12 +223,18 @@ export const SmartTabs = ({
                     'flex items-center justify-center rounded-full font-bold shrink-0 h-4 w-4 text-[9px]',
                     isActive
                       ? 'bg-elec-yellow/30 text-elec-yellow'
-                      : tabComplete
-                        ? 'bg-green-500/20 text-green-400'
-                        : 'bg-white/[0.08] text-current'
+                      : showErrorBadge
+                        ? 'bg-red-500/80 text-white'
+                        : tabComplete
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-white/[0.08] text-current'
                   )}
                 >
-                  {tabComplete && !isActive ? <CheckCircle className="h-2.5 w-2.5" /> : index + 1}
+                  {showErrorBadge
+                    ? errors
+                    : tabComplete && !isActive
+                      ? <CheckCircle className="h-2.5 w-2.5" />
+                      : index + 1}
                 </span>
                 <span className="truncate">{displayLabel}</span>
               </button>

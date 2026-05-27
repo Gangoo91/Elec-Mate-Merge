@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useEICRTabs } from '@/hooks/useEICRTabs';
+import { useEICRValidation } from '@/hooks/useEICRValidation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EICRTabContent from './EICRTabContent';
 
@@ -54,6 +55,20 @@ const EICRFormTabs = ({
       certificate: completedSections.certificate || hasRequiredFields('certificate'),
     };
   }, [formData.completedSections, formData.scheduleOfTests, hasRequiredFields]);
+
+  // Per-tab error counts for the SmartTabs red badge.
+  const eicrValidation = useEICRValidation(formData);
+  const errorCounts = useMemo(
+    () =>
+      eicrValidation.errors.reduce(
+        (acc, rule) => {
+          acc[rule.tab] = (acc[rule.tab] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      ),
+    [eicrValidation.errors]
+  );
 
   const handleTabChange = (value: string) => {
     setCurrentTab(value as any);
@@ -121,6 +136,7 @@ const EICRFormTabs = ({
       onValueChange={handleTabChange}
       className="w-full"
       completedTabs={completedTabs}
+      errorCounts={errorCounts}
       showProgress={true}
     />
   );

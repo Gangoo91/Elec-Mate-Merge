@@ -109,42 +109,29 @@ export function useProjectDocuments(projectId: string) {
         const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         const filePath = `${user.id}/${projectId}/${docType}s/${fileName}`;
 
-        // Pre-read the file into a real in-memory Blob. On Android, files
-        // picked from Google Drive (and some other cloud sources) arrive as
-        // `content://` URIs that the WebView's fetch() can't stream — the
-        // upload then fails with a misleading "Failed to fetch" pointing at
-        // the Supabase host. Reading the bytes upfront either succeeds (and
-        // gives us a Blob the SDK can reliably upload) or fails locally
-        // with a clear error.
-        let blob: Blob;
+        // Upload, catching both Supabase-reported errors and browser-level
+        // network failures. On Android, files picked from a cloud source
+        // like Google Drive can arrive as `content://` URIs the WebView
+        // can't stream — the SDK then throws a generic "Failed to fetch"
+        // pointing at the Supabase host, which is useless to the user.
+        // Rewrite that case into actionable guidance; pass other errors
+        // through verbatim so we don't mask real problems.
+        let uploadError: { message?: string } | null = null;
         try {
-          const buffer = await file.arrayBuffer();
-          if (buffer.byteLength === 0) {
-            throw new Error(
-              'This file is empty or could not be read. If it came from Google Drive or another cloud service, please download it to your device first, then try again.'
-            );
-          }
-          blob = new Blob([buffer], { type: file.type || 'application/octet-stream' });
-        } catch (readErr) {
-          if (readErr instanceof Error && readErr.message.includes('Google Drive')) throw readErr;
+          const result = await supabase.storage
+            .from('project-documents')
+            .upload(filePath, file, { contentType: file.type });
+          uploadError = result.error;
+        } catch (networkErr) {
           throw new Error(
-            'Could not read this file. If you picked it from Google Drive or another cloud source, please download it to your device first, then try again.'
+            networkErr instanceof TypeError
+              ? 'Could not upload this file. If you picked it from a cloud source like Google Drive, download it to your device first, then try again.'
+              : networkErr instanceof Error
+                ? networkErr.message
+                : 'Upload failed. Please try again.'
           );
         }
-
-        const { error: uploadError } = await supabase.storage
-          .from('project-documents')
-          .upload(filePath, blob, { contentType: file.type });
-
-        if (uploadError) {
-          const msg = uploadError.message?.toLowerCase() || '';
-          if (msg.includes('failed to fetch') || msg.includes('network')) {
-            throw new Error(
-              'Upload could not reach the server. Check your connection and try again — or if the file came from Google Drive, download it locally first.'
-            );
-          }
-          throw uploadError;
-        }
+        if (uploadError) throw uploadError;
 
         const { error: dbError } = await supabase.from('project_documents').insert({
           project_id: projectId,

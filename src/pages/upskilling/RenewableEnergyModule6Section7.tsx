@@ -463,6 +463,90 @@ export default function RenewableEnergyModule6Section7() {
 
           <SectionRule />
 
+          <ContentEyebrow>The engineering case + the tariff / install boundary</ContentEyebrow>
+
+          <Pullquote>
+            UK 2025-26 EV peak demand could double grid load at 17:00. Smart charging is the engineering response. The customer earns the savings; the grid earns the stability.
+          </Pullquote>
+
+          <ConceptBlock
+            title="Why grid demand-shifting matters — the engineering case"
+            plainEnglish="UK 2025-26 EV stock is ~2 million vehicles (and growing rapidly). Average daily charge ~10 kWh per vehicle. If every UK EV charged simultaneously at 17:00 home-from-work peak, that adds ~14 GW to the grid — comparable to the entire UK overnight low. Synchronised EV charging would force significant grid investment + emissions; demand-shifting to overnight troughs is the engineering answer."
+            onSite="The customer doesn’t care about grid engineering — they care about cheap charging. The SCP Regulations 2021 + EV tariffs ALIGN the two: cheap rates for the customer + spread demand for the grid. Customer education at handover: explain the why behind the default off-peak schedule + randomised delay; most customers find it interesting once explained."
+          >
+            <p>The grid engineering numbers (UK 2025-26):</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">UK EV stock</strong> — ~2 million in
+                early 2026; ~30% YoY growth. Projected ~6 million by 2030
+              </li>
+              <li>
+                <strong className="text-white">Average per-vehicle daily
+                  charge</strong> — ~10 kWh (UK average ~50 km/day at ~5 km/kWh)
+              </li>
+              <li>
+                <strong className="text-white">Synchronised peak risk</strong> — if all
+                charged at 17:00 simultaneously, ~14 GW additional load. UK overnight low load is ~25 GW; peak is ~45 GW. A synchronised EV pulse would land in the same window as the existing evening peak — un-buildable without massive grid investment
+              </li>
+              <li>
+                <strong className="text-white">Demand-shifting to
+                  overnight</strong> — 23:00-07:00 window has ~10-15 GW spare capacity vs daytime peak. Spreading EV charging across this window is essentially free for the grid
+              </li>
+              <li>
+                <strong className="text-white">Smart-charging response</strong> —
+                SCP Regulations 2021 (default off-peak + randomised delay) is the regulatory mechanism that engineers the demand-shift WITHOUT requiring customer-side intervention. Aligned with EV tariffs that pay the customer for the shift
+              </li>
+              <li>
+                <strong className="text-white">The customer’s
+                  savings</strong> — ~£400/year on Octopus Intelligent Go vs flat-rate import (typical UK 2025-26 driver). The customer is the engineering response’s beneficiary
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — records SCP Regulations 2021 compliance + the customer’s tariff choice. The engineering response and the customer-side outcome both documented
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Tariff vs install — who owns what at the boundary"
+            plainEnglish="The wallbox install is the installer’s responsibility (BS 7671 / Section 722 / SCP Regulations 2021). The tariff is the customer’s contract with their electricity supplier. The two meet at the wallbox’s smart-charging configuration. Understanding the boundary prevents support-call confusion."
+            onSite="Customer asks the installer about tariff savings or tariff changes — politely route them to their electricity supplier. Customer asks the supplier about wallbox commissioning or RCD type — supplier routes back to the installer. The wallbox app sits at the boundary: customer’s tariff data flows in via the app; installer’s install + commissioning data flows out via the app + cert evidence bundle."
+          >
+            <p>The boundary in practice:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Installer
+                  ownership</strong> — BS 7671 install + Section 722 compliance + manufacturer DoC + SCP Regulations factory configuration + commissioning + cert evidence bundle + customer handover education
+              </li>
+              <li>
+                <strong className="text-white">Customer
+                  ownership</strong> — choice of electricity supplier + tariff; ongoing payment of bills; customer-side override of charging schedule for specific sessions; ongoing maintenance / use of the wallbox app
+              </li>
+              <li>
+                <strong className="text-white">Supplier
+                  ownership</strong> — tariff rates + windows + smart-charging integration with the customer’s wallbox / vehicle; billing; supplier app
+              </li>
+              <li>
+                <strong className="text-white">Wallbox manufacturer
+                  ownership</strong> — product conformity + Declaration of Conformity + firmware updates + cloud services + customer support for product issues
+              </li>
+              <li>
+                <strong className="text-white">Handover
+                  documentation</strong> — installer hands customer the cert evidence bundle + customer-facing operating instructions; customer keeps the bundle for warranty / EICR / property-sale evidence
+              </li>
+              <li>
+                <strong className="text-white">Tariff change
+                  scenario</strong> — customer switches from Octopus Intelligent Go to Octopus Flux (e.g. they’ve added PV+BESS). Customer reconfigures the wallbox app to the new tariff windows; no installer involvement needed; cert evidence bundle remains valid (install didn’t change). Customer may notify installer for service contract update
+              </li>
+              <li>
+                <strong className="text-white">Common support-call
+                  confusion</strong> — customer calls installer about tariff savings being lower than expected. Installer’s role is to verify the install is operating correctly (default off-peak + randomised delay still working) and route the customer to the supplier for tariff queries. The customer / supplier / installer triangle requires polite boundary discipline
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
           <Scenario
             title="EV + Octopus Intelligent Go install — straightforward case"
             situation="Customer has bought an electric vehicle (compatible with Octopus Intelligent Go via OEM API). Switching to Octopus Intelligent Go tariff. Wallbox selected: Ohme ePod (designed around the tariff integration). No PV, no BESS, no heat pump."

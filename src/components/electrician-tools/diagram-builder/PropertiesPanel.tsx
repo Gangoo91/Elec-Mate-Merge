@@ -14,10 +14,11 @@ import {
 interface PropertiesPanelProps {
   selectedObject: any;
   onUpdate: (updates: any) => void;
+  onDelete: () => void;
   onClose: () => void;
 }
 
-export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: PropertiesPanelProps) => {
+export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }: PropertiesPanelProps) => {
   if (!selectedObject) return null;
 
   const symbolMeta = selectedObject.symbolId
@@ -212,7 +213,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
           <Button
             variant="outline"
             onClick={() => {
-              onUpdate({ _delete: true });
+              onDelete();
               onClose();
             }}
             className="w-full h-11 border-red-500/30 text-red-400 hover:bg-red-500/10 touch-manipulation"

@@ -102,6 +102,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
         <div className="grid grid-cols-2 gap-2 items-end">
           <FormField label="Name" required>
             <Input
+              data-field="electricianName"
               value={formData.electricianName || ''}
               onChange={(e) => onUpdate('electricianName', e.target.value)}
               placeholder="Full name"
@@ -120,7 +121,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
 
         {/* Position presets */}
         <FormField label="Position" required>
-          <div className="grid grid-cols-3 gap-1">
+          <div data-field="position" className="grid grid-cols-3 gap-1 rounded-lg">
             {POSITION_PRESETS.map((pos) => (
               <button
                 key={pos}
@@ -249,6 +250,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
 
         <FormField label="Date" required>
           <Input
+            data-field="signatureDate"
             type="date"
             value={formData.signatureDate || ''}
             onChange={(e) => onUpdate('signatureDate', e.target.value)}
@@ -256,11 +258,13 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
           />
         </FormField>
 
-        <SignatureInput
-          value={formData.signature || ''}
-          onChange={(v) => onUpdate('signature', v)}
-          placeholder="Sign here"
-        />
+        <div data-field="signature" className="rounded-lg">
+          <SignatureInput
+            value={formData.signature || ''}
+            onChange={(v) => onUpdate('signature', v)}
+            placeholder="Sign here"
+          />
+        </div>
       </div>
     </div>
   );

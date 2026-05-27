@@ -26,7 +26,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { runRAMSGeneration } from '../_shared/rams-core.ts';
+import { runRAMSGeneration, runSingleAgent } from '../_shared/rams-core.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -112,8 +112,43 @@ Deno.serve(async (req) => {
       return json({ success: true });
     }
 
+    if (action === 'retry-agent') {
+      const { jobId, agent } = body ?? {};
+      if (!jobId || typeof jobId !== 'string') {
+        return json({ error: 'jobId is required for retry-agent' }, 400);
+      }
+      if (agent !== 'hs' && agent !== 'method') {
+        return json({ error: 'agent must be "hs" or "method"' }, 400);
+      }
+
+      const { data: existing } = await supabase
+        .from('rams_generation_jobs')
+        .select('id, user_id, status')
+        .eq('id', jobId)
+        .maybeSingle();
+
+      if (!existing || existing.user_id !== user.id) {
+        return json({ error: 'Job not found or not yours' }, 404);
+      }
+      if (existing.status === 'processing') {
+        return json({ error: 'Job is still running' }, 409);
+      }
+
+      const work = runSingleAgent(supabase, jobId, agent as 'hs' | 'method').catch((err) => {
+        console.error('[rams-generator] retry-agent crashed:', err);
+      });
+
+      if (typeof EdgeRuntime !== 'undefined') {
+        EdgeRuntime.waitUntil(work);
+      } else {
+        void work;
+      }
+
+      return json({ jobId, status: 'pending', retrying: agent }, 202);
+    }
+
     // Default: create
-    const { jobDescription, projectInfo, jobScale } = body ?? {};
+    const { jobDescription, projectInfo, jobScale, attachments } = body ?? {};
 
     if (!jobDescription || typeof jobDescription !== 'string' || jobDescription.trim().length === 0) {
       return json({ error: 'jobDescription is required' }, 400);
@@ -130,6 +165,19 @@ Deno.serve(async (req) => {
       return json({ error: 'jobScale must be domestic | commercial | industrial' }, 400);
     }
 
+    // Attachments are optional. The frontend uploads to the safety-photos
+    // bucket and sends an array of { path, name, type, size } back. We
+    // store the metadata only; the vision pre-pass signs each path at
+    // generation time.
+    const safeAttachments = Array.isArray(attachments)
+      ? attachments
+          .filter(
+            (a): a is { path: string; name?: string; type?: string; size?: number } =>
+              !!a && typeof a.path === 'string'
+          )
+          .slice(0, 8)
+      : [];
+
     const { data: job, error: insertError } = await supabase
       .from('rams_generation_jobs')
       .insert({
@@ -137,6 +185,7 @@ Deno.serve(async (req) => {
         job_description: jobDescription,
         project_info: projectInfo,
         job_scale: jobScale ?? 'commercial',
+        attachments: safeAttachments,
         status: 'pending',
         progress: 0,
         current_step: 'Queued',

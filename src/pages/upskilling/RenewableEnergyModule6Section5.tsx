@@ -495,6 +495,55 @@ export default function RenewableEnergyModule6Section5() {
 
           <SectionRule />
 
+          <ContentEyebrow>Mechanical impact and BS EN IEC 61439-7 assemblies</ContentEyebrow>
+
+          <Pullquote>
+            Vehicle strike protection is real on driveway installs. A bollard or kerb costs less than a replacement wallbox + diagnosis.
+          </Pullquote>
+
+          <ConceptBlock
+            title="Vehicle strike protection on driveway installs"
+            plainEnglish="A driveway-mounted wallbox is in real danger from accidental vehicle impact — reversing into the wallbox, mis-parking, contractor vehicles. BS EN 62262 IK10 housing rates the unit to 20 J impact energy — adequate for hand tools / wind-blown debris but NOT a slow-moving vehicle (a 1.5-tonne car at 5 km/h carries ~1,400 J)."
+            onSite="Physical barriers are the practical answer where vehicles can reach the wallbox. Common UK 2025-26 solutions: galvanised steel bollard 150-300 mm in front of the wallbox; concrete kerb / parking stop at the parking-bay limit; mount the wallbox on a free-standing pole offset from vehicle approach. Cert evidence bundle records the strike-protection arrangement."
+          >
+            <p>Strike-protection options:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Steel bollard</strong> — galvanised
+                steel, concreted into ground, 0.6-1.0 m above ground. Sized to absorb / deflect vehicle strike. Common UK 2025-26 install where space allows
+              </li>
+              <li>
+                <strong className="text-white">Concrete parking
+                  stop / kerb</strong> — pre-cast concrete kerb at parking-bay limit;
+                low-cost; defines the parking position so the customer’s wheel hits the kerb before the wallbox
+              </li>
+              <li>
+                <strong className="text-white">Mount offset from vehicle
+                  approach</strong> — wallbox on the side wall of the garage rather than the back wall; vehicle can’t roll into it
+              </li>
+              <li>
+                <strong className="text-white">Free-standing pole</strong> —
+                pre-fabricated EV charging post on concrete base; steel column protects the wallbox; offset from the parking position
+              </li>
+              <li>
+                <strong className="text-white">Customer education</strong> — at
+                handover, demonstrate the parking position relative to the wallbox; recommend a reverse-parking sensor / camera if the vehicle doesn’t have one
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle</strong> —
+                records the strike-protection arrangement; photographs show the bollard / kerb / offset
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 522 (external influences) + BS EN 62208 + BS EN IEC 61439-7"
+            clause="Wiring systems and electrical equipment shall be suitable for the external influences likely to be encountered. Enclosures shall meet relevant general requirements (BS EN 62208 for empty enclosures). For low-voltage switchgear and controlgear assemblies for specific applications including EV charging stations, BS EN IEC 61439-7:2023 applies."
+            meaning="Three layered standards apply to the outdoor wallbox install. Reg 522 sets the regulatory requirement to assess external influences (water, solids, mechanical impact, corrosion, fauna, solar radiation). BS EN 62208 covers empty enclosure general requirements (used as the base standard before EV-specific assembly standards). BS EN IEC 61439-7:2023 covers assemblies for specific applications including EV charging stations — relevant when multiple wallboxes are housed in a single assembly (commercial / public; M7 scope) but referenced for single-wallbox installs too. Cert evidence bundle records the standards stack + the Reg 522 site assessment."
+          />
+
+          <SectionRule />
+
           <Scenario
             title="UK suburban customer — sheltered driveway install"
             situation="Midlands semi-detached, integral garage on the south side of the property, customer wants the wallbox on the external side of the garage wall. The position is sheltered by the garage roof overhang (1 m projection). Site exposure: sheltered. Cable run from interior CU: ~3 m through the integral garage internal wall, no fire-rated wall crossings, internal cable in trunking."

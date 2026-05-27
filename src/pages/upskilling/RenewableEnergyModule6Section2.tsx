@@ -520,6 +520,54 @@ export default function RenewableEnergyModule6Section2() {
             whyItMatters="Route (c) is the no-OPDD fallback. Slightly more install time and cost than OPDD route, but technically equivalent in safety case. Customer choice of older wallbox model is respected; cert evidence bundle records the rationale (route c chosen because wallbox model doesn’t include OPDD). Some customers prefer the visible electrode because they understand it; UK 2025-26 install practice respects this preference where it doesn’t add risk."
           />
 
+          <Pullquote>
+            OPDD’s commissioning self-test is the only commissioning step where the manufacturer’s app injects a simulated PEN failure into the wallbox. Treat it as the safety-critical test it is.
+          </Pullquote>
+
+          <ConceptBlock
+            title="The OPDD commissioning self-test — what actually happens"
+            plainEnglish="At commissioning, the installer initiates the wallbox’s OPDD self-test mode via the manufacturer app or wallbox display. The wallbox electronically simulates a lost-PEN condition (typically by injecting a small voltage anomaly on its internal sensing circuit) and observes whether its OPDD logic triggers contactor opening. A pass = the OPDD function is verified working at install day; a fail = the unit has a fault and must be diagnosed or replaced before energising."
+            onSite="Manufacturer-specific procedure but the principle is universal. Most UK 2025-26 OPDD-equipped wallboxes have a guided self-test in the commissioning workflow — the app prompts the installer through the steps and reports the result. Record the result in the cert evidence bundle WITH date AND firmware version (because firmware updates can change the test behaviour). Future EICR re-runs the same self-test for verification."
+          >
+            <p>OPDD self-test mechanism:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Trigger</strong> — installer initiates via
+                manufacturer app or wallbox front-panel menu. Test mode is typically only available with the wallbox de-energised on the AC output side (no vehicle charging)
+              </li>
+              <li>
+                <strong className="text-white">Simulated fault
+                  injection</strong> — wallbox electronics inject a voltage anomaly mimicking lost PEN; manufacturer-specific exactly how (some inject on the L-N reference; some on the PE reference)
+              </li>
+              <li>
+                <strong className="text-white">Contactor
+                  response</strong> — OPDD logic detects the simulated anomaly within milliseconds; opens the internal contactor; wallbox displays a fault state
+              </li>
+              <li>
+                <strong className="text-white">Test pass
+                  criteria</strong> — contactor opens within manufacturer-specified time; fault state appears on display / app; recovery to normal state on test cancel
+              </li>
+              <li>
+                <strong className="text-white">Test fail
+                  diagnosis</strong> — contactor doesn’t open OR fault state doesn’t appear OR doesn’t recover. Manufacturer support / replacement before energising
+              </li>
+              <li>
+                <strong className="text-white">Periodic
+                  verification</strong> — re-run at EICR (5-year for landlords / 10-year for owner-occupier). Cert evidence bundle compares to install-day baseline
+              </li>
+              <li>
+                <strong className="text-white">Firmware
+                  dependency</strong> — record firmware version with the test result. Firmware updates can change the OPDD behaviour or self-test procedure; future EICR uses the firmware version then-current
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 411.4 (TN systems) + Reg 722.411.4 layer"
+            clause="In a TN system, automatic disconnection of supply (ADS) is achieved by the action of an overcurrent protective device and/or a residual current device acting on the live conductors of the circuit, in conjunction with the protective bonding arrangements. Reg 722.411.4 adds the EV-specific layer for outdoor charging points where PME is in use."
+            meaning="Reg 411.4 is the standard ADS regulation for TN systems. The dedicated EV circuit’s 30 mA RCBO satisfies Reg 411.4 in the normal AC-fault case (live-to-earth fault → RCD operates → ADS achieved within 0.4 s for ≤32 A final circuits). Reg 722.411.4 then ADDS the EV-specific layer for the lost-PEN scenario that Reg 411.4 doesn’t cover — the OPDD / TT / TN-S alternative. Both layers operate together: Reg 411.4 for AC residual faults; Reg 722.411.4 for lost-PEN events. Cert evidence bundle records compliance against both — Reg 411.4 via RCD trip-time test; Reg 722.411.4 via OPDD self-test (or TT Ra + ADS calculation)."
+          />
+
           <CommonMistake
             title="Connecting the EV wallbox PE to the consumer unit’s PME-derived earth without invoking 722.411.4 alternatives"
             whatHappens="Installer treats the EV install as a standard 32 A circuit — wires L, N, PE from the consumer unit’s standard terminals to the wallbox’s standard terminals. The wallbox’s PE is now connected to the PME-derived earth. Customer drives car onto the driveway and plugs in. Six months later, a JCB on the street damages the PEN conductor during groundworks. The PEN opens. The customer’s “earth” rises to 180 V. The customer walks across the wet driveway to disconnect their car; one hand on the door handle, other foot on the puddle to the garden tap. Shock current flows through the customer’s body — fatal."

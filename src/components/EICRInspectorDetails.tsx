@@ -323,18 +323,29 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
         </div>
       )}
 
-      {/* Quick Load Button - Loads ALL saved details */}
-      {(companyProfile || getAvailableProfile()) && (
-        <div className={cn('px-4 py-2', '')}>
-          <button
-            onClick={handleLoadFromBusinessSettings}
-            disabled={companyProfileLoading}
-            className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98] disabled:opacity-50"
-          >
-            Load from profile
-          </button>
-        </div>
-      )}
+      {/* Quick Load Button — fills the whole tab from saved profile. Context-aware text:
+          softens to "Reload" once the key fields are already populated, matching the
+          MW/EIC pattern so the button reads as a normal action rather than the only path. */}
+      {(companyProfile || getAvailableProfile()) && (() => {
+        const profilePopulated = !!(formData.inspectorName && formData.inspectorQualifications);
+        return (
+          <div className="px-4 pt-2">
+            <button
+              type="button"
+              onClick={handleLoadFromBusinessSettings}
+              disabled={companyProfileLoading}
+              className={cn(
+                'w-full h-10 rounded-lg font-semibold text-xs touch-manipulation active:scale-[0.98] disabled:opacity-50',
+                profilePopulated
+                  ? 'bg-white/[0.05] border border-white/[0.08] text-white/70'
+                  : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+              )}
+            >
+              {profilePopulated ? 'Reload from profile' : 'Load from profile'}
+            </button>
+          </div>
+        );
+      })()}
 
       {/* Personal Details Section */}
       <Collapsible open={openSections.personal} onOpenChange={() => toggleSection('personal')}>
@@ -351,6 +362,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           <div className={cn('space-y-4 py-4', '')}>
             <FormField label="Inspector Name" required>
               <Input
+                data-field="inspectorName"
                 value={formData.inspectorName || ''}
                 onChange={(e) => onUpdate('inspectorName', e.target.value)}
                 placeholder="Full name of the inspector"

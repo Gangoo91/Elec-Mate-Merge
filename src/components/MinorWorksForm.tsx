@@ -36,6 +36,7 @@ import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
 import MinorWorksValidationPanel from '@/components/minor-works/MinorWorksValidationPanel';
+import { useMinorWorksValidation } from '@/hooks/useMinorWorksValidation';
 import EICRTabNavigation from '@/components/EICRTabNavigation';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
@@ -1109,6 +1110,17 @@ const MinorWorksForm = ({
     declaration: isTabComplete('declaration'),
   };
 
+  // Per-tab error counts — feeds the SmartTabs red badge so sparkies see at
+  // a glance which tab has missing fields.
+  const mwValidation = useMinorWorksValidation(formData);
+  const errorCounts: Record<string, number> = mwValidation.errors.reduce(
+    (acc, rule) => {
+      acc[rule.tab] = (acc[rule.tab] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
   // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
   // from the user's most recent Minor Works at the same address.
   const prefillAddress =
@@ -1187,6 +1199,7 @@ const MinorWorksForm = ({
               onTabChange?.(value);
             }}
             completedTabs={completedTabs}
+            errorCounts={errorCounts}
             showProgress={true}
           />
         </div>

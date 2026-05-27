@@ -13,6 +13,7 @@ interface FloorPlanRow {
   notes: string | null;
   total_items: number;
   pdf_url: string | null;
+  project_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -33,6 +34,10 @@ export function useFloorPlanCloud() {
     propertyAddress?: string;
     clientName?: string;
     totalItems?: number;
+    /** When set, the row is created/updated with this project_id so the
+     *  plan immediately appears linked in ProjectDetailPage without a
+     *  second link call. Pass `null` to explicitly detach. */
+    projectId?: string | null;
   }) => {
     if (!user?.id) return null;
 
@@ -44,7 +49,7 @@ export function useFloorPlanCloud() {
     // Keep thumbnails only — fullImage regenerated from canvasState when needed
     const roomsForDb = plan.rooms.map(({ fullImage, ...rest }) => rest);
 
-    const row = {
+    const baseRow = {
       user_id: user.id,
       name: plan.name,
       property_address: plan.propertyAddress || null,
@@ -53,6 +58,9 @@ export function useFloorPlanCloud() {
       total_items: totalItems,
       updated_at: new Date().toISOString(),
     };
+    const row = plan.projectId !== undefined
+      ? { ...baseRow, project_id: plan.projectId }
+      : baseRow;
 
     if (plan.id) {
       // Update existing

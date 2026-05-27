@@ -288,23 +288,41 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           </div>
           <ol className="space-y-2">
             {TIMELINE.map((row, idx) => {
-              const isDone = partials.has(row.completedBy);
-              const firstUndoneIdx = TIMELINE.findIndex(
-                (r) => !partials.has(r.completedBy)
-              );
-              const isLive = !isDone && idx === firstUndoneIdx && !isComplete;
-              const payload = partials.get(row.completedBy) ?? {};
+              const partial = partials.get(row.completedBy);
+              // A partial flagged `streaming: true` means the agent is mid-flight
+              // (per-element ticks during the OpenAI stream); only count it as
+              // done when that flag is absent (i.e. the final post-parse write).
+              const isStreaming = partial?.streaming === true;
+              const isFinishedPartial = !!partial && !isStreaming;
+              const firstUnfinishedIdx = TIMELINE.findIndex((r) => {
+                const p = partials.get(r.completedBy);
+                return !p || p.streaming === true;
+              });
+              const isDone = isFinishedPartial;
+              const isLive =
+                !isDone &&
+                (isStreaming || idx === firstUnfinishedIdx) &&
+                !isComplete;
+              const payload = partial ?? {};
               let detail: string | null = null;
               if (row.key === 'sources') {
                 const n =
                   (payload.bs7671FacetCount ?? 0) +
                   (payload.safetyFacetCount ?? 0) +
                   (payload.practicalCount ?? 0);
-                if (n > 0) detail = `${n} sources`;
+                if (n > 0) {
+                  detail = payload.visionFindings
+                    ? `${n} sources · site photos`
+                    : `${n} sources`;
+                }
               } else if (row.key === 'hazards' && payload.count) {
-                detail = `${payload.count} hazards`;
+                detail = isStreaming
+                  ? `${payload.count} so far…`
+                  : `${payload.count} hazards`;
               } else if (row.key === 'method' && payload.count) {
-                detail = `${payload.count} steps`;
+                detail = isStreaming
+                  ? `${payload.count} so far…`
+                  : `${payload.count} steps`;
               } else if (row.key === 'finalise' && (payload.elapsedSeconds ?? 0) > 0) {
                 detail = `${payload.elapsedSeconds}s total`;
               }

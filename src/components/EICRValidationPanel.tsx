@@ -6,6 +6,7 @@ import {
   EICR_TAB_LABEL,
   type EICRTabId,
 } from '@/hooks/useEICRValidation';
+import { scrollToField } from '@/utils/scrollToField';
 import { cn } from '@/lib/utils';
 
 interface EICRValidationPanelProps {
@@ -33,10 +34,13 @@ const EICRValidationPanel: React.FC<EICRValidationPanelProps> = ({
   const validation = useEICRValidation(formData);
   const [showWarnings, setShowWarnings] = useState(false);
 
-  const handleJump = (tab?: EICRTabId) => {
+  // Header taps jump to the tab; row taps also flash the specific field.
+  const handleJump = (tab?: EICRTabId, field?: string) => {
     if (!tab || !onJumpToTab) return;
     onJumpToTab(tab);
-    if (typeof window !== 'undefined') {
+    if (field) {
+      scrollToField(field, 80);
+    } else if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -121,7 +125,7 @@ const EICRValidationPanel: React.FC<EICRValidationPanelProps> = ({
                     <button
                       key={rule.field}
                       type="button"
-                      onClick={() => handleJump(rule.tab)}
+                      onClick={() => handleJump(rule.tab, rule.field)}
                       className="w-full flex items-baseline gap-2 text-xs rounded-md px-1 py-0.5 hover:bg-white/[0.04] touch-manipulation transition-colors"
                     >
                       {RowContent}
@@ -179,7 +183,7 @@ const EICRValidationPanel: React.FC<EICRValidationPanelProps> = ({
                         <button
                           key={rule.field}
                           type="button"
-                          onClick={() => handleJump(rule.tab)}
+                          onClick={() => handleJump(rule.tab, rule.field)}
                           className="w-full flex items-baseline gap-2 text-xs rounded-md px-1 py-0.5 hover:bg-white/[0.04] touch-manipulation transition-colors"
                         >
                           {RowContent}

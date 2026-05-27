@@ -490,6 +490,113 @@ export default function RenewableEnergyModule6Section8() {
             filename="renewable/m6s8-commissioning-eicr-flow.png"
           />
 
+          <Pullquote>
+            The instrument decides what the EICR can actually verify. A Type B install needs a Type B-capable tester — anything else is reconstruction theatre.
+          </Pullquote>
+
+          <ContentEyebrow>Instrument selection and the Schedule of Test Results</ContentEyebrow>
+
+          <ConceptBlock
+            title="Type B-capable instrument selection — Reg 643.1 in practice"
+            plainEnglish="Reg 643.1 — measuring instruments comply with BS EN 61557. On an EV install with Type B RCD architecture, this means a Type B-capable RCD trip-time tester. Older Type AC / A-only instruments cannot generate the smooth-DC waveform needed to verify a Type B device — they give a misleading pass on the AC test path while the smooth-DC detection coil sits untested."
+            onSite="UK 2025-26 Type B-capable instruments: Megger MFT1731 series, Fluke 1664 FC, Kewtech KT64DL, Robin RDC-DD-100 series, Metrel MI 3155 EurotestXD. Older MFT1502 / MFT1721 / similar do NOT support Type B testing. Cert evidence bundle records the instrument used (make, model, serial, calibration date)."
+          >
+            <p>Instrument selection details:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Type B test waveform</strong> — the instrument must generate a smooth-DC residual test current to exercise the Type B detection. Type AC / A-only testers don’t include this generator
+              </li>
+              <li>
+                <strong className="text-white">BS EN 61557 compliance</strong> — Reg 643.1 mandates instrument compliance with BS EN 61557 series. Type B testers are part-3 (insulation), part-4 (low-resistance), part-6 (RCD) compliant
+              </li>
+              <li>
+                <strong className="text-white">Calibration</strong> — annual calibration to manufacturer
+                spec; calibration certificate kept by the inspecting electrician + serial number recorded in each EICR
+              </li>
+              <li>
+                <strong className="text-white">Cost</strong> — Type B-capable instrument ~£800-£1,500
+                (UK 2025-26); significantly more than Type AC / A-only instruments at ~£400-£700. Investment for the EV install business
+              </li>
+              <li>
+                <strong className="text-white">EICR consequence of wrong
+                  instrument</strong> — testing a Type B RCD with a Type AC / A-only instrument invalidates the Reg 643.1 compliance of the inspection itself; the EICR may be challenged
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 643.7 — RCD operate / trip-time verification"
+            clause="The effectiveness of the residual current device shall be verified by appropriate tests. The test instrument shall be selected per Reg 643.1 (BS EN 61557). The RCD shall operate within the times specified for the relevant disconnection time of Reg 411."
+            meaning="Reg 643.7 sets the residual current device verification requirement at commissioning AND periodic inspection. The test injects a known residual current at IΔn (rated residual operating current) and verifies the device operates within Reg 411 disconnection times (typically 0.4 s for final circuits ≤ 32 A on a TN system). For an EV install with Type B architecture, the test instrument must be Type B-capable (Reg 643.1). The test is repeated at periodic inspection — drift in trip-time over years can indicate mechanical wear / electronic degradation. Cert evidence bundle records the trip-time + instrument + date."
+          />
+
+          <ConceptBlock
+            title="Schedule of Inspections + Schedule of Test Results for the EV circuit"
+            plainEnglish="The EIC (Electrical Installation Certificate) for an EV circuit includes the standard BS 7671 schedules: Schedule of Inspections (visual + functional verification per Chapter 64) and Schedule of Test Results (numeric values from each test). The EV-specific items extend the schedules: OPDD self-test, RDC-DD self-test, BS EN 61851 functional test, SCP Regulations 2021 verification."
+            onSite="Use the BS 7671 model forms (or equivalent commercial software output) and ADD the EV-specific items at the bottom of each schedule. The Schedule of Test Results has columns for circuit ID, OCPD rating, Zs, IR (live-to-live and live-to-earth), RCD trip-time at IΔn. Add a section / footnote for the EV-specific tests with manufacturer-defined results."
+          >
+            <p>What goes in each schedule for the EV circuit:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Schedule of Inspections</strong> — wallbox identity (manufacturer, model, serial); earthing-tree route per Reg 722.411.4 (b/c/d/e); RCD architecture per Reg 722.531; AFDD decision per Reg 722.421.1.7.201; isolation point identified and labelled; warning notices present (570.6.8.x equivalent); IP / IK ratings; mounting integrity; cable routing inspected
+              </li>
+              <li>
+                <strong className="text-white">Schedule of Test Results — standard
+                  columns</strong> — circuit ID; OCPD type, rating, and BS EN reference; live conductor CSA; cpc CSA; R1+R2; Zs measured; IR live-live; IR live-earth; RCD trip-time at IΔn; polarity confirmed
+              </li>
+              <li>
+                <strong className="text-white">Schedule of Test Results — EV
+                  extensions</strong> — OPDD self-test (per Reg 722.411.4(d), manufacturer-defined procedure, result); RDC-DD self-test (per BS EN IEC 62955, manufacturer-defined procedure, result); BS EN 61851 functional test (manufacturer-defined initiation / draw / clean-disconnect sequence); CP/PP signalling verified
+              </li>
+              <li>
+                <strong className="text-white">SCP Regulations 2021
+                  verification</strong> — default off-peak schedule active; randomised delay enabled; manufacturer DoC for SCP-Regs compliance attached
+              </li>
+              <li>
+                <strong className="text-white">Test instrument
+                  declaration</strong> — instrument(s) used (make, model, serial, calibration date) recorded on the EIC. For an EV install with Type B testing: instrument must be Type B-capable
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle
+                  index</strong> — EIC + Schedule of Inspections + Schedule of Test Results + manufacturer DoCs + photographs + customer handover signed
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Year-10 EICR — what changes at the longer interval"
+            plainEnglish="UK domestic EICR interval is typically 10 years (per BS 7671 advisory and Electrical Safety Standards in the Private Rented Sector Regulations 2020 — landlords on 5 years). At year-10, the wallbox may be approaching end-of-life; the regulatory framework has likely evolved; the cert evidence bundle has aged."
+            onSite="Year-10 EICR is more involved than year-5: more degradation likely; manufacturer support may have changed; firmware versions may be unsupported; replacement candidacy assessment is part of the conversation. Cert evidence bundle records the year-10 findings + replacement recommendation."
+          >
+            <p>Year-10 vs year-5 — key differences:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Wallbox end-of-life
+                  candidacy</strong> — UK 2025-26 wallbox typical service life 7-15 years. At year-10, depreciation is significant; capacity / functionality may be reduced. Replacement candidacy assessed
+              </li>
+              <li>
+                <strong className="text-white">Manufacturer
+                  support</strong> — some brands consolidate / shut down over 10 years; cloud services for smart-charging may be deprecated; firmware updates may stop. Customer may be on an unsupported product
+              </li>
+              <li>
+                <strong className="text-white">Regulatory
+                  evolution</strong> — BS 7671 amendments expected over 10 years (A4:2026 itself was a major change; A5 / future amendments will add further); SCP Regulations may have been amended; OZEV / EVCS scheme may have changed
+              </li>
+              <li>
+                <strong className="text-white">Cable / connector
+                  wear</strong> — Type 2 connector rated 10,000 mating cycles; daily charging customer at ~3,650-7,300 cycles by year-10 — half-life. Cable visible wear common
+              </li>
+              <li>
+                <strong className="text-white">Replacement
+                  trigger</strong> — combination of degraded protective function (OPDD / RDC-DD failures), end-of-life cable, unsupported manufacturer software, or customer preference for current standards drives the replacement decision
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle
+                  evolution</strong> — year-10 EICR adds to the bundle; if replacement happens, new install pack starts a fresh thread alongside the closed legacy bundle. The history is the long-term truth
+              </li>
+            </ul>
+          </ConceptBlock>
+
           <Scenario
             title="Year-5 EICR on a standard UK 2025-26 install"
             situation="EV wallbox installed in 2021 (pre-SCP-Regs); year-5 EICR due in 2026. Original cert evidence bundle missing (customer moved house twice; never received original from previous owner). Wallbox is a MyEnergi Zappi; supply is TN-C-S (PME); Type A RCBO upstream with integrated RDC-DD in the Zappi."

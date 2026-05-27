@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
+  Camera,
   ChevronDown,
   FileText,
   Loader2,
   Shield,
   Sparkles,
   TestTube2,
+  X,
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { IOSInput } from '@/components/ui/ios-input';
@@ -20,6 +22,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 
 const MIN_DESCRIPTION = 50;
+
+export interface AIRAMSAttachment {
+  path: string;
+  name: string;
+  type: string;
+  size: number;
+  previewUrl?: string;
+}
 
 export interface AIRAMSInputProps {
   onGenerate: (
@@ -38,30 +48,10 @@ export interface AIRAMSInputProps {
       safetyOfficerPhone?: string;
       assemblyPoint?: string;
     },
-    jobScale: 'domestic' | 'commercial' | 'industrial'
+    jobScale: 'domestic' | 'commercial' | 'industrial',
+    attachments: AIRAMSAttachment[]
   ) => void;
   isProcessing: boolean;
-}
-
-interface RecentJobRow {
-  id: string;
-  job_description: string;
-  project_info: {
-    projectName?: string;
-    location?: string;
-    assessor?: string;
-    contractor?: string;
-    supervisor?: string;
-    siteManagerName?: string;
-    siteManagerPhone?: string;
-    firstAiderName?: string;
-    firstAiderPhone?: string;
-    safetyOfficerName?: string;
-    safetyOfficerPhone?: string;
-    assemblyPoint?: string;
-  } | null;
-  job_scale: 'domestic' | 'commercial' | 'industrial' | null;
-  completed_at: string | null;
 }
 
 export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
@@ -92,43 +82,73 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   const [scaleConfidence, setScaleConfidence] = useState<number>(0);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
   const [quoteSheetOpen, setQuoteSheetOpen] = useState(false);
-  const [recentJobs, setRecentJobs] = useState<RecentJobRow[]>([]);
+  const [attachments, setAttachments] = useState<AIRAMSAttachment[]>([]);
+  const [uploading, setUploading] = useState(false);
 
-  // Pull the user's last 6 completed RAMS as quick-start chips. Tap to
-  // pre-fill the brief + project info with a previous job's setup.
-  useEffect(() => {
-    if (!user?.id) return;
-    let cancelled = false;
-    (async () => {
-      const { data } = await supabase
-        .from('rams_generation_jobs')
-        .select('id, job_description, project_info, job_scale, completed_at')
-        .eq('user_id', user.id)
-        .eq('status', 'complete')
-        .order('completed_at', { ascending: false, nullsFirst: false })
-        .limit(6);
-      if (!cancelled) setRecentJobs((data ?? []) as RecentJobRow[]);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [user?.id]);
+  // Per-form upload session id so the same job can re-upload without
+  // colliding. The path is moved into the final job_id namespace by the
+  // edge function at create time if needed; for now we keep them grouped
+  // under this temp id.
+  const [uploadSessionId] = useState(
+    () => `pending-${crypto.randomUUID().slice(0, 8)}`
+  );
 
-  const applyRecentJob = (row: RecentJobRow) => {
-    if (row.job_description) setJobDescription(row.job_description);
-    if (row.project_info) {
-      setProjectInfo((prev) => ({
-        ...prev,
-        ...row.project_info,
-      } as typeof prev));
+  const MAX_ATTACHMENTS = 6;
+  const MAX_FILE_SIZE_MB = 10;
+
+  const handleAttachmentSelect = async (files: FileList | null) => {
+    if (!files || files.length === 0 || !user?.id) return;
+    const remaining = MAX_ATTACHMENTS - attachments.length;
+    if (remaining <= 0) {
+      toast({
+        title: 'Attachment limit reached',
+        description: `Up to ${MAX_ATTACHMENTS} photos per RAMS.`,
+        variant: 'destructive',
+      });
+      return;
     }
-    if (row.job_scale) setManualScale(row.job_scale);
-    toast({
-      title: 'Pre-filled from previous RAMS',
-      description: row.project_info?.projectName
-        ? `Using setup from "${row.project_info.projectName}".`
-        : 'Previous setup applied.',
-    });
+    setUploading(true);
+    const next: AIRAMSAttachment[] = [];
+    for (const file of Array.from(files).slice(0, remaining)) {
+      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        toast({
+          title: 'File too large',
+          description: `${file.name} is over ${MAX_FILE_SIZE_MB} MB.`,
+          variant: 'destructive',
+        });
+        continue;
+      }
+      const ext = (file.name.split('.').pop() ?? 'jpg').toLowerCase();
+      const safeName = `${crypto.randomUUID().slice(0, 8)}.${ext}`;
+      const path = `${user.id}/${uploadSessionId}/${safeName}`;
+      const { error } = await supabase.storage
+        .from('safety-photos')
+        .upload(path, file, { upsert: false, contentType: file.type });
+      if (error) {
+        console.error('attachment upload failed', error);
+        toast({
+          title: 'Upload failed',
+          description: error.message,
+          variant: 'destructive',
+        });
+        continue;
+      }
+      next.push({
+        path,
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        previewUrl: URL.createObjectURL(file),
+      });
+    }
+    setAttachments((prev) => [...prev, ...next]);
+    setUploading(false);
+  };
+
+  const removeAttachment = async (att: AIRAMSAttachment) => {
+    setAttachments((prev) => prev.filter((a) => a.path !== att.path));
+    if (att.previewUrl) URL.revokeObjectURL(att.previewUrl);
+    await supabase.storage.from('safety-photos').remove([att.path]);
   };
 
   const handlePickQuote = (q: QuotePickerRow) => {
@@ -243,7 +263,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   const handleSubmit = () => {
     if (jobDescription && projectInfo.projectName) {
       const finalScale = manualScale || detectedScale;
-      onGenerate(jobDescription, projectInfo, finalScale);
+      onGenerate(jobDescription, projectInfo, finalScale, attachments);
     }
   };
 
@@ -280,43 +300,6 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
       animate="visible"
       className="space-y-7 sm:space-y-10 pb-32 sm:pb-12"
     >
-      {/* Recent RAMS templates — pulled once on mount, no realtime needed.
-          Surfaces as a quiet picker only if the user actually has any. */}
-      {recentJobs.length > 0 && (
-        <motion.section variants={itemVariants} className="space-y-2">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-              Quick start from a recent RAMS
-            </span>
-            <span className="text-[11px] text-white/45 tabular-nums">
-              {recentJobs.length} saved
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {recentJobs.map((row) => {
-              const name = row.project_info?.projectName || 'Untitled RAMS';
-              return (
-                <button
-                  key={row.id}
-                  type="button"
-                  onClick={() => applyRecentJob(row)}
-                  disabled={isProcessing}
-                  className={cn(
-                    'h-9 px-3 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
-                    'bg-[hsl(0_0%_10%)] border-white/[0.10] text-white/80',
-                    'hover:border-elec-yellow/40 hover:text-elec-yellow active:scale-[0.99]',
-                    'disabled:opacity-50 max-w-[220px] truncate'
-                  )}
-                  title={name}
-                >
-                  {name}
-                </button>
-              );
-            })}
-          </div>
-        </motion.section>
-      )}
-
       {/* 01 — BRIEFING (hero) */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div className="flex items-baseline justify-between gap-3">
@@ -340,7 +323,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
 
         <div
           className={cn(
-            'relative -mx-4 sm:mx-0 bg-[hsl(0_0%_10%)] border-y sm:border sm:rounded-2xl py-4 px-4 sm:p-5 transition-colors',
+            'relative bg-[hsl(0_0%_10%)] border rounded-2xl p-5 transition-colors',
             hasDescription
               ? 'border-elec-yellow/40'
               : 'border-white/[0.10] hover:border-white/15'
@@ -393,6 +376,88 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
             />
           </div>
         )}
+
+        {/* Site photo attachments — vision extracts visible hazards on the
+            backend before the H&S agent runs. Optional but adds real depth. */}
+        <div className="pt-3 space-y-3">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              Site photos
+            </span>
+            <span className="text-[11px] text-white/45 tabular-nums">
+              {attachments.length} / {MAX_ATTACHMENTS}
+            </span>
+          </div>
+          <p className="text-[12px] text-white/65 leading-relaxed">
+            Add up to {MAX_ATTACHMENTS} photos of the site, distribution boards or work
+            area. We&rsquo;ll pull visible hazards into the risk register.
+          </p>
+
+          {attachments.length > 0 && (
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+              {attachments.map((a) => (
+                <div
+                  key={a.path}
+                  className="relative aspect-square rounded-xl overflow-hidden bg-[hsl(0_0%_10%)] border border-white/[0.10]"
+                >
+                  {a.previewUrl && a.type.startsWith('image/') ? (
+                    <img
+                      src={a.previewUrl}
+                      alt={a.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-white/55 text-[11px] p-2 text-center">
+                      {a.name}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => removeAttachment(a)}
+                    disabled={isProcessing}
+                    className="absolute top-1 right-1 inline-flex items-center justify-center h-7 w-7 rounded-full bg-black/65 hover:bg-black/85 transition-colors touch-manipulation"
+                    aria-label="Remove photo"
+                  >
+                    <X className="h-3.5 w-3.5 text-white" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {attachments.length < MAX_ATTACHMENTS && (
+            <label
+              className={cn(
+                'block w-full cursor-pointer touch-manipulation',
+                (isProcessing || uploading) && 'opacity-50 pointer-events-none'
+              )}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  handleAttachmentSelect(e.target.files);
+                  e.target.value = '';
+                }}
+                className="hidden"
+              />
+              <div className="flex items-center justify-center gap-2 h-12 rounded-xl border border-dashed border-white/[0.15] hover:border-elec-yellow/40 bg-[hsl(0_0%_10%)] text-[13px] font-medium text-white/75 transition-colors">
+                {uploading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Uploading…
+                  </>
+                ) : (
+                  <>
+                    <Camera className="h-4 w-4" />
+                    Add a site photo
+                  </>
+                )}
+              </div>
+            </label>
+          )}
+        </div>
       </motion.section>
 
       {/* 02 — PROJECT DETAILS */}

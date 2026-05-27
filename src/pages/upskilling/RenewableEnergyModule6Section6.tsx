@@ -542,6 +542,23 @@ export default function RenewableEnergyModule6Section6() {
             doInstead="Follow the wallbox manufacturer’s terminal diagram exactly. For tethered wallboxes, the factory cable termination handles this; the installer just needs to verify nothing was disturbed. For untethered wallboxes, the manufacturer’s Type 2 socket has clearly-marked CP and PP terminals; cross-reference the wiring diagram. Cert evidence bundle includes a wiring photo at handover for future EICR reference."
           />
 
+          <RegsCallout
+            source="BS EN 61851-1 — Conductive charging of electric vehicles · General requirements"
+            clause="BS EN 61851-1 defines the four charging modes (1, 2, 3, 4) and specifies the Control Pilot (CP) functional signalling protocol, including the ±12 V PWM duty-cycle modulation that announces available current, the proximity detection logic, and the contactor-coordination state machine. Reg 722.511.101 of BS 7671 mandates compliance with the appropriate parts of the BS EN 61851 series."
+            meaning="BS EN 61851-1 is the foundational EV-charging product standard. Defines what Mode 3 actually is at the signalling level — the ±12 V PWM duty cycle, the voltage transition through plug-in / ready / charging / unplug states, the contactor sequencing. BS EN 61851-22 layers on the AC charging station-specific requirements; -23 covers DC charging stations. UK 2025-26 reputable wallbox brands declare conformity to -1 + -22 (AC) at minimum. Cert evidence bundle records which parts the manufacturer DoC cites. The standard is owned by IEC + adopted as BS EN; UK installer references the BS EN edition."
+          />
+
+          <Pullquote>
+            Two EVs, one supply. DLM is no longer optional — it is the only way the maths works on a 100 A domestic supply.
+          </Pullquote>
+
+          <Scenario
+            title="Two-EV household — DLM coordination across two wallboxes"
+            situation="Customer has two electric vehicles, wants two wallboxes (one for each driver). Standard UK domestic 100 A single-phase supply; household max demand measured ~60 A peak. Two 7 kW wallboxes = 64 A combined continuous draw — would breach the supply with even modest household load on top."
+            whatToDo="Multi-charger DLM. Both wallboxes share a single CT clamp on the incoming tails (or each has its own, coordinated via the manufacturer’s cloud / local network). Supply limit configured to 95 A. DLM logic: when both EVs plug in, the available current (95 A minus household) is shared between them — typically 50/50 split, but configurable for priority. When only one EV plugged in, that EV gets the full available current. Reg 722.55 dedicated final circuit applies to each — two separate CU ways, two separate cables, two separate RCBOs. Reg 311.1 max demand calc with Reg 722.311.201 load curtailment per wallbox individually + coordinated. Common UK 2025-26 brands supporting multi-charger DLM: MyEnergi Zappi (with libbi extension), Wallbox (multi-Pulsar configuration), EO Mini Pro (Genius hub coordinator). Cert evidence bundle records: two dedicated circuits per Reg 722.55; CT clamp position(s); DLM coordination configuration; per-wallbox max demand contribution; combined effective max demand; SCP-Regs compliance per wallbox."
+            whyItMatters="Two-EV households are growing in UK 2025-26. The Reg 722.311.201 load curtailment carve-out scales up — coordinated DLM across multiple wallboxes is the only way to fit two 32 A continuous loads on a 100 A supply. The wallbox brands handle the coordination internally (cloud or local network); the installer’s job is to specify the right kit and document the architecture. Customer-side education: explain how the two wallboxes share when both EVs plug in; cost split (per-vehicle metering common with smart wallboxes); priority configuration (e.g. work car charges first)."
+          />
+
           <SectionRule />
 
           <KeyTakeaways

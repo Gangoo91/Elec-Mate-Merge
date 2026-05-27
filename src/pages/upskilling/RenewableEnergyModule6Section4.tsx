@@ -144,6 +144,19 @@ const quizQuestions = [
     explanation:
       'Reg 311.1 is the general max-demand regulation. It permits diversity as a calculation aid but explicitly forbids using diversity as a means of load curtailment. Reg 722.311.201 is the EV-specific carve-out — permits load curtailment (manual or automatic disconnection) to be considered in max demand. The distinction: diversity = paper assumption about peak coincidence; load curtailment = active hardware enforcement of non-coincidence. DLM hardware (in the wallbox or as a separate clamp meter + contactor) is the actuator that makes Reg 722.311.201 honest. Cert evidence bundle records the DLM configuration as the regulatory underpinning.',
   },
+  {
+    question:
+      'A 7 kW Mode 3 wallbox cable runs grouped in shared trunking with five other final circuits to the kitchen / utility area. What does the cable sizing need to account for?',
+    options: [
+      'Nothing — bunching is already in the table',
+      'Cable grouping derating per Appendix 4 Table 4C1 — 6 grouped cables derates the current-carrying capacity (factor ~0.57). 6 mm² T+E Method 102 baseline ~32-34 A × 0.57 = ~18-19 A — INADEQUATE for 32 A continuous. Upsize to 10 mm² (~46 A × 0.57 = ~26 A — still tight) or route the EV cable on its own (clipped direct / separate conduit) to avoid the grouping derating. Cert evidence bundle records the grouping calculation',
+      'Use 1.5 mm²',
+      'Ignore the other circuits',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cable grouping (multiple cables in shared conduit / trunking) derates the cable’s current-carrying capacity per Appendix 4 Table 4C1. Six grouped cables: factor ~0.57. 6 mm² T+E Method 102 baseline ~32-34 A × 0.57 = ~18-19 A — INADEQUATE for 32 A continuous. Either upsize to 10 mm² (better but still close to In after grouping) or route the EV cable independently (clipped direct or its own conduit) so the grouping factor doesn’t apply. This is a common UK 2025-26 EV install mistake — engineer sizes cable from the Method C baseline without checking the actual installation method + grouping on site. Cert evidence bundle records the cable sizing with the grouping factor explicitly applied.',
+  },
 ];
 
 const faqs = [

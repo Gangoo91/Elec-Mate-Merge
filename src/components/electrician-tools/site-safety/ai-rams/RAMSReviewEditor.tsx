@@ -70,6 +70,8 @@ interface RAMSReviewEditorProps {
   onRegenerate?: () => void;
   isPartial?: boolean;
   onRetry?: () => void;
+  /** Retry just the failed agent — patches the existing job row. */
+  onRetryAgent?: (agent: 'hs' | 'method') => void;
 }
 
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
@@ -85,6 +87,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   onRegenerate,
   isPartial = false,
   onRetry,
+  onRetryAgent,
 }) => {
   // PHASE 4: Handle missing data gracefully
   if (!initialRamsData && !initialMethodData) {
@@ -861,7 +864,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
       <div className="space-y-7 sm:space-y-10">
 
-        {/* Partial completion banner — editorial style */}
+        {/* Partial completion banner — editorial style. Retry just the
+            failed half if we know which one it is. */}
         {isPartial && (
           <section className="bg-[hsl(0_0%_10%)] border border-amber-500/30 rounded-2xl p-5">
             <div className="flex items-baseline gap-3">
@@ -875,18 +879,40 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
                   {!ramsData && 'Risk assessment generation failed. '}
                   {!methodData && 'Method statement generation failed. '}
-                  Proceed with what's available, or retry the failed section.
+                  Proceed with what's available, or retry just the failed half.
                 </p>
-                {onRetry && (
-                  <button
-                    type="button"
-                    onClick={onRetry}
-                    className="mt-4 inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
-                  >
-                    <Sparkles className="h-3.5 w-3.5" />
-                    Retry failed section
-                  </button>
-                )}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {onRetryAgent && !ramsData && (
+                    <button
+                      type="button"
+                      onClick={() => onRetryAgent('hs')}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry hazard register
+                    </button>
+                  )}
+                  {onRetryAgent && !methodData && (
+                    <button
+                      type="button"
+                      onClick={() => onRetryAgent('method')}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry method statement
+                    </button>
+                  )}
+                  {!onRetryAgent && onRetry && (
+                    <button
+                      type="button"
+                      onClick={onRetry}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry failed section
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </section>
@@ -1011,17 +1037,28 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     Risk assessment not generated
                   </h3>
                   <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
-                    The risk assessment didn't generate. Retry to have the AI read the brief again.
+                    The risk assessment didn't generate. Retry just this half to patch it in.
                   </p>
-                  {onRetry && (
+                  {onRetryAgent ? (
                     <button
                       type="button"
-                      onClick={onRetry}
+                      onClick={() => onRetryAgent('hs')}
                       className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
                     >
                       <Sparkles className="h-3.5 w-3.5" />
-                      Retry generation
+                      Retry hazard register
                     </button>
+                  ) : (
+                    onRetry && (
+                      <button
+                        type="button"
+                        onClick={onRetry}
+                        className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                      >
+                        <Sparkles className="h-3.5 w-3.5" />
+                        Retry generation
+                      </button>
+                    )
                   )}
                 </div>
               )}
@@ -1146,18 +1183,29 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     Method statement not generated
                   </h3>
                   <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
-                    The method statement timed out or failed. You can still use the risk
-                    assessment, or regenerate the full document.
+                    The method statement didn't generate. Retry just this half to patch it
+                    into the existing RAMS.
                   </p>
-                  {onRegenerate && (
+                  {onRetryAgent ? (
                     <button
                       type="button"
-                      onClick={onRegenerate}
+                      onClick={() => onRetryAgent('method')}
                       className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
                     >
                       <Sparkles className="h-3.5 w-3.5" />
-                      Regenerate full document
+                      Retry method statement
                     </button>
+                  ) : (
+                    onRegenerate && (
+                      <button
+                        type="button"
+                        onClick={onRegenerate}
+                        className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                      >
+                        <Sparkles className="h-3.5 w-3.5" />
+                        Regenerate full document
+                      </button>
+                    )
                   )}
                 </div>
               )}

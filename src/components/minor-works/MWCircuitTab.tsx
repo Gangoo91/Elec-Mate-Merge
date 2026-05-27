@@ -288,6 +288,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
         <div className="grid grid-cols-2 gap-2 items-end">
           <FormField label="Circuit No." required>
             <Input
+              data-field="circuitDesignation"
               value={(formData.circuitDesignation as string) || ''}
               onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
               placeholder="e.g., C1 or MCB-05"

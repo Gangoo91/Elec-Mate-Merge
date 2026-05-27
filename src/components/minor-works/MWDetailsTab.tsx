@@ -143,6 +143,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
       <div className="grid grid-cols-2 gap-2 items-end">
         <FormField label="Client Name" required>
           <Input
+            data-field="clientName"
             value={(formData.clientName as string) || ''}
             onChange={(e) => onUpdate('clientName', e.target.value)}
             placeholder="Full name"
@@ -185,6 +186,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
 
       <FormField label="Property Address" required>
         <Input
+          data-field="propertyAddress"
           value={(formData.propertyAddress as string) || ''}
           onChange={(e) => onUpdate('propertyAddress', e.target.value)}
           placeholder="Full installation address including postcode"
@@ -216,6 +218,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
       <div className="grid grid-cols-2 gap-2 items-end">
         <FormField label="Date of Work *">
           <Input
+            data-field="workDate"
             type="date"
             value={(formData.workDate as string) || ''}
             onChange={(e) => onUpdate('workDate', e.target.value)}
@@ -282,7 +285,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
 
       {/* Work type as toggle buttons */}
       <FormField label="Type of Work" required>
-        <div className="grid grid-cols-3 gap-1">
+        <div data-field="workType" className="grid grid-cols-3 gap-1 rounded-lg">
           {WORK_TYPES.slice(0, 6).map((wt) => (
             <button
               key={wt.value}
@@ -318,6 +321,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
         </FormField>
         <FormField label="Description of Work *">
           <Input
+            data-field="workDescription"
             value={(formData.workDescription as string) || ''}
             onChange={(e) => onUpdate('workDescription', e.target.value)}
             placeholder="e.g., Addition of socket outlet to kitchen circuit"
@@ -486,11 +490,13 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
       </div>
 
       <FormField label="Earthing Arrangement" required>
-        <ToggleButtons
-          options={earthingOptions}
-          value={(formData.earthingArrangement as string) || ''}
-          onSelect={(v) => onUpdate('earthingArrangement', v)}
-        />
+        <div data-field="earthingArrangement" className="rounded-lg">
+          <ToggleButtons
+            options={earthingOptions}
+            value={(formData.earthingArrangement as string) || ''}
+            onSelect={(v) => onUpdate('earthingArrangement', v)}
+          />
+        </div>
       </FormField>
 
       <div className="grid grid-cols-2 gap-2 items-end">

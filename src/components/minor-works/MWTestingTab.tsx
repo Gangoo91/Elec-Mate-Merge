@@ -353,6 +353,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
         </div>
 
         <FormField label="Polarity" required>
+          <div data-field="polarity" className="rounded-lg">
           <ToggleButtons
             options={[
               { value: 'correct', label: 'Correct', color: 'green' },
@@ -361,6 +362,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
             value={formData.polarity || ''}
             onChange={(v) => onUpdate('polarity', v)}
           />
+          </div>
           {formData.polarity === 'correct' && (
             <span className="text-xs text-green-400 mt-1 block">Polarity confirmed</span>
           )}
@@ -523,6 +525,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
           <FormField label="Zs (Ω)" required>
             <div className="relative">
               <Input
+                data-field="earthFaultLoopImpedance"
                 value={formData.earthFaultLoopImpedance || ''}
                 onChange={(e) => onUpdate('earthFaultLoopImpedance', e.target.value)}
                 placeholder="e.g. 0.85"
@@ -600,6 +603,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
         <div className="grid grid-cols-2 gap-3">
           <FormField label="Ipf (kA)" required>
             <Input
+              data-field="prospectiveFaultCurrent"
               value={formData.prospectiveFaultCurrent || ''}
               onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
               placeholder="e.g. 2.5"

@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FileText, Mail } from 'lucide-react';
+import { FileText, Loader2 } from 'lucide-react';
 import { SavedRoom } from '@/hooks/useFloorPlanRooms';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 
@@ -22,15 +22,41 @@ interface ExportReviewSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   rooms: SavedRoom[];
-  onGeneratePdf: (data: ExportData) => void;
+  /** Called when the user taps Generate PDF. May return a Promise so the
+   *  sheet can show a loading state until the parent's async work resolves. */
+  onGeneratePdf: (data: ExportData) => void | Promise<void>;
+  /** Optional defaults — prefilled when opened from a project so the
+   *  electrician doesn't retype the property/client/their own name. */
+  defaultProperty?: string;
+  defaultClient?: string;
+  defaultElectrician?: string;
 }
 
-export const ExportReviewSheet = ({ open, onOpenChange, rooms, onGeneratePdf }: ExportReviewSheetProps) => {
-  const [property, setProperty] = useState('');
-  const [client, setClient] = useState('');
-  const [electrician, setElectrician] = useState('');
+export const ExportReviewSheet = ({
+  open,
+  onOpenChange,
+  rooms,
+  onGeneratePdf,
+  defaultProperty,
+  defaultClient,
+  defaultElectrician,
+}: ExportReviewSheetProps) => {
+  const [property, setProperty] = useState(defaultProperty ?? '');
+  const [client, setClient] = useState(defaultClient ?? '');
+  const [electrician, setElectrician] = useState(defaultElectrician ?? '');
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [notes, setNotes] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Re-sync from defaults when they arrive (project + profile fetches are
+  // async — they may resolve after the sheet has already mounted with
+  // empty strings).
+  useEffect(() => {
+    if (defaultProperty && !property) setProperty(defaultProperty);
+    if (defaultClient && !client) setClient(defaultClient);
+    if (defaultElectrician && !electrician) setElectrician(defaultElectrician);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultProperty, defaultClient, defaultElectrician]);
 
   // Aggregate materials from all rooms
   const schedule = useMemo(() => {
@@ -62,17 +88,23 @@ export const ExportReviewSheet = ({ open, onOpenChange, rooms, onGeneratePdf }: 
 
   const categoryOrder = Object.keys(grouped).sort();
 
-  const handleGenerate = () => {
-    onGeneratePdf({
-      property,
-      client,
-      electrician,
-      date,
-      notes,
-      rooms,
-      materialsSchedule: schedule.map(({ category, name, count }) => ({ category, name, count })),
-      totalItems,
-    });
+  const handleGenerate = async () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
+    try {
+      await onGeneratePdf({
+        property,
+        client,
+        electrician,
+        date,
+        notes,
+        rooms,
+        materialsSchedule: schedule.map(({ category, name, count }) => ({ category, name, count })),
+        totalItems,
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -199,23 +231,23 @@ export const ExportReviewSheet = ({ open, onOpenChange, rooms, onGeneratePdf }: 
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-3 border-t border-white/10 flex gap-2 shrink-0 pb-safe">
+          <div className="px-4 py-3 border-t border-white/10 shrink-0 pb-safe">
             <Button
               onClick={handleGenerate}
-              className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation"
+              disabled={isGenerating || rooms.length === 0}
+              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:opacity-60"
             >
-              <FileText className="h-4 w-4 mr-2" />
-              Generate PDF
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                handleGenerate();
-              }}
-              className="h-11 px-4 border-white/20 text-white hover:bg-white/10 touch-manipulation"
-            >
-              <Mail className="h-4 w-4 mr-2" />
-              Email
+              {isGenerating ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Generating PDF…
+                </>
+              ) : (
+                <>
+                  <FileText className="h-4 w-4 mr-2" />
+                  Generate PDF
+                </>
+              )}
             </Button>
           </div>
         </div>

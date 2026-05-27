@@ -43,7 +43,8 @@ import { MyPlansSheet } from '@/components/electrician-tools/diagram-builder/MyP
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { assignCircuits } from '@/utils/circuit-assignment';
 import { STANDARD_NOTES } from '@/utils/standard-electrical-notes';
-import { useFloorPlanRooms } from '@/hooks/useFloorPlanRooms';
+import { useFloorPlanRooms, type SavedRoom } from '@/hooks/useFloorPlanRooms';
+import { useFloorPlanCloud } from '@/hooks/useFloorPlanCloud';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
@@ -293,11 +294,22 @@ const DiagramBuilderPage = () => {
   const [myPlansOpen, setMyPlansOpen] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   const [mobileUiOffset, setMobileUiOffset] = useState(0);
-  const { rooms, saveRoom, deleteRoom, updateRoom } = useFloorPlanRooms();
+  const { rooms, saveRoom, deleteRoom, updateRoom, clearAllRooms } = useFloorPlanRooms();
+  const { saveToCloud, loadFromCloud } = useFloorPlanCloud();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
+  const projectId = searchParams.get('projectId') || null;
+  const initialFloorPlanId = searchParams.get('floorPlanId') || null;
+  const [linkedFloorPlanId, setLinkedFloorPlanId] = useState<string | null>(initialFloorPlanId);
+  const [projectName, setProjectName] = useState<string | null>(null);
+  const [projectLocation, setProjectLocation] = useState<string | null>(null);
+  const [projectClientName, setProjectClientName] = useState<string | null>(null);
+  const [electricianName, setElectricianName] = useState<string | null>(null);
   const haptic = useHaptic();
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const propertiesTipShown = useRef<boolean>(
+    storageGetJSONSync<boolean>('floor-plan-tip-properties-shown', false)
+  );
   const [isDirty, setIsDirty] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const [savedAgoTick, setSavedAgoTick] = useState(0);
@@ -424,6 +436,101 @@ const DiagramBuilderPage = () => {
     const t = setInterval(() => setSavedAgoTick((n) => n + 1), 30_000);
     return () => clearInterval(t);
   }, []);
+
+  // Prefetch the current user's name so we can prefill "Drawn by" in the
+  // export sheet — saves the electrician retyping their own name every
+  // time. Runs regardless of project mode.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data: authData } = await supabase.auth.getUser();
+      if (!authData.user) return;
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', authData.user.id)
+        .maybeSingle();
+      if (!cancelled && profile?.full_name) setElectricianName(profile.full_name);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // When the planner is opened from a project, fetch the project name +
+  // address + customer so we can: (a) show a "Linked to [project]" pill,
+  // (b) name the cloud plan, (c) prefill the export sheet so the user
+  // doesn't retype info that's already on the project record.
+  useEffect(() => {
+    if (!projectId) return;
+    let cancelled = false;
+    (async () => {
+      const { data: proj } = await supabase
+        .from('spark_projects')
+        .select('name, location, customers(name)')
+        .eq('id', projectId)
+        .maybeSingle();
+      if (cancelled) return;
+      if (proj?.name) setProjectName(proj.name);
+      if (proj?.location) setProjectLocation(proj.location);
+      const customer = (proj as { customers?: { name?: string } | null } | null)?.customers;
+      if (customer?.name) setProjectClientName(customer.name);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [projectId]);
+
+  // When a specific floor plan is deep-linked from a project, load its
+  // rooms from the cloud once on mount. This makes the project ↔ planner
+  // link a true round-trip: open existing plan → edit → save back.
+  useEffect(() => {
+    if (!initialFloorPlanId) return;
+    let cancelled = false;
+    (async () => {
+      const plans = await loadFromCloud();
+      if (cancelled) return;
+      const match = plans.find((p) => p.id === initialFloorPlanId);
+      if (!match || !Array.isArray(match.rooms) || match.rooms.length === 0) return;
+      clearAllRooms();
+      (match.rooms as SavedRoom[]).forEach((r) =>
+        saveRoom({
+          name: r.name,
+          thumbnail: r.thumbnail,
+          fullImage: r.fullImage,
+          canvasState: r.canvasState,
+          symbolIds: r.symbolIds,
+          photoBase64: r.photoBase64,
+        })
+      );
+      toast({
+        title: 'Plan loaded',
+        description: `${match.rooms.length} room${match.rooms.length !== 1 ? 's' : ''} from "${match.name}"`,
+      });
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // Intentionally one-shot — initialFloorPlanId is read once from the URL
+    // on mount; re-running on every dep change would clobber the user's
+    // in-progress edits.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFloorPlanId]);
+
+  // One-shot discoverability hint: the first time a user has at least one
+  // symbol placed, tell them they can long-press it to open Properties.
+  // Without this, the Properties panel is effectively invisible — there's
+  // no visible trigger anywhere.
+  useEffect(() => {
+    if (propertiesTipShown.current) return;
+    if (!canvasObjects.some((o) => o.type === 'symbol')) return;
+    toast({
+      title: 'Tip: Long-press any item',
+      description: 'Opens Properties to rotate, nudge, or delete it.',
+    });
+    propertiesTipShown.current = true;
+    storageSetJSONSync('floor-plan-tip-properties-shown', true);
+  }, [canvasObjects]);
 
   // Desktop keyboard shortcuts — Figma-style. Skipped on mobile (no keyboard).
   // Shortcuts are gated by `target` so they don't fire while typing in inputs.
@@ -572,17 +679,18 @@ const DiagramBuilderPage = () => {
 
   const handleObjectUpdate = (updates: Partial<CanvasObject>) => {
     if (!selectedObject) return;
-    if ((updates as any)._delete) {
-      setCanvasObjects((prev) => prev.filter((obj) => obj.id !== selectedObject.id));
-      setSelectedObject(null);
-      canvasRef.current?.deleteSelected?.();
-      return;
-    }
     const updatedObjects = canvasObjects.map((obj) =>
       obj.id === selectedObject.id ? applyCanvasObjectUpdates(obj, updates) : obj
     );
     setCanvasObjects(updatedObjects);
     setSelectedObject(applyCanvasObjectUpdates(selectedObject, updates));
+  };
+
+  const handleObjectDelete = () => {
+    if (!selectedObject) return;
+    setCanvasObjects((prev) => prev.filter((obj) => obj.id !== selectedObject.id));
+    setSelectedObject(null);
+    canvasRef.current?.deleteSelected?.();
   };
 
   const handleDuplicateSelected = () => {
@@ -633,11 +741,16 @@ const DiagramBuilderPage = () => {
       symbolIds,
     };
 
+    let nextRooms: SavedRoom[];
     if (activeRoomId) {
       updateRoom(activeRoomId, roomPayload);
+      nextRooms = rooms.map((r) =>
+        r.id === activeRoomId ? { ...r, ...roomPayload } : r
+      );
     } else {
       const newRoom = saveRoom(roomPayload);
       setActiveRoomId(newRoom.id);
+      nextRooms = [...rooms, newRoom];
     }
 
     setSaveSheetOpen(false);
@@ -647,6 +760,27 @@ const DiagramBuilderPage = () => {
       title: `${name} saved`,
       description: `${symbolCounts.length > 0 ? symbolCounts.reduce((sum, s) => sum + s.count, 0) + ' items. ' : ''}Keep editing or export when ready.`,
     });
+
+    // When the planner is bound to a project, mirror every Save Room into
+    // the cloud `floor_plans` table with `project_id` baked in. The first
+    // save creates the row and we remember its id so subsequent saves
+    // update the same plan (single row per project session).
+    if (projectId) {
+      saveToCloud({
+        id: linkedFloorPlanId ?? undefined,
+        name: projectName ? `${projectName} — Floor Plan` : 'Floor Plan',
+        rooms: nextRooms,
+        projectId,
+      })
+        .then((row) => {
+          if (row && !linkedFloorPlanId) setLinkedFloorPlanId(row.id);
+        })
+        .catch(() => {
+          // Cloud failure is non-fatal — local save already succeeded.
+          // We deliberately don't surface this; the user has the room
+          // safely in localStorage and the next save will retry.
+        });
+    }
   };
 
   const handleRoomSelect = (roomId: string) => {
@@ -674,6 +808,29 @@ const DiagramBuilderPage = () => {
     setCanvasObjects([]);
     setActiveRoomId(null);
     setSelectedObject(null);
+  };
+
+  // Wraps deleteRoom so that, in project mode, the deletion is mirrored
+  // up to the cloud `floor_plans` row. Without this, a deleted room
+  // would re-appear next time the planner is opened via the project
+  // link because the cloud row would still contain it.
+  const handleRoomDelete = (roomId: string) => {
+    deleteRoom(roomId);
+    if (activeRoomId === roomId) {
+      setActiveRoomId(null);
+      setCanvasObjects([]);
+    }
+    if (projectId && linkedFloorPlanId) {
+      const nextRooms = rooms.filter((r) => r.id !== roomId);
+      saveToCloud({
+        id: linkedFloorPlanId,
+        name: projectName ? `${projectName} — Floor Plan` : 'Floor Plan',
+        rooms: nextRooms,
+        projectId,
+      }).catch(() => {
+        // Local delete already succeeded; cloud failure is non-fatal.
+      });
+    }
   };
 
   // Primary toolbar — the tools electricians need most
@@ -808,11 +965,21 @@ const DiagramBuilderPage = () => {
             variant="ghost"
             size="icon"
             className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
-            onClick={() => navigate('/electrician/business')}
+            aria-label={projectId ? 'Back to project' : 'Back'}
+            onClick={() => navigate(projectId ? `/electrician/projects/${projectId}` : '/electrician/business')}
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <h1 className="hidden sm:block text-sm font-semibold text-white truncate">Room Planner</h1>
+          {projectId && (
+            <span
+              className="flex items-center gap-1.5 text-[11px] text-elec-yellow px-2 py-1 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 max-w-[140px] sm:max-w-[200px]"
+              title={projectName ? `Linked to ${projectName}` : 'Linked to project'}
+            >
+              <FolderOpen className="h-3 w-3 shrink-0" />
+              <span className="truncate">{projectName ?? 'Project'}</span>
+            </span>
+          )}
           {(() => {
             if (canvasObjects.length === 0 && !lastSavedAt) return null;
             const diffSec = lastSavedAt
@@ -1035,7 +1202,7 @@ const DiagramBuilderPage = () => {
           activeRoomId={activeRoomId}
           onRoomSelect={handleRoomSelect}
           onNewRoom={handleNewRoom}
-          onDeleteRoom={deleteRoom}
+          onDeleteRoom={handleRoomDelete}
         />
       )}
 
@@ -1300,6 +1467,7 @@ const DiagramBuilderPage = () => {
           // the change immediately.
           setPropertiesTarget((prev) => (prev ? { ...prev, ...updates } : prev));
         }}
+        onDelete={handleObjectDelete}
         onClose={() => setPropertiesTarget(null)}
       />
 
@@ -1361,6 +1529,9 @@ const DiagramBuilderPage = () => {
         open={exportReviewOpen}
         onOpenChange={setExportReviewOpen}
         rooms={rooms}
+        defaultProperty={projectLocation ?? undefined}
+        defaultClient={projectClientName ?? undefined}
+        defaultElectrician={electricianName ?? undefined}
         onGeneratePdf={async (data) => {
           haptic.light();
           const loadingToast = toast({ title: 'Generating PDF...', description: 'This may take a moment' });

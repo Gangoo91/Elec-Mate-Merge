@@ -499,21 +499,21 @@ const ProjectDetailPage = () => {
       fetch: fetchUnlinkedCircuitDesigns,
       link: linkCircuitDesign,
       createLabel: 'New circuit design',
-      createUrl: '/electrician/circuit-designer',
+      createUrl: `/electrician/circuit-designer?projectId=${project?.id ?? ''}`,
     },
     costEstimate: {
       title: 'Link Cost Estimate',
       fetch: fetchUnlinkedCostEstimates,
       link: linkCostEstimate,
       createLabel: 'New cost estimate',
-      createUrl: '/electrician/cost-engineer',
+      createUrl: `/electrician/cost-engineer?projectId=${project?.id ?? ''}`,
     },
     floorPlan: {
       title: 'Link Floor Plan',
       fetch: fetchUnlinkedFloorPlans,
       link: linkFloorPlan,
       createLabel: 'Create new floor plan',
-      createUrl: '/electrician/business/room-planner',
+      createUrl: `/electrician/business/room-planner?projectId=${project?.id ?? ''}`,
     },
   };
 
@@ -1395,7 +1395,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={cd.id}
                     type="button"
-                    onClick={() => navigate('/electrician/circuit-designer')}
+                    onClick={() => navigate(`/electrician/circuit-designer?projectId=${project?.id ?? ''}`)}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">
@@ -1469,7 +1469,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={ce.id}
                     type="button"
-                    onClick={() => navigate('/electrician/cost-engineer')}
+                    onClick={() => navigate(`/electrician/cost-engineer?projectId=${project?.id ?? ''}`)}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">
@@ -1541,7 +1541,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={fp.id}
                     type="button"
-                    onClick={() => navigate('/electrician/business/room-planner')}
+                    onClick={() => navigate(`/electrician/business/room-planner?projectId=${project?.id ?? ''}&floorPlanId=${fp.id}`)}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">

@@ -198,6 +198,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
           <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="Client Name" required>
               <Input
+                data-field="clientName"
                 value={localValues.clientName || ''}
                 onChange={(e) => handleFieldChange('clientName', e.target.value)}
                 placeholder="Full name"
@@ -268,6 +269,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
           {localValues.sameAsClientAddress !== 'true' && (
             <FormField label="Installation Address" required>
               <Textarea
+                data-field="installationAddress"
                 value={localValues.installationAddress || ''}
                 onChange={(e) => handleFieldChange('installationAddress', e.target.value)}
                 placeholder="Full address of the installation"
