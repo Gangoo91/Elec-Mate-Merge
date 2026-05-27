@@ -137,9 +137,7 @@ function makeIncrementalArrayExtractor(arrayKey: string) {
 
       if (arrayStart === -1) {
         // Find the array opening — handles both " and unquoted keys defensively.
-        const m = buffer.match(
-          new RegExp(`"${arrayKey}"\\s*:\\s*\\[`, 'm')
-        );
+        const m = buffer.match(new RegExp(`"${arrayKey}"\\s*:\\s*\\[`, 'm'));
         if (!m) return [];
         arrayStart = (m.index ?? 0) + m[0].length;
         nextScan = arrayStart;
@@ -272,81 +270,87 @@ async function streamOpenAIChat(opts: {
  * conservative honesty (no speculation when the image is ambiguous).
  * Returns null if no images / all failed — callers should skip injection.
  */
-async function runVisionPrepass(
-  supabase: any,
-  job: RAMSJobRow
-): Promise<string | null> {
+async function runVisionPrepass(supabase: any, job: RAMSJobRow): Promise<string | null> {
   const attachments = Array.isArray(job.attachments) ? job.attachments : [];
-  const images = attachments.filter((a) =>
-    (a.type ?? '').startsWith('image/')
-  );
+  const images = attachments.filter((a) => (a.type ?? '').startsWith('image/'));
   if (images.length === 0) return null;
 
-  const apiKey = Deno.env.get('OPENAI_API_KEY');
-  if (!apiKey) return null;
-
-  // Sign each storage path so OpenAI Vision can fetch it.
-  const signed = await Promise.all(
-    images.map(async (a) => {
-      const { data } = await supabase.storage
-        .from('safety-photos')
-        .createSignedUrl(a.path, 60 * 10);
-      return data?.signedUrl ? { url: data.signedUrl, name: a.name } : null;
-    })
-  );
-  const urls = signed.filter((s): s is { url: string; name?: string } => !!s);
-  if (urls.length === 0) return null;
-
-  const systemPrompt = `You are a CMIOSH Chartered Health & Safety Practitioner. You are looking at site photos and / or drawings submitted with a RAMS brief. Extract a SHORT hazards-context block to feed to a downstream hazard-register author.
-
-Rules:
-- Only describe what is clearly visible. Do NOT speculate.
-- UK English. Imperative voice for any recommended actions.
-- Cite electrical / site hazards (exposed live parts, lost earthing, working at height, asbestos suspicion, dust, hot works, manual handling, public access, vehicle movement, fire load, confined space).
-- If image is ambiguous, say so plainly.
-- 4-8 bullet points per image, max. Lead each bullet with the hazard noun phrase.`;
-
-  // Single vision call combining all images keeps cost low. If any single
-  // image breaks the API, just skip the prepass — the H&S agent still runs.
-  const content: any[] = [
-    {
-      type: 'text',
-      text: `Extract visible hazards from these ${urls.length} site photo(s).`,
-    },
-  ];
-  for (const u of urls) {
-    content.push({
-      type: 'image_url',
-      image_url: { url: u.url, detail: 'high' },
-    });
+  // Use Gemini for vision (project standard — same as parse-snag-photo).
+  // OpenAI gpt-5.4-mini is text-only in this codebase.
+  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  if (!geminiKey) {
+    console.warn('[rams-core] GEMINI_API_KEY not set, skipping vision prepass');
+    return null;
   }
 
+  // Fetch each image as bytes, base64-encode for Gemini inline_data.
+  const parts: any[] = [
+    {
+      text: `Extract a hazards-context block from these ${images.length} site photo(s) submitted with a RAMS brief. Output PLAIN TEXT (not JSON). Use bullet points led by the hazard noun phrase. Rules:
+- Only describe what is clearly visible. Do NOT speculate. If ambiguous, say so.
+- UK English. Imperative voice for recommended actions.
+- Look for: exposed live parts, lost / suspect earthing, working at height (≥1 m), asbestos suspicion (AIB / textured coatings / old lagging), dust, hot works, manual handling, lone working, public access, vehicle movement, fire load, confined space, dampness, poor housekeeping.
+- 3-6 bullets per image, lead with the hazard noun phrase.
+- Open each image's bullets with a one-line title like "Photo 1: short scene description".`,
+    },
+  ];
+
+  for (const a of images) {
+    try {
+      const { data: signed } = await supabase.storage
+        .from('safety-photos')
+        .createSignedUrl(a.path, 60 * 10);
+      if (!signed?.signedUrl) continue;
+      const imgResp = await fetch(signed.signedUrl);
+      if (!imgResp.ok) continue;
+      const bytes = new Uint8Array(await imgResp.arrayBuffer());
+      // Base64 encode without going through binary-string (which truncates large
+      // images in some Deno versions).
+      let binary = '';
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+      }
+      const base64 = btoa(binary);
+      parts.push({
+        inline_data: {
+          mime_type: a.type ?? 'image/jpeg',
+          data: base64,
+        },
+      });
+    } catch (err) {
+      console.warn(`[rams-core] could not fetch ${a.path}:`, err);
+    }
+  }
+
+  // If no images successfully attached, bail.
+  if (parts.length === 1) return null;
+
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_completion_tokens: 1500,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content },
-        ],
-      }),
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts }],
+          generationConfig: {
+            maxOutputTokens: 1500,
+            temperature: 0.15,
+          },
+        }),
+      }
+    );
     if (!response.ok) {
       console.warn(
-        '[rams-core] vision prepass failed:',
+        '[rams-core] vision prepass (Gemini) failed:',
         response.status,
         (await response.text()).slice(0, 300)
       );
       return null;
     }
     const j = await response.json();
-    const text = String(j?.choices?.[0]?.message?.content ?? '').trim();
+    const text = String(j?.candidates?.[0]?.content?.parts?.[0]?.text ?? '').trim();
     return text.length > 0 ? text : null;
   } catch (err) {
     console.warn('[rams-core] vision prepass threw:', err);
@@ -385,7 +389,9 @@ export async function runSingleAgent(
   try {
     const { data: job, error } = await supabase
       .from('rams_generation_jobs')
-      .select('id, user_id, job_description, project_info, job_scale, status, rams_data, method_data')
+      .select(
+        'id, user_id, job_description, project_info, job_scale, status, rams_data, method_data, attachments, vision_context'
+      )
       .eq('id', jobId)
       .maybeSingle();
     if (error || !job) throw new Error(`Job not found: ${jobId}`);
@@ -394,9 +400,7 @@ export async function runSingleAgent(
       status: 'processing',
       progress: 20,
       current_step:
-        which === 'hs'
-          ? 'Drafting the hazard register'
-          : 'Drafting the method statement',
+        which === 'hs' ? 'Drafting the hazard register' : 'Drafting the method statement',
       error_message: null,
       ...(which === 'hs'
         ? { hs_agent_status: 'processing', hs_agent_progress: 0 }
@@ -429,6 +433,8 @@ export async function runSingleAgent(
 
     if (await isCancelled(supabase, jobId)) return;
 
+    const visionContext: string | null = job.vision_context ?? null;
+
     let result: any;
     if (which === 'hs') {
       result = await runHealthSafetyAgent(supabase, jobId, {
@@ -436,6 +442,7 @@ export async function runSingleAgent(
         workType,
         bs7671Facets,
         safetyFacets,
+        visionContext,
       });
     } else {
       result = await runMethodStatementAgent(supabase, jobId, {
@@ -443,6 +450,7 @@ export async function runSingleAgent(
         workType,
         bs7671Facets,
         practical,
+        visionContext,
       });
     }
 
@@ -493,30 +501,33 @@ export async function runSingleAgent(
     });
   } catch (err: any) {
     console.error(`[rams-core] runSingleAgent(${which}) fatal:`, err);
+    // Re-read so we know whether the OTHER half is still good. If so, keep
+    // status as 'partial' instead of overwriting the previously-good run.
+    const { data: cur } = await supabase
+      .from('rams_generation_jobs')
+      .select('rams_data, method_data')
+      .eq('id', jobId)
+      .maybeSingle();
+    const otherStillGood = which === 'hs' ? !!cur?.method_data : !!cur?.rams_data;
+    const fallbackStatus = otherStillGood ? 'partial' : 'failed';
     await updateJob(supabase, jobId, {
-      status: 'failed',
+      status: fallbackStatus,
       progress: 100,
-      current_step: 'Failed',
+      current_step:
+        fallbackStatus === 'partial' ? 'Retry failed — original RAMS preserved' : 'Failed',
       error_message: String(err?.message ?? err),
-      ...(which === 'hs'
-        ? { hs_agent_status: 'failed' }
-        : { installer_agent_status: 'failed' }),
+      ...(which === 'hs' ? { hs_agent_status: 'failed' } : { installer_agent_status: 'failed' }),
       completed_at: new Date().toISOString(),
     }).catch(() => {});
   }
 }
 
-export async function runRAMSGeneration(
-  supabase: any,
-  jobId: string
-): Promise<void> {
+export async function runRAMSGeneration(supabase: any, jobId: string): Promise<void> {
   const start = Date.now();
   try {
     const { data: job, error } = await supabase
       .from('rams_generation_jobs')
-      .select(
-        'id, user_id, job_description, project_info, job_scale, status, attachments'
-      )
+      .select('id, user_id, job_description, project_info, job_scale, status, attachments')
       .eq('id', jobId)
       .maybeSingle();
     if (error || !job) throw new Error(`Job not found: ${jobId}`);
@@ -538,18 +549,17 @@ export async function runRAMSGeneration(
     const workType: WorkType = (job.job_scale ?? 'commercial') as WorkType;
     const ragQuery = buildRagQuery(job);
 
-    const [bs7671Facets, safetyFacets, practical, visionContext] =
-      await Promise.all([
-        searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
-        searchSafetyFacets(supabase, { query: ragQuery, matchCount: 18 }),
-        searchPracticalWorkV2(supabase, {
-          query: ragQuery,
-          matchCount: 16,
-          facetTypes: ['installation', 'testing', 'commissioning'],
-          appliesTo: [workType],
-        }),
-        runVisionPrepass(supabase, job),
-      ]);
+    const [bs7671Facets, safetyFacets, practical, visionContext] = await Promise.all([
+      searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
+      searchSafetyFacets(supabase, { query: ragQuery, matchCount: 18 }),
+      searchPracticalWorkV2(supabase, {
+        query: ragQuery,
+        matchCount: 16,
+        facetTypes: ['installation', 'testing', 'commissioning'],
+        appliesTo: [workType],
+      }),
+      runVisionPrepass(supabase, job),
+    ]);
 
     if (visionContext) {
       await updateJob(supabase, jobId, { vision_context: visionContext });
@@ -583,10 +593,7 @@ export async function runRAMSGeneration(
       const progress = completedAgents === 1 ? 60 : 95;
       await updateJob(supabase, jobId, {
         progress,
-        current_step:
-          completedAgents === 1
-            ? 'Stitching findings'
-            : 'Finalising document',
+        current_step: completedAgents === 1 ? 'Stitching findings' : 'Finalising document',
         ...(which === 'hs'
           ? { hs_agent_status: 'complete', hs_agent_progress: 100 }
           : { installer_agent_status: 'complete', installer_agent_progress: 100 }),
@@ -613,17 +620,12 @@ export async function runRAMSGeneration(
       await onAgentDone('method');
       return r;
     });
-    const [hsResult, methodResult] = await Promise.allSettled([
-      hsPromise,
-      methodPromise,
-    ]);
+    const [hsResult, methodResult] = await Promise.allSettled([hsPromise, methodPromise]);
 
     if (await isCancelled(supabase, jobId)) return;
 
-    const ramsData =
-      hsResult.status === 'fulfilled' ? hsResult.value : null;
-    const methodData =
-      methodResult.status === 'fulfilled' ? methodResult.value : null;
+    const ramsData = hsResult.status === 'fulfilled' ? hsResult.value : null;
+    const methodData = methodResult.status === 'fulfilled' ? methodResult.value : null;
 
     if (hsResult.status === 'rejected') {
       console.error('[rams-core] H&S agent failed:', hsResult.reason);
@@ -689,10 +691,7 @@ export async function runRAMSGeneration(
    ──────────────────────────────────────────────────────── */
 
 async function updateJob(supabase: any, jobId: string, fields: Record<string, any>) {
-  const { error } = await supabase
-    .from('rams_generation_jobs')
-    .update(fields)
-    .eq('id', jobId);
+  const { error } = await supabase.from('rams_generation_jobs').update(fields).eq('id', jobId);
   if (error) console.error('[rams-core] updateJob failed:', error);
 }
 
@@ -705,12 +704,7 @@ async function isCancelled(supabase: any, jobId: string): Promise<boolean> {
   return data?.status === 'cancelled';
 }
 
-async function writePartial(
-  supabase: any,
-  jobId: string,
-  stage: string,
-  payload: any
-) {
+async function writePartial(supabase: any, jobId: string, stage: string, payload: any) {
   const { error } = await supabase.from('rams_partials').upsert({
     job_id: jobId,
     stage,
@@ -764,11 +758,7 @@ interface HSAgentArgs {
   visionContext?: string | null;
 }
 
-async function runHealthSafetyAgent(
-  supabase: any,
-  jobId: string,
-  args: HSAgentArgs
-): Promise<any> {
+async function runHealthSafetyAgent(supabase: any, jobId: string, args: HSAgentArgs): Promise<any> {
   const apiKey = Deno.env.get('OPENAI_API_KEY');
   if (!apiKey) throw new Error('OPENAI_API_KEY not configured');
 
@@ -971,8 +961,7 @@ Hard rules:
       const riskRating = r.riskRating ?? (r.likelihood ?? 3) * (r.severity ?? 3);
       const residual =
         r.residual_risk_rating ??
-        (r.residual_likelihood ?? r.likelihood ?? 2) *
-          (r.residual_severity ?? r.severity ?? 2);
+        (r.residual_likelihood ?? r.likelihood ?? 2) * (r.residual_severity ?? r.severity ?? 2);
       let controlsProse = '';
       if (Array.isArray(r.controlsStructured) && r.controlsStructured.length) {
         const byTier: Record<string, any[]> = {};
@@ -986,7 +975,9 @@ Hard rules:
           const label = TIER_LABEL[t] ?? t.toUpperCase();
           const sentences = byTier[t]
             .map((c: any) => {
-              const head = String(c.control ?? '').trim().replace(/[.;]+$/, '');
+              const head = String(c.control ?? '')
+                .trim()
+                .replace(/[.;]+$/, '');
               const detail = String(c.detail ?? '').trim();
               return detail ? `${head}. ${detail}` : head;
             })
@@ -1225,8 +1216,7 @@ Hard rules:
   parsed.safetyOfficerPhone = pi.safetyOfficerPhone ?? '';
   parsed.assemblyPoint = pi.assemblyPoint ?? '';
   parsed.workType = workType;
-  parsed.reviewDate =
-    parsed.reviewDate ?? sixMonthsFromToday();
+  parsed.reviewDate = parsed.reviewDate ?? sixMonthsFromToday();
   parsed.createdAt = new Date().toISOString();
   parsed.updatedAt = new Date().toISOString();
   parsed.agentMetadata = {
@@ -1261,7 +1251,9 @@ Hard rules:
         ppe_required: Array.isArray(ms.ppe_required) ? ms.ppe_required : [],
         bs7671_cites: Array.isArray(ms.bs7671_cites) ? ms.bs7671_cites : [],
         safety_cites: Array.isArray(ms.safety_cites) ? ms.safety_cites : [],
-        documentation_produced: Array.isArray(ms.documentation_produced) ? ms.documentation_produced : [],
+        documentation_produced: Array.isArray(ms.documentation_produced)
+          ? ms.documentation_produced
+          : [],
         sign_off_required: ms.sign_off_required === true,
         estimated_duration: ms.estimated_duration ?? '30 minutes',
         risk_level: ms.risk_level ?? 'medium',
@@ -1325,8 +1317,28 @@ function mapMethodStepsToHazards(methodData: any, ramsData: any): void {
   if (!risks.length || !Array.isArray(methodData?.method_steps)) return;
 
   const STOPWORDS = new Set([
-    'the', 'a', 'an', 'of', 'and', 'or', 'to', 'from', 'in', 'on', 'at', 'with',
-    'for', 'by', 'as', 'is', 'are', 'be', 'risk', 'hazard', 'work', 'working',
+    'the',
+    'a',
+    'an',
+    'of',
+    'and',
+    'or',
+    'to',
+    'from',
+    'in',
+    'on',
+    'at',
+    'with',
+    'for',
+    'by',
+    'as',
+    'is',
+    'are',
+    'be',
+    'risk',
+    'hazard',
+    'work',
+    'working',
   ]);
 
   const tokenise = (s: string): Set<string> => {
