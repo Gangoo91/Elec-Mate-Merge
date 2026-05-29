@@ -187,9 +187,24 @@ function loadVector(): void {
 
 /**
  * Initialise marketing pixels if consent is granted. Safe to call repeatedly.
+ * Skips entirely on localhost / non-production hostnames so the dev console
+ * doesn't fill up with CORS rejections, 429s, and tracker noise that the
+ * vendor servers return for non-prod origins.
  */
 export function initMarketingPixels(): void {
   if (!hasMarketingConsent()) return;
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host.endsWith('.local') ||
+      host.startsWith('192.168.') ||
+      host.startsWith('10.')
+    ) {
+      return;
+    }
+  }
   loadMetaPixel();
   loadGtag();
   loadVector();
