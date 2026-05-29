@@ -38,7 +38,12 @@ import {
 } from './rag-practical-work.ts';
 
 const MODEL = 'gpt-5.4-mini-2026-03-17';
-const MAX_COMPLETION_TOKENS = 32000;
+// Per-agent cap. Was 32k briefly to dodge truncation but invited the model
+// to over-generate — runs ballooned to 4-5 min when the schema gave it room
+// to ramble. 20k is enough for 12-16 hazards / 14 steps at the v2 depth
+// while keeping a single agent under ~90s. JSON-repair handles any rare
+// truncation.
+const MAX_COMPLETION_TOKENS = 20000;
 
 /**
  * Best-effort JSON repair for OpenAI responses that hit the token cap
@@ -823,42 +828,39 @@ Schema (rich v2 — every hazard fully detailed):
   "date": string,                                     // today's date ISO
   "assessor": string,                                 // copied from input
   "activities": string[],                             // 4-6 top-level activities for the work
-  "executive_summary": string,                        // 5-7 sentences — scope, headline hazards, key statutory references, residual risk position
-  "rationale": string,                                // 2-3 sentences — why this RAMS exists / what work it covers
-  "scope": string,                                    // 3-5 sentences — boundaries of the work
+  "executive_summary": string,                        // 3-4 sentences — scope, headline hazards, residual position
+  "scope": string,                                    // 2-3 sentences — boundaries of the work
   "preparation": {
-    "competency_required": string[],                  // 3-5 — qualifications, cards, training tickets
-    "permits_required": string[],                     // 0-5
-    "documentation_required": string[],               // 3-5
-    "site_access": string[],                          // 2-4
-    "ppe_baseline": string[]                          // 5-8
+    "competency_required": string[],                  // 3-4 — qualifications, cards, training tickets
+    "permits_required": string[],                     // 0-4
+    "documentation_required": string[],               // 3-4
+    "site_access": string[],                          // 2-3
+    "ppe_baseline": string[]                          // 4-6
   },
   "risks": Array<{
     "id": string,                                     // "risk-1", "risk-2", ...
     "hazard_number": number,
     "hazard": string,                                 // noun phrase, 8-14 words
-    "rationale": string,                              // 2-3 sentences — mechanism of harm, who exposed, when
-    "risk": string,                                   // 1 sentence — the harm if uncontrolled, who is exposed
-    "who_at_risk": string[],                          // 2-5 — operative / principal contractor / public / designer
+    "rationale": string,                              // 1-2 sentences — mechanism of harm, who exposed
+    "risk": string,                                   // 1 sentence — the harm if uncontrolled
+    "who_at_risk": string[],                          // 1-3 — operative / principal contractor / public
     "likelihood": 1 | 2 | 3 | 4 | 5,
     "severity": 1 | 2 | 3 | 4 | 5,
     "riskRating": number,                             // likelihood × severity
-    "controlsStructured": Array<{                     // 4-7 controls, ordered by control hierarchy
+    "controlsStructured": Array<{                     // 3-5 controls, ordered by control hierarchy
       "tier": "eliminate" | "substitute" | "engineer" | "admin" | "ppe",
-      "control": string,                              // imperative, 8-16 words
-      "detail": string,                               // 25-40 words — HOW the control is implemented + success criterion
-      "responsible_role": string
+      "control": string,                              // imperative, 6-12 words
+      "detail": string,                               // 15-25 words — HOW + success criterion
+      "responsible_role": string                      // 1-3 words
     }>,
     "residual_likelihood": 1 | 2 | 3 | 4 | 5,
     "residual_severity": 1 | 2 | 3 | 4 | 5,
     "residual_risk_rating": number,
-    "ppe_required": string[],                         // 3-5 hazard-specific PPE (e.g. "Class 0 insulating gloves to BS EN 60903")
-    "competence_required": string[],                  // 1-3 e.g. "Approved Electrician, City & Guilds 2391"
-    "bs7671_cites": string[],                         // 1-3 from BS 7671 facets block — DO NOT INVENT
-    "safety_cites": string[],                         // 1-3 from safety facets block — DO NOT INVENT
-    "monitoring_checks": string[],                    // 2-3 in-progress monitoring activities
-    "evidence_required": string[],                    // 2-3 photos / sign-offs / test results
-    "stop_work_triggers": string[]                    // 1-3 conditions mandating stopping work
+    "ppe_required": string[],                         // 2-4 hazard-specific PPE (e.g. "Class 0 insulating gloves to BS EN 60903")
+    "bs7671_cites": string[],                         // 1-2 from BS 7671 facets block — DO NOT INVENT
+    "safety_cites": string[],                         // 1-2 from safety facets block — DO NOT INVENT
+    "monitoring_checks": string[],                    // 1-2 in-progress monitoring activities
+    "stop_work_triggers": string[]                    // 1-2 conditions mandating stopping work
   }>,
   "ppeDetails": Array<{
     "id": string,
@@ -877,22 +879,23 @@ Schema (rich v2 — every hazard fully detailed):
     "welfare_facilities": string,
     "site_restrictions": string
   },
-  "complianceRegulations": string[],                  // 6-10 cite strings (mix of BS 7671 + HSE from facets)
-  "complianceWarnings": string[],                     // 3-5 plain-English warnings
-  "competence_requirements": Array<{ key: string; value: string }>  // 4-6 — overall qualifications, scheme membership, training
+  "complianceRegulations": string[],                  // 5-8 cite strings (mix of BS 7671 + HSE from facets)
+  "complianceWarnings": string[],                     // 2-4 plain-English warnings
+  "competence_requirements": Array<{ key: string; value: string }>  // 3-5 — overall qualifications, scheme membership, training
 }
 
 Hard rules:
-- MINIMUM 14 hazards, MAXIMUM 18 hazards. Each with distinct mechanism of harm. Do NOT pad.
+- MINIMUM 12 hazards, MAXIMUM 14 hazards. Distinct mechanism per hazard. Do NOT pad.
 - ALWAYS include separate hazards for: (a) electric shock from live parts, (b) arc flash, (c) failure to safely isolate and prove dead, (d) slips/trips/falls, (e) manual handling, (f) tools failure / dropped objects.
-- ALWAYS include hazards triggered by the brief: confined space, hot works, working at height (≥1 m), lone working, asbestos disturbance, dust, noise ≥80 dB(A), HAVS, working near live services, fire load, public access.
+- ALSO include any of these the brief implies: confined space, hot works, working at height (≥1 m), lone working, asbestos disturbance, dust, noise ≥80 dB(A), HAVS, public access, fire load.
 - Risk score: 1-4 low, 5-9 medium, 10-15 high, 16-25 unacceptable. HSE 5×5 matrix. Sort risks by riskRating DESC.
-- Every hazard MUST have controlsStructured with 4-7 entries.
-- Each control's detail MUST be 25-40 words and specific to THIS hazard (not generic).
+- Every hazard MUST have controlsStructured with 3-5 entries — NOT MORE.
+- Each control's detail MUST be 15-25 words. No more. Specific to THIS hazard.
 - For electrical hazards: name the test (e.g. "GS38 prove-dead with approved 2-pole indicator", "MFT IR ≥1 MΩ at 500 V dc").
 - bs7671_cites MUST appear in the BS 7671 facets block. safety_cites MUST appear in the safety facets block. Do not invent.
 - residual_risk_rating ≤ riskRating for every hazard.
-- For severity ≥3: at least one of (eliminate / substitute / engineer) must appear before PPE.`;
+- For severity ≥3: at least one of (eliminate / substitute / engineer) must appear before PPE.
+- Be CONCISE. Hit the minimum counts, not the maximum. Over-generating wastes the operative's time.`;
 
   const userBlock = [
     `# Project info`,
