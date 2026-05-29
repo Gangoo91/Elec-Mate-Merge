@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -150,6 +150,21 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     if (att.previewUrl) URL.revokeObjectURL(att.previewUrl);
     await supabase.storage.from('safety-photos').remove([att.path]);
   };
+
+  // Revoke any unrevoked blob URLs on unmount so we don't leak object URLs.
+  // A ref tracks the LIVE attachments list so the cleanup sees the latest
+  // state at unmount time (not the empty array captured at mount).
+  const attachmentsRef = useRef<AIRAMSAttachment[]>([]);
+  useEffect(() => {
+    attachmentsRef.current = attachments;
+  }, [attachments]);
+  useEffect(() => {
+    return () => {
+      for (const a of attachmentsRef.current) {
+        if (a.previewUrl) URL.revokeObjectURL(a.previewUrl);
+      }
+    };
+  }, []);
 
   const handlePickQuote = (q: QuotePickerRow) => {
     const description =

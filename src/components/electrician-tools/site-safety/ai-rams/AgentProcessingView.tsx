@@ -296,7 +296,8 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               // (per-element ticks during the OpenAI stream); only count it as
               // done when that flag is absent (i.e. the final post-parse write).
               const isStreaming = partial?.streaming === true;
-              const isFinishedPartial = !!partial && !isStreaming;
+              const isFailed = partial?.failed === true;
+              const isFinishedPartial = !!partial && !isStreaming && !isFailed;
               const firstUnfinishedIdx = TIMELINE.findIndex((r) => {
                 const p = partials.get(r.completedBy);
                 return !p || p.streaming === true;
@@ -304,6 +305,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               const isDone = isFinishedPartial;
               const isLive =
                 !isDone &&
+                !isFailed &&
                 (isStreaming || idx === firstUnfinishedIdx) &&
                 !isComplete;
               const payload = partial ?? {};
@@ -335,16 +337,20 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   key={row.key}
                   className={cn(
                     'flex items-start gap-3 py-3 px-3 sm:px-4 rounded-xl border transition-colors',
-                    isDone
-                      ? 'border-emerald-500/25 bg-[hsl(0_0%_10%)]'
-                      : isLive
-                        ? 'border-elec-yellow/35 bg-[hsl(0_0%_11%)]'
-                        : 'border-white/[0.06] bg-[hsl(0_0%_9%)]'
+                    isFailed
+                      ? 'border-red-500/30 bg-[hsl(0_0%_10%)]'
+                      : isDone
+                        ? 'border-emerald-500/25 bg-[hsl(0_0%_10%)]'
+                        : isLive
+                          ? 'border-elec-yellow/35 bg-[hsl(0_0%_11%)]'
+                          : 'border-white/[0.06] bg-[hsl(0_0%_9%)]'
                   )}
                 >
-                  {/* Status dot — done = filled emerald; live = pulsing yellow; pending = hollow */}
+                  {/* Status dot — done = filled emerald; live = pulsing yellow; failed = solid red; pending = hollow */}
                   <div className="pt-1 shrink-0">
-                    {isDone ? (
+                    {isFailed ? (
+                      <span className="inline-block h-2.5 w-2.5 rounded-full bg-red-400" />
+                    ) : isDone ? (
                       <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-400" />
                     ) : isLive ? (
                       <span className="relative inline-flex h-2.5 w-2.5 items-center justify-center">
@@ -361,11 +367,13 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                       <div
                         className={cn(
                           'text-[14px] sm:text-[14.5px] font-semibold tracking-tight',
-                          isDone
-                            ? 'text-white'
-                            : isLive
-                              ? 'text-elec-yellow'
-                              : 'text-white/55'
+                          isFailed
+                            ? 'text-red-400'
+                            : isDone
+                              ? 'text-white'
+                              : isLive
+                                ? 'text-elec-yellow'
+                                : 'text-white/55'
                         )}
                       >
                         {row.label}
@@ -373,14 +381,22 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                       <span
                         className={cn(
                           'text-[10.5px] font-semibold uppercase tracking-[0.18em] shrink-0 tabular-nums',
-                          isDone
-                            ? 'text-emerald-400'
-                            : isLive
-                              ? 'text-elec-yellow'
-                              : 'text-white/30'
+                          isFailed
+                            ? 'text-red-400'
+                            : isDone
+                              ? 'text-emerald-400'
+                              : isLive
+                                ? 'text-elec-yellow'
+                                : 'text-white/30'
                         )}
                       >
-                        {isDone ? (detail ?? 'Done') : isLive ? 'Live' : 'Next'}
+                        {isFailed
+                          ? 'Failed'
+                          : isDone
+                            ? (detail ?? 'Done')
+                            : isLive
+                              ? 'Live'
+                              : 'Next'}
                       </span>
                     </div>
                     <div

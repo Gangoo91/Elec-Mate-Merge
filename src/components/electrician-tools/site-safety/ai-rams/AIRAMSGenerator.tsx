@@ -221,17 +221,25 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       }, 2000);
     }
 
-    // For partial completion, show toast notification instead
+    // For partial completion, show a toast that names whichever half is
+    // missing so the user knows what to retry.
     if (hasPartialData && showResults && !celebrationShown) {
       sessionStorage.removeItem('rams-generation-active');
       setGenerationEndTime(Date.now());
       setCelebrationShown(true);
-      setShowResults(true); // Ensure results display
+      setShowResults(true);
+
+      const missingHs = !ramsData;
+      const missingMethod = !methodData;
+      const description = missingHs
+        ? 'Method statement is ready. The risk assessment didn\u2019t generate \u2014 retry the hazard register to fill it in.'
+        : missingMethod
+          ? 'Risk assessment is ready. The method statement didn\u2019t generate \u2014 retry it to complete the document.'
+          : 'Document generated with gaps.';
 
       toast({
-        title: 'Health & Safety Complete',
-        description:
-          'Risk assessment generated. Method statement timed out - you can retry or proceed with RAMS only.',
+        title: 'RAMS generated with gaps',
+        description,
         variant: 'default',
       });
     }
@@ -382,6 +390,17 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
     if (error || !data?.jobId) {
       console.error('Failed to create job:', error);
+      sessionStorage.removeItem('rams-generation-active');
+      setShowResults(false);
+      setGenerationStartTime(0);
+      toast({
+        title: 'Could not start generation',
+        description:
+          error?.message ||
+          data?.error ||
+          'Something went wrong setting up the RAMS job. Please try again.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -397,8 +416,17 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
    */
   const handleRetryAgent = async (agent: 'hs' | 'method') => {
     if (!currentJobId) return;
+    // Reset completion state so the celebration / toast fires again when the
+    // retried half lands. Without this, celebrationShown is stuck at true
+    // from the partial completion and the user gets no feedback on success.
+    setShowCelebration(false);
+    setCelebrationShown(false);
     setGenerationStartTime(Date.now());
+    setGenerationEndTime(0);
     setShowResults(true);
+    sessionStorage.setItem('rams-generation-active', 'true');
+    lastErrorNotifiedJobRef.current = null;
+
     const { data, error } = await supabase.functions.invoke('rams-generator', {
       body: { action: 'retry-agent', jobId: currentJobId, agent },
     });

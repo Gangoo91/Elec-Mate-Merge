@@ -608,20 +608,32 @@ export async function runRAMSGeneration(supabase: any, jobId: string): Promise<v
       bs7671Facets,
       safetyFacets,
       visionContext,
-    }).then(async (r) => {
-      await onAgentDone('hs');
-      return r;
-    });
+    })
+      .then(async (r) => {
+        await onAgentDone('hs');
+        return r;
+      })
+      .catch(async (err) => {
+        // Clear the `streaming: true` flag on the hazards partial so the
+        // timeline row stops pulsing "Live" indefinitely after a failure.
+        await finaliseStreamingPartial(supabase, jobId, 'hazards', 'hs');
+        throw err;
+      });
     const methodPromise = runMethodStatementAgent(supabase, jobId, {
       job,
       workType,
       bs7671Facets,
       practical,
       visionContext,
-    }).then(async (r) => {
-      await onAgentDone('method');
-      return r;
-    });
+    })
+      .then(async (r) => {
+        await onAgentDone('method');
+        return r;
+      })
+      .catch(async (err) => {
+        await finaliseStreamingPartial(supabase, jobId, 'steps', 'method');
+        throw err;
+      });
     const [hsResult, methodResult] = await Promise.allSettled([hsPromise, methodPromise]);
 
     if (await isCancelled(supabase, jobId)) return;
@@ -713,6 +725,37 @@ async function writePartial(supabase: any, jobId: string, stage: string, payload
     payload,
   });
   if (error) console.error(`[rams-core] writePartial(${stage}) failed:`, error);
+}
+
+/**
+ * Mark a streaming partial as failed and clear the `streaming: true` flag
+ * so the UI's timeline row stops pulsing "Live" forever after an agent
+ * throws mid-stream. Preserves the count that landed before failure so
+ * the user can see how far the agent got.
+ */
+async function finaliseStreamingPartial(
+  supabase: any,
+  jobId: string,
+  stage: string,
+  which: 'hs' | 'method'
+): Promise<void> {
+  try {
+    const { data } = await supabase
+      .from('rams_partials')
+      .select('payload')
+      .eq('job_id', jobId)
+      .eq('stage', stage)
+      .maybeSingle();
+    const prev = data?.payload ?? {};
+    await writePartial(supabase, jobId, stage, {
+      ...prev,
+      streaming: false,
+      failed: true,
+      failed_agent: which,
+    });
+  } catch (err) {
+    console.error(`[rams-core] finaliseStreamingPartial(${stage}) error:`, err);
+  }
 }
 
 /* ────────────────────────────────────────────────────────
