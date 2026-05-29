@@ -58,6 +58,16 @@ import {
 import { preloadAllSymbols } from '@/components/electrician-tools/diagram-builder/symbols/svgLoader';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 export type DrawingTool = 'select' | 'line' | 'rectangle' | 'wall' | 'text' | 'symbol' | 'dimension' | 'eraser' | 'cable';
 
@@ -302,9 +312,26 @@ const DiagramBuilderPage = () => {
   const initialFloorPlanId = searchParams.get('floorPlanId') || null;
   const [linkedFloorPlanId, setLinkedFloorPlanId] = useState<string | null>(initialFloorPlanId);
   const [projectName, setProjectName] = useState<string | null>(null);
+  // When a deep-linked plan would clobber unsaved local rooms, the cloud
+  // payload is parked here and an AlertDialog asks the user to confirm
+  // the replace. Without this, the load would silently destroy local work.
+  const [pendingCloudPlan, setPendingCloudPlan] = useState<
+    { id: string; name: string; rooms: SavedRoom[]; localRoomCount: number } | null
+  >(null);
   const [projectLocation, setProjectLocation] = useState<string | null>(null);
   const [projectClientName, setProjectClientName] = useState<string | null>(null);
   const [electricianName, setElectricianName] = useState<string | null>(null);
+  // Refs that mirror the latest committed state for use inside async chains
+  // where capturing React state via closure would be stale. Critical for the
+  // cloud-save chain below: the second Save Room tap must see the first
+  // save's resulting row id, even before React has re-rendered.
+  const linkedFloorPlanIdRef = useRef<string | null>(initialFloorPlanId);
+  const projectNameRef = useRef<string | null>(null);
+  const cloudPlanNameSetRef = useRef<boolean>(false);
+  // Serialises every cloud upsert/delete so rapid taps can't race into
+  // duplicate `floor_plans` rows. Each handler appends to the chain rather
+  // than firing in parallel.
+  const cloudSaveChainRef = useRef<Promise<unknown>>(Promise.resolve());
   const haptic = useHaptic();
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const propertiesTipShown = useRef<boolean>(
@@ -481,9 +508,32 @@ const DiagramBuilderPage = () => {
     };
   }, [projectId]);
 
+  // Apply a cloud plan locally — clears existing rooms and hydrates the
+  // strip from the cloud payload. Pulled out of the deep-link effect so
+  // the AlertDialog confirm can also call it after the user okays a
+  // replace.
+  const applyCloudPlan = (plan: { name: string; rooms: SavedRoom[] }) => {
+    clearAllRooms();
+    plan.rooms.forEach((r) =>
+      saveRoom({
+        name: r.name,
+        thumbnail: r.thumbnail,
+        fullImage: r.fullImage,
+        canvasState: r.canvasState,
+        symbolIds: r.symbolIds,
+        photoBase64: r.photoBase64,
+      })
+    );
+    toast({
+      title: 'Plan loaded',
+      description: `${plan.rooms.length} room${plan.rooms.length !== 1 ? 's' : ''} from "${plan.name}"`,
+    });
+  };
+
   // When a specific floor plan is deep-linked from a project, load its
-  // rooms from the cloud once on mount. This makes the project ↔ planner
-  // link a true round-trip: open existing plan → edit → save back.
+  // rooms from the cloud once on mount. If the user already has local
+  // rooms in this session, park the cloud payload and ask before
+  // replacing — silent destruction of unsaved work is a non-negotiable.
   useEffect(() => {
     if (!initialFloorPlanId) return;
     let cancelled = false;
@@ -492,21 +542,17 @@ const DiagramBuilderPage = () => {
       if (cancelled) return;
       const match = plans.find((p) => p.id === initialFloorPlanId);
       if (!match || !Array.isArray(match.rooms) || match.rooms.length === 0) return;
-      clearAllRooms();
-      (match.rooms as SavedRoom[]).forEach((r) =>
-        saveRoom({
-          name: r.name,
-          thumbnail: r.thumbnail,
-          fullImage: r.fullImage,
-          canvasState: r.canvasState,
-          symbolIds: r.symbolIds,
-          photoBase64: r.photoBase64,
-        })
-      );
-      toast({
-        title: 'Plan loaded',
-        description: `${match.rooms.length} room${match.rooms.length !== 1 ? 's' : ''} from "${match.name}"`,
-      });
+      const cloudRooms = match.rooms as SavedRoom[];
+      if (rooms.length > 0) {
+        setPendingCloudPlan({
+          id: match.id,
+          name: match.name,
+          rooms: cloudRooms,
+          localRoomCount: rooms.length,
+        });
+        return;
+      }
+      applyCloudPlan({ name: match.name, rooms: cloudRooms });
     })();
     return () => {
       cancelled = true;
@@ -516,6 +562,47 @@ const DiagramBuilderPage = () => {
     // in-progress edits.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialFloorPlanId]);
+
+  // Keep the cloud-save refs in lock-step with their state mirrors. The
+  // refs are read inside the serial save chain (closures there can't see
+  // post-commit React state, which is how the race that creates duplicate
+  // rows happens in the first place).
+  useEffect(() => {
+    linkedFloorPlanIdRef.current = linkedFloorPlanId;
+  }, [linkedFloorPlanId]);
+  useEffect(() => {
+    projectNameRef.current = projectName;
+  }, [projectName]);
+
+  // Late-name fix: if the user did a Save Room BEFORE projectName had
+  // resolved, the cloud row landed with a generic "Floor Plan" name. When
+  // projectName finally arrives, fire a one-shot rename through the save
+  // chain so the user finds it sensibly named in their plan list rather
+  // than as a generic "Floor Plan".
+  useEffect(() => {
+    if (!projectId) return;
+    if (!projectName) return;
+    if (!linkedFloorPlanIdRef.current) return;
+    if (cloudPlanNameSetRef.current) return;
+    cloudPlanNameSetRef.current = true;
+    cloudSaveChainRef.current = cloudSaveChainRef.current
+      .then(() =>
+        saveToCloud({
+          id: linkedFloorPlanIdRef.current!,
+          name: `${projectName} — Floor Plan`,
+          rooms,
+          projectId,
+        })
+      )
+      .catch(() => {
+        // Non-fatal — name update is cosmetic, retry on next save.
+        cloudPlanNameSetRef.current = false;
+      });
+    // `rooms` intentionally excluded: this should fire exactly once when
+    // projectName resolves, capturing the rooms at that moment. Re-firing
+    // on every room change would defeat the purpose.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectName, projectId]);
 
   // One-shot discoverability hint: the first time a user has at least one
   // symbol placed, tell them they can long-press it to open Properties.
@@ -762,23 +849,33 @@ const DiagramBuilderPage = () => {
     });
 
     // When the planner is bound to a project, mirror every Save Room into
-    // the cloud `floor_plans` table with `project_id` baked in. The first
-    // save creates the row and we remember its id so subsequent saves
-    // update the same plan (single row per project session).
+    // the cloud `floor_plans` table with `project_id` baked in. Each call
+    // is appended to a serial chain so that a rapid double-tap cannot fire
+    // two parallel INSERTs and create duplicate rows. Refs (not React
+    // state) are read inside the chain so the second link sees the first
+    // save's row id, even before React has re-rendered.
     if (projectId) {
-      saveToCloud({
-        id: linkedFloorPlanId ?? undefined,
-        name: projectName ? `${projectName} — Floor Plan` : 'Floor Plan',
-        rooms: nextRooms,
-        projectId,
-      })
+      cloudSaveChainRef.current = cloudSaveChainRef.current
+        .then(() =>
+          saveToCloud({
+            id: linkedFloorPlanIdRef.current ?? undefined,
+            name: projectNameRef.current
+              ? `${projectNameRef.current} — Floor Plan`
+              : 'Floor Plan',
+            rooms: nextRooms,
+            projectId,
+          })
+        )
         .then((row) => {
-          if (row && !linkedFloorPlanId) setLinkedFloorPlanId(row.id);
+          if (row) {
+            linkedFloorPlanIdRef.current = row.id;
+            if (row.id !== linkedFloorPlanId) setLinkedFloorPlanId(row.id);
+            if (projectNameRef.current) cloudPlanNameSetRef.current = true;
+          }
         })
         .catch(() => {
           // Cloud failure is non-fatal — local save already succeeded.
-          // We deliberately don't surface this; the user has the room
-          // safely in localStorage and the next save will retry.
+          // The next user save will retry through the same chain.
         });
     }
   };
@@ -811,25 +908,31 @@ const DiagramBuilderPage = () => {
   };
 
   // Wraps deleteRoom so that, in project mode, the deletion is mirrored
-  // up to the cloud `floor_plans` row. Without this, a deleted room
-  // would re-appear next time the planner is opened via the project
-  // link because the cloud row would still contain it.
+  // up to the cloud `floor_plans` row. Goes through the same serial chain
+  // as Save Room so a delete can't race past an in-flight save (which
+  // would otherwise write back the deleted room).
   const handleRoomDelete = (roomId: string) => {
     deleteRoom(roomId);
     if (activeRoomId === roomId) {
       setActiveRoomId(null);
       setCanvasObjects([]);
     }
-    if (projectId && linkedFloorPlanId) {
+    if (projectId && linkedFloorPlanIdRef.current) {
       const nextRooms = rooms.filter((r) => r.id !== roomId);
-      saveToCloud({
-        id: linkedFloorPlanId,
-        name: projectName ? `${projectName} — Floor Plan` : 'Floor Plan',
-        rooms: nextRooms,
-        projectId,
-      }).catch(() => {
-        // Local delete already succeeded; cloud failure is non-fatal.
-      });
+      cloudSaveChainRef.current = cloudSaveChainRef.current
+        .then(() =>
+          saveToCloud({
+            id: linkedFloorPlanIdRef.current!,
+            name: projectNameRef.current
+              ? `${projectNameRef.current} — Floor Plan`
+              : 'Floor Plan',
+            rooms: nextRooms,
+            projectId,
+          })
+        )
+        .catch(() => {
+          // Local delete already succeeded; cloud failure is non-fatal.
+        });
     }
   };
 
@@ -1523,6 +1626,66 @@ const DiagramBuilderPage = () => {
         onSave={handleSaveRoom}
         defaultName={activeRoom?.name || `Room ${rooms.length + 1}`}
       />
+
+      {/* Deep-link replace confirmation — protects unsaved local work when
+          the URL points to a different cloud plan than what's in localStorage. */}
+      <AlertDialog
+        open={!!pendingCloudPlan}
+        onOpenChange={(open) => {
+          if (!open) {
+            // User dismissed without choosing — treat as Cancel:
+            // local rooms stay, and we detach from the cloud row so the
+            // next Save Room creates a fresh plan rather than overwriting
+            // the one they declined to load.
+            setPendingCloudPlan(null);
+            linkedFloorPlanIdRef.current = null;
+            setLinkedFloorPlanId(null);
+          }
+        }}
+      >
+        <AlertDialogContent className="bg-elec-gray border-white/10">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Open this saved plan?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
+              You already have {pendingCloudPlan?.localRoomCount ?? 0} room
+              {pendingCloudPlan && pendingCloudPlan.localRoomCount !== 1 ? 's' : ''} on this
+              device. Opening "{pendingCloudPlan?.name}" replaces them with{' '}
+              {pendingCloudPlan?.rooms.length ?? 0} cloud room
+              {pendingCloudPlan && pendingCloudPlan.rooms.length !== 1 ? 's' : ''}. This
+              can't be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              className="border-white/20 text-white hover:bg-white/10 hover:text-white"
+              onClick={() => {
+                setPendingCloudPlan(null);
+                // Detach so subsequent saves create a new plan instead of
+                // silently overwriting the one we declined.
+                linkedFloorPlanIdRef.current = null;
+                setLinkedFloorPlanId(null);
+                toast({
+                  title: 'Kept your local rooms',
+                  description: 'Save Room will create a new plan instead of opening the linked one.',
+                });
+              }}
+            >
+              Keep local
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              onClick={() => {
+                if (pendingCloudPlan) {
+                  applyCloudPlan({ name: pendingCloudPlan.name, rooms: pendingCloudPlan.rooms });
+                }
+                setPendingCloudPlan(null);
+              }}
+            >
+              Replace with cloud
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Export Review Sheet */}
       <ExportReviewSheet
