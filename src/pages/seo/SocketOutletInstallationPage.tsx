@@ -227,6 +227,43 @@ const sections = [
                 dangerous installation.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Confirm existing protective device suitability before starting</strong> —
+                the most commonly missed pre-work check: confirm that the existing protective device
+                is rated and typed correctly for the modified circuit load before adding any
+                sockets. Adding socket outlets to a circuit protected by an undersized or incorrect
+                device leaves the modified circuit without adequate overcurrent protection. This is
+                a mandatory check under Part P Table 1 note (f) and is the top recurring mistake
+                recorded in practical work data for socket-outlet addition jobs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Fused vs unfused spurs — know the distinction</strong> — a{' '}
+                <em>fused spur</em> is taken via a fused connection unit (FCU) which has its own
+                integral fuse (rated to suit the load, typically 13A or lower). An{' '}
+                <em>unfused spur</em> connects directly to the ring without any additional fuse and
+                relies solely on the ring's 32A protective device. Unfused spurs are acceptable for
+                a single double socket but should be kept short, as excessive length increases
+                impedance and reduces fault-current capability. The distinction must be documented
+                on your Minor Works Certificate. Practical work records consistently flag failure to
+                document this distinction as a common mistake on socket addition jobs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>High-integrity CPC connection on spurs (OSG Reg 7.5.3)</strong> — spurs from
+                a ring final circuit require high-integrity protective conductor connections of
+                equivalent integrity to the ring conductor itself. The CPC termination on a spur
+                must not be of lower mechanical or electrical quality than the ring's protective
+                conductor. Verify CPC continuity on both the ring and each spur with a continuity
+                tester after installation and record the results.
+              </span>
+            </li>
           </ul>
         </div>
         <SEOAppBridge
@@ -378,6 +415,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>A4:2026 — no risk-assessment opt-out in dwellings (Reg 411.3.3)</strong> —
+                under BS 7671:2018+A4:2026, the exception permitting omission of RCD protection via
+                a documented risk assessment is expressly limited to installations{' '}
+                <em>other than dwellings</em>. In a dwelling, RCD protection on all socket outlets
+                rated ≤32A is mandatory with no opt-out. This is a tightening of the requirement
+                beyond the previous edition: there is no risk-assessment route available for
+                domestic socket outlets.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Underground cable for outbuilding sockets</strong> — where a socket outlet
@@ -500,7 +549,7 @@ const sections = [
 export default function SocketOutletInstallationPage() {
   return (
     <GuideTemplate
-      title="Socket Outlet Installation Guide — Ring Main, Spurs,"
+      title="Socket Outlet Installation Guide — Ring Main, Spurs, and Outdoor Requirements"
       description="Complete UK guide to adding socket outlets. Ring main vs radial circuits, spur rules, one socket per spur from a ring, maximum floor area…"
       datePublished="2024-07-01"
       dateModified="2026-05-18"

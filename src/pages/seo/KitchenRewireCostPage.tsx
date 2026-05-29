@@ -87,14 +87,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for cooker circuits, ring mains, and dedicated appliance circuits.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on cooker circuits and long cable runs to kitchen islands.',
     icon: Zap,
@@ -337,7 +337,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to verify the correct cable size for the specific cooker rating, circuit length, and
@@ -505,7 +505,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cooker circuits, ring mains, and dedicated appliance circuits with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Apply diversity for cooker circuits per BS 7671 Table 10.2.
@@ -520,12 +520,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the full kitchen rewire with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Ring main, cooker circuit, appliance circuits, lighting, extractor, island
-                  power, consumer unit — all itemised with your margins. Send a professional PDF
-                  quote from the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Ring main, cooker circuit, appliance circuits, lighting, extractor, island power,
+                  consumer unit — all itemised with your margins. Send a professional PDF quote from
+                  the survey.
                 </p>
               </div>
             </div>

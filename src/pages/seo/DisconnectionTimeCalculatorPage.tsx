@@ -19,7 +19,7 @@ export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
       title="Max Disconnection Time Calculator: BS 7671 0.4s/5s/0.2s"
-      description="Max disconnection time for BS 7671 final circuits not exceeding 32A: 0.4s for TN socket-outlets, 0.2s for TT, 5s for distribution + fixed loads. Free UK tool."
+      description="Max disconnection time to BS 7671: 0.4s for TN socket-outlet circuits up to 63A and fixed-load circuits up to 32A, 0.2s for TT, 5s for distribution circuits. Free UK tool."
       datePublished="2026-01-20"
       dateModified="2026-05-24"
       breadcrumbs={[
@@ -45,7 +45,7 @@ export default function DisconnectionTimeCalculatorPage() {
           5s Rules to BS 7671
         </>
       }
-      heroSubtitle="Check whether your protective devices will disconnect within the required time under earth fault conditions. Enter the earth fault loop impedance (Zs), select the protective device, and instantly verify compliance with BS 7671 Regulation 411 for both TN and TT systems."
+      heroSubtitle="Check whether your protective devices will disconnect within the required time under earth fault conditions. Enter the earth fault loop impedance (Zs), select the protective device, and instantly verify compliance with BS 7671 Regulation 411 — 0.4s for socket-outlet circuits up to 63A, 0.4s for fixed-load final circuits up to 32A, and 5s for distribution circuits — for both TN and TT systems."
       heroFeaturePills={[
         { icon: Clock, label: '0.4s & 5s Rules' },
         { icon: Shield, label: 'BS 7671 Compliant' },
@@ -59,6 +59,8 @@ export default function DisconnectionTimeCalculatorPage() {
         'The maximum permitted earth fault loop impedance (Zs) for each protective device and disconnection time is tabulated in BS 7671 Tables 41.2 to 41.6.',
         'TT systems rely on RCDs for disconnection because the earth fault loop impedance through the general mass of earth is too high for overcurrent devices alone.',
         'The Elec-Mate calculator checks Zs against tabulated maximums for your specific protective device type and rating, giving instant pass/fail results on site.',
+        'On-site cold Zs measurements must be multiplied by 0.8 (GN3 site factor) before comparing against BS 7671 Table 41.3 values — for example, a Type B 32A MCB has a table maximum of 1.37 ohms but a cold-measurement site limit of 1.10 ohms.',
+        'A4:2026 Regulation 411.3.4 introduces a new requirement: 30 mA RCD protection is now mandatory for AC final circuits supplying luminaires in domestic premises — unprotected domestic lighting circuits are a C2 code on an EICR.',
       ]}
       sections={[
         {
@@ -152,7 +154,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 These disconnection times apply to circuits where the protection against electric
                 shock is provided by automatic disconnection of supply (ADS), which is the most
                 common protective measure in UK installations. The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 and disconnection time calculator work together to ensure both thermal protection
@@ -189,11 +191,20 @@ export default function DisconnectionTimeCalculatorPage() {
                 <SEOInternalLink href="/rcd-testing-guide">RCD</SEOInternalLink>.
               </p>
               <p>
-                It is important to note that BS 7671 now requires 30mA RCD protection for all socket
-                outlets rated up to 32 A in domestic premises (BS 7671 Section 411), regardless of
-                whether the overcurrent device meets the disconnection time on its own. The RCD
-                provides additional protection against electric shock, particularly in cases where
-                the fault current is too low to trip the overcurrent device promptly.
+                BS 7671 Regulation 411.3.3 (A4:2026) requires 30&nbsp;mA RCD additional protection
+                for all socket outlets rated up to 32&nbsp;A, regardless of whether the overcurrent
+                device meets the disconnection time on its own. In domestic premises this is an
+                absolute requirement. In non-dwellings, the RCD may be omitted only where a
+                documented risk assessment determines that RCD protection is not necessary —
+                omission without that assessment is a non-compliance on an EICR.
+              </p>
+              <p>
+                A4:2026 also introduces Regulation 411.3.4, which requires additional protection by
+                a 30&nbsp;mA RCD for AC final circuits supplying luminaires in domestic premises.
+                This is a new requirement — lighting circuits in dwellings that were previously
+                unprotected by an RCD will now be coded C2 on an EICR if no RCD is present. When
+                verifying disconnection times for lighting circuits in domestic properties, also
+                confirm 30&nbsp;mA RCD protection is in place.
               </p>
             </>
           ),
@@ -291,11 +302,32 @@ export default function DisconnectionTimeCalculatorPage() {
                   <li className="flex items-start gap-3">
                     <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">BS 88 fuse 32A:</strong> Zs max = 1.09
-                      ohms
+                      <strong className="text-yellow-400">BS 88-2 gG fuse 32A:</strong> Zs max =
+                      0.99 ohms (BS 88-3 system C 32A: 0.91 ohms)
                     </span>
                   </li>
                 </ul>
+              </div>
+              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-semibold text-white">
+                      GN3 Site Factor — apply 0.8 to your measured Zs
+                    </p>
+                    <p className="text-white/80 text-sm mt-1">
+                      BS 7671 table values are based on conductors at their maximum operating
+                      temperature. When you measure Zs on site with cold cables, the reading is
+                      lower than it would be under load. GN3 guidance requires you to multiply your
+                      cold measured Zs by 0.8 before comparing against the table maximum. For
+                      example: a Type B 32A MCB has a table maximum of 1.37&nbsp;&Omega;, but the
+                      on-site pass/fail limit for a cold measurement is 1.10&nbsp;&Omega; (1.37
+                      &times; 0.8). Similarly, Type B 6A: table 7.28&nbsp;&Omega;, site limit
+                      5.82&nbsp;&Omega;; Type B 16A: table 2.73&nbsp;&Omega;, site limit
+                      2.18&nbsp;&Omega;. A cold reading below the site limit confirms compliance.
+                    </p>
+                  </div>
+                </div>
               </div>
               <p>
                 When testing on site, you compare your measured Zs against these maximum values. The
@@ -306,7 +338,7 @@ export default function DisconnectionTimeCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/prospective-fault-current-calculator">
+                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                   prospective fault current calculator
                 </SEOInternalLink>{' '}
                 complements this tool by verifying that the prospective fault current does not
@@ -395,7 +427,7 @@ export default function DisconnectionTimeCalculatorPage() {
         {
           question: 'How do I find the maximum Zs for my protective device?',
           answer:
-            'The maximum Zs values are tabulated in BS 7671 Chapter 41. Table 41.2 covers Type B MCBs to BS EN 60898, Table 41.3 covers Type C MCBs, Table 41.4 covers Type D MCBs, Table 41.5 covers RCDs, and Table 41.6 covers BS 88-2.1 fuses and BS 88-3 fuses. Each table lists the maximum Zs for each current rating at both 0.4 second and 5 second disconnection times. The Elec-Mate disconnection time calculator has all these values built in — simply select the device type and rating to see the maximum Zs instantly.',
+            'The maximum Zs values are tabulated in BS 7671 Chapter 41. Table 41.2 (Reg 411.4.201) covers fuses only — BS 88-2 gG/gM, BS 88-3 system C, BS 3036, and BS 1362 — at 0.4s and 5s disconnection times. Table 41.3 (Reg 411.4.202) covers circuit-breakers: Type B, Type C, and Type D MCBs to BS EN 60898, and RCBOs to BS EN 61009-1. Table 41.5 covers RCDs. Each table lists the maximum Zs for each current rating at the relevant disconnection time. Note that BS 7671 gives the hot (loaded) Zs limit; on site you measure a cold Zs and should multiply by 0.8 (GN3 factor) before comparing against the table. The Elec-Mate disconnection time calculator has all these values built in — simply select the device type and rating to see the maximum Zs instantly.',
         },
         {
           question: 'Why do TT systems need faster disconnection than TN systems?',
@@ -412,6 +444,12 @@ export default function DisconnectionTimeCalculatorPage() {
           answer:
             'If the measured earth fault loop impedance exceeds the maximum value for the protective device and required disconnection time, the circuit does not comply with BS 7671 Regulation 411. Corrective actions include: reducing the circuit length (which reduces R1+R2), increasing the cable or CPC size (which reduces conductor resistance), adding an RCD to provide disconnection at lower fault currents, changing the protective device to one with a lower Zs requirement (for example, changing from Type C to Type B MCB), or checking and improving the main earth connection to reduce Ze.',
         },
+        {
+          question:
+            'What are the Zs limits for S-type time-delayed RCDs and cascaded RCD installations?',
+          answer:
+            'Where an installation uses cascaded RCDs — for example, a 100 mA S-type (time-delayed) RCD at the main board upstream of 30 mA downstream devices — the upstream device must also satisfy a maximum Zs. BS 7671 Table 41.5 gives maximum Zs values for RCDs based on their rated residual operating current: 30 mA RCD: 1667 ohms (50 V ÷ 0.03 A); 100 mA RCD: 500 ohms; 300 mA RCD: 167 ohms; 500 mA RCD: 100 ohms. In practice, the high Zs limits for 100 mA S-type devices are virtually always met, but they are a required verification point on an EICR where the installation relies on the upstream S-type for disconnection of distribution circuits. The Elec-Mate calculator includes RCD Zs checks for all standard residual current ratings.',
+        },
       ]}
       relatedPages={[
         {
@@ -423,7 +461,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/prospective-fault-current-calculator',
+          href: '/tools/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:
             'Verify PSCC does not exceed the breaking capacity of your protective devices.',
@@ -431,7 +469,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault withstand checks.',

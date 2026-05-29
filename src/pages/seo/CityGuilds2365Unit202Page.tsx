@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'What mathematical skills do I need for Unit 202?',
     answer:
-      'Unit 202 requires competence in basic algebra, the ability to rearrange formulae, and familiarity with scientific notation (powers of ten — kilo, mega, milli, micro). Specific mathematical skills required include: rearranging Ohm\'s law (V = IR, I = V/R, R = V/I); calculating power using P = VI, P = I²R, and P = V²/R; working with series and parallel resistance formulae; using the formula for electrical energy (E = Pt, where E is in joules or kilowatt-hours); and basic circuit analysis using Kirchhoff\'s laws. A scientific calculator is permitted in the Unit 202 exam. Key formulae are typically provided on a formula sheet in the exam booklet, but understanding what each formula means and when to apply it is more important than memorising the formulae themselves.',
+      "Unit 202 requires competence in basic algebra, the ability to rearrange formulae, and familiarity with scientific notation (powers of ten — kilo, mega, milli, micro). Specific mathematical skills required include: rearranging Ohm's law (V = IR, I = V/R, R = V/I); calculating power using P = VI, P = I²R, and P = V²/R; working with series and parallel resistance formulae; using the formula for electrical energy (E = Pt, where E is in joules or kilowatt-hours); and basic circuit analysis using Kirchhoff's laws. A scientific calculator is permitted in the Unit 202 exam. Key formulae are typically provided on a formula sheet in the exam booklet, but understanding what each formula means and when to apply it is more important than memorising the formulae themselves.",
   },
   {
     question: "What is Ohm's law and why is it fundamental?",
@@ -106,9 +106,9 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Apply Ohm\'s law and voltage drop calculations with real circuits.',
+    description: "Apply Ohm's law and voltage drop calculations with real circuits.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -173,17 +173,52 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-3 sm:grid-cols-2">
             {[
-              { symbol: 'V', unit: 'Volt', quantity: 'Electromotive force (EMF) / Potential difference (PD)', colour: 'text-yellow-400' },
-              { symbol: 'A', unit: 'Ampere', quantity: 'Electric current', colour: 'text-blue-400' },
-              { symbol: 'Ω', unit: 'Ohm', quantity: 'Electrical resistance', colour: 'text-green-400' },
-              { symbol: 'W', unit: 'Watt', quantity: 'Electrical power (1W = 1V × 1A)', colour: 'text-orange-400' },
-              { symbol: 'J', unit: 'Joule', quantity: 'Electrical energy (1J = 1W × 1s)', colour: 'text-purple-400' },
-              { symbol: 'Hz', unit: 'Hertz', quantity: 'Frequency (cycles per second)', colour: 'text-red-400' },
+              {
+                symbol: 'V',
+                unit: 'Volt',
+                quantity: 'Electromotive force (EMF) / Potential difference (PD)',
+                colour: 'text-yellow-400',
+              },
+              {
+                symbol: 'A',
+                unit: 'Ampere',
+                quantity: 'Electric current',
+                colour: 'text-blue-400',
+              },
+              {
+                symbol: 'Ω',
+                unit: 'Ohm',
+                quantity: 'Electrical resistance',
+                colour: 'text-green-400',
+              },
+              {
+                symbol: 'W',
+                unit: 'Watt',
+                quantity: 'Electrical power (1W = 1V × 1A)',
+                colour: 'text-orange-400',
+              },
+              {
+                symbol: 'J',
+                unit: 'Joule',
+                quantity: 'Electrical energy (1J = 1W × 1s)',
+                colour: 'text-purple-400',
+              },
+              {
+                symbol: 'Hz',
+                unit: 'Hertz',
+                quantity: 'Frequency (cycles per second)',
+                colour: 'text-red-400',
+              },
               { symbol: 'H', unit: 'Henry', quantity: 'Inductance', colour: 'text-cyan-400' },
               { symbol: 'F', unit: 'Farad', quantity: 'Capacitance', colour: 'text-pink-400' },
             ].map((item) => (
-              <div key={item.symbol} className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5">
-                <span className={`text-2xl font-bold ${item.colour} w-8 shrink-0`}>{item.symbol}</span>
+              <div
+                key={item.symbol}
+                className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5"
+              >
+                <span className={`text-2xl font-bold ${item.colour} w-8 shrink-0`}>
+                  {item.symbol}
+                </span>
                 <div>
                   <p className="text-white font-semibold text-sm">{item.unit}</p>
                   <p className="text-white text-xs leading-relaxed">{item.quantity}</p>
@@ -194,9 +229,9 @@ const sections = [
         </div>
         <p>
           Prefixes scale the base unit up or down: kilo (k) = ×1,000; mega (M) = ×1,000,000; milli
-          (m) = ×0.001; micro (μ) = ×0.000001. Common examples: 1kΩ = 1,000Ω; 1MΩ = 1,000,000Ω;
-          30mA = 0.030A; 100μF = 0.0001F. Always convert to base units before performing
-          calculations to avoid errors.
+          (m) = ×0.001; micro (μ) = ×0.000001. Common examples: 1kΩ = 1,000Ω; 1MΩ = 1,000,000Ω; 30mA
+          = 0.030A; 100μF = 0.0001F. Always convert to base units before performing calculations to
+          avoid errors.
         </p>
       </>
     ),
@@ -228,22 +263,35 @@ const sections = [
             </div>
           </div>
         </div>
-        <p>
-          Practical applications of Ohm's law in electrical installation work:
-        </p>
+        <p>Practical applications of Ohm's law in electrical installation work:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Voltage drop calculation:</strong> A 2.5mm² copper cable has resistance of approximately 7.41mΩ/m. A 20m ring circuit with a fault at the end (effectively a 10m one-way path) has R = 0.00741 × 10 = 0.0741Ω. At 16A fault current, voltage drop = I × R = 16 × 0.0741 = 1.19V.</span>
+              <span>
+                <strong>Voltage drop calculation:</strong> A 2.5mm² copper cable has resistance of
+                approximately 7.41mΩ/m. A 20m ring circuit with a fault at the end (effectively a
+                10m one-way path) has R = 0.00741 × 10 = 0.0741Ω. At 16A fault current, voltage drop
+                = I × R = 16 × 0.0741 = 1.19V.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Fault current:</strong> If the supply voltage is 230V and the total loop impedance (Zs) is 0.8Ω, the prospective fault current = V/Zs = 230/0.8 = 287.5A. This must be within the breaking capacity of the protective device.</span>
+              <span>
+                <strong>Fault current:</strong> If the supply voltage is 230V and the total loop
+                impedance (Zs) is 0.8Ω, the prospective fault current = V/Zs = 230/0.8 = 287.5A.
+                This must be within the breaking capacity of the protective device.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Continuity test interpretation:</strong> A continuity reading of 0.5Ω on a 20m protective conductor — does it indicate a good connection? R = ρ × L/A. For 1.5mm² copper (ρ = 17.2×10⁻⁹Ω·m): R = 17.2×10⁻⁹ × 20 / (1.5×10⁻⁶) = 0.23Ω. A reading of 0.5Ω is higher than expected and suggests a high-resistance joint worth investigating.</span>
+              <span>
+                <strong>Continuity test interpretation:</strong> A continuity reading of 0.5Ω on a
+                20m protective conductor — does it indicate a good connection? R = ρ × L/A. For
+                1.5mm² copper (ρ = 17.2×10⁻⁹Ω·m): R = 17.2×10⁻⁹ × 20 / (1.5×10⁻⁶) = 0.23Ω. A reading
+                of 0.5Ω is higher than expected and suggests a high-resistance joint worth
+                investigating.
+              </span>
             </li>
           </ul>
         </div>
@@ -289,16 +337,18 @@ const sections = [
           <h3 className="font-bold text-white mb-3">Worked Examples</h3>
           <ul className="space-y-4 text-white">
             <li>
-              <strong>Example 1 — Immersion heater:</strong> A 3kW immersion heater runs for 2 hours.
-              Energy used = 3kW × 2h = 6kWh. At 28p/kWh, cost = 6 × 28p = 168p = £1.68.
+              <strong>Example 1 — Immersion heater:</strong> A 3kW immersion heater runs for 2
+              hours. Energy used = 3kW × 2h = 6kWh. At 28p/kWh, cost = 6 × 28p = 168p = £1.68.
             </li>
             <li>
-              <strong>Example 2 — Cable heating:</strong> A 6mm² cable carries 40A. Resistance per metre = 3.08mΩ/m.
-              Power dissipated per metre = I² × R = 40² × 0.00308 = 4.93W/m. Over a 10m run = 49.3W. This heating must be accounted for in the derating of the cable.
+              <strong>Example 2 — Cable heating:</strong> A 6mm² cable carries 40A. Resistance per
+              metre = 3.08mΩ/m. Power dissipated per metre = I² × R = 40² × 0.00308 = 4.93W/m. Over
+              a 10m run = 49.3W. This heating must be accounted for in the derating of the cable.
             </li>
             <li>
               <strong>Example 3 — Fuse sizing:</strong> A 1kW electric heater operates from 230V.
-              Current = P/V = 1000/230 = 4.35A. The circuit should be protected by at least a 6A MCB (the next standard MCB rating above 4.35A, allowing for starting current).
+              Current = P/V = 1000/230 = 4.35A. The circuit should be protected by at least a 6A MCB
+              (the next standard MCB rating above 4.35A, allowing for starting current).
             </li>
           </ul>
         </div>
@@ -361,21 +411,57 @@ const sections = [
           <div>
             <h3 className="font-bold text-white mb-3">Series Circuits</h3>
             <ul className="space-y-2 text-white text-sm">
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" /><span>Same current flows through every component</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" /><span>Voltages add up: V_total = V1 + V2 + V3</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" /><span>Resistances add up: R_total = R1 + R2 + R3</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" /><span>One break in the circuit stops current flowing everywhere</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" /><span>Practical example: traditional Christmas tree lights (older style), pilot circuits, some fault loop paths</span></li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <span>Same current flows through every component</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <span>Voltages add up: V_total = V1 + V2 + V3</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <span>Resistances add up: R_total = R1 + R2 + R3</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <span>One break in the circuit stops current flowing everywhere</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <span>
+                  Practical example: traditional Christmas tree lights (older style), pilot
+                  circuits, some fault loop paths
+                </span>
+              </li>
             </ul>
           </div>
           <div>
             <h3 className="font-bold text-white mb-3">Parallel Circuits</h3>
             <ul className="space-y-2 text-white text-sm">
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" /><span>Same voltage appears across every branch</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" /><span>Currents add up: I_total = I1 + I2 + I3</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" /><span>1/R_total = 1/R1 + 1/R2 + 1/R3 (total R is less than smallest branch R)</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" /><span>One branch open does not affect other branches</span></li>
-              <li className="flex items-start gap-2"><Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" /><span>Practical example: all domestic circuits (sockets, lights) — each device gets full supply voltage regardless of how many devices are connected</span></li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                <span>Same voltage appears across every branch</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                <span>Currents add up: I_total = I1 + I2 + I3</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                <span>1/R_total = 1/R1 + 1/R2 + 1/R3 (total R is less than smallest branch R)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                <span>One branch open does not affect other branches</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                <span>
+                  Practical example: all domestic circuits (sockets, lights) — each device gets full
+                  supply voltage regardless of how many devices are connected
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -395,7 +481,8 @@ const sections = [
         <p>
           Unit 202 is assessed by written online examination. The exam includes both calculation
           questions (where you must show working and arrive at a numerical answer) and knowledge
-          questions (explaining concepts and identifying correct statements about circuit behaviour).
+          questions (explaining concepts and identifying correct statements about circuit
+          behaviour).
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -459,7 +546,9 @@ export default function CityGuilds2365Unit202Page() {
       heroTitle={
         <>
           C&G 2365 Unit 202:{' '}
-          <span className="text-yellow-400">Electrical Principles Revision Guide for Apprentices</span>
+          <span className="text-yellow-400">
+            Electrical Principles Revision Guide for Apprentices
+          </span>
         </>
       }
       heroSubtitle="Comprehensive revision guide for City & Guilds 2365 Unit 202 — Principles of Building Services Engineering. Ohm's law, power and energy calculations, series and parallel circuits, AC vs DC, SI units, and exam technique for electrical apprentices."

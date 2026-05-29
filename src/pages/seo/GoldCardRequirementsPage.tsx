@@ -45,6 +45,7 @@ const keyTakeaways = [
   'The Gold Card corresponds to the JIB Technician grade, which commands the highest standard pay rate. In 2026, this is approximately 21.13 pounds per hour nationally, 22.80 in London.',
   'Many Gold Card holders progress to supervisory roles, start their own businesses, or move into consulting. The card is a credibility marker that distinguishes you from other electricians.',
   'You also need the ECS Health, Safety and Environmental Assessment and your card must be renewed every 5 years with current qualifications.',
+  'GN3 (9th Edition, aligned to A4:2026) states that competence for inspection and testing is best shown by holding a recognised I&T qualification AND a current level 3 BS 7671 certificate — both the 2391 and a current 2382 are needed, not just one or the other.',
 ];
 
 const faqs = [
@@ -205,6 +206,67 @@ const sections = [
                 qualifies you to inspect, test, and certify installations.
               </span>
             </li>
+          </ul>
+          <div className="mt-4 rounded-xl bg-white/[0.04] border border-white/10 p-4">
+            <p className="text-amber-300 text-sm font-semibold mb-2">
+              What does the 2391 actually test?
+            </p>
+            <p className="text-white/70 text-xs mb-3">
+              The C&G 2391 is assessed against BS 7671 Part 6 (Chapter 64 — Inspection and Testing).
+              Candidates must demonstrate competence across the full verification sequence:
+            </p>
+            <ul className="space-y-1 text-white/80 text-xs">
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>Continuity of protective conductors</strong> — ring finals and protective
+                  conductors (Reg 643.2)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>Insulation resistance</strong> — live conductors to earth and between live
+                  conductors (Reg 643.3)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>Polarity</strong> — correct connections throughout (Reg 643.6)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>Earth fault loop impedance (Zs/EFLI)</strong> — protection by automatic
+                  disconnection of supply (Reg 643.7)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>RCD operating times</strong> — additional protection tests at I&Delta;n
+                  and 5×I&Delta;n (Reg 643.8)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>Functional testing</strong> — switchgear, controls, interlocks, AFDD
+                  indication (Reg 643.10)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+                <span>
+                  <strong>Verification of voltage drop</strong> — compliance with installation
+                  design criteria (Chapter 64)
+                </span>
+              </li>
+            </ul>
+          </div>
+          <ul className="space-y-4 text-white mt-4">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
@@ -375,7 +437,12 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Outdated 2382:</strong> If your 2382 was based on the 17th Edition or
-                earlier, you need the current version (2382-22) before applying.
+                earlier, you need the current version (2382-22) before applying. Importantly, this
+                also applies to earlier 18th Edition versions — BS 7671:2018 has been amended four
+                times (A1:2020, A2:2022, A3:2024, A4:2026). The current consolidated edition is{' '}
+                <strong>BS 7671:2018+A4:2026</strong>. If your certificate covers only Amendment 1,
+                2, or 3, check with the JIB whether an update is required — the current 2382-22 exam
+                covers A4:2026.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,6 +477,39 @@ const sections = [
           but manageable alongside full-time work. The financial and career benefits make it one of
           the best investments you can make in your electrical career.
         </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+          <p className="text-amber-300 font-semibold mb-3">
+            Key A4:2026 changes Gold Card holders need to know
+          </p>
+          <ul className="space-y-2 text-white text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AFDD requirement (Reg 421.1.7):</strong> Arc Fault Detection Devices are now
+                recommended for certain final circuits supplying socket-outlets. Gold Card holders
+                carrying out design and inspection work must apply this regulation and confirm AFDD
+                operational indication at completion (Regs 421.1.7, 532.6, 651.2(e)).
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Consolidated edition:</strong> All assessment, certification, and design
+                work must now reference BS 7671:2018+A4:2026. Pre-A4 copies reference regulation
+                numbers that no longer exist in the consolidated text.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="text-sm text-white/80 italic">
+            "Competence [for inspection and testing] is best shown by holding recognised inspection
+            and testing qualifications and a current level 3 BS 7671 certificate."
+          </p>
+          <p className="text-xs text-white/50 mt-2">
+            — GN3 (9th Edition, aligned to BS 7671:2018+A4:2026), Chapter 1, Reg 1.1
+          </p>
+        </div>
         <SEOAppBridge
           title="18th Edition Amendment 4 Release Date 2026"
           description="18th Edition Amendment 4:2026 is now live. Learn the compliance deadline, cable sizing changes, and installation updates you need to know."

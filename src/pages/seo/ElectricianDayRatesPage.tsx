@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'Are day rates going up or down for electricians?',
     answer:
-      'Electrician day rates have been steadily increasing over the past 5 years. The average day rate has risen by approximately 4-7% per year since 2020, driven by a shortage of skilled electricians, increasing demand for electrical work (particularly EV charging and renewable energy), rising costs of living and materials, and new regulations creating more work (EICR requirements for landlords, AFDD requirements). The trend is expected to continue through 2026 and beyond. The UK has a significant skills shortage in the electrical trade, with an ageing workforce and insufficient new entrants to replace retiring electricians. This supply-demand imbalance supports continued upward pressure on day rates.',
+      'Electrician day rates have been steadily increasing over the past 5 years. The average day rate has risen by approximately 4-7% per year since 2020, driven by a shortage of skilled electricians, increasing demand for electrical work (particularly EV charging and renewable energy), rising costs of living and materials, and new regulations creating more work (EICR requirements for landlords, and BS 7671 Reg 421.1.7 — which recommends, but does not mandate, AFDD installation on AC final circuits — opening a genuine upsell conversation on many consumer unit and rewire jobs). The trend is expected to continue through 2026 and beyond. The UK has a significant skills shortage in the electrical trade, with an ageing workforce and insufficient new entrants to replace retiring electricians. This supply-demand imbalance supports continued upward pressure on day rates.',
   },
   {
     question: 'How does the Construction Industry Scheme (CIS) affect my day rate?',
@@ -385,7 +385,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection (C&G 2391):</strong> £280 to £380. Steady work from
-                landlord EICRs, commercial compliance, and insurance requirements. High demand and
+                landlord EICRs, commercial compliance, and insurance requirements. Standard
+                recommended EICR intervals are 10 years for owner-occupied domestic premises and 5
+                years for commercial premises (IET GN3), creating a predictable pipeline of
                 recurring revenue.
               </span>
             </li>
@@ -394,6 +396,9 @@ const sections = [
               <span>
                 <strong>EV charger installation:</strong> £300 to £400. Growing rapidly with
                 government incentives and increasing EV adoption. Domestic and commercial projects.
+                BS 7671:2018+A4:2026 made significant changes to Section 722, including Reg
+                722.311.201 on load curtailment for maximum demand — keeping current with A4:2026 is
+                a genuine differentiator that justifies the specialist premium.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -599,7 +604,7 @@ export default function ElectricianDayRatesPage() {
     <GuideTemplate
       localArea="Day Rates Uk"
       title="Electrician Day Rates UK 2026 | What to Charge"
-      description="What UK electricians charge in 2026 — domestic vs commercial day rates by region, JIB benchmarks, sole-trader vs limited co. markups + London weighting."
+      description="What UK electricians charge in 2026 — domestic vs commercial day rates by region, specialist rates for testing, EV and CompEx, and how to calculate your true day rate from costs up."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

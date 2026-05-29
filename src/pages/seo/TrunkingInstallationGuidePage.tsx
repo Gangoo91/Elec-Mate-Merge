@@ -614,7 +614,7 @@ export default function TrunkingInstallationGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/trunking-fill-calculator',
+          href: '/tools/trunking-fill-calculator',
           title: 'Trunking Fill Calculator',
           description: 'Instant trunking fill calculation for all sizes.',
           icon: Calculator,

@@ -54,7 +54,8 @@ export default function ConsumerUnitChangePage() {
         'All new consumer units in domestic premises must have a metal enclosure compliant with BS EN 61439-3 (Regulation 421.1.201).',
         'A full Electrical Installation Certificate (EIC) is required — a Minor Works Certificate is not appropriate for a consumer unit change.',
         'Typical cost for a like-for-like consumer unit replacement is £500 to £1,200 depending on the number of circuits, board type (RCBO vs split-load), and any additional work required.',
-        'The job typically takes one day for a straightforward replacement, but can extend to two days if rewiring from the old board is needed or additional circuits are being added.',
+        'A straightforward like-for-like consumer unit replacement typically takes around four hours for the board change and testing alone; allow a full day when including the survey, DNO coordination, and EIC completion.',
+        'Domestic lighting circuits now require 30 mA RCD additional protection under Regulation 411.3.4 (BS 7671:2018+A4:2026) — this applies to all AC final circuits supplying luminaires and must be provided at the consumer unit.',
       ]}
       sections={[
         {
@@ -91,11 +92,11 @@ export default function ConsumerUnitChangePage() {
                   <p className="text-white text-sm leading-relaxed">
                     If the existing consumer unit has no RCD protection at all, it does not meet the
                     current requirements of BS 7671, which require 30 mA RCD protection for almost
-                    all circuits in a domestic installation, including all socket-outlet circuits and
-                    cables concealed in walls. While
-                    there is no legal requirement to upgrade an existing installation
-                    retrospectively, the safety benefit of adding RCD protection is substantial — an
-                    RCD can prevent fatal electric shock and reduce the risk of electrical fires.
+                    all circuits in a domestic installation, including all socket-outlet circuits
+                    and cables concealed in walls. While there is no legal requirement to upgrade an
+                    existing installation retrospectively, the safety benefit of adding RCD
+                    protection is substantial — an RCD can prevent fatal electric shock and reduce
+                    the risk of electrical fires.
                   </p>
                 </div>
 
@@ -179,20 +180,30 @@ export default function ConsumerUnitChangePage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        30 mA RCD protection
+                        30 mA RCD protection for all circuits including lighting (Regulations
+                        411.3.3, 411.3.4)
                       </strong>{' '}
-                      — BS 7671 requires 30 mA RCD protection for all socket-outlet circuits, cables concealed in walls, and most other domestic circuits. This is typically achieved with individual RCBOs or a split-load arrangement with dual RCDs.
+                      — BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for
+                      socket-outlet circuits and cables concealed in walls (Reg 411.3.3), and — new
+                      in A4:2026 — for AC final circuits supplying luminaires in domestic premises
+                      (Reg 411.3.4). Every lighting circuit in a domestic consumer unit change must
+                      now be RCD-protected. This is achieved with individual RCBOs or by placing
+                      lighting circuits under an RCD in a split-load arrangement.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        Type A RCDs minimum (BS 7671 Section 531)
+                        Type A RCDs minimum; Type B where required (BS 7671 Section 531, OSG Reg
+                        3.6.4.5)
                       </strong>{' '}
-                      — RCDs must be at least Type A for circuits supplying equipment likely to
-                      produce pulsating DC fault currents. In practice, this covers most domestic
-                      circuits.
+                      — RCDs must be at least Type A for circuits supplying equipment that produces
+                      pulsating DC fault currents, which covers most domestic circuits. Where the
+                      installation includes an EV charger, PV inverter, or battery storage system
+                      capable of producing smooth DC or complex residual currents, a Type B RCD is
+                      required for that circuit (OSG Reg 3.6.4.5). This is particularly relevant
+                      when a consumer unit change is being driven by the addition of an EV charger.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -311,26 +322,27 @@ export default function ConsumerUnitChangePage() {
                 arcs.
               </p>
               <p>
-                BS 7671 Section 421 recommends that AFDDs to BS EN 62606 are considered for
-                circuits in the following locations: premises with sleeping accommodation (houses,
-                flats, care homes, hotels), locations with a risk of fire due to the nature of
-                processed or stored materials, locations with combustible constructional materials
-                (timber-framed buildings), fire-propagating structures, and locations with risks to
-                irreplaceable goods (museums, galleries).
+                Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends the installation of AFDDs to
+                BS EN 62606 in AC final circuits of a fixed installation to mitigate the risk of
+                fire due to arc fault currents. The regulation uses "recommends" rather than
+                "shall", so AFDDs remain advisory rather than mandatory — but A4:2026 is already the
+                current edition of BS 7671 and this is live regulatory text. Many competent person
+                schemes and building control bodies treat AFDD provision on bedroom and high-risk
+                circuits as strong best practice.
               </p>
               <p>
-                The regulation uses the word "recommended" rather than "required," which means AFDDs
-                are not currently mandatory in the UK. However, the direction of travel is clear —
-                Amendment 4 to BS 7671 (expected 2026) may strengthen this recommendation. Many
-                forward-thinking electricians are already fitting AFDDs on high-risk circuits,
-                particularly in bedrooms and HMOs. The cost of an AFDD RCBO is typically £80-£120
-                per circuit compared to £30-£50 for a standard RCBO.
+                Where AFDDs are fitted, on-completion verification is required: Regulations 421.1.7,
+                532.6, and 651.2(e) require the installer to confirm that each AFDD shows the
+                correct operational indication and can be tested in accordance with the
+                manufacturer's instructions. This confirmation must be recorded on the EIC schedule
+                of inspections.
               </p>
               <p>
-                When specifying a consumer unit for a replacement, it is worth discussing AFDD
-                provision with the customer. If the consumer unit has enough ways, AFDDs can be
-                added to bedroom circuits and any circuits in locations with higher fire risk
-                without replacing the entire board later.
+                The cost of an AFDD RCBO is typically £80–£120 per circuit compared to £30–£50 for a
+                standard RCBO. When specifying a consumer unit for a replacement, it is worth
+                discussing AFDD provision with the customer — particularly for bedroom circuits and
+                any circuits in locations with a higher fire risk such as roof spaces or areas with
+                combustible structural materials.
               </p>
             </>
           ),
@@ -447,6 +459,15 @@ export default function ConsumerUnitChangePage() {
                       the design for the new board layout. The SPD is installed and connected. Earth
                       and bonding connections are made up.
                     </p>
+                    <p className="text-white text-sm leading-relaxed mt-2">
+                      <strong className="text-yellow-400">Torque tightening is essential.</strong>{' '}
+                      Every terminal — main switch clamp, RCBO/MCB screw terminals, neutral bar
+                      connections, and earth connections — must be tightened to the manufacturer's
+                      specified torque value. Under-torqued terminations are the leading cause of
+                      loose connections, overheating, and premature board failure. Use a calibrated
+                      torque screwdriver and consult the consumer unit manufacturer's data sheet for
+                      each terminal type.
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
@@ -504,7 +525,7 @@ export default function ConsumerUnitChangePage() {
         },
         {
           name: 'Remove the old board and install the new one',
-          text: 'Disconnect all circuits from the old board, labelling each cable clearly. Remove the old board. Mount the new metal consumer unit. Connect the meter tails (typically 25mm² for 100A supply). Install the main switch, SPD, and all RCBOs or MCBs. Reconnect each circuit to its designated protective device following the design layout.',
+          text: "Disconnect all circuits from the old board, labelling each cable clearly. Remove the old board. Mount the new metal consumer unit. Connect the meter tails (typically 25mm² for 100A supply). Install the main switch, SPD, and all RCBOs or MCBs. Reconnect each circuit to its designated protective device following the design layout. Torque all terminals — main switch clamp, RCBO/MCB screws, neutral bar, and earth connections — to the manufacturer's specified values using a calibrated torque screwdriver. Under-torqued terminations are the most common practical failure mode on consumer unit replacements.",
         },
         {
           name: 'Test every circuit',
@@ -519,7 +540,7 @@ export default function ConsumerUnitChangePage() {
         {
           question: 'How long does a consumer unit change take?',
           answer:
-            'A straightforward like-for-like consumer unit replacement typically takes one full day — approximately 6 to 8 hours. This includes removing the old board, installing the new one, reconnecting all circuits, carrying out the full testing sequence, and completing the Electrical Installation Certificate. More complex jobs — for example, where additional circuits are being added, the meter tails need upgrading, an earth rod is being installed, or the existing wiring needs modification — can take a day and a half to two days. The property will be without electricity for most of the day during the changeover, so homeowners should plan accordingly.',
+            'A straightforward like-for-like consumer unit replacement typically takes around four hours for the board change and testing itself — removing the old board, installing the new one, reconnecting all circuits, carrying out the full testing sequence, and completing the Electrical Installation Certificate. When you include the pre-work survey, DNO coordination for temporary disconnection, and Part P notification, allow a full working day. More complex jobs — where additional circuits are being added, the meter tails need upgrading, an earth rod is being installed, or the existing wiring needs modification — can take a day and a half to two days. The property will be without electricity for most of the changeover period, so homeowners should plan accordingly.',
         },
         {
           question: 'Do I need a new consumer unit if I have a plastic one?',
@@ -534,7 +555,7 @@ export default function ConsumerUnitChangePage() {
         {
           question: 'Should I choose RCBOs or a split-load board?',
           answer:
-            'For most domestic installations in 2026, a full RCBO board is the recommended choice. Each circuit has its own individual RCBO, providing independent overcurrent and earth fault protection. This means a fault on one circuit trips only that circuit — every other circuit stays live. On a split-load board with dual RCDs, a fault on any circuit trips the RCD for that entire group, disconnecting half the circuits in the house. The cost difference is typically £60-£150 (the price of individual RCBOs versus two RCDs plus MCBs), which is easily justified by the improved discrimination and reduced nuisance tripping. The time saved in avoiding call-backs for nuisance tripping often pays for the difference on the first job.',
+            'For most domestic installations in 2026, a full RCBO board is the recommended choice. Each circuit has its own individual RCBO, providing independent overcurrent and earth fault protection. This means a fault on one circuit trips only that circuit — every other circuit stays live. On a split-load board with dual RCDs, a fault on any circuit trips the RCD for that entire group, disconnecting half the circuits in the house. A full RCBO board also makes it simpler to comply with Regulation 411.3.4 (A4:2026), which now requires 30 mA RCD protection for lighting circuits in domestic premises — on an RCBO board, every circuit including lighting already has its own RCBO. The cost difference between an RCBO board and a split-load is typically £60–£150, easily justified by the improved discrimination and reduced nuisance tripping. The time saved in avoiding call-backs for nuisance tripping often pays for the difference on the first job.',
         },
         {
           question: 'What certificate do I get after a consumer unit change?',
@@ -570,7 +591,7 @@ export default function ConsumerUnitChangePage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for every circuit.',
           icon: Calculator,

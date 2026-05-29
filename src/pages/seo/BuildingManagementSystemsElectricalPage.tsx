@@ -19,7 +19,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Specialist Work', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Building Management Systems Electrical', href: '/guides/building-management-systems-bms-electrical' },
+  {
+    label: 'Building Management Systems Electrical',
+    href: '/guides/building-management-systems-bms-electrical',
+  },
 ];
 
 const tocItems = [
@@ -114,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for BMS panel power supplies, DDC controller feeds, and DALI bus wiring.',
@@ -145,8 +148,8 @@ const sections = [
           Building Management Systems (BMS) sit at the intersection of electrical engineering,
           mechanical engineering, and software. For electricians with the ambition to develop beyond
           traditional installation work, BMS engineering offers a clear career path from hands-on
-          wiring to high-value engineering and project management roles — with salaries of
-          £45,000 to £65,000 and contractor day rates of £350 to £600 for experienced engineers.
+          wiring to high-value engineering and project management roles — with salaries of £45,000
+          to £65,000 and contractor day rates of £350 to £600 for experienced engineers.
         </p>
         <p>
           The BMS integrates and controls virtually all of a building's mechanical and electrical
@@ -158,8 +161,9 @@ const sections = [
         <p>
           This guide covers BMS architecture (DDC controllers, supervisory level, management
           interface), the four main protocols (BACnet, Modbus, KNX, LON), CIBSE TM47 guidance on
-          metering, the integration of DALI lighting and electrical sub-metering, the BS EN ISO 16484
-          standard series, and the career path from electrical installation into BMS engineering.
+          metering, the integration of DALI lighting and electrical sub-metering, the BS EN ISO
+          16484 standard series, and the career path from electrical installation into BMS
+          engineering.
         </p>
       </>
     ),
@@ -169,16 +173,14 @@ const sections = [
     heading: 'BMS Architecture: DDC Controllers, Sensors, and Supervisory Level',
     content: (
       <>
-        <p>
-          A BMS is structured in three levels, each with a specific role:
-        </p>
+        <p>A BMS is structured in three levels, each with a specific role:</p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-3">Field Level</h3>
             <p className="text-white text-sm leading-relaxed">
               Sensors (temperature, pressure, flow, CO2, occupancy) and actuators (valve actuators,
-              VSDs, damper motors) connected to DDC (Direct Digital Controllers). Each DDC manages
-              a specific plant item or building zone. Communicates with supervisory level via BACnet
+              VSDs, damper motors) connected to DDC (Direct Digital Controllers). Each DDC manages a
+              specific plant item or building zone. Communicates with supervisory level via BACnet
               or Modbus.
             </p>
           </div>
@@ -193,9 +195,9 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-3">Management Level</h3>
             <p className="text-white text-sm leading-relaxed">
-              The central SCADA-style interface — typically web-based — that facilities managers
-              use to monitor building conditions, adjust setpoints, view alarms, and analyse
-              energy data. May be cloud-hosted or on a local server.
+              The central SCADA-style interface — typically web-based — that facilities managers use
+              to monitor building conditions, adjust setpoints, view alarms, and analyse energy
+              data. May be cloud-hosted or on a local server.
             </p>
           </div>
         </div>
@@ -213,8 +215,9 @@ const sections = [
     content: (
       <>
         <p>
-          Four main protocols are used in UK BMS installations. Understanding them helps electricians
-          select the correct cables and understand the wiring and termination requirements:
+          Four main protocols are used in UK BMS installations. Understanding them helps
+          electricians select the correct cables and understand the wiring and termination
+          requirements:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -232,8 +235,8 @@ const sections = [
               <span>
                 <strong>Modbus RTU</strong> — widely used for power metering and industrial
                 equipment integration. Two-core shielded twisted pair (RS-485). Master-slave
-                architecture. Commonly used to integrate electricity meters, sub-meters, and
-                power quality analysers into the BMS energy management system.
+                architecture. Commonly used to integrate electricity meters, sub-meters, and power
+                quality analysers into the BMS energy management system.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -274,19 +277,36 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Metering hierarchy:</strong> TM47 defines a hierarchy — whole building, major plant (chillers, boilers, AHUs), tenant supplies, lighting, small power — and specifies which levels of metering are required for different building types and BREEAM credits.</span>
+              <span>
+                <strong>Metering hierarchy:</strong> TM47 defines a hierarchy — whole building,
+                major plant (chillers, boilers, AHUs), tenant supplies, lighting, small power — and
+                specifies which levels of metering are required for different building types and
+                BREEAM credits.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Meter accuracy:</strong> Revenue-grade meters (Class 1 or better per IEC 62053) are required at the building intake. Sub-metering can use Class 2 meters. The accuracy class affects CT selection and meter specification.</span>
+              <span>
+                <strong>Meter accuracy:</strong> Revenue-grade meters (Class 1 or better per IEC
+                62053) are required at the building intake. Sub-metering can use Class 2 meters. The
+                accuracy class affects CT selection and meter specification.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Communication:</strong> TM47 recommends Modbus or MBus as the communication protocol for meter data transmission to the BMS. Pulse output (S0) meters are the simplest but provide only energy totals, not real-time power or power factor.</span>
+              <span>
+                <strong>Communication:</strong> TM47 recommends Modbus or MBus as the communication
+                protocol for meter data transmission to the BMS. Pulse output (S0) meters are the
+                simplest but provide only energy totals, not real-time power or power factor.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>CT sizing:</strong> The current transformer (CT) ratio must be selected to match the circuit being metered. Oversized CTs reduce accuracy at low loads; undersized CTs saturate and give incorrect readings at high loads.</span>
+              <span>
+                <strong>CT sizing:</strong> The current transformer (CT) ratio must be selected to
+                match the circuit being metered. Oversized CTs reduce accuracy at low loads;
+                undersized CTs saturate and give incorrect readings at high loads.
+              </span>
             </li>
           </ul>
         </div>
@@ -298,16 +318,14 @@ const sections = [
     heading: 'Integration with Electrical Systems: DALI, Metering, and Sub-Metering',
     content: (
       <>
-        <p>
-          The BMS integrates directly with electrical systems through several interfaces:
-        </p>
+        <p>The BMS integrates directly with electrical systems through several interfaces:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DALI lighting control</strong> — a DALI gateway bridges the DALI bus
-                (IEC 62386) to the BMS (typically BACnet or Modbus). The BMS can monitor energy
+                <strong>DALI lighting control</strong> — a DALI gateway bridges the DALI bus (IEC
+                62386) to the BMS (typically BACnet or Modbus). The BMS can monitor energy
                 consumption by lighting zone, control lighting scenes, and integrate occupancy data
                 from BMS occupancy sensors with DALI lighting control. DALI bus wiring is two-core
                 (typically 1.5mm² or 2.5mm²) and is polarity-insensitive.
@@ -318,8 +336,8 @@ const sections = [
               <span>
                 <strong>Electrical sub-metering</strong> — per CIBSE TM47, sub-meters on major
                 electrical loads (chillers, AHUs, lighting distribution boards, EV chargers) report
-                energy data to the BMS via Modbus. The electrician installs the meters, CTs, and
-                the Modbus wiring from meter to BMS panel.
+                energy data to the BMS via Modbus. The electrician installs the meters, CTs, and the
+                Modbus wiring from meter to BMS panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,8 +353,8 @@ const sections = [
               <span>
                 <strong>Variable speed drives (VSDs)</strong> — VSDs on fan and pump motors provide
                 Modbus interfaces for speed control, energy monitoring, and fault reporting. BMS
-                integration allows the BMS to optimise fan speed based on building conditions
-                rather than using fixed speed settings.
+                integration allows the BMS to optimise fan speed based on building conditions rather
+                than using fixed speed settings.
               </span>
             </li>
           </ul>
@@ -362,19 +380,36 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>ISO 16484-1:</strong> Project specification and implementation. Provides the framework for writing BMS specifications and managing BMS projects, including acceptance testing criteria.</span>
+              <span>
+                <strong>ISO 16484-1:</strong> Project specification and implementation. Provides the
+                framework for writing BMS specifications and managing BMS projects, including
+                acceptance testing criteria.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>ISO 16484-3:</strong> Functions. Describes the standard functional modules that a BMS should provide — setpoint management, scheduling, alarms, trending, energy reporting.</span>
+              <span>
+                <strong>ISO 16484-3:</strong> Functions. Describes the standard functional modules
+                that a BMS should provide — setpoint management, scheduling, alarms, trending,
+                energy reporting.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>ISO 16484-5:</strong> Data communication protocol. The BACnet standard in its international form. Maintained in alignment with ASHRAE Standard 135. Defines how BMS devices communicate, how objects and properties are structured, and the conformance classes that devices must meet.</span>
+              <span>
+                <strong>ISO 16484-5:</strong> Data communication protocol. The BACnet standard in
+                its international form. Maintained in alignment with ASHRAE Standard 135. Defines
+                how BMS devices communicate, how objects and properties are structured, and the
+                conformance classes that devices must meet.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>ISO 16484-6:</strong> Data communication compliance testing. Defines how BACnet devices are tested for conformance to the standard, which underpins the BACnet Testing Laboratories (BTL) mark that compliant devices carry.</span>
+              <span>
+                <strong>ISO 16484-6:</strong> Data communication compliance testing. Defines how
+                BACnet devices are tested for conformance to the standard, which underpins the
+                BACnet Testing Laboratories (BTL) mark that compliant devices carry.
+              </span>
             </li>
           </ul>
         </div>
@@ -388,35 +423,55 @@ const sections = [
       <>
         <p>
           The BMS engineering career path is one of the most accessible high-value career
-          transitions for qualified electricians. The electrical installation background is a genuine
-          advantage — BMS engineers who understand how the electrical systems they are integrating
-          actually work are more effective than those who come from a pure software or IT background.
+          transitions for qualified electricians. The electrical installation background is a
+          genuine advantage — BMS engineers who understand how the electrical systems they are
+          integrating actually work are more effective than those who come from a pure software or
+          IT background.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Step 1 — BMS installation electrician (£35–£45k):</strong> Work on BMS cable installation projects. Learn to install DDC panels, sensor wiring, communications cabling, and BMS panel power supplies. Understand the physical installation and work with BMS engineers on commissioning.</span>
+              <span>
+                <strong>Step 1 — BMS installation electrician (£35–£45k):</strong> Work on BMS cable
+                installation projects. Learn to install DDC panels, sensor wiring, communications
+                cabling, and BMS panel power supplies. Understand the physical installation and work
+                with BMS engineers on commissioning.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Step 2 — BMS commissioning engineer (£40–£55k):</strong> Learn to set up DDC controllers, address BACnet and DALI devices, configure points lists, and perform functional testing. Attend BACnet training — IBMS (Institute of Building Management Systems) runs short courses.</span>
+              <span>
+                <strong>Step 2 — BMS commissioning engineer (£40–£55k):</strong> Learn to set up DDC
+                controllers, address BACnet and DALI devices, configure points lists, and perform
+                functional testing. Attend BACnet training — IBMS (Institute of Building Management
+                Systems) runs short courses.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Step 3 — BMS engineer / applications engineer (£50–£65k):</strong> Develop programming skills in BMS software environments (Trend IQ, Tridium Niagara, Siemens Desigo CC, Honeywell EBI). Design graphics, write control sequences, integrate third-party systems.</span>
+              <span>
+                <strong>Step 3 — BMS engineer / applications engineer (£50–£65k):</strong> Develop
+                programming skills in BMS software environments (Trend IQ, Tridium Niagara, Siemens
+                Desigo CC, Honeywell EBI). Design graphics, write control sequences, integrate
+                third-party systems.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Step 4 — Senior engineer / consultant (£60–£80k+):</strong> System design, specification writing, project management. CIBSE membership and Chartered Engineer status add credibility and earnings potential.</span>
+              <span>
+                <strong>Step 4 — Senior engineer / consultant (£60–£80k+):</strong> System design,
+                specification writing, project management. CIBSE membership and Chartered Engineer
+                status add credibility and earnings potential.
+              </span>
             </li>
           </ul>
         </div>
         <p>
           Major BMS specialist contractors in the UK include Schneider Electric (EcoStruxure),
           Siemens Smart Infrastructure, Honeywell Building Technologies, Johnson Controls, Trend
-          Control Systems, and Tridium. All regularly recruit from electrical installation backgrounds
-          for commissioning and field engineer roles.
+          Control Systems, and Tridium. All regularly recruit from electrical installation
+          backgrounds for commissioning and field engineer roles.
         </p>
       </>
     ),
@@ -441,7 +496,9 @@ export default function BuildingManagementSystemsElectricalPage() {
       heroTitle={
         <>
           Building Management Systems:{' '}
-          <span className="text-yellow-400">BACnet, DALI, and the BMS Career Path for Electricians</span>
+          <span className="text-yellow-400">
+            BACnet, DALI, and the BMS Career Path for Electricians
+          </span>
         </>
       }
       heroSubtitle="BMS engineering pays £45–65k in employment or £350–600/day as a contractor. This guide covers BMS architecture, BACnet and Modbus protocols, CIBSE TM47 metering, DALI and sub-metering integration, BS EN ISO 16484, and the career transition from electrical installation to BMS engineer."

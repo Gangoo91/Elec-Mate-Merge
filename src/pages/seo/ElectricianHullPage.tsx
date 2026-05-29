@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       "Size cables correctly for rewires in Hull's Victorian terraces and post-war housing.",

@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for buried runs and surface wiring with full BS 7671 derating.',
     icon: Calculator,

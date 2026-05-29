@@ -229,6 +229,20 @@ const sections = [
           on the tasks that do not generate revenue: data entry, report writing, pricing, and
           paperwork.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4 flex items-start gap-4">
+          <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+          <div>
+            <p className="text-white/90 text-sm font-semibold mb-0.5">
+              Reviewed by a qualified electrician
+            </p>
+            <p className="text-white/60 text-xs leading-relaxed">
+              The technical content on this page — regulation references, defect codes, test
+              criteria, and A4:2026 changes — has been reviewed by an 18th Edition (BS 7671:2018)
+              qualified electrician and 2391 Inspection and Testing certified inspector. Last
+              reviewed May 2026.
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
@@ -288,6 +302,13 @@ const sections = [
           review it, make any corrections, and move on to testing. What used to take 5-10 minutes of
           manual typing now takes under 30 seconds.
         </p>
+        <p>
+          The scanner also identifies arc fault detection devices (AFDDs) — relevant since
+          Regulation 421.1.7, introduced by A4:2026, recommends AFDD installation on AC final
+          circuits of a fixed installation to mitigate fire risk from arc fault currents. Where the
+          AI Circuit Designer is used for a new installation, it accounts for this recommendation so
+          that the consumer unit schedule reflects current best practice.
+        </p>
       </>
     ),
   },
@@ -312,9 +333,23 @@ const sections = [
             "No RCD protection on socket circuit in the kitchen"
           </p>
           <p className="text-white text-sm leading-relaxed mt-3">
-            <strong>AI response:</strong> C2 — Potentially Dangerous. Regulation 411.3.3 (BS 7671:2018+A4:2026). Additional protection by an RCD with a rated residual operating
+            <strong>AI response:</strong> C2 — Potentially Dangerous. Regulation 411.3.3 (BS
+            7671:2018+A4:2026). Additional protection by an RCD with a rated residual operating
             current not exceeding 30 mA shall be provided for socket-outlets with a rated current
             not exceeding 32 A.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <p className="text-white text-sm leading-relaxed italic">
+            "Domestic property — lighting circuit has no RCD protection"
+          </p>
+          <p className="text-white text-sm leading-relaxed mt-3">
+            <strong>AI response:</strong> C2 — Potentially Dangerous. Regulation 411.3.4 (BS
+            7671:2018+A4:2026). Within domestic (household) premises, additional protection by an
+            RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC
+            final circuits supplying luminaires. This requirement was introduced by A4:2026 and
+            applies to all domestic installations regardless of age — an unprotected lighting
+            circuit in a domestic property is a C2 defect under the current edition.
           </p>
         </div>
         <p>
@@ -324,6 +359,18 @@ const sections = [
           C3 (no RCD protection on a kitchen socket circuit in a property wired under the 16th
           Edition, where RCD protection was not required at the time of installation).
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wide mb-2">
+            A4:2026 — Reg 411.3.3 Socket RCD Exception
+          </p>
+          <p className="text-white/80 text-sm leading-relaxed">
+            Under the revised Reg 411.3.3, omission of RCD protection on socket-outlets rated ≤ 32 A
+            is only permitted outside dwellings, and only where a documented risk assessment
+            determines that RCD protection is not necessary. In domestic premises there is no
+            exception — RCD protection on all such socket-outlets is mandatory. The AI applies this
+            distinction automatically so your observation codes reflect the correct edition.
+          </p>
+        </div>
         <SEOAppBridge
           title="Never second-guess a defect code again"
           description="Describe any defect in plain English. The AI assigns the correct C1, C2, C3, or FI code with the specific BS 7671 regulation reference."
@@ -353,11 +400,12 @@ const sections = [
           </p>
           <p className="text-white text-sm leading-relaxed mt-3">
             <strong>AI response:</strong> Most probable cause: deteriorating immersion heater
-            element. As the element heats up, the insulation resistance drops below the RCD
-            threshold. The 1.2 megohm cold reading is borderline — a healthy element should read
-            well above 2 megohms. Diagnostic steps: (1) Isolate the immersion heater circuit and
-            test IR at the element terminals with the thermostat bypassed. (2) If possible, run the
-            immersion for 10 minutes and re-test IR while hot — expect a significant drop if the
+            element. As the element heats up, the insulation resistance drops below the RCD trip
+            threshold. The 1.2 megohm cold reading is above the BS 7671 minimum of 1.0 MΩ for 230 V
+            circuits, but elements that are beginning to fail often pass cold and drop significantly
+            under operating temperature. Diagnostic steps: (1) Isolate the immersion heater circuit
+            and test IR at the element terminals with the thermostat bypassed. (2) If possible, run
+            the immersion for 10 minutes and re-test IR while hot — expect a significant drop if the
             element is failing. (3) Replace the element and re-test.
           </p>
         </div>
@@ -430,10 +478,10 @@ const sections = [
           at Work Regulations 1989.
         </p>
         <p>
-          The <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports
-          the document as a professional PDF ready for submission. No more spending 30 minutes
-          adapting a generic template for each job. No more RAMS that read like they were written
-          for a different site. Describe the job, and the AI does the rest.
+          The <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports the
+          document as a professional PDF ready for submission. No more spending 30 minutes adapting
+          a generic template for each job. No more RAMS that read like they were written for a
+          different site. Describe the job, and the AI does the rest.
         </p>
         <SEOAppBridge
           title="Site-specific RAMS in under 60 seconds"
@@ -474,9 +522,9 @@ const sections = [
         <p>
           The AI answers with specific regulation references from BS 7671:2018+A4:2026, IET Guidance
           Notes, and exam-relevant content. Elec-Mate also includes structured{' '}
-          <SEOInternalLink href="/study-centre">training courses</SEOInternalLink> for
-          Level 2, Level 3, and CPD topics that complement the AI Tutor with sequential learning
-          modules, quizzes, and progress tracking.
+          <SEOInternalLink href="/study-centre">training courses</SEOInternalLink> for Level 2,
+          Level 3, and CPD topics that complement the AI Tutor with sequential learning modules,
+          quizzes, and progress tracking.
         </p>
       </>
     ),
@@ -494,13 +542,18 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <p className="text-white text-sm leading-relaxed italic">
             "Ring circuit 1, R1 plus R2 0.32 ohms, Zs 0.89 ohms, insulation resistance 200 megohms,
-            RCD trip time 18 milliseconds."
+            PEFC 0.85 kA, RCD trip time 18 milliseconds."
           </p>
         </div>
         <p>
           The AI transcribes your spoken results and populates the correct fields in the schedule of
           test results. It understands electrical terminology, unit formats, and the structure of
-          the schedule. You keep your hands on the probes and your eyes on the board.
+          the schedule. You keep your hands on the probes and your eyes on the board. Once
+          populated, the AI validates your Zs readings against the maximum permissible values for
+          the installed protective device — and checks that the device breaking capacity is not
+          exceeded by the measured prospective earth fault current (PEFC), in accordance with GN3
+          Reg 2.29 and BS 7671 Reg 643.7.1 — flagging any circuit that falls outside limits before
+          you leave site.
         </p>
         <p>
           For a typical 10-circuit domestic EICR, voice entry saves approximately 15-20 minutes
@@ -522,7 +575,7 @@ export default function ElectricalAppWithAIPage() {
       title="Electrical App with AI | Smart Tools for Electricians"
       description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       toolPath="/tools/electrical-app-with-ai"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}

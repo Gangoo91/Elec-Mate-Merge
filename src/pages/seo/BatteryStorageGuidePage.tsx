@@ -45,7 +45,7 @@ const tocItems = [
 const keyTakeaways = [
   'Home battery storage systems are either AC-coupled (connected to the AC side of the existing installation, works with any existing solar PV) or DC-coupled (integrated with solar PV via a hybrid inverter, more efficient but requires compatible equipment).',
   'Battery sizing depends on daily energy consumption, solar PV generation, electricity tariff structure, and whether backup power during grid outages is required.',
-  'Safety requirements include ventilation, fire-rated enclosures where applicable, overcurrent protection, isolation switching, and compliance with BS 7671:2018+A4:2026 and the relevant battery storage standards.',
+  'Safety requirements include ventilation, fire-rated enclosures where applicable, overcurrent protection, isolation switching, and compliance with BS 7671:2018+A4:2026 and the relevant battery storage standards. Domestic installations must also comply with PAS 63100 (referenced directly by BS 7671 Reg 570.6.7.203) for location, ventilation, and fire separation.',
   'MCS (Microgeneration Certification Scheme) certification is required for the installer if the homeowner wants to access the Smart Export Guarantee (SEG) payments for exported electricity.',
   'An Electrical Installation Certificate (EIC) or Minor Works Certificate must be issued for the electrical connections, and the system must be notified to the DNO (Distribution Network Operator) under G98 or G99.',
 ];
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'Can battery storage provide backup power during a grid outage?',
     answer:
-      'Some battery systems offer an Emergency Power Supply (EPS) or backup function that provides power to essential circuits during a grid outage. However, this is not a standard feature on all systems — it requires an inverter with EPS capability and additional wiring to create a backed-up circuit or sub-panel. The backup arrangement must include anti-islanding protection to prevent the battery from feeding power back into the grid during an outage (which would be dangerous for DNO engineers working on the network). The backed-up circuits are typically limited to essentials — lighting, fridge, broadband router, and a few sockets. High-power loads such as electric showers, ovens, and EV chargers cannot usually be supported by domestic battery systems during an outage.',
+      'Some battery systems offer an Emergency Power Supply (EPS) or backup function that provides power to essential circuits during a grid outage. However, this is not a standard feature on all systems — it requires an inverter with EPS capability and additional wiring to create a backed-up circuit or sub-panel. The backup arrangement must include anti-islanding protection to prevent the battery from feeding power back into the grid during an outage (which would be dangerous for DNO engineers working on the network). For inverters up to 16 A per phase — the threshold covering most domestic battery systems — the anti-islanding, voltage, and frequency protection settings must be configured in accordance with BS EN 50549-1 (Reg 551.7.4); this is the standard DNOs and commissioning engineers verify during connection. The backed-up circuits are typically limited to essentials — lighting, fridge, broadband router, and a few sockets. High-power loads such as electric showers, ovens, and EV chargers cannot usually be supported by domestic battery systems during an outage.',
   },
   {
     question: 'How long does a home battery last?',
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for battery storage connections, AC and DC circuits, and inverter feeds.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on cable runs between inverter, battery, and consumer unit.',
     icon: Zap,
@@ -396,10 +396,13 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Labelling</strong> — warning labels must be applied at the consumer unit,
-                the meter position, and the battery/inverter location. Labels must indicate "DUAL
-                SUPPLY" or "BATTERY STORAGE — ISOLATE BEFORE WORKING" (or similar wording per BS
-                7671 and DNO requirements). This protects other electricians and emergency services
-                who may not be aware of the battery system.
+                the meter position, and the battery/inverter location. Reg&nbsp;712.514.103 requires
+                a warning notice fixed to all inverters with wording that covers{' '}
+                <em>both AC and DC isolation</em> — for example: "WARNING — Isolate both AC and DC
+                sides before servicing." This dual-isolation wording is mandatory because residual
+                DC energy from the battery remains present even when the AC supply is isolated. It
+                protects other electricians and emergency services who may not be aware of the
+                battery system.
               </span>
             </li>
           </ul>
@@ -409,6 +412,14 @@ const sections = [
           there is a conflict between the two, contact the manufacturer technical support for
           clarification. The manufacturer manual takes precedence for product-specific safety
           requirements; BS 7671 governs the general electrical installation.
+        </p>
+        <p>
+          For domestic battery installations, BS 7671 Reg&nbsp;570.6.7.203 explicitly requires
+          compliance with <strong>PAS&nbsp;63100</strong> — the publicly available specification for
+          domestic electrical energy storage systems. PAS&nbsp;63100 covers suitable location,
+          minimum clearances, ventilation, and fire separation requirements. Installers must consult
+          it alongside the manufacturer instructions when selecting the battery position in a
+          dwelling (OSG&nbsp;12.4.2).
         </p>
       </>
     ),
@@ -509,7 +520,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           can be used for the AC cable between the inverter and consumer unit. For DC cables, follow
@@ -538,7 +549,11 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Insulation resistance of all new AC circuits (500V DC, minimum 1 megohm)</span>
+              <span>
+                Insulation resistance of AC wiring (500V DC with equipment disconnected, minimum
+                1&nbsp;M&#x03A9;). Where battery inverter or BMS electronics remain connected and
+                are likely to be damaged by standard test voltages, use 250V DC per Reg&nbsp;643.3
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -561,6 +576,16 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          The standard BS&nbsp;7671 test sequence covers the AC wiring. The DC side and the battery
+          management system (BMS) require additional checks beyond the scope of a standard EIC.
+          GN3&nbsp;Reg&nbsp;1.7 classifies electrical energy storage systems as installations
+          requiring specialist knowledge and mandates that designers, installers, and inspectors
+          refer to the <strong>IET Code of Practice for Electrical Energy Storage Systems</strong>{' '}
+          for test procedures, DC earthing arrangements, BMS functional verification, and capacity
+          testing. Key additional checks include: DC earth fault loop impedance, BMS communications
+          and protection function test, and a capacity verification against the rated output.
+        </p>
         <p>
           An{' '}
           <SEOInternalLink href="/eic-certificate">
@@ -601,7 +626,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the AC cable from inverter to consumer unit with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic voltage drop check and derating for installation method. Get the
@@ -617,10 +642,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the battery storage installation with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Battery unit, inverter, cables, accessories, labour, testing, commissioning, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Battery unit, inverter, cables, accessories, labour, testing, commissioning, and
                   DNO notification — all itemised with your margins. Professional PDF quote sent to
                   the customer from the survey.
                 </p>

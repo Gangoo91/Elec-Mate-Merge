@@ -31,6 +31,7 @@ const tocItems = [
   { id: 'risk-assessment', label: 'Risk Assessment Structure' },
   { id: 'method-statement', label: 'Method Statement Sections' },
   { id: 'cdm-requirements', label: 'CDM 2015 Requirements' },
+  { id: 'eawr-requirements', label: 'Electricity at Work Regulations 1989' },
   { id: 'common-hazards', label: 'Common Electrical Hazards' },
   { id: 'writing-tips', label: 'Tips for Writing Effective RAMS' },
   { id: 'review-approval', label: 'Review and Approval' },
@@ -42,8 +43,10 @@ const tocItems = [
 const keyTakeaways = [
   'RAMS (Risk Assessment and Method Statement) is the standard safety document required for electrical work on commercial, industrial, and CDM-notifiable projects.',
   'A risk assessment identifies hazards, evaluates the risk, and sets out control measures. A method statement describes the safe system of work step by step.',
+  'The Electricity at Work Regulations 1989 (EAWR) are the primary statutory duty-holder legislation for electrical safety at work. Regulation 16 requires that persons working on or near live electrical equipment are competent to prevent danger — your RAMS must demonstrate this competence.',
   'Under CDM 2015, principal contractors must ensure that RAMS are produced for all high-risk activities — including electrical work — and that they are communicated to all workers on site.',
   'Generic RAMS that are not tailored to the specific job, site, and installation are not compliant. Every RAMS must be site-specific and task-specific.',
+  'A permit to work (PTW) is required in addition to RAMS for high-risk activities such as isolation of high-voltage equipment, work in confined spaces, and hot work. Proceeding without a completed permit is one of the most common and serious RAMS failings identified during site inspections.',
   'Elec-Mate AI Health and Safety Agent can generate site-specific RAMS for electrical activities in minutes — tailored to your job description, with proper hazard identification and control measures.',
 ];
 
@@ -123,6 +126,29 @@ const relatedPages: RelatedPage[] = [
     description: 'Study for C&G 2391 with structured training on the Elec-Mate platform.',
     icon: GraduationCap,
     category: 'Training',
+  },
+];
+
+const howToSteps = [
+  {
+    name: 'Identify the hazards',
+    text: 'List every hazard associated with the specific task and site — electric shock, arc flash, fire, work at height, manual handling, and asbestos in older buildings.',
+  },
+  {
+    name: 'Identify who might be harmed',
+    text: 'Consider the electrician, other trades, building occupants, and members of the public in accessible areas.',
+  },
+  {
+    name: 'Evaluate the risk',
+    text: 'Score each hazard using a 5x5 risk matrix: likelihood (1–5) multiplied by severity (1–5). Scores of 1–6 are low, 8–12 medium, 15–25 high.',
+  },
+  {
+    name: 'Set out control measures',
+    text: 'For each hazard, apply the hierarchy of control: eliminate, substitute, engineering controls, administrative controls, then PPE as a last resort.',
+  },
+  {
+    name: 'Record, communicate, and review',
+    text: 'Document the completed assessment, brief all workers before work starts, obtain signatures, and review whenever conditions or scope change.',
   },
 ];
 
@@ -356,6 +382,107 @@ const sections = [
           The construction phase plan must include the RAMS for all high-risk activities, and the
           HSE notification must be displayed on site.
         </p>
+      </>
+    ),
+  },
+  {
+    id: 'eawr-requirements',
+    heading: 'Electricity at Work Regulations 1989: The Primary Statutory Duty',
+    content: (
+      <>
+        <p>
+          CDM 2015 governs construction project management, but the{' '}
+          <strong>Electricity at Work Regulations 1989 (EAWR)</strong> are the primary legislation
+          imposing direct duties on anyone who carries out electrical work. Every electrician&apos;s
+          RAMS must demonstrate compliance with EAWR — not just CDM — because it is EAWR that HSE
+          inspectors will cite if something goes wrong on an electrical job.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 4 — Systems, work activities and protective equipment:</strong>{' '}
+                All electrical systems shall be of such construction and maintained as to prevent
+                danger, so far as reasonably practicable. Your RAMS must describe how the
+                installation or system being worked on meets this duty.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 13 — Precautions for work on equipment made dead:</strong> Where
+                it is possible that electrical equipment may become live again unexpectedly,
+                suitable precautions must be taken (lock-off, warning notices, proving dead). Your
+                method statement must detail these steps explicitly.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 14 — Work on or near live conductors:</strong> No person shall
+                work on live conductors unless it is unreasonable for the equipment to be made dead,
+                the work is justified, and suitable precautions are taken. Live working must be
+                explicitly risk-assessed and justified in the RAMS — it cannot be the default.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 16 — Competence to prevent danger or injury:</strong> No person
+                shall engage in electrical work unless they are competent to do so, or are under
+                close supervision by a competent person. GN3 (9th ed, A4:2026) explicitly references
+                Reg 16 as the legal basis for restricting live diagnostic and testing work to
+                suitably competent persons. Your RAMS must identify the competence of each person
+                carrying out the work — qualifications, trade body registration, and relevant
+                experience.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/30 p-5 my-4">
+          <p className="text-sm font-semibold text-yellow-300 mb-1">
+            HSE HSG85 — Electricity at Work: Safe Working Practices
+          </p>
+          <p className="text-sm text-white/80">
+            The HSE publication{' '}
+            <strong>HSG85 &apos;Electricity at Work: Safe Working Practices&apos;</strong> is the
+            authoritative guidance document underpinning every safe isolation procedure described in
+            this guide. The On-Site Guide (OSG, Reg 12.5) states: &ldquo;UK requirements for working
+            safely on electrical systems can be found in HSG85.&rdquo; GN3 (Reg 1.1) recommends that
+            before commencing electrical work, a system of rules and procedures for the site is
+            established as recommended by HSG85. HSE inspectors expect to see HSG85 referenced or
+            followed in RAMS for any work on or near live electrical systems. HSG85 is a free
+            download from the HSE website.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-5 my-4">
+          <p className="text-sm font-semibold text-red-300 mb-1">
+            Permit to Work (PTW) — When RAMS Alone Is Not Sufficient
+          </p>
+          <p className="text-sm text-white/80">
+            A RAMS describes the planned safe system of work. A{' '}
+            <strong>permit to work (PTW)</strong> is a formal, signed authorisation that a specific
+            isolation has been completed and work may safely proceed. PTW is required in addition to
+            RAMS for:
+          </p>
+          <ul className="mt-2 space-y-1 text-sm text-white/80 list-disc list-inside">
+            <li>Isolation of high-voltage equipment or busbar trunking feeders</li>
+            <li>Work in confined spaces (e.g. cable ducts, plant rooms)</li>
+            <li>Hot work near cable routes or electrical panels</li>
+            <li>Any isolation where a lock-off/tag procedure alone is insufficient</li>
+          </ul>
+          <p className="mt-2 text-sm text-white/80">
+            Proceeding without a completed PTW where one is required is one of the most serious
+            failings identified during electrical site inspections. Your RAMS should state
+            explicitly whether a PTW will be required for each activity, and who is authorised to
+            issue it. See the{' '}
+            <SEOInternalLink href="/guides/safe-isolation-procedure">
+              safe isolation procedure guide
+            </SEOInternalLink>{' '}
+            for the full isolation sequence.
+          </p>
+        </div>
       </>
     ),
   },
@@ -614,9 +741,12 @@ export default function RAMSTemplateGuidePage() {
           <span className="text-yellow-400">Risk Assessments and Method Statements That Work</span>
         </>
       }
-      heroSubtitle="Every commercial job needs a RAMS. Every principal contractor demands one before you set foot on site. This guide shows you how to write risk assessments and method statements that are genuinely useful, compliant with CDM 2015, and specific to electrical work."
-      readingTime={10}
+      heroSubtitle="Every commercial job needs a RAMS. Every principal contractor demands one before you set foot on site. This guide shows you how to write risk assessments and method statements that are genuinely useful, compliant with CDM 2015 and the Electricity at Work Regulations 1989, and specific to electrical work."
+      readingTime={12}
       keyTakeaways={keyTakeaways}
+      howToSteps={howToSteps}
+      howToHeading="How to Write a Risk Assessment for Electrical Work"
+      howToDescription="The standard 5-step risk assessment process used across the UK construction industry, applied to electrical work."
       sections={sections}
       faqs={faqs}
       faqHeading="Frequently Asked Questions About RAMS for Electricians"

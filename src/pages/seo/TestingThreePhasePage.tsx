@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'How do I test insulation resistance on a three-phase circuit?',
     answer:
-      'For a three-phase circuit, insulation resistance must be tested between all conductor combinations. The full set of tests is: all live conductors connected together to earth (L1+L2+L3+N to E), then between each pair of live conductors individually (L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N). All readings must be at least 1.0 megohm per BS 7671 Table 61 (at 500V DC test voltage for standard 400V circuits). Before testing, disconnect all three-phase equipment — motors, drives, control panels — as the 500V DC test voltage can damage sensitive electronics. In practice, many electricians first test all conductors to earth as a combined test, then test between each pair only if the combined test shows a lower-than-expected reading.',
+      'For a three-phase circuit, insulation resistance must be tested between all conductor combinations. The full set of tests is: all live conductors connected together to earth (L1+L2+L3+N to E), then between each pair of live conductors individually (L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N). All readings must be at least 1.0 MΩ per BS 7671 Table 64 (Reg 643.3.2) at 500 V DC test voltage for standard 400 V circuits. Before testing, disconnect all three-phase equipment — motors, drives, control panels — as the 500V DC test voltage can damage sensitive electronics. In practice, many electricians first test all conductors to earth as a combined test, then test between each pair only if the combined test shows a lower-than-expected reading.',
   },
   {
     question: 'What is neutral-earth voltage and what level is acceptable?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Can I test RCDs on a three-phase system the same way as single-phase?',
     answer:
-      'The basic RCD test procedure is the same — you use the RCD test function on your MFT to measure the trip time at 1x, 2x, and 5x the rated residual current (In). However, on a three-phase system there are additional considerations. If the RCD protects all three phases (a four-pole RCD), you must test on each phase separately to confirm the RCD trips from a fault on any phase. Some four-pole RCDs have different trip characteristics on different phases — testing all three phases ensures complete coverage. If the three-phase system uses individual single-pole RCDs or RCBOs on each phase, test each one individually as you would on a single-phase system. For three-phase RCDs with a common neutral, ensure the neutral is properly connected before testing — a disconnected neutral can prevent the RCD from detecting faults correctly.',
+      'Under BS 7671:2018+A4:2026 (Reg 643.3), Appendix 3 Table 3A has been deleted. The pre-A4:2026 three-multiplier protocol (1× / 2× / 5× IΔn) no longer applies. Verification now requires a single alternating-current test at the rated residual operating current (IΔn): non-Type S devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG Reg 11.3). On a three-phase system, for a four-pole RCD routinely test on at least L1; repeat on L2 and L3 if results are inconsistent or device authenticity is in doubt. If each phase has its own RCBO, test each device individually. For three-phase RCDs with a common neutral, ensure the neutral is properly connected before testing — a disconnected neutral can prevent the RCD from detecting faults correctly.',
   },
   {
     question: 'What should the line-to-line and line-to-neutral voltages be?',
@@ -268,6 +268,13 @@ const sections = [
           the cable lengths for each phase may genuinely differ slightly depending on the routing,
           so small differences in R1+R2 between phases are expected.
         </p>
+        <p>
+          Polarity is a separate required dead test — distinct from phase rotation. Polarity
+          confirms each conductor is correctly connected to its intended terminal at every accessory
+          and outlet. Per Reg 442.1.2, both polarity results (single-phase circuits) and phase
+          rotation (three-phase installations) must be recorded on the Generic Schedule of Test
+          Results (Appendix 6) before the installation is energised.
+        </p>
       </>
     ),
   },
@@ -278,8 +285,8 @@ const sections = [
       <>
         <p>
           Insulation resistance testing on three-phase circuits requires testing between all
-          conductor combinations. The minimum acceptable value remains 1.0 MΩ per BS 7671 Table 61
-          at 500V DC test voltage for standard 400V circuits.
+          conductor combinations. The minimum acceptable value is 1.0 MΩ per BS 7671 Table 64 (Reg
+          643.3.2) at 500 V DC test voltage for standard 400 V circuits.
         </p>
         <p>
           The full test set is: all live conductors connected together to earth (L1+L2+L3+N to E),
@@ -287,6 +294,17 @@ const sections = [
           three-phase equipment must be disconnected before testing — motors, variable speed drives,
           contactors with electronic coils, and control panel electronics.
         </p>
+        <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong className="text-blue-300">A4:2026 note (Reg 643.3):</strong> Where equipment
+            cannot safely be disconnected — for example, interlocked VSD panels or equipment whose
+            disconnection would affect other circuits — connect the equipment and perform the
+            insulation resistance test at 250 V DC instead of 500 V DC. This lower test voltage
+            avoids damaging sensitive electronics whilst still verifying insulation integrity. This
+            is the most practically significant A4:2026 change for three-phase industrial
+            installations.
+          </p>
+        </div>
         <p>
           For more detail on insulation resistance values, test voltages, and troubleshooting, see
           the{' '}
@@ -329,6 +347,18 @@ const sections = [
           Ze value is measured once and is common to all phases. The expected Zs for each phase can
           be calculated as Ze + R1+R2 for that phase.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-4 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong className="text-yellow-400">Temperature correction (GN3 Reg 1.08):</strong>{' '}
+            R1+R2 is measured at ambient (cold) temperature, but Tables 41.2–41.4 assume conductors
+            at operating temperature. Before comparing against the permitted Zs, apply the GN3
+            correction factor: multiply the measured R1+R2 by{' '}
+            <span className="font-mono">(1 + 0.004 × (T − 20))</span> where T is the conductor
+            operating temperature in °C. On a cold installation this factor is significant — for 70
+            °C PVC cable the multiplier is 1.20, meaning a site-measured result that appears to pass
+            may actually fail at operating temperature if the correction is omitted.
+          </p>
+        </div>
       </>
     ),
   },
@@ -370,9 +400,13 @@ const sections = [
     content: (
       <>
         <p>
-          RCD testing on three-phase systems follows the same principles as single-phase — measure
-          the trip time at the rated residual current (In) and at 5x In. However, on a three-phase
-          system you must consider which type of RCD is protecting the circuit and test accordingly.
+          RCD testing on three-phase systems follows the same principles as single-phase. Under BS
+          7671:2018+A4:2026 (Reg 643.3), Appendix 3 Table 3A has been deleted; verification now
+          requires a single alternating-current test at the rated residual operating current (IΔn) —
+          the pre-A4:2026 three-multiplier protocol (1× / 2× / 5× In) no longer applies. Non-Type S
+          devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG
+          Reg 11.3). On a three-phase system you must also consider which type of RCD is protecting
+          the circuit and test accordingly.
         </p>
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -381,10 +415,10 @@ const sections = [
               <div>
                 <h3 className="font-bold text-white mb-1">Four-pole RCD</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  A four-pole RCD protects all three phases and neutral. Test on each phase
-                  separately (L1-E, L2-E, L3-E) to confirm the RCD trips from a fault on any phase.
-                  All trip times must be within BS 7671 limits. Also perform the RCD test button
-                  functional check.
+                  A four-pole RCD protects all three phases and neutral. Routinely test on at least
+                  L1 at rated IΔn. Repeat on L2 and L3 if results are inconsistent or if device
+                  authenticity is in doubt. All trip times must be within BS 7671 limits. Also
+                  perform the RCD test button functional check.
                 </p>
               </div>
             </div>
@@ -516,7 +550,7 @@ const relatedPages = [
     href: '/guides/insulation-resistance-minimum-values',
     title: 'Insulation Resistance Minimum Values',
     description:
-      'BS 7671 Table 61 minimum IR values, test voltages, and troubleshooting low readings on all circuit types.',
+      'BS 7671 Table 64 minimum IR values, test voltages, and troubleshooting low readings on all circuit types.',
     icon: Gauge,
     category: 'Guide',
   },

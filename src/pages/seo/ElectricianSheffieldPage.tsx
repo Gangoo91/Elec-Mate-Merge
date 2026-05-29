@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for long runs in industrial conversion projects, accounting for voltage drop.',
@@ -367,7 +367,7 @@ const sections = [
                 <strong>Long cable runs and thick masonry:</strong> Industrial buildings have cable
                 runs of 30 metres or more and walls of 450mm to 600mm solid stone or brick. Voltage
                 drop calculations are critical — use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify compliance before ordering. Core drilling for penetrations requires
@@ -668,7 +668,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Conversions</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Industrial conversion cable runs can exceed 30 metres. The{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   verifies the cable size is correct before you order materials. Avoid costly

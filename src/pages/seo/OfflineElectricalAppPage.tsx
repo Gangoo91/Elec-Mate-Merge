@@ -150,19 +150,19 @@ export default function OfflineElectricalAppPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     Cable sizing calculator
                   </SEOInternalLink>{' '}
                   — full BS 7671 cable selection with correction factors
                 </li>
                 <li>
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     Voltage drop calculator
                   </SEOInternalLink>{' '}
                   — verify compliance with Regulation 525
                 </li>
                 <li>
-                  <SEOInternalLink href="/max-demand-calculator">
+                  <SEOInternalLink href="/tools/max-demand-calculator">
                     Maximum demand calculator
                   </SEOInternalLink>{' '}
                   — calculate total installation demand with diversity
@@ -202,10 +202,8 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Mock exams and practice tests also work offline, with results stored locally and
                 synced later. This means you can run through a full{' '}
-                <SEOInternalLink href="/am2-exam-preparation">
-                  AM2 practice exam
-                </SEOInternalLink>{' '}
-                on the train home without worrying about signal.
+                <SEOInternalLink href="/am2-exam-preparation">AM2 practice exam</SEOInternalLink> on
+                the train home without worrying about signal.
               </p>
             </>
           ),
@@ -295,7 +293,8 @@ export default function OfflineElectricalAppPage() {
                 That matters commercially as well as technically. You can keep the job moving in
                 low-signal environments, then feed the completed work into the{' '}
                 <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
-                or the <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
+                or the{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
                 once connectivity returns, without rebuilding the admin from scratch.
               </p>
             </>

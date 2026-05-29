@@ -58,7 +58,7 @@ export default function AIComponentIdentificationPage() {
         'The component database covers MCBs, RCBOs, RCDs, contactors, relays, isolators, SPDs, timers, and hundreds of other devices from all major UK manufacturers.',
         'Compatible replacement suggestions include current-production equivalents when the original component is obsolete or discontinued.',
         'Trade pricing from UK wholesalers is shown alongside each replacement, so you can quote remedial work on the spot.',
-        'All identified components include BS 7671:2018+A4:2026 compliance information, including breaking capacity, disconnection characteristics, and applicable regulations.',
+        'All identified components include BS 7671:2018+A4:2026 compliance information, including breaking capacity, disconnection characteristics, and applicable regulations. For protective devices, identified Zs characteristics are cross-referenced against Table 41.3 maximum earth fault loop impedance limits (0.4 s and 5 s disconnection) per Reg 411.4.204, using the GN3 0.80 site factor for cold-measurement comparison.',
       ]}
       sections={[
         {
@@ -177,9 +177,20 @@ export default function AIComponentIdentificationPage() {
                   — 30mA, 100mA, and 300mA sensitivity ratings. Type AC, Type A, and Type B.
                 </li>
                 <li>
+                  <span className="font-semibold text-white">
+                    Arc Fault Detection Devices (AFDDs)
+                  </span>{' '}
+                  — A device category introduced by BS 7671:2018+A4:2026, Reg 421.1.7, which
+                  recommends AFDD installation on AC final circuits to mitigate fire risk from arc
+                  fault currents. AFDDs are now appearing in upgraded and new consumer units from
+                  manufacturers including Hager, Schneider, and Eaton. The AI identifies them by
+                  manufacturer and model and confirms whether the circuit context is consistent with
+                  the Reg 421.1.7 recommendation.
+                </li>
+                <li>
                   <span className="font-semibold text-white">Surge Protection Devices (SPDs)</span>{' '}
-                  — Type 1, Type 2, and Type 1+2 combined devices. Status indicators and replacement
-                  cartridge identification.
+                  — Type 1, Type 2, Type 1+2 combined, and Type 3 point-of-use devices. Status
+                  indicators and replacement cartridge identification.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Contactors and relays</span> — Heating
@@ -268,7 +279,11 @@ export default function AIComponentIdentificationPage() {
                   Instead of squinting at faded labels and manually looking up specifications, you
                   photograph each device and the data populates your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink>{' '}
-                  automatically.
+                  automatically. For domestic EICRs, the AI also flags lighting circuits that lack
+                  30&nbsp;mA RCD additional protection — a mandatory requirement under
+                  BS&nbsp;7671:2018+A4:2026 Reg&nbsp;411.3.4 for AC final circuits supplying
+                  luminaires in household premises. Unprotected lighting circuits represent a common
+                  C2 or C3 observation on post-A4 inspections.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Fault finding</span> — a device has
@@ -368,7 +383,7 @@ export default function AIComponentIdentificationPage() {
           icon: ShieldCheck,
           title: 'BS 7671 Compliance Data',
           description:
-            'Every identified component includes BS 7671:2018+A4:2026 compliance information — applicable regulations, required characteristics…',
+            'Every identified protective device includes BS 7671:2018+A4:2026 compliance data — applicable regulations, required characteristics, and Zs values cross-referenced against Table 41.3 maximum earth fault loop impedance limits (0.4 s and 5 s disconnection per Reg 411.4.204), with GN3 0.80 site-factor cold-measurement limits shown alongside.',
         },
       ]}
       featuresHeading="Component Identifier Features"

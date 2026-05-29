@@ -44,6 +44,7 @@ const keyTakeaways = [
   'NHBC Standards Chapter 8.1 sets minimum requirements for electrical installations in new build homes registered with NHBC. The installation must also comply with BS 7671:2018+A4:2026.',
   'An Electrical Installation Certificate (EIC) must be issued for each dwelling, and the work must be notified under Part P of the Building Regulations.',
   'Reference labour benchmarks (2026): full house rewire 35–55 hours / £3,500–£5,500; consumer unit change 4–6 hours / £450–£750. Use these as a sanity check when pricing a new-build first-fix package.',
+  'BS 7671:2018+A4:2026 introduced two key changes for new build consumer unit design: Reg 411.3.4 mandates 30 mA RCD protection on all AC lighting circuits in domestic premises; Reg 421.1.7 recommends AFDDs (arc fault detection devices) on AC final circuits to reduce fire risk from arc faults. Both affect material and pricing for new build work.',
 ];
 
 const faqs = [
@@ -282,8 +283,9 @@ const sections = [
                 <strong>Premium specification: £70 to £85/m²</strong> — High-density socket
                 provision, LED downlights throughout, structured Cat6A data wiring, underfloor
                 heating controls (wiring only), multi-room audio pre-wire, comprehensive external
-                and garden lighting, EV charger installation, brushed steel or chrome accessories.
-                Typical for premium developers and self-build projects.
+                and garden lighting, EV charger installation, AFDDs (arc fault detection devices,
+                recommended under BS 7671 Reg 421.1.7 A4:2026) on final circuits, brushed steel or
+                chrome accessories. Typical for premium developers and self-build projects.
               </span>
             </li>
           </ul>
@@ -408,8 +410,28 @@ const sections = [
           pack to the buyer.
         </p>
         <p>
-          SPD (surge protection device) installation is required under Regulation 443.4 of BS 7671.
-          This should be included in every new build consumer unit as standard.
+          Under Regulation 443.4 of BS 7671:2018+A4:2026, a risk assessment determines whether SPD
+          (surge protection device) protection is required. For most new build homes supplied via an
+          overhead or mixed network, the risk assessment supports SPD installation. Note that Reg
+          443.4 also provides an exception: single dwelling units may be excluded from the
+          requirement to provide transient overvoltage protection where the specified conditions are
+          met. In practice, NHBC expectations and good industry guidance mean SPDs are routinely
+          included in new build consumer units — but the regulatory basis is a risk assessment, not
+          an unconditional mandate.
+        </p>
+        <p>
+          Under Regulation 411.3.4 (introduced by A4:2026), all AC final circuits supplying
+          luminaires within domestic premises must have additional protection by a 30 mA RCD. This
+          means every lighting circuit in a new build dwelling requires RCD protection — typically
+          delivered via RCBOs in a fully-protected consumer unit. This is a direct A4:2026 change
+          that affects every new build consumer unit design.
+        </p>
+        <p>
+          Regulation 421.1.7 (introduced by A4:2026) recommends the installation of arc fault
+          detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the
+          risk of fire from arc fault currents. The wording is advisory rather than mandatory, but
+          AFDDs are increasingly expected on premium new build specifications and are a growing
+          industry-standard inclusion.
         </p>
       </>
     ),

@@ -39,6 +39,8 @@ const tocItems = [
   { id: 'lock-off-loto', label: 'Lock-Off and LOTO' },
   { id: 'common-mistakes', label: 'Common Mistakes' },
   { id: 'three-phase', label: 'Three-Phase Isolation' },
+  { id: 'solar-pv-isolation', label: 'Solar PV and Battery Isolation' },
+  { id: 'semiconductor-isolators', label: 'Semiconductor Devices' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
@@ -48,6 +50,9 @@ const keyTakeaways = [
   'The prove-test-prove method is the standard: prove your voltage indicator works, test the circuit is dead, prove the indicator still works.',
   'HSE Guidance Note GS 38 specifies the requirements for test equipment — HBC fused leads, finger guards, maximum 4 mm exposed probe tips, and a proving unit.',
   'Lock-off with a personal padlock is not optional — it prevents inadvertent re-energisation and is the physical guarantee of your safety.',
+  'BS 7671 Reg 462.2 requires isolation of all live conductors — switching off a single-pole MCB does not isolate the neutral. Use double-pole isolation in TN-C-S/PME systems.',
+  'Reg 537.2.2 prohibits semiconductor devices (smart dimmers, relay modules, EVSE controller relays) from serving as the means of isolation — a mechanical isolator is always required.',
+  'On solar PV installations, Reg 712.514.102 requires a permanent warning notice at every DC access point — missing notices are a certifiable EICR observation.',
   'Elec-Mate includes guided safe isolation checklists, AI Health and Safety agents that generate RAMS with safe isolation procedures, and testing tools that validate results against BS 7671.',
 ];
 
@@ -91,6 +96,10 @@ const faqs = [
 
 const howToSteps = [
   {
+    name: 'Obtain permission and notify the client or occupant',
+    text: 'Before touching the distribution board, inform the client or building occupant of the circuit you are about to isolate, the duration of the outage, and any services that will be affected (for example, alarms, refrigeration, or other trades on site). Obtain permission to turn off the power. This step is required practice — it prevents disputes, protects people who may be relying on the supply (medical equipment, heating systems), and is explicitly identified in practical work intelligence as a preparation requirement before isolation is carried out.',
+  },
+  {
     name: 'Identify the circuit to be worked on',
     text: 'Identify the correct circuit at the distribution board or consumer unit. Check the circuit chart and labelling, but never rely solely on labels — they may be incorrect or out of date. Verify the circuit identity by switching the load on and off at the consumer unit and observing the result at the point of work. For example, switch off the MCB and confirm that the light or socket at the work location goes off. This prevents you from isolating the wrong circuit — a surprisingly common error.',
   },
@@ -112,7 +121,19 @@ const howToSteps = [
   },
   {
     name: 'Prove the voltage indicator still works (second prove)',
-    text: 'Immediately after confirming the circuit is dead, return to the known live source and test your voltage indicator again. It must give the same clear, positive indication of voltage as it did in Step 3. This final step confirms that your instrument did not fail between the first prove and the test — if it had failed silently, the dead reading you got in Step 5 would be meaningless. If the indicator fails the second prove, treat the circuit as live and repeat the entire procedure with a different instrument.',
+    text: 'Immediately after confirming the circuit is dead, return to the known live source and test your voltage indicator again. It must give the same clear, positive indication of voltage as it did in Step 4. This final step confirms that your instrument did not fail between the first prove and the test — if it had failed silently, the dead reading you got in Step 6 would be meaningless. If the indicator fails the second prove, treat the circuit as live and repeat the entire procedure with a different instrument.',
+  },
+  {
+    name: 'Consider alternative supplies and assess remaining risks',
+    text: 'Before beginning work, consider whether any alternative supply sources could re-energise the circuit: solar PV inverters, battery storage, UPS systems, standby generators, or back-feed from interconnected circuits. Isolate any such sources independently. On installations with solar PV, be aware that DC conductors between the panels and the inverter remain live even after AC isolation — Reg 712.514.102 requires a permanent warning notice at every DC access point. Satisfy yourself that all energisation risks have been addressed before touching any conductors.',
+  },
+  {
+    name: 'Carry out the work and maintain isolation throughout',
+    text: 'Carry out the intended work with your lock-off and tag in place throughout. Do not remove the lock until all work is complete, tools are clear, and all personnel are away from the circuit. On multi-person jobs, no one removes their padlock until they personally confirm they are clear. Never hand your padlock key to another person or allow the lock to be removed on your behalf.',
+  },
+  {
+    name: 'Reinstate supply and record the isolation',
+    text: 'Once work is complete, restore all covers and enclosures. Remove warning labels and lock-off devices. Restore supply in a controlled manner, confirming with the client or occupant before energising. Record the isolation in your method statement or site log: circuit reference, time isolated, time reinstated, and the name of the person who performed the isolation. A written record protects you and provides evidence that the correct procedure was followed.',
   },
 ];
 
@@ -438,6 +459,26 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <h3 className="font-bold text-white mb-1">
+                  Reg 462.2 — Double-Pole Isolation Required
+                </h3>
+                <p className="text-white text-sm leading-relaxed">
+                  Switching off a single-pole MCB only breaks the phase conductor — it does not
+                  isolate the neutral. BS 7671 Regulation 462.2 requires isolation of all live
+                  conductors, which in single-phase circuits includes both the phase and the neutral
+                  conductor. In TN-C-S/PME systems the neutral is a live conductor and must be
+                  switched. Use a double-pole isolating device (DP switch or DP MCB) to satisfy this
+                  requirement. On single-pole MCBs, use a DP isolator upstream, or confirm that the
+                  installation's main switch isolates the neutral before relying on an SP MCB
+                  lock-off alone.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -593,6 +634,141 @@ const sections = [
       </>
     ),
   },
+  {
+    id: 'solar-pv-isolation',
+    heading: 'Solar PV, Battery Storage, and EV Isolation',
+    content: (
+      <>
+        <p>
+          Installations with solar PV panels, battery storage, or EV charge points introduce
+          additional isolation hazards that are not present in conventional circuits. The page's
+          prove-test-prove procedure still applies, but these systems require extra steps before
+          work can be considered safe.
+        </p>
+        <div className="space-y-4 mt-6">
+          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <h3 className="font-bold text-white mb-1">
+                  DC Back-Feed Risk — Solar PV Panels Cannot Be Switched Off
+                </h3>
+                <p className="text-white text-sm leading-relaxed">
+                  Isolating the AC supply at the inverter disconnects the inverter output, but the
+                  DC cabling between the solar panels and the inverter input remains live at panel
+                  voltage whenever there is daylight. Panels cannot be switched off. The DC
+                  conductors between the array, combiner boxes, and inverter DC terminals remain
+                  energised at all times during daylight, even after the AC isolator is open and
+                  locked off. Working on these conductors without understanding and managing the DC
+                  back-feed risk has caused serious electrical burns and fatalities.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+            <div className="flex items-start gap-3">
+              <ShieldAlert className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <div>
+                <h3 className="font-bold text-white mb-1">
+                  Reg 712.514.102 — Mandatory DC Warning Notice (EICR Observable Defect)
+                </h3>
+                <p className="text-white text-sm leading-relaxed">
+                  BS 7671:2018+A4:2026 Regulation 712.514.102 requires a permanent warning notice at
+                  every point of access to live parts on the DC side of a solar PV installation —
+                  including combiner boxes, DC distribution boards, and inverter DC terminals. The
+                  notice must state that DC live parts can remain energised after isolation. The
+                  regulation gives example wording: "SOLAR DC — Live parts can remain energised
+                  after isolation." This notice must be permanent and durable, not a paper label.
+                  Missing or non-permanent DC warning notices are an EICR observable defect — the
+                  absence of a mandatory safety-critical notice on a solar installation constitutes
+                  a C2 observation. Always check for these notices when carrying out an EICR on any
+                  installation with solar PV.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <h3 className="font-bold text-white mb-1">Battery Storage and EV Charge Points</h3>
+                <p className="text-white text-sm leading-relaxed">
+                  Battery storage systems can supply energy to circuits from the load side even when
+                  the DNO supply is isolated. Isolate the battery system at its dedicated isolator
+                  before working on any circuit that the battery could energise, and prove dead at
+                  the point of work after isolating both the DNO supply and the battery output. EV
+                  charge points with on-board energy management systems may have control circuitry
+                  that remains energised after the supply MCB is switched off. Always identify the
+                  dedicated EVSE isolator and lock it off in addition to the circuit breaker.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'semiconductor-isolators',
+    heading: 'Semiconductor Devices Cannot Be Used as Isolators',
+    content: (
+      <>
+        <p>
+          As smart-home retrofits, energy management systems, and automated lighting become more
+          common, electricians are increasingly encountering circuits where the only apparent
+          switching device is a semiconductor-based module rather than a mechanical switch. These
+          devices cannot legally serve as the means of isolation.
+        </p>
+        <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5 my-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">
+                Reg 537.2.2 — Semiconductor Devices Prohibited as Isolating Devices
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671 Regulation 537.2.2 is unambiguous: semiconductor devices shall not be used
+                as isolating devices. A device whose switching function relies on semiconductor
+                components — a solid state relay, a thyristor dimmer, a relay module inside a smart
+                switch, or a relay within an EVSE controller — does not provide the positive
+                electrical disconnection required for safe isolation. Even when such a device is in
+                its "off" state, leakage current can be present and the circuit cannot be considered
+                dead for the purposes of safe working.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p>
+          Practical examples of Reg 537.2.2 violations that are becoming common EICR observations:
+        </p>
+        <ul className="space-y-2 mt-4 text-white text-sm leading-relaxed list-disc list-inside">
+          <li>
+            <strong>Smart dimmer modules:</strong> Trailing-edge and leading-edge dimmers fitted
+            behind standard faceplates — the mechanical rocker operates the dimmer's control input,
+            not a mechanical isolation contact. Switching the dimmer off does not isolate the
+            circuit.
+          </li>
+          <li>
+            <strong>Relay-switch modules:</strong> Wireless relay modules installed in back-boxes or
+            ceiling roses to control lighting. The relay coil may de-energise on command, but the
+            semiconductor switching element remains connected across the load terminals.
+          </li>
+          <li>
+            <strong>EVSE controller relays:</strong> Some EV charge point designs use solid state
+            switching inside the charge point enclosure. The dedicated EVSE isolator upstream of the
+            charge point is the correct means of isolation — not the charge point's own internal
+            switching.
+          </li>
+        </ul>
+        <p className="mt-4">
+          When carrying out an EICR or working on any circuit where the only switching device is
+          semiconductor-based, identify and use a compliant mechanical isolator upstream. If no
+          mechanical isolation point exists, this is an EICR observable defect — the installation
+          does not provide a means of isolation that satisfies BS 7671 Reg 537.2.2.
+        </p>
+      </>
+    ),
+  },
 ];
 
 const relatedPages = [
@@ -667,8 +843,8 @@ export default function SafeIsolationProcedurePage() {
       keyTakeaways={keyTakeaways}
       sections={sections}
       howToSteps={howToSteps}
-      howToHeading="Safe Isolation Procedure: Step by Step"
-      howToDescription="The complete prove-test-prove safe isolation procedure following HSE Guidance Note GS 38, with lock-off and LOTO requirements."
+      howToHeading="Safe Isolation Procedure: 10-Step Guide"
+      howToDescription="The complete 10-step safe isolation procedure following HSE Guidance Note GS 38, covering client notification, prove-test-prove, lock-off and LOTO, alternative supplies, and reinstatement."
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Safe isolation tools built for site"

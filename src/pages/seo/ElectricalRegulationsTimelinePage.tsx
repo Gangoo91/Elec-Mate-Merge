@@ -34,8 +34,8 @@ const tocItems = [
   { id: 'seventeenth-edition', label: '2008 to 2018: The 17th Edition' },
   { id: 'eighteenth-edition', label: '2018 to Present: The 18th Edition' },
   { id: 'amendment-three', label: 'Amendment 3 (2024): What Changed' },
+  { id: 'amendment-four', label: 'Amendment 4 (2026): What Changed' },
   { id: 'regulatory-bodies', label: 'Key Regulatory Bodies' },
-  { id: 'upcoming-changes', label: 'Upcoming Changes: Amendment 4 and Beyond' },
   { id: 'for-electricians', label: 'For Electricians: Staying Current' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -43,27 +43,27 @@ const tocItems = [
 
 const keyTakeaways = [
   'The UK\'s electrical wiring regulations have evolved through 18 editions since the first "Rules and Regulations for the Prevention of Fire Risks" was published by the IEE in 1882.',
-  'The current standard is BS 7671:2018+A3:2024 — the 18th Edition with Amendment 3, issued on 31 July 2024, which adds new Section 530 requirements covering bidirectional and unidirectional devices.',
+  'The current standard is BS 7671:2018+A4:2026 — the 18th Edition with Amendment 4, published in 2026. Key additions include Reg 421.1.7 (AFDD recommendation), Reg 411.3.4 (mandatory 30 mA RCD on domestic lighting circuits), new Chapter 57 (Stationary Secondary Batteries), and significant changes to Section 722 (EV charging).',
   'Part P of the Building Regulations (2005, England and Wales) made domestic electrical work notifiable for the first time, requiring competent person scheme registration or Building Control notification.',
-  'Amendment 4 to BS 7671 is expected in 2026, with potential changes to AFDD requirements, EV charging provisions, and energy storage systems.',
-  'Elec-Mate keeps electricians current with the latest regulation changes through built-in AI regulation lookup that references BS 7671:2018+A3:2024 directly.',
+  'Amendment 4 (A4:2026) also modifies Reg 133.1.3 to require that specified equipment usage is recorded on the appropriate Part 6 electrical certification — a direct change to how electricians complete EICs and EICRs.',
+  'Elec-Mate keeps electricians current with the latest regulation changes through built-in AI regulation lookup that references BS 7671:2018+A4:2026 directly.',
 ];
 
 const faqs = [
   {
     question: 'What is the current edition of the UK wiring regulations?',
     answer:
-      'The current edition is BS 7671:2018+A3:2024, commonly known as the 18th Edition with Amendment 3. BS 7671 is published by the Institution of Engineering and Technology (IET) in conjunction with the British Standards Institution (BSI). The 18th Edition was first published in July 2018 and came into effect on 1 January 2019. Amendment 1 was published in February 2020, Amendment 2 in March 2022, and Amendment 3 on 31 July 2024. Each amendment updates and refines the regulations without requiring a completely new edition. The physical book (the "brown book") covers BS 7671:2018+A2:2022. Amendment 3 is a separate free PDF supplement that adds new Section 530 requirements regarding bidirectional and unidirectional devices. All electricians working in the UK must work to the current edition of BS 7671, and holding the C&G 2382 (18th Edition) qualification is a requirement for competent person scheme registration.',
+      'The current edition is BS 7671:2018+A4:2026, commonly known as the 18th Edition with Amendment 4. BS 7671 is published by the Institution of Engineering and Technology (IET) in conjunction with the British Standards Institution (BSI). The 18th Edition was first published in July 2018 and came into effect on 1 January 2019. Amendment 1 was published in February 2020, Amendment 2 in March 2022, Amendment 3 on 31 July 2024, and Amendment 4 in 2026. Each amendment updates and refines the regulations without requiring a completely new edition. Key additions introduced by A4:2026 include: Reg 421.1.7 recommending AFDDs on AC final circuits; Reg 411.3.4 requiring mandatory 30 mA RCD protection for domestic lighting circuits; new Chapter 57 covering Stationary Secondary Battery installations; significant changes to Section 722 (EV charging); and Reg 133.1.3 requiring specified equipment usage to be recorded on Part 6 certification. All electricians working in the UK must work to the current edition of BS 7671, and holding the C&G 2382 (18th Edition) qualification is a requirement for competent person scheme registration.',
   },
   {
     question: 'How often does BS 7671 change?',
     answer:
-      'A new edition of BS 7671 is typically published every 7 to 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address specific changes — new technology, new safety data, harmonisation with European standards (CENELEC), and corrections. The 18th Edition has had three amendments so far (2020, 2022, and 2024), with a fourth expected in 2026. When a new edition is published, there is typically a transition period of 6 to 12 months during which both the old and new editions can be used. After the transition period, all new work must comply with the new edition. Electricians are expected to update their qualifications when a new edition is published — the C&G 2382 course covers the current edition, and most competent person schemes require members to complete it within a specified period of a new edition being released.',
+      'A new edition of BS 7671 is typically published every 7 to 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address specific changes — new technology, new safety data, harmonisation with European standards (CENELEC), and corrections. The 18th Edition has had four amendments (2020, 2022, 2024, and 2026), with the current edition being BS 7671:2018+A4:2026. When a new edition is published, there is typically a transition period of 6 to 12 months during which both the old and new editions can be used. After the transition period, all new work must comply with the new edition. Electricians are expected to update their qualifications when a new edition is published — the C&G 2382 course covers the current edition, and most competent person schemes require members to complete it within a specified period of a new edition being released.',
   },
   {
     question: 'What changed in Amendment 3 of BS 7671?',
     answer:
-      'Amendment 3 (A3:2024) to BS 7671:2018 was issued on 31 July 2024. It is a relatively narrow amendment compared to A1 and A2. The key addition introduces new requirements in Section 530 for the selection and use of bidirectional and unidirectional switching and protective devices. This is directly relevant to the growing prevalence of solar PV, battery storage, and EV charger installations where current can flow in both directions (from the grid to the installation and from the installation back to the grid). Standard MCBs and RCBOs are designed for unidirectional current flow. Using a unidirectional device on a bidirectional circuit can result in the device failing to operate correctly during a fault — a serious safety risk. A3:2024 clarifies when bidirectional devices are required and how to select them correctly. The amendment is available as a free PDF supplement from the IET and BSI. It does not require a new physical book — it supplements the existing BS 7671:2018+A2:2022 brown book.',
+      'Amendment 3 (A3:2024) to BS 7671:2018 was issued on 31 July 2024. It is a relatively narrow amendment focused on Section 530 protective device selection, including requirements relating to bidirectional and unidirectional switching and protective devices. This is relevant to solar PV, battery storage, and EV charger installations where current can flow in both directions. Standard MCBs and RCBOs are designed for unidirectional current flow; using an unsuitable device on a bidirectional circuit can result in failure to operate during a fault. A3:2024 clarifies when bidirectional-rated devices are required and how to select them correctly. Amendment 4 (A4:2026) subsequently introduced further significant changes — see the A4:2026 section of this page.',
   },
   {
     question: 'When did Part P of the Building Regulations come into force?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Will there be a 19th Edition of BS 7671?',
     answer:
-      'A 19th Edition of BS 7671 has not been formally announced as of early 2026, but based on the historical pattern (new editions every 7 to 10 years, with the 18th Edition published in 2018), a 19th Edition could be expected between 2025 and 2028. The IET typically begins work on a new edition several years before publication, with technical committees reviewing all parts of the regulations. In the meantime, Amendment 4 to the 18th Edition is expected in 2026. Key areas likely to be addressed in either Amendment 4 or a future 19th Edition include expanded AFDD (Arc Fault Detection Device) requirements, comprehensive provisions for EV charging installations (reflecting the rapid growth of home and commercial charging), battery energy storage systems (BESS), smart grid integration, bidirectional power flow requirements (building on A3:2024), and updated cable sizing tables reflecting modern installation methods. The transition to a new edition typically includes a training period and updated qualifications — the C&G 2382 course will be updated to cover the new edition.',
+      'A 19th Edition of BS 7671 has not been formally announced as of mid-2026, but based on the historical pattern (new editions every 7 to 10 years, with the 18th Edition published in 2018), a 19th Edition could be expected between 2025 and 2028. The IET typically begins work on a new edition several years before publication, with technical committees reviewing all parts of the regulations. The current edition is BS 7671:2018+A4:2026. Key areas that may be addressed in a future 19th Edition include comprehensive EV charging provisions, smart grid integration, cybersecurity for connected installations, and updated cable sizing tables reflecting modern installation methods. The transition to a new edition typically includes a training period and updated qualifications — the C&G 2382 course will be updated to cover the new edition.',
   },
 ];
 
@@ -87,7 +87,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Comprehensive guide to BS 7671:2018+A3:2024, the current UK wiring regulations, including all three amendments.',
+      'Comprehensive guide to BS 7671:2018+A4:2026, the current UK wiring regulations, including all four amendments.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
-      'Study for the C&G 2382 qualification covering BS 7671:2018+A3:2024 on the Elec-Mate platform.',
+      'Study for the C&G 2382 qualification covering BS 7671:2018+A4:2026 on the Elec-Mate platform.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -149,7 +149,7 @@ const sections = [
           Risks Arising from Electric Lighting" published by the Society of Telegraph Engineers
           (later the IEE, now the IET) in 1882, through to the current{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , the regulations have evolved continuously to address new technologies, new risks, and
           hard-won safety lessons.
@@ -402,11 +402,9 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>July 2018 — 18th Edition published.</strong> BS 7671:2018. Effective from 1
-                January 2019. Key changes included: recommendation for{' '}
-                <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink>{' '}
-                (Regulation 421.1), expanded surge protection requirements (Section 534), new
-                requirements for EV charging installations, and updated prosumer (solar PV)
-                guidance.
+                January 2019. Key changes included: expanded surge protection requirements (Section
+                534), new requirements for EV charging installations, and updated prosumer (solar
+                PV) guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -428,10 +426,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>31 July 2024 — Amendment 3.</strong> Adds new Section 530 requirements
-                covering bidirectional and unidirectional switching and protective devices. Directly
-                relevant to solar PV, battery storage, and EV charger installations where current
-                flow can reverse. Available as a free PDF supplement.
+                <strong>31 July 2024 — Amendment 3.</strong> Adds Section 530 requirements covering
+                bidirectional and unidirectional switching and protective devices. Directly relevant
+                to solar PV, battery storage, and EV charger installations where current flow can
+                reverse. Available as a free PDF supplement.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>2026 — Amendment 4 (A4:2026).</strong> Significant update bringing the
+                current edition to BS 7671:2018+A4:2026. See the{' '}
+                <a href="#amendment-four" className="text-yellow-400 underline underline-offset-2">
+                  Amendment 4 section below
+                </a>{' '}
+                for the full detail.
               </span>
             </li>
           </ul>
@@ -446,7 +455,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI regulation lookup — always current"
-          description="Elec-Mate's built-in regulation assistant references BS 7671:2018+A3:2024 directly. Ask any question about wiring regulations and get the specific…"
+          description="Elec-Mate's built-in regulation assistant references BS 7671:2018+A4:2026 directly. Ask any question about wiring regulations and get the specific…"
           icon={BookOpen}
         />
       </>
@@ -492,6 +501,93 @@ const sections = [
           must check and confirm, not assume. The{' '}
           <SEOInternalLink href="/guides/wiring-colours-uk">data plate</SEOInternalLink> on the
           device will indicate whether it is bidirectional.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'amendment-four',
+    heading: 'Amendment 4 (2026): What Changed and Why It Matters',
+    content: (
+      <>
+        <p>
+          Amendment 4 (A4:2026) brings the current edition to <strong>BS 7671:2018+A4:2026</strong>.
+          It is one of the most substantive amendments to the 18th Edition and affects everyday
+          certification work, domestic lighting circuits, and battery storage installations. Here
+          are the key changes:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-5 text-white">
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 421.1.7 — AFDD recommendation introduced.</strong> A new Regulation
+                421.1.7 recommends the installation of{' '}
+                <SEOInternalLink href="/guides/afdd-arc-fault-detection">
+                  arc fault detection devices (AFDDs)
+                </SEOInternalLink>{' '}
+                on AC final circuits of a fixed installation to mitigate the risk of fire due to arc
+                fault currents. The wording is advisory ("recommending"), not mandatory — but this
+                is the first time AFDDs appear in their own dedicated regulation. Installers and
+                certifiers should treat it as a strong recommendation, particularly for higher-risk
+                premises.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 411.3.4 — 30 mA RCD mandatory on domestic lighting circuits.</strong>{' '}
+                This is one of the most compliance-critical changes in A4:2026. Within domestic
+                (household) premises, additional protection by an RCD with a rated residual
+                operating current not exceeding <strong>30 mA</strong> shall now be provided for all
+                AC final circuits supplying luminaires. The word "shall" makes this mandatory. Every
+                electrician completing a new domestic installation or consumer unit change must
+                ensure lighting circuits are RCD-protected to ≤30 mA.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>New Chapter 57 — Stationary Secondary Battery Installations.</strong> A new
+                Chapter 57 has been introduced to cover installations where the designed purpose of
+                the battery system is storage and supply of electrical energy. This provides
+                dedicated requirements for home battery storage and BESS installations — previously
+                only covered by general provisions. Chapter 57 does not apply to batteries within
+                products covered by product safety standards, nor to pluggable UPS units.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Reg 133.1.3 — Equipment usage must be recorded on Part 6 certification.
+                </strong>{' '}
+                Regulation 133.1.3 has been modified to require that certain usage of equipment
+                shall be recorded on the appropriate electrical certification specified in Part 6
+                (EIC, EICR, Minor Works). Where BS 7671 calls for the usage of particular equipment
+                to be identified — for example, AFDD installation under Reg 421.1.7 — that entry
+                must appear explicitly on the certificate. This embeds equipment-selection
+                disclosures into the formal certification record.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Section 722 — Significant changes to EV charging requirements.</strong>{' '}
+                Section 722 (electric vehicle charging installations) contains significant
+                regulatory changes in A4:2026. Installers working on EV charging should consult
+                Section 722 directly in the updated BS 7671:2018+A4:2026 text for the revised
+                requirements.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          The mandatory 30 mA RCD requirement for domestic lighting (Reg 411.3.4) is the change most
+          immediately affecting everyday installation work. Previously, lighting circuits were
+          commonly left without individual RCD protection in some legacy consumer unit arrangements.
+          A4:2026 removes that ambiguity: all new domestic lighting circuits require ≤30 mA RCD
+          additional protection.
         </p>
       </>
     ),
@@ -563,60 +659,6 @@ const sections = [
     ),
   },
   {
-    id: 'upcoming-changes',
-    heading: 'Upcoming Changes: Amendment 4 and Beyond',
-    content: (
-      <>
-        <p>
-          The electrical industry does not stand still, and neither do the regulations. Here is what
-          is expected in the near future:
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Amendment 4 (expected 2026).</strong> Details have not been formally
-                published, but industry discussion suggests potential changes in several areas:
-                expanded AFDD requirements (possibly moving from recommendation to requirement for
-                certain installation types), updated EV charging provisions, battery energy storage
-                system requirements, and refinements to the bidirectional device guidance introduced
-                by A3:2024.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Energy efficiency and smart grids.</strong> As the UK moves towards net
-                zero, the regulations will increasingly address energy management, demand-side
-                response, and smart grid integration. Installations that can communicate with the
-                grid, adjust consumption, and export stored energy will need new regulatory
-                frameworks.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Cybersecurity for connected installations.</strong> As more electrical
-                installations include internet-connected devices (smart meters, EV chargers, battery
-                storage controllers, heat pump systems), the cybersecurity of these systems becomes
-                a safety consideration. The IET has published guidance on this, and future editions
-                of BS 7671 may include requirements.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <p>
-          The pace of change in the electrical industry is accelerating. The transition to electric
-          vehicles, heat pumps, solar PV, and battery storage is transforming domestic installations
-          from simple one-way power distribution systems to complex, bidirectional energy management
-          systems. The regulations must evolve to address these changes — and electricians must keep
-          their knowledge current.
-        </p>
-      </>
-    ),
-  },
-  {
     id: 'for-electricians',
     heading: 'For Electricians: Staying Current with Regulation Changes',
     content: (
@@ -637,9 +679,9 @@ const sections = [
                   Ask any question about BS 7671 and get the specific regulation number, section,
                   and plain-English explanation. The AI references{' '}
                   <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                    BS 7671:2018+A3:2024
+                    BS 7671:2018+A4:2026
                   </SEOInternalLink>{' '}
-                  directly — including all three amendments. No flipping through the brown book on
+                  directly — including all four amendments. No flipping through the brown book on
                   site.
                 </p>
               </div>
@@ -690,7 +732,7 @@ export default function ElectricalRegulationsTimelinePage() {
           <span className="text-yellow-400">140 Years of Wiring Standards</span>
         </>
       }
-      heroSubtitle="From 12 rules about fire prevention in 1882 to the 700+ pages of BS 7671:2018+A3:2024, the UK's electrical wiring regulations have evolved through 18 editions. This timeline traces every key milestone, amendment, and regulatory change."
+      heroSubtitle="From 12 rules about fire prevention in 1882 to the 700+ pages of BS 7671:2018+A4:2026, the UK's electrical wiring regulations have evolved through 18 editions. This timeline traces every key milestone, amendment, and regulatory change."
       readingTime={15}
       keyTakeaways={keyTakeaways}
       sections={sections}

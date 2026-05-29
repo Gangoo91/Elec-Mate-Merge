@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size SWA cables for garage supplies with burial depth derating, voltage drop checks, and grouping factors.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long SWA cable runs from the consumer unit to the garage sub-board.',
@@ -226,7 +226,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink>{' '}
           must account for the installation method (direct burial), the soil thermal resistivity,
           and the voltage drop over the full cable run. For a typical 10 to 15 metre run supplying a
           light workshop load, 4.0mm 3-core SWA is usually sufficient. For runs exceeding 20 metres
@@ -591,7 +591,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable on site during the survey.{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     Enter the load, cable length, and installation method
                   </SEOInternalLink>{' '}
                   — the calculator applies burial depth derating, soil thermal resistivity, and
@@ -608,10 +608,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the garage installation with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . SWA cable by the metre, trenching labour, sub-board, accessories, testing, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  cable by the metre, trenching labour, sub-board, accessories, testing, and
                   certification — all calculated with your margins and sent to the customer as a
                   professional PDF quote.
                 </p>

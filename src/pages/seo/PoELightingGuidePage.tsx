@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the mains supply circuits to PoE switches and network equipment.',
     icon: Calculator,
@@ -591,7 +591,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the mains supply circuits to PoE switches and network equipment with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   .
@@ -606,10 +606,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote PoE lighting electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Mains supply circuits, switch installation, containment, and testing — all
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Mains supply circuits, switch installation, containment, and testing — all
                   itemised.
                 </p>
               </div>

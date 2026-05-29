@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'What is O-PEN protection and when is it required?',
     answer:
-      'O-PEN (Open PEN) protection is a device that detects the loss of the PEN conductor in a PME supply and disconnects the EV charging circuit within a defined time (typically under 5 seconds). It is required whenever an EV charger is installed on a PME earthing system where the user could be outdoors — which covers the vast majority of domestic and workplace installations. The O-PEN device monitors the voltage between the neutral and earth. Under normal conditions, this voltage is close to zero. If the PEN conductor is broken, the voltage rises and the O-PEN device trips, isolating the charger. O-PEN devices are available as standalone units (installed in the consumer unit or distribution board) or integrated into the charger itself. Some charger manufacturers include O-PEN detection as a built-in feature.',
+      'O-PEN (Open PEN) protection is a device that detects the loss of the PEN conductor in a PME supply and disconnects the EV charging circuit within a time that depends on the voltage that develops on the circuit protective conductor (CPC) relative to true earth. Per Table A722 of BS 7671:2018+A4:2026 Annex A722, maximum disconnection times are: 0.7 s at 70 V, 0.2 s at 100 V, and 0.04 s at 200 V or above. The higher the voltage that appears on the CPC during a PEN failure, the faster the device trips. O-PEN protection is required whenever an EV charger is installed on a PME earthing system where the user could be outdoors — which covers the vast majority of domestic and workplace installations. Under normal conditions, the voltage between the CPC and true earth is close to zero. If the PEN conductor is broken, that voltage rises and the O-PEN device trips, isolating the charger. O-PEN devices are available as standalone units (installed in the consumer unit or distribution board) or integrated into the charger itself. Some charger manufacturers include O-PEN detection as a built-in feature.',
   },
   {
     question: 'What cable size do I need for a 7 kW EV charger?',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for EV charger circuits with automatic correction factors and voltage drop verification to BS 7671.',
@@ -231,7 +231,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calculate existing maximum demand</strong> — use the{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 with diversity applied per BS 7671 Appendix 1.
@@ -240,10 +240,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consider load management</strong> — a dynamic load management system can
-                reduce the charger output when other loads are running, preventing the total demand
-                from exceeding the supply capacity. Many smart chargers support this via CT clamp
-                monitoring on the main incoming supply.
+                <strong>Consider load management / curtailment</strong> — BS 7671:2018+A4:2026 Reg
+                722.311.201 explicitly permits load curtailment (automatic or manual load reduction
+                or disconnection) to be taken into account when determining the maximum demand of an
+                EV installation. A dynamic load management system that reduces charger output when
+                other loads are running can therefore be used to justify a smaller supply or avoid a
+                DNO upgrade. Many smart chargers support this via CT clamp monitoring on the main
+                incoming supply.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -288,17 +291,23 @@ const sections = [
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">PME Earthing and EV Charging</h4>
+                <h4 className="font-bold text-white mb-1">
+                  PME Earthing and EV Charging — Reg 722.312.2.1
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  PME earthing must not be used for EV charging where the user is outdoors unless
-                  O-PEN protection is installed. This applies to the vast majority of domestic and
-                  workplace EV charger installations. The IET CoP is clear on this point.
+                  BS 7671:2018+A4:2026 Reg 722.312.2.1 requires that no PEN conductor shall form
+                  part of the circuit supplying EV charging equipment. On a TN-C-S (PME) supply this
+                  means the EV circuit must originate downstream of the main bonding point where PE
+                  and N are already separate conductors — combined PEN wiring must not extend into
+                  the EV final circuit. PME earthing must not be used for EV charging where the user
+                  is outdoors unless additional protective measures (O-PEN device, TT earth, or
+                  separation) are installed. The IET CoP is clear on this point.
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3 my-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h4 className="font-bold text-white text-lg mb-3">Option 1: O-PEN Device</h4>
             <p className="text-white text-sm leading-relaxed">
@@ -323,6 +332,15 @@ const sections = [
               Use a charger and charging cable that are double insulated (Class II) throughout the
               entire charging path, eliminating the need for a protective earth conductor to the
               charger metalwork. Limited availability — most chargers are Class I.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <h4 className="font-bold text-white text-lg mb-3">Option 4: Isolation Transformer</h4>
+            <p className="text-white text-sm leading-relaxed">
+              BS 7671:2018+A4:2026 Reg 722.413.1.2 permits a fixed isolating transformer (complying
+              with BS EN 61558-2-4) to supply a Class I EV charging point from a separated,
+              unearthed source. This arrangement is limited to supplying one vehicle from one
+              unearthed source. An example wiring arrangement is shown in Annex A722, Figure A722.
             </p>
           </div>
         </div>
@@ -357,8 +375,12 @@ const sections = [
           A with all applicable correction factors applied — grouping, ambient temperature, thermal
           insulation, and installation method. The most common cable type for domestic EV
           installations is 6 mm² SWA (steel wire armoured), which provides mechanical protection for
-          buried or surface-mounted runs and has a current rating of 41 A when clipped to a surface
-          (Reference Method C).
+          buried or surface-mounted runs. Per BS 7671 Table 4D4A, a 6 mm² 3-core XLPE (90 °C)
+          armoured cable clipped direct (Method C) has a current-carrying capacity of 47 A at
+          reference conditions — note that the 41 A figure sometimes quoted comes from Table 4D1A,
+          which applies to flat PVC twin-and-earth cable, not SWA. All applicable correction factors
+          (ambient temperature, grouping, soil thermal resistivity) must be applied before
+          confirming 6 mm² SWA is adequate for the 32 A continuous EV load.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3">Typical Cable Sizes for EV Chargers</h4>
@@ -394,7 +416,9 @@ const sections = [
           Voltage drop is frequently the limiting factor for EV charger cable sizing because of the
           long cable runs involved — the charger is often mounted on the side of a garage or at the
           end of a driveway, 20 to 40 metres from the consumer unit. Use the{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">voltage drop calculator</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
+            voltage drop calculator
+          </SEOInternalLink>{' '}
           to verify compliance with the 5% limit (11.5 V on a 230 V single-phase circuit).
         </p>
       </>
@@ -494,11 +518,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Surge protection (SPD):</strong> BS 7671 Amendment 2 requires surge
-                protection where the consequence of an overvoltage event could result in serious
-                injury or significant financial loss. EV chargers with electronic control circuitry
-                are susceptible to surge damage. A Type 2 SPD at the consumer unit provides
-                effective protection.
+                <strong>Surge protection (SPD):</strong> BS 7671:2018+A4:2026 Reg 443.4 requires
+                surge protection where transient overvoltage could result in serious injury to or
+                loss of human life (443.4(a)), interruption of public services (443.4(b)),
+                interruption of commercial or industrial activity (443.4(c)), or risk to a large
+                number of co-located individuals (443.4(d)). For all other cases a risk assessment
+                determines whether protection is needed. EV chargers with electronic control
+                circuitry are susceptible to surge damage. A Type 2 SPD at the consumer unit
+                provides effective protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -568,6 +595,26 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Building Regulations Part S — EV Infrastructure
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                Alongside Part P notification, electricians working on new dwellings and major
+                renovations must also consider Approved Document S (Infrastructure for the Charging
+                of Electric Vehicles). Part S requires EV charging infrastructure — cable
+                containment and, in some cases, charge points — to be installed as part of the
+                building work. It applies to new residential buildings with associated parking and
+                to existing residential buildings undergoing major renovation where parking is
+                provided. This is a distinct legal requirement from Part P and is noted in the
+                On-Site Guide (OSG) as a cross-discipline consideration for electrical installers.
+              </p>
+            </div>
+          </div>
         </div>
         <SEOInternalLink href="/guides/building-regulations-electrical">
           See also: Building Regulations Electrical — Approved Document P

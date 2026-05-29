@@ -42,9 +42,34 @@ const sections = [
     content: (
       <>
         <p>
-          A Surge Protective Device to BS EN 61643-11. Type 1 (lightning current), Type 2 (transient
-          overvoltage), Type 3 (point of use). BS 7671 443.4 risk assessment usually requires Type 2
-          at origin.
+          A Surge Protective Device to BS EN 61643-11. Types 1, 2 and 3 are placed according to the
+          Lightning Protection Zone (LPZ) concept (Figure 534.1): Type 1 at the LPZ&nbsp;0/1
+          boundary (direct lightning current — incoming service where an external lightning
+          protection system is fitted), Type 2 at the LPZ&nbsp;1/2 boundary (transient overvoltage —
+          distribution board or consumer unit origin), and Type 3 at final sub-circuit equipment
+          (point of use). Coordination, per OSG 3.7.4, ensures each downstream device's voltage
+          protection level (Up) is lower than the upstream device's let-through.
+        </p>
+        <p className="mt-3">
+          <strong>BS 7671 Reg 443.4 — when is SPD protection mandatory?</strong> Protection is
+          mandatory without further assessment where a transient overvoltage could result in:
+        </p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li>serious injury to, or loss of, human life (Reg 443.4(a))</li>
+          <li>interruption of public services or damage to cultural heritage (Reg 443.4(b))</li>
+          <li>interruption of commercial or industrial activity (Reg 443.4(c))</li>
+          <li>a large number of co-located individuals being affected (Reg 443.4(d))</li>
+        </ul>
+        <p className="mt-3">
+          For all other cases a risk assessment is required to determine whether SPDs are necessary
+          (Reg 443.4 final paragraph). There is also an exception for single dwelling units in
+          certain specified situations — the installer shall confirm whether it applies before
+          omitting protection.
+        </p>
+        <p className="mt-3 text-sm text-white/60 italic">
+          Note: Section 534 was completely revised in the A4:2026 amendment. The revision updates
+          requirements for the selection and erection of SPDs, including a significant technical
+          change to the SPD voltage protection level (Up) selection criteria (Reg 527.1.3 note).
         </p>
       </>
     ),
@@ -55,9 +80,26 @@ const sections = [
     content: (
       <>
         <p>
-          New installations + rewires — Type 2 at consumer unit origin; Type 1 where lightning
-          protection is fitted.
+          Where Section 443 requires SPDs and no external lightning protection system is fitted (or
+          the structure does not require protection against direct lightning), Reg 534.4.1.4
+          mandates Type 2 SPDs installed as close as possible to the origin of the installation
+          (consumer unit or main distribution board). Where an external lightning protection system
+          is present, a Type 1 SPD is required at the LPZ&nbsp;0/1 boundary (incoming service).
         </p>
+        <p className="mt-3">
+          <strong>Conductor sizing — Reg 534.4.10</strong> (connecting conductors between the SPD
+          and the main earthing terminal or protective conductor):
+        </p>
+        <ul className="list-disc pl-5 mt-2 space-y-1">
+          <li>
+            Type 2 SPD at or near the origin: protective conductor not less than{' '}
+            <strong>6&nbsp;mm² copper</strong> (live conductor not less than 2.5&nbsp;mm²)
+          </li>
+          <li>
+            Type 1 SPD at or near the origin: protective conductor not less than{' '}
+            <strong>16&nbsp;mm² copper</strong> (live conductor not less than 6&nbsp;mm²)
+          </li>
+        </ul>
         <p>
           For the full set of distribution symbols, see the{' '}
           <SEOInternalLink href="/guides/electrical-distribution-symbols">
@@ -141,8 +183,10 @@ export default function SpdSymbolPage() {
       heroSubtitle="SPD surge protection device electrical symbol BS EN 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={4}
       keyTakeaways={[
-        'A Surge Protective Device to BS EN 61643-11. Type 1 (lightning current), Type 2 (transient overvoltage), Type 3 (point of use). BS 7671 443.4 risk assessment usually requires Type 2 at origin.',
-        'New installations + rewires — Type 2 at consumer unit origin; Type 1 where lightning protection is fitted.',
+        'Surge Protective Device to BS EN 61643-11. Types placed by LPZ zone: Type 1 at incoming service (LPZ 0/1, direct lightning), Type 2 at consumer unit/distribution board origin (LPZ 1/2), Type 3 at final equipment.',
+        'BS 7671 Reg 443.4: SPD protection is mandatory (no risk assessment needed) where a transient overvoltage could cause loss of life, disrupt public services, interrupt commercial activity, or affect large numbers of people. All other cases require a risk assessment. Single dwelling units have a specific exception.',
+        'Where Section 443 requires SPDs and no external lightning protection system is fitted, Reg 534.4.1.4 requires Type 2 SPDs as close as possible to the installation origin. Connecting conductor minimums (Reg 534.4.10): 6 mm² Cu for Type 2, 16 mm² Cu for Type 1.',
+        'Section 534 was completely revised in A4:2026 — apply the updated selection and erection requirements, including the revised voltage protection level (Up) criteria.',
         'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to BS EN 60617.',
       ]}
       sections={sections}
@@ -150,12 +194,17 @@ export default function SpdSymbolPage() {
         {
           question: 'What does the SPD (Surge Protection Device) symbol mean?',
           answer:
-            'A Surge Protective Device to BS EN 61643-11. Type 1 (lightning current), Type 2 (transient overvoltage), Type 3 (point of use). BS 7671 443.4 risk assessment usually requires Type 2 at origin.',
+            'A Surge Protective Device to BS EN 61643-11. Three types are defined by the Lightning Protection Zone (LPZ) concept: Type 1 at the LPZ 0/1 boundary (lightning current, incoming service where an external lightning protection system is fitted), Type 2 at the LPZ 1/2 boundary (transient overvoltage, consumer unit or distribution board origin), and Type 3 at final sub-circuit equipment (point of use).',
         },
         {
-          question: 'Where is the SPD (Surge Protection Device) symbol used?',
+          question: 'When does BS 7671 require an SPD?',
           answer:
-            'New installations + rewires — Type 2 at consumer unit origin; Type 1 where lightning protection is fitted.',
+            'BS 7671 Reg 443.4 makes SPD protection mandatory — without needing a further risk assessment — where a transient overvoltage could result in loss of human life (443.4(a)), interruption of public services or damage to cultural heritage (443.4(b)), interruption of commercial or industrial activity (443.4(c)), or a large number of co-located individuals being affected (443.4(d)). For all other cases a risk assessment is required. A specific exception exists for single dwelling units in certain situations.',
+        },
+        {
+          question: 'What conductor size is needed for an SPD connection?',
+          answer:
+            'Reg 534.4.10 sets mandatory minimums for the conductor between the SPD and the main earthing terminal or protective conductor: not less than 6 mm² copper for a Type 2 SPD installed at or near the installation origin; not less than 16 mm² copper for a Type 1 SPD at or near the origin. Conductors to live conductors must also withstand the prospective short-circuit current (Reg 433.3.1(b)).',
         },
       ]}
       faqHeading="FAQ — SPD (Surge Protection Device) Symbol"

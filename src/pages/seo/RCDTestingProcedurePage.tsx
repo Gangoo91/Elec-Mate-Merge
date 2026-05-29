@@ -52,7 +52,7 @@ const keyTakeaways = [
   'RCD testing involves multiple tests at different current levels: half-rated (must NOT trip), 1x rated (must trip within 300 ms), and 5x rated (must trip within 40 ms for general-type 30 mA RCDs).',
   'All tests must be performed on both positive (0 degree) and negative (180 degree) half-cycles of the supply waveform — the worst-case (longest) trip time is the value recorded on the certificate.',
   'Time-delayed (Type S) RCDs have different trip time requirements: 130 to 500 ms at 1x rated current and 50 to 200 ms at 5x rated current — they must NOT trip faster than the lower limit.',
-  'The push-button test confirms the mechanical trip mechanism works but does NOT verify the electrical trip function — instrument testing is mandatory for compliance.',
+  'The push-button test confirms the mechanical trip mechanism works but does NOT verify the electrical trip function — instrument testing is mandatory for compliance. BS 7671 Regs 514.12.1/514.12.2 require a notice instructing occupants to test six-monthly by pressing the relevant test button(s).',
   'Elec-Mate validates all RCD trip times automatically against BS 7671 requirements and supports voice-to-test-results for hands-free data entry on site.',
 ];
 
@@ -70,12 +70,12 @@ const faqs = [
   {
     question: 'What is the difference between a general-type RCD and a Type S (time-delayed) RCD?',
     answer:
-      'A general-type RCD (sometimes called a Type AC or Type A depending on waveform sensitivity) is designed to trip as quickly as possible when it detects a fault current at or above its rated residual operating current. A Type S (selective or time-delayed) RCD has an intentional time delay built in — it will NOT trip within a certain minimum time, even if the fault current exceeds its rated value. This delay is designed to achieve discrimination with a downstream general-type RCD. For example, if a 100 mA Type S RCCB is installed upstream of a 30 mA general-type RCBO, a fault on a circuit protected by the 30 mA RCBO should trip the RCBO first without tripping the upstream 100 mA Type S device. This prevents unnecessary disconnection of other circuits. The trip time limits for a Type S RCD are: at 1x rated current, it must trip between 130 ms and 500 ms (not faster than 130 ms); at 5x rated current, it must trip between 50 ms and 200 ms.',
+      'A general-type RCD is designed to trip as quickly as possible when it detects a fault current at or above its rated residual operating current. Note that Type AC and Type A are distinct device types (Reg 534.4.7): Type AC operates only on alternating sinusoidal residual current; Type A additionally responds to residual pulsating DC current. Critically, under Reg 531.3.3, Type AC shall only be used to serve fixed equipment where it is known that the load current contains no DC components — circuits supplying inverters, EV chargers, or variable-speed drives must use Type A or higher. A Type S (selective or time-delayed) RCD has an intentional time delay built in — it will NOT trip within a certain minimum time, even if the fault current exceeds its rated value. This delay is designed to achieve discrimination with a downstream general-type RCD. For example, if a 100 mA Type S RCCB is installed upstream of a 30 mA general-type RCBO, a fault on a circuit protected by the 30 mA RCBO should trip the RCBO first without tripping the upstream 100 mA Type S device. This prevents unnecessary disconnection of other circuits. The trip time limits for a Type S RCD are: at 1x rated current, it must trip between 130 ms and 500 ms (not faster than 130 ms); at 5x rated current, it must trip between 50 ms and 200 ms.',
   },
   {
     question: 'Is the push-button test sufficient for BS 7671 compliance?',
     answer:
-      'No. The push-button test (the test button on the front of the RCD) only confirms that the mechanical trip mechanism works correctly — that when the trip coil is activated, the mechanism releases and disconnects the supply. It does NOT verify the electrical trip function at the correct current level or within the required time. An RCD could pass the push-button test but fail the instrument tests because the sensing toroid is damaged, the electronics have drifted, or the contacts are degraded. BS 7671 requires full instrument testing at the specified current levels (0.5x, 1x, and 5x rated current) on both half-cycles. The push-button test is an additional mechanical check that should be performed first, but it is not a substitute for instrument testing. Occupants should be advised to press the test button monthly as a routine check between periodic inspections.',
+      'No. The push-button test (the test button on the front of the RCD) only confirms that the mechanical trip mechanism works correctly — that when the trip coil is activated, the mechanism releases and disconnects the supply. It does NOT verify the electrical trip function at the correct current level or within the required time. An RCD could pass the push-button test but fail the instrument tests because the sensing toroid is damaged, the electronics have drifted, or the contacts are degraded. BS 7671 requires full instrument testing at the specified current levels (0.5x, 1x, and 5x rated current) on both half-cycles. The push-button test is an additional mechanical check that should be performed first, but it is not a substitute for instrument testing. Occupants should be advised to press the test button six-monthly as a routine check between periodic inspections — this matches the mandatory notice wording required by BS 7671 Regs 514.12.1 and 514.12.2: "Test six-monthly by pressing the relevant test button(s)."',
   },
   {
     question: 'What is a ramp test and when is it used?',
@@ -153,6 +153,15 @@ const sections = [
           case of the half-rated test, does NOT trip. The tests must be performed on both the
           positive and negative half-cycles of the supply waveform to verify correct operation under
           all conditions.
+        </p>
+        <p>
+          A4:2026 introduced an important change to Reg 643.3: regardless of RCD type (AC, A, F, B
+          etc.), an alternating current test at rated residual operating current (IΔn) shall be used
+          to verify the effectiveness of the RCD. This means the 1x IΔn effectiveness test is always
+          performed as an AC sinusoidal test, even for Type A, F, or B devices. Where your MFT has a
+          type selector, select Type AC for the 1x IΔn effectiveness test; instruments without a
+          type selector can only perform Type AC tests and this remains compliant for the
+          effectiveness verification.
         </p>
       </>
     ),
@@ -389,8 +398,9 @@ const sections = [
           The push-button test should be performed first, before any instrument testing. If the
           button test fails (the RCD does not trip when the button is pressed), the device is faulty
           and must be replaced — there is no point proceeding with instrument tests. Occupants
-          should be advised to press the test button monthly as a routine maintenance check between
-          periodic inspections.
+          should be advised to press the test button six-monthly as a routine maintenance check
+          between periodic inspections — this is the interval specified in the mandatory RCD
+          instruction notice required by BS 7671 Regs 514.12.1 and 514.12.2.
         </p>
       </>
     ),
@@ -421,7 +431,10 @@ const sections = [
               <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">At 5x IΔn (five times rated):</strong> Must trip
-                between 50 ms and 200 ms. Again, the device must NOT trip faster than 50 ms.
+                between 50 ms and 200 ms per BS EN 61008/61009 device-standard requirements. Again,
+                the device must NOT trip faster than 50 ms. Note: BS 7671 Reg 643.7.3 specifies the
+                1x IΔn window (130–500 ms) for Type S — the 5x window is governed by the device
+                product standard, not by BS 7671 directly.
               </span>
             </li>
             <li className="flex items-start gap-3">

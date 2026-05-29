@@ -42,7 +42,7 @@ const keyTakeaways = [
   'A dedicated radial or ring circuit for a home office is strongly recommended where high-load equipment (laser printers, workstations, NAS drives, monitors) is in regular use. A 20A radial circuit on 2.5mm T&E is typically appropriate for most home offices.',
   'Data cabling (Cat6 or Cat6A) installed at the same time as electrical work avoids the need for surface-mounted trunking later. Structured cabling installed in conduit provides flexibility for future upgrades without replastering.',
   'Lighting for a home office should achieve a minimum of 300 lux at the working plane per BS EN 12464-1, with task lighting to supplement general lighting. Colour temperature of 4000K (cool white) is recommended for focus and alertness.',
-  'An external garden office requires a separate circuit from the main dwelling, typically using SWA (steel wire armoured) cable buried at 600mm depth. All circuits in a garden office must have 30mA RCD protection.',
+  'An external garden office requires a separate circuit from the main dwelling, typically using SWA (steel wire armoured) cable buried at 600mm depth. Socket-outlet circuits (rated current not exceeding 32 A) must have 30 mA RCD protection under Regulation 411.3.3 of BS 7671:2018+A4:2026. Under A4:2026, all AC lighting circuits in domestic premises, including garden offices, now also require 30 mA RCD protection — Regulation 411.3.4.',
   'A domestic UPS (Uninterruptible Power Supply) protects computers and network equipment from momentary power interruptions and voltage fluctuations. For a home business, equipment loss from a single power event can exceed the cost of UPS protection many times over.',
 ];
 
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What size cable do I need to run electricity to a garden office?',
     answer:
-      'The cable size depends on the load in the garden office and the length of the run. For a typical garden office with lighting, socket circuits, and a heater, a 6mm SWA (steel wire armoured) cable from the main consumer unit in the house is usually appropriate. The cable must be buried at a depth of at least 600mm in soft ground (450mm under a path or drive with suitable protection) or run in conduit. At the garden office end, a sub-consumer unit with its own RCD protection is required. All circuits in the garden office must have 30mA RCD protection under Regulation 411.3.3 of BS 7671.',
+      'The cable size depends on the load in the garden office and the length of the run. For a typical garden office with lighting, socket circuits, and a heater, a 6mm SWA (steel wire armoured) cable from the main consumer unit in the house is usually appropriate. The cable must be buried at a depth of at least 600mm in soft ground (450mm under a path or drive with suitable protection) or run in conduit. At the garden office end, a sub-consumer unit with its own RCD protection is required. Socket-outlet circuits (rated current not exceeding 32 A) must have 30 mA RCD protection under Regulation 411.3.3 of BS 7671:2018+A4:2026. Under A4:2026, Regulation 411.3.4 also requires 30 mA RCD protection on all AC lighting circuits in domestic premises, including garden office outbuildings.',
   },
   {
     question: 'What is a UPS and do I need one for my home office?',
@@ -183,10 +183,22 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>A4:2026 — Arc Fault Detection (AFDD):</strong> Regulation 421.1.7 of BS
+            7671:2018+A4:2026 recommends arc fault detection devices (AFDDs) on AC final circuits to
+            reduce the risk of fire from arc fault currents. For a home office with multiple
+            connected loads and equipment running all day, specifying AFDD protection on the new
+            circuit is a meaningful safety upgrade worth discussing with the homeowner.
+          </p>
+        </div>
         <p>
-          All electrical work in a home office constitutes notifiable work under Part P of the
-          Building Regulations. Use a registered competent person (NICEIC, NAPIT, or ELECSA) to
-          ensure proper certification and building control notification.
+          Not all home office electrical work is notifiable under Part P of the Building Regulations
+          — adding a socket to an existing circuit in a room that is not a kitchen or bathroom is
+          not notifiable. However, installing a new dedicated circuit, altering the consumer unit,
+          or carrying out electrical work in a new building (such as a garden office) are all
+          notifiable. Use a registered competent person (NICEIC, NAPIT, or ELECSA) for notifiable
+          work to ensure proper certification and automatic building control notification.
         </p>
       </>
     ),
@@ -383,9 +395,12 @@ const sections = [
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Garden office consumer unit</strong> — the garden office must have its own
-                consumer unit with a main switch and individual circuit breakers. All circuits must
-                be protected by 30mA RCDs under Regulation 411.3.3 of BS 7671. An additional 30mA
-                RCD at the point of supply in the main house provides additional protection.
+                consumer unit with a main switch and individual circuit breakers. Socket-outlet
+                circuits (rated current not exceeding 32 A) must have 30 mA RCD protection under
+                Regulation 411.3.3 of BS 7671:2018+A4:2026. Under A4:2026, Regulation 411.3.4 now
+                also requires 30 mA RCD protection on all AC lighting circuits in domestic premises,
+                including garden offices. An additional 30 mA RCD at the point of supply in the main
+                house provides additional protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -609,10 +624,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Full Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Home office enquiries often grow once you meet the customer. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to quickly add data cabling, garden lighting, EV charging, and additional socket
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  quickly add data cabling, garden lighting, EV charging, and additional socket
                   circuits to a quote. A comprehensive quote wins more work than a minimum-scope
                   tender.
                 </p>
@@ -637,7 +650,7 @@ const sections = [
 export default function HomeOfficeElectricalGuidePage() {
   return (
     <GuideTemplate
-      title="Home Office Electrical Guide UK | Wiring for Working from"
+      title="Home Office Electrical Guide UK | Wiring for Working from Home"
       description="Complete electrical guide for home offices in the UK. Dedicated circuits, data point installation, lighting design, EV charging…"
       datePublished="2026-03-27"
       dateModified="2026-05-18"

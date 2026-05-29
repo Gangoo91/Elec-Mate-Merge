@@ -361,7 +361,7 @@ const sections = [
         </p>
         <p>
           {' '}
-          <SEOInternalLink href="/cable-sizing-calculator">Cable sizing</SEOInternalLink> must
+          <SEOInternalLink href="/tools/cable-sizing-calculator">Cable sizing</SEOInternalLink> must
           account for the installation method (clipped direct, in conduit, within thermal
           insulation), ambient temperature, grouping with other cables, and voltage drop. The
           correction factors can significantly affect the required cable size, particularly for

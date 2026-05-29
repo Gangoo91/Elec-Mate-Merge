@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Is commissioning a legal requirement?',
     answer:
-      'BS 7671 Part 6 (Regulation 641.1) requires that every installation is inspected and tested during erection and on completion before being put into service. An Electrical Installation Certificate must be issued upon completion of initial verification. While BS 7671 does not use the word "commissioning" as a formal requirement, the practical reality is that initial verification, functional testing, and certification together constitute commissioning. For notifiable work under Part P of the Building Regulations, the installation must be certified before it is put into service. Under the CDM Regulations 2015 (Construction Design and Management), the principal contractor must ensure that all building services — including electrical installations — are commissioned and tested before handover. In practice, commissioning is expected by clients, main contractors, scheme providers, and building control.',
+      'BS 7671 Part 6, Chapter 64 (Regulation 641) requires that every installation is inspected and tested during erection and on completion before being put into service. An Electrical Installation Certificate must be issued upon completion of initial verification under Regulation 644.4.201. While BS 7671 does not use the word "commissioning" as a formal requirement, the practical reality is that initial verification, functional testing, and certification together constitute commissioning. For notifiable work under Part P of the Building Regulations, the installation must be certified before it is put into service. Under the CDM Regulations 2015 (Construction Design and Management), the principal contractor must ensure that all building services — including electrical installations — are commissioned and tested before handover. In practice, commissioning is expected by clients, main contractors, scheme providers, and building control.',
   },
   {
     question: 'What documentation should I provide at commissioning handover?',
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What functional checks are needed during commissioning?',
     answer:
-      'Functional checks confirm that every device operates correctly as part of the complete installation. BS 7671 Regulation 643.10 requires functional testing as part of initial verification. The checks include: operating every MCB, RCBO, and RCD to confirm they trip and reset correctly, testing every isolator switch for correct operation, verifying that emergency switching devices (fireman switches, emergency stop buttons) operate correctly, confirming that interlocked devices operate in the correct sequence, testing automation and control systems (timers, sensors, BMS interfaces), checking that all indicator lights and displays show the correct status, testing that no-volt release contactors and motor starters operate as designed, and verifying that standby generators and UPS systems switch correctly on loss of mains supply.',
+      'Functional checks confirm that every device operates correctly as part of the complete installation. BS 7671 Regulation 643.7.3.201 requires functional testing as part of initial verification. The checks include: operating every MCB, RCBO, and RCD to confirm they trip and reset correctly, testing every isolator switch for correct operation, verifying that emergency switching devices (fireman switches, emergency stop buttons) operate correctly, confirming that interlocked devices operate in the correct sequence, testing automation and control systems (timers, sensors, BMS interfaces), checking that all indicator lights and displays show the correct status, testing that no-volt release contactors and motor starters operate as designed, and verifying that standby generators and UPS systems switch correctly on loss of mains supply.',
   },
   {
     question: 'How long does commissioning take?',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/testing-sequence-guide',
     title: 'Testing Sequence Guide',
-    description: 'The dead and live test sequence required by BS 7671 Chapter 61.',
+    description: 'The dead and live test sequence required by BS 7671 Chapter 64.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -145,7 +145,7 @@ const sections = [
           <SEOInternalLink href="/guides/initial-verification">
             initial verification
           </SEOInternalLink>{' '}
-          (inspection and testing to BS 7671 Chapter 61), functional checks of all equipment and
+          (inspection and testing to BS 7671 Chapter 64), functional checks of all equipment and
           controls, snagging and rectification of minor defects, completion of all documentation
           (certificates, drawings, manuals), and formal handover to the client.
         </p>
@@ -245,8 +245,8 @@ const sections = [
         <p>
           Functional checks go beyond the instrument-based testing of initial verification. They
           involve physically operating every device in the installation to confirm it works
-          correctly. BS 7671 Regulation 643.10 requires functional testing of assemblies such as
-          switchgear, controls, and interlocks.
+          correctly. BS 7671 Regulation 643.7.3.201 requires functional testing of assemblies such
+          as switchgear, controls, and interlocks.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Functional Checks Checklist</h3>
@@ -306,6 +306,16 @@ const sections = [
                 controls, or stairwell pressurisation), confirm the interfaces work correctly.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AFDD verification.</strong> Where arc fault detection devices (AFDDs) are
+                fitted — recommended by BS 7671 Reg 421.1.7 for AC final circuits — confirm the
+                operational indication (status LED or integral test button) shows the device is
+                active. Operate the device&apos;s test mechanism and confirm it resets correctly.
+                Per GN3, confirmation of AFDD operational status is a required inspection step.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -332,22 +342,27 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC).</strong> The formal certificate
-                issued under BS 7671 Regulation 631. Includes design, construction, and inspection
-                signatures, plus the schedule of inspections and schedule of test results.
+                issued under BS 7671 Regulation 644.4.201, based on the model in Appendix 6.
+                Includes design, construction, and inspection signatures, plus the schedule of
+                inspections and schedule of test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of test results.</strong> Every test value for every circuit —
-                R1+R2, IR, Zs, PFC, RCD trip times. Accompanies the EIC.
+                R1+R2, IR, Zs, PFC, RCD trip times — based on the Appendix 6 model form required by
+                Reg 644.4.201. The A4:2026 Appendix 6 model includes columns for AFDD fitted and SPD
+                fitted per circuit. Accompanies the EIC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit charts and labels.</strong> Clear identification of every circuit at
-                the distribution board. Required by BS 7671 Regulation 514.9.
+                the distribution board. Required by BS 7671 Regulation 514.9.1. Note: A4:2026
+                introduced an exception for domestic (household) premises — check the amended
+                regulation text for the precise scope of that exception on residential jobs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -514,7 +529,7 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Visual inspection completed per BS 7671 Part 6 (Section 641)</span>
+              <span>Visual inspection completed per BS 7671 Part 6, Chapter 64 (Reg 641)</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -527,7 +542,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                All live tests completed: Zs, PFC, RCD operation, phase sequence (if 3-phase)
+                All live tests completed: Zs, PFC, RCD operation, phase sequence (if 3-phase). Where
+                site ambient temperature differs from 10&nbsp;&deg;C, apply the ambient correction
+                factor from GN3 Table A8 to the tabulated maximum Zs values before comparing against
+                measured results.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -536,7 +554,17 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Functional checks completed on all switchgear, controls, and interlocks</span>
+              <span>
+                Functional checks completed on all switchgear, controls, and interlocks (Reg
+                643.7.3.201)
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                AFDD operational status confirmed where fitted — test button operated and reset
+                verified (Reg 421.1.7 / GN3)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -553,8 +581,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and
-                signed
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and signed
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -603,9 +630,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Photograph the new consumer unit. The AI reads MCB/RCBO ratings and circuit labels
-                  from the image. The{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> schedule
-                  pre-fills with circuit descriptions and protective device details.
+                  from the image. The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
+                  schedule pre-fills with circuit descriptions and protective device details.
                 </p>
               </div>
             </div>

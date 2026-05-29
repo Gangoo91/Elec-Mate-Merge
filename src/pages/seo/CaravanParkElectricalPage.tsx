@@ -27,7 +27,7 @@ const tocItems = [
   { id: 'individual-supply-equipment', label: 'Individual Supply Equipment' },
   { id: 'cee-connectors', label: 'IEC 60309 CEE Connectors' },
   { id: 'rcd-requirements', label: 'RCD Requirements' },
-  { id: 'socket-outlet-spacing', label: 'Socket Outlet Spacing' },
+  { id: 'socket-outlet-spacing', label: 'Socket Outlet Spacing (20 m Rule)' },
   { id: 'earthing', label: 'Earthing Considerations' },
   { id: 'metering', label: 'Metering & Submains' },
   { id: 'for-electricians', label: 'For Electricians' },
@@ -39,9 +39,9 @@ const keyTakeaways = [
   'BS 7671:2018+A4:2026 Section 708 is the specific section governing electrical installations in caravan parks and similar locations. Every pitch supply must comply with its requirements.',
   'Each caravan pitch must be supplied through an individual supply equipment assembly incorporating overcurrent protection, 30 mA RCD protection, and a socket outlet to IEC 60309 (CEE form).',
   'RCDs must disconnect within 40 ms at 5× the rated residual operating current. This is a life-safety requirement in the outdoor, damp environment of caravan parks.',
-  'Socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m (Regulation 708.55.1.2).',
+  'Socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 20 m (Regulation 708.55.1.2).',
   'TT earthing is common at caravan parks. The product of the earth electrode resistance and RCD operating current must not exceed 50 V.',
-  'The recommended periodic inspection interval for caravan park installations is 1 year (IET Guidance Note 3), reflecting the harsh outdoor environment and seasonal heavy use.',
+  'The recommended periodic inspection interval for caravan park installations reflects the harsh outdoor environment and seasonal heavy use. Annual inspection is industry practice for sites in continuous operation.',
 ];
 
 const faqs = [
@@ -63,17 +63,17 @@ const faqs = [
   {
     question: 'How close must the pitch supply point be to the caravan?',
     answer:
-      'Regulation 708.55.1.2 states that socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m in length. This limits voltage drop and ensures the caravan is within a safe distance of its supply. Pitch layouts must be designed with this 25 m limit in mind.',
+      'Regulation 708.55.1.2 states that caravan pitch electrical supply equipment shall be located not more than 20 m from the connection facility on the leisure accommodation vehicle or tent when on its pitch. This limits voltage drop and prevents excessively long cables creating trip hazards across the site. Pitch layouts must be designed with this 20 m limit in mind.',
   },
   {
     question: 'What earthing system is used in caravan parks?',
     answer:
-      'Caravan parks commonly use TT earthing (where the installation earth is connected to a local earth electrode) because a reliable TN-C-S protective earth is often unavailable at individual rural pitches. Earth electrode resistance must satisfy Section 708.411, and the RCD operating current × earth electrode resistance must not exceed 50 V.',
+      'Caravan parks commonly use TT earthing (where the installation earth is connected to a local earth electrode) because a reliable TN-C-S protective earth is often unavailable at individual rural pitches. Earth electrode resistance must satisfy Section 708.411, and the RCD operating current × earth electrode resistance must not exceed 50 V. Critically, Regulation 708.553.1.14 contains a hard prohibition: socket-outlet protective conductors shall not be connected to a PME (TN-C-S) earthing facility. Where the site supply uses PME, an alternative earthing arrangement must be provided for the pitch socket-outlets — typically a separate TT earth electrode.',
   },
   {
     question: 'How often should caravan park electrical installations be inspected?',
     answer:
-      'IET Guidance Note 3 recommends a maximum periodic inspection interval of 1 year for caravan parks and similar locations. The harsh outdoor environment — moisture, mechanical damage, UV degradation, and seasonal heavy use — means annual inspection is the industry standard. Each inspection should cover the main distribution equipment, submain cables, all pitch supply units, RCD testing, earth electrode testing, and visual inspection of socket outlet enclosures.',
+      'The harsh outdoor environment — moisture, mechanical damage, UV degradation, and seasonal heavy use — means short periodic inspection intervals apply to caravan parks. Annual inspection is the industry standard for sites in continuous seasonal operation. Each inspection should cover the main distribution equipment, submain cables, all pitch supply units, RCD testing, earth electrode testing, and visual inspection of socket outlet enclosures.',
   },
   {
     question: 'What current rating is required for caravan pitch supply sockets?',
@@ -219,10 +219,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mechanical protection</strong> — supply equipment posts must be robust
-                enough to withstand accidental vehicle impact. Bollard-style enclosures with
-                protective posts are standard on pitches accessible to motorhomes and touring
-                caravans.
+                <strong>Mechanical protection — IK08 minimum</strong> — Regulation 708.512.2.1.3
+                requires that equipment installed at a campsite be protected against mechanical
+                damage at impact severity AG3. This may be achieved by siting the equipment to avoid
+                foreseeable impact, by fitting local or general mechanical guards, or by specifying
+                equipment rated to a minimum of IK08 (per BS EN 62262). Bollard-style enclosures and
+                protective posts satisfy the location and guarding methods; alternatively, selecting
+                a supply unit with a verified IK08 rating meets the requirement directly.
               </span>
             </li>
           </ul>
@@ -274,8 +277,9 @@ const sections = [
               <span>
                 <strong>EHU cables</strong> — caravan users connect via a proprietary electric
                 hookup (EHU) cable with a CEE plug at one end and an inlet socket at the caravan
-                end. These cables must be rated for outdoor use and must not exceed the 25 m maximum
-                length specified in Section 708.
+                end. These cables must be rated for outdoor use. The 20 m distance limit in
+                Regulation 708.55.1.2 governs pitch layout; EHU cables must not bridge a gap greater
+                than this limit between the supply point and the caravan connection facility.
               </span>
             </li>
           </ul>
@@ -341,7 +345,7 @@ const sections = [
   },
   {
     id: 'socket-outlet-spacing',
-    heading: 'Socket Outlet Positioning and the 25 m Rule',
+    heading: 'Socket Outlet Positioning and the 20 m Rule',
     content: (
       <>
         <p>
@@ -355,10 +359,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>25 m maximum cable run</strong> — Regulation 708.55.1.2 specifies that
-                socket outlets must be positioned so the connecting cable from the pitch supply
-                point to the caravan does not exceed 25 m. This limit controls voltage drop and
-                prevents excessive cable lying across the site creating trip hazards.
+                <strong>20 m maximum distance</strong> — Regulation 708.55.1.2 requires that caravan
+                pitch electrical supply equipment shall be located not more than 20 m from the
+                connection facility on the leisure accommodation vehicle or tent when on its pitch.
+                This limit controls voltage drop and prevents excessive cable lying across the site
+                creating trip hazards.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -373,10 +378,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Height and accessibility</strong> — supply points should be mounted at
-                0.5–1.0 m above finished ground level and positioned to avoid obstruction by caravan
-                awnings, steps, or stabiliser legs. The socket outlet must be accessible without
-                tools.
+                <strong>Mounting height</strong> — Regulation 708.55.1.6 requires the lowest part of
+                any socket outlet to be placed at a height between 0.5 m and 1.5 m from the ground.
+                Exceeding the 1.5 m maximum is permitted only in extreme environmental conditions
+                (for example, sites at risk of flooding or heavy snow) provided special measures are
+                taken to allow safe insertion and withdrawal of plugs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Maximum 4 socket outlets per enclosure</strong> — Regulation 708.55.1.3
+                states that, in order to avoid any hazard due to long connection cables, no more
+                than 4 socket outlets shall be grouped together in any one enclosure. On older
+                multi-pitch supply pillars with 6 or 8 outlets in a single cabinet, this is a common
+                C2 observation on an EICR.
               </span>
             </li>
           </ul>
@@ -414,6 +430,17 @@ const sections = [
                 for supplementary equipotential bonding. Where metallic structures are within arm's
                 reach of live equipment, bonding is required to prevent dangerous potential
                 differences in fault conditions.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>PME prohibition</strong> — Regulation 708.553.1.14 is an absolute
+                prohibition: socket-outlet protective conductors shall not be connected to a PME
+                (TN-C-S) earthing facility. This applies even where the DNO supplies the park via a
+                PME network. Where PME is present, a separate earth electrode must be installed to
+                serve the pitch socket-outlet protective conductors, effectively creating a TT
+                arrangement for the pitch supplies regardless of the incoming supply system.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -542,7 +569,7 @@ export default function CaravanParkElectricalPage() {
       title="Caravan Park Electrics: BS 7671 Section 708 Rules UK"
       description="Caravan park electrical installations to BS 7671 Section 708: IEC 60309 CEE connectors, 30mA RCD per pitch, socket spacing, TT earthing, supply ratings."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

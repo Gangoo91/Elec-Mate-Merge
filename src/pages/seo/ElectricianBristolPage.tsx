@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Victorian property rewires, EV charger circuits, and heat pump installations.',
@@ -553,7 +553,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Period Properties</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for rewires in Bristol's Victorian and Georgian properties. Longer cable routes

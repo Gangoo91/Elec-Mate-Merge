@@ -25,6 +25,7 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'what-is-fp200', label: 'What is FP200 Gold Cable?' },
   { id: 'temperature-and-standard', label: 'Temperature Rating and BS 7629' },
+  { id: 'bs7671-requirements', label: 'BS 7671 Legal Requirements' },
   { id: 'bs5839-bs5266', label: 'BS 5839 and BS 5266 Requirements' },
   { id: 'installation-requirements', label: 'Installation Requirements' },
   { id: 'vs-micc', label: 'FP200 Gold vs MICC Cable' },
@@ -35,9 +36,12 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'FP200 Gold is a fire-resistant cable compliant with BS 7629-1, designed to maintain circuit integrity during a fire — powering fire alarm and emergency lighting systems when they are needed most.',
+  'FP200 Gold is a fire-resistant cable compliant with BS 7629-1 / BS EN 50200, designed to maintain circuit integrity during a fire — powering fire alarm and emergency lighting systems when they are needed most.',
   'FP200 Gold has a continuous operating temperature rating of 105°C and is designed to maintain circuit integrity at 930°C for a minimum of 30 minutes (BS 7629-1 standard).',
+  'BS 7671 Reg 560.8.1 requires fire-resistant wiring for safety services and lists four permitted routes — MICC, IEC 60331, BS EN 50200/BS 8434/BS 8491 cables (which FP200 Gold satisfies), and constructional protection.',
   'BS 5839-1 (fire detection and alarm systems) and BS 5266-1 (emergency lighting) both require fire-resistant cabling — FP200 Gold satisfies these requirements for most building types.',
+  'Circuit integrity depends on the entire cable system. Fire-rated glands and termination enclosures are mandatory — using standard glands at entries or panels will void the fire performance of the installation.',
+  'OSG Reg 7.4.1 requires — not merely recommends — that fire alarm and emergency lighting circuits are segregated from other cables and from each other, in compliance with BS 5839-1 and BS 5266-1 respectively.',
   'FP200 Gold must be installed using fire-resistant clips and fixings. Standard plastic cable clips will fail in a fire, defeating the purpose of using fire-resistant cable.',
   'Unlike MICC (mineral insulated cable), FP200 Gold uses conventional twisted conductors in an enhanced insulation system and does not require specialist crimping tools or moisture-sensitive termination kits.',
 ];
@@ -216,9 +220,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CPR classification</strong> — under the Construction Products Regulation
-                (EU) 305/2011 as retained in UK law, FP200 Gold is classified as Cca-s1b,d1,a1 for
-                reaction to fire — meeting requirements for life-safety cable specifications.
+                <strong>CPR classification</strong> — BS 7671 Reg 527.1.3 (A4:2026) requires that
+                cables satisfy CPR reaction-to-fire requirements in addition to their electrical
+                requirements. FP200 Gold carries a Cca-s1b,d1,a1 classification under the
+                Construction Products Regulation (EU 305/2011 as retained in UK law). Specifiers
+                should note that BS 7671 Reg 253.0 (Note) confirms that in the UK, MHCLG has not
+                exercised CPR powers to set mandatory minimum reaction-to-fire performance levels
+                for cables in specific applications — so the Cca-s1b,d1,a1 rating is a specification
+                and CPR labelling requirement rather than a BS 7671 mandatory minimum. Project
+                specifications and procurement documents should call up the required CPR class
+                explicitly.
               </span>
             </li>
           </ul>
@@ -228,6 +239,71 @@ const sections = [
           the required circuit integrity class (30, 60, or 90 minutes) and any additional
           project-specific fire engineering requirements. The 30-minute minimum of BS 7629-1 is the
           baseline — some specifications require 60 or 90 minutes.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'bs7671-requirements',
+    heading: 'BS 7671 Legal Requirements for Fire-Resistant Wiring',
+    content: (
+      <>
+        <p>
+          The legal obligation to use fire-resistant wiring for safety services comes from BS 7671
+          Chapter 56. Reg 560.5.1 requires that safety services are capable of operating during
+          mains failure and fire conditions — which means the wiring itself must maintain circuit
+          integrity throughout the fire event. Reg 560.8.1 specifies the wiring systems that satisfy
+          this obligation.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <p className="text-sm font-semibold text-yellow-400 uppercase tracking-wide mb-3">
+            Reg 560.8.1 — Four Permitted Wiring Systems for Safety Services
+          </p>
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>(a) Mineral insulated cable</strong> — complying with BS EN 60702-1 and BS
+                EN 60702-2, also tested to BS EN 60332-1-2. This is MICC/Pyrotenax cable.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>(b) Fire-resistant cables complying with IEC 60331-1, -2 or -3</strong> —
+                the IEC circuit-integrity test series, also tested to BS EN 60332-1-2.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  (c) Fire-resistant cables complying with BS EN 50200, BS 8434 or BS 8491
+                </strong>{' '}
+                — these are the test standards that BS 7629-1 cables such as FP200 Gold are assessed
+                against. FP200 Gold satisfies this route.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  (d) A wiring system maintaining the necessary fire and mechanical protection
+                </strong>{' '}
+                — for example, cables in concrete embedment or a fully fire-protected enclosure
+                system.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          BS 7629-1 is the underlying product standard for cables tested to route (c) — it is not
+          itself named in Reg 560.8.1, which means IEC 60331 cables are an equally valid BS 7671
+          route. The selected wiring system must also meet the requirements of the relevant code of
+          practice for the application (typically BS 5839-1 for fire alarms and BS 5266-1 for
+          emergency lighting). Always confirm that the specific cable selected meets the correct
+          test standard for the integrity class (30, 60, or 90 minutes) required by the system
+          design.
         </p>
       </>
     ),
@@ -319,12 +395,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Route segregation</strong> — fire-resistant cables should be routed
-                separately from standard power cables where practical. Where cables must pass
-                through high-risk areas (e.g., plant rooms, kitchens), additional protection or
-                alternative routing should be considered.
+                <strong>Route segregation — mandatory requirement</strong> — OSG Reg 7.4.1 requires
+                that fire alarm and emergency lighting circuits are separated from other cables and
+                from each other. Compliance with BS 5839-1 is required for fire alarm circuit
+                segregation, and compliance with BS 5266-1 for emergency lighting circuit
+                segregation. This is a compliance requirement, not a best-practice recommendation.
+                Failure to segregate is a notifiable defect on inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -341,6 +419,18 @@ const sections = [
                 <strong>Minimum bend radius</strong> — the minimum bend radius for FP200 Gold is 6×
                 the overall cable diameter for fixed wiring (8× during installation). Overbending
                 can damage the mica tape layer and compromise fire performance.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Fire-rated glands and termination accessories are essential</strong> — fire
+                performance depends on the complete cable system, not the cable alone. Glands at
+                panel entries, junction box entries, and conduit entries must be fire-rated products
+                specified by the manufacturer. Using standard cable glands at these points is one of
+                the most common installation failures on fire alarm audits — it voids the
+                circuit-integrity rating of the cable at the point of termination.
+                Manufacturer-approved fire-rated termination assemblies must be used throughout.
               </span>
             </li>
           </ul>
@@ -467,9 +557,23 @@ const sections = [
         <p>
           Fire alarm and emergency lighting installations must be certified by a competent person
           familiar with BS 5839-1 and BS 5266-1. The certification must include evidence that
-          fire-resistant cable complying with BS 7629-1 has been used and that fixings are
-          fire-rated.
+          fire-resistant cable complying with BS 7629-1 (or another BS 7671 Reg 560.8.1 permitted
+          route) has been used and that fixings and glands are fire-rated.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="text-sm font-semibold text-yellow-400 uppercase tracking-wide mb-2">
+            Testing: BS 7671 IR test regime does not fully apply to fire alarm circuits
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671 Reg 643.3.2 Note states that more specific testing requirements apply to fire
+            detection and alarm system wiring — see BS 5839-1. The standard 500 V DC insulation
+            resistance test regime in Table 64 is not a substitute for the commissioning tests
+            required by BS 5839-1. Where stationary secondary batteries form part of the
+            installation (e.g., emergency lighting battery packs or fire alarm panel batteries), Reg
+            560.11 requires that Chapter 57 (Stationary Secondary Batteries) is also complied with,
+            and certificates should reference this compliance.
+          </p>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">

@@ -182,9 +182,17 @@ export default function PartPBuildingRegulationsPage() {
             Part P Building Regulations
             <span className="block text-yellow-400 mt-1">Explained for Electricians</span>
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-6 leading-relaxed">
             The complete guide to Approved Document P. Notifiable vs non-notifiable work, competent
             person schemes, building control, penalties, and how Part P interacts with BS 7671.
+          </p>
+          <p className="text-base text-white/80 max-w-2xl mx-auto mb-8 leading-relaxed">
+            Part P (Approved Document P) requires all electrical installation work within dwellings
+            to be safe. Some work — including new circuits, consumer unit replacement, and bathroom
+            electrical work — is notifiable: it must be either self-certified by a competent person
+            scheme member or formally notified to building control before it starts. Non-notifiable
+            work (such as like-for-like accessory replacement) does not require notification but
+            must still comply with BS 7671:2018+A4:2026.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -526,6 +534,18 @@ export default function PartPBuildingRegulationsPage() {
               non-notifiable.
             </p>
             <p>
+              Regulation 701.415.2 imposes a supplementary protective equipotential bonding
+              requirement in rooms containing a bath or shower. Local supplementary bonding must
+              connect together the terminals of the protective conductor of each circuit supplying
+              Class I and Class II equipment to all accessible extraneous-conductive-parts within
+              the room. This includes metallic water supply and waste pipes, metallic central
+              heating pipes, and accessible metallic structural parts of the building. The bonding
+              conductors should be positioned as close as practicable to the point of entry of
+              extraneous-conductive-parts into the room. Note that metallic door architraves and
+              window frames are not considered extraneous-conductive-parts unless they are connected
+              to metallic structural parts of the building.
+            </p>
+            <p>
               <strong className="text-yellow-400">
                 Swimming pools, saunas, and hot tub installations
               </strong>{' '}
@@ -564,10 +584,24 @@ export default function PartPBuildingRegulationsPage() {
               Approved Document P references BS 7671 as the standard that, if followed, demonstrates
               compliance with the safety requirements of Part P. The current referenced edition is
               BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment
-              3, issued in July 2024. Amendment 4 introduced Regulation 530.3.201 covering
-              bidirectional and unidirectional protective devices, as well as other updates and
-              clarifications.
+              4, effective April 2026. Amendment 4 introduced Regulation 530.3.201 covering
+              bidirectional and unidirectional protective devices, mandatory RCD protection for
+              domestic lighting circuits (Reg 411.3.4), and other updates and clarifications.
             </p>
+            <div className="p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20 text-sm">
+              <p className="font-semibold text-yellow-400 mb-1">
+                A4:2026 key change — Reg 411.3.4: RCD protection on domestic lighting circuits
+              </p>
+              <p className="text-white leading-relaxed">
+                Under Amendment 4, all AC final circuits supplying luminaires within domestic
+                (household) premises must be provided with additional protection by an RCD with a
+                rated residual operating current not exceeding 30&nbsp;mA (Reg 411.3.4). This
+                applies to new consumer unit installations and new lighting circuits — both of which
+                are notifiable work under Part P. When replacing a consumer unit or installing a new
+                lighting circuit, verify that each lighting circuit is RCD-protected at 30&nbsp;mA
+                or below before issuing the EIC.
+              </p>
+            </div>
             <p>
               The practical implication is straightforward: if you design and install electrical
               work to BS 7671:2018+A4:2026, and you certify the work correctly using the appropriate
@@ -584,6 +618,19 @@ export default function PartPBuildingRegulationsPage() {
               Regulations Compliance Certificate that the homeowner receives. This dual function
               means that getting the certification right is doubly important — errors in the EIC or
               Minor Works Certificate can create both BS 7671 and Part P compliance issues.
+            </p>
+            <p>
+              Choosing the correct certificate matters for Part P compliance. Regulation 120.3 sets
+              the rule: an Electrical Installation Certificate (EIC) is required for any new
+              installation, for any addition or alteration that introduces one or more new circuits,
+              and for consumer unit replacement. A Minor Electrical Installation Works Certificate
+              (MEIWC) may only be used for additions or alterations that do not introduce any new
+              circuits. In addition, Regulation 644.1.2 requires that any defect in the existing
+              installation that is found during inspection and that will affect the safety of the
+              new work must be corrected before the certificate is issued; all other defects found
+              in the existing installation must be recorded on the EIC or MEIWC. This record
+              obligation is often overlooked but is a specific BS 7671 requirement on every Part P
+              job.
             </p>
             <p>
               Elec-Mate generates certificates that comply with both BS 7671 and Part P
@@ -661,7 +708,6 @@ export default function PartPBuildingRegulationsPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -669,14 +715,30 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/part-p-building-regulations-electrical">Part P Building Regulations</SEOInternalLink>
-            <SEOInternalLink href="/guides/building-regulations-electrical">Building Regulations Part P Electrical</SEOInternalLink>
-            <SEOInternalLink href="/wiring-regulations-building-regulations">Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained</SEOInternalLink>
-            <SEOInternalLink href="/tools/ai-regulations-lookup">AI Regulations Lookup</SEOInternalLink>
-            <SEOInternalLink href="/guides/bathroom-electrical-regulations">Bathroom Electrical Regulations UK</SEOInternalLink>
-            <SEOInternalLink href="/building-management-system">Building Management Systems (BMS) UK</SEOInternalLink>
-            <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-regulations-timeline-uk">UK Electrical Regulations Timeline</SEOInternalLink>
+            <SEOInternalLink href="/guides/part-p-building-regulations-electrical">
+              Part P Building Regulations
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/building-regulations-electrical">
+              Building Regulations Part P Electrical
+            </SEOInternalLink>
+            <SEOInternalLink href="/wiring-regulations-building-regulations">
+              Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/ai-regulations-lookup">
+              AI Regulations Lookup
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/bathroom-electrical-regulations">
+              Bathroom Electrical Regulations UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/building-management-system">
+              Building Management Systems (BMS) UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/training/cdm-regulations-course">
+              CDM Regulations Course for Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-regulations-timeline-uk">
+              UK Electrical Regulations Timeline
+            </SEOInternalLink>
           </div>
         </div>
       </section>

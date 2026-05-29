@@ -4,12 +4,11 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-05-29';
 
 export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-electric-shower',
-  title:
-    'Cable Size for an Electric Shower (8.5 / 9.5 / 10.8 kW)',
+  title: 'Cable Size for an Electric Shower (8.5 / 9.5 / 10.8 kW)',
   description:
     'Cable size for UK electric showers explained: 6 mm² for most 8.5 kW units, 10 mm² for 9.5 kW and most 10.5/10.8 kW units.',
   datePublished: published,
@@ -39,8 +38,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'For a typical UK domestic electric shower installation, the cable size most often specified is:',
+          text: 'For a typical UK domestic electric shower installation, the cable size most often specified is:',
         },
         {
           type: 'list',
@@ -57,8 +55,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'Always verify against the actual installation',
-          text:
-            'These are starting points, not final answers. Every shower installation requires the full BS 7671 sizing calculation against the specific cable route, reference method, ambient temperature, grouping factor, and supply earthing arrangement. Use the calculator linked at the end of this guide or perform the calculation yourself.',
+          text: 'These are starting points, not final answers. Every shower installation requires the full BS 7671 sizing calculation against the specific cable route, reference method, ambient temperature, grouping factor, and supply earthing arrangement. Use the calculator linked at the end of this guide or perform the calculation yourself.',
         },
       ],
     },
@@ -69,8 +66,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Design current (Ib) for an electric shower is calculated from the rated power divided by the nominal supply voltage:',
+          text: 'Design current (Ib) for an electric shower is calculated from the rated power divided by the nominal supply voltage:',
         },
         {
           type: 'list',
@@ -86,8 +82,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'Electric showers operate at maximum power for the full duration of use — there\'s no diversity to apply. The protective device rating should be the next standard MCB / RCBO rating at or above Ib: typically 40 A for 8.5 kW, 45 A or 50 A for 9.5 kW, 50 A for 10.5-10.8 kW.',
+          text: "Electric showers operate at maximum power for the full duration of use — there's no diversity to apply. The protective device rating should be the next standard MCB / RCBO rating at or above Ib: typically 40 A for 8.5 kW, 45 A or 50 A for 9.5 kW, 50 A for 10.5-10.8 kW.",
         },
       ],
     },
@@ -98,8 +93,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Cable sizing for a shower (same as for any load) is a three-stage check. The cable size selected must satisfy all three:',
+          text: 'Cable sizing for a shower (same as for any load) is a three-stage check. The cable size selected must satisfy all three:',
         },
         {
           type: 'list',
@@ -119,8 +113,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A 9.5 kW shower installed in a first-floor bathroom, 12 m cable route from consumer unit (in the ground-floor under-stair cupboard) up to the shower isolator outside the bathroom and then through to the shower unit. TN-C-S (PME) supply.',
+          text: 'A 9.5 kW shower installed in a first-floor bathroom, 12 m cable route from consumer unit (in the ground-floor under-stair cupboard) up to the shower isolator outside the bathroom and then through to the shower unit. TN-C-S (PME) supply.',
         },
         {
           type: 'list',
@@ -141,17 +134,17 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'An electric shower is installed in a Section 701 location (location containing a bath or shower). Several specific requirements apply:',
+          text: 'An electric shower is installed in a Section 701 location (location containing a bath or shower). Several specific requirements apply:',
         },
         {
           type: 'list',
           items: [
             '**Regulation 701.411.3.3** — additional protection by RCD with rated residual operating current not exceeding 30 mA shall be provided for all low voltage circuits in the location.',
-            '**Regulation 701.512.3** — switching, control and accessories in the location are restricted. The shower must have a dedicated isolator OUTSIDE the bathroom zones (typically a 45 A or 50 A double-pole switch in the airing cupboard, on the landing, or just outside the bathroom door).',
+            '**Regulation 701.512.3** — switching, control and accessories in the location are restricted. The shower must have a dedicated isolator OUTSIDE the bathroom zones (typically a 45 A or 50 A double-pole switch in the airing cupboard, on the landing, or just outside the bathroom door). Zone accessory rules: Zone 0 — no switchgear or accessories whatsoever; Zone 1 — only switches of SELV circuits at &lt;=12 V AC RMS or 30 V ripple-free DC (SELV source must be outside zones 0, 1 and 2); Zone 2 — no switches or socket-outlets except SELV (Section 414) and shaver supply units complying with BS EN 61558-2-5. Pull-cord insulating cords and switches incorporated in fixed current-using equipment suitable for the zone are exempt from these restrictions.',
             '**Regulation 701.512.2** — electrical equipment in zones 1 and 2 must have minimum IP rating IPX4. The shower itself is normally rated to its installation position by the manufacturer.',
             '**Cable concealment** — cable concealed in walls of the location at depth less than 50 mm must either be mechanically protected, run within Earthed metallic conduit / trunking, or be 30 mA RCD protected. The RCD requirement of 701.411.3.3 covers the shower circuit naturally.',
-            '**Supplementary bonding** — supplementary equipotential bonding requirements in older installations (BS 7671 pre-A3:2008+A2) may apply — verify the bonding to the shower and to any extraneous-conductive-parts in the location.',
+            '**Regulation 411.3.4 (A4:2026) — bathroom lighting circuits** — in domestic premises, AC final circuits supplying luminaires must have additional 30 mA RCD protection (Regulation 411.3.4). When quoting for a new shower installation, check whether the consumer unit already provides RCBO or split-load RCD coverage for the bathroom lighting circuit. If lighting circuits are on an unprotected MCB, A4:2026 compliance requires an upgrade — this is a practical consequence that commonly affects shower installation quotes and should be identified at the initial survey stage.',
+            '**Supplementary bonding (Regulation 701.415.2)** — supplementary protective equipotential bonding is required in every room containing a bath or shower, connecting the protective conductor terminals of each circuit to accessible extraneous-conductive-parts (metallic water/waste pipes, central heating, accessible structural metalwork). Omission is only permitted when ALL three conditions are met: (d) all final circuits of the location comply with Regulation 411.3.2 automatic disconnection; (e) all final circuits have additional RCD protection per Regulation 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to the main protective equipotential bonding per Regulation 411.3.1.2. Where any condition is not met, supplementary bonding is mandatory regardless of when the installation was carried out.',
           ],
         },
       ],
@@ -163,8 +156,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The shower isolator is the dedicated double-pole switch that disconnects both line and neutral from the shower unit. It sits between the consumer unit / RCBO and the shower itself. Selection:',
+          text: 'The shower isolator is the dedicated double-pole switch that disconnects both line and neutral from the shower unit. It sits between the consumer unit / RCBO and the shower itself. Selection:',
         },
         {
           type: 'list',
@@ -191,7 +183,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
             '**Not accounting for cable in roof insulation** — Reference Method 101 (cable in thermally insulating wall) gives lower Iz than the same cable clipped direct. Many real installations have part of the route in loft insulation — apply the correct reference method to the worst-case section.',
             '**Forgetting the RCD** — Regulation 701.411.3.3 requires 30 mA RCD on every shower circuit. A 40 A Type B MCB with no RCD is non-compliant regardless of cable size.',
             '**Omitting the dedicated isolator** — installing the shower directly from the consumer unit with no dedicated isolator outside the bathroom is non-compliant with Regulation 701.512.3.',
-            '**Mixing 7.5 kW protective device with 9.5 kW shower upgrade** — when upgrading the shower without upgrading the protective device, the old 40 A MCB may protect 6 mm² cable that\'s now overloaded by the 9.5 kW unit. Always re-check the whole circuit when changing the shower rating.',
+            "**Mixing 7.5 kW protective device with 9.5 kW shower upgrade** — when upgrading the shower without upgrading the protective device, the old 40 A MCB may protect 6 mm² cable that's now overloaded by the 9.5 kW unit. Always re-check the whole circuit when changing the shower rating.",
           ],
         },
       ],
@@ -229,6 +221,11 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
         'BS 7671 Regulation 525 sets the voltage-drop maximum at 3% for lighting and 5% for "other" circuits. A shower is "other" — so the technical maximum is 5%. In practice, designing to 3% leaves headroom for future modifications and ensures the shower performs at its rated power. On longer runs (>15 m) the voltage drop calculation often dictates the cable size — 10 mm² may technically satisfy current-carrying capacity but fail voltage drop, requiring 16 mm². Calculator below does the maths.',
     },
     {
+      question: 'Can I fit a socket outlet near the shower?',
+      answer:
+        'Standard socket-outlets (13 A BS 1363) are prohibited within 2.50 m horizontally of the boundary of zone 1 — this is the Rule in Regulation 701.512.3. In practice, this means a socket outlet on a wall adjacent to the shower or bath is almost always within the exclusion distance and cannot be installed. Exceptions are: SELV socket-outlets complying with Section 414 of BS 7671, and shaver supply units that comply with BS EN 61558-2-5 (the standard shaver socket found in bathrooms), which may be installed in zone 2. A standard socket-outlet outside the bathroom door, beyond the 2.50 m horizontal distance from the zone 1 boundary, is acceptable.',
+    },
+    {
       question: 'Do I need a Type A RCD or is Type AC enough?',
       answer:
         'Modern UK showers with electronic temperature controls and SCR / triac-based heating element switching can produce DC fault current components. Type AC RCDs may not detect these reliably, leading to a failure-to-trip on a DC-component earth fault. Type A RCDs reliably detect AC and pulsating DC fault currents and are the appropriate default for shower installations. Type AC is still permitted by 701.411.3.3 itself but increasingly inadvisable. Some inspectors flag Type AC on a modern shower circuit as a C3 ("Improvement recommended").',
@@ -238,35 +235,40 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
     {
       href: '/tools/cable-sizing-calculator',
       title: 'Cable Sizing Calculator (BS 7671 Appendix 4)',
-      description: 'Free interactive calculator that does the Iz / voltage drop / Zs checks for any shower cable run.',
+      description:
+        'Free interactive calculator that does the Iz / voltage drop / Zs checks for any shower cable run.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
       href: '/tools/voltage-drop-calculator',
       title: 'Voltage Drop Calculator',
-      description: 'Verify the 3% / 5% voltage drop limit per Regulation 525 for the shower cable run.',
+      description:
+        'Verify the 3% / 5% voltage drop limit per Regulation 525 for the shower cable run.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
       href: '/guides/cable-size-for-ev-charger',
       title: 'Cable Size for an EV Charger',
-      description: 'Same three-check process applied to the other major UK domestic cable-sizing question.',
+      description:
+        'Same three-check process applied to the other major UK domestic cable-sizing question.',
       icon: 'Cable',
       category: 'Guide',
     },
     {
       href: '/guides/section-701-bathrooms-complete-guide',
       title: 'BS 7671 Section 701 Bathrooms Complete Guide',
-      description: 'The wider zone, RCD, equipment IP and bonding requirements for bathroom installations.',
+      description:
+        'The wider zone, RCD, equipment IP and bonding requirements for bathroom installations.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
       title: 'A4:2026 Luminaire RCD Protection',
-      description: 'Why all-RCBO consumer units have become the default — bathroom lighting circuits get the same RCD as the shower.',
+      description:
+        'Why all-RCBO consumer units have become the default — bathroom lighting circuits get the same RCD as the shower.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
@@ -280,5 +282,5 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Size shower cables in seconds',
   ctaSubheading:
-    'Elec-Mate\'s Cable Sizing Calculator runs all three BS 7671 checks (Iz / voltage drop / Zs) and includes Section 701 zone reminders for bathroom installations. 7-day free trial.',
+    "Elec-Mate's Cable Sizing Calculator runs all three BS 7671 checks (Iz / voltage drop / Zs) and includes Section 701 zone reminders for bathroom installations. 7-day free trial.",
 };

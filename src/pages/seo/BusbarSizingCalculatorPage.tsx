@@ -366,10 +366,17 @@ export default function BusbarSizingCalculatorPage() {
                 voltage drop is negligible and rarely a concern. For long busbar trunking runs
                 (which can extend tens of metres through a building), the voltage drop must be
                 calculated and verified against the{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   BS 7671 voltage drop limits
                 </SEOInternalLink>{' '}
-                of 3% for lighting and 5% for other circuits.
+                of 3% for lighting and 5% for other circuits (Reg 525.202 and Appendix 4, Section
+                6.4).
+              </p>
+              <p>
+                Regulation 525.202 requires that the voltage drop between the origin of the
+                installation and any socket-outlet or the terminals of fixed current-using equipment
+                shall not exceed the values stated in BS 7671 Appendix 4, Section 6.4 — 3% for
+                lighting circuits and 5% for other circuits.
               </p>
               <p>
                 Note that busbar resistance increases with temperature — the resistance at operating
@@ -417,7 +424,54 @@ export default function BusbarSizingCalculatorPage() {
                   <li className="flex items-start gap-3">
                     <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong>k</strong> = 176 for copper busbars, 76 for aluminium busbars
+                      <strong>k</strong> = 176 for copper busbars, 76 for aluminium busbars (see
+                      note on k values below)
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+                <p className="text-orange-300 text-sm leading-relaxed">
+                  <strong>Important — 5 s limit (Reg 543.1.3):</strong> The adiabatic equation is
+                  only valid for disconnection times not exceeding 5 s. Where a fuse or MCCB has an
+                  operating time above 5 s, the equation does not apply — consult BS 7454 or use a
+                  type-test verified device with a confirmed withstand rating.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <h3 className="font-bold text-white text-base mb-3">
+                  k Values — Temperature and Insulation Class
+                </h3>
+                <p className="text-white text-sm leading-relaxed mb-2">
+                  k is a factor that accounts for the resistivity, temperature coefficient, and heat
+                  capacity of the conductor material at the appropriate initial and final
+                  temperatures (Reg 543.1.3). The value of k therefore varies depending on the
+                  conductor material and the initial and final temperatures assumed.
+                </p>
+                <ul className="space-y-2 text-white text-sm leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong>k = 176:</strong> bare copper conductors — applies where the busbar
+                      surface is uninsulated and the assumed temperature rise allows a higher final
+                      temperature.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong>Insulated connection points:</strong> where the busbar connects to
+                      insulated conductors or insulated terminations, use the k value from BS 7671
+                      Table 54.3 for the appropriate insulation class and initial temperature —
+                      these are lower than 176. Consult Table 54.3 for your specific installation
+                      conditions.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong>Aluminium:</strong> k = 76 for bare aluminium; lower values apply for
+                      insulated aluminium conductors — see Table 54.3.
                     </span>
                   </li>
                 </ul>
@@ -432,12 +486,28 @@ export default function BusbarSizingCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/prospective-fault-current-calculator">
+                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                   prospective fault current calculator
                 </SEOInternalLink>{' '}
                 can determine the fault level at the point where the busbar is installed, which is
                 the input needed for the short-circuit withstand check.
               </p>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <h3 className="font-bold text-white text-base mb-3">
+                  Busbar Trunking Enclosure as CPC (Reg 543.2.2)
+                </h3>
+                <p className="text-white text-sm leading-relaxed">
+                  Where the metal enclosure of a busbar trunking system is used as the circuit
+                  protective conductor (CPC), Reg 543.2.2 requires that its cross-sectional area is
+                  at least equal to that determined by Reg 543.1 (the adiabatic calculation above).
+                  The enclosure continuity must also be assured — whether by construction or by
+                  suitable connections — and must be protected against mechanical, chemical, and
+                  electrochemical deterioration. This is a frequently overlooked design requirement
+                  for rising-mains trunking: using the trunking enclosure as the CPC is only
+                  permissible if the metalwork satisfies the adiabatic area requirement and its
+                  continuity is maintained throughout the run.
+                </p>
+              </div>
             </>
           ),
           appBridge: {
@@ -604,13 +674,13 @@ export default function BusbarSizingCalculatorPage() {
         {
           question: 'What voltage drop limit applies to busbars under BS 7671?',
           answer:
-            'BS 7671 recommends that voltage drop in installations should not exceed 3% for lighting and 5% for other uses from the origin of the installation to the point of use (Regulation 525.1). For a busbar trunking run feeding distribution boards, the voltage drop in the trunking itself plus the drop in the final circuits must remain within these limits. Busbars have very low resistance per unit length compared to cables, so voltage drop is rarely the critical constraint — thermal rating and short-circuit withstand are usually the governing factors. However, for very long busbar runs (over 50 metres) supplying sensitive equipment, voltage drop should be calculated and verified. The Elec-Mate busbar sizing calculator includes voltage drop calculation as part of its output.',
+            'BS 7671 requires that voltage drop from the origin of the installation to any socket-outlet or fixed equipment terminal shall not exceed 3% for lighting and 5% for other circuits (Reg 525.202, referencing Appendix 4, Section 6.4). For a busbar trunking run feeding distribution boards, the voltage drop in the trunking itself plus the drop in the final circuits must remain within these limits. Busbars have very low resistance per unit length compared to cables, so voltage drop is rarely the critical constraint — thermal rating and short-circuit withstand are usually the governing factors. However, for very long busbar runs (over 50 metres) supplying sensitive equipment, voltage drop should be calculated and verified. The Elec-Mate busbar sizing calculator includes voltage drop calculation as part of its output.',
         },
       ]}
       faqHeading="Frequently Asked Questions About Busbar Sizing"
       relatedPages={[
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault current verification.',
@@ -618,7 +688,7 @@ export default function BusbarSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/prospective-fault-current-calculator',
+          href: '/tools/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:
             'Calculate the prospective short-circuit current at any point in the installation for busbar withstand verification.',
@@ -634,7 +704,7 @@ export default function BusbarSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Calculate voltage drop for busbar trunking runs and cable circuits to verify BS 7671 compliance.',

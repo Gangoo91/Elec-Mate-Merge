@@ -44,9 +44,10 @@ const tocItems = [
 const keyTakeaways = [
   'Every EICR must include a clear statement of the extent and limitations of the inspection — this is a BS 7671 requirement, not an optional addition.',
   'The EICR covers the fixed electrical installation only. It does not cover gas installations, water systems, structural issues, portable appliances, or equipment beyond the landlord meter.',
-  'Sampling is standard practice on larger installations. The EICR should clearly state what percentage of circuits was tested and any areas that could not be accessed.',
+  'Sampling is standard practice on larger installations. GN3 requires the sampling approach to be justified by a formal risk assessment and documented in the Schedule of Inspections and Schedule of Test Results — not simply a matter of agreeing a percentage.',
   'Concealed wiring behind walls, under floors, or above ceilings is not inspected during a standard EICR unless there is reason to suspect a fault or the client specifically requests invasive inspection.',
   'Recording limitations accurately protects both the electrician (from liability for issues outside the inspection scope) and the client (by making clear what further work may be needed).',
+  'BS 7671:2018+A4:2026 introduced new inspection checkpoints: domestic lighting circuits must have ≤30 mA RCD additional protection (Reg 411.3.4), and HMOs, Higher Risk Residential Buildings, purpose-built student accommodation, and care homes now require AFDDs on socket circuits ≤32 A (Reg 421.1.7). Absence of either must be recorded as an observation.',
 ];
 
 const faqs = [
@@ -78,7 +79,7 @@ const faqs = [
   {
     question: 'What should I do if the EICR records an FI (Further Investigation) code?',
     answer:
-      'An FI (Further Investigation) code means the inspector could not fully assess a particular aspect of the installation and recommends that further investigation is carried out before a definitive classification can be given. This is different from a C1, C2, or C3 code — an FI is not a defect classification but rather an acknowledgement that more work is needed to determine whether a defect exists. Common reasons for an FI include: suspected concealed wiring fault that requires lifting floorboards to verify; an inaccessible junction box that needs to be opened; or an unusual test result that needs investigation with the supply disconnected. You should treat FI codes seriously and arrange the further investigation promptly. The follow-up investigation may clear the FI (no defect found) or may result in a C1, C2, or C3 classification once the area has been fully examined.',
+      'An FI (Further Investigation) code means the inspector could not fully assess a particular aspect of the installation and further investigation is required without delay — the OSG definition (Ch 7 Reg 7.28) is explicit: FI is applied where conditions observed may present danger. This is different from a C1, C2, or C3 code — an FI is not a defect classification but an acknowledgement that more investigation is needed before a definitive classification can be given, and the area observed may carry a risk. Common reasons for an FI include: suspected concealed wiring fault that requires lifting floorboards to verify; an inaccessible junction box that needs to be opened; or an unusual test result that needs investigation with the supply disconnected. Do not treat FI as a minor administrative note. The further investigation should be arranged without delay; it may clear the FI (no defect found) or may result in a C1, C2, or C3 classification once the area has been fully examined.',
   },
 ];
 
@@ -176,7 +177,10 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit / distribution board:</strong> condition, labelling,
-                protective devices (MCBs, RCDs, RCBOs), main switch, connections.
+                protective devices (MCBs, RCDs, RCBOs), main switch, connections. Under BS
+                7671:2018+A4:2026 Reg 411.3.4, domestic AC lighting circuits must have additional
+                protection by an RCD rated ≤30 mA — absence of this protection on a domestic
+                lighting circuit must be recorded as an observation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -229,10 +233,12 @@ const sections = [
           installation and recording the sampling rate on the EICR.
         </p>
         <p>
-          Guidance Note 3 (GN3) provides guidance on appropriate sampling rates. For a standard
-          domestic property, the expectation is that every circuit is tested. For a large commercial
-          installation with hundreds of circuits, a sampling rate of 10% to 25% may be appropriate,
-          depending on the age and condition of the installation.
+          Guidance Note 3 (GN3) Chapter 8 Reg 8.2 defines sampling as the procedure where, for
+          groups of similar circuits, not all circuits are tested provided an appropriate sampling
+          plan is justified. Crucially, GN3 requires that sampling must be justified by a formal
+          risk assessment, and the details of that justification must be documented in the Schedule
+          of Inspections and Schedule of Test Results. Sampling is not simply a matter of agreeing a
+          percentage with a client — the risk-assessment basis is a GN3 obligation.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-4">
@@ -240,9 +246,13 @@ const sections = [
             <div>
               <h4 className="font-bold text-white mb-2">Sampling best practice</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
-                <li>For domestic properties: test every circuit. Sampling is not appropriate.</li>
                 <li>
-                  For commercial properties: agree the sampling rate with the client before
+                  Justify any sampling approach by a risk assessment before starting. Document the
+                  justification in the Schedule of Inspections and Schedule of Test Results (GN3 Ch
+                  8 Reg 8.2).
+                </li>
+                <li>
+                  For commercial properties: agree the sampling approach with the client before
                   starting. Record it clearly on the EICR.
                 </li>
                 <li>
@@ -282,11 +292,21 @@ const sections = [
         </p>
         <p>
           Instead, the inspector uses test results to infer the condition of concealed wiring.
-          Insulation resistance testing at 500V DC can detect degraded insulation. Continuity
+          Insulation resistance testing at 500 V DC can detect degraded insulation. Continuity
           testing can detect broken or high-resistance conductors. Earth fault loop impedance
           testing can reveal issues with the protective conductor. But none of these tests can
           detect physical damage to cable sheathing, incorrect installation methods, or mechanical
           damage that has not yet affected the electrical properties.
+        </p>
+        <p>
+          An important testing limitation applies where sensitive equipment — electronic controls,
+          dimmer modules, data equipment, or similar — is connected on the circuit. Under BS
+          7671:2018+A4:2026 Reg 643.3, where connected equipment is likely to be influenced by or
+          damaged by the standard test voltage, a 250 V DC insulation resistance test shall be used
+          with the equipment connected. This reduced test voltage produces a lower minimum
+          acceptable resistance reading and is a relevant limitation that should be recorded on the
+          EICR (for example: "IR test conducted at 250 V DC — sensitive equipment connected on
+          lighting circuit 3").
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-4">
@@ -502,6 +522,25 @@ const sections = [
                 vegetation.
               </li>
             </ul>
+          </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-2">
+                  A4:2026 AFDD requirement — HMOs and Higher Risk Buildings
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Under BS 7671:2018+A4:2026 Reg 421.1.7, arc fault detection devices (AFDDs) are
+                  mandatory on final circuits supplying socket-outlets rated ≤32 A in Houses in
+                  Multiple Occupation (HMOs), Higher Risk Residential Buildings, purpose-built
+                  student accommodation, and care homes. When inspecting these premises, the absence
+                  of AFDDs on qualifying socket circuits must be recorded as an observation. This is
+                  one of the significant A4:2026 changes directly affecting EICR compliance checks
+                  on HMO properties.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </>

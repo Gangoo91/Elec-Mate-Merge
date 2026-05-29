@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -14,7 +15,109 @@ import {
   Brain,
   CheckCircle,
   AlertTriangle,
+  Calculator,
 } from 'lucide-react';
+
+function OTJHoursCalculator() {
+  const [contractedHours, setContractedHours] = useState(37.5);
+  const [durationYears, setDurationYears] = useState(4);
+  const [holidayWeeks, setHolidayWeeks] = useState(5.6);
+
+  const workingWeeksPerYear = 52 - holidayWeeks;
+  const totalWorkingWeeks = workingWeeksPerYear * durationYears;
+  const weeklyOTJHours = contractedHours * 0.2;
+  const totalOTJHours = Math.round(weeklyOTJHours * totalWorkingWeeks);
+
+  return (
+    <div className="rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-5 sm:p-7">
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-lg bg-yellow-500/15 flex items-center justify-center shrink-0">
+          <Calculator className="w-5 h-5 text-yellow-400" />
+        </div>
+        <div>
+          <h3 className="font-bold text-white text-base leading-tight">OTJ Hours Calculator</h3>
+          <p className="text-white/60 text-xs mt-0.5">20% rule — adjust to your contract</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div>
+          <label className="block text-xs font-medium text-white/70 mb-1.5">
+            Contracted hours / week
+          </label>
+          <input
+            type="number"
+            min={16}
+            max={60}
+            step={0.5}
+            value={contractedHours}
+            onChange={(e) => setContractedHours(Number(e.target.value))}
+            className="w-full h-11 rounded-lg bg-white/[0.07] border border-white/20 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/20 px-3 text-white text-base touch-manipulation"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-white/70 mb-1.5">
+            Apprenticeship length (years)
+          </label>
+          <input
+            type="number"
+            min={1}
+            max={6}
+            step={0.5}
+            value={durationYears}
+            onChange={(e) => setDurationYears(Number(e.target.value))}
+            className="w-full h-11 rounded-lg bg-white/[0.07] border border-white/20 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/20 px-3 text-white text-base touch-manipulation"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-white/70 mb-1.5">
+            Holiday weeks / year
+          </label>
+          <input
+            type="number"
+            min={0}
+            max={12}
+            step={0.2}
+            value={holidayWeeks}
+            onChange={(e) => setHolidayWeeks(Number(e.target.value))}
+            className="w-full h-11 rounded-lg bg-white/[0.07] border border-white/20 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/20 px-3 text-white text-base touch-manipulation"
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-xl bg-white/[0.06] border border-white/10 p-4 text-center">
+          <p className="text-xs text-white/60 mb-1">Weekly OTJ target</p>
+          <p className="text-3xl font-bold text-yellow-400">{weeklyOTJHours.toFixed(1)}</p>
+          <p className="text-xs text-white/50 mt-0.5">hours / week</p>
+        </div>
+        <div className="rounded-xl bg-white/[0.06] border border-white/10 p-4 text-center">
+          <p className="text-xs text-white/60 mb-1">Total OTJ requirement</p>
+          <p className="text-3xl font-bold text-yellow-400">{totalOTJHours.toLocaleString()}</p>
+          <p className="text-xs text-white/50 mt-0.5">hours over {durationYears} yrs</p>
+        </div>
+      </div>
+      <p className="mt-4 text-[11px] text-white/40 leading-relaxed">
+        Based on the ESFA 20% rule. Total = contracted hours × 0.2 × (52 − holiday weeks) × years.
+        Your training provider may track a lower documented figure — college attendance is often
+        recorded centrally.
+      </p>
+    </div>
+  );
+}
+
+const howToSteps = [
+  {
+    name: 'Determine your weekly contracted hours',
+    text: 'Find the number of paid working hours per week in your employment contract. Common figures for electrical apprentices are 37.5, 40, or 30 hours per week.',
+  },
+  {
+    name: 'Calculate 20% of weekly contracted hours',
+    text: 'Multiply your weekly contracted hours by 0.2. For a 37.5-hour week this gives 7.5 hours per week; for a 30-hour week it gives 6 hours per week.',
+  },
+  {
+    name: 'Multiply over the full apprenticeship duration',
+    text: 'Multiply your weekly OTJ figure by the number of working weeks in the apprenticeship. For a 4-year programme with 48 working weeks per year, this is approximately 1,440 hours on a 37.5-hour week (7.5 × 48 × 4).',
+  },
+];
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -39,7 +142,7 @@ const keyTakeaways = [
   'Off-the-job training means at least 20% of your paid working hours must be spent learning new knowledge, skills, and behaviours related to your apprenticeship. This is not just college — it includes many activities beyond the classroom.',
   'Activities that count include college days, online learning, shadowing experienced electricians, mentoring sessions, manufacturer training, industry visits, directed study, and practice of new skills. The key test is whether it teaches you something new relevant to the apprenticeship standard.',
   'Activities that do not count include performing normal work duties you already know how to do, English and maths functional skills study, and any training not directly relevant to the apprenticeship standard.',
-  'On a typical 30-hour contracted week, 20% equals 6 hours per week of off-the-job training. Over a 4-year apprenticeship, this totals approximately 1,248 hours — though the practical target tracked by most providers is around 400 hours of documented evidence.',
+  'On a typical 30-hour contracted week, 20% equals 6 hours per week of off-the-job training. Over a 4-year apprenticeship this totals roughly 1,152–1,440 hours depending on contracted hours and holidays. Many providers separately track approximately 400 hours of individually documented evidence — this is provider practice, not an ESFA mandated floor; the only regulatory requirement is 20% of total paid hours (ESFA Apprenticeship Funding Rules).',
   'Elec-Mate OJT Tracker automatically logs your off-the-job hours against the 400-hour target. It categorises activities, tracks compliance percentage in real time, collects evidence, and generates Ofsted-ready records effortlessly.',
 ];
 
@@ -435,9 +538,7 @@ const sections = [
           evidence to each entry — a photograph from a training session, a certificate from a
           manufacturer course, a screenshot of a completed quiz, or a note from a mentoring session.
           This evidence strengthens your OTJ record and links naturally to your{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">
-            apprentice portfolio
-          </SEOInternalLink>
+          <SEOInternalLink href="/apprentice-portfolio-guide">apprentice portfolio</SEOInternalLink>
           .
         </p>
       </>
@@ -607,8 +708,17 @@ export default function OffJobTrainingHoursPage() {
       }
       heroSubtitle="Every electrical apprentice must spend at least 20% of their paid working hours on off-the-job training. This guide explains what that means, what activities count, how to calculate and record your hours, and how Elec-Mate's OJT Tracker makes compliance effortless."
       readingTime={15}
+      answerBox={{
+        question: 'How many off-the-job training hours does an electrical apprentice need?',
+        answer:
+          'At least 20% of total paid working hours, as required by the ESFA Apprenticeship Funding Rules. On a standard 37.5-hour week that is 7.5 hours per week. Over a 4-year apprenticeship this totals approximately 1,440 hours. Many providers separately track around 400 hours of individually documented evidence, though the sole regulatory requirement is the 20% threshold.',
+      }}
+      embeddedTool={<OTJHoursCalculator />}
       keyTakeaways={keyTakeaways}
       sections={sections}
+      howToSteps={howToSteps}
+      howToHeading="How to Calculate Your Off-the-Job Training Hours"
+      howToDescription="Use these three steps to work out your 20% off-the-job training requirement from your contracted hours and apprenticeship duration."
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Off-the-Job Training"
       relatedPages={relatedPages}

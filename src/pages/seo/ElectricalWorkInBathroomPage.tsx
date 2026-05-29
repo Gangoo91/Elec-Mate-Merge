@@ -34,6 +34,7 @@ const tocItems = [
   { id: 'zone-1', label: 'Zone 1: Above the Bath or Shower' },
   { id: 'zone-2', label: 'Zone 2: 0.6m from the Bath or Shower' },
   { id: 'outside-zones', label: 'Outside the Zones' },
+  { id: 'supplementary-bonding', label: 'Supplementary Bonding' },
   { id: 'ip-ratings', label: 'IP Ratings for Each Zone' },
   { id: 'extract-fans', label: 'Bathroom Extract Fans' },
   { id: 'shower-circuits', label: 'Electric Shower Circuits' },
@@ -45,9 +46,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 7671 Section 701 divides bathrooms into Zone 0, Zone 1, Zone 2, and an area outside the zones. Each zone has specific requirements for what equipment can be installed and what IP rating is required.',
-  'Zone 0 (inside the bath or shower tray) requires IPX7 minimum and only permits SELV (Separated Extra-Low Voltage) equipment rated at 12V maximum.',
+  'Zone 0 (inside the bath or shower tray) requires IPX7 minimum and only permits SELV (Separated Extra-Low Voltage) equipment at a nominal voltage not exceeding 12V AC RMS or 30V ripple-free DC (Reg 701.55).',
   'Zone 1 (above the bath to 2.25m from the floor) requires IPX4 minimum (IPX5 where water jets are used for cleaning) and permits SELV equipment and water heaters (showers, instantaneous heaters).',
-  'All electrical work in a bathroom is notifiable under Part P of the Building Regulations (England and Wales), regardless of whether it involves a new circuit.',
+  'All electrical work in a bathroom is notifiable under Part P of the Building Regulations (England and Wales). This includes like-for-like replacements such as a light fitting or extractor fan — a new circuit is not required to trigger notification.',
   'Elec-Mate guides electricians through bathroom zone requirements, auto-validates IP ratings, and produces the EIC with all bathroom-specific inspection items completed.',
 ];
 
@@ -55,7 +56,7 @@ const faqs = [
   {
     question: 'Can I have a socket in a bathroom in the UK?',
     answer:
-      'Standard 13A socket outlets are not permitted in bathrooms in the UK. BS 7671 Section 701 prohibits socket outlets in Zone 0, Zone 1, and Zone 2. Outside the zones, a standard socket could theoretically be installed, but in practice most domestic bathrooms are too small to have an area outside the zones. The only sockets permitted in bathrooms are shaver supply units complying with BS EN 61558-2-5 (formerly BS 3535). These are double-insulated transformers that provide an isolated supply — they can be installed in Zone 2 or outside the zones. They are commonly seen as dual-voltage (110V/240V) units for electric shavers and toothbrushes. If you need a 13A socket for an appliance in a bathroom, it must be installed outside the bathroom in an adjacent room or hallway.',
+      'Standard 230V (13A) socket outlets are prohibited in Zone 0, Zone 1 and Zone 2. Beyond Zone 2, a 230V socket outlet is only permitted where it is sited at least 2.5m horizontally from the Zone 1 boundary (BS 7671 Reg 701.418.2, OSG 4.6.4). In practice this distance rules out sockets in almost all domestic bathrooms — for example, if the Zone 1 boundary is 0.8m from the bath edge, the socket must be at least 3.3m from the bath. The only sockets permitted within a bathroom are shaver supply units complying with BS EN 61558-2-5 (formerly BS 3535). These are double-insulated transformers that provide an isolated supply — they can be installed in Zone 2 or further from Zone 1. They are commonly seen as dual-voltage (110V/240V) units for electric shavers and toothbrushes. If you need a 13A socket for an appliance, it must be installed outside the bathroom in an adjacent room or hallway.',
   },
   {
     question: 'What IP rating do I need for a bathroom light?',
@@ -115,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for shower circuits and bathroom installations following BS 7671 Appendix 4.',
@@ -197,9 +198,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage:</strong> Only SELV (Separated Extra-Low Voltage) at a maximum of
-                12V AC or 30V DC is permitted. The SELV source (safety transformer) must be located
-                outside Zone 0, Zone 1, and Zone 2.
+                <strong>Voltage:</strong> Only SELV (Separated Extra-Low Voltage) at a nominal
+                voltage not exceeding 12V AC RMS or 30V ripple-free DC is permitted (Reg 701.55).
+                The SELV source (safety transformer) must be located outside Zone 0, Zone 1, and
+                Zone 2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -263,6 +265,19 @@ const sections = [
           in Zone 1 and must be connected via a fused connection unit or dedicated circuit with the
           switch located outside the zones.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <p className="text-white text-sm leading-relaxed">
+              <strong>SELV/PELV voltage limits by zone (Reg 701.55):</strong> Zone 0 — maximum 12V
+              AC RMS or 30V ripple-free DC. Zone 1 — maximum 25V AC RMS or 60V ripple-free DC (SELV
+              or PELV). In both zones the safety source must be located outside Zones 0, 1 and 2.
+              These limits matter for low-voltage lighting design — a 12V AC transformer serving
+              Zone 0 downlights must sit outside all three zones, even if that means locating it in
+              the ceiling void above Zone 2.
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
@@ -321,6 +336,19 @@ const sections = [
           The area outside Zone 0, Zone 1, and Zone 2 has fewer restrictions, but bathrooms are
           still considered special locations under BS 7671. The key rules outside the zones:
         </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-white text-sm leading-relaxed">
+              <strong>On-site gotcha — space under the bath (Reg 701.32.3):</strong> The space
+              beneath a bath panel is classified as Zone 1, not outside the zones — unless that
+              space is only accessible with a tool (e.g. screws holding the panel). Where the bath
+              panel is removable by hand, any wiring, fused connection units, or isolators in that
+              void must meet Zone 1 requirements (IPX4, no socket outlets). This is a commonly
+              missed item on EICRs.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -333,10 +361,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard socket outlets:</strong> Technically permitted outside the zones,
-                but in practice most domestic bathrooms do not have a large enough area outside the
-                zones to accommodate a socket. If installed, the socket must be RCD-protected
-                (30mA).
+                <strong>Standard 230V socket outlets:</strong> Permitted only where sited at least
+                2.5m horizontally from the Zone 1 boundary (Reg 701.418.2 / OSG 4.6.4). In practice
+                this distance makes sockets impractical in most domestic bathrooms. For example, if
+                the Zone 1 boundary is 0.8m from the bath edge, the socket must be at least 3.3m
+                from the bath. If installed, the socket must be RCD-protected (30mA).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -353,6 +382,74 @@ const sections = [
           In many small UK bathrooms, the entire room falls within Zone 1 and Zone 2, with no area
           "outside the zones." In larger bathrooms, there may be a small area outside the zones —
           typically at the far end of the room from the bath/shower.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'supplementary-bonding',
+    heading: 'Supplementary Bonding in Bathrooms',
+    content: (
+      <>
+        <p>
+          Regulation 701.415.2 requires local supplementary protective equipotential bonding in
+          rooms containing a bath or shower. This connects together the terminals of the protective
+          conductor of each circuit supplying Class I and Class II equipment to all accessible
+          extraneous-conductive-parts within the room.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-base mb-4">
+            What must be bonded (Reg 701.415.2)
+          </h3>
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Metallic service pipes:</strong> All accessible metallic water supply and
+                waste pipes (e.g. copper supply, chrome waste trap).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Central heating and air conditioning:</strong> Accessible metallic heating
+                pipes and pipework entering or within the bathroom.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Accessible metallic structural parts:</strong> Any accessible metallic
+                structural elements of the building. Note: metallic door architraves and window
+                frames are NOT considered extraneous-conductive-parts unless connected to metallic
+                structural parts of the building.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-white text-sm leading-relaxed font-semibold mb-1">
+                Three-condition test for omitting supplementary bonding
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                Supplementary bonding may be omitted where the building already has a protective
+                equipotential bonding system per Reg 411.3.1.2 AND all three of the following
+                conditions are met: (d) all final circuits in the bathroom comply with automatic
+                disconnection requirements (Reg 411.3.2); (e) all final circuits have additional
+                30mA RCD protection (Reg 415.1.1); (f) all extraneous-conductive-parts in the
+                location are effectively connected to the main protective equipotential bonding. All
+                three conditions must be satisfied — meeting only one or two is not sufficient.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p>
+          Supplementary bonding is one of the most frequently missed items on bathroom EICRs and is
+          an active inspection item on the EIC. When inspecting an existing installation, verify
+          that bonding conductors are present, correctly labelled, and properly terminated.
         </p>
       </>
     ),

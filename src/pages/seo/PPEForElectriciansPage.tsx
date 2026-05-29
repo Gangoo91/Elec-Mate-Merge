@@ -45,6 +45,8 @@ const keyTakeaways = [
   'Arc flash PPE is categorised into 4 levels based on incident energy (cal/cm squared). Category 2 (8 cal/cm squared) is the minimum recommended for work on or near energised distribution boards.',
   'Voltage-rated tools (VDE 1000V) compliant with BS EN 60900 are required for any work on or near live conductors. Standard chrome vanadium tools are not insulated.',
   'Employers have a legal duty under the Personal Protective Equipment at Work Regulations 2022 to provide suitable PPE free of charge, maintain it, and train workers in its correct use.',
+  'On solar PV installations, BS 7671 Regulation 712.410.101 requires that DC-side conductors are treated as live and energised at all times — Class 0 insulated gloves and VDE tools are mandatory even when the AC supply is fully isolated.',
+  'The Electricity at Work Regulations 1989 (Reg 14) prohibit live working unless it is unreasonable to work dead and suitable precautions — including appropriate PPE — are in place. The PPE Regulations 2022 govern provision; EWR 1989 governs when live work is permissible at all.',
 ];
 
 const faqs = [
@@ -430,6 +432,35 @@ const sections = [
           not guess — the difference between Category 1 and Category 4 can be the difference between
           minor injury and fatal burns.
         </p>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <Zap className="w-6 h-6 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Solar PV: DC Side Is Always Live (BS 7671 Reg 712.410.101)
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Regulation 712.410.101 states that electrical equipment on the
+                DC side of a solar PV installation{' '}
+                <strong>shall be considered to be energised</strong>, even when the AC supply is
+                disconnected from the grid and even when the inverter has been isolated from the DC
+                side. PV strings continue to generate voltage in daylight regardless of isolation
+                actions on the AC side. This means Class 0 (1,000V AC) insulated gloves and
+                VDE-rated tools are mandatory for any work on DC-side conductors, combiner boxes, or
+                string connections — there is no safe isolation equivalent for the DC side during
+                daylight hours. See the{' '}
+                <SEOInternalLink href="/tools/solar-pv-certificate">
+                  Solar PV installation certificate
+                </SEOInternalLink>{' '}
+                and{' '}
+                <SEOInternalLink href="/tools/ev-charging-certificate">
+                  EV charging certificate
+                </SEOInternalLink>{' '}
+                for the related documentation requirements.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -489,6 +520,25 @@ const sections = [
           must never be used as a substitute for VDE tools when working on or near live conductors.
           The grip on a standard tool is for comfort, not electrical protection.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                GS 38: Test Leads and Voltage Indicators
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                When proving dead before removing PPE, HSE Guidance Note{' '}
+                <SEOInternalLink href="/guides/gs-38-proving-dead">GS 38</SEOInternalLink> requires
+                that voltage indicators and test probes also meet safety requirements — including
+                finger barriers, shrouded connectors, and fused test leads where the instrument
+                manufacturer advises. Insulated VDE tools protect you during work on live
+                conductors; GS 38-compliant test equipment protects you during the preceding
+                proving-dead step. Both are required parts of a safe system of work.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Track PPE and tool inspection dates"
           description="Elec-Mate's site safety tools help you manage PPE inspection records, tool calibration dates, and training certificates. Never miss an expiry date."
@@ -632,6 +682,28 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Statutory Framework: Electricity at Work Regulations 1989
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                The primary statutory basis for electrical PPE requirements is the{' '}
+                <strong>Electricity at Work Regulations 1989 (EWR 1989)</strong>, not just the PPE
+                Regulations 2022. Regulation 14 of EWR 1989 prohibits live working unless it is
+                unreasonable to work dead and suitable precautions are in place to prevent injury —
+                PPE is one of those precautions. Regulation 16 requires that any person carrying out
+                live work must be competent to do so. The PPE Regulations 2022 govern the provision,
+                maintenance, and training obligations; EWR 1989 governs when live work is
+                permissible at all. Both apply simultaneously. HSE publication HSR25 provides
+                authoritative guidance on meeting EWR 1989 obligations in practice, and is the
+                framework HSE inspectors and courts apply when assessing compliance.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           The 2022 regulations extended PPE duties to cover limb (b) workers — those who are not
           employees but work under a contract to personally perform work. This includes many agency
@@ -663,7 +735,7 @@ const sections = [
 export default function PPEForElectriciansPage() {
   return (
     <GuideTemplate
-      title="Electrical Clothing Requirements 2026"
+      title="PPE for Electricians: Gloves, Arc Flash, Boots & Legal Duties (2026)"
       description="PPE for UK electricians on site: insulated gloves (Class 0/00), arc flash suits, safety boots, hi-vis, helmets, eye protection — what + when + how."
       datePublished="2025-04-20"
       dateModified="2026-05-18"

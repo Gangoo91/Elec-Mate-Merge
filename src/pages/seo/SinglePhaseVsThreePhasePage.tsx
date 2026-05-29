@@ -83,23 +83,26 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for single phase and three phase circuits with voltage drop calculation.',
+    description:
+      'Size cables for single phase and three phase circuits with voltage drop calculation.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete EIC certificates for single and three phase installations on your phone.',
+    description:
+      'Complete EIC certificates for single and three phase installations on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Systems Guide',
-    description: 'TN-S, TN-C-S and TT earthing explained — essential knowledge for any supply type.',
+    description:
+      'TN-S, TN-C-S and TT earthing explained — essential knowledge for any supply type.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -123,11 +126,10 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the difference between single phase and three phase electrical supplies
-          is essential for designing, installing, and certifying electrical systems. The choice
-          of supply type determines the maximum load available, the equipment that can be
-          connected, the wiring and protection requirements, and the cost and complexity of
-          the installation.
+          Understanding the difference between single phase and three phase electrical supplies is
+          essential for designing, installing, and certifying electrical systems. The choice of
+          supply type determines the maximum load available, the equipment that can be connected,
+          the wiring and protection requirements, and the cost and complexity of the installation.
         </p>
         <p>
           In the UK, most domestic properties are supplied with single phase 230V. Commercial and
@@ -149,18 +151,23 @@ const sections = [
       <>
         <p>
           A single phase supply consists of one line conductor (L) and one neutral conductor (N),
-          providing 230V between L and N. The standard UK domestic service is provided via a
-          60A or 100A DNO cut-out fuse. The maximum continuous load is:
+          providing 230V between L and N. The standard UK domestic service is provided via a 60A or
+          100A DNO cut-out fuse. The maximum continuous load is:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-base mb-3">Single Phase Supply Characteristics</h3>
+          <h3 className="font-bold text-white text-base mb-3">
+            Single Phase Supply Characteristics
+          </h3>
           <ul className="space-y-2 text-white text-sm">
             <li>• Voltage: 230V line to neutral (L-N)</li>
             <li>• Standard cut-out fuse: 60A or 100A</li>
             <li>• Maximum continuous load at 100A: 23kW (23kVA at unity power factor)</li>
             <li>• Standard for all UK domestic properties</li>
             <li>• Small commercial premises (offices, small retail): single phase 100A common</li>
-            <li>• RCD requirement: Regulation 411.3.4 — 30mA RCD for all socket outlet circuits in domestic installations</li>
+            <li>
+              • RCD requirement: Regulation 411.3.4 — 30mA RCD for all socket outlet circuits in
+              domestic installations
+            </li>
           </ul>
         </div>
         <p>
@@ -179,12 +186,14 @@ const sections = [
       <>
         <p>
           A three phase supply consists of three line conductors (L1, L2, L3) and a neutral
-          conductor (N), providing 230V from each line to neutral and 400V between any two
-          lines. The three phases are 120° apart in time, so the combined power flow is smooth
-          and continuous — unlike single phase which pulsates at twice the supply frequency.
+          conductor (N), providing 230V from each line to neutral and 400V between any two lines.
+          The three phases are 120° apart in time, so the combined power flow is smooth and
+          continuous — unlike single phase which pulsates at twice the supply frequency.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-base mb-3">Three Phase Supply Characteristics</h3>
+          <h3 className="font-bold text-white text-base mb-3">
+            Three Phase Supply Characteristics
+          </h3>
           <ul className="space-y-2 text-white text-sm">
             <li>• Voltage: 230V line to neutral (L-N), 400V line to line (L-L)</li>
             <li>• Standard commercial cut-out: 100A per phase (69kVA total capacity)</li>
@@ -208,29 +217,29 @@ const sections = [
     content: (
       <>
         <p>
-          Three phase supply becomes necessary when the connected electrical load exceeds what
-          a single phase supply can reasonably provide. The practical threshold is approximately
-          15kW of continuous electrical load, though this depends on the diversity of the
-          installation. Specific applications that typically require three phase:
+          Three phase supply becomes necessary when the connected electrical load exceeds what a
+          single phase supply can reasonably provide. The practical threshold is approximately 15kW
+          of continuous electrical load, though this depends on the diversity of the installation.
+          Specific applications that typically require three phase:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three phase motors above 2.2kW:</strong> Electric motors above 2.2kW
-                are typically three phase because single phase motors of this size have poor
-                efficiency and starting characteristics. Motors for large air handling units,
-                commercial refrigeration compressors, industrial machinery, and lifts are
-                almost always three phase.
+                <strong>Three phase motors above 2.2kW:</strong> Electric motors above 2.2kW are
+                typically three phase because single phase motors of this size have poor efficiency
+                and starting characteristics. Motors for large air handling units, commercial
+                refrigeration compressors, industrial machinery, and lifts are almost always three
+                phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large EV charging:</strong> 22kW AC EV chargers require three phase
-                (3 × 32A). 7.4kW chargers can be single phase. DC rapid chargers (50kW, 150kW)
-                require a three phase supply at the charge point operator's premises.
+                <strong>Large EV charging:</strong> 22kW AC EV chargers require three phase (3 ×
+                32A). 7.4kW chargers can be single phase. DC rapid chargers (50kW, 150kW) require a
+                three phase supply at the charge point operator's premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -244,9 +253,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large heat pumps and HVAC:</strong> Air source heat pumps above 12kW
-                output and large commercial HVAC systems typically require three phase. Some
-                domestic heat pumps (16kW and above) may require three phase.
+                <strong>Large heat pumps and HVAC:</strong> Air source heat pumps above 12kW output
+                and large commercial HVAC systems typically require three phase. Some domestic heat
+                pumps (16kW and above) may require three phase.
               </span>
             </li>
           </ul>
@@ -280,12 +289,12 @@ const sections = [
           </div>
         </div>
         <p>
-          The application process: (1) Submit a new connection application to the DNO. (2) The
-          DNO carries out a network study and provides a quotation. (3) Accept the quotation and
-          pay the connection charge. (4) DNO carries out the network works (new cable, transformer
-          upgrade if required). (5) DNO installs the new service head and meter position equipment.
-          (6) The electrician installs the new consumer unit and three phase wiring. (7) DNO
-          energises the supply.
+          The application process: (1) Submit a new connection application to the DNO. (2) The DNO
+          carries out a network study and provides a quotation. (3) Accept the quotation and pay the
+          connection charge. (4) DNO carries out the network works (new cable, transformer upgrade
+          if required). (5) DNO installs the new service head and meter position equipment. (6) The
+          electrician installs the new consumer unit and three phase wiring. (7) DNO energises the
+          supply.
         </p>
       </>
     ),
@@ -296,8 +305,8 @@ const sections = [
     content: (
       <>
         <p>
-          In a three phase installation, loads must be distributed as evenly as possible across
-          the three phases. Unbalanced loading has several negative consequences:
+          In a three phase installation, loads must be distributed as evenly as possible across the
+          three phases. Unbalanced loading has several negative consequences:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -305,9 +314,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Increased neutral current:</strong> With single phase loads, the neutral
-                carries the vector sum of the three phase currents. A perfectly balanced three
-                phase load has zero neutral current. An unbalanced load causes neutral current that
-                can approach line current in severely unbalanced installations.
+                carries the vector sum of the three phase currents. A perfectly balanced three phase
+                load has zero neutral current. An unbalanced load causes neutral current that can
+                approach line current in severely unbalanced installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,8 +324,8 @@ const sections = [
               <span>
                 <strong>Voltage imbalance:</strong> Unbalanced loading causes voltage imbalance —
                 the voltage on the heavily loaded phase is lower and the lightly loaded phase is
-                higher. Even a 2% voltage imbalance can reduce three phase motor efficiency by
-                up to 8% and significantly reduce motor life.
+                higher. Even a 2% voltage imbalance can reduce three phase motor efficiency by up to
+                8% and significantly reduce motor life.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -330,10 +339,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          As a practical guide for distributing single phase circuits: cycle phase allocation
-          across circuits — L1 for circuit 1, L2 for circuit 2, L3 for circuit 3, then repeat.
-          For large single phase loads (EV chargers, storage heaters), assign the heaviest single
-          loads to different phases.
+          As a practical guide for distributing single phase circuits: cycle phase allocation across
+          circuits — L1 for circuit 1, L2 for circuit 2, L3 for circuit 3, then repeat. For large
+          single phase loads (EV chargers, storage heaters), assign the heaviest single loads to
+          different phases.
         </p>
       </>
     ),
@@ -375,9 +384,9 @@ const sections = [
       <>
         <p>
           Three phase installations require careful load schedule design, phase allocation,
-          protection co-ordination, and testing. The earth fault loop impedance must be measured
-          on all three phases, and the voltage between all phase combinations (L1-L2, L2-L3,
-          L1-L3) must be verified at commissioning.
+          protection co-ordination, and testing. The earth fault loop impedance must be measured on
+          all three phases, and the voltage between all phase combinations (L1-L2, L2-L3, L1-L3)
+          must be verified at commissioning.
         </p>
         <SEOAppBridge
           title="Certificate three phase installations on your phone"

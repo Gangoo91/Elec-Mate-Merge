@@ -36,8 +36,8 @@ const tocItems = [
 const keyTakeaways = [
   'Electric underfloor heating (UFH) falls under BS 7671:2018+A4:2026 Section 753 (Heating Cables and Embedded Heating Systems), which imposes additional requirements beyond those for standard fixed heating circuits, including temperature limiting thermostats and specific installation depths.',
   'Mat systems (pre-spaced heating cable on a fibreglass mesh) are faster to install in regular-shaped rooms; loose wire systems are better suited to irregular spaces and provide greater control over watt density. Both types must be installed in accordance with the manufacturer instructions.',
-  'A temperature limiting thermostat (floor sensor) is mandatory under BS 7671 Regulation 753.424 to prevent overheating of the floor construction and cable sheath. Standard air-sensing thermostats are insufficient on their own for floors containing UFH cable.',
-  'Every electric UFH circuit must be protected by a 30mA RCD (typically an RCBO at the consumer unit) per BS 7671 Regulation 411.3.3. A separate dedicated circuit from the consumer unit is strongly recommended for UFH rather than connecting to an existing ring main.',
+  'A temperature limiting thermostat (floor sensor) is mandatory under BS 7671 Regulation 753.424.201 to prevent overheating of the floor construction and cable sheath. The floor surface temperature must be limited to no more than 35°C (Regulation 753.423 NOTE). Two distinct limits apply: the walkable floor surface must not exceed 35°C (Reg 753.423), and the heating unit installation zone must not exceed 80°C (Reg 753.424.201). Standard air-sensing thermostats are insufficient on their own for floors containing UFH cable.',
+  'Every electric UFH circuit must be protected by a 30mA RCD (typically an RCBO at the consumer unit) per BS 7671 Regulation 753.415.1 (circuits supplying heating units shall have additional protection by RCDs having the characteristics of Regulation 415.1.1). A separate dedicated circuit from the consumer unit is strongly recommended for UFH rather than connecting to an existing ring main.',
   'In bathroom zones (Zone 0, 1, and 2 per BS 7671 Section 701), electric UFH below the floor is permitted provided the heating element is covered by at least 50mm of material and the circuit is protected by a 30mA RCD. The thermostat controller must be outside zone 2 unless it is suitable for the zone.',
 ];
 
@@ -45,7 +45,7 @@ const faqs = [
   {
     question: 'What is BS 7671 Regulation 753 and why does it apply to underfloor heating?',
     answer:
-      'BS 7671:2018+A4:2026 Section 753 covers heating cables, heating units, and embedded heating systems — a category that includes electric underfloor heating mats and loose wire systems. The section imposes requirements specifically for this type of installation because heating elements embedded in or beneath floor constructions present risks of overheating the floor, adjacent combustible materials, and the cable sheath itself. Key requirements include the use of temperature limiting devices (Regulation 753.424), minimum installation depths for different floor types, and that the system cannot be covered by fixed thermal insulation on the floor above the element. Regulation 753.2 also requires that the manufacturer instructions are followed, as these form part of the compliance evidence.',
+      'BS 7671:2018+A4:2026 Section 753 covers heating cables, heating units, and embedded heating systems — a category that includes electric underfloor heating mats and loose wire systems. The section imposes requirements specifically for this type of installation because heating elements embedded in or beneath floor constructions present risks of overheating the floor, adjacent combustible materials, and the cable sheath itself. Key requirements include the use of temperature limiting devices (Regulation 753.424.201 — limiting the heating unit zone to 80°C and the floor surface to 35°C per Regulation 753.423), minimum installation depths for different floor types, and that the system cannot be covered by fixed thermal insulation on the floor above the element. Regulation 753.2 also requires that the manufacturer instructions are followed, as these form part of the compliance evidence.',
   },
   {
     question: 'What is the difference between a mat system and a loose wire UFH system?',
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'Where should the thermostat be positioned in a bathroom?',
     answer:
-      'In a bathroom, the controller/thermostat must be installed outside zone 2 (measured as greater than 600mm horizontally from the edge of the bath or shower tray) unless the device is specifically rated for the zone. Zone 2 extends from the bath or shower to 600mm horizontally and from the floor to a height of 2.25m. The floor temperature sensor probe is installed under the floor and is connected back to the thermostat with low-voltage wiring — the sensor itself can be within zones. The thermostat must include a floor limiting function to prevent the floor surface exceeding 40\u00b0C per BS 7671 Regulation 753.424.',
+      'In a bathroom, the controller/thermostat must be installed outside zone 2 (measured as greater than 600mm horizontally from the edge of the bath or shower tray) unless the device is specifically rated for the zone. Zone 2 extends from the bath or shower to 600mm horizontally and from the floor to a height of 2.25m. The floor temperature sensor probe is installed under the floor and is connected back to the thermostat with low-voltage wiring — the sensor itself can be within zones. The thermostat must include a floor limiting function to prevent the floor surface exceeding 35\u00b0C (BS 7671 Regulation 753.423 — Protection against burns; the NOTE to that regulation gives 35\u00b0C as the example limit for floor heating systems).',
   },
   {
     question:
@@ -245,9 +245,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thermal insulation above cable:</strong> BS 7671 Regulation 753.424.3
-                prohibits fixed thermal insulation being installed above embedded heating elements.
-                Rugs and mats may be placed temporarily but should not cover the entire heated area
+                <strong>Thermal insulation above cable:</strong> BS 7671 Regulation 753.424.201
+                requires measures to limit the temperature of the heating unit zone to a maximum of
+                80°C — installing fixed thermal insulation above an embedded heating element
+                (blocking heat emission) undermines these measures and is not permitted. Rugs and
+                mats may be placed temporarily but should not cover the entire heated area
                 continuously, as this causes overheating and trips the temperature limiter.
               </span>
             </li>
@@ -263,9 +265,10 @@ const sections = [
       <>
         <p>
           The thermostat is the control centre of an electric UFH system. Modern thermostats combine
-          an air sensor and a floor sensor, providing dual-mode control. BS 7671 Regulation 753.424
-          mandates a temperature limiting device to protect against overheating of the floor
-          construction.
+          an air sensor and a floor sensor, providing dual-mode control. BS 7671 Regulation
+          753.424.201 mandates measures to limit the temperature within the heating unit zone to a
+          maximum of 80°C; Regulation 753.423 further requires the walkable floor surface to be
+          limited to no more than 35°C (by example, per the NOTE to that regulation).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Wiring a UFH Thermostat</h3>
@@ -293,10 +296,11 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature limiting:</strong> Set the floor temperature limit to no more
-                than 40\u00b0C for most floor constructions, or per the floor covering manufacturer
-                specification (e.g. 27\u00b0C for engineered timber). The floor limiter takes
-                priority over the air temperature setpoint — if the floor reaches the limit, the
-                system shuts off regardless of air temperature.
+                than 35\u00b0C for most floor constructions per BS 7671 Regulation 753.423
+                (Protection against burns), or per the floor covering manufacturer specification
+                where lower (e.g. 27\u00b0C for engineered timber). The floor limiter takes priority
+                over the air temperature setpoint — if the floor reaches the limit, the system shuts
+                off regardless of air temperature.
               </span>
             </li>
           </ul>
@@ -311,9 +315,9 @@ const sections = [
       <>
         <p>
           Correct circuit sizing for electric UFH is straightforward once the total installed
-          wattage is known. Every UFH circuit in a domestic installation must be protected by a 30mA
-          RCD — an RCBO at the consumer unit provides both overcurrent and RCD protection in a
-          single device.
+          wattage is known. Every UFH circuit must be protected by a 30mA RCD under BS 7671
+          Regulation 753.415.1 — an RCBO at the consumer unit provides both overcurrent and RCD
+          protection in a single device.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -344,10 +348,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection:</strong> BS 7671 Regulation 411.3.3 requires 30mA RCD
-                protection for all socket outlets and for fixed equipment installed outdoors or in
-                domestic premises. UFH in domestic premises requires 30mA RCD protection as a
-                minimum.
+                <strong>RCD protection:</strong> BS 7671 Regulation 753.415.1 requires that circuits
+                supplying heating units shall have additional protection by RCDs having the
+                characteristics of Regulation 415.1.1 (rated residual operating current not
+                exceeding 30mA). An RCBO at the consumer unit provides both overcurrent and RCD
+                protection in a single device.
               </span>
             </li>
           </ul>
@@ -400,11 +405,7 @@ const sections = [
           consumer unit RCBO installation comply with Section 701. Bathroom electrical work is
           notifiable under Part P in England — use a registered competent person scheme. Document
           the completed installation on an{' '}
-          <SEOInternalLink
-            href="/eic-certificate"
-            label="Electrical Installation Certificate"
-          />
-          .
+          <SEOInternalLink href="/eic-certificate" label="Electrical Installation Certificate" />.
         </p>
       </>
     ),
@@ -432,26 +433,50 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 753.424.1:</strong> Heating systems must be provided with
-                automatic disconnection in the event of overheating. A temperature limiting device
-                (floor sensor thermostat) satisfies this requirement.
+                <strong>Regulation 753.423 — Protection against burns:</strong> In floor areas where
+                contact with skin or footwear is possible, the surface temperature of the floor
+                shall be limited. The NOTE to this regulation gives 35°C as the example maximum for
+                floor heating systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 753.424.3:</strong> Embedded heating elements must not be covered
-                by thermal insulation (fixed) above the element. Rugs may be placed temporarily but
-                must not be permanently fixed over the heated zone.
+                <strong>Regulation 753.424.201 — Overheating protection (A4:2026):</strong> For
+                floor or ceiling heating systems in buildings, one or more of the following shall be
+                applied within the zone where heating units are installed to limit the temperature
+                to a maximum of 80°C: (a) appropriate design of the heating system, (b) appropriate
+                installation, or (c) protective devices for temperature limiting. Note that 80°C is
+                the upper limit for the heating unit zone — the separate 35°C limit in Regulation
+                753.423 governs the walkable floor surface.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 753.424.201 — Inseparable cold tail connections:</strong> Heating
+                units shall be inseparably connected to cold tails — for example, by a crimped
+                connection. This A4:2026 requirement is checked on EICR; a heating element with a
+                detachable or plug-in cold tail connection does not comply.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 753.522.1:</strong> The heating element must be protected against
-                mechanical damage throughout its installed life. A minimum screed or adhesive depth
-                of 3mm above a heating mat element and 50mm above a loose wire element in screed is
-                typical, but manufacturer instructions take precedence.
+                <strong>Regulation 753.415.1 — RCD protection:</strong> Circuits supplying heating
+                units shall have additional protection by RCDs with the characteristics of
+                Regulation 415.1.1 (rated residual operating current not exceeding 30mA).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 753.520.4 — Heating-free areas:</strong> Where room fittings
+                (such as fixed kitchen units, bathroom vanity units, or built-in furniture) are to
+                be attached adjacent to or above UFH elements, heating-free areas shall be provided
+                so that the fittings do not prevent heat emission. This must be planned before cable
+                layout is fixed. Manufacturer instructions typically specify the required
+                clearances.
               </span>
             </li>
           </ul>
@@ -474,10 +499,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge
-                  href="/eic-certificate"
-                  label="Electrical Installation Certificate"
-                />{' '}
+                <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — record UFH circuit details, RCBO rating, floor sensor type, and all test results
                 including pre- and post-installation IR readings.
               </span>
@@ -485,9 +507,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue a
-                minor works certificate when connecting UFH to an existing suitable circuit without
-                consumer unit modifications.
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
+                issue a minor works certificate when connecting UFH to an existing suitable circuit
+                without consumer unit modifications.
               </span>
             </li>
           </ul>

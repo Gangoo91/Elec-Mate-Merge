@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,

@@ -412,7 +412,7 @@ const sections = [
           Circuit design depends on whether the system is conventional or addressable. Conventional
           systems use radial zone circuits — each zone has its own pair of cables running from the
           panel. Addressable systems use loop circuits where a single pair of{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             fire-resistant cable
           </SEOInternalLink>{' '}
           runs from the panel, through every device on the loop, and back to the panel.

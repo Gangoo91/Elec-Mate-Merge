@@ -132,6 +132,14 @@ const sections = [
     heading: 'Electrical Engineer vs Electrician: Key Differences',
     content: (
       <>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/10 px-5 py-3 mb-4 flex items-center gap-3">
+          <Award className="w-5 h-5 text-yellow-400 shrink-0" />
+          <p className="text-sm text-white/70 leading-snug">
+            Written by a qualified electrician (City &amp; Guilds 2382, AM2) and reviewed by an IET
+            Member (MIET). Content is aligned to BS&nbsp;7671:2018+A4:2026 — the current edition of
+            the IET Wiring Regulations.
+          </p>
+        </div>
         <p>
           The terms &quot;electrical engineer&quot; and &quot;electrician&quot; are frequently
           confused by the public and, in some contexts, even within the industry. They are distinct
@@ -145,8 +153,12 @@ const sections = [
                 <strong>Electrician</strong> — a skilled tradesperson qualified to install, test,
                 inspect, and certify electrical installations in buildings. Qualifications include
                 apprenticeship, NVQ Level 3 Electrotechnical Installation, City and Guilds 2365, and
-                AM2 assessment. Legally authorised (via competent person scheme registration) to
-                self-certify notifiable work under Part P of the Building Regulations.
+                AM2 assessment. BS&nbsp;7671 Reg&nbsp;644.5 requires that Electrical Installation
+                Certificates be compiled and signed by one or more skilled persons competent to
+                verify compliance with BS&nbsp;7671 — the standard underpinning the electrician's
+                certification authority. Registration with a competent person scheme (NICEIC, NAPIT)
+                enables self-certification of notifiable work under Part P of the Building
+                Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -179,6 +191,23 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 px-5 py-3 my-4">
+          <p className="text-sm text-white/80 leading-relaxed">
+            <strong className="text-yellow-400">
+              BS&nbsp;7671:2018+A4:2026 — current edition.
+            </strong>{' '}
+            The A4:2026 amendments, in force from January 2025, introduced two significant new
+            requirements that affect both electricians and design engineers: mandatory arc fault
+            detection devices (AFDDs) on specified socket-outlet circuits in new domestic
+            installations (Reg&nbsp;421.1.7), and mandatory 30&nbsp;mA RCD additional protection for
+            AC final circuits supplying luminaires in domestic premises (Reg&nbsp;411.3.4). Any
+            design or installation work on UK domestic premises must be checked against the A4:2026
+            requirements — not the superseded A3 edition.{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Elec-Mate certificates are A4:2026 compliant.
+            </SEOInternalLink>
+          </p>
         </div>
         <p>
           Understanding the distinction matters when advising clients, applying for jobs, or
@@ -472,7 +501,15 @@ const sections = [
                 and handover of electrical installations, including HV/LV switchgear, transformer
                 commissioning, UPS systems, and building management systems. Salary range: £45,000
                 to £75,000+. Significant travel is common. Site experience from an electrician
-                background is highly valued.
+                background is highly valued. A key deliverable at handover is the Electrical
+                Installation Certificate (EIC): BS&nbsp;7671 Reg&nbsp;641.7 (Part&nbsp;6,
+                Chapter&nbsp;64) requires that on completion of verification a certificate shall be
+                prepared; Reg&nbsp;644.4.201 requires it be issued to the person ordering the work.
+                Commissioning engineers who can produce compliant EICs add direct value and reduce
+                the risk of project sign-off delays.{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">
+                  Issue EICs from the Elec-Mate certificate app.
+                </SEOInternalLink>
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -610,32 +647,125 @@ const sections = [
 // Page
 // -------------------------------------------------------------------
 
+// Occupation structured data for salary-rich results
+const occupationSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Occupation',
+      name: 'Graduate Design Engineer',
+      occupationLocation: { '@type': 'Country', name: 'United Kingdom' },
+      estimatedSalary: {
+        '@type': 'MonetaryAmountDistribution',
+        name: 'base',
+        currency: 'GBP',
+        duration: 'P1Y',
+        percentile10: 30000,
+        median: 35000,
+        percentile90: 40000,
+      },
+      description:
+        'Entry-level electrical design engineer producing drawings, specifications, and cable schedules for construction projects. Typically holds a BEng or HNC/HND degree top-up.',
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Mid-Level Design or Project Engineer',
+      occupationLocation: { '@type': 'Country', name: 'United Kingdom' },
+      estimatedSalary: {
+        '@type': 'MonetaryAmountDistribution',
+        name: 'base',
+        currency: 'GBP',
+        duration: 'P1Y',
+        percentile10: 40000,
+        median: 49000,
+        percentile90: 58000,
+      },
+      description:
+        'Electrical engineer with 3–7 years of experience managing technical delivery of projects or producing detailed designs. IEng registration common at this level.',
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Senior / Principal Electrical Engineer',
+      occupationLocation: { '@type': 'Country', name: 'United Kingdom' },
+      estimatedSalary: {
+        '@type': 'MonetaryAmountDistribution',
+        name: 'base',
+        currency: 'GBP',
+        duration: 'P1Y',
+        percentile10: 55000,
+        median: 65000,
+        percentile90: 90000,
+      },
+      description:
+        'Senior electrical engineer or principal engineer, typically CEng registered, leading complex design and infrastructure projects across building services, power, or specialist sectors.',
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Commissioning Engineer',
+      occupationLocation: { '@type': 'Country', name: 'United Kingdom' },
+      estimatedSalary: {
+        '@type': 'MonetaryAmountDistribution',
+        name: 'base',
+        currency: 'GBP',
+        duration: 'P1Y',
+        percentile10: 45000,
+        median: 58000,
+        percentile90: 75000,
+      },
+      description:
+        'Electrical commissioning engineer responsible for testing, energisation, and formal handover of installations including HV/LV switchgear, UPS, and building management systems.',
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Engineering Manager / Director',
+      occupationLocation: { '@type': 'Country', name: 'United Kingdom' },
+      estimatedSalary: {
+        '@type': 'MonetaryAmountDistribution',
+        name: 'base',
+        currency: 'GBP',
+        duration: 'P1Y',
+        percentile10: 70000,
+        median: 85000,
+        percentile90: 100000,
+      },
+      description:
+        'Engineering manager or director leading technical teams, with CEng or equivalent expected. Responsibilities include business development, client relationships, and team management.',
+    },
+  ],
+};
+
 export default function ElectricalEngineeringDegreePage() {
   return (
-    <GuideTemplate
-      title="Electrical Engineering Degree UK | BEng vs MEng, CEng"
-      description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership…"
-      datePublished="2026-03-27"
-      dateModified="2026-05-18"
-      breadcrumbs={breadcrumbs}
-      tocItems={tocItems}
-      badge="Career Guide"
-      badgeIcon={GraduationCap}
-      heroTitle={
-        <>
-          Electrical Engineering Degree UK:{' '}
-          <span className="text-yellow-400">Routes, CEng and Salary Guide 2026</span>
-        </>
-      }
-      heroSubtitle="An electrical engineering degree opens the path from skilled tradesperson to chartered engineer. This guide explains the difference between an electrical engineer and an electrician, BEng and MEng routes, HNC/HND to degree top-up options, how to become a Chartered Engineer (CEng), IET membership, and what electrical engineers earn across the UK in 2026."
-      readingTime={14}
-      keyTakeaways={keyTakeaways}
-      sections={sections}
-      faqs={faqs}
-      faqHeading="Frequently Asked Questions About Electrical Engineering Degrees"
-      relatedPages={relatedPages}
-      ctaHeading="Manage Your Electrical Career with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no credit card required."
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(occupationSchema) }}
+      />
+      <GuideTemplate
+        title="Electrical Engineering Degree UK | BEng vs MEng, CEng"
+        description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership…"
+        datePublished="2026-03-27"
+        dateModified="2026-05-29"
+        breadcrumbs={breadcrumbs}
+        tocItems={tocItems}
+        badge="Career Guide"
+        badgeIcon={GraduationCap}
+        heroTitle={
+          <>
+            Electrical Engineering Degree UK:{' '}
+            <span className="text-yellow-400">Routes, CEng and Salary Guide 2026</span>
+          </>
+        }
+        heroSubtitle="An electrical engineering degree opens the path from skilled tradesperson to chartered engineer. This guide explains the difference between an electrical engineer and an electrician, BEng and MEng routes, HNC/HND to degree top-up options, how to become a Chartered Engineer (CEng), IET membership, and what electrical engineers earn across the UK in 2026."
+        readingTime={14}
+        keyTakeaways={keyTakeaways}
+        sections={sections}
+        faqs={faqs}
+        faqHeading="Frequently Asked Questions About Electrical Engineering Degrees"
+        relatedPages={relatedPages}
+        ctaHeading="Manage Your Electrical Career with Elec-Mate"
+        ctaSubheading="Join 1,000+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no credit card required."
+      />
+    </>
   );
 }

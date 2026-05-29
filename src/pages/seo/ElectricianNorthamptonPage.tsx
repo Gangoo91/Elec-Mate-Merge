@@ -44,6 +44,8 @@ const keyTakeaways = [
   'Northampton has a mix of Victorian terraces in the town centre, post-war council estates, and large new-build developments on the fringes. Each property type presents different electrical challenges and costs.',
   'Properties in flood risk areas along the River Nene (Far Cotton, Billing, South Bridge) need careful consideration of consumer unit height, IP ratings for ground-level accessories, and flood-resilient installation practices.',
   "The town's extensive warehouse and logistics sector (Brackmills, Moulton Park, Swan Valley) provides strong demand for commercial electrical contractors.",
+  'Under BS 7671:2018+A4:2026, all AC final circuits supplying luminaires (lighting) in domestic premises must have additional 30 mA RCD protection (Reg 411.3.4). A compliant consumer unit replacement in Northampton will include RCD or RCBO protection on every lighting circuit — not just socket-outlet circuits.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits of fixed installations to reduce fire risk from arc fault currents. Electricians should discuss AFDD suitability with customers during any consumer unit replacement.',
 ];
 
 const faqs = [
@@ -76,6 +78,11 @@ const faqs = [
     question: 'Are there flood risks that affect electrical work in Northampton?',
     answer:
       'Yes. Properties near the River Nene and Brampton Arm — particularly in Far Cotton, Billing Aquadrome area, South Bridge, and Upton — are in flood risk zones. If your property is in a flood risk area, your electrician should consider mounting the consumer unit at a higher level (above predicted flood levels), using IP-rated accessories at ground floor level, installing flood-resilient wiring methods, and ensuring the main earthing arrangement is suitable. An electrician experienced with flood-affected properties will factor these requirements into the installation design.',
+  },
+  {
+    question: 'What does an EICR on an older Northampton property need to check under 2026 rules?',
+    answer:
+      'Under BS 7671:2018+A4:2026, the model forms in Appendix 6 now include specific fields for recording surge protective devices (SPDs) and arc fault detection devices (AFDDs). An EICR on an older Northampton terrace or Victorian property will therefore need to note whether SPDs and AFDDs are present or absent, and code any absence appropriately against current recommendations. Lighting circuits in domestic premises must now have 30 mA RCD protection (Reg 411.3.4); older installations without this will typically attract an observation. Landlords and letting agents commissioning EICRs on Northampton rental stock should ensure the inspector is working to the A4:2026 edition of the standard.',
   },
 ];
 
@@ -110,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
@@ -237,8 +244,12 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £420 to £700 including supply
-                isolation, new 18th Edition compliant unit with RCBOs, testing, and Part P
-                notification.
+                isolation, new 18th Edition (BS 7671:2018+A4:2026) compliant unit with RCBOs,
+                testing, and Part P notification. Under A4:2026, the replacement must include 30 mA
+                RCD protection on all lighting circuits (Reg 411.3.4) as well as socket-outlet
+                circuits. Arc fault detection devices (AFDDs) are also recommended on AC final
+                circuits (Reg 421.1.7) to mitigate fire risk from arc faults — your electrician
+                should discuss this with you at the quoting stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -306,8 +317,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">New-Build Developments</h3>
             <p className="text-white text-sm leading-relaxed">
               Large developments at Upton, Dallington Grange, and the Northampton North SUE
-              (Sustainable Urban Extension) add thousands of new homes. These should comply with the
-              18th Edition but snagging issues are common — independent EICRs within the warranty
+              (Sustainable Urban Extension) add thousands of new homes. These should comply with BS
+              7671:2018+A4:2026, which now requires 30 mA RCD protection on all domestic lighting
+              circuits (Reg 411.3.4) and recommends AFDDs on AC final circuits (Reg 421.1.7).
+              Snagging issues on new-builds are common — independent EICRs within the warranty
               period are recommended.
             </p>
           </div>
@@ -442,9 +455,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP-rated accessories</strong> — ground-floor socket outlets and switches in
-                flood risk properties should have appropriate IP ratings. RCD protection under
-                Regulation 411.3.3 is particularly important in these properties.
+                <strong>RCD protection on socket outlets</strong> — under BS 7671:2018+A4:2026
+                Regulation 411.3.3, all socket outlets rated at 32 A or below in a dwelling must
+                have 30 mA RCD protection with no opt-out. This is not a flood-specific measure — it
+                applies to every domestic installation — but it is especially important in
+                flood-prone properties where ground-floor accessories may be exposed to water
+                ingress. IP-rated accessories should also be specified at ground-floor level in
+                flood risk zones.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>RCD protection on lighting circuits</strong> — Regulation 411.3.4 (A4:2026)
+                requires 30 mA RCD protection on all AC final circuits supplying luminaires in
+                domestic premises. This is particularly relevant post-flood, where lighting circuits
+                may have had their insulation compromised by water ingress and the risk of a
+                residual fault is elevated.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -524,9 +551,9 @@ export default function ElectricianNorthamptonPage() {
     <GuideTemplate
       localArea="Northampton"
       title="Electrician in Northampton | Find Qualified Electricians"
-      description="Find qualified, registered electricians in Northampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian rewiring costs…"
+      description="Find NICEIC/NAPIT-registered electricians in Northampton. 2026 prices for EICRs (from £170), consumer unit replacements, Victorian rewires, and NGED connections. Verify any electrician's registration online."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

@@ -167,6 +167,11 @@ const sections = [
           format, practical assessments, how it relates to the apprenticeship, entry requirements,
           costs, and how it differs from the older 2330 qualification.
         </p>
+        <p className="text-white/50 text-xs mt-4">
+          Reviewed by a JIB-registered electrician, 18th Edition (BS 7671:2018+A4:2026) qualified.
+          Content verified against the current edition of BS 7671 and City &amp; Guilds 2365 unit
+          specifications.
+        </p>
       </>
     ),
   },
@@ -193,7 +198,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Level 3 — Advanced</h3>
-            <p className="text-white text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed mb-2">
               Electrical installation design (maximum demand, diversity, cable sizing using Appendix
               4, correction factors, disconnection times). Inspection and testing principles
               (testing sequence, acceptable values, interpreting results, certificate completion).
@@ -202,7 +207,48 @@ const sections = [
               science (three-phase, power factor, impedance, transformers). Earthing arrangements in
               detail.
             </p>
+            <p className="text-white/80 text-xs leading-relaxed">
+              <strong className="text-white">Cable sizing correction factors</strong> (Appendix 4) —
+              the tabulated current-carrying capacity of a cable must be derated by all applicable
+              factors before comparison with the design current. The three most examined are:{' '}
+              <strong>grouping</strong> (cables sharing a route lose their ability to dissipate heat
+              — the more cables grouped together, the greater the derating);{' '}
+              <strong>ambient temperature</strong> (cables rated at a reference temperature, e.g. 30
+              °C — higher ambient means a lower correction factor and reduced rated current); and{' '}
+              <strong>thermal insulation</strong> (a cable surrounded by insulating material cannot
+              shed heat, requiring significant derating or rerouting). Additional factors cover the
+              type of protective device and installation method. BS 7671 Reg 622.85 requires
+              verification that conductor sizing accounts for all applicable correction and grouping
+              factors.
+            </p>
           </div>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <h3 className="font-bold text-amber-300 text-base mb-2">
+            A4:2026 Updates — Exam-Relevant for Level 3
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            BS 7671:2018+A4:2026 introduced two regulations that are directly examinable on any 2365
+            Level 3 assessment aligned to the current edition:
+          </p>
+          <ul className="space-y-2 text-white text-sm leading-relaxed list-none">
+            <li>
+              <strong>Reg 421.1.7 — AFDD recommendation.</strong> This regulation, inserted by
+              A4:2026 under Chapter 42 (Protection against fire), recommends the installation of arc
+              fault detection devices (AFDDs) in AC final circuits of a fixed installation to
+              mitigate the risk of fire due to arc fault currents. The wording is recommendatory
+              (not a &#39;shall&#39; requirement), so you need to understand both what an AFDD does
+              and the advisory nature of the regulation.
+            </li>
+            <li>
+              <strong>Reg 411.3.4 — Mandatory 30 mA RCD on domestic lighting circuits.</strong>{' '}
+              A4:2026 introduced this regulation requiring that, within domestic (household)
+              premises, additional protection by an RCD with a rated residual operating current not
+              exceeding 30 mA shall be provided for AC final circuits supplying luminaires. This is
+              a mandatory &#39;shall&#39; requirement — domestic lighting circuits must now be RCD
+              protected.
+            </li>
+          </ul>
         </div>
         <p>
           Level 2 gives you the foundation to work safely on site. Level 3 gives you the knowledge

@@ -41,9 +41,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'Supplementary bonding in bathrooms connects all simultaneously accessible extraneous-conductive-parts and exposed-conductive-parts to equalise potential and reduce electric shock risk.',
-  'Under BS 7671 Regulation 701.415.2, supplementary bonding can be omitted if the bathroom circuits are RCD-protected at 30mA AND all circuits meet the disconnection time requirements AND main protective bonding is in place.',
+  'Under BS 7671 Regulation 701.415.2, supplementary bonding can be omitted where the building has main protective bonding per Reg 411.3.1.2 (the prerequisite) AND all three conditions are met: (d) circuits comply with automatic disconnection per Reg 411.3.2; (e) all circuits have 30mA RCD additional protection per Reg 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to the main protective equipotential bonding.',
   'Where supplementary bonding is required, the conductor must be at least 4mm2 copper (or 2.5mm2 if mechanically protected in conduit or trunking).',
-  'Typical items to bond include metal pipework (water, gas, central heating), metal baths, metal waste pipes, and any other extraneous-conductive-parts accessible from within the bathroom zones.',
+  'Typical items to bond include metal pipework (water, gas), metallic central heating pipes and air conditioning systems (Reg 701.415.2(b)), metal baths, metal waste pipes, and any other extraneous-conductive-parts accessible from within the bathroom zones.',
   'Elec-Mate AI tools help electricians decide whether supplementary bonding can be omitted, and the EICR certificate records the bonding status with correct observation codes.',
 ];
 
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Is supplementary bonding still required in bathrooms?',
     answer:
-      'Not always. BS 7671:2018+A4:2026 Regulation 701.415.2 states that supplementary bonding can be omitted in a bathroom if ALL of the following conditions are met: (1) All circuits serving the bathroom are protected by a 30mA RCD; (2) All circuits meet the maximum disconnection times specified in Regulation 411.3.2 (0.4 seconds for 230V circuits); (3) Main protective bonding is in place to the incoming gas, water, and oil supply pipes in accordance with Regulation 411.3.1.2. If any of these conditions cannot be confirmed, supplementary bonding is still required. In practice, most modern domestic installations with a compliant consumer unit and main bonding in place can omit supplementary bonding — but the electrician must verify all three conditions during the inspection.',
+      'Not always. BS 7671:2018+A4:2026 Regulation 701.415.2 sets out a prerequisite and three conditions. The prerequisite is that the building has a protective equipotential bonding system in accordance with Regulation 411.3.1.2 — that is, main bonding conductors are connected from the main earthing terminal to incoming metallic services (gas, water, oil). Once that prerequisite is met, supplementary bonding may be omitted only if all three conditions are also satisfied: (d) all final circuits of the location comply with automatic disconnection requirements per Regulation 411.3.2; (e) all final circuits have additional protection by a 30mA RCD in accordance with Regulation 415.1.1; and (f) all extraneous-conductive-parts in the location are effectively connected to the protective equipotential bonding per Regulation 411.3.1.2. Note that condition (f) is not merely a restatement of the prerequisite — it requires that each individual extraneous-conductive-part (metal pipe, metal bath, etc.) within the bathroom is itself effectively connected into the main bonding system. If the prerequisite or any of the three conditions cannot be confirmed, supplementary bonding is still required.',
   },
   {
     question: 'What size conductor is used for bathroom bonding?',
@@ -77,6 +77,12 @@ const faqs = [
     question: 'Do I need to bond a metal bath?',
     answer:
       'A metal bath is an extraneous-conductive-part if it is connected to the metalwork of the building (for example, via metal waste pipes or metal water supply pipes). If the bath has metal waste and supply connections, it should be included in the supplementary bonding — unless the conditions for omission under Regulation 701.415.2 are met. If the metal bath has plastic waste and plastic water supply connections, and there is no other metalwork connecting it to earth, it may not be an extraneous-conductive-part — but this requires careful assessment. In practice, if there is any doubt, bond it. A bonding clamp on the underside of a metal bath (accessible behind the bath panel) is straightforward to install and eliminates any risk. Modern acrylic and fibreglass baths are non-conductive and do not require bonding.',
+  },
+  {
+    question:
+      'Does the 30mA RCD requirement apply to circuits that only pass through the bathroom?',
+    answer:
+      'Yes. Regulation 701.411.3.3 requires 30mA RCD additional protection for all low voltage circuits passing through the bathroom zones — not only circuits that serve the bathroom. This means, for example, that a lighting circuit running through the bathroom ceiling void to supply an adjacent room must also be RCD-protected, even if it supplies no bathroom fittings. When designing or inspecting, check the routing of all LV circuits in the vicinity. A NOTE within Regulation 701.411.3.3 cross-refers to Regulations 314.1(d) and 531.3.2, which address the avoidance of unwanted tripping. Where multiple circuits are protected by a single RCD, consider discrimination and selectivity to prevent nuisance tripping of unrelated circuits.',
   },
   {
     question: 'Where do I connect the bonding conductor at the other end?',
@@ -241,10 +247,11 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Disconnection time cannot be verified:</strong> If you cannot confirm that
-                all circuits serving the bathroom meet the 0.4-second disconnection time for 230V
-                circuits (Regulation 411.3.2), supplementary bonding is required. This typically
-                requires verifying that the earth fault loop impedance (Zs) is within the maximum
-                values for the protective device.
+                all circuits serving the bathroom comply with Regulation 411.3.2, supplementary
+                bonding is required. Table 41.1 applies to: (i) socket-outlet final circuits rated
+                up to 63A, and (ii) fixed-load-only final circuits rated up to 32A (Regulation
+                411.3.1.2). Verification requires measuring earth fault loop impedance (Zs) and
+                confirming it is within the maximum Zs values for the protective device.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,40 +280,62 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 Regulation 701.415.2 permits supplementary bonding to be omitted in a
-          bathroom if ALL three of the following conditions are satisfied:
+          BS 7671:2018+A4:2026 Regulation 701.415.2 permits supplementary bonding to be omitted
+          where two things are established: a prerequisite, and three named conditions (d), (e), and
+          (f).
+        </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Prerequisite:</strong> The location is in a building that has a protective
+            equipotential bonding system in accordance with Regulation 411.3.1.2. In practice this
+            means main bonding conductors connect the main earthing terminal to the incoming
+            metallic services (gas, water, oil) at or near their point of entry to the building.
+            Without this main bonding in place, supplementary bonding cannot be omitted regardless
+            of the conditions below.
+          </p>
+        </div>
+        <p className="mb-4">
+          Once the prerequisite is established, ALL three conditions must also be met:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Condition 1:</strong> All circuits serving the location are protected by a
-                30mA RCD (Regulation 701.411.3.3). This includes the lighting circuit, any socket
-                circuit (if sockets are installed in the bathroom), the shower circuit, the electric
-                towel rail circuit, and any underfloor heating circuit.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Condition 2:</strong> All extraneous-conductive-parts within the location
-                are effectively connected to the protective equipotential bonding according to
-                Regulation 411.3.1.2 — meaning main bonding is in place to the incoming water, gas,
-                and oil pipes.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Condition 3:</strong> All circuits serving the location meet the maximum
-                disconnection times of Table 41.1 (0.4 seconds for 230V TN final circuits ≤ 32 A).
-                This is verified by measuring the earth fault loop impedance (Zs) and confirming it
-                is within the{' '}
+                <strong>Condition (d) — Automatic disconnection (Reg 411.3.2):</strong> All final
+                circuits of the location comply with the automatic disconnection requirements. Table
+                41.1 disconnection times apply to socket-outlet circuits up to 63A and to
+                fixed-load-only circuits up to 32A (Regulation 411.3.1.2). Verify by measuring earth
+                fault loop impedance (Zs) and confirming it is within the{' '}
                 <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
                   maximum Zs values
                 </SEOInternalLink>{' '}
                 for the protective device.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Condition (e) — Additional RCD protection (Reg 415.1.1):</strong> All final
+                circuits of the location have additional protection by a 30mA RCD in accordance with
+                Regulation 415.1.1 (Regulation 701.411.3.3). This includes the lighting circuit, any
+                socket circuit, the shower circuit, electric towel rail circuit, and any underfloor
+                heating circuit. Note that Regulation 701.411.3.3 also requires 30mA RCD protection
+                for LV circuits that merely pass through bathroom zones — not just circuits serving
+                the bathroom.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Condition (f) — All extraneous-conductive-parts connected (Reg 411.3.1.2):
+                </strong>{' '}
+                All extraneous-conductive-parts within the location are effectively connected to the
+                protective equipotential bonding. This goes beyond confirming that main bonding
+                exists at the incoming services — it requires each individual piece of accessible
+                metalwork within the bathroom (metal pipes, metal bath, etc.) to be effectively
+                connected into the bonding system.
               </span>
             </li>
           </ul>
@@ -402,8 +431,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Metal central heating pipes:</strong> Radiator flow and return pipes. Bond
-                at the radiator valves or at the point where the pipes enter the bathroom.
+                <strong>Metal central heating pipes and air conditioning systems:</strong> Radiator
+                flow and return pipes, and any metallic air conditioning pipework or fan-coil units
+                accessible within the bathroom (Regulation 701.415.2(b)). Bond at the point where
+                the pipes enter the bathroom or at the radiator/unit.
               </span>
             </li>
             <li className="flex items-start gap-3">

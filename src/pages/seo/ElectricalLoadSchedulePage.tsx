@@ -117,10 +117,9 @@ export default function ElectricalLoadSchedulePage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">EIC and EICR certificates</span> —
-                  Section 6 of the{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and Section F
-                  of the EICR require the assessed maximum demand. You cannot complete these
-                  certificates accurately without a load schedule.
+                  Section 6 of the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
+                  and Section F of the EICR require the assessed maximum demand. You cannot complete
+                  these certificates accurately without a load schedule.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Main cable and switchgear sizing</span>{' '}
@@ -264,8 +263,8 @@ export default function ElectricalLoadSchedulePage() {
                 Elec-Mate applies these rules automatically as you build the schedule. Each circuit
                 is categorised by load type, and the diversity percentages are applied in the
                 summary section. The result is the assessed maximum demand — the figure you enter on
-                the <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
-                and compare against the supply rating.
+                the <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> and
+                compare against the supply rating.
               </p>
             </>
           ),
@@ -406,7 +405,7 @@ export default function ElectricalLoadSchedulePage() {
       ]}
       relatedPages={[
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Quick maximum demand calculation with IET diversity factors for domestic installations.',
@@ -430,7 +429,7 @@ export default function ElectricalLoadSchedulePage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for each circuit in the load schedule using BS 7671 tables and correction factors.',

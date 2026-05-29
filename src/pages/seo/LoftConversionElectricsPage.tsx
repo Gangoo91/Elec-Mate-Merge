@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for loft conversion circuits with automatic derating for thermal insulation and voltage drop checks.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long cable runs from the consumer unit to the loft distribution board.',
@@ -486,7 +486,7 @@ const sections = [
                 ground floor to the loft can be 15 to 25 metres or more. BS 7671 limits the voltage
                 drop to 3% for lighting circuits and 5% for other circuits (of the nominal 230V
                 supply). On a long run with a high load, the{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop
                 </SEOInternalLink>{' '}
                 may exceed the permitted limit, requiring a larger cable size.
@@ -496,7 +496,7 @@ const sections = [
         </div>
         <p>
           The practical approach is to use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to apply all correction factors — thermal insulation, grouping, ambient temperature — and
@@ -599,7 +599,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Apply thermal insulation derating, grouping factors, and ambient temperature
                   correction automatically. Get the correct cable size with a full{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop check
                   </SEOInternalLink>{' '}
                   — compliant with BS 7671 Appendix 4. No manual table lookups, no calculation
@@ -628,11 +628,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App for Accurate Pricing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the loft conversion electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Materials, labour, margins, and VAT calculated automatically. Send a
-                  professional quote to the customer before you leave the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Materials, labour, margins, and VAT calculated automatically. Send a professional
+                  quote to the customer before you leave the survey.
                 </p>
               </div>
             </div>

@@ -351,7 +351,7 @@ const sections = [
               = disconnection time), why the equation matters (it verifies the cable can withstand
               fault current without the insulation being damaged), and how to apply it in practice
               with a worked example using real values from the{' '}
-              <SEOInternalLink href="/adiabatic-equation-calculator">
+              <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                 adiabatic equation calculator
               </SEOInternalLink>
               .

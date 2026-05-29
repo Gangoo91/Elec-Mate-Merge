@@ -40,6 +40,9 @@ const keyTakeaways = [
   "Detector contamination is the most common cause of false alarms from optical smoke detectors. Dust, insects, and steam ingress cause the detector's optical chamber to scatter light and trigger a fire signal. Contaminated detectors must be cleaned or replaced.",
   'Fire alarm panel faults — including CPU errors, memory corruption, and power supply module failure — require investigation by a competent fire alarm engineer, not a general electrician. Working inside a fire alarm panel without appropriate training risks disabling the fire detection system.',
   'Any person carrying out maintenance, testing, or fault finding on a fire alarm system should be competent in accordance with BS 5839-1:2017. In practice, this means being trained and experienced in fire alarm systems, not merely holding a general electrical qualification.',
+  'Fire alarm zone and sounder wiring must use fire-resistant cable with a resistance to fire rating — typically MICC or IEC 60331-compliant cable such as FP200 Gold. Standard PVC cable on life-safety circuits is a C2 EICR observation under BS 7671 Reg 560.8.',
+  'Fire alarm wiring must be segregated from general installation cables and from emergency lighting circuits. This is a mandatory requirement under OSG 9th Ed:2022 Reg 7.4.1 referencing BS 5839 and BS 5266, and its absence is a common C2 observation on commercial EICRs.',
+  'Where a fire alarm circuit is intentionally omitted from RCD protection to prevent nuisance tripping, the EICR and consumer unit schedule must document this omission with a risk-assessment note. Omitting the justification is itself a recordable deficiency.',
 ];
 
 const faqs = [
@@ -491,6 +494,54 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="w-6 h-6 text-orange-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Wiring Requirements: Fire-Resistant Cable
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  BS 7671 Reg 560.8 requires that cables supplying safety circuits — including fire
+                  alarm zone wiring and sounder circuits — shall have a resistance to fire rating.
+                  Where no British Standard specifies the duration, a minimum one-hour rating
+                  applies. In practice this means MICC (mineral-insulated copper-clad) or IEC
+                  60331-compliant enhanced fire-resistant cable (such as FP200 Gold or equivalent)
+                  is required for fire alarm wiring in commercial premises. Standard PVC
+                  twin-and-earth is not acceptable for life-safety circuits. Where standard PVC
+                  cable is found on fire alarm zone or sounder wiring during an EICR, this is
+                  typically a <strong>C2 observation</strong> — potentially dangerous, requiring
+                  rectification.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">EICR: Segregation and RCD Omission</h4>
+                <p className="text-white text-sm leading-relaxed">
+                  <strong>Segregation (OSG Reg 7.4.1):</strong> Fire alarm wiring must be segregated
+                  from general installation cables and from emergency lighting circuits. This is a
+                  mandatory requirement under the On-Site Guide (9th Ed:2022, Reg 7.4.1), not merely
+                  best practice, and references BS 5839 and BS 5266 respectively. On an EICR in
+                  commercial premises, absence of segregation between fire alarm cabling and other
+                  circuits is a common <strong>C2 observation</strong>.
+                </p>
+                <p className="text-white text-sm leading-relaxed mt-2">
+                  <strong>RCD omission documentation:</strong> Fire alarm supply circuits are
+                  frequently — and intentionally — placed on a non-RCD way in the consumer unit to
+                  prevent nuisance RCD tripping from disabling the safety service. The consumer unit
+                  schedule and EICR must clearly document which circuits are intentionally
+                  unprotected by RCD and the risk-assessment basis for that omission. Listing the
+                  circuit as unprotected without the accompanying justification note is a common
+                  deficiency found during EICR review. (PWI: labelling &amp; segregation — &quot;no
+                  documentation of which circuits are intentionally unprotected&quot;.)
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
         <SEOAppBridge
           title="Manage fire alarm electrical work with Elec-Mate"
@@ -510,7 +561,7 @@ export default function FireAlarmFaultFindingPage() {
   return (
     <GuideTemplate
       title="Fire Alarm Fault Finding | Fire Detection System Problems UK"
-      description="Fire alarm fault? This guide covers zone faults, detector contamination, panel faults, power supply issues, BS 5839 compliance…"
+      description="Fire alarm showing a fault? This guide explains zone faults, detector contamination, panel faults, power supply issues and BS 5839-1 compliance for UK electricians."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

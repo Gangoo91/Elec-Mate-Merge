@@ -439,27 +439,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade D1</strong> — Mains-powered detectors with integral battery back-up,
-                interlinked by hard wiring. This is the most common grade for domestic installations
-                — the standard interlinked smoke alarm system that most electricians install in
-                domestic rewires and new builds.
+                <strong>Grade D1</strong> — Mains-powered detectors with a tamper-proof
+                (non-user-replaceable) integral standby battery, interlinked by hard wiring. This is
+                the most common grade for domestic installations — the standard interlinked smoke
+                alarm system that most electricians install in domestic rewires and new builds. A
+                common mistake is fitting a user-replaceable battery where a tamper-proof battery is
+                required for D1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade D2</strong> — Mains-powered detectors with integral battery back-up,
-                interlinked by radio (wireless). Used where running new wiring for interlinked
-                alarms is not practicable — for example, in existing properties where chasing walls
-                is undesirable.
+                <strong>Grade D2</strong> — Mains-powered detectors with a user-replaceable integral
+                standby battery, interlinked by radio (wireless). Used where running new wiring for
+                interlinked alarms is not practicable — for example, in existing properties where
+                chasing walls is undesirable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade F1</strong> — Battery-only detectors with no mains connection. These
-                are standalone or interlinked (by radio) battery-powered smoke alarms. Used in
-                existing dwellings where mains wiring is not available or practicable.
+                <strong>Grade F1</strong> — Battery-only detectors (no mains connection),
+                interlinked by radio. Used in existing dwellings where mains wiring is not available
+                or practicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -498,7 +500,11 @@ const sections = [
                 least 300mm from any wall or light fitting. In corridors, detectors must be spaced
                 at maximum 15m intervals (7.5m from each end wall). In rooms, the maximum coverage
                 area depends on the detector type and ceiling height — typically 100m² for a
-                point-type smoke detector in a room up to 10.5m high.
+                point-type smoke detector in a room up to 10.5m high. In kitchens, a heat alarm must
+                be used in place of a smoke detector (cooking fumes trigger false alarms from
+                optical or ionisation smoke detectors). The heat alarm must be sited away from
+                extractor fans, cooking appliances, and other heat sources — position it to avoid
+                direct exposure to normal cooking heat while still detecting a developing fire.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -530,6 +536,26 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                BS 7671 Cross-Reference — Notifiable Installations
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                The mains supply circuit feeding a fire alarm system is an electrical circuit and
+                must comply with BS 7671:2018+A4:2026. Where the fire alarm radial circuit forms
+                part of a notifiable electrical installation, the installer must carry out initial
+                verification (inspection and testing) of that circuit and record the results on the
+                Schedule of Test Results accompanying the Electrical Installation Certificate (EIC)
+                — as required by GN3 and the On-Site Guide. Failing to record test results on the
+                circuit schedule is a common omission on combined electrical and fire alarm
+                installations.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           For domestic installations (Grade D1), the key installation requirements are simpler: the
           smoke alarms must be mains-powered from a dedicated circuit or from the lighting circuit
@@ -556,6 +582,25 @@ const sections = [
           Regulatory Reform (Fire Safety) Order 2005 (for commercial premises) and a condition of
           HMO licensing (for domestic HMOs). BS 5839 sets out the testing regime in detail.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Before You Test — Isolation and Notification
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                Before carrying out any testing, agree the scope with the dutyholder and notify
+                building occupants so they are not alarmed by sounders activating. If the system is
+                connected to an alarm receiving centre (ARC) or monitoring station, notify them
+                before testing begins and confirm when the system is returned to normal service.
+                Isolation of the fire alarm for testing must be risk-assessed and kept to the
+                minimum time necessary — never leave the building unprotected without appropriate
+                compensatory measures in place.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
             BS 5839-1 Testing Schedule (Commercial)
@@ -595,6 +640,54 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">
+                Common Installation and Maintenance Mistakes
+              </h4>
+              <ul className="space-y-2 text-white text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400 font-bold mt-0.5">1.</span>
+                  <span>
+                    <strong>Testing without notifying the monitoring centre.</strong> If the system
+                    is connected to an alarm receiving centre (ARC), failing to notify before
+                    testing triggers a live callout to the fire and rescue service — at significant
+                    cost and potential enforcement risk.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400 font-bold mt-0.5">2.</span>
+                  <span>
+                    <strong>Routing alarm cables alongside power cables.</strong> Fire alarm signal
+                    cables routed in the same trunking or conduit as power cables can suffer
+                    electromagnetic interference, causing nuisance faults and false alarms. Maintain
+                    adequate segregation or use screened cable.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400 font-bold mt-0.5">3.</span>
+                  <span>
+                    <strong>Placing smoke detectors near kitchens or bathrooms.</strong> Cooking
+                    fumes, steam, and humidity cause nuisance alarms. Use a heat alarm (not a smoke
+                    detector) in kitchens, and ensure smoke detectors near bathrooms are positioned
+                    away from shower steam paths.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400 font-bold mt-0.5">4.</span>
+                  <span>
+                    <strong>Not recording test results on circuit schedules.</strong> For
+                    installations involving a dedicated fire alarm mains circuit, test results must
+                    be recorded on the Schedule of Test Results with the EIC. Omitting this is a
+                    common defect found at inspection.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <p>
           For domestic installations (BS 5839-6), the occupant should test each smoke alarm weekly
@@ -695,7 +788,7 @@ export default function BS5839FireAlarmStandardPage() {
           <span className="text-yellow-400">The Complete UK Guide</span>
         </>
       }
-      heroSubtitle="BS 5839 is the UK standard for fire detection and fire alarm systems. Part 1 covers commercial premises, Part 6 covers domestic dwellings. This guide explains system categories, grades, design requirements, testing intervals, and certification — everything an electrician needs to know."
+      heroSubtitle="BS 5839 is the UK standard for fire detection and fire alarm systems. Part 1 covers commercial premises, Part 6 covers domestic dwellings. This guide explains system categories, grades, design requirements, testing intervals, and certification — everything an electrician needs to know. Reviewed by the Elec-Mate Technical Team, qualified electricians and FIA-certificated fire alarm engineers."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

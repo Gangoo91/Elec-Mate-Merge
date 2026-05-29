@@ -52,7 +52,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           Star-Delta, Soft Starter & VFD
         </>
       }
-              calculator={<MotorStartingCurrentCalculator />}
+      calculator={<MotorStartingCurrentCalculator />}
       heroSubtitle="Enter the motor kW rating, full load current, and starting method. The calculator determines the starting current, the duration of the inrush, and the impact on supply voltage. Select the correct protective device and cable size for any motor installation."
       heroFeaturePills={[
         { icon: Gauge, label: 'Starting Current' },
@@ -63,11 +63,13 @@ export default function MotorStartingCurrentCalculatorPage() {
       readingTime={11}
       toolPath="/tools/motor-starting-current-calculator"
       keyTakeaways={[
-        'Direct-on-line (DOL) motor starting draws 6-8 times the full load current (FLC) — a 30A motor draws 180-240A during DOL starting, lasting 2-10 seconds depending on the load.',
+        'Direct-on-line (DOL) starting of squirrel-cage motors draws 4.2–9 times full load current (In) for 2-pole motors, and 4.2–7 In for motors with more than 2 poles (mean value 6 In). Wound-rotor and DC motors draw 1.5–3 In (mean 2.5 In).',
         'Star-delta starting reduces the starting current to approximately one-third of DOL starting current, but also reduces the starting torque to one-third — suitable for low-torque loads like centrifugal pumps and fans.',
         'Soft starters ramp the voltage gradually from 30-70% to 100%, limiting the starting current to 2-4 times FLC with adjustable ramp time.',
-        'Variable Frequency Drives (VFDs) provide the gentlest start, limiting current to 100-150% FLC by controlling both voltage and frequency — but they introduce harmonic distortion.',
-        'The motor starting method affects protective device selection, cable sizing, voltage drop, and transformer capacity — Elec-Mate calculates all of these on your phone.',
+        'Variable Frequency Drives (VFDs) provide the gentlest start, limiting current to 100-150% FLC by controlling both voltage and frequency — but increase the apparent supply power demand by approximately 10%, requiring upstream protection and cable sizing to account for the drive plus motor.',
+        'Voltage drop for motor circuits must comply with Reg 525.202 and the circuit-type-specific limits in Appendix 4, Section 6.4 of BS 7671. A greater voltage drop than those limits may be accepted during the motor starting period under Reg 525.203.',
+        'BS 7671 Chapter 33 requires the designer to assess that motor starting currents do not have a detrimental effect on other equipment on the same installation — lighting flicker, PLC resets, and other motor stalling are all Chapter 33 compatibility concerns.',
+        'Motor circuits must incorporate undervoltage protection (contactor hold-in or undervoltage release) to prevent automatic restart after supply interruption — a mandatory requirement under Reg 131.6.3 and Section 445.',
       ]}
       sections={[
         {
@@ -83,17 +85,18 @@ export default function MotorStartingCurrentCalculatorPage() {
                 normally limits the current has not yet developed.
               </p>
               <p>
-                The starting current typically ranges from 6 to 8 times the full load current (FLC)
-                for a standard induction motor with direct-on-line (DOL) starting. As the motor
-                accelerates and the rotor begins to turn, the back-EMF increases and the current
-                gradually reduces to the normal running level. The starting period typically lasts 2
-                to 10 seconds for most commercial motors, depending on the motor size and the
-                mechanical load being driven.
+                For direct-on-line (DOL) starting of squirrel-cage motors, the starting current
+                typically ranges from 4.2 to 9 times the full load current (In) for 2-pole motors,
+                and 4.2 to 7 In for motors with more than 2 poles (mean value 6 In). Wound-rotor and
+                DC motors draw 1.5 to 3 In (mean 2.5 In). As the motor accelerates and the rotor
+                begins to turn, the back-EMF increases and the current gradually reduces to the
+                normal running level. The starting period typically lasts 2 to 10 seconds for most
+                commercial motors, depending on the motor size and the mechanical load being driven.
               </p>
               <p>
                 This high starting current has significant implications for the electrical
                 installation. The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable must be sized
                 </SEOInternalLink>{' '}
                 to carry the starting current without excessive voltage drop, the protective device
@@ -121,8 +124,9 @@ export default function MotorStartingCurrentCalculatorPage() {
                   <li className="flex items-start gap-3">
                     <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong>Starting current:</strong> 6 to 8 times full load current (FLC). A
-                      motor with a FLC of 50A will draw 300-400A during starting.
+                      <strong>Starting current:</strong> 4.2–9 In for 2-pole squirrel-cage motors;
+                      4.2–7 In (mean 6 In) for motors with more than 2 poles. A 4-pole motor with
+                      50A full load current will typically draw 210–350A during DOL starting.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -391,16 +395,75 @@ export default function MotorStartingCurrentCalculatorPage() {
                 </ul>
               </div>
               <p>
-                BS 7671 Regulation 525 limits the voltage drop from the origin of the installation
-                to any load point to 5% for motor circuits. However, the transient voltage dip
-                during starting is a separate consideration — a dip greater than 10-15% at the point
-                of common coupling is generally considered unacceptable. The{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                BS 7671 Reg 525.202 requires that voltage drop from the origin of the installation
+                to any load point does not exceed the circuit-type-specific limits in Appendix 4,
+                Section 6.4 — which contains separate figures for lighting circuits, final circuits
+                to socket-outlets, and motor circuits. However, Reg 525.203 permits a greater
+                voltage drop than the Appendix 4 limits specifically during motor starting periods
+                and for other equipment with high inrush currents, provided the voltage at the motor
+                terminals remains within the motor's product standard requirements. The transient
+                voltage dip during starting is therefore a separate design check from steady-state
+                voltage drop compliance. The{' '}
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 can help assess the steady-state voltage drop, while the motor starting current
                 calculator determines the transient inrush that causes the momentary dip.
               </p>
+              <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
+                <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-orange-400 shrink-0" />
+                  Undervoltage Protection — Section 445 &amp; Reg 131.6.3
+                </h3>
+                <p className="text-white/90 text-sm">
+                  Motor circuits must incorporate undervoltage protection to prevent automatic
+                  restart after a supply interruption. A motor that stops due to a supply dip or
+                  momentary loss of voltage may restart unexpectedly when voltage recovers, creating
+                  a serious risk of injury to anyone in the vicinity. BS 7671 Reg 131.6.3 requires
+                  persons to be protected against injury from unintended motor restart; Section 445
+                  sets out the measures — typically a contactor with hold-in coil (which drops out
+                  on undervoltage and requires a deliberate restart) or a dedicated undervoltage
+                  release device. This is a mandatory design requirement for motor circuits and must
+                  be specified at design stage and verified during commissioning.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+                <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
+                  <Building2 className="w-5 h-5 text-yellow-400 shrink-0" />
+                  Chapter 33 Compatibility — Design Obligation
+                </h3>
+                <p className="text-white/90 text-sm mb-3">
+                  BS 7671 Chapter 33 requires the designer to ensure that equipment installed will
+                  not have a detrimental effect on other equipment connected to the same
+                  installation. Motor starting currents are a primary Chapter 33 concern. Key design
+                  checks include:
+                </p>
+                <ul className="space-y-2 text-white/90 text-sm list-disc list-inside">
+                  <li>
+                    Voltage dip at the point of common coupling — assess whether the starting
+                    current causes the supply voltage to dip below acceptable limits for sensitive
+                    equipment (PLCs, control systems, other motors)
+                  </li>
+                  <li>
+                    Transformer capacity — confirm the supply transformer kVA rating can deliver the
+                    starting current without excessive voltage reduction
+                  </li>
+                  <li>
+                    Other motors on the same busbars — a large DOL start can cause running motors to
+                    stall if the voltage dip exceeds approximately 80% of nominal
+                  </li>
+                  <li>
+                    Lighting circuits — visible flicker is a common symptom of an inadequately
+                    assessed Chapter 33 design
+                  </li>
+                </ul>
+                <p className="text-white/90 text-sm mt-3">
+                  Failing to assess starting current impact at design stage is one of the most
+                  common motor installation mistakes. Specifying a soft starter or VFD to limit
+                  starting current is the standard mitigation where Chapter 33 analysis shows DOL
+                  starting would cause detrimental effects.
+                </p>
+              </div>
             </>
           ),
         },
@@ -416,7 +479,7 @@ export default function MotorStartingCurrentCalculatorPage() {
         },
         {
           name: 'Calculate the starting current',
-          text: 'Apply the starting current multiplier for the chosen method: DOL = 6-8x FLC, star-delta = 2-2.7x FLC, soft starter = 2-4x FLC, VFD = 1-1.5x FLC. Use the actual motor data where available.',
+          text: 'Apply the starting current multiplier for the chosen method: DOL squirrel-cage (4-pole+) = 4.2–7 In (mean 6 In); DOL 2-pole = 4.2–9 In; wound-rotor/DC = 1.5–3 In; star-delta ≈ 2–2.7x FLC; soft starter = 2–4x FLC; VFD = 1–1.5x FLC. Use the actual motor nameplate data where available. For VFD-controlled circuits, add 10% to the calculated motor power when sizing upstream cables and protective devices to account for the drive power overhead.',
         },
         {
           name: 'Check the voltage drop during starting',
@@ -492,7 +555,7 @@ export default function MotorStartingCurrentCalculatorPage() {
         {
           question: 'How do VFDs affect the electrical installation?',
           answer:
-            'VFDs have several effects on the electrical installation that must be considered. They draw non-sinusoidal current from the supply, creating harmonic distortion — typically the 5th and 7th harmonics are the most significant. This can cause overheating in cables and transformers, requiring derating or oversizing. The output waveform from a VFD contains high-frequency switching noise that can interfere with sensitive equipment and communication cables — screened motor cables and EMC filters may be required. VFDs also generate common-mode voltages that can cause bearing currents in the motor, leading to premature bearing failure — shaft grounding rings or insulated bearings may be needed for larger motors. Finally, the cable length between the VFD and motor is limited due to reflected wave effects from the high-frequency switching — typically 50-100 metres maximum without an output filter.',
+            'VFDs have several effects on the electrical installation that must be considered. First, when a VFD is installed on an existing motor circuit, it increases the apparent power demand by approximately 10% — the upstream cable and protective device must be sized for the drive-plus-motor combination, not the motor alone; this is a common oversight when retrofitting VFDs. Second, VFDs draw non-sinusoidal current from the supply, creating harmonic distortion — typically the 5th and 7th harmonics are most significant — which can cause overheating in cables and transformers. Third, the output waveform contains high-frequency switching noise that can interfere with sensitive equipment and communication cables — screened motor cables and EMC filters are required for EMC compliance. Fourth, VFDs generate common-mode voltages that cause bearing currents in the motor, leading to premature bearing failure — shaft grounding rings or insulated bearings may be needed for larger motors. Finally, the cable length between the VFD and motor is limited due to reflected wave effects — typically 50–100 metres maximum without an output filter.',
         },
         {
           question: 'Can I use this calculator for single-phase motors?',
@@ -511,7 +574,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with correction factors, voltage drop, and fault current verification for motor circuits.',
@@ -527,7 +590,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Calculate voltage drop for motor circuits including the impact of starting current on long cable runs.',

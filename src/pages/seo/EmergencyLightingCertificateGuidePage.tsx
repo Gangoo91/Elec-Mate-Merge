@@ -35,6 +35,7 @@ const tocItems = [
   { id: 'verification-certificate', label: 'Verification Certificate' },
   { id: 'monthly-testing', label: 'Monthly Testing Records' },
   { id: 'annual-testing', label: 'Annual Testing Records' },
+  { id: 'self-test-systems', label: 'Self-Test & DALI Systems' },
   { id: 'logbook-requirements', label: 'Logbook Requirements' },
   { id: 'duration-types', label: 'System Duration Types' },
   { id: 'legal-requirements', label: 'Legal Requirements' },
@@ -47,6 +48,7 @@ const keyTakeaways = [
   'Monthly functional tests (flick tests) must be carried out and recorded for every emergency luminaire, confirming the lamp illuminates when mains power is removed.',
   'Annual full-duration discharge tests must run the batteries to their rated duration (typically 3 hours) and record the results for every luminaire.',
   'A fire safety logbook must be maintained on site containing all emergency lighting certificates, test records, and maintenance reports.',
+  'BS 7671 Regulation 560.9 requires emergency lighting systems to comply with BS 5266-1, BS EN 1838 (lighting application performance), and BS EN 50172 (installation, operation and maintenance regime). All three standards apply concurrently.',
   'Elec-Mate provides digital emergency lighting certificate templates with monthly and annual test record sheets, automatic scheduling reminders, and professional PDF export.',
 ];
 
@@ -267,6 +269,16 @@ const sections = [
           safety documentation and may be requested by building control, the fire authority, or
           insurers.
         </p>
+        <p>
+          For smaller installations, BS 5266-1 provides a simplified{' '}
+          <strong>two-part completion certificate</strong> introduced when the standard was revised
+          in 2011 (<strong>Annex I, Figures I.1–I.2</strong>). This concise Declaration of
+          Conformity format is designed for small new installations — for example, a block of
+          communal corridors or a small commercial unit — where the full multi-page completion
+          certificate would be disproportionate. BS 5266-trained engineers and building inspectors
+          will expect to see either the full certificate or the Annex I two-part form, not a generic
+          handover letter.
+        </p>
       </>
     ),
   },
@@ -439,6 +451,82 @@ const sections = [
     ),
   },
   {
+    id: 'self-test-systems',
+    heading: 'Self-Test and DALI Addressable Systems',
+    content: (
+      <>
+        <p>
+          Modern commercial installations increasingly use self-test emergency luminaires and DALI
+          (Digital Addressable Lighting Interface) addressable systems, which automate much of the
+          routine testing regime required by BS 5266-1 and BS EN 50172:2004.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-4">Self-Test Systems</h3>
+          <ul className="space-y-3 text-white">
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                Self-test luminaires automatically execute short functional tests and full-duration
+                discharge tests on a configured schedule, logging results internally without
+                requiring manual intervention.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                BS EN 50172:2004 recognises automatic testing facilities as an acceptable means of
+                meeting the routine inspection requirements, provided scheduled tests execute as
+                configured and logs are reviewed regularly for unrectified faults.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                The competent person must periodically download and review the automatic test log,
+                confirm tests have run at the correct intervals, and cross-check a sample of
+                automatic test events by manually initiating a test and comparing results.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-4">DALI Addressable Systems</h3>
+          <ul className="space-y-3 text-white">
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                DALI systems address each emergency luminaire individually, allowing test results,
+                fault conditions, and battery status to be logged centrally via a gateway or
+                building management system (BMS) interface.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                Monthly functional testing via a DALI controller generates a per-luminaire pass/fail
+                log automatically, meeting BS 5266-1 Clause 12.3 recording requirements without a
+                manual walk-round flick test.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                Certification records for DALI-controlled installations should include the system
+                configuration, DALI address schedule, and exported test logs, which form part of the
+                fire safety logbook in place of manual test record sheets.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Whether a system uses manual testing, self-test luminaires, or a DALI controller, the
+          obligation to maintain a complete and up-to-date test record remains the same under BS
+          5266-1 and BS EN 50172.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'logbook-requirements',
     heading: 'Logbook Requirements',
     content: (
@@ -446,7 +534,10 @@ const sections = [
         <p>
           BS 5266-1 requires that a logbook is maintained for every emergency lighting installation.
           The logbook is the central record of the system's history and is the primary evidence of
-          compliance with fire safety legislation.
+          compliance with fire safety legislation. BS 5266-1 provides a model log book format in{' '}
+          <strong>Annex J (informative)</strong>, which sets out the recommended structure for
+          recording monthly functional tests, annual full-duration discharge tests, maintenance
+          actions, component replacements, and certification entries.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Logbook Contents</h3>
@@ -602,6 +693,16 @@ const sections = [
                 condition of the HMO licence, with specific requirements set by the local authority.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>BS 7671 Regulation 560.9</strong> — requires emergency lighting systems to
+                comply with BS 5266-1, BS EN 1838 (lighting application performance standard), and
+                BS EN 50172 (installation, operation, and maintenance standard). Clause 7.2 of BS EN
+                50172:2004 specifically governs routine inspection and testing regimes including
+                annual full-duration discharge tests and recharge verification.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -641,7 +742,6 @@ export default function EmergencyLightingCertificateGuidePage() {
           Emergency Lighting Certificate Guide: <span className="text-yellow-400">BS 5266 UK</span>
         </>
       }
-              noindex={true}
       heroSubtitle="BS 5266-1 requires completion certificates, monthly functional test records, and annual full-duration discharge test records for every emergency lighting installation. This guide explains what each document must contain, who is responsible, and how to keep compliant records."
       readingTime={11}
       keyTakeaways={keyTakeaways}

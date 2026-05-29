@@ -51,6 +51,9 @@ export default function AIElectricalFaultFindingPage() {
         'Pattern matching identifies correlations that human diagnosticians might miss — for example, that intermittent RCD tripping only occurs during humid weather suggesting moisture ingress.',
         'The AI learns from resolved faults, building an increasingly accurate model of which symptoms typically lead to which root causes in different types of installation.',
         'AI fault finding is a diagnostic aid, not a replacement for physical testing. It suggests where to look and what to test — you still carry out the actual measurements and repairs.',
+        'BS 7671:2018+A4:2026 Reg 411.3.4 requires ≤30 mA RCD additional protection on domestic lighting circuits — an RCD trip on a lighting circuit may be correctly-operating A4 protection, not a fault.',
+        'Reg 421.1.7 (A4:2026) recommends arc fault detection devices (AFDDs) on AC final circuits — an AFDD trip is a distinct symptom pattern, not the same as an MCB or RCD trip.',
+        'Always compare a high measured Zs reading against a temperature-corrected limit, not raw Table 41.4 values — measured conductor impedance is lower at test temperature than at maximum operating temperature (GN3 Reg 3.18 / Appendix A3).',
       ]}
       sections={[
         {
@@ -287,10 +290,14 @@ export default function AIElectricalFaultFindingPage() {
                   <span className="font-semibold text-white">
                     Step 2: Insulation resistance test
                   </span>{' '}
-                  — with all appliances disconnected, carry out an insulation resistance test at
-                  500V DC between live conductors and earth. A reading below 1 megohm indicates
-                  cable insulation deterioration. Test each leg of the ring separately to localise
-                  the fault.
+                  — safe isolation and proving dead are mandatory before connecting the tester (BS
+                  7671 Reg 643.3.1 / GN3 Reg 2.8). With all appliances disconnected and the circuit
+                  isolated, carry out an insulation resistance test at 500 V DC between live
+                  conductors and earth. The minimum acceptable result for a standard LV circuit is
+                  1.0 M&Omega; per Table 64 (Reg 643.3.2). Note: SELV and PELV circuits must only be
+                  tested at 250 V DC (minimum 0.5 M&Omega; per Table 64) — applying 500 V to
+                  SELV/PELV circuits risks equipment damage. Test each leg of the ring separately to
+                  localise the fault.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Step 3: Split the ring</span> — if
@@ -416,7 +423,35 @@ export default function AIElectricalFaultFindingPage() {
                   <span className="font-semibold text-white">High earth fault loop impedance</span>{' '}
                   — the AI considers loose or degraded earth connections, undersized CPCs, long
                   cable runs, and supply-side earth path issues. It recommends systematic testing
-                  from the origin outward to localise the high-resistance point.
+                  from the origin outward to localise the high-resistance point. When reviewing
+                  measured Zs values, always compare against a temperature-corrected limit rather
+                  than the raw Table 41.4 maximum — conductor impedance at test temperature is lower
+                  than at maximum operating temperature, so a raw comparison can give a false pass
+                  or false fail. GN3 Reg 3.18 and Appendix A3 set out the correction method; GN3
+                  Appendix A provides adjusted tabulated Zs values for standard thermoplastic (PVC)
+                  circuits.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    A4:2026 — lighting circuit RCD trips
+                  </span>{' '}
+                  — BS 7671:2018+A4:2026 Reg 411.3.4 now requires additional protection by a ≤30 mA
+                  RCD on AC final circuits supplying luminaires in domestic premises. An RCD trip on
+                  a domestic lighting circuit may therefore be correctly-operating A4 protection
+                  responding to a real leakage event, rather than a nuisance trip or wiring fault.
+                  The AI differentiates this from pre-A4 installations where lighting circuits were
+                  not required to be RCD-protected.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">A4:2026 — AFDD trips</span> — Reg
+                  421.1.7 (A4:2026) recommends arc fault detection devices (AFDDs) on AC final
+                  circuits to mitigate fire risk from arc fault currents. An AFDD trip is a distinct
+                  symptom from an MCB overcurrent trip or an RCD residual-current trip — the AFDD
+                  detects the characteristic signature of a series or parallel arc fault. If a
+                  consumer unit has AFDD devices fitted, the AI treats an AFDD operation as a
+                  separate fault category requiring arc-fault investigation (loose connections,
+                  damaged cable insulation, deteriorated wiring) rather than a standard overload or
+                  earth fault diagnostic path.
                 </li>
               </ul>
               <p>
@@ -501,7 +536,7 @@ export default function AIElectricalFaultFindingPage() {
         {
           question: 'Can the AI diagnose faults from test results alone?',
           answer:
-            'Yes. If you have already taken test readings, you can provide them to the AI along with your symptom description. The AI analyses the test data — insulation resistance values, earth fault loop impedance readings, continuity measurements, RCD trip times — and uses them to refine its diagnosis. For example, if you report an RCD tripping and also provide an insulation resistance reading of 0.5 megohm on the shower circuit, the AI immediately identifies cable insulation deterioration on that circuit as the primary cause, rather than working through the full differential diagnosis. Including test data significantly improves the accuracy and speed of the diagnosis.',
+            'Yes. If you have already taken test readings, you can provide them to the AI along with your symptom description. The AI analyses the test data — insulation resistance values, earth fault loop impedance readings, continuity measurements, RCD trip times — and uses them to refine its diagnosis. For example, if you report an RCD tripping and also provide an insulation resistance reading of 0.8 megohm on the shower circuit (below the 1.0 MΩ minimum for a standard LV circuit per BS 7671 Table 64), the AI immediately identifies cable insulation deterioration on that circuit as the primary cause, rather than working through the full differential diagnosis. Including test data significantly improves the accuracy and speed of the diagnosis.',
         },
         {
           question: 'Does AI fault finding work for three-phase installations?',

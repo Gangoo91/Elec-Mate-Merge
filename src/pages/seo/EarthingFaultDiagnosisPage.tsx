@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'An earth fault is current flowing from a live conductor to earth through an unintended path — typically caused by insulation breakdown in cables, accessories, or appliances.',
-  'Insulation resistance testing at 500V DC is the primary method for detecting earth faults. The minimum acceptable reading is 1M ohm, but readings below 2M ohm should be investigated.',
+  'Insulation resistance testing at 500V DC is the primary method for detecting earth faults. The minimum acceptable reading under BS 7671 Table 64 (Reg 643.3.2) is 1M ohm for circuits up to 500V, but readings below 2M ohm should be investigated.',
   'The half-split method is the fastest way to locate an earth fault on a circuit — disconnect at the midpoint and test each half separately, narrowing down the fault location.',
   'An earth leakage clamp meter can detect earth faults on live circuits without disconnecting, measuring the imbalance between line and neutral currents.',
   'Elec-Mate AI fault diagnosis helps electricians interpret insulation resistance readings, identify the most likely fault location, and generate the correct observation codes.',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What insulation resistance readings mean a fault?',
     answer:
-      'Under BS 7671 (Table 61), the minimum acceptable insulation resistance is 1M ohm for circuits operating at 500V or below (which includes all standard domestic circuits tested at 500V DC). However, this is the absolute minimum — a new installation should give readings of 200M ohm or higher. In practice, readings between 1M and 2M ohm should be investigated, as they indicate deteriorating insulation that will likely fail in the future. Readings between 0.5M and 1M ohm are a C2 (Potentially Dangerous) defect. Readings below 0.5M ohm or a dead short (close to 0 ohm) are a C1 (Danger Present) defect requiring immediate action. A reading that is lower on the Line-Earth test than the Neutral-Earth test (or vice versa) helps identify which conductor has the insulation breakdown.',
+      'Under BS 7671 Table 64 (Reg 643.3.2), the minimum acceptable insulation resistance is 1M ohm for circuits operating at up to 500V, tested at 500V DC. This is the absolute minimum floor — a reading below 1M ohm means the insulation does not comply. In practice, readings between 1M and 2M ohm should be investigated, as they indicate deteriorating insulation that will likely fail in the future. Readings approaching or below 1M ohm indicate failing insulation and, depending on professional judgement (GN3 Ch.3 Reg 3.11), typically attract a C2 (Potentially Dangerous) or C1 (Danger Present) code on an EICR — the correct code requires the inspector to assess all circumstances, not apply a fixed numeric threshold mechanically. Readings close to 0 ohm (dead short to earth) clearly warrant C1 and immediate isolation. A reading that is lower on the Line-Earth test than the Neutral-Earth test (or vice versa) helps identify which conductor has the insulation breakdown. Note: SELV and PELV circuits use a lower test voltage of 250V DC with a minimum of 0.5M ohm per Table 64.',
   },
   {
     question: 'How does an earth leakage clamp meter work?',
@@ -187,6 +187,24 @@ const sections = [
           Understanding the type and severity of the earth fault determines the diagnostic approach
           and the urgency of the repair.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">Earthing system type affects diagnosis</p>
+              <p className="text-white text-sm leading-relaxed">
+                On TN-S and TN-C-S systems, a low-impedance earth fault will cause the MCB to
+                operate — the fault current path through the supplier&apos;s earthed neutral is
+                low-impedance. On a TT system, the fault current must return via the local earth
+                electrode, which may have a resistance of tens or hundreds of ohms — far too high
+                for an MCB to operate reliably. TT systems therefore require RCD protection for
+                fault protection per Reg 411.5.3, and the electrode resistance must be measured as
+                part of verification (BS 7671 Table 41.5). When diagnosing on a TT installation,
+                expect higher Zs readings and always verify RCD operation.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -262,11 +280,10 @@ const sections = [
           measures the resistance of the insulation separating them.
         </p>
         <p>
-          For standard domestic circuits (230V), the test voltage is 500V DC. The minimum acceptable
-          insulation resistance under{' '}
+          For standard circuits up to 500V (including all domestic 230V circuits), the test voltage
+          is 500V DC. The minimum acceptable insulation resistance under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> Table
-          61 is 1M ohm. However, a new installation should read 200M ohm or higher — the 1M ohm
-          minimum is a threshold below which the insulation is considered unsafe.
+          64 (Reg 643.3.2) is 1M ohm — below this value the installation does not comply.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -286,20 +303,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <Ruler className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>0.5M to 1M ohm:</strong> unsatisfactory. The insulation is failing. This is
-                a C2 (Potentially Dangerous) defect. The circuit should be investigated and the
-                fault rectified.
+                <strong>Approaching 1M ohm:</strong> unsatisfactory. The insulation is failing and
+                does not meet the BS 7671 Table 64 minimum. Professional judgement (GN3 Ch.3) is
+                required to assign the correct EICR code — typically C2 (Potentially Dangerous)
+                where there is no immediate danger, but circumstances may warrant C1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Ruler className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Below 0.5M ohm:</strong> dangerous. The insulation has failed. This is a C1
-                (Danger Present) defect requiring immediate action. The circuit should be isolated
-                until the fault is repaired.
+                <strong>Very low or dead short (close to 0 ohm):</strong> the insulation has failed.
+                This is typically a C1 (Danger Present) defect requiring immediate action. The
+                circuit should be isolated until the fault is repaired.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                SELV and PELV circuits — different test parameters
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                Extra-low voltage circuits (SELV and PELV) — including ELV lighting, fire-alarm
+                wiring, CCTV, and access-control cabling — use a lower test voltage of 250V DC with
+                a minimum insulation resistance of 0.5M&#8486; per BS 7671 Table 64 (Reg 643.3.2).
+                Applying 500V DC to these circuits risks damaging connected equipment. Always
+                identify the circuit type before selecting the test voltage.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           Before testing, ensure: the circuit is{' '}
@@ -571,8 +606,10 @@ const sections = [
               <span>
                 <strong>On the EICR:</strong> record insulation resistance readings for every
                 circuit in the Schedule of Test Results (Schedule C). Record the readings for L-E,
-                N-E, and L-N. Any reading below 1M ohm requires an observation code — C2 for
-                readings between 0.5M and 1M ohm, C1 for readings below 0.5M ohm.
+                N-E, and L-N. Any reading below the BS 7671 Table 64 minimum (1M&#8486; at 500V DC
+                for circuits up to 500V) requires an observation code. The correct code — C1 (Danger
+                Present) or C2 (Potentially Dangerous) — is determined by professional judgement
+                based on all circumstances, not a fixed numeric sub-threshold.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -587,8 +624,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>After remedial work:</strong> retest and record the improved insulation
-                resistance. The post-repair reading confirms the fault has been fixed. Issue an
+                <strong>After remedial work — IR retest:</strong> retest and record the improved
+                insulation resistance. The post-repair reading confirms the insulation fault has
+                been fixed.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>After remedial work — Zs verification:</strong> a earth fault loop impedance
+                (Zs) test shall also be carried out and recorded per Reg 643.7.1 to confirm the
+                protective device will operate within the required disconnection time. This is
+                mandatory after any work that may affect the fault protection path. Issue an
                 Electrical Installation Certificate (EIC) or Minor Works Certificate for the
                 remedial work.
               </span>

@@ -36,7 +36,7 @@ const tocItems = [
   { id: 'niceic', label: 'NICEIC' },
   { id: 'napit', label: 'NAPIT' },
   { id: 'elecsa', label: 'ELECSA' },
-  { id: 'bre', label: 'BRE Certification' },
+  { id: 'stroma', label: 'STROMA' },
   { id: 'how-to-register', label: 'How to Register' },
   { id: 'costs', label: 'Costs and Fees' },
   { id: 'assessment', label: 'The Assessment Process' },
@@ -47,17 +47,22 @@ const tocItems = [
 
 const keyTakeaways = [
   'A competent person scheme allows registered electricians to self-certify notifiable electrical work under Part P of the Building Regulations, without involving building control.',
-  'The four main schemes for electrical work in England and Wales are NICEIC, NAPIT, ELECSA, and BRE Certification. All are government-authorised and equally valid.',
+  'The four main schemes for electrical work in England and Wales are NICEIC, NAPIT, ELECSA, and STROMA. All are government-authorised and equally valid. BRE Certification is an additional option but is less commonly used than the four main schemes.',
   'Annual registration fees range from approximately £350 to £700 depending on the scheme, tier of registration, and number of operatives. The cost is typically recovered within a few notifiable jobs.',
-  'To register, you need the 18th Edition qualification (C&G 2382), a relevant installation or inspection qualification, public liability insurance, and must pass a practical assessment of your work.',
+  'To register, you need the 18th Edition qualification (C&G 2382), a relevant installation or inspection qualification, public liability insurance, and must pass a practical assessment of your work. The qualification and competence standards that schemes assess against are defined by the Electrotechnical Assessment Specification (EAS).',
   'Elec-Mate generates certificates in the correct BS 7671 format, ready to upload to your scheme provider portal for Part P notification.',
 ];
 
 const faqs = [
   {
+    question: 'What electrical work is notifiable under Part P?',
+    answer:
+      "Not all electrical work in dwellings is notifiable — the On-Site Guide (9th Ed, A4:2022) states clearly that while all domestic electrical work falls within the guide's remit, only some of it is notifiable under Building Regulations Part P. For each job, the installer must determine whether the specific work type meets the notification criteria. Work that is generally notifiable includes: installing a new circuit; replacing a consumer unit (fuse board); carrying out work in a bathroom, shower room, or kitchen (special locations); and installing electric floor heating. Work that is generally not notifiable includes: like-for-like replacement of accessories (sockets, switches, ceiling roses) on an existing circuit outside a special location; adding a lighting point to an existing circuit; and repairing or maintaining existing equipment. If you are registered with a competent person scheme, you can self-certify notifiable work and submit the Part P notification yourself. If you are not registered, you must notify the local authority building control before carrying out notifiable work.",
+  },
+  {
     question: 'Which competent person scheme should I join?',
     answer:
-      'All four schemes — NICEIC, NAPIT, ELECSA, and BRE — are equally valid for self-certifying notifiable electrical work under Part P. The choice often comes down to cost, local reputation, and personal preference. NICEIC is the largest and best-known scheme, which can carry weight with customers who recognise the brand. NAPIT is often the most cost-effective and is well-regarded. ELECSA (part of the ECA group) offers a straightforward registration process. BRE is less common but equally valid. Some electricians choose based on which scheme their existing contacts or employers use. It is worth getting quotes from at least two schemes before deciding.',
+      'The four main schemes — NICEIC, NAPIT, ELECSA, and STROMA — are equally valid for self-certifying notifiable electrical work under Part P. The choice often comes down to cost, local reputation, and personal preference. NICEIC is the largest and best-known scheme, which can carry weight with customers who recognise the brand. NAPIT is often the most cost-effective and is well-regarded. ELECSA (part of the ECA group) offers a straightforward registration process. STROMA is well-established and particularly active in renewables and EV charging alongside electrical installation. BRE Certification is a further option and is equally valid, though less widely used than the four main schemes. It is worth getting quotes from at least two schemes before deciding.',
   },
   {
     question: 'What qualifications do I need to register?',
@@ -65,9 +70,14 @@ const faqs = [
       'All schemes require the qualifying supervisor (the person whose qualifications the registration is based on) to hold: the current edition qualification — C&G 2382 (18th Edition IET Wiring Regulations) or equivalent; a relevant installation qualification — such as C&G 2357 (Electrotechnical Technology), NVQ Level 3 in Electrotechnical Services, or equivalent trade qualification; and ideally an inspection and testing qualification — C&G 2391 or equivalent. Some schemes accept a combination of qualifications and experience. If you do not hold the 2391 but have significant practical experience in inspection and testing, some schemes will accept this provided you can demonstrate competence during the assessment. Public liability insurance (minimum £2 million) is also required.',
   },
   {
+    question: 'What is the Electrotechnical Assessment Specification (EAS)?',
+    answer:
+      'The Electrotechnical Assessment Specification (EAS) is the formal framework that defines what "fully qualified" means for competent person scheme eligibility. It sets out the qualification and competence requirements that registered businesses must meet — specifically that organisations registered with scheme operators (NICEIC, NAPIT, STROMA, ELECSA) must employ fully qualified electricians as defined by the EAS. When assessors carry out their scheme audits, the EAS is the standard they are measuring against. Understanding the EAS helps explain why schemes require particular combinations of qualifications and experience: it is not arbitrary — it reflects the published specification that underpins all four main schemes.',
+  },
+  {
     question: 'How much does it cost to join a competent person scheme?',
     answer:
-      'Annual registration fees vary by scheme and tier. As a rough guide for a sole trader or small business doing domestic electrical work: NICEIC Domestic Installer costs approximately £400 to £500 per year; NAPIT costs approximately £350 to £450 per year; ELECSA costs approximately £400 to £500 per year; and BRE costs approximately £350 to £450 per year. There is usually a one-off joining fee (approximately £150 to £300) and an assessment fee for the initial assessment (approximately £200 to £400). Some schemes include the first assessment in the joining fee. The total first-year cost is typically £600 to £1,000. After the first year, it is the annual fee plus assessment fee. The cost is a tax-deductible business expense and is typically recovered within a few notifiable jobs (since the alternative building control route costs £250 to £400 per notification).',
+      'Annual registration fees vary by scheme and tier. As a rough guide for a sole trader or small business doing domestic electrical work: NICEIC Domestic Installer costs approximately £400 to £500 per year; NAPIT costs approximately £350 to £450 per year; ELECSA costs approximately £400 to £500 per year; and STROMA costs approximately £350 to £450 per year. There is usually a one-off joining fee (approximately £150 to £300) and an assessment fee for the initial assessment (approximately £200 to £400). Some schemes include the first assessment in the joining fee. The total first-year cost is typically £600 to £1,000. After the first year, it is the annual fee plus assessment fee. The cost is a tax-deductible business expense and is typically recovered within a few notifiable jobs (since the alternative building control route costs £250 to £400 per notification).',
   },
   {
     question: 'What happens during the scheme assessment?',
@@ -284,10 +294,10 @@ const sections = [
               feature: 'Part of ECA group',
             },
             {
-              scheme: 'BRE',
+              scheme: 'STROMA',
               fee: '£350-£450',
               scope: 'Domestic + Commercial',
-              feature: 'Building research focus',
+              feature: 'Strong renewables/EV focus',
             },
           ].map((row) => (
             <div key={row.scheme} className="grid grid-cols-4 gap-px bg-white/5">
@@ -300,7 +310,9 @@ const sections = [
         </div>
         <p>
           All four schemes are equally valid for Part P self-certification. The choice is a business
-          decision based on cost, brand recognition, and personal preference.
+          decision based on cost, brand recognition, and personal preference. BRE Certification is a
+          further government-authorised option and is also valid, though less widely used than the
+          four schemes above.
         </p>
       </>
     ),
@@ -401,21 +413,27 @@ const sections = [
     ),
   },
   {
-    id: 'bre',
-    heading: 'BRE Certification',
+    id: 'stroma',
+    heading: 'STROMA: Renewables and EV Specialist',
     content: (
       <>
         <p>
-          BRE (Building Research Establishment) Certification is the least widely known of the four
-          main electrical competent person schemes, but it is equally valid. BRE has a strong
-          reputation in the broader building industry — the BRE is responsible for the BREEAM
-          environmental assessment method and other widely used building standards.
+          STROMA is a government-authorised competent person scheme operator covering electrical
+          installation alongside a strong focus on renewables, EV charging, and energy efficiency.
+          It is one of the four main scheme operators alongside NICEIC, NAPIT, and ELECSA, and is
+          equally valid for Part P self-certification of notifiable domestic electrical work.
         </p>
         <p>
-          BRE Certification for electrical work covers the same scope as the other schemes. Fees
-          tend to be competitive. The scheme is suitable for electricians who want a valid competent
-          person registration at a reasonable cost without the higher profile (and higher fees) of
-          NICEIC.
+          STROMA is particularly well-regarded for electricians who also carry out solar PV, battery
+          storage, or EV charge point installations, as the scheme covers these specialist areas
+          alongside domestic electrical work. Fees are competitive, and the registration process
+          follows the same practical assessment model as the other schemes.
+        </p>
+        <p>
+          BRE Certification is a further government-authorised option for electrical work. It is
+          valid for Part P self-certification but is less widely used than the four main schemes
+          above. Fees are competitive and it may suit electricians who want a lower-profile
+          registration at a reasonable cost.
         </p>
       </>
     ),
@@ -538,7 +556,25 @@ const sections = [
                 <strong>Certificate review:</strong> the assessor examines a sample of your
                 completed EICs, Minor Works Certificates, and EICRs. They check that the
                 certificates are correctly completed, test results are recorded accurately, and
-                observations are properly classified.
+                observations are properly classified. For EICs, a common practical gap that causes
+                scheme non-conformances is missing schedules — BS 7671 (GN3) requires that every EIC
+                issued after initial verification is accompanied by a Schedule of Circuit Details
+                and a Schedule of Test Results, based on the model forms in Appendix 6 of BS 7671.
+                Assessors check that both schedules are present and correctly completed, not just
+                the front page of the certificate.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>EICR observation codes:</strong> for EICRs, assessors verify that
+                observations are classified using the correct codes: <strong>C1</strong> — danger
+                present (requires immediate action); <strong>C2</strong> — potentially dangerous
+                (requires urgent action); <strong>C3</strong> — improvement recommended (does not
+                require immediate action); <strong>FI</strong> — further investigation required
+                without delay. Misclassification — for example, coding a C1 condition as C2 or C3 —
+                is a common non-conformance. Observations that do not require improvement are noted
+                without a code.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -644,7 +680,7 @@ export default function CompetentPersonSchemePage() {
           <span className="text-yellow-400">Electrical Registration in the UK</span>
         </>
       }
-      heroSubtitle="Everything you need to know about competent person schemes for electricians. NICEIC, NAPIT, ELECSA, and BRE compared. Costs, qualifications needed, the assessment process, how to register, and how scheme membership benefits your business."
+      heroSubtitle="Everything you need to know about competent person schemes for electricians. NICEIC, NAPIT, ELECSA, STROMA, and BRE compared. Costs, qualifications needed, the assessment process, how to register, and how scheme membership benefits your business."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

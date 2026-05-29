@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate circuit loading and diversity factors to determine whether a ring or radial is appropriate.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Verify cable sizes for ring and radial circuits with BS 7671 correction factors.',
     icon: Calculator,
@@ -331,7 +331,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             max demand calculator
           </SEOInternalLink>{' '}
           applies the correct diversity factors from the IET On-Site Guide to calculate the expected
@@ -539,7 +539,7 @@ const sections = [
                 reduces voltage drop because current flows in both directions. For long runs with
                 high loads, the ring may achieve lower voltage drop than a radial of the same cable
                 size. Check with Elec-Mate's{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>
                 .

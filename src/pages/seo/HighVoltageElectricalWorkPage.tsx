@@ -28,6 +28,7 @@ const tocItems = [
   { id: 'authorisation', label: 'HV Authorisation Systems' },
   { id: 'ena-standards', label: 'ENA Engineering Recommendations' },
   { id: 'dno-connections', label: 'DNO Connections Above LV' },
+  { id: 'section-442', label: 'BS 7671 Section 442: Temporary Overvoltages' },
   { id: 'training', label: 'HV Training and Assessment' },
   { id: 'health-safety', label: 'Health and Safety: EWR Regulation 14' },
   { id: 'for-electricians', label: 'For Electricians' },
@@ -38,7 +39,8 @@ const tocItems = [
 const keyTakeaways = [
   'High voltage (HV) in the UK electrical industry context means voltages above 1kV AC (or 1.5kV DC). This is the boundary defined by BS 7671:2018+A4:2026 and IEC 60038. Standard distribution voltages above LV include 11kV, 33kV, 66kV, 132kV, and 275kV/400kV transmission.',
   'HV systems are operated through formal Authorisation systems. Key roles are: Authorised Person (AP) — responsible for establishing and maintaining safe working conditions; Competent Person (CP) — can carry out HV work under the control of an AP; Senior Authorised Person (SAP) — issues sanctions for testing and manages complex switching operations.',
-  'ENA Engineering Recommendation G74 covers the protection of HV consumer installations. ENA Engineering Recommendation G82 covers safety management of HV electrical plant. These are the key industry standards for HV work on distribution networks.',
+  'ENA Engineering Recommendation G74 covers the protection of HV consumer installations. ENA Engineering Recommendation G99 is the current standard for new embedded generation connections to the distribution network (from 2019 onwards). These are the key industry standards for HV work on distribution networks.',
+  'BS 7671:2018+A4:2026 Section 442 (Regs 442.2.1 and 442.2.2) requires LV installations supplied from HV consumer substations (typically 11kV) to be designed to withstand temporary power-frequency overvoltages arising from earth faults on the HV system. The magnitude limit is set by Reg 442.2.1 (Uc, per Table 44.1); the duration limits are set by Reg 442.2.2 (Up+250V for long disconnection times; Up+1,200V for short disconnection times under 5 s). GN3 Chapter 2 Reg 2.36 requires inspectors to verify this protection at initial verification and periodic inspection.',
   'Electricity at Work Regulations 1989 Regulation 14 prohibits live working on HV systems in virtually all circumstances. Regulation 14 states that no person shall work on live conductors unless it is unreasonable in all the circumstances for it to be dead. For HV, "unreasonable" almost never applies — all HV work is carried out dead.',
   'HV-authorised electricians work in power generation, large industrial sites, data centres, DNO substation construction, and offshore wind. Pay rates range from £55 to £100+ per hour depending on the authorisation level and sector.',
 ];
@@ -70,7 +72,8 @@ const faqs = [
       'ENA Engineering Recommendation G82 (Requirements for the Connection of Generation to the Distribution Systems of Licensed Distribution Network Operators) covers generation connected to the distribution network. It is specifically relevant for embedded generation (solar farms, wind farms, combined heat and power plant) connecting at 11kV and 33kV. G82 defines the protection, control, and monitoring requirements for the connection point. For electricians and electrical engineers involved in HV-connected generation projects, G82 defines the technical requirements that the DNO will specify at the grid connection offer stage. The requirements include protection relay types and settings, automatic disconnection under abnormal voltage or frequency conditions, and communications to the DNO.',
   },
   {
-    question: 'Does Electricity at Work Regulations Regulation 14 mean all HV work must be done dead?',
+    question:
+      'Does Electricity at Work Regulations Regulation 14 mean all HV work must be done dead?',
     answer:
       'Electricity at Work Regulations 1989 Regulation 14 states: "No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless — (a) it is unreasonable in all the circumstances for it to be dead; and (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; and (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury." For HV systems, condition (a) is almost never met — there is virtually no situation where it is unreasonable to make an 11kV circuit dead before working on it. Live HV working does exist (for example, on 132kV and above overhead line work using specialist live line techniques) but it requires highly specialised training and equipment, and is carried out only by specialist teams under exceptional circumstances. For the vast majority of HV work that electricians encounter — substation maintenance, switchgear replacement, cable jointing — the circuit is always made dead, verified by test, and earthed before work begins.',
   },
@@ -145,15 +148,16 @@ const sections = [
           High voltage electrical work is among the most technically demanding and best-rewarded
           specialisms available to UK electricians and electrical engineers. HV systems power
           industrial sites, data centres, hospitals, offshore platforms, wind farms, and the
-          national distribution network. Access to this work requires formal HV authorisation —
-          a structured system of roles and responsibilities that exists specifically to manage the
+          national distribution network. Access to this work requires formal HV authorisation — a
+          structured system of roles and responsibilities that exists specifically to manage the
           risk of working with voltages that are invariably fatal on contact.
         </p>
         <p>
           This guide covers the definition of HV in UK electrical standards, the authorisation role
           structure (AP/CP/SAP), the key ENA Engineering Recommendations, DNO connections above LV,
-          HV training and assessment, and the health and safety framework — in particular Electricity
-          at Work Regulations 1989 Regulation 14, which governs live working restrictions.
+          HV training and assessment, and the health and safety framework — in particular
+          Electricity at Work Regulations 1989 Regulation 14, which governs live working
+          restrictions.
         </p>
         <p>
           For standard LV electrical work, see the guide to{' '}
@@ -179,23 +183,33 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span><strong>Extra Low Voltage (ELV):</strong> Not exceeding 50V AC or 120V ripple-free DC. Safe to touch in most circumstances.</span>
+              <span>
+                <strong>Extra Low Voltage (ELV):</strong> Not exceeding 50V AC or 120V ripple-free
+                DC. Safe to touch in most circumstances.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Low Voltage (LV):</strong> Exceeding ELV but not exceeding 1kV AC or 1.5kV DC. The standard domestic and commercial supply (230V/400V) falls in this band. Governed by BS 7671.</span>
+              <span>
+                <strong>Low Voltage (LV):</strong> Exceeding ELV but not exceeding 1kV AC or 1.5kV
+                DC. The standard domestic and commercial supply (230V/400V) falls in this band.
+                Governed by BS 7671.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>High Voltage (HV):</strong> Exceeding 1kV AC or 1.5kV DC. UK distribution: 11kV, 33kV, 66kV, 132kV. Transmission: 275kV, 400kV. Beyond BS 7671 scope.</span>
+              <span>
+                <strong>High Voltage (HV):</strong> Exceeding 1kV AC or 1.5kV DC. UK distribution:
+                11kV, 33kV, 66kV, 132kV. Transmission: 275kV, 400kV. Beyond BS 7671 scope.
+              </span>
             </li>
           </ul>
         </div>
         <p>
-          In UK industry, HV most commonly refers to 11kV — the voltage at which power is distributed
-          to large sites from DNO substations. Transformers step 11kV down to 400V/230V for
-          building distribution. Many large industrial and commercial sites own and operate their own
-          11kV switchgear and transformers (HV consumer installations).
+          In UK industry, HV most commonly refers to 11kV — the voltage at which power is
+          distributed to large sites from DNO substations. Transformers step 11kV down to 400V/230V
+          for building distribution. Many large industrial and commercial sites own and operate
+          their own 11kV switchgear and transformers (HV consumer installations).
         </p>
       </>
     ),
@@ -214,16 +228,16 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">CP</h3>
             <p className="text-white text-sm leading-relaxed">
               Competent Person. Competent to carry out specific HV work tasks under the control of
-              an AP. The CP cannot act independently on the HV system — they must work within a
-              safe system established by an AP.
+              an AP. The CP cannot act independently on the HV system — they must work within a safe
+              system established by an AP.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">AP</h3>
             <p className="text-white text-sm leading-relaxed">
-              Authorised Person. Responsible for establishing and maintaining safe working conditions
-              on the HV system. Issues Sanction for Test documents. Controls access to HV plant.
-              Can carry out switching operations per the switching programme.
+              Authorised Person. Responsible for establishing and maintaining safe working
+              conditions on the HV system. Issues Sanction for Test documents. Controls access to HV
+              plant. Can carry out switching operations per the switching programme.
             </p>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -259,10 +273,10 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ENA G74</strong> — Protection of HV electrical plant and associated HV
-                consumer installations. Covers protection relay settings, time-grading, and automatic
-                switching required on HV consumer substations (for example, at an 11kV-connected
-                industrial site). Relevant to any engineer specifying or commissioning HV protection
-                systems.
+                consumer installations. Covers protection relay settings, time-grading, and
+                automatic switching required on HV consumer substations (for example, at an
+                11kV-connected industrial site). Relevant to any engineer specifying or
+                commissioning HV protection systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -278,9 +292,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ENA G99</strong> — Requirements for Generators connecting at LV and up to
-                HV. Sets out the technical requirements for generation connecting to the distribution
-                network, including protection relay settings and grid code compliance. Related to
-                G82 but covers a wider voltage range.
+                HV. Sets out the technical requirements for generation connecting to the
+                distribution network, including protection relay settings and grid code compliance.
+                Related to G82 but covers a wider voltage range.
               </span>
             </li>
           </ul>
@@ -301,8 +315,8 @@ const sections = [
           LV distribution — these are the HV consumer installation.
         </p>
         <p>
-          The DNO connection process for HV sites involves a formal grid connection application,
-          a connection offer specifying the protection requirements (per G74), and an inspection and
+          The DNO connection process for HV sites involves a formal grid connection application, a
+          connection offer specifying the protection requirements (per G74), and an inspection and
           test by the DNO before energisation. The site's HV engineer or consultant manages this
           process. Electricians and electrical engineers with HV authorisation are involved in
           commissioning the site's switchgear, testing protection relays, and energising the
@@ -313,6 +327,87 @@ const sections = [
           description="Even the largest HV substation projects include LV distribution boards, UPS systems…"
           icon={FileCheck2}
         />
+      </>
+    ),
+  },
+  {
+    id: 'section-442',
+    heading: 'BS 7671 Section 442: Temporary Overvoltages at HV Consumer Substations',
+    content: (
+      <>
+        <p>
+          Although BS 7671 formally limits its scope to installations up to 1kV AC (see the{' '}
+          <SEOInternalLink href="/guides/18th-edition-wiring-regulations">
+            18th Edition wiring regulations guide
+          </SEOInternalLink>{' '}
+          for the full Part 4 overvoltage framework), it contains one section that is directly
+          applicable to every LV installation supplied from an HV consumer substation:{' '}
+          <strong>Section 442 (Chapter 44, Part 4)</strong>. This section sets mandatory
+          requirements for protecting the LV installation against temporary power-frequency
+          overvoltages that arise from earth faults on the HV supply system — typically the 11kV
+          network feeding the substation.
+        </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+          <h3 className="font-bold text-white text-base mb-3">What Section 442 Requires</h3>
+          <ul className="space-y-3 text-white text-sm leading-relaxed">
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 442.2.1 — Magnitude:</strong> The power-frequency fault voltage Uc
+                (appearing between exposed-conductive-parts and Earth in the LV installation during
+                an HV earth fault) shall not exceed a dangerous level. The value of Uc is calculated
+                from Table 44.1, which accounts for the earthing arrangement (TN, TT, or IT) and
+                whether the HV and LV earthing systems are interconnected or separated.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 442.2.2 — Duration limits:</strong> The permissible stress voltage on LV
+                equipment depends on how quickly the HV protection clears the fault. For HV systems
+                with long disconnection times (for example, isolated-neutral or resonant-earthed
+                networks), the limit is Up+250V. For systems with short disconnection times below 5
+                s (for example, low-impedance earthed 11kV networks as used by most UK DNOs), the
+                limit is Up+1,200V.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 442.2.3 — Compliance measures:</strong> Where the calculated limits are
+                not met, the standard permits three compliance measures: (a) separation of HV and LV
+                earthing arrangements; (b) change of LV system earthing; or (c) reduction of earth
+                resistance Rp. Where SPDs are used as part of the solution, they shall be selected
+                and erected in accordance with Section 534.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          <strong>Inspection and verification:</strong> GN3 (9th Edition, A4:2026) Chapter 2 Reg
+          2.36 requires inspectors carrying out initial verification or periodic inspection of an LV
+          installation supplied from a consumer substation to verify that protection against
+          temporary overvoltages from HV faults is in place and effective. This check is in addition
+          to the standard LV inspection schedule. Common findings on HV-fed sites include
+          insufficient earthing provision and inadequate records of HV protection relay settings —
+          both of which affect whether the Reg 442.2.2 duration limits are met.
+        </p>
+        <p>
+          The LV installer is normally not required to perform the Uc/Up calculations themselves —
+          that responsibility rests primarily with the substation installer or operator — but the LV
+          designer and inspector must confirm that the relevant calculations have been done, that
+          the results meet the limits, and that the method of compliance is documented on the
+          installation certificate or{' '}
+          <SEOInternalLink href="/guides/eicr-certificate-guide">EICR schedule</SEOInternalLink>.
+        </p>
+        <p>
+          <strong>SPDs and transient overvoltages:</strong> Where SPDs are assessed as part of the
+          HV-fed site's overvoltage protection, BS 7671 Note 3 to Chapter 443 confirms that
+          transient overvoltages transmitted by the supply distribution system are not significantly
+          attenuated downstream. This means the LV main distribution board at an HV-connected site
+          is exposed to near-source transient levels, and the SPD requirement assessment (per
+          Section 534) must account for this.
+        </p>
       </>
     ),
   },
@@ -331,15 +426,30 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>DNO graduate and apprentice schemes</strong> — National Grid Electricity Distribution, SP Energy Networks, UK Power Networks, and Electricity North West all run structured training schemes for HV engineers and technicians. These provide the most comprehensive route to HV authorisation.</span>
+              <span>
+                <strong>DNO graduate and apprentice schemes</strong> — National Grid Electricity
+                Distribution, SP Energy Networks, UK Power Networks, and Electricity North West all
+                run structured training schemes for HV engineers and technicians. These provide the
+                most comprehensive route to HV authorisation.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Independent HV training providers</strong> — PASS (Power Academy Support Services), AEI Cables training division, and various specialist electrical training companies offer 1 to 2 week HV safety rules and authorisation courses. Costs typically £1,500–£3,000 per candidate.</span>
+              <span>
+                <strong>Independent HV training providers</strong> — PASS (Power Academy Support
+                Services), AEI Cables training division, and various specialist electrical training
+                companies offer 1 to 2 week HV safety rules and authorisation courses. Costs
+                typically £1,500–£3,000 per candidate.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Site-specific assessment</strong> — after completing generic HV safety training, the candidate must be assessed on the specific system they will be authorised on by the responsible senior engineer. This typically involves a period of supervised switching before unsupervised authorisation.</span>
+              <span>
+                <strong>Site-specific assessment</strong> — after completing generic HV safety
+                training, the candidate must be assessed on the specific system they will be
+                authorised on by the responsible senior engineer. This typically involves a period
+                of supervised switching before unsupervised authorisation.
+              </span>
             </li>
           </ul>
         </div>
@@ -357,11 +467,11 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <p className="text-white italic">
-            "No person shall be engaged in any work activity on or so near any live conductor
-            (other than one suitably covered with insulating material so as to prevent danger) that
-            danger may arise unless — (a) it is unreasonable in all the circumstances for it to be
-            dead; and (b) it is reasonable in all the circumstances for him to be at work on or near
-            it while it is live; and (c) suitable precautions (including where necessary the provision
+            "No person shall be engaged in any work activity on or so near any live conductor (other
+            than one suitably covered with insulating material so as to prevent danger) that danger
+            may arise unless — (a) it is unreasonable in all the circumstances for it to be dead;
+            and (b) it is reasonable in all the circumstances for him to be at work on or near it
+            while it is live; and (c) suitable precautions (including where necessary the provision
             of suitable protective equipment) are taken to prevent injury."
           </p>
         </div>
@@ -405,15 +515,25 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Minimum foundation:</strong> C&G 2365 (Electrical Installations), C&G 2382 (18th Edition), C&G 2391 (Inspection and Testing), 5+ years LV experience on large commercial/industrial projects.</span>
+              <span>
+                <strong>Minimum foundation:</strong> C&G 2365 (Electrical Installations), C&G 2382
+                (18th Edition), C&G 2391 (Inspection and Testing), 5+ years LV experience on large
+                commercial/industrial projects.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>HV training:</strong> Attend an HV Safety Rules course (1–2 weeks, £1,500–£3,000). Seek CP appointment on your first HV site under AP supervision.</span>
+              <span>
+                <strong>HV training:</strong> Attend an HV Safety Rules course (1–2 weeks,
+                £1,500–£3,000). Seek CP appointment on your first HV site under AP supervision.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Target sectors:</strong> DNO substation construction, large industrial HV maintenance, offshore wind O&amp;M, nuclear site HV.</span>
+              <span>
+                <strong>Target sectors:</strong> DNO substation construction, large industrial HV
+                maintenance, offshore wind O&amp;M, nuclear site HV.
+              </span>
             </li>
           </ul>
         </div>

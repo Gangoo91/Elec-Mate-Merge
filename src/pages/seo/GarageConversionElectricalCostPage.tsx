@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for garage conversion circuits including long runs to remote consumer units.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long cable runs from house consumer unit to converted garage.',
@@ -317,7 +317,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           allows the correct cable size and MCB rating to be confirmed once the heating load is

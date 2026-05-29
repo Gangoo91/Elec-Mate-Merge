@@ -37,6 +37,7 @@ const tocItems = [
   { id: 'electrical-hazards', label: 'Electrical-Specific Hazards' },
   { id: 'risk-matrix', label: 'Risk Matrix' },
   { id: 'control-measures', label: 'Control Measures' },
+  { id: 'safety-systems-continuity', label: 'Continuity of Safety Systems' },
   { id: 'dynamic-risk-assessment', label: 'Dynamic Risk Assessment' },
   { id: 'rams-explained', label: 'RAMS Explained' },
   { id: 'faq', label: 'FAQ' },
@@ -49,6 +50,9 @@ const keyTakeaways = [
   'Electrical-specific hazards include electric shock, arc flash burns, falls from height, asbestos exposure in older buildings, and manual handling of heavy equipment like cable drums and consumer units.',
   'A risk matrix multiplies likelihood (1-5) by severity (1-5) to produce a risk score — this must be calculated before and after control measures to show how risk is being managed.',
   'Elec-Mate generates complete risk assessments from a plain-English job description using its AI Health and Safety agent, producing site-specific documents in under 60 seconds.',
+  'BS 7671:2018+A4:2026 (Reg 411.3.4) makes 30 mA RCD protection mandatory for all AC lighting circuits in domestic premises — risk assessments for rewires and consumer unit changes must flag unprotected lighting circuits as a notifiable hazard.',
+  'Solar PV systems present a specific DC-side live-working hazard: under Reg 712.410.101, DC-side conductors remain energised even when the AC isolator is open and must be treated as live until proven dead at the array.',
+  'Before isolating any circuit in an occupied building, identify whether it supplies fire alarm panels, emergency lighting, door-access systems, or servers — failure to notify stakeholders and arrange alternative provisions is one of the most common RAMS preparation mistakes.',
 ];
 
 const faqs = [
@@ -215,6 +219,57 @@ const sections = [
           that exists only in the electrician's head provides no evidence of compliance and will not
           satisfy any client, contractor, or HSE inspector.
         </p>
+        <p>
+          For working safely on live and isolated systems, the Health and Safety Executive
+          publication{' '}
+          <strong className="text-yellow-400">
+            HSG85 Electricity at Work: Safe Working Practices
+          </strong>{' '}
+          is the definitive statutory-aligned practical guide, explicitly recommended by the On-Site
+          Guide (OSG Reg&nbsp;12.5) and referenced in GN3. HSG85 is available as a free download
+          from the HSE website and provides the safe working procedures that underpin any compliant
+          risk assessment for electrical work.
+        </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/30 p-5 my-6">
+          <h3 className="font-bold text-yellow-400 text-lg mb-3">
+            BS&nbsp;7671:2018+A4:2026 Regulatory Changes Relevant to Risk Assessment
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-4">
+            The A4:2026 amendment introduced new protection requirements that directly affect how
+            risk assessments for domestic consumer unit upgrades and rewires must be prepared.
+          </p>
+          <ul className="space-y-3 text-white text-sm leading-relaxed">
+            <li className="flex items-start gap-3">
+              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">
+                  Reg&nbsp;421.1.7 — Arc Fault Detection Devices (AFDDs):
+                </strong>{' '}
+                BS&nbsp;7671:2018+A4:2026 recommends the installation of AFDDs on AC final circuits
+                of a fixed installation to mitigate the risk of fire from arc fault currents. When
+                assessing a consumer unit upgrade or a domestic rewire, the risk assessment should
+                note whether AFDDs have been provided. Where the client declines or budget
+                constraints prevent installation, that decision should be recorded as a residual
+                risk finding in the assessment.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">
+                  Reg&nbsp;411.3.4 — Mandatory RCD Protection for Domestic Lighting Circuits:
+                </strong>{' '}
+                Within domestic (household) premises, Reg&nbsp;411.3.4 requires that additional
+                protection <em>shall</em> be provided for all AC final circuits supplying luminaires
+                by an RCD with a rated residual operating current not exceeding 30&nbsp;mA. Risk
+                assessments for rewires, loft conversions, or consumer unit changes in domestic
+                premises must flag any legacy unprotected lighting circuits as a notifiable hazard.
+                The duty is mandatory — the regulation uses &ldquo;shall&rdquo;, not
+                &ldquo;should&rdquo;.
+              </span>
+            </li>
+          </ul>
+        </div>
         <SEOAppBridge
           title="AI generates legally compliant risk assessments"
           description="Elec-Mate's AI Health and Safety agent produces risk assessments that address all relevant legislation — MHSWR 1999, EAWR 1989, CDM 2015, COSHH 2002…"
@@ -380,6 +435,31 @@ const sections = [
               assessments under the Control of Noise at Work Regulations 2005.
             </p>
           </div>
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 sm:col-span-2">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-yellow-400" />
+              <h3 className="font-bold text-white text-lg">
+                Solar PV and Battery Storage — DC-Side Hazard
+              </h3>
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              Solar PV systems present a specific and frequently underestimated fatal risk during
+              domestic surveys, loft rewires, and consumer unit work. Under BS&nbsp;7671
+              Reg&nbsp;712.410.101, electrical equipment on the DC side of a PV installation{' '}
+              <strong className="text-yellow-400">
+                shall be considered to be energised even when the AC side is disconnected from the
+                grid
+              </strong>{' '}
+              — including when the inverter is isolated. PV strings continue to generate hazardous
+              DC voltage whenever the array is exposed to daylight, regardless of the AC isolator
+              position. Safe isolation of a PV system requires DC-side isolation at the array, not
+              just opening the AC incomer. Risk assessments for any work in buildings with rooftop
+              PV or battery storage must identify all DC conductors as live until proven dead by a
+              suitable DC voltage indicator, and the method statement must specify DC-side isolation
+              as a separate, mandatory step before work begins in the roof space or at the consumer
+              unit.
+            </p>
+          </div>
         </div>
       </>
     ),
@@ -513,6 +593,80 @@ const sections = [
           description="Elec-Mate's AI Health and Safety agent identifies hazards and applies the hierarchy of controls to each one."
           icon={ShieldCheck}
         />
+      </>
+    ),
+  },
+  {
+    id: 'safety-systems-continuity',
+    heading: 'Continuity of Safety Systems Before Isolation',
+    content: (
+      <>
+        <p>
+          Before isolating any circuit in an occupied or part-occupied building, the risk assessment
+          must establish whether the circuit — or any circuits fed from the same distribution board
+          — supplies a safety-critical system. Cutting power to these systems without prior
+          notification and alternative arrangements can create a life-safety emergency in its own
+          right, entirely separate from the electrical hazards of the work itself.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">Safety System Continuity Checklist</h3>
+          <p className="text-white text-sm leading-relaxed mb-4">
+            Before any planned isolation, confirm the status of the following. If any are affected,
+            obtain written consent from the responsible person and arrange a temporary supply or
+            standby provision before work begins.
+          </p>
+          <ul className="space-y-2 text-white text-sm leading-relaxed">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Fire alarm panels and detectors</strong> —
+                isolating the supply or disturbing the wiring may silence a life-safety system.
+                Notify the fire alarm company and the responsible person; arrange a fire watch if
+                required.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Emergency lighting</strong> — if the circuit
+                isolated feeds the charger for maintained or non-maintained emergency luminaires,
+                confirm battery backup duration and whether the building can remain occupied during
+                the outage.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Door access and security systems</strong> —
+                including magnetic door locks and electronic access control that may default to
+                locked or unlocked on power loss.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Servers, telecoms, and UPS equipment</strong> —
+                identify temporary supply requirements and agree the outage window in writing with
+                the responsible person before work starts.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Medical equipment and refrigeration</strong> —
+                in residential premises, fridges, freezers, and any home medical equipment (oxygen
+                concentrators, dialysis) must be identified before isolation.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p className="text-white text-sm leading-relaxed">
+          Practical Work Intelligence records show that the most common RAMS preparation failures
+          are: failing to consult site users and stakeholders, not identifying temporary supply
+          requirements, and failing to identify critical loads before isolation. A dedicated
+          continuity checklist in your risk assessment demonstrates competence and protects you if a
+          safety system failure occurs during your work.
+        </p>
       </>
     ),
   },

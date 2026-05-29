@@ -50,6 +50,8 @@ const keyTakeaways = [
   'The decision between extending the existing house consumer unit and installing a new consumer unit depends on spare capacity, cable routes, and whether the garage already has its own sub-panel from when it was a garage.',
   'Heating circuits are almost always required — garages are typically uninsulated before conversion. Electric panel heaters, underfloor heating, or a heat pump circuit will be needed. Factor this load into the design from the start.',
   'Ventilation must meet Building Regulations Part F. Mechanical extract ventilation (MEV) is often required in converted garages, particularly if the room will be used as a bedroom or kitchen.',
+  'BS 7671:2018+A4:2026 Reg 411.3.4 requires 30 mA RCD additional protection on every AC lighting circuit in domestic premises. All new lighting circuits in a garage conversion must be protected by a 30 mA RCD or RCBO — this is mandatory, not optional.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits. For bedroom or home office conversions, discuss AFDD provision with the client and note the recommendation on the EIC.',
 ];
 
 const faqs = [
@@ -92,7 +94,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for heating circuits, cooker circuits, and sub-mains in garage conversions.',
@@ -100,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on circuits running from house consumer unit to the converted garage.',
@@ -259,6 +261,20 @@ const sections = [
                 maximum demand.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>EV charger circuits — Section 722</strong> — EV charging circuits are a
+                special installation under BS 7671 Section 722. They require a dedicated circuit
+                design (not simply a larger sub-main), a specific RCD type (Type A or Type B
+                depending on the charger), and load management consideration where other high-demand
+                circuits share the same supply. Use the{' '}
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  cable sizing calculator
+                </SEOInternalLink>{' '}
+                to verify the circuit and sub-main design for the combined load.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -267,6 +283,20 @@ const sections = [
           extract fan. A conversion to a kitchen adds a cooker circuit, additional socket circuits,
           and potentially a dedicated appliance circuit (washing machine, dishwasher).
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="font-semibold text-white mb-2">
+            Arc fault detection — Reg 421.1.7 (A4:2026)
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection
+            devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault
+            currents. For a new garage conversion — particularly where the space will be used as a
+            bedroom or home office — discuss AFDD provision with the client during the design stage.
+            Where AFDDs are declined, note the recommendation on the EIC and record the client's
+            decision. AFDDs fit in the consumer unit in place of standard MCBs or RCBOs and are
+            available for 6 A, 10 A, 16 A, and 20 A circuit ratings.
+          </p>
+        </div>
       </>
     ),
   },
@@ -450,10 +480,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit enclosure</strong> — if the consumer unit is in the converted
-                space, it must be in a non-combustible (metal) enclosure or mounted on a
-                non-combustible surface. A documented risk assessment is required if a non-ferrous
-                alternative is used.
+                <strong>Consumer unit enclosure (Reg 421.1.201)</strong> — in domestic premises the
+                consumer unit enclosure must be manufactured from non-combustible material (ferrous
+                metal such as steel is the cited example), or the unit must be housed in a cabinet
+                of non-combustible material complying with Reg 132.12. There is no risk-assessment
+                route — one of these two options must be met.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -517,6 +548,23 @@ const sections = [
               <span>Functional testing of smoke alarms (interconnection, battery backup)</span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                A4:2026 compliance checkpoint — Reg 411.3.4
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                Under BS 7671:2018+A4:2026 Reg 411.3.4, all AC final circuits supplying luminaires
+                within domestic premises must have additional protection by an RCD rated at no more
+                than 30 mA. For a new garage conversion, every lighting circuit must be protected by
+                a 30 mA RCD or RCBO. Verify each lighting circuit at test and record the RCD
+                operating current on the schedule of test results within the EIC.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           The EIC is submitted to Building Control (via the competent person scheme) as part of the
@@ -675,11 +723,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . First fix, second fix, consumer unit, lighting, sockets, heating, smoke
-                  detection, testing — all itemised. Send a professional PDF quote that wins work.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  First fix, second fix, consumer unit, lighting, sockets, heating, smoke detection,
+                  testing — all itemised. Send a professional PDF quote that wins work.
                 </p>
               </div>
             </div>

@@ -45,6 +45,7 @@ const keyTakeaways = [
   'Electricians registered with a competent person scheme (NICEIC, NAPIT, ELECSA, BRE) can self-certify notifiable work without involving building control.',
   'Non-notifiable work includes like-for-like replacements, adding sockets or switches to existing circuits (outside special locations), and repairs.',
   'Failure to notify can result in enforcement action, difficulty selling the property, and invalidated insurance — it is not worth the risk.',
+  'A4:2026 (BS 7671:2018+A4:2026) introduced Reg 421.1.7, which recommends arc fault detection devices (AFDDs) on AC final circuits — electricians should discuss AFDD installation with clients during any consumer unit replacement.',
 ];
 
 const faqs = [
@@ -259,7 +260,9 @@ const sections = [
                 <SEOInternalLink href="/guides/consumer-unit-regulations">
                   consumer unit upgrades
                 </SEOInternalLink>
-                .
+                . Since A4:2026, Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC
+                final circuits — electricians should discuss AFDD installation with clients as part
+                of every consumer unit replacement (the wording is recommendatory, not mandatory).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -351,9 +354,7 @@ const sections = [
         <p>
           Even though non-notifiable work does not require formal notification, it must still comply
           with BS 7671 and should be documented. For additions and alterations, a{' '}
-          <SEOInternalLink href="/minor-works-certificate">
-            Minor Works Certificate
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           should be issued. For like-for-like replacements, a certificate is not legally required
           but is good practice — particularly for rented properties where the landlord may need
           evidence of compliance.
@@ -498,6 +499,14 @@ const sections = [
                   mA RCD protection. Supplementary bonding may be required unless the installation
                   meets specific conditions under Regulation 415.2. Even a simple task like
                   replacing a bathroom light fitting must be notified.
+                  <br />
+                  <br />
+                  Reg 701.418.2 (A4:2026) is the most-queried practical rule: low-voltage (230 V)
+                  socket-outlets must be sited at least 2.5 m from zone 1. This means a standard
+                  socket cannot be installed adjacent to a bath or shower enclosure. The
+                  commonly-used exception is a shaver socket supplied via a separated
+                  (transformer-isolated) or SELV source, which is permitted closer to the zones —
+                  verify the supply arrangement meets Reg 701.418.2 before installation.
                 </p>
               </div>
             </div>
@@ -511,10 +520,12 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Swimming pools, paddling pools, hot tubs, and their surrounding areas are special
-                  locations with the most stringent requirements. Zone 0 (inside the pool) allows
-                  only SELV at 12V AC or 30V DC. Zone 1 and Zone 2 have strict IP rating and
-                  equipment restrictions. Electrical work around pools and hot tubs should only be
-                  carried out by electricians with specific experience in this area.
+                  locations with the most stringent requirements. Per Section 702, Zone 0 (inside
+                  the pool) permits only SELV at extra-low voltage; Zone 1 and Zone 2 have strict IP
+                  rating and equipment restrictions. A4:2026 introduced Reg 702.414.3, amending
+                  SELV/PELV requirements for these zones — ensure you are working to the current
+                  edition. Electrical work around pools and hot tubs should only be carried out by
+                  electricians with specific experience in this area.
                 </p>
               </div>
             </div>
@@ -526,9 +537,12 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Saunas (Section 703)</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Saunas present extreme environmental conditions — high temperatures and humidity.
-                  Cabling and equipment must withstand temperatures of up to 170 degrees Celsius in
-                  certain zones. Only heat-resistant cables (such as silicone-insulated) are
-                  permitted within the sauna compartment. All work is notifiable.
+                  Per Section 703, cabling and equipment within the sauna compartment must withstand
+                  the elevated temperatures present in each zone; only heat-resistant cables (such
+                  as silicone-insulated types) are permitted in the highest-temperature zones.
+                  A4:2026 introduced Reg 703.414.3, amending SELV/PELV requirements for sauna
+                  installations — ensure you are working to the current edition. All work is
+                  notifiable.
                 </p>
               </div>
             </div>

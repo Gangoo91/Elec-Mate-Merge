@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Chapter 65, Reg 651.1). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
   'Nottingham EICR costs are close to the national average. Expect to pay between £150 and £280 for a two-bedroom terraced house and £250 to £400 for a three-bedroom semi-detached property.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Nottingham City Council enforces the regulations and can impose fines of up to £30,000 per breach.',
   'Nottingham operates one of the most extensive selective licensing schemes in England, covering large parts of the city. A valid EICR is a condition of the property licence, and the council actively enforces compliance.',
@@ -142,8 +142,10 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report is used for
-          periodic inspection and testing of existing installations — not an Electrical Installation
+          (Chapter 65, Reg 651.1), which requires that periodic inspection and testing of every
+          electrical installation shall be carried out in accordance with the Regulations. Reg 653.1
+          further requires that an Electrical Installation Condition Report (EICR), based on the
+          model in Appendix 6, shall be produced on completion — not an Electrical Installation
           Certificate, which is for new work only.
         </p>
         <p>
@@ -489,12 +491,27 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Section 631). The
-                report includes observations with classification codes, an overall assessment, and a
-                recommended date for the next inspection.
+                Schedules of Circuit Details and Test Results (as required by Chapter 65 / Reg
+                653.1, Appendix 6). The report includes observations with classification codes, an
+                overall assessment, and a recommended date for the next inspection.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            BS 7671:2018+A4:2026 — AFDD and Updated Model Forms
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            The A4:2026 amendment introduced Reg 421.1.7, which recommends installation of arc fault
+            detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc
+            fault currents. The Appendix 6 model forms have been updated (Reg 133.1.3; Reg
+            722.826.3.201) to include dedicated fields for recording AFDD and SPD presence on all
+            certification documents. For Nottingham&apos;s older housing stock, the absence of AFDDs
+            on AC final circuits may be noted as a C3 observation — improvement recommended, not
+            immediately dangerous. Inspectors must complete the relevant AFDD field on the updated
+            EICR form where applicable.
+          </p>
         </div>
       </>
     ),
@@ -505,9 +522,10 @@ const sections = [
     content: (
       <>
         <p>
-          The required frequency of EICRs depends on the property type and use. BS 7671 Section 621
-          establishes that installations must be periodically inspected at intervals suited to the
-          property type:
+          The required frequency of EICRs depends on the property type and use. BS 7671 Chapter 65
+          (Reg 651.1) establishes that where required, periodic inspection and testing of every
+          electrical installation shall be carried out in accordance with the Regulations. The
+          appropriate interval depends on the type and use of the installation:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -619,11 +637,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Landlords must act within 28 days — deliver the quote on the day to win the
-                  work.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Landlords must act within 28 days — deliver the quote on the day to win the work.
                 </p>
               </div>
             </div>
@@ -643,7 +658,7 @@ export default function EICRNottinghamPage() {
   return (
     <GuideTemplate
       title="EICR Nottingham | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Nottingham for 2026. Selective licensing requirements, landlord obligations, observation codes explained…"
+      description="EICR cost in Nottingham 2026: prices by property type, selective licensing rules, landlord obligations and observation codes. Get a compliant report today."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

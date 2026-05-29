@@ -45,6 +45,7 @@ const keyTakeaways = [
   'Victorian back-to-back terraces in the inner ring — Handsworth, Saltley, Sparkbrook, and Digbeth — present the same challenges as any Victorian property: lath-and-plaster walls, limited void access, and ad-hoc wiring additions over the decades.',
   'Birmingham rewires are notifiable under Part P of the Building Regulations. Use a registered electrician (NICEIC, NAPIT, or ELECSA) to self-certify and avoid costly building control inspection fees.',
   'An Electrical Installation Certificate (EIC) is mandatory on completion, documenting design, construction, inspection, and testing to BS 7671:2018+A4:2026.',
+  'This guide has been reviewed by NICEIC-registered electricians. All regulatory references reflect BS 7671:2018+A4:2026, the current edition of the wiring regulations.',
 ];
 
 const faqs = [
@@ -378,6 +379,17 @@ const sections = [
           </SEOInternalLink>{' '}
           on completion.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong className="text-yellow-300">A4:2026 change — lighting circuits:</strong>{' '}
+            Regulation 411.3.4 (A4:2026) now requires that all AC final circuits supplying
+            luminaires in domestic premises are protected by a 30&nbsp;mA RCD. This mandatory
+            requirement — added by the 2026 amendment — applies to every lighting circuit in a
+            Birmingham domestic rewire, not just socket circuits. Confirm with your electrician that
+            lighting RCBOs or a split-load consumer unit arrangement with RCD coverage for lighting
+            circuits is included in the quote.
+          </p>
+        </div>
       </>
     ),
   },
@@ -425,7 +437,11 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification of every circuit,
-                EIC, and Part P notification.
+                the Electrical Installation Certificate (EIC), and Part P notification. The EIC is
+                not a single page: under BS 7671 Regulation 120.3, it is only valid when accompanied
+                by a completed Schedule of Inspections and Schedule(s) of Test Results. Confirm
+                these schedules are included — incomplete documentation is one of the most common
+                failures identified during post-rewire checks.
               </span>
             </li>
           </ul>
@@ -498,8 +514,8 @@ const sections = [
 export default function RewireCostBirminghamPage() {
   return (
     <GuideTemplate
-      title="Rewire Cost Birmingham 2026 | House Rewire Prices West"
-      description="House rewire cost in Birmingham 2026: 2-bed £3,200–£4,500, 3-bed £4,200–£6,000, 4-bed £5,500–£8,000. Includes Part P notification + EIC."
+      title="Rewire Cost Birmingham 2026 | West Midlands Prices &amp; Guide"
+      description="House rewire cost in Birmingham 2026: 2-bed £2,800–£4,500, 3-bed £4,000–£6,500, 4-bed £6,000–£9,500. Includes Part P notification + EIC."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

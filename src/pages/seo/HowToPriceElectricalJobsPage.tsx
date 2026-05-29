@@ -51,6 +51,8 @@ export default function HowToPriceElectricalJobsPage() {
         'Material markup of 15-25% on trade prices is standard in the UK electrical trade and covers your time sourcing, collecting, storing, and guaranteeing materials.',
         'Common 2026 prices: socket install £80-£150, consumer unit change £500-£1,200, full rewire £3,500-£10,000, EICR £150-£300 — but prices vary hugely by region and complexity.',
         'Always take a deposit (typically 30-50% for jobs over £500) and never start large jobs without a signed quote and deposit cleared.',
+        'BS 7671:2018+A4:2026 affects consumer unit pricing: Reg 421.1.7 recommends arc fault detection devices (AFDDs) in AC final circuits; EV charger installations must comply with Section 722 requirements — both add scope and cost that your quote must reflect.',
+        'Consumer unit changes, new circuits in kitchens or bathrooms, and rewires are notifiable under Building Regulations Part P. Competent person scheme registration (NICEIC, NAPIT) lets you self-certify — saving your customer the building control fee and you the admin.',
       ]}
       sections={[
         {
@@ -252,7 +254,11 @@ export default function HowToPriceElectricalJobsPage() {
                       <td className="py-3 pr-4">Consumer unit change</td>
                       <td className="py-3 pr-4">£500-£1,200</td>
                       <td className="py-3">
-                        Dual RCD or RCBO board. Includes EIC and notification.
+                        Dual RCD or RCBO board. Includes EIC, Schedule of Test Results (a legal
+                        requirement under BS 7671 GN3), and building control notification. RCBO
+                        boards cost more but may be necessary where a steel (ferrous) enclosure
+                        raises earth fault loop impedance — a common issue that can prevent
+                        protective devices operating within the required 5-second limit.
                       </td>
                     </tr>
                     <tr className="border-b border-white/10">
@@ -306,6 +312,40 @@ export default function HowToPriceElectricalJobsPage() {
                 finance, for example), your prices need to be higher to maintain profitability.
               </p>
 
+              <div className="my-6 rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4">
+                <p className="font-semibold text-yellow-300 mb-2">
+                  BS 7671:2018+A4:2026 — Pricing Impact
+                </p>
+                <p className="text-white/90 text-sm">
+                  The 2026 amendments to BS 7671 can affect the scope and cost of consumer unit and
+                  EV charger quotes. Regulation 421.1.7 recommends arc fault detection devices
+                  (AFDDs) in AC final circuits to mitigate fire risk from arc faults — each AFDD
+                  adds cost compared to a standard RCBO, so a board fitted with AFDDs will sit at
+                  the higher end of the consumer unit price range. EV charger installations must
+                  comply with Section 722, which includes specific requirements for RCD protection
+                  and, on PME supplies, protective measures to manage earth potential — scope items
+                  that affect both labour and material costs. Always check which A4:2026
+                  requirements apply before quoting, and make the scope explicit in your written
+                  quote.
+                </p>
+              </div>
+
+              <div className="my-6 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
+                <p className="font-semibold text-blue-300 mb-2">
+                  Part P — Building Control Notification
+                </p>
+                <p className="text-white/90 text-sm">
+                  Consumer unit changes, new circuits in kitchens or bathrooms, and full rewires are
+                  notifiable under Building Regulations Part P. As the On-Site Guide (9th Ed, A4)
+                  notes: "All electrical work within dwellings, of which some is notifiable." If you
+                  are registered with a competent person scheme (NICEIC, NAPIT, or equivalent), you
+                  can self-certify the work — meaning the customer avoids the building control
+                  officer fee (typically £150-£350) and you retain control of the certification
+                  process. Being scheme-registered is a genuine pricing advantage: include it
+                  prominently in your quote.
+                </p>
+              </div>
+
               <SEOAppBridge
                 title="AI Cost Engineer — Accurate Job Pricing in Seconds"
                 description="Describe any electrical job and the AI generates an itemised estimate with current UK trade pricing, realistic labour hours…"
@@ -346,9 +386,10 @@ export default function HowToPriceElectricalJobsPage() {
                 <li>
                   <span className="font-semibold text-white">Explain the value</span> — do not just
                   list what you will do; explain why. "We will install a Type 2 SPD (surge
-                  protection device) as recommended by BS 7671 to protect your electronics from
-                  voltage surges." Customers who understand the value are less likely to shop around
-                  on price.
+                  protection device) as required by BS 7671 Section 443 where a risk assessment
+                  identifies lightning or switching-transient risk, and strongly advisable for all
+                  domestic installations to protect electronics from voltage surges." Customers who
+                  understand the value are less likely to shop around on price.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Include your credentials</span> — list
@@ -494,12 +535,9 @@ export default function HowToPriceElectricalJobsPage() {
                 <SEOInternalLink href="/tools/cash-flow-planner">Cash Flow Planner</SEOInternalLink>{' '}
                 forecasts incoming payments and outgoing costs so you can see potential cash flow
                 gaps before they become crises. Combined with the{' '}
-                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
-                and{' '}
-                <SEOInternalLink href="/electrician-invoice-app">
-                  invoice builder
-                </SEOInternalLink>
-                , you have a complete financial management system built specifically for electrical
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> and{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice builder</SEOInternalLink>,
+                you have a complete financial management system built specifically for electrical
                 contractors.
               </p>
 

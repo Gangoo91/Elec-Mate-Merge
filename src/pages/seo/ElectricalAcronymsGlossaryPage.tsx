@@ -40,7 +40,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'MCB (Miniature Circuit Breaker) protects against overcurrent. RCD (Residual Current Device) protects against earth leakage. RCBO combines both in one device.',
-  'AFDD (Arc Fault Detection Device) detects dangerous arcing. SPD (Surge Protection Device) protects against voltage spikes. Both are increasingly required by BS 7671.',
+  'AFDD (Arc Fault Detection Device) detects dangerous arcing — recommended by BS 7671:2018+A4:2026 Regulation 421.1.7. SPD (Surge Protection Device) protects against voltage spikes. From A4:2026, AFDD and SPD usage must be recorded on Part 6 certification (Reg 133.1.3).',
+  'A4:2026 Regulation 411.3.4 now requires 30mA RCD protection on all AC lighting circuits in domestic premises — one of the most significant changes in the current edition of BS 7671.',
   'PFC (Prospective Fault Current) and Zs (Earth Fault Loop Impedance) are the two most critical test values on any EICR or EIC. They determine whether protective devices will operate fast enough.',
   'TN-S, TN-C-S (PME), and TT are the three main earthing systems in the UK. The earthing arrangement affects every aspect of an installation — from bonding requirements to protective device selection.',
   'Elec-Mate includes a built-in AI assistant that explains any acronym or technical term in plain English — just ask it during a certificate or study session.',
@@ -55,7 +56,7 @@ const faqs = [
   {
     question: 'What does AFDD stand for and when is it required?',
     answer:
-      'AFDD stands for Arc Fault Detection Device. It detects dangerous electrical arcing — such as arcing caused by damaged cable insulation, loose connections, or crushed cables — and disconnects the circuit before the arcing can start a fire. AFDDs are covered by Regulation 421.1 of BS 7671:2018+A2:2022, which recommends their use in AC single-phase circuits supplying socket outlets rated up to 32A in residential premises and locations with sleeping accommodation. Amendment 2 (2022) strengthened the recommendation. While not yet a mandatory requirement in all cases, AFDDs are increasingly specified by building control and are expected to become mandatory in future amendments. They are already required in some European countries under HD 60364.',
+      'AFDD stands for Arc Fault Detection Device. It detects dangerous electrical arcing — such as arcing caused by damaged cable insulation, loose connections, or crushed cables — and disconnects the circuit before the arcing can start a fire. AFDDs are covered by Regulation 421.1.7 of BS 7671:2018+A4:2026, which recommends their installation in AC final circuits of a fixed installation to mitigate the risk of fire from arc fault currents. The wording is recommendatory — the regulation uses "recommending" rather than "shall" — so AFDDs are not yet a mandatory requirement in all cases, but are increasingly specified by building control and are expected to become mandatory in future amendments. They are already required in some European countries under HD 60364.',
   },
   {
     question: 'What is the difference between Ze and Zs?',
@@ -65,7 +66,7 @@ const faqs = [
   {
     question: 'What is PME and why does it matter?',
     answer:
-      'PME stands for Protective Multiple Earthing. It is the UK term for a TN-C-S earthing system, where the supply neutral conductor also serves as the earth (called a PEN conductor — Protective Earth and Neutral combined) in the supply cable, and is split into separate neutral and earth conductors at the consumer\'s main earthing terminal. PME is the most common earthing arrangement for newer UK domestic properties. It matters because if the PEN conductor breaks (an "open PEN" fault), the metalwork of the installation can rise to mains voltage. This is why PME supplies have strict supplementary bonding requirements (Regulation 544.1) and why certain special locations (bathrooms, swimming pools, caravan parks) have additional restrictions or prohibitions on using the PME earth.',
+      'PME stands for Protective Multiple Earthing. It is the UK term for a TN-C-S earthing system, where the supply neutral conductor also serves as the earth (called a PEN conductor — Protective Earth and Neutral combined) in the supply cable, and is split into separate neutral and earth conductors at the consumer\'s main earthing terminal. PME is the most common earthing arrangement for newer UK domestic properties. It matters because if the PEN conductor breaks (an "open PEN" fault), the metalwork of the installation can rise to mains voltage. This is why PME supplies have strict main protective bonding conductor requirements (Regulation 544.11) — where PME conditions apply, the bonding conductor must be selected in accordance with the PEN conductor of the supply and Table 54.8 — and why certain special locations (bathrooms, swimming pools, caravan parks) have additional restrictions or prohibitions on using the PME earth.',
   },
   {
     question: 'What does CPC stand for?',
@@ -171,7 +172,9 @@ const sections = [
                   Protects a circuit against overcurrent (overload and short circuit). Contains a
                   thermal element (bimetallic strip) that trips on sustained overload and a magnetic
                   element (solenoid) that trips instantly on short circuit. Available in{' '}
-                  <SEOInternalLink href="/guides/mcb-types-b-c-d-explained">Type B, C, and D</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/guides/mcb-types-b-c-d-explained">
+                    Type B, C, and D
+                  </SEOInternalLink>{' '}
                   — the type determines the instantaneous trip threshold. Type B trips at 3-5x rated
                   current (domestic). Type C at 5-10x (commercial/motor circuits). Type D at 10-20x
                   (heavy inductive loads).
@@ -194,6 +197,26 @@ const sections = [
                     full guide to RCDs
                   </SEOInternalLink>
                   .
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="w-6 h-6 text-orange-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  A4:2026 — 30mA RCD on Domestic Lighting Circuits
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  One of the most significant changes introduced by BS 7671:2018+A4:2026 is
+                  Regulation 411.3.4: all AC final circuits supplying luminaires (light fittings) in
+                  domestic premises must now be provided with additional protection by an RCD with a
+                  rated residual operating current not exceeding 30mA. The requirement uses
+                  &quot;shall&quot; — it is mandatory, not advisory. Lighting circuits were
+                  previously exempt from mandatory 30mA RCD protection in many existing
+                  installations, making this one of the most impactful new obligations for new
+                  domestic wiring and rewires post-A4.
                 </p>
               </div>
             </div>
@@ -226,9 +249,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Detects dangerous electrical arcing — from damaged insulation, crushed cables, or
                   loose connections — and disconnects the circuit before a fire starts. Analyses the
-                  waveform of the current for arc signatures. Recommended by BS 7671 Regulation
-                  421.1 for socket circuits up to 32A in dwellings with sleeping accommodation.
-                  Expected to become mandatory in future amendments.
+                  waveform of the current for arc signatures. Recommended by BS 7671:2018+A4:2026
+                  Regulation 421.1.7 for AC final circuits of a fixed installation to mitigate the
+                  risk of fire from arc fault currents. The wording is recommendatory, not mandatory
+                  — the regulation uses &#39;recommending&#39; rather than &#39;shall&#39;.
                 </p>
               </div>
             </div>
@@ -294,9 +318,15 @@ const sections = [
                 circuits, 5s for fixed equipment circuits under BS 7671). Maximum Zs values are
                 tabulated in{' '}
                 <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
-                  BS 7671 Tables 41.2-41.6
+                  BS 7671 Tables 41.2&#8211;41.6
                 </SEOInternalLink>
-                .
+                . <strong>GN3 temperature correction:</strong> the tabulated maximums assume a
+                conductor temperature of 20&deg;C. When testing at site ambient temperature, GN3
+                (Guidance Note 3, Appendix A2) specifies a correction factor of 0.8 — multiply the
+                measured Zs by 0.8 (or compare against 80% of the tabulated limit) before judging
+                compliance. This is the most common practical mistake on I&amp;T work: a Zs reading
+                that appears to pass without the correction factor may actually exceed the limit at
+                operating temperature.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,9 +346,13 @@ const sections = [
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IR — Insulation Resistance.</strong> The resistance of the insulation
-                between live conductors and earth, measured at 500V DC. Must be at least 1MΩ (one
-                megohm) for circuits rated up to 500V. Low insulation resistance indicates damaged
-                or deteriorated insulation and is a common cause of RCD tripping. See{' '}
+                between live conductors and earth, measured at 500V DC for circuits rated up to
+                500V. Must be at least 1M&Omega; (one megohm). Low insulation resistance indicates
+                damaged or deteriorated insulation and is a common cause of RCD tripping.
+                <strong> A4:2026 update (Reg 643.3):</strong> where connected equipment is likely to
+                influence the test result or be damaged by 500V DC, the regulation now permits — and
+                requires — a 250V DC insulation resistance test to be used instead, after the
+                equipment is connected. This is a redraft introduced by Amendment 4. See{' '}
                 <SEOInternalLink href="/guides/insulation-resistance-testing">
                   insulation resistance testing
                 </SEOInternalLink>
@@ -414,8 +448,12 @@ const sections = [
               <span>
                 <strong>EIC — Electrical Installation Certificate.</strong> Issued when new
                 installation work or a significant alteration is completed. Confirms the work
-                complies with BS 7671. See{' '}
-                <SEOInternalLink href="/guides/eicr-vs-eic-difference">EIC vs EICR comparison</SEOInternalLink>
+                complies with BS 7671. Under A4:2026 Regulation 133.1.3, certain equipment usage —
+                including the installation of an AFDD or SPD — must now be explicitly recorded on
+                the Part 6 certification form. See{' '}
+                <SEOInternalLink href="/guides/eicr-vs-eic-difference">
+                  EIC vs EICR comparison
+                </SEOInternalLink>
                 .
               </span>
             </li>
@@ -428,7 +466,8 @@ const sections = [
                 <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                   observation codes (C1, C2, C3, FI)
                 </SEOInternalLink>
-                .
+                . From A4:2026, the presence or absence of AFDD and SPD protection must also be
+                recorded on the appropriate Part 6 form (Reg 133.1.3).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -608,7 +647,7 @@ export default function ElectricalAcronymsGlossaryPage() {
       title="Electrical Acronyms & Glossary | A-Z Reference"
       description="Complete A-Z glossary of electrical acronyms and abbreviations used in UK installation work. MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference"

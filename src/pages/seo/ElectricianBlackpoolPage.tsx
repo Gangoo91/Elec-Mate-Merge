@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       "Size cables for guesthouse rewires and new circuits in Blackpool's multi-storey Victorian properties.",

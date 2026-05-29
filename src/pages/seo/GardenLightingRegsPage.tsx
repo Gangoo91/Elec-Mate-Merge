@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA cable for outdoor runs with voltage drop and thermal checks built in.',
     icon: Calculator,
@@ -270,7 +270,7 @@ const sections = [
           For long SWA runs, voltage drop must be checked. BS 7671 allows a maximum voltage drop of
           3% for lighting circuits (6.9 V on a 230 V supply). On a 50 m run of 1.5 mm squared SWA,
           voltage drop can become an issue — use the{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           to verify compliance.
@@ -295,10 +295,8 @@ const sections = [
               <span>
                 <strong>Dedicated RCBO</strong> — the preferred approach is to protect the outdoor
                 lighting circuit with its own RCBO at the{' '}
-                <SEOInternalLink href="/consumer-unit-regulations">
-                  consumer unit
-                </SEOInternalLink>
-                . This provides both overcurrent and RCD protection on a single device and prevents
+                <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>.
+                This provides both overcurrent and RCD protection on a single device and prevents
                 nuisance tripping from affecting other circuits.
               </span>
             </li>
@@ -565,7 +563,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable for the outdoor run with the Elec-Mate{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Enter the load, cable length, installation method, and ambient temperature. Get

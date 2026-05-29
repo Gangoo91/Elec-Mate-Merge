@@ -32,6 +32,7 @@ const tocItems = [
   { id: 'flex-colours', label: 'Flexible Cable Colours' },
   { id: 'identification-requirements', label: 'BS 7671 Identification Requirements' },
   { id: 'mixed-installations', label: 'Mixed Colour Installations' },
+  { id: 'a4-notices', label: 'A4:2026 New Notice Requirements' },
   { id: 'sleeving-requirements', label: 'Sleeving and Marking' },
   { id: 'common-mistakes', label: 'Common Identification Mistakes' },
   { id: 'faq', label: 'FAQs' },
@@ -41,8 +42,8 @@ const tocItems = [
 const keyTakeaways = [
   'Current harmonised cable colours (introduced 2004, mandatory from 2006): Brown = Line, Blue = Neutral, Green/Yellow = Earth. These colours align with European harmonised standards and replaced the old UK-specific colours.',
   'Old UK colours (pre-2004): Red = Line, Black = Neutral, Green (or bare) = Earth. These colours are still found in many existing installations and must be correctly identified during inspection and testing.',
-  'Three-phase colours: Current system uses Brown (L1), Black (L2), Grey (L3). The old system used Red (L1), Yellow (L2), Blue (L3). In mixed installations, warning notices are required at every distribution board and consumer unit.',
-  'BS 7671 Regulation 514.3 requires that every conductor is identified by colour at every termination point and at accessible positions along its route. Missing or incorrect identification is a deficiency on an EICR.',
+  'Three-phase colours: Current system uses Brown (L1), Black (L2), Grey (L3). The old system used Red (L1), Yellow (L2), Blue (L3). In mixed installations, the On-Site Guide (OSG Reg 6.12) recommends a caution notice at the distribution board — note that BS 7671 Reg 514.14, which previously mandated this notice, was deleted in A4:2026 and a replacement regulation is forthcoming.',
+  'BS 7671 Regulation 514.3.1 requires that cable cores shall be identified by colour as required by Regulation 514.4. Missing or incorrect identification is a deficiency on an EICR. Regulation 514.4.2 specifies that green-and-yellow bi-colour sleeving shall cover 30%–70% of the conductor surface with the remaining area in the other colour.',
   'Elec-Mate board scanner identifies cable colours from consumer unit photographs and flags incorrect or missing identification. The app auto-populates circuit details including conductor identification into your certificate.',
 ];
 
@@ -60,7 +61,7 @@ const faqs = [
   {
     question: 'Do I need to rewire an installation with old colours?',
     answer:
-      'No. An installation using the old pre-2004 colour code does not need to be rewired purely because of the colours. The old colours were compliant when installed and remain acceptable in existing installations. However, BS 7671 Regulation 514.14 requires that where an installation or part of an installation contains wiring to both the old and new colour codes, a warning notice must be affixed at or near the appropriate distribution board. This notice must read: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." If old-colour circuits have conductors used as switch wires without correct identification sleeving, this is a deficiency.',
+      'No. An installation using the old pre-2004 colour code does not need to be rewired purely because of the colours. The old colours were compliant when installed and remain acceptable in existing installations. Note: BS 7671 Regulation 514.14, which previously required a warning notice in mixed-colour installations, was deleted in BS 7671:2018+A4:2026 and a replacement regulation is forthcoming. The On-Site Guide (OSG Reg 6.12) continues to recommend affixing a caution notice at or near the distribution board reading: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." Following this guidance remains good practice. If old-colour circuits have conductors used as switch wires without correct identification sleeving, this is a deficiency.',
   },
   {
     question: 'What colour is a switch wire in the old system?',
@@ -70,12 +71,12 @@ const faqs = [
   {
     question: 'What are the flexible cable colours in the UK?',
     answer:
-      'Flexible cables (flex) used for appliance connections, extension leads, and portable equipment use the same harmonised colours as fixed wiring: Brown for line, Blue for neutral, and Green/Yellow for earth. Older flex cables may use the old colours (Red, Black, Green/Yellow — note that old flex already used Green/Yellow for earth, unlike old fixed wiring which sometimes used just green or bare copper). Two-core flex without an earth conductor uses Brown and Blue only. Three-core flex includes all three conductors. For higher-current flexible connections, the conductor cross-section determines the current rating — 0.5mm2 for light-duty (3A), 0.75mm2 for medium-duty (6A), 1.0mm2 (10A), 1.5mm2 (15A), and 2.5mm2 (20A).',
+      "Flexible cables (flex) used for appliance connections, extension leads, and portable equipment use the same harmonised colours as fixed wiring: Brown for line, Blue for neutral, and Green/Yellow for earth. Older flex cables may use the old colours (Red, Black, Green/Yellow — note that old flex already used Green/Yellow for earth, unlike old fixed wiring which sometimes used just green or bare copper). Two-core flex without an earth conductor uses Brown and Blue only. Three-core flex includes all three conductors. The current rating of a flexible cable depends on its conductor cross-sectional area, installation method, and ambient temperature — refer to the manufacturer's data and BS 7671 Appendix 4 for the applicable current-carrying capacity for the specific flex type and installation condition.",
   },
   {
     question: 'What warning notice is required for mixed colour installations?',
     answer:
-      'BS 7671 Regulation 514.14 requires a specific warning notice wherever an installation contains wiring using both the old and new colour codes. The notice must state: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." This notice must be placed at or near every distribution board, consumer unit, or other point where circuits with both colour codes are present. The notice must be durable and legible. If this notice is missing during an EICR, it should be raised as a C3 observation. Elec-Mate includes pre-formatted notice text that can be printed and applied on site.',
+      'BS 7671 Regulation 514.14, which previously required a specific warning notice for mixed-colour installations, was deleted in BS 7671:2018+A4:2026 (a replacement regulation is forthcoming). The On-Site Guide (OSG Reg 6.12) continues to recommend a notice at or near the appropriate distribution board with the wording: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." The notice should be durable and legible. Because there is currently no operative regulation mandating this notice, EICR observations for a missing notice do not have a confirmed BS 7671 regulatory basis — the practice is recommended by the OSG but no current C-code classification is prescribed in the standard. Elec-Mate includes pre-formatted notice text that can be printed and applied on site.',
   },
 ];
 
@@ -345,9 +346,10 @@ const sections = [
       <>
         <p>
           BS 7671 Section 514 sets out the requirements for conductor identification. Regulation
-          514.3 requires that every conductor shall be identifiable by colour at its terminations
-          and preferably throughout its length. This is not optional — it is a regulatory
-          requirement.
+          514.3.1 requires that cable cores shall be identified by colour as required by Regulation
+          514.4 (except where Regulation 514.6 exempts identification). The specific colours,
+          application points, and bi-colour ratios are then set out in Regulation 514.4. This is not
+          optional — it is a regulatory requirement.
         </p>
         <p>Key identification requirements include:</p>
         <ul className="space-y-3 my-4">
@@ -355,9 +357,11 @@ const sections = [
             <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-yellow-400">Protective conductors</strong> — must be
-              identified by the bi-colour combination green/yellow throughout their length. A bare
-              copper earth conductor in twin and earth cable must be sleeved with green/yellow
-              sleeving at every termination and at every accessible position (Regulation 514.4).
+              identified by the bi-colour combination green-and-yellow, which shall be used
+              exclusively for protective conductors and no other purpose (Regulation 514.4.2). The
+              bi-colour must cover the full conductor: one colour covering 30%–70% of the surface
+              and the other colour covering the remainder. A bare copper earth conductor in twin and
+              earth cable must be sleeved with green/yellow sleeving at every termination.
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -409,12 +413,28 @@ const sections = [
           replaced. However, the presence of both colour codes in the same installation creates a
           significant identification risk that must be managed.
         </p>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">A4:2026 Change — Reg 514.14 Deleted</h4>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671 Regulation 514.14, which previously required a mandatory warning notice for
+                mixed-colour installations, has been deleted in BS 7671:2018+A4:2026. A replacement
+                regulation is forthcoming. When citing a regulatory basis on EICR documentation, do
+                not reference Reg 514.14 — there is no current text at that clause number.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
-          BS 7671 Regulation 514.14 requires a specific warning notice at every distribution board
-          in a mixed-colour installation:
+          The On-Site Guide (OSG Reg 6.12) continues to recommend affixing a caution notice at or
+          near the appropriate distribution board in a mixed-colour installation:
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
-          <h3 className="font-bold text-yellow-400 mb-3">Required Warning Notice Text</h3>
+          <h3 className="font-bold text-yellow-400 mb-3">
+            Recommended Caution Notice Text (OSG Reg 6.12)
+          </h3>
           <p className="text-white text-sm leading-relaxed italic">
             "Caution — This installation has wiring colours to two versions of BS 7671. Great care
             should be taken before undertaking extension, alteration or repair that all conductors
@@ -422,7 +442,7 @@ const sections = [
           </p>
         </div>
         <p>
-          This notice must be durable, legible, and positioned at or near the{' '}
+          This notice should be durable, legible, and positioned at or near the{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           or distribution board where circuits of both colour codes are present. Self-adhesive
           labels are available from electrical wholesalers, or the notice can be printed and
@@ -432,13 +452,71 @@ const sections = [
           During a{' '}
           <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>,
           check for the presence of this notice at every distribution board in a mixed-colour
-          installation. A missing notice should be raised as a C3 observation.
+          installation. Following the OSG recommendation to affix such a notice remains good
+          practice, though the deleted Reg 514.14 no longer provides a regulatory basis for the
+          observation.
         </p>
         <SEOAppBridge
           title="Board Scanner Identifies Cable Colours"
           description="Elec-Mate's AI board scanner photographs the inside of a consumer unit and identifies cable colours, conductor identification…"
           icon={Camera}
         />
+      </>
+    ),
+  },
+  {
+    id: 'a4-notices',
+    heading: 'A4:2026 New Section 514 Notice Requirements',
+    content: (
+      <>
+        <p>
+          BS 7671:2018+A4:2026 introduced two new notice requirements in Section 514 that apply to
+          new installations and affect EICR inspections.
+        </p>
+        <div className="space-y-4 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-2">
+                  Reg 514.15.1 — Alternative and Additional Sources of Supply
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Where an installation includes alternative or additional sources of supply (such
+                  as solar PV, battery storage, or a generator), warning notices shall be durably
+                  affixed at: (a) the origin of the installation; (b) the meter position, if remote
+                  from the origin; (c) the consumer unit or distribution board to which the source
+                  is connected; and (d) all points of isolation of all sources of supply. Each
+                  notice must identify the relevant isolation point(s). An example notice format is
+                  given in Figure 11E of Appendix 11 of BS 7671.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-2">
+                  Reg 514.16.1 — Presence of Surge Protective Devices (SPDs)
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Where SPDs are installed, an information notice shall be placed at or near the
+                  relevant distribution board(s) to indicate their presence. This ensures
+                  maintenance personnel are aware of the surge protection before working on
+                  associated circuitry. There is an exception: domestic (household) premises are
+                  exempt from this labelling requirement.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>
+          Both obligations are live under A4:2026. During an{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> on an installation
+          with solar PV, battery storage, or SPDs, check for these notices and record their absence
+          as an observation where applicable.
+        </p>
       </>
     ),
   },
@@ -463,7 +541,11 @@ const sections = [
                   green/yellow sleeving at every termination point — at the consumer unit, at every
                   junction box, at every switch, socket, and light fitting. The sleeving must cover
                   the conductor from the point where it emerges from the cable sheath to the
-                  termination. Missing earth sleeving is one of the most common EICR findings.
+                  termination. Regulation 514.4.2 requires that when the bi-colour is applied, one
+                  colour shall cover at least 30% and at most 70% of the surface, with the other
+                  colour covering the remainder. Poor-quality or wrongly-proportioned sleeving can
+                  therefore fail on its own even if the correct colours are present. Missing earth
+                  sleeving is one of the most common EICR findings.
                 </p>
               </div>
             </div>
@@ -542,8 +624,10 @@ const sections = [
                   <SEOInternalLink href="/guides/consumer-unit-regulations">
                     consumer unit
                   </SEOInternalLink>
-                  . This is required by Regulation 514.14 and is commonly missing after partial
-                  rewires or extensions. Typically C3.
+                  . The On-Site Guide (OSG Reg 6.12) recommends this notice. Note: BS 7671 Reg
+                  514.14 — which previously mandated the notice — was deleted in A4:2026, so citing
+                  it on EICR documentation is not appropriate. A replacement regulation is
+                  forthcoming.
                 </p>
               </div>
             </div>

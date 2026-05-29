@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -330,7 +330,7 @@ const sections = [
               <span>
                 <strong>Voltage drop on long cable runs</strong> — Bristol terraces with long cable
                 runs (15 to 20 metres) from rear consumer units to front parking require careful{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>
                 . 10mm² cable may be needed to keep voltage drop within limits.
@@ -441,10 +441,8 @@ const sections = [
                   Factor in Bristol day rates (£300 to £420), long cable runs in Victorian terraces,
                   steep site access, PME earthing requirements, and conservation area constraints.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes on site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes on site.
                 </p>
               </div>
             </div>

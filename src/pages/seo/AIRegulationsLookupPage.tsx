@@ -308,7 +308,7 @@ const sections = [
               adds practical guidance: while 1.0mm cable may be adequate for the current- carrying
               capacity requirement of a low-wattage LED lighting circuit, the electrician must also
               consider voltage drop (particularly on long runs), the{' '}
-              <SEOInternalLink href="/earth-loop-impedance-calculator">
+              <SEOInternalLink href="/tools/earth-loop-impedance-calculator">
                 earth fault loop impedance
               </SEOInternalLink>{' '}
               at the furthest point (which increases with smaller conductors and longer runs), and

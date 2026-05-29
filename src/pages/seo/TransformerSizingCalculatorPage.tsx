@@ -48,7 +48,7 @@ export default function TransformerSizingCalculatorPage() {
           Rating Every Time
         </>
       }
-              calculator={<TransformerCalculator />}
+      calculator={<TransformerCalculator />}
       heroSubtitle="Enter the connected load, power factor, and diversity. The calculator determines the correct transformer kVA rating for single-phase or three-phase installations, applies standard oversize factors, and selects from standard transformer ratings. No more undersized or oversized transformers."
       heroFeaturePills={[
         { icon: Zap, label: 'kVA Rating' },
@@ -521,7 +521,7 @@ export default function TransformerSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Max Demand Calculator',
           description:
             'Calculate the maximum demand for an electrical installation using IET On-Site Guide diversity factors.',
@@ -537,7 +537,7 @@ export default function TransformerSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault current verification.',

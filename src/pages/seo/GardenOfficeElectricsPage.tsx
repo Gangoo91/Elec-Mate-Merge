@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size SWA cables for garden office supplies with burial depth derating and voltage drop checks.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long SWA runs from the house to the garden office.',
     icon: Zap,
@@ -219,7 +219,7 @@ const sections = [
         </p>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to determine the correct SWA size. Enter the total load (including heating), the cable run
@@ -561,7 +561,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable during the survey visit.{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     Enter the total load, cable run length, and burial conditions
                   </SEOInternalLink>{' '}
                   — the calculator applies all derating factors and checks voltage drop. Know
@@ -577,12 +577,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the full garden office package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . SWA cable, trenching, sub-board, circuits, accessories, testing, and
-                  certification — all itemised with your margins. Send a professional PDF quote to
-                  the homeowner on the spot.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  cable, trenching, sub-board, circuits, accessories, testing, and certification —
+                  all itemised with your margins. Send a professional PDF quote to the homeowner on
+                  the spot.
                 </p>
               </div>
             </div>

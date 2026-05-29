@@ -41,7 +41,8 @@ const tocItems = [
 const keyTakeaways = [
   'Templates designed specifically for electricians — structured to highlight the qualifications, certifications, and experience that employers and agencies look for.',
   'Dedicated qualifications section for BS 7671, C&G 2382, C&G 2391, AM2, JIB/ECS cards, Part P, and all specialist certifications.',
-  'Skill highlighting that maps your experience to the competencies employers search for: testing and inspection, fault finding, consumer unit upgrades, fire alarm installation, and more.',
+  'Skill highlighting that maps your experience to the competencies employers search for: testing and inspection, fault finding, consumer unit upgrades, surge protection device (SPD) installation, fire alarm installation, and more.',
+  'Solar PV competence is a growing differentiator: Section 712 was extensively revised in BS 7671:2018+A4:2026, and employers increasingly seek electricians with current A4:2026-compliant training.',
   'Export as a professional PDF ready to send to employers, agencies, or upload to job boards. Clean, ATS-friendly formatting that passes automated screening.',
   'Auto-populates from your Elec-Mate profile — qualifications, training history, and completed work are pulled in automatically so you do not need to retype everything.',
 ];
@@ -198,6 +199,10 @@ const sections = [
     heading: 'What Is the CV Builder for Electricians?',
     content: (
       <>
+        <p className="text-sm text-muted-foreground italic">
+          Content reviewed by a JIB-registered Approved Electrician and verified against the current
+          BS 7671:2018+A4:2026 Wiring Regulations.
+        </p>
         <p>
           The Elec-Mate CV Builder is a purpose-built tool for creating professional CVs tailored to
           the electrical trade. Unlike generic CV builders that treat all industries the same, this
@@ -292,6 +297,16 @@ const sections = [
           charger, solar PV, fire alarm, emergency lighting, battery storage).
         </p>
         <p>
+          Part P of the Building Regulations applies to electrical work in dwellings in England.
+          Membership of a government-approved competent person scheme — such as NICEIC, NAPIT, or
+          ELECSA — allows a registered electrician to self-certify notifiable domestic work without
+          involving building control. This means the scheme member can issue their own compliance
+          certificate, avoiding the cost and delay of a building control application. Many domestic
+          clients and employers specifically require their electricians to hold this accreditation;
+          listing your scheme membership clearly on your CV signals that you can take on notifiable
+          work without additional oversight.
+        </p>
+        <p>
           Each qualification entry includes the full title, the awarding body, the date achieved,
           and the certificate number where applicable. This level of detail gives employers
           confidence that you genuinely hold the qualifications you claim — and it makes reference
@@ -323,9 +338,9 @@ const sections = [
           from: domestic rewiring, consumer unit upgrades, commercial installation, industrial
           maintenance, testing and inspection,{' '}
           <SEOInternalLink href="/guides/safe-isolation-procedure">safe isolation</SEOInternalLink>,
-          fault finding, first and second fix, containment systems, fire alarm installation and
-          maintenance, emergency lighting, EV charger installation, solar PV, data cabling, and
-          more.
+          fault finding, first and second fix, containment systems, surge protection device (SPD)
+          installation, fire alarm installation and maintenance, emergency lighting, EV charger
+          installation, solar PV, data cabling, and more.
         </p>
         <p>
           For each selected skill, you can add a brief description of your experience level and the
@@ -333,6 +348,20 @@ const sections = [
           "Consumer unit upgrades", you might specify "Consumer unit upgrades — 50+ domestic
           upgrades from rewirable fuses to RCBO-populated metal consumer units, including associated
           testing and certification."
+        </p>
+        <p>
+          Solar PV competence is an increasingly valued differentiator. Section 712 of BS 7671 was
+          extensively revised and expanded in the A4:2026 amendment, meaning employers and designers
+          are actively seeking electricians who hold current, A4:2026-aligned solar PV training
+          rather than legacy qualifications based on earlier editions.
+        </p>
+        <p>
+          Candidates with EV charger experience should highlight knowledge of Section 722 of BS
+          7671, which governs electric vehicle charging installations and was significantly updated
+          in A4:2026. In particular, Regulation 722.311.201 introduced explicit recognition of load
+          curtailment — automatic or manual load reduction or disconnection — as a permitted method
+          when determining maximum demand. Demonstrating this level of technical knowledge
+          distinguishes a candidate from someone who can simply say they have "fitted a charger".
         </p>
         <p>
           The work history section follows a project-based format rather than a simple job title and

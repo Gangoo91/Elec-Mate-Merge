@@ -26,6 +26,7 @@ const tocItems = [
   { id: 'standby-vs-prime', label: 'Standby vs Prime Power' },
   { id: 'automatic-transfer-switch', label: 'Automatic Transfer Switch (ATS)' },
   { id: 'manual-changeover', label: 'Manual Changeover Switch' },
+  { id: 'portable-generator', label: 'Portable Generator Rules (OSG 2.4.3)' },
   { id: 'dno-requirements', label: 'DNO Requirements (G99)' },
   { id: 'earthing-generator', label: 'Earthing the Generator' },
   { id: 'fuel-storage', label: 'Fuel Storage Regulations' },
@@ -43,6 +44,9 @@ const keyTakeaways = [
   'Generator earthing in a TN-S installation uses a separate earth electrode at the generator, with the generator neutral bonded to the electrode — the generator is not bonded to the site mains earth when operating in island mode.',
   'Diesel fuel storage above 1,500 litres requires Planning Permission and must comply with the Control of Pollution (Oil Storage) (England) Regulations 2001, including a secondary containment bund sized for 110% of the largest tank volume.',
   'Load bank testing at 100% rated load for a minimum of 2 hours annually verifies generator performance and burns off wet stacking deposits in diesel engines running on light load during routine weekly tests.',
+  'BS 7671:2018+A4:2026 Reg 551.7.1(d) prohibits connecting a generator (or other source) to the load side of an RCD under the conditions specified in that regulation — a common wiring mistake in ATS panels that must be avoided.',
+  'A portable generator that is isolated from earth may only supply: (a) one or more Class II items; or (b) one Class I item; or (c) one or more Class II items together with one Class I item — never more than one Class I item simultaneously (OSG Reg 2.4.3).',
+  'Where a rotary generating set is used as a safety source (emergency lighting, fire systems, hospitals), it must conform to BS ISO 8528-12 — a mandatory requirement under BS 7671:2018+A4:2026 Reg 560.6.13.',
 ];
 
 const faqs = [
@@ -237,6 +241,25 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                A4:2026 — Reg 551.7.1(d): Generator Must Not Connect to RCD Load Side
+              </p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Reg 551.7.1(d) introduces an explicit prohibition: a generator
+                (or other source such as an inverter) must not be connected to the load side of an
+                RCD under the conditions specified in that regulation. This is a common wiring
+                mistake in ATS panels where the generator output is inadvertently terminated on the
+                RCD-protected side of the distribution board. Verify the connection point on both
+                the mains and generator sides of any ATS panel and confirm compliance before
+                completing the Electrical Installation Certificate.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -292,6 +315,68 @@ const sections = [
                 The generator connection point and the changeover switch must be included in the
                 EICR inspection scope. The presence of a generator changeover must be noted in the
                 Electrical Installation Certificate.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'portable-generator',
+    heading: 'Portable Generator Rules: Class I and Class II Equipment (OSG Reg 2.4.3)',
+    content: (
+      <>
+        <p>
+          A portable generator that is isolated from earth (i.e., has no connection between its
+          neutral and a local earth electrode) presents a specific shock risk: there is no earth
+          fault reference, so a fault to an earthed Class I enclosure will not necessarily cause a
+          protective device to operate. The On-Site Guide (OSG) Reg 2.4.3 addresses this by
+          restricting the combinations of equipment that may be connected to such a generator.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Permitted permutation (a) — Class II only</strong>: a portable generator
+                isolated from earth may supply one or more items of Class II (double-insulated)
+                equipment. Because Class II equipment relies on supplementary insulation rather than
+                a protective earth conductor, the absence of an earth reference on the generator
+                does not create a shock risk. This is the safest and most common configuration for
+                site power tools.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Permitted permutation (b) — one Class I item only</strong>: a portable
+                generator isolated from earth may supply a single item of Class I equipment (which
+                has a protective earth conductor). Only one Class I item is permitted because the
+                absence of an earth reference means a concurrent fault on a second Class I item
+                would not be detected.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Permitted permutation (c) — Class II items plus one Class I item</strong>: a
+                portable generator isolated from earth may supply one or more Class II items
+                together with one Class I item simultaneously. Multiple Class II items are safe; the
+                single Class I item is the controlled variable — never connect more than one Class I
+                item to an isolated-from-earth generator.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Verify before connecting</strong>: check the equipment marking before
+                connecting to an isolated portable generator. Class II equipment is identified by
+                the square-within-a-square symbol. Class I equipment has a protective earth
+                terminal. If in doubt about the class of any item, treat it as Class I. Where the
+                site requires multiple Class I items (e.g., portable lighting with metal fittings,
+                power tools without double-insulation), the generator neutral must be bonded to a
+                local earth electrode to provide an earth reference.
               </span>
             </li>
           </ul>
@@ -378,10 +463,13 @@ const sections = [
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Generator earth electrode</strong> — the generator neutral is connected to a
-                local earth electrode sited near the generator (typically a driven copper- clad rod
-                or a ring electrode). The electrode resistance must be low enough to allow earth
-                fault protection to operate — typically less than 1 Ω for HV and less than 10 Ω for
-                LV generators. The generator earth must be tested at commissioning.
+                local earth electrode sited near the generator (typically a driven copper-clad rod
+                or a ring electrode). There is no single fixed Ω limit applicable to all LV
+                generators; the electrode resistance must be assessed against the ability of the
+                protective devices to operate under earth fault conditions (BS 7430 method, using a
+                proprietary earth electrode resistance tester — do not use an earth fault loop
+                impedance tester for this measurement). The generator earth must be tested and
+                recorded at commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -537,6 +625,27 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                Safety Sources: Reg 560.6.13 and BS ISO 8528-12 (Hospitals, Fire Systems, Emergency
+                Lighting)
+              </p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                Where a rotary generating set is used as a safety source — supplying emergency
+                lighting, fire detection, evacuation systems, or other life-safety services — BS
+                7671:2018+A4:2026 Reg 560.6.13 imposes a mandatory requirement: the generating set
+                shall conform to BS ISO 8528-12. This conformity requirement is triggered by the
+                safety-source role, not by generator size or site type. The commissioning pack for
+                any such installation must include documentation evidencing BS ISO 8528-12
+                compliance. Inspectors completing an EICR for hospitals, care homes, or premises
+                with emergency lighting should verify this documentation is present.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -614,6 +723,46 @@ const sections = [
           generator and confirm that the changeover arrangement prevents simultaneous connection of
           mains and generator.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                A4:2026 Certification Requirements — Reg 133.1.3 and the 411.9.3 Checklist
+              </p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Reg 133.1.3 now requires that certain equipment usage is
+                explicitly recorded on the appropriate Part 6 electrical certification. For
+                generator installations, the Reg 411.9.3 commissioning checklist includes a specific
+                item confirming that adequate arrangements for a generating set operating as a
+                switched alternative to the public supply are provided in accordance with Reg 551.6
+                — this confirmation must appear on the EIC. The Elec-Mate EIC app captures this
+                field so the certification record is complete before you leave site.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                A4:2026 Reg 421.1.7 — AFDD Recommendation for Generator-Fed Fixed Installations
+              </p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection
+                devices (AFDDs) in AC final circuits of fixed installations to mitigate the risk of
+                fire from arc fault currents. This recommendation applies to generator-fed fixed
+                installations in the same way as mains-fed installations — where a generator
+                supplies a building's final circuits, consider AFDD protection as part of the
+                installation design, particularly in higher-risk premises (sleeping risk, older
+                wiring, high fire consequence). Note that the regulation uses recommendatory wording
+                rather than a mandatory 'shall', but the recommendation should be recorded in the
+                design rationale and discussed with the client.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -622,10 +771,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
-                  to record generator installation test results — earth electrode resistance,
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
+                  record generator installation test results — earth electrode resistance,
                   insulation resistance, loop impedance, ATS transfer time — and complete the
                   Electrical Installation Certificate on your phone. Export a professional PDF
                   certificate before you leave site, including notes on the G99 connection if

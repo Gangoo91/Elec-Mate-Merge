@@ -46,7 +46,8 @@ const keyTakeaways = [
   'Scottish landlords are governed by the Housing (Scotland) Act 2006 Repairing Standard — NOT the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, which applies only in England.',
   'Under the Repairing Standard, Edinburgh landlords must ensure the electrical installation in a let property is in a reasonable state of repair and in proper working order. An EICR (or Electrical Installation Condition Report) is the standard means of demonstrating compliance.',
   'Disputes and enforcement relating to the Repairing Standard are handled by the First-tier Tribunal for Scotland (Housing and Property Chamber) — NOT by City of Edinburgh Council, which handles HMO licensing separately.',
-  'RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Absence of RCD protection is a common finding that renders an EICR Unsatisfactory, triggering the Repairing Standard obligation to carry out remedial work.',
+  'RCD protection is required on socket-outlet circuits (rated at 32 A or below) under Regulation 411.3.3 of BS 7671. Absence of RCD protection is a common finding that renders an EICR Unsatisfactory, triggering the Repairing Standard obligation to carry out remedial work.',
+  'BS 7671:2018+A4:2026 introduces Regulation 411.3.4, which requires additional protection by a 30 mA RCD on all AC final circuits supplying luminaires (lighting circuits) within domestic premises. This is a new A4:2026 requirement and a common C2 or C3 observation in Edinburgh rental EICRs — landlords should expect remedial quotes for lighting circuit RCD protection when upgrading older installations.',
   "Edinburgh's private rented sector is one of the largest in Scotland, with a high concentration of tenement flats that frequently have ageing electrical installations requiring attention.",
 ];
 
@@ -161,8 +162,9 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing), is the recognised means of
-                demonstrating compliance with the Repairing Standard for electrical installations.
+                (Part 6, Chapter 65 — Regs 651–653 cover periodic inspection and testing), is the
+                recognised means of demonstrating compliance with the Repairing Standard for
+                electrical installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -282,8 +284,11 @@ const sections = [
               <span>
                 <strong>Communal areas and fire safety systems</strong> — the EICR must cover all
                 fixed electrical installations in an HMO, including communal corridors, stair
-                lighting, fire alarm systems, and emergency lighting. Regulation 411.3.3 applies to
-                all circuits including those in communal areas.
+                lighting, fire alarm systems, and emergency lighting. Regulation 411.3.3 requires
+                RCD protection on socket-outlet circuits rated at 32 A or below. Communal AC
+                lighting circuits are subject to Regulation 411.3.4 (30 mA RCD — see below). Fire
+                alarm and emergency lighting circuits fall under specialist provisions (BS 5839 / BS
+                7671 Part 7 special installations) rather than 411.3.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -409,8 +414,8 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
-          Edinburgh landlords have an obligation to carry out remedial work promptly under the
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Part 6, Chapter
+          65), Edinburgh landlords have an obligation to carry out remedial work promptly under the
           Repairing Standard.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -447,10 +452,14 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Common Edinburgh remedial work</strong> — typical remedial work in Edinburgh
-                rental properties includes fitting RCD protection (Regulation 411.3.3), replacing
-                outdated plastic consumer units with metal enclosures, upgrading earthing and
-                bonding, and replacing deteriorated rubber-insulated cables common in the tenement
-                stock.
+                rental properties includes fitting RCD protection on socket-outlet circuits
+                (Regulation 411.3.3), fitting 30 mA RCD protection on lighting circuits (Regulation
+                411.3.4 — new in BS 7671:2018+A4:2026), replacing outdated plastic consumer units
+                with metal enclosures, upgrading earthing and bonding, and replacing deteriorated
+                rubber-insulated cables common in the tenement stock. Where a consumer unit is being
+                replaced, Regulation 421.1.7 (introduced by A4:2026) recommends consideration of arc
+                fault detection devices (AFDDs) on AC final circuits to mitigate fire risk —
+                particularly relevant in high-risk or HMO premises.
               </span>
             </li>
           </ul>
@@ -593,12 +602,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work immediately using
-                  the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Edinburgh landlords are motivated to act quickly given the Tribunal process —
-                  the electrician who quotes on the day of the EICR wins the remedial work.
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Edinburgh landlords are motivated to act quickly given the Tribunal process — the
+                  electrician who quotes on the day of the EICR wins the remedial work.
                 </p>
               </div>
             </div>
@@ -621,8 +627,8 @@ const sections = [
 export default function LandlordElectricalSafetyEdinburghPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Edinburgh | Repairing Standard &"
-      description="Landlord electrical safety requirements in Edinburgh. Scotland's Housing (Scotland) Act 2006 Repairing Standard explained…"
+      title="Landlord Electrical Safety Edinburgh | Repairing Standard 2026"
+      description="Landlord electrical safety requirements in Edinburgh. Scotland's Housing (Scotland) Act 2006 Repairing Standard, First-tier Tribunal enforcement, HMO rules, EICR costs and BS 7671:2018+A4:2026 requirements explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

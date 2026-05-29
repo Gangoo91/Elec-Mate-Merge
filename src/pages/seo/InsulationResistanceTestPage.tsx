@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Insulation Resistance Testing | How to Test & Minimum Values';
 const PAGE_DESCRIPTION =
-  'Insulation resistance testing for UK electricians: test voltages, BS 7671 Table 61 minimums (1 MΩ), L-N/L-E/N-E, three-phase, low-reading causes.';
+  'Insulation resistance testing for UK electricians: test voltages, BS 7671 Table 64 minimums (1 MΩ), L-N/L-E/N-E, three-phase, low-reading causes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -46,9 +46,11 @@ const tocItems = [
 
 const keyTakeaways = [
   'Insulation resistance measures the quality of insulation between conductors and earth — it confirms current cannot leak where it should not, preventing shock, fire, and nuisance RCD tripping.',
-  'The standard test voltage for circuits up to 500 V (all domestic and most commercial installations) is 500 V DC, with a minimum acceptable reading of 1 MΩ per BS 7671 Table 61.',
+  'The standard test voltage for circuits up to 500 V (all domestic and most commercial installations) is 500 V DC, with a minimum acceptable reading of 1 MΩ per BS 7671 Table 64.',
   'You must test three conductor combinations: line-to-neutral (L-N), line-to-earth (L-E), and neutral-to-earth (N-E) — or link L+N together and test to earth as a combined first step.',
   'New installations should return readings of 200 MΩ or higher. Older wiring in good condition typically reads above 2 MΩ. Anything below 1 MΩ is a failure requiring investigation.',
+  'A4:2026 (Reg 643.3) introduces a 250 V DC post-connection test as a permitted alternative where connected equipment is likely to influence the result or be damaged by the standard 500 V DC test voltage — critical for circuits with permanent LED drivers, SPDs, or smart controls.',
+  'Reg 643.3.2 permits board-level efficiency: test the main switchboard and each distribution circuit with all final circuits connected but equipment disconnected — you do not need to test every final circuit individually from scratch.',
   'Elec-Mate auto-validates insulation resistance readings against the 1 MΩ minimum and supports voice-to-test-results so you can speak values while holding probes on site.',
 ];
 
@@ -56,7 +58,7 @@ const faqs = [
   {
     question: 'What is the minimum insulation resistance value per BS 7671?',
     answer:
-      'BS 7671 Table 61 specifies the minimum insulation resistance values based on the circuit voltage. For circuits operating at up to and including 500 V AC (which covers all standard domestic and commercial installations at 230 V single-phase and 400 V three-phase), the test voltage is 500 V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MΩ). For SELV and PELV circuits operating at up to 50 V, the test voltage is 250 V DC and the minimum is 0.5 MΩ. For circuits operating above 500 V, the test voltage is 1000 V DC and the minimum is 1.0 MΩ. In practice, a healthy circuit in good condition should return readings significantly higher than these minimums — new installations typically read 200 MΩ or more.',
+      'BS 7671 Table 64 specifies the minimum insulation resistance values based on the circuit voltage. For circuits operating at up to and including 500 V AC (which covers all standard domestic and commercial installations at 230 V single-phase and 400 V three-phase), the test voltage is 500 V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MΩ). For SELV and PELV circuits operating at up to 50 V, the test voltage is 250 V DC and the minimum is 0.5 MΩ. For circuits operating above 500 V, the test voltage is 1000 V DC and the minimum is 1.0 MΩ. In practice, a healthy circuit in good condition should return readings significantly higher than these minimums — new installations typically read 200 MΩ or more.',
   },
   {
     question: 'Why is insulation resistance tested with DC and not AC?',
@@ -114,7 +116,7 @@ const howToSteps = [
   },
   {
     name: 'Record the results on the schedule of test results',
-    text: 'Enter the measured insulation resistance values in megohms on the schedule of test results. Record the test voltage used and note ambient conditions. Elec-Mate automatically validates readings against BS 7671 Table 61 minimum values and highlights any failures. If a reading is below the minimum, record an observation with the appropriate classification code (C1, C2, or C3) on the EICR.',
+    text: 'Enter the measured insulation resistance values in megohms on the schedule of test results. Record the test voltage used and note ambient conditions. Elec-Mate automatically validates readings against BS 7671 Table 64 minimum values and highlights any failures. If a reading is below the minimum, record an observation with the appropriate classification code (C1, C2, or C3) on the EICR.',
   },
 ];
 
@@ -159,17 +161,17 @@ const sections = [
   },
   {
     id: 'test-voltage',
-    heading: 'Test Voltage and Minimum Values — BS 7671 Table 61',
+    heading: 'Test Voltage and Minimum Values — BS 7671 Table 64',
     content: (
       <>
         <p>
           The test voltage and minimum acceptable insulation resistance value are specified in BS
-          7671 Table 61, based on the nominal circuit voltage. Using the wrong test voltage produces
+          7671 Table 64, based on the nominal circuit voltage. Using the wrong test voltage produces
           invalid results and does not comply with the standard.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
-            BS 7671 Table 61 — Minimum Insulation Resistance
+            BS 7671 Table 64 — Minimum Insulation Resistance
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
@@ -216,9 +218,31 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                A4:2026 change — 250 V DC post-connection test (Reg 643.3)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 has redrafted Regulation 643.3 to address circuits where
+                connected equipment is likely to influence the test result or be damaged by the
+                standard test voltage. Where this condition applies — for example circuits with
+                permanent LED drivers, surge protective devices (SPDs), or smart controls that
+                cannot practically be disconnected — a 250&nbsp;V DC insulation resistance test
+                carried out <em>after</em> the equipment is connected is now the permitted
+                alternative verification method. This lower test voltage protects sensitive
+                electronics while still providing a valid insulation resistance verification. Where
+                equipment is disconnected and circuits can withstand the full voltage, the standard
+                Table 64 voltages (500&nbsp;V DC or 1000&nbsp;V DC) continue to apply.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Auto-validated insulation resistance readings"
-          description="Enter your IR readings into Elec-Mate's schedule of tests and the app instantly validates them against BS 7671 Table 61 minimum values."
+          description="Enter your IR readings into Elec-Mate's schedule of tests and the app instantly validates them against BS 7671 Table 64 minimum values."
           icon={ClipboardCheck}
         />
       </>
@@ -257,6 +281,46 @@ const sections = [
           reconnecting or retesting. Large cable runs can store significant charge from the 500 V DC
           test voltage. Your instrument should have a discharge function — use it.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">
+                GN3 two-stage approach for new installations
+              </h4>
+              <p className="text-white text-sm leading-relaxed mb-2">
+                GN3 (9th Edition, A4) Regulation 2.22 sets out a two-stage insulation resistance
+                test for new-installation work that is important to distinguish from periodic
+                testing:
+              </p>
+              <ul className="space-y-2 text-white text-sm leading-relaxed">
+                <li className="flex items-start gap-2">
+                  <span className="font-bold text-yellow-400 shrink-0">Stage (i):</span>
+                  <span>
+                    Carried out when circuit cables are <em>first installed</em>, before accessories
+                    or equipment are fitted. Tests are performed between line conductors (L-L) and
+                    between line conductors and earth (L-E) on the bare cable run. This confirms the
+                    cable insulation itself is undamaged during installation — before equipment is
+                    connected that could mask or cause a fault.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-bold text-yellow-400 shrink-0">Stage (ii):</span>
+                  <span>
+                    Carried out on the complete circuit after the installation is finished, with
+                    current-using equipment disconnected. This is the standard Table 64 test
+                    described in the steps above.
+                  </span>
+                </li>
+              </ul>
+              <p className="text-white text-sm leading-relaxed mt-2">
+                For periodic inspection (EICR) work on existing installations, only the equivalent
+                of Stage (ii) applies. The two-stage distinction matters on new build or major
+                rewire jobs where cable runs are installed in phases.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Voice to test results — speak values while holding probes"
           description="On site with probes in hand? Just speak: 'Ring 1, insulation resistance 200 meg.' Elec-Mate fills in the schedule of test results for you."
@@ -509,12 +573,34 @@ const sections = [
           </ul>
         </div>
         <p>
-          The same minimum value of 1 MΩ per BS 7671 Table 61 applies to every individual
+          The same minimum value of 1 MΩ per BS 7671 Table 64 applies to every individual
           measurement. For large commercial or industrial installations with many three-phase
           circuits, systematic recording of results is essential. Elec-Mate's schedule of tests
           handles single-phase and three-phase circuits, recording all conductor combinations per
           circuit.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-4">
+          <div className="flex items-start gap-3">
+            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Board-level vs circuit-level testing (Reg 643.3.2)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                Regulation 643.3.2 permits a practical time-saving approach on larger installations:
+                the insulation resistance of the{' '}
+                <em>main switchboard and each distribution circuit</em> may be tested separately,
+                with all final circuits connected but current-using equipment disconnected. You do
+                not need to test each final circuit individually from scratch — testing the
+                distribution circuit with its final circuit wiring in place (equipment removed)
+                satisfies the regulation, provided the result meets the Table 64 minimum. If a
+                distribution circuit fails, you then isolate and test individual final circuits to
+                locate the fault. This approach significantly reduces test time on commercial boards
+                with multiple sub-circuits.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -530,7 +616,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Schedule of tests with auto-validation"
-          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates them against the BS 7671 Table 61 minimum of 1…"
+          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates them against the BS 7671 Table 64 minimum of 1&nbsp;M&#x3A9;."
           icon={ClipboardCheck}
         />
         <p>
@@ -627,7 +713,7 @@ export default function InsulationResistanceTestPage() {
           <span className="text-yellow-400">How to Test and Minimum Values</span>
         </>
       }
-      heroSubtitle="The complete guide to insulation resistance testing for UK electricians. What insulation resistance is, test voltages per BS 7671 Table 61, minimum values (1 MΩ), how to perform the test, conductor combinations (L-N, L-E, N-E), typical good values by installation age, common causes of low readings, and three-phase testing."
+      heroSubtitle="The complete guide to insulation resistance testing for UK electricians. What insulation resistance is, test voltages per BS 7671 Table 64, minimum values (1 MΩ), how to perform the test, conductor combinations (L-N, L-E, N-E), typical good values by installation age, common causes of low readings, and three-phase testing."
       readingTime={18}
       keyTakeaways={keyTakeaways}
       sections={sections}

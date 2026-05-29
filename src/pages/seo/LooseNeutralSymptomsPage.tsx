@@ -42,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'A loose neutral connection causes voltage fluctuations across the installation — lights may brighten and dim unpredictably, and appliances can be damaged by over-voltage or under-voltage.',
   'On a TN-C-S (PME) earthing system, a broken or loose neutral on the supply side (between the meter and the transformer) is extremely dangerous because the neutral also serves as the earth path.',
-  'Classic symptoms include flickering lights that worsen under load, appliances running fast then slow, tingling from taps or radiators, and voltage readings that fluctuate between 200V and 260V.',
+  'Classic symptoms include flickering lights that worsen under load, appliances running fast then slow, tingling from taps or radiators, and voltage readings that fluctuate outside the statutory 216.2V to 253.0V supply tolerance (Electricity Safety, Quality and Continuity Regulations).',
   'If the loose neutral is on the supply side (DNO infrastructure), the Distribution Network Operator is responsible for the repair — not the electrician or the property owner.',
   "Elec-Mate's AI fault diagnosis tool helps electricians identify loose neutral symptoms, differentiate between internal and supply-side faults, and generate accurate EICR observation codes.",
 ];
@@ -66,12 +66,12 @@ const faqs = [
   {
     question: 'How do I test for a loose neutral?',
     answer:
-      'To test for a loose neutral, you need a voltmeter and a systematic approach. First, measure the voltage between live and neutral at the consumer unit main switch — it should be a stable 230V (within the tolerance of +10% / -6%, so 216V to 253V). Then have someone switch on a high-power appliance (such as a kettle or electric shower) while you observe the voltage reading. If the voltage drops significantly (below 210V) or rises significantly (above 255V) when the load is switched on, this suggests a high-resistance connection in the neutral path. Next, measure the voltage between the neutral bar and the main earth terminal at the consumer unit — on a healthy installation, this should be close to 0V. A reading above 2V to 3V indicates a neutral problem. You can also use a clamp meter on the main neutral conductor to measure the current, and then check for a voltage drop across each connection point in the neutral path to locate the high-resistance joint.',
+      'To test for a loose neutral, you need a voltmeter and a systematic approach. First, measure the voltage between live and neutral at the consumer unit main switch — it should be a stable 230V (within the tolerance of +10% / −6%, giving the statutory range of 216.2V to 253.0V under the Electricity Safety, Quality and Continuity Regulations). Then have someone switch on a high-power appliance (such as a kettle or electric shower) while you observe the voltage reading. If the voltage drops significantly (below 210V) or rises significantly (above 255V) when the load is switched on, this suggests a high-resistance connection in the neutral path. Next, measure the voltage between the neutral bar and the main earth terminal at the consumer unit — on a healthy installation, this should be close to 0V. A reading above 2V to 3V indicates a neutral problem. You can also use a clamp meter on the main neutral conductor to measure the current, and then check for a voltage drop across each connection point in the neutral path to locate the high-resistance joint.',
   },
   {
     question: 'Can a loose neutral damage appliances?',
     answer:
-      'Yes. A loose neutral causes the voltage supplied to appliances to fluctuate. When a high-power appliance is switched on, it draws a large current through the neutral. If the neutral has a loose connection with high resistance, a significant voltage drop occurs across that connection. This means the voltage available at the socket drops below normal — which can cause motors to overheat and electronics to malfunction. Conversely, when the high-power appliance switches off, the voltage can spike above normal — potentially exceeding the rated voltage of sensitive equipment and causing damage. On a three-phase supply with a loose neutral, the situation is worse: the voltage on each phase becomes unbalanced, and one phase can rise to well above 253V while another drops well below 216V. This can destroy appliances connected to the high-voltage phase. Voltage surge protectors (SPDs) can provide some protection, but the correct fix is to repair the loose connection.',
+      'Yes. A loose neutral causes the voltage supplied to appliances to fluctuate. When a high-power appliance is switched on, it draws a large current through the neutral. If the neutral has a loose connection with high resistance, a significant voltage drop occurs across that connection. This means the voltage available at the socket drops below normal — which can cause motors to overheat and electronics to malfunction. Conversely, when the high-power appliance switches off, the voltage can spike above normal — potentially exceeding the rated voltage of sensitive equipment and causing damage. On a three-phase supply with a loose neutral, the situation is worse: the voltage on each phase becomes unbalanced, and one phase can rise to well above 253.0V while another drops well below 216.2V. This can destroy appliances connected to the high-voltage phase. Voltage surge protectors (SPDs) can provide some protection, but the correct fix is to repair the loose connection.',
   },
   {
     question: 'What is an "open neutral" and how is it different from a loose neutral?',
@@ -170,6 +170,9 @@ const sections = [
           can help you differentiate between a supply-side and installation-side neutral fault based
           on the symptoms and test results you provide.
         </p>
+        <p className="text-sm text-white/50 mt-4">
+          Reviewed by a C&amp;G 2391-qualified electrician. Last reviewed: May 2026.
+        </p>
       </>
     ),
   },
@@ -198,7 +201,9 @@ const sections = [
               <span>
                 <strong>Voltage fluctuations:</strong> Voltage readings at the sockets swing between
                 approximately 200V and 260V as different loads are switched on and off. A healthy
-                supply should be stable at 230V (within +10% / -6%).
+                supply should be stable at 230V (within +10% / &#8722;6%, giving a statutory range
+                of 216.2V to 253.0V under the Electricity Safety, Quality and Continuity
+                Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -366,7 +371,7 @@ const sections = [
           This is why{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           requires specific precautions for TN-C-S systems, including main protective bonding to
-          gas, water, and oil pipework (Regulation 411.3.1.2) and restrictions on using PME earthing
+          gas, water, and oil pipework (Regulation 544.1.2) and restrictions on using PME earthing
           for certain installations such as petrol stations, caravan parks, and construction sites
           where the risk is considered too high.
         </p>
@@ -463,8 +468,11 @@ const sections = [
           A thermal imaging camera can also be invaluable for locating loose neutral connections
           within the consumer unit — the loose terminal will show as a hotspot under load.
           Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">testing calculators</SEOInternalLink> help you
-          verify that measured values are within the acceptable ranges specified by BS 7671.
+          <SEOInternalLink href="/electrical-testing-calculators">
+            testing calculators
+          </SEOInternalLink>{' '}
+          help you verify that measured values are within the acceptable ranges specified by BS
+          7671.
         </p>
         <SEOAppBridge
           title="Record test results by voice while diagnosing"
@@ -533,6 +541,25 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Zap className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                Consider an AFDD upgrade (Code C3 recommendation)
+              </p>
+              <p className="text-white/80 text-sm">
+                Arcing at a loose or degraded neutral terminal is precisely the scenario that arc
+                fault detection devices (AFDDs) are designed to detect. BS 7671:2018+A4:2026
+                Regulation 421.1.7 recommends the installation of AFDDs in AC final circuits of a
+                fixed installation to mitigate the risk of fire due to arc fault currents. Where an
+                installation has experienced arcing at a neutral connection and does not already
+                have AFDD protection, this is an appropriate Code C3 improvement recommendation on
+                an EICR — noting the existing regulatory recommendation and the arc event history.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           For supply-side faults, contact the DNO and advise the customer to avoid touching
           metalwork until the repair is completed. The DNO typically attends within 4 hours for a
@@ -553,7 +580,7 @@ export default function LooseNeutralSymptomsPage() {
       title="Loose Neutral | Symptoms, Dangers & How to Fix"
       description="Loose neutral symptoms: flickering lights, voltage fluctuations, tingling from metalwork, dim/bright cycle. How to diagnose, fix, and stay safe."
       datePublished="2025-09-12"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

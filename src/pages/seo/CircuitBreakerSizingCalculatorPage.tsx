@@ -50,7 +50,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           Right MCB Every Time
         </>
       }
-              calculator={<CircuitBreakerSelectorCalculator />}
+      calculator={<CircuitBreakerSelectorCalculator />}
       heroSubtitle="Enter the design current, cable type, and installation conditions. The calculator selects the correct MCB rating, verifies the Ib ≤ In ≤ Iz coordination requirement, and confirms the cable is adequately protected to BS 7671. No more guesswork on protective device selection."
       heroFeaturePills={[
         { icon: Shield, label: 'MCB Selection' },
@@ -80,12 +80,14 @@ export default function CircuitBreakerSizingCalculatorPage() {
                 rapidly under fault conditions.
               </p>
               <p>
-                BS 7671:2018+A4:2026 sets out the requirements for overload protection in
-                Regulations 432 and 433. The protective device must satisfy two fundamental
-                conditions: the nominal rating (In) must be at least equal to the design current
-                (Ib) of the circuit, and the cable's current carrying capacity (Iz) must be at least
-                equal to the nominal rating. This ensures the cable is never subjected to a
-                sustained current above its safe operating limit.
+                BS 7671:2018+A4:2026 sets out the requirements for overload protection in Section
+                432 and Chapter 43 (Section 433). Note that A4:2026 deleted the former Regulation
+                433.1 sub-regulation; practitioners must consult the restructured provisions in
+                Chapter 43 for the current overload protection requirements. The protective device
+                must satisfy two fundamental conditions: the nominal rating (In) must be at least
+                equal to the design current (Ib) of the circuit, and the cable's current carrying
+                capacity (Iz) must be at least equal to the nominal rating. This ensures the cable
+                is never subjected to a sustained current above its safe operating limit.
               </p>
               <p>
                 Selecting the wrong MCB rating can lead to two types of problems. If the MCB is too
@@ -93,7 +95,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                 and the equipment it supplies. If the MCB is too large, it will fail to protect the
                 cable from overload, allowing sustained currents that exceed the cable's thermal
                 rating — leading to insulation degradation, overheating, and potentially fire. The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 and circuit breaker sizing calculator work together to ensure both components are
@@ -240,13 +242,19 @@ export default function CircuitBreakerSizingCalculatorPage() {
                   type (115 for copper/PVC, 143 for copper/XLPE). If the installed cable CSA is
                   greater than or equal to S, the cable is adequately protected.
                 </p>
+                <p className="text-white/70 text-xs mt-3">
+                  k = 115 applies to copper conductors incorporated in a PVC cable at 70&deg;C
+                  initial temperature (BS 7671 Table 54.3); k = 143 applies to a separately run
+                  insulated copper conductor not incorporated in a cable at 30&deg;C initial
+                  temperature (BS 7671 Table 54.2).
+                </p>
               </div>
               <p>
                 In practice, for most domestic circuits, the standard cable sizes (1.5mm², 2.5mm²,
                 4mm², 6mm², 10mm²) easily satisfy the adiabatic equation when protected by standard
                 MCB ratings. The check becomes more critical on long cable runs, circuits with high
                 prospective fault current, or where the cable CSA has been minimised. The{' '}
-                <SEOInternalLink href="/adiabatic-equation-calculator">
+                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                   adiabatic equation calculator
                 </SEOInternalLink>{' '}
                 in Elec-Mate performs this verification automatically.
@@ -311,7 +319,10 @@ export default function CircuitBreakerSizingCalculatorPage() {
                     <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
                       <strong className="text-yellow-400">32A Type C:</strong> EV charger circuits
-                      (7kW single-phase), air source heat pumps.
+                      (7kW single-phase), air source heat pumps. Note: where the EVSE may produce
+                      smooth DC fault currents, BS 7671 Regulation 551.4.3.3.2 requires the
+                      installer to consider a Type B RCD — a standard Type AC or Type A RCD will not
+                      detect smooth DC residual currents.
                     </span>
                   </li>
                 </ul>
@@ -425,7 +436,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault withstand checks.',
@@ -449,7 +460,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/adiabatic-equation-calculator',
+          href: '/tools/adiabatic-equation-calculator',
           title: 'Adiabatic Equation Calculator',
           description: 'Verify cable fault current withstand using the BS 7671 adiabatic equation.',
           icon: BarChart3,

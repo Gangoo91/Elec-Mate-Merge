@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'When is a surge protection device (SPD) required in a consumer unit?',
     answer:
-      'BS 7671 Regulation 443.4.1 requires a risk assessment to determine whether surge protection is needed. The regulation was strengthened in the 18th Edition and now requires SPDs to be installed where the consequence of an overvoltage event would be serious — for example, where the installation includes valuable electronic equipment, where the building has a lightning protection system, or where the installation supplies equipment essential for safety (such as fire detection systems or security equipment). In practice, most domestic installations now include SPDs because the cost is relatively low (Type 2 SPDs suitable for consumer unit installation cost between 30 and 60 pounds) and the protection they provide is significant — a single lightning-induced surge can destroy thousands of pounds worth of electronic equipment. The SPD is installed at the origin of the installation, typically within or adjacent to the consumer unit, and requires a dedicated protective device (MCB or fuse) on its supply.',
+      "BS 7671 Regulation 443.4 requires SPDs where the consequence of a transient overvoltage would include risk to human life, disruption to public services, interruption of commercial or industrial activity, or impact on a large number of co-located individuals (Regulation 443.4(a)–(d)). For all other cases a risk assessment determines whether protection is needed. Regulation 443.4 also contains an explicit exception for single dwelling units in certain situations — designers should check whether this exception applies before concluding SPDs are mandatory. Where a risk assessment confirms protection is required, SPDs are installed at the origin of the installation, typically within or adjacent to the consumer unit, with a dedicated overcurrent protective device sized per the manufacturer's instructions and Regulation 534.4.10 (minimum 6 mm² connecting conductor for Type 2 SPDs at the origin). A visual indicator confirms the SPD is operational.",
   },
   {
     question: 'Is replacing a consumer unit notifiable under Part P?',
@@ -105,11 +105,13 @@ const articleSchema = {
   '@type': 'Article',
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  datePublished: '2025-02-01',
+  datePublished: '2024-08-01',
   dateModified: '2026-05-18',
   author: {
-    '@type': 'Organization',
-    name: 'Elec-Mate',
+    '@type': 'Person',
+    name: 'Elec-Mate Editorial Team',
+    description:
+      'Written and reviewed by qualified electricians and BS 7671 trainers at Elec-Mate.',
   },
   publisher: {
     '@type': 'Organization',
@@ -181,8 +183,21 @@ export default function ConsumerUnitRegulationsPage() {
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Consumer Unit Regulations
-            <span className="block text-yellow-400 mt-1">Amendment 4 Guide (2024)</span>
+            <span className="block text-yellow-400 mt-1">Amendment 4 Guide (A4:2026)</span>
           </h1>
+          {/* Answer-first block — targets featured snippet for 'consumer unit regulations UK' */}
+          <div className="rounded-2xl bg-white/[0.06] border border-yellow-500/20 px-6 py-5 max-w-2xl mx-auto mb-6 text-left">
+            <p className="text-base text-white leading-relaxed">
+              <strong className="text-yellow-400">Consumer unit regulations</strong> in the UK are
+              set by BS&nbsp;7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition). They
+              require metal (non-combustible) enclosures under Regulation&nbsp;421.1.201, 30&nbsp;mA
+              RCD protection for nearly all domestic circuits under Section&nbsp;411, and surge
+              protection assessment under Regulation&nbsp;443.4. Amendment&nbsp;4 (A4:2026), issued
+              July&nbsp;2024, adds a recommendation for arc fault detection devices (AFDDs) under
+              Regulation&nbsp;421.1.7 and new requirements where bidirectional current flow is
+              possible.
+            </p>
+          </div>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The definitive guide to consumer unit regulations under BS 7671:2018+A4:2026. Metal
             enclosures, RCD protection, RCBO design, SPD requirements, and the new Regulation
@@ -228,7 +243,8 @@ export default function ConsumerUnitRegulationsPage() {
               increasing complexity of domestic electrical installations.
             </p>
             <p>
-              The current standard for consumer units in domestic premises is set by BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment 4,
+              The current standard for consumer units in domestic premises is set by BS
+              7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment 4,
               issued in July 2024. This standard, together with the product standard BS EN 61439-3
               (which specifies construction and performance requirements for distribution boards),
               defines what a consumer unit must be made of, what protection it must contain, and how
@@ -406,9 +422,8 @@ export default function ConsumerUnitRegulationsPage() {
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <span>
                     <strong className="text-yellow-400">Lower cost</strong> — Two RCDs plus MCBs
-                    cost less than individual RCBOs for every circuit. A typical 10-way split-load
-                    board with two RCDs costs approximately 60-100 pounds less than the equivalent
-                    RCBO board.
+                    cost less than individual RCBOs for every circuit, making the split-load
+                    arrangement the lower-cost option at the point of installation.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -464,11 +479,10 @@ export default function ConsumerUnitRegulationsPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               For most new domestic installations and consumer unit replacements, full RCBO boards
-              are now the preferred choice among professional electricians. The additional cost
-              (typically 60-150 pounds depending on the number of circuits) is easily justified by
-              the improved discrimination, reduced nuisance tripping, and better fault diagnosis.
-              The time saved in call-backs for nuisance tripping alone often pays for the cost
-              difference.
+              are now the preferred choice among professional electricians. The additional material
+              cost is easily justified by the improved discrimination, reduced nuisance tripping,
+              and better fault diagnosis. The time saved in call-backs for nuisance tripping alone
+              often pays for the cost difference.
             </p>
           </div>
         </div>
@@ -526,13 +540,43 @@ export default function ConsumerUnitRegulationsPage() {
                 </p>
               </div>
             </div>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+              <h3 className="font-bold text-white text-lg mb-3">
+                Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)
+              </h3>
+              <div className="space-y-3 text-white text-sm leading-relaxed">
+                <p>
+                  Regulation 421.1.7 is a new addition introduced by Amendment&nbsp;4 (A4:2026),
+                  located in Part&nbsp;4 — Protection for Safety, Chapter&nbsp;42. It recommends the
+                  installation of arc fault detection devices (AFDDs) in AC final circuits of a
+                  fixed installation to mitigate the risk of fire due to the effects of arc fault
+                  currents.
+                </p>
+                <p>
+                  The wording of Regulation&nbsp;421.1.7 is advisory rather than mandatory — it uses
+                  &ldquo;recommending&rdquo; rather than &ldquo;shall&rdquo;. However, the
+                  recommendation carries regulatory weight as a BS&nbsp;7671 provision, and
+                  designers should consider AFDD provision at the consumer unit design stage,
+                  particularly for high-risk AC final circuits such as bedroom circuits and circuits
+                  in older wiring systems where degraded insulation may be present.
+                </p>
+                <p>
+                  AFDDs detect the characteristic high-frequency signatures of arc faults in
+                  electrical wiring and disconnect the circuit before a sustained arc can ignite
+                  surrounding materials. They are installed in the consumer unit in place of, or in
+                  addition to, standard MCBs or RCBOs. The combination AFDD+RCBO provides
+                  overcurrent, earth fault, and arc fault protection in a single device.
+                </p>
+              </div>
+            </div>
             <p>
-              Beyond the Section 530 bidirectional device requirements, Amendment 4 includes various
-              corrections, clarifications, and editorial amendments to the standard. It is important
-              to note that Amendment 4 does not change the fundamental requirements for consumer
-              unit design — metal enclosures, RCD protection, circuit protection, and labelling
-              requirements all remain as per the main 18th Edition text. The amendment adds to the
-              requirements rather than replacing them.
+              Beyond the Section 530 bidirectional device requirements and the new AFDD
+              recommendation (Reg&nbsp;421.1.7), Amendment 4 includes various corrections,
+              clarifications, and editorial amendments to the standard. It is important to note that
+              Amendment 4 does not change the fundamental requirements for consumer unit design —
+              metal enclosures, RCD protection, circuit protection, and labelling requirements all
+              remain as per the main 18th Edition text. The amendment adds to the requirements
+              rather than replacing them.
             </p>
           </div>
         </div>
@@ -560,22 +604,29 @@ export default function ConsumerUnitRegulationsPage() {
               to a large number of co-located individuals, SPD protection must be provided.
             </p>
             <p>
-              In practice, the risk assessment almost always concludes that SPDs should be installed
-              in modern domestic installations. The average UK home now contains thousands of pounds
-              worth of electronic equipment — smart TVs, computers, broadband routers, smart home
-              devices, LED lighting drivers, heating controls, and appliances with electronic
+              Regulation&nbsp;443.4 contains an explicit exception allowing single dwelling units to
+              be excluded from the requirement to provide transient overvoltage protection where the
+              specified conditions are met. Designers should evaluate whether this exception applies
+              before concluding that SPDs are mandatory for a particular domestic installation.
+            </p>
+            <p>
+              Where the exception does not apply, or where a risk assessment confirms the need for
+              protection, SPDs should be installed. The average UK home now contains thousands of
+              pounds worth of electronic equipment — smart TVs, computers, broadband routers, smart
+              home devices, LED lighting drivers, heating controls, and appliances with electronic
               controllers. A single transient overvoltage event can damage multiple items
-              simultaneously. The cost of a Type 2 SPD (suitable for most domestic installations) is
-              typically 30-60 pounds — a fraction of the potential damage cost.
+              simultaneously, making SPD provision a sound protective measure.
             </p>
             <p>
               SPDs are installed at the origin of the installation, either within the consumer unit
               (many modern consumer units have dedicated SPD modules) or in a separate enclosure
-              adjacent to the consumer unit. The SPD requires a dedicated MCB or fuse for its
-              supply, sized according to the manufacturer's instructions (typically 32A or 40A). A
-              green indicator on the SPD confirms it is operational — when the indicator turns red
-              or disappears, the SPD has operated and expended its protection capacity and must be
-              replaced.
+              adjacent to the consumer unit. The SPD requires a dedicated overcurrent protective
+              device (MCB or fuse) for its supply, sized in accordance with the manufacturer&apos;s
+              instructions and Regulation 534.4.10 (which specifies minimum conductor
+              cross-sectional areas for SPD connecting conductors — not less than 6&nbsp;mm&sup2;
+              copper for Type&nbsp;2 SPDs at the origin). A green indicator on the SPD confirms it
+              is operational — when the indicator turns red or disappears, the SPD has operated and
+              expended its protection capacity and must be replaced.
             </p>
             <p>
               For installations on overhead supply lines, the risk of lightning-induced transient
@@ -695,7 +746,6 @@ export default function ConsumerUnitRegulationsPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -703,14 +753,30 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/consumer-unit-change">Consumer Unit Change UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/consumer-unit-upgrade">Consumer Unit Upgrade</SEOInternalLink>
-            <SEOInternalLink href="/guides/consumer-unit-types">Consumer Unit Types</SEOInternalLink>
-            <SEOInternalLink href="/guides/consumer-unit-replacement-birmingham">Consumer Unit Replacement Birmingham</SEOInternalLink>
-            <SEOInternalLink href="/consumer-unit-replacement-brighton">Consumer Unit Replacement Brighton</SEOInternalLink>
-            <SEOInternalLink href="/guides/consumer-unit-replacement-bristol">Consumer Unit Replacement Bristol</SEOInternalLink>
-            <SEOInternalLink href="/consumer-unit-replacement-cardiff">Consumer Unit Replacement Cardiff</SEOInternalLink>
-            <SEOInternalLink href="/guides/consumer-unit-replacement-cost">Consumer Unit Replacement Cost 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-change">
+              Consumer Unit Change UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-upgrade">
+              Consumer Unit Upgrade
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-types">
+              Consumer Unit Types
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-replacement-birmingham">
+              Consumer Unit Replacement Birmingham
+            </SEOInternalLink>
+            <SEOInternalLink href="/consumer-unit-replacement-brighton">
+              Consumer Unit Replacement Brighton
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-replacement-bristol">
+              Consumer Unit Replacement Bristol
+            </SEOInternalLink>
+            <SEOInternalLink href="/consumer-unit-replacement-cardiff">
+              Consumer Unit Replacement Cardiff
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
+              Consumer Unit Replacement Cost 2026
+            </SEOInternalLink>
           </div>
         </div>
       </section>

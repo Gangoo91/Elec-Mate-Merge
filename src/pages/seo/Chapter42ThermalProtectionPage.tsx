@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Apply Ci derating factors and calculate safe current-carrying capacity for insulated cables.',
@@ -287,10 +287,10 @@ const sections = [
         <p>
           Fire-stopping is not optional — it is a requirement of both BS 7671 and Building
           Regulations (Approved Document B). During an{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,
-          missing or inadequate fire-stopping at cable penetrations is a common observation,
-          typically coded C3 (improvement recommended) unless the penetration is through a critical
-          fire barrier such as a party wall, where C2 may be appropriate.
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, missing or
+          inadequate fire-stopping at cable penetrations is a common observation, typically coded C3
+          (improvement recommended) unless the penetration is through a critical fire barrier such
+          as a party wall, where C2 may be appropriate.
         </p>
       </>
     ),
@@ -415,7 +415,7 @@ const sections = [
               insulation. If cables must run through insulation (for example, under insulation that
               covers the joists entirely), increase the cable size to account for the Ci derating.
               The{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               applies the Ci factor automatically when you select the installation method.

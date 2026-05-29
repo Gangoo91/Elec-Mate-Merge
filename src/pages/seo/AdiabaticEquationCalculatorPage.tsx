@@ -34,7 +34,7 @@ const faqs = [
   {
     question: 'What is the adiabatic equation and when is it used?',
     answer:
-      'The adiabatic equation is the formula used to calculate the minimum cross-sectional area (CSA) of a protective conductor (circuit protective conductor, earthing conductor, or supplementary bonding conductor) required to withstand the thermal effects of a fault current flowing for the duration of the disconnection time. The equation is S = square root of (I squared multiplied by t) divided by k, where S is the minimum conductor CSA in mm squared, I is the fault current in amperes, t is the disconnection time of the protective device in seconds, and k is a factor that depends on the conductor material, insulation type, and initial and final temperatures. It is used whenever you need to verify that a protective conductor is large enough to carry the earth fault current until the protective device disconnects — a requirement of BS 7671 Regulation 543.1.',
+      'The adiabatic equation is the formula used to calculate the minimum cross-sectional area (CSA) of a protective conductor (circuit protective conductor or earthing conductor) required to withstand the thermal effects of a fault current flowing for the duration of the disconnection time. The equation is S = square root of (I squared multiplied by t) divided by k, where S is the minimum conductor CSA in mm squared, I is the fault current in amperes, t is the disconnection time of the protective device in seconds, and k is a factor that depends on the conductor material, insulation type, and initial and final temperatures. It is used whenever you need to verify that a protective conductor is large enough to carry the earth fault current until the protective device disconnects — a requirement of BS 7671 Regulation 543.1. Important: the equation is only valid for disconnection times not exceeding 5 seconds (Reg 543.1.3). For longer disconnection times, use BS 7454 or manufacturer energy let-through data.',
   },
   {
     question: 'What are the k values for different conductor materials?',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Does the adiabatic equation apply to earthing conductors and bonding conductors?',
     answer:
-      'Yes. The adiabatic equation applies to all types of protective conductors — circuit protective conductors (CPCs), main earthing conductors, supplementary bonding conductors, and equipotential bonding conductors. Regulation 543.1 covers CPC sizing requirements, Regulation 544.1.1 covers main earthing conductors, and Regulation 544.2 covers bonding conductors. For each type, the calculation uses the relevant fault current (the earth fault current for CPCs, the let-through energy of the upstream protective device for earthing conductors), the disconnection time of the relevant protective device, and the appropriate k value for the conductor material and insulation. In practice, the main earthing conductor and main bonding conductors must also withstand the fault current for the disconnection time of the main protective device (the supply fuse or main switch).',
+      'The adiabatic equation (Regulation 543.1.3 / 543.1.1) applies to circuit protective conductors (CPCs) and main earthing conductors, but not to protective bonding conductors. Regulation 543.1.1 is explicit: the sizing rule applies to every protective conductor "other than a protective bonding conductor". Protective bonding conductors — both main equipotential bonding conductors (Regulation 544.1) and supplementary bonding conductors (Regulation 544.2) — have separate sizing requirements and are not sized by the adiabatic equation. For CPCs and earthing conductors, the calculation uses the relevant earth fault current, the disconnection time of the protective device, and the appropriate k value for the conductor material and insulation.',
   },
 ];
 
@@ -158,7 +158,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: liveRating ? 'iOS, Android, Web' : 'iOS, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://www.elec-mate.com/adiabatic-equation-calculator',
+  url: 'https://www.elec-mate.com/tools/adiabatic-equation-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -338,9 +338,9 @@ export default function AdiabaticEquationCalculatorPage() {
             <p>
               The equation is given in BS 7671 Regulation 543.1 and is the method used to verify
               that protective conductors are adequately sized. It applies to circuit protective
-              conductors (CPCs), main earthing conductors, supplementary bonding conductors, and all
-              other protective conductors within an installation. It is one of the most important
-              calculations in electrical installation design and verification.
+              conductors (CPCs) and main earthing conductors. Regulation 543.1.1 explicitly excludes
+              protective bonding conductors, which have separate sizing requirements. It is one of
+              the most important calculations in electrical installation design and verification.
             </p>
           </div>
         </div>
@@ -375,6 +375,13 @@ export default function AdiabaticEquationCalculatorPage() {
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-300">
+              <strong>5-second limit (Reg 543.1.3):</strong> The adiabatic equation is only valid
+              for disconnection times not exceeding 5 seconds. Where the disconnection time exceeds
+              5 s, the adiabatic assumption breaks down — heat begins to escape the conductor — so
+              the equation will overstate the safe minimum CSA. For t &gt; 5 s, use BS 7454 or
+              consult the manufacturer's energy let-through (I²t) data for the protective device.
+            </div>
             <p>
               The expression I²t (I squared t) represents the energy let-through — the total energy
               dissipated in the conductor during the fault. It is measured in A²s (ampere-squared
@@ -390,6 +397,14 @@ export default function AdiabaticEquationCalculatorPage() {
               energy, so a smaller conductor is acceptable. Copper has a higher k value than
               aluminium (115 vs 76 for PVC-insulated conductors), which is one reason copper
               conductors can be smaller than aluminium ones for the same duty.
+            </p>
+            <p>
+              Where an RCD is the limiting device — that is, where the highest prospective earth
+              fault current everywhere in the circuit does not exceed the RCD's conditional rated
+              current (Iq) — the RCD's I²t let-through energy may be used in the adiabatic equation
+              in place of MCB or fuse data (OSG 3.6.4.5). This is common on long radial circuits
+              where the fault level is modest. In all other cases, use the time/current
+              characteristics of the overcurrent device.
             </p>
           </div>
         </div>
@@ -519,6 +534,14 @@ export default function AdiabaticEquationCalculatorPage() {
               with less than 15.50 mm² effective CSA, the armour is inadequate as a CPC and either a
               larger cable must be used or a separate CPC must be installed alongside the SWA cable.
             </p>
+            <p>
+              <strong>Rounding to the next standard size (Reg 543.1.3):</strong> When the adiabatic
+              formula produces a non-standard CSA — such as 0.70 mm² in Example 1 or 15.50 mm² in
+              Example 2 — you must select a conductor with the next larger standard cross-sectional
+              area. The Regulation is explicit: where the formula gives a non-standard size, a
+              conductor of the next larger standard CSA shall be used. Never round down, even if the
+              calculated value is only marginally above a standard size.
+            </p>
           </div>
         </div>
       </section>
@@ -631,9 +654,18 @@ export default function AdiabaticEquationCalculatorPage() {
             </p>
             <p>
               Amendment 4 to BS 7671 (A4:2026), issued in July 2024, did not change the fundamental
-              adiabatic equation requirements but added Regulation 530.3.2 covering requirements for
-              bidirectional and unidirectional switching devices. The core CPC sizing requirements
-              in Regulation 543.1 remain as established in the 18th Edition.
+              adiabatic equation requirements but added Regulation 530.3.201 covering requirements
+              for bidirectional and unidirectional protective devices. The core CPC sizing
+              requirements in Regulation 543.1 remain as established in the 18th Edition.
+            </p>
+            <p>
+              <strong>Zs and the adiabatic check interact for small cables (GN3 Reg 1.25):</strong>{' '}
+              For smaller cross-sectional area cables, the earth fault loop impedance (Zs) may be
+              limited by the adiabatic equation as well as by the maximum Zs disconnection
+              requirement. A circuit can pass the Zs limit check — meaning the fault current is high
+              enough to operate the device within the permitted disconnection time — yet still fail
+              the adiabatic check if the fault current is modest and the device is slow. Both checks
+              must always be carried out; satisfying one does not guarantee the other.
             </p>
           </div>
         </div>

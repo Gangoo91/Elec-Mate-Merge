@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated office circuit with automatic derating and voltage drop calculations.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on the office circuit — particularly for longer runs to upstairs rooms.',
@@ -669,10 +669,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quick Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the home office setup with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Dedicated circuit, sockets, data cabling, lighting — all itemised. Send a
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Dedicated circuit, sockets, data cabling, lighting — all itemised. Send a
                   professional PDF quote from the survey visit.
                 </p>
               </div>

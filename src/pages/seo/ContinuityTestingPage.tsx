@@ -28,7 +28,7 @@ const tocItems = [
   { id: 'ring-circuits', label: 'Ring Circuit Testing (r1+r2/4 Method)' },
   { id: 'cpc-continuity', label: 'CPC Continuity' },
   { id: 'test-lead-resistance', label: 'Test Lead Resistance' },
-  { id: 'regulation-643-2', label: 'Regulation 643.2 Explained' },
+  { id: 'regulation-643-2', label: 'Regulation 643.2.1 Explained' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -39,7 +39,8 @@ const keyTakeaways = [
   'R1 is the resistance of the line conductor from the origin to the furthest point of the circuit. R2 is the resistance of the protective conductor (CPC) from the origin to the furthest point. R1+R2 is measured at the furthest accessible point of each circuit.',
   'For ring final circuits, the r1+r2/4 method is used: measure the end-to-end resistance of the ring line conductor (r1), the end-to-end resistance of the ring CPC (r2), then divide by 4 to determine the expected maximum Zs contribution from the ring conductors at any socket outlet.',
   'Test lead resistance must be measured and subtracted (nulled) before recording continuity values — most modern instruments have a null function. Lead resistance is typically 0.1Ω to 0.5Ω and is significant relative to the measured circuit values.',
-  'BS 7671 Regulation 643.2 requires continuity of ring final circuit conductors to be verified and protective conductors to be tested for continuity throughout the installation.',
+  'BS 7671:2018+A4:2026 Regulation 643.2.1 requires continuity of ring final circuit conductors to be verified and protective conductors to be tested for continuity, where any exposed-conductive-parts or extraneous-conductive-parts are present.',
+  'When measured at ambient (site) temperature, the calculated Zs (Ze + R1+R2) must not exceed 80% of the BS 7671 Appendix 3 tabulated maximum — the GN3 0.80 site-test factor. Example: a 32A Type B MCB has a tabulated maximum Zs of 1.37Ω; the on-site cold-test limit is 1.10Ω. This accounts for the rise in conductor resistance at full operating temperature.',
 ];
 
 const faqs = [
@@ -69,14 +70,14 @@ const faqs = [
       'Continuity test instruments measure resistance by passing a small test current through the circuit and measuring the resulting voltage. The test leads themselves have resistance — typically between 0.1Ω and 0.5Ω for standard test leads. If this lead resistance is not accounted for, it will be added to all measured values, making circuit resistances appear higher than they actually are. For example, if the true R2 of a circuit is 0.4Ω and your test leads add 0.3Ω, you would measure 0.7Ω — 75% higher than the actual value. To null out lead resistance: connect the test leads together, press the null or zero button on the instrument, and the displayed reading will be set to zero. All subsequent measurements will have the lead resistance automatically subtracted. Repeat the null procedure if you change leads.',
   },
   {
-    question: 'What does Regulation 643.2 require for continuity testing?',
+    question: 'What does Regulation 643.2.1 require for continuity testing?',
     answer:
-      'BS 7671:2018+A4:2026 Regulation 643.2 requires continuity testing to be carried out on all ring final circuits to verify that the ring is complete and has not been incorrectly wired as a spurious ring (a figure-of-eight configuration that would result in incorrect R1+R2 values and potentially overloaded conductors). The regulation also requires that all protective conductors, including main protective bonding conductors, supplementary bonding conductors, and circuit protective conductors, are tested for continuity. Main protective bonding continuity is tested between the main earthing terminal and the bonded service (gas pipe, water pipe, structural metalwork). The maximum acceptable resistance for main bonding conductors is typically less than 0.05Ω.',
+      'BS 7671:2018+A4:2026 Regulation 643.2.1 requires continuity testing to be carried out on all ring final circuits to verify that the ring is complete and has not been incorrectly wired as a spurious ring (a figure-of-eight configuration that would result in incorrect R1+R2 values and potentially overloaded conductors). The regulation also requires that all protective conductors, including main protective bonding conductors, supplementary bonding conductors, and circuit protective conductors, are tested for continuity. This requirement applies where any exposed-conductive-parts or extraneous-conductive-parts are present; on a fully-shrouded PELV installation with no such parts, the clause does not apply. Main protective bonding continuity is tested between the main earthing terminal and the bonded service (gas pipe, water pipe, structural metalwork). The maximum acceptable resistance for main bonding conductors is typically less than 0.05Ω.',
   },
   {
     question: 'How do I detect a spurious ring in a ring final circuit?',
     answer:
-      'A spurious ring (or figure-of-eight interconnection) occurs when the two ends of a ring final circuit have been incorrectly connected — for example, the line of one cable end is connected to the neutral terminal of the other. It can also occur when an additional socket has been added mid-ring and the wiring has been incorrectly looped. To detect this, after measuring end-to-end resistance of the ring line (r1) and ring neutral (rn), cross-connect one end of the line to one end of the neutral at the consumer unit, then measure from the other line end to the other neutral end. For a genuine ring with equal cross-section conductors, the reading should be approximately r1/2 = rn/2. If the reading differs significantly from this, the ring may contain a figure-of-eight interconnection. BS 7671 Regulation 643.2 requires this cross-connection test to be performed on all ring final circuits.',
+      'A spurious ring (or figure-of-eight interconnection) occurs when the two ends of a ring final circuit have been incorrectly connected — for example, the line of one cable end is connected to the neutral terminal of the other. It can also occur when an additional socket has been added mid-ring and the wiring has been incorrectly looped. To detect this, after measuring end-to-end resistance of the ring line (r1) and ring neutral (rn), cross-connect one end of the line to one end of the neutral at the consumer unit, then measure from the other line end to the other neutral end. For a genuine ring with equal cross-section conductors, the reading should be approximately r1/2 = rn/2. If the reading differs significantly from this, the ring may contain a figure-of-eight interconnection. BS 7671:2018+A4:2026 Regulation 643.2.1 requires this cross-connection test to be performed on all ring final circuits.',
   },
 ];
 
@@ -144,11 +145,12 @@ const sections = [
           creating a shock hazard that may not be obvious during visual inspection.
         </p>
         <p>
-          BS 7671:2018+A4:2026 Regulation 643.2 requires continuity testing of all ring final
+          BS 7671:2018+A4:2026 Regulation 643.2.1 requires continuity testing of all ring final
           circuit conductors (to verify the ring is complete and correctly wired) and all protective
           conductors (to verify the CPC is continuous from the main earthing terminal to the
-          furthest point of every circuit). The results of continuity testing are recorded on the
-          schedule of test results, which forms part of the{' '}
+          furthest point of every circuit), where any exposed-conductive-parts or
+          extraneous-conductive-parts are present. The results of continuity testing are recorded on
+          the schedule of test results, which forms part of the{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -200,6 +202,24 @@ const sections = [
           table maximum, the CPC or line conductor may need to be upsized, or the circuit length
           reduced by repositioning the distribution board.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            Temperature Correction and the GN3 0.80 Site-Test Factor
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            Appendix 3 Zs limits assume conductors at their maximum operating temperature. When
+            R1+R2 is measured cold on site (typically at 20°C ambient), the resulting Zs will be
+            lower than it will be under full load. To account for this, BS 7671 Guidance Note 3
+            requires that the cold-measured Zs must not exceed{' '}
+            <strong>80% of the tabulated Appendix 3 maximum</strong>. For example, a 32A Type B MCB
+            has a tabulated maximum Zs of 1.37Ω — the on-site cold-test limit is{' '}
+            <strong>1.10Ω</strong>. Alternatively, apply the temperature correction factor Cr = 1 +
+            0.004 × (T − 20) to scale R1+R2 from the measured ambient temperature to the conductor
+            operating temperature (70°C for thermoplastic cable gives Cr = 1.20). Both methods
+            achieve the same result: ensuring measured values remain compliant at load temperature
+            (OSG Reg 1.08; GN3 Reg 5.78).
+          </p>
+        </div>
       </>
     ),
   },
@@ -309,14 +329,28 @@ const sections = [
   },
   {
     id: 'test-lead-resistance',
-    heading: 'Test Lead Resistance — Why It Matters',
+    heading: 'Test Lead Resistance and Instrument Proving — Why Both Matter',
     content: (
       <>
         <p>
-          Continuity test lead resistance can be a significant source of error, particularly for
-          measurements below 1Ω. Standard test leads have a resistance of between 0.1Ω and 0.5Ω. For
-          a circuit with an R2 of 0.5Ω, an unnulled lead resistance of 0.3Ω would produce a reading
-          of 0.8Ω — 60% higher than the true value.
+          Before taking any continuity measurement, two separate checks are required: proving the
+          instrument is functioning correctly, and nulling out the test lead resistance.
+        </p>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 mb-4">
+          <h4 className="font-bold text-white mb-2">Prove the Instrument First</h4>
+          <p className="text-white text-sm leading-relaxed">
+            Use a proving unit (or a known good resistor) to verify that the continuity tester is
+            operating correctly before testing and again after testing is complete. This confirms
+            the instrument has not developed a fault during use. Skipping the proving step is one of
+            the most common errors on site — a defective instrument could pass a broken CPC or give
+            a falsely low reading without any warning.
+          </p>
+        </div>
+        <p>
+          Continuity test lead resistance can also be a significant source of error, particularly
+          for measurements below 1Ω. Standard test leads have a resistance of between 0.1Ω and 0.5Ω.
+          For a circuit with an R2 of 0.5Ω, an unnulled lead resistance of 0.3Ω would produce a
+          reading of 0.8Ω — 60% higher than the true value.
         </p>
         <p>Always null (zero) the test leads before taking measurements:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -363,11 +397,11 @@ const sections = [
   },
   {
     id: 'regulation-643-2',
-    heading: 'Regulation 643.2 Explained',
+    heading: 'Regulation 643.2.1 Explained',
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 Regulation 643.2 sets out the requirements for continuity testing.
+          BS 7671:2018+A4:2026 Regulation 643.2.1 sets out the requirements for continuity testing.
           The regulation requires:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -387,7 +421,8 @@ const sections = [
                 conductors must be verified, including circuit protective conductors (CPCs), main
                 protective bonding conductors, supplementary bonding conductors, and the earthing
                 conductor connecting the main earthing terminal to the earth electrode or PME
-                terminal.
+                terminal. This requirement applies where any exposed-conductive-parts or
+                extraneous-conductive-parts are present.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -399,6 +434,20 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">GN3 0.80 Site-Test Factor</h4>
+          <p className="text-white text-sm leading-relaxed">
+            All BS 7671 Appendix 3 Zs limits are based on conductors at their maximum operating
+            temperature. When testing cold on site, the measured Zs (Ze + R1+R2) must not exceed{' '}
+            <strong>80% of the tabulated maximum</strong> — the GN3 0.80 site-test factor — to allow
+            for the increase in conductor resistance as the circuit warms up under load. Example: a
+            32A Type B MCB has a tabulated maximum Zs of 1.37Ω; the on-site cold-test limit is{' '}
+            <strong>1.10Ω</strong> (1.37 × 0.80). For temperature correction of measured R1+R2
+            values, the resistance correction factor is Cr = 1 + 0.004 × (T − 20), where T is the
+            conductor operating temperature in °C. For thermoplastic (70°C) cable, Cr = 1.20 (OSG
+            Reg 1.08; GN3 Reg 5.78).
+          </p>
         </div>
         <p>
           The schedule of test results on an EIC or EICR includes a dedicated column for R1+R2 (or
@@ -446,6 +495,20 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">Prove the Instrument at Start and End</h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Always prove your continuity tester with a proving unit before starting a test
+                  session and again when you finish. This confirms the instrument was working
+                  correctly throughout — a requirement for defensible test records and a key step in
+                  the instrument setup procedure for any testing and commissioning work.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -462,7 +525,7 @@ export default function ContinuityTestingPage() {
       title="Continuity Testing Guide | R1+R2 + Ring Final 2026"
       description="Continuity testing for UK electricians: R1+R2 method, r1+r2/4 ring final check, CPC continuity, lead-resistance null + recording on the EIC schedule."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"
@@ -473,7 +536,7 @@ export default function ContinuityTestingPage() {
           <span className="text-yellow-400">R1+R2, Ring Circuits, and CPC Continuity</span>
         </>
       }
-      heroSubtitle="A complete guide to continuity testing for UK electricians. Covers R1+R2 measurement, the r1+r2/4 ring circuit method, CPC continuity, test lead resistance, and what Regulation 643.2 requires."
+      heroSubtitle="A complete guide to continuity testing for UK electricians. Covers R1+R2 measurement, the r1+r2/4 ring circuit method, CPC continuity, test lead resistance, and what Regulation 643.2.1 requires."
       readingTime={11}
       keyTakeaways={keyTakeaways}
       sections={sections}

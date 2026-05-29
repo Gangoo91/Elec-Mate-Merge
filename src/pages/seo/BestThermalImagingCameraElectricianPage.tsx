@@ -47,6 +47,9 @@ const keyTakeaways = [
   'The FLIR C5 offers the best balance of resolution, portability, and features for a dedicated electrical thermal camera at around 500 to 600 pounds.',
   'Phone-attachment cameras (FLIR ONE Pro) are the cheapest entry point at around 350 pounds, but the image quality and ergonomics are inferior to standalone devices.',
   'Thermal imaging is increasingly expected on EICR condition reports — a thermal scan of the consumer unit adds professionalism and helps justify your findings to customers and insurers.',
+  'GN3 (9th Ed:2022, A4) Reg 4.9 requires that persons carrying out thermographic surveying have sufficient competence to prevent danger and injury — this is a legal obligation under Regulation 16 of the Electricity at Work Regulations 1989, not a guideline.',
+  'A persistent hot spot or arcing signature found during a thermal scan supports the case for an AFDD retrofit: BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices in AC final circuits to mitigate the risk of fire from arc fault currents.',
+  'GN3 8.2 states that thermographic survey results shall be recorded and anomalies addressed — save thermal images with timestamp metadata and attach them to Section K of the EICR as supporting evidence.',
 ];
 
 const faqs = [
@@ -73,12 +76,12 @@ const faqs = [
   {
     question: 'How do I interpret thermal images of a consumer unit?',
     answer:
-      'Open the consumer unit cover and allow 10 to 15 minutes for temperature to stabilise (removing the cover changes airflow). Scan the board with circuits under normal load. Look for hot spots — any connection or component significantly warmer than its neighbours warrants investigation. A general guide: up to 10 degrees above ambient is normal for loaded circuits, 10 to 30 degrees above ambient suggests a loose connection or overloading, and 30 degrees or more above ambient is a serious issue requiring immediate attention. Always compare like with like — a 30A cooker circuit will naturally run warmer than a 6A lighting circuit.',
+      'Open the consumer unit cover and allow 10 to 15 minutes for temperature to stabilise (removing the cover changes airflow). Scan the board with circuits under normal load. Look for hot spots — any connection or component significantly warmer than its neighbours warrants investigation. A general guide: up to 10 degrees above ambient is normal for loaded circuits, 10 to 30 degrees above ambient suggests a loose connection or overloading, and 30 degrees or more above ambient is a serious issue requiring immediate attention. Always compare like with like — a 30A cooker circuit will naturally run warmer than a 6A lighting circuit. Note: these temperature-delta bands are widely used practitioner guidelines — they are not BS 7671 or GN3 classification thresholds. GN3 3.11 makes clear that C1, C2, and C3 observation codes are assigned on the basis of risk assessment (danger, potential danger, or improvement recommended), not on a single temperature reading. A high delta alone does not determine the code; the inspector must assess the specific risk in context.',
   },
   {
     question: 'Is thermal imaging part of the EICR process?',
     answer:
-      'Thermal imaging is not a requirement of BS 7671 or the EICR process. However, IET Guidance Note 3 acknowledges thermographic surveying as a useful diagnostic tool during inspection. Many inspection bodies and insurance companies now expect or request a thermal scan as supplementary evidence alongside the EICR schedule of test results. Including thermal images in your EICR report adds professionalism, helps support your observations and recommendations, and can justify C2 or C3 codes to customers who question why a connection needs attention.',
+      'Thermal imaging is not a requirement of BS 7671 or the EICR process. However, IET Guidance Note 3 acknowledges thermographic surveying as a useful diagnostic tool during inspection. Many inspection bodies and insurance companies now expect or request a thermal scan as supplementary evidence alongside the EICR schedule of test results. Including thermal images in your EICR report adds professionalism, helps support your observations and recommendations, and can justify C2 or C3 codes to customers who question why a connection needs attention. Important: GN3 Reg 4.9 states that persons carrying out thermographic surveying shall have sufficient competence to prevent danger and injury, and shall be able to identify those parts of equipment which are, or are capable of being, live when the supply is switched on. Scanning a live, open consumer unit is live work — Regulation 16 of the Electricity at Work Regulations 1989 requires that anyone carrying out such work is competent for the specific task. GN3 8.2 also requires that survey results are recorded and anomalies addressed; attach thermal images to Section K of the EICR as supporting evidence for any observations raised.',
   },
 ];
 
@@ -98,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Correctly sized cables run cooler — verify your designs with the cable sizing calculator.',
@@ -122,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'High voltage drop means heat in cables — check your designs before installation.',
     icon: Zap,
@@ -215,6 +218,18 @@ const sections = [
                 their overheating connection is far more persuasive than a verbal explanation. It
                 helps justify repair costs, replacement recommendations, and C2 codes on EICRs.
                 Customers understand a red hot spot immediately.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Supporting AFDD retrofit recommendations</strong> — a thermal scan that
+                reveals arcing signatures or persistent hot spots at a connection provides evidence
+                for an AFDD (arc fault detection device) retrofit recommendation.
+                BS&nbsp;7671:2018+A4:2026 Reg 421.1.7 recommends AFDDs in AC final circuits to
+                mitigate the risk of fire due to arc fault currents. Thermal evidence of a
+                high-resistance joint or loose terminal strengthens that case considerably when
+                presenting findings on an EICR.
               </span>
             </li>
           </ul>
@@ -601,6 +616,18 @@ const sections = [
                 (case, lanyard, screen protector), software subscriptions (FLIR Ignite has free and
                 paid tiers), and replacement costs if dropped. The cheapest camera to buy is not
                 always the cheapest to own.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Recording results</strong> — GN3 8.2 states that thermographic survey
+                results shall be recorded and anomalies addressed. Choose a camera whose app or
+                cloud platform timestamps and geo-tags images automatically. Save thermal images
+                alongside visible-light photos, attach them to Section K of the EICR as supporting
+                evidence for any observations raised, and retain them as part of the inspection
+                record. Images embedded in your EICR report provide a defensible audit trail if
+                findings are later questioned.
               </span>
             </li>
           </ul>

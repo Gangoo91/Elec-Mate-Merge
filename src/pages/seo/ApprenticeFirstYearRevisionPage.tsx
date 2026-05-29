@@ -42,11 +42,12 @@ const keyTakeaways = [
   'Series circuits share the same current throughout; parallel circuits share the same voltage across each branch.',
   'AC (alternating current) in the UK runs at 230V / 50Hz — frequency and voltage values appear in every exam.',
   'Health and safety legislation you must know in Year 1: Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, and Manual Handling Operations Regulations 1992.',
+  'BS 7671:2018+A4:2026 introduced two key rules apprentices encounter from day one: Reg 411.3.4 requires 30 mA RCD protection on domestic lighting circuits; Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits.',
 ];
 
 const faqs = [
   {
-    question: "What topics are covered in Year 1 of an electrical apprenticeship?",
+    question: 'What topics are covered in Year 1 of an electrical apprenticeship?',
     answer:
       "Year 1 of a Level 3 Electrical Installation apprenticeship covers fundamental electrical theory including electrical units (volts, amps, ohms, watts), Ohm's Law, Kirchhoff's Laws, series and parallel circuits, DC and AC fundamentals, basic tools and their safe use, health and safety legislation (Health and Safety at Work Act 1974, Electricity at Work Regulations 1989), PAT testing introduction, and basic wiring principles. You will also begin working towards your Level 3 Award in the Requirements for Electrical Installations (BS 7671).",
   },
@@ -56,29 +57,29 @@ const faqs = [
       "Use the Ohm's Law triangle (V at the top, I and R at the bottom). Cover the unknown and the remaining symbols show you the formula: cover V → V = I × R; cover I → I = V / R; cover R → R = V / I. Practice transposing the formula with worked examples until it becomes automatic. The Elec-Mate flashcard system lets you drill Ohm's Law calculations with randomly generated values so you practise the maths, not just the formula.",
   },
   {
-    question: "What is the difference between series and parallel circuits?",
+    question: 'What is the difference between series and parallel circuits?',
     answer:
-      "In a series circuit, components are connected end-to-end so the same current flows through every component. The total resistance is the sum of all individual resistances (Rt = R1 + R2 + R3). Voltage is shared between components proportional to their resistance. In a parallel circuit, each component has its own separate path connected between the same two points. The voltage across each branch is identical, but current divides between branches. Total resistance in a parallel circuit is always less than the smallest individual resistance.",
+      'In a series circuit, components are connected end-to-end so the same current flows through every component. The total resistance is the sum of all individual resistances (Rt = R1 + R2 + R3). Voltage is shared between components proportional to their resistance. In a parallel circuit, each component has its own separate path connected between the same two points. The voltage across each branch is identical, but current divides between branches. Total resistance in a parallel circuit is always less than the smallest individual resistance.',
   },
   {
-    question: "What is the UK mains supply voltage and frequency?",
+    question: 'What is the UK mains supply voltage and frequency?',
     answer:
-      "The UK nominal supply voltage is 230V AC at 50Hz (hertz). The voltage tolerance is +10% / -6%, meaning acceptable voltages range from approximately 216V to 253V. The frequency tolerance is ±1%, so 49.5Hz to 50.5Hz. These values are set by the Electricity Supply (Amendment) Regulations 1994 and align with European harmonised voltages. You must know both values — they appear frequently in theory exams and practical assessments throughout your apprenticeship.",
+      'The UK nominal supply voltage is 230V AC at 50Hz (hertz). The voltage tolerance is +10% / -6%, meaning acceptable voltages range from approximately 216.2V to 253.0V. The frequency tolerance is ±1%, so 49.5Hz to 50.5Hz. These limits are set by the Electricity Safety, Quality and Continuity Regulations (ESQCR) and align with European harmonised voltages. You must know both values — they appear frequently in theory exams and practical assessments throughout your apprenticeship.',
   },
   {
-    question: "What health and safety legislation must I know in Year 1?",
+    question: 'What health and safety legislation must I know in Year 1?',
     answer:
-      "The key legislation for Year 1 includes: Health and Safety at Work etc. Act 1974 (HSWA) — the primary legislation placing duties on employers and employees; Electricity at Work Regulations 1989 — specific to electrical systems, requires all electrical work to be carried out in a safe manner; Manual Handling Operations Regulations 1992 — risk assessment for lifting and moving loads; Personal Protective Equipment at Work Regulations 1992 — employer duty to provide PPE; and Control of Substances Hazardous to Health Regulations 2002 (COSHH). In construction, you will also encounter the Construction (Design and Management) Regulations 2015 (CDM).",
+      'The key legislation for Year 1 includes: Health and Safety at Work etc. Act 1974 (HSWA) — the primary legislation placing duties on employers and employees; Electricity at Work Regulations 1989 — specific to electrical systems, requires all electrical work to be carried out in a safe manner; Manual Handling Operations Regulations 1992 — risk assessment for lifting and moving loads; Personal Protective Equipment at Work Regulations 1992 — employer duty to provide PPE; and Control of Substances Hazardous to Health Regulations 2002 (COSHH). In construction, you will also encounter the Construction (Design and Management) Regulations 2015 (CDM).',
   },
   {
-    question: "What tools should a first-year apprentice know?",
+    question: 'What tools should a first-year apprentice know?',
     answer:
-      "First-year apprentices should be able to identify, name, and use correctly: screwdrivers (flathead, Pozidriv, insulated), wire strippers, cable cutters, pliers (combination, long-nose), hammer, chisel, cold chisel, spirit level, tape measure, bradawl, cordless drill, and voltage indicator. You must also understand when and how to use PPE including insulated gloves, safety glasses, hard hat, steel-toecap boots, and hi-vis vest. Never use a tool you have not been trained on — always ask your supervisor.",
+      'First-year apprentices should be able to identify, name, and use correctly: screwdrivers (flathead, Pozidriv, insulated), wire strippers, cable cutters, pliers (combination, long-nose), hammer, chisel, cold chisel, spirit level, tape measure, bradawl, cordless drill, and voltage indicator. You must also understand when and how to use PPE including insulated gloves, safety glasses, hard hat, steel-toecap boots, and hi-vis vest. Never use a tool you have not been trained on — always ask your supervisor.',
   },
   {
-    question: "What is PAT testing and do apprentices do it?",
+    question: 'What is PAT testing and do apprentices do it?',
     answer:
-      "PAT stands for Portable Appliance Testing — the process of inspecting and testing portable electrical equipment to check it is safe to use. Apprentices are introduced to PAT testing in Year 1 as it demonstrates fundamental principles: visual inspection, earth continuity testing, insulation resistance testing, and record keeping. Formal PAT testing certification (City & Guilds 2377) is usually completed later in the apprenticeship or after qualification, but understanding the principles from Year 1 helps build inspection and testing skills that are central to the AM2 assessment and EICR work.",
+      'PAT stands for Portable Appliance Testing — the process of inspecting and testing portable electrical equipment to check it is safe to use. Apprentices are introduced to PAT testing in Year 1 as it demonstrates fundamental principles: visual inspection, earth continuity testing, insulation resistance testing, and record keeping. Formal PAT testing certification (City & Guilds 2377) is usually completed later in the apprenticeship or after qualification, but understanding the principles from Year 1 helps build inspection and testing skills that are central to the AM2 assessment and EICR work.',
   },
 ];
 
@@ -86,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/apprentice-maths-electrician',
     title: 'Maths for Electrical Apprentices',
-    description: 'Essential electrical calculations with worked examples — Ohm\'s Law, power triangle, voltage drop.',
+    description:
+      "Essential electrical calculations with worked examples — Ohm's Law, power triangle, voltage drop.",
     icon: Calculator,
     category: 'Guide',
   },
   {
     href: '/apprentice-endpoint-assessment',
     title: 'End-Point Assessment (EPA) Guide',
-    description: 'What the EPA involves, how to prepare, grading, and what happens if you need to re-sit.',
+    description:
+      'What the EPA involves, how to prepare, grading, and what happens if you need to re-sit.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -107,14 +110,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/city-guilds-level3-guide',
     title: 'City & Guilds Level 3 Guide',
-    description: 'Everything you need to know about the City & Guilds 2365 Level 3 Electrical Installation qualification.',
+    description:
+      'Everything you need to know about the City & Guilds 2365 Level 3 Electrical Installation qualification.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
     href: '/study-centre',
     title: 'Elec-Mate Study Centre',
-    description: 'Flashcards, AI tutor, mock exams, and course modules built for electrical apprentices.',
+    description:
+      'Flashcards, AI tutor, mock exams, and course modules built for electrical apprentices.',
     icon: Lightbulb,
     category: 'Study Tool',
   },
@@ -149,8 +154,8 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ampere (A)</strong> — the unit of electric current. Current is the rate of
-                flow of electric charge. One ampere equals one coulomb of charge passing a point
-                per second. Symbol: A or I (for intensity). Named after André-Marie Ampère.
+                flow of electric charge. One ampere equals one coulomb of charge passing a point per
+                second. Symbol: A or I (for intensity). Named after André-Marie Ampère.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -165,9 +170,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Watt (W)</strong> — the unit of electrical power. Power is the rate at
-                which energy is transferred or converted. Symbol: W or P. Named after James Watt.
-                P = V × I (power equals voltage multiplied by current).
+                <strong>Watt (W)</strong> — the unit of electrical power. Power is the rate at which
+                energy is transferred or converted. Symbol: W or P. Named after James Watt. P = V ×
+                I (power equals voltage multiplied by current).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -181,19 +186,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Farad (F)</strong> — the unit of electrical capacitance. Capacitance is
-                the ability to store electrical charge. In practice, capacitors are measured in
-                microfarads (μF) or picofarads (pF) as one farad is very large. Named after
-                Michael Faraday.
+                <strong>Farad (F)</strong> — the unit of electrical capacitance. Capacitance is the
+                ability to store electrical charge. In practice, capacitors are measured in
+                microfarads (μF) or picofarads (pF) as one farad is very large. Named after Michael
+                Faraday.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          You also need to understand SI prefixes for when values are very large or very small.
-          The key prefixes in electrical work are: kilo (k) = 1,000; mega (M) = 1,000,000; milli
-          (m) = 0.001; micro (μ) = 0.000001. So 2.5kΩ means 2,500 ohms, and 100mA means 0.1
-          amperes.
+          You also need to understand SI prefixes for when values are very large or very small. The
+          key prefixes in electrical work are: kilo (k) = 1,000; mega (M) = 1,000,000; milli (m) =
+          0.001; micro (μ) = 0.000001. So 2.5kΩ means 2,500 ohms, and 100mA means 0.1 amperes.
         </p>
       </>
     ),
@@ -205,8 +209,8 @@ const sections = [
       <>
         <p>
           Ohm's Law is the single most important relationship in electrical theory. Stated by Georg
-          Simon Ohm in 1827, it defines the relationship between voltage, current, and resistance
-          in a conductor at constant temperature.
+          Simon Ohm in 1827, it defines the relationship between voltage, current, and resistance in
+          a conductor at constant temperature.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -227,25 +231,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transposed for resistance:</strong> R = V ÷ I — if you know the voltage
-                and current, divide voltage by current to find resistance.
+                <strong>Transposed for resistance:</strong> R = V ÷ I — if you know the voltage and
+                current, divide voltage by current to find resistance.
               </span>
             </li>
           </ul>
         </div>
         <p>
           <strong>Worked example:</strong> A 12V battery supplies a lamp with a resistance of 6Ω.
-          What current flows? I = V ÷ R = 12 ÷ 6 = 2A. The Ohm's Law triangle is a memory aid:
-          draw a triangle with V at the top, I bottom-left, R bottom-right. Cover the unknown
-          quantity and the visible symbols show you the calculation.
+          What current flows? I = V ÷ R = 12 ÷ 6 = 2A. The Ohm's Law triangle is a memory aid: draw
+          a triangle with V at the top, I bottom-left, R bottom-right. Cover the unknown quantity
+          and the visible symbols show you the calculation.
         </p>
         <p>
-          Use the{' '}
-          <SEOInternalLink href="/study-centre">
-            Elec-Mate Study Centre
-          </SEOInternalLink>{' '}
-          flashcard system to drill Ohm's Law calculations with randomly generated values until
-          the transposition is second nature.
+          Use the <SEOInternalLink href="/study-centre">Elec-Mate Study Centre</SEOInternalLink>{' '}
+          flashcard system to drill Ohm's Law calculations with randomly generated values until the
+          transposition is second nature.
         </p>
       </>
     ),
@@ -257,8 +258,8 @@ const sections = [
       <>
         <p>
           Every electrical circuit has the same basic components: a source of EMF (battery or
-          supply), conductors (wires) to carry current, a load (device that uses the energy), and
-          a return path. Kirchhoff's Laws describe how voltage and current behave in circuits.
+          supply), conductors (wires) to carry current, a load (device that uses the energy), and a
+          return path. Kirchhoff's Laws describe how voltage and current behave in circuits.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -266,8 +267,8 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Kirchhoff's Current Law (KCL)</strong> — the total current entering a
-                junction equals the total current leaving it. No current is lost at a junction.
-                This is a statement of conservation of charge.
+                junction equals the total current leaving it. No current is lost at a junction. This
+                is a statement of conservation of charge.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -304,17 +305,17 @@ const sections = [
     content: (
       <>
         <p>
-          Direct current (DC) flows in one direction only. Batteries, solar panels, and USB
-          chargers all produce DC. Understanding DC circuits is the foundation before moving on to
-          AC, which is more complex due to the effects of inductance and capacitance.
+          Direct current (DC) flows in one direction only. Batteries, solar panels, and USB chargers
+          all produce DC. Understanding DC circuits is the foundation before moving on to AC, which
+          is more complex due to the effects of inductance and capacitance.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Resistors in series:</strong> Rt = R1 + R2 + R3. Example: 10Ω + 15Ω +
-                25Ω = 50Ω total.
+                <strong>Resistors in series:</strong> Rt = R1 + R2 + R3. Example: 10Ω + 15Ω + 25Ω =
+                50Ω total.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,8 +328,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power in DC circuits:</strong> P = V × I, P = I² × R, P = V² ÷ R. All
-                three are equivalent — use whichever suits the values you have been given.
+                <strong>Power in DC circuits:</strong> P = V × I, P = I² × R, P = V² ÷ R. All three
+                are equivalent — use whichever suits the values you have been given.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,9 +343,7 @@ const sections = [
         </div>
         <p>
           Practise these calculations using the{' '}
-          <SEOInternalLink href="/study-centre">
-            apprentice module calculator tools
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/study-centre">apprentice module calculator tools</SEOInternalLink>{' '}
           in the Elec-Mate Study Centre. Working through multiple examples is far more effective
           than re-reading your notes.
         </p>
@@ -358,31 +357,31 @@ const sections = [
       <>
         <p>
           Alternating current (AC) repeatedly reverses direction. The UK mains supply is 230V at
-          50Hz — this is what you work with in almost every domestic and commercial installation.
-          AC introduces concepts of frequency, period, peak values, and RMS values.
+          50Hz — this is what you work with in almost every domestic and commercial installation. AC
+          introduces concepts of frequency, period, peak values, and RMS values.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Frequency (f)</strong> — the number of complete cycles per second,
-                measured in hertz (Hz). UK mains: 50Hz. USA mains: 60Hz.
+                <strong>Frequency (f)</strong> — the number of complete cycles per second, measured
+                in hertz (Hz). UK mains: 50Hz. USA mains: 60Hz.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Period (T)</strong> — the time for one complete cycle. T = 1 ÷ f. At 50Hz:
-                T = 1 ÷ 50 = 0.02 seconds (20 milliseconds).
+                <strong>Period (T)</strong> — the time for one complete cycle. T = 1 ÷ f. At 50Hz: T
+                = 1 ÷ 50 = 0.02 seconds (20 milliseconds).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Peak value</strong> — the maximum voltage reached during a cycle. For UK
-                mains (230V RMS): Vpeak = 230 × √2 ≈ 325V. This is why cable insulation must
-                be rated for higher than the nominal supply voltage.
+                mains (230V RMS): Vpeak = 230 × √2 ≈ 325V. This is why cable insulation must be
+                rated for higher than the nominal supply voltage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -397,9 +396,26 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase supply</strong> — commercial and industrial premises are
-                supplied with three-phase 400V AC (line-to-line) / 230V (line-to-neutral). The
-                three phases are 120° apart. You will study three-phase in depth in Years 2 and 3.
+                supplied with three-phase 400V AC (line-to-line) / 230V (line-to-neutral). The three
+                phases are 120° apart. You will study three-phase in depth in Years 2 and 3.
               </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <p className="text-white font-semibold mb-2">New in BS 7671:2018+A4:2026</p>
+          <ul className="space-y-2 text-white text-sm leading-relaxed">
+            <li>
+              <strong>Reg 411.3.4 — 30 mA RCD on domestic lighting circuits (mandatory):</strong>{' '}
+              All AC final circuits supplying luminaires in domestic (household) premises must now
+              have additional protection by an RCD with a rated residual operating current not
+              exceeding 30 mA. This is a mandatory &ldquo;shall&rdquo; requirement — not guidance.
+            </li>
+            <li>
+              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs) recommended:</strong> BS
+              7671 A4:2026 recommends the installation of AFDDs on AC final circuits to mitigate the
+              risk of fire from arc fault currents. The wording is advisory rather than mandatory,
+              but you will encounter AFDDs on new and rewired installations from day one.
             </li>
           </ul>
         </div>
@@ -457,8 +473,8 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Drill and bits</strong> — cordless drills are standard. SDS drills for
-                masonry. Always check for hidden cables and pipes before drilling using a cable
-                and pipe detector. Follow safe drilling procedures and wear eye protection.
+                masonry. Always check for hidden cables and pipes before drilling using a cable and
+                pipe detector. Follow safe drilling procedures and wear eye protection.
               </span>
             </li>
           </ul>
@@ -474,16 +490,16 @@ const sections = [
         <p>
           Health and safety is not just a box-ticking exercise — it is a legal requirement and a
           professional responsibility. Electrical work can be fatal if safety procedures are not
-          followed. The following legislation is examinable in Year 1 and applies to your work
-          every day.
+          followed. The following legislation is examinable in Year 1 and applies to your work every
+          day.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Health and Safety at Work etc. Act 1974</strong> — the primary UK health
-                and safety legislation. Places a duty on employers to provide a safe working
+                <strong>Health and Safety at Work etc. Act 1974</strong> — the primary UK health and
+                safety legislation. Places a duty on employers to provide a safe working
                 environment, safe equipment, and adequate training. Employees must take reasonable
                 care for their own safety and the safety of others, and must co-operate with their
                 employer on health and safety matters.
@@ -494,25 +510,25 @@ const sections = [
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — specific to electrical
                 systems. Regulation 4 requires that electrical systems be constructed and maintained
-                to prevent danger. Regulation 14 prohibits working on or near live conductors
-                unless it is unreasonable to work dead, adequate precautions are taken, and it is
+                to prevent danger. Regulation 14 prohibits working on or near live conductors unless
+                it is unreasonable to work dead, adequate precautions are taken, and it is
                 reasonable to work live. Safe isolation is mandatory before working on any circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Manual Handling Operations Regulations 1992</strong> — requires employers
-                to avoid manual handling where possible and, where not, to assess and reduce the
-                risk. Electricians regularly handle cable drums, consumer units, and conduit that
-                can cause musculoskeletal injury if handled incorrectly.
+                <strong>Manual Handling Operations Regulations 1992</strong> — requires employers to
+                avoid manual handling where possible and, where not, to assess and reduce the risk.
+                Electricians regularly handle cable drums, consumer units, and conduit that can
+                cause musculoskeletal injury if handled incorrectly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PPE at Work Regulations 1992</strong> — employers must provide suitable
-                PPE free of charge. Employees must use PPE correctly and report defects. Basic
+                <strong>PPE at Work Regulations 1992</strong> — employers must provide suitable PPE
+                free of charge. Employees must use PPE correctly and report defects. Basic
                 electrical PPE includes: safety footwear (steel toecap, anti-static), hi-vis vest,
                 hard hat (on construction sites), safety glasses, insulated gloves, and hearing
                 protection when using power tools.
@@ -522,9 +538,14 @@ const sections = [
         </div>
         <p>
           Safe isolation is one of the most critical procedures you will learn. The sequence is:
-          identify the circuit, switch off, lock off (lock the isolator and retain the key),
-          attach a warning notice, test for dead using a proved voltage tester. Prove the tester
-          works on a known live source before and after testing for dead.
+          identify the circuit, switch off, lock off (lock the isolator and retain the key), attach
+          a warning notice, test for dead using a proved voltage tester. Prove the tester works on a
+          known live source before and after testing for dead. This{' '}
+          <em>prove&ndash;test&ndash;prove</em> method is the GN3-aligned approach set out in
+          Guidance Note 3, Chapter 8 (Reg 8.2): &ldquo;isolation shall be established and proven
+          before live-work tests are performed; voltage indicators shall be used.&rdquo; A
+          non-contact tester alone is never sufficient — always use a two-pole voltage indicator as
+          your primary confirmation tool.
         </p>
       </>
     ),
@@ -565,17 +586,17 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance test</strong> — applies 500V DC between live
-                conductors and earth. For Class I appliances, the insulation resistance should be
-                at least 1MΩ (megohm). Confirms that the insulation has not broken down.
+                conductors and earth. For Class I appliances, the insulation resistance should be at
+                least 1MΩ (megohm). Confirms that the insulation has not broken down.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Record keeping</strong> — every PAT test must be recorded with the
-                appliance description, asset number, test results, pass or fail outcome, date, and
-                tester's name. Records demonstrate that a system of inspection and testing is in
-                place and form the audit trail for workplace safety compliance.
+                <strong>Record keeping</strong> — every PAT test must be recorded with the appliance
+                description, asset number, test results, pass or fail outcome, date, and tester's
+                name. Records demonstrate that a system of inspection and testing is in place and
+                form the audit trail for workplace safety compliance.
               </span>
             </li>
           </ul>
@@ -607,11 +628,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Drill Ohm's Law, electrical units, circuit theory, and health and safety
                   legislation with the{' '}
-                  <SEOInternalLink href="/study-centre">
-                    Elec-Mate flashcard system
-                  </SEOInternalLink>
-                  . Spaced repetition ensures you review cards at the optimal time before your
-                  exam.
+                  <SEOInternalLink href="/study-centre">Elec-Mate flashcard system</SEOInternalLink>
+                  . Spaced repetition ensures you review cards at the optimal time before your exam.
                 </p>
               </div>
             </div>
@@ -622,10 +640,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AI Tutor</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Ask the{' '}
-                  <SEOInternalLink href="/study-centre">
-                    Elec-Mate AI tutor
-                  </SEOInternalLink>{' '}
+                  Ask the <SEOInternalLink href="/study-centre">Elec-Mate AI tutor</SEOInternalLink>{' '}
                   any question about Year 1 theory. Get step-by-step explanations of calculations,
                   worked examples, and plain-English explanations of complex topics like AC
                   waveforms and circuit analysis.

@@ -83,9 +83,10 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for LED lighting circuits using actual VA load including power factor.',
+    description:
+      'Size cables for LED lighting circuits using actual VA load including power factor.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -123,18 +124,18 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial fluorescent lighting — T8 and T5 tubes, high-bay metal halide, and
-          compact fluorescent — is being rapidly replaced by LED. The energy savings are
-          substantial: LED luminaires typically use 50–70% less energy than the fluorescent
-          fittings they replace, and their lifespan is three to five times longer.
+          Commercial fluorescent lighting — T8 and T5 tubes, high-bay metal halide, and compact
+          fluorescent — is being rapidly replaced by LED. The energy savings are substantial: LED
+          luminaires typically use 50–70% less energy than the fluorescent fittings they replace,
+          and their lifespan is three to five times longer.
         </p>
         <p>
           For UK electricians, commercial LED retrofit projects are a significant and growing
           revenue stream. However, they require an understanding of the technical differences
           between LED and fluorescent technologies — particularly regarding driver compatibility,
-          power factor, dimming controls, and the disposal of mercury-containing fluorescent
-          lamps. This guide covers everything needed to design, install, and certify a commercial
-          LED upgrade under{' '}
+          power factor, dimming controls, and the disposal of mercury-containing fluorescent lamps.
+          This guide covers everything needed to design, install, and certify a commercial LED
+          upgrade under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>
@@ -149,8 +150,8 @@ const sections = [
     content: (
       <>
         <p>
-          The efficiency of a light source is measured in lumens per watt (lm/W) — how much
-          visible light output is produced per watt of electrical input. Higher is better.
+          The efficiency of a light source is measured in lumens per watt (lm/W) — how much visible
+          light output is produced per watt of electrical input. Higher is better.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <table className="w-full text-white text-sm">
@@ -191,9 +192,9 @@ const sections = [
           </table>
         </div>
         <p>
-          The energy saving from T8 fluorescent to LED linear is typically 60–70% per fitting.
-          At 25p/kWh commercial electricity rate and 4,000 operating hours per year, a 38W
-          saving per fitting equates to £38 per fitting per year in electricity savings.
+          The energy saving from T8 fluorescent to LED linear is typically 60–70% per fitting. At
+          25p/kWh commercial electricity rate and 4,000 operating hours per year, a 38W saving per
+          fitting equates to £38 per fitting per year in electricity savings.
         </p>
         <SEOAppBridge
           title="Calculate LED upgrade savings and payback with AI"
@@ -235,8 +236,8 @@ const sections = [
         <p>
           The L70 rating of an LED luminaire indicates the hours at which the lumen output has
           degraded to 70% of the initial value. At 50,000 hours (L70), the luminaire is still
-          producing 70% of its original light output — still adequate for most applications.
-          Specify LED luminaires with L70 &gt;50,000 hours for commercial applications.
+          producing 70% of its original light output — still adequate for most applications. Specify
+          LED luminaires with L70 &gt;50,000 hours for commercial applications.
         </p>
       </>
     ),
@@ -257,28 +258,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DALI (IEC 62386):</strong> Digital addressable protocol. Each luminaire
-                has an individual DALI address — can be controlled, dimmed, and monitored
-                individually. Fault reporting built in. Best choice for office, healthcare, and
-                educational facilities. Compatible with Building Management Systems (BMS).
+                <strong>DALI (IEC 62386):</strong> Digital addressable protocol. Each luminaire has
+                an individual DALI address — can be controlled, dimmed, and monitored individually.
+                Fault reporting built in. Best choice for office, healthcare, and educational
+                facilities. Compatible with Building Management Systems (BMS).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>0-10V / 1-10V:</strong> Analogue dimming signal from 0V (off/minimum)
-                to 10V (full output). Simple wiring, low cost, compatible with most dimming
-                controllers. Cannot address individual luminaires. Suitable for zones, not
-                individual control.
+                <strong>0-10V / 1-10V:</strong> Analogue dimming signal from 0V (off/minimum) to 10V
+                (full output). Simple wiring, low cost, compatible with most dimming controllers.
+                Cannot address individual luminaires. Suitable for zones, not individual control.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Phase-cut dimming (leading or trailing edge):</strong> Standard
-                dimmer switch compatible. Trailing edge (electronic) dimmers work best with
-                LED drivers. Leading edge (TRIAC) dimmers can cause flicker or hum with some
-                LED drivers — always check driver compatibility with the specific dimmer.
+                <strong>Phase-cut dimming (leading or trailing edge):</strong> Standard dimmer
+                switch compatible. Trailing edge (electronic) dimmers work best with LED drivers.
+                Leading edge (TRIAC) dimmers can cause flicker or hum with some LED drivers — always
+                check driver compatibility with the specific dimmer.
               </span>
             </li>
           </ul>
@@ -302,21 +302,26 @@ const sections = [
               <p className="font-bold text-white mb-2">Commercial LED Specification Requirements</p>
               <ul className="space-y-1 text-white text-sm">
                 <li>• Power factor: specify PF &gt;0.9 for all luminaires above 25W</li>
-                <li>• Total harmonic distortion (THD): specify THD &lt;20% for commercial applications</li>
+                <li>
+                  • Total harmonic distortion (THD): specify THD &lt;20% for commercial applications
+                </li>
                 <li>• Size cables based on apparent power (VA), not real power (W): VA = W ÷ PF</li>
-                <li>• For large LED installations (&gt;50kW), consider harmonic analysis and power factor correction</li>
+                <li>
+                  • For large LED installations (&gt;50kW), consider harmonic analysis and power
+                  factor correction
+                </li>
               </ul>
             </div>
           </div>
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
-          with the actual VA load (apparent power, including the effect of power factor) when
-          sizing cable for commercial LED lighting circuits. A 2,000W LED installation with
-          PF 0.9 draws 2,222VA — size the cable for 2,222VA, not 2,000W.
+          with the actual VA load (apparent power, including the effect of power factor) when sizing
+          cable for commercial LED lighting circuits. A 2,000W LED installation with PF 0.9 draws
+          2,222VA — size the cable for 2,222VA, not 2,000W.
         </p>
       </>
     ),
@@ -328,16 +333,34 @@ const sections = [
       <>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-base mb-2">Option 1: LED Tube (Type A — Ballast Compatible)</h3>
-            <p className="text-white text-sm">Replace fluorescent tube only. Existing ballast remains. Quick installation, minimal labour. Risk: ballast compatibility must be verified. Ballast still consumes power and will eventually fail.</p>
+            <h3 className="font-bold text-white text-base mb-2">
+              Option 1: LED Tube (Type A — Ballast Compatible)
+            </h3>
+            <p className="text-white text-sm">
+              Replace fluorescent tube only. Existing ballast remains. Quick installation, minimal
+              labour. Risk: ballast compatibility must be verified. Ballast still consumes power and
+              will eventually fail.
+            </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-base mb-2">Option 2: LED Tube (Type B — Ballast Bypass)</h3>
-            <p className="text-white text-sm">Ballast is bypassed; LED tube wired directly to mains. Eliminates ballast losses and compatibility issues. Requires rewiring of the fitting. Best long-term reliability. Must label fitting as mains voltage.</p>
+            <h3 className="font-bold text-white text-base mb-2">
+              Option 2: LED Tube (Type B — Ballast Bypass)
+            </h3>
+            <p className="text-white text-sm">
+              Ballast is bypassed; LED tube wired directly to mains. Eliminates ballast losses and
+              compatibility issues. Requires rewiring of the fitting. Best long-term reliability.
+              Must label fitting as mains voltage.
+            </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h3 className="font-bold text-white text-base mb-2">Option 3: Full LED Luminaire Replacement</h3>
-            <p className="text-white text-sm">Replace the entire fitting with a new LED luminaire. Higher capital cost but best performance, controls compatibility, and warranty. Recommended for large commercial projects and installations with DALI or BMS control.</p>
+            <h3 className="font-bold text-white text-base mb-2">
+              Option 3: Full LED Luminaire Replacement
+            </h3>
+            <p className="text-white text-sm">
+              Replace the entire fitting with a new LED luminaire. Higher capital cost but best
+              performance, controls compatibility, and warranty. Recommended for large commercial
+              projects and installations with DALI or BMS control.
+            </p>
           </div>
         </div>
       </>
@@ -349,26 +372,41 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial LED lighting installations must comply with several regulations and
-          standards:
+          Commercial LED lighting installations must comply with several regulations and standards:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>BS 7671:2018+A4:2026</strong> — governs the electrical installation. Lighting circuits must comply with all relevant sections including overcurrent protection, RCD requirements, and inspection and testing requirements.</span>
+              <span>
+                <strong>BS 7671:2018+A4:2026</strong> — governs the electrical installation.
+                Lighting circuits must comply with all relevant sections including overcurrent
+                protection, RCD requirements, and inspection and testing requirements.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Building Regulations Part L</strong> — energy efficiency requirements for lighting in commercial buildings. Minimum efficacy thresholds for installed luminaires. LED luminaires typically exceed these requirements easily.</span>
+              <span>
+                <strong>Building Regulations Part L</strong> — energy efficiency requirements for
+                lighting in commercial buildings. Minimum efficacy thresholds for installed
+                luminaires. LED luminaires typically exceed these requirements easily.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>CIBSE SLL Code for Lighting</strong> — guidance on maintained illuminance levels for different task areas. Lux levels must be maintained throughout the luminaire service life (accounting for L70 degradation).</span>
+              <span>
+                <strong>CIBSE SLL Code for Lighting</strong> — guidance on maintained illuminance
+                levels for different task areas. Lux levels must be maintained throughout the
+                luminaire service life (accounting for L70 degradation).
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>WEEE Regulations 2013</strong> — fluorescent lamps and LED luminaires are WEEE. Mercury-containing fluorescent lamps are hazardous WEEE and must be disposed of separately from other WEEE.</span>
+              <span>
+                <strong>WEEE Regulations 2013</strong> — fluorescent lamps and LED luminaires are
+                WEEE. Mercury-containing fluorescent lamps are hazardous WEEE and must be disposed
+                of separately from other WEEE.
+              </span>
             </li>
           </ul>
         </div>
@@ -381,10 +419,10 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial LED retrofit projects typically range from £5,000 (small office) to
-          £200,000+ (large warehouse or factory). Electricians who can design, supply, install,
-          and certify LED upgrades — including energy savings calculations, proper power factor
-          analysis, and WEEE disposal — can command premium margins over those who only install.
+          Commercial LED retrofit projects typically range from £5,000 (small office) to £200,000+
+          (large warehouse or factory). Electricians who can design, supply, install, and certify
+          LED upgrades — including energy savings calculations, proper power factor analysis, and
+          WEEE disposal — can command premium margins over those who only install.
         </p>
         <SEOAppBridge
           title="Quote and certify commercial LED projects on your phone"

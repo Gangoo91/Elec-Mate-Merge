@@ -41,8 +41,9 @@ const keyTakeaways = [
   'Industrial electrical installation costs in the UK range from £15,000 for a small light industrial unit to £100,000+ for a large manufacturing facility, with per square metre rates typically £18–£65/m² depending on load density and motor control requirements.',
   'Most industrial premises require a 3-phase 400V supply from the DNO. Substations are required for larger sites; a 500kVA substation typically costs £40,000–£80,000 including civils, transformer, and HV switchgear.',
   'Motor control centres (MCCs) are the primary cost driver in manufacturing facilities. A fully-specified MCC with variable speed drives (VSDs) for 20 motors can cost £80,000–£200,000 for the panel and drives alone.',
-  'Cable containment systems — cable tray, cable ladder, and conduit — account for 15–25% of a typical industrial electrical budget. Heavy-duty cable ladder for main distribution runs at high level costs £40–£120 per metre installed.',
-  'Industrial premises with flammable atmospheres (paint spraying, flour milling, petrochemical) require ATEX/UKCA-marked electrical equipment in designated zones, adding 50–150% to the cost of fittings in those areas.',
+  'Cable containment systems — cable tray, cable ladder, and conduit — form a significant portion of a typical industrial electrical budget. Heavy-duty cable ladder for main distribution runs at high level costs £40–£120 per metre installed.',
+  'Industrial premises with flammable atmospheres (paint spraying, flour milling, petrochemical) require ATEX/UKCA-marked electrical equipment in designated zones, adding a significant cost premium to fittings in those areas.',
+  'Under the Electricity at Work Regulations 1989 (EAWR), industrial employers must have formal arrangements for maintenance and interim routine checks in addition to the periodic EICR — a written maintenance plan with interim checks is a legal requirement, not optional (GN3 Reg 3.5).',
 ];
 
 const faqs = [
@@ -54,7 +55,7 @@ const faqs = [
   {
     question: 'Does an industrial unit need a 3-phase electrical supply?',
     answer:
-      'Almost all industrial premises require a 3-phase 400V supply. Single-phase is insufficient once you have overhead cranes, large compressors, CNC machinery, or multiple welding points running simultaneously. A DNO application for a 3-phase service must be submitted early in the project — lead times are typically 8–24 weeks for a new connection, longer if a substation is required. For sites over approximately 1MVA, a private HV (high voltage) substation is more cost-effective than a large LV supply from the DNO.',
+      'Almost all industrial premises require a 3-phase 400V supply. Single-phase is insufficient once you have overhead cranes, large compressors, CNC machinery, or multiple welding points running simultaneously. A DNO application for a 3-phase service must be submitted early in the project — lead times for a new connection vary by DNO and network capacity; always confirm timescales directly with your regional DNO at the earliest opportunity, as delays can affect the construction programme significantly. For sites over approximately 1MVA, a private HV (high voltage) substation is more cost-effective than a large LV supply from the DNO.',
   },
   {
     question: 'What is a motor control centre (MCC) and how much does one cost?',
@@ -69,17 +70,17 @@ const faqs = [
   {
     question: 'What electrical standards apply to industrial installations?',
     answer:
-      'Industrial electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations). Additional standards apply by sector: BS EN 60204-1 (Safety of machinery — electrical equipment of machines) governs machine wiring; BS EN 61439 (Low-voltage switchgear and controlgear assemblies) covers MCCs and distribution boards; ATEX/UKCA Directive (2014/34/EU, retained as UK law) applies where flammable atmospheres exist; BS EN IEC 60079 series covers explosion-protected electrical apparatus. All new industrial installations require an Electrical Installation Certificate (EIC) under the Building Regulations.',
+      'Industrial electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations). Additional standards apply by sector: BS EN 60204-1 (Safety of machinery — electrical equipment of machines) governs machine wiring; BS EN 61439 (Low-voltage switchgear and controlgear assemblies) covers MCCs and distribution boards; ATEX/UKCA Directive (2014/34/EU, retained as UK law) applies where flammable atmospheres exist; BS EN IEC 60079 series covers explosion-protected electrical apparatus. All new industrial installations require an Electrical Installation Certificate (EIC) issued following initial verification — this obligation flows from BS 7671 Part 6 and GN3 Reg 1.3, which require the EIC (together with Schedules of Circuit Details and Test Results) to be handed to the person ordering the work. Note: Building Regulations Part P applies to dwellings only and does not govern industrial or commercial electrical work.',
   },
   {
     question: 'How often does a factory or industrial unit need an EICR?',
     answer:
-      'The recommended EICR interval for industrial premises under BS 7671 is five years or on change of occupancy. However, many industrial operators schedule EICRs every 3 years given the high-consequence nature of industrial electrical faults and the ongoing wear imposed by frequent load switching, vibration, and harsh environments. EICRs for industrial premises are complex and must include all distribution boards, MCCs, and motor control panels. An EICR for a medium manufacturing facility typically costs £1,500–£5,000.',
+      'BS 7671 Reg 652.1 does not prescribe a single fixed interval for industrial EICRs. The frequency must be determined by the responsible person having regard to: (1) the type of installation and equipment present; (2) external influences such as corrosion, vibration, and chemical exposure; (3) the use and operation of the installation (continuous 24/7 operation is an adverse factor); and (4) the frequency and quality of maintenance. GN3 Reg 3.4 confirms that where practical experience shows a heavy-industrial installation deteriorates faster than anticipated, the dutyholder may judge a shorter interval appropriate. In practice, many industrial operators commission EICRs every three years for demanding environments and every five years for light industrial or storage premises. On change of occupancy, a new periodic inspection is also strongly recommended. EICRs for industrial premises are complex and must cover all distribution boards, MCCs, and motor control panels. An EICR for a medium manufacturing facility typically costs £1,500–£5,000.',
   },
   {
     question: 'What is an ATEX zone and what does it mean for electrical costs?',
     answer:
-      'ATEX (Atmosphères Explosibles) zones are areas where flammable gases, vapours, mists, or dusts may be present in quantities sufficient to create an explosive atmosphere. UK law (DSEAR — Dangerous Substances and Explosive Atmospheres Regulations 2002) requires employers to classify these zones and use appropriately rated electrical equipment. ATEX/UKCA-marked light fittings, switches, sockets, and motors cost 50–150% more than standard equivalents. Zone 1 (flammable gas likely in normal operation) and Zone 21 (combustible dust likely) require the highest rated equipment. A spray booth, flour mill, or solvent-handling area is typically Zone 1 or Zone 2.',
+      'ATEX (Atmosphères Explosibles) zones are areas where flammable gases, vapours, mists, or dusts may be present in quantities sufficient to create an explosive atmosphere. UK law (DSEAR — Dangerous Substances and Explosive Atmospheres Regulations 2002) requires employers to classify these zones and use appropriately rated electrical equipment. ATEX/UKCA-marked light fittings, switches, sockets, and motors carry a significant cost premium over standard equivalents because of specialist construction and third-party certification requirements. Zone 1 (flammable gas likely in normal operation) and Zone 21 (combustible dust likely) require the highest rated equipment. A spray booth, flour mill, or solvent-handling area is typically Zone 1 or Zone 2.',
   },
 ];
 
@@ -132,6 +133,10 @@ const sections = [
     heading: 'Industrial Electrical Installation: Scope and Key Systems',
     content: (
       <>
+        <p className="text-sm text-white/50 mb-3">
+          Written by a UK registered electrician. Verified against BS&nbsp;7671:2018+A4:2026 and IET
+          Guidance Note 3 (9th&nbsp;Ed, 2022).
+        </p>
         <p>
           Industrial electrical installations are fundamentally different from commercial premises
           in scale, complexity, and the standards that apply. The primary cost drivers are the
@@ -226,6 +231,44 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="overflow-x-auto my-4 rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.08] text-left">
+                <th className="px-4 py-3 font-semibold">Premises type</th>
+                <th className="px-4 py-3 font-semibold">Rate (£/m²)</th>
+                <th className="px-4 py-3 font-semibold">Example size</th>
+                <th className="px-4 py-3 font-semibold">Example total</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">Light industrial / storage</td>
+                <td className="px-4 py-3">£18–£30</td>
+                <td className="px-4 py-3">1,000 m²</td>
+                <td className="px-4 py-3">£18,000–£30,000</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Medium manufacturing</td>
+                <td className="px-4 py-3">£30–£50</td>
+                <td className="px-4 py-3">2,000 m²</td>
+                <td className="px-4 py-3">£60,000–£100,000</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">Heavy manufacturing / food processing</td>
+                <td className="px-4 py-3">£45–£65</td>
+                <td className="px-4 py-3">5,000 m²</td>
+                <td className="px-4 py-3">£225,000–£325,000</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Specialist / hazardous area (ATEX zones)</td>
+                <td className="px-4 py-3">£65–£120+</td>
+                <td className="px-4 py-3">1,000 m² ATEX area</td>
+                <td className="px-4 py-3">£65,000–£120,000+</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           These are guide rates for estimating purposes. A detailed tender from a qualified
@@ -424,9 +467,10 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ATEX-rated equipment cost premium</strong> — ATEX/UKCA-certified light
-                fittings, switches, junction boxes, motors, and sensors cost 50–150% more than
-                standard equivalents. A standard industrial LED floodlight: £80–£150. ATEX Zone 1
-                equivalent: £200–£450.
+                fittings, switches, junction boxes, motors, and sensors carry a significant price
+                premium over standard equivalents due to specialist construction and certification.
+                As a guide: a standard industrial LED floodlight costs £80–£150; an ATEX Zone 1
+                equivalent typically costs £200–£450.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -527,9 +571,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recommended interval</strong> — five years maximum; three years in harsh
-                environments (chemical exposure, high vibration, frequent switching) or as
-                recommended by the inspector based on the previous report findings.
+                <strong>Inspection interval — BS 7671 Reg 652.1</strong> — there is no single
+                prescribed interval. BS 7671 Reg 652.1 requires the responsible person to determine
+                the frequency having regard to four factors: (1) the type of installation and
+                equipment present; (2) external influences to which the installation is subjected
+                (corrosion, vibration, temperature extremes, chemical attack); (3) the use and
+                operation of the installation — continuous 24/7 operation is an adverse factor; and
+                (4) the frequency and quality of maintenance. In practice, GN3 Reg 3.4 confirms that
+                where an installation in heavy industrial use deteriorates faster than anticipated,
+                the dutyholder should shorten the interval accordingly. A guide: light industrial
+                storage — five years; demanding manufacturing or food processing — three years.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -548,6 +599,18 @@ const sections = [
                 maintained in a safe condition. An EICR provides documentary evidence of this duty
                 being discharged. In the event of an electrical incident, absence of an EICR is a
                 significant adverse factor in any HSE investigation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Interim routine checks — a legal requirement</strong> — GN3 Reg 3.5 is
+                explicit: interim routine checks shall be provided for industrial electrical
+                installations as part of the formal arrangements required by the Electricity at Work
+                Regulations 1989 (EAWR), in addition to the periodic EICR. A written maintenance
+                plan with scheduled interim checks must be in place and demonstrable to the HSE.
+                This is not optional — it is a duty under EAWR for all commercial and industrial
+                employers.
               </span>
             </li>
             <li className="flex items-start gap-3">

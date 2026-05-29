@@ -406,7 +406,7 @@ const sections = [
           backing sheets that could be disturbed during mounting rail installation.
         </p>
         <p>
-          <SEOInternalLink href="/cable-sizing-calculator">Cable sizing</SEOInternalLink> for
+          <SEOInternalLink href="/tools/cable-sizing-calculator">Cable sizing</SEOInternalLink> for
           DC circuits follows the same principles as AC circuits but uses DC voltage for the voltage
           drop calculation. BS 7671 Section 712 contains the specific requirements for solar PV
           installations, including isolation, protection, and marking requirements.
@@ -437,7 +437,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate DC and AC cable sizes for solar PV installations with voltage drop verification.',

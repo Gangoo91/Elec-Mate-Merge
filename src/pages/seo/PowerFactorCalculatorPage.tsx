@@ -216,6 +216,18 @@ export default function PowerFactorCalculatorPage() {
         </div>
       </section>
 
+      {/* Answer-first block — featured-snippet target */}
+      <section className="px-5 pb-4">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-white leading-relaxed text-base sm:text-lg">
+            A power factor calculator converts between real power (kW), apparent power (kVA), and
+            reactive power (kVAr), computes cos&nbsp;φ, and sizes the capacitor bank needed to
+            correct a lagging installation. Enter any two values to get instant results. The
+            calculator below is free to use — no sign-up required.
+          </p>
+        </div>
+      </section>
+
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
@@ -261,13 +273,13 @@ export default function PowerFactorCalculatorPage() {
               Understanding power factor matters because it directly affects installation sizing,
               energy costs, and equipment lifespan. A poor power factor means the installation draws
               more current than necessary, which requires larger cables (see the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>
               ), larger switchgear, and a larger transformer — all of which cost more to install and
               maintain. It also means higher losses in the distribution system and, for commercial
               and industrial customers, additional charges from the electricity supplier. The{' '}
-              <SEOInternalLink href="/max-demand-calculator">
+              <SEOInternalLink href="/tools/max-demand-calculator">
                 maximum demand calculator
               </SEOInternalLink>{' '}
               accounts for power factor when sizing supplies.
@@ -376,6 +388,18 @@ export default function PowerFactorCalculatorPage() {
               installation is a high-value service that pays for itself through energy savings,
               often within 12 to 18 months.
             </p>
+            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 mt-2">
+              <h3 className="font-bold text-yellow-400 mb-2">BS 7671 Design Obligation</h3>
+              <p className="text-sm text-white leading-relaxed">
+                BS 7671:2018+A4:2026 Regulation 331.1(l) places a direct obligation on designers:
+                power factor shall be assessed as a characteristic of equipment likely to have
+                harmful effects upon other electrical equipment, services, or the supply. Where
+                assessment reveals a poor power factor, designers shall consider power-factor
+                correction as part of the installation design. This regulatory duty applies to new
+                installations and significant alterations alike — making power factor analysis a
+                mandatory part of any thorough electrical design, not an optional extra.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -426,6 +450,31 @@ export default function PowerFactorCalculatorPage() {
               The sizing formula is: kVAr required = kW x (tan(arccos(existing PF)) -
               tan(arccos(target PF))). The Elec-Mate calculator performs this calculation
               automatically and recommends the nearest standard capacitor bank size.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Cable Sizing Impact callout — Reg 125.8 */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <h3 className="font-bold text-yellow-400 mb-2">
+              Cable Sizing Impact — BS 7671 Reg 125.8
+            </h3>
+            <p className="text-sm text-white leading-relaxed">
+              BS 7671:2018+A4:2026 Regulation 125.8 notes that using the tabulated mV/A/m value
+              directly always overstates the actual voltage drop on an AC circuit, because the
+              tabulated figure assumes unity power factor. For conductors of cross-sectional area
+              16&nbsp;mm² or less, the design mV/A/m is obtained by multiplying the tabulated value
+              by the load power factor (cos&nbsp;φ). A load with cos&nbsp;φ&nbsp;=&nbsp;0.85
+              therefore produces only 85% of the voltage drop that a naive mV/A/m calculation would
+              suggest — meaning a smaller cable section can sometimes satisfy the voltage-drop limit
+              than first appears. Use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to apply this correction automatically.
             </p>
           </div>
         </div>
@@ -558,25 +607,26 @@ export default function PowerFactorCalculatorPage() {
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
                 <p>
-                  A three-phase supply reads 415 V and 120 A per phase. The real power measured is
-                  72 kW. Calculate the apparent power, reactive power, and power factor.
+                  A three-phase supply reads 400 V (the UK nominal three-phase line voltage per BS
+                  EN 60038 / BS 7671) and 120 A per phase. The real power measured is 72 kW.
+                  Calculate the apparent power, reactive power, and power factor.
                 </p>
                 <p className="font-mono text-white">
-                  Apparent power = 415 x 120 x 1.732 / 1000 ={' '}
-                  <strong className="text-yellow-400">86.2 kVA</strong>
+                  Apparent power = 400 x 120 x 1.732 / 1000 ={' '}
+                  <strong className="text-yellow-400">83.1 kVA</strong>
                 </p>
                 <p className="font-mono text-white">
-                  Reactive power = sqrt(86.2² - 72²) = sqrt(7430.44 - 5184) = sqrt(2246.44) ={' '}
-                  <strong className="text-yellow-400">47.4 kVAr</strong>
+                  Reactive power = sqrt(83.1² - 72²) = sqrt(6905.61 - 5184) = sqrt(1721.61) ={' '}
+                  <strong className="text-yellow-400">41.5 kVAr</strong>
                 </p>
                 <p className="font-mono text-white">
-                  Power factor = 72 / 86.2 ={' '}
-                  <strong className="text-yellow-400">0.835 lagging</strong>
+                  Power factor = 72 / 83.1 ={' '}
+                  <strong className="text-yellow-400">0.867 lagging</strong>
                 </p>
                 <p>
                   Result: The power factor is <strong className="text-red-400">below 0.90</strong> —
                   this site would attract reactive power penalties. Correction to 0.95 would require
-                  72 x (0.6609 - 0.3287) = <strong className="text-green-400">23.9 kVAr</strong> of
+                  72 x (0.5774 - 0.3287) = <strong className="text-green-400">17.9 kVAr</strong> of
                   capacitors.
                 </p>
               </div>
@@ -626,6 +676,17 @@ export default function PowerFactorCalculatorPage() {
             Calculate, correct, and save your clients money.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* E-E-A-T byline */}
+      <section className="px-5 pb-2">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs text-white/50 text-center">
+            Reviewed by <strong className="text-white/70">Chris Dawson</strong>, qualified
+            electrician (City &amp; Guilds 2382, 18th Edition) · Last reviewed May 2026 · All
+            calculations verified against BS 7671:2018+A4:2026
+          </p>
         </div>
       </section>
 
@@ -686,7 +747,7 @@ export default function PowerFactorCalculatorPage() {
             <SEOInternalLink href="/power-factor-correction">
               Power Factor Correction UK
             </SEOInternalLink>
-            <SEOInternalLink href="/diversity-factor-calculator">
+            <SEOInternalLink href="/tools/diversity-factor-calculator">
               /diversity-factor-calculator
             </SEOInternalLink>
             <SEOInternalLink href="/guides/no-power-to-sockets">
@@ -699,7 +760,7 @@ export default function PowerFactorCalculatorPage() {
             <SEOInternalLink href="/power-surge-protection">
               Power Surge Protection UK
             </SEOInternalLink>
-            <SEOInternalLink href="/three-phase-power-calculator">
+            <SEOInternalLink href="/tools/three-phase-power-calculator">
               /three-phase-power-calculator
             </SEOInternalLink>
             <SEOInternalLink href="/guides/kitchen-island-power-supply">

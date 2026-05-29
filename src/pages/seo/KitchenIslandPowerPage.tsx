@@ -92,14 +92,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for induction hob circuits and island socket supplies.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on under-floor cable runs to kitchen islands.',
     icon: Zap,
@@ -245,7 +245,7 @@ const sections = [
           typically inside the island carcass (accessed via the plinth or a service panel) or
           mounted on the wall behind the island if close enough. The cable must be correctly sized
           for the load and the run length — use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to verify.
@@ -415,8 +415,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Use the{' '}
-          <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
+          Use the <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works certificate app
           </SEOInternalLink>{' '}
@@ -493,10 +492,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Kitchen island work often has weeks or months between first fix and second fix.
                   Quote them as separate visits in the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  so the customer understands the timeline and cost breakdown.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> so
+                  the customer understands the timeline and cost breakdown.
                 </p>
               </div>
             </div>

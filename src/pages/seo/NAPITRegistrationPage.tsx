@@ -36,18 +36,20 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "NAPIT is one of the UK's leading competent person scheme providers, enabling electricians to self-certify notifiable electrical work under Part P of the Building Regulations without involving building control.",
+  "NAPIT is one of the UK's leading competent person scheme providers, enabling electricians to self-certify notifiable electrical work under Part P of the Building Regulations in England and Wales (or equivalent regulations in Scotland and Northern Ireland) without involving building control.",
   'The application process involves submitting your qualifications, completing a desk-based assessment of your certification work, and passing a practical on-site assessment. Most applications are completed within 4-8 weeks.',
   'NAPIT membership costs approximately GBP 540-800 per year (plus VAT) depending on the scheme and number of disciplines. This is a legitimate business expense that pays for itself through the ability to self-certify work.',
   'Schemes available include domestic installer, commercial installer, fire detection and alarm, emergency lighting, unvented hot water, and EV charger installation — allowing you to expand your service offering.',
   'NAPIT provides technical support, compliance documentation templates, building control notification services, and professional development resources as part of your membership.',
+  'A4:2026 key change for assessors: Reg 411.3.4 now mandates 30 mA RCD protection on AC lighting circuits in domestic premises, and Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits. Assessors will probe both on any consumer unit or new-circuit job from 2026 onwards.',
+  'When demonstrating Zs compliance during your assessment, apply the GN3 0.80 site correction factor: multiply your measured Zs by 0.80 and confirm the result is within the Table 41.2 limit. A reading that passes raw but fails after applying the 0.80 factor is non-compliant.',
 ];
 
 const faqs = [
   {
     question: 'What qualifications do I need to join NAPIT?',
     answer:
-      'To join NAPIT as a domestic electrical installer, you need the 18th Edition (BS 7671:2018+A4:2026, C&G 2382), an inspection and testing qualification (C&G 2391 or C&G 2394/2395), and evidence of practical competence. This can come from a Level 3 NVQ in Electrotechnical Services with AM2 assessment, or from demonstrable experience as a qualified electrician. If you have been working as a qualified electrician for some years but do not hold a formal NVQ, NAPIT may accept a portfolio of evidence demonstrating your competence — though this route is assessed on a case-by-case basis. For the commercial and specialist schemes, additional qualifications may be required depending on the specific discipline.',
+      'To join NAPIT as a domestic electrical installer, you need the 18th Edition (BS 7671:2018+A4:2026, C&G 2382), an inspection and testing qualification (C&G 2391 or C&G 2394/2395), and evidence of practical competence. This can come from a Level 3 NVQ in Electrotechnical Services with AM2 assessment, or from demonstrable experience as a qualified electrician. The formal benchmark all scheme operators use is the Electrotechnical Assessment Specification (EAS) — the EAS defines what "fully qualified" means for NAPIT, NICEIC, ELECSA, and STROMA alike. When you contact NAPIT, they will assess your qualifications and experience against the EAS. If you have been working as a qualified electrician for some years but do not hold a formal NVQ, NAPIT may accept a portfolio of evidence demonstrating your competence — though this route is assessed on a case-by-case basis. For the commercial and specialist schemes, additional qualifications may be required depending on the specific discipline.',
   },
   {
     question: 'How long does NAPIT registration take?',
@@ -77,7 +79,7 @@ const faqs = [
   {
     question: 'Do I need to be NAPIT registered to do electrical work?',
     answer:
-      'You do not need to be registered with any competent person scheme to carry out electrical work in the UK. However, without scheme membership, you cannot self-certify notifiable work under Part P of the Building Regulations. This means that for notifiable work (which includes most work in domestic properties such as new circuits, consumer unit changes, and work in special locations like bathrooms and kitchens), you or your client would need to involve local authority building control at a cost of GBP 150-300 per notification. For non-notifiable work (like-for-like replacements, minor additions), scheme membership is not legally required but demonstrates professionalism and competence to clients.',
+      'You do not need to be registered with any competent person scheme to carry out electrical work in the UK. However, without scheme membership, you cannot self-certify notifiable work under Part P of the Building Regulations. This means that for notifiable work (which includes most work in domestic properties such as new circuits, consumer unit changes, and work in special locations like bathrooms and kitchens), you or your client would need to involve local authority building control at a cost of GBP 150-300 per notification. For non-notifiable work (like-for-like replacements, minor additions), scheme membership is not legally required but demonstrates professionalism and competence to clients. Note for Scottish and Northern Irish readers: Part P applies only in England and Wales. Scotland and Northern Ireland have equivalent but distinct regulatory frameworks — the same competent person scheme membership (including NAPIT) is equally applicable and valuable, but the underpinning legislation differs.',
   },
 ];
 
@@ -91,7 +93,9 @@ const sections = [
           NAPIT (National Association of Professional Inspectors and Testers) is one of the UK's
           leading competent person scheme providers for electrical installations. Founded in 1992,
           NAPIT is government-authorised to enable registered electricians to self-certify
-          notifiable electrical work under Part P of the Building Regulations in England and Wales.
+          notifiable electrical work under Part P of the Building Regulations in England and Wales —
+          or equivalent regulations in Scotland and Northern Ireland, which have distinct but
+          broadly comparable frameworks.
         </p>
         <p>
           In practical terms, NAPIT registration means you can carry out notifiable domestic
@@ -213,8 +217,11 @@ const sections = [
               </span>
               <span className="flex-1 text-left">
                 <strong>Upload your qualifications:</strong> Provide copies of your 18th Edition
-                certificate (C&G 2382), inspection and testing certificate (C&G 2391 or 2394/2395),
-                Level 3 NVQ or equivalent, AM2 pass certificate, and your ECS/JIB card.
+                certificate (C&amp;G 2382), inspection and testing certificate (C&amp;G 2391 or
+                2394/2395), Level 3 NVQ or equivalent, AM2 pass certificate, and your ECS/JIB card.
+                NAPIT assesses these against the Electrotechnical Assessment Specification (EAS) —
+                the formal benchmark all competent person scheme operators use to define the minimum
+                qualification standard for registered electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -311,7 +318,10 @@ const sections = [
               <span className="flex-1 text-left">
                 <strong>Regulation knowledge:</strong> The assessor may ask questions about BS 7671
                 regulations relevant to the work being inspected — maximum Zs values, cable derating
-                factors, RCD requirements, earthing arrangements, and so on.
+                factors, RCD requirements, earthing arrangements, and so on. On Zs: know that your
+                measured site reading must be multiplied by the GN3 0.80 correction factor before
+                comparing against the Table 41.2 tabulated limit; conductors are warmer at operating
+                temperature and the factor accounts for this.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -320,6 +330,48 @@ const sections = [
                 <strong>Test equipment:</strong> Your test instruments must be in calibration
                 (within date), in good condition, and accompanied by the relevant calibration
                 certificates. GS38-compliant test leads are essential.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-6">
+          <h3 className="font-bold text-yellow-300 text-lg mb-3">
+            A4:2026 Updates You Must Know for Your NAPIT Assessment
+          </h3>
+          <p className="text-white/90 mb-3">
+            Assessors will probe these rules on any consumer unit replacement or new domestic
+            circuit job from 2026 onwards. Make sure you can explain each one:
+          </p>
+          <ul className="space-y-3 text-white/90">
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="flex-1 text-left">
+                <strong>Reg 421.1.7 — AFDDs on AC final circuits:</strong> BS 7671:2018+A4:2026
+                recommends the installation of arc fault detection devices (AFDDs) to mitigate the
+                risk of fire in AC final circuits. The wording is recommendatory, not mandatory, but
+                assessors will expect you to know the regulation, the purpose (arc-fault ignition
+                risk), and when a designer or client might specify AFDDs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="flex-1 text-left">
+                <strong>Reg 411.3.4 — 30 mA RCD on lighting circuits in domestic premises:</strong>{' '}
+                A4:2026 introduces a mandatory requirement (the regulation uses &apos;shall&apos;)
+                for additional protection by an RCD with a rated residual operating current not
+                exceeding 30 mA on AC final circuits supplying luminaires within domestic
+                (household) premises. This is a significant change: lighting circuits that
+                previously did not require RCD protection in domestic installations now do.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="flex-1 text-left">
+                <strong>GN3 0.80 site correction factor for Zs:</strong> When recording earth fault
+                loop impedance results, your measured cold reading must be multiplied by 0.80 to
+                obtain the verified value for comparison against Table 41.2. If Zs (measured)
+                &times; 0.80 exceeds the tabulated limit, the circuit does not comply — even if the
+                raw reading appears acceptable.
               </span>
             </li>
           </ul>
@@ -642,13 +694,24 @@ const relatedPages = [
   },
 ];
 
+const reviewerSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  reviewedBy: {
+    '@type': 'Person',
+    name: 'Elec-Mate Technical Team',
+    description:
+      'Reviewed by NAPIT-registered electricians with 18th Edition (BS 7671:2018+A4:2026) qualifications and inspection and testing certification.',
+  },
+};
+
 export default function NAPITRegistrationPage() {
   return (
     <GuideTemplate
       title="NAPIT Registration Guide | How to Join & What It Costs"
       description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits…"
       datePublished="2024-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"
@@ -659,7 +722,7 @@ export default function NAPITRegistrationPage() {
           <span className="text-yellow-400">How to Join and What to Expect</span>
         </>
       }
-      heroSubtitle="A complete, practical guide to joining NAPIT as a registered electrician. Everything from the application form to the on-site assessment, what it costs, and how NAPIT compares to NICEIC and ELECSA."
+      heroSubtitle="A complete, practical guide to joining NAPIT as a registered electrician. Everything from the application form to the on-site assessment, what it costs, and how NAPIT compares to NICEIC and ELECSA. Reviewed by NAPIT-registered, 18th Edition qualified electricians."
       readingTime={15}
       keyTakeaways={keyTakeaways}
       sections={sections}
@@ -668,6 +731,7 @@ export default function NAPITRegistrationPage() {
       relatedPages={relatedPages}
       ctaHeading="Prepare for your NAPIT assessment"
       ctaSubheading="Professional digital certificates, 70+ BS 7671 calculators, and 18th Edition revision. Everything you need to demonstrate competence during your NAPIT assessment."
+      extraSchemas={[reviewerSchema]}
     />
   );
 }

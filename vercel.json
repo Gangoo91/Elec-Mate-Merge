@@ -109,6 +109,166 @@
   ],
   "redirects": [
     {
+      "source": "/consumer-unit-types-guide",
+      "destination": "/guides/consumer-unit-types",
+      "permanent": true
+    },
+    {
+      "source": "/data-centre-electrical-installation",
+      "destination": "/guides/data-centre-electrical-installation",
+      "permanent": true
+    },
+    {
+      "source": "/training/ev-charger-installation",
+      "destination": "/guides/ev-charger-installation",
+      "permanent": true
+    },
+    {
+      "source": "/earth-electrode-testing",
+      "destination": "/guides/earth-electrode-testing",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrical-handover-documentation-guide",
+      "destination": "/guides/electrical-handover-documentation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrician-tool-insurance",
+      "destination": "/electrician-tool-insurance-2025",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrician-working-abroad-uk",
+      "destination": "/guides/electrician-working-abroad",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrician-career-progression-uk",
+      "destination": "/guides/electrician-career-progression",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrician-van-setup-guide",
+      "destination": "/guides/electrician-van-setup",
+      "permanent": true
+    },
+    {
+      "source": "/guides/emergency-lighting-certificate-guide",
+      "destination": "/emergency-lighting-certificate",
+      "permanent": true
+    },
+    {
+      "source": "/house-extension-electrical-cost",
+      "destination": "/guides/house-extension-electrical-cost",
+      "permanent": true
+    },
+    {
+      "source": "/insulation-resistance-testing-guide",
+      "destination": "/guides/insulation-resistance-testing",
+      "permanent": true
+    },
+    {
+      "source": "/guides/spd-surge-protection-guide",
+      "destination": "/guides/spd-surge-protection",
+      "permanent": true
+    },
+    {
+      "source": "/guides/starting-an-electrical-business-uk",
+      "destination": "/guides/starting-an-electrical-business",
+      "permanent": true
+    },
+    {
+      "source": "/guides/wiring-colours-uk",
+      "destination": "/guides/cable-colour-codes-uk",
+      "permanent": true
+    },
+    {
+      "source": "/guides/polarity-testing-guide",
+      "destination": "/polarity-test-guide",
+      "permanent": true
+    },
+    {
+      "source": "/guides/polarity-testing-guide-bs7671",
+      "destination": "/polarity-test-guide",
+      "permanent": true
+    },
+    {
+      "source": "/guides/continuity-testing-electricians-guide",
+      "destination": "/continuity-testing-guide",
+      "permanent": true
+    },
+    {
+      "source": "/adiabatic-equation-calculator",
+      "destination": "/tools/adiabatic-equation-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/cable-sizing-calculator",
+      "destination": "/tools/cable-sizing-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/conduit-fill-calculator",
+      "destination": "/tools/conduit-fill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/diversity-factor-calculator",
+      "destination": "/tools/diversity-factor-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/earth-loop-impedance-calculator",
+      "destination": "/tools/earth-loop-impedance-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/job-profitability-calculator",
+      "destination": "/tools/job-profitability-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/max-demand-calculator",
+      "destination": "/tools/max-demand-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/power-factor-calculator",
+      "destination": "/tools/power-factor-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/prospective-fault-current-calculator",
+      "destination": "/tools/prospective-fault-current-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/ring-circuit-calculator",
+      "destination": "/tools/ring-circuit-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/three-phase-power-calculator",
+      "destination": "/tools/three-phase-power-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/trunking-fill-calculator",
+      "destination": "/tools/trunking-fill-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/voltage-drop-calculator",
+      "destination": "/tools/voltage-drop-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/guides/apprentice-electrician-salary-uk",
+      "destination": "/guides/apprentice-electrician-salary",
+      "permanent": true
+    },
+    {
       "source": "/cheatsheet.pdf",
       "destination": "https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/bs7671-a4-2026-cheatsheet.pdf",
       "permanent": false

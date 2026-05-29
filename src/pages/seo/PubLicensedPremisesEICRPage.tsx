@@ -46,7 +46,8 @@ const keyTakeaways = [
   'The EICR for a pub covers fixed wiring, distribution boards, cellar equipment circuits, beer cooler and chiller circuits, gaming machine circuits, kitchen extraction circuits, and emergency lighting — a significantly more complex scope than a residential inspection.',
   'Emergency lighting to BS 5266-1:2016 is required in all means of escape, including bar areas, function rooms, toilets, corridors, and all exit routes. Maintained or non-maintained luminaires are both acceptable.',
   'Fire detection systems in pubs and licensed premises must comply with BS 5839-1:2017 (commercial-grade systems with a central control panel). Grade D domestic systems are not appropriate for licensed premises.',
-  'Gaming machine circuits are frequently found to be inadequately protected or on overloaded circuits during EICR inspections of licensed premises. Each machine should ideally be on a dedicated circuit with appropriate MCB protection.',
+  'Gaming machine circuits are frequently found to be inadequately protected or on overloaded circuits during EICR inspections of licensed premises. Each machine should ideally be on a dedicated circuit with appropriate MCB protection. Under BS 7671:2018+A4:2026 Reg 411.3.3, omission of 30 mA RCD protection on socket-outlets in public areas requires a documented risk assessment — in a customer-access environment this will almost always conclude RCD protection is necessary.',
+  'BS 7671:2018+A4:2026 introduces Reg 421.1.7, which recommends arc fault detection devices (AFDDs) in AC final circuits to reduce fire risk from arc fault currents. Pubs with pre-1990 wiring are prime candidates for an AFDD recommendation on the EICR. The regulation is advisory, not mandatory.',
 ];
 
 const faqs = [
@@ -316,6 +317,36 @@ const sections = [
           installation, which in a pub typically includes elements not found in residential or small
           commercial premises.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            BS 7671:2018+A4:2026 — What Has Changed for Licensed Premises EICRs
+          </h4>
+          <ul className="space-y-2 text-white text-sm leading-relaxed">
+            <li>
+              <strong>Revised Reg 411.3.3 — RCD risk-assessment route.</strong> A4:2026 revises Reg
+              411.3.3 so that omission of RCD protection on socket-outlets rated 32 A and below now
+              requires a documented risk assessment for non-dwellings. Inspectors must check that
+              any unprotected socket-outlet circuit is backed by a recorded risk assessment — not
+              simply an absence of RCD. In a public access environment such as a pub, the risk
+              assessment outcome will almost always mandate RCD protection.
+            </li>
+            <li>
+              <strong>New Reg 421.1.7 — AFDD recommendation.</strong> A4:2026 introduces Reg
+              421.1.7, which recommends the installation of arc fault detection devices (AFDDs) in
+              AC final circuits to mitigate the risk of fire from arc fault currents. The
+              recommendation is advisory, not mandatory — but for pubs with pre-1990 wiring, where
+              ageing insulation increases arc fault risk, inspectors should consider noting AFDD
+              installation as a recommendation on the EICR.
+            </li>
+            <li>
+              <strong>Reg 643.7.3.201 — PFC at multiple distribution boards.</strong> Prospective
+              fault current must be measured or calculated at the origin of the installation
+              <em> and</em> at other relevant points. A pub with multiple distribution boards
+              requires a PFC determination at each DB — this is commonly missed in commercial EICRs
+              and should be checked on every inspection.
+            </li>
+          </ul>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -412,6 +443,31 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+            <ClipboardCheck className="w-5 h-5 text-blue-400 shrink-0" />
+            Key Test Values for Cellar and Commercial Circuits
+          </h4>
+          <ul className="space-y-2 text-white text-sm leading-relaxed">
+            <li>
+              <strong>Insulation resistance (Table 64)</strong> — minimum 1.0 M&Omega; when tested
+              at 500 V DC for standard circuits up to and including 500 V. Cellar circuit readings
+              near this threshold require further investigation to identify whether damp ingress or
+              active insulation degradation is the cause.
+            </li>
+            <li>
+              <strong>RCD operating time (Reg 643.7.3.201)</strong> — a general non-delay 30 mA RCD
+              must operate within a maximum of 300 ms when tested at its rated residual operating
+              current (I&Delta;n). Testing is carried out with suitable equipment to BS EN 61557-6.
+            </li>
+            <li>
+              <strong>Prospective fault current (Reg 643.7.3.201)</strong> — prospective
+              short-circuit and earth fault current must be measured or calculated at the origin of
+              the installation <em>and</em> at other relevant points. For a pub with multiple
+              distribution boards, each DB is a relevant point requiring its own PFC determination.
+            </li>
+          </ul>
+        </div>
       </>
     ),
   },
@@ -449,9 +505,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection — required</strong> — gaming machine circuits in public areas
-                must be protected by 30mA RCD in accordance with Regulation 411.3.3 of BS 7671.
-                Absence of RCD protection is commonly recorded as a C2 observation.
+                <strong>RCD protection — required in public areas</strong> — under Regulation
+                411.3.3 of BS 7671:2018+A4:2026, RCD protection is required on socket-outlets rated
+                at 32 A and below unless a documented, site-specific risk assessment determines it
+                is not necessary. For a gaming machine socket in a public area with general customer
+                access, a risk assessment will almost always conclude that 30 mA RCD protection is
+                the correct outcome. Absence of RCD protection without a supporting documented risk
+                assessment is recorded as a C2 observation on the EICR.
               </span>
             </li>
           </ul>
@@ -657,10 +717,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Distribution board replacements, emergency lighting upgrades, and fire alarm
                   circuit remediation are high-value jobs. Quote on the day with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  and convert inspection clients into recurring commercial maintenance contracts.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> and
+                  convert inspection clients into recurring commercial maintenance contracts.
                 </p>
               </div>
             </div>
@@ -686,7 +744,7 @@ export default function PubLicensedPremisesEICRPage() {
       title="EICR for Pubs & Licensed Premises UK | Licensing"
       description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Licensed Premises Guide"

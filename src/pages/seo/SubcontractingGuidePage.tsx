@@ -33,6 +33,7 @@ const tocItems = [
   { id: 'cis-deductions', label: 'CIS Tax Deductions' },
   { id: 'protecting-payment', label: 'Protecting Payment — Construction Act 1996' },
   { id: 'subcontract-agreements', label: 'Subcontract Agreements' },
+  { id: 'eic-certification', label: 'BS 7671 Certification When Subcontracting' },
   { id: 'for-electricians', label: 'Tools for Subcontractors' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -44,6 +45,7 @@ const keyTakeaways = [
   'CHAS accreditation and Constructionline registration are the most widely accepted pre-qualification credentials in the UK construction sector. Without at least CHAS, most national main contractors will not add you to their supply chain.',
   'Labour-only subcontracting (you supply labour; the main contractor supplies materials) carries lower risk but lower margin. Direct subcontracting (you supply materials and labour) carries higher margin but more commercial risk.',
   'Never start subcontract work without a signed subcontract agreement or at minimum a written order. Verbal agreements are very difficult to enforce and leave your payment rights unprotected.',
+  'The electrical subcontractor who carries out the installation is responsible for signing the relevant sections of the Electrical Installation Certificate (EIC). Under BS 7671 Regulation 644.5, the signatory accepts responsibility for verifying compliance. The main contractor does not sign on your behalf — and cannot.',
 ];
 
 const faqs = [
@@ -560,6 +562,75 @@ const sections = [
     ),
   },
   {
+    id: 'eic-certification',
+    heading: 'BS 7671 Certification When Subcontracting',
+    content: (
+      <>
+        <p>
+          One of the most common misunderstandings in electrical subcontracting is who is
+          responsible for BS 7671 certification. The answer is clear: the electrical subcontractor
+          who carries out the installation signs the Electrical Installation Certificate (EIC) — not
+          the main contractor.
+        </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <FileText className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Who signs the EIC</strong> — BS 7671 Regulation 644.5 requires that an EIC
+                be signed or otherwise authenticated by the skilled person(s) responsible for each
+                stage: design, construction, and inspection &amp; testing. By signing, the signatory
+                accepts responsibility for verifying that BS 7671 has been met for that stage. The
+                multiple-signature EIC (the model form in Appendix 6) exists precisely to allow
+                different persons to sign separately for design, construction, and inspection &amp;
+                testing where these are carried out by separate parties.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileText className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>The main contractor cannot sign for your work</strong> — a main contractor
+                (or M&amp;E management contractor) is not the person who carried out the electrical
+                installation and cannot lawfully authenticate the EIC for your scope. If a main
+                contractor asks you to hand over unsigned paperwork for them to complete, refuse:
+                they do not have the technical responsibility or the competence authority for your
+                installation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileText className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Scope your certificate to your scope of works</strong> — Regulation 644.3
+                requires the certificate to include details of the extent of the work covered. On a
+                subcontract where you are responsible for specific circuits or areas only, your EIC
+                covers your scope. The main contractor (or a separate contractor) will produce a
+                separate certificate covering their scope. Do not sign for work you have not
+                designed, constructed, or tested.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileText className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Schedule of Inspection and test results</strong> — every EIC must be
+                accompanied by a Schedule of Inspection and a Schedule of Circuit Details and Test
+                Results (Regulation 644.3), both based on the model forms in Appendix 6 of BS 7671.
+                As the subcontractor, you must provide these to the main contractor as part of your
+                package — they are not optional and form part of the handover documentation required
+                by the client.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Generate compliant EICs, Schedules of Inspection, and test result schedules directly in{' '}
+          <SEOInternalLink href="/electrical-certificates">Elec-Mate</SEOInternalLink>. See also the{' '}
+          <SEOInternalLink href="/electrical-installation-certificate">EIC guide</SEOInternalLink>{' '}
+          for a full walkthrough of what each section requires.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'for-electricians',
     heading: 'Tools for Electrical Subcontractors',
     content: (
@@ -619,7 +690,7 @@ const sections = [
 export default function SubcontractingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Subcontracting Guide UK | How to Subcontract"
+      title="Electrical Subcontracting Guide UK | CIS, Construction Act &amp; Payment Rights"
       description="How to find main contractors, get CHAS and Constructionline, price to win subcontract work, protect your payment rights under the Construction Act 1996…"
       datePublished="2026-03-27"
       dateModified="2026-05-18"

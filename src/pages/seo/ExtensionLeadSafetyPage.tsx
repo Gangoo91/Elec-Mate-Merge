@@ -41,6 +41,7 @@ const keyTakeaways = [
   'Always fully uncoil cable drum extension leads before use — a coiled 13A lead can overheat and melt its own insulation.',
   'Outdoor extension leads must have an IP44 rating or higher and must be plugged into an RCD-protected socket.',
   'RCD-protected extension leads add meaningful protection for power tools and garden equipment.',
+  'BS 7671:2018+A4:2026 (Reg 411.3.3) now requires RCD protection (≤30 mA) for all socket outlets ≤32 A in dwellings — omission is not permitted.',
   'If you need an extension lead permanently in the same spot, the right solution is to have an additional socket outlet installed by a registered electrician.',
 ];
 
@@ -227,6 +228,15 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          BS 7671:2018+A4:2026 Regulation 421.1.7 recommends that your electrician fits an Arc Fault
+          Detection Device (AFDD) at the consumer unit on the AC final circuit supplying your
+          sockets. An AFDD monitors the circuit continuously and disconnects the supply if it
+          detects the current patterns associated with serial arcing — exactly the type of arcing
+          that occurs at a loose or worn connection, such as an overloaded extension lead plug
+          worked loose under load. This provides a layer of upstream arc-fire protection that a fuse
+          or MCB alone cannot offer.
+        </p>
       </>
     ),
   },
@@ -256,9 +266,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use for garden equipment</strong> — lawnmowers, hedge trimmers, and garden
-                power tools must be used with RCD protection. Regulation 411.3.3 of BS 7671 requires
-                RCD protection (not exceeding 30mA) for socket outlets in certain locations used to
-                supply portable equipment outdoors.
+                power tools must be used with RCD protection. Under BS 7671:2018+A4:2026 Regulation
+                411.3.3, RCD protection (≤30 mA) is now required for all socket outlets rated ≤32 A;
+                in dwellings, omission of RCD protection is not permitted under any exception.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,9 +358,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Connect to an RCD-protected socket</strong> — outdoor socket outlets must be
-                RCD-protected under BS 7671 Regulation 411.3.3. If your outdoor socket is not
-                RCD-protected, use a plug-in RCD adaptor rated at 30mA.
+                <strong>Connect to an RCD-protected socket</strong> — under BS 7671:2018+A4:2026
+                Regulation 411.3.3, all socket outlets rated ≤32 A in a dwelling must be
+                RCD-protected (≤30 mA) with no omission permitted. If your outdoor socket is not
+                RCD-protected, use a plug-in RCD adaptor rated at 30 mA until the installation is
+                upgraded.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -414,6 +426,15 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm">
+            <strong>A4:2026 requirement:</strong> Under BS 7671:2018+A4:2026 Regulation 411.3.3, any
+            new or replacement socket outlet (≤32 A) in a dwelling must be RCD-protected at ≤30 mA —
+            omission is not permitted. Socket outlets incorporating an integral RCD to BS 7288:2016
+            are a neat single-device solution that satisfies this requirement without fitting a
+            separate RCD upstream.
+          </p>
+        </div>
         <p>
           Find a NICEIC or NAPIT registered electrician to carry out this work. All notifiable work
           (including new socket circuits) must be registered with building control or completed by a
@@ -433,6 +454,16 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Check for a BS 1363 plug</strong> — BS 1363 is the British Standard
+                governing UK 13 A fused plugs and shuttered socket outlets (as required by BS 7671
+                Table 55.1). Every extension lead sold for UK use must be fitted with a BS 1363
+                fused plug containing a BS 1362 fuse. Look for the BS 1363 marking on the plug body
+                — an unmarked plug is a sign of a non-compliant product.
+              </span>
+            </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
@@ -490,7 +521,7 @@ export default function ExtensionLeadSafetyPage() {
   return (
     <GuideTemplate
       title="Extension Lead Safety UK | Load + Daisy-Chain Rules"
-      description="Extension lead safety: 13A load limit, why daisy-chaining is dangerous, when to use an RCD lead + the BS 1363 marks to look for before buying."
+      description="Extension lead safety: 13A load limit, why daisy-chaining is dangerous, when to use an RCD lead, and the BS 1363 plug marking to check before buying."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

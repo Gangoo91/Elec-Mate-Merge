@@ -746,7 +746,7 @@ export default function HouseRewireGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for every circuit in the rewire.',
           icon: Calculator,

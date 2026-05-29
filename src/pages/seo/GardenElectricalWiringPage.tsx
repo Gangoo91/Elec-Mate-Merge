@@ -88,12 +88,13 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/outbuilding-electrical-supply-guide',
     title: 'Outbuilding Electrical Supply Guide',
-    description: 'Detailed guide to supplying garages, workshops, and summer houses with electricity.',
+    description:
+      'Detailed guide to supplying garages, workshops, and summer houses with electricity.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA cables for garden circuits and outdoor supplies correctly.',
     icon: Calculator,
@@ -114,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long garden cable runs to sheds and outbuildings.',
     icon: Zap,
@@ -142,21 +143,21 @@ const sections = [
         <p>
           Garden and outdoor electrical installations are more demanding than indoor domestic work
           because of the environmental conditions — weather exposure, moisture, mechanical damage
-          from gardening, and the increased risk of electric shock outdoors where the earth is
-          a better conductor than a dry indoor floor.
+          from gardening, and the increased risk of electric shock outdoors where the earth is a
+          better conductor than a dry indoor floor.
         </p>
         <p>
           BS 7671 contains specific requirements for outdoor electrical installations, including
-          Section 714 (outdoor lighting installations) and the general requirements of Part 4
-          and Part 5 for cable selection, protection against the effects of weather, and RCD
-          protection. All new garden and outdoor circuits in dwellings are notifiable under Part P
-          of the Building Regulations.
+          Section 714 (outdoor lighting installations) and the general requirements of Part 4 and
+          Part 5 for cable selection, protection against the effects of weather, and RCD protection.
+          All new garden and outdoor circuits in dwellings are notifiable under Part P of the
+          Building Regulations.
         </p>
         <p>
           The three critical areas of compliance for garden electrical work are: using the correct
           cable type and burial depth, providing mandatory RCD protection, and using IP-rated
-          equipment suitable for outdoor use. Getting any of these wrong creates a risk of
-          electric shock or fire.
+          equipment suitable for outdoor use. Getting any of these wrong creates a risk of electric
+          shock or fire.
         </p>
       </>
     ),
@@ -174,32 +175,34 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Section 714 — Outdoor Lighting</h3>
             <p className="text-white text-sm leading-relaxed">
               Section 714 applies to permanent outdoor lighting installations, including garden
-              lighting, pathway lighting, security lighting, and external building illumination.
-              Key requirements include: RCD protection for all outdoor lighting circuits, IP-rated
+              lighting, pathway lighting, security lighting, and external building illumination. Key
+              requirements include: RCD protection for all outdoor lighting circuits, IP-rated
               luminaires appropriate to their location, and correct cable selection for outdoor use.
               Section 714 also covers festoon and decorative lighting, but temporary seasonal
-              outdoor lighting connected via a standard socket outlet is generally treated under
-              the socket outlet RCD protection requirements rather than Section 714.
+              outdoor lighting connected via a standard socket outlet is generally treated under the
+              socket outlet RCD protection requirements rather than Section 714.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Section 705 — Agricultural Premises</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Section 705 — Agricultural Premises
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Section 705 applies to agricultural and horticultural premises, which includes
-              outbuildings on farms, stables, and market garden installations. It requires 30mA
-              RCD protection for all socket outlets, specific requirements for luminaires in
-              locations where livestock is present (to avoid damage from animals), and earthing
-              requirements for farm buildings. For domestic outbuildings that are not on
-              agricultural premises, Section 705 does not directly apply, but its principles
-              (robust installation, IP-rated equipment, earthing) represent good practice.
+              outbuildings on farms, stables, and market garden installations. It requires 30mA RCD
+              protection for all socket outlets, specific requirements for luminaires in locations
+              where livestock is present (to avoid damage from animals), and earthing requirements
+              for farm buildings. For domestic outbuildings that are not on agricultural premises,
+              Section 705 does not directly apply, but its principles (robust installation, IP-rated
+              equipment, earthing) represent good practice.
             </p>
           </div>
         </div>
         <p>
           For most domestic garden electrical work, the general requirements of BS 7671 (Part 4
           protection requirements, cable selection from Part 5, and the RCD rules in Regulation
-          411.3.3) are the primary applicable standards. Section 714 applies specifically where
-          a permanent outdoor lighting installation is being created.
+          411.3.3) are the primary applicable standards. Section 714 applies specifically where a
+          permanent outdoor lighting installation is being created.
         </p>
       </>
     ),
@@ -211,9 +214,9 @@ const sections = [
       <>
         <p>
           Steel Wire Armoured (SWA) cable is the standard for buried garden and outdoor circuits.
-          The steel wire armour provides mechanical protection against accidental damage from spades,
-          forks, and other garden tools, and also provides an earth continuity path when correctly
-          terminated.
+          The steel wire armour provides mechanical protection against accidental damage from
+          spades, forks, and other garden tools, and also provides an earth continuity path when
+          correctly terminated.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -222,10 +225,10 @@ const sections = [
               <div>
                 <strong>Cable type</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  2-core SWA (for single-phase supplies with earthing via the armour) or
-                  3-core SWA (for single-phase supplies where a separate CPC is required).
-                  The armour must be connected to earth at both ends via suitable SWA glands.
-                  SWA cable is available in conductor sizes from 1.5mm to 300mm and above.
+                  2-core SWA (for single-phase supplies with earthing via the armour) or 3-core SWA
+                  (for single-phase supplies where a separate CPC is required). The armour must be
+                  connected to earth at both ends via suitable SWA glands. SWA cable is available in
+                  conductor sizes from 1.5mm to 300mm and above.
                 </p>
               </div>
             </li>
@@ -234,12 +237,12 @@ const sections = [
               <div>
                 <strong>Termination</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  SWA cable must be terminated using appropriate brass SWA glands at both ends.
-                  The armour is clamped between the inner and outer cones of the gland and must
-                  make good electrical contact to provide the earth continuity path. Inside the
-                  consumer unit or distribution board, the armour is terminated to the earth bar
-                  via the gland plate. Outside (at the garden socket or shed consumer unit),
-                  the armour is connected to the earth terminal of the enclosure.
+                  SWA cable must be terminated using appropriate brass SWA glands at both ends. The
+                  armour is clamped between the inner and outer cones of the gland and must make
+                  good electrical contact to provide the earth continuity path. Inside the consumer
+                  unit or distribution board, the armour is terminated to the earth bar via the
+                  gland plate. Outside (at the garden socket or shed consumer unit), the armour is
+                  connected to the earth terminal of the enclosure.
                 </p>
               </div>
             </li>
@@ -252,7 +255,7 @@ const sections = [
                   (which reduces the cable's ability to dissipate heat). SWA cable buried in the
                   ground can carry more current than the same cable installed in thermal insulation.
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   and check voltage drop for the cable run length.
@@ -311,11 +314,11 @@ const sections = [
           <Shovel className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" />
           <div>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Mark the cable route on an as-installed plan</strong> — cable routes
-              should be recorded on an as-installed drawing given to the homeowner. This is
-              essential for future gardening or building work. Cable route maps should show the
-              route from the consumer unit to each termination point with accurate dimensions
-              from fixed reference points.
+              <strong>Mark the cable route on an as-installed plan</strong> — cable routes should be
+              recorded on an as-installed drawing given to the homeowner. This is essential for
+              future gardening or building work. Cable route maps should show the route from the
+              consumer unit to each termination point with accurate dimensions from fixed reference
+              points.
             </p>
           </div>
         </div>
@@ -329,17 +332,17 @@ const sections = [
       <>
         <p>
           Regulation 411.3.3 of BS 7671 is the mandatory RCD protection requirement for outdoor
-          socket outlets. It states that socket outlets rated up to 20A that are used outdoors
-          (for equipment used outdoors) must be protected by an RCD with a rated residual operating
+          socket outlets. It states that socket outlets rated up to 20A that are used outdoors (for
+          equipment used outdoors) must be protected by an RCD with a rated residual operating
           current not exceeding 30mA.
         </p>
         <p>
           This requirement is non-negotiable — there is no circumstance in which an outdoor socket
-          outlet in a domestic garden can be unprotected by a 30mA RCD. The reason is straightforward:
-          outdoors, a person using electrical equipment is often standing on damp ground, which
-          provides a better earth connection than a dry indoor floor. This means that a much smaller
-          fault current can cause a fatal shock, and 30mA RCD protection is essential to disconnect
-          within the time limits required by BS 7671 before a fatal shock can occur.
+          outlet in a domestic garden can be unprotected by a 30mA RCD. The reason is
+          straightforward: outdoors, a person using electrical equipment is often standing on damp
+          ground, which provides a better earth connection than a dry indoor floor. This means that
+          a much smaller fault current can cause a fatal shock, and 30mA RCD protection is essential
+          to disconnect within the time limits required by BS 7671 before a fatal shock can occur.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -364,8 +367,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD at the socket:</strong> An RCD-protected socket outlet (with built-in
-                30mA RCD) can also be used, but only where a single outdoor socket is being
-                added and replacing the socket with an RCD type is the most practical option.
+                30mA RCD) can also be used, but only where a single outdoor socket is being added
+                and replacing the socket with an RCD type is the most practical option.
               </span>
             </li>
           </ul>
@@ -379,8 +382,8 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor socket outlets must meet specific standards for weatherproofing and safety.
-          The requirements are:
+          Outdoor socket outlets must meet specific standards for weatherproofing and safety. The
+          requirements are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -396,27 +399,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protected at 30mA</strong> — mandatory under Regulation 411.3.3.
-                The RCD can be at the consumer unit (RCBO or RCD-protected way) or built into
-                the socket outlet.
+                <strong>RCD protected at 30mA</strong> — mandatory under Regulation 411.3.3. The RCD
+                can be at the consumer unit (RCBO or RCD-protected way) or built into the socket
+                outlet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Weatherproof covers</strong> — all outdoor socket outlets should have
-                spring-loaded covers that close automatically when the socket is not in use.
-                Some socket units include a lid that can be closed with a plug inserted ("in-use"
+                spring-loaded covers that close automatically when the socket is not in use. Some
+                socket units include a lid that can be closed with a plug inserted ("in-use"
                 covers), which provides protection against rain when equipment is connected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mounting position</strong> — outdoor sockets should be mounted on a wall
-                or post at a convenient height (typically 0.75m to 1.2m from the ground), clear
-                of water run-off from above, and not in a position where they will be submerged
-                in standing water.
+                <strong>Mounting position</strong> — outdoor sockets should be mounted on a wall or
+                post at a convenient height (typically 0.75m to 1.2m from the ground), clear of
+                water run-off from above, and not in a position where they will be submerged in
+                standing water.
               </span>
             </li>
           </ul>
@@ -450,8 +453,8 @@ const sections = [
                   The supply to the shed should be a dedicated circuit from the main consumer unit,
                   protected by an RCBO or MCB of appropriate rating. Do not share the garden shed
                   supply with other circuits. Size the cable for the maximum load in the shed —
-                  typically a 20A or 32A circuit depending on whether power tools, heaters, or
-                  EV chargers will be used.
+                  typically a 20A or 32A circuit depending on whether power tools, heaters, or EV
+                  chargers will be used.
                 </p>
               </div>
             </li>
@@ -462,8 +465,8 @@ const sections = [
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   The shed should have its own small consumer unit (typically 4 to 6 way), which
                   provides local overcurrent protection and isolation. This allows the shed's
-                  individual circuits (lighting, sockets, specific equipment) to be controlled
-                  and protected independently.
+                  individual circuits (lighting, sockets, specific equipment) to be controlled and
+                  protected independently.
                 </p>
               </div>
             </li>
@@ -473,10 +476,10 @@ const sections = [
                 <strong>Earth electrode for TT systems</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   For sheds that are not connected by a metallic armouring to the main building
-                  earth (TT system), an earth electrode (earth rod) must be installed at the shed
-                  to provide a local earth reference. The electrode resistance should be measured
-                  and must be low enough for the RCD to operate within the required disconnection
-                  time. See the outbuilding electrical supply guide for TT earthing details.
+                  earth (TT system), an earth electrode (earth rod) must be installed at the shed to
+                  provide a local earth reference. The electrode resistance should be measured and
+                  must be low enough for the RCD to operate within the required disconnection time.
+                  See the outbuilding electrical supply guide for TT earthing details.
                 </p>
               </div>
             </li>
@@ -535,10 +538,10 @@ const sections = [
     content: (
       <>
         <p>
-          Garden electrical work is high-value, repeat-business territory. Homeowners investing
-          in garden landscaping, outdoor entertaining spaces, and garden offices are willing to
-          spend on quality electrical installations. A professional job — correct cable, correct
-          depth, IP-rated equipment, properly certified — builds lasting customer relationships.
+          Garden electrical work is high-value, repeat-business territory. Homeowners investing in
+          garden landscaping, outdoor entertaining spaces, and garden offices are willing to spend
+          on quality electrical installations. A professional job — correct cable, correct depth,
+          IP-rated equipment, properly certified — builds lasting customer relationships.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -548,12 +551,12 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Long garden cable runs can cause significant voltage drop. Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to confirm the SWA cable size is adequate for the run length, and check voltage
                   drop with the{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>
                   .

@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Southampton properties?',
     answer:
-      'Southampton has a high proportion of post-war rebuilds and 1960s to 1970s properties. Common EICR findings include lack of RCD protection on socket circuits (a C2 observation under Regulation 411.3.3), deteriorated rubber or PVC insulation on older wiring, inadequate earthing and bonding in properties that have not been updated since original installation, overloaded circuits due to modern appliance loads, and missing or damaged consumer unit covers. Victorian terraced properties near the city centre may also have older wiring types requiring replacement.',
+      'Southampton has a high proportion of post-war rebuilds and 1960s to 1970s properties. Common EICR findings include: lack of RCD protection on socket-outlet circuits rated not exceeding 32 A (a C2 observation under Regulation 411.3.3 of BS 7671:2018+A4:2026); absence of 30 mA RCD protection on lighting circuits, now required in domestic premises by Regulation 411.3.4; deteriorated rubber or PVC insulation on older wiring; inadequate earthing and bonding in properties that have not been updated since original installation; overloaded circuits due to modern appliance loads; and missing or damaged consumer unit covers. Victorian terraced properties near the city centre may also have older wiring types requiring replacement.',
   },
   {
     question: 'How long does an EICR take in Southampton?',
@@ -317,10 +317,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
-                protection for socket outlet circuits not exceeding 20A. Older consumer units
-                without RCD protection are a very common C2 finding across Southampton's post-war
-                housing stock.
+                <strong>Absent RCD protection on socket circuits</strong> — Regulation 411.3.3 of BS
+                7671:2018+A4:2026 requires RCD protection for all socket-outlets rated not exceeding
+                32&nbsp;A (no exception exists for dwellings). Older consumer units without RCD
+                protection are a very common C2 finding across Southampton's post-war housing stock.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Unprotected lighting circuits</strong> — Regulation 411.3.4 of
+                BS&nbsp;7671:2018+A4:2026 requires that AC final circuits supplying luminaires in
+                domestic premises are protected by a 30&nbsp;mA RCD. Southampton post-war properties
+                almost universally pre-date this requirement, making absent lighting RCD protection
+                a new C2 observation that inspectors must record.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -374,9 +384,12 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
-              Could become dangerous. Urgent remedial action required. The most common C2 finding in
-              Southampton is absence of RCD protection on socket circuits (Regulation 411.3.3),
-              followed by inadequate earthing and deteriorated cable insulation.
+              Could become dangerous. Urgent remedial action required. Common C2 findings in
+              Southampton include: absence of RCD protection on socket-outlet circuits
+              (Reg&nbsp;411.3.3 &mdash; threshold is 32&nbsp;A, no exception for dwellings); absence
+              of 30&nbsp;mA RCD protection on lighting circuits (Reg&nbsp;411.3.4 &mdash; new
+              A4:2026 requirement); inadequate earthing and bonding; and deteriorated cable
+              insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -504,9 +517,13 @@ const sections = [
           </ul>
         </div>
         <p>
-          The inspector may recommend a shorter interval than the standard maximum if the
-          installation is in poor condition. A Southampton property with multiple C3 observations
-          may have a recommended next inspection of 3 years rather than 5.
+          The five-year maximum is not automatic. IET Guidance Note 3 (GN3, Reg&nbsp;3.5) requires
+          the inspector to base the recommended next-inspection interval on the actual condition,
+          use, any damage or deterioration observed, and the results of any previous periodic
+          inspection reports. A Southampton property with multiple C3 observations, deteriorating
+          1960s wiring, or a history of high-occupancy use may correctly receive a recommended
+          interval of 3&nbsp;years rather than 5. The reason for the chosen interval must be
+          recorded on the EICR.
         </p>
       </>
     ),
@@ -594,13 +611,33 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Southampton landlords are legally obligated to act within 28 days — the
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Southampton landlords are legally obligated to act within 28 days — the
                   electrician who delivers the quote on the day wins the remedial work.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
+          <div className="flex items-start gap-4">
+            <Zap className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                A4:2026 Points to Note: AFDD and Lighting RCD
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                Two A4:2026 changes are particularly relevant to Southampton EICR work. First,
+                Regulation&nbsp;411.3.4 now requires 30&nbsp;mA RCD protection on AC final circuits
+                supplying luminaires in domestic premises &mdash; a requirement that older consumer
+                units do not meet and which should be recorded as a C2 observation. Second,
+                Regulation&nbsp;421.1.7 recommends the installation of arc fault detection devices
+                (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. Where a
+                consumer unit is being upgraded following an EICR on a property with degraded 1960s
+                wiring, absence of AFDDs on the new installation may be recorded as a C3
+                (improvement recommended) observation. The AFDD recommendation is advisory, not
+                mandatory.
+              </p>
             </div>
           </div>
         </div>

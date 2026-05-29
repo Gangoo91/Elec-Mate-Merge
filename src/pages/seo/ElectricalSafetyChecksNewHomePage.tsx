@@ -42,6 +42,9 @@ const keyTakeaways = [
   'Consumer unit age indicators: BS 3036 rewireable fuse boards (pre-1980s, no RCD, over-fusing risk), MCB boards without RCD protection (pre-2008 practice), and split-load boards with one RCD (standard from late 1990s to 2015).',
   'Red flags in a new home include no main protective bonding on gas and water services, no RCD protection, single-pole isolation at the main switch, 5-amp round-pin sockets, and scorch marks on accessories.',
   'An EICR should be commissioned before exchange of contracts where possible, or immediately after moving in. Any C1 deficiencies must be remediated before the installation is used.',
+  'A4:2026 update: BS 7671 Regulation 411.3.4 now requires 30 mA RCD additional protection on AC lighting circuits in domestic premises. An existing installation without RCD-protected lighting will show this as a deficiency on an EICR.',
+  'A4:2026 update: BS 7671 Regulation 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. This is a recommendation, not a mandatory requirement, but electricians should note it when advising on new or rewired circuits.',
+  'Private rented properties in England are subject to the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, which require an EICR at intervals of not more than 5 years. Owner-occupied properties should follow GN3 guidance on recommended inspection intervals.',
 ];
 
 const faqs = [
@@ -73,7 +76,7 @@ const faqs = [
   {
     question: 'What is main protective bonding and how do I check if it is present?',
     answer:
-      'Main protective bonding (also called equipotential bonding) connects the main metallic services entering the building — gas pipes and water pipes — to the main earthing terminal at the consumer unit. It is required by BS 7671 Regulation 411.3.1.2 to prevent a dangerous voltage difference developing between these services and earthed electrical equipment if a fault occurs on the electrical supply. Main bonding cables are typically 10mm green-and-yellow insulated cables that can be seen connecting the gas meter pipework or incoming water pipe to the consumer unit or to an earth rod. The connection point on the gas or water service is a yellow earthing clamp. If no main bonding is visible, the installation should be inspected — absence of main bonding is typically a C2 deficiency on an EICR.',
+      'Main protective bonding (also called equipotential bonding) connects the main metallic services entering the building — gas pipes and water pipes — to the main earthing terminal at the consumer unit. It is required by BS 7671 Regulation 411.3.1.1, which mandates that extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors. Main bonding cables are typically 10mm green-and-yellow insulated cables that can be seen connecting the gas meter pipework or incoming water pipe to the consumer unit or to an earth rod. The connection point on the gas or water service is a yellow earthing clamp. If no main bonding is visible, the installation should be inspected — absence of main bonding is typically a C2 deficiency on an EICR. Note: under BS 7671:2018+A4:2026, bonding of metallic service pipes may be omitted where an insulating section is provided at the point of entry to the building; an inspector should verify whether this applies before coding absent bonding as C2.',
   },
   {
     question: 'How long does an EICR take and what does it cost?',
@@ -100,7 +103,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-handover-documentation',
     title: 'Electrical Handover Documentation',
-    description: 'What certificates to look for when buying a property with existing electrical work.',
+    description:
+      'What certificates to look for when buying a property with existing electrical work.',
     icon: FileText,
     category: 'Guide',
   },
@@ -139,24 +143,24 @@ const sections = [
       <>
         <p>
           The electrical installation is one of the most important — and most frequently overlooked
-          — aspects of buying a home. Unlike a damp problem or a roof defect, electrical deficiencies
-          are often invisible and can be present for years before causing an incident. A house with
-          deteriorating wiring, no RCD protection, or absent earth bonding can look perfectly normal
-          while presenting a serious risk of electric shock or fire.
+          — aspects of buying a home. Unlike a damp problem or a roof defect, electrical
+          deficiencies are often invisible and can be present for years before causing an incident.
+          A house with deteriorating wiring, no RCD protection, or absent earth bonding can look
+          perfectly normal while presenting a serious risk of electric shock or fire.
         </p>
         <p>
           Standard homebuyer surveys do not include detailed electrical testing. A surveyor will
           note obvious visual defects but will not carry out the insulation resistance testing,
           continuity testing, and RCD testing that form the basis of an EICR. Only a qualified
-          electrician carrying out an EICR can properly assess the condition of the fixed
-          electrical installation.
+          electrician carrying out an EICR can properly assess the condition of the fixed electrical
+          installation.
         </p>
         <p>
           For buyers, commissioning an EICR before exchange of contracts gives them accurate
-          information about the cost of any necessary remediation work — information that can
-          be used to negotiate the purchase price or to require the seller to carry out
-          remediation before completion. Discovering serious electrical deficiencies after
-          completion is both more stressful and more expensive.
+          information about the cost of any necessary remediation work — information that can be
+          used to negotiate the purchase price or to require the seller to carry out remediation
+          before completion. Discovering serious electrical deficiencies after completion is both
+          more stressful and more expensive.
         </p>
       </>
     ),
@@ -180,9 +184,13 @@ const sections = [
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   Ideally before exchange of contracts, so the results can inform the purchase
                   negotiation. If this is not possible, commission the EICR within the first few
-                  weeks after moving in. An EICR within the first year of ownership is essential
-                  for any property where there is no existing EICR certificate or where the
-                  existing certificate is more than 5 to 10 years old.
+                  weeks after moving in. An EICR within the first year of ownership is essential for
+                  any property where there is no existing EICR certificate or where the existing
+                  certificate is more than 5 years old. For private rented properties in England, an
+                  EICR is required by law at intervals of not more than 5 years under the Electrical
+                  Safety Standards in the Private Rented Sector (England) Regulations 2020. For
+                  owner-occupied properties, the recommended interval is determined by the inspector
+                  on the most recent EICR.
                 </p>
               </div>
             </li>
@@ -192,10 +200,10 @@ const sections = [
                 <strong>What the EICR covers</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   The EICR assesses the condition of all fixed wiring, circuit protective devices,
-                  earthing and bonding, RCD protection, socket outlets, switches, and light fittings.
-                  It includes electrical testing (continuity, insulation resistance, polarity, earth
-                  fault loop impedance, RCD test) and a visual inspection of all accessible parts
-                  of the installation.
+                  earthing and bonding, RCD protection, socket outlets, switches, and light
+                  fittings. It includes electrical testing (continuity, insulation resistance,
+                  polarity, earth fault loop impedance, RCD test) and a visual inspection of all
+                  accessible parts of the installation.
                 </p>
               </div>
             </li>
@@ -205,10 +213,10 @@ const sections = [
                 <strong>Satisfactory vs Unsatisfactory</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   The EICR concludes with an overall assessment: Satisfactory (no C1 or C2
-                  deficiencies found) or Unsatisfactory (one or more C1 or C2 deficiencies
-                  present). An Unsatisfactory result does not mean the installation is unusable,
-                  but C1 deficiencies (danger present) require immediate attention — in some cases
-                  the electrician may disconnect the affected circuits before leaving.
+                  deficiencies found) or Unsatisfactory (one or more C1 or C2 deficiencies present).
+                  An Unsatisfactory result does not mean the installation is unusable, but C1
+                  deficiencies (danger present) require immediate attention — in some cases the
+                  electrician may disconnect the affected circuits before leaving.
                 </p>
               </div>
             </li>
@@ -236,19 +244,23 @@ const sections = [
           <div className="space-y-6">
             <div>
               <h3 className="font-semibold text-white text-base mb-2 flex items-center gap-2">
-                <span className="bg-red-500 text-white text-xs font-bold rounded px-2 py-1">Pre-1960s</span>
+                <span className="bg-red-500 text-white text-xs font-bold rounded px-2 py-1">
+                  Pre-1960s
+                </span>
                 Rubber-Insulated Wiring (VIR/TRS)
               </h3>
               <p className="text-white text-sm leading-relaxed">
                 Braided or cotton-covered outer sheath (VIR — vulcanised india rubber) or black
-                rubber outer sheath. Conductors insulated with rubber, which has become brittle
-                and may be crumbling. Colours: red (live), black (neutral), bare or green earth.
-                Very high fire risk — prioritise rewiring immediately.
+                rubber outer sheath. Conductors insulated with rubber, which has become brittle and
+                may be crumbling. Colours: red (live), black (neutral), bare or green earth. Very
+                high fire risk — prioritise rewiring immediately.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-white text-base mb-2 flex items-center gap-2">
-                <span className="bg-orange-500 text-white text-xs font-bold rounded px-2 py-1">1960s–1970s</span>
+                <span className="bg-orange-500 text-white text-xs font-bold rounded px-2 py-1">
+                  1960s–1970s
+                </span>
                 Aluminium Wiring
               </h3>
               <p className="text-white text-sm leading-relaxed">
@@ -260,19 +272,23 @@ const sections = [
             </div>
             <div>
               <h3 className="font-semibold text-white text-base mb-2 flex items-center gap-2">
-                <span className="bg-yellow-500 text-black text-xs font-bold rounded px-2 py-1">1960s–1980s</span>
+                <span className="bg-yellow-500 text-black text-xs font-bold rounded px-2 py-1">
+                  1960s–1980s
+                </span>
                 TRS (Tough Rubber Sheathed) Wiring
               </h3>
               <p className="text-white text-sm leading-relaxed">
-                Grey or black rubber outer sheath, rubber-insulated conductors. Colours: red
-                (live), black (neutral). Generally better condition than older rubber wiring but
-                ageing — 40 to 60 years old. Insulation condition varies significantly; inspect
-                carefully and test insulation resistance.
+                Grey or black rubber outer sheath, rubber-insulated conductors. Colours: red (live),
+                black (neutral). Generally better condition than older rubber wiring but ageing — 40
+                to 60 years old. Insulation condition varies significantly; inspect carefully and
+                test insulation resistance.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-white text-base mb-2 flex items-center gap-2">
-                <span className="bg-green-500 text-white text-xs font-bold rounded px-2 py-1">1970s onwards</span>
+                <span className="bg-green-500 text-white text-xs font-bold rounded px-2 py-1">
+                  1970s onwards
+                </span>
                 PVC-Insulated Wiring (T&E)
               </h3>
               <p className="text-white text-sm leading-relaxed">
@@ -308,7 +324,9 @@ const sections = [
             </p>
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-              <span className="text-white text-sm font-semibold">High priority for replacement</span>
+              <span className="text-white text-sm font-semibold">
+                High priority for replacement
+              </span>
             </div>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
@@ -320,7 +338,9 @@ const sections = [
             </p>
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-orange-400 shrink-0" />
-              <span className="text-white text-sm font-semibold">C3 deficiency — upgrade recommended</span>
+              <span className="text-white text-sm font-semibold">
+                C3 deficiency — upgrade recommended
+              </span>
             </div>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -332,7 +352,9 @@ const sections = [
             </p>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0" />
-              <span className="text-white text-sm font-semibold">Acceptable but improvement possible</span>
+              <span className="text-white text-sm font-semibold">
+                Acceptable but improvement possible
+              </span>
             </div>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -365,10 +387,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No main protective bonding</strong> — gas and water service pipes not
-                bonded to the main earthing terminal. This is typically a C2 deficiency on an
-                EICR and should be remediated promptly. Bonding cables are yellow-green, typically
-                10mm, attached to the pipework near the meter with an earthing clamp.
+                <strong>No main protective bonding</strong> — gas and water service pipes not bonded
+                to the main earthing terminal. This is typically a C2 deficiency on an EICR and
+                should be remediated promptly. Bonding cables are yellow-green, typically 10mm,
+                attached to the pipework near the meter with an earthing clamp.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -390,9 +412,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>5-amp round-pin sockets</strong> — these are very old socket types (pre-1950s)
-                indicating the installation has not been updated since the property was built.
-                A comprehensive rewire is likely needed.
+                <strong>5-amp round-pin sockets</strong> — these are very old socket types
+                (pre-1950s) indicating the installation has not been updated since the property was
+                built. A comprehensive rewire is likely needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -422,55 +444,61 @@ const sections = [
     heading: 'Before and After Purchase: What to Do',
     content: (
       <>
-        <p>
-          The ideal sequence for electrical due diligence when buying a property is:
-        </p>
+        <p>The ideal sequence for electrical due diligence when buying a property is:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-5 text-white">
             <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">1</span>
+              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                1
+              </span>
               <div>
                 <strong>Ask for existing electrical certificates</strong>
                 <p className="text-white text-sm mt-1">
                   Ask the seller or estate agent for any existing EICR, EIC, or Minor Works
-                  Certificates for the property. A valid EICR within the past 5 to 10 years is a
-                  positive indicator. Absence of any certificates is a red flag — it does not mean
-                  the installation is unsafe, but it means there is no verified evidence of its
-                  condition.
+                  Certificates for the property. A valid EICR within the past 5 years (or the
+                  interval stated on the report) is a positive indicator. Absence of any
+                  certificates is a red flag — it does not mean the installation is unsafe, but it
+                  means there is no verified evidence of its condition.
                 </p>
               </div>
             </li>
             <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">2</span>
+              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                2
+              </span>
               <div>
                 <strong>Commission an EICR before exchange</strong>
                 <p className="text-white text-sm mt-1">
                   Instruct a qualified electrician (NICEIC, NAPIT, or equivalent registered) to
-                  carry out an EICR of the property before exchange of contracts. Use the results
-                  to negotiate or to require remediation by the seller as a condition of purchase.
+                  carry out an EICR of the property before exchange of contracts. Use the results to
+                  negotiate or to require remediation by the seller as a condition of purchase.
                 </p>
               </div>
             </li>
             <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">3</span>
+              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                3
+              </span>
               <div>
                 <strong>Remediate C1 and C2 deficiencies immediately</strong>
                 <p className="text-white text-sm mt-1">
-                  Any C1 (danger present) or C2 (potentially dangerous) deficiencies identified
-                  in the EICR must be remediated before or immediately after moving in. C3
-                  improvement recommendations should be budgeted for and addressed within a
-                  reasonable timeframe.
+                  Any C1 (danger present) or C2 (potentially dangerous) deficiencies identified in
+                  the EICR must be remediated before or immediately after moving in. C3 improvement
+                  recommendations should be budgeted for and addressed within a reasonable
+                  timeframe.
                 </p>
               </div>
             </li>
             <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">4</span>
+              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                4
+              </span>
               <div>
                 <strong>Plan any major electrical upgrades</strong>
                 <p className="text-white text-sm mt-1">
                   If the EICR reveals that the installation is nearing the end of its useful life
-                  (very old wiring, no RCD protection, rewireable fuses), plan for a full rewire
-                  or consumer unit upgrade within the first year of ownership.
+                  (very old wiring, no RCD protection, rewireable fuses), plan for a full rewire or
+                  consumer unit upgrade within the first year of ownership.
                 </p>
               </div>
             </li>
@@ -498,11 +526,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EICR on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete your{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICR certificate
-                  </SEOInternalLink>{' '}
-                  on site with Elec-Mate. AI-assisted inspection guidance, deficiency classification,
-                  and instant PDF for the homeowner — professional report delivered on the day.
+                  <SEOInternalLink href="/tools/eicr-certificate">EICR certificate</SEOInternalLink>{' '}
+                  on site with Elec-Mate. AI-assisted inspection guidance, deficiency
+                  classification, and instant PDF for the homeowner — professional report delivered
+                  on the day.
                 </p>
               </div>
             </div>
@@ -513,10 +540,39 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AI Fault Finding</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Elec-Mate's AI tools help you identify and classify unfamiliar wiring types,
-                  check regulation compliance on old installations, and generate accurate remediation
+                  Elec-Mate's AI tools help you identify and classify unfamiliar wiring types, check
+                  regulation compliance on old installations, and generate accurate remediation
                   recommendations for the homeowner.
                 </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  BS 7671:2018+A4:2026 — Key Changes Affecting New Home EICRs
+                </h4>
+                <ul className="text-white text-sm leading-relaxed space-y-2 mt-1 list-disc list-inside">
+                  <li>
+                    <strong>Reg 411.3.4 — RCD protection on lighting circuits (mandatory):</strong>{' '}
+                    AC lighting circuits in domestic premises shall now have 30&nbsp;mA additional
+                    RCD protection. Existing installations without protected lighting will attract a
+                    deficiency observation on an EICR.
+                  </li>
+                  <li>
+                    <strong>Reg 421.1.7 — AFDDs recommended:</strong> BS 7671 now recommends arc
+                    fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from
+                    arc fault currents. This is recommendatory — use &apos;shall&apos; wording only
+                    when advising on new or rewired circuits.
+                  </li>
+                  <li>
+                    <strong>Reg 411.3.1.1 — Main bonding exemption:</strong> Protective bonding of
+                    metallic service pipes may be omitted where an insulating section is provided at
+                    the point of entry to the building. Verify before coding absent bonding as C2.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

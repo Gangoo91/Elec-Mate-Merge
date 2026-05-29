@@ -35,6 +35,7 @@ const tocItems = [
   { id: 'method-c', label: 'Method C' },
   { id: 'method-d', label: 'Method D' },
   { id: 'methods-efg', label: 'Methods E, F, and G' },
+  { id: 'methods-100-102', label: 'OSG Methods 100, 101, and 102' },
   { id: 'choosing-method', label: 'How to Choose the Right Method' },
   { id: 'impact-on-capacity', label: 'Impact on Current-Carrying Capacity' },
   { id: 'common-installations', label: 'Common Installation Scenarios' },
@@ -47,6 +48,8 @@ const keyTakeaways = [
   'The same cable can have vastly different current-carrying capacities depending on the reference method — for example, 2.5 mm² T+E is rated at 20 A under Method A but 27 A under Method C.',
   'The most restrictive section of the cable run determines the reference method for the entire run, even if that restrictive section is only a short distance.',
   'Method C (clipped direct) is the most common for domestic T+E cable. Method A (enclosed in conduit in an insulating wall) is used when cables are chased into masonry with conduit.',
+  'OSG Methods 100, 101, and 102 apply when flat twin-and-earth cable is in contact with plasterboard or joists inside a stud wall or ceiling void — these require derating using Tables 7.1(iii) and 7.1(iv) of the IET On-Site Guide.',
+  'Reg 622.85 of BS 7671 requires inspectors to verify that cables are adequate for current-carrying capacity, including the installation reference method and all applicable correction and grouping factors, as part of every EICR inspection.',
   'Elec-Mate handles reference method selection as part of its cable sizing calculator, automatically applying the correct column from the Appendix 4 tables across its suite of 70+ calculators.',
 ];
 
@@ -54,7 +57,7 @@ const faqs = [
   {
     question: 'What is a reference method in BS 7671?',
     answer:
-      'A reference method is a standardised description of how a cable is installed. BS 7671 Table 4C1 defines the installation reference methods (A1, A2, B, C, D, E, F, G), each describing a specific physical arrangement — for example, a cable enclosed in conduit in a thermally insulating wall (Method A), a cable clipped directly to a surface (Method C), or a cable on an open perforated tray (Method E). The reference method determines which column of the current-carrying capacity tables in Appendix 4 you use to look up the cable capacity. Different reference methods give different capacities for the same cable because the installation arrangement affects how well the cable can dissipate heat. A cable in free air on an open tray dissipates heat much more effectively than one enclosed in conduit buried in an insulated wall.',
+      'A reference method is a standardised description of how a cable is installed. Table 4A2 of BS 7671 (Appendix 4) lists the installation reference methods (A1, A2, B, C, D, E, F, G), each describing a specific physical arrangement — for example, a cable enclosed in conduit in a thermally insulating wall (Method A), a cable clipped directly to a surface (Method C), or a cable on an open perforated tray (Method E). The reference method determines which column of the current-carrying capacity tables in Appendix 4 you use to look up the cable capacity. Different reference methods give different capacities for the same cable because the installation arrangement affects how well the cable can dissipate heat. A cable in free air on an open tray dissipates heat much more effectively than one enclosed in conduit buried in an insulated wall.',
   },
   {
     question: 'Which reference method is most common for domestic work?',
@@ -74,7 +77,7 @@ const faqs = [
   {
     question: 'What is the difference between Methods E, F, and G?',
     answer:
-      'Methods E, F, and G all involve cables installed in free air with good heat dissipation, but they differ in the physical arrangement. Method E covers cables on an open or ventilated perforated cable tray — common in commercial and industrial cable management. Method F covers cables on a cable ladder or cleats — typically seen in industrial settings where large cables are secured to wall-mounted cleats or horizontal ladders. Method G covers cables touching a wall or ceiling surface in free air (not on a tray). These methods give the highest current-carrying capacities because the cables have maximum air circulation for heat dissipation. In domestic work, these methods are rarely used. In commercial and industrial installations, they are common for submains, distribution cables, and large power circuits.',
+      'Methods E, F, and G all involve cables installed in free air with good heat dissipation, but they differ in the physical arrangement. Method E covers cables on an open or ventilated perforated cable tray — common in commercial and industrial cable management. Method F covers cables on a cable ladder or cleats — typically seen in industrial settings where large cables are secured to wall-mounted cleats or horizontal ladders. Method G covers cables spaced from a wall or ceiling surface in free air, not touching the surface — this allows air to circulate on all sides of the cable, giving slightly better heat dissipation than clipped-direct Method C. These methods give the highest current-carrying capacities because the cables have maximum air circulation for heat dissipation. In domestic work, these methods are rarely used. In commercial and industrial installations, they are common for submains, distribution cables, and large power circuits.',
   },
   {
     question: 'Does the reference method affect voltage drop calculations?',
@@ -92,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Automated cable sizing with reference method selection and correction factor application.',
@@ -145,7 +148,7 @@ const sections = [
       <>
         <p>
           Installation reference methods are standardised descriptions of how a cable is physically
-          installed in a building or site. They are defined in Table 4C1 of{' '}
+          installed in a building or site. They are listed in Table 4A2 of Appendix 4 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
@@ -408,6 +411,65 @@ const sections = [
     ),
   },
   {
+    id: 'methods-100-102',
+    heading: 'OSG Methods 100, 101, and 102: Cables in Contact with Plasterboard or Joists',
+    content: (
+      <>
+        <p>
+          In addition to the lettered reference methods (A to G) in BS 7671 Table 4A2, the IET
+          On-Site Guide defines three numbered reference methods — 100, 101, and 102 — specifically
+          for flat twin-and-earth cable installed inside stud walls and ceiling voids where the
+          cable is in contact with plasterboard or joists.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Method 100:</strong> Flat twin-and-earth cable clipped to or lying on the
+                surface of a joist inside a floor or ceiling void, in contact with the joist. The
+                joist conducts heat away on one side but the overall thermal environment is more
+                restrictive than open-air Method C.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Method 101:</strong> Flat twin-and-earth cable touching the inner face of
+                plasterboard inside a stud wall or ceiling void, with thermal insulation present on
+                the other side. The plasterboard contact and proximity to insulation reduce heat
+                dissipation, requiring derating relative to Method C.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Method 102:</strong> Flat twin-and-earth cable touching plasterboard or
+                joists where thermal insulation is in contact with the cable. This is the most
+                restrictive of the three numbered methods and may require significant derating or a
+                larger cable cross-section.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          The detailed current-carrying capacity values and correction factors for Methods 100, 101,
+          and 102 are given in Tables 7.1(iii) and 7.1(iv) of the IET On-Site Guide (OSG 9th
+          Edition, 2022, incorporating A4:2026). These tables reference Table 4D5 for the base cable
+          ratings. Failing to apply these numbered methods when cables are in contact with
+          plasterboard or joists — and instead using the higher Method C ratings — results in
+          undersized cables that may overheat in service.
+        </p>
+        <p>
+          <strong>Practical note:</strong> These scenarios are very common in domestic rewires and
+          first-fix work. Any T+E cable that runs through a stud wall or across joists in a void
+          containing thermal insulation must be assessed against Methods 100–102 rather than simply
+          defaulting to Method C.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'choosing-method',
     heading: 'How to Choose the Right Reference Method',
     content: (
@@ -421,8 +483,9 @@ const sections = [
               joists, through a floor void, passing through insulation, on a tray, etc.
             </li>
             <li>
-              <strong>Identify the reference method for each section.</strong> Refer to Table 4C1 in
-              BS 7671. Match the physical installation arrangement of each section to the correct
+              <strong>Identify the reference method for each section.</strong> Refer to Table 4A2 in
+              Appendix 4 of BS 7671 (or Table 7.1(ii) of the IET On-Site Guide for domestic final
+              circuits). Match the physical installation arrangement of each section to the correct
               reference method.
             </li>
             <li>
@@ -520,7 +583,7 @@ const sections = [
           </SEOInternalLink>{' '}
           for grouping, ambient temperature, and thermal insulation are applied. After applying
           those factors, the effective capacity is lower still. The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           handles all of this in one step.

@@ -48,20 +48,17 @@ export const rcdKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'An RCD that trips the moment you reset it is usually telling a different story from one that trips after ten minutes, only in wet weather, or only when a specific load is used. Before opening accessories or disconnecting circuits, work out whether the trip is immediate, load-related, random, or linked to one item of equipment.',
+          text: 'An RCD that trips the moment you reset it is usually telling a different story from one that trips after ten minutes, only in wet weather, or only when a specific load is used. Before opening accessories or disconnecting circuits, work out whether the trip is immediate, load-related, random, or linked to one item of equipment.',
         },
         {
           type: 'paragraph',
-          text:
-            'That first read on the problem helps you avoid blind testing. If the whole bank drops when one outdoor circuit is energised, the likely causes are different from a board that trips overnight with no obvious demand on it.',
+          text: 'That first read on the problem helps you avoid blind testing. If the whole bank drops when one outdoor circuit is energised, the likely causes are different from a board that trips overnight with no obvious demand on it.',
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'Do not rely on repeated resets',
-          text:
-            'If the RCD keeps tripping, separate the downstream circuits and prove which circuit or item is actually involved. Repeated resetting without a plan only burns time and can make intermittent faults harder to pin down.',
+          text: 'If the RCD keeps tripping, separate the downstream circuits and prove which circuit or item is actually involved. Repeated resetting without a plan only burns time and can make intermittent faults harder to pin down.',
         },
       ],
     },
@@ -81,8 +78,7 @@ export const rcdKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'If you need to explain the protection side of the board to the client, [RCD types explained](/guides/rcd-types-explained) is a useful companion page.',
+          text: 'If you need to explain the protection side of the board to the client, [RCD types explained](/guides/rcd-types-explained) is a useful companion page.',
         },
       ],
     },
@@ -92,8 +88,7 @@ export const rcdKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The best fixes are rarely glamorous. Dry and remake the outdoor joint. Replace the damaged fitting. Split a heavily loaded bank onto individual RCBOs. Correct the borrowed neutral. Replace the faulty accessory. Tighten the diagnosis first, then make the smallest sound fix that removes the fault and gives the client a safer installation.',
+          text: 'The best fixes are rarely glamorous. Dry and remake the outdoor joint. Replace the damaged fitting. Split a heavily loaded bank onto individual RCBOs. Correct the borrowed neutral. Replace the faulty accessory. Tighten the diagnosis first, then make the smallest sound fix that removes the fault and gives the client a safer installation.',
         },
         {
           type: 'list',
@@ -113,13 +108,11 @@ export const rcdKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'If the visit leads to remedial work, the paperwork should show the fault found, the work completed, and the test result after the repair. If the client declines further work or the fault could not be fully traced in the time available, say that clearly and record the limitation.',
+          text: 'If the visit leads to remedial work, the paperwork should show the fault found, the work completed, and the test result after the repair. If the client declines further work or the fault could not be fully traced in the time available, say that clearly and record the limitation.',
         },
         {
           type: 'paragraph',
-          text:
-            'For certificate-driven jobs, link the remedial note back to the [EICR certificate workflow](/tools/eicr-certificate) or to a follow-on [consumer unit upgrade guide](/guides/consumer-unit-upgrade) if the fix is really about poor circuit separation rather than one defective accessory.',
+          text: 'For certificate-driven jobs, link the remedial note back to the [EICR certificate workflow](/tools/eicr-certificate) or to a follow-on [consumer unit upgrade guide](/guides/consumer-unit-upgrade) if the fix is really about poor circuit separation rather than one defective accessory.',
         },
       ],
     },
@@ -209,15 +202,13 @@ export const rcdKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Ask what was running when the trip happened, whether it happens immediately on reset, and whether weather, heating, or one item of equipment seems to trigger it. Those simple questions often cut the fault tree in half before you touch the board.',
+          text: 'Ask what was running when the trip happened, whether it happens immediately on reset, and whether weather, heating, or one item of equipment seems to trigger it. Those simple questions often cut the fault tree in half before you touch the board.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Set the job up properly',
-          text:
-            'Label the circuits, note any existing limitations, and make sure you know whether you are dealing with one split-load bank, a full RCD main switch arrangement, or mixed RCBO and RCD protection.',
+          text: 'Label the circuits, note any existing limitations, and make sure you know whether you are dealing with one split-load bank, a full RCD main switch arrangement, or mixed RCBO and RCD protection.',
         },
       ],
     },
@@ -255,8 +246,7 @@ export const rcdKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'If the issue turns out to be cumulative leakage rather than one clear defect, the next step may be better circuit separation or a move toward individual protection rather than repeated call-backs for the same bank.',
+          text: 'If the issue turns out to be cumulative leakage rather than one clear defect, the next step may be better circuit separation or a move toward individual protection rather than repeated call-backs for the same bank.',
         },
       ],
     },
@@ -266,13 +256,11 @@ export const rcdKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The final step is not just restoring power. Record the cause, the repair, the final test result, and any remaining recommendation. If the client needs a wider solution such as a board upgrade, say so clearly instead of pretending the immediate repair solved the whole installation.',
+          text: 'The final step is not just restoring power. Record the cause, the repair, the final test result, and any remaining recommendation. If the client needs a wider solution such as a board upgrade, say so clearly instead of pretending the immediate repair solved the whole installation.',
         },
         {
           type: 'paragraph',
-          text:
-            'Use this alongside the wider [RCD causes and fixes page](/guides/rcd-keeps-tripping-causes-and-fixes) and the [digital certificate flow](/tools/eicr-certificate) when the fault ties into formal reporting.',
+          text: 'Use this alongside the wider [RCD causes and fixes page](/guides/rcd-keeps-tripping-causes-and-fixes) and the [digital certificate flow](/tools/eicr-certificate) when the fault ties into formal reporting.',
         },
       ],
     },
@@ -372,11 +360,12 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
   heroPrefix: 'RCBO Keeps Tripping',
   heroHighlight: 'Guide',
   heroSubtitle:
-    'A practical guide to single-circuit trips, what the device is telling you, and how to move from one bad circuit to a defensible fix.',
+    'An RCBO trips when the circuit it protects has an overload, short circuit, or earth leakage fault. Because each RCBO covers one circuit, you already know which circuit to investigate — a practical guide to narrowing the fault and reaching a defensible fix.',
   keyTakeaways: [
     'An RCBO trip is usually easier to localise because the problem sits on one protected circuit.',
     'The main causes are still familiar: overload, short circuit, earth leakage, damaged accessories, and appliance faults.',
     'The trip timing tells you a lot. Instant trips, load-related trips, and delayed trips point you in different directions.',
+    'Under BS 7671:2018+A4:2026 Reg 411.3.4, domestic lighting circuits require additional protection by an RCD rated at 30 mA or less — a tripping RCBO on a lighting circuit may reveal a missing or failed protection device.',
     'Because the fault is localised, the paperwork should also be localised. Describe the actual circuit, the actual defect, and the actual repair.',
     'If one troublesome circuit keeps coming back, the right answer may be a deeper condition check rather than repeated minor remedials.',
   ],
@@ -387,13 +376,11 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'An RCBO protects one circuit rather than a whole bank, so when it trips you already know the problem is tied to that one circuit. That makes the diagnosis cleaner than a split-load RCD trip, because you are not trying to decide which of several circuits caused the outage.',
+          text: 'An RCBO protects one circuit rather than a whole bank, so when it trips you already know the problem is tied to that one circuit. That makes the diagnosis cleaner than a split-load RCD trip, because you are not trying to decide which of several circuits caused the outage.',
         },
         {
           type: 'paragraph',
-          text:
-            'The fault could still be overload, short circuit, or earth leakage, but the search area is smaller. That usually means quicker isolation, quicker repair, and better continuity for the rest of the installation.',
+          text: 'The fault could still be overload, short circuit, or earth leakage, but the search area is smaller. That usually means quicker isolation, quicker repair, and better continuity for the rest of the installation.',
         },
       ],
     },
@@ -419,15 +406,19 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'If the RCBO trips immediately on reset, think hard fault or solid leakage. If it trips only when a shower, immersion, or outside circuit is used, that points to demand or load-linked leakage. If it trips after rain or at certain times of day, moisture and environment move up the list quickly.',
+          text: 'If the RCBO trips immediately on reset, think hard fault or solid leakage. If it trips only when a shower, immersion, or outside circuit is used, that points to demand or load-linked leakage. If it trips after rain or at certain times of day, moisture and environment move up the list quickly.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Use the circuit history',
-          text:
-            'Recent kitchen work, a new outside light, a replaced socket, or a recently fitted appliance often matters more than broad theory. The last thing changed is worth checking early.',
+          text: 'Recent kitchen work, a new outside light, a replaced socket, or a recently fitted appliance often matters more than broad theory. The last thing changed is worth checking early.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'No conventional fault found? Consider arc faults',
+          text: 'If thorough testing finds no overload, short circuit, or measurable earth leakage, arcing is a recognised cause of nuisance trips. BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices (AFDDs) for AC final circuits to mitigate fire risk from arc fault currents. Where repeat unexplained trips occur on an otherwise sound circuit, an AFDD upgrade is worth documenting as a recommendation.',
         },
       ],
     },
@@ -437,13 +428,11 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Because the issue sits on one circuit, the close-out should be very clear: circuit description, defect found, remedial action, and test result after repair. If the client declines deeper investigation, note that limitation directly instead of leaving the job vague.',
+          text: 'Because the issue sits on one circuit, the close-out should be very clear: circuit description, defect found, remedial action, and test result after repair. If the client declines deeper investigation, note that limitation directly instead of leaving the job vague.',
         },
         {
           type: 'paragraph',
-          text:
-            'If the call-out develops into broader inspection work, move it into the [EICR certificate workflow](/tools/eicr-certificate) so the observation, recommendation, and sign-off stay together.',
+          text: 'If the call-out develops into broader inspection work, move it into the [EICR certificate workflow](/tools/eicr-certificate) so the observation, recommendation, and sign-off stay together.',
         },
       ],
     },
@@ -469,6 +458,11 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
       answer:
         'Yes. If one circuit keeps failing or there are wider signs of age, damage, or poor alterations, a fuller condition report can be the better next step.',
     },
+    {
+      question: 'Does BS 7671:2018+A4:2026 require RCD protection on domestic lighting circuits?',
+      answer:
+        'Yes. Regulation 411.3.4 of BS 7671:2018+A4:2026 makes it mandatory that AC final circuits supplying luminaires in domestic (household) premises are provided with additional protection by an RCD with a rated residual operating current not exceeding 30 mA. If a lighting RCBO keeps tripping, check that the RCD function is rated at 30 mA or less — a device rated above this does not satisfy the regulation.',
+    },
   ],
   relatedPages: [
     {
@@ -481,7 +475,8 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
     {
       href: '/guides/rcd-keeps-tripping',
       title: 'RCD Keeps Tripping',
-      description: 'Useful comparison when the outage affects a whole bank rather than one circuit.',
+      description:
+        'Useful comparison when the outage affects a whole bank rather than one circuit.',
       icon: 'AlertTriangle',
       category: 'Guide',
     },
@@ -532,6 +527,10 @@ export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       heading: 'The faults electricians see most often',
       blocks: [
         {
+          type: 'paragraph',
+          text: "An RCBO trips for one of three reasons. Overload — too much current drawn by connected loads for the circuit rating. Short-circuit — a dead fault between conductors, producing a high fault current. Earth leakage — current taking an unintended path to earth that exceeds the device's rated residual operating current, typically 30 mA on domestic circuits. Identifying which of the three is occurring before touching anything is the starting point for every diagnosis (BS 7671 Reg 531.3.2).",
+        },
+        {
           type: 'list',
           items: [
             'Damaged socket outlets, switches, isolators, and fused spurs on the affected circuit.',
@@ -544,13 +543,37 @@ export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       ],
     },
     {
+      id: 'diagnostic',
+      heading: 'How to tell whether it is overload, short-circuit, or earth leakage',
+      blocks: [
+        {
+          type: 'paragraph',
+          text: 'The GN3 subdivision approach gives a reliable sequence. Start by removing all loads and portable appliances from the circuit, then reset the RCBO. If it holds with no loads, reconnect them one at a time — the one that trips it is the load fault. If it trips immediately with nothing connected, the fault is in the fixed wiring or an accessory.',
+        },
+        {
+          type: 'list',
+          tone: 'info',
+          items: [
+            'Trips with loads removed: run an insulation resistance test between live conductors and earth. A reading below 1 MΩ (500 V DC test) points to cable or accessory damage.',
+            'Subdivide the circuit where possible — isolate sections and test each individually to pinpoint the section with low insulation resistance before dismantling anything (GN3 Reg 2.21).',
+            'Trips only under load: measure the connected current or compare load totals against the circuit rating. Overload is the likely cause if the total approaches or exceeds the RCBO rating.',
+          ],
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'Test before you replace',
+          text: 'Do not swap the RCBO before testing downstream loads and running an insulation resistance test. The device itself is rarely the fault. Replacing it without finding the root cause leaves a live defect on the circuit.',
+        },
+      ],
+    },
+    {
       id: 'best-fixes',
       heading: 'What usually fixes the trip',
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Once the fault is narrowed down properly, the fix is usually straightforward. Replace the failed outside socket. Dry and remake the light fitting. Repair the damaged flex. Replace the faulty appliance. Re-terminate the loose conductors. If the issue is overload, rework the circuit use or review the design rather than pretending the symptom is random.',
+          text: 'Once the fault is narrowed down properly, the fix is usually straightforward. Replace the failed outside socket. Dry and remake the light fitting. Repair the damaged flex. Replace the faulty appliance. Re-terminate the loose conductors. If the issue is overload, rework the circuit use or review the design rather than pretending the symptom is random. Where a cable has been penetrated by a nail or screw, any repair must also restore mechanical protection to the standard required by Reg 522.6.203 — conduit, capping, or re-routing outside the wall zone is required, not just re-jointing the conductors.',
         },
         {
           type: 'list',
@@ -569,13 +592,11 @@ export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Some RCBO faults are not really small-fix jobs. Repeated moisture problems, signs of age across the installation, or multiple questionable alterations may mean the client needs a broader inspection or a more substantial remedial plan.',
+          text: 'Some RCBO faults are not really small-fix jobs. Repeated moisture problems, signs of age across the installation, or multiple questionable alterations may mean the client needs a broader inspection or a more substantial remedial plan.',
         },
         {
           type: 'paragraph',
-          text:
-            'That is when it is worth stepping back and moving from a quick reactive visit into a clearer recommendation, whether that is an [EICR](/tools/eicr-certificate) or a bigger [consumer unit upgrade](/guides/consumer-unit-upgrade).',
+          text: 'That is when it is worth stepping back and moving from a quick reactive visit into a clearer recommendation, whether that is an [EICR](/tools/eicr-certificate) or a bigger [consumer unit upgrade](/guides/consumer-unit-upgrade).',
         },
       ],
     },
@@ -587,8 +608,7 @@ export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Explain the fix in plain English',
-          text:
-            'Clients do not need a lecture on device characteristics. They need to know which circuit failed, what was defective, what was repaired or replaced, and whether anything more is still recommended.',
+          text: 'Clients do not need a lecture on device characteristics. They need to know which circuit failed, what was defective, what was repaired or replaced, and whether anything more is still recommended.',
         },
       ],
     },
@@ -613,6 +633,12 @@ export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
       question: 'Does every RCBO repair need a certificate?',
       answer:
         'The paperwork depends on the work carried out, but the repair and the final test result should always be recorded clearly.',
+    },
+    {
+      question:
+        'Could intermittent tripping with no clear overload or leakage be caused by arcing?',
+      answer:
+        'Yes. Arc faults — caused by damaged insulation, loose terminations, or degraded conductors — produce intermittent signatures that a standard RCBO cannot detect. BS 7671 Reg 421.1.7 recommends Arc Fault Detection Devices (AFDDs) on AC final circuits of fixed installations to mitigate fire risk from arcing. If no conventional fault is found after thorough testing, arcing should be considered and an AFDD discussed with the client.',
     },
   ],
   relatedPages: [
@@ -678,13 +704,11 @@ export const eicrCommonMistakesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'One of the most common EICR problems is lazy circuit identification. If several circuits are just labelled "sockets" or "lights", the report becomes harder to trust and harder to use later when remedials are quoted.',
+          text: 'One of the most common EICR problems is lazy circuit identification. If several circuits are just labelled "sockets" or "lights", the report becomes harder to trust and harder to use later when remedials are quoted.',
         },
         {
           type: 'paragraph',
-          text:
-            'The same applies to copied-forward readings. If the circuit details, observations, and measured values look like they came from an old report rather than today’s installation, the whole document loses weight quickly.',
+          text: 'The same applies to copied-forward readings. If the circuit details, observations, and measured values look like they came from an old report rather than today’s installation, the whole document loses weight quickly.',
         },
       ],
     },
@@ -694,13 +718,11 @@ export const eicrCommonMistakesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Observation codes need to reflect the actual risk and the actual limitation of the report. Over-coding weak defects and under-coding genuinely dangerous defects are both problems. The client needs a report they can act on, not one that feels theatrical or vague.',
+          text: 'Observation codes need to reflect the actual risk and the actual limitation of the report. Over-coding weak defects and under-coding genuinely dangerous defects are both problems. The client needs a report they can act on, not one that feels theatrical or vague.',
         },
         {
           type: 'paragraph',
-          text:
-            'If coding is still a grey area on your reports, use the current [EICR limitations guide](/guides/eicr-limitations) and your scheme guidance so the wording and the code still make sense together.',
+          text: 'If coding is still a grey area on your reports, use the current [EICR limitations guide](/guides/eicr-limitations) and your scheme guidance so the wording and the code still make sense together.',
         },
       ],
     },
@@ -725,13 +747,11 @@ export const eicrCommonMistakesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A good EICR is not just technically sound. It is readable, traceable, and ready for client handover. The person reading it should understand what was inspected, what was found, what needs fixing first, and what the next step is.',
+          text: 'A good EICR is not just technically sound. It is readable, traceable, and ready for client handover. The person reading it should understand what was inspected, what was found, what needs fixing first, and what the next step is.',
         },
         {
           type: 'paragraph',
-          text:
-            'That is why the [schedule of test results](/guides/schedule-of-test-results), the observations, and the handover wording all need to agree with each other.',
+          text: 'That is why the [schedule of test results](/guides/schedule-of-test-results), the observations, and the handover wording all need to agree with each other.',
         },
       ],
     },
@@ -837,8 +857,7 @@ export const eicrWhatToIncludeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A good EICR does more than raise codes. It tells the client what the issue is, where it is, how serious it is, and why it matters. That clarity makes remedial quoting much easier and reduces the back-and-forth after handover.',
+          text: 'A good EICR does more than raise codes. It tells the client what the issue is, where it is, how serious it is, and why it matters. That clarity makes remedial quoting much easier and reduces the back-and-forth after handover.',
         },
       ],
     },
@@ -848,8 +867,7 @@ export const eicrWhatToIncludeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'If the [schedule of test results](/guides/schedule-of-test-results) looks incomplete or mismatched, the whole report feels weak. The schedule should read like evidence for the conclusions, not like a separate document prepared by somebody else.',
+          text: 'If the [schedule of test results](/guides/schedule-of-test-results) looks incomplete or mismatched, the whole report feels weak. The schedule should read like evidence for the conclusions, not like a separate document prepared by somebody else.',
         },
       ],
     },
@@ -859,8 +877,7 @@ export const eicrWhatToIncludeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The final PDF should be ready to hand over, not something that still needs cleaning up at night. If it is unsatisfactory, the client should understand what needs doing first and what you can quote next.',
+          text: 'The final PDF should be ready to hand over, not something that still needs cleaning up at night. If it is unsatisfactory, the client should understand what needs doing first and what you can quote next.',
         },
       ],
     },
@@ -950,8 +967,7 @@ export const eicrClientHandoverGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The first thing the client needs to understand is the overall result. If the report is unsatisfactory, say that plainly. If the inspection was limited, say what was excluded. If the installation is satisfactory, still explain the key notes so the handover does not feel rushed or careless.',
+          text: 'The first thing the client needs to understand is the overall result. If the report is unsatisfactory, say that plainly. If the inspection was limited, say what was excluded. If the installation is satisfactory, still explain the key notes so the handover does not feel rushed or careless.',
         },
       ],
     },
@@ -975,8 +991,7 @@ export const eicrClientHandoverGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A good handover means the client can re-open the report next week and still understand it. That is why the wording, the coding, and the schedule detail matter so much. If you expect a facilities manager, landlord, or homeowner to act on the report, the actions need to be obvious.',
+          text: 'A good handover means the client can re-open the report next week and still understand it. That is why the wording, the coding, and the schedule detail matter so much. If you expect a facilities manager, landlord, or homeowner to act on the report, the actions need to be obvious.',
         },
       ],
     },
@@ -986,8 +1001,7 @@ export const eicrClientHandoverGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'When the report leads to more work, the cleanest move is to link the defects straight into a quote, snag list, or remedial certificate path while the job is still fresh. That keeps the client journey simple and reduces lost follow-up work.',
+          text: 'When the report leads to more work, the cleanest move is to link the defects straight into a quote, snag list, or remedial certificate path while the job is still fresh. That keeps the client journey simple and reduces lost follow-up work.',
         },
       ],
     },
@@ -1077,8 +1091,7 @@ export const consumerUnitUpgradeCostGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Most clients think the board itself sets the whole price. In reality, the cost usually moves because of the installation around it: number of circuits, condition of existing conductors, need for SPDs or RCBOs, tail upgrades, bonding defects, and the amount of testing needed before the board can be safely re-energised.',
+          text: 'Most clients think the board itself sets the whole price. In reality, the cost usually moves because of the installation around it: number of circuits, condition of existing conductors, need for SPDs or RCBOs, tail upgrades, bonding defects, and the amount of testing needed before the board can be safely re-energised.',
         },
       ],
     },
@@ -1105,8 +1118,7 @@ export const consumerUnitUpgradeCostGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A fast survey saves arguments later. If the existing board is badly labelled, the tails are poor, or the main bonding is missing, that needs to be picked up early and reflected in the quote. Otherwise a tidy-looking price turns into a stressful on-site renegotiation.',
+          text: 'A fast survey saves arguments later. If the existing board is badly labelled, the tails are poor, or the main bonding is missing, that needs to be picked up early and reflected in the quote. Otherwise a tidy-looking price turns into a stressful on-site renegotiation.',
         },
       ],
     },
@@ -1116,8 +1128,7 @@ export const consumerUnitUpgradeCostGuideConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Clients respond better when the quote is clear about what is included, what is optional, and what could be subject to condition on strip-out. That is better for trust and better for margin than hiding the detail inside one headline figure.',
+          text: 'Clients respond better when the quote is clear about what is included, what is optional, and what could be subject to condition on strip-out. That is better for trust and better for margin than hiding the detail inside one headline figure.',
         },
       ],
     },
@@ -1223,8 +1234,7 @@ export const consumerUnitUpgradePriceBreakdownConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A fair labour allowance covers safe isolation, removing the old board, re-terminating circuits, resolving reasonable issues found on change-over, testing, labelling, and producing the finished paperwork. Many under-priced jobs ignore the back half of the day and only think about fitting time.',
+          text: 'A fair labour allowance covers safe isolation, removing the old board, re-terminating circuits, resolving reasonable issues found on change-over, testing, labelling, and producing the finished paperwork. Many under-priced jobs ignore the back half of the day and only think about fitting time.',
         },
       ],
     },
@@ -1234,8 +1244,7 @@ export const consumerUnitUpgradePriceBreakdownConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The job is not finished when the front cover goes on. Testing, certification, and where required notification are part of the deliverable. If they are not visible in your pricing logic, the quote is usually softer than it looks.',
+          text: 'The job is not finished when the front cover goes on. Testing, certification, and where required notification are part of the deliverable. If they are not visible in your pricing logic, the quote is usually softer than it looks.',
         },
       ],
     },
@@ -1247,8 +1256,7 @@ export const consumerUnitUpgradePriceBreakdownConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Protect the quote without hiding it',
-          text:
-            'If the survey suggests likely extras such as bonding defects, damaged circuit conductors, or tail issues, show them as conditional lines or exclusions instead of hoping they disappear on the day.',
+          text: 'If the survey suggests likely extras such as bonding defects, damaged circuit conductors, or tail issues, show them as conditional lines or exclusions instead of hoping they disappear on the day.',
         },
       ],
     },
@@ -1369,8 +1377,7 @@ export const consumerUnitUpgradeLabourAndMaterialsConfig: GeneratedGuideConfig =
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'If the client only sees one headline figure, they often assume the board itself is most of the job. Showing labour and materials logic helps them understand why one quote is higher and why a tidy installation with proper testing cannot be priced like a fast swap-out.',
+          text: 'If the client only sees one headline figure, they often assume the board itself is most of the job. Showing labour and materials logic helps them understand why one quote is higher and why a tidy installation with proper testing cannot be priced like a fast swap-out.',
         },
       ],
     },
@@ -1380,8 +1387,7 @@ export const consumerUnitUpgradeLabourAndMaterialsConfig: GeneratedGuideConfig =
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The cleanest jobs use the same structure from quote to final invoice. That consistency reduces disputes and makes it easier to explain variations if extra remedials are approved later.',
+          text: 'The cleanest jobs use the same structure from quote to final invoice. That consistency reduces disputes and makes it easier to explain variations if extra remedials are approved later.',
         },
       ],
     },
@@ -1471,8 +1477,7 @@ export const victorianTerraceElectricalRequirementsConfig: GeneratedGuideConfig 
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Victorian terraces rarely behave like blank-canvas installs. Many have been extended, divided, converted, or patched over time, which means the electrical installation can carry a mix of ages, materials, and circuit strategies in one small footprint.',
+          text: 'Victorian terraces rarely behave like blank-canvas installs. Many have been extended, divided, converted, or patched over time, which means the electrical installation can carry a mix of ages, materials, and circuit strategies in one small footprint.',
         },
       ],
     },
@@ -1498,8 +1503,7 @@ export const victorianTerraceElectricalRequirementsConfig: GeneratedGuideConfig 
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The priority is usually to create a safer, clearer installation without turning every job into a full rewire by default. Sometimes the right answer is a focused upgrade: better board arrangement, better circuit separation, and correction of the worst historic alterations. Sometimes the survey shows the property really does need far more extensive work.',
+          text: 'The priority is usually to create a safer, clearer installation without turning every job into a full rewire by default. Sometimes the right answer is a focused upgrade: better board arrangement, better circuit separation, and correction of the worst historic alterations. Sometimes the survey shows the property really does need far more extensive work.',
         },
       ],
     },
@@ -1509,13 +1513,11 @@ export const victorianTerraceElectricalRequirementsConfig: GeneratedGuideConfig 
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Victorian terrace jobs benefit from a clear split between essential safety work, optional upgrades, and finish-related items. That makes the quote easier for the client to approve and reduces scope drift later.',
+          text: 'Victorian terrace jobs benefit from a clear split between essential safety work, optional upgrades, and finish-related items. That makes the quote easier for the client to approve and reduces scope drift later.',
         },
         {
           type: 'paragraph',
-          text:
-            'If the survey points to a board change first, the [consumer unit upgrade cost guide](/guides/consumer-unit-upgrade-cost-guide) and the [electrical quoting app](/electrical-quoting-app) are the natural next steps.',
+          text: 'If the survey points to a board change first, the [consumer unit upgrade cost guide](/guides/consumer-unit-upgrade-cost-guide) and the [electrical quoting app](/electrical-quoting-app) are the natural next steps.',
         },
       ],
     },
@@ -1605,8 +1607,7 @@ export const victorianTerraceConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'In Victorian terraces, the consumer unit is often only one part of the story. You may find mixed circuit labelling, altered kitchen or loft supplies, bonding issues, or tails and accessories that no longer suit the demand of the property. That is why the survey detail matters so much before a price is promised.',
+          text: 'In Victorian terraces, the consumer unit is often only one part of the story. You may find mixed circuit labelling, altered kitchen or loft supplies, bonding issues, or tails and accessories that no longer suit the demand of the property. That is why the survey detail matters so much before a price is promised.',
         },
       ],
     },
@@ -1631,8 +1632,7 @@ export const victorianTerraceConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The cleanest way to quote is to define the upgrade scope clearly, note the likely unknowns, and show any conditional lines that may be needed if the existing condition is worse than the survey could confirm. That protects the relationship and protects the job value.',
+          text: 'The cleanest way to quote is to define the upgrade scope clearly, note the likely unknowns, and show any conditional lines that may be needed if the existing condition is worse than the survey could confirm. That protects the relationship and protects the job value.',
         },
       ],
     },
@@ -1642,8 +1642,7 @@ export const victorianTerraceConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Once the upgrade is complete, the finish matters. Clear circuit descriptions, correct certification, and a readable client handover make the job feel complete instead of rushed.',
+          text: 'Once the upgrade is complete, the finish matters. Clear circuit descriptions, correct certification, and a readable client handover make the job feel complete instead of rushed.',
         },
       ],
     },

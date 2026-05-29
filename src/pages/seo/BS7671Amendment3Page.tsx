@@ -28,7 +28,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-amendment-3', label: 'What Is Amendment 3?' },
-  { id: 'regulation-530-3-201', label: 'The A3 Section 530 Requirement' },
+  { id: 'regulation-530-3-201', label: 'The A3 Reg 530.3.201 Requirement' },
   { id: 'bidirectional-devices', label: 'Bidirectional Devices' },
   { id: 'unidirectional-devices', label: 'Unidirectional Devices' },
   { id: 'practical-impact', label: 'Practical Impact for Electricians' },
@@ -41,22 +41,24 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement — it does not replace the main standard and does not require buying a new book.',
-  'The primary change is a new requirement within Section 530 of BS 7671 (introduced by A3:2024), which addresses bidirectional and unidirectional protective and switching devices in installations with multiple sources of supply.',
+  'A3:2024 introduces two new definitions ("bidirectional protective device" and "unidirectional protective device") and one new Regulation — Reg 530.3.201 (Chapter 53) — requiring device selection to account for the direction of current flow in installations with embedded generation.',
+  'Reg 530.3.201 also prohibits placing a unidirectional device where bidirectional current flow may occur. Additionally, Reg 551.7.1(d) (introduced in A4:2026) prohibits connecting a source to the load side of an RCD under certain conditions — relevant for any PV or BESS circuit protected by an RCD.',
   'Electricians working on solar PV, battery storage, EV charger, and generator installations must understand the distinction between bidirectional and unidirectional devices to ensure correct device selection.',
   'Existing installations that are safe and compliant with BS 7671:2018+A2:2022 do not need to be retrospectively upgraded to meet A3:2024 requirements.',
-  'Elec-Mate includes updated regulation references for A3:2024, and the AI circuit designer accounts for bidirectional device requirements when designing solar PV and battery storage circuits.',
+  "BS 7671:2018+A4:2026 was issued on 15 April 2026 and may be used immediately. A3:2024 remains current but will be withdrawn on 15 October 2026. A4 introduces Chapter 82 — Prosumer's Electrical Installations — as the comprehensive framework for solar PV and BESS sites.",
+  'Elec-Mate includes updated regulation references for A3:2024 and A4:2026, and the AI circuit designer accounts for bidirectional device requirements when designing solar PV and battery storage circuits.',
 ];
 
 const faqs = [
   {
     question: 'Do I need to buy a new copy of BS 7671 for Amendment 3?',
     answer:
-      'No. Amendment 3 (A3:2024) was issued as a free PDF supplement by the IET on 31 July 2024. You can download it from the IET website at no cost. It is designed to be read alongside your existing copy of BS 7671:2018+A2:2022 (the "brown book"). The supplement adds a new regulation within Section 530 covering bidirectional and unidirectional devices, and its associated guidance notes. You do not need to purchase a new edition of the standard. When Amendment 4 is eventually published (expected 2026), that may involve a more substantial update, but for now A3 is a minor, targeted addition.',
+      'No. Amendment 3 (A3:2024) was issued as a free PDF supplement by the IET on 31 July 2024. You can download it from the IET website at no cost. It is designed to be read alongside your existing copy of BS 7671:2018+A2:2022 (the "brown book"). The supplement adds two new definitions and one new regulation — Reg 530.3.201 (Chapter 53) — covering bidirectional and unidirectional devices, plus associated guidance notes. You do not need to purchase a new edition of the standard to apply A3. Note that BS 7671:2018+A4:2026 was issued on 15 April 2026; A4 is available as a full updated edition and A3 will be withdrawn on 15 October 2026.',
   },
   {
-    question: 'What does the Amendment 3 Section 530 requirement actually require?',
+    question: 'What does Reg 530.3.201 (the A3:2024 requirement) actually require?',
     answer:
-      'The Amendment 3 addition to Section 530 requires that where an installation includes multiple sources of supply (for example, the mains supply plus a solar PV inverter or battery storage system), the protective and switching devices must be suitable for the direction of current flow they will experience. Specifically, devices that can only interrupt current flowing in one direction (unidirectional devices) must not be installed where current may flow in both directions. This means the designer must verify that every protective device in the circuit path is rated for bidirectional operation if the installation topology allows reverse current flow. The regulation is accompanied by guidance notes that explain how to identify whether a device is bidirectional or unidirectional.',
+      'Regulation 530.3.201 (introduced by A3:2024 within Chapter 53 of BS 7671) requires that the selection and erection of equipment for protection shall take account of the appropriate use of either a unidirectional protective device or a bidirectional protective device. Where an installation includes multiple sources of supply — for example the mains supply plus a solar PV inverter or battery storage system — the designer must determine whether current can flow in both directions through each protective device and, if so, select a device rated for bidirectional operation. A3:2024 also introduces two new definitions ("bidirectional protective device" and "unidirectional protective device") to support application of this regulation. Devices that are not marked to indicate a required orientation are implied to have no unidirectional constraint, but this must be confirmed against the relevant product standard.',
   },
   {
     question: 'Does Amendment 3 affect domestic installations without solar panels?',
@@ -69,15 +71,15 @@ const faqs = [
       'The manufacturer datasheet and product marking will indicate whether the device is rated for bidirectional operation. Most modern MCBs conforming to BS EN 60898-1 are bidirectional — they can interrupt fault current flowing in either direction through the device. However, some moulded case circuit breakers (MCCBs) and certain specialist devices are unidirectional only. RCBOs and RCDs should also be checked — most RCDs detect current imbalance regardless of direction, but the overcurrent element of an RCBO may be unidirectional. Always check the manufacturer documentation. If in doubt, contact the manufacturer technical support team. Elec-Mate AI agents can also help identify bidirectional compatibility for common device ranges.',
   },
   {
-    question: 'When does Amendment 4 come into effect?',
+    question: 'Has Amendment 4 been published, and when does A3 become obsolete?',
     answer:
-      'Amendment 4 to BS 7671 is expected in 2026, though the IET has not confirmed a precise publication date. Amendment 4 is anticipated to be more substantial than Amendment 3, potentially addressing areas such as energy storage systems, electric vehicle charging infrastructure, smart home installations, and updates reflecting the latest harmonised European standards. When Amendment 4 is published, there will typically be a transition period during which both the current and amended versions are acceptable. Elec-Mate will update its regulation references, AI agents, and training content as soon as Amendment 4 is officially published.',
+      'Yes — BS 7671:2018+A4:2026 was issued on 15 April 2026 and may be used immediately. The previous version (BS 7671:2018+A2:2022+Corrigendum+A3:2024) remains current but will be withdrawn on 15 October 2026, giving a six-month transition window. Amendment 4 is more substantial than Amendment 3: the headline change is a new Chapter 82 — Prosumer\'s Electrical Installations (PEIs) — which provides a consolidated framework for the design, erection and verification of installations that include local production or storage of energy (solar PV, BESS, V2G). A4 also redrafts Reg 551.7.1 to add explicit indents on bidirectional device protection and the prohibition on connecting a source to the load side of an RCD under certain conditions. See our <a href="/guides/bs-7671-amendment-4-2026" class="underline">BS 7671 Amendment 4 guide</a> for full details. Elec-Mate updates its regulation references and training content with every amendment.',
   },
   {
     question:
       'How should I document bidirectional device selection on my installation certificate?',
     answer:
-      'BS 7671:2018+A3:2024 requires that protective devices in circuits with bidirectional current flow are suitable for bidirectional operation. On the Electrical Installation Certificate (EIC) for a solar PV or battery storage installation, you should record the make, model, and current rating of all protective devices used in the AC and DC circuit paths, and confirm (in the remarks or additional information section) that devices have been checked for bidirectional suitability. The manufacturer\'s datasheet or product specification sheet should confirm this suitability — many manufacturers now explicitly state "bidirectional" on datasheets for devices intended for solar and battery applications. Elec-Mate solar PV and battery storage certificates include a dedicated field for recording bidirectional device details so this information is captured as part of the standard certificate workflow.',
+      'Regulation 530.3.201 (A3:2024) requires that protective devices in circuits with bidirectional current flow are suitable for bidirectional operation. On the Electrical Installation Certificate (EIC) for a solar PV or battery storage installation, you should record the make, model, and current rating of all protective devices used in the AC and DC circuit paths, and confirm (in the remarks or additional information section) that devices have been checked for bidirectional suitability in accordance with Reg 530.3.201. The manufacturer\'s datasheet or product specification sheet should confirm this suitability — many manufacturers now explicitly state "bidirectional" on datasheets for devices intended for solar and battery applications. Elec-Mate solar PV and battery storage certificates include a dedicated field for recording bidirectional device details so this information is captured as part of the standard certificate workflow.',
   },
 ];
 
@@ -160,10 +162,12 @@ const sections = [
           did not explicitly address.
         </p>
         <p>
-          The core of Amendment 3 is a new addition within <strong>Section 530 of BS 7671</strong>,
-          which sets out requirements for the selection and installation of protective and switching
-          devices where bidirectional current flow may occur. The amendment also includes associated
-          guidance notes to help designers and installers understand the practical implications.
+          The core of Amendment 3 is a new regulation — <strong>Reg 530.3.201</strong> (Chapter 53
+          of BS 7671) — together with two new definitions: "bidirectional protective device" and
+          "unidirectional protective device". Reg 530.3.201 sets out the requirement to select and
+          install protective devices appropriate to the direction of current flow they will
+          experience. The amendment also includes associated guidance notes to help designers and
+          installers understand the practical implications.
         </p>
         <p>
           For electricians, the key message is straightforward: if you work on any installation that
@@ -176,15 +180,18 @@ const sections = [
   },
   {
     id: 'regulation-530-3-201',
-    heading: 'The A3:2024 Section 530 Requirement: Bidirectional Devices',
+    heading: 'The A3:2024 Requirement: Reg 530.3.201 — Bidirectional Devices',
     content: (
       <>
         <p>
-          The Amendment 3 addition sits within Chapter 53 of BS 7671 (Section 530), which deals with
-          switching and control devices. The requirement states that where an installation includes
-          one or more sources of supply that can cause current to flow in more than one direction
-          through a protective or switching device, the device must be suitable for that
-          bidirectional current flow.
+          The Amendment 3 addition is Regulation 530.3.201, sitting within Chapter 53 of BS 7671
+          (Selection and Erection of Equipment). A3:2024 also introduces two new definitions —
+          <strong> "bidirectional protective device"</strong> and{' '}
+          <strong>"unidirectional protective device"</strong> — to support the regulation's
+          application. Reg 530.3.201 requires that selection and erection of protective equipment
+          shall take account of the appropriate use of either a unidirectional or a bidirectional
+          protective device, depending on whether current can flow in one direction only or in both
+          directions through the device.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -408,8 +415,8 @@ const sections = [
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 should record that the design accounts for bidirectional current flow where
-                applicable. Reference the A3:2024 Section 530 bidirectional device requirement in
-                the observations if relevant.
+                applicable. Reference the Reg 530.3.201 (A3:2024) bidirectional device requirement
+                in the observations if relevant.
               </span>
             </li>
           </ul>
@@ -434,9 +441,7 @@ const sections = [
         <p>
           The driving force behind Amendment 3 is the rapid growth of solar PV and battery storage
           installations in the UK. When a{' '}
-          <SEOInternalLink href="/guides/solar-panel-installation">
-            solar PV system
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/solar-panel-installation">solar PV system</SEOInternalLink>{' '}
           is connected to a domestic consumer unit via an AC-coupled inverter, the inverter
           generates AC current that flows back through the consumer unit and into the grid. This
           reverse current flow passes through the main switch, the meter tails, and potentially
@@ -482,6 +487,25 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-3">
+            Reg 551.7.1(d) — RCD Load-Side Prohibition (A4:2026)
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-0">
+            BS 7671:2018+A4:2026 redrafts Reg 551.7.1 and adds indent (d), which prohibits the
+            connection of a source (for example a PV inverter, BESS, or generator) to the load side
+            of an RCD under certain conditions. This is directly relevant to any installation where
+            solar PV or battery storage is connected downstream of an RCD-protected circuit.
+            Combined with Reg 530.3.201 (A3:2024), these two requirements form the core regulatory
+            framework for multi-source installations. A4:2026 was issued on 15 April 2026 and may be
+            used immediately; A3:2024 is withdrawn on 15 October 2026. See the{' '}
+            <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">
+              BS 7671 Amendment 4 guide
+            </SEOInternalLink>{' '}
+            for the full A4 framework, including the new Chapter 82 — Prosumer&apos;s Electrical
+            Installations.
+          </p>
+        </div>
         <SEOAppBridge
           title="AI circuit designer for solar PV installations"
           description="Elec-Mate's AI circuit designer handles bidirectional device selection automatically. Describe the installation — solar PV capacity, battery storage…"
@@ -498,8 +522,8 @@ const sections = [
         <p>
           Amendment 3 has direct implications for how you complete electrical certificates. When
           issuing an Electrical Installation Certificate (EIC) for a new installation or alteration
-          that includes embedded generation, you must confirm that the design complies with the
-          A3:2024 Section 530 bidirectional device requirements.
+          that includes embedded generation, you must confirm that the design complies with Reg
+          530.3.201 (A3:2024) — the bidirectional device selection requirement.
         </p>
         <p>
           On the EIC, the design section should note that bidirectional current flow has been
@@ -512,7 +536,7 @@ const sections = [
           existing installation includes any embedded generation. If it does, verify that the
           protective devices are suitable for bidirectional operation. If a unidirectional device is
           found in a bidirectional circuit path, record it as a C2 (Potentially Dangerous)
-          observation referencing the A3:2024 Section 530 bidirectional device requirement.
+          observation referencing Reg 530.3.201 (A3:2024).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -520,8 +544,9 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New installations with solar PV/BESS</strong> — the EIC must confirm
-                compliance with the A3:2024 Section 530 bidirectional device requirement. Record the
-                inverter model, battery system model, and confirm bidirectional device suitability.
+                compliance with the Reg 530.3.201 (A3:2024) bidirectional device requirement. Record
+                the inverter model, battery system model, and confirm bidirectional device
+                suitability.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -636,7 +661,7 @@ export default function BS7671Amendment3Page() {
   return (
     <GuideTemplate
       title="BS 7671 Amendment 3 (A3:2024) | Changes Explained"
-      description="Complete guide to BS 7671:2018+A3:2024 Amendment 3 changes. Bidirectional and unidirectional device requirements explained — solar PV and battery storage…"
+      description="Complete guide to BS 7671:2018+A3:2024: Reg 530.3.201 bidirectional device requirements for solar PV, battery storage and V2G installations explained."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -649,7 +674,7 @@ export default function BS7671Amendment3Page() {
           <span className="text-yellow-400">What Changed and Why It Matters</span>
         </>
       }
-      heroSubtitle="Amendment 3 (A3:2024) was issued on 31 July 2024 as a free PDF supplement. It adds new requirements within Section 530 covering bidirectional and unidirectional protective devices — essential for any installation with solar PV, battery storage, or other embedded generation. This guide explains every detail."
+      heroSubtitle="Amendment 3 (A3:2024) was issued on 31 July 2024 as a free PDF supplement. It introduces two new definitions and Reg 530.3.201 (Chapter 53) — the bidirectional and unidirectional protective device requirement — essential for any installation with solar PV, battery storage, or other embedded generation. This guide explains every detail."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

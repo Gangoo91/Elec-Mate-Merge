@@ -131,7 +131,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -266,11 +266,11 @@ export default function RingCircuitCalculatorPage() {
               interconnections have been made incorrectly. This is where the cross-connection method
               comes in — the standard testing procedure described in GN3 (Guidance Note 3:
               Inspection and Testing) and BS 7671:2018+A4:2026. Use the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               when adding new ring circuits and the{' '}
-              <SEOInternalLink href="/voltage-drop-calculator">
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify compliance on long ring runs.
@@ -616,14 +616,12 @@ export default function RingCircuitCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -631,14 +629,28 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/ring-circuit-fault-finding">Ring Circuit Fault Finding</SEOInternalLink>
+            <SEOInternalLink href="/guides/ring-circuit-fault-finding">
+              Ring Circuit Fault Finding
+            </SEOInternalLink>
             <SEOInternalLink href="/ai-circuit-designer">AI Circuit Designer</SEOInternalLink>
-            <SEOInternalLink href="/guides/cooker-circuit-guide">Cooker Circuit Guide</SEOInternalLink>
-            <SEOInternalLink href="/tools/circuit-breaker-sizing-calculator">Circuit Breaker Sizing Calculator</SEOInternalLink>
-            <SEOInternalLink href="/circuit-breaker-types">Types of Circuit Breakers UK</SEOInternalLink>
-            <SEOInternalLink href="/lighting-circuit-installation">Lighting Circuit Installation Guide — LED, Dimmers, Outdoor, Emergency</SEOInternalLink>
-            <SEOInternalLink href="/guides/overloaded-circuit-signs">Overloaded Circuit</SEOInternalLink>
-            <SEOInternalLink href="/guides/radial-circuit-explained">Radial Circuit: Cable Size & MCB Rules 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/cooker-circuit-guide">
+              Cooker Circuit Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/circuit-breaker-sizing-calculator">
+              Circuit Breaker Sizing Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/circuit-breaker-types">
+              Types of Circuit Breakers UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/lighting-circuit-installation">
+              Lighting Circuit Installation Guide — LED, Dimmers, Outdoor, Emergency
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/overloaded-circuit-signs">
+              Overloaded Circuit
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/radial-circuit-explained">
+              Radial Circuit: Cable Size & MCB Rules 2026
+            </SEOInternalLink>
           </div>
         </div>
       </section>

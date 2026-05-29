@@ -43,6 +43,8 @@ const keyTakeaways = [
   'All portable electrical equipment on site must be visually inspected before each use and formally inspected and tested (PAT tested) at intervals recommended by the HSE.',
   'Temporary electrical installations on construction sites must comply with BS 7671 and be designed, installed, and maintained by a competent person.',
   'A permit to work system must be used for all work on or near live electrical equipment — this is a legal requirement under the Electricity at Work Regulations 1989.',
+  'BS 7671 Section 704 (Construction and Demolition Site Installations) governs all temporary electrical installations on UK construction sites. Administrative locations such as site offices, canteens, and welfare facilities are excluded from Section 704 and are instead covered by Parts 1–6 of BS 7671.',
+  'Circuits supplying socket-outlets or hand-held tools rated up to 32 A must be protected by one of four methods under Reg 704.410.3.10: reduced low voltage (110 V CTE per Reg 411.8), ADS with a 30 mA RCD, electrical separation (individual transformer per outlet), or SELV/PELV.',
   'Elec-Mate generates complete RAMS documents for electrical site work using AI, covering every hazard from temporary supplies to cable routing.',
 ];
 
@@ -290,6 +292,19 @@ const sections = [
                 inspection.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Protection hierarchy for hand-held equipment (Reg 704.410.3.10):</strong>{' '}
+                Every circuit supplying socket-outlets or hand-held equipment rated up to 32 A must
+                be protected by one of four methods: (a) reduced low voltage in accordance with Reg
+                411.8 — the standard 110 V CTE transformer arrangement; (b) automatic disconnection
+                of supply (ADS) with an additional 30 mA RCD per Reg 415.1.1; (c) electrical
+                separation (Section 413) with an individual transformer for each socket-outlet; or
+                (d) SELV or PELV (Section 414). The 110 V CTE route (a) is the industry standard on
+                UK construction sites and satisfies this requirement directly.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -407,10 +422,12 @@ const sections = [
         <p>
           For detailed guidance on permit to work systems, including templates and implementation
           advice, see our dedicated{' '}
-          <SEOInternalLink href="/guides/permit-to-work-electrician">permit to work guide</SEOInternalLink>.
-          Elec-Mate can generate permit to work documents as part of the{' '}
-          <SEOInternalLink href="/rams-generator">RAMS package</SEOInternalLink>,
-          pre-populated with the site details and the specific hazards identified in your{' '}
+          <SEOInternalLink href="/guides/permit-to-work-electrician">
+            permit to work guide
+          </SEOInternalLink>
+          . Elec-Mate can generate permit to work documents as part of the{' '}
+          <SEOInternalLink href="/rams-generator">RAMS package</SEOInternalLink>, pre-populated with
+          the site details and the specific hazards identified in your{' '}
           <SEOInternalLink href="/guides/risk-assessment-electricians">
             risk assessment
           </SEOInternalLink>
@@ -435,10 +452,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Route cables overhead where possible.</strong> Cables should be suspended at
-                a minimum height of 5.8 metres where vehicles pass beneath, or 3 metres minimum for
-                pedestrian areas only. Use proper cable supports — never drape cables over
-                scaffolding or hang them from nails.
+                <strong>Route cables overhead where possible.</strong> Under BS 7671 Reg
+                708.521.7.3, overhead conductors must be at a minimum height of 6 metres where
+                vehicles pass beneath, or 3.5 metres minimum in pedestrian-only areas. Use proper
+                cable supports — never drape cables over scaffolding or hang them from nails.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -552,7 +569,7 @@ export default function ElectricalSafetyOnSitePage() {
   return (
     <GuideTemplate
       title="Electrical Safety on Site | Construction Guide UK"
-      description="Complete guide to electrical safety on UK construction sites. Covers 110V vs 230V systems, portable equipment inspections, temporary supplies…"
+      description="Complete UK guide: 110V CTE systems, PAT testing, BS 7671 Section 704 temporary supplies, permit to work, and cable routing for construction sites."
       datePublished="2025-05-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

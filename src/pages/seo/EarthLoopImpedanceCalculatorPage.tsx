@@ -66,7 +66,7 @@ const howToSteps = [
   },
   {
     name: 'Apply temperature correction',
-    text: 'Multiply the calculated Zs by the appropriate correction factor to account for conductor resistance at operating temperature. For thermoplastic (PVC) insulated cables, multiply by 1.20. For thermosetting (XLPE) cables, multiply by 1.28. Using the previous example: 1.21 x 1.20 = 1.45 ohms at operating temperature.',
+    text: 'Multiply the calculated Zs by the appropriate correction factor to account for conductor resistance at operating temperature. GN3 (Chapter 5) notes that where reduced csa protective conductors are used, maximum EFLIs may need further reduction; the general temperature correction requirement stems from the fact that the tabulated Zs values in BS 7671 Tables 41.2–41.4 (and GN3 Tables B1–B6) are based on conductors at their maximum normal operating temperature, not at the ambient temperature at which site measurements are taken. The correction factors commonly used on site are 1.20 for thermoplastic (PVC) insulated cables and 1.28 for thermosetting (XLPE) cables — verify the precise values for your measurement conditions against GN3 9th Ed Table B2. Using the previous example with 1.20: 1.21 x 1.20 = 1.45 ohms at operating temperature.',
   },
   {
     name: 'Compare against BS 7671 maximum Zs',
@@ -126,7 +126,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -211,6 +211,26 @@ export default function EarthLoopImpedanceCalculatorPage() {
         </div>
       </section>
 
+      {/* Direct-answer block — targets featured-snippet position */}
+      <section className="px-5 pb-4">
+        <div className="max-w-4xl mx-auto p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <p className="text-white leading-relaxed">
+            <strong className="text-yellow-400">What is Zs?</strong> Zs is the total earth fault
+            loop impedance — the complete impedance of the fault current path from the point of
+            fault, through the circuit protective conductor (CPC), back to the supply transformer
+            and return via the line conductor. It is calculated using the formula{' '}
+            <strong className="text-yellow-400">Zs = Ze + (R1 + R2)</strong>, where Ze is the
+            external impedance supplied by the network and R1 + R2 is the combined resistance of the
+            line conductor and CPC within the installation. To verify BS 7671 compliance, the
+            corrected Zs (adjusted to conductor operating temperature) must not exceed the maximum
+            values in{' '}
+            <strong className="text-yellow-400">BS 7671:2018+A4:2026 Tables 41.2–41.4</strong> for
+            the protective device fitted — confirming that automatic disconnection of supply will
+            operate within the required disconnection time (GN3 9th Ed, Chapter 8).
+          </p>
+        </div>
+      </section>
+
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
@@ -243,10 +263,13 @@ export default function EarthLoopImpedanceCalculatorPage() {
               disconnection of supply. BS 7671 Regulation 411.3.2 requires that, in the event of a
               fault between a line conductor and an exposed-conductive-part connected to the
               protective earthing, the protective device must disconnect the faulty circuit within a
-              specified time. For final circuits not exceeding 32 A, the maximum disconnection time
-              is 0.4 seconds. For distribution circuits and final circuits exceeding 32 A, the
-              maximum time is 5 seconds. The lower the earth fault loop impedance, the higher the
-              fault current, and the faster the protective device will operate.
+              specified time. Under Reg 411.3.1.2, the 0.4 second disconnection time applies to two
+              categories of final circuit: (i) final circuits rated up to 32 A that supply only
+              fixed connected current-using equipment, and (ii) final circuits rated up to 63 A that
+              include one or more socket-outlets. For distribution circuits and other final circuits
+              not falling within those two categories, the maximum disconnection time is 5 seconds.
+              The lower the earth fault loop impedance, the higher the fault current, and the faster
+              the protective device will operate.
             </p>
             <p>
               If the earth fault loop impedance is too high, the fault current will be insufficient
@@ -536,11 +559,12 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 <h3 className="font-bold text-white text-lg mb-2">Method 2: Correction Factor</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Multiply your measured Zs by a correction factor to obtain the estimated Zs at
-                  operating temperature. For 70 degrees C thermoplastic cables measured at 10 to 20
-                  degrees C ambient, the factor is approximately 1.20. For 90 degrees C
-                  thermosetting cables, the factor is approximately 1.28. The corrected value is
-                  then compared directly against the BS 7671 maximum. This method is more precise
-                  and is described in GN3.
+                  operating temperature. For 70 degrees C thermoplastic cables, the factor commonly
+                  applied on site is approximately 1.20; for 90 degrees C thermosetting cables,
+                  approximately 1.28. The corrected value is then compared directly against the BS
+                  7671 maximum. GN3 9th Ed Tables B1–B6 tabulate maximum Zs values at a reference
+                  temperature of 10 °C; consult GN3 9th Ed Table B2 for the precise correction
+                  factors applicable to your measurement conditions and cable type.
                 </p>
               </div>
             </div>
@@ -674,10 +698,16 @@ export default function EarthLoopImpedanceCalculatorPage() {
           </div>
 
           <p className="text-white text-sm leading-relaxed">
-            These values are from BS 7671:2018+A4:2026 and represent the maximum Zs at conductor
-            operating temperature. When comparing against site measurements taken at ambient
-            temperature, use the 80% rule or apply the appropriate correction factor as described
-            above.
+            These values are from{' '}
+            <strong className="text-yellow-400">BS 7671:2018+A4:2026 Tables 41.2–41.4</strong> and
+            represent the maximum Zs at conductor operating temperature. Cross-referenced against{' '}
+            <strong className="text-yellow-400">
+              GN3 9th Ed (2022, incorporating A4) Tables B1–B6
+            </strong>
+            , which present maximum Zs values at a reference temperature of 10 °C and provide the
+            correction factors required for site measurements taken at ambient temperature. When
+            comparing against site measurements, use the 80% rule or apply the appropriate
+            correction factor from GN3 9th Ed Table B2 as described above.
           </p>
         </div>
       </section>
@@ -743,6 +773,134 @@ export default function EarthLoopImpedanceCalculatorPage() {
               as a secondary measure. The Elec-Mate calculator checks both the RCD limit and the
               OCPD limit, flagging any discrepancies.
             </p>
+            <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 mt-4">
+              <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                TT Systems — Earth Electrode Resistance (Ra)
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                On TT installations, the return path from the installation earth back to the supply
+                transformer is through the general mass of earth rather than a metallic conductor.
+                The resistance of this path — the earth electrode resistance, Ra — can be 20 ohms or
+                more, making Zs far too high for any overcurrent protective device to clear a fault
+                within the required disconnection time. This is why BS 7671 Regulation 411.5
+                requires TT installations to use RCD protection: Regulation 411.6.5(b) states that
+                the condition Ra &#215; I &#8804; 50 V must be satisfied (where Ra is the sum of the
+                resistances of the earth electrode and the protective conductor, and I is the
+                current causing automatic disconnection). Because RCDs operate on differential
+                current rather than fault-current magnitude, even a very high Ra will not prevent
+                disconnection — the 1667 ohm limit for a 30 mA RCD easily encompasses any practical
+                TT Ze value.
+              </p>
+              <p className="text-white text-sm leading-relaxed mt-2">
+                Ra is measured on site using a proprietary earth electrode resistance tester (or the
+                3-terminal fall-of-potential method). BS 7671 Regulation 643.7.3 requires that where
+                the earthing system incorporates an earth electrode, the electrode resistance to
+                earth (Ra) shall be measured and recorded. Typical TT Ze values obtained from the
+                distributor or measured on site should be used for design verification; on-site
+                measurement is required if the distributed value is unavailable or suspect (OSG Reg
+                1.3).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Prospective Fault Current (Ipf) */}
+      <section className="py-16 px-5">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+              <Zap className="w-5 h-5 text-yellow-400" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Prospective Fault Current (Ipf) and the Schedule of Test Results
+            </h2>
+          </div>
+          <div className="space-y-4 text-white leading-relaxed">
+            <p>
+              Alongside Zs, BS 7671 Regulation 643.7.3.201 requires that the{' '}
+              <strong className="text-yellow-400">
+                prospective short-circuit current and prospective earth fault current
+              </strong>{' '}
+              shall be measured, calculated, or determined at the origin of the installation and at
+              other relevant points. This is a mandatory requirement for initial verification — not
+              an optional check. The prospective fault current (commonly written as Ipf or PSCC at
+              the origin) must be recorded on the Schedule of Test Results and on the Electrical
+              Installation Certificate (EIC).
+            </p>
+            <p>
+              Ipf is related to Zs but is a separate quantity. While Zs tells you whether a fault
+              will be cleared quickly enough, Ipf tells you how severe the fault current could be at
+              a given point. All protective devices (MCBs, fuses, RCBOs) have a rated short-circuit
+              capacity (Ics or Icn) — the maximum fault current they can safely interrupt. If Ipf
+              exceeds the device's rated breaking capacity, the device may fail catastrophically
+              during a fault. BS 7671 Appendix 14 provides further guidance on determination of
+              prospective fault current.
+            </p>
+            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <h3 className="font-bold text-white text-base mb-2">
+                Ipf at the origin — quick formula
+              </h3>
+              <p className="text-sm text-white leading-relaxed">
+                Ipf (prospective earth fault current) = Uo ÷ Zs, where Uo is the nominal
+                line-to-earth voltage (230 V). Prospective short-circuit current (line-to-line) uses
+                the line-to-line voltage (400 V) and the relevant loop impedance. For typical TN-C-S
+                supplies with Ze of 0.35 ohms, Ipf at the origin is approximately 230 ÷ 0.35 ≈{' '}
+                <strong className="text-yellow-400">657 A</strong> — well within the 6 kA breaking
+                capacity of standard domestic MCBs. On installations with very low Ze (close to a
+                substation), Ipf can be significantly higher.
+              </p>
+            </div>
+            <p>
+              The OSG (On-Site Guide, Reg 1.2.7) confirms that installers shall document
+              verification of prospective fault current on installation records, certificates, and
+              schedules of tests to demonstrate compliance. When completing an EICR, the maximum Ipf
+              recorded at the time of original installation should be checked against device
+              ratings; a code C2 or C3 may be appropriate if devices with insufficient breaking
+              capacity are found.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* A4:2026 Changes Relevant to Zs Planning */}
+      <section className="py-16 px-5">
+        <div className="max-w-4xl mx-auto">
+          <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/30">
+            <h2 className="text-xl sm:text-2xl font-bold text-yellow-400 mb-4">
+              BS 7671 A4:2026 — Key Changes for Zs Planning
+            </h2>
+            <div className="space-y-4 text-white leading-relaxed text-sm">
+              <div>
+                <h3 className="font-bold text-white mb-1">
+                  Reg 411.3.4 — Mandatory RCD protection on domestic lighting circuits
+                </h3>
+                <p>
+                  Amendment 4 adds Regulation 411.3.4, which requires that AC final circuits
+                  supplying luminaires within domestic (household) premises shall be provided with
+                  additional protection by an RCD with a rated residual operating current not
+                  exceeding 30 mA. This directly affects Zs planning on lighting circuits (such as
+                  Example 2 above): the circuit must now have a 30 mA RCD regardless of whether the
+                  Zs easily meets the OCPD limit. The 1667 ohm RCD Zs limit will always be
+                  satisfied, but the presence of the mandatory RCD must be reflected on the Schedule
+                  of Test Results and the EICR.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-bold text-white mb-1">
+                  Reg 421.1.7 — AFDD recommendation for AC final circuits
+                </h3>
+                <p>
+                  Regulation 421.1.7 recommends the installation of arc fault detection devices
+                  (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire
+                  due to arc fault currents. The wording is recommendatory (not mandatory with
+                  'shall'), but specifiers and assessors should consider AFDDs — particularly on
+                  socket-outlet circuits — when planning protection at design stage. AFDDs combine
+                  OCPD and RCD functions with arc detection; their Zs requirements follow the
+                  integrated OCPD type fitted.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -785,11 +943,11 @@ export default function EarthLoopImpedanceCalculatorPage() {
               and the CPC resistance (R2) over the length of the circuit.
             </p>
             <p>
-              Common R1+R2 values for domestic circuits depend on the cable size and length. For
-              example, a 2.5 mm² twin and earth cable (with 1.0 mm² CPC) has a combined R1+R2 of
-              approximately 25.51 milliohms per metre at 20 degrees C. A 20-metre run would give
-              R1+R2 of about 0.51 ohms. A 1.5 mm² cable (with 1.0 mm² CPC) has approximately 30.20
-              milliohms per metre, so a 25-metre lighting circuit would give about 0.76 ohms.
+              Common R1+R2 values for domestic circuits depend on the cable size and length. Always
+              obtain the precise mΩ/m figures from GN3 Table B1 (copper conductors at 20 °C) — the
+              full table must be used because fragmentary extracts can be misleading. Note that
+              25.51 mΩ/m refers to aluminium 2.5 mm² conductors, not copper twin and earth; verify
+              the correct copper 2.5 mm²/1.0 mm² CPC value from Table B1 before use in calculations.
             </p>
           </div>
         </div>
@@ -880,14 +1038,12 @@ export default function EarthLoopImpedanceCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -895,14 +1051,30 @@ export default function EarthLoopImpedanceCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">Earth Fault Loop Impedance Explained</SEOInternalLink>
-            <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">Earth Fault Loop Impedance Calculation</SEOInternalLink>
-            <SEOInternalLink href="/guides/earth-fault-loop-impedance-testing">Earth Fault Loop Impedance Testing</SEOInternalLink>
-            <SEOInternalLink href="/guides/earth-loop-impedance-too-high">Earth Loop Impedance Too High</SEOInternalLink>
-            <SEOInternalLink href="/guides/earth-fault-loop-impedance-too-high">Earth Fault Loop Impedance Too High</SEOInternalLink>
-            <SEOInternalLink href="/loop-impedance-testing-guide">Loop Impedance Testing Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/earth-electrode-testing">Earth Electrode Testing</SEOInternalLink>
-            <SEOInternalLink href="/earth-electrode-testing">Earth Electrode Testing Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">
+              Earth Fault Loop Impedance Explained
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
+              Earth Fault Loop Impedance Calculation
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-testing">
+              Earth Fault Loop Impedance Testing
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-loop-impedance-too-high">
+              Earth Loop Impedance Too High
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-too-high">
+              Earth Fault Loop Impedance Too High
+            </SEOInternalLink>
+            <SEOInternalLink href="/loop-impedance-testing-guide">
+              Loop Impedance Testing Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-electrode-testing">
+              Earth Electrode Testing
+            </SEOInternalLink>
+            <SEOInternalLink href="/earth-electrode-testing">
+              Earth Electrode Testing Guide UK
+            </SEOInternalLink>
           </div>
         </div>
       </section>

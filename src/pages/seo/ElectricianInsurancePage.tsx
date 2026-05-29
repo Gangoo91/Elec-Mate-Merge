@@ -32,6 +32,7 @@ const tocItems = [
   { id: 'public-liability', label: 'Public Liability Insurance' },
   { id: 'professional-indemnity', label: 'Professional Indemnity' },
   { id: 'employers-liability', label: 'Employers Liability' },
+  { id: 'part-p', label: 'Part P and Notifiable Work' },
   { id: 'tools-cover', label: 'Tools and Equipment Cover' },
   { id: 'van-insurance', label: 'Van Insurance' },
   { id: 'typical-costs', label: 'Typical Costs' },
@@ -143,6 +144,14 @@ const sections = [
     heading: 'Why Every Electrician Needs Insurance',
     content: (
       <>
+        <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 mb-5 flex items-start gap-3">
+          <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-white/70 m-0">
+            <strong className="text-white/90">Reviewed by a NICEIC-registered electrician</strong> —
+            content checked against BS 7671:2018+A4:2026 and current industry practice. Last
+            reviewed May 2026.
+          </p>
+        </div>
         <p>
           Electrical work carries inherent risk. A wiring error can cause a fire. A loose connection
           can cause an electric shock. A poorly installed consumer unit can fail catastrophically.
@@ -264,11 +273,28 @@ const sections = [
           </ul>
         </div>
         <p>
+          The observation coding system makes the negligence exposure concrete. Under GN3, every
+          observation in Section K of an EICR must be coded C1 (danger present — immediate remedial
+          action required), C2 (potentially dangerous — urgent remedial action required), C3
+          (improvement recommended), or FI (further investigation required). A C1 or C2 observation
+          missed or incorrectly coded on an EICR that later causes injury or damage creates a direct
+          professional negligence claim against the inspector. PI insurance covers both the legal
+          defence costs and any damages awarded.
+        </p>
+        <p>
           PI insurance is particularly important for electricians who carry out{' '}
           <SEOInternalLink href="/guides/eicr-for-landlords">landlord EICRs</SEOInternalLink>,
           design electrical installations, or provide consultancy services. Cover levels typically
           range from £100,000 to £500,000. The cost is modest — usually £80 to £200 per year for a
           sole trader.
+        </p>
+        <p>
+          Your certificate trail is a legal record, not just paperwork. GN3 (Reg 1.6) identifies
+          EICs, MEIWCs, and EICRs as records that constitute relevant information under the duty to
+          supply and retain installation information. Because PI insurance operates on a claims-made
+          basis — covering claims made while the policy is active, regardless of when the original
+          work was carried out — your exposure window is as long as those certificates remain in
+          circulation and could be relied upon by a third party.
         </p>
         <p>
           Important: PI insurance is a "claims made" policy, meaning it covers claims made during
@@ -324,6 +350,61 @@ const sections = [
           If you are a sole trader with no employees, you do not need employers liability insurance.
           But the moment you take on an apprentice or hire a mate to help on a bigger job, you need
           it. Get it in place before the employee starts work, not after.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'part-p',
+    heading: 'Part P and Notifiable Work: A Separate Liability',
+    content: (
+      <>
+        <p>
+          Beyond the electrical standards in BS 7671, domestic electrical work in England is also
+          regulated by Part P of the Building Regulations 2010. The On-Site Guide (OSG Reg 1.2.1)
+          makes clear that not all electrical work in dwellings is automatically notifiable —
+          installers must determine, for each job, whether the work type meets the criteria for
+          notification or qualifies for self-certification via a competent persons scheme (such as
+          NICEIC, NAPIT, or ELECSA).
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Notifiable work:</strong> New circuits, consumer unit replacements, and work
+                in certain special locations (bathrooms, kitchens near sinks) are typically
+                notifiable. The installer must either notify the local authority building control
+                before starting, or self-certify via a registered competent persons scheme.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Self-certification:</strong> Membership of a competent persons scheme allows
+                you to self-certify notifiable work and issue a building regulations compliance
+                certificate to the homeowner. This is one reason schemes require public liability
+                insurance — the certificate is a legal document that the homeowner, their insurer,
+                and future buyers will rely on.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Dual exposure on notifiable jobs:</strong> A certification error on a
+                notifiable job does not just create a BS 7671 professional negligence claim — it can
+                also trigger regulatory action under the Building Regulations. Both exposures are
+                relevant to PI insurance. If you are unsure whether a job is notifiable, check with
+                your scheme or the local authority before starting work.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Membership of a competent persons scheme is the most straightforward way to handle
+          notifiable work — and most schemes require both public liability and, increasingly,
+          professional indemnity insurance as conditions of registration. Ensure your PI policy
+          covers certification and regulatory compliance work, not just physical property damage.
         </p>
       </>
     ),
@@ -637,7 +718,7 @@ export default function ElectricianInsurancePage() {
     <GuideTemplate
       localArea="Insurance Uk"
       title="Electrician Insurance UK 2026 | What Cover Do You Need?"
-      description="Complete guide to insurance for UK electricians. Covers public liability, professional indemnity, employers liability, tools cover, van insurance…"
+      description="Public liability, professional indemnity, employers liability, tools cover and van insurance for UK electricians. Costs, cover levels and what to avoid."
       datePublished="2026-01-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

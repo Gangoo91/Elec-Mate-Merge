@@ -21,6 +21,7 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   keyTakeaways: [
     'An RCBO usually points you to one circuit, one load, or one damaged point rather than a whole board problem.',
     'The most common causes are overload, leakage to earth, damaged accessories, moisture ingress, and recent alteration work.',
+    'For a 30 mA RCBO, total downstream earth leakage from all loads must not exceed 9 mA (30% of 30 mA) to avoid nuisance trips — Reg 531.3.1.202(c).',
     'Read the trip pattern first. Instant trips, load-related trips, and intermittent trips usually need a different test path.',
     'If the fix is bigger than a local repair, record that clearly and move the job toward a quote or further inspection.',
     'Elec-Mate helps you move from fault, to quote, to certificate, without losing the details in the middle.',
@@ -30,6 +31,10 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
       id: 'start-here',
       heading: 'Start with the way it trips',
       blocks: [
+        {
+          type: 'paragraph',
+          text: 'An RCBO trips because it detects either excess current or residual earth-leakage current on its protected circuit. The most common causes are overload, accumulated earth leakage from multiple appliances, damaged insulation, moisture ingress, and a mismatch between the RCBO type and modern electronic loads. Identifying which of those applies — and measuring it — is the fastest route to a fix that holds.',
+        },
         {
           type: 'paragraph',
           text: 'An RCBO that trips instantly usually behaves differently from one that trips only under load or only after a few minutes. That simple detail often tells you whether you are dealing with a hard fault, leakage, or a circuit that is being asked to carry more than it should.',
@@ -53,6 +58,22 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
             'Loose terminations, heat damage, and worn accessories that only fail once the circuit is under demand.',
             'Alteration work that has left a borrowed neutral, bad junction, or other hidden wiring issue behind.',
           ],
+        },
+      ],
+    },
+    {
+      id: 'rcbo-type-selection',
+      heading: 'RCBO type: AC, A, or F?',
+      blocks: [
+        {
+          type: 'paragraph',
+          text: 'An RCBO marked Type AC responds only to sinusoidal residual currents. Modern circuits feeding switchmode power supplies (phone chargers, LED drivers, computers), variable-speed drives, and EV chargers produce pulsating DC or mixed-waveform residual currents — which a Type AC device may not detect reliably, or may detect erratically, causing unexplained tripping behaviour.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'Type selection matters for modern loads',
+          text: 'Per OSG Reg 3.6.4.5, the operating characteristic of an RCD/RCBO shall be selected according to the nature of residual currents expected on the circuit. Type A is the minimum for circuits supplying electronic equipment, EV charge points, or any load known to produce pulsating DC. Type F adds sensitivity to high-frequency residual currents typical of some variable-speed drives. If the RCBO type is mismatched to the load, the device may nuisance-trip or fail to provide the intended protection.',
         },
       ],
     },
@@ -105,8 +126,8 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
         {
           type: 'list',
           items: [
-            'Insulation resistance test L-E and N-E on the disconnected circuit. Anything below 1 MΩ is your suspect.',
-            'Check for cumulative earth leakage by measuring with a clamp meter on the protective conductor.',
+            'Insulation resistance test: link L and N together and measure L&N to E at 500 V DC. Minimum acceptable is 1.0 MΩ per Table 64 (Reg 643.3.2). Anything below that is your suspect.',
+            'Check for cumulative earth leakage: clamp around the live conductors only (excluding the PE), per the GN3 earth leakage clamp method (GN3 Reg 1.08). Total downstream leakage must not exceed 9 mA on a 30 mA RCBO (30% rule, Reg 531.3.1.202(c)).',
             'Look for shared neutrals between circuits — a borrowed neutral will trip on imbalance, not earth fault.',
             'Test at 0° and 180° phase angle — some faults only trigger on one half-cycle, especially with switched-mode loads.',
           ],

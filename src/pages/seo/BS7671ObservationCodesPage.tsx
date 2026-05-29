@@ -46,6 +46,12 @@ const faqs = [
       'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, if an EICR identifies any observations that require urgent remedial action or further investigation (C1, C2, or FI), the landlord must ensure that further investigative or remedial work is carried out within 28 days. If the inspector specifies a shorter period on the report (for example, for a C1 Danger Present observation that requires immediate action), the landlord must comply with that shorter period. The landlord must then obtain written confirmation from a qualified person that the remedial work has been completed to a satisfactory standard. Failure to comply can result in civil penalties of up to 30,000 pounds per breach.',
   },
   {
+    question:
+      'How do I code the absence of an AFDD or 30 mA RCD on lighting circuits under A4:2026?',
+    answer:
+      'BS 7671:2018+A4:2026 introduced two new requirements that inspectors will increasingly encounter on EICRs of legacy installations. Regulation 421.1.7 (new in A4:2026) recommends the installation of arc fault detection devices (AFDDs) on AC final circuits of fixed installations to mitigate the risk of fire from arc fault currents. Because the regulation uses recommendatory rather than mandatory language, absence of an AFDD on an existing installation would typically attract a C3 code — an improvement recommended but not a safety defect. Regulation 411.3.4 (new in A4:2026) is mandatory: it requires that, within domestic (household) premises, AC final circuits supplying luminaires shall be provided with additional protection by a 30 mA RCD. For a new installation or rewire this is a hard requirement. For an existing domestic installation where lighting circuits are not RCD-protected, the absence represents a departure from the current edition; in a low-risk context this is typically coded C3, but where there are aggravating factors (for example, exposed or damaged wiring, high-use circuits, vulnerable occupants) the inspector may judge C2 appropriate. In all cases, document the observation clearly and cite the relevant regulation.',
+  },
+  {
     question: 'Can I change an observation code after the EICR has been issued?',
     answer:
       'Once an EICR has been signed and issued to the client, it is a formal document and should not be altered retrospectively. If you realise an observation has been incorrectly coded, the correct procedure is to issue an amended report with a clear explanation of the correction, or to issue a new EICR if the error is significant. Some competent person scheme providers have specific procedures for amending issued certificates. In practice, the best approach is to take your time coding observations correctly before signing the report. Elec-Mate helps by providing classification guidance and examples for each code, so you can make an informed decision before finalising.',
@@ -53,7 +59,7 @@ const faqs = [
   {
     question: 'What is the most common C2 observation found on domestic EICRs?',
     answer:
-      'The most frequently occurring C2 observation in domestic installations is the absence of RCD protection on final socket-outlet circuits in dwellings. Under BS 7671, socket-outlet circuits rated up to 20 A in domestic premises must be protected by a 30 mA RCD. Many older consumer units contain MCBs without RCD protection for socket circuits, which represents a potentially dangerous condition given the risk of electric shock to occupants using portable appliances. Other commonly encountered C2 observations include: earthing and bonding deficiencies where the main bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where required. Correctly identifying and coding these observations is essential — a C2 that should be a C1 could put a client at serious risk, while over-coding C3 observations as C2 creates unnecessary alarm.',
+      'The most frequently occurring C2 observation in domestic installations is the absence of RCD protection on final socket-outlet circuits in dwellings. Under BS 7671 Reg 411.3.3 (as revised by A4:2026), socket-outlet circuits rated up to 32 A must be protected by a 30 mA RCD. Many older consumer units contain MCBs without RCD protection for socket circuits, which represents a potentially dangerous condition given the risk of electric shock to occupants using portable appliances. Other commonly encountered C2 observations include: earthing and bonding deficiencies where the main bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where required. Correctly identifying and coding these observations is essential — a C2 that should be a C1 could put a client at serious risk, while over-coding C3 observations as C2 creates unnecessary alarm.',
   },
 ];
 
@@ -168,6 +174,45 @@ export default function BS7671ObservationCodesPage() {
             criteria, and how to write clear observations that stand up to scrutiny. For UK
             electricians.
           </p>
+          {/* Quick-reference table — targets featured-snippet for 'C1 C2 C3 observation codes' */}
+          <div className="w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden border border-white/10">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06]">
+                  <th className="px-4 py-3 font-semibold text-white">Code</th>
+                  <th className="px-4 py-3 font-semibold text-white">Meaning</th>
+                  <th className="px-4 py-3 font-semibold text-white">Action required</th>
+                  <th className="px-4 py-3 font-semibold text-white">EICR outcome</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                <tr>
+                  <td className="px-4 py-3 font-bold text-red-400">C1</td>
+                  <td className="px-4 py-3 text-white">Danger Present</td>
+                  <td className="px-4 py-3 text-white">Immediate</td>
+                  <td className="px-4 py-3 text-red-400 font-medium">Unsatisfactory</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-bold text-orange-400">C2</td>
+                  <td className="px-4 py-3 text-white">Potentially Dangerous</td>
+                  <td className="px-4 py-3 text-white">Urgent</td>
+                  <td className="px-4 py-3 text-red-400 font-medium">Unsatisfactory</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-bold text-blue-400">C3</td>
+                  <td className="px-4 py-3 text-white">Improvement Recommended</td>
+                  <td className="px-4 py-3 text-white">Advisory</td>
+                  <td className="px-4 py-3 text-green-400 font-medium">Satisfactory</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-bold text-purple-400">FI</td>
+                  <td className="px-4 py-3 text-white">Further Investigation</td>
+                  <td className="px-4 py-3 text-white">Without delay</td>
+                  <td className="px-4 py-3 text-red-400 font-medium">Unsatisfactory</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="/auth/signup"
@@ -204,9 +249,11 @@ export default function BS7671ObservationCodesPage() {
               classifying observations across the industry. Before the current system, different
               inspectors and different scheme providers used different terminology, making it
               difficult for property owners and other stakeholders to understand the severity of
-              identified issues. The current C1, C2, C3, FI system — as defined in BS 7671 and the
-              associated IET Guidance Notes — provides a common language that is understood across
-              the UK electrical industry.
+              identified issues. The current C1, C2, C3, FI system — as defined in GN3 Table 3.5
+              (IET Guidance Note 3, 9th edition) and required by Regulation 3.11 of that guidance —
+              provides a common language that is understood across the UK electrical industry.
+              Scheme providers including NAPIT, NICEIC and ELECSA audit completed EICRs against the
+              definitions in Table 3.5.
             </p>
             <p>
               The observation codes are used during the periodic inspection of existing
@@ -595,9 +642,10 @@ export default function BS7671ObservationCodesPage() {
               Every observation should answer three questions: What was found? Where was it found?
               Which regulation does it relate to? For example, instead of writing "Bonding
               inadequate", write "Main protective bonding conductor to incoming water service is
-              absent. Regulation 411.3.1.2 requires main protective bonding to all
-              extraneous-conductive-parts." The second version tells the reader exactly what the
-              problem is, where it is, and which regulation requires it to be addressed.
+              absent. Regulation 544.1.2 requires the main protective bonding connection to any
+              extraneous-conductive-part to be made as near as practicable to the point of entry."
+              The second version tells the reader exactly what the problem is, where it is, and
+              which regulation requires it to be addressed.
             </p>
             <p>
               For FI observations, also explain why further investigation is needed and what
@@ -628,17 +676,18 @@ export default function BS7671ObservationCodesPage() {
                 Good Observations
               </h3>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
-                <li>"Main bonding to water service absent. Reg 411.3.1.2."</li>
+                <li>"Main bonding to water service absent. Reg 544.1.2."</li>
                 <li>
-                  "RCD serving kitchen sockets tripped at 22mA (below 50% of rated current). Replace
-                  RCD. Reg 531.3.3."
+                  "RCD serving kitchen sockets tripped during test at 22 mA. Rated residual current
+                  30 mA. Replace RCD — device operating below rated tripping threshold."
                 </li>
                 <li>
                   "Circuit 7 (first-floor ring) — Zs measured 2.15 ohms, max permitted 1.37 ohms for
                   B32. Reg 411.3.2."
                 </li>
                 <li>
-                  "Red/black wiring colours present throughout. Not re-identified. C3 — Reg 514.14."
+                  "Red/black wiring colours present throughout. Not re-identified with
+                  sleeving/markers. C3 — Reg 514 (identification of conductors)."
                 </li>
                 <li>
                   "Cables in loft void laid directly on thermal insulation. Access limited — FI to
@@ -889,7 +938,6 @@ export default function BS7671ObservationCodesPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -897,12 +945,24 @@ export default function BS7671ObservationCodesPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/eicr-observation-codes-explained">EICR Observation Codes C1 C2 C3 FI Explained</SEOInternalLink>
-            <SEOInternalLink href="/guides/cable-colour-codes-uk">Cable Colour Codes UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-error-codes">EV Charger Error Codes</SEOInternalLink>
-            <SEOInternalLink href="/guides/polarity-testing-guide-bs7671">Polarity Testing Guide BS 7671</SEOInternalLink>
-            <SEOInternalLink href="/guides/bathroom-electrical-zones-bs7671">Bathroom Electrical Zones BS 7671</SEOInternalLink>
-            <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">Insulation Resistance Testing BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+              EICR Observation Codes C1 C2 C3 FI Explained
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/cable-colour-codes-uk">
+              Cable Colour Codes UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-error-codes">
+              EV Charger Error Codes
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/polarity-testing-guide-bs7671">
+              Polarity Testing Guide BS 7671
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/bathroom-electrical-zones-bs7671">
+              Bathroom Electrical Zones BS 7671
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
+              Insulation Resistance Testing BS 7671
+            </SEOInternalLink>
           </div>
         </div>
       </section>

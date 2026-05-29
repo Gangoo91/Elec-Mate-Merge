@@ -44,7 +44,8 @@ const tocItems = [
 const keyTakeaways = [
   'BS 7375 (Code of Practice for Distribution of Electricity on Construction and Building Sites) provides guidance on temporary electrical installations, supplementing BS 7671 Section 704.',
   '110V Centre-Tapped Earth (CTE) supply is the standard for portable power tools on UK construction sites — the 55 V to earth voltage significantly reduces the risk of fatal electric shock.',
-  'All site distribution boards must be of robust construction, IP-rated for the outdoor environment (minimum IP44), and equipped with 30 mA RCDs on all socket-outlet circuits.',
+  'All site distribution boards must be of robust construction and IP-rated for the outdoor environment (minimum IP44). Socket-outlet circuits ≤ 32 A must be protected by one of four methods under Reg 704.410.3.10: reduced low voltage (Reg 411.8, the standard 110V CTE route), ADS with 30 mA RCD (Reg 415.1.1), electrical separation (Section 413), or SELV/PELV (Section 414).',
+  'Distribution boards on construction sites must comply with BS EN 61439-4 as an Assembly for Construction Sites (ACS) — the correct technical term used by BS 7671 (Reg 421.1201) and required by inspectors and designers.',
   'Cable management on construction sites must prevent mechanical damage, tripping hazards, and contact with water — overhead routes, armoured cable, or protected cable routes are required.',
   'Elec-Mate allows electricians to complete EICR certificates for temporary site installations, generate professional reports for principal contractors, and document compliance with CDM regulations.',
 ];
@@ -53,7 +54,7 @@ const faqs = [
   {
     question: 'What is a 110V CTE supply and why is it used on construction sites?',
     answer:
-      'A 110V Centre-Tapped Earth (CTE) supply is a reduced-voltage electrical supply system specifically designed for use on construction sites. It uses a step-down transformer that takes the incoming 230V single-phase mains supply and converts it to 110V. The key safety feature is the "centre-tapped earth" arrangement: the secondary winding of the transformer has its centre point connected to earth. This means the maximum voltage between any live conductor and earth is only 55V (half of 110V), rather than 230V. At 55V, the current flowing through a person in the event of a fault is significantly lower than at 230V, and the risk of a fatal electric shock is greatly reduced — though not eliminated entirely. The 110V CTE system is identified by its yellow colour-coding: yellow plugs, yellow sockets, and yellow cables. The transformer is typically housed in a robust metal or GRP enclosure rated for outdoor use. The standard for construction site electrical distribution is BS 7375, which recommends 110V CTE as the standard supply for portable hand tools and temporary lighting on construction sites. BS 7671 Section 704 also applies. The 110V CTE system does not replace the need for RCD protection — 30 mA RCDs must still be provided on all 110V socket-outlet circuits.',
+      'A 110V Centre-Tapped Earth (CTE) supply is a reduced-voltage electrical supply system specifically designed for use on construction sites. It uses a step-down transformer that takes the incoming 230V single-phase mains supply and converts it to 110V. The key safety feature is the "centre-tapped earth" arrangement: the secondary winding of the transformer has its centre point connected to earth. This means the maximum voltage between any live conductor and earth is only 55V (half of 110V), rather than 230V. At 55V, the current flowing through a person in the event of a fault is significantly lower than at 230V, and the risk of a fatal electric shock is greatly reduced — though not eliminated entirely. The 110V CTE system is identified by its yellow colour-coding: yellow plugs, yellow sockets, and yellow cables. The transformer is typically housed in a robust metal or GRP enclosure rated for outdoor use. The standard for construction site electrical distribution is BS 7375, which recommends 110V CTE as the standard supply for portable hand tools and temporary lighting on construction sites. BS 7671:2018+A4:2026 Section 704 also applies. Under Reg 704.410.3.10, the 110V CTE reduced low voltage system itself satisfies the required protection for socket-outlet circuits ≤ 32 A (method (a), Reg 411.8) — it is not necessary to add a 30 mA RCD on top of a CTE circuit, though RCDs provide additional protection where specified. A 30 mA RCD is specifically required under method (b) when 230V ADS is chosen as the protection method for a socket-outlet circuit.',
   },
   {
     question: 'Can I use 230V tools on a construction site?',
@@ -63,7 +64,7 @@ const faqs = [
   {
     question: 'What type of distribution board is required on a construction site?',
     answer:
-      "Construction site distribution boards must comply with BS 7375 and BS EN 61439-4 (assemblies for construction sites). The key requirements are: robust construction — the enclosure must withstand the mechanical impacts, vibration, and rough handling typical of a construction site. An impact resistance rating of IK08 or higher is recommended. IP rating — a minimum of IP44 for outdoor use, providing protection against solid objects greater than 1mm and splashing water. In particularly wet or exposed locations, IP55 or higher may be required. Socket-outlets — BS EN 60309-2 industrial sockets are the standard for construction sites. Yellow sockets indicate 110V CTE supply, blue sockets indicate 230V single-phase, and red sockets indicate 400V three-phase. All socket-outlet circuits must be protected by 30 mA RCDs. Isolation — each socket-outlet or group of sockets must have individual isolation capability (typically interlocked socket-outlets that cannot be connected or disconnected under load). The main incoming supply must have a lockable isolator for safe isolation during maintenance. Portability — site distribution boards are often portable (trolley-mounted or carry-handle) to allow repositioning as the construction progresses. They must be stable and secure when in use. Cable entries — all cable entries must be via IP-rated cable glands that maintain the enclosure's ingress protection rating. No open knockouts.",
+      "Construction site distribution boards must comply with BS 7375 and BS EN 61439-4 (Assemblies for Construction Sites — ACS). The key requirements are: robust construction — the enclosure must withstand the mechanical impacts, vibration, and rough handling typical of a construction site. An impact resistance rating of IK08 or higher is recommended. IP rating — a minimum of IP44 for outdoor use, providing protection against solid objects greater than 1mm and splashing water. In particularly wet or exposed locations, IP55 or higher may be required. Socket-outlets — BS EN 60309-2 industrial sockets are the standard for construction sites. Yellow sockets indicate 110V CTE supply, blue sockets indicate 230V single-phase, and red sockets indicate 400V three-phase. Under Reg 704.410.3.10, socket-outlet circuits ≤ 32 A must be protected by one of four permitted methods: reduced low voltage (Reg 411.8 — the standard 110V CTE route), ADS with 30 mA RCD (Reg 415.1.1), electrical separation (Section 413), or SELV/PELV (Section 414). Isolation — each socket-outlet or group of sockets must have individual isolation capability (typically interlocked socket-outlets that cannot be connected or disconnected under load). The main incoming supply must have a lockable isolator for safe isolation during maintenance. Portability — site distribution boards are often portable (trolley-mounted or carry-handle) to allow repositioning as the construction progresses. They must be stable and secure when in use. Cable entries — all cable entries must be via IP-rated cable glands that maintain the enclosure's ingress protection rating. No open knockouts.",
   },
   {
     question: 'How often should a construction site temporary installation be inspected?',
@@ -120,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate correct cable sizes for temporary and permanent installations accounting for all derating factors.',
@@ -128,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/guides/caravan-park-electrical',
+    href: '/guides/caravan-park-electrical',
     title: 'Caravan Park Electrical',
     description:
       'Similar outdoor distribution challenges — BS 7671 Section 708, TT earthing, and IP-rated equipment.',
@@ -160,7 +161,7 @@ const sections = [
           Sites) is the primary guidance document for temporary electrical installations on
           construction sites in the UK. It works alongside{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 704 (Construction and Demolition Sites), which provides the regulatory framework
           for these installations.
@@ -175,12 +176,24 @@ const sections = [
         </p>
         <p>
           The key principles of BS 7375 and Section 704 are: reduced voltage (110V CTE) for portable
-          tools and temporary lighting, robust and weatherproof distribution equipment, 30 mA RCD
-          protection on all socket-outlet circuits, regular inspection and testing (quarterly EICR),
+          tools and temporary lighting, robust and weatherproof distribution equipment, compliant
+          protection on all socket-outlet circuits ≤ 32 A (Reg 704.410.3.10 — four permitted methods
+          including the standard 110V CTE route), regular inspection and testing (quarterly EICR),
           and safe isolation procedures for all electrical work. These principles are non-negotiable
           on any UK construction site, and the principal contractor has a legal duty under CDM 2015
           to ensure they are applied.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>BS 7671:2018+A4:2026.</strong> The current edition of the wiring regulations is
+            BS 7671:2018+A4:2026 — not A2:2022. Key A4:2026 changes relevant to construction sites
+            include: the introduction of Reg 421.1.7, which recommends arc fault detection devices
+            (AFDDs) on AC final circuits to mitigate fire risk from arc faults (relevant to welfare
+            cabins and site offices with fixed wiring); and updated EICR Schedule of Inspections
+            fields for SPD and AFDD provisions. Ensure EICRs and design specifications reference the
+            correct edition.
+          </p>
+        </div>
       </>
     ),
   },
@@ -299,6 +312,17 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Assembly for Construction Sites (ACS) — BS EN 61439-4.</strong> BS 7671 Reg
+            421.1201 specifies that distribution boards and assemblies intended for construction
+            sites shall satisfy the particular requirements of <strong>BS EN 61439-4:2013</strong>{' '}
+            (Assemblies for Construction Sites — ACS). The ACS designation is the correct technical
+            term used by designers, specifiers, and inspectors. When procuring or certifying a site
+            distribution board, verify that it carries the ACS marking in accordance with BS EN
+            61439-4, in addition to any required IP and IK ratings.
+          </p>
+        </div>
         <p>
           Distribution boards must be mounted on stable, level surfaces and protected from vehicle
           traffic. On multi-storey construction sites, temporary distribution boards on each floor
@@ -319,19 +343,28 @@ const sections = [
     content: (
       <>
         <p>
-          RCD protection is mandatory on all construction site socket-outlet circuits — both 110V
-          CTE and 230V. BS 7671 Regulation 704.410.3.10 requires that every socket-outlet circuit is
-          protected by a 30 mA RCD. This applies regardless of the voltage.
+          BS 7671 Regulation 704.410.3.10 sets out the required protection for every socket-outlet
+          circuit ≤ 32 A and every circuit supplying hand-held equipment ≤ 32 A on construction
+          sites. The regulation permits four alternative protection methods — designers and
+          electricians must apply at least one. The 30 mA RCD requirement applies specifically under
+          method (b) when 230V ADS is chosen; it is <em>not</em> a blanket requirement on all
+          circuits, including those already protected by 110V CTE reduced low voltage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA RCD on all socket-outlet circuits.</strong> Every socket-outlet
-                circuit on a construction site, regardless of voltage, must be protected by a 30 mA
-                RCD. This is the last line of defence against electric shock when all other
-                protective measures (reduced voltage, earthing, insulation) have failed.
+                <strong>Reg 704.410.3.10 — four permitted methods.</strong> <strong>(a)</strong>{' '}
+                Reduced low voltage per Reg 411.8 — this is the primary route for 110V CTE supplies,
+                and is strongly preferred for portable hand tools and local lighting up to 2 kW
+                (NOTE 1). <strong>(b)</strong> Automatic disconnection of supply (ADS) per Section
+                411 with additional protection by a 30 mA RCD meeting Reg 415.1.1 — the required
+                route when 230V circuits supply socket-outlets on site. <strong>(c)</strong>{' '}
+                Electrical separation per Section 413, with each socket-outlet fed by an individual
+                transformer winding (attention to Reg 413.3.4 required). <strong>(d)</strong> SELV
+                or PELV per Section 414. At least one method must be applied on every qualifying
+                circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -446,10 +479,11 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance.</strong> Measure Zs at the most distant
-                socket-outlet on each circuit. Verify the disconnection time is within the limits
-                specified in BS 7671 for the protective device type and rating. For 110V CTE
-                circuits, the maximum Zs values are different from 230V circuits — check the tables
-                in BS 7671 Appendix 3.
+                socket-outlet on each circuit. GN3 maximum Zs table values are stated at ambient
+                temperature; where tests are carried out at other ambient temperatures, apply the
+                Table A7 correction factors from GN3 before comparing against the permitted maximum.
+                For 110V CTE circuits, the maximum Zs values are lower than for 230V circuits —
+                check the correct GN3 appendix table for the protective device type and rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -464,10 +498,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD testing.</strong> Test every 30 mA RCD at 1x and 5x the rated operating
-                current. Record the trip time for each. RCDs on construction sites are subject to
-                more wear than those in permanent installations and should be tested more
-                frequently.
+                <strong>RCD testing.</strong> Per BS 7671:2018+A4:2026 Reg 643.3, RCD effectiveness
+                is verified by an alternating current test at the rated residual operating current
+                (I&#916;n). Note: the previous time/current table (former Appendix 3 Table 3A) was
+                deleted in A4:2026. Record the trip time at I&#916;n for each RCD. RCDs on
+                construction sites are subject to more wear than those in permanent installations
+                and should be tested more frequently.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -650,7 +686,7 @@ export default function ConstructionSiteTemporarySupplyPage() {
           <span className="text-yellow-400">The Complete 110V Guide for UK Sites</span>
         </>
       }
-      heroSubtitle="Construction site temporary installations must use 110V CTE for portable tools, IP-rated distribution boards, 30 mA RCD protection on every circuit, and quarterly EICR inspections. This guide covers BS 7375, BS 7671 Section 704, and everything electricians need to know about site electrics."
+      heroSubtitle="Construction site temporary installations must use 110V CTE for portable tools, IP-rated distribution boards, compliant protection on all socket-outlet circuits (Reg 704.410.3.10), and quarterly EICR inspections. This guide covers BS 7375, BS 7671:2018+A4:2026 Section 704, and everything electricians need to know about site electrics."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

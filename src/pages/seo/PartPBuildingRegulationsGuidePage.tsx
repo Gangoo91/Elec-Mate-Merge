@@ -43,6 +43,8 @@ const keyTakeaways = [
   'Non-notifiable work — such as like-for-like replacement of accessories and additions to existing circuits in most rooms — does not require building control notification.',
   'Electricians registered with NICEIC, NAPIT, ELECSA, or another approved competent person scheme can self-certify their work, issuing a certificate directly without involving building control.',
   'Failure to notify can create serious problems when selling a property, as buyers solicitors will request evidence of Building Regulations compliance for all electrical work.',
+  'BS 7671:2018+A4:2026 Reg 411.3.4 now requires RCD protection (≤30 mA) on all domestic AC lighting circuits — every consumer unit replacement must include RCD-protected lighting ways.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits in dwellings to mitigate fire risk from arc fault currents.',
 ];
 
 const faqs = [
@@ -121,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for new circuits that require Part P notification.',
     icon: Calculator,
@@ -154,10 +156,12 @@ const sections = [
           work commences.
         </p>
         <p>
-          Part P applies to Scotland, Wales, and Northern Ireland under their own separate building
-          regulations, which have equivalent requirements. The specific competent person schemes and
-          notification procedures differ slightly by nation, but the underlying principle — that
-          significant electrical work in dwellings must be verified — is consistent across the UK.
+          Part P applies to England only. Scotland, Wales, and Northern Ireland have their own
+          separate building regulations: Wales has its own Approved Documents published by Welsh
+          Ministers, Scotland uses Technical Standards and Handbooks, and Northern Ireland has its
+          own Building Regulations (Northern Ireland) Order. Electricians working outside England
+          should consult the relevant devolved authority for the applicable notification and
+          self-certification requirements.
         </p>
         <p>
           For electricians, understanding Part P is essential. Failure to self-certify or notify
@@ -229,6 +233,32 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4 space-y-3">
+          <h3 className="font-bold text-white text-base">
+            BS 7671:2018+A4:2026 — What Changes for Consumer Unit Replacements
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Reg 411.3.4 — RCD protection on lighting circuits (mandatory).</strong> A4:2026
+            introduces a mandatory requirement that, within domestic (household) premises, all AC
+            final circuits supplying luminaires shall have additional protection by an RCD with a
+            rated residual operating current not exceeding 30 mA. Every consumer unit replacement in
+            a domestic dwelling must therefore provide RCD-protected ways for all lighting circuits.
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Reg 421.1.7 — AFDDs recommended on AC final circuits.</strong> A4:2026 also
+            introduces a recommendation (not a mandate) that arc fault detection devices (AFDDs) be
+            installed on AC final circuits of a fixed installation to mitigate the risk of fire from
+            arc fault currents. Discuss the option with the homeowner when quoting a consumer unit
+            replacement, and record the decision on the EIC.
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            <strong>DNO notification when breaking the meter seal.</strong> If the consumer unit
+            replacement requires access to the meter tails or breaking the DNO meter seal, the
+            network operator must be notified and give permission before seals are broken. This
+            requirement is separate from Part P — failure to notify the DNO is the most commonly
+            cited procedural mistake on consumer unit replacement jobs.
+          </p>
         </div>
         <p>
           The key principle is that notifiable work involves higher risk — either because it creates
@@ -590,7 +620,7 @@ export default function PartPBuildingRegulationsGuidePage() {
   return (
     <GuideTemplate
       title="Part P Building Regulations | Electrical Work in Dwellings"
-      description="Complete guide to Part P Building Regulations for electricians. What work is notifiable, competent person scheme self-certification…"
+      description="Complete guide to Part P Building Regulations for electricians — what work is notifiable electrical work UK, how self-certification works via NICEIC/NAPIT/ELECSA, and the consequences of non-compliance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

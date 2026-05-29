@@ -618,7 +618,7 @@ export default function LEDLightingGuidePage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate cable sizes for lighting circuits.',
           icon: Calculator,
@@ -646,7 +646,7 @@ export default function LEDLightingGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Check voltage drop on long lighting cable runs.',
           icon: Gauge,

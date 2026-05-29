@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size every cable in the new build correctly with all BS 7671 correction factors applied automatically.',
@@ -340,7 +340,7 @@ const sections = [
                 <strong>Cable sizing</strong> — a 7kW single phase charge point draws approximately
                 32A. The circuit typically requires a 6.0mm2 or 10.0mm2 cable (depending on cable
                 length and correction factors) protected by a 32A or 40A RCBO. Use Elec-Mate's{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -485,8 +485,8 @@ const sections = [
           Both AFDDs and SPDs add cost to the consumer unit — budget an additional £30-£50 per
           circuit for AFDDs and £50-£100 for an SPD module. Include these in the initial quote to
           avoid surprises. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to price the full
-          new build installation including all protective devices.
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to price the
+          full new build installation including all protective devices.
         </p>
       </>
     ),
@@ -516,7 +516,7 @@ const sections = [
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/max-demand-calculator">
+                  <SEOInternalLink href="/tools/max-demand-calculator">
                     Maximum demand
                   </SEOInternalLink>
                 </strong>{' '}

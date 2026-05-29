@@ -28,9 +28,9 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'overview', label: 'Why Electrical Science Matters' },
-  { id: 'ohms-law', label: 'Ohm\'s Law' },
+  { id: 'ohms-law', label: "Ohm's Law" },
   { id: 'power-triangle', label: 'Power Triangle' },
-  { id: 'kirchhoffs-laws', label: 'Kirchhoff\'s Laws' },
+  { id: 'kirchhoffs-laws', label: "Kirchhoff's Laws" },
   { id: 'series-parallel', label: 'Series vs Parallel Circuits' },
   { id: 'ac-theory', label: 'AC Theory' },
   { id: 'three-phase', label: 'Three-Phase Theory' },
@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Ohm\'s law (V = I x R) is the foundation of everything. If you understand the relationship between voltage, current, and resistance, every other formula builds on it.',
+  "Ohm's law (V = I x R) is the foundation of everything. If you understand the relationship between voltage, current, and resistance, every other formula builds on it.",
   'The power triangle (P = I x V, P = I\u00B2R, P = V\u00B2/R) lets you calculate power, current, or voltage when you know two of the three values — essential for cable sizing and circuit design.',
   'Series circuits share the same current; parallel circuits share the same voltage. Knowing this helps you understand how consumer units, ring circuits, and distribution boards work.',
   'AC theory introduces impedance, reactance, and power factor — these matter for commercial and industrial installations and appear in your Level 3 exams.',
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Do I need to memorise all these formulas for the exam?',
     answer:
-      'Yes, for most electrical exams (including the Level 2 and Level 3 diploma exams and the 18th Edition), you need to know the key formulas from memory. The good news is that all the formulas are variations of the same core relationships. Start with Ohm\'s law (V = IR) and the power formula (P = IV). From these two, you can derive everything else: P = I\u00B2R, P = V\u00B2/R, I = P/V, R = V/I, and so on. Practise using the formulas with real numbers until they become second nature. The formulas themselves are simple — the challenge in exams is recognising which formula to use for a given question.',
+      "Yes, for most electrical exams (including the Level 2 and Level 3 diploma exams and the 18th Edition), you need to know the key formulas from memory. The good news is that all the formulas are variations of the same core relationships. Start with Ohm's law (V = IR) and the power formula (P = IV). From these two, you can derive everything else: P = I\u00B2R, P = V\u00B2/R, I = P/V, R = V/I, and so on. Practise using the formulas with real numbers until they become second nature. The formulas themselves are simple — the challenge in exams is recognising which formula to use for a given question.",
   },
   {
     question: 'Why do I need to know three-phase theory as an apprentice?',
@@ -70,7 +70,7 @@ const faqs = [
       'Power factor is the ratio of real power (watts, what does useful work) to apparent power (volt-amps, what the supply delivers). A power factor of 1.0 means all the power delivered is doing useful work — this occurs in purely resistive loads like heaters. A power factor less than 1.0 means some of the power delivered is "wasted" as reactive power (it oscillates back and forth without doing useful work). Inductive loads like motors, transformers, and fluorescent lighting have lagging power factors, typically 0.7 to 0.9. Poor power factor means the supply has to deliver more current for the same useful power output, leading to larger cables, bigger transformers, higher losses, and penalty charges from the DNO for commercial customers. Power factor correction capacitors can improve the power factor, reducing current demand and losses.',
   },
   {
-    question: 'What is the easiest way to remember Kirchhoff\'s laws?',
+    question: "What is the easiest way to remember Kirchhoff's laws?",
     answer:
       'Kirchhoff\'s Current Law (KCL): "what goes in must come out." The total current entering a junction equals the total current leaving it. Think of a T-junction in a pipe — the water flowing in equals the water flowing out through both branches. Kirchhoff\'s Voltage Law (KVL): "the voltage drops must add up to the supply." The sum of all voltages around a closed loop equals zero — or, put simply, the voltage drops across all components in a series circuit add up to the supply voltage. If you have a 230V supply and three resistors in series, the voltage drops across all three must total 230V. These two laws, combined with Ohm\'s law, let you analyse any circuit.',
   },
@@ -91,10 +91,10 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Apply your science knowledge practically — size cables using Ohm\'s law and voltage drop.',
+      "Apply your science knowledge practically — size cables using Ohm's law and voltage drop.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -145,8 +145,8 @@ const sections = [
         <p>
           Electrical science is not just a college subject you need to pass — it is the foundation
           of everything you do on site. When you size a cable, you are using Ohm's law. When you
-          measure earth fault loop impedance, you are applying Kirchhoff's laws. When you work on
-          a commercial three-phase board, you need to understand the relationship between line and
+          measure earth fault loop impedance, you are applying Kirchhoff's laws. When you work on a
+          commercial three-phase board, you need to understand the relationship between line and
           phase voltages.
         </p>
         <p>
@@ -160,42 +160,36 @@ const sections = [
         </p>
         <p>
           Take it one section at a time. Work through the examples with a calculator. If a concept
-          does not click immediately, read it again — electrical science builds on itself, and
-          every topic connects to the ones before it.
+          does not click immediately, read it again — electrical science builds on itself, and every
+          topic connects to the ones before it.
         </p>
       </>
     ),
   },
   {
     id: 'ohms-law',
-    heading: 'Ohm\'s Law: The Foundation',
+    heading: "Ohm's Law: The Foundation",
     content: (
       <>
         <p>
-          Ohm's law describes the relationship between voltage (V), current (I), and resistance
-          (R) in an electrical circuit:
+          Ohm's law describes the relationship between voltage (V), current (I), and resistance (R)
+          in an electrical circuit:
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
           <p className="text-2xl font-bold text-white mb-2">V = I x R</p>
-          <p className="text-white text-sm">
-            Voltage (volts) = Current (amps) x Resistance (ohms)
-          </p>
+          <p className="text-white text-sm">Voltage (volts) = Current (amps) x Resistance (ohms)</p>
         </div>
         <p>
-          Rearranged: <strong>I = V / R</strong> (to find current) and{' '}
-          <strong>R = V / I</strong> (to find resistance).
+          Rearranged: <strong>I = V / R</strong> (to find current) and <strong>R = V / I</strong>{' '}
+          (to find resistance).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Worked Example 1</h3>
           <p className="text-white mb-2">
             A 3kW immersion heater is connected to a 230V supply. What current does it draw?
           </p>
-          <p className="text-white mb-1">
-            First, convert 3kW to watts: 3,000W
-          </p>
-          <p className="text-white mb-1">
-            Using P = IV, rearranged to I = P / V:
-          </p>
+          <p className="text-white mb-1">First, convert 3kW to watts: 3,000W</p>
+          <p className="text-white mb-1">Using P = IV, rearranged to I = P / V:</p>
           <p className="text-white mb-1">
             <strong>I = 3,000 / 230 = 13.04A</strong>
           </p>
@@ -209,15 +203,13 @@ const sections = [
           <p className="text-white mb-2">
             A cable has a resistance of 0.5 ohms and carries 20A. What is the voltage drop?
           </p>
-          <p className="text-white mb-1">
-            Using V = IR:
-          </p>
+          <p className="text-white mb-1">Using V = IR:</p>
           <p className="text-white mb-1">
             <strong>V = 20 x 0.5 = 10V</strong>
           </p>
           <p className="text-white text-sm mt-2">
-            A 10V drop on a 230V supply means the load receives 220V. BS 7671 limits voltage drop
-            to 3% for lighting (6.9V) and 5% for other circuits (11.5V), so this cable may be
+            A 10V drop on a 230V supply means the load receives 220V. BS 7671 limits voltage drop to
+            3% for lighting (6.9V) and 5% for other circuits (11.5V), so this cable may be
             borderline for some installations.
           </p>
         </div>
@@ -249,8 +241,8 @@ const sections = [
         </div>
         <p>
           All three formulas give the same answer — use whichever one suits the information you
-          have. If you know current and voltage, use P = IV. If you know current and resistance,
-          use P = I{'\u00B2'}R. If you know voltage and resistance, use P = V{'\u00B2'}/R.
+          have. If you know current and voltage, use P = IV. If you know current and resistance, use
+          P = I{'\u00B2'}R. If you know voltage and resistance, use P = V{'\u00B2'}/R.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Worked Example</h3>
@@ -280,12 +272,12 @@ const sections = [
   },
   {
     id: 'kirchhoffs-laws',
-    heading: 'Kirchhoff\'s Laws',
+    heading: "Kirchhoff's Laws",
     content: (
       <>
         <p>
-          Kirchhoff's two laws describe how current and voltage behave in electrical circuits.
-          They are essential for understanding how circuits work and for fault diagnosis.
+          Kirchhoff's two laws describe how current and voltage behave in electrical circuits. They
+          are essential for understanding how circuits work and for fault diagnosis.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -312,7 +304,9 @@ const sections = [
           </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Worked Example — Kirchhoff's Voltage Law</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Worked Example — Kirchhoff's Voltage Law
+          </h3>
           <p className="text-white mb-2">
             A 230V supply feeds a cable with 0.3 ohms resistance, connected to a heater drawing 20A.
             What voltage does the heater actually receive?
@@ -325,7 +319,8 @@ const sections = [
           </p>
           <p className="text-white text-sm mt-2">
             By KVL, the supply voltage (230V) equals the cable voltage drop (6V) plus the voltage
-            across the heater (224V). This is exactly how voltage drop calculations work in practice.
+            across the heater (224V). This is exactly how voltage drop calculations work in
+            practice.
           </p>
         </div>
       </>
@@ -345,14 +340,13 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Series Circuits</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               Components are connected end-to-end in a single path. The same current flows through
-              every component. The total resistance is the sum of individual resistances. The voltage
-              is shared between components (proportional to their resistance).
+              every component. The total resistance is the sum of individual resistances. The
+              voltage is shared between components (proportional to their resistance).
             </p>
             <p className="text-white text-sm leading-relaxed">
               <strong>Real example:</strong> Christmas tree lights wired in series — if one bulb
-              fails, they all go out because the circuit is broken. In electrical installations,
-              the cable and the load are in series — this is why cable resistance causes voltage
-              drop.
+              fails, they all go out because the circuit is broken. In electrical installations, the
+              cable and the load are in series — this is why cable resistance causes voltage drop.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -370,13 +364,13 @@ const sections = [
           </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Worked Example — Parallel Resistance</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Worked Example — Parallel Resistance
+          </h3>
           <p className="text-white mb-2">
             Three 30-ohm resistors are connected in parallel. What is the total resistance?
           </p>
-          <p className="text-white mb-1">
-            1/Rtotal = 1/30 + 1/30 + 1/30 = 3/30 = 1/10
-          </p>
+          <p className="text-white mb-1">1/Rtotal = 1/30 + 1/30 + 1/30 = 3/30 = 1/10</p>
           <p className="text-white mb-1">
             <strong>Rtotal = 10 ohms</strong>
           </p>
@@ -468,10 +462,12 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Key Relationships</h3>
           <div className="space-y-3 text-white">
             <p>
-              <strong>Line voltage (VL)</strong> = voltage between any two phases = <strong>400V</strong> (UK)
+              <strong>Line voltage (VL)</strong> = voltage between any two phases ={' '}
+              <strong>400V</strong> (UK)
             </p>
             <p>
-              <strong>Phase voltage (VP)</strong> = voltage between any phase and neutral = <strong>230V</strong> (UK)
+              <strong>Phase voltage (VP)</strong> = voltage between any phase and neutral ={' '}
+              <strong>230V</strong> (UK)
             </p>
             <p>
               <strong>VL = VP x {'\u221A'}3</strong> (approximately VP x 1.732)
@@ -486,8 +482,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Star (Y) Connection</h3>
             <p className="text-white text-sm leading-relaxed">
               Each phase is connected between a line conductor and the neutral (star point). The
-              phase voltage is 230V. The line voltage is 400V. Line current equals phase current
-              (IL = IP). Most UK distribution uses star connection — the neutral is connected to the
+              phase voltage is 230V. The line voltage is 400V. Line current equals phase current (IL
+              = IP). Most UK distribution uses star connection — the neutral is connected to the
               star point, giving you 230V single-phase from any phase to neutral, and 400V
               three-phase between any two phases.
             </p>
@@ -508,9 +504,7 @@ const sections = [
             A balanced three-phase load draws 20A per phase from a 400V supply with a power factor
             of 0.85. What is the total power?
           </p>
-          <p className="text-white mb-1">
-            Three-phase power: P = {'\u221A'}3 x VL x IL x PF
-          </p>
+          <p className="text-white mb-1">Three-phase power: P = {'\u221A'}3 x VL x IL x PF</p>
           <p className="text-white mb-1">
             P = 1.732 x 400 x 20 x 0.85 = <strong>11,777W (approximately 11.8kW)</strong>
           </p>
@@ -540,8 +534,8 @@ const sections = [
                 <strong>How they work</strong> — an AC current in the primary winding creates a
                 changing magnetic field in the iron core. This changing magnetic field induces a
                 voltage in the secondary winding. The voltage ratio equals the turns ratio: V1/V2 =
-                N1/N2. No electrical connection between primary and secondary — energy is transferred
-                magnetically.
+                N1/N2. No electrical connection between primary and secondary — energy is
+                transferred magnetically.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -558,8 +552,8 @@ const sections = [
               <span>
                 <strong>On-site examples</strong> — 110V centre-tapped transformers for construction
                 site power tools (reduces the voltage to earth to 55V for safety), bell transformers
-                for doorbells (230V to 8V or 12V), and distribution transformers that step down
-                11kV to 400V/230V for domestic supplies.
+                for doorbells (230V to 8V or 12V), and distribution transformers that step down 11kV
+                to 400V/230V for domestic supplies.
               </span>
             </li>
           </ul>
@@ -599,7 +593,8 @@ const sections = [
                 <strong>How motors work</strong> — a current-carrying conductor in a magnetic field
                 experiences a force (Fleming's left-hand rule). In a motor, the stator creates a
                 magnetic field, and the rotor carries current — the interaction produces rotation.
-                The direction of rotation depends on the direction of current and the magnetic field.
+                The direction of rotation depends on the direction of current and the magnetic
+                field.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -616,10 +611,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single-phase vs three-phase motors</strong> — single-phase motors are
-                common in domestic appliances and small commercial equipment. Three-phase motors are
-                more efficient, produce smoother torque, and are standard for industrial machinery.
-                A three-phase motor runs directly from the three-phase supply; a single-phase motor
+                <strong>Single-phase vs three-phase motors</strong> — single-phase motors are common
+                in domestic appliances and small commercial equipment. Three-phase motors are more
+                efficient, produce smoother torque, and are standard for industrial machinery. A
+                three-phase motor runs directly from the three-phase supply; a single-phase motor
                 needs a capacitor or other starting mechanism to create the rotating field.
               </span>
             </li>

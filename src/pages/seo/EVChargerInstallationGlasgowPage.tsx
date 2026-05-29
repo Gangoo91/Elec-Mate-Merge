@@ -44,7 +44,8 @@ const keyTakeaways = [
   'Glasgow is served by SP Energy Networks (SPEN) as the Distribution Network Operator. All EV charger installations must be notified under G98 before the charger is energised.',
   'Scotland uses the Building Standards system administered by local authorities — not Part P as in England. EV charger installations in Scotland must comply with the Building (Scotland) Act 2003 and relevant Technical Handbooks.',
   'The OZEV EV chargepoint grant (up to £350) is available to flat owners and tenants in Scotland, including Glasgow tenement flat residents.',
-  'Regulation 722.411.4.1 of BS 7671 earthing requirements apply equally in Scotland. Most Glasgow properties are on PME (TN-C-S) supplies, requiring careful consideration of outdoor charging earthing.',
+  'Regulation 722.411.4 of BS 7671 (TN system — PME earthing) applies equally in Scotland. Most Glasgow properties are on PME (TN-C-S) supplies. BS 7671 prohibits using a PME facility directly as the protective earth for an outdoor charging point; the standard solution is an earth electrode sized so that the voltage between the main earthing terminal and Earth does not exceed 70 V RMS under a PEN open-circuit fault (Annex 722, A722.3).',
+  'Regulation 722.311.201 (A4:2026) permits load curtailment — automatic or manual load reduction or disconnection — to be taken into account when calculating maximum demand. For Glasgow tenements with limited board capacity or a shared supply, a smart charger with load management can allow the circuit to be designed on a lower simultaneous demand.',
 ];
 
 const faqs = [
@@ -76,7 +77,7 @@ const faqs = [
   {
     question: 'Do I need an earth rod for an EV charger in Glasgow?',
     answer:
-      'Possibly. Most Glasgow properties are on a PME (TN-C-S) supply. Regulation 722.411.4.1 of BS 7671 requires additional earthing measures where an EV charger is installed outdoors on a PME supply. The standard solution is an earth rod creating a local TT arrangement at the charger, or a charger with integrated PEN fault detection. Your installer will assess during the site survey.',
+      'Possibly. Most Glasgow properties are on a PME (TN-C-S) supply. Regulation 722.411.4 of BS 7671 prohibits using the PME earthing facility directly as the protective earth connection for an outdoor charging point. Two common compliant methods are: (b) an installation earth electrode, sized so that the voltage between the main earthing terminal and Earth does not exceed 70 V RMS under a PEN open-circuit fault — Annex 722 item A722.3 gives guidance on calculating the required resistance; or (c) a built-in PEN fault detection device that electrically disconnects the vehicle from all live conductors and from protective earth within 5 seconds if the protective conductor-to-Earth voltage exceeds 70 V RMS. The device cannot be reset while that voltage persists. Your installer will carry out the earthing assessment during the site survey and specify the appropriate method.',
   },
   {
     question: 'What is SELECT and do I need a SELECT-registered electrician in Glasgow?',
@@ -103,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -318,10 +319,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 Section 722 requirements</strong> — dedicated circuit per charger
-                (Regulation 722.533.101), appropriate RCD protection (Regulation 722.531.101), and
-                earthing assessment for outdoor PME-supplied installations (Regulation 722.411.4.1)
-                all apply in Glasgow exactly as they do in England.
+                <strong>BS 7671 Section 722 requirements</strong> — a dedicated final circuit per
+                charger (Section 722 scope requirement, Reg 722.1), appropriate RCD protection for
+                the charging circuit, and earthing assessment for outdoor PME-supplied installations
+                (Regulation 722.411.4) all apply in Glasgow exactly as they do in England.
               </span>
             </li>
           </ul>
@@ -429,10 +430,8 @@ const sections = [
                   Factor in Glasgow day rates (£300 to £400), cable routing challenges in tenement
                   and stone-built properties, earthing requirements on PME supplies, and factor
                   consent requirements for tenement flats. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes on site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes on site.
                 </p>
               </div>
             </div>
@@ -450,6 +449,25 @@ const sections = [
                   , SPEN G98 notification, and Building Standards notification under Scottish
                   regulations. Confirm your registration covers Scotland before quoting Glasgow
                   jobs.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <Zap className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Load Curtailment and Maximum Demand (Reg 722.311.201)
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  BS 7671:2018+A4:2026 Regulation 722.311.201 permits load curtailment — automatic
+                  or manual load reduction or disconnection — to be taken into account when
+                  determining the maximum demand of the installation or part thereof. In Glasgow
+                  tenements with limited board capacity or a shared supply, this means a smart
+                  charger with dynamic load management can be factored into the design demand
+                  calculation, avoiding an otherwise unnecessary consumer unit upgrade or supply
+                  reinforcement.
                 </p>
               </div>
             </div>

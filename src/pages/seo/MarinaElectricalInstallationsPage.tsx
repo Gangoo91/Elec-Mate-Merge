@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Marina electrical installations are classified as special installations under BS 7671 Section 709, with more stringent requirements than standard domestic or commercial work.',
   'TT earthing is strongly recommended (and often mandatory) for marina installations because PME (TN-C-S) earthing poses unacceptable shock risk in water environments due to the broken PEN conductor danger.',
   'All socket outlets supplying boats must have individual 30mA RCD protection — not shared RCDs — to prevent a fault on one vessel from tripping supplies to multiple vessels.',
-  'A minimum IP rating of IP44 is required for all equipment installed on the pontoon or jetty, increasing to IP56 for equipment exposed to wave splash.',
+  'Equipment on pontoons and jetties must meet IP44 as a minimum (Reg 709.512.2.1.1 / 709.553.1.8), rising to IPX5 or IPX6 for water jets or wave splash. AF2 corrosion resistance is mandatory for all equipment; AF3 applies where hydrocarbons (fuel) are present (Reg 709.512.2.1.3).',
   'Elec-Mate helps electricians complete certificates for special installations, with AI assistance for the specific BS 7671 Section 709 requirements.',
 ];
 
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What section of BS 7671 covers marina installations?',
     answer:
-      'Section 709 of BS 7671:2018+A4:2026 covers marinas and similar locations. It applies to circuits intended to supply pleasure craft or houseboats in marinas, boatyards, and similar locations. The section sets out additional requirements beyond the general rules in Parts 1-6, covering earthing, protective devices, cable management, socket outlets, and environmental protection. Section 709 works alongside the general requirements — it does not replace them. So a marina installation must comply with all the general requirements of BS 7671 plus the additional requirements in Section 709. The section also references BS EN 60309-2 for the type of socket outlets to be used (industrial blue CEE sockets, not domestic 13A sockets) and IEC 60364-7-709 (the international standard from which Section 709 is derived).',
+      'Section 709 of BS 7671:2018+A4:2026 covers marinas and similar locations. It applies to circuits intended to supply pleasure craft or houseboats in marinas, boatyards, and similar locations. The section sets out additional requirements beyond the general rules in Parts 1-6, covering earthing, protective devices, cable management, socket outlets, and environmental protection. Section 709 works alongside the general requirements — it does not replace them. A marina installation must comply with all the general requirements of BS 7671 plus the additional requirements in Section 709. Key socket outlet rules are in Regulation 709.553.1.8 (BS EN IEC 60309-2 for sockets up to 63 A; BS EN IEC 60309-1 above 63 A — industrial CEE sockets, not domestic 13 A sockets) and Regulation 709.553.1.11 (one socket outlet per pleasure craft or houseboat). The section also incorporates the international standard IEC 60364-7-709 from which it is derived.',
   },
   {
     question: 'Why can you not use PME earthing at a marina?',
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What type of socket outlets are required at a marina?',
     answer:
-      'Socket outlets for supplying boats must comply with BS EN 60309-2 — these are the blue industrial CEE-type sockets, typically rated at 16A (for smaller craft) or 32A (for larger vessels). Standard 13A BS 1363 domestic sockets must not be used for boat supplies. The CEE sockets must be individually protected by a 30mA RCD (each socket having its own RCD — not shared), and each socket must have overcurrent protection matched to the cable and socket rating. The sockets must be mounted on supply pillars (also called feeder pillars or service pedestals) at a height that protects them from flooding and wave splash — typically at least 1 metre above the highest anticipated water level. Each socket must have a clearly marked isolator, and the supply pillar must be rated to at least IP44 (or IP56 if exposed to wave splash). Some marinas also provide 63A or 125A three-phase supplies for larger vessels — these follow the same principles but with appropriately rated equipment.',
+      'Regulation 709.553.1.8 sets out the socket outlet type requirements. Socket outlets rated up to 63 A must comply with BS EN IEC 60309-2 — these are the blue industrial CEE-type sockets, typically 16 A (for smaller craft) or 32 A (for larger vessels). Socket outlets rated above 63 A must comply with BS EN IEC 60309-1 (the industrial connector standard for higher ratings). Standard 13 A BS 1363 domestic sockets must not be used for boat supplies. Regulation 709.553.1.11 adds a further mandatory rule: one socket outlet shall supply only one pleasure craft or houseboat — splitting a single outlet to feed two boats is not permitted. Each socket must be individually protected by a 30 mA RCD (not shared), with overcurrent protection matched to the cable and socket rating. The sockets must be mounted on supply pillars at a height that protects them from flooding and wave splash. Every socket outlet must also achieve at least IP44 (provided by the socket itself or by an enclosure); where ADS (water jets) or AD6 (water waves) conditions apply, the degree of protection rises to at least IPX5 or IPX6 respectively.',
   },
   {
     question: 'How often should a marina electrical installation be inspected?',
@@ -76,6 +76,12 @@ const faqs = [
     question: 'What is electric shock drowning and how is it prevented?',
     answer:
       'Electric shock drowning (ESD) occurs when a person in the water experiences electric shock from stray electrical current in the water. Even a small current (as low as 10mA) can cause muscle paralysis in a swimmer, preventing them from staying afloat, leading to drowning. ESD has been documented in marinas, swimming areas near boats, and in freshwater (freshwater has lower conductivity than salt water but still conducts enough to be dangerous). Prevention relies on several measures: using TT earthing (not PME) to prevent neutral current from energising the water, individual RCD protection (30mA) on every boat supply, regular inspection and testing of all marina electrical installations, shore power cables in good condition (no damaged insulation), galvanic isolators or isolation transformers on boats with metal hulls, and clear signage prohibiting swimming near boats connected to shore power. If someone in the water appears to be in distress near a boat or pontoon with electrical connections, do not enter the water — disconnect the electrical supply first, then use a throw line or flotation device.',
+  },
+  {
+    question:
+      'When are isolation transformers used and what does Regulation 709.313.1.101 require?',
+    answer:
+      'A fixed on-shore isolation transformer may be installed to prevent galvanic currents circulating between the hull of a vessel and metallic parts on the shore side. This is particularly relevant for metal-hulled boats where dissimilar metal corrosion (galvanic corrosion) is a concern. Regulation 709.313.1.101 sets out two mandatory requirements for this arrangement. First, the transformer must comply with BS EN 61558-2-4. Second — and critically — the protective conductor (PE) of the supply to the isolating transformer must NOT be connected to the earth terminal in the socket outlet supplying the vessel. Connecting the supply PE to the vessel socket earth would defeat the purpose of the isolation by creating a galvanic path through the earth conductor. At commissioning, a continuity check between the supply PE and the vessel socket earth terminal should confirm an open circuit. Any low-resistance reading indicates an incorrect connection that must be rectified before the installation is energised.',
   },
   {
     question: 'Do I need special qualifications to work on marina installations?',
@@ -230,17 +236,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 709.512.2:</strong> socket outlets must comply with BS EN 60309-2
-                (CEE industrial sockets). Standard 13A domestic sockets must not be used for boat
-                supplies.
+                <strong>Regulation 709.553.1.8:</strong> socket outlets rated up to 63&nbsp;A must
+                comply with BS EN IEC 60309-2 (CEE industrial sockets). Socket outlets rated above
+                63&nbsp;A must comply with BS EN IEC 60309-1. Standard 13A domestic sockets must not
+                be used for boat supplies. Every socket outlet must achieve at least IP44 — provided
+                either by the socket itself or by an enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 709.512.2:</strong> equipment installed on jetties and pontoons
-                must have a minimum protection of IP44. Equipment exposed to wave splash requires
-                IP56 or higher.
+                <strong>Regulation 709.553.1.11:</strong> one socket outlet shall supply only one
+                pleasure craft or houseboat — connecting multiple vessels to a single outlet is a
+                mandatory prohibition.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 709.512.2.1.1:</strong> equipment on jetties and pontoons must be
+                selected for the external water influence present — at least IPX4 (water splashes,
+                AD4), rising to IPX5 (water jets, ADS) or IPX6 (water waves, AD6) for more exposed
+                positions. Where the solid-particle digit is also specified (e.g. IP44), the
+                combined rating must be met.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -341,7 +359,7 @@ const sections = [
                 distributes power to sub-mains cables running to each supply pillar. Each sub-main
                 should have overcurrent protection and isolation at the main board. The sub-main
                 cable must be sized for the maximum demand of the supply pillar, considering{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop
                 </SEOInternalLink>{' '}
                 on potentially long cable runs to the end of the pontoon.
@@ -400,6 +418,27 @@ const sections = [
                 <strong>IP56 or higher</strong> — for equipment exposed to wave splash or heavy
                 rain. IP56 provides protection against dust ingress and powerful water jets. This
                 applies to equipment at the outer edges of pontoons or in exposed coastal locations.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AF2/AF3 atmospheric classification (Reg 709.512.2.1.3).</strong> All
+                equipment on or above a jetty, wharf, pier or pontoon must be suitable for AF2
+                conditions — the presence of atmospheric corrosive or polluting substances (salt
+                spray, moisture). Where hydrocarbons are present (e.g. fuel pontoons), the
+                requirement escalates to AF3. Material selection, protective coatings, and gasket
+                integrity must all satisfy the applicable classification.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AG2 mechanical impact protection (Reg 709.512.2.1.4).</strong> Equipment on
+                or above a jetty, wharf, pier or pontoon must be protected against medium-severity
+                mechanical impact (AG2) — a real hazard from boat hooks, mooring ropes, fenders, and
+                vessel movement. Protection may be achieved by siting equipment to avoid foreseeable
+                impacts, or by providing local or general mechanical guards or barriers.
               </span>
             </li>
             <li className="flex items-start gap-3">

@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop checks.',
     icon: Calculator,
@@ -309,7 +309,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing and voltage drop</strong> — on longer Sheffield cable runs, use{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify voltage drop stays within the 5% limit. 6mm² cable is typically suitable

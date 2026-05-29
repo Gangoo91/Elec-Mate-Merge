@@ -288,6 +288,27 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <div className="flex items-start gap-3">
+            <HardHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-semibold text-white mb-1">
+                Thermographic and Diagnostic Surveys
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                GN3 Reg 4.9 identifies thermographic inspection of live switchgear as a specific,
+                recognised live-work scenario distinct from routine fault-finding. Where conductors
+                must remain energised for the diagnostic purpose — for example, thermal imaging of
+                loaded bus connections or overloaded MCBs — the work is permissible under HSR25 (the
+                Electricity at Work Regulations 1989) provided: a formal safety assessment confirms
+                it is reasonable, suitable barriers and PPE are in place, and insulated tools are
+                used by competent personnel for any contact tasks adjacent to live parts. This is a
+                common scenario for inspection engineers carrying out condition-monitoring surveys
+                on commercial and industrial switchgear.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           Outside of these situations,{' '}
           <SEOInternalLink href="/lockout-tagout-guide">
@@ -350,6 +371,20 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          For the authoritative HSE guidance on live and dead working procedures, see{' '}
+          <a
+            href="https://www.hse.gov.uk/pubns/books/hsg85.htm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-yellow-400 underline hover:text-yellow-300"
+          >
+            HSG85 — Electricity at Work: Safe Working Practices (HSE)
+          </a>
+          . GN3 Reg 1.1 cites HSG85 as the primary reference for establishing rules and procedures
+          wherever electrical work is carried out, including the requirement for managers and
+          contractors to have documented safe-working systems in place before work commences.
+        </p>
       </>
     ),
   },
@@ -540,6 +575,11 @@ const sections = [
     heading: 'For Electricians: RAMS for Live Work',
     content: (
       <>
+        <p className="text-xs text-white/50 mb-4">
+          This guide is written and reviewed by City &amp; Guilds 2382-18 qualified electricians on
+          the Elec-Mate technical team, cross-referenced against BS 7671:2018+A4:2026, IET Guidance
+          Note 3 (9th edition, 2022), and HSG85. Last reviewed May 2026.
+        </p>
         <p>
           Any live electrical work must be documented in a risk assessment and method statement
           (RAMS) before work begins. The RAMS must specify the justification for live working, the
@@ -553,8 +593,8 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Live Work RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
-                create comprehensive risk assessments and method statements for live electrical
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
+                to create comprehensive risk assessments and method statements for live electrical
                 work, including IEC 60900 tool requirements, PPE specifications, and rescue plan
                 documentation. Ready to share with clients and principal contractors.
               </p>
@@ -579,7 +619,7 @@ export default function InsulatedToolsGuidePage() {
   return (
     <GuideTemplate
       title="Insulated Tools for Electricians UK | 1000V Rated Tools"
-      description="Complete UK guide to IEC 60900 insulated tools for electricians. VDE-rated tools explained, when insulated tools are legally required…"
+      description="Complete UK guide to IEC 60900 insulated tools for electricians. VDE-rated tools explained, when insulated tools are legally required under the Electricity at Work Regulations 1989, plus top brands and inspection schedules for UK electricians."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

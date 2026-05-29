@@ -308,7 +308,7 @@ const sections = [
               earth. The measured PFC must not exceed the rated breaking capacity of the protective
               devices installed in the board. PFC values in commercial installations can be very
               high (10 kA, 16 kA, or more at the intake), so{' '}
-              <SEOInternalLink href="/prospective-fault-current-calculator">
+              <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                 accurate measurement
               </SEOInternalLink>{' '}
               is essential for verifying that protective device ratings are adequate.
@@ -378,7 +378,9 @@ const sections = [
         <p>
           The EICR for a larger installation may cover multiple pages of schedule of test results,
           with separate schedules for each distribution board.{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">Observation codes</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            Observation codes
+          </SEOInternalLink>{' '}
           must be applied consistently across the entire installation, and the overall assessment
           (satisfactory or unsatisfactory) must reflect the worst findings across all parts of the
           installation.
@@ -451,7 +453,9 @@ const sections = [
           The overall assessment — satisfactory or unsatisfactory — must be clearly stated. An
           installation is assessed as unsatisfactory if any C1 (danger present) or C2 (potentially
           dangerous) observations are recorded. The{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">observation codes</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            observation codes
+          </SEOInternalLink>{' '}
           must be applied correctly and consistently, as incorrect coding can lead to legal
           challenges and professional liability issues.
         </p>

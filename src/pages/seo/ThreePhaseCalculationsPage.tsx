@@ -47,7 +47,7 @@ const keyTakeaways = [
   'The three-phase power formula is P = root 3 x VL x IL x cos phi — where VL is the line voltage (400V in the UK), IL is the line current, and cos phi is the power factor.',
   'Line voltage (VL = 400V) is measured between any two phases. Phase voltage (Vp = 230V) is measured between any phase and neutral. In a star configuration, VL = root 3 x Vp.',
   'To calculate line current from total three-phase power: IL = P / (root 3 x VL x cos phi). This is the current each line conductor must carry and the basis for cable sizing.',
-  'Three-phase voltage drop uses the three-phase mV/A/m values from the Appendix 4 (now Appendix 12) tables: VD = mV/A/m x Ib x L / 1000.',
+  'Three-phase voltage drop uses the three-phase mV/A/m values from Appendix 4 (Section 6.4) tables: VD = mV/A/m x Ib x L / 1000.',
   'Elec-Mate has a three-phase power calculator, cable sizing calculator in three-phase mode, voltage drop calculator for three-phase circuits, and star-delta calculator — all working offline.',
 ];
 
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'How do I calculate voltage drop for a three-phase circuit?',
     answer:
-      'Voltage drop for a three-phase circuit is calculated using the same formula as single-phase but with three-phase mV/A/m values from the BS 7671 Appendix 4 (now Appendix 12) tables. The formula is: VD = mV/A/m (three-phase) x Ib x L / 1000, where mV/A/m is the three-phase voltage drop value for the cable type and size, Ib is the design current per phase (the line current), and L is the cable length in metres. The three-phase mV/A/m values in the tables are lower than the single-phase values for the same cable because the three-phase voltage drop calculation already accounts for the phase relationships in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting and 5 percent for other loads. From a 400V three-phase supply, 3 percent is 12V and 5 percent is 20V. It is important to use the correct (three-phase) mV/A/m values — using the single-phase values for a three-phase circuit will give an incorrect (too high) voltage drop.',
+      'Voltage drop for a three-phase circuit is calculated using the same formula as single-phase but with three-phase mV/A/m values from the BS 7671 Appendix 4 (Section 6.4) tables. The formula is: VD = mV/A/m (three-phase) x Ib x L / 1000, where mV/A/m is the three-phase voltage drop value for the cable type and size, Ib is the design current per phase (the line current), and L is the cable length in metres. The three-phase mV/A/m values in the tables are lower than the single-phase values for the same cable because the three-phase voltage drop calculation already accounts for the phase relationships in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting and 5 percent for other loads (Reg 525.202; limits stated in Appendix 4, Section 6.4). From a 400V three-phase supply, 3 percent is 12V and 5 percent is 20V. It is important to use the correct (three-phase) mV/A/m values — using the single-phase values for a three-phase circuit will give an incorrect (too high) voltage drop.',
   },
   {
     question: 'What is phase balancing and why does it matter?',
@@ -522,6 +522,32 @@ const sections = [
           difference between the most and least loaded phases to be no more than 10-15% of the total
           load per phase.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">
+            Harmonics and neutral conductor sizing
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            In commercial three-phase installations with modern electronic loads —
+            variable-frequency drives (VFDs), switch-mode power supplies, and LED drivers with poor
+            power factor — triplen (third-order and multiple) harmonics add in the neutral conductor
+            rather than cancelling. This means the neutral can carry a current that exceeds the line
+            current even in an otherwise balanced system.
+          </p>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            Reg 523.6.1 treats the neutral as loaded when the total harmonic distortion (THD) of the
+            line current exceeds 15%, and requires the neutral to be included in the conductor count
+            when selecting cable current-carrying capacity from the Appendix 4 tables (which reduces
+            the rated capacity). Appendix 4 Section 5.5 rating factors account for the additional
+            thermal effect of third-harmonic current in both the neutral and the line conductors.
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            Reg 524.2.1(b) requires the neutral conductor to be not less than the line conductor
+            cross-sectional area in polyphase circuits where the line conductors are
+            16&nbsp;mm&sup2; or smaller (copper). For larger conductors, the neutral may be reduced
+            only where harmonic loading and unbalanced loading are assessed as not causing the
+            neutral current to exceed the line current.
+          </p>
+        </div>
         <SEOAppBridge
           title="Phase balancing built into the circuit schedule"
           description="Elec-Mate's EIC circuit schedule lets you assign each circuit to a phase (L1, L2, L3) and automatically calculates the load per phase…"
@@ -539,7 +565,7 @@ const sections = [
           Voltage drop for three-phase circuits is calculated using the same formula as single-phase
           but with the three-phase mV/A/m values from the{' '}
           <SEOInternalLink href="/guides/appendix-4-tables-bs-7671">Appendix 4</SEOInternalLink>{' '}
-          (now Appendix 12) tables:
+          (Section 6.4) tables:
         </p>
         <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 my-4">
           <p className="text-white font-mono text-sm">
@@ -631,11 +657,20 @@ const sections = [
               because three current-carrying conductors generate more heat than two.
             </p>
           </div>
+          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-4">
+            <p className="text-white text-sm leading-relaxed">
+              <strong className="text-yellow-400">A4:2026 note — buried cables:</strong> Tables 4A2,
+              4D4A, 4E4A, 4H4A, and 4J4A in Appendix 4 were revised in A4:2026 to reflect updated
+              methods for buried cable installation. If the three-phase cable run is buried (direct
+              in soil or in ducts), you must use the revised A4:2026 table values — pre-A4 values
+              are no longer valid for these installation methods (Reg 653.2).
+            </p>
+          </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <h3 className="font-bold text-white mb-2">5. Verify voltage drop</h3>
             <p className="text-white text-sm leading-relaxed">
-              Use the three-phase mV/A/m values from Appendix 12. Check against 12V (lighting) or
-              20V (other) limits for a 400V supply.
+              Use the three-phase mV/A/m values from Appendix 4 (Section 6.4). Check against 12V
+              (lighting) or 20V (other) limits for a 400V supply (Reg 525.202).
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -645,6 +680,37 @@ const sections = [
               prospective fault current at the point of installation.
             </p>
           </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">Which Appendix 4 table do I use?</h3>
+          <div className="space-y-2 text-white text-sm">
+            <p>
+              <strong className="text-yellow-400">
+                PVC twin and earth (T+E) 70&deg;C — single-phase:
+              </strong>{' '}
+              Table 4D1A. Standard flat grey cable for domestic and single-phase commercial
+              circuits.
+            </p>
+            <p>
+              <strong className="text-yellow-400">
+                XLPE twin and earth (T+E) 90&deg;C — single-phase:
+              </strong>{' '}
+              Table 4D5A. Higher-rated T+E cable; still single-phase (two loaded conductors), 230V.
+              Do not use for three-phase motor or heating circuits.
+            </p>
+            <p>
+              <strong className="text-yellow-400">
+                3-core XLPE SWA 90&deg;C — three-phase (400V):
+              </strong>{' '}
+              Table 4D4A. The correct table for three-phase submains, motor feeds, and heating
+              circuits wired in multicore SWA. Revised in A4:2026 for buried installation methods.
+            </p>
+          </div>
+          <p className="text-white text-xs mt-3">
+            Using the wrong table — for example T+E single-phase values for a three-phase SWA
+            circuit — will give an incorrect I<sub>z</sub> and mV/A/m, leading to an undersized or
+            wrongly-assessed cable.
+          </p>
         </div>
         <SEOAppBridge
           title="Three-phase cable sizing calculator"
@@ -686,8 +752,10 @@ const sections = [
                 20 &divide; 1.0 = 20A
               </p>
               <p>
-                <strong>From Table 4D5A (3 loaded conductors, Method C):</strong> 2.5mm&sup2; has I
-                <sub>z</sub> = 24A
+                <strong>
+                  From Table 4D4A (3-core XLPE SWA 90&deg;C, Method C, 400V three-phase):
+                </strong>{' '}
+                2.5mm&sup2; has I<sub>z</sub> = 27A
               </p>
               <p>
                 <strong>Voltage drop:</strong> mV/A/m (3-phase) for 2.5mm&sup2; = 16 mV/A/m
@@ -759,8 +827,8 @@ const sections = [
                 <strong>No derating factors apply.</strong> I<sub>t</sub> = 40A
               </p>
               <p>
-                <strong>Cable:</strong> 6mm&sup2; four-core SWA (I<sub>z</sub> = 41A for 3 loaded
-                conductors, Method C)
+                <strong>Cable:</strong> 6mm&sup2; four-core SWA (I<sub>z</sub> = 47A for 3 loaded
+                conductors, Method C — Table 4D4A, 3-core XLPE SWA 90&deg;C, 400V three-phase)
               </p>
             </div>
           </div>
@@ -780,7 +848,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Three-phase mode with correct Appendix 4 tables, correction factors, and voltage drop verification.',
@@ -788,9 +856,10 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Three-phase voltage drop calculation using mV/A/m values from Appendix 12.',
+    description:
+      'Three-phase voltage drop calculation using mV/A/m values from Appendix 4 (Section 6.4).',
     icon: Zap,
     category: 'Tool' as const,
   },

@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 712 cover for solar PV installations?',
     answer:
-      'Section 712 of BS 7671:2018+A4:2026 covers the particular requirements for solar photovoltaic (PV) power supply systems. It addresses the specific hazards associated with PV installations — principally the fact that PV arrays generate DC voltage whenever exposed to light and cannot be simply switched off. Key requirements include: protection against electric shock on both the DC and AC sides; overcurrent protection for PV string and array cables; requirements for PV DC isolators and their location; earthing arrangements for the PV array frame; cable selection and installation methods for DC cables exposed to sunlight (UV-resistant); labelling requirements to warn that the PV array remains live even when the inverter is disconnected; and requirements for the PV installation to be designed so that maintenance can be carried out safely.',
+      'Section 712 of BS 7671:2018+A4:2026 covers the particular requirements for solar photovoltaic (PV) power supply systems. It addresses the specific hazards associated with PV installations — principally the fact that PV arrays generate DC voltage whenever exposed to light and cannot be simply switched off. Key requirements include: on the DC side, one of two protective measures shall be applied under Regulation 712.410.102 — either double or reinforced insulation (Section 412) or extra-low voltage, SELV or PELV (Section 414); insulation monitoring device (IMD) requirements for unearthed DC systems under Regulation 712.421.101; overcurrent and reverse-current protection for PV string cables (Regulation 712.433.101); securing of devices without breaking capacity to prevent DC on-load arcing (712.537.2.2.104); earthing arrangements for the PV array frame; cable selection for DC cables exposed to UV and temperature extremes; and labelling requirements to warn that the DC side remains energised even when the AC supply or inverter is disconnected.',
   },
   {
     question: 'Can I complete solar PV certificates on a mobile device?',
@@ -225,6 +225,12 @@ export default function SolarPVCertificatePage() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Digital <span className="text-yellow-400">Solar PV Certificates</span> on Your Phone
           </h1>
+          <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-4">
+            A solar PV installation certificate is the formal document that records the system
+            specification, DC and AC commissioning test results, and evidence of compliance with
+            BS&nbsp;7671 Section&nbsp;712, G98/G99, and where applicable, MCS requirements. It is
+            required for every new PV installation before the system is handed over to the client.
+          </p>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             The complete solar PV certification app for UK electricians and MCS installers. DC and
             AC side testing, inverter specs, string configurations, G98/G99 documentation, and
@@ -303,6 +309,13 @@ export default function SolarPVCertificatePage() {
               to light — they cannot be de-energised by switching off a supply. This means all DC
               testing must be carried out with careful attention to safe working practices and
               awareness of the voltages present.
+            </p>
+            <p>
+              <strong>Safe isolation (Regulation 712.410.101):</strong> BS&nbsp;7671 is explicit
+              that safe isolation of the DC side is not satisfied solely by disconnecting the AC
+              supply from the grid, or by disconnecting the inverter from the DC side. DC-side
+              voltage must be independently verified with a suitable voltage indicator before any
+              work is carried out on DC conductors or equipment.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 my-6">
@@ -466,7 +479,7 @@ export default function SolarPVCertificatePage() {
               Elec-Mate is part of a complete platform for UK electricians that includes 70
               electrical calculators, 8 Elec-AI agents and 12 AI tools, 46+ training courses, 8
               certificate types, and integration with Xero and QuickBooks for invoicing. The{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               handles DC and AC cable sizing for solar installations, and the{' '}
@@ -525,18 +538,43 @@ export default function SolarPVCertificatePage() {
               installing, or certifying PV systems.
             </p>
             <p>
-              <strong>Protection against electric shock (712.411):</strong> The standard requires
-              that PV arrays on the DC side use either double insulation, protective separation, or
-              automatic disconnection of supply. Since PV arrays cannot be de-energised during
-              daylight, the emphasis is on preventing contact with live DC conductors through proper
-              insulation, cable protection, and clear labelling.
+              <strong>Protection against electric shock — DC side (712.410.102):</strong> Regulation
+              712.410.102 requires that on the DC side one of exactly two protective measures shall
+              be applied: (a)&nbsp;double or reinforced insulation in accordance with
+              Section&nbsp;412, or (b)&nbsp;extra-low voltage — SELV or PELV — in accordance with
+              Section&nbsp;414. Automatic disconnection of supply is not a permitted DC-side measure
+              under this regulation. Since a PV array cannot be de-energised during daylight hours,
+              Regulation&nbsp;712.410.101 further requires that DC-side equipment shall be
+              considered energised at all times — even when the AC side is disconnected from the
+              grid or the inverter is disconnected from the DC side. Safe isolation of the DC side
+              requires independent voltage verification; disconnecting the AC side or the inverter
+              alone does not satisfy safe-isolation requirements.
             </p>
             <p>
-              <strong>DC isolator requirements (712.537.2):</strong> A DC isolator
+              <strong>Insulation monitoring — DC side (712.421.101):</strong> For unearthed DC
+              systems, Regulation&nbsp;712.421.101.1 requires that an insulation monitoring device
+              (IMD) shall be installed. The exception under Regulation&nbsp;712.421.101.2 applies
+              where functional earthing is applied to a live conductor inside the inverter on the DC
+              side; in that case, the installer must provide a means to verify insulation status on
+              the DC side throughout the life of the array — for example by using an inverter with
+              integrated insulation monitoring complying with BS&nbsp;EN&nbsp;61557-8.
+            </p>
+            <p>
+              <strong>DC isolator requirements (712.537.2.2.104):</strong> A DC isolator
               (switch-disconnector) must be provided between the PV array and the inverter to allow
-              safe maintenance. It must be rated for DC use at the system voltage and current, be
-              located adjacent to the inverter, and be clearly labelled. The isolator must be
-              capable of interrupting the full DC short-circuit current.
+              safe maintenance. Devices without breaking capacity that could be used to open a DC
+              circuit — such as SPD carriages and fuse carriers — shall be secured against
+              inadvertent or unauthorised operation to prevent DC on-load arcing. Securing may be
+              achieved by locating the device in a lockable enclosure or by padlocking.
+            </p>
+            <p>
+              <strong>Reverse-current cable sizing (712.433.101):</strong> For PV arrays with more
+              than two strings in parallel (N&nbsp;&gt;&nbsp;2), the maximum reverse current that
+              may flow in a string cable is (N&nbsp;&minus;&nbsp;1)&nbsp;&times;&nbsp;Isc&nbsp;max.
+              Where string overcurrent protective devices are not fitted, each string cable shall
+              have a continuous current-carrying capacity at least equal to this reverse-current
+              figure. Where string protective devices are fitted, the cable capacity shall be at
+              least equal to the rated current of the protective device.
             </p>
             <p>
               <strong>Cable selection (712.522):</strong> DC cables on the PV array side are exposed
@@ -623,7 +661,6 @@ export default function SolarPVCertificatePage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -631,14 +668,28 @@ export default function SolarPVCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/solar-pv-certificate-requirements">Solar PV Certificate Requirements</SEOInternalLink>
-            <SEOInternalLink href="/guides/ac-vs-dc-earthing-solar-ev">AC vs DC Earthing for Solar PV and EV Charging</SEOInternalLink>
-            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/napit-certificate-guide">NAPIT Certificate Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/solar-pv-certificate-requirements">
+              Solar PV Certificate Requirements
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ac-vs-dc-earthing-solar-ev">
+              AC vs DC Earthing for Solar PV and EV Charging
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">
+              EICR Certificate Guide 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/napit-certificate-guide">
+              NAPIT Certificate Guide
+            </SEOInternalLink>
             <SEOInternalLink href="/solar-pv-grants">Solar Panel Grants UK 2025</SEOInternalLink>
-            <SEOInternalLink href="/solar-pv-maintenance">Solar Panel Maintenance UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">EV Charger Certificate Requirements UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-certificate-retention">How Long to Keep Electrical Certificates UK</SEOInternalLink>
+            <SEOInternalLink href="/solar-pv-maintenance">
+              Solar Panel Maintenance UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">
+              EV Charger Certificate Requirements UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-certificate-retention">
+              How Long to Keep Electrical Certificates UK
+            </SEOInternalLink>
           </div>
         </div>
       </section>

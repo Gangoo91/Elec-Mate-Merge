@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA cable for garden lighting circuits with automatic voltage drop checks.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long garden lighting cable runs — critical for consistent brightness.',
@@ -539,12 +539,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised garden lighting quotes. List each fitting type, cable
-                  quantities, junction boxes, controls, labour for trenching, installation, testing,
-                  and certification. Professional PDF sent to the customer.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised garden lighting quotes. List each fitting type, cable quantities,
+                  junction boxes, controls, labour for trenching, installation, testing, and
+                  certification. Professional PDF sent to the customer.
                 </p>
               </div>
             </div>
@@ -556,7 +554,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Garden lighting cable runs are often long relative to the load. Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to confirm 1.5mm2 SWA is adequate or whether 2.5mm2 is needed for voltage drop
@@ -571,9 +569,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EIC on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
-                  on site after testing. Document the outdoor circuit, SWA cable details, IP ratings
-                  of installed fittings, and test results. Instant PDF export to the homeowner.
+                  Complete the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on
+                  site after testing. Document the outdoor circuit, SWA cable details, IP ratings of
+                  installed fittings, and test results. Instant PDF export to the homeowner.
                 </p>
               </div>
             </div>

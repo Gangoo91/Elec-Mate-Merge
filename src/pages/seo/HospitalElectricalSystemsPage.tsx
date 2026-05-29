@@ -45,6 +45,7 @@ const keyTakeaways = [
   'Essential supply systems ensure that life-critical equipment (operating theatres, ICU, renal dialysis, NICU) remains powered during a mains failure — with automatic changeover within 0.5 seconds for Category 1 supplies.',
   'Medical IT systems (IPS — Isolated Power Supply) use an isolation transformer to create an unearthed system in Group 2 medical locations, preventing a first fault from disconnecting the supply to life-support equipment.',
   'Residual Current Monitoring (RCM) devices are used instead of RCDs in medical IT systems because an RCD would disconnect the supply on the first earth fault — exactly the behaviour that must be avoided in a Group 2 location.',
+  'BS 7671:2018+A4:2026 Regulation 710.421.1.7 prohibits AFDDs (Arc Fault Detection Devices) in circuits serving Group 0 and Group 2 medical locations. Regulation 710.421.1.7.101 extends this prohibition to any circuit supplied by a medical IT system. Do not specify or install AFDDs on medical IT panels.',
   'Elec-Mate allows electricians to complete EICR and EIC certificates for healthcare installations on site, with specialist observation coding for HTM 06-01 and BS 7671 Section 710 requirements.',
 ];
 
@@ -67,7 +68,7 @@ const faqs = [
   {
     question: 'Why are RCDs not used in Group 2 medical locations?',
     answer:
-      'RCDs (Residual Current Devices) are not used in Group 2 medical locations because their fundamental operating principle — disconnecting the supply when a residual current (earth fault) is detected — is exactly the behaviour that must be avoided in these critical areas. In an operating theatre, disconnection of the supply during a surgical procedure could be fatal for the patient. Instead, Group 2 medical locations use a combination of medical IT systems (which do not disconnect on the first fault) and Residual Current Monitoring (RCM) devices (which alarm on fault detection without disconnecting). The RCM device monitors the insulation resistance of the circuit and provides a visual and audible alarm when the residual current exceeds a set threshold. This alerts maintenance staff to investigate and rectify the fault — but the supply continues to operate. BS 7671 Regulation 710.411.6.3.1 specifies that for Group 2 medical locations supplied by a medical IT system, an insulation monitoring device (IMD) to BS EN 61557-8 shall be provided, and a locator system to BS EN 61557-9 should be provided to identify the faulty circuit without disconnecting the supply.',
+      'RCDs (Residual Current Devices) are not used in Group 2 medical locations because their fundamental operating principle — disconnecting the supply when a residual current (earth fault) is detected — is exactly the behaviour that must be avoided in these critical areas. In an operating theatre, disconnection of the supply during a surgical procedure could be fatal for the patient. Instead, Group 2 medical locations use a combination of medical IT systems (which do not disconnect on the first fault) and Residual Current Monitoring (RCM) devices (which alarm on fault detection without disconnecting). The RCM device monitors the insulation resistance of the circuit and provides a visual and audible alarm when the residual current exceeds a set threshold. This alerts maintenance staff to investigate and rectify the fault — but the supply continues to operate. BS 7671 Regulation 710.411.6.1.101 specifies that in Group 2 medical locations an IT system complying with the relevant Regulations shall be provided. Regulation 710.538.1.101 requires that insulation in a medical IT system shall be monitored with a MED-IMD conforming to BS EN 61557-8:2015 (Annexes A and B), installed in the medical IT system distribution board. A locator system to BS EN 61557-9 should be provided to identify the faulty circuit without disconnecting the supply.',
   },
   {
     question: 'What are the testing intervals for hospital electrical installations?',
@@ -94,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete overview of BS 7671:2018+A2:2022 including Section 710 (Medical Locations).',
+      'Complete overview of BS 7671:2018+A4:2026 including Section 710 (Medical Locations).',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -107,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/prospective-fault-current-calculator',
+    href: '/tools/prospective-fault-current-calculator',
     title: 'Prospective Fault Current Calculator',
     description:
       'Calculate Ipf values for distribution systems and verify protective device coordination.',
@@ -152,7 +153,7 @@ const sections = [
         <p>
           HTM 06-01 works alongside{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 710 (Medical Locations) but goes further in several areas. While BS 7671 Section
           710 sets out the general wiring regulations for medical locations, HTM 06-01 provides
@@ -413,6 +414,14 @@ const sections = [
           example, if a standard ward bay is converted to a high-dependency area, the electrical
           installation may need to be upgraded from Group 1 to Group 2 requirements.
         </p>
+        <p>
+          Importantly, Regulation 710.3 of BS 7671 confirms that a single physical location may
+          contain sub-areas with different group classifications — for example, a theatre suite may
+          include a Group 1 preparation and anaesthetic room alongside a Group 2 procedure area.
+          Each sub-area must be classified and wired according to its own group requirements;
+          sharing circuits or protective devices across different-group sub-areas is not acceptable.
+          This is particularly relevant when scoping an EICR for a theatre suite or procedural unit.
+        </p>
       </>
     ),
   },
@@ -483,10 +492,19 @@ const sections = [
           </ul>
         </div>
         <p>
+          The testing intervals above cover the fixed electrical installation. Note that medical
+          electrical (ME) equipment — monitors, ventilators, infusion pumps, and other plug-in
+          medical devices — is subject to a separate testing obligation under BS EN 62353, which
+          specifies acceptance and periodic safety testing of ME equipment. Regulation 710.6 of BS
+          7671 explicitly directs electricians to BS EN 62353 for ME equipment inspection and
+          testing; this is a distinct requirement from the fixed-installation EICR and is typically
+          carried out by the medical physics or biomedical engineering team.
+        </p>
+        <p>
           All test results must be recorded, retained, and available for inspection by the CQC, NHS
           trust governance, and external auditors. A comprehensive testing and maintenance programme
           is typically managed by the Authorised Person (Electrical) within the healthcare
-          facility's estates department.
+          facility&apos;s estates department.
         </p>
       </>
     ),
@@ -542,6 +560,16 @@ const sections = [
                 <strong>Overloaded distribution boards.</strong> Additional circuits added over time
                 without upgrading the distribution board or verifying that the prospective fault
                 current and maximum demand are still within limits.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AFDDs installed in prohibited locations.</strong> Regulation 710.421.1.7 (BS
+                7671:2018+A4:2026) prohibits AFDDs in circuits serving Group 0 and Group 2 medical
+                locations. Regulation 710.421.1.7.101 extends this to any circuit supplied by a
+                medical IT system. An AFDD fitted to a medical IT panel or a Group 2 circuit is a
+                non-compliant installation and a C2 defect on EICR.
               </span>
             </li>
           </ul>

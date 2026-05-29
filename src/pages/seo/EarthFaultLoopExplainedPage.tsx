@@ -70,12 +70,12 @@ const faqs = [
   {
     question: 'What are the maximum Zs values for Type B MCBs?',
     answer:
-      'BS 7671 Table 41.3 gives the maximum Zs values for Type B MCBs to achieve disconnection within 0.4 seconds: 6 A = 7.28 ohms, 10 A = 4.37 ohms, 16 A = 2.73 ohms, 20 A = 2.18 ohms, 25 A = 1.75 ohms, 32 A = 1.37 ohms, 40 A = 1.09 ohms, 50 A = 0.87 ohms. These values are derived using Cmin = 0.95 (i.e. 0.95 x 230 = 218.5 V) divided by the MCB magnetic trip current. They represent the absolute maximum values at the maximum conductor operating temperature. When testing at ambient temperature (which is the norm), you should apply the 0.8 correction factor — meaning your measured Zs should not exceed 80% of these values. For example, a B32 MCB has a tabulated maximum of 1.37 ohms, but your measured Zs at ambient should not exceed 1.10 ohms (1.37 x 0.8).',
+      'BS 7671 Table 41.3 gives the maximum Zs values for Type B MCBs to achieve disconnection within 0.4 seconds: 6 A = 7.28 ohms, 10 A = 4.37 ohms, 16 A = 2.73 ohms, 20 A = 2.19 ohms, 25 A = 1.75 ohms, 32 A = 1.37 ohms, 40 A = 1.09 ohms, 50 A = 0.87 ohms. These values are derived using Cmin = 0.95 (i.e. 0.95 x 230 = 218.5 V) divided by the MCB magnetic trip current. They represent the absolute maximum values at the maximum conductor operating temperature. When testing at ambient temperature (which is the norm), you should apply the 0.8 correction factor — meaning your measured Zs should not exceed 80% of these values. For example, a B32 MCB has a tabulated maximum of 1.37 ohms, but your measured Zs at ambient should not exceed 1.10 ohms (1.37 x 0.8).',
   },
   {
     question: 'What is the 0.8 correction factor for temperature?',
     answer:
-      'The 0.8 correction factor accounts for the increase in conductor resistance as cables heat up during normal operation. The maximum Zs values in BS 7671 tables are given at the maximum operating temperature of the conductors (typically 70 degrees Celsius for PVC-insulated cables). However, when you measure Zs on site, the conductors are usually at ambient temperature (approximately 20 degrees Celsius). As the installation operates and cables carry current, they heat up, and their resistance increases — copper resistance increases by approximately 20% between 20 degrees Celsius and 70 degrees Celsius. The 0.8 factor compensates for this: if your measured Zs at ambient temperature is no more than 80% of the tabulated maximum, it should still be within limits when the cables reach their maximum operating temperature. This is a design guideline rather than a regulation, but it is widely adopted and recommended by the IET.',
+      "The 0.8 correction factor accounts for the increase in conductor resistance as cables heat up during normal operation. The maximum Zs values in BS 7671 Table 41.3 are given at the maximum operating temperature of the conductors (typically 70 degrees Celsius for PVC-insulated cables). However, when you measure Zs on site, the conductors are usually at ambient temperature (approximately 20 degrees Celsius). As the installation operates and cables carry current, they heat up, and their resistance increases — copper resistance increases by approximately 20% between 20 degrees Celsius and 70 degrees Celsius. The 0.8 factor compensates for this: if your measured Zs at ambient temperature is no more than 80% of the tabulated maximum, it should still be within limits when the cables reach their maximum operating temperature. Importantly, the cold-measured site limit (GN3 0.80 factor) is embedded directly alongside every entry in Table 41.3 (Reg 411.4.204) — for example, B20 MCB: 2.19 ohms tabulated, 1.75 ohms site limit. This makes the 0.8 factor part of the standard's normative guidance package, not merely an optional recommendation.",
   },
   {
     question: 'What typical Ze values should I expect for different earthing systems?',
@@ -171,10 +171,7 @@ const sections = [
         </p>
         <p>
           The external earth return path differs depending on the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing system
-          </SEOInternalLink>
-          :
+          <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink>:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -331,6 +328,17 @@ const sections = [
           </SEOInternalLink>
           .
         </p>
+        <p>
+          The regulatory framework behind Zs verification is set out in Reg 643.7.3.1, which
+          requires that where protective measures depend on a knowledge of earth fault loop
+          impedance, the relevant impedances shall be measured or determined by an alternative
+          method, and the measured values shall comply with Chapter 41. Reg 411.4.202 sets out how
+          compliance is demonstrated for circuit-breakers: the maximum Zs shall be determined by the
+          formula in Reg 411.4.4 (Zs = Uo &times; Cmin / Ia), or — for a nominal voltage of 230 V —
+          the values in Table 41.3 may be used directly as an alternative to calculation. Using
+          Table 41.3 directly is the standard on-site approach; the formula route is used where a
+          device is not listed in the table or where a non-standard voltage applies.
+        </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
             Type B MCBs — Maximum Zs for 0.4 s Disconnection (Key Ratings)
@@ -357,7 +365,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B20:</strong> 2.18 Ω (corrected: 1.75 Ω)
+                <strong className="text-yellow-400">B20:</strong> 2.19 Ω (corrected: 1.75 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -415,6 +423,16 @@ const sections = [
               period.
             </p>
           </div>
+          <div className="flex items-start gap-3 mt-3">
+            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <p className="text-white text-sm leading-relaxed">
+              <strong className="text-yellow-400">Professional tip (OSG Reg 1.3):</strong> On new
+              installations, obtain the typical maximum Ze from the electricity distributor before
+              starting work. The distributor can provide this value for the supply address, allowing
+              you to calculate the maximum achievable Zs and verify disconnection times during the
+              design stage — without needing a site measurement at the origin.
+            </p>
+          </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Measuring Zs</h3>
@@ -464,9 +482,13 @@ const sections = [
           </p>
         </div>
         <p>
-          The 0.8 factor is a design guideline recommended by the IET, not a regulation within BS
-          7671 itself. However, it is widely adopted and expected by verifying bodies. Elec-Mate
-          applies the 0.8 correction automatically when validating Zs measurements.
+          The 0.8 correction factor appears as the cold-measured site limit within GN3 and is
+          embedded alongside every entry in Table 41.3 of BS 7671 (Reg 411.4.204). For example, the
+          B20 MCB entry states a tabulated maximum of 2.19 ohms and a cold-measured site limit of
+          1.75 ohms. This makes the 0.8 factor part of the standard's normative guidance package,
+          not merely an optional IET practice — it should be treated as the working limit for
+          on-site testing. Elec-Mate applies the 0.8 correction automatically when validating Zs
+          measurements.
         </p>
       </>
     ),
@@ -525,8 +547,33 @@ const sections = [
                     RCD testing
                   </SEOInternalLink>{' '}
                   is therefore critical. The RCD provides disconnection based on leakage current
-                  rather than fault current magnitude, bypassing the Zs limitation.
+                  rather than fault current magnitude, and compliance for TT systems is assessed
+                  against the maximum Zs values in BS 7671 Table 41.5 (Reg 411.5.3) rather than
+                  Table 41.3.
                 </p>
+                <div className="mt-3 rounded-xl bg-white/[0.04] border border-white/10 p-4">
+                  <p className="text-yellow-400 font-semibold text-sm mb-2">
+                    Table 41.5 — Maximum Zs for RCD-protected TT systems (230 V)
+                  </p>
+                  <ul className="space-y-1 text-white text-sm leading-relaxed">
+                    <li>
+                      <strong className="text-yellow-400">30 mA RCD:</strong> 1,667 &Omega;
+                    </li>
+                    <li>
+                      <strong className="text-yellow-400">100 mA RCD:</strong> 500 &Omega;
+                    </li>
+                    <li>
+                      <strong className="text-yellow-400">300 mA RCD:</strong> 167 &Omega;
+                    </li>
+                    <li>
+                      <strong className="text-yellow-400">500 mA RCD:</strong> 100 &Omega;
+                    </li>
+                  </ul>
+                  <p className="text-white/60 text-xs mt-2">
+                    Source: BS 7671:2018+A4:2026 Table 41.5, Reg 411.5.3. Applies to non-delayed and
+                    time-delayed &#39;S&#39; Type RCDs to BS EN 61008-1 / BS EN 61009-1.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

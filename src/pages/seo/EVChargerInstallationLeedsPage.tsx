@@ -45,6 +45,7 @@ const keyTakeaways = [
   'The OZEV EV chargepoint grant offers up to £350 for eligible flat owners and tenants, reducing the net cost of installation significantly.',
   'Regulation 722.411.4.1 of BS 7671 requires careful attention to earthing where EV chargers are installed outdoors on PME (TN-C-S) supplies, which is the predominant supply type across Leeds.',
   'Smart chargers with off-peak scheduling can reduce overnight charging costs substantially — important for Leeds households on time-of-use electricity tariffs.',
+  'Regulation 722.311.201 (BS 7671:2018+A4:2026) permits load curtailment — automatic or manual load reduction — to be taken into account when calculating maximum demand for an EV charging installation. Smart chargers with dynamic load management can satisfy this without requiring a supply upgrade.',
 ];
 
 const faqs = [
@@ -103,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -361,19 +362,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger must
-                have its own dedicated circuit from the consumer unit. Sharing circuits with other
-                loads is not permitted. If the consumer unit has no spare ways, an upgrade or
-                additional enclosure is required.
+                <strong>Dedicated circuit (Section 722)</strong> — each EV charger must have its own
+                dedicated final circuit from the consumer unit. Sharing circuits with other loads is
+                not permitted. If the consumer unit has no spare ways, an upgrade or additional
+                enclosure is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — the EV circuit requires
-                appropriate RCD protection. Where the charger can produce DC residual currents, a
-                Type B RCD or Type A RCD with a 6mA DC RDC-DD is required. Most quality charger
-                units include integrated DC protection compliant with this requirement.
+                <strong>RCD protection (Section 722)</strong> — the EV circuit requires appropriate
+                RCD protection in accordance with Section 722. Where the charger can produce DC
+                residual currents, a Type B RCD or Type A RCD with a 6mA DC RDC-DD device is
+                required. Most quality charger units include integrated DC protection compliant with
+                this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -388,8 +390,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
+                <strong>IP rating for outdoor units (Regulation 712.512.102)</strong> — enclosures
+                for electrical equipment installed outdoors must have a minimum degree of protection
+                of IP44 (BS EN 60529) and IK07 mechanical impact resistance (BS EN 62262). All
+                outdoor EV charger units and associated enclosures must meet this minimum standard.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Load curtailment (Regulation 722.311.201)</strong> — where the EV charger
+                load could exceed the available supply capacity, load curtailment (automatic or
+                manual load reduction or disconnection) may be taken into account when determining
+                the maximum demand of the installation. Smart chargers with dynamic load management
+                can satisfy this requirement and avoid the need for a supply upgrade.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
                 <strong>Cable sizing</strong> — use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to confirm the circuit cable size meets both current-carrying capacity and voltage
@@ -506,10 +527,8 @@ const sections = [
                   Factor in Yorkshire day rates (£300 to £400), cable run lengths in older terraced
                   stock, potential board upgrades on pre-2000 consumer units, and parking
                   considerations in inner-city Leeds streets. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes on site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes on site.
                 </p>
               </div>
             </div>
@@ -518,14 +537,22 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Certification and Compliance</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Certification and Handover Documentation
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Every EV charger installation requires an{' '}
+                  Every EV charger installation requires a complete documentation pack handed over
+                  to the client at completion. This must include an{' '}
                   <SEOInternalLink href="/eic-certificate">
-                    Electrical Installation Certificate
-                  </SEOInternalLink>
-                  , NPG G98/G99 notification, and Building Regulations notification (Part P).
-                  Complete all documentation on your phone from the job.
+                    Electrical Installation Certificate (EIC)
+                  </SEOInternalLink>{' '}
+                  with schedules of inspection and test results, NPG G98/G99 notification
+                  confirmation, and Building Regulations notification (Part P). Also include: an
+                  as-fitted cable route drawing, volt drop calculation, manufacturer&apos;s
+                  commissioning record, and the charger app or software configuration notes.
+                  Omitting commissioning records or software configuration notes are common
+                  deficiencies found on EV charger installations. Complete all documentation on your
+                  phone from the job.
                 </p>
               </div>
             </div>

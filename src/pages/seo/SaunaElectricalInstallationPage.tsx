@@ -41,9 +41,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'Sauna heaters typically draw 4.5kW to 9kW for domestic units, requiring a dedicated 20A to 40A radial circuit. Larger commercial saunas may require three-phase supplies up to 18kW or more.',
-  'BS 7671 Section 703 (saunas and steam rooms) applies. The sauna interior is divided into temperature zones — Zone 1 (above the heater) and Zone 2 (the rest of the room) — with strict limits on what equipment can be installed in each zone.',
+  'BS 7671 Section 703 (saunas and steam rooms) applies. The sauna interior is divided into three temperature zones under Regs 703.32.2 and 703.32.3: Zone 1 (the heater volume, bounded by a vertical surface 0.5 m from the heater surface), Zone 2 (outside Zone 1, from floor to 1.0 m above floor), and Zone 3 (outside Zone 1, from 1.0 m above floor to the cold side of the ceiling insulation). Strict limits govern what equipment may be installed in each zone.',
   'All wiring within the sauna room must use heat-resistant cable rated for the temperatures encountered. Standard PVC-insulated cable (rated 70°C) must not be used inside the sauna — use silicone rubber or XLPE cable rated to at least 170°C.',
-  'RCD protection is mandatory under BS 7671 Regulation 411.3.3. A 30mA RCBO on the dedicated circuit is the standard approach.',
+  'RCD protection for sauna circuits is governed by BS 7671 Regulation 703.411.3.3 (the sauna-specific Part 7 rule). All sauna circuits require additional protection by 30mA RCD(s). Note the manufacturer exception: RCD protection need not be provided for the sauna heater itself unless the heater manufacturer recommends it.',
   'An Electrical Installation Certificate (EIC) must be issued, and the work must be notified under Part P as it involves a special location.',
 ];
 
@@ -61,12 +61,12 @@ const faqs = [
   {
     question: 'What are the BS 7671 Section 703 zones for a sauna?',
     answer:
-      'BS 7671 Section 703 divides the sauna room into zones based on temperature. Zone 1 is the area directly above and within a horizontal distance of the heater — only the heater and its dedicated wiring may be in this zone. Zone 2 covers the rest of the sauna room. In Zone 2, luminaires and the sauna control sensor may be installed, but they must be heat-resistant and suitable for the zone temperature. No socket outlets are permitted inside the sauna room. The sauna control unit and any switching must be located outside the sauna room.',
+      'BS 7671 Section 703 defines three zones within the sauna room (Regs 703.32.2 and 703.32.3). Zone 1 is the volume containing the sauna heater, bounded by the floor, the cold side of the ceiling insulation, and a vertical surface circumscribing the heater at a radial distance of 0.5 m from the heater surface — only the heater and its dedicated wiring are permitted here. Zone 2 is the volume outside Zone 1, from the floor up to a horizontal plane 1.0 m above the floor, laterally bounded by the cold side of the wall insulation — luminaires and temperature sensors suitable for the zone temperature may be installed here. Zone 3 is the volume outside Zone 1, between 1.0 m above the floor and the cold side of the ceiling insulation. No socket outlets are permitted inside the sauna room under any circumstances. The sauna control unit and any switching must be located outside the sauna room.',
   },
   {
     question: 'Does a sauna need RCD protection?',
     answer:
-      'Yes. BS 7671 Regulation 411.3.3 requires additional protection by a 30mA RCD for the sauna heater circuit. The sauna is classified as a special location under Section 703, which reinforces this requirement. An RCBO on the dedicated way at the consumer unit is the standard approach — it combines overcurrent protection and earth fault protection without affecting other circuits if it trips.',
+      'Yes, for all sauna circuits. BS 7671 Regulation 703.411.3.3 (the sauna-specific Part 7 regulation) requires additional protection for all circuits of the sauna by one or more RCDs having the characteristics specified in Regulation 415.1.1 (30mA). There is an important exception for the heater itself: RCD protection need not be provided for the sauna heater unless such protection is recommended by the heater manufacturer. In practice always check the manufacturer documentation — if the manufacturer recommends RCD protection for the heater, it is then mandatory. An RCBO on the dedicated way at the consumer unit is the standard approach for the sauna circuits — it combines overcurrent protection and earth fault protection without affecting other circuits if it trips.',
   },
   {
     question: 'Can I install a sauna in a bathroom?',
@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for sauna heater circuits with voltage drop and derating calculations.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on cable runs to sauna installations.',
     icon: Zap,
@@ -222,19 +222,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 1</strong> — the area where the sauna heater is installed. Only the
-                heater and its dedicated wiring are permitted in Zone 1. The heater must be
-                installed according to the manufacturer instructions with minimum clearances to
-                combustible materials.
+                <strong>Zone 1 (Reg 703.32.3)</strong> — the volume containing the sauna heater,
+                bounded by the floor, the cold side of the ceiling insulation, and a vertical
+                surface circumscribing the heater at 0.5 m from the heater surface. Only the heater
+                and equipment belonging to the sauna heater are permitted in Zone 1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 2</strong> — the remainder of the sauna room. Luminaires and
-                temperature sensors are permitted in Zone 2 provided they are suitable for the
-                temperature (heat resistant). No socket outlets, junction boxes, or other
-                accessories are permitted inside the sauna room.
+                <strong>Zone 2 (Reg 703.32.2)</strong> — the volume outside Zone 1, from the floor
+                to a horizontal plane 1.0 m above the floor, limited laterally by the cold side of
+                the wall insulation. Heat-resistant luminaires and temperature sensors may be
+                installed in Zone 2.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Zone 3 (Reg 703.32.3)</strong> — the volume outside Zone 1, between 1.0 m
+                above the floor and the cold side of the ceiling insulation. Wiring on the warm side
+                of thermal insulation in Zones 1 or 3 must be heat-resisting and metallic sheaths or
+                conduits must not be accessible in normal use (Reg 703.52).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -251,6 +260,16 @@ const sections = [
                 <strong>Equipotential bonding</strong> — accessible extraneous-conductive-parts
                 within the sauna (metal bench supports, metallic door handles, etc.) must be
                 connected by supplementary equipotential bonding.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>SELV/PELV (Reg 703.414.3, A4:2026)</strong> — BS 7671:2018+A4:2026
+                introduces Regulation 703.414.3, which sets specific requirements for SELV and PELV
+                circuits used in sauna locations. SELV supplies are commonly used for sauna
+                luminaires in Zones 2 and 3 as an alternative protective measure, and any such
+                installation must comply with the requirements of 703.414.3.
               </span>
             </li>
           </ul>
@@ -296,6 +315,17 @@ const sections = [
           standard cable to heat-resistant cable should be made in a junction box outside the sauna
           room.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Regulatory basis — Reg 703.52:</strong> Where a wiring system is installed on
+            the warm side of thermal insulation in Zone 1 or Zone 3, it shall be heat-resisting.
+            Metallic sheaths and metallic conduits shall not be accessible in normal use in those
+            zones. Where practicable, wiring should be installed on the cold side of the thermal
+            insulation (outside the zones). This is the explicit BS 7671:2018+A4:2026 requirement
+            underpinning the choice of silicone rubber or equivalent heat-resistant cable inside the
+            sauna room.
+          </p>
+        </div>
       </>
     ),
   },
@@ -355,15 +385,22 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 411.3.3 requires additional protection by a 30mA RCD for the sauna
-          circuit. The sauna is a special location under Section 703, and the combination of high
-          temperatures and moisture (particularly in combined sauna/steam rooms) makes RCD
-          protection essential.
+          BS 7671 Regulation 703.411.3.3 (the sauna-specific Part 7 rule) requires additional
+          protection for all circuits of the sauna by one or more RCDs having the characteristics of
+          Regulation 415.1.1 (30mA). The combination of high temperatures and moisture —
+          particularly in combined sauna/steam rooms — makes RCD protection essential.
         </p>
         <p>
-          An RCBO on the dedicated way at the consumer unit is the standard approach. Type A is
-          preferred over Type AC as sauna heater controllers may include electronic components that
-          produce DC fault components.
+          There is a specific exception for the sauna heater: RCD protection need not be provided
+          for the sauna heater itself unless the heater manufacturer recommends it. Always check the
+          manufacturer documentation before deciding whether to apply RCD protection to the heater
+          circuit. If the manufacturer recommends it, RCD protection becomes mandatory for the
+          heater.
+        </p>
+        <p>
+          An RCBO on the dedicated way at the consumer unit is the standard approach for sauna
+          circuits. Type A is preferred over Type AC as sauna heater controllers may include
+          electronic components that produce DC fault components.
         </p>
       </>
     ),
@@ -373,7 +410,10 @@ const sections = [
     heading: 'Testing and Certification',
     content: (
       <>
-        <p>The completed installation must be tested in accordance with BS 7671 Chapter 61:</p>
+        <p>
+          The completed installation must be tested in accordance with BS 7671 Chapter 64 (Initial
+          Verification, BS 7671:2018+A4:2026):
+        </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -488,10 +528,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote with Specialist Materials</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to itemise the heat-resistant cable, silicone fixings, fireproof junction box, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  itemise the heat-resistant cable, silicone fixings, fireproof junction box, and
                   specialist luminaires. These cost more than standard materials — make sure the
                   quote reflects this.
                 </p>

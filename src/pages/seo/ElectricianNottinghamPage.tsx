@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for long runs in Lace Market warehouse conversions with automatic derating.',
@@ -484,7 +484,7 @@ const sections = [
                 <strong>Thick masonry walls</strong> — warehouse buildings have 450mm to 600mm solid
                 brick walls. Core drilling for cable penetrations requires specialist equipment.
                 Plan routes to minimise penetrations and use existing openings. The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 helps verify cable sizes for the long runs typical in these buildings.

@@ -506,7 +506,7 @@ export default function ElectricianAccountingSoftwarePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     Your accounting software shows overall business profit, but Elec-Mate's{' '}
-                    <SEOInternalLink href="/job-profitability-calculator">
+                    <SEOInternalLink href="/tools/job-profitability-calculator">
                       job profitability calculator
                     </SEOInternalLink>{' '}
                     shows profit at the individual job level. This granular view helps you identify
@@ -594,7 +594,7 @@ export default function ElectricianAccountingSoftwarePage() {
           category: 'Business',
         },
         {
-          href: '/job-profitability-calculator',
+          href: '/tools/job-profitability-calculator',
           title: 'Job Profitability Calculator',
           description: 'Track profit margins on every electrical job.',
           icon: TrendingUp,

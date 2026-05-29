@@ -28,8 +28,9 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'overview', label: 'Chapter 44 Overview' },
   { id: 'regulation-443', label: 'Regulation 443 — When SPDs Are Required' },
-  { id: 'risk-assessment', label: 'The Risk Assessment (443.4)' },
+  { id: 'risk-assessment', label: 'Reg 443.4.1 — Owner Declaration' },
   { id: 'spd-types', label: 'Type 1, Type 2 and Type 3 SPDs' },
+  { id: 'switching-overvoltages', label: 'Reg 443.4.2 — Switching Overvoltages' },
   { id: 'installation', label: 'Installing SPDs at the Consumer Unit' },
   { id: 'coordination', label: 'Coordination with Protective Devices' },
   { id: 'cost-benefit', label: 'Cost vs Benefit Analysis' },
@@ -39,10 +40,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Chapter 44 of BS 7671 covers protection against overvoltage caused by atmospheric origin (lightning) and switching overvoltages. Amendment 2 introduced the requirement for a risk assessment to determine whether SPDs (Surge Protection Devices) are needed.',
-  'Regulation 443.4 requires that where the consequence of an overvoltage includes risk to human life (for example, in medical locations or safety services) or affects installations with public services or cultural heritage, SPDs shall be provided. For all other installations, a risk assessment determines whether SPDs are required.',
-  'In practice, following the Amendment 2 risk assessment, SPDs are required for the vast majority of new domestic installations. The cost of equipment that could be damaged by a transient overvoltage (smart home systems, IT equipment, appliances with electronic controls) almost always exceeds the cost of installing SPDs.',
+  'Chapter 44 of BS 7671:2018+A4:2026 covers protection against overvoltage caused by atmospheric origin (lightning) and switching overvoltages. A4:2026 redrafted Section 443: the old AQ lightning-density criteria no longer apply — protection is now required based on the consequence of an overvoltage, not its likelihood.',
+  'Regulation 443.4 sets four mandatory categories where SPDs shall be provided without any risk assessment: (a) risk to human life; (b) public services or cultural heritage; (c) interruption of commercial or industrial activity; (d) large numbers of co-located individuals. For all other installations, Regulation 443.4.1 applies.',
+  'Under Regulation 443.4.1, the default position is that SPDs shall be provided. The only route to omit them in a non-critical installation is a formal written owner declaration stating that any loss or damage is tolerable and that the owner accepts the risk. The declaration must be retained with the installation documentation and EIC.',
   'Type 1 SPDs protect against direct lightning strikes and are installed at the origin of the installation. Type 2 SPDs protect against indirect lightning and switching surges, also at the origin. Type 3 SPDs provide fine protection at individual equipment locations.',
+  'Regulation 443.4.2 introduces a separate limb: where equipment is likely to produce switching overvoltages or disturbances — such as variable-frequency drives, large motors, or power factor correction capacitors — protection against those overvoltages shall be considered regardless of the Reg 443.4.1 assessment.',
   'SPDs must be coordinated with the upstream protective device (MCB or fuse). The SPD manufacturer specifies the maximum recommended backup fuse or MCB rating. If the SPD is installed after the main switch but before the RCD, the disconnection of the SPD backup fuse does not affect the rest of the installation.',
 ];
 
@@ -50,7 +52,7 @@ const faqs = [
   {
     question: 'When are SPDs required under BS 7671?',
     answer:
-      'Under Regulation 443.4, SPDs are required where the consequence of an overvoltage event includes risk to human life, affects public services or cultural heritage, or affects commercial or industrial installations where business continuity is critical. For all other installations (including domestic), a risk assessment is carried out to determine whether the cost of the potential damage from an overvoltage event exceeds the cost of installing SPDs. In practice, the risk assessment almost always concludes that SPDs are required for new domestic installations because the value of electronic equipment in a modern home (smart TVs, computers, broadband routers, smart home systems, electronic white goods) significantly exceeds the cost of an SPD (approximately 50 to 150 pounds for the device plus installation time).',
+      'Under Regulation 443.4 (A4:2026), SPDs shall be provided without further assessment where the consequence of an overvoltage could: (a) result in serious injury or loss of human life; (b) interrupt public services or damage cultural heritage; (c) interrupt commercial or industrial activity; or (d) affect a large number of co-located individuals. For all other installations, Regulation 443.4.1 applies: SPDs shall be provided by default. The only route to omit them is a formal written owner declaration stating that any loss or damage is tolerable and that the owner accepts the risk of equipment damage and consequential loss. That declaration must be retained with the installation documentation. There is no longer a cost/benefit test as the operative compliance mechanism — omission requires the owner declaration route.',
   },
   {
     question: 'What is the difference between Type 1, Type 2 and Type 3 SPDs?',
@@ -155,11 +157,14 @@ const sections = [
           sensitive to voltage spikes.
         </p>
         <p>
-          Amendment 2 to BS 7671 (2022) significantly strengthened the overvoltage protection
-          requirements by introducing a risk assessment process (Regulation 443.4) that, in
-          practice, means SPDs are now required for the majority of new installations. This guide
-          explains the risk assessment, SPD types, installation methods, and the practical and
-          commercial implications.
+          BS 7671:2018+A4:2026 redrafted Chapter 44 and Section 443, fundamentally changing how SPD
+          need is determined. The old AQ lightning-density criteria no longer apply. Instead,
+          protection is required based on the consequence of an overvoltage event — with four
+          mandatory categories (Reg 443.4) and a default-on rule for all other installations (Reg
+          443.4.1) that can only be set aside by a formal owner declaration. In practice, this means
+          SPDs are required for the vast majority of new installations. This guide explains the
+          regulatory framework, SPD types, installation methods, and the practical and commercial
+          implications.
         </p>
       </>
     ),
@@ -169,13 +174,16 @@ const sections = [
     heading: 'Regulation 443 — When SPDs Are Required',
     content: (
       <>
-        <p>Regulation 443.4 sets out the circumstances under which SPDs must be provided:</p>
+        <p>
+          Regulation 443.4 sets out four categories where SPDs <strong>shall</strong> be provided
+          with no further assessment required. These are mandatory regardless of installation type:
+        </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory — risk to life:</strong> SPDs shall be provided where an
+                <strong>(a) Mandatory — risk to life:</strong> SPDs shall be provided where an
                 overvoltage could result in serious injury or loss of human life. This includes
                 medical locations, safety services (fire alarms, emergency lighting), and
                 installations where equipment failure could endanger people.
@@ -184,98 +192,86 @@ const sections = [
             <li className="flex items-start gap-3">
               <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory — public services and heritage:</strong> SPDs shall be provided
-                where an overvoltage could affect public services, telecommunications, or cultural
-                heritage structures.
+                <strong>(b) Mandatory — public services and heritage:</strong> SPDs shall be
+                provided where an overvoltage could interrupt public services or cause damage to
+                cultural heritage. This covers essential public infrastructure and structures or
+                items of cultural significance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Risk assessment — all other installations:</strong> For all other
-                installations (including standard domestic and commercial), a risk assessment shall
-                be carried out. If the risk assessment determines that the cost of damage from an
-                overvoltage event exceeds the cost of providing SPDs, then SPDs shall be installed.
+                <strong>(c) Mandatory — commercial or industrial activity:</strong> SPDs shall be
+                provided where an overvoltage could result in interruption of commercial or
+                industrial activity. This directly applies to shops, offices, factories, and any
+                premises where supply loss or equipment damage from a transient would have material
+                commercial consequences.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>(d) Mandatory — large numbers of co-located individuals:</strong> SPDs shall
+                be provided where an overvoltage could affect a large number of co-located
+                individuals — for example, hotels, schools, residential care homes, and sports
+                venues.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The risk assessment is not optional — it is a mandatory step. Even if you decide not to
-          install SPDs, you must document the risk assessment and justify the decision. In practice,
-          the outcome nearly always favours installing SPDs, which is why the industry has moved
-          strongly towards SPDs as standard in new installations.
+          For all installations not covered by (a) to (d) above, Regulation 443.4.1 applies — see
+          the section below on the owner declaration mechanism.
         </p>
       </>
     ),
   },
   {
     id: 'risk-assessment',
-    heading: 'The Risk Assessment (Regulation 443.4)',
+    heading: 'Regulation 443.4.1 — The Default Rule and Owner Declaration',
     content: (
       <>
         <p>
-          The risk assessment compares the cost of potential damage from a transient overvoltage
-          against the cost of installing SPDs. The assessment considers:
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Lightning density</strong> — the number of lightning flashes per square
-                kilometre per year in the area. The UK average is approximately 0.5 to 1 flash per
-                square kilometre per year, but this varies by region (higher in the south and east
-                of England, lower in Scotland).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Supply type</strong> — overhead supply lines are more exposed to
-                lightning-induced surges than underground cables. Rural properties with overhead
-                lines are at higher risk.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Value of equipment at risk</strong> — the replacement cost of electronic
-                equipment in the installation. In a modern domestic installation, this typically
-                includes: smart TV (500 to 2000 pounds), computer/laptop (500 to 2000 pounds),
-                broadband router (100 pounds), smart home hub (200 pounds), electronic white goods
-                (1000 to 3000 pounds), boiler electronics (200 to 500 pounds), and EV charger
-                electronics (200 to 500 pounds). Total: 2,700 to 8,200 pounds.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Cost of SPD installation</strong> — a Type 2 SPD module costs 50 to 150
-                pounds for the device, plus a 32A MCB for backup protection, plus installation time
-                (approximately 30 to 60 minutes). Total installed cost: approximately 100 to 250
-                pounds.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <p>
-          When the value of equipment at risk (2,700 pounds and above) is compared to the cost of
-          SPD installation (100 to 250 pounds), the outcome is clear. For any installation with
-          electronic equipment worth more than the cost of the SPD (which is virtually every modern
-          home), SPDs are required.
+          For all installations not caught by the four mandatory categories in Regulation 443.4,
+          Regulation 443.4.1 sets a <strong>default-on position: SPDs shall be provided.</strong>{' '}
+          The A4:2026 framework is not a cost/benefit test — the starting point is that protection
+          is required. The only compliant route to omit SPDs in a non-critical installation is a
+          formal written <strong>owner declaration</strong>.
         </p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-            <p className="text-white text-sm">
-              <strong>Document the assessment:</strong> Whether you install SPDs or not, the risk
-              assessment must be documented. Record it on the EIC or as a separate document. If you
-              decide not to install SPDs (for example, in an agricultural outbuilding with no
-              electronic equipment), the risk assessment provides the justification.
-            </p>
+            <div>
+              <p className="text-white text-sm font-semibold mb-2">
+                Owner Declaration — What Is Required (Reg 443.4.1)
+              </p>
+              <p className="text-white text-sm mb-2">The owner declaration must state that:</p>
+              <ul className="list-disc list-inside text-white text-sm space-y-1 ml-2">
+                <li>any loss or damage from a transient overvoltage is tolerable to them; and</li>
+                <li>they accept the risk of equipment damage and any consequential loss.</li>
+              </ul>
+              <p className="text-white text-sm mt-2">
+                The declaration must be{' '}
+                <strong>recorded and retained with the installation documentation</strong> —
+                retained with the EIC or as a separate document signed by the owner. It does not
+                remove any other regulatory obligations under BS 7671 or statutory law.
+              </p>
+            </div>
           </div>
         </div>
+        <p>
+          In practice, most owners of modern properties will not sign a declaration of this kind,
+          given the value of electronic equipment at risk. A modern domestic installation may
+          contain smart TVs, computers, broadband routers, smart home systems, electronic white
+          goods, boiler controls, and EV charger electronics — total replacement value: 2,700 to
+          8,200+ pounds. Against an installed SPD cost of approximately 100 to 250 pounds, the owner
+          declaration route is rarely used.
+        </p>
+        <p>
+          Note: the AQ lightning-density criteria (lightning flash density, overhead vs underground
+          supply) that were used under previous editions no longer form part of the compliance
+          decision. A4:2026 removed them from Section 443 entirely.
+        </p>
       </>
     ),
   },
@@ -340,6 +336,89 @@ const sections = [
           fine clamping. The cable distance between Type 2 and Type 3 must be at least 5 metres (or
           an inductance decoupling device must be used) to ensure correct energy sharing.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-base mb-3">
+            Overvoltage Categories (Table 443.2) and Voltage Protection Level (Reg 534.4.8)
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            Equipment is classified into four overvoltage categories (I–IV) with corresponding
+            required rated impulse voltages (Uw) from Table 443.2. At 230/400 V nominal, the
+            required values are: Category I = 1.5 kV (sensitive electronics, protected equipment);
+            Category II = 2.5 kV (appliances, tools, most domestic equipment); Category III = 4 kV
+            (distribution boards, switchgear, cables); Category IV = 6 kV (origin of installation,
+            metering equipment, overhead line apparatus).
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            Regulation 534.4.8 Note 2 recommends that the voltage protection level (Vp) of a
+            selected SPD should not exceed{' '}
+            <strong>80% of the equipment's required rated impulse voltage</strong> for overvoltage
+            category II (2.5 kV at 230/400 V). This gives a recommended maximum Vp of 2.0 kV for
+            protecting most domestic and commercial equipment. The figures of 1.5 kV (Type 3) and
+            below 2.5 kV (Type 2) cited by manufacturers correspond to this framework — not
+            arbitrary marketing claims.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'switching-overvoltages',
+    heading: 'Regulation 443.4.2 — Switching Overvoltages (Commercial and Industrial)',
+    content: (
+      <>
+        <p>
+          Regulation 443.4.2 introduces a separate and independent limb of the overvoltage
+          assessment. Where equipment is likely to produce switching overvoltages or disturbances,
+          protection against those overvoltages <strong>shall be considered</strong> — regardless of
+          whether the installation falls into Reg 443.4 categories or has an owner declaration under
+          Reg 443.4.1.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Variable-frequency drives (VFDs / inverters)</strong> — produce high-energy
+                switching transients on every switching cycle. Common in HVAC systems, pump
+                controls, and motor starters in commercial and industrial premises.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Large motors and motor starters</strong> — switching large inductive loads
+                generates voltage spikes. Star-delta starters and direct-on-line starters are
+                particularly prone to producing switching disturbances.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Power factor correction capacitors</strong> — switching capacitor banks
+                causes high-frequency transient overvoltages that propagate through the
+                installation.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          The Reg 443.4.2 obligation is to <em>consider</em> protection — the designer or installer
+          shall assess whether SPDs or other suppression measures (RC snubbers, line reactors) are
+          needed. This is a common gap in commercial and industrial surveys: installers familiar
+          with domestic SPD practice may apply the Reg 443.4.1 framework and overlook the separate
+          switching-overvoltage assessment entirely.
+        </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-white text-sm">
+              <strong>EICR implication:</strong> Where VFDs, large motors, or capacitor banks are
+              present and no switching overvoltage assessment has been carried out or documented,
+              this is a codeable observation (C2 or C3 depending on the degree of risk to sensitive
+              equipment sharing the same distribution board).
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
@@ -465,7 +544,7 @@ const sections = [
               <p>Type 2 SPD module: 50 to 150 pounds</p>
               <p>Backup MCB (32A): 5 to 10 pounds</p>
               <p>Cable and sundries: 5 to 10 pounds</p>
-              <p>Installation time: 30 to 60 minutes</p>
+              <p>Installation time: 60 to 90 minutes (new-build 45–60 min; retrofit 90 min)</p>
               <p>
                 <strong>Total installed cost: 100 to 250 pounds</strong>
               </p>
@@ -571,7 +650,7 @@ export default function Chapter44OvervoltageProtectionPage() {
           Chapter 44: <span className="text-yellow-400">Overvoltage and SPD Requirements</span>
         </>
       }
-      heroSubtitle="SPDs are now required for most new installations following the Amendment 2 risk assessment. This guide explains when SPDs are needed, the three types, how to install and coordinate them, and the cost/benefit case for your customers."
+      heroSubtitle="Under BS 7671:2018+A4:2026, SPDs are required by default for most installations — omission requires a formal written owner declaration. This guide explains the Reg 443.4 mandatory categories, the Reg 443.4.1 owner declaration mechanism, SPD types, installation, and the commercial case for your customers."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -30,6 +30,7 @@ export default function ElectricalSiteInductionPage() {
       tocItems={[
         { id: 'what-is-site-induction', label: 'What Is a Site Induction?' },
         { id: 'cdm-requirements', label: 'CDM 2015 Requirements' },
+        { id: 'bs7671-section-704', label: 'BS 7671 Section 704 Obligations' },
         { id: 'what-is-covered', label: 'What Is Covered' },
         { id: 'rams-review', label: 'RAMS Review' },
         { id: 'permit-to-work', label: 'Permit to Work Systems' },
@@ -53,6 +54,8 @@ export default function ElectricalSiteInductionPage() {
         'You must bring your CSCS card (or equivalent), photo ID, qualifications, insurance details, and your RAMS (risk assessment and method statement) to the induction.',
         'RAMS are reviewed during or before the induction. If your RAMS are not accepted, you will not be allowed to start work until they are revised and resubmitted.',
         "Elec-Mate's RAMS Generator creates site-specific risk assessments and method statements that meet principal contractor requirements, so your documentation is ready before you arrive.",
+        'As an electrician, you must also ensure that any temporary electrical installation you design or install on a construction site complies with BS 7671 Section 704. This includes confirming that any distribution assembly used on site meets the Assembly for Construction Sites (ACS) standard BS EN 61439-4, as required by Reg 421.1201.',
+        'Equipment on construction sites must be identified with and compatible with the particular supply from which it is energised (BS 7671 Reg 704.313.3). Some sites operate reduced-voltage supplies; confirm the site supply arrangements at induction so you bring compatible tools and equipment.',
       ]}
       sections={[
         {
@@ -143,6 +146,91 @@ export default function ElectricalSiteInductionPage() {
                 induction requirements are proportionate to the risk — a brief site-specific safety
                 briefing rather than a formal structured induction.
               </p>
+              <p>
+                Alongside CDM 2015, the HSE publication{' '}
+                <strong>HSG85 — Electricity at Work: Safe Working Practices</strong> sets out the
+                standard that electrical contractors must follow for isolation procedures,
+                permit-to-work systems, and safe-working arrangements on site. GN3 (the IET Guidance
+                Note on Inspection and Testing) specifically identifies HSG85 as the benchmark for
+                ensuring that contractors have appropriate rules and procedures for safe electrical
+                working. A thorough site induction will confirm that these procedures are understood
+                and in place before any electrical work begins.
+              </p>
+            </>
+          ),
+        },
+        {
+          id: 'bs7671-section-704',
+          heading: 'BS 7671 Section 704: Electrical Obligations on Construction Sites',
+          content: (
+            <>
+              <p>
+                CDM 2015 governs the management of health and safety on construction sites, but as a
+                qualified electrician you also carry a separate technical obligation: any temporary
+                electrical installation you design, install, or work on during the construction
+                phase must comply with <strong>Section 704 of BS 7671:2018+A4:2026</strong> — the
+                dedicated chapter for construction and demolition site installations.
+              </p>
+              <p>
+                Regulation 704.1.1 states that the particular requirements of Section 704 apply to
+                temporary installations used during the period of construction, demolition,
+                alteration, extension, repair, or engineering works. This covers the site
+                distribution boards, socket-outlet supplies, temporary lighting, and all other
+                electrical provisions in place while work is ongoing — not the permanent
+                installation being built.
+              </p>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+                <h3 className="font-bold text-white text-lg mb-4">
+                  Key Section 704 Requirements for Electricians
+                </h3>
+                <ul className="space-y-3 text-white">
+                  <li className="flex items-start gap-3">
+                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong className="text-yellow-400">
+                        ACS distribution assemblies (Reg 421.1201)
+                      </strong>{' '}
+                      — any distribution board or assembly provided for use on a construction site
+                      must meet the Assembly for Construction Sites (ACS) standard,{' '}
+                      <strong>BS EN 61439-4:2013</strong>. Confirm at induction whether the site
+                      provides a compliant ACS unit or whether you are expected to supply your own.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong className="text-yellow-400">
+                        Equipment supply compatibility (Reg 704.313.3)
+                      </strong>{' '}
+                      — all equipment and tools must be identified with, and compatible with, the
+                      particular supply from which they are energised. A single site may operate
+                      multiple sources (public supply, generator, reduced-voltage transformer).
+                      Confirm the site supply arrangements at induction so your tools and protective
+                      devices are suitable for the actual supply characteristics.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong className="text-yellow-400">
+                        Plugs, socket-outlets and wiring systems (Reg 704.511.1)
+                      </strong>{' '}
+                      — Section 704 contains specific amended requirements for plugs,
+                      socket-outlets, and wiring systems on construction sites. Check the induction
+                      materials confirm which socket types are installed on the ACS and ensure your
+                      leads and plugs match.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <p>
+                These obligations are separate from the CDM duties covered in the previous section.
+                CDM applies to how the site is managed; Section 704 applies to the technical
+                standard of the temporary electrical installation itself. If you are the only
+                electrician on a small project, both sets of obligations fall on you. Ask at the
+                induction who is responsible for the site temporary installation and whether a
+                Section 704-compliant ACS is in place before you plug anything in.
+              </p>
             </>
           ),
         },
@@ -180,6 +268,15 @@ export default function ElectricalSiteInductionPage() {
                     areas, confined spaces, working at height risks, crane operations, underground
                     services, contaminated ground, or noise from concurrent works. The induction
                     identifies these so you can recognise and avoid them.
+                  </p>
+                  <p className="text-white text-sm leading-relaxed mt-3">
+                    <strong className="text-yellow-400">Electrician-specific:</strong> Some
+                    construction sites operate a reduced-voltage supply for portable tools via a
+                    step-down transformer, meaning tools rated only for 230&nbsp;V may not be
+                    suitable. BS&nbsp;7671 Reg&nbsp;704.313.3 requires all equipment to be
+                    identified with and compatible with the particular supply from which it is
+                    energised. Use the induction to confirm the site supply voltage and socket types
+                    so you arrive with compatible tools and leads on your first working day.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">

@@ -116,6 +116,16 @@ const sections = [
           that of an NICEIC certification — both are authorised by the Government under the same
           Part P framework.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-4 my-6 flex items-start gap-3">
+          <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+          <p className="text-white/60 text-xs leading-relaxed">
+            <span className="text-white/80 font-medium">
+              Written by the Elec-Mate editorial team
+            </span>{' '}
+            &mdash; verified by a qualified UK electrician and checked against
+            BS&nbsp;7671:2018+A4:2026 and the On-Site Guide 9th&nbsp;Ed:2022 (A4).
+          </p>
+        </div>
       </>
     ),
   },
@@ -320,6 +330,32 @@ const sections = [
           may visit a recent job site to inspect your installation work. Technical questions about
           current regulations and testing procedures are part of the assessment.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-base mb-2">
+            What assessors check on certificates (BS 7671:2018+A4:2026)
+          </h3>
+          <ul className="space-y-2 text-white/80 text-sm leading-relaxed">
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Recommended inspection interval (Reg 644.4):</strong> Every EIC must record
+                the recommended interval between initial verification and the first periodic
+                inspection. Assessors specifically check this field is completed, as it is a legal
+                requirement under BS 7671:2018+A4:2026.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>SPD and AFDD fields (Appendix 6, A4:2026):</strong> The A4:2026 amendment
+                updated the Appendix 6 model forms to include dedicated fields for recording surge
+                protective device (SPD) and arc fault detection device (AFDD) details. Certificates
+                issued since the amendment should include these fields where such devices are
+                installed.
+              </span>
+            </li>
+          </ul>
+        </div>
         <p>
           If the assessor identifies any non-conformances, you will receive a corrective action
           report with specific issues to address and a deadline for resolution. Minor issues are
@@ -349,6 +385,42 @@ const sections = [
           . When you complete notifiable work, you notify NAPIT through their online portal rather
           than notifying the local authority building control department.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-base mb-3">
+            What is and is not notifiable under Part P?
+          </h3>
+          <p className="text-white/80 text-sm leading-relaxed mb-3">
+            The On-Site Guide (9th Ed:2022, A4) makes clear that &lsquo;all electrical work within
+            dwellings, of which <em>some</em> is notifiable&rsquo; — not all domestic electrical
+            work requires a competent person scheme notification.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 text-sm">
+            <div>
+              <p className="font-semibold text-yellow-400 mb-1">
+                Notifiable (requires notification)
+              </p>
+              <ul className="space-y-1 text-white/80 leading-relaxed">
+                <li>New circuits from the consumer unit</li>
+                <li>Consumer unit replacement or alteration</li>
+                <li>New circuits in bathrooms, kitchens, or outdoors</li>
+                <li>New circuits anywhere in a dwelling</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-semibold text-white/60 mb-1">
+                Not notifiable (no notification required)
+              </p>
+              <ul className="space-y-1 text-white/80 leading-relaxed">
+                <li>Like-for-like socket or switch replacement</li>
+                <li>
+                  Adding a socket to an existing ring circuit (except in a kitchen or bathroom)
+                </li>
+                <li>Replacing a light fitting (except in a bathroom)</li>
+                <li>Repair and maintenance work</li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <p>
           The notification process is simple. After completing the work and issuing the appropriate
           electrical certificate (
@@ -444,6 +516,49 @@ const sections = [
           Both schemes provide the same legal self-certification ability under Part P, so the
           decision comes down to other factors.
         </p>
+        <div className="overflow-x-auto my-6 rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] border-b border-white/10">
+                <th className="text-left px-4 py-3 font-semibold text-white/70 w-1/3">Feature</th>
+                <th className="text-left px-4 py-3 font-semibold text-yellow-400">NAPIT</th>
+                <th className="text-left px-4 py-3 font-semibold text-white">NICEIC</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.06]">
+              <tr>
+                <td className="px-4 py-3 text-white/70">Annual fee (approx.)</td>
+                <td className="px-4 py-3">£280 – £380</td>
+                <td className="px-4 py-3">£350 – £500+</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3 text-white/70">Initial assessment fee</td>
+                <td className="px-4 py-3">£250 – £400</td>
+                <td className="px-4 py-3">£300 – £500+</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-white/70">Part P self-cert</td>
+                <td className="px-4 py-3">Yes</td>
+                <td className="px-4 py-3">Yes</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3 text-white/70">Multi-trade coverage</td>
+                <td className="px-4 py-3">Yes (gas, plumbing, heating, building fabric)</td>
+                <td className="px-4 py-3">Electrical only</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-white/70">Insurance-backed warranty</td>
+                <td className="px-4 py-3">Yes</td>
+                <td className="px-4 py-3">Yes (Platinum Promise)</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3 text-white/70">Commercial/industrial scope</td>
+                <td className="px-4 py-3">Yes</td>
+                <td className="px-4 py-3">Yes (Approved Contractor)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">Choose NAPIT if...</h3>
@@ -548,7 +663,7 @@ export default function NAPICertificateGuidePage() {
           NAPIT Certificate Guide: <span className="text-yellow-400">Registration & Forms</span>
         </>
       }
-      heroSubtitle="The complete guide to NAPIT registration for UK electricians. Registration categories, qualification requirements, costs, application process, building control notification, and a detailed comparison with NICEIC. Everything you need to know before choosing your competent person scheme."
+      heroSubtitle="NAPIT is a Government-authorised competent person scheme under Part P of the Building Regulations, giving electricians the same self-certification ability as NICEIC for notifiable domestic work. The complete guide covers registration categories, qualification requirements, costs, application process, building control notification, and a detailed comparison with NICEIC."
       readingTime={16}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -38,18 +38,19 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An outbuilding supply requires a dedicated circuit from the main dwelling consumer unit — either via buried armoured cable (SWA) at 0.5m depth in gardens, or overhead cable at minimum 3.5m clearance (5.2m over driveways).',
+  'An outbuilding supply requires a dedicated circuit from the main dwelling consumer unit — either via buried armoured cable (SWA) at 0.5m depth in gardens, or overhead cable at minimum 3.5m clearance (6m over driveways and vehicle movement areas — BS 7671 Reg 709.521.1.8).',
   'Overhead cable spans must account for wind loading and mechanical tension — catenary wire support is required for spans over approximately 3m.',
   'The outbuilding should have its own consumer unit, providing local overcurrent protection, isolation, and RCD protection for all circuits within the outbuilding.',
   'Where the outbuilding supply is a TT system (no metallic earth connection from the main building), an earth electrode is required at the outbuilding and the circuit must be RCD protected.',
   'All outbuilding electrical supplies are notifiable under Part P of the Building Regulations, as they involve a new circuit from the dwelling consumer unit.',
+  'BS 7671 Regulation 421.1.7 (A4:2026) recommends arc fault detection devices (AFDDs) for single-phase AC socket-outlet circuits up to 32A — AFDD+RCBO combinations in the outbuilding consumer unit address both the fire risk (arc fault) and earth leakage protection requirements in one device.',
 ];
 
 const faqs = [
   {
     question: 'What is the minimum overhead cable height for an outbuilding supply?',
     answer:
-      'The minimum overhead cable height is 3.5m above ground level for pedestrian access areas. For driveways and areas accessible to vehicles, the minimum height is 5.2m. These heights are specified to ensure that people walking or working in the area cannot reach the cable, and that vehicles (including agricultural vehicles and lorries) can pass underneath safely. The cable should be of a type suitable for outdoor use, or a catenary wire should be used to support standard cable. Bare concentric or SWA cable is suitable for overhead use; standard twin-and-earth must not be used unsupported in the open air.',
+      'The minimum overhead cable height is 3.5m above ground level for pedestrian-only areas. For driveways and all areas subject to vehicle movement, BS 7671 Regulation 709.521.1.8 requires a minimum height of not less than 6m above ground. These heights ensure that people walking in the area cannot reach the cable and that vehicles (including agricultural vehicles and lorries) can pass underneath safely. If existing supports cannot achieve 6m clearance over vehicle routes, the supports must be relocated or the conductor raised. The cable should be of a type suitable for outdoor use; a catenary wire is required for spans over approximately 3m. Bare concentric or SWA cable is suitable for overhead use; standard twin-and-earth must not be used unsupported in the open air.',
   },
   {
     question: 'Do I need an earth electrode for an outbuilding supply?',
@@ -92,14 +93,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA supply cables for outbuildings correctly.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long supply runs to remote outbuildings.',
     icon: Zap,
@@ -115,7 +116,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Issue Electrical Installation Certificates for outbuilding supplies on your phone.',
+    description:
+      'Issue Electrical Installation Certificates for outbuilding supplies on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -139,10 +141,10 @@ const sections = [
     content: (
       <>
         <p>
-          Supplying electricity to a detached garage, shed, summerhouse, home office, or workshop
-          is one of the most common domestic electrical jobs. The installation must comply with
-          BS 7671 for the cable routing, earthing, and protection arrangements, and is notifiable
-          under Part P of the Building Regulations.
+          Supplying electricity to a detached garage, shed, summerhouse, home office, or workshop is
+          one of the most common domestic electrical jobs. The installation must comply with BS 7671
+          for the cable routing, earthing, and protection arrangements, and is notifiable under Part
+          P of the Building Regulations.
         </p>
         <p>
           The two primary routes for the supply cable from the dwelling to the outbuilding are
@@ -154,10 +156,10 @@ const sections = [
         </p>
         <p>
           In addition to the supply cable, the installation requires a consumer unit in the
-          outbuilding for local protection and control, appropriate earthing arrangements, and
-          RCD protection at both ends of the supply. Getting these right from the outset saves
-          the customer problems later — particularly as homeowners increasingly use outbuildings
-          as home offices and workshops with significant electrical loading.
+          outbuilding for local protection and control, appropriate earthing arrangements, and RCD
+          protection at both ends of the supply. Getting these right from the outset saves the
+          customer problems later — particularly as homeowners increasingly use outbuildings as home
+          offices and workshops with significant electrical loading.
         </p>
       </>
     ),
@@ -204,10 +206,10 @@ const sections = [
               <div>
                 <strong>Entry into outbuilding</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  The cable enters the outbuilding via a suitable weatherproof entry point — typically
-                  a conduit sleeve through the wall or floor, sealed against moisture ingress. The
-                  cable should rise inside the outbuilding to the consumer unit via conduit or trunking
-                  on the wall to protect it from mechanical damage.
+                  The cable enters the outbuilding via a suitable weatherproof entry point —
+                  typically a conduit sleeve through the wall or floor, sealed against moisture
+                  ingress. The cable should rise inside the outbuilding to the consumer unit via
+                  conduit or trunking on the wall to protect it from mechanical damage.
                 </p>
               </div>
             </li>
@@ -233,8 +235,8 @@ const sections = [
               <div>
                 <strong>Minimum height: 3.5m above ground level</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  For areas accessible to pedestrians only. The cable must be at a height where
-                  a person cannot reach it and where tall garden equipment (ladder, long-handled
+                  For areas accessible to pedestrians only. The cable must be at a height where a
+                  person cannot reach it and where tall garden equipment (ladder, long-handled
                   tools) is unlikely to contact it.
                 </p>
               </div>
@@ -242,11 +244,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <strong>Minimum height: 5.2m over driveways</strong>
+                <strong>Minimum height: 6m over driveways and vehicle movement areas</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  Where vehicles can pass under the cable, including vans, lorries, and delivery
-                  vehicles, a minimum height of 5.2m is required. This is particularly important
-                  for cables spanning driveways that may occasionally be used by larger vehicles.
+                  Where vehicles can pass under the cable — including vans, lorries, and delivery
+                  vehicles — BS 7671 Regulation 709.521.1.8 requires a minimum height of not less
+                  than 6m above ground. If existing support heights cannot achieve this clearance,
+                  supports must be relocated or the conductor raised to comply.
                 </p>
               </div>
             </li>
@@ -255,21 +258,21 @@ const sections = [
               <div>
                 <strong>Catenary wire support</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  For spans over approximately 3m, the cable must be supported by a catenary wire
-                  (a separate steel wire tensioned between the two buildings) to prevent the cable
+                  For spans over approximately 3m, the cable must be supported by a catenary wire (a
+                  separate steel wire tensioned between the two buildings) to prevent the cable
                   sagging below the minimum height under its own weight and under wind and ice
-                  loading. Self-supporting aerial cables (with a built-in supporting messenger
-                  wire) are an alternative that simplifies installation.
+                  loading. Self-supporting aerial cables (with a built-in supporting messenger wire)
+                  are an alternative that simplifies installation.
                 </p>
               </div>
             </li>
           </ul>
         </div>
         <p>
-          Overhead cables are more susceptible to UV degradation and storm damage than buried cables.
-          XLPE-insulated SWA cable or purpose-made aerial bundled cable is suitable for overhead use;
-          PVC-insulated cable degrades faster in UV exposure. Overhead cable routes should be
-          inspected periodically for sag, damage, and vegetation contact.
+          Overhead cables are more susceptible to UV degradation and storm damage than buried
+          cables. XLPE-insulated SWA cable or purpose-made aerial bundled cable is suitable for
+          overhead use; PVC-insulated cable degrades faster in UV exposure. Overhead cable routes
+          should be inspected periodically for sag, damage, and vegetation contact.
         </p>
       </>
     ),
@@ -281,8 +284,8 @@ const sections = [
       <>
         <p>
           Every outbuilding with a permanent electrical supply should have its own consumer unit.
-          This provides local isolation, overcurrent protection for the outbuilding's circuits,
-          and a convenient point for switching off all power to the outbuilding.
+          This provides local isolation, overcurrent protection for the outbuilding's circuits, and
+          a convenient point for switching off all power to the outbuilding.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -300,25 +303,28 @@ const sections = [
                 <strong>Circuit protection:</strong> Individual MCBs or RCBOs for each outbuilding
                 circuit (lighting, socket ring or radial, EV charger if applicable, workshop
                 equipment). RCBOs are preferred for outbuilding installations as they provide
-                individual RCD protection without nuisance tripping affecting other circuits.
+                individual RCD protection without nuisance tripping affecting other circuits. For
+                workshop and garage socket-outlet circuits, BS 7671 Regulation 421.1.7 (A4:2026)
+                recommends AFDD protection — AFDD+RCBO combination devices are available and address
+                both arc-fault fire risk and RCD requirements in a single device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Enclosure type:</strong> Metal consumer units are required for consumer
-                units in dwellings (post-2016 Amendment 4 to BS 7671). For outbuildings that
-                are not classified as dwellings, plastic enclosures are technically permitted,
-                but metal enclosures are recommended for fire containment in all cases.
+                units in dwellings (post-2016 Amendment 4 to BS 7671). For outbuildings that are not
+                classified as dwellings, plastic enclosures are technically permitted, but metal
+                enclosures are recommended for fire containment in all cases.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Location:</strong> The consumer unit should be mounted in a position
-                that is dry, accessible for maintenance, and not subject to mechanical damage
-                or flooding. It should be within 2m of the incoming cable entry point to
-                minimise unprotected cable length inside the outbuilding.
+                <strong>Location:</strong> The consumer unit should be mounted in a position that is
+                dry, accessible for maintenance, and not subject to mechanical damage or flooding.
+                It should be within 2m of the incoming cable entry point to minimise unprotected
+                cable length inside the outbuilding.
               </span>
             </li>
           </ul>
@@ -355,16 +361,21 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
-                <span>RCD protection still required for socket outlet circuits</span>
+                <span>
+                  30mA RCD protection required for socket-outlet circuits (Reg 411.3.3) and lighting
+                  circuits in domestic premises (Reg 411.3.4)
+                </span>
               </li>
             </ul>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">TT System (No Metallic Earth Path)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              TT System (No Metallic Earth Path)
+            </h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               If the outbuilding earth is not connected to the main building earth via a metallic
-              path (overhead cable without separate earth, or where armour earth path is not
-              relied upon), the outbuilding is a TT installation.
+              path (overhead cable without separate earth, or where armour earth path is not relied
+              upon), the outbuilding is a TT installation.
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -373,7 +384,11 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                <span>Electrode resistance measured and recorded (typically &lt;200 ohms)</span>
+                <span>
+                  Electrode resistance measured and compliance confirmed by calculation: Ra × I
+                  <sub>Δn</sub> ≤ 50V (Reg 411.5.3) — for a 30mA RCD this gives a maximum Ra of
+                  1,667Ω
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
@@ -388,6 +403,14 @@ const sections = [
           reduces earth fault loop impedance, and ensures the outbuilding has a reliable earth
           connection even if the main supply cable earth path develops a fault.
         </p>
+        <p>
+          For TT installations, compliance of the earth electrode is confirmed by calculation under
+          BS 7671 Regulation 411.5.3: the electrode resistance Ra (in ohms) multiplied by the RCD
+          rated residual operating current I<sub>Δn</sub> must not exceed 50V. For a 30mA RCD this
+          gives a maximum permissible Ra of 1,667Ω — confirming that compliance depends on the RCD
+          rating selected, not a fixed resistance target. Record the measured Ra on the EIC schedule
+          of test results.
+        </p>
         <SEOAppBridge
           title="Record earth electrode test results on site"
           description="Elec-Mate's EIC Certificate app includes earth electrode resistance recording in the test results schedule."
@@ -401,9 +424,7 @@ const sections = [
     heading: 'RCD Protection Requirements for Outbuildings',
     content: (
       <>
-        <p>
-          RCD protection is required at two levels for outbuilding supplies:
-        </p>
+        <p>RCD protection is required at two levels for outbuilding supplies:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -411,10 +432,10 @@ const sections = [
               <div>
                 <strong>At the main consumer unit (source protection)</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  The outbuilding supply circuit at the main consumer unit should be connected to
-                  an RCD-protected way — either an RCBO in the main consumer unit, or an RCD
-                  section with the outbuilding circuit MCB on the protected side. This protects
-                  the supply cable from the main building to the outbuilding.
+                  The outbuilding supply circuit at the main consumer unit should be connected to an
+                  RCD-protected way — either an RCBO in the main consumer unit, or an RCD section
+                  with the outbuilding circuit MCB on the protected side. This protects the supply
+                  cable from the main building to the outbuilding.
                 </p>
               </div>
             </li>
@@ -425,10 +446,15 @@ const sections = [
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   All circuits within the outbuilding must be individually RCD protected at 30mA.
                   For TT system installations, this is a mandatory requirement under BS 7671
-                  Regulation 411.5. For TN system installations, 30mA RCD protection is still
-                  required for socket outlet circuits under Regulation 411.3.4. Using RCBOs for
-                  each outbuilding circuit is the best practice — it provides selective protection
-                  so that a fault on one circuit does not de-energise the whole outbuilding.
+                  Regulation 411.5. For TN system installations, 30mA RCD protection is required for
+                  all socket-outlet circuits (rated ≤32A) under Regulation 411.3.3 — there is no
+                  documented-risk-assessment exception where the outbuilding is ancillary to a
+                  dwelling. Regulation 411.3.4 (A4:2026) separately mandates 30mA RCD additional
+                  protection for AC lighting circuits in domestic premises, so outbuilding lighting
+                  circuits also require 30mA RCD protection where the outbuilding serves a domestic
+                  dwelling. Using RCBOs for each outbuilding circuit is best practice — it provides
+                  selective protection so that a fault on one circuit does not de-energise the whole
+                  outbuilding.
                 </p>
               </div>
             </li>
@@ -485,9 +511,9 @@ const sections = [
       <>
         <p>
           Outbuilding supply jobs are excellent revenue opportunities. A properly specified
-          outbuilding supply — correct cable sizing, TT earthing, RCBOs per circuit, metal
-          consumer unit, and professional certification — demonstrates expertise and commands
-          a professional price.
+          outbuilding supply — correct cable sizing, TT earthing, RCBOs per circuit, metal consumer
+          unit, and professional certification — demonstrates expertise and commands a professional
+          price.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -497,7 +523,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Long cable runs to remote outbuildings cause voltage drop. Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to confirm the SWA cable size meets both current-carrying capacity and voltage
@@ -538,7 +564,7 @@ export default function OutbuildingElectricalSupplyPage() {
       title="Overhead Cable to Outbuilding: 3.5m Min Height"
       description="Overhead cable installation for garages, sheds, workshops. BS 7671:2018+A4:2026 clearance rules, SWA vs overhead, RCD protection, TT earthing setup."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Outbuilding Supply Guide"
@@ -549,7 +575,7 @@ export default function OutbuildingElectricalSupplyPage() {
           <span className="text-yellow-400">Garage, Shed, and Workshop</span>
         </>
       }
-      heroSubtitle="Supplying an outbuilding with electricity requires the right cable route (SWA underground or overhead at minimum 3.5m), a consumer unit in the outbuilding, correct TT earthing, and RCD protection at both ends. This guide covers every aspect of outbuilding electrical supply."
+      heroSubtitle="Supplying an outbuilding with electricity requires the right cable route (SWA underground or overhead at minimum 3.5m — 6m where vehicles pass), a consumer unit in the outbuilding, correct TT earthing, and RCD protection at both ends. This guide covers every aspect of outbuilding electrical supply."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

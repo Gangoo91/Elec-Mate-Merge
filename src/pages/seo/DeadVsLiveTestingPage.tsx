@@ -384,7 +384,7 @@ const sections = [
                   have a breaking capacity equal to or greater than the prospective fault current. A
                   typical domestic supply has a PSCC of 2 to 6 kA at the origin. The measurement is
                   taken at the main distribution board. Use the{' '}
-                  <SEOInternalLink href="/prospective-fault-current-calculator">
+                  <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                     prospective fault current calculator
                   </SEOInternalLink>{' '}
                   to verify.
@@ -404,10 +404,8 @@ const sections = [
                   increasing current until the RCD trips) confirms the actual trip current. The test
                   is done using the RCD test function on a multifunction tester, connected at a
                   socket or accessory on the protected circuit. See the{' '}
-                  <SEOInternalLink href="/rcd-testing-guide">
-                    RCD testing guide
-                  </SEOInternalLink>{' '}
-                  for detailed procedures.
+                  <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
+                  detailed procedures.
                 </p>
               </div>
             </div>
@@ -562,8 +560,8 @@ const sections = [
         <p>
           All test results — both dead and live — are recorded on the schedule of test results that
           accompanies the <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. Each circuit has a
-          row on the schedule with columns for every required test value.
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. Each circuit has a row on
+          the schedule with columns for every required test value.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">

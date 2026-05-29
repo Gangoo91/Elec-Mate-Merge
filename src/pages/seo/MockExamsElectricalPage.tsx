@@ -45,6 +45,7 @@ const keyTakeaways = [
   'The 2391 inspection and testing exam combines written theory with practical assessment. Mock exams help with the written component; practical preparation needs hands-on time with test equipment.',
   'AM2 is a practical assessment — mock exams help with the underpinning knowledge, but you also need to practise the physical installation and testing tasks under timed conditions.',
   'Elec-Mate provides mock exams, flashcards, and structured revision for 18th Edition, 2391, AM2, and EPA — with progress tracking to show you exactly where to focus.',
+  'Amendment 4 (A4:2026) introduced three key exam topics: Reg 411.3.4 (mandatory RCD ≤30 mA on domestic luminaire circuits), Reg 421.1.7 (AFDD recommendation for AC final circuits), and Section 722 with Reg 722.311.201 (EV load curtailment in demand calculations). These are live questions in the current C&G 2382 paper.',
 ];
 
 const faqs = [
@@ -254,6 +255,48 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5 text-yellow-400 shrink-0" />
+            18th Edition A4:2026 Key Changes — Live Exam Topics
+          </h4>
+          <p className="text-white/80 text-sm mb-3">
+            Amendment 4 (2026) introduced several new requirements that are already appearing in the
+            current C&G 2382 paper. These three are the most tested:
+          </p>
+          <ul className="space-y-3 text-white/90 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits.</strong> Within
+                domestic (household) premises, all AC final circuits supplying luminaires must now
+                have additional protection by an RCD with a rated residual operating current not
+                exceeding 30 mA. This is a mandatory requirement ('shall'), not a recommendation.
+                Exam questions test both the regulation number and the 30 mA threshold.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 421.1.7 — AFDD recommendation.</strong> Arc fault detection devices
+                (AFDDs) are recommended — not mandatory — in AC final circuits of a fixed
+                installation to mitigate the risk of fire due to arc fault currents. Exam questions
+                distinguish the advisory wording here ('recommending') from the mandatory wording of
+                Reg 411.3.4.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Part 7, Sec 722 — EV load management.</strong> Section 722 (electric vehicle
+                charging installations) has significant changes in A4:2026. Reg 722.311.201 permits
+                load curtailment — automatic or manual load reduction or disconnection — to be taken
+                into account when determining maximum demand. This underpins smart-charging design
+                questions in the current paper.
+              </span>
+            </li>
+          </ul>
+        </div>
         <p>
           When doing mock exams for the 18th Edition, always time yourself. Two hours for 60
           questions is tight. Practise finding regulation numbers, table values, and appendix data
@@ -290,9 +333,14 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Written exam topics:</strong> Testing sequence and procedures,
-                interpretation of test results, observation code classification (C1, C2, C3, FI),
-                completion of certification (EICR, EIC, Minor Works), fault diagnosis, and BS 7671
-                Part 6 requirements.
+                interpretation of test results, observation code classification (C1, C2, C3, and
+                FI), completion of certification (EICR, EIC, Minor Works), fault diagnosis, and BS
+                7671 Part 6 requirements. A common exam question distinguishes C3 from FI: C3 means
+                'Improvement recommended' (a non-dangerous deficiency where no immediate action is
+                needed), whereas FI means 'Further investigation required without delay' — used only
+                in exceptional circumstances where a formal C1/C2/C3 classification cannot be made
+                until more information is obtained. GN3 Reg 3.11 states that only one code is
+                recorded per observation, and FI use is explicitly exceptional.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -314,8 +362,10 @@ const sections = [
           </SEOInternalLink>{' '}
           for given scenarios, interpret test results (is a Zs reading of 1.2 ohms acceptable for a
           B32 MCB on a TN-S system?), identify the correct{' '}
-          <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink>,
-          and complete certification documents accurately.
+          <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink>{' '}
+          (Reg 643.1 requires the tests of Regs 643.2 to 643.11 to be carried out before
+          energisation; visual inspection precedes all dead tests per GN3 Ch 2), and complete
+          certification documents accurately.
         </p>
       </>
     ),
@@ -354,9 +404,12 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing:</strong> After installation, you carry out the full initial
-                verification testing sequence — continuity of protective conductors, ring final
-                circuit continuity, insulation resistance, polarity, earth fault loop impedance, RCD
-                testing, and prospective fault current.
+                verification testing sequence in the order prescribed by Reg 643.1 — the tests of
+                Regs 643.2 to 643.11 shall be carried out in that order before energisation. This
+                covers: continuity of protective conductors (Reg 643.2), ring final circuit
+                continuity (Reg 643.2), insulation resistance (Reg 643.3), polarity (Reg 643.5),
+                earth fault loop impedance (Reg 643.6), RCD operating times (Reg 643.8), and
+                prospective fault current (Reg 643.7).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -615,7 +668,7 @@ const sections = [
 export default function MockExamsElectricalPage() {
   return (
     <GuideTemplate
-      title="Electrical Exam Revision Strategy: 18th Ed, 2391, AM2, EPA"
+      title="Mock Exams for Electricians — 18th Edition, 2391, AM2 &amp; EPA (2026)"
       description="How to revise for UK electrical qualifications using mock exams effectively: study schedule, weak-area technique, exam-day strategy, common pitfalls. Plus where to take each free mock test."
       datePublished="2025-02-28"
       dateModified="2026-05-23"

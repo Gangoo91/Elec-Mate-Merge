@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Correction Factors | Ca Cg Ci Cf Explained';
 const PAGE_DESCRIPTION =
-  'BS 7671 correction factors for cable sizing: Ca (4B1), Cg (4C1-4C5), Ci (523.7), Cf (0.725 BS 3036). Worked examples, formula, mistakes.';
+  'BS 7671 correction factors for cable sizing: Ca (4B1), Cg (4C1-4C5), Ci (Reg 523.9), Cf (0.725 BS 3036). Worked examples, formula, mistakes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -44,7 +44,8 @@ const keyTakeaways = [
   'The correction factor formula is It = In / (Ca x Cg x Ci x Cf) — you must calculate the tabulated current rating before selecting a cable from BS 7671 Appendix 4.',
   'Ca (ambient temperature) comes from Table 4B1 and accounts for temperatures above the standard 30 degrees Celsius reference — at 40 degrees Celsius, Ca drops to 0.87 for PVC cables, requiring a larger cable.',
   'Cg (grouping) from Table 4C1 to 4C5 is the most commonly applied factor — three circuits touching on a surface have Cg of 0.70, meaning the cable can only carry 70% of its tabulated current.',
-  'Ci (thermal insulation) is the most punishing factor — a cable totally surrounded by thermal insulation for more than 0.5 metres drops to Ci = 0.50, halving its current-carrying capacity.',
+  'Ci (thermal insulation) under Reg 523.9 is the most punishing factor — a cable totally surrounded by thermal insulation for more than 0.5 metres drops to Ci = 0.50, which is 0.5 times the current-carrying capacity for that cable clipped direct and open (Reference Method C).',
+  'When a cable is totally enclosed in thermal insulation for less than 0.5 metres, the derating depends on three factors: conductor size, length in insulation, and the thermal conductivity of the insulation material — not length alone (Reg 523.9 and OSG Reg 2.6).',
   "Elec-Mate's cable sizing calculator applies all four correction factors automatically with every BS 7671 table built in — no manual lookups, no calculation errors.",
 ];
 
@@ -67,7 +68,7 @@ const faqs = [
   {
     question: 'What is the thermal insulation correction factor Ci and when does it apply?',
     answer:
-      'The thermal insulation correction factor Ci applies when a cable passes through or is enclosed in thermal insulation material such as loft insulation, wall insulation, or floor insulation. Thermal insulation prevents the cable from dissipating heat, which reduces its safe current-carrying capacity. There are two scenarios under BS 7671 Regulation 523.7 and 523.9: (1) If the cable is in contact with thermal insulation on one side only, Ci = 0.89 — this is common where cables are clipped to joists with insulation laid between the joists. (2) If the cable is totally surrounded by thermal insulation for a length of more than 0.5 metres, Ci = 0.50 — this halves the cable rating and is extremely punishing. For cables totally surrounded by insulation for less than 0.5 metres, a sliding scale applies depending on the length enclosed, as shown in Table 52.2 of BS 7671. The Ci factor is one of the most commonly forgotten derating factors, particularly in domestic loft installations where insulation depth has increased significantly in recent years.',
+      'The thermal insulation correction factor Ci applies when a cable passes through or is enclosed in thermal insulation material such as loft insulation, wall insulation, or floor insulation. Thermal insulation prevents the cable from dissipating heat, which reduces its safe current-carrying capacity. The governing regulation is BS 7671 Regulation 523.9 (not 523.7, which covers parallel conductors). There are two main scenarios: (1) If the cable is in contact with thermal insulation on one side only, Ci = 0.89 — this is common where cables are clipped to joists with insulation laid between the joists. (2) If the cable is totally surrounded by thermal insulation for a length of more than 0.5 metres, Ci = 0.50 — this is 0.5 times the current-carrying capacity for that cable clipped direct and open (Reference Method C), and is extremely punishing. For cables totally surrounded by insulation for less than 0.5 metres, a sliding scale applies, but the correct derating depends on three factors: conductor size, length in insulation, and the thermal conductivity of the insulation material. These derating values are found in Appendix 4 Section 2.6 of BS 7671. The Ci factor is one of the most commonly forgotten derating factors, particularly in domestic loft installations where insulation depth has increased significantly in recent years.',
   },
   {
     question: 'Do I still need to apply Cf = 0.725 for BS 3036 fuses?',
@@ -201,6 +202,26 @@ const sections = [
           server rooms, and South-facing roof voids. If the ambient temperature is 30 degrees
           Celsius or below, Ca = 1.0 and has no effect on the calculation.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <div className="flex items-start gap-3">
+            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">
+                Solar PV installations — Reg 712.523.101
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                Cables routed directly beneath photovoltaic modules are subjected to heating from
+                the underside of the module. Reg 712.523.101 requires that for the design and sizing
+                of such cables, the ambient temperature shall be considered to be at least
+                70&nbsp;&deg;C. At 70&nbsp;&deg;C the Ca factor for a 70&nbsp;&deg;C PVC cable drops
+                to 0.50 — the same magnitude as total thermal insulation enclosure. XLPE or LSOH
+                cables with a 90&nbsp;&deg;C conductor operating temperature are standard for
+                under-module strings precisely because their Ca value at 70&nbsp;&deg;C is
+                significantly less severe.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -285,7 +306,9 @@ const sections = [
           The thermal insulation correction factor Ci is the most punishing of all correction
           factors. Thermal insulation prevents a cable from dissipating the heat generated by
           current flow, causing the conductor temperature to rise above its safe operating limit. BS
-          7671 Regulation 523.7 and 523.9 set out the requirements.
+          7671 Regulation 523.9 sets out the requirements. Note that Reg 523.7 covers parallel
+          conductors and equal load sharing — some older guides incorrectly cite it for thermal
+          insulation. The correct reference is Reg 523.9 alone.
         </p>
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
@@ -307,10 +330,18 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-yellow-400">Ci = 0.50</strong> — If the cable is completely
               enclosed in thermal insulation for a continuous length of more than 0.5 metres, the
-              cable's current-carrying capacity is halved. This is an extremely severe derating that
-              typically forces a significant increase in cable size. It applies when cables are run
-              through insulation in lofts, walls, or floors where the insulation completely
-              surrounds the cable.
+              current-carrying capacity shall be taken as 0.5 times the capacity for that cable
+              clipped direct to a surface and open (<strong>Reference Method C</strong>). This is an
+              extremely severe derating that typically forces a significant increase in cable size.
+              It applies when cables are run through insulation in lofts, walls, or floors where the
+              insulation completely surrounds the cable.
+            </p>
+            <p className="text-white text-sm leading-relaxed mt-2">
+              <strong className="text-yellow-400">Important:</strong> If the cable is installed in
+              conduit or trunking (Reference Method A or B), the base I<sub>z</sub> is already lower
+              than Method C. You must still work from the Method C figure when applying the 0.5
+              factor per Reg 523.9 — using the conduit rating as the base would result in systematic
+              under-sizing.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -318,10 +349,24 @@ const sections = [
               Cable in insulation for less than 0.5m
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Table 52.2 of BS 7671 provides Ci values for cables totally surrounded by thermal
-              insulation for short lengths. For 100mm in insulation, Ci = 0.89. For 200mm, Ci =
-              0.81. For 400mm, Ci = 0.68. For 500mm or more, Ci = 0.50. These intermediate values
-              are useful when cables pass through insulated walls or partitions.
+              Appendix 4 Section 2.6 of BS 7671 provides Ci derating factors for cables totally
+              surrounded by thermal insulation for short lengths (up to 10&nbsp;mm&sup2; conductors,
+              insulation thermal conductivity above
+              0.04&nbsp;W&nbsp;m&#8315;&sup1;&nbsp;K&#8315;&sup1;). Typical values: 50&nbsp;mm in
+              insulation Ci&nbsp;=&nbsp;0.88; 100&nbsp;mm Ci&nbsp;=&nbsp;0.78; 200&nbsp;mm
+              Ci&nbsp;=&nbsp;0.63; 400&nbsp;mm Ci&nbsp;=&nbsp;0.51; 500&nbsp;mm or more
+              Ci&nbsp;=&nbsp;0.50.
+            </p>
+            <p className="text-white text-sm leading-relaxed mt-2">
+              The derating for cables in insulation for less than 0.5&nbsp;m depends on three
+              factors, not length alone: the <strong>size of the conductor</strong>, the{' '}
+              <strong>length of cable within the insulation</strong>, and the{' '}
+              <strong>thermal conductivity of the insulation material</strong> (OSG Reg&nbsp;2.6).
+              Different insulation products — mineral wool, rigid foam board, and blown fibre — have
+              different thermal conductivities, so the published derating factors assume insulation
+              with a thermal conductivity above 0.04&nbsp;W&nbsp;m&#8315;&sup1;&nbsp;K&#8315;&sup1;.
+              For conductors above 10&nbsp;mm&sup2; or insulation with lower conductivity, more
+              precise information is required.
             </p>
           </div>
         </div>
@@ -382,6 +427,24 @@ const sections = [
           is a common finding on older installations and may warrant a C3 observation code on the
           EICR, depending on the magnitude of the shortfall and the actual loading of the circuit.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <div className="flex items-start gap-3">
+            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">EICR obligation — Reg 622.85</h3>
+              <p className="text-white text-sm leading-relaxed">
+                Regulation 622.85 requires inspectors carrying out an EICR to verify that cables are
+                adequate for current-carrying capacity with regard for the type and nature of the
+                installation (Section 523). This explicitly includes confirming that conductor
+                cross-sectional areas account for applicable correction factors — ambient
+                temperature, grouping, and thermal insulation. An original design that omitted any
+                correction factor is a verifiable defect under Reg 622.85, not merely a legacy
+                sizing decision. Record it with an appropriate EICR observation code and
+                cross-reference the correction factor calculation.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -622,7 +685,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Automatic cable sizing with all correction factors, voltage drop, and adiabatic equation verification.',
@@ -630,7 +693,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop using mV/A/m values from Appendix 4 for single-phase and three-phase circuits.',
@@ -668,7 +731,7 @@ export default function CorrectionFactorsGuidePage() {
           <span className="text-yellow-400">Ca, Cg, Ci &amp; Cf Explained</span>
         </>
       }
-      heroSubtitle="The complete guide to cable sizing correction factors under BS 7671. Ambient temperature (Ca from Table 4B1), grouping (Cg from Table 4C1-4C5), thermal insulation (Ci from Regulation 523.7), and semi-enclosed fuse factor (Cf = 0.725). Worked examples, common mistakes, and how to apply the formula It = In / (Ca x Cg x Ci x Cf)."
+      heroSubtitle="The complete guide to cable sizing correction factors under BS 7671. Ambient temperature (Ca from Table 4B1), grouping (Cg from Table 4C1-4C5), thermal insulation (Ci from Regulation 523.9), and semi-enclosed fuse factor (Cf = 0.725). Worked examples, common mistakes, and how to apply the formula It = In / (Ca x Cg x Ci x Cf)."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

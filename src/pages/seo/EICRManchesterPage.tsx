@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed wiring, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It assesses whether the installation is safe and identifies any defects using observation codes (C1, C2, C3, FI).",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed wiring, documented in accordance with BS 7671:2018+A4:2026 (Part 6 Chapter 65, Reg 653.1). It assesses whether the installation is safe and identifies any defects using observation codes (C1, C2, C3, FI).",
   'Manchester EICR costs are competitive compared to London. Expect £120 to £200 for a two-bedroom flat, £180 to £300 for a three-bedroom terraced house, and £250 to £400 for a four-bedroom detached house.',
   'Since 1 April 2021, landlords in England must have a valid EICR for every private rented property, renewed at least every five years. Manchester City Council enforces this through its Private Rented Sector team with fines of up to £30,000.',
   'Selective licensing schemes in Manchester (including parts of Moss Side, Rusholme, Fallowfield, and Old Moat) require landlords to hold a property licence with a valid EICR as a condition.',
@@ -149,8 +149,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an Electrical Installation Condition Report must be
-          used for periodic inspection and testing of existing installations. Each defect is
+          Part 6 Chapter 65 (Reg 653.1), which governs the production of the Condition Report and
+          requires that the notes in Appendix 6 are consulted during its preparation. Each defect is
           classified using observation codes (C1, C2, C3, FI) and the overall installation is
           assessed as Satisfactory or Unsatisfactory.
         </p>
@@ -271,9 +271,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          Regulation 132.13 of BS 7671 specifically addresses the requirement to issue a periodic
-          inspection report (EICR) for rented properties with detailed circuit-level findings,
-          remedial action schedules, and priority ratings.
+          BS 7671:2018+A4:2026 Section 6 establishes the regime for periodic inspection and testing
+          of existing installations. Part 6 Chapter 65 (Reg 653.1) governs production of the
+          Condition Report. The legal obligation to obtain an EICR for rented properties derives
+          from the Electrical Safety Standards in the Private Rented Sector (England) Regulations
+          2020, which reference BS 7671 as the applicable standard.
         </p>
       </>
     ),
@@ -448,6 +450,32 @@ const sections = [
                 cable route without destructive investigation.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Lighting circuits without RCD protection (Reg 411.3.4)</strong> — BS
+                7671:2018+A4:2026 Reg 411.3.4 requires that AC final circuits supplying luminaires
+                in domestic premises are provided with additional protection by an RCD with a rated
+                residual operating current not exceeding 30&nbsp;mA. The vast majority of unmodified
+                Victorian terraces in Manchester have lighting circuits not covered by a 30&nbsp;mA
+                RCD. This is a C2 observation (potentially dangerous) because the absence of the
+                required protection cannot be compensated by other means. Reinstatement requires
+                either replacing the consumer unit or adding a combined RCBO for each lighting
+                circuit.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Absence of AFDDs (Reg 421.1.7)</strong> — Reg 421.1.7 of BS
+                7671:2018+A4:2026 recommends the installation of arc fault detection devices (AFDDs)
+                to mitigate the risk of fire in AC final circuits. The wording is advisory (not
+                mandatory), so the absence of AFDDs on circuits supplying bedrooms and living areas
+                is typically coded C3 (improvement recommended). Inspectors should record this and
+                discuss the recommendation with the landlord. In older Manchester terraces with
+                ageing wiring, AFDDs provide a meaningful additional layer of fire protection.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -499,10 +527,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Report completion</strong> — the inspector completes the EICR with Schedules
-                of Circuit Details and Test Results as required by Section 631. The report includes
-                observations, classification codes, an overall assessment, and a recommended date
-                for the next periodic inspection.
+                <strong>Report completion</strong> — the inspector completes the EICR together with
+                the Condition Report Inspection Schedule, Schedule(s) of Circuit Details, and
+                Schedule(s) of Test Results, as required by GN3 Reg 1.3 (BS 7671:2018+A4:2026 Part 6
+                Chapter 65). The report includes observations, classification codes, an overall
+                assessment, and a recommended date for the next periodic inspection.
               </span>
             </li>
           </ul>
@@ -644,11 +673,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work on the spot using
-                  the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Landlords must act within 28 days — the electrician who provides the quote
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Landlords must act within 28 days — the electrician who provides the quote
                   immediately is most likely to get the job.
                 </p>
               </div>

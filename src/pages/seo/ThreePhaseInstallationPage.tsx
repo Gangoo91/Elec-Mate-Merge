@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate conductor sizes for single and three phase circuits with all BS 7671 correction factors applied automatically.',
@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop for three phase circuits against BS 7671 limits — 3% for lighting, 5% for other circuits.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate total maximum demand with diversity factors to determine whether three phase is required.',
@@ -178,7 +178,7 @@ const sections = [
           The decision to install a three phase supply depends on the total electrical demand of the
           premises. A single phase supply in the UK is typically rated at 60A or 100A (depending on
           the service fuse), providing a maximum of approximately 14kW to 23kW. When the{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             calculated maximum demand
           </SEOInternalLink>{' '}
           exceeds this, three phase becomes necessary.
@@ -227,7 +227,7 @@ const sections = [
           To determine whether three phase is needed, calculate the maximum demand using diversity
           factors from BS 7671 and the IET On-Site Guide. If the total demand after diversity
           exceeds the single phase supply capacity, three phase is required. Elec-Mate's{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             max demand calculator
           </SEOInternalLink>{' '}
           applies the correct diversity factors automatically and tells you whether single or three
@@ -394,7 +394,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing process
           </SEOInternalLink>{' '}
           then applies the standard correction factors from BS 7671 Appendix 4:
@@ -497,9 +497,9 @@ const sections = [
         </p>
         <p>
           Record all test results on the Schedule of Test Results form. Elec-Mate's{' '}
-          <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink>{' '}
-          includes the full schedule of test results and supports three phase circuit entries with
-          per-phase readings.
+          <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink> includes
+          the full schedule of test results and supports three phase circuit entries with per-phase
+          readings.
         </p>
       </>
     ),
@@ -550,9 +550,7 @@ const sections = [
         </div>
         <p>
           For detailed guidance on{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangements
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
           including TN-S, TN-C-S, and TT systems, see our dedicated guide.
         </p>
       </>

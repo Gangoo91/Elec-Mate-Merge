@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly for every installation with automatic voltage drop and derating calculations.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on cable runs identified during route tracing.',
     icon: Zap,
@@ -547,8 +547,39 @@ const sections = [
               electromagnetic field. They cannot detect dead cables, DC cables (solar PV, battery
               storage), or cables in metallic conduit. Never assume a wall is clear of cables based
               solely on a wall scanner reading. Check both sides of the wall, use cable routes (safe
-              zones as per BS 7671 Regulation 522.6), and drill with caution.
+              zones — enclosed trunking, within walls above dado, or suitably protected ceiling
+              voids, as defined in OSG 9th Ed Reg 9.2.2), and drill with caution.
             </p>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div className="text-white text-sm space-y-2">
+              <p>
+                <strong>When a cable is not in a safe zone:</strong> GN3 9th Ed Reg 5.9 confirms
+                that cables concealed in walls outside a safe zone require one of two compliant
+                remedies:
+              </p>
+              <ul className="list-disc list-inside space-y-1 pl-1">
+                <li>
+                  <strong>Mechanical protection</strong> — earthed metallic conduit, trunking, or a
+                  suitable enclosure over the cable route; or
+                </li>
+                <li>
+                  <strong>Additional RCD protection</strong> — under BS 7671:2018+A4:2026 Reg
+                  411.3.4, AC final circuits supplying luminaires in domestic premises now require
+                  additional protection by an RCD with rated residual operating current not
+                  exceeding 30 mA. This A4:2026 extension means most domestic lighting circuits now
+                  need 30 mA RCD protection regardless of cable routing.
+                </li>
+              </ul>
+              <p>
+                On an EICR, cables concealed in walls without a safe-zone route and without either
+                remedy are typically coded C2 (potentially dangerous) or C3 (improvement
+                recommended) depending on the age of the installation and assessed risk.
+              </p>
+            </div>
           </div>
         </div>
       </>
@@ -680,9 +711,9 @@ const sections = [
           </p>
           <p className="text-white text-sm leading-relaxed">
             <strong>The universal rule:</strong> No cable detector is 100% reliable. Always combine
-            instrument detection with service drawings, safe zone awareness (BS 7671 Regulation
-            522.6), visual inspection, and careful working practices. The detector reduces risk — it
-            does not eliminate it.
+            instrument detection with service drawings, safe zone awareness (OSG 9th Ed Reg 9.2.2 —
+            enclosed trunking, above dado, or protected ceiling voids), visual inspection, and
+            careful working practices. The detector reduces risk — it does not eliminate it.
           </p>
         </div>
         <SEOAppBridge
@@ -703,7 +734,7 @@ export default function BestCableDetector2026Page() {
   return (
     <GuideTemplate
       title="Best Cable Detector 2026 | Pipe & Wire Finders UK"
-      description="Honest comparison of the best cable detectors for UK electricians in 2026. Radiodetection C.A.T4+, Leica DD220, Amprobe AT-3500, Fluke 2042…"
+      description="Best cable detectors &amp; underground cable avoidance tools (CAT scanner UK) for electricians in 2026. Radiodetection C.A.T4+, Leica DD220, Amprobe AT-3500, Fluke 2042 &amp; budget wall scanners compared."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

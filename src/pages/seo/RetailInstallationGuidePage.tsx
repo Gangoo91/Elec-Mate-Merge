@@ -47,6 +47,8 @@ const keyTakeaways = [
   'Fire alarm systems in retail premises must comply with BS 5839-1 and must be integrated with emergency lighting, access control, and any smoke ventilation systems for coordinated operation.',
   'Power distribution for retail must account for high lighting loads, electronic point-of-sale systems, refrigeration (food retail), HVAC, and seasonal variations in demand.',
   'Elec-Mate lets electricians complete EIC and EICR certificates for retail fit-outs on site, generate remedial quotes for defects, and deliver professional PDFs to the client before leaving.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends arc fault detection devices (AFDDs) for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in retail and other commercial premises. AFDDs are mandatory for high-rise residential buildings, HMOs, and care homes; recommended (not yet mandatory) for all other premises including retail.',
+  'Reg 133.1.3 (A4:2026) requires that any use of AFDDs or SPDs is recorded on the appropriate Part 6 electrical certification — the EIC for a retail fit-out must capture this information explicitly.',
 ];
 
 const faqs = [
@@ -68,7 +70,7 @@ const faqs = [
   {
     question: 'How do I calculate maximum demand for a retail unit?',
     answer:
-      'Maximum demand calculation for a retail unit must account for all connected loads, with appropriate diversity factors applied. The main load categories in a typical retail unit are: lighting (often the largest single load in non-food retail — display lighting, ambient lighting, feature lighting, window displays, and signage can total 20 to 50 W/m² for high-end retail), small power (socket-outlets for tills, card machines, computers, displays — typically 25 W/m² with diversity), refrigeration (food retail only — commercial fridges and freezers can add 5 to 20 kW per unit), HVAC (heating, ventilation, and air conditioning — typically provided by the landlord in shopping centres, but may be a tenant load in standalone units), signage (illuminated signs, both internal and external, can add several kW), and security systems (CCTV, access control, intruder alarms — typically 1 to 3 kW). Apply diversity factors from BS 7671 Appendix A or from the IET On-Site Guide Table 1.1. For retail, a diversity factor of 0.9 for lighting and 0.4 for socket-outlets is typical. The total assessed maximum demand determines the incoming supply capacity — single-phase 100 A may be sufficient for a small shop, but larger retail units often require three-phase 100 A or higher. Coordinate with the landlord and the Distribution Network Operator (DNO) to ensure the supply capacity is adequate before starting the fit-out.',
+      'Maximum demand calculation for a retail unit must account for all connected loads, with appropriate diversity factors applied. The main load categories in a typical retail unit are: lighting (often the largest single load in non-food retail — display lighting, ambient lighting, feature lighting, window displays, and signage can total 20 to 50 W/m² for high-end retail), small power (socket-outlets for tills, card machines, computers, displays — typically 25 W/m² with diversity), refrigeration (food retail only — commercial fridges and freezers can add 5 to 20 kW per unit), HVAC (heating, ventilation, and air conditioning — typically provided by the landlord in shopping centres, but may be a tenant load in standalone units), signage (illuminated signs, both internal and external, can add several kW), and security systems (CCTV, access control, intruder alarms — typically 1 to 3 kW). Apply diversity factors in accordance with the IET On-Site Guide (which provides guidance on assessing current demand and diversity for installations consisting of a number of final circuits). For retail, lighting circuits are typically assessed with limited diversity (most luminaires running simultaneously), while socket-outlet circuits are commonly assessed with a diversity factor in the range of 0.4 to 0.6 depending on the nature of the loads — consult the On-Site Guide for the applicable method for the installation. The total assessed maximum demand determines the incoming supply capacity — single-phase 100 A may be sufficient for a small shop, but larger retail units often require three-phase 100 A or higher. Coordinate with the landlord and the Distribution Network Operator (DNO) to ensure the supply capacity is adequate before starting the fit-out.',
   },
   {
     question: 'What are the lighting design considerations for a retail fit-out?',
@@ -78,7 +80,7 @@ const faqs = [
   {
     question: 'How often should a retail electrical installation be inspected?',
     answer:
-      'IET Guidance Note 3 (Inspection and Testing) recommends a maximum interval of 5 years for commercial premises generally, and 3 years for premises with public access where there is a higher risk of electrical fault due to the intensity of use. Most retail premises fall into the 5-year category, but larger stores, shopping centres, and food retail premises with refrigeration equipment may justify a 3-year interval. The Health and Safety Executive (HSE) does not specify exact intervals but expects employers to ensure their electrical installations are maintained in a safe condition — regular EICR inspections are the accepted way to demonstrate this. Insurance providers typically require evidence of a current EICR and may invalidate cover if the installation has not been inspected within the recommended interval. Landlords in shopping centres often include specific EICR requirements in the lease — typically requiring tenants to carry out an EICR before occupation, at regular intervals during the lease, and at the end of the lease (a "dilapidations" inspection). Retail tenants should check their lease obligations carefully.',
+      'IET Guidance Note 3 (Inspection and Testing) Table 3.2 lists suggested initial frequencies for inspection and testing — these are recommendations and not legal requirements (GN3 Reg 3.5). The suggested maximum initial frequency is 5 years for commercial premises generally, and 3 years for premises with public access where there is a higher risk of electrical fault due to intensity of use. Most retail premises fall into the 5-year category, but larger stores, shopping centres, and food retail premises with refrigeration equipment may justify a shorter interval. The period between subsequent inspections may also be reduced where conditions affecting the installation warrant it. The Health and Safety Executive (HSE) does not specify exact intervals but expects employers to ensure their electrical installations are maintained in a safe condition — regular EICR inspections are the accepted way to demonstrate this. Insurance providers typically require evidence of a current EICR and may invalidate cover if the installation has not been inspected within the recommended interval. Landlords in shopping centres often include specific EICR requirements in the lease — typically requiring tenants to carry out an EICR before occupation, at regular intervals during the lease, and at the end of the lease (a "dilapidations" inspection). Retail tenants should check their lease obligations carefully.',
   },
   {
     question: 'Can I use the landlord supply for a retail fit-out or do I need a new supply?',
@@ -113,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Maximum Demand Calculator',
     description:
       'Calculate maximum demand for retail and commercial premises with diversity factors and load assessment.',
@@ -379,7 +381,7 @@ const sections = [
                 <strong>Lighting load.</strong> Retail lighting loads can be substantial — 20 to 50
                 W/m² for high-end fashion retail, 10 to 20 W/m² for general retail. For a 500 m²
                 store, lighting alone can be 10 to 25 kW. Use the{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 to assess the total lighting load with appropriate diversity.
@@ -429,6 +431,24 @@ const sections = [
           be correctly sized for the assessed maximum demand, with voltage drop calculated for the
           cable length.
         </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">
+            AFDDs for Retail Socket-Outlet Circuits — BS 7671:2018+A4:2026 Reg 421.1.7
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
+            detection devices (AFDDs) conforming to BS EN 62606 on single-phase AC final circuits
+            supplying socket-outlets not exceeding 32 A. For retail and other commercial premises
+            this is a recommendation rather than a mandatory requirement — mandatory installation
+            applies to high-rise residential buildings (HRRBs), houses in multiple occupation
+            (HMOs), purpose-built student accommodation, and care homes. Electricians specifying
+            retail fit-outs should note this distinction: many retail clients and landlords are now
+            requesting AFDD protection as best practice, particularly in fit-outs with substantial
+            socket-outlet circuits supplying displays and point-of-sale equipment. Where AFDDs are
+            installed, their use must be recorded on the Electrical Installation Certificate in
+            accordance with Reg 133.1.3.
+          </p>
+        </div>
       </>
     ),
   },
@@ -482,6 +502,16 @@ const sections = [
                 <strong>Part L (Conservation of Fuel and Power).</strong> Lighting efficacy and
                 energy efficiency requirements apply to new-build and major refurbishment retail
                 projects.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 133.1.3 — A4:2026 certification requirement.</strong> Where AFDDs or
+                surge protection devices (SPDs) are installed in a retail fit-out, their use must be
+                explicitly recorded on the Electrical Installation Certificate (EIC) under Part 6 of
+                BS 7671. This is a new A4:2026 obligation: the EIC for a retail installation is not
+                complete without this entry where these devices are present.
               </span>
             </li>
           </ul>

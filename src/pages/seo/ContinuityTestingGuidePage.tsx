@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'What is continuity testing and why is it required?',
     answer:
-      'Continuity testing verifies that all conductors in a circuit are intact — that there are no open circuits, broken connections, or missing conductor runs. It is a mandatory test under BS 7671 Chapter 61 for all new installations and forms part of the periodic inspection (EICR). The test confirms that line, neutral, and protective conductors are all connected end-to-end. For ring final circuits, it additionally verifies the integrity of the ring — confirming that the circuit forms a complete loop and has not been incorrectly wired as a spur.',
+      'Continuity testing verifies that all conductors in a circuit are intact — that there are no open circuits, broken connections, or missing conductor runs. It is a mandatory test under BS 7671 Chapter 64 (Reg 643.2.1) for all new installations and forms part of the periodic inspection (EICR). The test confirms that line, neutral, and protective conductors are all connected end-to-end. For ring final circuits, it additionally verifies the integrity of the ring — confirming that the circuit forms a complete loop and has not been incorrectly wired as a spur.',
   },
   {
     question: 'How do you test a ring final circuit for continuity?',
@@ -139,8 +139,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Chapter 61 and must be carried out on all circuits during initial verification of a new
-          installation (EIC) and during every periodic inspection (EICR).
+          Chapter 64 (Reg 643.2.1) and must be carried out on all circuits during initial
+          verification of a new installation (EIC) and during every periodic inspection (EICR).
         </p>
         <p>Continuity tests cover three separate requirements:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -150,7 +150,7 @@ const sections = [
               <span>
                 <strong>Ring final circuit continuity</strong>: Verifying that socket outlet
                 circuits wired as a ring form a complete loop with no spurious spurs or incorrectly
-                wired connections (Regulation 612.2.1).
+                wired connections (Regulation 643.2.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -158,7 +158,7 @@ const sections = [
               <span>
                 <strong>CPC continuity</strong>: Confirming that every circuit has an unbroken
                 protective conductor connecting all exposed-conductive-parts to the main earthing
-                terminal (Regulation 612.2.1).
+                terminal (Regulation 643.2.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -166,11 +166,18 @@ const sections = [
               <span>
                 <strong>Equipotential bonding conductor continuity</strong>: Verifying that main
                 equipotential bonding conductors and supplementary bonding conductors are intact and
-                properly connected (Regulation 612.2.2).
+                properly connected (Regulation 643.2.1).
               </span>
             </li>
           </ul>
         </div>
+        <p>
+          Note that Reg 643.2.1 requires live conductor (line and neutral) resistance measurement
+          specifically for ring final circuits. For radial circuits, only the CPC continuity
+          measurement is required under this regulation — there is no BS 7671 requirement to measure
+          the resistance of the line and neutral conductors of a radial circuit as a separate
+          continuity test.
+        </p>
         <p>
           Continuity tests are performed with the installation de-energised using a low-resistance
           ohmmeter (often a combined multifunction test instrument). The instrument injects a test
@@ -275,6 +282,21 @@ const sections = [
           ring will show a reading close to R1+Rn divided by 4; outlets near the consumer unit will
           show a lower reading.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <span className="text-white">
+              <strong>Figure-of-eight fault</strong>: GN3 identifies this as a specific diagnostic
+              outcome of the three-step ring test. A figure-of-eight occurs when conductors are
+              cross-connected at an intermediate junction — the ring appears to have end-to-end
+              continuity in Test 1 but the conductors are actually looped back on themselves. The
+              result is that r1+rn readings at outlets vary unexpectedly, or outlets near the
+              cross-connection point show unusually low readings. If the end-to-end values from Test
+              1 appear correct but cross-connected readings are inconsistent across the ring,
+              investigate for a figure-of-eight wiring error.
+            </span>
+          </div>
+        </div>
       </>
     ),
   },
@@ -313,7 +335,10 @@ const sections = [
                 <strong>r2</strong>: Resistance of the CPC from the consumer unit to the furthest
                 point. This is the most critical value. Combined with Ze, it gives Zs without
                 applying live voltage: Zs = Ze + (r1 + r2). This calculated Zs must not exceed the
-                maximum Zs for the protective device.
+                maximum Zs for the protective device. GN3 (Reg 2.15) uses the notation{' '}
+                <strong>Rz</strong> for the same value — the resistance of the CPC measured from the
+                distribution board to each utilisation point — and records it on the Schedule of
+                Test Results as Rz. The two notations refer to the same measurement.
               </span>
             </li>
           </ul>
@@ -407,10 +432,11 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Expected resistance values</strong>: Main equipotential bonding conductors
-                are short and of large cross-sectional area (minimum 6mm² copper for TN systems per
-                BS 7671 Table 54.8). The resistance should be very low — typically 0.05Ω or less.
-                Higher values indicate a poor connection at a clamp, a corroded conductor, or a join
-                in the bonding conductor.
+                are short and of large cross-sectional area. Under BS 7671 Reg 544.11 / Table 54.8,
+                where the supply PEN conductor is 35mm² or less (the normal domestic TN-C-S case),
+                the minimum copper main protective bonding conductor is 10mm². The resistance should
+                be very low — typically 0.05Ω or less. Higher values indicate a poor connection at a
+                clamp, a corroded conductor, or a join in the bonding conductor.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -490,7 +516,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>r1+rn (MΩ)</strong>: The measured r1+rn resistance at the furthest point of
+                <strong>r1+rn (Ω)</strong>: The measured r1+rn resistance at the furthest point of
                 the circuit, in ohms. For ring final circuits, this is the value at the furthest
                 outlet derived from the cross-connected test.
               </span>

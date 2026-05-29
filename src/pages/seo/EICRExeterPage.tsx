@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Chapter 65 — periodic inspection and testing). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Exeter EICR costs are broadly in line with the South West average. Expect to pay between £95 and £180 for a two-bedroom flat and £150 to £270 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Exeter City Council enforces these requirements and can fine non-compliant landlords up to £30,000 per breach.',
   "Exeter has a mixed housing stock: a historic city centre with Medieval, Georgian, and Victorian properties, alongside inter-war suburbs and post-war estates. The University of Exeter generates strong student HMO demand in the St David's and Heavitree areas.",
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Exeter properties?',
     answer:
-      "Exeter's mixed housing stock produces a range of EICR findings. Absent RCD protection on socket circuits (a C2 finding under Regulation 411.3.3 of BS 7671) is the most common finding across the city's pre-1990s stock. Victorian and Edwardian properties in St David's, Heavitree, and the city centre may have rubber-insulated cables in unmodernised sections. Inadequate earthing and bonding, poor circuit documentation in converted properties, and overloaded circuits in student HMOs are also frequent findings. Inter-war and post-war properties on the Whipton and Pinhoe estates may have ageing PVC wiring approaching the end of its design life.",
+      "Exeter's mixed housing stock produces a range of EICR findings. Absent RCD protection on socket-outlets rated at 32 A and below (a C2 finding under Regulation 411.3.3 of BS 7671:2018+A4:2026) is the most common finding across the city's pre-1990s stock. Victorian and Edwardian properties in St David's, Heavitree, and the city centre may have rubber-insulated cables in unmodernised sections. Inadequate earthing and bonding, poor circuit documentation in converted properties, and overloaded circuits in student HMOs are also frequent findings. Inter-war and post-war properties on the Whipton and Pinhoe estates may have ageing PVC wiring approaching the end of its design life.",
   },
   {
     question: 'How long does an EICR take in Exeter?',
@@ -153,8 +153,9 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
-          observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
+          (Chapter 65 — periodic inspection and testing). It is a detailed condition assessment
+          using standardised C1, C2, C3, and FI observation codes. The overall assessment is either
+          Satisfactory or Unsatisfactory.
         </p>
       </>
     ),
@@ -232,8 +233,10 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Every five years</strong> — the EICR must be renewed at least every five
-                years or sooner if the inspector recommends it. BS 7671 Regulation 134.2 requires
-                periodic inspection regimes to confirm installations remain safe.
+                years or sooner if the inspector recommends it. Chapter 65 of BS 7671:2018+A4:2026
+                governs periodic inspection and testing; the recommended interval is set by the
+                inspector on the Condition Report having regard to the installation's age,
+                condition, and use.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,10 +282,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
-                protection on socket circuits not exceeding 20A. This is the most common C2 finding
-                across Exeter's pre-1990s housing stock, including the large stock of Victorian
-                terraced houses used as student lets.
+                <strong>Absent RCD protection on socket circuits</strong> — Regulation 411.3.3 of BS
+                7671:2018+A4:2026 requires RCD protection on all socket-outlets rated at 32 A and
+                below (with no exception permitted for dwellings). This is the most common C2
+                finding across Exeter's pre-1990s housing stock, including the large stock of
+                Victorian terraced houses used as student lets.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Absent RCD protection on lighting circuits</strong> — Regulation 411.3.4
+                (introduced in A4:2026) requires that AC final circuits supplying luminaires in
+                domestic premises are protected by an RCD with a rated residual operating current
+                not exceeding 30 mA. Properties with an older consumer unit that has no RCD coverage
+                of lighting circuits will receive a C2 observation under this requirement. This
+                affects virtually every pre-2018 Exeter property that has not had a modern RCBO
+                board fitted.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -310,6 +326,18 @@ const sections = [
                 heavy appliance use in student lets can overload circuits designed for domestic use.
                 Extension leads used in lieu of sufficient socket outlets are a common source of
                 concern during inspections.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>No arc fault detection devices (AFDDs)</strong> — Regulation 421.1.7 of BS
+                7671:2018+A4:2026 recommends installation of AFDDs on AC final circuits to mitigate
+                fire risk from arc fault currents. Inspectors completing EICRs on the updated model
+                forms must record the AFDD field. Victorian terraces and student HMOs — precisely
+                the stock found across St David's and Heavitree — are the dwelling type where the
+                AFDD recommendation is most pertinent. Absence of AFDDs typically attracts a C3
+                observation where the wiring is otherwise serviceable.
               </span>
             </li>
           </ul>
@@ -388,7 +416,11 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dead testing</strong> — continuity of protective conductors, ring final
-                circuit continuity, and insulation resistance (minimum 1 megohm at 500V DC).
+                circuit continuity, and insulation resistance. Table 64 of BS 7671:2018+A4:2026
+                specifies the required test voltages: 500 V DC with a minimum of 1.0 M&Omega; for
+                standard circuits, and 250 V DC with a minimum of 0.5 M&Omega; for SELV and PELV
+                circuits (such as ELV lighting, garden circuits, and bathroom shaver supplies common
+                in Victorian conversions).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,8 +434,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631, with
-                observation codes and an overall Satisfactory or Unsatisfactory assessment.
+                Schedules of Circuit Details and Test Results as required by Chapter 65 of BS
+                7671:2018+A4:2026 (Regulation 653.1 and Appendix 6), with observation codes and an
+                overall Satisfactory or Unsatisfactory assessment.
               </span>
             </li>
           </ul>
@@ -530,10 +563,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Exeter landlords face a 28-day deadline and are under pressure to comply before
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Exeter landlords face a 28-day deadline and are under pressure to comply before
                   students arrive — quoting immediately gives you the best chance of winning the
                   remedial work.
                 </p>

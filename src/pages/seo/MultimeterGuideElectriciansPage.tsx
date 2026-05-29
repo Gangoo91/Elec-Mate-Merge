@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for any circuit — domestic, commercial, or industrial.',
     icon: Calculator,
@@ -555,7 +555,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing from Measured Values</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use measured Ze and Zs values in the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to verify disconnection time compliance and confirm maximum permitted Zs for the

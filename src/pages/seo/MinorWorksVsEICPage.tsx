@@ -34,7 +34,7 @@ const keyTakeaways = [
   'If you are installing a new circuit (running a new cable from the distribution board with a new protective device), you need a full EIC. If you are adding to or altering an existing circuit, use a Minor Works certificate.',
   'Like-for-like replacement of accessories (same type, same location) does not require any certificate — just verify CPC continuity and polarity.',
   'In dwellings, new circuit installation is notifiable under Part P. Most minor works outside special locations are non-notifiable but still require a Minor Works certificate.',
-  'Consumer unit replacement is an edge case — most scheme providers accept a Minor Works certificate for each circuit, but some require an EIC. Check with your registration body.',
+  'Consumer unit replacement always requires a full EIC — Reg 644.4.201 and Reg 644.4 explicitly remove Minor Works eligibility for this work type. The regulation is unambiguous: Minor Works may only be used where the work does not include replacement of a distribution board or consumer unit.',
   'Elec-Mate has both Minor Works and EIC forms built in, plus 6 other certificate types. The app helps you select the right form based on the scope of work.',
 ];
 
@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'Does replacing a consumer unit require an EIC or Minor Works?',
     answer:
-      'Consumer unit replacement is one of the most debated grey areas in UK electrical certification. Since no new circuits are being created — you are replacing the existing protective devices on existing circuits — it is technically an alteration rather than a new installation. Many contractors issue a Minor Works certificate for each circuit affected (or one Minor Works for the entire board replacement), and most scheme providers accept this approach. However, some scheme providers prefer a full EIC for consumer unit replacements on the basis that the scale of the work (removing and replacing all protective devices, re-terminating all circuits) warrants the more comprehensive certificate. The safest approach is to check with your specific competent person scheme provider (NICEIC, NAPIT, ELECSA) for their preferred method. Regardless of which certificate you use, consumer unit replacement in a dwelling is always notifiable under Part P.',
+      'Consumer unit replacement always requires a full Electrical Installation Certificate (EIC) — not a Minor Works certificate. This is unambiguous in BS 7671:2018+A4:2026. Reg 644.4.201 explicitly lists replacement of a distribution board or consumer unit as work requiring an EIC upon completion of verification. Reg 644.4 states that Minor Works eligibility applies only where the work does not include replacement of a distribution board or consumer unit — replacement removes Minor Works eligibility entirely. Reg 120.3 confirms the same position: the EIC is to be used when a consumer unit or distribution board is replaced. There is no "scheme provider preference" that can override the regulation — an EIC is required by the standard. Consumer unit replacement in a dwelling is also always notifiable under Part P.',
   },
   {
     question: 'Can I use a Minor Works certificate for work in a bathroom?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'How many Minor Works certificates do I need for multiple alterations on one job?',
     answer:
-      'Each separate alteration to an existing circuit should have its own Minor Works certificate. If you are adding sockets to two different existing circuits, that is two Minor Works certificates — one for each circuit that has been modified. If you are making multiple additions to the same circuit (for example, adding two socket outlets to the same ring final circuit), a single Minor Works certificate can cover all the work on that one circuit. The principle is that each Minor Works certificate relates to the work carried out on a single existing circuit. If the job involves work on multiple circuits, issue a separate certificate for each one. This ensures that the test results recorded on each certificate specifically relate to the circuit that was altered.',
+      'Each separate alteration to an existing circuit should have its own Minor Works certificate. If you are adding sockets to two different existing circuits, that is two Minor Works certificates — one for each circuit that has been modified. If you are making multiple additions to the same circuit (for example, adding two socket outlets to the same ring final circuit), a single Minor Works certificate can cover all the work on that one circuit. The principle is that each Minor Works certificate relates to the work carried out on a single existing circuit. If the job involves work on multiple circuits, issue a separate certificate for each one. This ensures that the test results recorded on each certificate specifically relate to the circuit that was altered. There is also a practical alternative: Reg 120.3 explicitly permits a single EIC to be used as an alternative to multiple Minor Electrical Installation Works Certificates where there are multiple additions, alterations, or remedial works that do not extend to new circuits. If a job involves many circuit alterations, a single EIC covering all the work is a legitimate and often tidier option.',
   },
 ];
 
@@ -137,8 +137,8 @@ const sections = [
         <p>
           If the work involves running a new cable from the distribution board with a new protective
           device (MCB, RCBO, or fuse), you are installing a new circuit and a full{' '}
-          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is required. If the
-          work is an addition or alteration to an existing circuit — without creating a new one — a{' '}
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is required. If the work is
+          an addition or alteration to an existing circuit — without creating a new one — a{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works certificate
           </SEOInternalLink>{' '}
@@ -149,6 +149,11 @@ const sections = [
           installations and additions or alterations that include new circuits, and a Minor Works
           certificate for additions or alterations to existing circuits that do not extend to the
           installation of a new circuit.
+        </p>
+        <p>
+          Reg 120.3 also provides a practical option for jobs involving multiple circuit
+          alterations: a single EIC may be used as an alternative to issuing multiple Minor Works
+          certificates, where the work does not extend to new circuits.
         </p>
         <p>
           Getting this right matters. Issuing the wrong certificate can result in scheme provider
@@ -189,9 +194,9 @@ const sections = [
             switch to a different location on the same circuit
           </li>
           <li>
-            <strong>Consumer unit replacement</strong> — replacing the consumer unit on existing
-            circuits (no new circuits added). Note: check with your scheme provider, as some prefer
-            an EIC for this work
+            <strong>Replacing an RCBO or MCB on an existing circuit</strong> — swapping a protective
+            device on an existing circuit (not a full consumer unit replacement). This is an
+            alteration to an existing circuit; a Minor Works certificate is appropriate
           </li>
           <li>
             <strong>Installing a fused spur</strong> from an existing ring or radial circuit to
@@ -201,7 +206,7 @@ const sections = [
         <p>
           It is important to note that a like-for-like replacement of accessories (swapping a socket
           for an identical one in the same position) does not require any certificate, provided you
-          verify CPC continuity and polarity. This is covered by BS 7671 Regulation 620.3.
+          verify CPC continuity and polarity.
         </p>
         <SEOAppBridge
           title="EIC Form: Minor Works vs Full Certificate"
@@ -373,7 +378,7 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>Consumer unit replacement (Minor Works or EIC)</span>
+                <span>Consumer unit replacement (always EIC — Reg 644.4.201)</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -521,10 +526,11 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white mb-2">Consumer unit replacement</h3>
             <p className="text-white text-sm leading-relaxed">
-              No new circuits are being created, but all protective devices are being replaced. Most
-              scheme providers accept a Minor Works certificate (one per circuit or one per board).
-              Some prefer an EIC. The work is always notifiable under Part P. Check with your
-              registration body for their specific guidance.
+              This is not a grey area — BS 7671 is unambiguous. Reg 644.4.201 explicitly requires an
+              EIC for replacement of a distribution board or consumer unit, and Reg 644.4 removes
+              Minor Works eligibility for this work type entirely. Regardless of the number of
+              circuits involved, a full EIC is the correct certificate. The work is also always
+              notifiable under Part P in dwellings.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -592,6 +598,13 @@ const sections = [
           Alarm, PAT Testing, EV Charger, and Solar PV. One subscription covers every certificate an
           electrician needs.
         </p>
+        <p>
+          Elec-Mate's digital certificates comply with BS 7671 Reg 644.4.202, which explicitly
+          permits certificates to be produced in any written or electronic form, provided their
+          authenticity and integrity are verified by a reliable process or method. Every certificate
+          generated in Elec-Mate meets this requirement — giving you fully regulation-compliant
+          digital documentation, not just a PDF copy.
+        </p>
         <SEOAppBridge
           title="All 16 Certificate Types in One App"
           description="Stop guessing which certificate to use. Elec-Mate guides you to the right form based on the scope of work."
@@ -618,7 +631,7 @@ export default function MinorWorksVsEICPage() {
           Minor Works vs EIC — <span className="text-yellow-400">Which Certificate Do I Need?</span>
         </>
       }
-      heroSubtitle="New circuit? EIC. Alteration to an existing circuit? Minor Works. The rule is simple, but the real-world scenarios are not always clear-cut. This guide covers the straightforward cases, the grey areas (consumer unit replacement, circuit splitting, bathroom work), and the practical examples that help you get it right every time."
+      heroSubtitle="New circuit? EIC. Alteration to an existing circuit? Minor Works. Consumer unit replacement? Always EIC — the regulation is unambiguous. This guide covers the straightforward cases, the genuine grey areas (circuit splitting, bathroom work), and the practical examples that help you get it right every time."
       readingTime={11}
       keyTakeaways={keyTakeaways}
       sections={sections}

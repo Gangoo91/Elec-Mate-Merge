@@ -21,7 +21,7 @@ export default function CableDeratingCalculatorPage() {
   return (
     <ToolTemplate
       title="Cable Derating Calculator | Correction Factors Tool"
-      description="Calculate cable derating correction factors to BS 7671. Apply Ca (ambient temperature), Cg (grouping), Ci (thermal insulation)…"
+      description="Calculate cable derating correction factors to BS 7671. Apply Ca (ambient temperature), Cg (grouping), Ci (thermal insulation), and Cf (BS 3036 fuse) correction factors. Free cable derating calculator for UK electricians."
       datePublished="2026-01-22"
       dateModified="2026-05-18"
       breadcrumbs={[
@@ -48,7 +48,7 @@ export default function CableDeratingCalculatorPage() {
           Made Simple
         </>
       }
-              calculator={<CableDeratingCalculator />}
+      calculator={<CableDeratingCalculator />}
       heroSubtitle="Apply all four BS 7671 correction factors in seconds. Enter the ambient temperature, number of grouped circuits, insulation conditions, and protective device type. The calculator determines the required tabulated current carrying capacity (It) so you select the correct cable size every time."
       heroFeaturePills={[
         { icon: Thermometer, label: 'Ca Factor' },
@@ -70,6 +70,12 @@ export default function CableDeratingCalculatorPage() {
           heading: 'What Is Cable Derating?',
           content: (
             <>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white/70">
+                <BookOpen className="w-4 h-4 text-yellow-400 shrink-0" />
+                <span>
+                  Content verified against BS 7671:2018+A4:2026 by a JIB-registered electrician.
+                </span>
+              </div>
               <p>
                 Cable derating is the process of reducing the tabulated current carrying capacity of
                 a cable to account for installation conditions that are less favourable than the
@@ -85,7 +91,7 @@ export default function CableDeratingCalculatorPage() {
                 carrying capacity of the cable. The combined effect of all applicable factors
                 determines the minimum tabulated current (It) that the selected cable must have.
                 This directly affects the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculation
                 </SEOInternalLink>{' '}
                 and can mean the difference between a cable that runs safely within its thermal
@@ -158,12 +164,29 @@ export default function CableDeratingCalculatorPage() {
                 does not significantly affect the cable size. However, in plant rooms, boiler
                 cupboards, roof spaces in summer, and commercial kitchens, temperatures of 35-45°C
                 are common and Ca becomes a significant factor. The{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 can also apply a temperature correction to the mV/A/m values for more accurate
                 results on lightly loaded cables.
               </p>
+              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+                <p className="font-semibold text-yellow-400 mb-2 flex items-center gap-2">
+                  <Zap className="w-4 h-4 shrink-0" />
+                  Solar PV installations — BS 7671 Reg 712.523.101 (A4:2026)
+                </p>
+                <p className="text-white text-sm">
+                  For cables subjected to direct heating from the underside of a PV module, BS 7671
+                  Reg 712.523.101 (introduced in Amendment 4:2026) requires that the ambient
+                  temperature used for Ca derating shall be taken as at least{' '}
+                  <strong>70&deg;C</strong>, regardless of the actual measured air temperature. This
+                  mandatory requirement applies at the design and sizing stage, and also governs the
+                  minimum insulation temperature rating of cables selected for that location.
+                  Standard 70&deg;C thermoplastic (PVC) cable is therefore not suitable beneath PV
+                  modules — XLPE or LSOH insulated cable rated to 90&deg;C is the typical compliant
+                  solution.
+                </p>
+              </div>
             </>
           ),
         },
@@ -219,7 +242,7 @@ export default function CableDeratingCalculatorPage() {
                   conduit fill calculator
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/trunking-fill-calculator">
+                <SEOInternalLink href="/tools/trunking-fill-calculator">
                   trunking fill calculator
                 </SEOInternalLink>{' '}
                 work alongside the derating calculator to ensure both physical space and thermal
@@ -319,6 +342,14 @@ export default function CableDeratingCalculatorPage() {
                 you need to verify that the cables are adequately rated with the Cf factor applied.
                 The Elec-Mate derating calculator makes this straightforward — select BS 3036 as the
                 protective device type and the 0.725 factor is applied automatically.
+              </p>
+              <p>
+                Under BS 7671 Reg 622.85, inspectors must verify during an EICR that cables are
+                adequate for current-carrying capacity with regard to Section 523 — which means
+                checking that all applicable correction factors (Ca, Cg, Ci, and Cf) were correctly
+                applied at the design stage. Correct cable derating is therefore not just a design
+                obligation but an inspection checkpoint that feeds directly into the EICR coding
+                decision.
               </p>
             </>
           ),
@@ -483,7 +514,7 @@ export default function CableDeratingCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Full cable sizing to BS 7671 with automatic correction factors, voltage drop, and fault withstand.',
@@ -491,7 +522,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Calculate voltage drop and check compliance with 3% lighting and 5% power limits.',
@@ -507,7 +538,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/trunking-fill-calculator',
+          href: '/tools/trunking-fill-calculator',
           title: 'Trunking Fill Calculator',
           description:
             'Verify trunking cable capacity to BS 7671 with automatic cable factor summation.',

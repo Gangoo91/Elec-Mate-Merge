@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Carlisle property rewires and long rural cable runs on the Solway Plain.',
@@ -484,7 +484,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Carlisle Properties</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for rewires in solid-brick Victorian terraces and long cable runs in rural

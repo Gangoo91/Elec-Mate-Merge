@@ -490,8 +490,8 @@ export default function ElectricalRetrofitGuidePage() {
             <>
               <p>
                 The most effective approach to retrofit work in older properties is to start with a
-                thorough <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
-                that identifies every deficiency, then prioritise the remedial work based on safety
+                thorough <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> that
+                identifies every deficiency, then prioritise the remedial work based on safety
                 impact and cost-effectiveness.
               </p>
               <div className="space-y-3 mt-4">
@@ -658,7 +658,7 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Regulation',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes with derating factors.',
           icon: Calculator,

@@ -152,8 +152,7 @@ const sections = [
         </p>
         <p>
           Year 2 is also when many apprentices begin thinking seriously about the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> and
-          the{' '}
+          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> and the{' '}
           <SEOInternalLink href="/guides/epa-what-to-expect">End Point Assessment</SEOInternalLink>.
           Both are still a year or more away, but the skills tested in those assessments are
           developed in Year 2. Starting preparation early gives you a significant advantage.
@@ -260,7 +259,11 @@ const sections = [
                   :
                 </strong>{' '}
                 Testing the insulation between live conductors and between live conductors and earth
-                at 500V DC. Results must be at least 1 megohm for circuits rated up to 500V.
+                at 500&nbsp;V DC. Results must be at least 1&nbsp;M&#x2126; for circuits rated up to
+                500&nbsp;V (BS&nbsp;7671 Table&nbsp;64 / Reg&nbsp;643.3.2). Before applying the test
+                voltage, disconnect or remove sensitive electronics — dimmers, electronic controls,
+                and similar equipment are likely to be damaged by 500&nbsp;V DC. Always prove your
+                test instrument on a proving unit before and after use.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -281,7 +284,12 @@ const sections = [
                   :
                 </strong>{' '}
                 Measuring the impedance of the earth fault loop to confirm that protective devices
-                will operate within the required disconnection time. This is a live test.
+                will operate within the required disconnection time. This is a live test. Zs is made
+                up of two parts: the external earth fault loop impedance (Ze) supplied by the
+                distributor, and the resistance of the line conductor and CPC within the
+                installation (R1+R2), giving the formula Zs&nbsp;=&nbsp;Ze&nbsp;+&nbsp;(R1+R2) (GN3
+                Reg&nbsp;4.5). Ze must be determined and documented as part of the installation's
+                supply characteristics (BS&nbsp;7671 Reg&nbsp;312.3).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,6 +303,16 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-sm mb-2">Test sequence — mandatory order</h3>
+          <p className="text-white text-sm leading-relaxed">
+            BS&nbsp;7671 Reg&nbsp;643.1 requires that dead tests (continuity of protective
+            conductors, insulation resistance, and polarity — Regs&nbsp;643.2 to&nbsp;643.6) are
+            completed in that order <em>before</em> the installation is energised. Live tests (earth
+            fault loop impedance and RCD operation) follow once the supply is connected. Getting
+            this sequence wrong is a common AM2 and City&nbsp;&amp;&nbsp;Guilds exam error.
+          </p>
         </div>
         <p>
           Understanding why each test is performed, what the results mean, and what to do when a
@@ -339,6 +357,15 @@ const sections = [
                 Installing a complete ring circuit for socket outlets — running the ring, connecting
                 accessories, and verifying the ring using continuity testing. Understanding spurs,
                 fused connection units, and the limitations of the ring circuit.
+              </p>
+              <p className="text-white text-sm leading-relaxed mt-2">
+                Two methods are used to prove the ring is a true ring (GN3 three-step test): the
+                wandering-lead method — where you test resistance at each socket in turn along the
+                ring — and the shorted-out (cross-connected) method — where line and neutral ends
+                are bridged at the consumer unit and resistance is measured at each outlet. A common
+                AM2 mistake is misidentifying the CPC in twin-and-earth cable when setting up the
+                test leads — always check conductor colours and sleeve the bare CPC before
+                connecting leads.
               </p>
             </div>
           </div>
@@ -433,6 +460,20 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-sm mb-2">
+            A4:2026 amendment — what apprentices must know
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            The 2026 amendment (BS&nbsp;7671:2018+A4:2026) introduces two key changes relevant to
+            domestic installation work. Reg&nbsp;421.1.7 recommends the installation of arc fault
+            detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc
+            fault currents. Reg&nbsp;411.3.4 makes 30&nbsp;mA RCD additional protection mandatory
+            for all AC final circuits supplying luminaires in domestic premises — not just socket
+            outlets. If your assessments or AM2 preparation references BS&nbsp;7671, ensure you are
+            working to the live 2026 edition.
+          </p>
+        </div>
         <p>
           Regular study is essential to keep up with Level 3 content. Elec-Mate's training courses
           break down complex topics into manageable sections, and the flashcards tool helps you
@@ -448,10 +489,10 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink>{' '}
-          (Achievement Measurement 2) is the practical assessment that demonstrates your competence
-          as an installation electrician. It is typically sat at the end of Year 3 or during Year 4,
-          but the skills it tests are developed throughout Years 2 and 3.
+          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> (Achievement
+          Measurement 2) is the practical assessment that demonstrates your competence as an
+          installation electrician. It is typically sat at the end of Year 3 or during Year 4, but
+          the skills it tests are developed throughout Years 2 and 3.
         </p>
         <p>
           <strong>What the AM2 tests:</strong> The AM2 is a practical assessment carried out at an

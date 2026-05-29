@@ -44,7 +44,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Section 702 of BS 7671 applies to swimming pools, paddling pools, hot tubs, fountains, and their surrounding zones — any location with a basin intended for immersion or wading.',
-  'Zone 0 (inside the pool) permits only SELV at 12 V AC or 30 V DC. Equipment must be rated IPX8. The safety source must be located outside Zones 0 and 1.',
+  'Zone 0 (inside the pool) permits only SELV at 12 V AC RMS or 30 V ripple-free DC. Equipment must be rated IPX8. The safety source must be located outside Zones 0, 1 and 2 (Reg 702.410.3.4.2).',
   'Supplementary equipotential bonding is mandatory — all extraneous conductive parts in Zones 0, 1, and 2 must be bonded together and to the protective conductor.',
   'Hot tubs installed outdoors follow Section 702 zones, and the electrical supply must not use PME earthing if outdoors — a TT system or separate earth electrode is required.',
   'Elec-Mate AI regulations lookup gives instant answers on Section 702 requirements, and the EICR certificate app handles swimming pool inspections with all the zone-specific fields.',
@@ -59,12 +59,12 @@ const faqs = [
   {
     question: 'What is SELV and why is it required in Zone 0?',
     answer:
-      'SELV stands for Separated Extra-Low Voltage. It is a protective measure where the voltage is limited to a maximum of 12 V AC or 30 V DC, and the circuit is electrically separated from all other circuits and from earth. The separation is achieved by a safety isolating transformer complying with BS EN 61558-2-6. In Zone 0 (inside the pool basin), the body is fully immersed in water, skin resistance is at its lowest, and there is no possibility of escape. At these voltages, even with zero skin resistance, the current flowing through the body cannot reach a dangerous level. This is why SELV is the only acceptable form of electrical supply in Zone 0. The safety source (transformer) must be located outside Zones 0 and 1 to prevent it from being exposed to water.',
+      'SELV stands for Separated Extra-Low Voltage. In Zone 0 the voltage is limited to 12 V AC RMS or 30 V ripple-free DC; in Zone 1 the limits are 25 V AC RMS or 60 V ripple-free DC (Reg 702.410.3.4.2). The circuit is electrically separated from all other circuits and from earth. The separation is achieved by a safety isolating transformer complying with BS EN 61558-2-6. In Zone 0 (inside the pool basin), the body is fully immersed in water, skin resistance is at its lowest, and there is no possibility of escape. At these voltages, even with zero skin resistance, the current flowing through the body cannot reach a dangerous level. This is why SELV is the only acceptable form of electrical supply in Zone 0. The safety source (transformer) must be located outside Zones 0, 1 and 2 — unless the supply to the source is protected by an RCD meeting Reg 415.1.1, in which case the source may be in Zone 2.',
   },
   {
     question: 'What IP rating is required for each swimming pool zone?',
     answer:
-      'Zone 0 requires IPX8 — protection against continuous immersion in water under conditions specified by the manufacturer. In practice, this means only equipment specifically designed for permanent underwater use. Zone 1 requires a minimum of IPX4 (protection against splashing water from any direction), or IPX5 if water jets are used for cleaning purposes (common in commercial pools). Zone 2 also requires a minimum of IPX4. These IP ratings must be maintained after installation, which means that cable entries, junction boxes, and enclosure seals must all achieve the required rating. During inspection and testing, the electrician should visually check that all IP ratings are maintained and that no damage, corrosion, or degraded seals have compromised the protection.',
+      'Zone 0 requires IPX8 — protection against continuous immersion in water under conditions specified by the manufacturer. In practice, this means only equipment specifically designed for permanent underwater use. Zone 1 requires a minimum of IPX4 (protection against splashing water from any direction), or IPX5 if water jets are used for cleaning purposes (common in commercial pools). Zone 2 requires a minimum of IPX2 for indoor locations or IPX4 for outdoor locations; IPX5 applies in either case where water jets are used for cleaning (Reg 702.512.2). These IP ratings must be maintained after installation, which means that cable entries, junction boxes, and enclosure seals must all achieve the required rating. During inspection and testing, the electrician should visually check that all IP ratings are maintained and that no damage, corrosion, or degraded seals have compromised the protection.',
   },
   {
     question: 'Is supplementary bonding always required for swimming pools?',
@@ -243,8 +243,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Only SELV is permitted</strong> — at a maximum of 12 V AC or 30 V DC. The
-                safety source (isolating transformer) must be located outside Zones 0 and 1.
+                <strong>Only SELV is permitted</strong> — at a maximum of 12 V AC RMS or 30 V
+                ripple-free DC. The safety source (isolating transformer) must be located outside
+                Zones 0, 1 and 2 (Reg 702.410.3.4.2).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,9 +274,9 @@ const sections = [
         </div>
         <p>
           Underwater pool lighting is the most common electrical equipment in Zone 0. These
-          luminaires must be rated IPX8, supplied by SELV at 12 V, and the transformer must be
-          located at least 2 m from the pool edge (outside Zone 1). The cable from the transformer
-          to the luminaire must be continuous without joints inside Zones 0 or 1.
+          luminaires must be rated IPX8, supplied by SELV at 12 V AC RMS, and the transformer must
+          be located outside Zone 2 (i.e. beyond 3.5 m from the pool edge). The cable from the
+          transformer to the luminaire must be continuous without joints inside Zones 0 or 1.
         </p>
       </>
     ),
@@ -294,8 +295,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SELV at 12 V AC or 30 V DC only</strong> — the same voltage restriction as
-                Zone 0. Mains voltage equipment is not permitted.
+                <strong>SELV at 25 V AC RMS or 60 V ripple-free DC maximum</strong> — a higher limit
+                than Zone 0 (which is restricted to 12 V AC RMS). Mains voltage equipment is not
+                permitted. The SELV source must be located outside Zones 0, 1 and 2 (Reg
+                702.410.3.4.2).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,6 +332,16 @@ const sections = [
           considered outside Zone 1 — but the electrician must assess whether the barrier provides
           genuine separation.
         </p>
+        <p>
+          <strong>
+            Special case — diving boards, springboards, and starting blocks (Reg 702.4):
+          </strong>{' '}
+          Where the pool contains diving boards, springboards, starting blocks, chutes, or other
+          structures expected to be occupied by persons, Zone 1 extends 1.5 m horizontally from the
+          periphery of those structures (not 2 m from the pool rim) and 2.5 m vertically above the
+          highest surface expected to be occupied. This distinction is commonly tested in C&G 2382
+          and applies to most commercial and competition pools.
+        </p>
       </>
     ),
   },
@@ -347,17 +360,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket outlets are permitted</strong> but must be protected by a 30 mA RCD,
-                SELV, or electrical separation. In practice, 30 mA RCD protection is the most common
-                approach.
+                <strong>Socket outlets are permitted</strong> but must be protected by at least one
+                of: automatic disconnection of supply (ADS) via a 30 mA RCD; SELV; or electrical
+                separation (Section 413) supplying a single item of equipment with the source
+                outside Zones 0, 1 and 2 (Reg 702.410.3.4.3). In practice, 30 mA RCD protection is
+                the most common approach.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equipment must be rated IPX4 minimum.</strong> For outdoor pools, the
-                outdoor environment may require a higher IP rating (e.g., IP65 or IP66) based on the
-                general installation requirements.
+                <strong>
+                  Equipment IP rating — indoor Zone 2: IPX2 minimum; outdoor Zone 2: IPX4 minimum
+                </strong>{' '}
+                (Reg 702.512.2). IPX5 is required where water jets are used for cleaning, regardless
+                of whether the location is indoor or outdoor.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -383,8 +400,9 @@ const sections = [
       <>
         <p>
           Separated Extra-Low Voltage (SELV) is the primary protective measure for swimming pool
-          Zones 0 and 1. SELV limits the voltage to a maximum of 12 V AC or 30 V DC and provides
-          electrical separation from all other circuits.
+          Zones 0 and 1. In Zone 0, SELV is limited to 12 V AC RMS or 30 V ripple-free DC. In Zone
+          1, the limit is 25 V AC RMS or 60 V ripple-free DC (Reg 702.410.3.4.2). SELV provides
+          electrical separation from all other circuits and from earth.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -400,8 +418,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The transformer must be located outside Zones 0 and 1</strong> — at least 2
-                m from the pool edge. It can be in Zone 2 or outside the zones entirely.
+                <strong>The transformer must be located outside Zones 0, 1 and 2</strong> (Reg
+                702.410.3.4.2) — beyond 3.5 m from the pool edge. It cannot be in Zone 2 unless the
+                supply circuit is protected by an RCD with the characteristics specified in Reg
+                415.1.1.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -517,9 +537,10 @@ const sections = [
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-semibold">Zone 2</td>
-                <td className="py-3 pr-4">IPX4</td>
+                <td className="py-3 pr-4">IPX2 (indoor) / IPX4 (outdoor)</td>
                 <td className="py-3 text-white">
-                  Protection against splashing. Higher rating may be needed for outdoor pools.
+                  IPX2 minimum for indoor Zone 2; IPX4 minimum for outdoor Zone 2. IPX5 required
+                  where water jets are used for cleaning (Reg 702.512.2).
                 </td>
               </tr>
             </tbody>
@@ -711,7 +732,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable for a hot tub or pool pump circuit with the Elec-Mate{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Enter the load, cable length, installation method, and get the correct cable

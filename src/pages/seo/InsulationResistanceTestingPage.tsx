@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'Insulation resistance (IR) testing verifies that the insulation of conductors is intact and is not leaking current to earth or between conductors. BS 7671 Regulation 643.3 sets out the requirements.',
   'The test voltage applied depends on the circuit nominal voltage: 250V DC for circuits up to 50V (SELV/PELV), 500V DC for circuits up to 500V (most domestic and commercial circuits), and 1000V DC for circuits above 500V.',
-  'The minimum acceptable insulation resistance value is 1 MΩ for all circuit types under BS 7671. In practice, values of 200 MΩ or higher are typical on a sound new installation.',
+  'The minimum acceptable insulation resistance value depends on circuit type. For SELV and PELV circuits (tested at 250V DC) the minimum is 0.5 MΩ. For circuits up to 500V — including all standard 230V domestic and 400V commercial circuits (tested at 500V DC) — the minimum is 1 MΩ. In practice, values of 200 MΩ or higher are typical on a sound new installation.',
   'For new circuits, IR testing is carried out on the dead circuit before connection to the supply. All luminaires and appliances should be disconnected — many electronic devices are damaged by IR test voltages.',
   'On live circuit EICR work, IR testing requires safe isolation of the circuit under test and disconnection of sensitive electronic equipment before applying the test voltage.',
 ];
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What electronic equipment is damaged by insulation resistance testing?',
     answer:
-      'Many modern electrical components contain electronics that are rated for the circuit voltage (230V or lower) and will be damaged or destroyed by the 500V or 1000V IR test voltage. Items to always disconnect before IR testing include: LED luminaires and LED drivers, fluorescent light fittings with electronic ballasts, variable speed drives (VSDs) and inverters, surge protective devices (SPDs, also called surge protectors), programmable thermostats, occupancy sensors and presence detectors, socket outlets with USB charging ports, and any connected electronic appliances. Note that SPDs are particularly important to disconnect — they contain metal oxide varistors (MOVs) that conduct at voltages above their clamping voltage, which is typically well below the 500V test voltage. Failure to disconnect SPDs will give a spurious low IR reading and may permanently damage the SPD.',
+      'Many modern electrical components contain electronics that are rated for the circuit voltage (230V or lower) and will be damaged or destroyed by the 500V or 1000V IR test voltage. Items to always disconnect before IR testing include: LED luminaires and LED drivers, fluorescent light fittings with electronic ballasts, variable speed drives (VSDs) and inverters, surge protective devices (SPDs, also called surge protectors), arc fault detection devices (AFDDs — recommended on AC final circuits under Reg 421.1.7 and increasingly fitted on A4:2026-compliant installations), programmable thermostats, occupancy sensors and presence detectors, socket outlets with USB charging ports, and any connected electronic appliances. Note that SPDs are particularly important to disconnect — they contain metal oxide varistors (MOVs) that conduct at voltages above their clamping voltage, which is typically well below the 500V test voltage. AFDDs are equally vulnerable: their internal electronics are designed for 230V operation and will be damaged by 500V DC. Failure to disconnect either gives a spurious low IR reading and may permanently damage the device.',
   },
   {
     question: 'What does a low insulation resistance reading indicate?',
@@ -76,7 +76,12 @@ const faqs = [
   {
     question: 'What does Regulation 643.3 require?',
     answer:
-      'BS 7671:2018+A4:2026 Regulation 643.3 requires that insulation resistance testing is carried out on all new electrical installations and on existing installations during periodic inspection and testing. The regulation sets out the test voltages and minimum acceptable values tabulated in Table 64.1. The test must be carried out with all equipment connected (or representative of the installed conditions) except for equipment that would be damaged by the test voltage — which must be disconnected. Where electronic equipment cannot be disconnected, only a low-voltage continuity check may be possible. Regulation 643.3 also requires that where results approach (but do not fall below) the minimum value, further investigation is recommended to identify the cause of the relatively low reading.',
+      'BS 7671:2018+A4:2026 Regulation 643.3 requires that insulation resistance testing is carried out on all new electrical installations and on existing installations during periodic inspection and testing. The regulation sets out the test voltages and minimum acceptable values tabulated in Table 64. Under the A4:2026 redraft, where equipment is connected and is likely to influence the result or be damaged by the standard test voltage, a 250V DC insulation resistance test shall be performed with the equipment connected — not skipped. This is a procedural change from previous practice. Regulation 643.3 also requires that where results approach (but do not fall below) the minimum value, further investigation is recommended to identify the cause of the relatively low reading.',
+  },
+  {
+    question: 'When do I use IR testing to verify SELV or PELV circuit separation?',
+    answer:
+      'BS 7671:2018+A4:2026 Regulations 643.4.1 to 643.4.3 require that the separation of live parts in SELV and PELV systems — and in circuits protected by electrical separation — is confirmed by a measurement of insulation resistance. The resistance values obtained must comply with Table 64. This applies to ELV circuits that are increasingly common in modern buildings: EV pilot/control circuits, fire detection wiring, Category 6 PoE circuits, and ELV lighting systems. The purpose of the test in this context is not just to verify cable insulation health but to confirm that the required degree of electrical separation from other circuits and from earth has been achieved. Use the 250V DC test voltage (minimum 0.5 MΩ for SELV/PELV as per Table 64) and record the result as a verification of the protection measure, not merely as a cable condition check.',
   },
 ];
 
@@ -311,6 +316,17 @@ const sections = [
                 the circuit designation on the schedule of test results.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-red-500 text-white font-bold text-sm flex items-center justify-center">
+                6
+              </span>
+              <span>
+                <strong>Discharge before touching</strong> — as noted in Guidance Note 3, the cable
+                capacitance holds the test voltage as residual charge that persists after the tester
+                is removed and can cause a shock. Confirm the instrument has completed its discharge
+                cycle before touching any conductors or reconnecting equipment.
+              </span>
+            </li>
           </ol>
         </div>
         <SEOAppBridge
@@ -361,13 +377,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Discharge the circuit after testing</strong> — the IR tester charges the
-                circuit capacitance to the test voltage. After removing the test voltage, the
-                instrument should discharge the circuit — confirm the instrument is doing this
-                before reconnecting any equipment.
+                <strong>Identify and disconnect AFDDs</strong> — arc fault detection devices (AFDDs)
+                are recommended under Reg 421.1.7 on AC final circuits and are increasingly fitted
+                on A4:2026-compliant boards. Their internal electronics are vulnerable to 500V DC
+                test voltages. Check for AFDDs alongside SPDs before applying any test voltage.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">Residual Charge — Shock Hazard</p>
+              <p className="text-white text-sm leading-relaxed">
+                Guidance Note 3 explicitly flags residual charge as a shock hazard, not merely an
+                instrument feature. IR testing charges cable capacitance to the full test voltage
+                (500V DC or higher). This charge can persist after the tester is disconnected and
+                the circuit may remain live to touch until it is fully discharged. Always confirm
+                that the instrument has completed its automatic discharge cycle — and verify with an
+                approved voltage indicator — before touching conductors or reconnecting equipment.
+              </p>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -391,12 +423,14 @@ const sections = [
           damaged by IR test voltages, requiring them to be disconnected individually.
         </p>
         <p>
-          Regulation 643.3 also notes that where IR testing cannot be carried out (for example,
-          where a circuit cannot be isolated and electronic equipment cannot be disconnected), the
-          inspector must record the limitation and the reason on the EICR. This is a genuine
-          limitation that should be noted rather than a reason to skip the test entirely — where
-          partial testing is possible (for example, testing the wiring by disconnecting equipment at
-          accessories), this is preferable to no testing.
+          A significant procedural change introduced in the A4:2026 redraft addresses situations
+          where sensitive equipment <em>cannot</em> be disconnected. Under the revised Regulation
+          643.3, the correct response is <strong>not</strong> to skip the test or simply record a
+          limitation. Instead, the equipment shall be connected and a <strong>250V DC</strong>{' '}
+          insulation resistance test shall be performed with the equipment in circuit. The lower
+          test voltage avoids damage to the connected electronics whilst still providing a valid
+          verification of the wiring insulation. This replaces the previous informal practice of
+          noting equipment as "not disconnected" and recording a limitation.
         </p>
         <p>
           The minimum acceptable IR values from Table 64.1 are the legal minimum under BS 7671.
@@ -424,11 +458,16 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Always Check for SPDs Before Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Surge protective devices (SPDs) are now mandatory on most new installations under
-                  BS 7671:2018+A4:2026 Amendment 4. They are easily missed during inspection. Before
-                  applying any IR test voltage, check the consumer unit, distribution board, and
-                  sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit gives
-                  a reading of virtually zero ohms — which can falsely condemn a sound installation.
+                  Surge protective devices (SPDs) are required under BS 7671:2018+A4:2026 Regulation
+                  443.4 where a risk assessment identifies transient overvoltage as a hazard (e.g.
+                  risk to life, public services, commercial activity, or a large number of
+                  occupants). They are increasingly common and easily missed during inspection.
+                  Before applying any IR test voltage, check the consumer unit, distribution board,
+                  and sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit
+                  gives a reading of virtually zero ohms — which can falsely condemn a sound
+                  installation. Also check for arc fault detection devices (AFDDs), now recommended
+                  on AC final circuits under Reg 421.1.7. AFDDs contain electronics that are equally
+                  vulnerable to 500V DC test voltages and must be disconnected before testing.
                 </p>
               </div>
             </div>
@@ -465,7 +504,7 @@ export default function InsulationResistanceTestingPage() {
       title="Insulation Resistance Testing BS 7671 | IR Testing Guide UK"
       description="Complete guide to insulation resistance testing under BS 7671 for UK electricians. Covers test voltages (250V, 500V, 1000V), minimum values (≥1 MΩ)…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any circuit with correction factors, voltage drop, and fault protection.',

@@ -220,6 +220,23 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-orange-400" /> Making Tax Digital: Admin Is About
+            to Get Heavier for Higher Earners
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            Making Tax Digital for Income Tax Self Assessment (MTD for ITSA) replaces the annual
+            Self Assessment return with quarterly digital submissions. It applies from April 2026 if
+            your self-employment income exceeds £50,000, and from April 2027 if it exceeds £30,000.
+            If you are a sole trader earning above these thresholds, the &apos;sole trader = simple
+            admin&apos; advantage is significantly reduced. You will need HMRC-compatible software
+            and to submit four quarterly updates plus a final declaration each year. This is not a
+            reason to incorporate — a Ltd also has quarterly obligations — but it is a reason to
+            invest in proper bookkeeping software (e.g. QuickBooks, FreeAgent, Xero) now rather than
+            waiting.
+          </p>
+        </div>
       </>
     ),
   },
@@ -403,6 +420,24 @@ const sections = [
           break-even point where Ltd genuinely saves you money (after all costs) is approximately
           £40,000 to £50,000.
         </p>
+        <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-green-400" /> Employment Allowance: A Ltd Benefit
+            Once You Have Employees
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            Employment Allowance allows eligible employers to reduce their employer National
+            Insurance bill by up to £10,500 per year (2026/27). There is an important distinction
+            for electricians: a limited company where the director is the{' '}
+            <strong>sole employee</strong> cannot claim Employment Allowance — HMRC excludes
+            single-director companies. However, once you take on even one additional employee (a
+            second electrician, an apprentice, an office administrator), the company becomes
+            eligible and the full £10,500 relief applies. At that point, the tax efficiency of a Ltd
+            structure improves further. If you are running a growing electrical business with staff,
+            factor Employment Allowance into your break-even calculation — it can shift the numbers
+            meaningfully in favour of incorporation.
+          </p>
+        </div>
       </>
     ),
   },
@@ -481,7 +516,7 @@ const sections = [
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Confirmation statement</span>
               <span className="text-yellow-400">Not needed</span>
-              <span className="text-yellow-400">Annual (£13)</span>
+              <span className="text-yellow-400">Annual (£34)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 pb-2">
               <span>Extracting profits</span>
@@ -544,6 +579,48 @@ const sections = [
           company formation, payroll, and complex accounting when you could be spending that time
           finding customers and doing work.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+            <FileText className="w-5 h-5 text-blue-400" /> Construction Industry Scheme (CIS): A
+            Major Factor for Site Electricians
+          </h4>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            If you work on construction sites as a subcontractor, the Construction Industry Scheme
+            (CIS) directly affects your cash flow and makes your structure decision more financially
+            significant.
+          </p>
+          <ul className="space-y-2 text-white text-sm">
+            <li className="flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
+              <span>
+                <strong>Standard CIS deduction (sole trader or standard Ltd):</strong> The
+                contractor deducts 20% from your labour payments and sends it to HMRC on your
+                behalf. This is not additional tax — it is a payment on account — but it does reduce
+                your take-home cash during the year.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
+              <span>
+                <strong>Gross payment status:</strong> If your Ltd has a turnover of at least
+                £30,000 (per director, up to £100,000 total) and a clean compliance record with
+                HMRC, you can apply for gross payment status — meaning the contractor pays you in
+                full and you pay your own tax directly. This significantly improves cash flow for
+                site-based electrical businesses.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2 shrink-0" />
+              <span>
+                <strong>Practical impact:</strong> For electricians doing significant site work, the
+                ability to qualify for gross payment status via a Ltd is an additional argument for
+                incorporation — on top of the tax efficiency argument — once you exceed the turnover
+                threshold. Register for CIS with HMRC before you take on your first construction
+                contract.
+              </span>
+            </li>
+          </ul>
+        </div>
         <SEOAppBridge
           title="Manage your electrical business whatever your structure"
           description="Elec-Mate handles quoting, certification, invoicing, and job management for sole traders and limited companies alike. 7-day free trial."

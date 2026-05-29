@@ -16,7 +16,7 @@ export default function AIToolsForElectriciansPage() {
   return (
     <GuideTemplate
       title="AI for Electricians: 7 Tools 2026"
-      description="AI for electricians cuts survey time by 40%. Board scanning, fault diagnosis, cost estimation. See which tools pass accuracy tests and protect your data."
+      description="AI for electricians reduces data entry and admin time on site. Board scanning, fault diagnosis, cost estimation. See which tools pass accuracy tests and protect your data."
       datePublished="2026-01-15"
       dateModified="2026-05-18"
       breadcrumbs={[
@@ -54,6 +54,8 @@ export default function AIToolsForElectriciansPage() {
         'AI cost estimation tools generate itemised quotes with materials and labour from a job description, using real UK trade pricing data.',
         'AI circuit designers produce complete consumer unit schedules with cable sizes, protective device ratings, and diversity calculations to BS 7671.',
         'Privacy matters — look for AI tools that process data in the UK/EU, do not train on your client data, and comply with GDPR.',
+        'A4:2026 introduced Reg 411.3.4 (30 mA RCD on domestic AC lighting circuits) and Reg 421.1.7 (AFDD recommendation for dwellings) — a compliant AI tool must know both.',
+        'For EV charger design, Reg 722.311.201 permits load curtailment to be factored into maximum demand calculations — essential for fitting higher-rated chargers on constrained supplies.',
       ]}
       sections={[
         {
@@ -85,7 +87,7 @@ export default function AIToolsForElectriciansPage() {
                 training.
               </p>
               <p>
-                The result is AI that can cite Regulation 411.3.2 when discussing disconnection
+                The result is AI that can cite Regulation 411.3.1.2 when discussing disconnection
                 times, quote current Hager RCBO prices when estimating a board change, and know that
                 a 10mm twin and earth cable to a cooker circuit needs a 32A MCB, not a 40A. This
                 level of accuracy makes AI genuinely useful on site, not just a novelty.
@@ -212,21 +214,33 @@ export default function AIToolsForElectriciansPage() {
               <p>
                 AI defect classification solves this by letting you describe the defect in plain
                 English — for example, "no RCD protection on socket outlets in the kitchen" — and
-                the AI returns the correct code (C2), the regulation reference (Regulation 411.3.2),
+                the AI returns the correct code (C2), the regulation reference (Regulation 411.3.3),
                 and a properly worded observation for the certificate.
               </p>
               <p>
                 Elec-Mate's Defect Code AI is trained on BS 7671:2018+A4:2026 and thousands of
                 real-world EICR observations. It handles everything from simple non-compliances ("no
-                earth on lighting circuit" = C2, Reg 411.3.1.1) to nuanced situations ("original
-                wiring in good condition but no RCD protection" = C3, Reg 411.3.2 — because it was
-                compliant at the time of installation under the 16th Edition).
+                earth on lighting circuit" = C2) to nuanced situations ("original wiring in good
+                condition but no RCD protection on socket outlets" = C3, Reg 411.3.3 — because it
+                was compliant at the time of installation under the 16th Edition; note that A4:2026
+                Reg 411.3.4 now also mandates 30 mA RCD protection on AC lighting circuits in
+                domestic premises).
               </p>
               <SEOAppBridge
                 title="Defect Code AI — Instant C1/C2/C3/FI Classification"
                 description="Describe any defect in plain English. The AI assigns the correct observation code, cites the specific BS 7671 regulation…"
                 icon={Search}
               />
+              <p>
+                A4:2026 introduced two new requirements that frequently arise in EICR defect lists.
+                Regulation 411.3.4 now mandates additional protection by a 30 mA RCD on AC final
+                circuits supplying luminaires in domestic premises — an absence of this protection
+                on post-A4:2026 new installations or rewired circuits should be classified
+                accordingly. Regulation 421.1.7 recommends the installation of arc fault detection
+                devices (AFDDs) on AC final circuits in dwellings to mitigate fire risk from arc
+                fault currents. The Defect Code AI is aware of both requirements and will surface
+                the correct code and regulation reference automatically.
+              </p>
             </>
           ),
         },
@@ -310,6 +324,20 @@ export default function AIToolsForElectriciansPage() {
                 bathroom circuits), and recommending SPD protection in line with Regulation 443. The
                 output feeds directly into your EIC schedule of circuits.
               </p>
+              <p>
+                A4:2026 adds several mandatory or recommended provisions that the AI Circuit
+                Designer applies automatically. Regulation 411.3.4 requires 30 mA RCD additional
+                protection on all AC final circuits supplying luminaires in domestic premises — the
+                designer allocates these circuits to RCD-protected ways accordingly. Regulation
+                421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits in
+                dwellings; the designer flags circuits where an AFDD is advisable and includes the
+                device in the consumer unit schedule. For EV charging installations, Regulation
+                722.311.201 permits load curtailment (automatic or manual load reduction or
+                disconnection) to be taken into account when determining maximum demand — meaning a
+                smart charge point with a demand management function can allow a higher-rated
+                charger to be installed without upgrading the supply, and the AI designer handles
+                this calculation correctly.
+              </p>
               <SEOAppBridge
                 title="AI Circuit Designer — Full CU Schedules to BS 7671"
                 description="Describe the installation and the AI produces a complete consumer unit schedule with cable sizes, protective devices, diversity calculations…"
@@ -346,11 +374,11 @@ export default function AIToolsForElectriciansPage() {
                 </SEOInternalLink>{' '}
                 generates risk assessments, method statements, COSHH assessments, and toolbox talk
                 documents. The{' '}
-                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink>{' '}
-                exports professional PDF documents ready for submission. Documents reference the
-                Health and Safety at Work Act 1974, the Management of Health and Safety at Work
-                Regulations 1999, the CDM Regulations 2015, and the Electricity at Work Regulations
-                1989 where applicable.
+                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports
+                professional PDF documents ready for submission. Documents reference the Health and
+                Safety at Work Act 1974, the Management of Health and Safety at Work Regulations
+                1999, the CDM Regulations 2015, and the Electricity at Work Regulations 1989 where
+                applicable.
               </p>
               <SEOAppBridge
                 title="AI RAMS Generator — Site-Specific in 60 Seconds"
@@ -410,8 +438,9 @@ export default function AIToolsForElectriciansPage() {
                 <li>
                   <span className="font-semibold text-white">Regulation accuracy</span> — the AI
                   must cite specific BS 7671 regulation numbers, not make vague references to "the
-                  regulations." Ask it about RCD protection requirements and check whether it cites
-                  Regulation 411.3.2 correctly.
+                  regulations." Ask it about RCD protection for socket outlets and check whether it
+                  correctly cites Regulation 411.3.3 (socket outlets ≤32 A) and Reg 411.3.4 (30 mA
+                  RCD on domestic AC lighting circuits — introduced in A4:2026).
                 </li>
                 <li>
                   <span className="font-semibold text-white">Current data</span> — pricing tools
@@ -545,7 +574,7 @@ export default function AIToolsForElectriciansPage() {
         {
           question: 'Is AI going to replace electricians?',
           answer:
-            "No. AI cannot pull cables, terminate connections, test circuits, or carry out physical installations. Electrical work is a skilled manual trade that requires hands-on expertise, and that is not going to change. What AI does replace is the paperwork, data entry, pricing calculations, and administrative tasks that take up a significant portion of an electrician's working day. A typical self-employed electrician spends 10-15 hours per week on non-productive tasks — writing quotes, filling in certificates, creating RAMS, doing accounts. AI can reduce this to 2-3 hours per week, freeing up time for billable work. The electricians who embrace AI will not lose their jobs — they will simply be more productive and more profitable than those who do not.",
+            "No. AI cannot pull cables, terminate connections, test circuits, or carry out physical installations. Electrical work is a skilled manual trade that requires hands-on expertise, and that is not going to change. What AI does replace is the paperwork, data entry, pricing calculations, and administrative tasks that take up a significant portion of an electrician's working day. A significant portion of an electrician's working week goes on non-productive tasks — writing quotes, filling in certificates, creating RAMS, doing accounts. AI meaningfully reduces this overhead, freeing up time for billable work. The electricians who embrace AI will not lose their jobs — they will simply be more productive and more profitable than those who do not.",
         },
         {
           question: 'How accurate is AI for BS 7671 regulation lookups?',
@@ -560,7 +589,7 @@ export default function AIToolsForElectriciansPage() {
         {
           question: 'Can I trust AI-generated quotes and cost estimates?',
           answer:
-            "AI-generated cost estimates should always be treated as a starting point, not a final quote. The accuracy of AI cost estimation depends on the quality of the pricing data, the detail in your job description, and how well the AI understands the scope of work. Elec-Mate's AI Cost Engineer uses weekly-updated UK trade pricing from major wholesalers and labour timing data from real installations, which typically produces estimates within 5-15% of the final actual cost for standard domestic and commercial work. You should always review the AI output, adjust material prices to match your actual supplier costs, modify labour hours based on site-specific factors (access difficulties, working in occupied properties, complex containment routes), and add contingency for unknown conditions. The AI saves you the 30-60 minutes of manual itemisation — the review and adjustment takes 5-10 minutes.",
+            "AI-generated cost estimates should always be treated as a starting point, not a final quote. The accuracy of AI cost estimation depends on the quality of the pricing data, the detail in your job description, and how well the AI understands the scope of work. Elec-Mate's AI Cost Engineer uses weekly-updated UK trade pricing from major wholesalers and labour timing data from real installations, which typically produces estimates close to the final actual cost for standard domestic and commercial work. You should always review the AI output, adjust material prices to match your actual supplier costs, modify labour hours based on site-specific factors (access difficulties, working in occupied properties, complex containment routes), and add contingency for unknown conditions. The AI saves you the 30-60 minutes of manual itemisation — the review and adjustment takes 5-10 minutes.",
         },
         {
           question: 'Is my client data safe when using AI tools?',

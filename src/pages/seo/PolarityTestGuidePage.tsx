@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Polarity testing verifies that all single-pole protective and switching devices are connected in the line conductor only, and that all accessories are wired with correct line and neutral connections. This is required by BS 7671 Regulation 612.6.',
+  'Polarity testing verifies that all single-pole protective and switching devices are connected in the line conductor only, and that all accessories are wired with correct line and neutral connections. This is required by BS 7671 Regulation 643.6.',
   'The principal danger of incorrect polarity is that a luminaire, appliance, or socket outlet may be live even when the switch controlling it is in the off position. A reversed socket outlet has the live pin where the neutral should be, creating a shock risk when inserting a plug.',
   'The bell and battery (or buzzer) method is the traditional dead polarity test — it uses a low-voltage continuity indication between two conductors to trace their route without applying mains voltage. Modern continuity testers achieve the same result more reliably.',
   'Polarity must be checked at every socket outlet, every switch position, every luminaire, and every fixed appliance connection point. The test is performed dead (installation isolated) for the initial verification.',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Why is polarity testing required?',
     answer:
-      'BS 7671 Regulation 612.6 requires polarity to be verified during the initial verification of a new installation and during every periodic inspection and test. Incorrect polarity creates shock and fire hazards: a single-pole switch in the neutral rather than the line conductor leaves the connected luminaire or appliance at line potential when switched off. A reversed socket outlet has the line conductor connected to the larger neutral pin, potentially energising a double-insulated appliance chassis. These hazards can exist for years without being apparent during normal use.',
+      'BS 7671 Regulation 643.6 requires polarity to be verified during the initial verification of a new installation and during every periodic inspection and test. Incorrect polarity creates shock and fire hazards: a single-pole switch in the neutral rather than the line conductor leaves the connected luminaire or appliance at line potential when switched off. A reversed socket outlet has the line conductor connected to the larger neutral pin, potentially energising a double-insulated appliance chassis. These hazards can exist for years without being apparent during normal use.',
   },
   {
     question: 'What is the bell and battery polarity test?',
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What must be checked during a polarity test?',
     answer:
-      'BS 7671 requires polarity to be verified for: all single-pole switching and protective devices (MCBs, fuses, switches — these must all be in the line conductor); all socket outlets (line must be at the correct terminal, neutral at the correct terminal, and earth at the correct terminal); all luminaire connections (centre contact of ES lamp holders must be connected to line); all fixed appliance connections; and the line and neutral at the consumer unit busbars (line bus must feed MCBs, neutral bus must be connected to neutral conductors only).',
+      'BS 7671 Regulation 643.6 requires polarity to be verified for: all single-pole switching and protective devices (MCBs, fuses, switches — these must all be in the line conductor); all socket outlets (line must be at the correct terminal, neutral at the correct terminal, and earth at the correct terminal); all luminaire connections (for ES lampholders, the outer screwed contact shall be connected to neutral per Reg 559.5.1.206 — E14 and E27 lampholders complying with BS EN 60238 are excepted); all fixed appliance connections; and the line and neutral at the consumer unit busbars (line bus must feed MCBs, neutral bus must be connected to neutral conductors only).',
   },
   {
     question: 'Can you check polarity with the installation live?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Does polarity testing apply to three-phase installations?',
     answer:
-      'Yes. For three-phase installations, polarity testing verifies that each phase conductor (L1, L2, L3) connects to the correct MCB or fuse, and that phase, neutral, and earth are correctly connected at all three-phase accessories, distribution boards, and motor connections. Phase rotation (the sequence in which L1, L2, L3 cycle) is separately tested to verify correct motor direction of rotation. The polarity test for three-phase focuses on correct conductor identification at each point rather than specifically line/neutral.',
+      'Yes. For three-phase installations, polarity testing (Reg 643.6) verifies that each phase conductor (L1, L2, L3) connects to the correct MCB or fuse, and that phase, neutral, and earth are correctly connected at all three-phase accessories, distribution boards, and motor connections. Phase rotation — the sequential order of L1, L2, L3 — is a separately performed and recorded test. BS 7671 Reg 442.1.2 and GN3 Reg 2.30 require phase rotation to be tested at the point closest to each three-phase load before energisation (to prevent incorrect motor direction of rotation), and the result shall be recorded as a distinct item on the Generic Schedule of Test Results (Appendix 6). Phase rotation is not the same as polarity: polarity confirms correct conductor identity at every point, whilst phase rotation confirms the cyclic sequence of the three phases. For the full three-phase testing context including loop impedance and Zs, see the loop impedance testing guide.',
   },
 ];
 
@@ -143,7 +143,7 @@ const sections = [
           installation. Getting it wrong is not simply an administrative error — incorrect polarity
           creates real and potentially lethal hazards.{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
-          Regulation 612.6 makes polarity verification mandatory at initial installation and at
+          Regulation 643.6 makes polarity verification mandatory at initial installation and at
           every periodic inspection.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
@@ -173,11 +173,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ES lamp holders</strong>: The centre contact of an ES lamp holder must be
-                connected to the line conductor. This ensures that when the lamp is unscrewed, the
-                outer threaded part (which users inevitably touch) is at neutral potential. A
-                reversed ES lamp holder has the outer shell at line potential — a hidden shock
-                hazard.
+                <strong>ES lamp holders</strong>: BS 7671 Reg 559.5.1.206 requires that the outer
+                (screwed) contact of every Edison screw lampholder shall be connected to the neutral
+                conductor in TN and TT systems. This ensures that when a lamp is unscrewed, the
+                outer threaded shell that users touch is at neutral potential. If reversed, the
+                outer shell is at line potential — a hidden shock hazard. Note: E14 and E27
+                lampholders complying with BS&nbsp;EN&nbsp;60238 are excepted from this requirement.
               </span>
             </li>
           </ul>
@@ -227,7 +228,9 @@ const sections = [
               <span>
                 <strong>Luminaire connections</strong>: At every fixed luminaire connection, confirm
                 line to line terminal and neutral to neutral terminal. For ES lamp holders, confirm
-                the centre contact is connected to line.
+                the outer (screwed) contact is connected to neutral (Reg 559.5.1.206). Exception:
+                E14 and E27 lampholders complying with BS EN 60238 are not subject to this
+                requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -248,6 +251,19 @@ const sections = [
     heading: 'Bell and Battery Method — The Traditional Dead Polarity Test',
     content: (
       <>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <span className="text-white">
+              <strong>Test sequence context (BS 7671:2018+A4:2026):</strong> Polarity is the sixth
+              and final pre-energisation test in the initial verification sequence. BS 7671 Reg
+              642.3 and GN3 Reg 2.12 both require tests 643.2 to 643.6 to be carried out in that
+              order before the installation is energised — continuity, insulation resistance,
+              protection by automatic disconnection, protection by separation, polarity. The dead
+              polarity test described below satisfies that final step.
+            </span>
+          </div>
+        </div>
         <p>
           The bell and battery (or buzzer) method is the original dead polarity test technique, used
           by electricians for decades before multifunction test instruments became standard. It

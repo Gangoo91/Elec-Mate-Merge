@@ -40,7 +40,7 @@ const tocItems = [
 const keyTakeaways = [
   'A detached garage electrical installation typically costs £800 to £2,000, with the main variable being the length of the armoured cable run from the house and whether trenching through a driveway or garden is required.',
   'An integral (attached) garage electrical installation is simpler, costing £400 to £800, as the cable run is short and no external trenching is required.',
-  'SWA (Steel Wire Armoured) cable is required for any underground cable run to a detached garage. Trenching, sand bedding, and cable covers add £20 to £50 per metre to the installation cost.',
+  'SWA (Steel Wire Armoured) cable is required for any underground cable run to a detached garage. Unprotected SWA must be buried at a minimum depth of 600 mm (BS 7671 Reg 730.521.101.3.2 NOTE 1); a shallower depth is permissible only with additional mechanical protection such as conduit or cover tiles. Trenching, sand bedding, and cable covers add £20 to £50 per metre to the installation cost.',
   'A dedicated consumer unit in a detached garage is strongly recommended and is required under BS 7671 where the supply enters at a point remote from the main board. Expect to pay £300 to £600 for a small garage consumer unit.',
   'Adding a 7kW EV charger to a garage installation costs an additional £600 to £1,200 (excluding the charger unit), but if the consumer unit and cable are being installed anyway, the marginal cost of adding an EV circuit is much lower.',
 ];
@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What type of cable is used to supply a garage?',
     answer:
-      'The underground supply cable to a detached garage must be Steel Wire Armoured (SWA) cable — typically 6mm² twin core and earth for a standard domestic supply, or 10mm² if the garage will have an EV charger. SWA cable is buried at a minimum depth of 500mm in a garden (450mm under a concrete slab) with sand bedding below and above, and bright yellow cable covers over the top to warn future excavators. Above-ground SWA runs on the exterior of a building are also acceptable and avoid the cost of trenching.',
+      'The underground supply cable to a detached garage must be Steel Wire Armoured (SWA) cable — typically 6mm² twin core and earth for a standard domestic supply, or 10mm² if the garage will have an EV charger. Unprotected SWA cable should be buried at a minimum depth of 600 mm (BS 7671 Reg 730.521.101.3.2 NOTE 1), with sand bedding below and above and bright yellow cable covers to warn future excavators. A shallower depth is only acceptable where additional mechanical protection such as conduit or cover tiles is provided. Above-ground SWA runs on the exterior of a building are also acceptable and avoid the cost of trenching.',
   },
   {
     question: 'Do I need a consumer unit in my garage?',
@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'How deep does the cable need to be buried?',
     answer:
-      'Under a garden or lawn, SWA cable must be buried at a minimum depth of 500mm (measured to the top of the cable). Under a concrete slab, path, or driveway, the minimum depth is 450mm. The cable should be laid on a 50mm bed of sharp sand, with a further 50mm of sand above before backfilling with soil or reinstating the hard surface. Bright yellow cable covers (warning tape) must be placed 150mm above the cable to alert future excavators.',
+      'BS 7671 Regulation 730.521.101.3.2 NOTE 1 gives 0.6 m (600 mm) as the generally accepted minimum burial depth for an unprotected underground cable. A shallower depth is permissible only where additional mechanical protection — such as a conduit, duct, or cable protection tiles — is provided. The cable should be laid on a 50 mm bed of sharp sand, with a further 50 mm of sand above before backfilling. Bright yellow cable covers (warning tape) must be placed 150 mm above the cable to alert future excavators.',
   },
   {
     question: 'Can I use a normal twin and earth cable to supply my garage?',
@@ -293,18 +293,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Burial depth: 500mm (garden), 450mm (under hard standing)</strong> — as
-                required by the IET On-Site Guide and Wiring Matters guidance. Sand bedding above
-                and below, plus cable covers, are mandatory.
+                <strong>Burial depth: 600mm minimum (unprotected cable)</strong> — BS 7671 Reg
+                730.521.101.3.2 NOTE 1 gives 0.6 m as the generally accepted minimum to avoid
+                damage. A shallower depth is permissible only where additional mechanical protection
+                (conduit, duct, or cover tiles) is provided. Sand bedding above and below, plus
+                cable covers, are mandatory regardless of depth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead alternative</strong> — where trenching is not feasible, an overhead
-                supply on a catenary wire is an option. Minimum height of 3.5m above ground (5.2m
-                over a vehicle route). Cheaper than cutting through a concrete driveway but less
-                aesthetically pleasing.
+                supply on a catenary wire is an option. Minimum height of 3.5 m above ground (6 m
+                where vehicles can pass underneath — BS 7671 Regs 708.521.7.3 and 730.521.101.3.3).
+                Cheaper than cutting through a concrete driveway but less aesthetically pleasing.
               </span>
             </li>
           </ul>
@@ -349,6 +351,25 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">A4:2026 Certification Note</p>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Regulation 133.1.3 requires that certain equipment selections —
+                including the type of RCD and whether an Arc Fault Detection Device (AFDD) is fitted
+                — are explicitly recorded on the Electrical Installation Certificate (Part 6). If
+                the garage consumer unit is installed or replaced after the A4:2026 effective date,
+                the electrician must complete these fields on the EIC. Regulation 421.1.7 recommends
+                AFDDs for final circuits supplying socket-outlets; they are mandatory in Higher Risk
+                Residential Buildings, HMOs, student accommodation, and care homes. For a standard
+                domestic garage, an AFDD is recommended but not mandatory — the decision and the
+                device type used must still be recorded on the EIC.
+              </p>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -430,8 +451,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate</strong> — the{' '}
-                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> documents the
-                design, construction, inspection, and test results. It is your property's compliance
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> documents the design,
+                construction, inspection, and test results. It is your property's compliance
                 evidence when you sell — solicitors routinely request it for garage and outbuilding
                 electrical work.
               </span>
@@ -483,10 +504,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the customer has a car, offer the EV charger option. On a new garage
                   installation, adding a 32A EV circuit costs far less than a standalone job. Use
-                  the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                   to show the cost with and without the EV charger option — most customers choose
                   the upgrade when the price difference is clear.
                 </p>
@@ -511,9 +529,9 @@ const sections = [
 export default function GarageElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Garage Electrical Installation Cost UK 2025 | Garage Wiring"
-      description="Garage electrical installation costs in the UK for 2025. Detached garage from £800–£2,000, integral garage £400–£800."
-      datePublished="2025-01-01"
+      title="Garage Electrical Installation Cost UK 2026 | Garage Wiring"
+      description="Garage electrical installation costs in the UK for 2026. Detached garage from £800–£2,000, integral garage £400–£800."
+      datePublished="2026-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
@@ -521,11 +539,11 @@ export default function GarageElectricalCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Garage Electrical Installation Cost UK 2025:{' '}
+          Garage Electrical Installation Cost UK 2026:{' '}
           <span className="text-yellow-400">Garage Wiring Prices</span>
         </>
       }
-      heroSubtitle="Detailed breakdown of garage electrical installation costs in the UK for 2025 — detached garage from £800, integral garage from £400, SWA armoured cable and trenching costs, garage consumer unit, EV charger add-ons, and Part P compliance."
+      heroSubtitle="Detailed breakdown of garage electrical installation costs in the UK for 2026 — detached garage from £800, integral garage from £400, SWA armoured cable and trenching costs, garage consumer unit, EV charger add-ons, and Part P compliance."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

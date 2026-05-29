@@ -42,7 +42,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'Hot tubs require a dedicated radial circuit — typically 32A for smaller tubs (up to 7kW) or 40A for larger models (up to 9kW). Never connect a hot tub to an existing socket circuit.',
-  'RCD protection is mandatory under BS 7671 Regulation 411.3.3 — a 30mA RCD or RCBO must protect the circuit. For outdoor installations, additional RCD protection at the point of use is strongly recommended.',
+  'RCD protection is mandatory under BS 7671 Section 702 and Reg 411.3.3 (socket-outlets) — a 30mA RCD or RCBO must protect the fixed hot tub circuit. Section 702 imposes additional RCD requirements for this special location.',
+  'Supplementary equipotential bonding is required under BS 7671 Reg 702.415.2 — all extraneous-conductive-parts within zones 0, 1 and 2 (metalwork of the tub, pipework, pump housing, handrails) must be connected by supplementary bonding conductors to the circuit protective conductor.',
   'All outdoor electrical equipment must have an appropriate IP rating — IP56 minimum for the isolator switch, and the cable route must be protected against mechanical damage using SWA cable or conduit.',
   'A lockable rotary isolator must be installed within sight of the hot tub but at least 2 metres away from the tub edge, in accordance with BS 7671 Section 702 (swimming pools and hot tubs).',
   'An Electrical Installation Certificate (EIC) must be issued for the new circuit, and the work must be notified under Part P of the Building Regulations as it involves a special location (zone around a hot tub).',
@@ -57,7 +58,7 @@ const faqs = [
   {
     question: 'Do I need an RCD for a hot tub?',
     answer:
-      'Yes. BS 7671 Regulation 411.3.3 requires RCD protection with a rated residual operating current not exceeding 30mA for circuits supplying equipment outdoors or in special locations. Hot tubs fall under both categories. The RCD can be provided by an RCBO at the consumer unit or by a separate RCD. For additional safety, many electricians install a Type A or Type AC RCD — Type A is preferred as hot tub motors can produce DC fault currents. If the consumer unit already has RCD protection on the relevant way, verify it is 30mA and test it before relying on it.',
+      'Yes. For a fixed hardwired hot tub, RCD protection is required under BS 7671 Section 702 (swimming pools and similar locations), which mandates additional protection for this special location. Reg 411.3.3 requires 30mA RCD protection for socket-outlets rated up to 32A, and 411.3.3(c) covers mobile equipment for outdoor use — for a fixed hardwired circuit the Section 702 requirement is the primary driver. A 30mA RCD or RCBO must protect the circuit. Type A is preferred over Type AC as hot tub pump motors and electronic control boards can produce pulsating DC fault currents that a Type AC RCD may not detect. For installations with variable-speed drives or inverter-controlled pumps (common in swim spas), a Type B RCD should be considered — Type B detects pulsating rectified DC from two or more phases as well as smooth DC residual currents (OSG Reg 3.6.4.5). If the consumer unit already has RCD protection on the relevant way, verify it is 30mA and test it before relying on it.',
   },
   {
     question: 'How far can the hot tub be from the consumer unit?',
@@ -93,14 +94,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for hot tub circuits with automatic voltage drop and Zs checks.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on long cable runs to outdoor hot tub locations.',
     icon: Zap,
@@ -212,16 +213,17 @@ const sections = [
   },
   {
     id: 'rcd-protection',
-    heading: 'RCD Protection: BS 7671 Regulation 411.3.3',
+    heading: 'RCD Protection: BS 7671 Section 702 and Reg 411.3.3',
     content: (
       <>
         <p>
-          RCD protection is mandatory for hot tub circuits. BS 7671 Regulation 411.3.3 requires
-          additional protection by an RCD with a rated residual operating current not exceeding 30mA
-          for socket-outlets with a rated current not exceeding 32A, and for mobile equipment with a
-          current rating not exceeding 32A for use outdoors. Hot tubs, as fixed outdoor equipment,
-          also fall within the scope of Section 702 (swimming pools and hot tubs) which has
-          additional RCD requirements.
+          RCD protection is mandatory for hot tub circuits. For a fixed hardwired hot tub, the
+          primary requirement derives from BS 7671 Section 702 (swimming pools and similar
+          locations), which imposes additional protective measures for this special location. Reg
+          411.3.3 requires 30mA RCD additional protection for socket-outlets rated up to 32A and for
+          mobile equipment rated up to 32A for outdoor use (Reg 411.3.3(c)) — for a fixed hardwired
+          circuit, Section 702 is the governing requirement. In either case, a 30mA RCD or RCBO must
+          protect the circuit.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -241,6 +243,18 @@ const sections = [
                 pump motors and electronic control boards can produce pulsating DC fault currents
                 that a Type AC RCD may not detect. Type A RCDs detect both AC and pulsating DC
                 residual currents.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Type B RCD for inverter-driven installations</strong> — swim spas and
+                premium hot tubs with variable-speed drives or multi-pump inverter controllers can
+                produce pulsating rectified DC from two or more phases. A Type A RCD will not detect
+                smooth DC fault currents. Where such equipment is installed, a Type B RCD should be
+                specified — it covers all Type A fault current waveforms plus smooth DC and
+                pulsating rectified DC from multi-phase rectification (OSG Reg 3.6.4.5). Check the
+                manufacturer&apos;s installation manual for the required RCD type.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,7 +309,7 @@ const sections = [
                 <strong>Voltage drop</strong> — check the voltage drop for the total cable run. BS
                 7671 allows 5% total; aim for 3% on the final circuit. For a 40A load on 10.0mm²
                 cable, the maximum run for 3% voltage drop is approximately 40 metres. Use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -397,7 +411,7 @@ const sections = [
     content: (
       <>
         <p>
-          The completed hot tub circuit must be tested in accordance with BS 7671 Chapter 61. The
+          The completed hot tub circuit must be tested in accordance with BS 7671 Chapter 64. The
           following tests are required:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -432,7 +446,10 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Earth fault loop impedance (Zs) — must be within the maximum permitted Zs for the
-                protective device
+                protective device. When comparing the measured Zs against the tabulated maximum,
+                apply the GN3 temperature correction factor of 0.8: multiply the measured value by
+                0.8 to derive the corrected Zs at maximum operating temperature (GN3 Reg 2.29,
+                Appendix A2). Record both the measured and corrected values on the EIC schedule.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -443,6 +460,26 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                Supplementary Equipotential Bonding — Reg 702.415.2
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                All extraneous-conductive-parts within zones 0, 1 and 2 must be connected by
+                supplementary protective bonding conductors. This includes the metalwork of the tub
+                shell, water inlet and outlet pipework, pump housing, handrails, and any other
+                metalwork within or bounding the zones. The bonding conductors connect these parts
+                to the protective conductors of exposed-conductive-parts of equipment in the zones.
+                Omitting this bonding is a mandatory non-compliance under BS 7671 Reg 702.415.2 and
+                is among the most common dangerous mistakes on hot tub and pool installations.
+                Verify continuity of each bonding conductor and record on the EIC.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           An{' '}
@@ -527,10 +564,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately with Elec-Mate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to itemise materials (SWA cable per metre, RCBO, isolator, glands, clips, warning
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  itemise materials (SWA cable per metre, RCBO, isolator, glands, clips, warning
                   tape) and labour. Send a professional PDF quote from the survey.
                 </p>
               </div>
@@ -543,10 +578,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the EIC on your phone before you leave using the{' '}
-                  <SEOInternalLink href="/eic-certificate">
-                    EIC certificate app
-                  </SEOInternalLink>
-                  . Note the BS 7671 Section 702 reference in the remarks. Send the PDF to the
+                  <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink>.
+                  Note the BS 7671 Section 702 reference in the remarks. Send the PDF to the
                   customer immediately — it is professional and avoids the paperwork backlog.
                 </p>
               </div>

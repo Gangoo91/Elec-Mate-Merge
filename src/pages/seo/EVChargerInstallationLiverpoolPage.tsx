@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -340,7 +340,7 @@ const sections = [
               <span>
                 <strong>Cable sizing</strong> — long cable runs in Victorian Liverpool terraces
                 require careful{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
                 for voltage drop. 10mm² cable may be needed on runs over 15 metres.
@@ -452,10 +452,8 @@ const sections = [
                   Factor in Liverpool day rates (£280 to £380), cable run lengths in Victorian
                   terraces, PME earthing requirements, and board upgrades on pre-RCD consumer units.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes on site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes on site.
                 </p>
               </div>
             </div>

@@ -738,7 +738,7 @@ const relatedPages = [
     category: 'Regulations',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any circuit — load, method, grouping, and temperature.',

@@ -30,7 +30,7 @@ const tocItems = [
   { id: 'emergency-lighting', label: 'Emergency Lighting (BS 5266)' },
   { id: 'fire-suppression', label: 'Fire Suppression Interlocks' },
   { id: 'cctv-security', label: 'CCTV & Security' },
-  { id: 'cost-breakdown', label: 'Cost Breakdown 2025' },
+  { id: 'cost-breakdown', label: 'Cost Breakdown 2025/2026' },
   { id: 'eicr', label: 'EICR & Compliance' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
@@ -42,7 +42,8 @@ const keyTakeaways = [
   'Commercial catering kitchens almost always require a 3-phase 400V supply — single-phase is insufficient for high-draw equipment such as combination ovens, fryers, and commercial dishwashers running simultaneously.',
   'Kitchen canopy extract systems must be electrically interlocked with gas suppression or Ansul wet chemical systems under current building regulations and BS EN 15251.',
   'Emergency lighting to BS 5266-1 is mandatory in any restaurant serving the public and must cover all escape routes, exit signs, and the kitchen at sufficient lux levels.',
-  'An EICR is required at least every five years for commercial premises; many insurers and food hygiene inspectors expect to see a current satisfactory report.',
+  'BS 7671 Reg 652.1 requires EICR frequency to be determined having regard to the type of installation, equipment present, use, and maintenance history — five years is the industry-standard recommended maximum for commercial premises such as restaurants, not a fixed statutory interval.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 (introduced by Amendment 4) recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk — particularly relevant in commercial catering kitchens where arc faults in concealed wiring pose a high ignition hazard.',
 ];
 
 const faqs = [
@@ -59,7 +60,7 @@ const faqs = [
   {
     question: 'What electrical standards apply to commercial kitchens?',
     answer:
-      'Commercial kitchen electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations), with particular attention to Section 706 (restrictive conductive locations — relevant to wet kitchen environments). Fire suppression interlock wiring must follow the requirements of the suppression system manufacturer and BS EN 15251. Emergency lighting is governed by BS 5266-1. Gas interlock systems follow IGEM/UP/19.',
+      'Commercial kitchen electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations). Section 706 of BS 7671 (Conducting locations with restricted movement) applies specifically to confined spaces containing conductive parts where persons have restricted movement — for example the inside of metal vessels or tanks — and does not govern commercial kitchens. Kitchen installations are governed by the standard Part 4 protection measures together with appropriate IP ratings for wet areas. BS 7671:2018+A4:2026 Reg 421.1.7 also recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk. Fire suppression interlock wiring must follow the requirements of the suppression system manufacturer and BS EN 15251. Emergency lighting is governed by BS 5266-1. Gas interlock systems follow IGEM/UP/19.',
   },
   {
     question: 'What is a gas interlock system and does it need an electrician?',
@@ -69,7 +70,7 @@ const faqs = [
   {
     question: 'How often does a restaurant need an EICR?',
     answer:
-      'For commercial premises such as restaurants, the recommended maximum interval for an Electrical Installation Condition Report (EICR) is five years or on change of occupancy. Many insurers, pub companies, and food safety inspectors require sight of a current satisfactory EICR. The EICR is assessed under BS 7671 Section 631. Any C1 or C2 observations must be remedied before the installation is deemed satisfactory.',
+      'For commercial premises such as restaurants, BS 7671 Reg 652.1 requires the frequency of periodic inspection and testing to be determined having regard to the type of installation, equipment present, use and operation, and maintenance history. Five years is the industry-standard recommended maximum interval — it is not a fixed statutory requirement for commercial premises. The EICR is governed by Chapter 65 of BS 7671 (Regs 651.1, 652.1, 653.1). Many insurers, pub companies, and food safety inspectors require sight of a current satisfactory EICR. Any C1 or C2 observations must be remedied before the installation is deemed satisfactory.',
   },
   {
     question: 'What emergency lighting does a restaurant need?',
@@ -180,8 +181,14 @@ const sections = [
           </ul>
         </div>
         <p>
-          All of the above must be designed, installed, inspected, and tested in accordance with BS 7671:2018+A4:2026 (the IET Wiring Regulations). For wet kitchen areas, Section 706 applies
-          special requirements for protective measures in restrictive conductive locations.
+          All of the above must be designed, installed, inspected, and tested in accordance with BS
+          7671:2018+A4:2026 (the IET Wiring Regulations). Part 4 protection measures and appropriate
+          IP ratings govern kitchen electrical installations. Note that Section 706 of BS 7671
+          (Conducting locations with restricted movement) applies to confined spaces such as the
+          inside of metal vessels or tanks — not to commercial kitchens. BS 7671:2018+A4:2026 Reg
+          421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits of fixed
+          installations to mitigate fire risk from arc fault currents, which is particularly
+          relevant in a catering kitchen environment.
         </p>
       </>
     ),
@@ -450,14 +457,14 @@ const sections = [
   },
   {
     id: 'cost-breakdown',
-    heading: 'Restaurant Electrical Cost Breakdown 2025',
+    heading: 'Restaurant Electrical Cost Breakdown 2025/2026',
     content: (
       <>
         <p>
-          The table below reflects typical 2025 costs for a new restaurant electrical fit-out in the
-          UK. Prices include labour and materials but exclude VAT and DNO connection charges. London
-          and South East rates are typically 20–35% higher than the national average, reflecting
-          2025/2026 labour cost escalation and skilled trade scarcity in the region.
+          The table below reflects typical 2025/2026 costs for a new restaurant electrical fit-out
+          in the UK. Prices include labour and materials but exclude VAT and DNO connection charges.
+          London and South East rates are typically 20–35% higher than the national average,
+          reflecting 2025/2026 labour cost escalation and skilled trade scarcity in the region.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -571,10 +578,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR frequency</strong> — commercial premises: maximum five years. Many
-                restaurant insurers require annual visual inspection records in addition to the
-                five-yearly full EICR. Food Standards Agency inspectors increasingly ask to see
-                electrical compliance documentation alongside food hygiene records.
+                <strong>EICR frequency</strong> — BS 7671 Reg 652.1 requires the frequency of
+                periodic inspection and testing to be determined having regard to the type of
+                installation, equipment present, use, and maintenance history. Five years is the
+                industry-standard recommended maximum for commercial premises — it is not a fixed
+                statutory requirement as it is for private rented residential property. GN3 Reg 3.5
+                requires a maintenance plan that considers routine checks and periodic inspections
+                in addition to the full EICR. Many restaurant insurers require annual visual
+                inspection records alongside the five-yearly EICR. Food Standards Agency inspectors
+                increasingly expect to see electrical compliance documentation with food hygiene
+                records.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AFDDs (Reg 421.1.7)</strong> — BS 7671:2018+A4:2026 Reg 421.1.7, introduced
+                by Amendment 4, recommends the installation of arc fault detection devices (AFDDs)
+                on AC final circuits of a fixed installation to mitigate fire risk from arc fault
+                currents. Commercial catering kitchens — high fire-risk environments with concealed
+                wiring subject to mechanical wear, vermin, and moisture — are a prime candidate for
+                AFDD protection. While the regulation uses recommendatory wording, specifiers and
+                insurers increasingly treat AFDD provision as best practice on new commercial
+                kitchen installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -641,8 +667,8 @@ const sections = [
 export default function RestaurantElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Restaurant Electrical Installation Cost UK 2025 | Catering"
-      description="Restaurant electrical installation costs UK 2025. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1…"
+      title="Restaurant Electrical Installation Cost UK 2025/2026 | Catering"
+      description="Restaurant electrical installation costs UK 2025/2026. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1…"
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -651,7 +677,7 @@ export default function RestaurantElectricalCostPage() {
       badgeIcon={ChefHat}
       heroTitle={
         <>
-          Restaurant Electrical Installation Cost UK 2025:{' '}
+          Restaurant Electrical Installation Cost UK 2025/2026:{' '}
           <span className="text-yellow-400">Catering Electrical Guide</span>
         </>
       }

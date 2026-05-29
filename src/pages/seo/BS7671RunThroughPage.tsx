@@ -289,7 +289,7 @@ const sections = [
           full calculation process: determine design current, select protective device rating, apply
           correction factors, look up the minimum cable size from the Appendix 3 tables, and verify
           voltage drop. Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to check your manual calculations during revision.

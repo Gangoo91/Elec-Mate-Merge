@@ -38,6 +38,8 @@ const keyTakeaways = [
   'Time management is the single biggest cause of failure. Practise every task under timed conditions until you can finish with time to spare. Rushing causes mistakes; preparation creates speed.',
   'Safe isolation is an automatic fail if done incorrectly. The prove-test-prove procedure must be second nature — every single time, no shortcuts. Assessors watch this step closely.',
   'Bring your own complete toolkit and calibrated test instruments. Check everything the day before — flat batteries, blown fuses in test leads, or a missing proving unit will cost you on the day.',
+  'BS 7671:2018+A4:2026 introduces two rules directly relevant to the AM2 consumer unit task: Reg 411.3.4 makes 30 mA RCD protection mandatory on domestic AC lighting circuits, and Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits. Both can appear in the Section E online knowledge test.',
+  'When testing insulation resistance with equipment connected that may be damaged by higher test voltages, BS 7671 Reg 643.3 (A4:2026) requires a 250 V DC test rather than the standard 500 V DC. RCD acceptance criterion (Reg 643.7.3.201): general non-delay RCDs must disconnect within 300 ms maximum at rated residual operating current (An).',
   'Elec-Mate has an AM2 Simulator that replicates every practical task with timed exercises and AI feedback. Candidates who practise 3 to 4 full mock assessments before the real AM2 report significantly higher confidence and pass rates.',
 ];
 
@@ -45,7 +47,7 @@ const faqs = [
   {
     question: 'What exactly does the AM2 assessment test?',
     answer:
-      'The AM2 tests your practical competence across four main areas: consumer unit installation (selecting and installing the correct protective devices, busbar configuration, and cable termination), ring final circuit wiring (complete ring with spur, correct connections at every socket outlet), lighting circuit wiring (one-way and two-way switching with correct terminal connections, brown sleeving on switch wires, and proper cable management), and fault finding (safe isolation followed by systematic testing to identify faults on a pre-built circuit). After completing the wiring tasks, you must also inspect and test your own work — continuity, insulation resistance, polarity, and functional testing — and record the results accurately on a test schedule. The assessment evaluates workmanship quality, safety practices, compliance with BS 7671, time management, and the accuracy of your test results and documentation.',
+      'The AM2 tests your practical competence across four main areas: consumer unit installation (selecting and installing the correct protective devices, busbar configuration, and cable termination), ring final circuit wiring (complete ring with spur, correct connections at every socket outlet), lighting circuit wiring (one-way and two-way switching with correct terminal connections, brown sleeving on switch wires, and proper cable management), and fault finding (safe isolation followed by systematic testing to identify faults on a pre-built circuit). After completing the wiring tasks, you must also inspect and test your own work — continuity, insulation resistance, polarity, and functional testing — and record the results accurately on a test schedule. For insulation resistance, the standard test voltage is 500 V DC; however, BS 7671 Reg 643.3 (A4:2026) requires you to use 250 V DC where connected equipment is likely to be influenced by or damaged by the higher voltage. The assessment evaluates workmanship quality, safety practices, compliance with BS 7671, time management, and the accuracy of your test results and documentation.',
   },
   {
     question: 'How long does the AM2 take and how is the time split?',
@@ -191,6 +193,21 @@ const sections = [
                   terminals, cable dressing, and circuit labelling. This task rewards methodical,
                   careful work and a professional finish.
                 </p>
+                <div className="mt-3 rounded-xl bg-yellow-500/10 border border-yellow-500/25 px-4 py-3">
+                  <p className="text-yellow-300 text-xs font-semibold mb-1">
+                    BS 7671:2018+A4:2026 update — device selection
+                  </p>
+                  <p className="text-white/80 text-xs leading-relaxed">
+                    <strong className="text-white">Reg 411.3.4:</strong> Within domestic premises,
+                    additional protection by a 30 mA RCD is now mandatory on AC final circuits
+                    supplying luminaires (lighting circuits). Your circuit schedule must show RCD
+                    protection on all lighting circuits.{' '}
+                    <strong className="text-white">Reg 421.1.7:</strong> BS 7671 recommends arc
+                    fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from
+                    arc faults — this recommendation is examinable in the Section E online knowledge
+                    test.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -408,6 +425,31 @@ const sections = [
           impedance, PFC, and RCD. You must be able to test your own completed work accurately and
           record results on a test schedule.
         </p>
+        <div className="rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 my-3">
+          <p className="text-yellow-300 text-xs font-semibold mb-2">
+            Key AM2 testing values to memorise
+          </p>
+          <ul className="text-white/80 text-xs leading-relaxed space-y-1 list-disc list-inside">
+            <li>
+              <strong className="text-white">Ring continuity (GN3 Reg 2.17):</strong> Measure r1
+              (line conductor loop), rx (neutral conductor loop), and rz (protective conductor loop)
+              in sequence. If the three values are of the same order the ring is correctly connected
+              and conductors are sound. A reading that is open-circuit or over-range indicates a
+              damaged conductor or poor termination.
+            </li>
+            <li>
+              <strong className="text-white">Insulation resistance (BS 7671 Reg 643.3):</strong>{' '}
+              Standard test uses 500 V DC. Where connected equipment is likely to be influenced by
+              or damaged by the test voltage, use 250 V DC instead — this is an A4:2026 change to
+              Reg 643.3.
+            </li>
+            <li>
+              <strong className="text-white">RCD trip time (BS 7671 Reg 643.7.3.201):</strong>{' '}
+              General non-delay RCDs must disconnect within 300 ms maximum at rated residual
+              operating current (An). If your MFT reads above 300 ms the device fails.
+            </li>
+          </ul>
+        </div>
         <p>
           <strong>Step 5 — Run full timed mock assessments:</strong> Once confident with each
           individual task, run a full timed AM2 mock covering all four tasks with realistic time
@@ -528,7 +570,7 @@ export default function AM2ExamTipsPage() {
   return (
     <GuideTemplate
       title="AM2 Exam Tips 2026: How to Pass First Time (NET)"
-      description="AM2 practical assessment 2026: the 6 NET sections, 16.5h total time, common fails on Section B testing + Section C safe isolation, what to take on the day."
+      description="AM2 practical assessment 2026: consumer unit installation, ring final circuit, lighting circuit, fault finding, and testing. Common failures, what to bring, and A4:2026 BS 7671 updates you need to know."
       datePublished="2025-06-20"
       dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}

@@ -227,16 +227,29 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                specifies torque values for terminal connections.
+                Reg 134.1.4 requires terminals to be tightened to the{' '}
+                <strong>manufacturer&apos;s specified torque values</strong> — BS 7671 does not
+                publish its own torque table; the duty is on the installer to obtain and follow the
+                equipment manufacturer&apos;s instructions.
               </span>
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <p className="text-white text-sm">
+            <strong>Inspector note (GN3 Reg 1.2.2):</strong> During periodic inspection, the
+            inspector shall confirm that <em>all</em> conductor connections — including connections
+            to busbars — are tight and secure. Loose connections are non-compliant with Reg 526.1
+            and must be recorded as an observation on the EICR.
+          </p>
+        </div>
         <p>
           During periodic inspection, electricians should torque-check every accessible terminal
-          connection. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">testing calculators</SEOInternalLink> help you
-          verify that measured values are within acceptable limits for each circuit type.
+          connection. Elec-Mate&apos;s{' '}
+          <SEOInternalLink href="/electrical-testing-calculators">
+            testing calculators
+          </SEOInternalLink>{' '}
+          help you verify that measured values are within acceptable limits for each circuit type.
         </p>
       </>
     ),
@@ -271,9 +284,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized cable on a spur:</strong> A spur taken from a ring circuit using
-                2.5mm² cable is protected by the 32A MCB, but the cable is only rated for 20A
-                (Reference Method C). If the load exceeds 20A, the cable overheats before the MCB
-                trips.
+                2.5mm² cable is protected by the 32A MCB, but the cable is only rated for 24A
+                (Reference Method C, Table 4D1A). If the load on the spur exceeds 24A, the cable
+                overheats before the MCB trips.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,8 +508,10 @@ const sections = [
               ends.
             </li>
             <li>
-              <strong>Insulation resistance test.</strong> Test between L-E, N-E, and L-N to check
-              for insulation breakdown. A reading below 1 M-ohm indicates damaged insulation.
+              <strong>Insulation resistance test.</strong> With all current-using equipment
+              disconnected (Reg 643.3.2), test between L-E, N-E, and L-N using 500 V DC for 230 V
+              circuits. The pass threshold is 1.0 M&Omega; per Table 64 — a reading below this
+              indicates damaged or degraded insulation.
             </li>
             <li>
               <strong>Continuity test.</strong> Check the R1+R2 values for the circuit. An unusually

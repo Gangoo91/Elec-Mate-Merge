@@ -46,6 +46,9 @@ const keyTakeaways = [
   "Southampton consumer unit replacement costs range from £400 to £800, reflecting the city's south coast labour rates which sit between London and the Midlands.",
   'BS EN 61439-3 is the product standard governing consumer units sold in the UK. Only UKCA-marked units from reputable manufacturers should be installed in Southampton properties.',
   "Southampton's mix of post-war council housing, Victorian terraces in areas such as Shirley and St Denys, and modern waterfront developments creates varied consumer unit replacement requirements across the city.",
+  'A4:2026 Regulation 411.3.4 requires 30mA RCD additional protection for all AC lighting circuits in domestic premises — not just sockets. A new consumer unit installed today must protect every luminaire circuit with an RCD or RCBO rated at 30mA or lower.',
+  "A4:2026 Regulation 421.1.7 recommends arc fault detection devices (AFDDs) conforming to BS EN 62606 for AC final circuits in domestic premises. AFDDs detect serial arc faults before they ignite surrounding structure — particularly relevant in Southampton's older timber-framed terraces.",
+  "Surge Protective Devices (SPDs) at the consumer unit are recommended under Regulation 443/534 and OSG guidance. Southampton's waterfront and marine-adjacent properties can be exposed to elevated transient overvoltage risk — electricians should quote SPD installation on the day of consumer unit work.",
 ];
 
 const faqs = [
@@ -67,7 +70,7 @@ const faqs = [
   {
     question: 'What RCD protection is required in a new Southampton consumer unit?',
     answer:
-      'BS 7671 Regulation 411.3.3 requires 30mA RCD protection for all socket-outlet circuits rated up to 32A and for all circuits in locations containing a bath or shower. The two main consumer unit protection arrangements used in Southampton are: a dual-RCD consumer unit, where circuits are split across two groups each protected by a 30mA RCD (economical but a fault trips an entire group); or an all-RCBO consumer unit, where each circuit has an individual RCBO combining MCB and RCD functions (more expensive but a fault only trips the affected circuit). Southampton electricians generally recommend RCBOs for newer installations and for properties where loss of power to multiple circuits would be particularly disruptive.',
+      'Under BS 7671:2018+A4:2026, two regulations govern mandatory 30mA RCD additional protection in domestic premises. Regulation 411.3.3 requires 30mA RCD protection for all socket-outlet circuits rated up to 32A and for all circuits in locations containing a bath or shower. Regulation 411.3.4 — introduced by A4:2026 — additionally requires 30mA RCD additional protection for all AC final circuits supplying luminaires (lighting circuits) in domestic (household) premises. A consumer unit installed today in a Southampton dwelling must therefore provide RCD or RCBO protection for both socket circuits and lighting circuits. The two main consumer unit arrangements are: a dual-RCD consumer unit, where circuits are split across two groups each protected by a 30mA RCD (economical but a fault trips an entire group); or an all-RCBO consumer unit, where each circuit has an individual RCBO combining MCB and RCD functions (more expensive but a fault only trips the affected circuit). Southampton electricians generally recommend all-RCBO boards for new installations, both for better fault discrimination and to satisfy the expanded A4:2026 RCD requirements across all circuit types.',
   },
   {
     question: 'How long will the consumer unit replacement take in Southampton?',
@@ -228,6 +231,21 @@ const sections = [
                 be non-combustible. A full replacement unit is required.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Arc fault detection devices (AFDDs) — Regulation 421.1.7 (A4:2026)</strong>{' '}
+                — A4:2026 introduces Regulation 421.1.7, which recommends the installation of arc
+                fault detection devices (AFDDs) conforming to BS EN 62606 in AC final circuits of a
+                fixed installation to mitigate the risk of fire from arc fault currents. Unlike RCD
+                protection, the wording is advisory rather than mandatory — but the recommendation
+                is directly relevant to Southampton&apos;s older timber-framed terraces in Shirley,
+                Freemantle, and St Denys, where a serial arc fault inside a wall cavity can ignite
+                surrounding structure before a conventional MCB detects it. Electricians quoting
+                consumer unit replacement in these areas should discuss AFDDs with customers as a
+                recommended upgrade alongside the new board.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -239,20 +257,31 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 411.3.3 of BS 7671 specifies the minimum RCD protection requirements for
-          domestic consumer unit installations. Southampton electricians routinely encounter older
-          properties with no RCD protection at all, or outdated split-load consumer units with
-          partial coverage.
+          Regulations 411.3.3 and 411.3.4 of BS 7671:2018+A4:2026 together specify the minimum RCD
+          protection requirements for domestic consumer unit installations. Southampton electricians
+          routinely encounter older properties with no RCD protection at all, or outdated split-load
+          consumer units with partial coverage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory 30mA protection</strong> — all socket-outlet circuits rated up to
-                32A must have 30mA RCD protection. All circuits in locations containing a bath or
-                shower (Regulation 701) must also have 30mA RCD protection. No exceptions in a new
-                installation.
+                <strong>Sockets and bathrooms — Regulation 411.3.3</strong> — all socket-outlet
+                circuits rated up to 32A must have 30mA RCD additional protection. All circuits in
+                locations containing a bath or shower (Regulation 701) must also have 30mA RCD
+                protection. No exceptions in a new installation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Lighting circuits — Regulation 411.3.4 (A4:2026)</strong> — this is a new
+                requirement introduced by A4:2026. Within domestic (household) premises, all AC
+                final circuits supplying luminaires (lighting fittings) must also be provided with
+                additional protection by an RCD with a rated residual operating current not
+                exceeding 30mA. A consumer unit installed today in any Southampton dwelling must
+                therefore protect both socket and lighting circuits with 30mA RCDs or RCBOs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -261,7 +290,9 @@ const sections = [
                 <strong>Dual-RCD vs RCBO</strong> — a dual-RCD consumer unit divides circuits into
                 two groups on two 30mA RCDs. An all-RCBO consumer unit gives each circuit its own
                 RCBO. RCBOs are more expensive but provide better fault discrimination — a single
-                fault trips only the affected circuit, not an entire group.
+                fault trips only the affected circuit, not an entire group. With lighting circuits
+                now also requiring RCD protection, all-RCBO boards are increasingly the preferred
+                choice for new installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -416,6 +447,18 @@ const sections = [
                 systems, and meter tails replacement add £100 to £400 depending on scope.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Surge Protective Device (SPD)</strong> — Regulation 443/534 and OSG guidance
+                recommend SPD installation at the consumer unit to protect against transient
+                overvoltage. Southampton&apos;s waterfront and marine-adjacent properties can be
+                exposed to elevated surge risk. A Type 1/2 combined SPD fitted at the consumer unit
+                typically adds £150 to £300 to the job cost and should be quoted on the day. As
+                noted in GN3 Regulation 2.10, the presence of an SPD shall be clearly labelled at
+                the consumer unit.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -493,11 +536,18 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Southampton</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
-                  to complete the full Electrical Installation Certificate and Schedule of Test
-                  Results while still at the Southampton property. Record all circuit test values on
-                  your phone, generate the PDF, and send it to your customer before you leave. No
-                  paper certificates, no evening data entry.
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
+                  complete the full Electrical Installation Certificate and Schedule of Test Results
+                  while still at the Southampton property. Record all circuit test values on your
+                  phone, generate the PDF, and send it to your customer before you leave. No paper
+                  certificates, no evening data entry.
+                </p>
+                <p className="text-white/70 text-sm leading-relaxed mt-2">
+                  <strong className="text-white">Terminal torque:</strong> OSG Regulation 2.2.5 and
+                  BS 7671 Regulation 134.1.4 require all screw terminals to be tightened to the
+                  equipment manufacturer&apos;s specified torque value. Always use a calibrated
+                  torque screwdriver for consumer unit terminations — the torque setting is
+                  specified on the device or in the manufacturer&apos;s installation instructions.
                 </p>
               </div>
             </div>
@@ -514,7 +564,13 @@ const sections = [
                   </SEOInternalLink>{' '}
                   to quote earthing upgrades, smoke alarm systems, or additional circuits while
                   still on site. Southampton customers respond far better to quotes that come with a
-                  clear explanation while the issues are visible in front of them.
+                  clear explanation while the issues are visible in front of them. Always include
+                  SPD installation as an optional line item — OSG Reg 3.1 cites SPDs fitted at the
+                  consumer unit as the standard overvoltage protection measure, and GN3 Reg 2.10
+                  requires SPD presence to be labelled on the board. Southampton&apos;s waterfront
+                  and marina-adjacent properties are a natural conversation-opener for surge
+                  protection. AFDDs (Regulation 421.1.7, A4:2026) are a further upsell for customers
+                  in older timber properties who want the highest level of arc fire protection.
                 </p>
               </div>
             </div>

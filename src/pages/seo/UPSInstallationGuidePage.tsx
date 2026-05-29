@@ -261,7 +261,8 @@ export default function UPSInstallationGuidePage() {
                 UPS installation involves more than simply plugging in a box. Larger systems (above
                 3kVA) require dedicated circuits, appropriate cable sizing, mechanical ventilation,
                 and compliance with manufacturer specifications and{' '}
-                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>.
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>
+                .
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-4">
@@ -363,8 +364,8 @@ export default function UPSInstallationGuidePage() {
                     reference must be established at the UPS output transformer, with a
                     neutral-earth bond and a local earth electrode if required. This arrangement
                     must be clearly documented on the{' '}
-                    <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and the
-                    earthing arrangement verified during commissioning.
+                    <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and the earthing
+                    arrangement verified during commissioning.
                   </p>
                 </div>
               </div>
@@ -597,7 +598,7 @@ export default function UPSInstallationGuidePage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Size cables for UPS input and output circuits.',
           icon: Calculator,
@@ -618,7 +619,7 @@ export default function UPSInstallationGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Max Demand Calculator',
           description: 'Calculate maximum demand for UPS sizing.',
           icon: Gauge,

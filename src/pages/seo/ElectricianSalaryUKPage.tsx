@@ -332,10 +332,22 @@ const sections = [
           UK, driven by the government's net-zero targets and increasing consumer demand.
           Electricians who hold the relevant qualifications and manufacturer accreditations (such as
           OZEV-approved installer status for EV chargers) are in high demand and can command premium
-          rates. Similarly, testing and inspection specialists who hold the C&G 2391 qualification
-          can earn excellent rates carrying out{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> for landlords,
-          letting agents, and property management companies.
+          rates. A4:2026 has also introduced load management requirements for EV installations (Reg
+          722.311.201): load curtailment — automatic or manual reduction or disconnection — must be
+          considered when calculating maximum demand, requiring smart charging coordination where
+          the supply capacity needs careful management. EV installers who understand these
+          demand-side compliance obligations can offer a more complete service and justify higher
+          fees.
+        </p>
+        <p>
+          Testing and inspection specialists who hold the C&G 2391 qualification can earn excellent
+          rates carrying out <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
+          for landlords, letting agents, and property management companies. Note that BS
+          7671:2018+A4:2026 has added new mandatory schedule fields to the EICR — including domestic
+          lighting circuit RCD protection (Reg 411.3.4 requires a 30 mA RCD on AC luminaire circuits
+          in dwellings), AFDD presence (Reg 421.1.7), and SPD — meaning EICR specialists need
+          current knowledge of A4:2026 to certify correctly, which justifies premium rates over
+          generalists working from older schedules.
         </p>
         <SEOAppBridge
           title="50+ Training Courses to Upskill"
@@ -638,8 +650,11 @@ const sections = [
               <span className="flex-1 text-left">
                 <strong>Specialise in high-demand areas:</strong> EV charger installation, solar PV,
                 battery storage, fire alarm systems, and testing and inspection all command premium
-                rates. The investment in training (typically £500-£2,000 per qualification) pays for
-                itself within a few jobs.
+                rates. AFDD (arc fault detection device) fitting for consumer unit upgrades is a
+                growing demand area following the A4:2026 recommendation under Reg 421.1.7 — as
+                installers upgrade panels to BS 7671:2018+A4:2026, clients increasingly ask for
+                AFDDs on AC final circuits. The investment in training (typically £500-£2,000 per
+                qualification) pays for itself within a few jobs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -663,8 +678,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Stay current with certifications:</strong> Hold the 18th Edition (including
-                Amendment 4:2024), C&G 2391, and membership of a competent person scheme. These
+                <strong>Stay current with certifications:</strong> Hold the 18th Edition (BS
+                7671:2018+A4:2026), C&G 2391, and membership of a competent person scheme. These
                 credentials signal reliability to clients and allow you to self-certify notifiable
                 work.
               </span>
@@ -714,7 +729,7 @@ const relatedPages = [
     category: 'Business Guide',
   },
   {
-    href: '/guides/apprentice-electrician-salary-uk',
+    href: '/guides/apprentice-electrician-salary',
     title: 'Apprentice Salary Guide',
     description: 'Detailed breakdown of apprentice electrician pay rates by year and region.',
     icon: PoundSterling,

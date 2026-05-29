@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Arc flash generates temperatures up to 20,000 degrees Celsius and explosive pressure waves exceeding 1,000 pounds per square foot — it is one of the most severe hazards electricians face when working on or near energised switchgear.',
-  'Arc-rated PPE is categorised into four levels (Category 1 to Category 4), with minimum arc thermal performance values (ATPV) ranging from 4 cal/cm squared to 40 cal/cm squared — the required category depends on the incident energy at the working distance.',
+  'Arc-rated PPE is categorised into four levels (Category 1 to Category 4), with minimum arc thermal performance values (ATPV) ranging from 4 cal/cm² to 40 cal/cm² — the required category depends on the incident energy at the working distance.',
   'The Electricity at Work Regulations 1989 and the Management of Health and Safety at Work Regulations 1999 require employers to assess arc flash risk and provide appropriate protective measures, including arc-rated PPE where the risk cannot be eliminated.',
   'The most effective arc flash control measure is to de-energise before working — proper safe isolation and lock off/tagout procedures eliminate the arc flash hazard entirely.',
   'Elec-Mate AI Health and Safety agent generates arc flash risk assessments covering incident energy estimation, PPE category selection, boundary distances, and control measures for your specific installation.',
@@ -62,12 +62,12 @@ const faqs = [
   {
     question: 'What ATPV rating do I need for my PPE?',
     answer:
-      'The required arc thermal performance value (ATPV) depends on the estimated incident energy at your working distance. To determine this, you need to know the prospective short-circuit current at the point of work and the clearing time of the upstream protective device. For most UK domestic consumer unit work, the incident energy is typically below 4 cal/cm squared, so Category 1 PPE (minimum 4 cal/cm squared ATPV) is usually adequate. For commercial distribution boards with higher fault currents, Category 2 (minimum 8 cal/cm squared) is commonly required. For industrial switchgear, motor control centres, and high-voltage equipment, Category 3 (25 cal/cm squared) or Category 4 (40 cal/cm squared) may be needed. If you do not have the data or expertise to calculate incident energy, err on the side of caution and use a higher category. The ideal approach is to conduct a formal arc flash risk assessment for each installation or type of installation you work on.',
+      'The required arc thermal performance value (ATPV) depends on the estimated incident energy at your working distance. To determine this, you need to know the prospective short-circuit current at the point of work and the clearing time of the upstream protective device. For most UK domestic consumer unit work, the incident energy is typically below 4 cal/cm², so Category 1 PPE (minimum 4 cal/cm² ATPV) is usually adequate. For commercial distribution boards with higher fault currents, Category 2 (minimum 8 cal/cm²) is commonly required. For industrial switchgear, motor control centres, and high-voltage equipment, Category 3 (25 cal/cm²) or Category 4 (40 cal/cm²) may be needed. If you do not have the data or expertise to calculate incident energy, err on the side of caution and use a higher category. The ideal approach is to conduct a formal arc flash risk assessment for each installation or type of installation you work on.',
   },
   {
     question: 'Is arc flash risk assessment a legal requirement in the UK?',
     answer:
-      'Yes. While UK law does not use the specific term "arc flash risk assessment," the legal requirements are clear. The Management of Health and Safety at Work Regulations 1999 (Regulation 3) require a suitable and sufficient assessment of all risks to health and safety — this includes the risk of arc flash. The Electricity at Work Regulations 1989 (Regulation 3) require all systems to be constructed and maintained to prevent danger, and (Regulation 4) require all work activities on or near electrical systems to be carried out in a manner that prevents danger. The Personal Protective Equipment at Work Regulations 2022 require employers to assess the risk and provide suitable PPE where the risk cannot be eliminated. Taken together, these regulations require you to assess the arc flash risk, implement control measures to reduce the risk, and provide arc-rated PPE where residual risk remains. A specific, documented arc flash risk assessment is the practical way to demonstrate compliance.',
+      'Yes. While UK law does not use the specific term "arc flash risk assessment," the legal requirements are clear. The Management of Health and Safety at Work Regulations 1999 (Regulation 3) require a suitable and sufficient assessment of all risks to health and safety — this includes the risk of arc flash. The Electricity at Work Regulations 1989 Regulation 4(1) requires all systems to be of such construction as to prevent danger; Regulation 4(2) requires all systems to be maintained so as to prevent danger; and Regulation 14 governs live working. The Personal Protective Equipment at Work Regulations 2022 require employers to assess the risk and provide suitable PPE where the risk cannot be eliminated. Taken together, these regulations require you to assess the arc flash risk, implement control measures to reduce the risk, and provide arc-rated PPE where residual risk remains. A specific, documented arc flash risk assessment is the practical way to demonstrate compliance.',
   },
   {
     question: 'What should I do if an arc flash incident occurs?',
@@ -259,9 +259,9 @@ const sections = [
       <>
         <p>
           Incident energy is the measure of thermal energy reaching a surface at a given distance
-          from an arc flash event. It is expressed in calories per square centimetre (cal/cm
-          squared) and is the key value used to determine the required level of arc flash PPE. The
-          higher the incident energy, the more severe the potential burns and injuries.
+          from an arc flash event. It is expressed in calories per square centimetre (cal/cm²) and
+          is the key value used to determine the required level of arc flash PPE. The higher the
+          incident energy, the more severe the potential burns and injuries.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
@@ -272,24 +272,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-green-400 mt-1.5 shrink-0" />
               <span>
-                <strong>Below 1.2 cal/cm squared</strong> — onset of second-degree burns on exposed
-                skin. This is the threshold at which arc flash begins to cause burn injuries. Even
-                at this level, the intense light can cause temporary blindness and the blast can
-                cause hearing damage.
+                <strong>Below 1.2 cal/cm²</strong> — onset of second-degree burns on exposed skin.
+                This is the threshold at which arc flash begins to cause burn injuries. Even at this
+                level, the intense light can cause temporary blindness and the blast can cause
+                hearing damage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-yellow-400 mt-1.5 shrink-0" />
               <span>
-                <strong>1.2 to 4 cal/cm squared</strong> — second-degree burns likely on exposed
-                skin. Category 1 arc-rated PPE provides protection at this level. Typical of some
-                domestic and light commercial installations at close working distances.
+                <strong>1.2 to 4 cal/cm²</strong> — second-degree burns likely on exposed skin.
+                Category 1 arc-rated PPE provides protection at this level. Typical of some domestic
+                and light commercial installations at close working distances.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-orange-400 mt-1.5 shrink-0" />
               <span>
-                <strong>4 to 8 cal/cm squared</strong> — serious burns through ordinary clothing.
+                <strong>4 to 8 cal/cm²</strong> — serious burns through ordinary clothing.
                 Non-flame-resistant clothing can ignite. Category 2 arc-rated PPE required. Typical
                 of commercial distribution boards with moderate fault currents.
               </span>
@@ -297,24 +297,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-red-400 mt-1.5 shrink-0" />
               <span>
-                <strong>8 to 25 cal/cm squared</strong> — severe, potentially life-threatening burns
-                even through standard work clothing. Category 3 arc-rated PPE required. Typical of
-                larger commercial and industrial switchgear.
+                <strong>8 to 25 cal/cm²</strong> — severe, potentially life-threatening burns even
+                through standard work clothing. Category 3 arc-rated PPE required. Typical of larger
+                commercial and industrial switchgear.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-red-600 mt-1.5 shrink-0" />
               <span>
-                <strong>25 to 40 cal/cm squared</strong> — extreme thermal hazard. Category 4 arc
-                flash PPE required (full arc flash suit, balaclava, face shield, arc-rated gloves).
-                Typical of large industrial switchgear, motor control centres, and some high-voltage
-                equipment.
+                <strong>25 to 40 cal/cm²</strong> — extreme thermal hazard. Category 4 arc flash PPE
+                required (full arc flash suit, balaclava, face shield, arc-rated gloves). Typical of
+                large industrial switchgear, motor control centres, and some high-voltage equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-purple-400 mt-1.5 shrink-0" />
               <span>
-                <strong>Above 40 cal/cm squared</strong> — exceeds the protection capability of
+                <strong>Above 40 cal/cm²</strong> — exceeds the protection capability of
                 commercially available PPE. Work must not be performed at this incident energy level
                 without additional engineering controls to reduce the incident energy (remote
                 switching, fault current limiting, zone selective interlocking).
@@ -351,15 +350,13 @@ const sections = [
                 <span className="text-green-400 font-bold text-sm">1</span>
               </div>
               <div>
-                <h4 className="font-bold text-white mb-1">
-                  Category 1 — Minimum ATPV: 4 cal/cm squared
-                </h4>
+                <h4 className="font-bold text-white mb-1">Category 1 — Minimum ATPV: 4 cal/cm²</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Arc-rated long-sleeve shirt and trousers (or coverall), arc-rated face shield or
                   safety glasses with side shields, hard hat, hearing protection, leather gloves,
                   and leather work boots. Suitable for low-energy arc flash risks such as domestic
                   consumer unit work and light commercial distribution boards where the incident
-                  energy does not exceed 4 cal/cm squared at the working distance.
+                  energy does not exceed 4 cal/cm² at the working distance.
                 </p>
               </div>
             </div>
@@ -370,15 +367,13 @@ const sections = [
                 <span className="text-yellow-400 font-bold text-sm">2</span>
               </div>
               <div>
-                <h4 className="font-bold text-white mb-1">
-                  Category 2 — Minimum ATPV: 8 cal/cm squared
-                </h4>
+                <h4 className="font-bold text-white mb-1">Category 2 — Minimum ATPV: 8 cal/cm²</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Arc-rated long-sleeve shirt and trousers (or coverall) rated to 8 cal/cm squared,
+                  Arc-rated long-sleeve shirt and trousers (or coverall) rated to 8 cal/cm²,
                   arc-rated face shield, arc-rated balaclava, hard hat, hearing protection, leather
                   gloves, and leather work boots. Suitable for commercial distribution boards, small
                   panel boards, and motor control centres where the incident energy is between 4 and
-                  8 cal/cm squared.
+                  8 cal/cm².
                 </p>
               </div>
             </div>
@@ -389,15 +384,13 @@ const sections = [
                 <span className="text-orange-400 font-bold text-sm">3</span>
               </div>
               <div>
-                <h4 className="font-bold text-white mb-1">
-                  Category 3 — Minimum ATPV: 25 cal/cm squared
-                </h4>
+                <h4 className="font-bold text-white mb-1">Category 3 — Minimum ATPV: 25 cal/cm²</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Arc flash suit (jacket and bib overalls or coverall) rated to 25 cal/cm squared,
+                  Arc flash suit (jacket and bib overalls or coverall) rated to 25 cal/cm²,
                   arc-rated face shield and balaclava, arc-rated hard hat liner, hearing protection,
                   arc-rated gloves, and leather work boots. Suitable for large industrial
                   switchgear, bus duct systems, and high-fault-current installations where the
-                  incident energy is between 8 and 25 cal/cm squared.
+                  incident energy is between 8 and 25 cal/cm².
                 </p>
               </div>
             </div>
@@ -408,16 +401,14 @@ const sections = [
                 <span className="text-red-400 font-bold text-sm">4</span>
               </div>
               <div>
-                <h4 className="font-bold text-white mb-1">
-                  Category 4 — Minimum ATPV: 40 cal/cm squared
-                </h4>
+                <h4 className="font-bold text-white mb-1">Category 4 — Minimum ATPV: 40 cal/cm²</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Multi-layer arc flash suit rated to 40 cal/cm squared, arc-rated face shield with
-                  full balaclava, arc-rated hard hat liner, hearing protection, arc-rated gloves,
-                  and leather work boots. This is the highest standard category and is required for
-                  the most hazardous situations — large industrial switchboards, utility
-                  substations, and high-voltage equipment. If the incident energy exceeds 40 cal/cm
-                  squared, work must not proceed without additional engineering controls.
+                  Multi-layer arc flash suit rated to 40 cal/cm², arc-rated face shield with full
+                  balaclava, arc-rated hard hat liner, hearing protection, arc-rated gloves, and
+                  leather work boots. This is the highest standard category and is required for the
+                  most hazardous situations — large industrial switchboards, utility substations,
+                  and high-voltage equipment. If the incident energy exceeds 40 cal/cm², work must
+                  not proceed without additional engineering controls.
                 </p>
               </div>
             </div>
@@ -460,12 +451,12 @@ const sections = [
               <Eye className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Arc flash boundary</strong> — the distance at which the incident energy
-                equals 1.2 cal/cm squared (the onset of second-degree burns on bare skin). Anyone
-                working inside this boundary must wear arc-rated PPE appropriate to the calculated
-                incident energy at their working distance. The arc flash boundary varies depending
-                on the available fault current and protective device clearing time — for a typical
-                domestic consumer unit it may be less than half a metre, while for industrial
-                switchgear it can extend to several metres.
+                equals 1.2 cal/cm² (the onset of second-degree burns on bare skin). Anyone working
+                inside this boundary must wear arc-rated PPE appropriate to the calculated incident
+                energy at their working distance. The arc flash boundary varies depending on the
+                available fault current and protective device clearing time — for a typical domestic
+                consumer unit it may be less than half a metre, while for industrial switchgear it
+                can extend to several metres.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -541,10 +532,10 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Determine the available fault current</strong> — obtain or calculate the
-                prospective short-circuit current (PSCC) at the point of work. This data may come
-                from the DNO, from loop impedance measurements, from design calculations, or from
-                the installation records. The higher the fault current, the greater the potential
-                arc energy.
+                prospective short-circuit current (PSCC) at the point of work (as required by BS
+                7671 Reg 643.7.3.201 for initial verification). This data may come from the DNO,
+                from loop impedance measurements, from design calculations, or from the installation
+                records. The higher the fault current, the greater the potential arc energy.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -562,8 +553,8 @@ const sections = [
               <span>
                 <strong>Estimate the incident energy</strong> — using the fault current, clearing
                 time, working distance, and electrode configuration, calculate or estimate the
-                incident energy in cal/cm squared. IEEE 1584 provides the standard calculation
-                method. Simplified lookup tables are available for common installation types.
+                incident energy in cal/cm². IEEE 1584 provides the standard calculation method.
+                Simplified lookup tables are available for common installation types.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -571,8 +562,8 @@ const sections = [
               <span>
                 <strong>Select the appropriate PPE category</strong> — based on the calculated
                 incident energy, determine the required arc flash PPE category (1, 2, 3, or 4). If
-                the incident energy exceeds 40 cal/cm squared, additional engineering controls are
-                needed before work can proceed.
+                the incident energy exceeds 40 cal/cm², additional engineering controls are needed
+                before work can proceed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -610,11 +601,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electricity at Work Regulations 1989</strong> — Regulation 3 requires
-                electrical systems to be constructed and maintained to prevent danger. Regulation 4
-                requires work on or near electrical systems to be carried out safely. Regulation 14
-                addresses working on live equipment. These regulations collectively require arc
-                flash risk to be assessed and managed.
+                <strong>Electricity at Work Regulations 1989</strong> — Regulation 4(1) requires
+                that all electrical systems shall at all times be of such construction as to
+                prevent, so far as is reasonably practicable, danger. Regulation 4(2) requires that,
+                as necessary to prevent danger, all systems shall be maintained so as to prevent, so
+                far as is reasonably practicable, such danger. Regulation 14 addresses working on
+                live equipment. These regulations collectively require arc flash risk to be assessed
+                and managed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -764,6 +757,34 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                BS 7671:2018+A4:2026 Reg 421.1.7 — Arc Fault Detection Devices (AFDDs)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                Amendment A4:2026 introduced Regulation 421.1.7, which recommends the installation
+                of arc fault detection devices (AFDDs) on AC final circuits of a fixed installation
+                to mitigate the risk of fire from arc fault currents. AFDDs detect the electrical
+                signature of series arc faults — the kind caused by damaged cable insulation, loose
+                connections, and conductor degradation — and disconnect the circuit before the fault
+                can ignite surrounding materials.
+              </p>
+              <p className="text-white text-sm leading-relaxed mt-2">
+                It is important to understand the distinction: AFDDs address arc fault{' '}
+                <em>fire prevention</em> in fixed wiring (a wiring integrity and building safety
+                measure); arc flash PPE protects workers against the explosive energy release from
+                switchgear and distribution board faults (a personal safety measure). Both are
+                complementary controls — AFDDs reduce the likelihood of a sustained arc fault
+                developing; PPE and safe isolation protect workers if an arc flash event occurs
+                despite those controls. Reg 421.1.7 is recommendatory, not mandatory, but represents
+                recognised good practice under A4:2026.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           Prevention is always better than protection. The combination of proper safe isolation,
           well-maintained equipment, current-limiting protective devices, and trained, competent
@@ -784,7 +805,7 @@ export default function ArcFlashProtectionPage() {
   return (
     <GuideTemplate
       title="Arc Flash Protection | Risk Assessment & PPE Guide"
-      description="Complete guide to arc flash protection for electricians. What causes arc flash, incident energy levels, PPE categories (Category 1 to 4)…"
+      description="Complete guide to arc flash protection for electricians. What causes arc flash, incident energy levels (cal/cm²), PPE categories (Category 1–4), boundary distances, UK legal requirements, and BS 7671:2018+A4:2026 Reg 421.1.7 AFDD guidance."
       datePublished="2025-04-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

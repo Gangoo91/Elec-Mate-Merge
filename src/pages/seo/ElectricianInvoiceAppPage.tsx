@@ -106,7 +106,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks integration, automatic payment reminders, VAT and CIS compliance…',
-  url: 'https://www.elec-mate.com/electrician-invoice-app',
+  url: 'https://www.elec-mate.com/tools/electrician-invoice-app',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -171,10 +171,16 @@ export default function ElectricianInvoiceAppPage() {
               Digital Invoicing and Payments for UK Electricians
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-6 leading-relaxed">
             Create professional invoices in seconds, get paid by card or bank transfer, and sync
             everything to your accounts. Stop chasing payments manually — let Elec-Mate do it for
             you.
+          </p>
+          <p className="text-base text-white/80 max-w-2xl mx-auto mb-8 leading-relaxed">
+            Elec-Mate&apos;s electrician invoice app is part of the complete platform for UK
+            electricians — from £12.99/month with a 7-day free trial. Available on web, iOS, and
+            Android, it combines digital invoicing with Stripe card payments, Xero and QuickBooks
+            sync, automatic payment reminders, and full EIC and EICR certification in one place.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -215,13 +221,13 @@ export default function ElectricianInvoiceAppPage() {
               work.
             </p>
             <p>
-              The average UK small business is owed over £8,500 in late payments at any given time.
-              For electricians, who typically invoice between £200 and £5,000 per job, just three or
-              four overdue invoices can create a serious cash flow problem. The root cause is
-              usually not that clients refuse to pay — it is that the invoicing process is slow and
-              manual, reminders are not sent consistently, and payment is inconvenient (bank
-              transfer requires the client to log into their banking app, copy your details, and set
-              up a payment).
+              UK small businesses consistently report significant sums tied up in late payments at
+              any given time. For electricians, who typically invoice between £200 and £5,000 per
+              job, just three or four overdue invoices can create a serious cash flow problem. The
+              root cause is usually not that clients refuse to pay — it is that the invoicing
+              process is slow and manual, reminders are not sent consistently, and payment is
+              inconvenient (bank transfer requires the client to log into their banking app, copy
+              your details, and set up a payment).
             </p>
             <p>
               <strong className="text-yellow-400">
@@ -363,9 +369,11 @@ export default function ElectricianInvoiceAppPage() {
             </p>
             <p>
               For the flat-rate VAT scheme, the invoice shows the full 20% VAT to the client (as
-              required by HMRC), but Elec-Mate tracks the flat-rate percentage internally (typically
-              14.5% for electrical installation services in the first year, 16.5% thereafter). This
-              ensures your VAT return is correct regardless of which scheme you use.
+              required by HMRC), but you retain only the flat-rate percentage of turnover as
+              specified by HMRC for your trade category. Elec-Mate tracks this internally so your
+              VAT return is correct regardless of which scheme you use. Check the current HMRC
+              flat-rate percentages for your trade at gov.uk before configuring your scheme, as
+              rates can change.
             </p>
             <p>
               <strong className="text-yellow-400">CIS:</strong> The Construction Industry Scheme
@@ -505,11 +513,9 @@ export default function ElectricianInvoiceAppPage() {
               complement the 56 technical calculators. Together with the AI tools and training
               courses, Elec-Mate covers every aspect of electrical work — from design and
               calculation, through installation and testing, to{' '}
-              <SEOInternalLink href="/tools/eicr-certificate">
-                EICR certification
-              </SEOInternalLink>
-              , <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>,
-              invoicing, and payment. One platform, one subscription, no gaps.
+              <SEOInternalLink href="/tools/eicr-certificate">EICR certification</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>, invoicing,
+              and payment. One platform, one subscription, no gaps.
             </p>
           </div>
         </div>
@@ -537,14 +543,24 @@ export default function ElectricianInvoiceAppPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Faster payment is valuable, but the bigger win is continuity. If the job started in
-              the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>,
-              was priced in the <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>,
-              and carried a sensible floor price from the{' '}
+              the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>, was
+              priced in the{' '}
+              <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
+              carried a sensible floor price from the{' '}
               <SEOInternalLink href="/tools/minimum-charge-calculator">
                 minimum charge calculator
               </SEOInternalLink>
               , the invoice becomes the final clean step rather than another admin task to rebuild
               from scratch.
+            </p>
+            <p>
+              Elec-Mate also closes the cert-to-invoice gap that generic invoicing apps miss. For
+              any new installation or addition involving new circuits, BS 7671 Reg 120.3 requires an
+              Electrical Installation Certificate to be issued before handover. When you complete
+              that work in Elec-Mate, the EIC is generated alongside the invoice — both documents
+              are stored together under the same job record, giving the client the certificate and
+              giving you a clean audit trail. No separate PDF to attach, no risk of issuing an
+              invoice without the accompanying certification.
             </p>
             <p>
               That is also where profitability improves. Link invoices back to the quote and the
@@ -597,7 +613,6 @@ export default function ElectricianInvoiceAppPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -605,13 +620,27 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/electrician-cv-guide">Electrician CV Guide 2026</SEOInternalLink>
-            <SEOInternalLink href="/cis-guide-electrician">Construction Industry Scheme (CIS) Guide for Electricians UK</SEOInternalLink>
-            <SEOInternalLink href="/tools/cv-builder-electrician">CV Builder for Electricians</SEOInternalLink>
-            <SEOInternalLink href="/guides/commercial-electrician-guide">Commercial Electrician Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/domestic-electrician-guide">Domestic Electrician Guide UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/compare/electrician-app-android">Best Electrician App for Android 2026</SEOInternalLink>
-            <SEOInternalLink href="/tools/electrician-app-iphone">Best Electrician App for iPhone 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrician-cv-guide">
+              Electrician CV Guide 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/cis-guide-electrician">
+              Construction Industry Scheme (CIS) Guide for Electricians UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/cv-builder-electrician">
+              CV Builder for Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/commercial-electrician-guide">
+              Commercial Electrician Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/domestic-electrician-guide">
+              Domestic Electrician Guide UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/compare/electrician-app-android">
+              Best Electrician App for Android 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/electrician-app-iphone">
+              Best Electrician App for iPhone 2026
+            </SEOInternalLink>
             <SEOInternalLink href="/guides/electrician-bath">Electrician in Bath</SEOInternalLink>
           </div>
         </div>
@@ -619,7 +648,7 @@ export default function ElectricianInvoiceAppPage() {
 
       <SEOCTASection
         heading="Get Paid Faster, Chase Less"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and payments. 7-day free trial, cancel anytime."
+        subheading="Join 900+ UK electricians using Elec-Mate for professional invoicing and payments. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

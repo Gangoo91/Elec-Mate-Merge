@@ -23,8 +23,8 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'jib-grades', label: 'JIB Grade Rates 2025' },
-  { id: 'apprentice-rates', label: 'Apprentice Pay by Year' },
+  { id: 'jib-grades', label: 'JIB Grade Rates 2026' },
+  { id: 'apprentice-rates', label: 'Apprentice Pay by Year (2026)' },
   { id: 'london-weighting', label: 'London Weighting' },
   { id: 'regional-variations', label: 'Regional Variations' },
   { id: 'shift-allowances', label: 'Shift Allowances & Hazard Money' },
@@ -37,37 +37,38 @@ const tocItems = [
 
 const keyTakeaways = [
   'The Joint Industry Board (JIB) sets national minimum rates for electricians in England, Wales, and Northern Ireland. JIB rates are updated annually and apply to employers who are JIB members.',
-  'The JIB Approved Electrician rate is the benchmark most often cited. At the 2025 rate of approximately £20.00 per hour, a full-time Approved Electrician earns around £38,000 to £42,000 gross per annum including typical overtime.',
+  'The JIB Approved Electrician rate is the benchmark most often cited. At the 2026 rate of approximately £20.00 per hour, a full-time Approved Electrician earns around £38,000 to £42,000 gross per annum including typical overtime.',
   'London weighting under the JIB Working Rule Agreement (WRA) adds a premium of around £1.50 to £2.50 per hour above the national rate, depending on the Inner or Outer London zone.',
   'Shift allowances, hazard money, and travel time can add 15 to 30 per cent to basic earnings on industrial or commercial contracts, making total compensation significantly higher than the headline hourly rate.',
   'Electricians working outside the JIB — typically self-employed contractors — should benchmark against regional market rates rather than JIB national rates, which may understate actual market pay in tight labour markets.',
+  'The ability to independently sign Electrical Installation Certificates is a regulated competence requirement under BS 7671 Regulation 644.5 — only a skilled person competent to verify BS 7671 compliance may compile and authenticate an EIC. This certification authority is a key reason Approved Electrician and Technician grades command a pay premium over the Electrician grade.',
 ];
 
 const faqs = [
   {
-    question: 'What is the JIB Approved Electrician rate in 2025?',
+    question: 'What is the JIB Approved Electrician rate in 2026?',
     answer:
-      "The JIB sets the Approved Electrician (AE) rate annually following negotiations between the Electrical Contractors' Association (ECA) and Unite the Union. For 2025, the JIB Approved Electrician national rate is approximately £20.00 per hour. This equates to a gross annual salary of approximately £37,000 to £40,000 based on a standard 37.5-hour week, rising to £42,000 to £46,000 with typical overtime. Check the JIB website (jib.org.uk) for the current confirmed rate, as it is updated each January.",
+      "The JIB sets the Approved Electrician (AE) rate annually following negotiations between the Electrical Contractors' Association (ECA) and Unite the Union. For 2026, the JIB Approved Electrician national rate is approximately £20.00 per hour. This equates to a gross annual salary of approximately £37,000 to £40,000 based on a standard 37.5-hour week, rising to £42,000 to £46,000 with typical overtime. Check the JIB website (jib.org.uk) for the current confirmed rate, as it is updated each January.",
   },
   {
     question: 'What is the JIB Technician Electrician rate?',
     answer:
-      'The JIB Technician Electrician grade sits above Approved Electrician. The Technician rate in 2025 is approximately £22.50 to £23.00 per hour at national rates, reflecting the additional qualifications and responsibilities of the grade. To achieve JIB Technician grade, an electrician typically needs to hold a relevant Level 4 qualification (such as the EAL Level 4 Award in the Design and Verification of Electrical Installations) and demonstrate a higher level of technical responsibility on site.',
+      'The JIB Technician Electrician grade sits above Approved Electrician. The Technician rate in 2026 is approximately £22.50 to £23.00 per hour at national rates, reflecting the additional qualifications and responsibilities of the grade. To achieve JIB Technician grade, an electrician typically needs to hold a relevant Level 4 qualification (such as the EAL Level 4 Award in the Design and Verification of Electrical Installations) and demonstrate a higher level of technical responsibility on site. Technician and Approved Electrician grades are the minimum required to independently compile and sign Electrical Installation Certificates under BS 7671 Regulation 644.5 — the ability to certify work is a key reason these grades command a pay premium.',
   },
   {
     question: 'How much does an electrical apprentice earn in Year 1?',
     answer:
-      'The JIB recommends Year 1 apprentice pay at 40% of the Approved Electrician rate. At a £20.00/hour AE rate, Year 1 apprentices earn approximately £8.00/hour. This is above the National Minimum Wage for apprentices (£6.40/hour from April 2024) but below the NMW for those aged 21+. The JIB scale rises to 50% in Year 2, 65% in Year 3, and 75% in Year 4. Actual pay varies by employer — many firms in tight labour markets pay above the JIB recommended scale to attract and retain apprentices.',
+      'The JIB recommends Year 1 apprentice pay at 40% of the Approved Electrician rate. At a £20.00/hour AE rate, Year 1 apprentices earn approximately £8.00/hour. This is above the National Minimum Wage for apprentices (£7.55/hour from April 2025) but below the NMW for those aged 21+. The JIB scale rises to 50% in Year 2, 65% in Year 3, and 75% in Year 4. Actual pay varies by employer — many firms in tight labour markets pay above the JIB recommended scale to attract and retain apprentices.',
   },
   {
     question: 'Do JIB rates apply to self-employed electricians?',
     answer:
-      "JIB rates are contractual minimum rates for employees working for JIB-registered employers in England, Wales, and Northern Ireland. They do not directly apply to self-employed electricians or sole traders. However, JIB rates serve as a useful benchmark — self-employed day rate electricians typically charge a premium above the equivalent employed rate to cover their self-employment costs (no employer's NI contribution, no holiday pay, no sick pay, funding their own tools and insurance). A typical self-employed day rate in 2025 for an Approved Electrician equivalent is £200 to £280 per day, depending on region and specialism.",
+      "JIB rates are contractual minimum rates for employees working for JIB-registered employers in England, Wales, and Northern Ireland. They do not directly apply to self-employed electricians or sole traders. However, JIB rates serve as a useful benchmark — self-employed day rate electricians typically charge a premium above the equivalent employed rate to cover their self-employment costs (no employer's NI contribution, no holiday pay, no sick pay, funding their own tools and insurance). A typical self-employed day rate in 2026 for an Approved Electrician equivalent is £200 to £280 per day, depending on region and specialism.",
   },
   {
     question: 'What is London weighting for electricians?',
     answer:
-      'The JIB Working Rule Agreement includes a London Allowance paid to electricians working within the Greater London area. The allowance is divided into Inner London and Outer London zones. In 2025, the Inner London addition is approximately £1.50 to £2.50 per hour above the national rate; the Outer London addition is slightly lower. This is in addition to any site-specific allowances. Electricians working on major London commercial or infrastructure projects may also negotiate additional site-specific payments above the JIB minimum.',
+      'The JIB Working Rule Agreement includes a London Allowance paid to electricians working within the Greater London area. The allowance is divided into Inner London and Outer London zones. In 2026, the Inner London addition is approximately £1.50 to £2.50 per hour above the national rate; the Outer London addition is slightly lower. This is in addition to any site-specific allowances. Electricians working on major London commercial or infrastructure projects may also negotiate additional site-specific payments above the JIB minimum.',
   },
   {
     question: 'What hazard money are electricians entitled to?',
@@ -119,7 +120,7 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'jib-grades',
-    heading: 'JIB Grade Rates for 2025',
+    heading: 'JIB Grade Rates for 2026',
     content: (
       <>
         <p>
@@ -169,7 +170,7 @@ const sections = [
         </div>
         <p>
           Always check the current JIB rate schedule at jib.org.uk — rates are updated annually in
-          January and the figures above are 2025 approximations. The JIB also publishes consolidated
+          January and the figures above are 2026 approximations. The JIB also publishes consolidated
           WRA documents covering all grades and allowances.
         </p>
       </>
@@ -190,9 +191,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 1 — 40% of AE rate</strong> — approximately £8.00/hour (2025). Legal
-                minimum (NMW apprentice rate) is £6.40/hour; most JIB employers pay at or above the
-                JIB recommended rate. Annual equivalent: approximately £15,600.
+                <strong>Year 1 — 40% of AE rate</strong> — approximately £8.00/hour (2026). Legal
+                minimum (NMW apprentice rate from April 2025) is £7.55/hour; most JIB employers pay
+                at or above the JIB recommended rate. Annual equivalent: approximately £15,600.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -312,9 +313,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scotland</strong> — the SELECT (Scottish Electrical Charitable Training
-                Trust) sets rates for electrical contractors in Scotland separately from the JIB.
-                SELECT rates are broadly comparable to JIB but have a different grade structure.
+                <strong>Scotland</strong> — SELECT (the trade association for electrical contractors
+                in Scotland, formerly known as SELECT — Promoting Electrical Safety) sets rates for
+                Scottish electrical contractors separately from the JIB. SELECT rates are broadly
+                comparable to JIB but have a different grade structure. Note: SECTT (Scottish
+                Electrical Charitable Training Trust) is the separate apprentice training body and
+                should not be confused with SELECT.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -501,6 +505,42 @@ const sections = [
           <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> help you
           price jobs correctly from day one.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-bold text-white mb-3">True Cost of an Electrician to an Employer</h4>
+          <p className="text-white/80 text-sm leading-relaxed mb-3">
+            JIB grade rates are the starting point, not the total cost. When budgeting for an
+            employed electrician, employers should account for the full overhead-inclusive labour
+            rate. A JIB Approved Electrician at £20.00/hour carries significantly higher total
+            employment cost once the following are factored in:
+          </p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li>
+              <strong className="text-white">Employer's National Insurance</strong> — 13.8% on
+              earnings above the secondary threshold (£9,100/year for 2025/26), adding approximately
+              £2.50 to £3.00/hour to the effective cost.
+            </li>
+            <li>
+              <strong className="text-white">Pension contributions</strong> — minimum 3% employer
+              contribution under auto-enrolment; many JIB employers pay the JIB pension scheme rate.
+            </li>
+            <li>
+              <strong className="text-white">Holiday pay</strong> — 5.6 weeks' statutory minimum;
+              the JIB WRA specifies holiday entitlement and pay arrangements.
+            </li>
+            <li>
+              <strong className="text-white">Vehicle, tools, PPE, and insurance</strong> — van
+              provision or mileage reimbursement, tool allowances, PPE supply, and employer's
+              liability insurance are significant overheads that must be included when calculating
+              the true cost of a field electrician. For small works and domestic contracting, these
+              overheads can add 30 to 50% above the base hourly rate.
+            </li>
+          </ul>
+          <p className="text-white/70 text-sm mt-3">
+            For self-employed contractors, these same costs fall on the individual — which is why a
+            comparable self-employed day rate must be set well above the implied employed hourly
+            equivalent to be commercially viable.
+          </p>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -559,11 +599,11 @@ export default function ElectricalSalaryBenchmarkingPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Electrician Salary Benchmarking UK 2025:{' '}
+          Electrician Salary Benchmarking UK 2026:{' '}
           <span className="text-yellow-400">JIB Pay Rates Guide</span>
         </>
       }
-      heroSubtitle="JIB national grade rates for 2025, apprentice pay by year, London weighting, regional variations, shift allowances, hazard money, and a step-by-step guide to benchmarking your pay and negotiating a rise."
+      heroSubtitle="JIB national grade rates for 2026, apprentice pay by year, London weighting, regional variations, shift allowances, hazard money, and a step-by-step guide to benchmarking your pay and negotiating a rise."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

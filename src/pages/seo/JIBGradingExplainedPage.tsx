@@ -44,6 +44,8 @@ const keyTakeaways = [
   'JIB pay rates are updated annually (usually in January). The 2026 Electrician rate is approximately 18.21 pounds per hour, with Approved Electricians and Technicians earning more. London weighting adds approximately 1.67 pounds per hour.',
   'Progression from Electrician to Approved Electrician to Technician requires additional qualifications — inspection and testing (2391), design (2396), and relevant experience. Each step up increases your earning potential.',
   'JIB grading is not mandatory, but it is the industry standard. Most major electrical contractors operate under JIB terms, and many clients specify JIB-graded electricians in their contracts.',
+  'The C&G 2382 exam is now examined against BS 7671:2018+A4:2026 (Amendment 4, in force 2026). Candidates must know the A4:2026 updates including AFDD recommendations (Reg 421.1.7), the new requirement for 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), and the significant changes to EV charging installations (Section 722).',
+  'BS 7671 Reg 641.6 requires that inspection, testing, and signing-off of installations be carried out by ‘skilled persons competent in such work’. This is a competence standard, not a JIB grade designation — non-JIB electricians who meet the competence requirement may also legally sign EICRs.',
 ];
 
 const faqs = [
@@ -60,7 +62,7 @@ const faqs = [
   {
     question: 'What is the difference between an Electrician and an Approved Electrician?',
     answer:
-      'An Electrician (JIB grade) holds the standard qualifications: NVQ Level 3, C&G 2382 (18th Edition), and AM2. An Approved Electrician holds additional qualifications — typically C&G 2391 (Inspection and Testing) — which means they can inspect and test installations and issue EICRs (Electrical Installation Condition Reports). The Approved Electrician grade is the minimum grade usually required for an electrician to sign off their own work on site. The pay rate for an Approved Electrician is approximately 1.50 pounds per hour more than a standard Electrician.',
+      'An Electrician (JIB grade) holds the standard qualifications: NVQ Level 3, C&G 2382 (18th Edition, now examined against BS 7671:2018+A4:2026), and AM2. An Approved Electrician holds additional qualifications — typically C&G 2391 (Inspection and Testing) — which means they can inspect and test installations and issue EICRs (Electrical Installation Condition Reports). The Approved Electrician grade is the minimum grade usually required for an electrician to sign off their own work on JIB sites. Note: BS 7671 Reg 641.6 sets the legal competence bar as skilled persons competent in such work — the JIB grade is the industry benchmark, not the sole legal gateway. The pay rate for an Approved Electrician is approximately 1.50 pounds per hour more than a standard Electrician.',
   },
   {
     question: 'How do I move from Electrician grade to Approved Electrician?',
@@ -194,8 +196,9 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   The standard qualified electrician grade. Requires NVQ Level 3, C&G 2382 (18th
-                  Edition), and the AM2 assessment. Can work unsupervised on installation or
-                  maintenance work. Corresponds to the ECS blue card.
+                  Edition, now examined against BS 7671:2018+A4:2026), and the AM2 assessment. Can
+                  work unsupervised on installation or maintenance work. Corresponds to the ECS blue
+                  card.
                 </p>
               </div>
             </div>
@@ -208,7 +211,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Electrician plus C&G 2391 (Inspection and Testing). Can inspect and test
                   installations and issue EICRs. This is the minimum grade for signing off work on
-                  most JIB sites.
+                  most JIB sites. Note: BS 7671 Reg 641.6 sets the legal bar as 'skilled persons
+                  competent in such work' — JIB Approved Electrician grade is the industry
+                  benchmark, but the statutory requirement is competence rather than a specific JIB
+                  designation.
                 </p>
               </div>
             </div>
@@ -239,25 +245,38 @@ const sections = [
           JIB pay rates are updated annually, typically in January. Here are the approximate 2026
           national standard rates and London-weighted rates:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 overflow-x-auto">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04]">
-              <span className="text-white font-medium">Electrical Labourer</span>
-              <span className="text-white">~13.50/hr (national) | ~15.17/hr (London)</span>
-            </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-blue-500/10">
-              <span className="text-white font-medium">Electrician</span>
-              <span className="text-white">~18.21/hr (national) | ~19.88/hr (London)</span>
-            </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10">
-              <span className="text-white font-medium">Approved Electrician</span>
-              <span className="text-white">~19.67/hr (national) | ~21.34/hr (London)</span>
-            </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10">
-              <span className="text-white font-medium">Technician</span>
-              <span className="text-white">~21.13/hr (national) | ~22.80/hr (London)</span>
-            </div>
-          </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 overflow-x-auto">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="text-left py-2 px-3 font-semibold">JIB Grade</th>
+                <th className="text-right py-2 px-3 font-semibold">National (approx.)</th>
+                <th className="text-right py-2 px-3 font-semibold">London (approx.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.06]">
+                <td className="py-2 px-3 font-medium">Electrical Labourer</td>
+                <td className="py-2 px-3 text-right">~£13.50/hr</td>
+                <td className="py-2 px-3 text-right">~£15.17/hr</td>
+              </tr>
+              <tr className="border-b border-white/[0.06] bg-blue-500/10">
+                <td className="py-2 px-3 font-medium">Electrician</td>
+                <td className="py-2 px-3 text-right">~£18.21/hr</td>
+                <td className="py-2 px-3 text-right">~£19.88/hr</td>
+              </tr>
+              <tr className="border-b border-white/[0.06] bg-green-500/10">
+                <td className="py-2 px-3 font-medium">Approved Electrician</td>
+                <td className="py-2 px-3 text-right">~£19.67/hr</td>
+                <td className="py-2 px-3 text-right">~£21.34/hr</td>
+              </tr>
+              <tr className="bg-amber-500/10">
+                <td className="py-2 px-3 font-medium">Technician</td>
+                <td className="py-2 px-3 text-right">~£21.13/hr</td>
+                <td className="py-2 px-3 text-right">~£22.80/hr</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           These are minimum rates — many employers pay above JIB standard, especially for specialist
@@ -289,8 +308,10 @@ const sections = [
                 apprenticeship, pass the NVQ Level 3, take the{' '}
                 <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
                   C&G 2382
-                </SEOInternalLink>
-                , and pass the{' '}
+                </SEOInternalLink>{' '}
+                (now examined against BS 7671:2018+A4:2026 — including AFDD Reg 421.1.7, 30 mA RCD
+                on domestic lighting circuits Reg 411.3.4, and EV charging updates Section 722), and
+                pass the{' '}
                 <SEOInternalLink href="/guides/am2-exam-tips">AM2 assessment</SEOInternalLink>.
               </span>
             </li>
@@ -441,8 +462,8 @@ const sections = [
 export default function JIBGradingExplainedPage() {
   return (
     <GuideTemplate
-      title="ECS Grading: 2026 Pay Rates & Progression"
-      description="ECS grading structure for UK electricians: 5 grades, 2026 pay scales, and clear progression from Approved to Senior Technician. Get certified today."
+      title="JIB Grading Explained: 2026 Pay Rates & Career Progression"
+      description="JIB grading structure for UK electricians: 4 grades, 2026 pay scales, and clear progression from Electrician to Approved Electrician to Technician. Get certified today."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

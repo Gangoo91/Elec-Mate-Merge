@@ -42,6 +42,8 @@ const keyTakeaways = [
   'Swindon has a large stock of modern housing — including extensive post-millennium new-build estates — as well as the Great Western Designer Outlet and a significant commercial and industrial sector.',
   "Labour rates in Swindon are mid-range for the South West, typically £45 to £60 per hour, reflecting the town's mix of commuter population and local industry.",
   "Swindon's rapid population growth has driven strong demand for EV charger installations, solar PV, and battery storage, making renewable electrical installations a growing part of the local market.",
+  'BS 7671 A4:2026 Regulation 411.3.4 now requires ≤30 mA RCD protection for AC lighting circuits in domestic premises — not just socket outlets. Every consumer unit upgrade in Swindon must address lighting circuits as well as power circuits.',
+  'All domestic consumer unit replacements in Swindon must use a non-combustible (steel) enclosure complying with BS EN 61439-3, per Regulation 421.1.201. Plastic enclosures do not satisfy this requirement.',
 ];
 
 const faqs = [
@@ -100,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables accurately for Swindon new-build and rewire projects with correct voltage drop calculations.',
@@ -276,8 +278,13 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Swindon has a large number of properties built in the 1980s and 1990s with outdated
               consumer units. Upgrading to a modern unit with RCDs or RCBOs to meet BS 7671
-              Regulation 411.3.3 is one of the most common jobs in the area, typically triggered by
-              a failed EICR, a property sale, or an EV charger installation requiring a spare way.
+              Regulations 411.3.3 (socket outlets ≤32 A) and 411.3.4 (lighting circuits, A4:2026) is
+              one of the most common jobs in the area, typically triggered by a failed EICR, a
+              property sale, or an EV charger installation requiring a spare way. Under Regulation
+              421.1.201, all replacement consumer units in domestic premises must comply with BS EN
+              61439-3 and have their enclosure manufactured from non-combustible material — in
+              practice, a steel enclosure (ferrous metal is deemed non-combustible per the
+              regulation note). Fitting a plastic-enclosure unit is a non-compliance.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -335,16 +342,20 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD protection
-                for all socket outlets up to 32A and all final circuits in new domestic
-                installations. Modern consumer units in Swindon must be fitted with RCDs or RCBOs.
+                for all socket outlets rated up to 32 A (no exception permitted in dwellings).
+                A4:2026 adds Regulation 411.3.4, which separately requires ≤30 mA RCD additional
+                protection for AC final circuits supplying luminaires in domestic premises — meaning
+                lighting circuits must now also be RCD-protected. Consumer unit upgrades in Swindon
+                must comply with both regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the requirements
-                for periodic inspection and testing. Rental properties must have an EICR every 5
-                years; owner-occupied properties are recommended every 10 years.
+                <strong>Periodic inspection</strong> — BS 7671 Part 6, Chapter 65 (Regulations
+                651–653) sets out the requirements for periodic inspection and testing. Rental
+                properties must have an EICR every 5 years; owner-occupied properties are
+                recommended every 10 years.
               </span>
             </li>
           </ul>
@@ -459,7 +470,6 @@ const sections = [
 export default function ElectricianSwindonPage() {
   return (
     <GuideTemplate
-      noindex={true}
       localArea="Swindon"
       title="Electrician in Swindon | Local Electricians 2026"
       description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers…"

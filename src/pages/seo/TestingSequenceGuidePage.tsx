@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'What is the minimum acceptable insulation resistance?',
     answer:
-      'BS 7671 Table 61 specifies the minimum insulation resistance values. For installations operating at voltages up to and including 500V AC (which covers all standard domestic and commercial installations at 230V and 400V), the test voltage is 500V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MΩ). For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage, typically 12V or 24V circuits), the test voltage is 250V DC and the minimum acceptable insulation resistance is 0.5 megohm (500 kΩ). In practice, the insulation resistance of a healthy circuit in good condition is typically much higher than the minimum — readings of 50 MΩ to 200 MΩ or more are common for new installations. Low but passing readings (for example, 2-5 MΩ) may indicate deteriorating insulation that should be monitored. Readings below 1 MΩ are failures that must be investigated and rectified before the circuit is energised.',
+      'BS 7671 Table 64 (Part 6, Chapter 64) specifies the minimum insulation resistance values. For installations operating at voltages up to and including 500V AC (which covers all standard domestic and commercial installations at 230V and 400V), the test voltage is 500V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MΩ). For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage, typically 12V or 24V circuits), the test voltage is 250V DC and the minimum acceptable insulation resistance is 0.5 megohm (500 kΩ). In practice, the insulation resistance of a healthy circuit in good condition is typically much higher than the minimum — readings of 50 MΩ to 200 MΩ or more are common for new installations. Low but passing readings (for example, 2-5 MΩ) may indicate deteriorating insulation that should be monitored. Readings below 1 MΩ are failures that must be investigated and rectified before the circuit is energised.',
   },
   {
     question: 'Can I use a multifunction tester for all the tests?',
@@ -154,7 +154,6 @@ export default function TestingSequenceGuidePage() {
   useSEO({
     title: 'Electrical Testing Sequence | GN3 Order Explained',
     description: PAGE_DESCRIPTION,
-    noindex: true,
   });
 
   return (
@@ -207,6 +206,57 @@ export default function TestingSequenceGuidePage() {
         </div>
       </section>
 
+      {/* Direct-Answer Summary */}
+      <section className="py-10 px-5 bg-white/[0.02]">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
+            The GN3 Testing Sequence — 8 Steps in Order
+          </h2>
+          <ol className="space-y-2 text-white text-sm sm:text-base leading-relaxed list-decimal list-inside">
+            <li>
+              <strong className="text-yellow-400">Continuity of protective conductors</strong> —
+              confirm every CPC is continuous from the board to each outlet (dead test, low-reading
+              ohmmeter).
+            </li>
+            <li>
+              <strong className="text-yellow-400">
+                Continuity of ring final circuit conductors
+              </strong>{' '}
+              — verify the ring is complete and correctly wired; record R1+R2 at the furthest point
+              (dead test).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Insulation resistance</strong> — test at 500 V DC
+              (250 V DC for SELV/PELV); minimum 1.0 MΩ per BS 7671 Table 64 (dead test).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Polarity</strong> — confirm all single-pole
+              devices are in the line conductor and all accessories are correctly wired (dead +
+              visual).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Earth electrode resistance</strong> — TT systems
+              only; RA must not exceed 200 Ω where IΔn ≤ 100 mA (Reg 411.5.3).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Earth fault loop impedance (Zs)</strong> — live
+              test at the furthest point; measured Zs must satisfy the protective device table value
+              (live test).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Prospective fault current (Ipf)</strong> —
+              measured or calculated at the origin; must not exceed the breaking capacity of the
+              installed devices (live test).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Functional testing</strong> — RCD trip times at
+              0.5×, 1× and 5× IΔn on both half-cycles; all switchgear and controls verified (live
+              test).
+            </li>
+          </ol>
+        </div>
+      </section>
+
       {/* Why Testing Order Matters */}
       <section id="testing-sequence" className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
@@ -246,7 +296,7 @@ export default function TestingSequenceGuidePage() {
                 EICR certificate guide
               </SEOInternalLink>{' '}
               for how test results are recorded and reported, and the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               for verifying that cables meet the correct current-carrying capacity.
@@ -469,8 +519,10 @@ export default function TestingSequenceGuidePage() {
                 <strong className="text-yellow-400">Pass/fail:</strong> The earth electrode
                 resistance must be low enough that the product of the electrode resistance and the
                 rated residual operating current of the RCD does not exceed 50 V (the touch voltage
-                limit). For a 30 mA RCD: RA x IΔn must be no greater than 50 V, giving a maximum RA
-                of 1667 ohms. In practice, values below 200 ohms are preferred for reliability.
+                limit). For a 30 mA RCD: RA × IΔn must be no greater than 50 V, giving a maximum RA
+                of 1,667 ohms. Where IΔn does not exceed 100 mA, BS 7671 Reg 411.5.3 (Table 41.5)
+                requires the earth electrode resistance not to exceed 200 ohms — this is a mandatory
+                upper limit, not a preference.
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is fifth:</strong> Earth electrode
@@ -517,6 +569,18 @@ export default function TestingSequenceGuidePage() {
                 the rule of thumb is that the measured Zs should not exceed 80% of the tabulated
                 maximum (to allow for temperature rise during normal operation). Values exceeding
                 the tabulated maximum are failures.
+              </p>
+              <p>
+                <strong className="text-yellow-400">Temperature correction:</strong> Site
+                measurements are made at ambient temperature, but the OSG Tables B1–B6 maximum
+                measured Zs values are referenced to 10 °C. Where the site temperature differs from
+                10 °C, GN3 Reg 1.08 provides a correction factor of (1 + 0.004 × (ambient °C − 20
+                °C)) applied to the Table B1 conductor resistance values, so that the designer or
+                inspector can determine the resistance at the expected test temperature. For a quick
+                on-site check, the GN3 Tables B1–B2 give maximum measured Zs values at typical
+                ambient temperatures, removing the need to calculate manually. The 0.8× site factor
+                described above provides a conservative working margin that accounts for this effect
+                in most routine situations.
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is sixth:</strong> This is a live test —
@@ -602,6 +666,18 @@ export default function TestingSequenceGuidePage() {
                 stop buttons, time clocks, PIR sensors, dimmer switches, interlocking devices, and
                 any automation or BMS controls. All switchgear must operate smoothly and latch
                 correctly.
+              </p>
+              <p>
+                <strong className="text-yellow-400">A4:2026 additions:</strong> Where an Arc Fault
+                Detection Device (AFDD) is installed, BS 7671:2018+A4:2026 Reg 421.1.7 recommends
+                AFDDs on AC final circuits to mitigate fire risk from arc fault currents. During
+                functional testing, verify the AFDD self-test indicator operates correctly by
+                pressing the test button and confirming the device resets. Under Reg 133.1.3
+                (A4:2026), the use of any equipment whose installation BS 7671 requires to be
+                recorded must be noted on the appropriate Part 6 certification (EIC or EICR). This
+                includes AFDD presence — ensure it is captured on the certificate so that the
+                inspecting electrician at the next periodic inspection is aware of its presence and
+                function.
               </p>
               <p>
                 <strong className="text-yellow-400">Pass/fail (RCDs):</strong> At 0.5x IΔn — must

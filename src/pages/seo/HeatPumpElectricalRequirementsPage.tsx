@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated circuit cable for ASHP compressor supply including starting current considerations.',
@@ -207,7 +207,7 @@ const sections = [
           Always request the electrical specification sheet from the heat pump manufacturer before
           sizing the circuit. The rated current, maximum current, and starting current are all
           relevant. Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to confirm the cable size for the actual run length from the consumer unit to the outdoor
@@ -483,10 +483,8 @@ const sections = [
                   The heat pump installer needs the EIC to complete their MCS commissioning
                   documentation and to register the BUS grant. A prompt EIC — issued the same day
                   using the{' '}
-                  <SEOInternalLink href="/eic-certificate">
-                    EIC Certificate app
-                  </SEOInternalLink>{' '}
-                  — makes you the preferred electrical sub-contractor for heat pump installers who
+                  <SEOInternalLink href="/eic-certificate">EIC Certificate app</SEOInternalLink> —
+                  makes you the preferred electrical sub-contractor for heat pump installers who
                   care about their customer experience.
                 </p>
               </div>

@@ -25,7 +25,7 @@ export default function BestQuotingAppPage() {
       title="Best Quoting App for Electricians 2026 | Compared"
       description="Compare the best quoting and invoicing apps for UK electricians in 2026. Elec-Mate vs Powered Now vs Tradify — pricing, certificate integration…"
       datePublished="2026-01-30"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {
@@ -80,6 +80,7 @@ export default function BestQuotingAppPage() {
         'The AI Remedial Cost Estimator in Elec-Mate converts EICR defects into priced remedial works quotations using real UK trade pricing data. No other quoting app offers AI-powered pricing specific to electrical work.',
         'All three apps support Stripe payments and Xero integration. The difference is that Elec-Mate also includes certificates, calculators, AI tools, and training — eliminating the need for multiple subscriptions.',
         'For electricians, paying for both a certificate app and a separate quoting app costs more than a single Elec-Mate subscription that includes everything.',
+        'Elec-Mate certificates are updated for BS 7671:2018+A4:2026 — EICR and EIC forms include the new Appendix 6 fields for SPDs and AFDDs. Apps that have not implemented the A4:2026 model-form amendments will produce non-compliant documentation on jobs where these devices are fitted.',
       ]}
       sections={[
         {
@@ -158,6 +159,14 @@ export default function BestQuotingAppPage() {
                 details, create the invoice, and send it separately. This duplication of effort adds
                 admin time to every job.
               </p>
+              <p>
+                Elec-Mate's EICR and EIC forms also include the new Appendix 6 fields for SPDs
+                (surge protective devices) and AFDDs (arc fault detection devices) introduced in
+                BS&nbsp;7671:2018+A4:2026. Generic quoting apps cannot produce compliant
+                certificates at all — and even dedicated certificate apps that have not yet
+                implemented the A4:2026 model-form amendments will produce non-compliant
+                documentation for any installation where SPDs or AFDDs are fitted.
+              </p>
             </>
           ),
         },
@@ -173,9 +182,13 @@ export default function BestQuotingAppPage() {
                 both the electrical defects and the associated repair costs.
               </p>
               <p>
-                During an EICR inspection, you record defects with observation codes (C1, C2, C3).
-                The AI analyses each defect, itemises the materials and labour required to rectify
-                it, applies current UK trade prices, and generates a professional remedial works
+                During an EICR inspection, you record defects with observation codes (C1, C2, C3,
+                FI). C1, C2, and C3 observations indicate danger, potential danger, or improvement
+                recommended — these are the items that generate priced remedial works. FI (further
+                investigation required) items are handled separately, as the scope of remedial work
+                cannot be determined until the investigation is complete. The AI analyses each
+                priced-category defect, itemises the materials and labour required to rectify it,
+                applies current UK trade prices, and generates a professional remedial works
                 quotation. You hand the client both the EICR report and the repair quote at the same
                 time.
               </p>
@@ -240,7 +253,7 @@ export default function BestQuotingAppPage() {
           icon: Calculator,
           title: '50+ BS 7671 Calculators',
           description:
-            'Cable sizing, voltage drop, maximum demand, Zs verification, and more. Use calculation results to inform accurate quotes.',
+            'Cable sizing, voltage drop, maximum demand, Zs verification against disconnection-time limits, and more. Use calculation results to inform accurate quotes and demonstrate BS 7671 compliance.',
         },
         {
           icon: Camera,
@@ -281,6 +294,11 @@ export default function BestQuotingAppPage() {
           question: 'How does the AI Remedial Cost Estimator work?',
           answer:
             'During an EICR inspection, you record defects with observation codes (C1, C2, C3, FI). The AI Remedial Cost Estimator analyses each defect, identifies the materials and labour required to rectify it, applies current UK trade pricing, and generates a professional remedial works quotation. This means you hand the client both the inspection report and a repair quote at the same time, significantly improving conversion rates for remedial work.',
+        },
+        {
+          question: "Are Elec-Mate's certificates up to date with BS 7671:2018+A4:2026?",
+          answer:
+            "Yes. Elec-Mate's EICR and EIC forms include the new Appendix 6 fields for SPDs (surge protective devices) and AFDDs (arc fault detection devices) introduced in BS 7671:2018+A4:2026. Any installation where these devices are fitted must have them recorded on the certificate — certificates produced by apps that have not implemented the A4:2026 model-form amendments will be non-compliant.",
         },
         {
           question: 'Is Tradify suitable for electricians?',

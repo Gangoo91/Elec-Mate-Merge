@@ -319,27 +319,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — Regulation 411.3.3 requires 30mA RCD protection
-                for circuits supplying fixed equipment in domestic premises. The boiler circuit MCB
-                should be in a dual-RCD or RCBO consumer unit, or have a separate 30mA RCD upstream.
+                <strong>RCD protection</strong> — The boiler circuit must satisfy the automatic
+                disconnection times in Table 41.1 (Regulation 411.3.1.2). Note that Regulation
+                411.3.3 (A4:2026) applies only to socket-outlets rated up to 32A; it does not
+                directly mandate RCD protection for high-current fixed equipment circuits. However,
+                30mA RCD protection is strongly recommended best practice for boiler circuits and is
+                required by many DNOs and competent-person schemes. Regulation 411.3.4 (A4:2026)
+                separately mandates 30mA RCD on all AC lighting circuits in domestic premises. Use
+                an RCBO or a dual-RCD consumer unit to achieve this protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Volt drop check</strong> — for long cable runs from consumer unit to boiler
-                (over 15m at high current), check that volt drop does not exceed 3% for lighting
-                circuits or 5% for other circuits (BS 7671 Appendix 12). Use 16mm\u00b2 cable on
-                longer runs if 10mm\u00b2 gives excessive volt drop.
+                (over 15m at high current), verify that volt drop is within acceptable limits for
+                power circuits. Use the mV/A/m values from BS 7671 Appendix 4 (e.g. Table 4D1A for
+                copper T&amp;E clipped direct) to calculate volt drop for the design current and
+                cable length. Use 16mm\u00b2 cable on longer runs if 10mm\u00b2 gives excessive volt
+                drop.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth bonding</strong> — confirm main protective bonding is in place for
-                water and gas services per Regulation 411.3.1.2. Supplementary bonding within the
-                airing cupboard or boiler room is not routinely required in modern installations
-                meeting the main bonding requirement.
+                water and gas services per Regulation 544.1.2. The bonding connection shall be made
+                as near as practicable to the point of entry of the service into the premises.
+                Supplementary bonding within the airing cupboard or boiler room is not routinely
+                required in modern installations meeting the main bonding requirement.
               </span>
             </li>
           </ul>
@@ -560,6 +568,51 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <h3 className="text-lg font-semibold text-white mb-3">Testing and Certification</h3>
+          <p className="text-white mb-3">
+            Under BS 7671:2018+A4:2026 (Regulation 653.4) and GN3, an Electrical Installation
+            Certificate must be accompanied by Schedules of Circuit Details and Schedules of Test
+            Results. For a new boiler circuit the following tests are mandatory:
+          </p>
+          <ul className="space-y-3 text-white">
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Continuity of CPC</strong> — verify the circuit protective conductor is
+                continuous from the consumer unit to the boiler isolator earth terminal.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Insulation resistance</strong> — test between live conductors and between
+                live conductors and earth at 500V DC with the boiler disconnected. Record all
+                measured values on the Schedule of Test Results.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Polarity</strong> — confirm that the line conductor is connected to the line
+                terminal of the isolator and that the MCB at the consumer unit operates on the line
+                conductor only.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Earth fault loop impedance (Z&#x2093;)</strong> — measure Z&#x2093; at the
+                boiler isolator and verify it is low enough to achieve the required disconnection
+                time under Table 41.1 for the protective device fitted.
+              </span>
+            </li>
+          </ul>
+          <p className="text-sm text-white mt-4 opacity-80">
+            The Schedule of Test Results shall be given to the person ordering the work together
+            with the signed EIC (OSG Reg 9.1, GN3 Reg 1.3).
+          </p>
+        </div>
       </>
     ),
   },
@@ -572,8 +625,8 @@ const sections = [
 export default function ElectricBoilerInstallationPage() {
   return (
     <GuideTemplate
-      title="12kW Shower Cable Size: 10mm² Guide"
-      description="12kW shower needs 10mm² cable minimum under BS 7671:2018+A4:2026. Verify sizing, earthing, and circuit protection for safe installation."
+      title="Electric Boiler Installation Guide UK — BS 7671 Wiring Requirements"
+      description="Electric boiler installation in UK homes: circuit sizing, BS 7671:2018+A4:2026 wiring rules, Part P notification, and costs. From 6kW to 15kW boilers."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

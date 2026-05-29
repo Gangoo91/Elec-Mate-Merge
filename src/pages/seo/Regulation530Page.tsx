@@ -28,7 +28,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-530', label: 'What Is Regulation 530.3.201?' },
-  { id: 'amendment-3-context', label: 'BS 7671 Amendment 4 Context' },
+  { id: 'amendment-3-context', label: 'Amendment History: A3:2024 and A4:2026' },
   { id: 'bidirectional-vs-unidirectional', label: 'Bidirectional vs Unidirectional' },
   { id: 'solar-pv-impact', label: 'Impact on Solar PV Installations' },
   { id: 'battery-storage-impact', label: 'Impact on Battery Storage' },
@@ -40,18 +40,19 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Regulation 530.3.201 was introduced by BS 7671:2018+A4:2026 (Amendment 4, issued 31 July 2024). It requires that switching devices installed in installations with bidirectional power flow must be rated for bidirectional operation or otherwise proven suitable.',
+  'Regulation 530.3.201 was introduced by BS 7671:2018+A3:2024 (Amendment 3, issued 31 July 2024). It requires that those selecting and erecting protective equipment take account of the appropriate use of either a unidirectional or bidirectional protective device — and follow any orientation marking (in/out, line/load, arrows) on the device.',
   'Bidirectional power flow occurs in installations with solar PV, battery storage, vehicle-to-grid (V2G) EV chargers, or other embedded generation where current can flow both from the supply to the installation and from the installation back to the supply.',
   'Standard MCBs and RCDs are designed and tested for unidirectional current flow only. Using a unidirectional device where bidirectional flow occurs may result in the device failing to operate correctly under fault conditions or failing to break the circuit safely.',
-  'Manufacturers are now producing bidirectional-rated MCBs, RCBOs, and isolators specifically for solar PV, battery storage, and other prosumer installations. Check the device datasheet or IEC marking for bidirectional suitability.',
-  'Elec-Mate solar PV and battery storage certificates include fields for confirming bidirectional device selection in compliance with Regulation 530.3.201. The app references A4:2026 requirements on relevant certificates.',
+  'RCCBs, RCBOs, circuit-breakers, and AFDDs may carry orientation markings (such as "in"/"out", "line"/"load", or arrows) required by the relevant product standard listed in Appendix I of BS 7671. Installers must follow this marking when connecting the device.',
+  'BS 7671:2018+A4:2026 (Amendment 4, issued April 2026) introduced additional new requirements including Reg 421.1.7 recommending arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk, and the insertion of Reg 411.6.5 and new Regulation group 419.',
+  'Elec-Mate solar PV and battery storage certificates include fields for confirming bidirectional device selection in compliance with Regulation 530.3.201. The app references BS 7671:2018+A4:2026 on relevant certificates.',
 ];
 
 const faqs = [
   {
     question: 'What is Regulation 530.3.201 in BS 7671?',
     answer:
-      'Regulation 530.3.201 is a new requirement introduced by Amendment 4 (A4:2026) to BS 7671:2018. It states that where an installation includes a source of supply that can cause current to flow in both directions through switching devices (bidirectional power flow), those switching devices must be suitable for bidirectional operation. This regulation was added specifically to address the growing number of installations with solar PV panels, battery energy storage systems, and vehicle-to-grid EV chargers, where power can flow from the installation back towards the supply network. The regulation ensures that protective and switching devices will function correctly regardless of the direction of current flow during both normal operation and fault conditions.',
+      'Regulation 530.3.201 was introduced by Amendment 3 (A3:2024, issued 31 July 2024) to BS 7671:2018. It requires that those selecting and erecting protective equipment take account of the appropriate use of either a unidirectional or bidirectional protective device, and follow any orientation marking on the device. This regulation was added to address the growing number of installations with solar PV panels, battery energy storage systems, and vehicle-to-grid EV chargers, where power can flow from the installation back towards the supply network. The regulation ensures that protective and switching devices are selected correctly for the direction of current flow.',
   },
   {
     question: 'What is the difference between bidirectional and unidirectional devices?',
@@ -59,9 +60,9 @@ const faqs = [
       'A unidirectional switching device is designed and tested to interrupt current flowing in one direction only — from the supply to the load. Standard MCBs, RCBOs, and isolators are typically unidirectional. When current flows in the intended direction, the arc-quenching mechanism operates correctly and the device safely interrupts the circuit. A bidirectional device is designed and tested to interrupt current flowing in either direction — both from supply to load and from load to supply. The arc-quenching mechanism works equally well regardless of current direction. Bidirectional devices are marked accordingly on their rating plate or datasheet, often with a specific IEC symbol or the marking "bidirectional" in the technical documentation.',
   },
   {
-    question: 'Does Amendment 4 apply to existing solar PV installations?',
+    question: 'Does Regulation 530.3.201 apply to existing solar PV installations?',
     answer:
-      'Amendment 4 (A4:2026) applies to new installations and alterations carried out after its publication date of 31 July 2024. It does not retrospectively require existing solar PV installations to be upgraded. However, during an EICR of an existing installation with solar PV, the inspector should note whether unidirectional devices are being used where bidirectional flow occurs. This might be raised as a C3 (improvement recommended) observation. If significant alterations are being made to an existing solar PV or battery storage installation, the altered parts should comply with the current edition of BS 7671 including Amendment 4. Any new switching devices installed as part of the alteration should be bidirectional-rated where bidirectional power flow is present.',
+      'Amendment 3 (A3:2024) applies to new installations and alterations carried out after its publication date of 31 July 2024. It does not retrospectively require existing solar PV installations to be upgraded. However, during an EICR of an existing installation with solar PV, the inspector should note whether unidirectional devices are being used where bidirectional flow occurs. This might be raised as a C3 (improvement recommended) observation. If significant alterations are being made to an existing solar PV or battery storage installation, the altered parts should comply with the current edition of BS 7671 including BS 7671:2018+A4:2026. Any new switching devices installed as part of the alteration should be appropriate for the directional characteristics of the circuit.',
   },
   {
     question: 'Which devices in a solar PV installation need to be bidirectional?',
@@ -71,7 +72,7 @@ const faqs = [
   {
     question: 'Where can I find A4:2026 and is it free?',
     answer:
-      'BS 7671:2018+A4:2026 (Amendment 4) was issued on 31 July 2024 by the IET. Unlike the main standard (the "brown book"), Amendment 4 is available as a free PDF supplement from the IET website. It is not a full new edition — it is an amendment document that contains only the changed and added regulations. You need the base standard (BS 7671:2018+A2:2022) to use it, as the amendment cross-references the existing regulation structure. Amendment 4 adds Regulation 530.3.201 (bidirectional devices) along with some other minor clarifications. Amendment 4 is expected in 2026 and will likely incorporate larger changes.',
+      'BS 7671:2018+A3:2024 (Amendment 3) was issued on 31 July 2024 by the IET and introduced Regulation 530.3.201 (bidirectional devices) along with two new definitions. It is available as a free PDF supplement from the IET website. BS 7671:2018+A4:2026 (Amendment 4) followed, issued on 15 April 2026, and introduced further new requirements including Reg 421.1.7 recommending AFDDs on AC final circuits and the insertion of Reg 411.6.5. The full current citation is BS 7671:2018+A4:2026 and should be used on all certificates and documentation from April 2026.',
   },
   {
     question: 'Do V2G (vehicle-to-grid) EV chargers require bidirectional devices?',
@@ -137,18 +138,20 @@ const sections = [
       <>
         <p>
           Regulation 530.3.201 is a new regulation introduced by{' '}
-          <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 4 (A4:2026)</SEOInternalLink>{' '}
-          to BS 7671:2018. It addresses a specific safety concern: the use of switching and
+          <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">
+            Amendment 3 (A3:2024)
+          </SEOInternalLink>{' '}
+          to BS 7671:2018. It addresses a specific safety concern: the selection and erection of
           protective devices in installations where electrical current can flow in both directions
           through those devices.
         </p>
         <p>
-          The regulation states that where an installation includes a source of energy that can
-          cause current to flow from the installation towards the supply (bidirectional power flow),
-          all switching devices in the path of that bidirectional current must be suitable for
-          operation in both directions. This means the device must be able to safely make, carry,
-          and break current regardless of whether it flows from supply to load or from load to
-          supply.
+          The regulation requires that those selecting and erecting protective equipment take
+          account of the appropriate use of either a unidirectional or a bidirectional protective
+          device. The designer or installer shall determine which directional characteristic is
+          appropriate for the application. Where a device is marked to indicate its orientation (for
+          example "in"/"out", "line"/"load", or arrows), the installer shall connect it in
+          accordance with that marking.
         </p>
         <p>
           This regulation was added because the UK is seeing rapid growth in domestic and commercial
@@ -158,29 +161,63 @@ const sections = [
           unidirectional current flow.
         </p>
         <p>
-          Prior to Amendment 4, there was no explicit regulation in BS 7671 requiring switching
-          devices to be rated for bidirectional operation. Electricians and designers relied on
-          manufacturer guidance and good practice, but there was no regulatory framework requiring
-          it. Regulation 530.3.201 fills this gap.
+          Prior to Amendment 3 (A3:2024), there was no explicit regulation in BS 7671 requiring
+          designers and installers to consider the directional characteristics of protective
+          devices. Electricians relied on manufacturer guidance and good practice, but there was no
+          regulatory framework mandating it. Regulation 530.3.201 fills this gap.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-bold text-yellow-400 text-sm uppercase tracking-wide mb-3">
+            Regulation 530.3.201 — Verbatim (BS 7671:2018+A4:2026)
+          </h4>
+          <blockquote className="border-l-4 border-yellow-400 pl-4 text-white italic text-sm leading-relaxed">
+            &ldquo;Selection and erection of equipment for protection shall take account of
+            appropriate use of either a unidirectional protective device or a bidirectional
+            protective device. The installer or designer shall determine which directional
+            characteristic is appropriate for the application when selecting protective
+            devices.&rdquo;
+          </blockquote>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">Device Orientation Marking — Site Check</h4>
+              <p className="text-white text-sm leading-relaxed">
+                The NOTE to Regulation 530.3.201 states that product standards (listed in Appendix I
+                of BS 7671) for some protective devices — including RCCBs, RCBOs, circuit-breakers,
+                and AFDDs — require those devices to be marked to indicate if they are
+                unidirectional (e.g. &ldquo;in&rdquo;/&ldquo;out&rdquo;,
+                &ldquo;line&rdquo;/&ldquo;load&rdquo;, or arrows). Where such marking is present,
+                the installer shall connect the device in accordance with that marking. Before
+                signing off a solar PV, battery storage, or V2G installation, check every protective
+                device in the bidirectional current path for orientation markings and confirm they
+                are installed accordingly.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
   {
     id: 'amendment-3-context',
-    heading: 'BS 7671 Amendment 4 (A4:2026) Context',
+    heading: 'BS 7671 Amendment History: A3:2024 and A4:2026',
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 was issued on 31 July 2024 by the IET. It is a supplementary
+          BS 7671:2018+A3:2024 was issued on 31 July 2024 by the IET. It is a supplementary
           amendment to the base standard (BS 7671:2018, commonly known as the 18th Edition) and to
-          Amendment 2 (A2:2022). A4:2026 is available as a free PDF document from the IET website —
-          it is not a new book.
+          Amendment 2 (A2:2022). A3:2024 is a small, focused document available as a free PDF from
+          the IET website — it is not a new book. Its primary addition is Regulation 530.3.201
+          (bidirectional and unidirectional protective devices), together with two supporting
+          definitions.
         </p>
         <p>
-          Amendment 4 is relatively small in scope compared to previous amendments. Its primary
-          addition is Regulation 530.3.201 concerning bidirectional switching devices. It also
-          includes some minor editorial corrections and clarifications to existing regulations.
+          BS 7671:2018+A4:2026 (Amendment 4) followed, issued on 15 April 2026. Amendment 4 is the
+          current consolidated amendment and introduced Reg 421.1.7 (recommending arc fault
+          detection devices on AC final circuits), Reg 411.6.5, and a new Regulation group 419. The
+          full current citation for the standard is BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">BS 7671 Amendment Timeline</h3>
@@ -204,14 +241,18 @@ const sections = [
               </span>
             </div>
             <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
-              <span className="text-yellow-400 font-bold shrink-0">2024</span>
+              <span className="text-yellow-400 font-bold shrink-0">Jul 2024</span>
               <span className="text-white">
-                Amendment 4 (A4:2026) — Regulation 530.3.201 (bidirectional devices)
+                Amendment 3 (A3:2024) — Regulation 530.3.201 (bidirectional/unidirectional devices)
+                + two new definitions
               </span>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-white font-bold shrink-0">2026</span>
-              <span className="text-white">Amendment 4 expected</span>
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+              <span className="text-yellow-400 font-bold shrink-0">Apr 2026</span>
+              <span className="text-white">
+                Amendment 4 (A4:2026) — Reg 421.1.7 (AFDDs), Reg 411.6.5, new group 419 — current
+                standard
+              </span>
             </div>
           </div>
         </div>
@@ -224,6 +265,40 @@ const sections = [
           </SEOInternalLink>{' '}
           covers the base standard in detail.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h4 className="font-bold text-white mb-3">What Else Did A4:2026 Introduce?</h4>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            Amendment 4 (A4:2026) extends beyond the bidirectional device rules introduced by
+            A3:2024. Key additions in A4:2026 include:
+          </p>
+          <ul className="space-y-2 text-white text-sm">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Reg 421.1.7</strong> — recommends the
+                installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed
+                installation to mitigate the risk of fire due to arc fault currents. The wording is
+                advisory (not &ldquo;shall&rdquo;), but practitioners should consider AFDDs on
+                higher-risk circuits.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <span>
+                <strong className="text-yellow-400">Reg 411.6.5 and new group 419</strong> —
+                inserted into Chapter 41 (Protection for Safety), extending the automatic
+                disconnection provisions.
+              </span>
+            </li>
+          </ul>
+          <p className="text-white text-sm leading-relaxed mt-3">
+            See the{' '}
+            <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">
+              full A4:2026 changes guide
+            </SEOInternalLink>{' '}
+            for a complete overview.
+          </p>
+        </div>
       </>
     ),
   },
@@ -352,7 +427,9 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/battery-storage-installation">battery storage</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/battery-storage-installation">
+            battery storage
+          </SEOInternalLink>{' '}
           system's AC connection to the consumer unit or distribution board carries current in both
           directions during normal operation — not just under fault conditions. This is a key
           distinction from some solar PV installations where reverse current flow occurs only during
@@ -494,8 +571,8 @@ const sections = [
     content: (
       <>
         <p>
-          When issuing an <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> for
-          an installation with bidirectional power flow, the certificate should reference compliance
+          When issuing an <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> for an
+          installation with bidirectional power flow, the certificate should reference compliance
           with BS 7671:2018+A4:2026 (not just BS 7671:2018 or A2:2022). This confirms that the
           installation has been designed and installed in accordance with the latest amendment,
           including Regulation 530.3.201.
@@ -562,7 +639,7 @@ export default function Regulation530Page() {
           <span className="text-yellow-400">Bidirectional Devices — BS 7671 A4:2026</span>
         </>
       }
-      heroSubtitle="Amendment 4 to BS 7671 introduces Regulation 530.3.201, requiring switching devices in installations with bidirectional power flow to be rated for bidirectional operation. This guide explains what it means, which installations are affected, and how to comply."
+      heroSubtitle="Amendment 3 (A3:2024) to BS 7671 introduced Regulation 530.3.201, requiring designers and installers to take account of whether a unidirectional or bidirectional protective device is appropriate — and to follow any orientation marking on the device. This guide explains what it means, which installations are affected, and how to comply."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

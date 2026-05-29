@@ -38,8 +38,8 @@ const tocItems = [
 const keyTakeaways = [
   'A ring final circuit leaves the consumer unit, serves a series of socket outlets, and returns to the same terminals — forming a complete ring. This gives each outlet two parallel paths back to the consumer unit, effectively doubling the current-carrying capacity.',
   'A radial circuit leaves the consumer unit and terminates at the last outlet — there is no return path. Radial circuits are protected by a 20A or 32A overcurrent device depending on the cable size and floor area served.',
-  'BS 7671 Section 433 and Appendix 15 govern ring final circuit design. A single 32A ring final circuit in 2.5mm² twin and earth (clipped direct) may serve a floor area with no prescribed limit, provided the connected load does not exceed 7,200VA.',
-  'Ring continuity testing uses the r1+r2/4 method to verify the ring is complete and unbroken. Each leg of the ring is measured, then cross-connected, and the resistance at each outlet must fall within 0.05Ω of the calculated value.',
+  'BS 7671 Section 433 and Regulation 433.1.204 govern ring final circuit design. A single 32A ring final circuit requires 2.5mm² line and neutral conductors (minimum), a 30A or 32A protective device to an approved standard, and a cable with Iz ≥ 20A to achieve deemed compliance with Reg 433.1.1.',
+  'Ring continuity testing uses the r1+r2/4 method to verify the ring is complete and unbroken. Each leg of the ring is measured, then cross-connected, and the resistance at each outlet should be substantially the same as (r1+r2)/4 (GN3 Reg 2.18). Where the CPC has a smaller cross-section than the line conductor (e.g. standard 2.5/1.5mm² twin-and-earth), readings will vary around the ring — this variation is expected and is not a fault.',
   'Radial circuits are increasingly preferred for new installations because they are simpler to install, easier to test, and avoid compliance problems arising from incorrectly wired rings or spurs.',
 ];
 
@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What is the maximum floor area a ring final circuit can serve?',
     answer:
-      'Under BS 7671:2018+A4:2026 Appendix 15, a 32A ring final circuit in 2.5mm² twin and earth cable (Method C, clipped direct) has no prescribed maximum floor area, provided the connected load does not exceed 7,200VA and the circuit design is appropriate. The historical IEE guidance of 100m² per ring was a rule of thumb, not a BS 7671 regulation. In practice, the current in each leg of the ring must not exceed the cable current-carrying capacity at any point. For large open-plan floors with high-power loads, the ring may need to be divided into two separate circuits.',
+      'Appendix 15 (where this guidance appears in BS 7671) is not reproduced in full in this guide. The historical IEE guidance of 100m² per ring was a rule of thumb, not a BS 7671 regulation. In practice, the current in each leg of the ring must not exceed the cable Iz at any point — for 2.5mm² twin-and-earth clipped direct (Method C), Iz = 24A per BS 7671 Table 4D1A. For large open-plan floors with high-power loads, the ring may need to be divided into two separate circuits. Always verify circuit design using a current-carrying capacity and voltage drop calculation against Regulation 525.202 and Appendix 4, Section 6.4.',
   },
   {
     question: 'Can I add spurs to a ring final circuit?',
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'How do I carry out ring continuity testing?',
     answer:
-      'The ring continuity test is described in BS 7671 Appendix 14 and GN3. Method: (1) Measure the end-to-end resistance of the line conductor (r1) and the earth conductor (r2) with the ring disconnected at the consumer unit. (2) Cross-connect the line of one end to the earth of the other end. (3) Measure resistance between line and earth at every outlet — each reading should be approximately (r1+r2)/4. (4) Readings significantly higher than (r1+r2)/4 indicate a break or poor connection. Readings significantly lower may indicate an unintended parallel path.',
+      'The ring continuity test procedure is set out in BS 7671 Chapter 64 (Reg 643.2.1) and GN3 Chapter 2 (Regs 2.17–2.20). Method: (1) Measure the end-to-end resistance of the line conductor (r1) and the CPC (r2) with the ring disconnected at the consumer unit. (2) Cross-connect the line conductor of one end to the CPC of the other end, creating a figure-of-eight. (3) Measure resistance between line and earth at every outlet — each reading should be approximately (r1+r2)/4. (4) All readings should be substantially the same (GN3 Reg 2.18). For standard 2.5/1.5mm² twin-and-earth, readings vary around the ring because the CPC is smaller than the line conductor — this is expected, not a fault. Readings significantly higher than (r1+r2)/4 indicate a break or poor connection. Readings significantly lower may indicate an unintended parallel path.',
   },
   {
     question: 'Is a ring final circuit better than a radial circuit?',
@@ -72,18 +72,18 @@ const faqs = [
   {
     question: 'What happens if a ring final circuit is broken at one point?',
     answer:
-      'If the ring is broken at any single point, it becomes a radial circuit. The outlets beyond the break are still powered — there is no immediate indication. However, if load is concentrated beyond the break, the remaining cable must carry the full current through a single path. A 2.5mm² cable (rated 27A clipped direct) may be overloaded if the load exceeds 27A. A broken ring is a Code C2 observation on an EICR. Ring continuity testing during inspection will identify the break.',
+      'If the ring is broken at any single point, it becomes a radial circuit. The outlets beyond the break are still powered — there is no immediate indication. However, if load is concentrated beyond the break, the remaining cable must carry the full current through a single path. A 2.5mm² PVC twin-and-earth cable (Iz = 24A clipped direct, per BS 7671 Table 4D1A) may be overloaded if the load exceeds 24A. A broken ring is a Code C2 observation on an EICR. Ring continuity testing during inspection will identify the break.',
   },
   {
     question: 'Can I use 1.5mm² cable for a ring final circuit?',
     answer:
-      'No. A ring final circuit for socket outlets must use a minimum of 2.5mm² cable, protected by a 32A overcurrent device. Using 1.5mm² cable on a 32A ring is a serious non-compliance — the cable is rated at only 18.5A (clipped direct) or less depending on installation method, and would be overloaded under fault conditions. Always check cable current-carrying capacity against BS 7671 Appendix 4 Tables 4D1A to 4D5A.',
+      'No — with one exception. A ring final circuit for socket outlets must use a minimum of 2.5mm² copper cable, protected by a 30A or 32A overcurrent device (Reg 433.1.204). Using 1.5mm² cable on a 32A ring is a serious non-compliance — per BS 7671 Table 4D1A, 1.5mm² PVC twin-and-earth clipped direct is rated at only 16A, and would be overloaded under fault conditions. The only exception is two-core mineral-insulated cable (MICC) complying with BS EN 60702-1, where 1.5mm² is permitted under Regulation 433.1.204. Always check cable current-carrying capacity against BS 7671 Appendix 4 Tables 4D1A to 4D5A.',
   },
 ];
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for ring and radial circuits with automatic derating and voltage drop.',
@@ -137,7 +137,10 @@ const sections = [
           </SEOInternalLink>{' '}
           Section 433 (protection against overcurrent), Regulation 433.1.204 (socket outlets on ring
           circuits), and Appendix 15 (guidance on ring and radial circuits for socket outlets). The
-          ring continuity test method is described in BS 7671 Appendix 14 and GN3.
+          ring continuity test method is set out in BS 7671 Chapter 64 (Reg 643.2.1) and GN3 Chapter
+          2 (Regs 2.17–2.20). Note: BS 7671 Appendix 14 in the A4:2026 edition covers prospective
+          fault current (Ips) determination — it does not contain the ring continuity test
+          procedure.
         </p>
       </>
     ),
@@ -157,11 +160,11 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Why the Ring Works</h3>
           <p className="text-white text-sm leading-relaxed">
             The ring provides two parallel paths for current to flow from the consumer unit to any
-            socket outlet. With 2.5mm² cable (rated 27A clipped direct), the ring can carry up to
-            27A in each leg simultaneously — a total of 54A potential capacity. This allows the
-            circuit to be protected by a 32A overcurrent device while serving a large floor area.
-            The 32A protection is for the cable, not each outlet — each outlet is limited to 13A by
-            the fuse in the plug.
+            socket outlet. With 2.5mm² PVC twin-and-earth cable (Iz = 24A clipped direct, per BS
+            7671 Table 4D1A), the ring can carry up to 24A in each leg simultaneously — a total of
+            48A potential capacity. This allows the circuit to be protected by a 32A overcurrent
+            device while serving a large floor area. The 32A protection is for the cable, not each
+            outlet — each outlet is limited to 13A by the fuse in the plug.
           </p>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -244,9 +247,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 433.1.204</strong> — socket outlets forming part of a ring final
-                circuit shall be connected to both legs of the ring. An outlet connected to only one
-                leg forms a spur, not a ring connection.
+                <strong>Regulation 433.1.204</strong> — ring final circuits supplying BS 1363
+                accessories shall be protected by a 30A or 32A device (to BS 88, BS 3036, BS EN
+                60898 or BS EN 61009-1), with line and neutral conductors of minimum 2.5mm². Where
+                the cable Iz is at least 20A, the circuit is deemed to comply with Reg 433.1.1.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,17 +264,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 543.1</strong> — for a ring final circuit, the CPC must also form
-                a ring, connected at both ends to the earth terminal. A broken CPC ring is a Code C2
-                defect on an EICR.
+                <strong>Regulation 543.2.9</strong> — the CPC of every ring final circuit shall be
+                run in the form of a ring, with both ends connected to the earthing terminal at the
+                origin of the circuit. The exception is where the CPC is formed by a metal covering
+                or enclosure containing all conductors of the ring (e.g. steel conduit) — in that
+                case a separate ring CPC is not required. A broken CPC ring is a Code C2 defect on
+                an EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Appendix 4, Tables 4D1A–4D5A</strong> — current-carrying capacity tables.
-                Installation method affects current rating: 2.5mm² 6242Y is rated 27A (Method C) or
-                20A (Method B, enclosed in insulation).
+                Installation method affects current rating: 2.5mm² PVC 6242Y is rated 24A (Method C,
+                clipped direct) or 20A (Method B, enclosed in insulation), per Table 4D1A.
               </span>
             </li>
           </ul>
@@ -322,9 +329,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <span className="shrink-0 font-bold text-yellow-400">4.</span>
               <span>
-                <strong>Interpret the results.</strong> All readings should be within 0.05Ω of
-                (r1+r2)/4. A high reading indicates a break or poor connection. A significantly
-                lower reading may indicate an unintended parallel path.
+                <strong>Interpret the results.</strong> All readings should be substantially the
+                same (GN3 Reg 2.18). There is no fixed tolerance — GN3 Table 2.9 shows that for
+                standard 2.5/1.5mm² twin-and-earth, readings will vary around the ring because the
+                1.5mm² CPC has higher resistance than the 2.5mm² line conductor; this variation is
+                expected. A significantly high reading indicates a break or poor connection. A
+                significantly lower reading may indicate an unintended parallel path.
               </span>
             </li>
           </ol>
@@ -352,9 +362,11 @@ const sections = [
     content: (
       <>
         <p>
-          The maximum connected load for a ring final circuit is 7,200VA (32A × 230V). In practice,
-          diversity means the simultaneous demand is much lower. BS 7671 Appendix 1 and the On-Site
-          Guide provide demand estimation guidance:
+          In practice, diversity means the simultaneous demand on a ring final circuit is much lower
+          than the theoretical maximum. The circuit must be designed so that the current in each leg
+          of the ring does not exceed the cable current-carrying capacity (Iz = 24A for 2.5mm²
+          clipped direct, per BS 7671 Table 4D1A). The On-Site Guide provides demand estimation
+          guidance for domestic installations:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -386,11 +398,12 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
-          to verify that voltage drop is within the 5% limit for power circuits under BS 7671
-          Appendix 12.
+          to verify that voltage drop complies with Regulation 525.202 and the limits in BS 7671
+          Appendix 4, Section 6.4 (which gives circuit-type specific limits for socket outlet and
+          fixed equipment circuits).
         </p>
       </>
     ),
@@ -456,7 +469,7 @@ const sections = [
 export default function RingVsRadialCircuitsPage() {
   return (
     <GuideTemplate
-      title="Ring vs Radial Final Circuits: A1, A2, A3 (BS 7671)"
+      title="Ring vs Radial Final Circuits: BS 7671:2018+A4:2026 Guide"
       description="Ring vs radial final circuits: A1 ring (32A), A2/A3 radial, cable sizes, load limits, ring continuity test (r1+r2/4 method). Appendix 15 of BS 7671."
       datePublished="2026-03-27"
       dateModified="2026-05-22"
@@ -472,6 +485,13 @@ export default function RingVsRadialCircuitsPage() {
       }
       heroSubtitle="The ring final circuit is unique to the UK. This guide explains how rings and radial circuits work, the BS 7671 Section 433 requirements, how to carry out ring continuity testing using the r1+r2/4 method, and when to choose each circuit type."
       readingTime={12}
+      answerBox={{
+        question: 'What is the difference between a ring and a radial circuit?',
+        answer:
+          'A ring final circuit leaves the consumer unit, serves a series of socket outlets, and returns to the same terminals, giving each outlet two parallel paths back to the board. A radial circuit runs out to the last outlet with no return path, protected by a 20A or 32A device depending on cable size.',
+        detail:
+          'A 32A ring in 2.5mm² twin and earth uses cable with Iz = 24A per leg (BS 7671 Table 4D1A, Method C). Ring continuity is verified with the r1+r2/4 method (BS 7671 Reg 643.2.1 and GN3 Regs 2.17–2.20). The CPC must also run as a ring under Reg 543.2.9.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

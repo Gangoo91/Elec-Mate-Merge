@@ -48,7 +48,7 @@ export default function EVChargerLoadCalculatorPage() {
           for Electric Vehicle Installations
         </>
       }
-              calculator={<EVSELoadCalculator />}
+      calculator={<EVSELoadCalculator />}
       heroSubtitle="Calculate the electrical load for EV charger installations. Single-phase 7kW, three-phase 22kW, or multiple charger sites with diversity. Check supply capacity, PME earthing requirements, and cable sizing in one integrated calculation."
       heroFeaturePills={[
         { icon: Car, label: 'EV Installations' },
@@ -75,7 +75,7 @@ export default function EVChargerLoadCalculatorPage() {
                 supply. Unlike most domestic appliances that cycle on and off or draw variable
                 power, an EV charger draws a near-constant current for several hours — often
                 overnight. Understanding these loads is essential for correct{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand assessment
                 </SEOInternalLink>{' '}
                 and supply capacity verification.
@@ -96,7 +96,7 @@ export default function EVChargerLoadCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 in Elec-Mate includes specific EV charger presets that account for the sustained
@@ -203,7 +203,7 @@ export default function EVChargerLoadCalculatorPage() {
                 Dynamic load management is the preferred approach because it maximises charging
                 speed while preventing supply overload. The Elec-Mate calculator models both
                 approaches and can determine whether load management is needed based on the existing{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand
                 </SEOInternalLink>{' '}
                 and the supply capacity.
@@ -362,14 +362,14 @@ export default function EVChargerLoadCalculatorPage() {
               </ul>
               <p>
                 The{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 helps you assess the existing installation demand, and the EV charger load
                 calculator determines whether there is sufficient headroom for the charger. The
                 results can be documented on the{' '}
-                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> for
-                the charger installation.
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> for the
+                charger installation.
               </p>
             </>
           ),
@@ -473,7 +473,7 @@ export default function EVChargerLoadCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate the total maximum demand for an installation including EV charger loads.',
@@ -481,7 +481,7 @@ export default function EVChargerLoadCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors and voltage drop checks.',

@@ -34,7 +34,7 @@ const faqs = [
   {
     question: 'What earthing arrangement is required for an EV charger on a PME supply?',
     answer:
-      'Under Regulation 722.411.4.1 of BS 7671, where the installation is supplied by a PME (TN-C-S) earthing system, the protective conductor for the EV charging circuit must not be connected to the PME earth terminal. Instead, a separate earth electrode (TT earthing rod) must be installed, and the circuit must be protected by a 30mA RCD. This is because an open PEN conductor fault on the supply could put a dangerous voltage on the vehicle chassis through the charging cable. The earth electrode resistance must be low enough to ensure the RCD will operate within the required disconnection time. Elec-Mate includes a PME assessment checklist that walks you through this requirement step by step.',
+      'Under Regulation 722.411.4 of BS 7671, where the installation is supplied by a PME (TN-C-S) earthing system, the protective conductor for the EV charging circuit must not be connected to the PME earth terminal. Instead, a separate earth electrode (TT earthing rod) must be installed, and the circuit must be protected by a 30mA RCD. This is because an open PEN conductor fault on the supply could put a dangerous voltage on the vehicle chassis through the charging cable. The earth electrode resistance must be low enough to ensure the RCD will operate within the required disconnection time. Elec-Mate includes a PME assessment checklist that walks you through this requirement step by step.',
   },
   {
     question: 'What is the minimum cable size for a 32A EV charger circuit?',
@@ -61,7 +61,7 @@ const faqs = [
 const howToSteps = [
   {
     name: 'Assess the supply and earthing',
-    text: 'Before starting, assess the existing supply characteristics. Record the earthing arrangement (TN-C-S, TN-S, or TT), the supply fuse rating, and the current maximum demand. If the supply is PME (TN-C-S), you will need to install a separate TT earth electrode for the EV circuit as required by Regulation 722.411.4.1.',
+    text: 'Before starting, assess the existing supply characteristics. Record the earthing arrangement (TN-C-S, TN-S, or TT), the supply fuse rating, and the current maximum demand. If the supply is PME (TN-C-S), you will need to install a separate TT earth electrode for the EV circuit as required by Regulation 722.411.4.',
   },
   {
     name: 'Open a new EV charger certificate',
@@ -96,7 +96,7 @@ const features = [
     icon: Activity,
     title: 'PME Assessment Built In',
     description:
-      'The dedicated PME assessment section walks you through Regulation 722.411.4.1. Earth electrode requirements, protective conductor sizing…',
+      'The dedicated PME assessment section walks you through Regulation 722.411.4. Earth electrode requirements, protective conductor sizing…',
   },
   {
     icon: Gauge,
@@ -166,7 +166,7 @@ const howToSchema = {
 
 export default function EVChargerCertificatePage() {
   useSEO({
-    title: 'EV Charger Installation Certificate App | BS 7671 Section',
+    title: 'EV Charger Installation Certificate App | BS 7671 Section 722',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -222,6 +222,19 @@ export default function EVChargerCertificatePage() {
         </div>
       </section>
 
+      {/* E-E-A-T attribution */}
+      <section className="py-4 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 text-sm text-white/60">
+            <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" />
+            <span>
+              Technical content reviewed by NICEIC-registered electricians. Regulations cited from
+              BS&nbsp;7671:2018+A4:2026 (IET Wiring Regulations, 18th Edition).
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* What is an EV charger installation certificate */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
@@ -229,13 +242,16 @@ export default function EVChargerCertificatePage() {
             What Is an EV Charger Installation Certificate?
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
-            <p>
+            <p className="text-lg font-medium">
               An EV charger installation certificate is the Electrical Installation Certificate
-              (EIC) produced after installing a dedicated electric vehicle charging point. It
-              certifies that the installation has been designed, constructed, inspected, and tested
-              in accordance with BS 7671:2018 (the IET Wiring Regulations, 18th Edition), with
-              particular attention to the requirements of Section 722, which deals specifically with
-              the supply of electric vehicles.
+              required by BS 7671 Section 722 after every dedicated EV charging point installation.
+            </p>
+            <p>
+              Specifically, it is the EIC produced after installing a dedicated electric vehicle
+              charging point, certifying that the installation has been designed, constructed,
+              inspected, and tested in accordance with BS 7671:2018+A4:2026 (the IET Wiring
+              Regulations, 18th Edition), with particular attention to the requirements of Section
+              722, which deals specifically with the supply of electric vehicles.
             </p>
             <p>
               The certificate is a legal document. It confirms to the property owner, the
@@ -285,19 +301,21 @@ export default function EVChargerCertificatePage() {
               electrician installing EV chargers.
             </p>
             <p>
-              The section covers several critical areas. Regulation 722.411.4.1 addresses the
-              earthing arrangements where the supply is TN-C-S (PME). Because an open PEN conductor
-              fault could place a dangerous potential on the vehicle chassis via the charging cable,
-              the regulation requires that the EV charging circuit uses a separate TT earth
-              electrode rather than the PME earth. This is one of the most important and most
-              commonly misunderstood requirements in EV charger installation.
+              The section covers several critical areas. Regulation 722.411.4 addresses the earthing
+              arrangements where the supply is TN-C-S (PME). Because an open PEN conductor fault
+              could place a dangerous potential on the vehicle chassis via the charging cable, the
+              regulation requires that the EV charging circuit uses a separate TT earth electrode
+              rather than the PME earth. This is one of the most important and most commonly
+              misunderstood requirements in EV charger installation.
             </p>
             <p>
-              Regulation 722.531.3.101 requires that each charging point be supplied by a dedicated
-              circuit, individually protected by an overcurrent protective device. The circuit must
-              be designed for continuous duty — that is, the cable and protective device must be
-              rated for the full load current drawn continuously. For a standard 7kW domestic
-              charger, this means a 32A circuit with no diversity applied.
+              Every Mode 3 EV charging point must be supplied by its own dedicated circuit,
+              individually protected by an overcurrent protective device. The circuit must be
+              designed for continuous duty — that is, the cable and protective device must be rated
+              for the full load current drawn continuously. For a standard 7kW domestic charger,
+              this means a 32A circuit with no diversity applied. Regulation 722.531.3.101
+              separately requires that associated supply equipment be sited as close as practicable
+              to its supplying transformer, with only one charging point permitted per transformer.
             </p>
             <p>
               Regulation 722.411.3.2 requires that the circuit be protected by an RCD with a rated
@@ -320,9 +338,9 @@ export default function EVChargerCertificatePage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The majority of domestic properties in the UK are supplied with a TN-C-S (PME)
-              earthing system. Under Regulation 722.411.4.1, when an EV charger is installed on a
-              PME supply, the protective conductor of the EV charging circuit must not be connected
-              to the PME earthing terminal. Instead, a separate earth electrode must be installed to
+              earthing system. Under Regulation 722.411.4, when an EV charger is installed on a PME
+              supply, the protective conductor of the EV charging circuit must not be connected to
+              the PME earthing terminal. Instead, a separate earth electrode must be installed to
               provide the earth for the EV circuit, effectively creating a TT earthing arrangement
               for that circuit alone.
             </p>
@@ -446,6 +464,14 @@ export default function EVChargerCertificatePage() {
               been installed, the maximum current limit set by the load management device, and the
               smart charging settings configured during commissioning. Elec-Mate provides dedicated
               fields for all of this documentation.
+            </p>
+            <p>
+              Regulation 722.311.201 (A4:2026) explicitly permits load curtailment — including
+              automatic or manual load reduction or disconnection — to be taken into account when
+              determining the maximum demand of the installation or any part thereof. This means a
+              properly documented CT-clamp load management system can legitimately reduce the
+              assessed maximum demand, potentially avoiding the need for a supply upgrade or DNO
+              capacity increase.
             </p>
           </div>
         </div>
@@ -581,7 +607,7 @@ export default function EVChargerCertificatePage() {
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
                   <strong>Earthing:</strong> Separate TT earth electrode on PME supplies (Regulation
-                  722.411.4.1)
+                  722.411.4)
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -710,7 +736,6 @@ export default function EVChargerCertificatePage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -718,14 +743,28 @@ export default function EVChargerCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">EV Charger Certificate Requirements UK</SEOInternalLink>
-            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">
+              EV Charger Certificate Requirements UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">
+              EICR Certificate Guide 2026
+            </SEOInternalLink>
             <SEOInternalLink href="/ev-charger-grants">EV Charger Grants UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-installation">EV Charger Installation UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/napit-certificate-guide">NAPIT Certificate Guide</SEOInternalLink>
-            <SEOInternalLink href="/ev-charger-brand-comparison">Best EV Charger UK 2025</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-error-codes">EV Charger Error Codes</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-installation-birmingham">EV Charger Installation Birmingham 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-installation">
+              EV Charger Installation UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/napit-certificate-guide">
+              NAPIT Certificate Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/ev-charger-brand-comparison">
+              Best EV Charger UK 2025
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-error-codes">
+              EV Charger Error Codes
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-installation-birmingham">
+              EV Charger Installation Birmingham 2026
+            </SEOInternalLink>
           </div>
         </div>
       </section>

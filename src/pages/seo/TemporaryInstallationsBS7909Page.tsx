@@ -46,6 +46,8 @@ const keyTakeaways = [
   'All temporary installations must be inspected and tested before first use and at regular intervals thereafter — typically every 3 months on construction sites.',
   'Comprehensive documentation is required including single-line diagrams, test certificates, risk assessments, and method statements for the installation.',
   'Elec-Mate generates electrical installation certificates, risk assessments, and RAMS documents for temporary installations — saving hours of paperwork per project.',
+  'RCD type selection matters: Type A covers pulsating DC; Type F covers composite/mixed-frequency loads (variable-speed drives); Type B covers smooth DC components — do not default to Type AC on any modern load (BS 7671 Reg 534.4.7).',
+  'Section 704 does not apply to administrative locations on construction sites (offices, canteens, welfare facilities) — those areas are subject to the general requirements of BS 7671 only (Reg 704.1.1).',
 ];
 
 const faqs = [
@@ -305,11 +307,9 @@ const sections = [
           configuration. A generator with an earthed star point typically operates as a TN-S system.
           An unearthed generator operates as an IT system, which requires an insulation monitoring
           device to detect first faults. The{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangement
-          </SEOInternalLink>{' '}
-          must be documented on the single-line diagram and verified by testing before the
-          installation is energised.
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> must
+          be documented on the single-line diagram and verified by testing before the installation
+          is energised.
         </p>
       </>
     ),
@@ -330,11 +330,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> All socket outlets in temporary installations must
-                have 30mA RCD protection. For TT earthing systems, RCD protection is essential for
-                fault protection (because the earth fault loop impedance is too high for overcurrent
-                devices to operate quickly enough). Use Type A or Type B RCDs depending on the loads
-                connected — Type B is required for any loads containing DC components (such as
-                variable speed drives or LED lighting drivers).
+                have 30mA RCD protection (note: certain exceptions apply — see BS 7671 and OSG Reg
+                4.6.4). For TT earthing systems, RCD protection is essential for fault protection:
+                earth fault loop impedance via driven electrodes is typically too high for
+                overcurrent devices alone to achieve the required disconnection times (OSG Reg
+                3.76), so RCDs are the primary means of achieving disconnection. Select the RCD type
+                to match the load: Type AC for purely sinusoidal residual currents only; Type A for
+                loads producing pulsating DC residual currents (most modern electronics); Type F for
+                circuits with variable-speed drives or mixed-frequency loads that produce composite
+                residual currents (Reg 534.4.7); Type B where smooth DC fault components are present
+                (three-phase drives, EV chargers).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -364,8 +369,10 @@ const sections = [
             type and rating of RCD
           </SEOInternalLink>{' '}
           must be carefully selected for the loads being protected. Modern entertainment lighting
-          and stage equipment often contain electronic drivers that produce DC fault currents — a
-          standard Type AC RCD may not detect these faults, requiring Type A or Type B RCDs.
+          and stage equipment often contain electronic drivers that produce pulsating DC or
+          composite fault currents — a standard Type AC RCD will not detect these. Use Type A as a
+          minimum for most modern equipment; Type F where variable-speed drives or mixed-frequency
+          loads are present; and Type B where smooth DC components exist (Reg 534.4.7).
         </p>
       </>
     ),
@@ -378,7 +385,8 @@ const sections = [
         <p>
           Every temporary installation must be inspected and tested before it is energised for the
           first time. The testing regime is the same as for a permanent installation under BS 7671
-          Chapter 6, with additional visual checks for the temporary-specific risks.
+          Chapter 64 (Initial Verification), with additional visual checks for the
+          temporary-specific risks.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
@@ -397,9 +405,8 @@ const sections = [
             <li>
               <strong>Live tests:</strong> Earth fault loop impedance at the furthest point of each
               circuit (to verify disconnection times); prospective fault current at the origin;{' '}
-              <SEOInternalLink href="/rcd-testing-guide">RCD testing</SEOInternalLink> (trip
-              time at rated current, 5x rated current, and ramp test); voltage and frequency at the
-              origin.
+              <SEOInternalLink href="/rcd-testing-guide">RCD testing</SEOInternalLink> (trip time at
+              rated current, 5x rated current, and ramp test); voltage and frequency at the origin.
             </li>
             <li>
               <strong>Functional tests:</strong> Verify all switching and isolation devices operate
@@ -545,6 +552,13 @@ const sections = [
             </ul>
           </div>
         </div>
+        <p>
+          <strong>Note on Section 704 scope (Reg 704.1.1):</strong> The particular requirements of
+          Section 704 do <em>not</em> apply to administrative locations on construction sites —
+          offices, cloakrooms, meeting rooms, canteens, restaurants, dormitories, and toilets are
+          explicitly excluded. Those areas are treated as ordinary installations under the general
+          requirements of BS 7671.
+        </p>
         <p>
           The public safety dimension of event installations cannot be overstated. On a construction
           site, the users of the electrical system are (or should be) trained workers who understand

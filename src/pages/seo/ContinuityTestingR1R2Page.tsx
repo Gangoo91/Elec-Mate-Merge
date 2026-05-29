@@ -46,10 +46,12 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'R1+R2 is the combined resistance of the phase conductor (R1) and the circuit protective conductor (R2) measured from the distribution board to the furthest point of the circuit.',
+  'R1+R2 is the combined resistance of the phase conductor (R1) and the circuit protective conductor (R2) measured from the distribution board to the furthest point of the circuit. BS 7671 Reg 643.2.1 requires verification of the continuity of protective conductors before energisation.',
   'The R1+R2 value is critical because it is used to calculate the total earth fault loop impedance: Zs = Ze + (R1+R2). This determines whether the protective device will disconnect within the required time.',
-  'The long lead method is the standard technique — connect a long test lead between the line bar and earth bar at the DB, then measure at the furthest point of each circuit.',
+  'The long lead method (Method 1) is the standard technique — connect a long test lead between the line bar and earth bar at the DB, then measure at the furthest point of each circuit. The wandering lead method (Method 2) is used where Method 1 is impractical, such as luminaire circuits.',
   'Ring circuit continuity testing uses a different three-stage method involving end-to-end resistance and cross-connection (figure-of-eight) tests to verify the ring is complete.',
+  'R1+R2 is measured at ambient temperature. Conductors operating at 70 °C have higher resistance: multiply the cold-measured R1+R2 by approximately 1.20 to obtain the hot (operating) value for Zs verification (GN3 Reg 1.08: correction factor = 1 + 0.004 × (70 − 20) = 1.20).',
+  'The tabulated Zs limit for a B32 MCB is 1.37 Ω. On site, apply the GN3 0.80 factor: the cold-measured Zs must not exceed 1.37 × 0.80 = 1.10 Ω to ensure compliance at operating temperature.',
   'Elec-Mate has a dedicated R1+R2 calculator and auto-validates every value in the schedule of tests. The Zs calculator uses your R1+R2 values to verify measured loop impedance readings.',
 ];
 
@@ -72,7 +74,7 @@ const faqs = [
   {
     question: 'What are acceptable R1+R2 values?',
     answer:
-      'There is no single maximum R1+R2 value in BS 7671. The acceptable value depends on the cable length, conductor cross-sectional area, and conductor material. What matters is whether the resulting Zs (Ze + R1+R2) is within the maximum permitted Zs for the protective device. For example, a B32 MCB has a maximum Zs of 1.37 ohms. If Ze is 0.35 ohms, then R1+R2 must not exceed approximately 1.02 ohms (before temperature correction). In practice, you check R1+R2 against the expected value calculated from the cable data: resistance per metre from BS 7671 tables multiplied by the cable length. If the measured value significantly exceeds the calculated value, there may be a high-resistance joint or damaged conductor.',
+      'There is no single maximum R1+R2 value in BS 7671. The acceptable value depends on the cable length, conductor cross-sectional area, and conductor material. What matters is whether the resulting Zs (Ze + R1+R2) falls within the maximum permitted Zs for the protective device — and critically, you must apply the GN3 0.80 site-test correction factor when making this comparison on site. The tabulated Zs limits in BS 7671 Table 41.3(a) are given at operating temperature; instruments measure at ambient temperature. For a B32 MCB, the tabulated limit is 1.37 Ω, but the site-measured cold limit is 1.37 × 0.80 = 1.10 Ω. If Ze is 0.35 Ω, then the site-measured R1+R2 must not exceed 1.10 − 0.35 = 0.75 Ω. In practice, you check R1+R2 against the expected value calculated from the cable data: resistance per metre from BS 7671 tables multiplied by the cable length. If the measured value significantly exceeds the calculated value, there may be a high-resistance joint or damaged conductor.',
   },
   {
     question: 'How do I test continuity on a ring circuit?',
@@ -94,7 +96,7 @@ const faqs = [
 const howToSteps = [
   {
     name: 'Isolate the circuit and verify dead',
-    text: 'Follow the safe isolation procedure per HSE GS 38. Identify the circuit at the distribution board, switch off and lock off the MCB (or remove the fuse), and verify the circuit is dead at the point of work using a proved voltage indicator. Safe isolation is mandatory before continuity testing.',
+    text: 'Follow the safe isolation procedure per HSE GS 38. Identify the circuit at the distribution board, switch off and lock off the MCB (or remove the fuse), and verify the circuit is dead at the point of work using a proved voltage indicator. Safe isolation is mandatory before continuity testing. BS 7671 Reg 643.2.1 requires verification of the continuity of protective conductors and connections to exposed-conductive-parts before the installation is energised.',
   },
   {
     name: 'Connect the long lead at the distribution board',
@@ -148,7 +150,10 @@ const sections = [
           </SEOInternalLink>{' '}
           — it is the very first electrical test carried out on an installation, performed with the
           circuit de-energised. This is because the integrity of the earth path must be confirmed
-          before any other test can be relied upon.
+          before any other test can be relied upon. The governing regulation is{' '}
+          <strong>BS 7671 Reg 643.2.1</strong>, which requires verification of the continuity of
+          conductors and connections to exposed-conductive-parts and extraneous-conductive-parts
+          before energisation.
         </p>
       </>
     ),
@@ -272,6 +277,43 @@ const sections = [
           This is less commonly used because it requires someone at the far end of the circuit to
           make the connection.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h3 className="font-bold text-white text-lg mb-4">Method 1 vs Method 2 — Which to Use</h3>
+          <p className="text-white leading-relaxed mb-3">
+            GN3 Reg 2.12 describes two widely used methods for protective conductor continuity
+            testing. Both are accepted under BS 7671 Reg 643.2.1; the choice is based on
+            practicality and circuit accessibility.
+          </p>
+          <ul className="space-y-4 text-white leading-relaxed">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <strong className="text-yellow-400">Method 1 — Long lead (circuit short):</strong>
+                <p className="mt-1 text-sm">
+                  A temporary lead links the line busbar to the earth bar at the DB, creating a
+                  series path through R1 and R2. The instrument reads R1+R2 at the furthest point.
+                  Best for: socket circuits, radial final circuits, any installation where the DB is
+                  accessible and the circuit has accessible end-points.
+                </p>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <strong className="text-yellow-400">Method 2 — Wandering lead (R2 only):</strong>
+                <p className="mt-1 text-sm">
+                  A supplementary test cable is connected to the CPC at the DB or MET; the other
+                  probe is moved along the circuit to each luminaire or accessory. This measures the
+                  CPC (R2) resistance alone without shorting the full circuit. Best for: luminaire
+                  circuits (where Method 1 would require shorting at each fitting), three-phase
+                  installations, bonding conductors, and situations where shorting the circuit is
+                  impractical. GN3 Reg 7.41 confirms Method 2 is the preferred approach for bonding
+                  and protective conductors in medical and specialist locations.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
         <SEOAppBridge
           title="Voice to test results — speak R1+R2 values on site"
           description="With probes in one hand and the instrument in the other, use Elec-Mate's voice entry: 'Ring 1…"
@@ -294,9 +336,9 @@ const sections = [
         <p>
           The value is recorded in the R1+R2 column of the schedule of test results on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. It is used alongside
-          the Ze measurement to calculate the expected Zs: Zs = Ze + (R1+R2). This calculated value
-          is compared against the measured Zs obtained during live testing — the two should be
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. It is used alongside the
+          Ze measurement to calculate the expected Zs: Zs = Ze + (R1+R2). This calculated value is
+          compared against the measured Zs obtained during live testing — the two should be
           approximately equal. Any significant discrepancy indicates a problem that requires
           investigation.
         </p>
@@ -363,6 +405,71 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <h3 className="font-bold text-white text-lg mb-3">
+            GN3 0.80 Site-Test Factor — Apply on Every Job
+          </h3>
+          <p className="text-white leading-relaxed mb-3">
+            The Zs limits in BS 7671 Table 41.3(a) are tabulated at conductor operating temperature.
+            On site, measurements are taken at ambient temperature, so you must apply the GN3 0.80
+            correction factor before comparing your reading against the tabulated limit:
+          </p>
+          <ul className="space-y-2 text-white leading-relaxed mb-3">
+            <li className="flex items-start gap-3">
+              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">B16 MCB:</strong> tabulated 2.73 Ω → site limit
+                2.73 × 0.80 = <strong>2.18 Ω</strong>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">B20 MCB:</strong> tabulated 2.19 Ω → site limit
+                2.19 × 0.80 = <strong>1.75 Ω</strong>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">B32 MCB:</strong> tabulated 1.37 Ω → site limit
+                1.37 × 0.80 = <strong>1.10 Ω</strong>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-yellow-400">B40 MCB:</strong> tabulated 1.09 Ω → site limit
+                1.09 × 0.80 = <strong>0.87 Ω</strong>
+              </span>
+            </li>
+          </ul>
+          <p className="text-white/80 text-sm leading-relaxed">
+            Source: BS 7671:2018+A4:2026 Table 41.3(a); GN3 0.80 site-test correction factor.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h3 className="font-bold text-white text-lg mb-3">Temperature Correction of R1+R2</h3>
+          <p className="text-white leading-relaxed mb-2">
+            R1+R2 is measured with the conductors at ambient temperature, but conductors in service
+            operate at up to 70 °C (PVC insulation) or 90 °C (thermosetting). Resistance increases
+            with temperature, so the effective Zs at operating temperature is higher than the
+            cold-measured value.
+          </p>
+          <p className="text-white leading-relaxed mb-2">
+            Per GN3 Reg 1.08, the correction factor is:{' '}
+            <strong>(1 + 0.004 × (operating temp − 20 °C))</strong>. For 70 °C PVC conductors: 1 +
+            0.004 × (70 − 20) = <strong>1.20</strong>. This means the measured R1+R2 will be
+            approximately 20 % higher at operating temperature. GN3 Reg 5.78 provides worked
+            examples of adjusting (R1+R2) measurements from 20 °C to 70 °C for Zs verification.
+          </p>
+          <p className="text-white/80 text-sm leading-relaxed">
+            Practical rule: where the GN3 0.80 factor is applied to the tabulated Zs limit, this
+            implicitly accounts for both the ambient-temperature measurement and the
+            operating-temperature conductor resistance, making the two approaches equivalent for
+            site compliance checks.
+          </p>
         </div>
         <p>
           If your measured R1+R2 is significantly higher than the calculated expected value, this

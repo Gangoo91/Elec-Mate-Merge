@@ -36,23 +36,25 @@ const tocItems = [
   { id: 'what-affects-ze', label: 'What Affects Ze' },
   { id: 'high-ze', label: 'When Ze Is Higher Than Expected' },
   { id: 'querying-the-dno', label: 'When to Query the DNO' },
+  { id: 'ze-new-supply', label: 'Obtaining Ze from the DNO for New Installations' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
 
 const keyTakeaways = [
   'Ze (external earth fault loop impedance) is the impedance of the fault loop path outside the installation — from the supply transformer, through the line conductor, and back via the earth return path.',
-  'Expected maximum Ze values by earthing arrangement: TN-S = 0.80 ohms, TN-C-S (PME) = 0.35 ohms, TT = 21 ohms. These are the maximum assumed values from BS 7671.',
+  'Expected maximum Ze values by earthing arrangement: TN-S = 0.80 ohms, TN-C-S (PME) = 0.35 ohms, TT = 21 ohms. These are distributor-quoted typical maximum values used by BS 7671 tables — they apply to supplies up to 100 A and are not a statutory cap. Actual Ze must be measured and verified at every installation.',
   'Ze directly affects every Zs reading on the installation — a high Ze pushes up Zs on every circuit, potentially causing widespread compliance failures.',
-  'If measured Ze significantly exceeds the maximum assumed value for the earthing arrangement, the DNO (Distribution Network Operator) should be queried because the supply earth may be defective.',
+  'If measured Ze significantly exceeds the distributor-quoted typical maximum for the earthing arrangement, the DNO (Distribution Network Operator) should be queried because the supply earth may be defective.',
   'Elec-Mate records Ze at the origin on the EICR, validates it against expected values for the declared earthing arrangement, and uses it to cross-check every Zs reading in the schedule of test results.',
+  'BS 7671:2018+A4:2026 (Reg 722.826.3.201) amended the Appendix 6 model forms to include new fields for recording SPD and AFDD details alongside Ze — ensure you are using the updated A4:2026 model forms when completing EICRs and EICs.',
 ];
 
 const faqs = [
   {
     question: 'What is a normal Ze reading for a TN-C-S (PME) supply?',
     answer:
-      'For a TN-C-S (PME) supply, the maximum assumed Ze in BS 7671 is 0.35 ohms. In practice, typical measured values range from 0.10 to 0.35 ohms. Most modern PME installations in urban areas measure between 0.15 and 0.25 ohms. A reading at the lower end (0.10 to 0.15 ohms) indicates a short distance to the supply transformer with good connections. A reading approaching or at 0.35 ohms is at the upper limit but still acceptable. If the reading exceeds 0.35 ohms, the supply earth may be compromised — possibly due to a poor neutral connection in the supply cable or a fault on the DNO network. Query the DNO if Ze exceeds the maximum assumed value.',
+      'For a TN-C-S (PME) supply, the distributor-quoted typical maximum Ze used by BS 7671 tables is 0.35 ohms. In practice, typical measured values range from 0.10 to 0.35 ohms. Most modern PME installations in urban areas measure between 0.15 and 0.25 ohms. A reading at the lower end (0.10 to 0.15 ohms) indicates a short distance to the supply transformer with good connections. A reading approaching or at 0.35 ohms is at the upper limit but still acceptable. If the reading exceeds 0.35 ohms, the supply earth may be compromised — possibly due to a poor neutral connection in the supply cable or a fault on the DNO network. Query the DNO if Ze exceeds the distributor-quoted typical maximum.',
   },
   {
     question: 'Why is TN-S Ze typically higher than TN-C-S?',
@@ -77,7 +79,7 @@ const faqs = [
   {
     question: 'Is the Ze value recorded on the EICR?',
     answer:
-      'Yes. Ze is a mandatory recording on the EICR (Electrical Installation Condition Report). It is recorded in the "Supply Characteristics and Earthing Arrangements" section, along with the earthing arrangement (TN-S, TN-C-S, or TT), the supply voltage, the prospective fault current, and the type of supply (single-phase or three-phase). The measured Ze value is used as a reference point for verifying the Zs readings throughout the installation — each Zs should approximately equal Ze plus the R1+R2 measured during continuity testing on that circuit. A significant discrepancy between the measured Zs and the calculated Zs (Ze + R1+R2) indicates a problem such as a parallel earth path or a high-resistance connection.',
+      'Yes. Ze is a mandatory recording on the EICR (Electrical Installation Condition Report). It is recorded in the "Supply Characteristics and Earthing Arrangements" section, along with the earthing arrangement (TN-S, TN-C-S, or TT), the supply voltage, the prospective fault current, and the type of supply (single-phase or three-phase). The measured Ze value is used as a reference point for verifying the Zs readings throughout the installation — each Zs should approximately equal Ze plus the R1+R2 measured during continuity testing on that circuit. A significant discrepancy between the measured Zs and the calculated Zs (Ze + R1+R2) indicates a problem such as a parallel earth path or a high-resistance connection. Note: the BS 7671:2018+A4:2026 update (Reg 722.826.3.201) amended the Appendix 6 model forms to add fields for SPD and AFDD details alongside Ze — use the current A4:2026 model forms to ensure compliance with the updated recording requirements.',
   },
 ];
 
@@ -189,7 +191,7 @@ const sections = [
               <h4 className="font-bold text-white mb-2">TN-S Ze Characteristics</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
                 <li>
-                  <strong>Maximum assumed value (BS 7671):</strong> 0.80 ohms
+                  <strong>Distributor-quoted typical maximum value:</strong> 0.80 ohms
                 </li>
                 <li>
                   <strong>Typical measured range:</strong> 0.20 to 0.80 ohms
@@ -243,7 +245,7 @@ const sections = [
               <h4 className="font-bold text-white mb-2">TN-C-S (PME) Ze Characteristics</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
                 <li>
-                  <strong>Maximum assumed value (BS 7671):</strong> 0.35 ohms
+                  <strong>Distributor-quoted typical maximum value:</strong> 0.35 ohms
                 </li>
                 <li>
                   <strong>Typical measured range:</strong> 0.10 to 0.35 ohms
@@ -296,7 +298,7 @@ const sections = [
               <h4 className="font-bold text-white mb-2">TT Ze Characteristics</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
                 <li>
-                  <strong>Maximum assumed value (BS 7671):</strong> 21 ohms
+                  <strong>Distributor-quoted typical maximum value:</strong> 21 ohms
                 </li>
                 <li>
                   <strong>Typical measured range:</strong> 10 to 200+ ohms (highly variable)
@@ -354,6 +356,11 @@ const sections = [
               is within normal limits (216V to 253V).
             </li>
             <li>
+              <strong>Turn the main switch off and secure it with a safety locking device.</strong>{' '}
+              GN3 Reg 2.29 requires isolation before the earthing conductor is disturbed — this step
+              must not be skipped. Inform any occupants that the supply will be briefly interrupted.
+            </li>
+            <li>
               <strong>
                 Disconnect the main earthing conductor from the main earthing terminal (MET).
               </strong>{' '}
@@ -372,11 +379,12 @@ const sections = [
             </li>
             <li>
               <strong>Reconnect the main earthing conductor to the MET immediately.</strong> Verify
-              the connection is tight and secure.
+              the connection is tight and secure, then restore the main switch.
             </li>
             <li>
-              <strong>Compare the reading against the expected maximum</strong> for the earthing
-              arrangement: 0.35 ohms for TN-C-S, 0.80 ohms for TN-S, 21 ohms for TT.
+              <strong>Compare the reading against the distributor-quoted typical maximum</strong>{' '}
+              for the earthing arrangement: 0.35 ohms for TN-C-S, 0.80 ohms for TN-S, 21 ohms for
+              TT.
             </li>
           </ol>
         </div>
@@ -477,9 +485,10 @@ const sections = [
     content: (
       <>
         <p>
-          If your measured Ze exceeds the maximum assumed value for the earthing arrangement, it is
-          a significant finding that requires action. A Ze above the expected maximum means the
-          supply earth may be compromised, and every circuit in the installation is affected.
+          If your measured Ze exceeds the distributor-quoted typical maximum value for the earthing
+          arrangement, it is a significant finding that requires action. A Ze above that figure
+          means the supply earth may be compromised, and every circuit in the installation is
+          affected.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -546,8 +555,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ze exceeds the maximum assumed value</strong> — for the declared earthing
-                arrangement (above 0.35 ohms for TN-C-S, above 0.80 ohms for TN-S).
+                <strong>Ze exceeds the distributor-quoted typical maximum value</strong> — for the
+                declared earthing arrangement (above 0.35 ohms for TN-C-S, above 0.80 ohms for
+                TN-S).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -597,6 +607,59 @@ const sections = [
       </>
     ),
   },
+  {
+    id: 'ze-new-supply',
+    heading: 'Obtaining Ze from the DNO for New Installations',
+    content: (
+      <>
+        <p>
+          For new installations requiring a new electrical supply, the procedure for establishing Ze
+          is different from measuring it at an existing installation. OSG Reg 1.3 requires that,
+          before starting work, the installer shall establish with the local electricity distributor
+          the typical maximum Ze of the earth fault path outside the consumer's installation. This
+          is a distinct workflow from on-site Ze measurement — the value comes from the DNO, not
+          from a tester.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">New Supply: Ze Workflow</h4>
+              <ul className="space-y-2 text-white text-sm leading-relaxed">
+                <li>
+                  <strong>Contact the DNO at design stage</strong> — request the typical maximum Ze
+                  for the proposed point of supply before finalising protective device selection and
+                  cable sizing.
+                </li>
+                <li>
+                  <strong>Use the DNO-quoted figure for design calculations</strong> — verify that
+                  the chosen protective devices will achieve the required disconnection times with
+                  the worst-case (maximum) Ze.
+                </li>
+                <li>
+                  <strong>Measure Ze once the supply is connected</strong> — the measured value
+                  should be at or below the distributor-quoted maximum; if it is higher, raise the
+                  discrepancy with the DNO before energising the installation.
+                </li>
+                <li>
+                  <strong>Record both values on the EIC</strong> — the DNO-quoted design figure and
+                  the measured Ze at commissioning. A significant difference between the two may
+                  indicate a supply defect.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p>
+          This two-stage approach — obtain from DNO for design, measure at commissioning — ensures
+          that circuits are designed to work within the worst-case supply impedance and that the
+          as-built installation is verified against it. For periodic inspection of an existing
+          installation, only the measured Ze is relevant; the DNO-quoted figure is a design tool,
+          not a pass/fail threshold for condition reporting.
+        </p>
+      </>
+    ),
+  },
 ];
 
 // -------------------------------------------------------------------
@@ -620,8 +683,15 @@ export default function ZeValuesUKPage() {
           <span className="text-yellow-400">External Earth Loop Impedance by Earthing Type</span>
         </>
       }
-      heroSubtitle="Ze is the starting point for every Zs reading in the installation. TN-S: 0.80 ohms maximum. TN-C-S (PME): 0.35 ohms maximum. TT: 21 ohms maximum. This guide explains what Ze is, how to measure it, what affects it, and what to do when the reading exceeds the expected maximum."
+      heroSubtitle="Ze is the starting point for every Zs reading in the installation. Distributor-quoted typical maximum values: TN-S 0.80 ohms, TN-C-S (PME) 0.35 ohms, TT 21 ohms. These figures apply to supplies up to 100 A — actual Ze must always be measured. This guide explains what Ze is, how to measure it safely, what affects it, and what to do when the reading exceeds the expected maximum."
       readingTime={10}
+      answerBox={{
+        question: 'What are the maximum Ze values in BS 7671?',
+        answer:
+          'The distributor-quoted typical maximum external earth fault loop impedance (Ze) values used by BS 7671 tables are 0.80 ohms for TN-S, 0.35 ohms for TN-C-S (PME), and 21 ohms for TT systems. These figures apply to supplies up to 100 A and are not a guaranteed cap — actual Ze must be measured at the origin of each installation.',
+        detail:
+          'TN-C-S is lowest because the supply earth uses a low-impedance PEN conductor; TN-S is higher as it relies on the cable sheath. Query the DNO if a measured Ze exceeds the distributor-quoted typical maximum for the earthing arrangement.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

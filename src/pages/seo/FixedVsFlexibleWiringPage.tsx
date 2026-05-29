@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size fixed wiring cables with BS 7671 Appendix 4 current ratings and derating.',
     icon: Calculator,
@@ -113,7 +113,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study cable selection, fixed wiring inspection, and flexible wiring defects for C&G 2391.',
+    description:
+      'Study cable selection, fixed wiring inspection, and flexible wiring defects for C&G 2391.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -130,8 +131,8 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the distinction between fixed wiring and flexible wiring is fundamental
-          to compliant electrical installation and periodic inspection. The two categories have
+          Understanding the distinction between fixed wiring and flexible wiring is fundamental to
+          compliant electrical installation and periodic inspection. The two categories have
           different conductor construction, different current-carrying capacity tables, different
           installation requirements, and different applications under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -140,11 +141,11 @@ const sections = [
           .
         </p>
         <p>
-          A common source of non-compliance observed during EICR periodic inspections is the
-          use of flexible cable in applications requiring fixed wiring — or the incorrect type
-          of flexible cable for the application temperature or mechanical requirements. This
-          guide covers the types of fixed and flexible wiring, the key technical differences,
-          and the regulatory requirements for each.
+          A common source of non-compliance observed during EICR periodic inspections is the use of
+          flexible cable in applications requiring fixed wiring — or the incorrect type of flexible
+          cable for the application temperature or mechanical requirements. This guide covers the
+          types of fixed and flexible wiring, the key technical differences, and the regulatory
+          requirements for each.
         </p>
       </>
     ),
@@ -155,28 +156,36 @@ const sections = [
     content: (
       <>
         <p>
-          Fixed wiring is installed permanently and not intended to be moved. It serves the
-          circuits of the electrical installation from the consumer unit to all fixed outlets,
-          luminaires, and fixed equipment. Fixed wiring must be installed in accordance with
-          all relevant sections of BS 7671 for the specific cable type and installation method.
+          Fixed wiring is installed permanently and not intended to be moved. It serves the circuits
+          of the electrical installation from the consumer unit to all fixed outlets, luminaires,
+          and fixed equipment. Fixed wiring must be installed in accordance with all relevant
+          sections of BS 7671 for the specific cable type and installation method.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">Common Fixed Wiring Types (UK)</h3>
           <ul className="space-y-3 text-white text-sm">
             <li>
-              <strong>6242Y twin and earth</strong> — flat twin and CPC PVC cable. Standard for domestic ring finals, radials, and lighting. Current ratings: Appendix 4 Tables 4D1A–4D5A.
+              <strong>6242Y twin and earth</strong> — flat twin and CPC PVC cable. Standard for
+              domestic ring finals, radials, and lighting. Current ratings: Appendix 4 Tables
+              4D1A–4D5A.
             </li>
             <li>
-              <strong>6181Y singles</strong> — single-core PVC cable for use in conduit or trunking. Allows replacement without disturbing the building structure.
+              <strong>6181Y singles</strong> — single-core PVC cable for use in conduit or trunking.
+              Allows replacement without disturbing the building structure.
             </li>
             <li>
-              <strong>SWA armoured cable</strong> — steel wire armour provides mechanical protection. Used for underground, outdoor, and industrial circuits.
+              <strong>SWA armoured cable</strong> — steel wire armour provides mechanical
+              protection. Used for underground, outdoor, and industrial circuits.
             </li>
             <li>
-              <strong>MICC (mineral insulated)</strong> — copper conductors in mineral powder insulation, copper sheath. Fire-resistant, high temperature. Used for fire alarms, emergency lighting, and exposed industrial locations.
+              <strong>MICC (mineral insulated)</strong> — copper conductors in mineral powder
+              insulation, copper sheath. Fire-resistant, high temperature. Used for fire alarms,
+              emergency lighting, and exposed industrial locations.
             </li>
             <li>
-              <strong>XLPE/SWA/PVC armoured</strong> — XLPE-insulated armoured cable. Higher current rating than PVC/SWA for the same conductor size. Common for commercial and industrial submain cables.
+              <strong>XLPE/SWA/PVC armoured</strong> — XLPE-insulated armoured cable. Higher current
+              rating than PVC/SWA for the same conductor size. Common for commercial and industrial
+              submain cables.
             </li>
           </ul>
         </div>
@@ -189,32 +198,36 @@ const sections = [
     content: (
       <>
         <p>
-          Flexible cables and cords use stranded conductors — many fine wires twisted together —
-          to withstand repeated flexing without conductor fracture. Fixed wiring uses larger
-          strands or solid conductors optimised for installation rather than repeated movement.
+          Flexible cables and cords use stranded conductors — many fine wires twisted together — to
+          withstand repeated flexing without conductor fracture. Fixed wiring uses larger strands or
+          solid conductors optimised for installation rather than repeated movement.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">Common Flexible Cable Types (UK)</h3>
           <ul className="space-y-3 text-white text-sm">
             <li>
-              <strong>3182Y / 3183Y</strong> — circular PVC flexible cord. Used for general domestic appliances. 3183Y has an additional earth conductor. Available 0.75mm² to 4.0mm².
+              <strong>3182Y / 3183Y</strong> — circular PVC flexible cord. Used for general domestic
+              appliances. 3183Y has an additional earth conductor. Available 0.75mm² to 4.0mm².
             </li>
             <li>
-              <strong>3093Y</strong> — heat-resisting PVC flexible cord. For use at higher temperatures — luminaires, cooker connections. Rated up to 85°C sheath temperature.
+              <strong>3093Y</strong> — heat-resisting PVC flexible cord. For use at higher
+              temperatures — luminaires, cooker connections. Rated up to 85°C sheath temperature.
             </li>
             <li>
-              <strong>Rubber flexible cord</strong> — vulcanised rubber insulation and sheath. Used where PVC is unsuitable: outdoor, oil-contaminated, or high-temperature environments. More durable than PVC in arduous conditions.
+              <strong>Rubber flexible cord</strong> — vulcanised rubber insulation and sheath. Used
+              where PVC is unsuitable: outdoor, oil-contaminated, or high-temperature environments.
+              More durable than PVC in arduous conditions.
             </li>
             <li>
-              <strong>Steel wire braided / armoured flex</strong> — flexible cable with steel wire braid for mechanical protection. Used for workshop tools and portable plant.
+              <strong>Steel wire braided / armoured flex</strong> — flexible cable with steel wire
+              braid for mechanical protection. Used for workshop tools and portable plant.
             </li>
           </ul>
         </div>
         <p>
-          Current-carrying capacities for flexible cords are given in BS 7671 Appendix 4
-          Table 4F4A (PVC insulated flexible cords) and Table 4F2A (rubber flexible cords).
-          These differ from the fixed wiring tables — never apply fixed wiring current ratings
-          to flexible cords.
+          Current-carrying capacities for flexible cords are given in BS 7671 Appendix 4 Table 4F4A
+          (PVC insulated flexible cords) and Table 4F2A (rubber flexible cords). These differ from
+          the fixed wiring tables — never apply fixed wiring current ratings to flexible cords.
         </p>
       </>
     ),
@@ -271,8 +284,8 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 521.9.1 prohibits flexible cables as substitutes for fixed
-          wiring unless expressly permitted. Expressly permitted uses include:
+          BS 7671 Regulation 521.9.1 prohibits flexible cables as substitutes for fixed wiring
+          unless expressly permitted. Expressly permitted uses include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -280,32 +293,32 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire flexible pendants</strong> (Regulation 559.5.1) — the final
-                connection of a suspended luminaire using a ceiling rose and flexible pendant.
-                The flex must be rated for the load and temperature.
+                connection of a suspended luminaire using a ceiling rose and flexible pendant. The
+                flex must be rated for the load and temperature.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Final connection of appliances</strong> — the flex connecting an
-                appliance to its fused connection unit or socket outlet. Must be appropriate
-                flex type for the appliance power and environment.
+                <strong>Final connection of appliances</strong> — the flex connecting an appliance
+                to its fused connection unit or socket outlet. Must be appropriate flex type for the
+                appliance power and environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Where flexibility is required during use</strong> — for equipment that
-                must be moved for use (portable tools, portable appliances). The flex must be
-                adequately protected against mechanical damage during movement.
+                <strong>Where flexibility is required during use</strong> — for equipment that must
+                be moved for use (portable tools, portable appliances). The flex must be adequately
+                protected against mechanical damage during movement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>In premises managed as flexible</strong> — temporary electrical
-                installations at events, exhibitions, and construction sites where flexible
-                wiring is appropriate for the duration of the installation.
+                installations at events, exhibitions, and construction sites where flexible wiring
+                is appropriate for the duration of the installation.
               </span>
             </li>
           </ul>
@@ -319,35 +332,35 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 526.1 requires that every connection in an electrical installation
-          is accessible for inspection and testing. For flexible cable terminations, the key
-          inspection points are:
+          BS 7671 Regulation 526.1 requires that every connection in an electrical installation is
+          accessible for inspection and testing. For flexible cable terminations, the key inspection
+          points are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Strain relief:</strong> The flex must be anchored at the entry to
-                every termination — plug, ceiling rose, fused connection unit, or appliance.
-                Anchor clamps, cable grips, or approved strain relief devices must hold the
-                flex sheath, not the individual conductors.
+                <strong>Strain relief:</strong> The flex must be anchored at the entry to every
+                termination — plug, ceiling rose, fused connection unit, or appliance. Anchor
+                clamps, cable grips, or approved strain relief devices must hold the flex sheath,
+                not the individual conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correct polarity:</strong> At a BS 1363 plug, the brown (live)
-                conductor connects to the L (live) terminal; the blue (neutral) to N; the
-                green/yellow (earth) to E. Reversed polarity is a Code C2 defect.
+                <strong>Correct polarity:</strong> At a BS 1363 plug, the brown (live) conductor
+                connects to the L (live) terminal; the blue (neutral) to N; the green/yellow (earth)
+                to E. Reversed polarity is a Code C2 defect.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sheath condition:</strong> The outer sheath must be undamaged and
-                extend inside the termination enclosure — the sheath is gripped by the strain
-                relief, not the insulated conductors.
+                <strong>Sheath condition:</strong> The outer sheath must be undamaged and extend
+                inside the termination enclosure — the sheath is gripped by the strain relief, not
+                the insulated conductors.
               </span>
             </li>
           </ul>
@@ -356,11 +369,16 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
-              <p className="font-bold text-white mb-1">Common Non-Compliances at Flex Terminations</p>
+              <p className="font-bold text-white mb-1">
+                Common Non-Compliances at Flex Terminations
+              </p>
               <ul className="space-y-1 text-white text-sm">
                 <li>• Damaged outer sheath — Code C2 or C1 depending on extent of damage</li>
                 <li>• No strain relief at plug or appliance entry — Code C2</li>
-                <li>• Wrong flex type for temperature (PVC flex at high-temperature luminaire) — Code C2</li>
+                <li>
+                  • Wrong flex type for temperature (PVC flex at high-temperature luminaire) — Code
+                  C2
+                </li>
                 <li>• Flex used as permanent fixed wiring in ceiling void — Code C2</li>
                 <li>• Twin flex (no earth) where earthed flex required — Code C1</li>
               </ul>
@@ -376,24 +394,35 @@ const sections = [
     content: (
       <>
         <p>
-          During EICR periodic inspection, flexible wiring — particularly at socket outlets,
-          ceiling roses, and fused connection units — is a primary source of observations.
-          The visual inspection of flex terminations is carried out with the installation
-          de-energised. Key checks:
+          During EICR periodic inspection, flexible wiring — particularly at socket outlets, ceiling
+          roses, and fused connection units — is a primary source of observations. The visual
+          inspection of flex terminations is carried out with the installation de-energised. Key
+          checks:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>At ceiling roses: verify the correct flex is used (3-core with earth where required), adequate strain relief, and no overloading of the ceiling rose terminals.</span>
+              <span>
+                At ceiling roses: verify the correct flex is used (3-core with earth where
+                required), adequate strain relief, and no overloading of the ceiling rose terminals.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>At fused connection units: verify the correct fuse rating for the connected flex and appliance, adequate strain relief on the flex entry, and that the flex is appropriate for the installed appliance.</span>
+              <span>
+                At fused connection units: verify the correct fuse rating for the connected flex and
+                appliance, adequate strain relief on the flex entry, and that the flex is
+                appropriate for the installed appliance.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>In ceiling voids and under floors: check for flex used as an extension of fixed wiring — a common defect in older installations where a DIY extension was added using flex rather than proper fixed cable.</span>
+              <span>
+                In ceiling voids and under floors: check for flex used as an extension of fixed
+                wiring — a common defect in older installations where a DIY extension was added
+                using flex rather than proper fixed cable.
+              </span>
             </li>
           </ul>
         </div>
@@ -419,9 +448,9 @@ const sections = [
         </p>
         <p>
           For installation work, always verify the cable type is appropriate for the application:
-          check the current rating from the correct BS 7671 Appendix 4 table (4D/4E for fixed,
-          4F for flexible), apply the correct derating factors, and use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          check the current rating from the correct BS 7671 Appendix 4 table (4D/4E for fixed, 4F
+          for flexible), apply the correct derating factors, and use the{' '}
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           to confirm the selected cable size.
@@ -449,7 +478,9 @@ export default function FixedVsFlexibleWiringPage() {
       heroTitle={
         <>
           Fixed Wiring vs Flexible Wiring:{' '}
-          <span className="text-yellow-400">BS 7671 Standards, Current Ratings and When to Use Each</span>
+          <span className="text-yellow-400">
+            BS 7671 Standards, Current Ratings and When to Use Each
+          </span>
         </>
       }
       heroSubtitle="BS 7671 Regulation 521.9.1 prohibits flexible cable as a substitute for fixed wiring. Fixed and flexible wiring have different current rating tables, different conductor construction, and different termination requirements. This guide covers the key differences, when flexible cable is permitted, and what to look for during EICR inspection."

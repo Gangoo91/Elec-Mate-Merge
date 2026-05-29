@@ -276,7 +276,7 @@ export default function ElectricalLoadAssessmentPage() {
               <p>
                 Diversity factors do not apply to individual circuits for cable sizing purposes.
                 Each circuit cable must be sized for the full expected load on that circuit. The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 handles this separately from the maximum demand calculation.
@@ -544,7 +544,7 @@ export default function ElectricalLoadAssessmentPage() {
       ]}
       relatedPages={[
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Max Demand Calculator',
           description:
             'Calculate maximum demand with BS 7671 diversity factors applied automatically.',
@@ -559,7 +559,7 @@ export default function ElectricalLoadAssessmentPage() {
           category: 'Calculator',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables correctly for current capacity, voltage drop, and fault current.',

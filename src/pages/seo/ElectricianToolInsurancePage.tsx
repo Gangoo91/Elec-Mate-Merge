@@ -151,11 +151,19 @@ const sections = [
     heading: 'Why Tool Insurance Matters for Electricians',
     content: (
       <>
+        <div className="rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white/70">
+          <Users className="w-4 h-4 text-yellow-400 shrink-0" />
+          <span>
+            Written by the Elec-Mate team and reviewed by an 18th Edition &amp; 2391 qualified
+            electrician.
+          </span>
+        </div>
         <p>
           Your tools are your livelihood. Without a multifunction tester, a set of hand tools, and
           your power tools, you cannot work — and you cannot earn. Tool theft from vans is one of
-          the most common crimes affecting tradespeople in the UK, with an estimated 23,000 van
-          break-ins per year targeting tools.
+          the most common crimes affecting tradespeople in the UK — industry trade bodies and
+          insurer data consistently report tens of thousands of van break-ins targeting trades
+          workers every year.
         </p>
         <p>
           A single theft can cost you £5,000 to £15,000 in replacement tools, plus days or weeks of
@@ -655,6 +663,30 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Calibration Compliance After Replacing Test Equipment
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                If your multifunction tester or other test instrument is stolen and replaced under
+                insurance, the replacement instrument must be formally calibrated and have
+                traceability to national standards before it is used to certify any electrical work.
+                GN3 (9th Edition, A4:2026) Chapter 4 requires that instruments used for inspection
+                and testing shall be calibrated at suitable intervals and that records of
+                calibration shall be available for verification during certification. A brand-new
+                tester straight from the box satisfies this requirement through the manufacturer's
+                factory calibration certificate — keep it with your records. If you borrow or hire a
+                replacement tester, confirm it has a current calibration certificate before signing
+                off any Electrical Installation Certificate or EICR. Intermediate checks (e.g. a
+                check-box comparison) do not substitute for formal calibration traceable to national
+                standards.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -668,7 +700,7 @@ export default function ElectricianToolInsurancePage() {
   return (
     <GuideTemplate
       title="Electrician Tool Insurance UK 2026 | Cover Your Kit"
-      description="Complete guide to tool insurance for UK electricians. Cover types, provider comparison, van security discounts, inventory documentation, exclusions…"
+      description="Complete guide to tool insurance for UK electricians: cover types, van security discounts, provider comparison, and how to document your kit for a successful claim."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -681,7 +713,6 @@ export default function ElectricianToolInsurancePage() {
           <span className="text-yellow-400">Cover Your Kit, Protect Your Income</span>
         </>
       }
-              noindex={true}
       heroSubtitle="Most electricians carry £5,000 to £15,000 of tools and test equipment. Standard van insurance does NOT cover them. This guide explains the types of cover, compares providers, details van security discounts, and shows you how to document your kit for a successful claim."
       readingTime={10}
       keyTakeaways={keyTakeaways}

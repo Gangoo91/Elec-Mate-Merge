@@ -44,6 +44,8 @@ const keyTakeaways = [
   'PIR (Passive Infrared) detectors must be sited to avoid false alarms from heat sources, draughts, and direct sunlight, while providing full coverage of the room or zone without masking.',
   'NSI or SSAIB certification is required for systems connected to a Police-Unique Reference Number (URN) for police response, and expected by most commercial insurers for alarm discounts.',
   'An Alarm Receiving Centre (ARC) monitors the system 24/7 and can dispatch keyholders or request a police response. ARC monitoring typically costs £150–£400 per year for a residential or small commercial system.',
+  'Alarm and emergency system cables must be run in dedicated, separate containment from mains power circuits (BS 7671 Reg 528; PWI common mistake: routing alarm cables with power circuits). Fire-rated cable is required where routes pass through fire-rated structures.',
+  'The alarm PSU standby battery is a stationary secondary battery installation. Under BS 7671 Reg 570.6.1.1.1 it must conform to BS EN IEC 62485; coordinate battery and wiring/protective-device requirements in the commissioning record.',
 ];
 
 const faqs = [
@@ -134,20 +136,19 @@ const sections = [
       <>
         <p>
           BS EN 50131 is the UK and European standard for intruder and hold-up alarm systems. It
-          replaces the older BS 4737 and defines four security grades based on the anticipated
-          risk level and the expected intruder profile. Specifying the correct grade at the design
-          stage determines every subsequent component choice.
+          replaces the older BS 4737 and defines four security grades based on the anticipated risk
+          level and the expected intruder profile. Specifying the correct grade at the design stage
+          determines every subsequent component choice.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade 1 — low risk</strong> — domestic properties at low risk of
-                burglary. The intruder is assumed to have limited knowledge of alarm systems.
-                Basic detectors (single-technology PIR), battery-operated keypads, and local
-                siren only. Suitable for holiday homes or outbuildings. No ARC monitoring
-                required.
+                <strong>Grade 1 — low risk</strong> — domestic properties at low risk of burglary.
+                The intruder is assumed to have limited knowledge of alarm systems. Basic detectors
+                (single-technology PIR), battery-operated keypads, and local siren only. Suitable
+                for holiday homes or outbuildings. No ARC monitoring required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -155,38 +156,38 @@ const sections = [
               <span>
                 <strong>Grade 2 — low to medium risk</strong> — domestic and light commercial
                 properties. The intruder may have general knowledge of alarm systems. Requires
-                dual-technology detectors (PIR + microwave or PIR + ultrasonic), anti-tamper
-                on all devices, and ARC monitoring (or police response) for full Grade 2
-                compliance. The most common grade for UK domestic and SME commercial installations.
+                dual-technology detectors (PIR + microwave or PIR + ultrasonic), anti-tamper on all
+                devices, and ARC monitoring (or police response) for full Grade 2 compliance. The
+                most common grade for UK domestic and SME commercial installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade 3 — medium to high risk</strong> — commercial sites at elevated
-                risk. The intruder is expected to have comprehensive knowledge of alarm systems,
-                including potential use of jamming equipment. Requires anti-masking detectors,
-                dual-path communications (e.g., broadband + GSM), faster response times, and
-                ARC monitoring. Required by many commercial insurers for high-value premises.
+                <strong>Grade 3 — medium to high risk</strong> — commercial sites at elevated risk.
+                The intruder is expected to have comprehensive knowledge of alarm systems, including
+                potential use of jamming equipment. Requires anti-masking detectors, dual-path
+                communications (e.g., broadband + GSM), faster response times, and ARC monitoring.
+                Required by many commercial insurers for high-value premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade 4 — high risk</strong> — banks, jewellers, cash-in-transit depots,
-                and critical infrastructure. The intruder is expected to be a specialist using
-                advanced attack methods. Requires the highest level of detector performance,
-                anti-masking, multi-path encrypted communications, and continuous ARC monitoring
-                with rapid response. Specialist design and NSI Gold installation required.
+                <strong>Grade 4 — high risk</strong> — banks, jewellers, cash-in-transit depots, and
+                critical infrastructure. The intruder is expected to be a specialist using advanced
+                attack methods. Requires the highest level of detector performance, anti-masking,
+                multi-path encrypted communications, and continuous ARC monitoring with rapid
+                response. Specialist design and NSI Gold installation required.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The grade should be determined by a formal risk assessment. Most commercial insurers
-          specify the minimum grade as a policy condition. For police response, the system must
-          meet the requirements of the Police Unique Reference Number (URN) scheme, which
-          typically requires Grade 2 minimum with ARC monitoring.
+          specify the minimum grade as a policy condition. For police response, the system must meet
+          the requirements of the Police Unique Reference Number (URN) scheme, which typically
+          requires Grade 2 minimum with ARC monitoring.
         </p>
       </>
     ),
@@ -197,8 +198,8 @@ const sections = [
     content: (
       <>
         <p>
-          Both wired and wireless systems can achieve BS EN 50131 compliance, but each has
-          distinct advantages depending on the installation environment.
+          Both wired and wireless systems can achieve BS EN 50131 compliance, but each has distinct
+          advantages depending on the installation environment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -209,19 +210,19 @@ const sections = [
                 and sirens are connected to the control panel by dedicated cable. No battery
                 management, no RF interference risk, and lower ongoing maintenance cost. Tamper
                 detection on cables is straightforward. Preferred for new builds, large commercial
-                sites, and any installation where cable runs can be hidden. Install time is
-                longer due to cabling.
+                sites, and any installation where cable runs can be hidden. Install time is longer
+                due to cabling.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wireless systems — suited to retrofits</strong> — detectors communicate
-                with the panel via encrypted radio frequency (RF). No cable runs required, making
-                installation in occupied buildings much faster and less disruptive. Requires
-                battery management (typically 2–5 year battery life per device). Grade 2 wireless
-                systems use frequency-hopping or encrypted protocols to resist jamming. Confirm
-                RF signal strength at every device location before commissioning.
+                <strong>Wireless systems — suited to retrofits</strong> — detectors communicate with
+                the panel via encrypted radio frequency (RF). No cable runs required, making
+                installation in occupied buildings much faster and less disruptive. Requires battery
+                management (typically 2–5 year battery life per device). Grade 2 wireless systems
+                use frequency-hopping or encrypted protocols to resist jamming. Confirm RF signal
+                strength at every device location before commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,8 +246,8 @@ const sections = [
     content: (
       <>
         <p>
-          Passive Infrared (PIR) detectors are the most common intruder detection technology in
-          UK installations. Correct placement is critical to achieve reliable detection while
+          Passive Infrared (PIR) detectors are the most common intruder detection technology in UK
+          installations. Correct placement is critical to achieve reliable detection while
           minimising false alarms — the most common cause of alarm fatigue and police URN
           withdrawal.
         </p>
@@ -255,38 +256,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mounting height</strong> — standard PIRs should be mounted at 2.0–2.4
-                metres above floor level in corners, angled to provide coverage across the room.
-                Too low and the detector may be defeated by crawling; too high and sensitivity
-                decreases. Wide-angle PIRs (360°) can be ceiling-mounted — follow manufacturer
-                guidance for optimum height.
+                <strong>Mounting height</strong> — standard PIRs should be mounted at 2.0–2.4 metres
+                above floor level in corners, angled to provide coverage across the room. Too low
+                and the detector may be defeated by crawling; too high and sensitivity decreases.
+                Wide-angle PIRs (360°) can be ceiling-mounted — follow manufacturer guidance for
+                optimum height.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Avoid heat sources and draughts</strong> — do not mount PIRs where they
-                face south-facing windows (direct sunlight), above radiators or fan heaters, near
-                air conditioning vents, or adjacent to boilers. Temperature changes in the PIR's
-                field of view trigger false alarms. A 50mm thermal buffer between the detector
-                and any heat source is good practice.
+                <strong>Avoid heat sources and draughts</strong> — do not mount PIRs where they face
+                south-facing windows (direct sunlight), above radiators or fan heaters, near air
+                conditioning vents, or adjacent to boilers. Temperature changes in the PIR's field
+                of view trigger false alarms. A 50mm thermal buffer between the detector and any
+                heat source is good practice.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pet-immune detectors</strong> — where pets are present, use pet-immune
-                PIRs (also called pet-tolerant). These use a downward-looking lens pattern or
-                dual-zone detection logic to ignore animals below a threshold weight (typically
-                15–25 kg). Confirm the pet's weight against the detector specification and test
-                with the pet present.
+                <strong>Pet-immune detectors</strong> — where pets are present, use pet-immune PIRs
+                (also called pet-tolerant). These use a downward-looking lens pattern or dual-zone
+                detection logic to ignore animals below a threshold weight (typically 15–25 kg).
+                Confirm the pet's weight against the detector specification and test with the pet
+                present.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Walk-test every detector</strong> — after installation, walk-test every
-                PIR to confirm coverage. Enter the detection zone from each direction the manufacturer
+                <strong>Walk-test every detector</strong> — after installation, walk-test every PIR
+                to confirm coverage. Enter the detection zone from each direction the manufacturer
                 specifies. Use the detector's walk-test LED to confirm activation. Document the
                 walk-test results in the commissioning record.
               </span>
@@ -302,9 +303,9 @@ const sections = [
     content: (
       <>
         <p>
-          Magnetic door and window contacts are the most reliable form of perimeter detection.
-          They trigger immediately when a protected door or window is opened, before any intruder
-          enters the detection zone of a PIR — providing earlier warning than volume detectors alone.
+          Magnetic door and window contacts are the most reliable form of perimeter detection. They
+          trigger immediately when a protected door or window is opened, before any intruder enters
+          the detection zone of a PIR — providing earlier warning than volume detectors alone.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -313,18 +314,18 @@ const sections = [
               <span>
                 <strong>Surface-mounted vs flush-mounted</strong> — surface-mounted contacts are
                 faster to install and visible (deterrent value). Flush-mounted contacts are hidden
-                within the door frame and harder to defeat. High-security applications should
-                use flush-mounted contacts with a guard magnet (anti-tamper magnet) to prevent
-                defeat by an external magnet.
+                within the door frame and harder to defeat. High-security applications should use
+                flush-mounted contacts with a guard magnet (anti-tamper magnet) to prevent defeat by
+                an external magnet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wiring convention</strong> — contacts are wired in a normally-closed
-                (NC) loop. An open circuit (contact separated) triggers the alarm. This convention
-                means a cut cable also triggers the alarm — an important anti-defeat measure.
-                Each external door and accessible window should have its own dedicated zone.
+                <strong>Wiring convention</strong> — contacts are wired in a normally-closed (NC)
+                loop. An open circuit (contact separated) triggers the alarm. This convention means
+                a cut cable also triggers the alarm — an important anti-defeat measure. Each
+                external door and accessible window should have its own dedicated zone.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -332,8 +333,8 @@ const sections = [
               <span>
                 <strong>Double-pole contacts for metal frames</strong> — on metal door or window
                 frames, use non-magnetic contact sets designed for metallic frames. Standard
-                magnetic contacts do not work reliably on steel frames due to the magnetic
-                shielding effect of the frame material.
+                magnetic contacts do not work reliably on steel frames due to the magnetic shielding
+                effect of the frame material.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,8 +343,8 @@ const sections = [
                 <strong>Shutter contacts and roller shutter detectors</strong> — for commercial
                 premises with roller shutters, use dedicated shutter contacts or vibration
                 detectors. Shutter contacts sense the position of the shutter; vibration detectors
-                sense forced attack on a closed shutter. Dual-technology (contact + vibration)
-                gives the most reliable coverage.
+                sense forced attack on a closed shutter. Dual-technology (contact + vibration) gives
+                the most reliable coverage.
               </span>
             </li>
           </ul>
@@ -368,24 +369,24 @@ const sections = [
               <span>
                 <strong>Zone capacity</strong> — each detector or contact uses one zone (input).
                 Count the total number of detectors, contacts, panic buttons, and auxiliary inputs
-                required, then add 25 per cent headroom. A typical office with 20 detectors and
-                12 door contacts (32 zones) should be fitted with a 40-zone or greater panel.
+                required, then add 25 per cent headroom. A typical office with 20 detectors and 12
+                door contacts (32 zones) should be fitted with a 40-zone or greater panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>User codes and access levels</strong> — panels should support multiple
-                user codes at different access levels: engineer code (full access), manager code
-                (set/unset, zone bypass), user codes (set/unset only). Commercial sites need
-                panels supporting 50+ user codes with individual audit trails.
+                <strong>User codes and access levels</strong> — panels should support multiple user
+                codes at different access levels: engineer code (full access), manager code
+                (set/unset, zone bypass), user codes (set/unset only). Commercial sites need panels
+                supporting 50+ user codes with individual audit trails.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Partitioning</strong> — for multi-tenant or multi-use buildings, choose
-                a panel that supports partitioned zones (areas). Each partition can be armed and
+                <strong>Partitioning</strong> — for multi-tenant or multi-use buildings, choose a
+                panel that supports partitioned zones (areas). Each partition can be armed and
                 disarmed independently. Essential for offices where different areas have different
                 access times — for example, a warehouse that is locked at 6pm while the office
                 remains occupied until 9pm.
@@ -394,10 +395,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Communications module</strong> — for ARC monitoring, the panel requires
-                a communicator: IP (broadband), GSM/4G, or dual-path (both). Grade 3 systems
-                require dual-path communication. Ensure the selected communicator is compatible
-                with your ARC's receiving equipment and protocols (SIA DC-09, Contact ID).
+                <strong>Communications module</strong> — for ARC monitoring, the panel requires a
+                communicator: IP (broadband), GSM/4G, or dual-path (both). Grade 3 systems require
+                dual-path communication. Ensure the selected communicator is compatible with your
+                ARC's receiving equipment and protocols (SIA DC-09, Contact ID).
               </span>
             </li>
           </ul>
@@ -411,39 +412,38 @@ const sections = [
     content: (
       <>
         <p>
-          An Alarm Receiving Centre (ARC) is a staffed facility that monitors alarm signals 24/7
-          and responds according to a predefined action plan. ARC monitoring transforms a
-          bells-only alarm into a system that can summon a response even when the keyholder is
-          unavailable.
+          An Alarm Receiving Centre (ARC) is a staffed facility that monitors alarm signals 24/7 and
+          responds according to a predefined action plan. ARC monitoring transforms a bells-only
+          alarm into a system that can summon a response even when the keyholder is unavailable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Keyholder response</strong> — when an alarm is triggered, the ARC calls
-                the keyholder list in sequence until someone confirms they are responding or
-                requests a police response. This is the most common monitoring arrangement for
-                domestic and small commercial systems. Annual monitoring cost: £150–£400.
+                <strong>Keyholder response</strong> — when an alarm is triggered, the ARC calls the
+                keyholder list in sequence until someone confirms they are responding or requests a
+                police response. This is the most common monitoring arrangement for domestic and
+                small commercial systems. Annual monitoring cost: £150–£400.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Police Unique Reference Number (URN)</strong> — for police response,
-                the system must hold a URN issued by the local police service. URN conditions
-                include NSI or SSAIB-approved installation, Grade 2 minimum, and a limit on
-                false alarm activations per year (typically three false alarms result in URN
-                withdrawal). Police response is not guaranteed and is subject to availability.
+                <strong>Police Unique Reference Number (URN)</strong> — for police response, the
+                system must hold a URN issued by the local police service. URN conditions include
+                NSI or SSAIB-approved installation, Grade 2 minimum, and a limit on false alarm
+                activations per year (typically three false alarms result in URN withdrawal). Police
+                response is not guaranteed and is subject to availability.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keyholding and mobile response</strong> — some ARCs offer a keyholding
-                service where the ARC holds a set of keys and can dispatch a mobile security
-                officer to attend the premises. Useful for sites where keyholders are not local
-                or are frequently unavailable. Additional annual cost: £300–£800.
+                service where the ARC holds a set of keys and can dispatch a mobile security officer
+                to attend the premises. Useful for sites where keyholders are not local or are
+                frequently unavailable. Additional annual cost: £300–£800.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -476,11 +476,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NSI Gold</strong> — the highest level of NSI certification, required
-                for Grade 3 and Grade 4 installations, for police-URN-eligible systems, and
-                for most large commercial contracts. NSI Gold companies are assessed against
-                PD 6662 (UK national guide to BS EN 50131) and are subject to unannounced
-                audits.
+                <strong>NSI Gold</strong> — the highest level of NSI certification, required for
+                Grade 3 and Grade 4 installations, for police-URN-eligible systems, and for most
+                large commercial contracts. NSI Gold companies are assessed against PD 6662 (UK
+                national guide to BS EN 50131) and are subject to unannounced audits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,10 +494,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insurance implications</strong> — most commercial insurers require NSI
-                or SSAIB-approved installation to apply alarm-related premium discounts. Without
-                approved installation, the insurer may refuse claims where an alarm was fitted
-                but not to the required standard. Always check the insurer's specific requirements
+                <strong>Insurance implications</strong> — most commercial insurers require NSI or
+                SSAIB-approved installation to apply alarm-related premium discounts. Without
+                approved installation, the insurer may refuse claims where an alarm was fitted but
+                not to the required standard. Always check the insurer's specific requirements
                 before specifying the system.
               </span>
             </li>
@@ -522,9 +521,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Police URN — professional only</strong> — a Police URN for police
-                response can only be issued for systems installed by NSI or SSAIB-approved
-                companies. A self-installed system, however well-designed, cannot obtain a URN.
+                <strong>Police URN — professional only</strong> — a Police URN for police response
+                can only be issued for systems installed by NSI or SSAIB-approved companies. A
+                self-installed system, however well-designed, cannot obtain a URN.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -538,11 +537,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DIY limitations</strong> — consumer-grade wireless systems (Ring, Ajax,
-                DSC) are suitable for basic domestic applications and offer reasonable Grade 1
-                equivalent performance. They do not meet Grade 2 or Grade 3 requirements. False
-                alarm rates on self-installed systems tend to be higher due to suboptimal detector
-                placement.
+                <strong>DIY limitations</strong> — consumer-grade wireless systems (Ring, Ajax, DSC)
+                are suitable for basic domestic applications and offer reasonable Grade 1 equivalent
+                performance. They do not meet Grade 2 or Grade 3 requirements. False alarm rates on
+                self-installed systems tend to be higher due to suboptimal detector placement.
               </span>
             </li>
           </ul>
@@ -558,9 +556,60 @@ const sections = [
         <p>
           Electricians are well placed to provide the cabling and electrical installation elements
           of intruder alarm systems, particularly for wired Grade 1 and Grade 2 systems.
-          Subcontracting relationships with NSI/SSAIB-approved security companies are a common
-          and profitable arrangement.
+          Subcontracting relationships with NSI/SSAIB-approved security companies are a common and
+          profitable arrangement.
         </p>
+
+        {/* Scope demarcation */}
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">Scope Demarcation: Know Your Interface</h4>
+          <p className="text-white/80 text-sm leading-relaxed">
+            The electrician&apos;s scope typically covers cabling, cable containment, PSU wiring,
+            and provision of a mains power supply to the panel location. Detection device placement,
+            control panel commissioning, zone programming, and ARC/URN registration remain with the
+            NSI/SSAIB-approved security company. Agree and document the interface in writing before
+            mobilisation — the most common project failure is neither party completing the handover
+            between electrical supply and panel commissioning (PWI: &apos;not recording excluded
+            systems clearly&apos;, &apos;failing to define interfaces with other trades&apos;).
+          </p>
+        </div>
+
+        {/* Cable segregation callout */}
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">Cable Segregation — Most Common Mistake</h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                Alarm and emergency system cables must be run in dedicated containment, separate
+                from mains power circuits. Routing alarm cables with power circuits is the single
+                most-cited installation error in the PWI dataset and contravenes BS 7671 Reg 528
+                (segregation of circuits). Where alarm cable routes pass through fire-rated walls,
+                floors, or ceiling voids, specify fire-rated cable (e.g. FP200 or MICC) and
+                reinstate fire-stopping at every penetration. Document cable routes and containment
+                type in the handover pack.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Standby battery compliance */}
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">Standby Battery: Reg 570.6.1.1.1</h4>
+          <p className="text-white/80 text-sm leading-relaxed">
+            The sealed lead-acid standby battery inside the alarm PSU is a stationary secondary
+            battery installation. BS 7671:2018+A4:2026 Reg 570.6.1.1.1 requires it to conform to the
+            relevant parts of BS EN IEC 62485 (safety requirements for stationary batteries). In
+            practice this means: correct ventilation of the PSU housing, appropriate protective
+            device sizing on the battery wiring, and coordination between battery manufacturer
+            requirements and BS 7671 wiring rules. Record the battery type, capacity, and
+            installation date in the commissioning record. A battery load test (measure terminal
+            voltage under rated discharge load) must be performed at commissioning and documented —
+            omitting the battery load test is a consistently flagged commissioning gap in both
+            fire-alarm and intruder-alarm PWI entries.
+          </p>
+        </div>
+
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -572,9 +621,9 @@ const sections = [
                   <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
-                  to generate accurate quotes for intruder alarm cabling, conduit installation,
-                  PSU wiring, and access control integration. Include materials and labour in
-                  a professional PDF quote sent directly from your phone.
+                  to generate accurate quotes for intruder alarm cabling, conduit installation, PSU
+                  wiring, and access control integration. Include materials and labour in a
+                  professional PDF quote sent directly from your phone.
                 </p>
               </div>
             </div>
@@ -593,8 +642,8 @@ const sections = [
                   <SEOInternalLink href="/access-control-installation">
                     access control wiring
                   </SEOInternalLink>{' '}
-                  on the same site. Offer a bundled electrical installation package to win more
-                  of the project value.
+                  on the same site. Offer a bundled electrical installation package to win more of
+                  the project value.
                 </p>
               </div>
             </div>

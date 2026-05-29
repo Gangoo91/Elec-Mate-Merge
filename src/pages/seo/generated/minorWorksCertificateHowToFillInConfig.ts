@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-05-18';
+const modified = '2026-05-29';
 
 export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-how-to-fill-in',
@@ -17,11 +17,12 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
   heroPrefix: 'Minor Works Certificate',
   heroHighlight: 'How to Fill In',
   heroSubtitle:
-    'A practical guide to completing Minor Works certificates properly, keeping the description and readings aligned, and finishing the paperwork without a second pass later.',
+    'To fill in a Minor Works certificate: complete one certificate per circuit affected, record the work description, circuit reference, relevant test results, and any limitations, then sign only after every field is verified. Use an EIC instead if the job includes a new circuit or a consumer unit replacement.',
   keyTakeaways: [
     'A good Minor Works certificate should describe the work clearly, match the actual installation, and show any important readings or limitations.',
-    'If the job creates a new circuit, you usually need to look at [when an EIC is required](/guides/when-is-eic-required) instead of using a Minor Works certificate.',
-    'The best forms are easy to read on a phone, quick to complete on site, and ready to hand over when the job is done.',
+    'One Minor Works Certificate must be issued for each existing circuit affected — if you altered three circuits, three certificates are required (GN3 Reg 2.5).',
+    'If the job creates a new circuit or involves replacing a consumer unit or distribution board, an EIC is required — not a Minor Works Certificate (Reg 644.4.201).',
+    'Since A4:2026, the Appendix 6 model MWC form includes fields for SPDs and AFDDs — complete these where those devices are present.',
     'A clear schedule of test results helps support the certificate where readings are needed.',
     'A digital workflow can keep the certificate, follow-on quote, and handover together in one place.',
   ],
@@ -32,13 +33,11 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A Minor Works certificate should tell the client what was done, where it was done, and what changed. The description should be specific enough that someone can understand the scope later without guessing.',
+          text: 'A Minor Works certificate should tell the client what was done, where it was done, and what changed. The description should be specific enough that someone can understand the scope later without guessing.',
         },
         {
           type: 'paragraph',
-          text:
-            'That means clear client details, a sensible description of the work, the circuit or accessory affected, and any readings or notes that support the work carried out.',
+          text: 'That means clear client details, a sensible description of the work, the circuit or accessory affected, and any readings or notes that support the work carried out.',
         },
       ],
     },
@@ -64,15 +63,19 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The big question is whether the work stayed as minor work on an existing circuit or became new installation work. If the job introduces a new circuit, it is usually time to look at [when an EIC is required](/guides/when-is-eic-required) rather than trying to force the job into a Minor Works form.',
+          text: 'The big question is whether the work stayed as minor work on an existing circuit or became new installation work. If the job introduces a new circuit, you need to look at [when an EIC is required](/guides/when-is-eic-required) rather than trying to force the job into a Minor Works form.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'Consumer unit or distribution board replacement always needs an EIC',
+          text: 'If the job includes replacing a consumer unit or distribution board, a full Electrical Installation Certificate is required regardless of whether new circuits were added (Reg 644.4.201). A Minor Works Certificate is not permitted for this work — GN3 Reg 2.5 explicitly excludes it.',
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'If in doubt, match the document to the work',
-          text:
-            'The certificate should reflect the real scope of the job. If the work went beyond minor alterations, the paperwork should move with it instead of staying on the smaller form.',
+          text: 'The certificate should reflect the real scope of the job. If the work went beyond minor alterations on an existing circuit, the paperwork should move with it instead of staying on the smaller form.',
         },
       ],
     },
@@ -82,13 +85,11 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Where readings are required, make sure the schedule of test results supports the certificate and does not feel like a separate document. If you want a cleaner reference point for that part of the paperwork, [schedule of test results](/guides/schedule-of-test-results) explains the detail in more depth.',
+          text: 'Where readings are required, make sure the schedule of test results supports the certificate and does not feel like a separate document. If you want a cleaner reference point for that part of the paperwork, [schedule of test results](/guides/schedule-of-test-results) explains the detail in more depth.',
         },
         {
           type: 'paragraph',
-          text:
-            'The goal is simple: one clear set of notes, one set of readings, one certificate that is ready to hand over.',
+          text: 'The goal is simple: one clear set of notes, one set of readings, one certificate that is ready to hand over.',
         },
       ],
     },
@@ -98,13 +99,11 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The best workflow is the one that lets you complete the certificate while the job is still fresh. That means fewer missed fields, fewer late-night admin fixes, and a cleaner handover for the customer.',
+          text: 'The best workflow is the one that lets you complete the certificate while the job is still fresh. That means fewer missed fields, fewer late-night admin fixes, and a cleaner handover for the customer.',
         },
         {
           type: 'paragraph',
-          text:
-            'If the work leads straight into a quote or remedial discussion, a mobile workflow tied to the [electrical quoting app](/electrical-quoting-app) helps you keep the next step in the same place.',
+          text: 'If the work leads straight into a quote or remedial discussion, a mobile workflow tied to the [electrical quoting app](/electrical-quoting-app) helps you keep the next step in the same place.',
         },
       ],
     },
@@ -114,13 +113,17 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Most Minor Works Certificate mistakes come from rushing — the certificate is short, so people treat it as a formality and finish it without checking. The result is missing supply details, incorrect circuit identification, or a declaration ticked before the test results are even in the boxes. None of those are technically illegal, but all of them weaken the legal value of the document.',
+          text: 'Most Minor Works Certificate mistakes come from rushing — the certificate is short, so people treat it as a formality and finish it without checking. The result is missing supply details, incorrect circuit identification, or a declaration ticked before the test results are even in the boxes. None of those are technically illegal, but all of them weaken the legal value of the document.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'One certificate per circuit — not one per job',
+          text: 'This is the most commonly failed compliance point. If you altered three circuits, you must issue three separate Minor Works Certificates — one for each circuit modified (GN3 Reg 2.5). A single certificate covering multiple circuits is non-compliant.',
         },
         {
           type: 'paragraph',
-          text:
-            'The fix is a short pause before sign-off. After every test is in, before any signature, read the certificate end to end as if you were the client or an inspector. Does every field describe the work you actually did? Are the readings consistent with the circuit? Is the declaration honest? If any answer is "not quite", the certificate needs another two minutes before you hand it over.',
+          text: 'The fix is a short pause before sign-off. After every test is in, before any signature, read the certificate end to end as if you were the client or an inspector. Does every field describe the work you actually did? Are the readings consistent with the circuit? Is the declaration honest? If any answer is "not quite", the certificate needs another two minutes before you hand it over.',
         },
         {
           type: 'list',
@@ -129,6 +132,8 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
             'Record continuity, insulation resistance, polarity, EFLI, and RCD time for every modified circuit.',
             'Date the certificate with the day of the work, not the day you fill in the paperwork.',
             'Sign only after every box is filled and every value verified against the test instrument readout.',
+            'Where RCD protection has been omitted on a socket-outlet circuit (non-dwelling only), attach the documented risk assessment required by Reg 411.3.3 before sign-off.',
+            'Complete the SPD and AFDD fields on the A4:2026 Appendix 6 form where surge protective devices or arc fault detection devices are present — leaving these blank is non-compliant under the updated model form.',
           ],
         },
       ],
@@ -148,7 +153,12 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
     {
       question: 'When should I stop and use a different certificate?',
       answer:
-        'If the work has turned into a new circuit or broader installation work, you should look at the correct certificate for that scope rather than forcing it into a Minor Works form.',
+        'If the work has turned into a new circuit, or the job involves replacing a consumer unit or distribution board, you need a full Electrical Installation Certificate — not a Minor Works Certificate. Reg 644.4.201 explicitly requires an EIC for consumer unit and distribution board replacements, and GN3 Reg 2.5 excludes them from the MWC entirely.',
+    },
+    {
+      question: 'Do I need a separate certificate for each circuit I modified?',
+      answer:
+        'Yes. GN3 Reg 2.5 requires a separate Minor Works Certificate for each circuit modified. If you altered three circuits on the same visit, you must issue three certificates — one per circuit.',
     },
     {
       question: 'Can I use software to finish the certificate faster?',

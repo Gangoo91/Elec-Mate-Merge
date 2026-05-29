@@ -30,6 +30,7 @@ const tocItems = [
   { id: 'earthing', label: 'Earthing Wire Mesh Basket' },
   { id: 'data-centre-use', label: 'Data Centre and Commercial Use' },
   { id: 'cost-vs-tray', label: 'Cost vs Solid Cable Tray' },
+  { id: 'cable-sizing', label: 'Cable Sizing on Basket' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -40,7 +41,8 @@ const keyTakeaways = [
   'Cable basket is particularly popular in data centres, server rooms, and modern commercial offices due to its excellent airflow, ease of cable installation and identification, and clean aesthetic.',
   'Wire mesh basket can be cut and modified on site with side cutters or bolt croppers, and shaped using a bending tool — no specialist cutting equipment needed. This significantly reduces installation time on complex routes.',
   'Like all metallic cable management, wire cable basket must be earthed — section joints must be bonded and the system must be connected to the main earthing terminal.',
-  'Cable basket typically costs 20–40% more per metre than equivalent perforated steel cable tray of the same width, but the installation labour saving partially offsets this material cost premium.',
+  'Cable basket is generally more expensive per metre than equivalent perforated steel cable tray of the same width, though the on-site flexibility and faster cable installation can partially offset the material cost premium — always compare on a project-specific installed cost basis.',
+  'Cable sizing on basket requires applying BS 7671 Appendix 4 correction factors: Ca (ambient temperature), Cg (grouping derating for bundled cables), and Ci (thermal insulation) as applicable. Manufacturers additionally recommend keeping the cross-sectional fill to around 40% as a practical ventilation guideline — note this is manufacturer guidance, not a specific BS 7671 threshold.',
 ];
 
 const faqs = [
@@ -52,7 +54,7 @@ const faqs = [
   {
     question: 'Can cable basket be used for power cables?',
     answer:
-      'Yes. Wire cable basket is suitable for both power cables and data/communications cables. For power cable installations, the basket must be earthed as a system, the fill ratio must not exceed approximately 40% (to maintain cable current ratings through adequate ventilation), and cable sizing calculations must include appropriate grouping derating factors as per BS 7671 Appendix 4. Cable basket is used extensively for power distribution in commercial buildings and data centres.',
+      'Yes. Wire cable basket is suitable for both power cables and data/communications cables. For power cable installations, the basket must be earthed as a system, and cable sizing calculations must include the BS 7671 Appendix 4 correction factors — Ca (ambient temperature), Cg (grouping) and Ci (thermal insulation) as applicable. Manufacturers typically recommend keeping the cross-sectional fill to around 40% as a practical guideline to preserve ventilation and avoid stacking cables into a dense bundle; note that this 40% figure is manufacturer guidance, not a specific BS 7671 threshold — the regulatory mechanism for maintaining current ratings is the Cg grouping derating calculation required by Appendix 4. Cable basket is used extensively for power distribution in commercial buildings and data centres.',
   },
   {
     question: 'How do you earth wire cable basket?',
@@ -257,7 +259,9 @@ const sections = [
               <span>
                 <strong>Width range</strong> — standard widths from 50mm to 600mm. Common sizes in
                 commercial installations are 100mm, 150mm, 200mm, 300mm, and 450mm. Choose width
-                based on cable fill calculation with 40% maximum fill.
+                based on cable fill calculation; manufacturers typically recommend a maximum fill of
+                around 40% as a practical guide to preserve ventilation and maintain the BS 7671
+                Appendix 4 Cg grouping correction factor assumptions for cables in free air.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -378,6 +382,19 @@ const sections = [
                 nearest the distribution board or panel.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Testing and certifying basket earthing</strong> — earth continuity of the
+                basket system must be verified and recorded on the Electrical Installation
+                Certificate (EIC) or EICR. BS 7671 Reg 830.3.201 requires that the presence and
+                adequacy of circuit protective conductors shall be checked during periodic
+                inspection, confirming both continuity and correct sizing per Section 543. In
+                practice, test between the origin earth connection and remote sections of basket
+                with a low-resistance ohmmeter; results should be a fraction of an ohm for a
+                well-bonded system. Record all readings on the schedule of test results.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -425,9 +442,15 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable segregation</strong> — separate wire basket runs should be used for
-                power and data cables. Where the runs must share a space, a central divider or a
-                minimum separation of 200mm should be maintained to minimise electromagnetic
-                interference on data circuits.
+                power and data cables. BS 7671 Section 528 (Reg 528.3.4) requires that wiring
+                systems shall be suitably protected against hazards from proximity to other
+                services, which includes electromagnetic interference risks to data circuits. Where
+                power and data basket runs must share a space, a central divider or physical
+                separation should be maintained; the commonly cited 200mm figure derives from
+                structured-cabling standards (CENELEC EN 50174) and cable manufacturers&apos; EMC
+                guidance rather than a specific BS 7671 distance — refer to the data cabling system
+                specification and manufacturer guidance for the required separation in your
+                installation.
               </span>
             </li>
           </ul>
@@ -486,6 +509,58 @@ const sections = [
             </li>
           </ul>
         </div>
+      </>
+    ),
+  },
+  {
+    id: 'cable-sizing',
+    heading: 'Cable Sizing on Basket: BS 7671 Appendix 4',
+    content: (
+      <>
+        <p>
+          Selecting the correct cable size for a wire basket installation requires applying the BS
+          7671 Appendix 4 correction factors to the base current-carrying capacity (I<sub>z</sub>).
+          The three factors most relevant to basket installations are:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Ca — ambient temperature correction</strong> — if the ambient temperature in
+                the ceiling void or plant room exceeds 30&deg;C, apply the Ca factor from BS 7671
+                Appendix 4 Table 4B1. At 40&deg;C ambient, Ca = 0.87 for 70&deg;C PVC cables.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Cg — grouping derating</strong> — this is the critical factor for basket
+                installations. Where multiple circuits are run together in the basket, Cg reduces
+                the rated current to account for mutual heating. Per BS 7671 Appendix 4 Table 4C1,
+                Cg for 3 circuits = 0.70, for 5 circuits = 0.60, for 10 circuits = 0.50. On a fully
+                loaded basket, this derating is the primary driver for upsizing conductors — not the
+                fill percentage. Always calculate Cg for the actual number of circuits in the
+                basket.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Ci — thermal insulation</strong> — does not normally apply on open basket,
+                but applies if cables leave the basket and pass through or are in contact with
+                thermal insulation in another part of their route.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          The combined derated capacity is: I<sub>z</sub>(derated) = I<sub>z</sub>(tabulated)
+          &times; Ca &times; Cg. The selected conductor must satisfy I<sub>z</sub>(derated) &ge; I
+          <sub>n</sub> (the nominal current of the protective device). Refer to BS 7671 Appendix 4
+          Tables 4D1A–4D5A for the base tabulated values for your cable type and installation
+          method.
+        </p>
       </>
     ),
   },

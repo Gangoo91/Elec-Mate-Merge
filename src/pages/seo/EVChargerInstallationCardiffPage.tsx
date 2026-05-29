@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop calculations.',
     icon: Calculator,
@@ -371,7 +371,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to confirm voltage drop is within 5% for longer cable runs in Cardiff Victorian
@@ -489,10 +489,8 @@ const sections = [
                   Factor in Welsh labour rates (£38 to £52/hour), site survey time for Victorian
                   terrace properties, earth rod costs, SP Manweb G98 notification, and EIC
                   certification costs. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised, professional quotes that cover all job-specific variables.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised, professional quotes that cover all job-specific variables.
                 </p>
               </div>
             </div>

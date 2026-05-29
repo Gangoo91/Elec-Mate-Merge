@@ -49,7 +49,7 @@ const keyTakeaways = [
   'Ground source heat pumps (GSHPs) typically have higher power demands than air source units — domestic systems range from 6 to 16kW electrical input, with larger properties often requiring three-phase supplies.',
   'Three-phase supply is commonly needed for GSHPs above 10kW. A DNO application for a three-phase supply upgrade can take 8 to 16 weeks and should be initiated at the earliest project stage.',
   'GSHPs require additional electrical circuits for circulation pumps (ground loop and heating circuits), zone valves, buffer tank immersion heaters, and the main compressor unit.',
-  'Ground loop isolation must be considered carefully — the ground loop is in contact with earth, and bonding the metalwork of the heat pump to the main earthing terminal is essential to prevent touch voltages.',
+  'Ground loop isolation must be considered carefully — the ground loop is in contact with earth, and bonding the metalwork of the heat pump to the main earthing terminal is essential to prevent touch voltages. Reg 411.3.1.1 requires extraneous-conductive-parts (including central heating and heat pump metalwork) to be connected to the MET.',
   'MCS certification is mandatory for the installer to access the Boiler Upgrade Scheme (BUS) grant, which provides up to £7,500 for ground source heat pump installations.',
 ];
 
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'How does the ground loop affect electrical safety?',
     answer:
-      'The ground loop consists of HDPE pipe buried in the ground, filled with a water-glycol mixture. While the pipe itself is non-conductive, the fluid is in thermal contact with the earth, and the metalwork of the heat pump (heat exchanger, compressor casing) is connected to this fluid circuit. This creates a path to earth that must be addressed. The metalwork of the heat pump must be bonded to the main earthing terminal (MET) as an extraneous conductive part. If the system uses a metallic manifold or buffer vessel, these must also be bonded. Regulation 411.3.1.2 requires connection of metallic casings of heat exchangers and heat pumps to the main bonding.',
+      'The ground loop consists of HDPE pipe buried in the ground, filled with a water-glycol mixture. While the pipe itself is non-conductive, the fluid is in thermal contact with the earth, and the metalwork of the heat pump (heat exchanger, compressor casing) is connected to this fluid circuit. This creates a path to earth that must be addressed. The metalwork of the heat pump must be bonded to the main earthing terminal (MET) as an extraneous conductive part. If the system uses a metallic manifold or buffer vessel, these must also be bonded. Regulation 411.3.1.1 requires extraneous-conductive-parts — including central heating and heat pump metalwork — to be connected to the main earthing terminal (MET) via protective bonding conductors.',
   },
   {
     question: 'What is a buffer tank and does it need its own circuit?',
@@ -96,14 +96,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for heat pump compressor circuits and circulation pump circuits.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on longer cable runs to plant rooms and outdoor equipment.',
     icon: Zap,
@@ -219,7 +219,7 @@ const sections = [
         <p>
           Total electrical demand for a typical domestic GSHP installation is 5 to 12kW. Carry out a
           thorough{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             maximum demand assessment
           </SEOInternalLink>{' '}
           to determine whether the existing supply can cope.
@@ -319,6 +319,22 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
+            Cable Segregation: Power vs Signal Cables
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            A common site mistake is routing 230 V power cables alongside low-voltage signal cables
+            (0–10 V pump speed, PWM control, room thermostat wiring, outdoor sensor).
+            Electromagnetic interference from the power cables can cause erratic pump speeds, false
+            thermostat readings, and nuisance controller faults. BS 7671 Reg 444.4.2 requires
+            segregation, screening, or other mitigation measures where EMI could affect equipment
+            operation. In practice: run power and signal cables in separate conduit or cable
+            trunking, or maintain a minimum 50 mm separation. Where crossing is unavoidable, cross
+            at 90&deg;.
+          </p>
         </div>
       </>
     ),
@@ -434,10 +450,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bonding requirement</strong> — Regulation 411.3.1.2 requires the metallic
-                casings of heat exchangers and heat pumps to be connected to the main bonding
-                system. This ensures that any fault current path via the ground loop is cleared by
-                the protective devices.
+                <strong>Bonding requirement</strong> — Regulation 411.3.1.1 requires
+                extraneous-conductive-parts, including the metallic casings of heat exchangers,
+                compressor units, manifolds, and buffer vessels, to be connected to the main
+                earthing terminal (MET) via protective bonding conductors complying with Chapter 54.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -515,32 +531,71 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.1.2</strong> — metallic casings of heat exchangers and heat
-                pumps must be connected to the main bonding to ensure faults are cleared and no
-                hazardous potentials develop.
+                <strong>Regulation 411.3.1.1</strong> — extraneous-conductive-parts liable to
+                introduce a dangerous potential difference (including central heating systems, heat
+                pump metalwork, metallic pipework, and buffer vessels) shall be connected to the
+                main earthing terminal by protective bonding conductors complying with Chapter 54.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 542.1.3</strong> — earthing arrangements for heat pumps including
-                protective bonding, RCD selection, avoidance of nuisance trips, and verification of
-                earth continuity.
+                <strong>Regulation 411.3.1.2</strong> — sets the maximum disconnection times from
+                Table 41.1 for final circuits rated up to 63 A with socket-outlets, and up to 32 A
+                supplying only fixed equipment. Compressor circuits above 32 A are assessed against
+                Regulation 411.4.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 704.537</strong> — local service isolators for heating circuits
-                and heat pumps to permit safe servicing without isolating unrelated circuits.
+                <strong>Regulation 537.3</strong> — every circuit shall be capable of being
+                isolated. The GSHP compressor circuit, immersion heater circuits, and circulation
+                pump circuits each require a local means of isolation to permit safe servicing
+                without de-energising unrelated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 708.312</strong> — earthing, bonding, and protective device
-                requirements for heat pumps, addressing pipework bonding and segregation.
+                <strong>Regulation 421.1.7</strong> — recommends arc fault detection devices (AFDDs)
+                on AC final circuits. Where a GSHP supply upgrade triggers new circuits or rewires
+                in domestic premises, AFDD installation is recommended on those circuits.
               </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 411.3.4 (A4:2026)</strong> — within domestic (household)
+                premises, AC final circuits supplying luminaires shall have additional protection by
+                a 30 mA RCD. Where new lighting circuits are added as part of a GSHP supply upgrade,
+                this requirement applies.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0" />
+            BS 7671:2018+A4:2026 Updates Relevant to GSHP Installations
+          </h4>
+          <ul className="space-y-3 text-white text-sm">
+            <li>
+              <strong>AFDD — Reg 421.1.7:</strong> Where a GSHP supply upgrade involves adding new
+              circuits or rewiring in domestic premises, arc fault detection devices (AFDDs) are
+              recommended on those AC final circuits. GSHP control electronics are sensitive to
+              supply-side arc faults; AFDDs provide an additional layer of protection.
+            </li>
+            <li>
+              <strong>30 mA RCD on lighting — Reg 411.3.4:</strong> New domestic lighting circuits
+              added as part of a GSHP supply upgrade shall have additional protection by a 30 mA
+              RCD. This A4:2026 addition is mandatory for new circuits in household premises.
+            </li>
+            <li>
+              <strong>SPDs for GSHP control electronics:</strong> GSHP controllers, inverter drives,
+              and outdoor sensors are sensitive to transient overvoltages. Where the risk assessment
+              indicates exposure (Reg 443.4), surge protective devices (SPDs) should be installed at
+              the distribution board supplying the GSHP to protect sensitive control electronics.
             </li>
           </ul>
         </div>
@@ -571,7 +626,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Size the compressor circuit, circulation pump circuits, and immersion heater
                   circuits with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Three-phase calculations included.
@@ -586,11 +641,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price GSHP electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Compressor circuit, three-phase supply, circulation pumps, zone valves,
-                  immersion heaters — all itemised.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Compressor circuit, three-phase supply, circulation pumps, zone valves, immersion
+                  heaters — all itemised.
                 </p>
               </div>
             </div>
@@ -605,6 +658,36 @@ const sections = [
                   and instant PDF export for the MCS documentation package.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <ClipboardCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">
+                Verification Checklist for GSHP Circuits
+              </h4>
+              <ul className="text-white text-sm space-y-2">
+                <li>
+                  <strong>Zs verification — GN3 0.8 factor:</strong> On long compressor cable runs
+                  (plant room to supply intake), apply the GN3 Appendix 3 acceptance criterion:
+                  measured Zs shall not exceed 0.8 &times; the tabulated maximum for the protective
+                  device type and rating. This accounts for conductor temperature at full load.
+                </li>
+                <li>
+                  <strong>Insulation resistance:</strong> Carry out IR testing (500 V d.c.) on all
+                  GSHP circuits before energising. Disconnect the GSHP controller and electronic
+                  components — these are not rated for 500 V test voltage. Test each circuit with
+                  associated equipment disconnected; minimum 1 M&ohm; per Reg 643.3.
+                </li>
+                <li>
+                  <strong>RCD trip time:</strong> Verify that any 30 mA RCDs protecting GSHP-related
+                  circuits trip within 40 ms at I&Delta;n (per Table 3A of GN3). Test using a
+                  calibrated RCD tester at 1 &times; and 5 &times; rated tripping current; record
+                  results on the Schedule of Test Results.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -626,12 +709,12 @@ export default function GroundSourceHeatPumpElectricalPage() {
   return (
     <GuideTemplate
       title="Ground Source Heat Pump Electrical | Wiring Guide UK"
-      description="Complete guide to ground source heat pump electrical installation in the UK. Power demands, three-phase supply, circulation pump wiring, zone controls…"
+      description="Complete guide to ground source heat pump electrical installation in the UK. Covers power demands, three-phase supply, circuit wiring, earthing, and BS 7671:2018+A4:2026 compliance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
-      badge="Emerging Technology"
+      badge="Renewables"
       badgeIcon={Layers}
       heroTitle={
         <>

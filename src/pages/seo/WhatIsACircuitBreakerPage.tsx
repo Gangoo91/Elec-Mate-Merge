@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'Can I replace a Type B MCB with a Type C to stop it tripping?',
     answer:
-      "You should not swap to a Type C simply to stop tripping without understanding why the MCB is tripping. If the MCB is tripping because of an overload, changing the type will not help — Type B and Type C have the same thermal trip characteristics for sustained overloads. If it is tripping due to inrush current (for example, when a motor starts), then Type C may be appropriate — but you need to verify that the higher magnetic trip threshold is still compatible with the circuit's earth fault loop impedance. A Type C MCB needs a higher fault current to achieve instantaneous disconnection, which means the maximum permitted Zs value is lower. If the circuit's Zs is too high for a Type C to disconnect within the required time, you have created a safety hazard. Always check the Zs against the tables in BS 7671 (Appendix 3, Tables 41.3 and 41.4) before changing MCB type.",
+      "You should not swap to a Type C simply to stop tripping without understanding why the MCB is tripping. If the MCB is tripping because of an overload, changing the type will not help — Type B and Type C have the same thermal trip characteristics for sustained overloads. If it is tripping due to inrush current (for example, when a motor starts), then Type C may be appropriate — but you need to verify that the higher magnetic trip threshold is still compatible with the circuit's earth fault loop impedance. A Type C MCB needs a higher fault current to achieve instantaneous disconnection, which means the maximum permitted Zs value is lower. If the circuit's Zs is too high for a Type C to disconnect within the required time, you have created a safety hazard. Always check the Zs against BS 7671 Tables 41.3 and 41.4 (in Chapter 41) before changing MCB type.",
   },
   {
     question: 'How does Elec-Mate help with MCB and protective device selection?',
@@ -345,8 +345,8 @@ const sections = [
           fault currents for instantaneous disconnection. This means the maximum permitted{' '}
           <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">Zs values</SEOInternalLink> are
           progressively lower. A circuit that complies with a Type B MCB might not comply with a
-          Type C, because the Zs is too high for the Type C to trip fast enough. Always check the
-          tables in BS 7671 Appendix 3.
+          Type C, because the Zs is too high for the Type C to trip fast enough. Always check BS
+          7671 Tables 41.3 and 41.4 (Chapter 41, Regs 411.4.202–411.4.203) before changing MCB type.
         </p>
         <SEOAppBridge
           title="Check maximum Zs values instantly"
@@ -490,10 +490,13 @@ const sections = [
               <span>
                 <strong>Earth Fault Loop Impedance (Zs).</strong> Measured at the furthest point of
                 each circuit. The measured Zs must be below the{' '}
-                <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">maximum value</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
+                  maximum value
+                </SEOInternalLink>{' '}
                 tabulated in BS 7671 for the MCB type and rating. This ensures the MCB will
-                disconnect within the required time (0.4s for socket circuits, 5s for fixed
-                equipment) under earth fault conditions.
+                disconnect within the required time — 0.4 s for socket-outlet circuits (Reg
+                411.3.1.2, Table 41.1) and 5 s for distribution circuits and fixed equipment (Reg
+                411.3.2.3) — under earth fault conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -506,6 +509,56 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            GN3 Site-Measurement Rule: Use 80% of the Tabulated Zs
+          </h4>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            BS 7671 Table 41.3 values assume conductors at normal operating temperature. On site,
+            you measure Zs cold (ambient temperature), so the conductor resistance is lower than it
+            will be under load. To account for this, GN3 requires that the measured Zs on site must
+            not exceed <strong>80% of the tabulated maximum</strong> — the most common compliance
+            error when reading Zs values in the field.
+          </p>
+          <p className="text-white text-sm font-semibold mb-2">
+            Common Type B MCB limits (BS 7671 Table 41.3, 230 V, Reg 411.4.202):
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white border-collapse">
+              <thead>
+                <tr className="border-b border-white/20">
+                  <th className="text-left py-1 pr-4 font-semibold">MCB</th>
+                  <th className="text-left py-1 pr-4 font-semibold">BS 7671 max Zs (&#x3A9;)</th>
+                  <th className="text-left py-1 font-semibold">
+                    Site limit &#x00D7;0.80 (&#x3A9;)
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="py-1 pr-4">B6</td>
+                  <td className="py-1 pr-4">7.28</td>
+                  <td className="py-1">5.82</td>
+                </tr>
+                <tr>
+                  <td className="py-1 pr-4">B16</td>
+                  <td className="py-1 pr-4">2.73</td>
+                  <td className="py-1">2.18</td>
+                </tr>
+                <tr>
+                  <td className="py-1 pr-4">B20</td>
+                  <td className="py-1 pr-4">2.19</td>
+                  <td className="py-1">1.75</td>
+                </tr>
+                <tr>
+                  <td className="py-1 pr-4">B32</td>
+                  <td className="py-1 pr-4">1.37</td>
+                  <td className="py-1">1.10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <p>
           If the MCB type, rating, or breaking capacity is incorrect for the circuit, this is

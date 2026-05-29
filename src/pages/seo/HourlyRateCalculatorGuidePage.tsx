@@ -61,12 +61,12 @@ const faqs = [
   {
     question: 'Should I charge hourly or give fixed prices?',
     answer:
-      'For most domestic work, fixed-price quoting is more profitable and more popular with customers. Customers want to know the total cost before committing — an hourly rate with an uncertain duration makes them nervous. Fixed-price quoting also rewards you for being efficient — if you quote £800 for a consumer unit upgrade and complete it in 4 hours, your effective hourly rate is £200 per hour (minus materials). If you quoted hourly at £50 per hour, you would earn only £200 for the same work. The exception is fault-finding and investigation work, where the scope is genuinely unknown — in these cases, an hourly rate with an estimated time range is appropriate. For commercial and subcontract work, day rates or contract prices are more common. The key to profitable fixed-price quoting is accurate cost estimation — which is exactly what Elec-Mate AI cost engineer provides.',
+      'For most domestic work, fixed-price quoting is more profitable and more popular with customers. Customers want to know the total cost before committing — an hourly rate with an uncertain duration makes them nervous. Fixed-price quoting also rewards you for being efficient — if you quote £800 for a consumer unit upgrade and complete it in 4 hours, your effective hourly rate is £200 per hour (minus materials). If you quoted hourly at £50 per hour, you would earn only £200 for the same work. When quoting consumer unit replacements, ensure your materials price includes a steel (non-combustible) enclosure — Regulation 421.1.201 of BS 7671:2018+A4:2026 mandates non-combustible enclosures in domestic premises, so plastic units are not compliant; underquoting on enclosure cost is a common margin error. You should also factor in arc fault detection devices (AFDDs) where recommended under Regulation 421.1.7 — discussing AFDD protection with the customer is both a compliance conversation and a legitimate upsell. The exception is fault-finding and investigation work, where the scope is genuinely unknown — in these cases, an hourly rate with an estimated time range is appropriate. For commercial and subcontract work, day rates or contract prices are more common. The key to profitable fixed-price quoting is accurate cost estimation — which is exactly what Elec-Mate AI cost engineer provides.',
   },
   {
     question: 'What overheads should I include in my hourly rate calculation?',
     answer:
-      'Every recurring cost of running your business should be included: van finance or depreciation (£200 to £500 per month), van insurance (£50 to £125 per month), fuel (£200 to £400 per month), public liability insurance (£15 to £35 per month), professional indemnity insurance (£7 to £17 per month), tools insurance (£8 to £25 per month), competent person scheme fees (£25 to £50 per month), accountant fees (£25 to £50 per month), phone and data (£30 to £60 per month), software subscriptions including Elec-Mate (£20 to £50 per month), training and CPD (£30 to £80 per month averaged), workwear and PPE (£10 to £20 per month), parking and tolls (£20 to £50 per month), test equipment calibration (£5 to £15 per month averaged), and marketing costs (£20 to £100 per month). Total monthly overheads for a typical sole trader electrician: £700 to £1,500 per month, or £8,400 to £18,000 per year.',
+      'Every recurring cost of running your business should be included: van finance or depreciation (£200 to £500 per month), van insurance (£50 to £125 per month), fuel (£200 to £400 per month), public liability insurance (£15 to £35 per month), professional indemnity insurance (£7 to £17 per month), tools insurance (£8 to £25 per month), competent person scheme fees (£25 to £50 per month), accountant fees (£25 to £50 per month), phone and data (£30 to £60 per month), software subscriptions including Elec-Mate (£20 to £50 per month), training and CPD (£30 to £80 per month averaged), workwear and PPE (£10 to £20 per month), parking and tolls (£20 to £50 per month), test equipment calibration (£5 to £15 per month averaged), and marketing costs (£20 to £100 per month). Total monthly overheads for a typical sole trader electrician: £643 to £1,525 per month, or £7,710 to £18,300 per year.',
   },
   {
     question: 'How do I know if my rate is too low?',
@@ -301,9 +301,11 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> captures
-          every cost automatically. After a few months, you will have exact data on your overheads —
-          no guesswork needed.
+          <SEOInternalLink href="/tools/expenses-manager-electrician">
+            expenses tracker
+          </SEOInternalLink>{' '}
+          captures every cost automatically. After a few months, you will have exact data on your
+          overheads — no guesswork needed.
         </p>
       </>
     ),
@@ -458,7 +460,10 @@ const sections = [
               Best for: defined jobs (consumer unit upgrade, rewire, EV charger installation). Quote
               a total price including labour and materials. Risk: if the job takes longer than
               estimated, your profit shrinks. Reward: if you are efficient, your effective hourly
-              rate increases. Customers love fixed prices.
+              rate increases. Customers love fixed prices. On consumer unit upgrades, always include
+              a steel (non-combustible) enclosure (Reg 421.1.201) and price AFDDs where recommended
+              (Reg 421.1.7) — omitting these from your quote creates both a compliance gap and a
+              margin shortfall.
             </p>
           </div>
         </div>
@@ -508,8 +513,9 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>You have gained qualifications or specialist skills.</strong> Completing the
-                2391, gaining AM2, or specialising in EV charging, solar PV, or fire alarm systems
-                adds value. Specialist skills command premium rates.
+                2391, gaining AM2, or specialising in EV charging, solar PV, fire alarm systems, or
+                AFDD-compliant domestic upgrades (Reg 421.1.7, BS 7671:2018+A4:2026) adds value.
+                Specialist skills command premium rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -524,9 +530,11 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expenses-manager-electrician">business analytics</SEOInternalLink> show
-          you your actual profit margin, average job value, and effective hourly rate across all
-          jobs. Use this data to make pricing decisions based on facts, not feelings.
+          <SEOInternalLink href="/tools/expenses-manager-electrician">
+            business analytics
+          </SEOInternalLink>{' '}
+          show you your actual profit margin, average job value, and effective hourly rate across
+          all jobs. Use this data to make pricing decisions based on facts, not feelings.
         </p>
       </>
     ),
@@ -601,7 +609,7 @@ export default function HourlyRateCalculatorGuidePage() {
   return (
     <GuideTemplate
       title="Hourly Rate Calculator for Electricians | Set Your Rate"
-      description="Calculate your true hourly rate as a UK electrician. Covers overheads, billable hours, profit margin, pricing methods…"
+      description="Calculate your true hourly rate as a UK electrician. Covers overheads, billable hours, profit margin, and pricing methods — so you charge enough to cover every cost and earn the income you deserve."
       datePublished="2026-01-22"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

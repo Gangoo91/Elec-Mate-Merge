@@ -133,11 +133,24 @@ const courseSchema = {
   courseMode: 'online',
   offers: {
     '@type': 'Offer',
-    price: '4.99',
+    price: '5.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
     description: 'From £5.99/month with 7-day free trial',
   },
+};
+
+const howToSchema = {
+  '@type': 'HowTo',
+  name: 'How to prepare for the AM2 assessment',
+  description:
+    'A step-by-step guide to preparing for the JIB/JTL AM2 practical electrical installation assessment.',
+  step: howToSteps.map((s, i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    name: s.name,
+    text: s.text,
+  })),
 };
 
 const faqSchema = {
@@ -201,6 +214,12 @@ export default function AM2ExamPreparationPage() {
             ...breadcrumbSchema,
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            ...howToSchema,
+          })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -215,6 +234,16 @@ export default function AM2ExamPreparationPage() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Prepare for the <span className="text-yellow-400">AM2 Assessment</span> Online
           </h1>
+          <p className="text-base sm:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed mb-5 text-left sm:text-center bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4">
+            The <strong>AM2 (Achievement Measurement 2)</strong> is the practical assessment of
+            competence required to obtain the JIB ECS Gold Card and become a fully qualified
+            Installation Electrician. It is open to candidates who hold a Level&nbsp;3 NVQ/SVQ in
+            Electrical Installation. To pass, you must complete all practical tasks — consumer unit
+            installation, wiring circuits, fault finding, and inspection and testing — within strict
+            time limits and to the required standard of workmanship and safety. Elec-Mate provides
+            timed mock exercises for every AM2 task so you can practise under realistic conditions
+            before assessment day.
+          </p>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             Timed mock exercises for every AM2 task. Consumer unit build, ring final circuit,
             lighting circuit, and fault finding practice with AI-powered feedback. Pass first time.
@@ -369,11 +398,72 @@ export default function AM2ExamPreparationPage() {
           </div>
           <div className="mt-6 space-y-4 text-white leading-relaxed">
             <p>
-              After completing the wiring tasks, you must also carry out inspection and testing of
-              your own work. This includes continuity of protective conductors (R1+R2), insulation
-              resistance, polarity verification, and functional testing. You record your results on
-              a test result schedule and sign off the work. Inaccurate test results or failure to
-              identify your own wiring errors during testing will count against you.
+              After completing the wiring tasks, you must carry out inspection and testing of your
+              own work. The ring final circuit requires the GN3 three-step continuity test: measure
+              end-to-end resistance of each conductor at the consumer unit (step 1), cross-connect
+              line and neutral at the far end and measure at each socket to obtain r1 and rn values
+              (step 2), then repeat with the CPC cross-connected to obtain r1 and r2 values at each
+              socket (step 3). This detects broken rings and figure-of-eight wiring that a simple
+              end-to-end reading cannot reveal (GN3 Reg 2.16). Insulation resistance must be tested
+              at 500 V DC and must be at least 1.0 M&Omega; for circuits up to 500 V (BS 7671 Table
+              64, Reg 643.3.2). You record all results on a test result schedule and sign off the
+              work. Inaccurate results or failure to identify your own wiring errors during testing
+              will count against you.
+            </p>
+          </div>
+          <div className="mt-8">
+            <h3 className="text-xl font-bold text-white mb-4">
+              Sequence of Initial Verification Tests
+            </h3>
+            <p className="text-white leading-relaxed mb-4">
+              BS 7671 Reg 643.1 requires the pre-energisation tests (Regs 643.2 to 643.6) to be
+              carried out in this order (GN3 Reg 2.12):
+            </p>
+            <ol className="space-y-2 text-white text-sm leading-relaxed list-none">
+              <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <span className="font-bold text-yellow-400 shrink-0">1.</span>
+                <span>
+                  <strong>Continuity of protective conductors</strong> — including the three-step
+                  ring test on every ring final circuit (GN3 Reg 2.16).
+                </span>
+              </li>
+              <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <span className="font-bold text-yellow-400 shrink-0">2.</span>
+                <span>
+                  <strong>Insulation resistance</strong> — minimum 1.0 M&Omega; at 500 V DC for
+                  circuits up to 500 V (BS 7671 Table 64). Disconnect or short-out sensitive
+                  equipment before testing.
+                </span>
+              </li>
+              <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <span className="font-bold text-yellow-400 shrink-0">3.</span>
+                <span>
+                  <strong>Polarity</strong> — verify correct connection of line conductor to
+                  single-pole devices and correct terminal identification.
+                </span>
+              </li>
+              <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <span className="font-bold text-yellow-400 shrink-0">4.</span>
+                <span>
+                  <strong>Earth fault loop impedance (Zs) and PSCC</strong> — measured after
+                  energisation. Compare against the tabulated maximums (OSG Appendix B). The GN3
+                  0.80 site-test factor accounts for conductor temperature at the time of
+                  measurement: your measured Zs must not exceed 80% of the BS 7671 table maximum.
+                </span>
+              </li>
+              <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <span className="font-bold text-yellow-400 shrink-0">5.</span>
+                <span>
+                  <strong>RCD operation test</strong> — verify trip time and current using a
+                  calibrated tester. A 30 mA RCD must trip within 40 ms at 5I&Delta;n and within 300
+                  ms at 1I&Delta;n (BS 7671 Table 53.1).
+                </span>
+              </li>
+            </ol>
+            <p className="text-white text-sm leading-relaxed mt-4">
+              Recording these results in the correct order on your test result schedule, with all
+              values legible and correctly attributed to each circuit, is part of what assessors
+              mark at the AM2.
             </p>
           </div>
         </div>
@@ -494,6 +584,14 @@ export default function AM2ExamPreparationPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
             How Elec-Mate Helps You Prepare for the AM2
           </h2>
+          <div className="mb-6 flex items-start gap-3 px-4 py-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <p className="text-white text-sm leading-relaxed">
+              <strong>Written by JIB-qualified electricians</strong> who have completed the AM2
+              process. All technical content — test values, procedures, and regulatory references —
+              is grounded in BS 7671:2018+A4:2026 and the IET Guidance Note 3 (9th edition).
+            </p>
+          </div>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
               Elec-Mate was built by electricians who have been through the AM2 process. We know the

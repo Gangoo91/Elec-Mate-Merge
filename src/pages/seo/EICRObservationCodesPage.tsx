@@ -65,12 +65,12 @@ const faqs = [
   {
     question: 'Should I record a C3 for old wiring colours that have not been re-identified?',
     answer:
-      'This is a common question and the answer depends on whether the old colours create a safety risk. Under BS 7671 Regulation 514.14, where new cables are installed alongside existing cables in the old colour scheme (red/black instead of brown/blue), a warning notice must be fitted at the distribution board stating that two wiring colour schemes are present. If the warning notice is absent and mixed colours are present, this is typically a C2 because it creates a risk of incorrect identification, which could lead to a dangerous situation during future work. If the installation uses the old colour scheme throughout (no mixing) and there is no immediate risk, some inspectors record this as C3. The key factor is whether the old colours could lead to a mistake that causes injury. In an installation with only one colour scheme and no mixing, the risk is lower and C3 may be appropriate. But if colours are mixed without a warning notice, C2 is the correct code.',
+      'This is a common question and the answer depends on whether the old colours create a safety risk. Note that Regulation 514.14 (which previously addressed non-standard colours) was deleted in BS 7671:2018+A4:2026. However, OSG Reg 6.12 (9th Edition, aligned with A4:2026) recommends that where new cables are installed alongside existing cables in the old colour scheme (red/black alongside brown/blue), a warning notice may be affixed at or near the appropriate distribution board to advise maintenance personnel that two colour schemes are present. If mixed colours are present and no warning notice has been fitted, this is typically a C2 because it creates a risk of incorrect identification during future work, which could lead to a dangerous situation. If the installation uses the old colour scheme throughout (no mixing) and there is no immediate risk, some inspectors record this as C3. The key factor is whether the old colours could lead to a mistake that causes injury. In an installation with only one colour scheme and no mixing, the risk is lower and C3 may be appropriate. But if colours are mixed without a warning notice, C2 is the correct code.',
   },
   {
     question: 'How do I decide whether a missing bonding connection is C1 or C2?',
     answer:
-      'The distinction between C1 and C2 for missing bonding depends on the level of immediate danger. C1 (Danger Present) means a risk of injury exists right now. C2 (Potentially Dangerous) means a risk of injury may arise. For bonding: if the metalwork is accessible, could become live due to a fault, and there is no protective conductor connecting it to the earthing system, the question is whether the danger is present right now or only under fault conditions. Main protective bonding to gas, water, and oil services is required by Regulation 411.3.1.2. If main bonding is absent and the service pipes enter the building, metalwork in the property could become live if a fault develops on any connected appliance. Because this scenario is foreseeable and the consequences are severe (electric shock), missing main bonding is typically classified as C2. If there is clear evidence that metalwork is already at a dangerous potential (for example, a tingle when touching a pipe), that is C1 because the danger is present right now, not just potential.',
+      'The distinction between C1 and C2 for missing bonding depends on the level of immediate danger. C1 (Danger Present) means a risk of injury exists right now. C2 (Potentially Dangerous) means a risk of injury may arise. For bonding: if the metalwork is accessible, could become live due to a fault, and there is no protective conductor connecting it to the earthing system, the question is whether the danger is present right now or only under fault conditions. Main protective bonding to gas, water, and oil services is required by Regulation 411.3.1.1 (extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal). If main bonding is absent and the service pipes enter the building, metalwork in the property could become live if a fault develops on any connected appliance. Because this scenario is foreseeable and the consequences are severe (electric shock), missing main bonding is typically classified as C2. If there is clear evidence that metalwork is already at a dangerous potential (for example, a tingle when touching a pipe), that is C1 because the danger is present right now, not just potential.',
   },
   {
     question: 'What happens if I get the classification code wrong?',
@@ -81,6 +81,11 @@ const faqs = [
     question: 'Is "lack of supplementary bonding in a bathroom" a C2 or C3?',
     answer:
       'This is one of the most commonly debated classifications. The answer depends on whether the installation meets the conditions of Regulation 701.415.2, which removed the requirement for supplementary bonding in bathrooms provided that: (1) all circuits in the bathroom are protected by a 30 mA RCD, and (2) the main protective bonding is in place and confirmed to be effective. If both conditions are met, supplementary bonding is no longer required under the current edition of BS 7671, and its absence should not be recorded as an observation at all — or at most as a C3 noting the historical departure. If either condition is NOT met (for example, a socket circuit in a bathroom without RCD protection), then the absence of supplementary bonding becomes a contributing factor to a more significant deficiency that would warrant a C2 classification. The point is that the classification depends on the full picture, not just a single missing item in isolation.',
+  },
+  {
+    question: 'Is absence of RCD protection on a domestic lighting circuit a C2 or C3?',
+    answer:
+      'Since BS 7671:2018+A4:2026 (Regulation 411.3.4), additional protection by an RCD with a rated residual operating current not exceeding 30 mA is mandatory for all AC final circuits supplying luminaires in domestic (household) premises. The regulation uses "shall", creating a firm obligation for new work. For existing installations inspected under an EICR, the absence of this protection is typically classified as C2 rather than C3. Although the circuit may have been compliant when originally installed, the foreseeable risk — a shock or fire fault on an unprotected lighting circuit affecting occupants — is sufficient to justify "Potentially Dangerous". C3 would only be appropriate where there is genuinely no foreseeable risk of injury; given that luminaires are handled by occupants (lamp changes, fitting replacements) and ceiling roses can become live under fault conditions, inspectors and scheme providers generally treat the absence as C2 in domestic premises.',
   },
   {
     question: 'How does Elec-Mate Defect Code AI help with observation codes?',
@@ -158,10 +163,14 @@ const sections = [
         </p>
         <p>
           The codes are defined in BS 7671:2018+A4:2026 and are explained in detail in IET Guidance
-          Note 3: Inspection and Testing (9th Edition, aligned with the 18th Edition of BS 7671).
-          They serve a critical purpose: they communicate the severity of each defect to the person
-          responsible for the installation (the client, landlord, or building owner) and determine
-          the overall assessment of the installation — Satisfactory or Unsatisfactory.
+          Note 3: Inspection and Testing (GN3), which is the normative reference for code
+          definitions. GN3 Table 3.5 sets out the explanation of C1, C2, C3, and FI and shall be
+          consulted for code assignment (GN3 Reg 3.11). Note also that GN3 recognises a fifth
+          outcome — an unlabelled "observation" — for items that do not require a code at all; this
+          is distinct from C3, which does require an improvement to be recommended. The codes serve
+          a critical purpose: they communicate the severity of each defect to the person responsible
+          for the installation (the client, landlord, or building owner) and determine the overall
+          assessment of the installation — Satisfactory or Unsatisfactory.
         </p>
         <p>
           Getting the codes right matters. Under-classifying a dangerous defect as C3 instead of C2
@@ -292,9 +301,9 @@ const sections = [
             'Absence of RCD protection on socket outlet circuits where required by BS 7671 — particularly in bathrooms, kitchens, and circuits supplying equipment intended for outdoor use.',
             'Missing circuit protective conductor (CPC / earth wire) connection at an accessory — the socket or light fitting has no earth, meaning metalwork could become live under a fault condition.',
             'Earth fault loop impedance (Zs) exceeding the maximum permitted value for the protective device — meaning the device may not disconnect within the required time during a fault.',
-            'Absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2.',
+            'Absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.1 — extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal.',
             'A circuit breaker or fuse that is incorrectly rated for the cable it protects — for example, a 32A MCB protecting a 1.0mm squared cable.',
-            'Mixed wiring colours (old red/black with new brown/blue) without the required warning notice at the distribution board.',
+            'Mixed wiring colours (old red/black with new brown/blue) without a warning notice at the distribution board — Regulation 514.14 was deleted in BS 7671:2018+A4:2026, but OSG Reg 6.12 (9th Ed) still recommends affixing a notice where mixed colours exist, and the absence of such a notice creates a risk of incorrect identification during future work.',
             'An RCD that fails to trip within the required time during testing.',
             'Lack of adequate overcurrent protection — for example, a rewirable fuse that has been replaced with incorrectly rated fuse wire.',
           ].map((example, i) => (
@@ -348,11 +357,12 @@ const sections = [
         <h4 className="font-bold text-white text-lg mb-3">Real Examples of C3 Observations</h4>
         <div className="space-y-3 mb-4">
           {[
-            'Absence of surge protection device (SPD) — required for new installations under BS 7671 Regulation 443.4.1 but not dangerous if absent in an existing installation.',
+            'Absence of surge protection device (SPD) — required for new installations under BS 7671 Regulation 443.4 but not dangerous if absent in an existing installation.',
             'Older wiring colours (red/black) throughout the installation where no mixing with new colours has occurred — not dangerous but noted as a departure from the current harmonised colour scheme.',
             'Absence of supplementary bonding in a bathroom where the conditions of Regulation 701.415.2 are met (all circuits RCD protected, main bonding effective) — no longer required by current regulations.',
             'Lack of cable support clips at the intervals specified in the current edition — typically seen in older installations where the cable is securely fixed but not at the precise intervals required today.',
             'Absence of IP-rated accessories in a location where the current edition would require them, but the existing accessories are in serviceable condition and the location does not present an immediate hazard.',
+            'Absence of arc fault detection devices (AFDDs) on AC final circuits — Regulation 421.1.7 (A4:2026) recommends AFDD installation to mitigate fire risk from arc fault currents, but the regulation uses advisory rather than mandatory wording. For new consumer unit replacements this is therefore typically C3; for unaltered existing installations the classification debate continues, though C3 remains the most widely adopted position where no other fire-risk factors are present.',
           ].map((example, i) => (
             <div key={i} className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
@@ -500,6 +510,10 @@ const sections = [
           determine the condition of part of the installation. The installation cannot be confirmed
           as safe until the further investigation is completed and the area in question is properly
           classified as C1, C2, C3, or acceptable. FI observations must be actioned without delay.
+          The authority for this rule is GN3 Reg 5.9, which states that one of the four codes (C1,
+          C2, C3, or FI) shall be allocated to each observation to indicate the degree of urgency
+          for remedial action — and GN3 Reg 3.11 directs inspectors to GN3 Table 3.5 for the
+          detailed explanation of each code.
         </p>
         <SEOAppBridge
           title="Auto overall assessment — no human error"
@@ -566,7 +580,7 @@ const sections = [
                   enough detail that a different electrician could find and rectify the issue: what
                   is missing, where it is located, and (ideally) the relevant BS 7671 regulation
                   reference. For example: "Absence of main protective bonding to incoming gas supply
-                  at meter position — Regulation 411.3.1.2" is far more useful than "no bonding."
+                  at meter position — Regulation 411.3.1.1" is far more useful than "no bonding."
                 </p>
               </div>
             </div>

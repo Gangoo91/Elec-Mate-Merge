@@ -33,6 +33,7 @@ const tocItems = [
   { id: 'cooker-control-unit', label: 'Cooker Control Unit Requirements' },
   { id: 'hob-and-oven', label: 'Hob and Oven on the Same Circuit' },
   { id: 'circuit-protection', label: 'Circuit Protection' },
+  { id: 'afdd-a4-2026', label: 'AFDD Requirement (A4:2026)' },
   { id: 'installation-method', label: 'Installation Method and Cable Route' },
   { id: 'voltage-drop', label: 'Voltage Drop Considerations' },
   { id: 'common-mistakes', label: 'Common Mistakes' },
@@ -46,6 +47,8 @@ const keyTakeaways = [
   'A single circuit can supply both a hob and an oven provided they are in the same room and the total load after diversity does not exceed the cable and protective device ratings.',
   'The cooker control unit must be positioned within 2 metres of the cooker and must include a double-pole switch for isolation.',
   "Elec-Mate's cable sizing calculator and diversity factor calculator handle the cooker circuit design calculations automatically, including correction factors and voltage drop verification.",
+  'The maximum Zs from BS 7671 Table 41.3 for a 32A Type B MCB is 1.37 ohms. On site, apply the GN3 0.80 cold-conductor factor: your loop tester reading must not exceed 1.10 ohms (1.37 × 0.80). Omitting this factor is the most common cause of incorrect EICR pass/fail decisions on cooker circuits.',
+  'BS 7671 A4:2026 introduced Reg 421.1.7, recommending arc fault detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate fire risk from arc fault currents. A CCU circuit with an integral socket outlet in a domestic kitchen warrants AFDD consideration.',
 ];
 
 const faqs = [
@@ -77,7 +80,7 @@ const faqs = [
   {
     question: 'What MCB type should I use for a cooker circuit?',
     answer:
-      'A Type B MCB (or Type B RCBO) is the standard choice for a domestic cooker circuit. Type B MCBs trip at 3 to 5 times their rated current for magnetic (instantaneous) tripping, which is appropriate for resistive loads like cooker elements. A 32A Type B MCB will trip instantaneously at fault currents of 96A to 160A, and will disconnect within 0.4 seconds at the maximum Zs value given in Table 41.3 of BS 7671 (1.37 ohms for a 32A Type B). Type C MCBs are not required for cooker circuits because cooker elements do not have high inrush currents. Using a Type C unnecessarily would mean the prospective fault current must be higher to achieve the same disconnection time, which could be a problem on installations with higher earth fault loop impedance.',
+      'A Type B MCB (or Type B RCBO) is the standard choice for a domestic cooker circuit. Type B MCBs trip at 3 to 5 times their rated current for magnetic (instantaneous) tripping, which is appropriate for resistive loads like cooker elements. A 32A Type B MCB will trip instantaneously at fault currents of 96A to 160A. The maximum earth fault loop impedance (Zs) from BS 7671 Table 41.3 for a 32A Type B is 1.37 ohms — this applies to both the 0.4s (circuit with socket outlet) and 5s (fixed-equipment-only circuit) disconnection criteria. When verifying on site with a loop tester, apply the GN3 0.80 cold-conductor factor: the site pass limit is 1.10 ohms (1.37 × 0.80). Type C MCBs are not required for cooker circuits because cooker elements do not have high inrush currents. Using a Type C unnecessarily would mean the prospective fault current must be higher to achieve the same disconnection time, which could be a problem on installations with higher earth fault loop impedance.',
   },
   {
     question: 'Can I use a 45A circuit for a cooker instead of 32A?',
@@ -88,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for cooker circuits with diversity, correction factors, and voltage drop.',
@@ -178,10 +181,13 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
+          The{' '}
+          <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
           for a cooker circuit is determined by the design current (after diversity), the
           installation method (
-          <SEOInternalLink href="/guides/reference-methods-cable-installation">reference method</SEOInternalLink>
+          <SEOInternalLink href="/guides/reference-methods-cable-installation">
+            reference method
+          </SEOInternalLink>
           ), and the applicable{' '}
           <SEOInternalLink href="/guides/correction-factors-bs-7671">
             correction factors
@@ -424,21 +430,75 @@ const sections = [
               <span>
                 <strong>RCD protection</strong> — required if the cable is concealed in a wall at
                 less than 50 mm depth without earthed metallic covering, and also required if the
-                cooker control unit includes a socket outlet (BS 7671 Section 411).
-                In modern RCBO boards, this is provided automatically.
+                cooker control unit includes a socket outlet (BS 7671 Section 411). In modern RCBO
+                boards, this is provided automatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Disconnection time</strong> — 0.4 seconds for circuits supplying socket
-                outlets, 5 seconds for circuits supplying fixed equipment only. A cooker circuit
-                with a cooker control unit that includes a socket must achieve 0.4 seconds. The
-                maximum Zs for a 32A Type B MCB at 0.4 seconds is 1.37 ohms.
+                <strong>Disconnection time</strong> — under BS 7671 Reg 411.3.2.2/411.3.2.3, final
+                circuits with one or more socket outlets (up to 63A) require disconnection within
+                0.4 seconds; circuits supplying only fixed connected equipment (no socket outlet, up
+                to 32A) may use 5 seconds (Reg 411.3.2.3). In practice: a cooker-only circuit with
+                no CCU socket qualifies for 5s, while a CCU with an integral 13A socket must achieve
+                0.4s. The maximum Zs from BS 7671 Table 41.3 for a 32A Type B MCB is 1.37 ohms. When
+                measuring on site (cold conductors), apply the GN3 0.80 factor: the cold-measured
+                pass limit is <strong>1.10 ohms</strong> (1.37 &times; 0.80) — this is the value to
+                compare against your loop tester reading.
               </span>
             </li>
           </ul>
         </div>
+      </>
+    ),
+  },
+  {
+    id: 'afdd-a4-2026',
+    heading: 'Arc Fault Detection Devices (AFDDs) — A4:2026 Update',
+    content: (
+      <>
+        <p>
+          BS 7671 Amendment A4:2026 introduced Regulation 421.1.7, which recommends the installation
+          of arc fault detection devices (AFDDs) on AC final circuits of a fixed installation to
+          mitigate the risk of fire caused by arc fault currents. The regulation is advisory (it
+          uses &ldquo;recommending&rdquo; rather than &ldquo;shall&rdquo;) but represents current
+          best practice and is increasingly expected by building control and fire risk assessors.
+        </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-3">
+            AFDD Consideration for Cooker Circuits
+          </h3>
+          <div className="space-y-3 text-white text-sm">
+            <p>
+              <strong>When does it apply?</strong> Reg 421.1.7 covers AC final circuits of a fixed
+              installation. A cooker circuit is a final circuit, so the recommendation applies.
+              Where the cooker control unit (CCU) includes an integral 13A socket outlet, the
+              circuit is also a socket circuit — making the case for AFDD consideration stronger.
+            </p>
+            <p>
+              <strong>What does an AFDD do?</strong> It detects the high-frequency signature of
+              series and parallel arc faults — the type of fault that a standard MCB or RCD cannot
+              detect because the fault current may be below the trip threshold. Arcing faults in
+              appliance flexes and wiring are a leading cause of electrical fires.
+            </p>
+            <p>
+              <strong>Practical installation note:</strong> AFDDs are available as combined
+              AFDD/RCBO modules for most consumer unit formats. On a new installation or full
+              rewire, fitting an AFDD/RCBO on the cooker circuit adds minimal cost and satisfies the
+              A4:2026 recommendation. On an EICR, the absence of an AFDD on a cooker circuit is not
+              itself a Code 2 defect, but the recommendation should be noted.
+            </p>
+          </div>
+        </div>
+        <p>
+          For further detail on AFDD requirements across domestic installations, including which
+          circuits are most likely to benefit, see the{' '}
+          <SEOInternalLink href="/guides/afdd-arc-fault-detection-devices">
+            AFDD guide
+          </SEOInternalLink>
+          .
+        </p>
       </>
     ),
   },

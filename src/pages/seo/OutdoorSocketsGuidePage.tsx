@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for outdoor circuits with burial depth derating and voltage drop checks.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on cable runs to outdoor sockets, especially long garden cable routes.',
@@ -606,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the cable for outdoor socket circuits with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic derating for burial depth and voltage drop check on long garden runs.
@@ -622,11 +622,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote outdoor socket installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Materials, cable, trenching, RCBO, testing, and certification — itemised with
-                  your margins. Send a professional PDF quote on the spot.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Materials, cable, trenching, RCBO, testing, and certification — itemised with your
+                  margins. Send a professional PDF quote on the spot.
                 </p>
               </div>
             </div>

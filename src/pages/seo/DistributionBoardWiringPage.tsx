@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'RCBO boards provide individual RCD and overcurrent protection per circuit, eliminating the nuisance tripping and loss-of-supply issues that affect split-load and dual-RCD configurations.',
-  'All consumer units in domestic premises must be constructed from non-combustible material (typically metal) under Amendment 4 of BS 7671:2018.',
+  'All consumer units in domestic premises must be constructed from non-combustible material (typically metal) under Amendment 1 of BS 7671:2018 (Regulation 421.1.201).',
   'Circuit labelling must be clear, permanent, and durable — Regulation 514.9.1 requires a chart or table at or near the distribution board identifying each circuit and the area it serves.',
   'Consumer units must be type-tested assemblies complying with BS EN 61439-3 — assembling a consumer unit from separate components (a "mix and match" approach) does not meet this requirement unless the assembly is verified by the manufacturer.',
   "Elec-Mate's AI circuit designer generates a complete circuit schedule with suggested board layout, circuit allocation, and cable sizing for any domestic or commercial installation.",
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Do I need to install an SPD in the consumer unit?',
     answer:
-      'BS 7671:2018+A4:2026 requires a risk assessment for surge protection (Regulation 443) on all new installations and alterations. If the consequence of a transient overvoltage would be serious — for example, in installations where loss of life, loss of public services, loss of IT equipment, or loss of high-value equipment would result — a surge protective device (SPD) must be installed. In most domestic installations, the risk assessment will conclude that an SPD is required, because modern homes contain sensitive electronic equipment (computers, smart home devices, AV systems) that can be damaged by transient overvoltages. A Type 2 SPD is installed at the consumer unit on the supply side of the protective devices. Some consumer unit manufacturers now offer boards with integrated SPD mounting positions. The SPD must be installed with appropriate overcurrent protection (a dedicated MCB or fuse) and a disconnector to indicate SPD failure.',
+      'Regulation 443 of BS 7671:2018+A4:2026 requires a risk assessment to determine whether surge protection is needed — it does not impose a blanket requirement on every installation. Regulation 443.4 mandates an SPD where a transient overvoltage could result in loss of life, interruption of public services, commercial or industrial disruption, or affect a large number of co-located individuals. For all other cases (including many domestic installations) a risk assessment must be carried out to determine whether protection is required. Regulation 443.4 also contains a specific exception for single dwelling units in certain situations. In practice, most modern domestic risk assessments will conclude that an SPD is warranted given the prevalence of sensitive electronic equipment, but the risk assessment is the trigger — not an automatic rule. Where an SPD is required, a Type 2 SPD is installed at the consumer unit on the supply side of the protective devices, with its own overcurrent protection and a status indicator.',
   },
   {
     question: 'Can I mix MCBs and RCBOs in the same consumer unit?',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes for all circuits in the distribution board with correction factors and voltage drop.',
@@ -235,6 +235,26 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Arc Fault Detection Devices (AFDDs) — Regulation 421.1.7
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs in AC
+                final circuits of a fixed installation to mitigate the risk of fire caused by arc
+                fault currents. The wording is recommendatory rather than mandatory, but it
+                represents the A4:2026 direction of travel. AFDDs fit within the consumer unit
+                alongside RCBOs, and several manufacturers now offer combined RCBO+AFDD devices that
+                provide overcurrent, RCD, and arc-fault protection in a single module. Installing
+                AFDDs on high-risk circuits (bedrooms, concealed wiring, older installations) is
+                considered best practice under the current standard.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           The trend in the UK is strongly towards full RCBO boards. The cost premium over dual-RCD
           boards has reduced significantly as RCBO prices have fallen. For new installations and
@@ -331,18 +351,23 @@ const sections = [
                 <strong>Circuit chart (Regulation 514.9.1)</strong> — a durable chart or table must
                 be provided at or near the distribution board. It must identify each circuit by
                 number, describe the area or function served, state the protective device type and
-                rating, and record the cable type and size.
+                rating, and record the cable type and size. Note: A4:2026 amended Regulation 514.9.1
+                to introduce an exception for domestic (household) premises in certain situations —
+                verify the current amended text before citing this requirement on EICRs for domestic
+                properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Warning notices (Regulation 514.12)</strong> — the following notices must be
-                permanently fixed at the consumer unit: "SAFETY ELECTRICAL CONNECTION — DO NOT
-                REMOVE" (at the main earthing terminal), dual supply warning (if applicable), RCD
-                test notice ("This installation, or part of it, is protected by a device which
-                automatically switches off the supply if an earth fault develops. Test quarterly by
-                pressing the button marked 'T' or 'Test'").
+                <strong>Warning notices</strong> — the "SAFETY ELECTRICAL CONNECTION — DO NOT
+                REMOVE" notice must be permanently fixed at or near every earthing conductor
+                connection and every bonding conductor connection to an extraneous-conductive-part
+                (Regulation 514.13.1). Regulation 514.12 requires the periodic inspection and
+                testing notice, including the RCD test notice ("This installation, or part of it, is
+                protected by a device which automatically switches off the supply if an earth fault
+                develops. Test quarterly by pressing the button marked 'T' or 'Test'") and, where
+                applicable, the dual supply warning.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -476,10 +501,18 @@ const sections = [
           <SEOInternalLink href="/guides/spd-surge-protection">
             Surge protective devices (SPDs)
           </SEOInternalLink>{' '}
-          are now required in most new domestic installations under BS 7671:2018+A4:2026 (Regulation
-          443). The SPD is installed at the distribution board to protect against transient
-          overvoltages caused by lightning strikes, switching surges, and other disturbances on the
-          supply network.
+          are addressed under Regulation 443 of BS 7671:2018+A4:2026, which requires a risk
+          assessment to determine whether surge protection is needed. Where the risk assessment
+          concludes that a transient overvoltage could cause loss of life, interruption of public
+          services, commercial or industrial disruption, or affect a large number of people
+          (Regulation 443.4), an SPD must be installed. For single dwelling units that do not meet
+          those criteria, Regulation 443.4 contains an exception — though in practice many modern
+          domestic installations will require an SPD because of the sensitive electronic equipment
+          present. See the{' '}
+          <SEOInternalLink href="/guides/spd-surge-protection">dedicated SPD guide</SEOInternalLink>{' '}
+          for the full risk-assessment methodology. The SPD is installed at the distribution board
+          to protect against transient overvoltages caused by lightning strikes, switching surges,
+          and other disturbances on the supply network.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -626,7 +659,7 @@ const sections = [
               <span>
                 <strong>Inadequate prospective fault current rating.</strong> The consumer unit and
                 its protective devices must be rated for the{' '}
-                <SEOInternalLink href="/prospective-fault-current-calculator">
+                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                   prospective fault current (PSCC)
                 </SEOInternalLink>{' '}
                 at the origin. If the PSCC exceeds the rated short-circuit capacity of the devices,

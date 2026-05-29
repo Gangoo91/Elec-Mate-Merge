@@ -396,7 +396,7 @@ const sections = [
         <p>
           The <strong>electrical installation</strong> includes fitting a dedicated circuit from the
           consumer unit, selecting the correct{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">cable size</SEOInternalLink> for
+          <SEOInternalLink href="/tools/cable-sizing-calculator">cable size</SEOInternalLink> for
           the run length and installation method, installing the protective device (typically a 32A
           Type B or Type A RCBO), and mounting and connecting the charge point unit.
         </p>
@@ -441,7 +441,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for EV charger circuits with voltage drop verification.',
@@ -522,7 +522,7 @@ export default function EVChargingCoursePage() {
           <span className="text-yellow-400">IET Code of Practice</span>
         </>
       }
-              noindex={true}
+      noindex={true}
       heroSubtitle="Master EV charger installation with comprehensive IET Code of Practice training. Charging modes 1-4, earthing and PME restrictions, load management, smart charging regulations, and BS 7671 compliance. 7 modules with video content, interactive quizzes, and AI-powered study tools."
       readingTime={14}
       courseDuration="10 hours"

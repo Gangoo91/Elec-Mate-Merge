@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for dedicated circuits supplying smart home hubs and equipment.',
     icon: Calculator,
@@ -401,6 +401,27 @@ const sections = [
           a 24-port patch panel, a PoE network switch, and 3 ceiling-mounted access points. Total
           materials cost: £400 to £700. Total installed cost including labour: £1,500 to £3,000.
         </p>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <p className="text-orange-300 text-sm leading-relaxed">
+            <strong>Segregation requirement:</strong> Data cables (Cat6) must be run in separate
+            containment from mains power cables. Running both in the same trunking or conduit is a
+            common on-site mistake and a breach of OSG 9th Ed (A4) Reg 7.6, which requires
+            containment to allow separation of power, data, and other circuits. Use dedicated data
+            trunking or conduit, or maintain the separation distances specified by the containment
+            manufacturer.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Pro tip — RCBOs per lighting zone:</strong> Multi-zone smart lighting
+            installations create many independent lighting circuits. Protecting these with a single
+            upstream RCD means that one faulty smart switch or driver can trip the whole lighting
+            ring. BS 7671:2018+A4:2026 Reg 531.3.1.202(b) specifically recommends considering RCBOs
+            for individual final circuits in residential premises to reduce unwanted tripping.
+            Specify one RCBO per smart lighting circuit — the modest extra cost avoids call-backs
+            and nuisance trips.
+          </p>
+        </div>
       </>
     ),
   },
@@ -490,6 +511,29 @@ const sections = [
                 accordance with BS 7671.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>30 mA RCD on all lighting circuits (A4:2026 Reg 411.3.4)</strong> — under BS
+                7671:2018+A4:2026, every AC final circuit supplying luminaires in domestic premises{' '}
+                <em>shall</em> have additional protection by an RCD with a rated residual operating
+                current not exceeding 30 mA. This applies to every smart lighting circuit and to any
+                existing lighting circuit that is modified when installing smart switches. Consumer
+                units that pre-date A4:2026 and lack RCD protection on lighting circuits must be
+                upgraded as part of the installation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Electrical safety tests — not just functional tests</strong> — replacing a
+                smart switch is not complete until BS 7671 testing is carried out: CPC continuity,
+                insulation resistance, and a functional test of the protective device. A common
+                on-site mistake is testing only that the app controls the light, with no electrical
+                safety tests recorded. An EIC or Minor Works Certificate cannot be issued without
+                the test results.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -514,7 +558,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size dedicated circuits for smart home equipment racks and PoE switches with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Verify voltage drop on longer Cat6 PoE runs.
@@ -552,7 +596,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Smart Home Wiring Cost UK 2026 | Labour & Materials"
-          description="Smart home wiring costs £800–£3,500 installed. Compare labour rates, cable specifications, and BS 7671:2018+A4:2026 compliance for accurate project quotes."
+          description="Smart home wiring costs from £500 (single room) to £5,000+ (whole house). Compare labour rates, cable specifications, and BS 7671:2018+A4:2026 compliance for accurate project quotes."
           icon={Home}
         />
       </>
@@ -567,8 +611,8 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Installation Cost UK 2026: £800-£3,500 Prices"
-      description="UK smart home installation cost 2026: single-room retrofits from £800, whole-house Cat6 + lighting + hub installs up to £3,500. Fair-margin pricing for UK electricians + clients."
+      title="Smart Home Installation Cost UK 2026: £500–£5,000+ Prices"
+      description="UK smart home installation cost 2026: single-room smart lighting from £500, whole-house Cat6 + lighting + hub installs £5,000+. Fair-margin pricing for UK electricians + clients."
       datePublished="2026-03-27"
       dateModified="2026-05-24"
       breadcrumbs={breadcrumbs}

@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'How does the AI handle EV charger circuit design?',
     answer:
-      'EV charger circuits have specific requirements that the Circuit Designer addresses automatically. For a typical 7.4 kW single-phase charger drawing 32A, the designer applies a continuous load factor (the charger operates at rated current for extended periods, so the cable must be rated for sustained loading). It specifies Type A RCD protection as a minimum, or Type B where required by the charger manufacturer for DC fault current protection. The cable sizing accounts for the full route from the consumer unit to the charging point, including any derating for thermal insulation where the cable passes through insulated walls or loft spaces. For installations requiring a dedicated supply (such as a 22 kW three-phase charger), the designer includes the supply assessment and any upgrades needed to the main incoming supply.',
+      'EV charger circuits have specific requirements under BS 7671 Section 722 that the Circuit Designer addresses automatically. For a typical 7.4 kW single-phase charger drawing 32A, the designer applies a continuous load factor (the charger operates at rated current for extended periods, so the cable must be rated for sustained loading). It specifies Type A RCD protection as a minimum, or Type B where required by the charger manufacturer for DC fault current protection. The cable sizing accounts for the full route from the consumer unit to the charging point, including any derating for thermal insulation where the cable passes through insulated walls or loft spaces. For installations requiring a dedicated supply (such as a 22 kW three-phase charger), the designer includes the supply assessment and any upgrades needed to the main incoming supply. BS 7671 Section 722 also includes specific requirements for TN-C-S (PME) earthing systems: outdoor EV charging equipment on a PME supply requires particular consideration of the earthing arrangement and protective measures, as the PME earth may not be suitable without additional precautions. The designer flags this when the earthing system is identified as TN-C-S and the charger is located outdoors.',
   },
   {
     question: 'What earthing systems does the Circuit Designer support?',
@@ -61,7 +61,18 @@ const faqs = [
   {
     question: 'How does voltage drop verification work?',
     answer:
-      'The Circuit Designer automatically verifies voltage drop for every circuit against the limits specified in BS 7671 Appendix 12. The standard limits are 3% for lighting circuits and 5% for all other circuits, measured from the origin of the installation to the furthest point of the circuit. The designer calculates voltage drop using the millivolt-per-ampere-per-metre (mV/A/m) values from the cable data tables in Appendix 4, multiplied by the design current and the cable route length. For longer cable runs — such as an outbuilding supply or a submain to a separate distribution board — the designer accounts for the cumulative voltage drop across all sections of the circuit. If the calculated voltage drop exceeds the permitted limit, the designer automatically upsizes the cable to bring the voltage drop within limits and recalculates all other parameters to confirm compliance.',
+      'The Circuit Designer automatically verifies voltage drop for every circuit against the limits set by BS 7671. The statutory requirement is in Regulation 525, and the numeric limits — 3% for lighting circuits and 5% for all other circuits — are stated in Appendix 4, Section 6.4 of BS 7671:2018+A4:2026. The designer calculates voltage drop using the millivolt-per-ampere-per-metre (mV/A/m) values from the cable data tables in Appendix 4, multiplied by the design current and the cable route length. For longer cable runs — such as an outbuilding supply or a submain to a separate distribution board — the designer accounts for the cumulative voltage drop across all sections of the circuit. If the calculated voltage drop exceeds the permitted limit, the designer automatically upsizes the cable to bring the voltage drop within limits and recalculates all other parameters to confirm compliance.',
+  },
+  {
+    question:
+      'Does the circuit designer apply the A4:2026 requirement for RCD protection on lighting circuits?',
+    answer:
+      'Yes. Regulation 411.3.4 of BS 7671:2018+A4:2026 introduces a mandatory requirement that, within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. This is a new A4:2026 obligation — not present in earlier editions — and the Circuit Designer applies it automatically when designing a domestic installation. When producing the consumer unit schedule, the designer specifies RCBO protection (or RCD coverage from a split-load board) for every lighting circuit in a domestic property, not only for socket-outlet circuits. The requirement uses "shall" and is not subject to a risk-assessment exception; it applies to all domestic lighting circuits regardless of installation method.',
+  },
+  {
+    question: 'When does the designer specify AFDDs, and does it need to be recorded on the EIC?',
+    answer:
+      'Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends the installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire due to arc fault currents. The regulation uses recommendatory rather than mandatory language, but many network operators and insurers treat it as a practical requirement for high-risk premises (houses in multiple occupation, care homes, and similar). Where the Circuit Designer recommends or specifies AFDDs for socket-outlet final circuits, this must be recorded on the Electrical Installation Certificate: Regulation 133.1.3 of BS 7671:2018+A4:2026 requires that certain equipment usages — including AFDD installation — shall be recorded on the appropriate Part 6 electrical certification. The consumer unit schedule output from the Circuit Designer flags AFDD-protected circuits and reminds you to declare this on the EIC.',
   },
 ];
 
@@ -200,6 +211,21 @@ export default function AICircuitDesignerPage() {
               Part of 8 Elec-AI agents
             </span>
           </div>
+        </div>
+      </section>
+
+      {/* Answer block — above the fold for featured snippet */}
+      <section className="px-5 pb-4">
+        <div className="max-w-3xl mx-auto p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-white text-sm leading-relaxed">
+          The AI Circuit Designer generates fully verified BS 7671:2018+A4:2026-compliant circuit
+          designs from a plain-English description of your installation. It produces a complete
+          consumer unit schedule — including cable sizes, protective device types and ratings,
+          voltage drop figures (verified against Appendix 4, Section 6.4 limits of 3% for lighting
+          and 5% for other circuits), and earth fault loop impedance values — ready to transfer
+          directly onto an Electrical Installation Certificate. All A4:2026 requirements are applied
+          automatically, including RCD protection on domestic lighting circuits (Reg 411.3.4) and
+          bidirectional device selection for installations with solar PV or battery storage (Reg
+          530.3.201).
         </div>
       </section>
 
@@ -380,11 +406,13 @@ export default function AICircuitDesignerPage() {
             </p>
             <p>
               The designer also applies the RCD protection requirements of BS 7671. Under Regulation
-              411.3.2, additional protection by an RCD with a rated residual operating current not
-              exceeding 30 mA must be provided for socket outlets with a rated current not exceeding
-              32A, mobile equipment with a rated current not exceeding 32A for use outdoors, and
-              cables concealed in walls at a depth less than 50mm where the wall does not have
-              earthed metallic covering. The designer specifies RCBO protection (combined MCB and
+              411.3.3 (revised in A4:2026), additional protection by an RCD with a rated residual
+              operating current not exceeding 30 mA is required for socket outlets with a rated
+              current not exceeding 32A. For mobile equipment with a rated current not exceeding 32A
+              for use outdoors, RCD protection is similarly required (Regulation 411.3.3 and OSG
+              Regulation 830.3.201). In non-dwelling premises the requirement may be omitted where a
+              documented risk assessment determines RCD protection is not necessary; in dwellings,
+              no such exception applies. The designer specifies RCBO protection (combined MCB and
               RCD in a single device) where individual circuit RCD protection is needed, or
               recommends a split-load consumer unit configuration with appropriate RCD coverage.
             </p>
@@ -394,8 +422,10 @@ export default function AICircuitDesignerPage() {
               RCDs detect only AC residual currents, Type A RCDs detect AC and pulsating DC residual
               currents, and Type B RCDs detect AC, pulsating DC, and smooth DC residual currents.
               The designer selects the correct type based on the equipment connected, in accordance
-              with BS 7671 Regulation 531.3 and the new Regulation 530.3.2 added by Amendment 4:2024
-              covering bidirectional and unidirectional protective devices.
+              with BS 7671 Regulation 531.3 and Regulation 530.3.201 introduced by A4:2026, which
+              requires selection and erection of protective devices to take account of whether a
+              device is unidirectional or bidirectional — essential for installations with reverse
+              power flow such as battery storage and solar PV arrays.
             </p>
           </div>
         </div>
@@ -437,18 +467,22 @@ export default function AICircuitDesignerPage() {
             </p>
             <p>
               Amendment 4:2024 (A4:2026) is particularly relevant for the Circuit Designer because
-              it adds Regulation 530.3.2, which introduces requirements for bidirectional and
-              unidirectional protective devices. This is critical for modern installations
-              incorporating battery energy storage systems, solar PV arrays, and other sources of
-              reverse power flow where standard unidirectional devices may not provide adequate
-              protection. The Circuit Designer automatically applies these requirements when you
-              describe an installation that includes such equipment.
+              it introduces several new requirements. Regulation 530.3.201 requires that the
+              selection and erection of protective devices shall take account of whether a device is
+              unidirectional or bidirectional — critical for installations with battery energy
+              storage, solar PV arrays, and other sources of reverse power flow. Regulation 411.3.4
+              introduces a mandatory requirement for RCD protection (rated residual operating
+              current not exceeding 30 mA) on all domestic lighting circuits. Regulation 411.3.3 has
+              been revised to apply to all socket outlets rated not exceeding 32A, with the
+              exception to omit RCD protection limited to non-dwelling premises where a documented
+              risk assessment supports it. The Circuit Designer automatically applies all of these
+              requirements.
             </p>
           </div>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A4:2026 (18th Edition)',
-              'Amendment 4:2024 — Regulation 530.3.2',
+              'Amendment 4:2024 — Regs 411.3.3, 411.3.4, 530.3.201',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',
@@ -517,7 +551,6 @@ export default function AICircuitDesignerPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -525,14 +558,30 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/cooker-circuit-guide">Cooker Circuit Guide</SEOInternalLink>
-            <SEOInternalLink href="/circuit-breaker-types">Types of Circuit Breakers UK</SEOInternalLink>
-            <SEOInternalLink href="/lighting-circuit-installation">Lighting Circuit Installation Guide — LED, Dimmers, Outdoor, Emergency</SEOInternalLink>
-            <SEOInternalLink href="/guides/overloaded-circuit-signs">Overloaded Circuit</SEOInternalLink>
-            <SEOInternalLink href="/guides/radial-circuit-explained">Radial Circuit Explained</SEOInternalLink>
-            <SEOInternalLink href="/ring-circuit-calculator">/ring-circuit-calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/what-is-a-circuit-breaker">What Is a Circuit Breaker?</SEOInternalLink>
-            <SEOInternalLink href="/tools/circuit-breaker-sizing-calculator">Circuit Breaker Sizing Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/cooker-circuit-guide">
+              Cooker Circuit Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/circuit-breaker-types">
+              Types of Circuit Breakers UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/lighting-circuit-installation">
+              Lighting Circuit Installation Guide — LED, Dimmers, Outdoor, Emergency
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/overloaded-circuit-signs">
+              Overloaded Circuit
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/radial-circuit-explained">
+              Radial Circuit Explained
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/ring-circuit-calculator">
+              /ring-circuit-calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/what-is-a-circuit-breaker">
+              What Is a Circuit Breaker?
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/circuit-breaker-sizing-calculator">
+              Circuit Breaker Sizing Calculator
+            </SEOInternalLink>
           </div>
         </div>
       </section>

@@ -10,12 +10,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/adiabatic-equation-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/agricultural-electrical-installation</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -167,12 +161,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/cable-sizing-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/cable-tray-installation</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -293,12 +281,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/conduit-fill-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/conduit-installation-guide</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -407,22 +389,8 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
-  <url>
-    <loc>https://www.elec-mate.com/diversity-factor-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
   <url>
     <loc>https://www.elec-mate.com/eal-level3-guide</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.elec-mate.com/earth-loop-impedance-calculator</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -4901,12 +4869,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/job-profitability-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/kitchen-electrical-requirements</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -5043,12 +5005,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/max-demand-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/mcs-certification-guide</loc>
@@ -5207,12 +5163,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/power-factor-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/power-factor-correction</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -5223,12 +5173,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/prospective-fault-current-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/pub-electrical-cost</loc>
@@ -5355,12 +5299,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/ring-circuit-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/school-electrical-cost</loc>
@@ -5557,12 +5495,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/thermostat-wiring-guide</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/three-phase-power-calculator</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -6073,12 +6005,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/trunking-fill-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/two-way-switch-wiring</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -6107,12 +6033,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/voltage-drop-calculator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/warehouse-electrical-installation</loc>

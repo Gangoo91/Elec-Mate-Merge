@@ -10,8 +10,7 @@ const modified = '2026-05-18';
 
 export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-ev-charger',
-  title:
-    'What Cable Size Do I Need for an EV Charger? (7 kW, 22 kW)',
+  title: 'What Cable Size Do I Need for an EV Charger? (7 kW, 22 kW)',
   description:
     'Cable size for UK EV chargers explained: 6 mm² for most 7 kW domestic chargers, 10 mm² or 16 mm² for 22 kW three-phase.',
   datePublished: published,
@@ -29,7 +28,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
     'Typical 7 kW single-phase domestic EV charger: 32 A rated, 6 mm² twin-and-earth or 6 mm² SWA on most short runs — verify with full BS 7671 Appendix 4 calculation for your specific cable route, reference method and length.',
     'Typical 22 kW three-phase EV charger: 32 A per phase, 10 mm² four-core SWA for most short runs, stepping to 16 mm² for longer runs (typically >20-30 m depending on derating).',
     'BS 7671 Section 722 EV Charging governs the installation. Regulation 722.411.4.1 addresses PME open-PEN risk mitigation — a real concern on PME supplies feeding outdoor EV chargers.',
-    'Three sizing checks matter: current-carrying capacity (Iz after derating), voltage drop (typically ≤ 3% from origin to charge point), and disconnection time at the calculated Zs.',
+    'Three sizing checks matter: current-carrying capacity (Iz after derating), voltage drop (≤ 5% from origin to charge point per Regulation 525 / Table 4Ab; design to ≤ 3% to leave headroom), and disconnection time at the calculated Zs.',
     'Reference method matters: cable in trunking vs buried direct vs free air all give different Iz values. The A4:2026 EICR/EIC Schedule of Circuit Details has a dedicated "Reference method" column to record the chosen method.',
     'Cable type matters: 6242Y (twin-and-earth) for clipped-direct routes through habitable spaces is fine; 6241X (SWA) for outdoor / buried / exposed runs; 6491X (single core) only inside conduit or trunking.',
   ],
@@ -41,8 +40,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'For the typical UK domestic EV charger installation, the cable size most often specified is:',
+          text: 'For the typical UK domestic EV charger installation, the cable size most often specified is:',
         },
         {
           type: 'list',
@@ -59,8 +57,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'These are starting points, not final answers',
-          text:
-            'Every EV charger installation must have its cable size calculated against BS 7671 Appendix 4 for the specific route, reference method, ambient temperature, grouping factor and load. Use the calculator linked at the end of this guide or perform the full design calculation yourself.',
+          text: 'Every EV charger installation must have its cable size calculated against BS 7671 Appendix 4 for the specific route, reference method, ambient temperature, grouping factor and load. Use the calculator linked at the end of this guide or perform the full design calculation yourself.',
         },
       ],
     },
@@ -71,15 +68,14 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Cable sizing for an EV charger (or any other load) is a three-stage check. The cable size you select must satisfy all three:',
+          text: 'Cable sizing for an EV charger (or any other load) is a three-stage check. The cable size you select must satisfy all three:',
         },
         {
           type: 'list',
           ordered: true,
           items: [
             '**Current-carrying capacity (Iz)** — the cable must carry the design current Ib continuously without exceeding its maximum permitted conductor temperature. Iz is read from BS 7671 Appendix 4 tables (4D1A / 4D2A / 4D4A / 4E4A etc.) for the chosen cable type and reference method, then adjusted for ambient temperature (Ca) and grouping (Cg).',
-            '**Voltage drop** — total voltage drop from the origin of the installation to the load must not exceed 3% for lighting circuits or 5% for other circuits (Regulation 525). For an EV charger, you typically design to 3% to leave headroom for the addition of other loads.',
+            '**Voltage drop** — total voltage drop from the origin of the installation to the load must not exceed 3% for lighting circuits or 5% for other circuits (Regulation 525 / Appendix 4 Table 4Ab). An EV charger is an "other" circuit so the technical limit is 5%, but designing to 3% leaves headroom for the addition of other loads.',
             '**Disconnection time at calculated Zs** — the protective device must disconnect within the time specified in Tables 41.2 to 41.6 for the relevant disconnection time (0.4 s for fixed equipment ≤32 A in TN systems). This means Zs at the charger end must be below the maximum permitted Zs for the device.',
           ],
         },
@@ -92,25 +88,23 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A typical UK domestic EV charger installation: 7 kW, 32 A, 230 V, single-phase. Cable route 20 m from consumer unit to outdoor wall-mounted charge point on a TN-C-S (PME) supply.',
+          text: 'A typical UK domestic EV charger installation: 7 kW, 32 A, 230 V, single-phase. Cable route 20 m from consumer unit to outdoor wall-mounted charge point on a TN-C-S (PME) supply.',
         },
         {
           type: 'list',
           items: [
             '**Design current (Ib)** = 7,000 W / 230 V ≈ 30.4 A. Round up to 32 A for the protective device (Type B MCB or 30 mA Type A RCBO).',
-            '**Cable selection trial** — 6 mm² twin-and-earth (6242Y), reference method 100 (clipped direct or laid in a thermally insulating wall) — Iz from Appendix 4 = 47 A (single-phase, twin-and-earth, 70°C PVC, 30°C ambient, no grouping).',
-            '**Derating** — assume Ca = 1.0 (typical UK 30°C ambient), Cg = 1.0 (single circuit). Adjusted Iz = 47 A. Ib (32 A) < Iz (47 A) — passes current capacity check.',
+            '**Cable selection trial** — 6 mm² twin-and-earth (6242Y), reference method C (clipped direct to a non-metallic surface) — Iz from BS 7671 Appendix 4 Table 4D1A = 41 A (single-phase, 70°C PVC T+E, 30°C ambient, no grouping). Note: the 47 A figure applies to 3-core XLPE SWA (Table 4D4A) — do not confuse the two.',
+            '**Derating** — assume Ca = 1.0 (typical UK 30°C ambient), Cg = 1.0 (single circuit). Adjusted Iz = 41 A. Ib (32 A) &lt; Iz (41 A) — passes current capacity check.',
             '**Voltage drop** — 6 mm² 6242Y voltage drop per Appendix 4 ≈ 7.3 mV/A/m for two-core cable. For 20 m at 32 A: 7.3 × 32 × 20 / 1000 = 4.67 V ≈ 2.0% of 230 V. Passes voltage drop check (target ≤3%).',
-            '**Disconnection time** — verify Zs at the charge point against the maximum permitted Zs for the chosen RCBO. Typical 32 A Type A 30 mA RCBO has a maximum permitted Zs around 1.37 Ω (Table 41.3 for Type B MCB equivalent, with RCD ensuring 0.4 s disconnection). Measured Zs typically well below this on a short PME run — pass.',
+            '**Disconnection time** — verify Zs at the charge point against the maximum permitted Zs for the chosen RCBO. Typical 32 A Type A 30 mA RCBO has a maximum permitted Zs around 1.37 Ω (Table 41.3 for Type B MCB equivalent, with RCD ensuring 0.4 s disconnection). Measured Zs typically well below this on a short PME run — pass. (A4:2026 note: maximum Zs tables previously in Appendix 14 have been moved to Appendix 3 in BS 7671:2018+A4:2026; Appendix 14 now covers prospective fault current determination.)',
           ],
         },
         {
           type: 'callout',
           tone: 'success',
           title: 'Conclusion for this scenario',
-          text:
-            '6 mm² twin-and-earth, 32 A Type A 30 mA RCBO, satisfies all three checks for a 7 kW EV charger on a 20 m run.',
+          text: '6 mm² twin-and-earth, 32 A Type A 30 mA RCBO, satisfies all three checks for a 7 kW EV charger on a 20 m run.',
         },
       ],
     },
@@ -121,8 +115,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A 22 kW three-phase charger drawing 32 A per phase, 30 m cable route to an external location, on a TN-C-S (PME) supply.',
+          text: 'A 22 kW three-phase charger drawing 32 A per phase, 30 m cable route to an external location, on a TN-C-S (PME) supply.',
         },
         {
           type: 'list',
@@ -143,28 +136,32 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'BS 7671 Section 722 — EV Charging — addresses a specific safety concern with outdoor EV chargers on PME supplies. If the distributor\'s combined PEN conductor breaks upstream of the installation ("open-PEN"), the metal casing of an outdoor charger and any connected EV bodywork could become live at supply potential — a fatal shock hazard.',
+          text: 'BS 7671 Section 722 — EV Charging — addresses a specific safety concern with outdoor EV chargers on PME supplies. If the distributor\'s combined PEN conductor breaks upstream of the installation ("open-PEN"), the metal casing of an outdoor charger and any connected EV bodywork could become live at supply potential — a fatal shock hazard.',
         },
         {
           type: 'paragraph',
-          text:
-            'Three approved mitigation methods are commonly used:',
+          text: 'Regulation 722.411.4.1 (as amended by A4:2026) lists four mitigation options (indents (i)–(iv)). Note that indent (a) has been deleted in the A4:2026 revision — consult the current edition. The four options are:',
         },
         {
           type: 'list',
           items: [
-            '**Open-PEN detection device** — a charger built with onboard voltage monitoring that disconnects the charging output if the PEN conductor fails. Many modern UK charge points have this built-in (e.g. Wallbox Pulsar Plus, Project EV, certain Ohme units).',
-            '**TT earthing arrangement for the EV charging circuit** — installing a dedicated earth electrode for the EV charger circuit, electrically separated from the PME earthing system. Requires the charger to be on a TT-style RCD with appropriate disconnection arrangements.',
-            '**Earth-mat or earth-rod with sufficient resistance** — less commonly used now that open-PEN detection chargers are widely available.',
-        ],
+            '**Open-PEN detection device** — a charger with onboard voltage monitoring that disconnects the charging output if the PEN conductor fails. Many modern UK charge points have this built-in (e.g. Wallbox Pulsar Plus, Project EV, certain Ohme units). Corresponds to indent (i).',
+            '**TT earthing arrangement for the EV charging circuit** — installing a dedicated earth electrode for the EV charger circuit, electrically separated from the PME earthing system. Requires the charger to be on a TT-style RCD with appropriate disconnection arrangements. Corresponds to indent (ii).',
+            '**Earth-mat or earth-rod with sufficient resistance** — less commonly used now that open-PEN detection chargers are widely available. Corresponds to indent (iii).',
+            '**Alternative solution per indent (iv) (A4:2026 addition)** — Regulation 722.411.4.1 was amended in A4:2026 to add indent (iv), which provides an additional alternative solution for charging installations. Consult the full regulation text and the redrafted Annex to Part 722 for the specific requirements of this option.',
+          ],
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'TN-C-S (PNB) supplies have different exposure',
-          text:
-            'The open-PEN risk addressed by 722.411.4.1 is specific to distributor-owned PME supplies. TN-C-S (PNB) installations downstream of a privately-owned transformer have different broken-neutral exposure and the mitigation requirements may differ — consult the latest IET Code of Practice for EV charging.',
+          text: 'The open-PEN risk addressed by 722.411.4.1 is specific to distributor-owned PME supplies. TN-C-S (PNB) installations downstream of a privately-owned transformer have different broken-neutral exposure and the mitigation requirements may differ — consult the latest IET Code of Practice for EV charging.',
+        },
+        {
+          type: 'callout',
+          tone: 'info',
+          title: 'V2G and smart charging — prosumer scope in A4:2026',
+          text: "BS 7671:2018+A4:2026 Section 722 now explicitly references prosumer's electrical installations — premises that both consume and generate electricity (e.g. with PV, battery storage, or vehicle-to-grid (V2G) export capability). Where a V2G-capable charger is installed, the design must account for the interaction between export and import, protective device co-ordination, and earthing implications. A common documentation omission is failing to record V2G export permissions and export limits on the EV charger installation certificate — include these where applicable.",
         },
       ],
     },
@@ -175,8 +172,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Choose cable type by the route. For an EV charger feed:',
+          text: 'Choose cable type by the route. For an EV charger feed:',
         },
         {
           type: 'list',
@@ -184,7 +180,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
             '**6242Y twin-and-earth** — fine for routes entirely inside the dwelling (e.g. consumer unit to a charger on the inside of the garage wall). Not suitable for outdoor exposed runs, buried direct, or where cable abuse is foreseeable.',
             '**6241X SWA (Steel Wire Armoured)** — the workhorse for EV chargers. Suitable for buried direct (most common for external charger feeds), exterior wall surface mounting, and routes through outbuildings. Available as two-core for single-phase, four-core for three-phase.',
             '**6491X single core** — only inside conduit or trunking. Sometimes used for the final tail from a junction to the charger inside a metal enclosure, but rarely the main feed.',
-            '**6491B single core for armouring earth** — where SWA is used and the armour serves as the CPC, ensure the design verifies that the armour\'s resistance meets BS 7671 requirements for the protective conductor.',
+            "**6491B single core for armouring earth** — where SWA is used and the armour serves as the CPC, ensure the design verifies that the armour's resistance meets BS 7671 requirements for the protective conductor.",
           ],
         },
       ],
@@ -202,7 +198,8 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
             '**Ignoring grouping factor** — when the EV charger cable runs alongside other loaded circuits (consumer unit to outbuilding feeding lights + sockets + charger), the grouping factor reduces Iz. Apply Cg from Table 4C1.',
             '**Using PVC tables for thermosetting cable (or vice versa)** — XLPE/EPR (90°C thermosetting) cables have higher Iz than PVC (70°C thermoplastic) of the same CSA. Match the cable specification to the table.',
             '**Forgetting the PME open-PEN mitigation** — installing a generic 32 A RCBO on a PME outdoor charger circuit without addressing 722.411.4.1 is a C2 observation on the next EICR.',
-            '**Sizing on rated power only, not actual continuous current** — Ib is the actual current the load draws. A 7 kW charger nameplate-rated at 32 A draws very close to 32 A continuously when charging. Don\'t use the historical 80% rule that\'s appropriate for socket-outlet loading — EV charging is a steady-state load.',
+            "**Sizing on rated power only, not actual continuous current** — Ib is the actual current the load draws. A 7 kW charger nameplate-rated at 32 A draws very close to 32 A continuously when charging. Don't use the historical 80% rule that's appropriate for socket-outlet loading — EV charging is a steady-state load.",
+            "**Not notifying the DNO when required** — a 7 kW or 22 kW EV charger is a significant additional load. Depending on the existing supply capacity and the distributor's requirements, notification under the distributor's connection agreement (or G99/G100 for generation/storage) may be required. Failure to notify is a common compliance oversight and can affect the validity of the installation certificate.",
           ],
         },
       ],
@@ -217,7 +214,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
     {
       question: 'What protective device do I install for a 7 kW EV charger?',
       answer:
-        'A 32 A Type A 30 mA RCBO is the most common choice. Type A is preferred over Type AC because modern EV chargers can produce DC fault current components — Type AC RCDs may not detect these reliably. Some installers specify Type F (or higher) for chargers with frequency-converter electronics. Confirm the charger\'s installation manual — many manufacturers (e.g. Wallbox) require Type A as a minimum; some (e.g. certain Tesla Wall Connectors) require Type B for full DC fault detection.',
+        "A 32 A Type A 30 mA RCBO is the most common choice. Type A is preferred over Type AC because modern EV chargers can produce DC fault current components — Type AC RCDs may not detect these reliably. Some installers specify Type F (or higher) for chargers with frequency-converter electronics. Confirm the charger's installation manual — many manufacturers (e.g. Wallbox) require Type A as a minimum; some (e.g. certain Tesla Wall Connectors) require Type B for full DC fault detection.",
     },
     {
       question: 'Does the EV charger need a separate consumer unit?',
@@ -237,7 +234,7 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need to consider grouping if the EV cable shares a trench with other cables?',
       answer:
-        'Yes. BS 7671 Appendix 4 Table 4C1 (and equivalents for buried installations) gives grouping factors Cg that reduce Iz when multiple loaded cables share a trench, conduit, tray or trunking. A grouping factor of 0.8 means the cable\'s effective Iz is 80% of the un-grouped value. Apply Cg in your sizing calculation; the practical effect is that you often step up one size when the EV cable is grouped with other heavily-loaded cables.',
+        "Yes. BS 7671 Appendix 4 Table 4C1 (and equivalents for buried installations) gives grouping factors Cg that reduce Iz when multiple loaded cables share a trench, conduit, tray or trunking. A grouping factor of 0.8 means the cable's effective Iz is 80% of the un-grouped value. Apply Cg in your sizing calculation; the practical effect is that you often step up one size when the EV cable is grouped with other heavily-loaded cables.",
     },
     {
       question: 'Should I install conduit / trunking even where not strictly required?',
@@ -249,7 +246,8 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
     {
       href: '/tools/cable-sizing-calculator',
       title: 'Cable Sizing Calculator (BS 7671 Appendix 4)',
-      description: 'Free interactive calculator that does the Iz / voltage drop / Zs checks for any EV charger cable run.',
+      description:
+        'Free interactive calculator that does the Iz / voltage drop / Zs checks for any EV charger cable run.',
       icon: 'Calculator',
       category: 'Tool',
     },
@@ -263,33 +261,37 @@ export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
     {
       href: '/tools/earth-loop-impedance-calculator',
       title: 'Earth Loop Impedance (Zs) Calculator',
-      description: 'Check that Zs at the charger end satisfies the 0.4 s disconnection time per Regulation 411.',
+      description:
+        'Check that Zs at the charger end satisfies the 0.4 s disconnection time per Regulation 411.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
       href: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
       title: 'TN-C-S (PME) vs (PNB) Earthing',
-      description: 'Why the supply earthing arrangement matters for the EV charger open-PEN mitigation.',
+      description:
+        'Why the supply earthing arrangement matters for the EV charger open-PEN mitigation.',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
       title: 'AFDD Changes A4:2026 — EV Charging Exemption',
-      description: 'EV chargers conforming to BS EN 61851 are exempt from the standard AFDD requirements.',
+      description:
+        'EV chargers conforming to BS EN 61851 are exempt from the standard AFDD requirements.',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/ev-charger-certificate',
       title: 'EV Charger Certificate',
-      description: 'Digital EV charger installation certificate with PME open-PEN mitigation declaration.',
+      description:
+        'Digital EV charger installation certificate with PME open-PEN mitigation declaration.',
       icon: 'FileCheck2',
       category: 'Tool',
     },
   ],
   ctaHeading: 'Size EV charger cables in seconds',
   ctaSubheading:
-    'Elec-Mate\'s Cable Sizing Calculator runs all three BS 7671 checks (Iz / voltage drop / Zs) and the EV-specific Section 722 mitigation prompts for you. 7-day free trial.',
+    "Elec-Mate's Cable Sizing Calculator runs all three BS 7671 checks (Iz / voltage drop / Zs) and the EV-specific Section 722 mitigation prompts for you. 7-day free trial.",
 };

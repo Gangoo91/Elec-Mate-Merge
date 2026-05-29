@@ -31,10 +31,12 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'what-is-bs5266', label: 'What Is BS 5266?' },
   { id: 'legal-requirements', label: 'Legal Requirements' },
+  { id: 'bs7671-wiring', label: 'BS 7671 Wiring Requirements' },
   { id: 'escape-route-lighting', label: 'Escape Route Lighting' },
   { id: 'open-area-lighting', label: 'Open Area Lighting' },
   { id: 'high-risk-areas', label: 'High-Risk Task Area Lighting' },
   { id: 'standby-lighting', label: 'Standby Lighting' },
+  { id: 'system-architecture', label: 'Central Battery vs Self-Contained' },
   { id: 'testing-intervals', label: 'Testing Intervals' },
   { id: 'certification-elec-mate', label: 'Certification with Elec-Mate' },
   { id: 'faq', label: 'FAQ' },
@@ -42,10 +44,12 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 5266-1 is the UK code of practice for emergency lighting, covering escape route lighting, open area lighting, high-risk task area lighting, and standby lighting.',
+  'BS 5266-1:2025 is the current UK code of practice for emergency lighting (revised from the 2016 edition), covering escape route lighting, open area lighting, high-risk task area lighting, and standby lighting.',
   'Emergency lighting is a legal requirement under the Regulatory Reform (Fire Safety) Order 2005, the Health and Safety at Work Act 1974, and Building Regulations Approved Document B.',
+  'BS 7671 Reg 560.9 requires emergency lighting systems to comply with BS 5266-1:2025, BS EN 1838:2024, and BS EN 50172 — three standards that must be read together.',
   'Emergency luminaires must provide a minimum of 1 lux along the centre line of an escape route, with a minimum duration of 3 hours for most commercial premises.',
   'Testing intervals are defined as: monthly functional tests (flick test), annually a full rated duration test (3-hour battery discharge), and daily visual checks where practicable.',
+  'A BS 5266-1:2025 certificate is only valid when accompanied by a current signed checklist/report, photometric design data in an accepted format, and the site test log book.',
   'Elec-Mate includes emergency lighting certificate templates, AI-powered defect coding, and training courses covering BS 5266 design, installation, and testing requirements.',
 ];
 
@@ -53,12 +57,12 @@ const faqs = [
   {
     question: 'What is the minimum duration for emergency lighting?',
     answer:
-      'BS 5266-1 recommends a minimum duration of 3 hours for emergency lighting in most premises. This is based on the assumption that it could take up to 3 hours to safely evacuate a building and for normal lighting to be restored. Some premises may require a longer duration — for example, sleeping accommodation such as hotels, hospitals, and care homes may need emergency lighting that lasts the full period until daylight or until the normal supply is restored. The 3-hour duration must be achieved after the battery has been charged in normal service. The battery must reach 80% of its rated capacity within 24 hours of the previous discharge test. For standby lighting (used for continuing essential activities, not just evacuation), the duration depends on the specific risk assessment.',
+      'BS 5266-1:2025 recommends a minimum duration of 3 hours for emergency lighting in most premises. This is based on the assumption that it could take up to 3 hours to safely evacuate a building and for normal lighting to be restored. Some premises may require a longer duration — for example, sleeping accommodation such as hotels, hospitals, and care homes may need emergency lighting that lasts the full period until daylight or until the normal supply is restored. The 3-hour duration must be achieved after the battery has been charged in normal service. The battery must reach 80% of its rated capacity within 24 hours of the previous discharge test. For standby lighting (used for continuing essential activities, not just evacuation), the duration depends on the specific risk assessment.',
   },
   {
     question: 'How often does emergency lighting need to be tested?',
     answer:
-      'BS 5266-1 sets out a three-tier testing regime. A daily visual check should confirm that the green indicator light on each self-contained luminaire is illuminated (indicating the battery is charging). A monthly functional test involves simulating a mains failure (usually by switching off the supply to the emergency lighting circuit) and checking that each luminaire switches to battery mode within 5 seconds and provides adequate illumination. This test should last long enough to confirm the lamps illuminate but not so long that it significantly discharges the batteries — typically 30 seconds to a few minutes. An annual full rated duration test involves a complete discharge for the full rated duration (typically 3 hours). After this test, the batteries are recharged and all luminaires are checked to confirm they have recovered to full charge within 24 hours.',
+      'BS 5266-1:2025 sets out a three-tier testing regime. A daily visual check should confirm that the green indicator light on each self-contained luminaire is illuminated (indicating the battery is charging). A monthly functional test involves simulating a mains failure (usually by switching off the supply to the emergency lighting circuit) and checking that each luminaire switches to battery mode within 5 seconds and provides adequate illumination. This test should last long enough to confirm the lamps illuminate but not so long that it significantly discharges the batteries — typically 30 seconds to a few minutes. An annual full rated duration test involves a complete discharge for the full rated duration (typically 3 hours). After this test, the batteries are recharged and all luminaires are checked to confirm they have recovered to full charge within 24 hours.',
   },
   {
     question: 'Do I need emergency lighting in a domestic property?',
@@ -73,12 +77,12 @@ const faqs = [
   {
     question: 'Can an electrician carry out emergency lighting testing?',
     answer:
-      'Yes. A qualified electrician is competent to design, install, and test emergency lighting systems in accordance with BS 5266-1. The testing does not require specialist fire alarm qualifications — it is fundamentally an electrical testing task. The monthly functional test involves isolating the supply to the emergency lighting circuit and checking that each luminaire operates on battery. The annual full duration test involves the same isolation but allowing the system to run for the full 3-hour rated duration. The electrician must record the results, including any luminaires that fail to illuminate, provide inadequate light output, or fail to achieve the full duration. Any defective luminaires must be replaced. Emergency lighting testing is a valuable recurring revenue stream — commercial premises need monthly and annual tests, creating regular maintenance contracts for electricians.',
+      'Yes. A qualified electrician is competent to design, install, and test emergency lighting systems in accordance with BS 5266-1:2025. The testing does not require specialist fire alarm qualifications — it is fundamentally an electrical testing task. The monthly functional test involves isolating the supply to the emergency lighting circuit and checking that each luminaire operates on battery. The annual full duration test involves the same isolation but allowing the system to run for the full 3-hour rated duration. The electrician must record the results, including any luminaires that fail to illuminate, provide inadequate light output, or fail to achieve the full duration. Any defective luminaires must be replaced. Emergency lighting testing is a valuable recurring revenue stream — commercial premises need monthly and annual tests, creating regular maintenance contracts for electricians.',
   },
   {
     question: 'What documentation should I issue after emergency lighting installation or testing?',
     answer:
-      'After installing a new emergency lighting system, you should issue an installation completion certificate confirming the system complies with BS 5266-1 and the relevant parts of BS EN 50172. This certificate should record the type and category of system, number and location of luminaires, battery duration rating, and the results of the commissioning tests. After each periodic test (monthly or annual), a test log entry must be made in the system log book — which should be kept on site and available for inspection. Many commercial clients and building insurers specifically request sight of the emergency lighting log book. Elec-Mate provides a digital emergency lighting certificate and log that lets you record all tests, generate a professional PDF, and email the completed documentation to the client directly from the app.',
+      'After installing a new emergency lighting system, you should issue an installation completion certificate confirming the system complies with BS 5266-1:2025 and the relevant parts of BS EN 50172. This certificate should record the type and category of system, number and location of luminaires, battery duration rating, and the results of the commissioning tests. After each periodic test (monthly or annual), a test log entry must be made in the system log book — which should be kept on site and available for inspection. Many commercial clients and building insurers specifically request sight of the emergency lighting log book. Elec-Mate provides a digital emergency lighting certificate and log that lets you record all tests, generate a professional PDF, and email the completed documentation to the client directly from the app.',
   },
 ];
 
@@ -145,10 +149,13 @@ const sections = [
       <>
         <p>
           BS 5266 is the British Standard code of practice for the emergency lighting of premises.
-          The primary document is <strong>BS 5266-1</strong>, which provides guidance on the design,
-          installation, wiring, testing, and maintenance of emergency lighting systems in buildings.
-          It works alongside the European standard BS EN 1838, which specifies the minimum
-          illuminance levels and design parameters.
+          The primary document is <strong>BS 5266-1:2025</strong> —{' '}
+          <em>Emergency lighting. Code of practice for the emergency lighting of premises</em> —
+          which provides guidance on the design, installation, wiring, testing, and maintenance of
+          emergency lighting systems in buildings. The standard was revised in 2025 from the
+          previous 2016 edition; any reference to "BS 5266-1" in specifications or contracts should
+          be understood to mean the current 2025 edition. It works alongside the European standard
+          BS EN 1838, which specifies the minimum illuminance levels and design parameters.
         </p>
         <p>
           Emergency lighting is the lighting that operates when the normal mains-powered lighting
@@ -163,8 +170,8 @@ const sections = [
           work (HMOs, blocks of flats), commercial work (offices, shops, warehouses), and industrial
           work (factories, plant rooms). Understanding{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> alone
-          is not enough — you also need to understand BS 5266-1 and BS EN 1838 to design and install
-          emergency lighting systems correctly.
+          is not enough — you also need to understand BS 5266-1:2025 and BS EN 1838 to design and
+          install emergency lighting systems correctly.
         </p>
       </>
     ),
@@ -207,7 +214,7 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Approved Document B</strong> — requires emergency
-                lighting to be provided in accordance with BS 5266-1 for all new buildings and
+                lighting to be provided in accordance with BS 5266-1:2025 for all new buildings and
                 material alterations where the building has a floor area exceeding 60m² or where
                 there are inner rooms without direct access to a final exit.
               </span>
@@ -228,6 +235,72 @@ const sections = [
           prosecution. In the event of a fire in which occupants are injured because of inadequate
           emergency lighting, the responsible person could face criminal charges including corporate
           manslaughter in the most serious cases.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'bs7671-wiring',
+    heading: 'BS 7671 Wiring Requirements for Emergency Lighting',
+    content: (
+      <>
+        <p>
+          Emergency lighting is not just a fire-safety discipline — it is a wiring discipline
+          governed by{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
+            BS 7671:2018+A4:2026
+          </SEOInternalLink>
+          . Three regulations are particularly important for electricians installing or inspecting
+          these systems.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-5 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 560.9 — The three-standard compliance chain.</strong> BS 7671 Reg 560.9
+                states:{' '}
+                <em>
+                  "Emergency lighting systems shall comply with BS 5266-1:2025, BS EN 1838:2024 and
+                  BS EN 50172."
+                </em>{' '}
+                All three standards must be satisfied — BS 5266-1:2025 for design and installation
+                practice, BS EN 1838 for illuminance performance, and BS EN 50172 for the system as
+                a whole. Specifying compliance with only one is not sufficient.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 740.415.1 — Battery supply on the same RCD as normal lighting.</strong>{' '}
+                In amusement parks and fairground installations (Chapter 74), the supply to a
+                battery-operated emergency lighting circuit shall be connected to the same RCD
+                protecting the associated lighting circuit. This ensures that a nuisance RCD trip on
+                the normal lighting circuit does not leave emergency luminaires on a separate
+                protected supply in an undefined state.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>OSG Reg 7.4.1 — Circuit segregation.</strong> The On-Site Guide states:
+                <em>
+                  {' '}
+                  "Emergency lighting circuits shall be separated from other cables and from each
+                  other in compliance with BS 5266."
+                </em>{' '}
+                This applies regardless of cable type. Fire alarm and emergency lighting circuits
+                must each be segregated both from general wiring and from one another — simultaneous
+                damage to both safety systems must be prevented.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          When carrying out an EICR on a premises with emergency lighting, check that the system
+          wiring is correctly segregated and that the circuit is identified on the distribution
+          board schedule. Missing identification or mixed-circuit containment should be recorded as
+          an observation code C2 or C3 depending on the risk presented.
         </p>
       </>
     ),
@@ -287,8 +360,9 @@ const sections = [
         <p>
           The positioning of luminaires is critical to achieving the uniformity requirement. Placing
           luminaires too far apart will create dark zones between them, while placing them too close
-          together wastes equipment and increases maintenance costs. BS 5266-1 provides guidance on
-          luminaire spacing based on the mounting height and the light output of the luminaire.
+          together wastes equipment and increases maintenance costs. BS 5266-1:2025 provides
+          guidance on luminaire spacing based on the mounting height and the light output of the
+          luminaire.
         </p>
       </>
     ),
@@ -415,9 +489,9 @@ const sections = [
       <>
         <p>
           Standby lighting is not strictly part of the emergency escape lighting system, but it is
-          covered by BS 5266-1. Standby lighting is provided to enable normal activities to continue
-          during a mains power failure. It is used in situations where a complete shutdown is not
-          acceptable — for example:
+          covered by BS 5266-1:2025. Standby lighting is provided to enable normal activities to
+          continue during a mains power failure. It is used in situations where a complete shutdown
+          is not acceptable — for example:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -461,13 +535,73 @@ const sections = [
     ),
   },
   {
+    id: 'system-architecture',
+    heading: 'Central Battery Systems vs Self-Contained Luminaires',
+    content: (
+      <>
+        <p>
+          Emergency lighting systems fall into two primary architectures. Understanding the
+          difference is essential for correct design, installation, and certification.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-5 text-white">
+            <li className="flex items-start gap-3">
+              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Self-contained luminaires.</strong> Each luminaire contains its own
+                rechargeable battery, charger, and control gear. Installation is straightforward —
+                each fitting is wired to the normal lighting circuit. Battery replacement is
+                distributed across many individual units, which increases maintenance labour in
+                larger buildings. Self-contained units with automatic self-test functions reduce the
+                manual testing burden but do not eliminate the requirement to record and review
+                results.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Central battery systems.</strong> A single central power supply unit
+                (conforming to BS EN 50171 per BS 5266-1:2025 Clause 7.2) feeds all emergency
+                luminaires from one location. This simplifies battery management — batteries are in
+                one place — but introduces a single point of failure if the central unit is not
+                correctly maintained. A critical installation requirement: all wiring on centrally
+                powered runs must be fire-resistant cable (BS 5266-1:2025 Clause 8.2.1). Using
+                standard building cable on these runs is one of the most common installation
+                mistakes. Battery rooms serving central systems also require adequate ventilation to
+                prevent the build-up of hydrogen gas during charging.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                Common installation mistake — centrally powered systems
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                Standard twin-and-earth or standard SWA cable is not acceptable for the final
+                circuit wiring of a centrally powered emergency lighting system. BS 5266-1:2025
+                Clause 8.2.1 requires fire-resistant cable (such as MICC or FP200 Gold equivalent)
+                so that the circuit survives long enough in a fire to serve its purpose. Retain
+                documentary evidence that the installed central power supply unit conforms to BS EN
+                50171.
+              </p>
+            </div>
+          </div>
+        </div>
+      </>
+    ),
+  },
+  {
     id: 'testing-intervals',
     heading: 'Testing Intervals: Daily, Monthly, and Annual',
     content: (
       <>
         <p>
           Regular testing of emergency lighting is essential to ensure the system will function when
-          needed. BS 5266-1 defines a clear testing schedule:
+          needed. BS 5266-1:2025 defines a clear testing schedule:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -514,6 +648,25 @@ const sections = [
           LED status lights on the luminaire. Self-testing luminaires reduce the manual testing
           burden but do not eliminate it entirely — the results must still be checked and recorded.
         </p>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                EICR/periodic inspection trap — insulation resistance testing
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                GN3 Reg 2.23 states: emergency lighting circuits and equipment shall be disconnected
+                or isolated before performing insulation resistance tests. Applying the 500 V DC
+                test voltage to connected emergency luminaires will damage the control gear and
+                batteries, and will produce false high-resistance readings that invalidate the test
+                results. This is a common mistake on first-time EICR visits to premises with
+                emergency lighting — always identify and isolate emergency lighting circuits before
+                starting IR testing.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           All test results must be recorded in an emergency lighting log book, which should be kept
           on the premises and available for inspection by the fire authority. The log book should
@@ -533,6 +686,35 @@ const sections = [
           can request evidence of regular testing at any time. Elec-Mate provides everything you
           need to manage emergency lighting work efficiently:
         </p>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-red-400 mt-1 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-2">
+                Certificate validity — three required documents
+              </p>
+              <p className="text-white text-sm leading-relaxed mb-3">
+                A BS 5266-1:2025 completion or periodic certificate is only valid when accompanied
+                by all three of the following:
+              </p>
+              <ol className="list-decimal list-inside space-y-1 text-white text-sm">
+                <li>A current signed checklist and inspection report.</li>
+                <li>
+                  Photometric design data in an accepted format — authenticated spacing data, Annex
+                  D calculations, CIBSE/SLL LG12 calculations, or site test light readings — with
+                  all de-rating factors identified.
+                </li>
+                <li>The site test log book.</li>
+              </ol>
+              <p className="text-white text-sm leading-relaxed mt-3">
+                Issuing a certificate without the signed checklist, providing photometric data in an
+                unidentified format, or omitting de-rating factors are the most common handover
+                failures. A certificate handed over without these documents is technically
+                incomplete.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -541,9 +723,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Emergency Lighting Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Elec-Mate includes a dedicated emergency lighting certificate template compliant
-                  with BS 5266-1. Complete the certificate on your phone during the test, record
-                  luminaire statuses, and export as a professional PDF. Send it to the client by
-                  email or WhatsApp before you leave.
+                  with BS 5266-1:2025. Complete the certificate on your phone during the test,
+                  record luminaire statuses, and export as a professional PDF. Send it to the client
+                  by email or WhatsApp before you leave.
                 </p>
               </div>
             </div>
@@ -580,7 +762,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">BS 5266 Training Course</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Study BS 5266-1 with Elec-Mate's structured training modules. Covers system
+                  Study BS 5266-1:2025 with Elec-Mate's structured training modules. Covers system
                   design, luminaire siting, illuminance requirements, testing procedures, and
                   certification. Part of the 46+ course library. Plus flashcards and mock exams.
                 </p>
@@ -608,7 +790,7 @@ export default function BS5266EmergencyLightingStandardPage() {
       title="BS 5266 Emergency Lighting Standard | UK Guide"
       description="Complete guide to BS 5266 emergency lighting standard. Escape routes, open areas, high-risk task areas, standby lighting, testing intervals (daily…"
       datePublished="2025-06-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"
@@ -618,7 +800,7 @@ export default function BS5266EmergencyLightingStandardPage() {
           BS 5266 Emergency Lighting: <span className="text-yellow-400">The Complete UK Guide</span>
         </>
       }
-      heroSubtitle="BS 5266-1 is the UK code of practice for emergency lighting. It covers escape route lighting, open area lighting, high-risk task areas, and standby lighting. This guide explains the design requirements, illuminance levels, testing intervals, and certification — essential knowledge for every electrician."
+      heroSubtitle="BS 5266-1:2025 is the current UK code of practice for emergency lighting. It covers escape route lighting, open area lighting, high-risk task areas, and standby lighting. This guide explains the design requirements, illuminance levels, testing intervals, and certification — essential knowledge for every electrician."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

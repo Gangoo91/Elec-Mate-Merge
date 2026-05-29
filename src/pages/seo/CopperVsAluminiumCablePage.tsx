@@ -37,14 +37,16 @@ const tocItems = [
 const keyTakeaways = [
   'Aluminium has approximately 61% of the electrical conductivity of copper. An aluminium conductor must be around 1.6 times the cross-sectional area of a copper conductor to carry the same current — for example, 25mm² aluminium has a similar current rating to 16mm² copper.',
   'BS 7671 Appendix 4 Tables 4D1A–4D5A cover copper conductors; Tables 4E1A–4E5A cover aluminium conductors. Current ratings are given for each installation method and conductor size.',
-  'Aluminium conductors must never be terminated in standard copper terminals without anti-oxidant compound. The aluminium oxide layer that forms on the conductor surface must be removed and the connection sealed with anti-oxidant compound to prevent re-oxidation.',
+  'Aluminium conductors must never be terminated in standard copper terminals without anti-oxidant compound. The aluminium oxide layer that forms on the conductor surface must be removed and the connection sealed with anti-oxidant compound to prevent re-oxidation. BS 7671 Reg 526.1 requires the connection method to account for conductor material — terminals must be rated for aluminium.',
+  'Aluminium PEN conductors (e.g. in meter tails) must be at least 16mm² CSA (Reg 543.4.201) and are prohibited in any part of the installation supplied through an RCD — including PME/TN-C-S systems where an RCD is inserted upstream.',
   'Aluminium cable is most commonly used in the UK for service heads, meter tails, distribution cables, and large industrial/commercial installations where the weight saving and lower cost justify the termination care required.',
   'Aluminium is not suitable for wiring accessories, standard socket outlets, or domestic circuits where connections are frequently disturbed. The galvanic corrosion risk between aluminium and copper terminals makes aluminium unsuitable for small-conductor domestic applications.',
 ];
 
 const faqs = [
   {
-    question: 'Why does aluminium cable need a larger cross-sectional area than copper for the same current rating?',
+    question:
+      'Why does aluminium cable need a larger cross-sectional area than copper for the same current rating?',
     answer:
       'Aluminium has a resistivity of approximately 2.82 × 10⁻⁸ Ω·m compared to 1.72 × 10⁻⁸ Ω·m for annealed copper — aluminium is about 1.64 times more resistive. This means that for the same cross-sectional area, an aluminium conductor will carry less current than a copper conductor at the same temperature rise. To achieve the same current-carrying capacity, the aluminium conductor must be larger in cross-sectional area. As a practical rule, an aluminium conductor rated for the same current as a copper conductor will be approximately 1.6 times the cross-sectional area. For example, 25mm² aluminium is broadly equivalent to 16mm² copper for current-carrying capacity under similar installation conditions. Check the specific values in BS 7671 Appendix 4 Tables 4D and 4E for your installation method.',
   },
@@ -82,23 +84,26 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size copper and aluminium cables with BS 7671 Appendix 4 current ratings and derating.',
+    description:
+      'Size copper and aluminium cables with BS 7671 Appendix 4 current ratings and derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates recording cable type and conductor material.',
+    description:
+      'Complete Electrical Installation Certificates recording cable type and conductor material.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/pvc-vs-xlpe-vs-lsoh-cable',
     title: 'PVC vs XLPE vs LSOH Cable',
-    description: 'Compare cable insulation types: temperature ratings, fire performance, and CPR classes.',
+    description:
+      'Compare cable insulation types: temperature ratings, fire performance, and CPR classes.',
     icon: Cable,
     category: 'Guide',
   },
@@ -112,7 +117,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study cable selection, current ratings, and voltage drop calculations for C&G 2391.',
+    description:
+      'Study cable selection, current ratings, and voltage drop calculations for C&G 2391.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -135,18 +141,18 @@ const sections = [
           installations where its weight and cost advantages become significant.
         </p>
         <p>
-          The choice between copper and aluminium affects cable sizing (aluminium requires a
-          larger cross-sectional area for the same current rating), termination method (aluminium
-          requires anti-oxidant compound and care with torque), and the suitability of the cable
-          for the application. Both conductor types are covered in{' '}
+          The choice between copper and aluminium affects cable sizing (aluminium requires a larger
+          cross-sectional area for the same current rating), termination method (aluminium requires
+          anti-oxidant compound and care with torque), and the suitability of the cable for the
+          application. Both conductor types are covered in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           — copper in Appendix 4 Tables 4D, aluminium in Tables 4E.
         </p>
         <p>
-          This guide explains the current ratings for both materials, the correct termination
-          method for aluminium, and the applications where each material is appropriate.
+          This guide explains the current ratings for both materials, the correct termination method
+          for aluminium, and the applications where each material is appropriate.
         </p>
       </>
     ),
@@ -159,11 +165,13 @@ const sections = [
         <p>
           BS 7671 Appendix 4 provides current-carrying capacity tables for cables in various
           installation configurations. Copper conductors are covered in Tables 4D1A to 4D5A;
-          aluminium conductors in Tables 4E1A to 4E5A. The tables give current ratings in
-          amperes for different conductor sizes and installation methods.
+          aluminium conductors in Tables 4E1A to 4E5A. The tables give current ratings in amperes
+          for different conductor sizes and installation methods.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <p className="text-white font-bold mb-3">Comparative Current Ratings (Method C — Clipped Direct, Single Phase)</p>
+          <p className="text-white font-bold mb-3">
+            Comparative Current Ratings (Method C — Clipped Direct, Single Phase)
+          </p>
           <table className="w-full text-white text-sm">
             <thead>
               <tr className="border-b border-white/20">
@@ -195,16 +203,22 @@ const sections = [
               </tr>
             </tbody>
           </table>
-          <p className="text-white text-xs mt-3">Source: BS 7671:2018+A4:2026 Appendix 4, Tables 4D1A and 4E1A. Always apply derating factors for grouping, ambient temperature, and installation method.</p>
+          <p className="text-white text-xs mt-3">
+            Source: BS 7671:2018+A4:2026 Appendix 4, Tables 4D1A (copper, PVC twin-and-earth) and
+            4E1A (aluminium equivalent), 30 °C ambient, no grouping. Always verify the exact values
+            from the relevant table for your cable type (e.g. Table 4D5A for XLPE/90 °C conductors
+            gives higher ratings). Apply derating factors from Table 4C1 (grouping) and Table 4B
+            (ambient temperature) before selecting a conductor size.
+          </p>
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
-          to apply the correct derating factors from BS 7671 Appendix 4 (grouping factor from
-          Table 4C1, ambient temperature factor from Table 4B) to determine the derated current
-          capacity for your specific installation conditions.
+          to apply the correct derating factors from BS 7671 Appendix 4 (grouping factor from Table
+          4C1, ambient temperature factor from Table 4B) to determine the derated current capacity
+          for your specific installation conditions.
         </p>
       </>
     ),
@@ -220,18 +234,45 @@ const sections = [
           connection sealed to prevent re-oxidation. Failure to do this correctly causes a
           high-resistance joint that will overheat under load, potentially causing a fire.
         </p>
+        <p>
+          BS 7671 Reg 526.1 requires that every connection shall provide durable electrical
+          continuity and adequate mechanical strength, and that the means of connection shall take
+          account of the conductor material (Reg 526.1(a)), conductor class and wire shape (Reg
+          526.1(b)), and cross-sectional area (Reg 526.1(c)). This means a terminal or lug that is
+          not rated for aluminium cannot be used — even with anti-oxidant compound — unless the
+          manufacturer has specifically approved and tested it for use with aluminium conductors.
+        </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
-              <p className="font-bold text-white mb-2">Aluminium Termination — Critical Requirements</p>
+              <p className="font-bold text-white mb-2">
+                Aluminium Termination — Critical Requirements
+              </p>
               <ul className="space-y-2 text-white text-sm">
-                <li>• Never terminate aluminium in standard copper-only terminals without anti-oxidant compound</li>
-                <li>• Strip the conductor and apply anti-oxidant compound immediately — do not allow the stripped end to sit in air</li>
-                <li>• Work the compound into the conductor strands with a brush or by working the conductor into the paste</li>
-                <li>• Use terminals rated for aluminium conductors — bi-metallic terminals where copper to aluminium connection is required</li>
-                <li>• Tighten to the manufacturer-specified torque using a calibrated torque tool</li>
-                <li>• Re-tighten after the first thermal cycle if specified by the terminal manufacturer</li>
+                <li>
+                  • Never terminate aluminium in standard copper-only terminals without anti-oxidant
+                  compound
+                </li>
+                <li>
+                  • Strip the conductor and apply anti-oxidant compound immediately — do not allow
+                  the stripped end to sit in air
+                </li>
+                <li>
+                  • Work the compound into the conductor strands with a brush or by working the
+                  conductor into the paste
+                </li>
+                <li>
+                  • Use terminals rated for aluminium conductors — bi-metallic terminals where
+                  copper to aluminium connection is required
+                </li>
+                <li>
+                  • Tighten to the manufacturer-specified torque using a calibrated torque tool
+                </li>
+                <li>
+                  • Re-tighten after the first thermal cycle if specified by the terminal
+                  manufacturer
+                </li>
               </ul>
             </div>
           </div>
@@ -249,37 +290,39 @@ const sections = [
     heading: 'When Aluminium Cable is Appropriate',
     content: (
       <>
-        <p>
-          Aluminium cable is appropriate in the following UK applications:
-        </p>
+        <p>Aluminium cable is appropriate in the following UK applications:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Service heads and meter tails:</strong> DNO service heads in the UK
-                commonly use aluminium conductors for the final connection to the meter. The
-                tails from the service head to the consumer unit may be aluminium in older
-                installations. Always use anti-oxidant compound and bi-metallic clamps when
-                connecting aluminium tails to copper terminals in the consumer unit or isolator.
+                <strong>Service heads and meter tails:</strong> DNO service heads in the UK commonly
+                use aluminium conductors for the final connection to the meter. The tails from the
+                service head to the consumer unit may be aluminium in older installations. Always
+                use anti-oxidant compound and bi-metallic clamps when connecting aluminium tails to
+                copper terminals in the consumer unit or isolator. Note: Reg 543.4.201 permits an
+                aluminium conductor to serve as a PEN conductor only where its CSA is at least 16mm²
+                and the part of the installation concerned is not supplied through an RCD —
+                aluminium PEN conductors are prohibited downstream of any RCD (including PME/TN-C-S
+                arrangements where an RCD is fitted between the origin and the point of use).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Distribution cables (submains):</strong> Large-CSA aluminium armoured
-                cables are commonly used for submain cables between distribution boards and
-                sub-distribution boards in commercial and industrial premises, particularly for
-                runs of 25mm² and above where the weight and cost savings are significant.
+                <strong>Distribution cables (submains):</strong> Large-CSA aluminium armoured cables
+                are commonly used for submain cables between distribution boards and
+                sub-distribution boards in commercial and industrial premises, particularly for runs
+                of 25mm² and above where the weight and cost savings are significant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overhead lines:</strong> Aluminium conductors (with or without a steel
-                core for mechanical strength — ACSR, Aluminium Conductor Steel Reinforced) are
-                the standard for overhead distribution lines in the UK due to their weight and
-                cost advantages over copper for long spans.
+                <strong>Overhead lines:</strong> Aluminium conductors (with or without a steel core
+                for mechanical strength — ACSR, Aluminium Conductor Steel Reinforced) are the
+                standard for overhead distribution lines in the UK due to their weight and cost
+                advantages over copper for long spans.
               </span>
             </li>
           </ul>
@@ -291,7 +334,12 @@ const sections = [
               <p className="font-bold text-white mb-1">Not Appropriate For:</p>
               <ul className="space-y-1 text-white text-sm">
                 <li>• Domestic socket outlet circuits and wiring accessories</li>
-                <li>• Small cross-sections (below 16mm²) in most applications</li>
+                <li>
+                  • Small cross-sections (below 16mm²) in most applications — Reg 524.2.3(c) sets
+                  25mm² aluminium as the minimum for a reduced neutral conductor in a polyphase
+                  circuit; general practice is 16mm² minimum for aluminium line conductors in fixed
+                  wiring
+                </li>
                 <li>• Connections that will be frequently disturbed</li>
                 <li>• Flexible cables and cords</li>
               </ul>
@@ -316,19 +364,19 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Compression joints:</strong> The standard jointing method for aluminium
-                cables. A compression sleeve is crimped onto the stripped conductor ends using
-                a calibrated compression tool. Anti-oxidant compound is applied before crimping.
+                cables. A compression sleeve is crimped onto the stripped conductor ends using a
+                calibrated compression tool. Anti-oxidant compound is applied before crimping.
                 Compression joints are reliable and tamper-evident.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bi-metallic terminals:</strong> Where aluminium cable must be connected
-                to copper busbars or copper terminal blocks, bi-metallic (aluminium/copper)
-                terminals prevent galvanic corrosion at the interface. The aluminium part of
-                the terminal accepts the aluminium conductor; the copper part makes the
-                connection to the copper equipment.
+                <strong>Bi-metallic terminals:</strong> Where aluminium cable must be connected to
+                copper busbars or copper terminal blocks, bi-metallic (aluminium/copper) terminals
+                prevent galvanic corrosion at the interface. The aluminium part of the terminal
+                accepts the aluminium conductor; the copper part makes the connection to the copper
+                equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,8 +384,20 @@ const sections = [
               <span>
                 <strong>Mechanical connectors:</strong> Bolted-type mechanical connectors with
                 serrated washers are used for larger conductors in distribution switchgear. The
-                serrations cut through the oxide layer on contact. Anti-oxidant compound and
-                correct bolt torque are essential.
+                serrations cut through the oxide layer on contact. Anti-oxidant compound and correct
+                bolt torque are essential.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Insulating barriers (inspection and older installations):</strong> Where
+                aluminium conductors are in proximity to copper in an existing installation and a
+                bi-metallic terminal cannot be used, BS 7671:2018+A4:2026 recognises the use of an
+                insulating barrier — such as sleeving or a non-conductive washer — to prevent direct
+                contact between the dissimilar metals and avoid electrolytic action. This approach
+                is relevant when inspecting older systems or making repairs where conductor
+                replacement is not practicable.
               </span>
             </li>
           </ul>
@@ -390,8 +450,12 @@ const sections = [
         <p>
           When you encounter existing aluminium wiring (particularly in properties built in the
           1960s and 1970s where solid aluminium domestic wiring was briefly used), inspect the
-          connections carefully. Loose or corroded aluminium connections at wiring accessories are
-          a Code C2 or C1 defect depending on severity.
+          connections carefully. Loose or corroded aluminium connections at wiring accessories are a
+          Code C2 or C1 defect depending on severity.
+        </p>
+        <p className="text-sm text-white/60">
+          This guide is written for qualified electricians working to BS 7671:2018+A4:2026 and
+          reviewed against the current edition of the standard. Last reviewed: May 2026.
         </p>
         <SEOAppBridge
           title="Size cables correctly with BS 7671 Appendix 4"

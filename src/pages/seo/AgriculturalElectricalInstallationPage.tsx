@@ -37,11 +37,13 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 7671:2018+A4:2026 Section 705 — Agricultural and Horticultural Premises — covers all fixed electrical installations in farm buildings, outbuildings, livestock housing, and horticultural facilities across the UK.',
-  'In locations intended for livestock, no exposed metalwork (conduit, trunking, cable management, socket outlet bodies) may be positioned where animals can reach it. All wiring in livestock buildings must be inaccessible to animals.',
+  'In locations intended for livestock, electrical equipment shall generally be inaccessible to animals (Regulation 705.513.2). Where equipment is unavoidably accessible — such as feeding or watering equipment — it must be adequately constructed and installed to withstand livestock contact and prevent injury.',
   'The damp and corrosive environment of farm buildings requires IP44 as the absolute minimum for all electrical equipment. IP54 or IP65 is strongly recommended for most agricultural applications.',
-  'RCD protection with a rated residual operating current not exceeding 30 mA is required for all socket outlet circuits. Section 705 imposes additional RCD requirements for fixed equipment in livestock buildings.',
+  'RCD protection is tiered under Regulation 705.411.1: socket outlet circuits rated ≤32 A must have an RCD per Regulation 415.1.1 (not exceeding 30 mA); circuits supplying socket outlets rated >32 A require an RCD with rated residual operating current not exceeding 100 mA; all other circuits require ≤300 mA. Section 705 imposes additional RCD requirements for fixed equipment in livestock buildings.',
   'Lightning protection is a significant consideration for isolated farm buildings and tall agricultural structures such as grain silos and barns. A risk assessment under BS EN 62305 should be carried out before installing electrical equipment in structures at risk.',
   'The recommended periodic inspection interval for agricultural installations is 3 years or annually following a change of tenancy (IET Guidance Note 3), reflecting the harsh operating environment.',
+  'Regulation 705.411.4 prohibits the use of a PEN conductor within electrical installations of agricultural and horticultural premises. Additionally, the use of a PME (TN-C-S) earthing facility is not recommended in livestock buildings unless a metal grid is laid in the floor (Reg 705.411.4, NOTE 2).',
+  'Electric fence installations fall outside the scope of Section 705 and must comply with BS EN 60335-2-76 instead (Reg 705.1 NOTE).',
 ];
 
 const faqs = [
@@ -53,7 +55,7 @@ const faqs = [
   {
     question: 'Why is metalwork a problem in livestock buildings?',
     answer:
-      'Livestock — particularly cattle and horses — are much more sensitive to electric shock than humans because they make simultaneous contact with the ground with four hooves over a large area, and their heart-to-forelimb path is particularly vulnerable to ventricular fibrillation. Touch voltages that would be tolerable to a person can be lethal to cattle. Regulation 705.512.2 therefore requires that no exposed metalwork (including conduit, cable trunking, junction boxes, or switch bodies) be accessible to livestock. All wiring in livestock areas must be contained in inaccessible conduit or routed out of reach.',
+      'Livestock — particularly cattle and horses — are much more sensitive to electric shock than humans because they make simultaneous contact with the ground with four hooves over a large area, and their heart-to-forelimb path is particularly vulnerable to ventricular fibrillation. Touch voltages that would be tolerable to a person can be lethal to cattle. Regulation 705.513.2 therefore requires that electrical equipment in livestock buildings shall generally be inaccessible to animals. Where items such as feeding or watering equipment are unavoidably accessible, they must be adequately constructed and installed. All wiring in livestock areas must be contained in inaccessible conduit or routed out of reach.',
   },
   {
     question: 'What IP rating is required for agricultural electrical equipment?',
@@ -63,7 +65,7 @@ const faqs = [
   {
     question: 'What RCD protection is required in farm buildings?',
     answer:
-      'All socket outlet circuits in agricultural premises must be protected by 30 mA RCDs (Regulation 705.411.1). In livestock buildings, fixed equipment (lighting, heaters, motors) must also be protected by RCDs with a rated residual operating current not exceeding 300 mA (where 30 mA protection is not practical for fixed equipment). The 30 mA threshold for socket outlets is consistent with the general requirement in Regulation 411.3.3.',
+      'Regulation 705.411.1 sets three tiers of RCD protection. (a) Final circuits supplying socket outlets rated ≤32 A: RCD with characteristics per Regulation 415.1.1 — in practice not exceeding 30 mA. (b) Final circuits supplying socket outlets rated >32 A: RCD with rated residual operating current not exceeding 100 mA. (c) All other circuits (including fixed equipment in livestock buildings): RCD with rated residual operating current not exceeding 300 mA. The 30 mA threshold therefore applies specifically to ≤32 A socket outlet circuits; larger socket outlet circuits may use up to 100 mA, and fixed equipment circuits up to 300 mA.',
   },
   {
     question: 'Do I need lightning protection on farm buildings?',
@@ -159,10 +161,11 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Priority modifications</strong> — the key modifications Section 705 makes to
-                the general requirements are: enhanced RCD protection (30 mA for all socket outlets
-                and 300 mA for fixed equipment in livestock buildings), exclusion of accessible
-                metalwork from livestock buildings, mandatory armoured or protected cables, and
-                enhanced IP ratings for all electrical equipment.
+                the general requirements are: tiered RCD protection (≤30 mA for ≤32 A socket outlet
+                circuits, ≤100 mA for &gt;32 A socket outlet circuits, ≤300 mA for all other
+                circuits), equipment generally inaccessible to livestock, mandatory armoured or
+                protected cables, enhanced IP ratings for all electrical equipment, and a
+                prohibition on PEN conductors within the installation.
               </span>
             </li>
           </ul>
@@ -175,6 +178,15 @@ const sections = [
           and be familiar with Section 705. The IET Guidance Note 7 (Special Locations) provides
           supplementary guidance including worked examples.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 my-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Electric fence installations are outside the scope of Section 705</strong> —
+            Regulation 705.1 NOTE states that electric fence installations are not covered by
+            Section 705. They must comply with BS EN 60335-2-76 (Safety of household and similar
+            electrical appliances — particular requirements for electric fence energisers) instead.
+          </p>
+        </div>
       </>
     ),
   },
@@ -194,12 +206,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No accessible metalwork</strong> — Regulation 705.512.2 requires that in
-                locations intended for livestock, no part of the electrical installation that may
-                become energised (conduit, cable management, switch bodies, socket outlet bodies,
-                motor casings) is accessible to animals. All wiring must be contained in conduit
-                routed at height, buried, or otherwise inaccessible. Animals will chew, rub, and
-                apply significant force to anything within reach.
+                <strong>Equipment inaccessible to livestock</strong> — Regulation 705.513.2 requires
+                that electrical equipment in livestock locations shall generally be inaccessible to
+                animals. Conduit, cable management, switch bodies, socket outlet bodies, and motor
+                casings must be routed at height, buried, or otherwise out of reach. Where equipment
+                (such as feeding or watering equipment) is unavoidably accessible, it must be
+                adequately constructed and installed. Animals will chew, rub, and apply significant
+                force to anything within reach.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -306,10 +319,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA for socket outlets</strong> — Regulation 705.411.1 requires all socket
-                outlet circuits in agricultural premises to be protected by 30 mA RCDs. This is a
-                mandatory requirement with no exceptions, reflecting the risk of portable tools and
-                equipment being used in damp or wet conditions.
+                <strong>Three-tier RCD requirement (Reg 705.411.1)</strong> — Regulation 705.411.1
+                applies irrespective of earthing system. (a) Socket outlet circuits ≤32 A: RCD with
+                characteristics per Regulation 415.1.1 — in practice not exceeding 30 mA. (b) Socket
+                outlet circuits rated &gt;32 A: RCD with rated residual operating current not
+                exceeding 100 mA. (c) All other circuits: RCD with rated residual operating current
+                not exceeding 300 mA. The 30 mA threshold therefore applies specifically to standard
+                ≤32 A socket outlet circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -383,6 +399,22 @@ const sections = [
                 protection (tiles or marker tape) or routed overhead as an aerial cable with
                 adequate support and sag allowance. All buried cables must be recorded on an
                 as-installed drawing retained on site.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Conduit and trunking specifications for livestock buildings (Reg 705.522.16)
+                </strong>{' '}
+                — in locations where livestock is kept, external influences shall be classified AF4.
+                Conduit systems installed indoors in such locations must achieve at least Class 2
+                (medium) corrosion protection per BS EN 61386-21; outdoors, at least Class 4 (high)
+                corrosion protection is required. Where wiring may be exposed to impact from
+                vehicles and mobile agricultural machinery (AG3 classification), conduit and cable
+                trunking systems must provide a degree of protection against impact of at least 5 J
+                in accordance with BS EN 61386-21 (conduit) and BS EN 50085-2-1 (trunking and
+                ducting). Standard domestic-grade conduit meets none of these requirements.
               </span>
             </li>
           </ul>
@@ -482,6 +514,21 @@ const sections = [
                 protective conductor.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>PEN conductor prohibition (Reg 705.411.4)</strong> — a PEN conductor shall
+                not be used within electrical installations of agricultural and horticultural
+                premises. This prohibition applies within the installation boundaries and also
+                extends to associated residences and other locations belonging to the premises. NOTE
+                1 clarifies that TN-C-S (PME) is not precluded by this prohibition — it is the use
+                of a combined protective-and-neutral conductor inside the installation that is
+                banned, not the supply system itself. NOTE 2 adds that unless a metal grid is laid
+                in the floor, the use of a PME earthing facility as the means of earthing for the
+                installation is not recommended in livestock buildings, owing to the risk of
+                elevated touch voltages across the floor.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -523,11 +570,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Three-Year Inspection Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Agricultural installations require inspection every 3 years. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to offer 3-year maintenance and inspection packages to farm operators. A large
-                  farm with multiple buildings represents a substantial single-client contract.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  offer 3-year maintenance and inspection packages to farm operators. A large farm
+                  with multiple buildings represents a substantial single-client contract.
                 </p>
               </div>
             </div>
@@ -553,7 +598,7 @@ export default function AgriculturalElectricalInstallationPage() {
       title="Agricultural Electrical Installation UK | Farm Wiring BS"
       description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Livestock building requirements, IP ratings, RCD protection…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

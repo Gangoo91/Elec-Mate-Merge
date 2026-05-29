@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'What happens if I do Part P notifiable work without scheme registration?',
     answer:
-      "If you carry out notifiable Part P work without scheme registration, you or the homeowner must notify local authority building control before starting the work (or as soon as possible afterwards). Building control will arrange an inspection and may require tests. This adds cost (a building control fee, typically £150–£300) and delay. The homeowner's home insurance may not cover incidents related to uninspected or uncertified electrical work. At property sale, solicitors will require evidence of compliance for notifiable work, and absence of a certificate can cause significant delays or price reductions.",
+      "If you carry out notifiable Part P work without scheme registration, you or the homeowner must notify local authority building control before starting the work (or as soon as possible afterwards). Building control will arrange an inspection and may require tests. This adds cost (a building control fee, typically £150–£350 depending on the local authority and scope of work) and delay. The homeowner's home insurance may not cover incidents related to uninspected or uncertified electrical work. At property sale, solicitors will require evidence of compliance for notifiable work, and absence of a certificate can cause significant delays or price reductions.",
   },
   {
     question: 'Is Part P the same across all of England and Wales?',
@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'How do I get a retroactive Part P certificate for work already done?',
     answer:
-      'If notifiable Part P work was carried out without certification, you can obtain retroactive certification by having a qualified electrician carry out a full electrical inspection and testing of the affected work. If the installation passes, the electrician can issue a Minor Works Certificate or Electrical Installation Certificate (as appropriate). For older uninspected work, some local authorities will accept an EICR showing the installation as satisfactory, along with a statutory declaration from the homeowner. The specific process varies by local authority — contact your building control department for guidance.',
+      'If notifiable Part P work was carried out without certification, you can obtain retroactive certification by having a qualified electrician carry out a full electrical inspection and testing of the affected work. If the installation passes, the electrician can issue a Minor Electrical Installation Works Certificate (MEIWC) or Electrical Installation Certificate (as appropriate). For older uninspected work, some local authorities will accept an EICR showing the installation as satisfactory, along with a statutory declaration from the homeowner. The specific process varies by local authority — contact your building control department for guidance.',
   },
 ];
 
@@ -152,7 +152,7 @@ const sections = [
               <span>
                 <strong>Statutory instrument</strong> — Part P is implemented through Schedule 1 and
                 Schedule 4 of the Building Regulations 2010. The technical standard it requires
-                compliance with is BS 7671:2018 (incorporating Amendment 4:2024), the current
+                compliance with is BS 7671:2018 (incorporating Amendment 4:2026), the current
                 edition of the IET Wiring Regulations.
               </span>
             </li>
@@ -207,7 +207,11 @@ const sections = [
               <span>
                 <strong>Consumer unit replacement</strong> — replacement of a consumer unit (fuse
                 board) is notifiable. This is one of the most common notifiable jobs and is the main
-                reason most electricians join a competent person scheme.
+                reason most electricians join a competent person scheme. Under BS 7671:2018+A4:2026
+                Regulation 421.1.7, the installation of arc fault detection devices (AFDDs) is now
+                recommended for final circuits supplying socket-outlets in domestic premises —
+                electricians replacing a consumer unit should assess whether AFDDs are required for
+                new circuits fitted at the same time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,7 +268,8 @@ const sections = [
                 <strong>Step 1 — carry out and test the work</strong> — complete the installation
                 and carry out all required inspection and testing in accordance with BS 7671.
                 Complete the relevant certification (Electrical Installation Certificate for new
-                installations, Minor Works Certificate for additions to existing circuits).
+                installations, Minor Electrical Installation Works Certificate (MEIWC) for additions
+                to existing circuits).
               </span>
             </li>
             <li className="flex items-start gap-3">

@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Tyneside flat rewires, EV charger circuits, and commercial fit-out installations.',
@@ -366,7 +366,7 @@ const sections = [
                 standard choice for external runs and is rated for the temperature range experienced
                 in the North East. For underground runs, bury to at least 500mm depth (600mm under
                 driveways) to protect against frost heave. Use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify the cable size with the appropriate correction factors.
@@ -573,7 +573,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Tyneside Flats</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for Tyneside flat rewires where restricted cable routes mean longer runs. Verify

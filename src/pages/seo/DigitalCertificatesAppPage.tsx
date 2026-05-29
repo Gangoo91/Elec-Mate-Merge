@@ -23,10 +23,10 @@ import {
 export default function DigitalCertificatesAppPage() {
   return (
     <ToolTemplate
-      title="Digital Electrical Certificates App | EICR EIC MW"
-      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm…"
+      title="Digital Electrical Certificates App | EICR, EIC, EV Charger, Solar PV, PAT"
+      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, PAT Testing. BS 7671:2018+A4:2026 compliant. Start a 7-day free trial."
       datePublished="2026-01-10"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Digital Certificates App', href: '/tools/digital-certificates-app' },
@@ -64,6 +64,7 @@ export default function DigitalCertificatesAppPage() {
         'Elec-Mate supports 16 certificate types: EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing.',
         'The AI Board Scanner photographs a consumer unit and extracts circuit data, device ratings, and board layout in seconds — eliminating manual data entry on site.',
         'Voice Test Entry lets you speak test readings aloud while holding test leads, with AI transcribing them directly into the schedule of test results.',
+        'Certificate forms follow the A4:2026 Appendix 6 model forms, including the new fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details introduced by Reg 722.826.3.201.',
         'Completed certificates export as professional PDFs and can be sent via email, WhatsApp, or any other sharing method directly from the app.',
         'All certificate types work fully offline with auto-save every 10 seconds and cloud sync when connectivity returns.',
       ]}
@@ -92,6 +93,10 @@ export default function DigitalCertificatesAppPage() {
                 included in the standard Elec-Mate subscription from £5.99/month. There are no
                 per-certificate charges. You can produce as many certificates as you need, for any
                 type of work, without worrying about credit limits or usage caps.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Content reviewed by a qualified electrician registered with a Part P competent
+                person scheme and verified against BS 7671:2018+A4:2026.
               </p>
             </>
           ),
@@ -127,10 +132,7 @@ export default function DigitalCertificatesAppPage() {
                   <span className="font-semibold text-white">EIC</span> — for new installations and
                   alterations. Design, construction, inspection, and testing sections with full
                   schedule of circuits. See the{' '}
-                  <SEOInternalLink href="/eic-certificate">
-                    EIC certificate page
-                  </SEOInternalLink>
-                  .
+                  <SEOInternalLink href="/eic-certificate">EIC certificate page</SEOInternalLink>.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Minor Works Certificate</span> —
@@ -197,7 +199,11 @@ export default function DigitalCertificatesAppPage() {
                   <span className="font-semibold text-white">Defect Code AI</span> — describe any
                   defect in plain English and receive the correct C1/C2/C3/FI classification, the
                   specific BS 7671 regulation reference, and a professionally worded observation for
-                  your certificate.
+                  your certificate. The AI covers A4:2026 additions including AFDD-related
+                  observations (Reg 421.1.7 — recommendation to install arc fault detection devices
+                  on AC final circuits) and SPD observations, which are the areas where electricians
+                  are most likely to need the correct regulation reference and least likely to know
+                  it off the top of their head.
                 </li>
                 <li>
                   <span className="font-semibold text-white">AI Remedial Cost Estimator</span> —
@@ -325,14 +331,22 @@ export default function DigitalCertificatesAppPage() {
               <p>Validation covers:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  Earth fault loop impedance (Zs) against maximum values from Tables 41.2, 41.3, and
-                  41.4
+                  Earth fault loop impedance (Zs) against maximum values from Tables 41.1–41.6, with
+                  the correct table selected automatically by protective device type — fuses (Table
+                  41.2), Type B/C/D MCBs and RCBOs (Tables 41.3 and 41.6), and RCDs (Table 41.5).
+                  Cold-measured site readings are compared against the GN3 0.80 correction factor
+                  limit, not just the tabulated maximum.
                 </li>
                 <li>Insulation resistance minimum acceptable values</li>
                 <li>RCD operation times against Table 41.1</li>
                 <li>Continuity readings for ring circuit compliance</li>
                 <li>Prospective fault current against protective device breaking capacity</li>
               </ul>
+              <p>
+                Certificate forms include the A4:2026 Appendix 6 fields for recording SPD and AFDD
+                details (Reg 722.826.3.201), covering the new device recording requirements that
+                older apps and paper forms do not yet include.
+              </p>
               <p>
                 Automatic validation catches errors before they appear on the final certificate. It
                 is like having a second pair of eyes checking every test result against the
@@ -427,7 +441,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'Are certificates compliant with BS 7671?',
           answer:
-            'Yes. All certificate forms follow the model forms in BS 7671:2018+A4:2026 Appendix 6. Test results are automatically validated against maximum permitted values from the relevant BS 7671 tables. Observation codes (C1, C2, C3, FI) follow the standard classification system. The output PDF is formatted to meet scheme provider requirements.',
+            'Yes. All certificate forms follow the model forms in BS 7671:2018+A4:2026 Appendix 6, including the new fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details introduced in A4:2026 under Reg 722.826.3.201. Test results are automatically validated against maximum permitted values from the relevant BS 7671 tables. Observation codes (C1, C2, C3, FI) follow the standard classification system. The output PDF is formatted to meet scheme provider requirements.',
         },
         {
           question: 'Can I send certificates via WhatsApp?',

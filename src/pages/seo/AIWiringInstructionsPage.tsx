@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes using the full BS 7671 Appendix 4 method with all correction factors.',
@@ -319,7 +319,7 @@ const sections = [
           For specific installation methods, the AI provides guidance on surface clipping, cable in
           conduit (rigid PVC and flexible), cable in trunking (including trunking fill calculations
           using the{' '}
-          <SEOInternalLink href="/trunking-fill-calculator">
+          <SEOInternalLink href="/tools/trunking-fill-calculator">
             trunking fill calculator
           </SEOInternalLink>
           ), cable in ceiling voids (avoiding thermal insulation or using appropriate derating

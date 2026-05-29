@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop on cable runs to check if cables are correctly sized for the load.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for current-carrying capacity and voltage drop limits.',
     icon: Cable,
@@ -402,7 +402,7 @@ const sections = [
         <p>
           BS 7671 Regulation 528.3 requires that voltage drop is calculated and limited to ensure
           equipment operates correctly. The{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           can help determine whether the existing cables are adequate for the current load. If they
@@ -584,7 +584,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">3. Calculate Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>{' '}
                   to check that existing cable sizes meet the BS 7671 voltage drop limits for the

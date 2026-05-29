@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate correct cable sizes accounting for voltage drop, grouping, thermal insulation, and ambient temperature.',
@@ -576,11 +576,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Built-In Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   and{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>{' '}
                   to verify designs for long cable runs between farm buildings. Account for ambient

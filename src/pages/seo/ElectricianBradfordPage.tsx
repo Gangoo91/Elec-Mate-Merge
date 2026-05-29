@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       "Size cables for rewires and new circuits across Bradford's varied Victorian and post-war housing stock.",

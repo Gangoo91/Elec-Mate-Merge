@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop calculations.',
     icon: Calculator,
@@ -321,7 +321,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify voltage drop is within the 5% limit for the actual cable run length. 6mm²
@@ -498,10 +498,8 @@ const sections = [
                   Factor in East of England labour rates (£42 to £58/hour), additional time for
                   listed building or conservation area assessments, earth rod costs, UKPN G98
                   notification, and EIC certification. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised, professional quotes that justify Cambridge pricing to informed
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised, professional quotes that justify Cambridge pricing to informed
                   customers.
                 </p>
               </div>

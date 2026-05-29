@@ -102,7 +102,10 @@ const sections = [
           through the load (appliance, light fitting, etc.), and returns through that same circuit's
           neutral conductor. The current flowing out on the live equals the current returning on the
           neutral. An RCD monitors this balance — if the currents are equal, the RCD remains closed.
-          If they differ by more than 30 mA, the RCD trips.
+          If the residual current (the difference between outgoing and returning current) reaches
+          the RCD's rated operating current I&Delta;n — typically 30 mA for additional-protection
+          devices — the RCD trips. BS 7671 Reg 415.1.1 recognises RCDs with a rated residual
+          operating current not exceeding 30 mA as the standard for additional protection.
         </p>
         <p>
           When a neutral is borrowed, current from circuit A flows out on circuit A's live but
@@ -204,6 +207,19 @@ const sections = [
               RCD trips. This is one of the most common post-installation complaints after a
               consumer unit upgrade, and the electrician must be prepared to diagnose and rectify
               borrowed neutrals discovered during or after the upgrade.
+            </p>
+            <p className="text-white text-sm leading-relaxed mt-3">
+              Under BS 7671:2018+A4:2026, modern domestic boards must satisfy significantly broader
+              RCD and protective-device requirements than older installations. Reg 411.3.4 now
+              requires that AC final circuits supplying luminaires in domestic premises be provided
+              with additional protection by an RCD rated at or below 30 mA — meaning lighting
+              circuits that previously had no RCD coverage are now individually monitored. Reg
+              421.1.7 recommends arc fault detection devices (AFDDs) for socket-outlet circuits in
+              domestic premises. The combined effect is that a compliant A4:2026 consumer unit
+              upgrade places every circuit — including previously unprotected lighting circuits —
+              under close residual-current supervision, making pre-existing borrowed neutrals that
+              were invisible for decades almost certain to surface during or immediately after
+              commissioning.
             </p>
           </div>
         </div>
@@ -431,7 +447,12 @@ const sections = [
             </p>
           </div>
         </div>
-        <p>After fixing the borrowed neutral, retest the affected circuits:</p>
+        <p>
+          After fixing the borrowed neutral, retest the affected circuits. BS 7671 Reg 641.5
+          requires that any addition or alteration to an existing installation is verified to comply
+          with BS 7671 and must not impair the safety of the existing installation — so retesting is
+          not optional best practice, it is a regulatory obligation.
+        </p>
         <ul className="space-y-2 my-4">
           <li className="flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
@@ -519,9 +540,13 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The shared neutral section carries current from two circuits simultaneously. If both
               circuits are under heavy load, the neutral current can exceed the conductor's rated
-              capacity, causing overheating. Unlike the live conductors, the neutral is not
-              protected by an MCB or fuse — there is no overcurrent protection on the neutral in a
-              standard installation. This creates a genuine fire risk.
+              capacity, causing overheating. BS 7671 Reg 431.2.1 establishes that in TN and TT
+              systems, where a neutral conductor has the same cross-sectional area as the line
+              conductors and its current is not expected to exceed line current, overcurrent
+              detection for the neutral is not required — the MCB on the live side is considered
+              sufficient. A borrowed neutral defeats this assumption entirely: the shared neutral
+              now carries the combined current of two circuits, which the MCB on neither live
+              conductor can detect or protect against. This creates a genuine fire risk.
             </p>
           </div>
 
@@ -539,10 +564,14 @@ const sections = [
           </div>
         </div>
         <p>
-          For these reasons, a borrowed neutral should be classified as at least a Code C2
-          (potentially dangerous) defect on an{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, with a
-          recommendation for immediate investigation and rectification.
+          For these reasons, a borrowed neutral should be classified as at least a Code C2 defect on
+          an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. Under GN3 (IET
+          Guidance Note 3), C2 is defined as{' '}
+          <em>potentially dangerous — remedial action required</em>. Where the neutral is confirmed
+          to be floating at a hazardous voltage during isolation of the associated circuit —
+          creating an immediate shock risk — the finding should be escalated to C1 (
+          <em>danger present — immediate remedial action required</em>). Either way, the
+          installation should not be left in service without rectification.
         </p>
       </>
     ),

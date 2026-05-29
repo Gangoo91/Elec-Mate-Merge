@@ -55,6 +55,7 @@ const keyTakeaways = [
   'Fire Alarm certificates (BS 5839), Emergency Lighting certificates (BS 5266), and Solar PV certificates (MCS) require specialist knowledge of their respective British Standards.',
   'Elec-Mate is the only app that has all 16 certificate types in one platform — with board scanner, voice test entry, defect code AI, remedial estimator, digital signatures, and PDF export.',
   'Every certificate type in Elec-Mate validates test results against BS 7671 maximum permitted values automatically, eliminating manual cross-referencing errors.',
+  'BS 7671:2018+A4:2026 introduced two key changes for domestic EICs: Reg 411.3.4 (mandatory 30 mA RCD on all luminaire circuits) and Reg 421.1.7 (recommended AFDDs on AC final circuits). EICs on domestic installations must now reflect both.',
 ];
 
 const faqs = [
@@ -204,9 +205,9 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued after
-          new installation work or a significant alteration to confirm that the work complies with
-          BS 7671 at the time of completion. It is required for all notifiable work under{' '}
+          The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued after new
+          installation work or a significant alteration to confirm that the work complies with BS
+          7671 at the time of completion. It is required for all notifiable work under{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> of
           the Building Regulations and must be issued before the installation is put into service.
         </p>
@@ -246,6 +247,33 @@ const sections = [
           include a schedule of inspections, a schedule of test results for every circuit, and
           details of the supply characteristics and earthing arrangements.
         </p>
+        <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">A4:2026 New Requirements for EICs</h3>
+          <ul className="space-y-3 text-white text-sm leading-relaxed">
+            <li className="flex items-start gap-3">
+              <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 411.3.4 — RCD on domestic lighting circuits (mandatory):</strong> All AC
+                final circuits supplying luminaires in domestic (household) premises must now be
+                provided with additional protection by an RCD with a rated residual operating
+                current not exceeding 30 mA. This is a mandatory 'shall' requirement introduced by
+                A4:2026. EICs for domestic installations must record RCD protection on every
+                lighting circuit.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 421.1.7 — AFDD recommendation (advisory):</strong> Amendment 4
+                introduced a recommendation that arc fault detection devices (AFDDs) be installed in
+                AC final circuits of a fixed installation to mitigate fire risk from arc fault
+                currents. The regulation uses advisory ('recommending') rather than mandatory
+                language. EICs completed after A4:2026 commencement should record AFDD provision on
+                socket-outlet circuits, or note where AFDDs have not been fitted and the reason.
+              </span>
+            </li>
+          </ul>
+        </div>
       </>
     ),
   },
@@ -288,9 +316,12 @@ const sections = [
         <p>
           The Minor Works Certificate is simpler than a full EIC but still requires the essential
           test results: continuity of protective conductors, insulation resistance, polarity, earth
-          fault loop impedance, and RCD operation (where applicable). If the work involves
-          installing a new circuit at the distribution board, a Minor Works Certificate is not
-          appropriate — use a full EIC.
+          fault loop impedance, and RCD operation (where applicable). Per Regulation 644.4.201 of BS
+          7671:2018+A4:2026, a Minor Works Certificate is not appropriate where the work includes
+          either: (a) the provision of a new circuit, or (b) the replacement of a distribution board
+          or consumer unit. Both conditions require a full EIC. Consumer unit replacement is also
+          notifiable under Part P of the Building Regulations, meaning a registered electrician must
+          issue an EIC for that work — not a Minor Works Certificate.
         </p>
       </>
     ),
@@ -301,9 +332,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/ev-charger-certificate">
-            EV charger installations
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/ev-charger-certificate">EV charger installations</SEOInternalLink>{' '}
           require a dedicated circuit and therefore a full Electrical Installation Certificate
           (EIC). However, EV charging installations have additional requirements under Section 722
           of BS 7671 that go beyond a standard circuit installation.
@@ -506,13 +535,17 @@ const sections = [
           </ul>
         </div>
         <p>
-          With{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             Amendment 4 (A4:2026)
           </SEOInternalLink>{' '}
-          introducing Regulation 530.3.201 on bidirectional protective devices, solar PV
-          installations with battery storage now require specific consideration of whether the
-          protective devices in the consumer unit are suitable for reverse fault current flow.
+          introduced Regulation 530.3.201, which requires installers and designers to determine
+          whether a unidirectional or bidirectional protective device is appropriate for the
+          application. For solar PV and battery storage installations this is particularly relevant:
+          where fault current may flow in either direction through a protective device (for example
+          through MCBs or RCBOs in the consumer unit), a bidirectional device must be selected, or a
+          unidirectional device must be installed in the correct orientation as marked. All
+          protective devices in the consumer unit — including those marked with 'in'/'out' or
+          'line'/'load' arrows — must be checked for suitability before commissioning.
         </p>
       </>
     ),
@@ -732,7 +765,7 @@ export default function ElectricalCertificateTypesPage() {
           Electrical Certificate Types UK: <span className="text-yellow-400">Complete Guide</span>
         </>
       }
-      heroSubtitle="The complete guide to all UK electrical certificates — EICR, EIC, Minor Works, EV Charger, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV (MCS), and PAT Testing. What each certificate is for, when it is required, who can issue it, and the legal requirements. All 8 types available in one app."
+      heroSubtitle="The complete guide to all UK electrical certificates — EICR, EIC, Minor Works, EV Charger, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV (MCS), and PAT Testing. What each certificate is for, when it is required, who can issue it, and the legal requirements. All 8 types available in one app. Last reviewed May 2026 against BS 7671:2018+A4:2026."
       readingTime={20}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -26,7 +26,10 @@ const PAGE_DESCRIPTION =
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
-  { label: 'Electrical Science Fundamentals', href: '/training/electrical-science-fundamentals-fundamentals' },
+  {
+    label: 'Electrical Science Fundamentals',
+    href: '/training/electrical-science-fundamentals-fundamentals',
+  },
 ];
 
 const tocItems = [
@@ -209,12 +212,10 @@ const sections = [
         </p>
         <p>
           For qualified electricians, a strong understanding of electrical science enables confident{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">circuit design</SEOInternalLink>,
+          <SEOInternalLink href="/tools/cable-sizing-calculator">circuit design</SEOInternalLink>,
           accurate fault diagnosis, and the ability to explain technical concepts to clients and
           colleagues. It is also essential for passing the{' '}
-          <SEOInternalLink href="/city-guilds2391">
-            inspection and testing
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/city-guilds2391">inspection and testing</SEOInternalLink>{' '}
           examination (2391/2394/2395) where electrical science questions feature prominently.
         </p>
       </>
@@ -243,9 +244,11 @@ const sections = [
           Practical applications for electricians include: calculating the current drawn by a known
           load to select the correct cable size and protective device rating, determining voltage
           drop across a cable run for{' '}
-          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">BS 7671 compliance</SEOInternalLink>,
-          and calculating the resistance of an earth fault path to verify disconnection times. Every
-          one of these everyday calculations starts with Ohm's law.
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
+            BS 7671 compliance
+          </SEOInternalLink>
+          , and calculating the resistance of an earth fault path to verify disconnection times.
+          Every one of these everyday calculations starts with Ohm's law.
         </p>
         <SEOAppBridge
           title="Practice Ohm's law with interactive calculators"
@@ -278,7 +281,7 @@ const sections = [
           sum of all voltages around any closed loop in a circuit equals zero. In practical terms,
           this means the supply voltage equals the sum of all the voltage drops around the circuit.
           This is the principle behind the{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculation
           </SEOInternalLink>{' '}
           in BS 7671 — the voltage available at the load equals the supply voltage minus the voltage
@@ -394,7 +397,7 @@ const sections = [
         </p>
         <p>
           Maximum demand calculations for{' '}
-          <SEOInternalLink href="/max-demand-calculator">BS 7671 design</SEOInternalLink> must
+          <SEOInternalLink href="/tools/max-demand-calculator">BS 7671 design</SEOInternalLink> must
           account for power factor — a 10kW load at 0.8 power factor draws 12.5kVA from the supply,
           requiring larger cables and protective devices than the same 10kW load at unity power
           factor. Understanding this relationship is essential for accurate circuit design.
@@ -457,14 +460,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: "Apply Ohm's law and impedance calculations to real cable sizing problems.",
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: "Kirchhoff's voltage law in practice — calculate voltage drop across cable runs.",
     icon: Zap,

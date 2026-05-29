@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for any circuit — domestic, commercial, or industrial.',
     icon: Calculator,
@@ -507,8 +507,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Load Survey Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Record clamp meter load measurements against circuit schedule entries in your{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or EICR.
-                  Document actual demand for distribution board design verification.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or EICR. Document
+                  actual demand for distribution board design verification.
                 </p>
               </div>
             </div>
@@ -533,7 +533,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Diversity and Load Calculations</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use measured actual demand values in the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to verify cables are correctly rated. Actual measured current is more accurate

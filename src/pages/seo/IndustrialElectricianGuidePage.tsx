@@ -50,6 +50,7 @@ const keyTakeaways = [
   'PLC (Programmable Logic Controller) programming and industrial automation are increasingly important — modern factories use PLCs, HMIs (Human Machine Interfaces), SCADA systems, and variable speed drives to control machinery, and industrial electricians are expected to understand, commission, and fault-find these systems.',
   'Planned preventive maintenance (PPM) is a core part of industrial work — electricians carry out scheduled inspections, thermal imaging, vibration analysis, and condition monitoring to prevent unplanned downtime that can cost manufacturers thousands of pounds per hour.',
   'Elec-Mate supports industrial electricians with three-phase calculators, cable sizing for large installations, EICR certificates for industrial premises, AI-powered RAMS generation, and training courses covering inspection and testing of industrial systems.',
+  'BS 7671:2018+A4:2026 (in force from April 2026) introduced Reg 133.1.3, which requires the use of certain equipment — including SPDs (surge protective devices) and AFDDs (arc fault detection devices) — to be recorded on the appropriate Part 6 electrical certification. Every industrial EIC and EICR issued after April 2026 must include these disclosures where applicable. Appendix 6 model forms have been updated with dedicated SPD and AFDD fields.',
 ];
 
 const faqs = [
@@ -245,6 +246,15 @@ const sections = [
           </SEOInternalLink>{' '}
           covers the practical aspects in more detail.
         </p>
+        <p>
+          BS 7671 Reg 643.9 requires that phase sequence (rotation) is verified as part of
+          inspection and testing of three-phase installations. For motor-driven equipment where the
+          direction of rotation is safety-critical, BS 7671 Reg 463.3.3 further requires that
+          provision is made to prevent incorrect phase sequence from causing a hazard. During
+          commissioning, installers must check and record correct phase sequence and confirm that
+          any phase-sequence prevention device operates correctly before the equipment is placed
+          into service — this is a formal compliance step, not simply good practice.
+        </p>
       </>
     ),
   },
@@ -313,6 +323,26 @@ const sections = [
           ability to diagnose quickly and accurately directly affects production downtime and is
           what separates good industrial electricians from average ones.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <Settings className="w-4 h-4 text-yellow-400 shrink-0" />
+            Motor Circuit Protection: Back-up OCPDs and Fuse Selection
+          </h4>
+          <p className="text-white/80 text-sm leading-relaxed">
+            BS 7671 Reg 536.4.2.2 requires that contactors and overload relays — which do not
+            themselves provide short-circuit protection — are protected by an upstream overcurrent
+            protective device (OCPD) or short-circuit protective device (SCPD). In motor circuits
+            this back-up OCPD must be correctly coordinated with the contactor and overload relay to
+            avoid damage on a fault. When selecting fuse-links for motor circuit back-up protection,
+            OSG Reg 7.2.7 draws the distinction between <strong>gM fuse-links</strong> (full-range
+            motor circuit protection — protecting against both overload and short-circuit over the
+            full motor range) and <strong>aM fuse-links</strong> (partial-range, short-circuit
+            protection only — always used alongside a separate overload relay, never in isolation).
+            Specifying aM fuses without a thermal overload relay is a common motor protection error
+            on industrial panels; compliance requires explicit coordination with the upstream OCPD
+            and the motor starter assembly.
+          </p>
+        </div>
       </>
     ),
   },
@@ -422,7 +452,10 @@ const sections = [
                 <SEOInternalLink href="/guides/eicr-for-commercial-premises">
                   periodic EICRs
                 </SEOInternalLink>{' '}
-                every 3 to 5 years. PPM prevents many failures but can result in unnecessary
+                at an interval recommended by the designer and recorded on the EIC — BS 7671 Reg
+                652.1 requires the interval to be determined by installation type, and GN3 guidance
+                notes that heavy industrial use may justify shorter intervals than the designer
+                originally specified. PPM prevents many failures but can result in unnecessary
                 maintenance on equipment that is still in good condition.
               </span>
             </li>
@@ -696,7 +729,7 @@ const sections = [
                   Cable sizing for three-phase circuits with correction factors, voltage drop
                   calculations for long sub-main runs, maximum demand assessment, prospective fault
                   current calculations, and{' '}
-                  <SEOInternalLink href="/three-phase-power-calculator">
+                  <SEOInternalLink href="/tools/three-phase-power-calculator">
                     three-phase power calculations
                   </SEOInternalLink>
                   . All the calculations an industrial electrician needs, right on your phone.

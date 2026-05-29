@@ -46,6 +46,8 @@ const keyTakeaways = [
   'Electricity North West (ENW) is the Distribution Network Operator. The Walney offshore wind farms (visible from Barrow) are connected to the ENW network and represent a significant local renewable energy infrastructure.',
   'Labour rates in Barrow are £35–52/hr for standard domestic work. BAE Systems and defence contractor rates are substantially higher — £55–85+/hr — reflecting the security clearance and specialist skills required.',
   'Barrow has a high proportion of older industrial and residential housing stock — Victorian terraces, inter-war social housing, and post-war estates. Consumer unit replacement, rewiring, and EICR work are the backbone of the domestic electrical market.',
+  'A4:2026 (BS 7671:2018+A4:2026 Reg 411.3.4) requires that all AC final circuits supplying luminaires in domestic premises are protected by a 30 mA RCD. All domestic consumer unit replacements in Barrow must now include RCD protection for lighting circuits — not just ring and radial power circuits.',
+  "EV charger installations on Barrow's predominantly TN-C-S (PME) network are subject to the specific PME provisions of Section 722 (BS 7671). These include protection against PEN conductor failure — a dedicated earth electrode or voltage-monitoring device may be required. Always verify the earthing arrangement and apply Section 722 before designing a domestic EV charger circuit.",
 ];
 
 const faqs = [
@@ -77,7 +79,7 @@ const faqs = [
   {
     question: 'What types of domestic electrical work are common in Barrow?',
     answer:
-      'The domestic electrical market in Barrow mirrors that of other post-industrial northern towns with older housing stock. Consumer unit replacements are the most common single job — the town has a high proportion of 1960s–1980s consumer units without adequate RCD protection, and a significant number of properties with older rewirable fuse boards still in service. Full rewires of Victorian terraces and inter-war housing are a regular source of work. EICR inspections are growing for the rental sector under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. EV charger installations are growing as BAE Systems employees and others adopt electric vehicles. Lighting upgrades to LED are common in both domestic and commercial properties.',
+      'The domestic electrical market in Barrow mirrors that of other post-industrial northern towns with older housing stock. Consumer unit replacements are the most common single job — the town has a high proportion of 1960s–1980s consumer units without adequate RCD protection, and a significant number of properties with older rewirable fuse boards still in service. Under BS 7671:2018+A4:2026 Reg 411.3.4, all domestic CU replacements must now include 30 mA RCD additional protection on lighting circuits — a new A4 requirement that increases scope and cost versus older CU jobs. Consumer units may also include AFDDs (arc fault detection devices) to mitigate arc ignition risk from degraded wiring in older properties (OSG Reg 3.1). Full rewires of Victorian terraces and inter-war housing are a regular source of work. EICR inspections are growing for the rental sector under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. EV charger installations are growing as BAE Systems employees and others adopt electric vehicles — note that Barrow properties are predominantly on TN-C-S (PME) supplies and Section 722 of BS 7671 applies specific PME requirements (protection against PEN conductor failure) to every domestic EV charger install. Lighting upgrades to LED are common in both domestic and commercial properties.',
   },
   {
     question: 'How much does an electrician charge in Barrow-in-Furness?',
@@ -104,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Barrow Victorian terraces and Furness Peninsula rural properties with longer cable runs.',
@@ -377,6 +379,13 @@ const sections = [
               the end of its service life. Consumer unit replacement is the most common job type in
               these areas, alongside socket circuit additions.
             </p>
+            <p className="text-white text-sm leading-relaxed mt-2">
+              <strong>A4:2026 compliance note:</strong> All domestic CU replacements must now
+              include 30 mA RCD protection on lighting circuits (Reg 411.3.4) — not just power
+              circuits. Consumer units may also include arc fault detection devices (AFDDs) to
+              mitigate arc ignition risk from degraded wiring (OSG Reg 3.1) — particularly relevant
+              for Victorian terraces where concealed cables may have aged insulation.
+            </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Walney Island Properties</h3>
@@ -518,7 +527,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for Victorian terrace rewires and longer cable runs in rural Furness Peninsula
@@ -561,10 +570,9 @@ const sections = [
 export default function ElectricianBarrowPage() {
   return (
     <GuideTemplate
-      noindex={true}
       localArea="Barrow In Furness"
       title="Electrician in Barrow-in-Furness | Local Electricians 2026"
-      description="Find qualified electricians in Barrow-in-Furness, Cumbria. BAE Systems submarine facility, defence and marine electrical work, security clearances…"
+      description="Find qualified electricians in Barrow-in-Furness. BAE Systems defence rates, EV charger installations, EICR for rental properties, and Victorian terrace rewires."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

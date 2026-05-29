@@ -30,6 +30,8 @@ const tocItems = [
   { id: 'scope', label: 'Scope vs Domestic EICR' },
   { id: 'qualifications', label: 'Qualifications Required' },
   { id: 'distribution', label: 'Distribution Boards and Three-Phase' },
+  { id: 'key-tests', label: 'Key Tests' },
+  { id: 'documentation-outputs', label: 'Documentation Required' },
   { id: 'fire-emergency', label: 'Fire Alarms and Emergency Lighting' },
   { id: 'costs', label: 'Commercial EICR Costs' },
   { id: 'for-electricians', label: 'For Electricians' },
@@ -43,6 +45,8 @@ const keyTakeaways = [
   'The inspector must be competent to assess the specific installation type — commercial, industrial, or healthcare installations require knowledge of standards beyond BS 7671, including BS 5266 (emergency lighting) and BS 5839-1 (fire alarms).',
   'Typical costs for a commercial EICR range from £500 to £3,000+ depending on the size of the premises, number of distribution boards, complexity of the installation, and whether specialist circuits (fire alarm, UPS, data) are included in scope.',
   'Landlords of commercial premises have a duty of care under the Electricity at Work Regulations 1989 and the Health and Safety at Work Act 1974 to maintain electrical installations in a safe condition — a periodic EICR is the primary means of demonstrating compliance.',
+  'A commercial EICR must be issued together with a Condition Report Inspection Schedule, a Schedule of Circuit Details, and a Schedule of Test Results for every distribution board inspected (GN3 Reg 1.3). Issuing the Condition Report alone without accompanying test schedules is one of the most common documentation failures.',
+  'Measured earth fault loop impedance (Zs) values must be temperature-corrected before comparing against the maximum permitted values in BS 7671 Tables 41.1–41.6. GN3 provides a correction formula (Zeest(max) = Ze + a(Zs − Ze)) to adjust readings to the 10 °C reference basis of those tables — a circuit that passes on the day may fail at operating temperature if this correction is not applied.',
 ];
 
 const faqs = [
@@ -100,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size sub-main cables and distribution board feeds for commercial installations.',
     icon: Calculator,
@@ -360,6 +364,130 @@ const sections = [
     ),
   },
   {
+    id: 'key-tests',
+    heading: 'Key Tests in a Commercial EICR',
+    content: (
+      <>
+        <p>
+          A commercial EICR involves a defined sequence of electrical tests on every circuit of
+          every distribution board within scope. The core tests are:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Insulation resistance</strong> — tested at 500 V d.c. for circuits up to 500
+                V. Minimum acceptable value is 1.0 M&#x2126; per circuit (BS 7671 Table 64). Low
+                insulation resistance indicates deteriorated or damaged cable insulation and is
+                typically recorded as a C2 observation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Earth fault loop impedance (Zs)</strong> — measured on each circuit and
+                compared against the maximum permitted value for the protective device. Measured
+                values must be temperature-corrected before comparison: GN3 gives the formula
+                Zeest(max) = Ze + a(Zs &#x2212; Ze), where the factor <em>a</em> adjusts the
+                measured conductor resistance to the 10&nbsp;°C reference basis of BS 7671 Tables
+                41.1&#x2013;41.6. Failing to apply this correction can cause a circuit to appear
+                compliant when it would actually fail at operating temperature.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>RCD operation</strong> — each RCD must be tested with an RCD tester at 100%
+                rated residual current (I&#x394;n). For general-purpose non-Type S devices, the
+                maximum permitted operating time is 300 ms (OSG Chapter 11, Reg 11.3). Type S
+                (time-delayed) devices must operate between 130 ms and 500 ms. The integral test
+                button does not substitute for a timed trip test with an RCD tester.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Polarity</strong> — verify that all single-pole switches and protective
+                devices are in the line conductor only, and that wiring is correctly connected
+                throughout (BS 7671 Reg 643.6; GN3 Reg 8.2).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Earth electrode resistance</strong> — where the installation uses a TT
+                earthing system or incorporates an earth electrode, the electrode resistance to
+                earth (RA) must be measured using an earth electrode tester, with test lead
+                resistance excluded from the reading (BS 7671 Reg 643.7.3; GN3 Reg 2.25).
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Test results for all circuits on all distribution boards within scope must be recorded on
+          a Schedule of Test Results and issued with the Condition Report.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'documentation-outputs',
+    heading: 'Documentation: What a Commercial EICR Must Deliver',
+    content: (
+      <>
+        <p>
+          GN3 (Reg 1.3) is explicit: after completing periodic inspection and testing, the inspector
+          must provide the person ordering the inspection with all of the following documents:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Electrical Installation Condition Report (EICR)</strong> — the front-page
+                document recording the overall outcome (Satisfactory / Unsatisfactory), the scope,
+                limitations, and all C1/C2/C3/FI observations.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Condition Report Inspection Schedule</strong> — the checklist recording the
+                visual inspection findings for each section of the installation (earthing, bonding,
+                distribution boards, wiring systems, accessories, etc.).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Schedule of Circuit Details — one per distribution board</strong> — records
+                the circuit type, wiring method, conductor size, overcurrent device rating, and RCD
+                details for each way on each board.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Schedule of Test Results — one per distribution board</strong> — records the
+                measured values for continuity, insulation resistance, Zs, and RCD tests for every
+                circuit tested. On a large commercial site with five distribution boards, five
+                separate Schedules of Test Results are required.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          A common documentation failure identified in industry guidance is issuing the EICR front
+          page without the accompanying Schedules of Test Results — rendering the report incomplete
+          and non-compliant with GN3 requirements. For multi-board commercial premises, confirm in
+          the scope agreement that a full set of schedules will be provided for every board
+          inspected.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'fire-emergency',
     heading: 'Fire Alarms and Emergency Lighting',
     content: (
@@ -494,12 +622,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Works at the Same Time</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to quote remedial works immediately after identifying C1 and C2 defects. Sending
-                  the remedial quote with the EICR report converts a one-off inspection into a
-                  repair job — and positions you as the natural choice to carry out the work.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  quote remedial works immediately after identifying C1 and C2 defects. Sending the
+                  remedial quote with the EICR report converts a one-off inspection into a repair
+                  job — and positions you as the natural choice to carry out the work.
                 </p>
               </div>
             </div>

@@ -50,6 +50,8 @@ const keyTakeaways = [
   'The method statement must be specific to the job and site — generic template method statements that do not address the actual work being done are increasingly being rejected by safety-conscious clients.',
   'Together with the risk assessment, the method statement forms a RAMS pack (Risk Assessment and Method Statement) — the standard safety document package for electrical contracting.',
   'Elec-Mate generates professional, site-specific method statements from a plain-English job description in under 60 seconds using its AI Health and Safety agent and RAMS Generator.',
+  'Post-A4:2026 method statements for domestic consumer unit changes and rewires must address two new design checkpoints: AFDDs on AC final circuits (Reg 421.1.7, recommended) and RCD protection not exceeding 30 mA on all lighting circuits in domestic premises (Reg 411.3.4, mandatory).',
+  'Safe isolation described in a method statement must follow the OSG Reg 12.5 minimum three-stage sequence before testing dead: (1) positively identify the isolation point, (2) check the VID condition, (3) confirm VID functioning on a known live source.',
 ];
 
 const faqs = [
@@ -96,7 +98,7 @@ const howToSteps = [
   },
   {
     name: 'Write the step-by-step sequence',
-    text: 'Describe the work in chronological order from arrival on site to handover. Each step should describe what is being done, who is doing it, what safety precautions apply at that stage, and what equipment is being used. Include critical safety checkpoints such as safe isolation verification, insulation resistance testing before energising, and GS 38 prove-test-prove before working on any conductors. The sequence must be logical and workable — it should reflect how the work will actually be done, not an idealised version that bears no relation to site reality.',
+    text: 'Describe the work in chronological order from arrival on site to handover. Each step should describe what is being done, who is doing it, what safety precautions apply at that stage, and what equipment is being used. Include critical safety checkpoints such as safe isolation verification following the OSG Reg 12.5 minimum sequence — positively identify the isolation point, check VID condition, confirm VID on a known live source, test dead, confirm VID again — insulation resistance testing before energising, and correct GS 38 prove-test-prove before working on any conductors. The sequence must be logical and workable — it should reflect how the work will actually be done, not an idealised version that bears no relation to site reality.',
   },
   {
     name: 'Include emergency procedures',
@@ -329,10 +331,29 @@ const sections = [
               installation survey and circuit identification, temporary supply arrangements (if
               customer is in residence), safe isolation of existing circuits, first fix — cable
               routes, containment, and cabling with fire stopping at all penetrations, consumer unit
-              installation and termination, second fix — accessories and final connections, initial
-              verification testing (BS 7671 sequence), Part P notification to building control via
-              competent person scheme, customer handover including EIC and operating instructions.
+              installation and termination (metal-enclosure type — BS 7671 Reg 421.1.201), second
+              fix — accessories and final connections, initial verification testing (BS 7671
+              sequence), Part P notification to building control via competent person scheme,
+              customer handover including EIC and operating instructions.
             </p>
+            <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
+              <h4 className="font-semibold text-white text-sm mb-2">
+                A4:2026 Design &amp; Commissioning Checkpoints
+              </h4>
+              <ul className="space-y-1 text-white/80 text-sm leading-relaxed list-disc list-inside">
+                <li>
+                  <strong>AFDDs (Reg 421.1.7):</strong> A4:2026 recommends arc fault detection
+                  devices on AC final circuits to mitigate fire risk from arc fault currents. Record
+                  the AFDD decision in the method statement.
+                </li>
+                <li>
+                  <strong>RCD on lighting (Reg 411.3.4):</strong> In domestic premises, all AC final
+                  circuits supplying luminaires shall have additional RCD protection with a rated
+                  residual operating current not exceeding 30 mA. This is a mandatory commissioning
+                  verification step.
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
@@ -342,12 +363,33 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Site assessment and existing installation review, safe isolation of incoming supply
               (coordination with DNO if required for service fuse), removal of existing consumer
-              unit, installation of new metal consumer unit (AMD3 type per BS 7671 Amendment 4),
-              circuit transfer and termination with correct torque settings, labelling of all
-              circuits, initial verification testing, completion of electrical installation
-              certificate (EIC), Part P notification, customer handover. Method statement must
-              address the period when the supply is isolated and customers have no power.
+              unit, installation of new metal-enclosure consumer unit (required under BS 7671 Reg
+              421.1.201 — domestic premises shall use non-combustible enclosures; steel is deemed to
+              satisfy this), circuit transfer and termination with correct torque settings,
+              labelling of all circuits, initial verification testing, completion of electrical
+              installation certificate (EIC), Part P notification, customer handover. Method
+              statement must address the period when the supply is isolated and customers have no
+              power.
             </p>
+            <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
+              <h4 className="font-semibold text-white text-sm mb-2">
+                A4:2026 Design &amp; Commissioning Checkpoints
+              </h4>
+              <ul className="space-y-1 text-white/80 text-sm leading-relaxed list-disc list-inside">
+                <li>
+                  <strong>AFDDs (Reg 421.1.7):</strong> BS 7671:2018+A4:2026 recommends arc fault
+                  detection devices on AC final circuits to mitigate fire risk from arc fault
+                  currents. Confirm whether client or designer has specified AFDDs and record the
+                  decision in the method statement.
+                </li>
+                <li>
+                  <strong>RCD on lighting (Reg 411.3.4):</strong> In domestic premises, AC final
+                  circuits supplying luminaires shall be provided with additional protection by an
+                  RCD with a rated residual operating current not exceeding 30 mA. Verify all
+                  lighting circuits are RCD-protected before completing the EIC.
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
@@ -380,6 +422,20 @@ const sections = [
               connection, testing and commissioning, completion of EIC, OZEV grant paperwork (if
               applicable), customer handover with charger operating instructions.
             </p>
+            <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
+              <h4 className="font-semibold text-white text-sm mb-2">
+                A4:2026 Commissioning Checkpoint — Load Curtailment (Reg 722.311.201)
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Reg 722.311.201 states that load curtailment — including
+                automatic or manual load reduction or disconnection — may be taken into account when
+                determining the maximum demand of an EV charging installation or part thereof. Where
+                a dynamic load management or demand-response device is fitted, record the
+                curtailment scheme in the method statement and confirm its correct operation at
+                commissioning. This is a design and commissioning checkpoint for all post-A4 EV
+                charger installations.
+              </p>
+            </div>
           </div>
         </div>
       </>
@@ -516,9 +572,13 @@ const sections = [
                   <SEOInternalLink href="/guides/safe-isolation-procedure">
                     safe isolation procedure
                   </SEOInternalLink>
-                  : identify the circuit, isolate at the distribution board, apply lock-off device
-                  and padlock, prove voltage indicator on known live source, test circuit dead at
-                  the point of work (L-N, L-E, N-E), prove voltage indicator again.
+                  , following the minimum sequence set out in OSG Reg 12.5: (1) locate and
+                  positively identify the correct isolation point; (2) check the physical condition
+                  of the voltage indicating device (VID) for obvious damage or deterioration; (3)
+                  confirm the VID is functioning correctly on a known live source; (4) test the
+                  circuit dead at the point of work (L-N, L-E, N-E); (5) confirm the VID on the
+                  known live source again (prove-test-prove). Apply lock-off device and personal
+                  padlock before beginning work.
                 </p>
               </div>
             </div>

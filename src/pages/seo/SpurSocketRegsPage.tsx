@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Can I add a spur to a ring circuit without notifying Building Control?',
     answer:
-      'Adding a spur to an existing ring circuit is generally classed as minor electrical work and does not require Building Control notification under Part P of the Building Regulations, provided the work is not in a special location (such as a bathroom or within 3 metres of a swimming pool) and does not involve work on the consumer unit. However, a Minor Works Certificate should always be issued for the completed work, regardless of whether Building Control notification is required. If you are registered with a competent person scheme (NICEIC, NAPIT, ELECSA), you can self-certify the work. If you are not registered, and the work is in a special location, you must either use a registered electrician or notify Building Control before starting the work.',
+      'Adding a spur to an existing ring circuit is generally classed as minor electrical work and does not require Building Control notification under Part P of the Building Regulations, provided the work is not in a kitchen or a special location (such as a bathroom or within 3 metres of a swimming pool) and does not involve work on the consumer unit. A kitchen is treated the same as a special location for the purposes of this rule — work in a kitchen (adding socket outlets or fused spurs to an existing ring or radial circuit) is notifiable, even though the kitchen itself is not a special location under BS 7671. A Minor Works Certificate should always be issued for the completed work, regardless of whether Building Control notification is required. If you are registered with a competent person scheme (NICEIC, NAPIT, ELECSA), you can self-certify the work. If you are not registered, and the work is in a kitchen or a special location, you must either use a registered electrician or notify Building Control before starting the work.',
   },
   {
     question: 'How many spurs can I have on a ring circuit?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'How do I identify if a socket is on a spur or on the ring?',
     answer:
-      'During testing, you can identify whether a socket is on a spur or part of the ring by performing a ring circuit continuity test. The three-step test (measuring end-to-end resistance of each conductor, then cross-connecting and measuring at each socket) will show whether each socket has two cables (part of the ring) or one cable (on a spur). A socket on a non-fused spur will have only one cable entering the back of the socket. A socket on the ring will have two cables — one arriving from each leg of the ring. A socket on a spur fed via a junction box will also have one cable, but the junction box itself will be in the ring. Visual inspection during an EICR should note the circuit arrangement and identify any spurs.',
+      'During testing, you can identify whether a socket is on a spur or part of the ring by performing a ring circuit continuity test. The three-step test (measuring end-to-end resistance of each conductor, then cross-connecting and measuring at each socket) gives a clear diagnostic: sockets directly in the ring should all show approximately the same resistance reading during the cross-connected step (approximately half the total ring resistance). A spur socket will show a noticeably higher resistance reading at that step than the ring sockets, because the current path to a spur has to travel further — out and back along the spur cable — rather than dividing around the ring. Misidentifying a spur socket as a ring outlet during commissioning is a known source of incorrect R1+R2 and Zs entries on the Schedule of Test Results. A socket on a non-fused spur will also have only one cable entering the back of the socket. A socket on the ring will have two cables — one arriving from each leg of the ring. A socket on a spur fed via a junction box will also have one cable, but the junction box itself will be in the ring. Visual inspection during an EICR should note the circuit arrangement and identify any spurs.',
   },
   {
     question: 'Is a fused connection unit the same as a switched fused spur?',
@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for spurs with BS 7671 correction factors and fuse coordination check.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/ring-circuit-calculator',
+    href: '/tools/ring-circuit-calculator',
     title: 'Ring Circuit Calculator',
     description:
       'Ring circuit testing calculations, R1+R2 values, and the three-step continuity test explained.',
@@ -156,7 +156,7 @@ const sections = [
         <p>
           Spurs are the most common method of adding socket outlets or fixed equipment connections
           to an existing{' '}
-          <SEOInternalLink href="/ring-circuit-calculator">ring circuit</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/tools/ring-circuit-calculator">ring circuit</SEOInternalLink> or{' '}
           <SEOInternalLink href="/guides/radial-circuit-explained">radial circuit</SEOInternalLink>{' '}
           without running a completely new circuit from the distribution board. They are quick to
           install, require minimal disruption, and — when done correctly — are fully compliant with{' '}
@@ -321,7 +321,8 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
+          The{' '}
+          <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
           for a spur depends on whether it is fused or unfused, and the rating of the fuse (if
           fused).
         </p>
@@ -374,6 +375,25 @@ const sections = [
           for the total cable length from the distribution board through the circuit cable and spur
           cable to the load.
         </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                30mA RCD protection required for the new socket outlet
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Regulation 411.3.3 requires that all socket outlets rated up to
+                and including 32A are provided with additional protection by a 30mA RCD. This
+                applies to the new spur socket outlet as well as to the existing circuit. In a
+                dwelling, there is no exception — the RCD requirement is mandatory. In non-domestic
+                installations, omission is only permitted where a documented risk assessment
+                determines it is not necessary. Ensure the new spur is fed from a circuit that is
+                already RCD-protected, or add RCD protection for the new outlet.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -422,6 +442,24 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                High-integrity CPC connections required on ring spurs
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                Where a ring final circuit has spurs, each spur must have a high-integrity
+                protective conductor connection complying with BS 7671 Regulation 543.7.1. The CPC
+                connection on the spur must be of equal integrity to the ring CPC — it cannot rely
+                on the ring conductor alone (OSG 9th Ed Reg 7.5.3; BS 7671:2018+A4:2026 Reg
+                543.7.2.201). This is commonly missed: verify CPC continuity on every spur with a
+                low-resistance continuity tester and record the result on the certificate.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           Before adding a spur to a ring circuit, you should verify that the circuit is a correctly
@@ -583,6 +621,25 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                Record pre-existing defects on the Minor Works Certificate
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671 Regulation 644.1.2 requires the installer to record any defects found in the
+                existing installation on the Minor Works Certificate (or EIC) so far as is
+                reasonably practicable. GN3 9th Ed Reg 1.4 confirms: any defects observed during the
+                course of the works that may give rise to danger must be noted on the certificate,
+                even if they do not affect the safety of the new spur itself. Failure to do so is a
+                legal duty omission. Any defect that does affect the safety of the new work must be
+                corrected before the certificate is issued.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           Elec-Mate generates both Minor Works Certificates and EICs on your phone. Enter the test

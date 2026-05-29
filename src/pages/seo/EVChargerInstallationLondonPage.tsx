@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -326,7 +326,7 @@ const sections = [
               <span>
                 <strong>Cable sizing for long runs</strong> — the long cable runs common in London
                 terraces require careful{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
                 to account for voltage drop. A 20-metre run in 6mm2 cable for a 32A load is close to
@@ -502,10 +502,8 @@ const sections = [
                   18 metres in terraced properties), frequent consumer unit upgrades, parking
                   restrictions affecting van access, and the time cost of congestion. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build accurate itemised quotes on site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build accurate itemised quotes on site.
                 </p>
               </div>
             </div>

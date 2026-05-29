@@ -107,7 +107,7 @@ const softwareAppSchema = {
   url: 'https://www.elec-mate.com/compare/elec-mate-vs-icertifi',
   offers: {
     '@type': 'Offer',
-    price: '4.99',
+    price: '5.99',
     priceCurrency: 'GBP',
     description: 'Monthly subscription from £5.99. 7-day free trial.',
   },
@@ -134,7 +134,7 @@ const faqSchema = {
 
 export default function ElecMateVsICertifiPage() {
   useSEO({
-    title: 'Elec-Mate vs iCertifi 2026 | Feature Comparison | Which Is',
+    title: 'Elec-Mate vs iCertifi 2026 | Which App Is Better for UK Electricians?',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -163,11 +163,23 @@ export default function ElecMateVsICertifiPage() {
             <span className="text-yellow-400">Elec-Mate</span> vs{' '}
             <span className="text-yellow-400">iCertifi</span>
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-6">
             An honest, detailed comparison of two popular apps for UK electricians. We will cover
             certificates, calculators, AI tools, training, business features, pricing, and platform
             support — so you can make an informed choice.
           </p>
+          {/* Direct-answer block — targets featured-snippet for 'elec mate vs icertifi' */}
+          <div className="max-w-2xl mx-auto mb-8 rounded-xl bg-yellow-500/10 border border-yellow-500/20 px-5 py-4 text-left">
+            <p className="text-white text-sm leading-relaxed">
+              <strong className="text-yellow-400">Verdict:</strong> Elec-Mate includes 70+ BS 7671
+              calculators, 16 certificate types, and AI tools that iCertifi does not offer, starting
+              from £5.99 per month. iCertifi suits electricians who only need standard certificates
+              and prefer a focused, established tool.
+            </p>
+            <p className="text-white/60 text-xs mt-2">
+              Reviewed by a City &amp; Guilds 2382-18 qualified electrician.
+            </p>
+          </div>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="/auth/signup"
@@ -234,10 +246,10 @@ export default function ElecMateVsICertifiPage() {
             <p>
               The platform includes 16 certificate types (EICR,{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
-              <SEOInternalLink href="/ev-charger-certificate">EV Charger</SEOInternalLink>,
-              Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist
-              electrical calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation
-              Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
+              <SEOInternalLink href="/ev-charger-certificate">EV Charger</SEOInternalLink>, Solar
+              PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical
+              calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide,
+              Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
               Regulation Lookup), full training courses (18th Edition, Level 2/3 Electrical
               Installation, AM2, EPA simulator), and business management features (job scheduling,
               quoting, invoicing, Stripe payments, Xero integration).
@@ -269,9 +281,10 @@ export default function ElecMateVsICertifiPage() {
             <div className="space-y-4 text-white leading-relaxed mb-6">
               <p>
                 Both Elec-Mate and iCertifi support the core certificate types that UK electricians
-                use regularly: EICR, EIC, and Minor Works. Both apps provide digital signature
-                capture, observation coding, and PDF export. For these standard certificates, both
-                platforms deliver a professional result.
+                use regularly: <SEOInternalLink href="/eicr-certificate">EICR</SEOInternalLink>,
+                EIC, and Minor Works. Both apps provide digital signature capture, observation
+                coding, and PDF export. For these standard certificates, both platforms deliver a
+                professional result.
               </p>
               <p>
                 Where they differ is in scope. Elec-Mate includes 16 certificate types in total,
@@ -346,7 +359,8 @@ export default function ElecMateVsICertifiPage() {
             <div className="space-y-4 text-white leading-relaxed">
               <p>
                 This is an area of significant difference between the two platforms. Elec-Mate
-                includes over 70 specialist electrical calculators that reference BS 7671:2018+A4:2026 tables directly. These cover cable sizing (Appendix 4 method),
+                includes over 70 specialist electrical calculators that reference BS
+                7671:2018+A4:2026 tables directly. These cover cable sizing (Appendix 4 method),
                 voltage drop verification, maximum demand calculations, diversity factors, conduit
                 and trunking fill rates, earth fault loop impedance (Zs) checks, prospective fault
                 current, disconnection time verification, cable derating for grouping and ambient
@@ -360,11 +374,15 @@ export default function ElecMateVsICertifiPage() {
                 Elec-Mate's calculator suite significantly more comprehensive.
               </p>
               <p>
-                For context, having the right calculator to hand on site can save 15 to 20 minutes
-                per calculation compared to looking up tables in the book and working through the
-                maths manually. Across a week of work, comprehensive calculators easily save hours
-                of time and reduce the risk of calculation errors that could lead to non-compliant
-                installations.
+                Having the right calculator to hand on site reduces the risk of calculation errors
+                that could lead to non-compliant installations. For reference values used in
+                verification,{' '}
+                <SEOInternalLink href="/guides/ze-values-uk">
+                  UK Ze (external earth fault loop impedance) values
+                </SEOInternalLink>{' '}
+                and{' '}
+                <SEOInternalLink href="/guides/voltage-drop">voltage drop guidance</SEOInternalLink>{' '}
+                are available in the Elec-Mate guides.
               </p>
             </div>
           </div>
@@ -454,6 +472,9 @@ export default function ElecMateVsICertifiPage() {
                 same app you use for work means you can study between jobs or during quiet periods
                 without needing a separate platform. It also means employers can provide their
                 apprentices with a single app that covers both training and practical tools.
+                Elec-Mate also includes{' '}
+                <SEOInternalLink href="/mock-exams">BS 7671 mock exams</SEOInternalLink> to help
+                candidates prepare for the 18th Edition assessment.
               </p>
             </div>
           </div>
@@ -699,7 +720,6 @@ export default function ElecMateVsICertifiPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -707,9 +727,15 @@ export default function ElecMateVsICertifiPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/compare/elec-mate-vs-electrical-om">Elec-Mate vs Electrical OM</SEOInternalLink>
-            <SEOInternalLink href="/compare/elec-mate-vs-easy-eicr">Elec-Mate vs Easy EICR 2026</SEOInternalLink>
-            <SEOInternalLink href="/compare/elec-mate-vs-simply-eicr">Elec-Mate vs SimplyEICR</SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-electrical-om">
+              Elec-Mate vs Electrical OM
+            </SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-easy-eicr">
+              Elec-Mate vs Easy EICR 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-simply-eicr">
+              Elec-Mate vs SimplyEICR
+            </SEOInternalLink>
           </div>
         </div>
       </section>

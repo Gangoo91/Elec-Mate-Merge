@@ -44,6 +44,9 @@ const keyTakeaways = [
   'MCS certification is required for the customer to access the Smart Export Guarantee (SEG) feed-in payments for exported electricity.',
   'G98 notification (for systems up to 16A per phase, approximately 3.68kW single-phase) must be submitted to the DNO before commissioning. G99 applies to larger systems.',
   'Handover documentation must include system design details, commissioning test results, inverter settings, and manufacturer warranty information.',
+  'DC-side cables and equipment remain energised whenever panels are exposed to light — even when the AC supply and inverter are fully disconnected (BS 7671 Reg 712.410.101). The EIC isolation notes and safe-working method must reflect this.',
+  'A permanent warning notice is mandatory at every DC access point (combiner boxes, DC distribution boards) and fixed to every inverter per BS 7671 Regs 712.514.102 and 712.514.103. Absence of these labels is a frequent MCS audit non-conformance.',
+  'DC connectors must be selected to BS EN 62852:2015+A1:2020 per Reg 712.526.101. Where accessible to non-skilled persons, they must require a key or tool to disconnect.',
   'Elec-Mate provides digital solar PV certificate templates covering the EIC, commissioning record, and handover pack with professional PDF export.',
 ];
 
@@ -66,7 +69,7 @@ const faqs = [
   {
     question: 'What must the EIC cover for a solar PV installation?',
     answer:
-      'The Electrical Installation Certificate for a solar PV system must cover all the electrical work associated with the installation. This includes the DC wiring from the solar panels to the inverter (string cables, DC isolator, MC4 connectors), the inverter itself, the AC wiring from the inverter to the consumer unit, the AC isolator, the dedicated MCB or RCBO in the consumer unit, the earthing arrangements (including any equipotential bonding of the mounting frame), and any generation meter. The EIC should be completed in accordance with BS 7671:2018+A4:2026 and should reference the relevant sections of the IET Code of Practice for Grid Connected Solar PV Systems.',
+      'The Electrical Installation Certificate for a solar PV system must cover all the electrical work associated with the installation. This includes the DC wiring from the solar panels to the inverter (string cables, DC isolator, and DC connectors selected to BS EN 62852:2015+A1:2020 per Reg 712.526.101), the inverter itself, the AC wiring from the inverter to the consumer unit, the AC isolator, the dedicated MCB or RCBO in the consumer unit, the earthing arrangements (including any equipotential bonding of the mounting frame), and any generation meter. The EIC must also record: the DC-side protective measure (double/reinforced insulation or SELV/PELV per Reg 712.410.102); confirmation that mandatory warning labels are in place at every DC access point (Reg 712.514.102) and fixed to every inverter (Reg 712.514.103); and an isolation note reflecting that DC circuits remain energised even when the AC supply is isolated (Reg 712.410.101). The EIC should be completed in accordance with BS 7671:2018+A4:2026, using the updated Appendix 6 model forms which now include fields for SPDs and AFDDs.',
   },
   {
     question: 'What happens if solar PV certificates are not provided?',
@@ -81,7 +84,7 @@ const faqs = [
   {
     question: 'What commissioning tests are required for solar PV?',
     answer:
-      'Commissioning tests for a solar PV installation include both DC-side and AC-side tests. DC-side tests include open-circuit voltage (Voc) and short-circuit current (Isc) measurements for each string, insulation resistance testing of DC cables (at 500V minimum, ideally 1000V), and polarity verification. AC-side tests include the standard BS 7671 tests — continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, and RCD operation. The inverter commissioning checks include verifying the grid protection settings (voltage and frequency trip limits), confirming the anti-islanding function operates correctly, and recording the inverter serial number and firmware version. All results must be recorded on the EIC and commissioning record.',
+      'Commissioning tests for a solar PV installation include both DC-side and AC-side tests. DC-side tests include open-circuit voltage (Voc) and short-circuit current (Isc) measurements for each string, insulation resistance testing of DC cables (at 500V minimum, ideally 1000V), and polarity verification. Before carrying out any DC-side test work, note that Reg 712.410.101 requires DC cables and equipment to be treated as live at all times — even when the AC supply and inverter are disconnected — because the PV array continues to generate voltage in daylight. AC-side tests include the standard BS 7671 tests — continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, and RCD operation. The EIC must also record the DC-side protective measure applied: either double/reinforced insulation (Section 412) or SELV/PELV (Section 414) as required by Reg 712.410.102. The inverter commissioning checks include verifying the grid protection settings (voltage and frequency trip limits), confirming the anti-islanding function operates correctly, and recording the inverter serial number and firmware version. All results must be recorded on the EIC and commissioning record.',
   },
 ];
 
@@ -223,7 +226,8 @@ const sections = [
     content: (
       <>
         <p>
-          Every solar PV installation requires an Electrical Installation Certificate (EIC) to BS 7671:2018+A4:2026. The EIC covers all the electrical work associated with the installation
+          Every solar PV installation requires an Electrical Installation Certificate (EIC) to BS
+          7671:2018+A4:2026. The EIC covers all the electrical work associated with the installation
           — both the DC side (panels, string cables, DC isolator) and the AC side (inverter output,
           AC isolator, consumer unit connection).
         </p>
@@ -234,7 +238,9 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 DC wiring — string cables from panels to inverter, DC isolator, cable type and size,
-                MC4 connector types, and cable routing.
+                and cable routing. DC connectors must be selected to BS EN 62852:2015+A1:2020 per
+                Reg 712.526.101. Where accessible to non-skilled persons, connectors must require a
+                key or tool to disconnect (Reg 712.526.101).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -258,10 +264,45 @@ const sections = [
                 loop impedance, RCD operation, and DC string voltage and current measurements.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                DC-side protective measure — the EIC must record whether double/reinforced
+                insulation (Section 412) or SELV/PELV (Section 414) is applied on the DC side, as
+                required by Reg 712.410.102. This is a mandatory selection, not a default
+                assumption.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                Mandatory warning labels — a permanent warning notice at every DC live-access point
+                (combiner boxes, DC distribution boards) per Reg 712.514.102, and a warning notice
+                fixed to every inverter per Reg 712.514.103. Both labels must be recorded as
+                installed in the EIC inspection notes.
+              </span>
+            </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <p className="font-bold text-orange-300 mb-2">
+            DC Safety: Always Treat as Live (Reg 712.410.101)
+          </p>
+          <p className="text-white text-sm leading-relaxed">
+            DC cables and equipment on the solar PV side remain energised whenever the panels are
+            exposed to light — even when the AC supply has been isolated and the inverter has been
+            disconnected. BS 7671 Reg 712.410.101 is explicit: electrical equipment on the DC side
+            shall be considered to be energised even when the AC side is disconnected from the grid
+            and even when the inverter is disconnected from the DC side. The EIC isolation notes and
+            any safe-working method statement must reflect this: DC circuits cannot be treated as
+            dead by AC isolation alone.
+          </p>
+        </div>
         <p>
-          The EIC should be issued in accordance with the model forms in BS 7671 Appendix 6. The{' '}
+          The EIC should be issued in accordance with the model forms in BS 7671 Appendix 6. The
+          A4:2026 update to Appendix 6 adds fields for recording surge protective devices (SPDs) and
+          arc fault detection devices (AFDDs) — where an SPD is fitted on the AC side of the
+          inverter, its details must be recorded on the updated EIC form. The{' '}
           <SEOInternalLink href="/guides/when-is-eic-required">EIC requirements</SEOInternalLink>{' '}
           for solar PV are the same as for any other new circuit, with the addition of DC-side test
           results that are specific to PV installations.
@@ -596,6 +637,34 @@ const sections = [
                 this step creates problems for the property owner during future sales.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Missing DC access-point warning labels (Reg 712.514.102)</strong> — a
+                permanent warning notice is mandatory at every point of access to DC live parts
+                (combiner boxes, DC distribution boards). Example wording: &lsquo;SOLAR DC — Live
+                parts can remain energised after isolation&rsquo;. Absence of these labels is a
+                frequent MCS audit non-conformance finding.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Missing inverter warning notice (Reg 712.514.103)</strong> — a warning
+                notice must be physically fixed to every inverter with wording similar to:
+                &lsquo;WARNING — Isolate both AC and DC sides before servicing&rsquo;. This is a
+                mandatory labelling requirement under BS 7671, not a recommendation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Wrong DC connector type (Reg 712.526.101)</strong> — DC connectors must be
+                selected to BS EN 62852:2015+A1:2020. Generic or non-compliant connectors fail this
+                requirement. Where connectors are accessible to non-skilled persons, they must
+                require a key or tool to disconnect.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -619,7 +688,7 @@ export default function SolarPVCertificateRequirementsPage() {
       title="Solar PV Certificate Requirements | MCS UK"
       description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation…"
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

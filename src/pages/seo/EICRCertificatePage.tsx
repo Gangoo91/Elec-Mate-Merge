@@ -72,7 +72,7 @@ const keyTakeaways = [
   'Landlords in England must have a valid EICR before tenants move in and renew it every 5 years — penalties of up to £30,000 per breach.',
   'Any C1 or C2 observation code makes the overall assessment Unsatisfactory — Elec-Mate tracks this automatically.',
   'You can create, sign, and export a professional EICR as a PDF directly from your phone using Elec-Mate.',
-  'BS 7671:2018 + Amendment 4:2024 is the current standard. Amendment 4 is expected in 2026.',
+  'BS 7671:2018+A4:2026 is the current standard, published in 2026.',
 ];
 
 const faqs = [
@@ -84,7 +84,7 @@ const faqs = [
   {
     question: 'What do the EICR observation codes C1, C2, C3, and FI mean?',
     answer:
-      'There are four classification codes used on an EICR. C1 (Danger Present) means there is an immediate risk of injury and the issue requires urgent remedial action — the person responsible for the installation should be advised to take immediate action. C2 (Potentially Dangerous) means there is a risk of injury that requires urgent remedial action. C3 (Improvement Recommended) indicates the installation does not comply with current regulations but is not imminently dangerous — improvement is recommended. FI (Further Investigation) means the inspector could not fully assess a part of the installation and further investigation is needed before a classification can be given.',
+      'There are four classification codes used on an EICR. C1 (Danger Present) means there is an immediate risk of injury and the issue requires urgent remedial action — the person responsible for the installation should be advised to take immediate action. C2 (Potentially Dangerous) means there is a risk of injury that requires urgent remedial action. C3 (Improvement Recommended) indicates the installation does not comply with current regulations but is not imminently dangerous — improvement is recommended. FI (Further Investigation) means the inspector could not fully assess a part of the installation and further investigation is needed before a classification can be given. Importantly, an FI observation alone does not make the EICR Unsatisfactory — only a C1 or C2 code triggers an Unsatisfactory overall assessment (GN3 Reg 3.11).',
   },
   {
     question: 'Can I issue an EICR certificate using a phone or tablet?',
@@ -359,6 +359,16 @@ export default function EICRCertificatePage() {
           <span className="text-yellow-400">Send the EICR Before You Leave.</span>
         </h1>
 
+        <p className="text-base text-white/80 leading-relaxed mb-4">
+          An <strong className="text-white">EICR (Electrical Installation Condition Report)</strong>{' '}
+          is the formal document produced after a periodic inspection and testing of an existing
+          electrical installation. It replaces the older PIR, is defined by
+          BS&nbsp;7671:2018+A4:2026, and gives the installation an overall assessment of{' '}
+          <strong className="text-white">Satisfactory</strong> or{' '}
+          <strong className="text-white">Unsatisfactory</strong>. Landlords in England are legally
+          required to hold a valid EICR and renew it every five years.
+        </p>
+
         <p className="text-lg text-white leading-relaxed mb-4">
           Elec-Mate is the EICR app that actually works the way you work. AI board scanner reads the
           DB from a photo. Voice-to-test-results fills in the schedule while your hands hold the
@@ -438,10 +448,8 @@ export default function EICRCertificatePage() {
             (the IET Wiring Regulations, 18th Edition) and follows the model forms published in
             Appendix 6 of the standard. It records the extent of the installation inspected, the
             supply characteristics, details of the{' '}
-            <SEOInternalLink href="/earthing-arrangements">
-              earthing arrangements
-            </SEOInternalLink>
-            , the test results for every circuit, and any observations about departures from the
+            <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>,
+            the test results for every circuit, and any observations about departures from the
             current standard or defects that could pose a danger.
           </p>
           <p>
@@ -631,18 +639,66 @@ export default function EICRCertificatePage() {
               Further investigation is required without delay. The inspector was unable to fully
               assess a part of the installation, and it could not be classified until further
               investigation is carried out. Common where access was restricted or where unexpected
-              test results need deeper analysis.
+              test results need deeper analysis. An FI code alone does <strong>not</strong> make the
+              overall assessment Unsatisfactory — only C1 or C2 do.
             </p>
           </div>
         </div>
         <div className="mt-6 space-y-4 text-white leading-relaxed">
           <p>
             The overall assessment of the EICR is determined by the observation codes present. If
-            any C1 or C2 observations are recorded, the report must be classified as Unsatisfactory.
-            A report with only C3 observations (or no observations at all) is classified as
-            Satisfactory. FI observations indicate that further work is needed before a final
-            assessment can be given for those items.
+            any C1 or C2 observations are recorded, the report must be classified as Unsatisfactory
+            (GN3 Reg&nbsp;3.11). A report with only C3 observations, FI observations, or no
+            observations at all is classified as Satisfactory — FI alone does <strong>not</strong>{' '}
+            make the report Unsatisfactory. FI observations indicate that further work is needed
+            before a final classification can be given for those specific items.
           </p>
+        </div>
+
+        {/* A4:2026 changes relevant to EICR inspectors */}
+        <div className="mt-6 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-yellow-400 shrink-0" />
+            New A4:2026 Rules That Generate EICR Observations
+          </h3>
+          <ul className="space-y-3 text-white text-sm leading-relaxed">
+            <li className="flex items-start gap-2">
+              <span className="w-6 h-6 rounded bg-orange-500/20 text-orange-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                C2
+              </span>
+              <span>
+                <strong>Reg&nbsp;411.3.4 — 30&nbsp;mA RCD on domestic lighting circuits.</strong>{' '}
+                A4:2026 introduces a mandatory requirement (&#39;shall&#39;) for additional
+                30&nbsp;mA RCD protection on AC final circuits supplying luminaires in domestic
+                premises. An existing domestic installation without this protection does not comply
+                — typically coded C2.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-6 h-6 rounded bg-blue-500/20 text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                C3
+              </span>
+              <span>
+                <strong>Reg&nbsp;421.1.7 — AFDD recommended for AC final circuits.</strong> A4:2026
+                recommends (advisory, not mandatory) the installation of arc fault detection devices
+                (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. Absence
+                of AFDDs on a domestic installation is typically coded C3 (improvement recommended)
+                since the wording is recommendatory rather than prescriptive.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-6 h-6 rounded bg-white/10 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                App&nbsp;6
+              </span>
+              <span>
+                <strong>Appendix&nbsp;6 model forms updated.</strong> The schedule of items
+                inspected now includes dedicated fields for recording the presence of SPDs (surge
+                protective devices) and AFDDs. Elec-Mate&#39;s EICR form includes these columns in
+                line with the updated BS&nbsp;7671:2018+A4:2026 model forms
+                (Reg&nbsp;722.826.3.201).
+              </span>
+            </li>
+          </ul>
         </div>
 
         <SEOAppBridge

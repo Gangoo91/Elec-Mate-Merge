@@ -46,7 +46,8 @@ const keyTakeaways = [
   'The EICR must be renewed at least every five years under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, but most local authorities specify a three-year cycle in HMO licence conditions.',
   'Fire detection in HMOs must comply with BS 5839-6:2019. Most HMOs require at minimum a Grade D, LD2 system — interlinked mains-powered detectors in all escape routes and high-risk rooms.',
   'Emergency lighting to BS 5266-1:2016 is required in communal areas and escape routes in all but the smallest HMOs. Non-maintained battery-backed luminaires are the most common solution.',
-  'RCD protection under Regulation 411.3.3 of BS 7671 is required on all socket-outlet circuits. Absence of RCD protection in shared areas is the most common C2 finding on HMO EICRs.',
+  'RCD protection under Regulation 411.3.3 of BS 7671 is required on all socket-outlet circuits. Under Regulation 411.3.4 (introduced in A4:2026), 30mA RCD protection is also mandatory on all AC lighting circuits in domestic premises including HMOs. Absence of either is a C2 on an EICR.',
+  'Arc Fault Detection Devices (AFDDs) are mandatory under Regulation 421.1.7 of BS 7671:2018+A4:2026 for all single-phase AC final circuits supplying socket-outlets rated up to 32A in HMOs. This is a mandatory requirement — not a recommendation — for new installations and a C2 observation on an EICR where absent.',
   'Full HMO electrical compliance — EICR, fire alarm system, and emergency lighting — typically costs £2,000 to £8,000 for a five-bedroom HMO depending on the condition of the existing installation.',
 ];
 
@@ -74,7 +75,12 @@ const faqs = [
   {
     question: 'What RCD protection is required in an HMO under BS 7671?',
     answer:
-      'Regulation 411.3.3 of BS 7671:2018+A4:2026 requires 30mA RCD protection on all socket-outlet circuits rated up to 32A. In an HMO, every circuit serving bedrooms, kitchens, and communal areas must have RCD protection. Best practice is an RCBO (residual current circuit-breaker with overcurrent protection) on each circuit, providing individual fault discrimination so one circuit tripping does not affect all tenants. A single split-load RCD consumer unit is inadequate for most HMOs.',
+      'Regulation 411.3.3 of BS 7671:2018+A4:2026 requires 30mA RCD protection on all socket-outlet circuits rated up to 32A. Regulation 411.3.4, introduced in A4:2026, additionally requires 30mA RCD protection on all AC final circuits supplying luminaires in domestic (household) premises — this includes HMOs. In an HMO, every circuit serving bedrooms, kitchens, communal areas, and all lighting circuits must therefore have RCD protection. Best practice is an RCBO on each circuit for individual fault discrimination. A single split-load RCD consumer unit is inadequate for most HMOs. Note that Regulation 421.1.7 also makes AFDDs mandatory for socket-outlet circuits in HMOs — RCBOs alone are not sufficient for new installations.',
+  },
+  {
+    question: 'Do lighting circuits in an HMO need RCD protection?',
+    answer:
+      'Yes. Regulation 411.3.4 of BS 7671:2018+A4:2026 requires 30mA RCD protection on all AC final circuits supplying luminaires within domestic (household) premises. HMOs are classified as domestic premises, so this requirement applies in full. This regulation was introduced in the A4:2026 amendment and represents a significant change from earlier editions. An EICR inspector carrying out an inspection against BS 7671:2018+A4:2026 must check every lighting circuit for RCD protection and record absence as a C2 observation.',
   },
   {
     question: 'What are the penalties for running an HMO without a valid EICR?',
@@ -465,6 +471,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
+                <strong>30mA RCD on all lighting circuits (Reg 411.3.4)</strong> — BS
+                7671:2018+A4:2026 introduced Regulation 411.3.4, which makes 30mA RCD protection
+                mandatory on all AC final circuits supplying luminaires in domestic (household)
+                premises. HMOs are domestic premises and this requirement applies in full. An
+                inspector must check lighting circuits for RCD protection and code absence as C2 on
+                the EICR.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
                 <strong>Bathroom and outdoor circuits</strong> — under Regulation 701.411.3.3, all
                 circuits supplying bathroom zones require additional RCD protection. Outdoor sockets
                 used by the HMO (garden, bin store, outbuildings) must also have 30mA RCD protection
@@ -472,6 +489,27 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                AFDD now mandatory for HMO socket circuits
+              </p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                Under BS 7671:2018+A4:2026 Regulation 421.1.7, Arc Fault Detection Devices (AFDDs)
+                are mandatory — not merely recommended — for all single-phase AC final circuits
+                supplying socket-outlets rated up to 32A in HMOs. RCBOs alone are no longer
+                sufficient for new HMO installations. On an EICR, absence of AFDDs on qualifying
+                socket circuits in a new installation is a C2 observation. See our dedicated{' '}
+                <SEOInternalLink href="/guides/afdd-mandatory-hmo-care-home-a4-2026">
+                  AFDD guide for HMOs
+                </SEOInternalLink>{' '}
+                for full EICR coding guidance.
+              </p>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -732,7 +770,7 @@ export default function HMOElectricalRequirementsPage() {
   return (
     <GuideTemplate
       title="HMO Electrical Requirements 2026 | Licensing + EICR"
-      description="HMO electrical rules: 5-year EICR, BS 5839-6 fire detection, BS 5266-1 emergency lighting, PAT testing + mandatory licensing thresholds for UK landlords."
+      description="HMO electrical rules: 5-year EICR, BS 5839-6 fire detection, BS 5266-1 emergency lighting, AFDD + RCD protection requirements + mandatory licensing thresholds for UK landlords."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -45,6 +45,7 @@ const keyTakeaways = [
   'Labour rates in Cumbria are typically £35–55/hr for standard domestic and commercial work — lower than major cities. Nuclear and specialist industrial rates are significantly higher, commonly £60–90+/hr.',
   "Barrow-in-Furness has a distinct industrial character centred on BAE Systems's submarine facility. Carlisle is the county's commercial hub and has strong cross-border trade links with Dumfries and south-west Scotland.",
   'Coastal industrial towns including Workington and Whitehaven have chemical, manufacturing, and offshore-adjacent electrical work, including compliance with the Electricity at Work Regulations 1989 in industrial settings.',
+  'BS 7671:2018+A4:2026 introduced two significant new domestic requirements: regulation 411.3.4 now mandates 30 mA RCD additional protection on AC lighting circuits in domestic premises; and regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents.',
 ];
 
 const faqs = [
@@ -81,7 +82,7 @@ const faqs = [
   {
     question: 'Are there any specific challenges for electricians in rural Cumbria?',
     answer:
-      'Rural Cumbria presents several practical challenges. Many properties are TT earthed (using an earth electrode rod) rather than TN-C-S, as overhead distribution lines are common in rural areas and a reliable metallic return path is not available. TT systems require RCD protection on all circuits under BS 7671 regulation 411.3.3, and earth electrode testing is essential. Long cable runs between properties and distribution points require careful voltage drop calculations. Some agricultural properties have three-phase supplies requiring different installation approaches. Travel times between jobs are longer than in urban areas, and material supply chains may add lead times for specialist items.',
+      'Rural Cumbria presents several practical challenges. Many properties are TT earthed (using an earth electrode rod) rather than TN-C-S, as overhead distribution lines are common in rural areas and a reliable metallic return path is not available. On TT systems, RCDs are required for fault protection because overcurrent devices alone cannot achieve the required disconnection times given the high earth fault loop impedance. BS 7671 regulation 411.5.3 sets the compliance condition: Ra × IΔn ≤ 50 V, where Ra is the sum of the earth electrode resistance and protective conductor resistance. Earth fault loop impedance (Zs) must also satisfy the limits in Table 41.5 for the RCD rating used. Earth electrode resistance measurement is therefore essential — not optional — on every TT installation. Long cable runs between properties and distribution points require careful voltage drop calculations. Some agricultural properties have three-phase supplies requiring different installation approaches. Travel times between jobs are longer than in urban areas, and material supply chains may add lead times for specialist items.',
   },
 ];
 
@@ -103,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables accurately for rural Cumbria properties with long cable runs and TT earthing systems.',
@@ -282,8 +283,9 @@ const sections = [
                 <strong>Part P Building Regulations</strong> — applies in England. Consumer unit
                 replacements, new circuits, and other notifiable work must be notified to the local
                 authority or self-certified through a competent person scheme (NICEIC, NAPIT, or
-                similar). RCD protection requirements under regulation 411.3.3 apply across all
-                notifiable domestic work.
+                similar). RCD protection under regulation 411.3.3 is required for socket-outlets
+                rated ≤ 32 A; A4:2026 adds regulation 411.3.4 requiring 30 mA RCD protection on
+                domestic lighting circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -304,6 +306,17 @@ const sections = [
                 facilities reference IEC 60364 directly, particularly for design and documentation
                 purposes. Understanding IEC 60364 alongside BS 7671 is valuable for industrial and
                 nuclear electrical work.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>A4:2026 domestic additions</strong> — the 2026 amendment introduced two
+                requirements directly relevant to Cumbrian domestic work. Regulation 411.3.4 now
+                requires 30 mA RCD additional protection on all AC final circuits supplying
+                luminaires in domestic premises. Regulation 421.1.7 recommends arc fault detection
+                devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents.
+                Both apply to new domestic installations and consumer unit replacements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,10 +376,12 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — rural Cumbria has a higher-than-average
-                proportion of properties with TT earthing, served by overhead distribution lines. TT
-                systems require all circuits to have RCD protection (BS 7671 regulation 411.3.3) and
-                earth electrode testing. Always verify the earthing arrangement at the intake before
-                quoting or starting work.
+                proportion of properties with TT earthing, served by overhead distribution lines. On
+                TT systems, where an RCD is used for fault protection, regulation 411.5.3 requires
+                that Ra × IΔn ≤ 50 V and that the earth fault loop impedance (Zs) meets the limits
+                in Table 41.5. Earth electrode resistance measurement is essential to verify
+                compliance. Always verify the earthing arrangement at the intake before quoting or
+                starting work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -555,7 +570,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Rural Properties</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for long rural cable runs and TT earthed properties. Accurate voltage drop
@@ -598,7 +613,7 @@ const sections = [
 export default function ElectricianCumbriaPage() {
   return (
     <GuideTemplate
-      noindex={true}
+      noindex={false}
       localArea="Cumbria"
       title="Cumbria Electricians 2026 | Carlisle, Barrow, Sellafield"
       description="Cumbria electricians covering Carlisle, Barrow + Sellafield. BS 7671:2018+A4:2026 EICRs, EV chargers, nuclear-site experience. Electricity North West area."

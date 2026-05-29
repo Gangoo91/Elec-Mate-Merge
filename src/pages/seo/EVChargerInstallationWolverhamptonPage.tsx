@@ -45,6 +45,7 @@ const keyTakeaways = [
   "Wolverhampton's housing stock includes a large proportion of post-war and 1960s–1980s semis and terraces with garages and driveways, making home EV charger installation particularly straightforward.",
   'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
   'NICEIC and NAPIT registered, OZEV-approved electricians in Wolverhampton can self-certify the installation under Building Regulations Part P without the need to notify the City of Wolverhampton Council building control.',
+  'BS 7671:2018+A4:2026 Regulation 722.311.201 provides the regulatory basis for smart charger load curtailment — overnight scheduled charging and dynamic load management can be taken into account in the installation design. Installations must also conform to the IET Code of Practice for Electric Vehicle Charging Equipment Installation alongside Section 722.',
 ];
 
 const faqs = [
@@ -71,7 +72,7 @@ const faqs = [
   {
     question: 'How long does EV charger installation take in Wolverhampton?',
     answer:
-      "A typical 7kW home charger installation in Wolverhampton takes 2 to 4 hours. Wolverhampton's large proportion of post-war and 1960s–1980s housing typically has garages integrated with or adjacent to the house, making cable routes short and installation straightforward. Older Victorian terraces in areas such as Whitmore Reans or Blakenhall with rear yard parking may require slightly longer cable runs, adding 1 to 2 hours. A consumer unit upgrade (if required) extends the total time to a full day.",
+      "A typical 7kW home charger installation in Wolverhampton takes 3 to 4 hours. Wolverhampton's large proportion of post-war and 1960s–1980s housing typically has garages integrated with or adjacent to the house, making cable routes short and installation straightforward. Older Victorian terraces in areas such as Whitmore Reans or Blakenhall with rear yard parking may require slightly longer cable runs, adding 1 to 2 hours. A consumer unit upgrade (if required) extends the total time to a full day.",
   },
   {
     question:
@@ -286,7 +287,10 @@ const sections = [
               <span>
                 <strong>Dedicated circuit installation</strong> — a new 32A radial circuit from the
                 consumer unit to the charger location, protected by an appropriate RCBO or MCB with
-                RCD protection per Regulation 722.531.2.
+                RCD protection per BS 7671 Section 722. A 7kW charger draws 32A continuously, so
+                conductors must be rated for continuous duty at that current — not merely protected
+                at 32A. Undersized conductors for the continuous charging current are the most
+                common installation defect recorded in EV charging work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -305,8 +309,9 @@ const sections = [
               </span>
               <span>
                 <strong>Testing, EIC, Part P, and OZEV</strong> — verification testing per BS 7671
-                Chapter 61, EIC issued, self-certification under Part P by NICEIC or NAPIT
-                registered installer, and OZEV grant application submitted on your behalf.
+                Chapter 64 (Initial Verification), EIC issued under Regulation 644.4.201,
+                self-certification under Part P by NICEIC or NAPIT registered installer, and OZEV
+                grant application submitted on your behalf.
               </span>
             </li>
           </ul>
@@ -467,6 +472,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
+                <strong>Regulation 722.311.201 — smart charging and load curtailment</strong> —
+                introduced in BS 7671:2018+A4:2026, this regulation permits load curtailment
+                (including automatic load reduction or disconnection by a smart charger) to be taken
+                into account when determining the maximum demand of the installation. In practice,
+                this provides the regulatory basis for overnight scheduled charging and dynamic load
+                management — a modern smart charger that limits or defers its draw can be treated
+                accordingly in the installation design, potentially avoiding the need for a consumer
+                unit upgrade in some properties.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
                 <strong>Building Regulations Part P</strong> — EV charger installation is notifiable
                 electrical work. NICEIC and NAPIT registered installers can self-certify under Part
                 P. An EIC must be issued on completion. Non-registered installers must notify City
@@ -475,6 +493,13 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          Installations must also conform to the{' '}
+          <strong>IET Code of Practice for Electric Vehicle Charging Equipment Installation</strong>
+          , which is referenced as co-required alongside BS 7671 Section 722 by both the IET
+          Guidance Note 3 (GN3) and the On-Site Guide. The Code of Practice provides detailed
+          selection, installation, and risk-assessment guidance beyond what BS 7671 alone contains.
+        </p>
       </>
     ),
   },

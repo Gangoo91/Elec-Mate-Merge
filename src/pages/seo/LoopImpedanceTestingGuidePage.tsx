@@ -40,7 +40,7 @@ const keyTakeaways = [
   'External loop impedance (Ze) is the impedance of the earth fault current loop outside the installation — from the supply transformer secondary winding, through the line conductor of the supply, back through the earthing system to the point of measurement. Typical values in the UK: TN-C-S (PME) 0.35Ω or less, TN-S 0.8Ω or less.',
   'Total loop impedance (Zs) is the sum of Ze plus the impedance of the line and CPC conductors within the installation: Zs = Ze + (r1 + r2). The measured or calculated Zs must not exceed the maximum permitted Zs for the protective device on that circuit.',
   'Prospective fault current (PFC) is the maximum current that would flow under fault conditions, calculated as the supply voltage divided by the total loop impedance: PFC = 230V ÷ Ze. This must not exceed the rated short-circuit capacity of the protective devices.',
-  'BS 7671 Appendix 3 gives maximum Zs values for MCBs (Type B, C, and D), fuses (BS 88, BS 1361, BS 3036), and RCBOs. The Zs value at the furthest point of every circuit must be within the permitted limit for that device at the declared temperature correction factor.',
+  'Maximum Zs limits for MCBs and RCBOs (Types B, C, D) are in Table 41.3 under Reg 411.4.204; limits for fuses (BS 88-2, BS 88-3, BS 3036, BS 1362) are in Table 41.2 under Reg 411.4.201. The Zs value at the furthest point of every circuit must not exceed the permitted limit for that protective device. On-site, GN3 recommends using a pass criterion of measured Zs ≤ 0.80 × tabulated limit to allow for conductor temperature rise under load.',
   'Live Zs testing must not be performed on circuits protected by RCDs — the test current trips the RCD. Use the calculated method (Ze + r1 + r2 from continuity tests) for RCD-protected circuits.',
 ];
 
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What are the maximum Zs values for Type B and Type C MCBs?',
     answer:
-      'Maximum Zs values are calculated using the BS 7671 Regulation 411.4.4 formula: Zs × Ia ≤ Uo × Cmin. Uo is the nominal line-to-earth voltage (230 V); Cmin = 0.95 (ESQCR minimum voltage factor); Ia is the instantaneous trip current of the protective device (5 × In for Type B, 10 × In for Type C, 20 × In for Type D). For Type B MCBs at 230 V (Cmin × Uo = 218.5 V), the calculated maximum Zs values are: 6 A = 7.28 Ω, 10 A = 4.37 Ω, 16 A = 2.73 Ω, 20 A = 2.19 Ω, 32 A = 1.37 Ω, 40 A = 1.09 Ω, 50 A = 0.87 Ω, 63 A = 0.69 Ω. Type C values are half of Type B (e.g. 32 A Type C = 0.68 Ω); Type D values are one quarter (e.g. 32 A Type D = 0.34 Ω). These are corrected values at conductor operating temperature — when verifying compliance from a measured reading at ambient, apply the rule from BS 7671: Zs(measured) ≤ 0.8 × (Uo / (Ia × Cmin)), i.e. the 0.8 temperature correction factor.',
+      'Maximum Zs limits for MCBs and RCBOs are tabulated in Table 41.3 (Reg 411.4.204). Ia = 5 × In for Type B, 10 × In for Type C, 20 × In for Type D. Type B examples (230 V, Cmin = 0.95): 6 A = 7.28 Ω, 10 A = 4.37 Ω, 16 A = 2.73 Ω, 20 A = 2.19 Ω, 32 A = 1.37 Ω, 40 A = 1.09 Ω, 50 A = 0.87 Ω, 63 A = 0.69 Ω. Type C (10 × In): 6 A = 3.64 Ω, 16 A = 1.37 Ω, 32 A = 0.68 Ω. Type D (20 × In): 6 A = 1.82 Ω, 16 A = 0.68 Ω, 32 A = 0.34 Ω. Tabulated values apply at maximum conductor operating temperature. On site, GN3 recommends: measured Zs ≤ 0.80 × tabulated limit (the GN3 cold-measured site pass criterion). Fuse Zs limits are in Table 41.2 (Reg 411.4.201): BS 88-2 gG 16 A = 2.43 Ω, 32 A = 0.99 Ω; BS 88-3 16 A = 2.30 Ω, 32 A = 0.91 Ω.',
   },
   {
     question: 'How do you calculate prospective fault current?',
@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What is the temperature correction factor for Zs?',
     answer:
-      'The maximum Zs values in BS 7671 Appendix 3 are given at the maximum permitted conductor operating temperature (typically 70°C for PVC cables, 80°C for EPR/XLPE). Tests are carried out at ambient temperature (typically 10°C to 25°C). A correction factor is applied: the measured Zs is multiplied by a factor to check whether it would remain within limits at operating temperature. The correction factor for 70°C PVC cables is 0.725 (the measured Zs should not exceed 0.725 × Zs max). Alternatively, divide the tabulated Zs max value by the correction factor to get the ambient temperature limit.',
+      'The maximum Zs values in Tables 41.2 and 41.3 are given at the maximum permitted conductor operating temperature (typically 70°C for PVC-insulated cables). Tests are carried out at ambient temperature (typically 10°C to 25°C). BS 7671 Appendix 3 (referenced by Reg 411.4.203) provides the method for adjusting measured readings to account for conductor temperature. The GN3-recommended on-site pass criterion is: measured Zs ≤ 0.80 × tabulated limit. This 0.80 site factor provides a margin for conductor temperature rise under load. If the measured Zs does not exceed 0.80 × the Table 41.3 or Table 41.2 limit, the circuit complies. If the measured Zs exceeds 0.80 × the limit, apply the full Appendix 3 temperature adjustment before deciding whether to raise a defect.',
   },
   {
     question: 'Can you use a long-lead method for Ze measurement?',
@@ -257,18 +257,18 @@ const sections = [
                 value obtained from the continuity tests: Zs = Ze + (r1 + r2). This is used for
                 RCD-protected circuits and where live testing is not practicable. The calculated
                 value must be corrected to account for conductor temperature as described in BS 7671
-                Appendix 14.
+                Appendix 3 (Reg 411.4.203).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature correction</strong>: Conductor resistance (and therefore
-                impedance) increases with temperature. The measured or calculated Zs at ambient
-                temperature must be multiplied by a correction factor to check compliance at the
-                maximum operating temperature of the conductor insulation. For 70°C PVC cables,
-                multiply the measured Zs by 1/0.725 (approximately 1.38) to obtain the corrected
-                value at operating temperature, then compare with the tabulated limit.
+                impedance) increases with temperature. Tables 41.2 and 41.3 give Zs limits at the
+                maximum conductor operating temperature. When testing at ambient, GN3 recommends the
+                on-site pass criterion: measured Zs ≤ 0.80 × tabulated limit. Where the measured Zs
+                exceeds 0.80 × the tabulated limit, apply the full Appendix 3 temperature adjustment
+                method (Reg 411.4.203) before deciding compliance.
               </span>
             </li>
           </ul>
@@ -330,10 +330,12 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Appendix 3 provides tables of maximum permitted Zs values for the most common
-          types of protective devices. These values are at the declared maximum conductor operating
-          temperature. The measured Zs (at ambient temperature) must be corrected before comparing
-          with these limits.
+          Maximum permitted Zs values for MCBs and RCBOs are in Table 41.3 (Reg 411.4.204); values
+          for fuses are in Table 41.2 (Reg 411.4.201). These tabulated values are at the maximum
+          conductor operating temperature. The Table 41.3 limits apply to both final circuits (0.4 s
+          disconnection, Reg 411.3.2.2) and distribution circuits (5 s disconnection, Reg
+          411.3.2.3). On site, use the GN3 pass criterion: measured Zs ≤ 0.80 × tabulated limit (the
+          cold-measured site limit).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -358,19 +360,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type D MCBs (BS EN 60898)</strong>: Operate at 10–20× rated current. Maximum
-                Zs values are one quarter those of Type B: 6A = 1.92Ω / 16A = 0.72Ω / 32A = 0.36Ω.
-                High Zs indicates that Type D devices require very low loop impedance and are not
-                suitable for long cable runs.
+                <strong>Type D MCBs (BS EN 60898)</strong>: Magnetic trip at 20 × In (Ia = 20 × In,
+                Reg 411.4.204(c) Table 41.3(c)). Maximum Zs: 6 A = 1.82 Ω / 16 A = 0.68 Ω / 32 A =
+                0.34 Ω. GN3 site limits (0.80 ×): 6 A = 1.46 Ω / 16 A = 0.54 Ω / 32 A = 0.27 Ω. Very
+                low Zs limits mean Type D devices are unsuitable for long cable runs — typically
+                used for motor or welding loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 88-2 (gG) fuses</strong>: Zs values depend on the fuse time-current
-                characteristic. These are tabulated in Appendix 3. Generally higher Zs is permitted
-                than for MCBs of equivalent rating, as the fuse time-current characteristic has a
-                steeper slope.
+                <strong>BS 88-2 (gG/gM) and BS 88-3 fuses — Table 41.2 (Reg 411.4.201)</strong>: BS
+                88-2 gG maximum Zs at 0.4 s disconnection: 16 A = 2.43 Ω / 32 A = 0.99 Ω / 63 A =
+                0.44 Ω. BS 88-3 (fuse system C): 16 A = 2.30 Ω / 32 A = 0.91 Ω. Note: Table 41.2
+                covers 0.4 s disconnection only (Reg 411.3.2.2 final-circuit requirement). Generally
+                higher Zs is permitted than for MCBs of equivalent rating, reflecting the steeper
+                fuse time-current characteristic.
               </span>
             </li>
           </ul>
@@ -379,12 +384,39 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <span className="text-white">
-              <strong>Ambient temperature correction</strong>: The measured Zs must be compared with
-              the limit at ambient temperature, not at the tabulated operating temperature. The
-              ambient temperature limit = tabulated limit × 0.725 (for 70°C PVC) or × 0.800 (for
-              90°C thermosetting cables). Alternatively, measure Zs and then multiply by 1/0.725
-              before comparing with the tabulated limit.
+              <strong>On-site pass criterion (GN3)</strong>: The measured Zs (at ambient
+              temperature) should not exceed 0.80 × the tabulated Table 41.3 or Table 41.2 limit.
+              This GN3-recommended site factor accounts for conductor temperature rise under normal
+              load. If the measured Zs is between 0.80 × and 1.00 × the tabulated limit, apply the
+              full Appendix 3 temperature adjustment (Reg 411.4.203) before deciding compliance.
+              Where thermosetting insulation is sized per Reg 512.1.5, use 70°C thermoplastic
+              temperatures for Zs assessment (per Note 3 to Reg 411.4.201).
             </span>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div className="text-white">
+              <strong>TT systems — Reg 411.5.3 Table 41.5</strong>
+              <p className="mt-2">
+                In TT systems, automatic disconnection is provided by an RCD and Zs compliance is
+                verified using the formula Zs ≤ Uo / (5 × I&Delta;N), where Uo = 50 V (touch voltage
+                limit) and I&Delta;N is the RCD rated residual operating current. Maximum permitted
+                Zs values from Table 41.5 (Reg 411.5.3):
+              </p>
+              <ul className="mt-2 space-y-1 list-disc list-inside">
+                <li>30 mA RCD: Zs ≤ 1667 &Omega;</li>
+                <li>100 mA RCD: Zs ≤ 500 &Omega;</li>
+                <li>300 mA RCD: Zs ≤ 167 &Omega;</li>
+                <li>500 mA RCD: Zs ≤ 100 &Omega;</li>
+              </ul>
+              <p className="mt-2">
+                For RCDs rated ≤ 100 mA, the earth electrode resistance Ra must not exceed 200 Ω.
+                These Zs limits are far higher than TN system limits — a TT installation is not
+                verified against Table 41.3 MCB Zs limits.
+              </p>
+            </div>
           </div>
         </div>
       </>

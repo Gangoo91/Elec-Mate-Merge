@@ -45,6 +45,8 @@ const keyTakeaways = [
   'Fixed capacitor banks are simpler and cheaper than APFC banks but only correct for a constant base load — they can over-correct at light load, which reverses the power factor and can increase charges.',
   'Capacitors in systems with significant harmonic distortion (from VFDs, UPS systems, or non-linear loads) can cause resonance that amplifies harmonics — always assess harmonic content before installing standard capacitor banks.',
   'Detuned capacitor banks (with reactor in series with each capacitor step) are the safe solution for systems with harmonics — the reactor shifts the resonant frequency to below the 5th harmonic, preventing amplification.',
+  'BS 7671 Reg 559.5.6 requires discharge resistors for compensation capacitors exceeding 0.5 µF. Reg 462.4 requires a warning label on the enclosure stating the discharge time before it can be safely opened.',
+  'Commissioning power factor readings must be taken at representative production load — not at light load or standby. Measurements taken under non-representative load produce misleading before/after figures and do not verify that the APFC controller steps are operating correctly.',
 ];
 
 const faqs = [
@@ -287,6 +289,19 @@ const sections = [
                 (utilisation category AC-6b). Step switching is controlled with a minimum
                 reconnection delay (typically 60–180 seconds) to allow the capacitor to discharge
                 before re-energisation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Cable sizing for capacitor circuits</strong> — cables feeding each capacitor
+                step must be rated for the full capacitor reactive current (I<sub>rc</sub>), not the
+                nominal load current. The reactive current is calculated as I<sub>rc</sub> =
+                2&pi;&middot;f&middot;C&middot;U<sub>r</sub>, where f is frequency (50&nbsp;Hz), C
+                is capacitance in farads, and U<sub>r</sub> is rated voltage. Sizing cables for the
+                nominal load current rather than I<sub>rc</sub> is one of the most common and costly
+                capacitor bank installation errors — the capacitor draws its rated reactive current
+                continuously, not just at peak load.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -610,13 +625,14 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
-                  to complete the Electrical Installation Certificate for the PFC installation on
-                  your phone. Record CT ratio, panel rating, step sizes, insulation resistance
-                  values, and initial/final power factor readings — then export a professional PDF
-                  before leaving site.
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
+                  complete the Electrical Installation Certificate for the PFC installation on your
+                  phone. The Schedule of Test Results must include: insulation resistance values
+                  (new installations should achieve well above 1&nbsp;M&Omega; — values below
+                  20&nbsp;M&Omega; warrant investigation per GN3 2.21), earth continuity, earth
+                  fault loop impedance (Z<sub>s</sub>), and polarity. Also record CT ratio, panel
+                  rating, step sizes, capacitor discharge time, and initial/final power factor
+                  readings — then export a professional PDF before leaving site.
                 </p>
               </div>
             </div>
@@ -642,6 +658,34 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">
+                BS 7671 Compliance — Discharge Requirements
+              </h4>
+              <ul className="space-y-2 text-sm text-white leading-relaxed">
+                <li>
+                  <strong>Reg 559.5.6 — Discharge resistors (mandatory):</strong> Compensation
+                  capacitors with a total capacitance exceeding 0.5&nbsp;&micro;F shall only be used
+                  in conjunction with discharge resistors. This is a mandatory requirement for
+                  stand-alone capacitor banks; capacitors forming part of the equipment are exempt.
+                  Verify discharge resistor presence on every capacitor step before raising the EIC.
+                </li>
+                <li>
+                  <strong>Reg 462.4 — Warning label:</strong> Where residual electrical energy is
+                  potentially present (as it is in any capacitor bank), suitable means shall be
+                  provided for its discharge. Where relevant, a warning label stating the required
+                  discharge time before the enclosure can be safely opened shall be fitted to the
+                  enclosure. PWI confirms the typical discharge criterion: residual voltage must
+                  fall to 75&nbsp;V within 3&nbsp;minutes. Measure and record the discharge time on
+                  the Schedule of Test Results.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Certificate PFC installations and quote industrial work"
           description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export."
@@ -659,7 +703,7 @@ const sections = [
 export default function PowerFactorCorrectionPage() {
   return (
     <GuideTemplate
-      title="Power Factor Correction UK | PFC Installation Guide for"
+      title="Power Factor Correction UK | PFC Installation Guide for Businesses"
       description="Complete guide to power factor correction in the UK. kVA vs kW explained, DNO reactive power charges, automatic and fixed capacitor banks…"
       datePublished="2026-03-27"
       dateModified="2026-05-18"
@@ -673,7 +717,7 @@ export default function PowerFactorCorrectionPage() {
           <span className="text-yellow-400">PFC Installation Guide for Businesses</span>
         </>
       }
-              embeddedTool={<PowerFactorCorrectionCalculator />}
+      embeddedTool={<PowerFactorCorrectionCalculator />}
       heroSubtitle="Complete guide to power factor correction for UK businesses — what power factor is (kVA vs kW), how DNOs charge for reactive power, automatic and fixed capacitor banks, why standard capacitors fail with VFDs, detuned harmonic-rated banks, savings calculation, and typical 2–4 year payback for industrial users."
       readingTime={15}
       keyTakeaways={keyTakeaways}

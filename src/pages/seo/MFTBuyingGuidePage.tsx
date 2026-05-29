@@ -37,7 +37,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A multifunction tester (MFT) is a single instrument that performs all the electrical tests required to complete an Electrical Installation Certificate (EIC) or Electrical Installation Condition Report (EICR) to BS 7671:2018+A4:2026.',
-  'The five core MFT functions are: earth fault loop impedance (Zs and Ze), RCD test (trip time at 100%, 150%, and 500% of rated current), insulation resistance (250V, 500V, and 1000V DC), continuity (low-resistance ohmmeter), and prospective fault current (PFC).',
+  'The five core MFT functions are: earth fault loop impedance (Zs and Ze), RCD test (non-operating check at 50% IΔn, trip-time test at 100% IΔn, and trip-time test at 500% IΔn), insulation resistance (250V, 500V, and 1000V DC), continuity (low-resistance ohmmeter), and prospective fault current (PFC).',
   'For distribution board testing, CAT IV 300V is the minimum safe rating. The measurement environment at a consumer unit includes CAT IV transients — using a CAT III instrument at the origin of the installation is unsafe.',
   'The Megger MFT1741, Fluke 1664 FC, Kewtech KT64 DL, and Metrel MI3102H are the leading MFTs for UK electricians in 2026, covering a range of budgets and capability levels.',
   'MFTs must be calibrated at least annually (or per the manufacturer recommendation) to maintain the accuracy required for BS 7671 compliance testing. A calibration certificate is required for legal defensibility of test results.',
@@ -72,7 +72,12 @@ const faqs = [
   {
     question: 'What insulation resistance values are acceptable for fixed wiring?',
     answer:
-      'BS 7671 Table 61 specifies minimum insulation resistance values. For circuits rated up to 500V (which includes all standard domestic and commercial mains circuits), the test voltage is 500V DC and the minimum insulation resistance is 1MΩ. In practice, new fixed wiring should show insulation resistance in the hundreds of megaohms or gigaohms range. Values between 1MΩ and 2MΩ indicate deteriorated insulation that should be investigated further. The 250V DC test voltage is used for circuits containing electronic components (SELV and PELV circuits, circuits with electronic dimmers) where 500V may damage the components — but the minimum acceptable insulation resistance remains 1MΩ at 250V. For circuits rated above 500V, the test voltage is 1000V DC with a minimum insulation resistance of 1MΩ.',
+      'BS 7671 Table 64 (Reg 643.3.2) specifies minimum insulation resistance values. For circuits rated up to 500V (which includes all standard domestic and commercial mains circuits), the test voltage is 500V DC and the minimum insulation resistance is 1MΩ. In practice, new fixed wiring should show insulation resistance in the hundreds of megaohms or gigaohms range. Values between 1MΩ and 2MΩ indicate deteriorated insulation that should be investigated further. The 250V DC test voltage is used for SELV and PELV circuits and for circuits containing sensitive electronic components where 500V may cause damage — for SELV and PELV circuits the minimum acceptable insulation resistance at 250V DC is 0.5MΩ per Table 64. For circuits rated above 500V, the test voltage is 1000V DC with a minimum insulation resistance of 1MΩ.',
+  },
+  {
+    question: 'Do domestic lighting circuits now need RCD protection?',
+    answer:
+      'Yes — under BS 7671:2018+A4:2026 Regulation 411.3.4, within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30mA is mandatory for all AC final circuits supplying luminaires. This is a new A4:2026 requirement. It means that when testing or issuing an EICR on a domestic installation, every lighting circuit must be verified as protected by a ≤30mA RCD. Where an existing installation has unprotected lighting circuits, this is a C2 or C3 observation depending on assessed risk. When buying an MFT, ensure it can perform RCD testing on the ≤30mA devices now expected across all domestic circuits — not just sockets.',
   },
   {
     question: 'How often does an MFT need to be calibrated?',
@@ -111,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Verify maximum Zs compliance using measured Ze and R1+R2 values.',
     icon: Calculator,
@@ -188,12 +193,13 @@ const sections = [
               2. RCD Test (Residual Current Device)
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Tests RCD trip time at 50%, 100%, and 500% of the rated residual operating current
-              (IΔn). A general-purpose 30mA RCD must trip in ≤300ms at IΔn and ≤40ms at 5×IΔn. The
-              MFT injects a test current through the protected circuit and measures how long the RCD
-              takes to trip. Many MFTs also offer a ramp test (gradually increasing current until
-              trip) and a no-trip pre-test at 50% IΔn. Both positive and negative half-cycle tests
-              are required for a complete RCD verification.
+              Tests RCD operation at 50%, 100%, and 500% of the rated residual operating current
+              (IΔn). The 50% IΔn test is a non-operating (no-trip) check — the RCD must not trip at
+              half its rated current. The 100% and 500% IΔn tests are timed trip tests: a
+              general-purpose 30mA RCD must trip in ≤300ms at IΔn and ≤40ms at 5×IΔn (BS 7671 Reg
+              643.7.3.201). Many MFTs also offer a ramp test (gradually increasing current until
+              trip). Both positive and negative half-cycle tests are required for a complete RCD
+              verification.
             </p>
           </div>
           <div>
@@ -206,7 +212,9 @@ const sections = [
               live conductors and earth (L-E, N-E). Performed on de-energised, isolated circuits
               with a DC test voltage of 250V, 500V, or 1000V depending on the circuit voltage rating
               and whether electronic components are connected. Minimum acceptable insulation
-              resistance for 230V circuits is 1MΩ at 500V DC (BS 7671 Table 61).
+              resistance for 230V circuits is 1M&#937; at 500V DC (BS 7671 Table 64, Reg 643.3.2).
+              For SELV and PELV circuits tested at 250V DC, the minimum acceptable value is
+              0.5M&#937;.
             </p>
           </div>
           <div>
@@ -328,8 +336,9 @@ const sections = [
               <span>
                 <strong>Temperature compensation:</strong> Resistance measurements vary with
                 temperature. An MFT with temperature compensation or the ability to enter conductor
-                temperature allows correction of measured Zs values to the standard reference
-                temperature (20°C), ensuring correct comparison against BS 7671 maximum Zs values.
+                temperature allows correction of measured Zs values to the reference temperature
+                used by the OSG comparison tables (10°C per Tables B1–B6, OSG Reg 1.08), ensuring
+                correct comparison against the maximum permitted Zs values.
               </span>
             </li>
             <li className="flex items-start gap-3">

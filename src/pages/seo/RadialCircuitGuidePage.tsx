@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Do radial circuits need RCD protection?',
     answer:
-      'Under BS 7671:2018+A4:2026, socket outlet circuits rated up to 32A in domestic premises require 30mA RCD protection (Regulation 411.3.3). This applies to radial circuits serving socket outlets just as it does to ring circuits. Lighting circuits in domestic premises also require 30mA RCD protection where the circuit serves a zone where the risk of electric shock is increased (such as bathrooms) or where the cables are concealed in walls at a depth less than 50mm and do not have earthed metallic covering. In practice, most modern domestic installations provide 30mA RCD protection on all circuits using either a split-load consumer unit with RCDs or an RCBO board.',
+      'Under BS 7671:2018+A4:2026, socket outlet circuits rated up to 32A in domestic premises require 30mA RCD protection (Regulation 411.3.3). This applies to radial circuits serving socket outlets just as it does to ring circuits. For lighting circuits, Regulation 411.3.4 (introduced in A4:2026) now requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic (household) premises — not only those in bathrooms or with cables concealed at less than 50mm depth. Radial lighting circuits are explicitly included. In practice, this means RCBO boards or split-load consumer units with RCD protection on every lighting circuit are now required for all new domestic installations and alterations.',
   },
   {
     question: 'How do I test a radial circuit?',
@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any radial circuit with automatic BS 7671 correction factors and voltage drop check.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop for radial circuits against the 5% BS 7671 limit with cable length and load inputs.',
@@ -163,8 +163,10 @@ const sections = [
         </p>
         <p>
           The term "radial" distinguishes this configuration from a{' '}
-          <SEOInternalLink href="/ring-circuit-calculator">ring final circuit</SEOInternalLink>,
-          where the cable forms a loop starting and finishing at the same terminals in the
+          <SEOInternalLink href="/tools/ring-circuit-calculator">
+            ring final circuit
+          </SEOInternalLink>
+          , where the cable forms a loop starting and finishing at the same terminals in the
           distribution board. Both configurations are permitted under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>, and
           the choice between them depends on the load, floor area, cable routing, and design
@@ -415,6 +417,21 @@ const sections = [
           current-carrying capacity below the protective device rating, you must increase the cable
           size.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">
+            Duplicate CPC on Radial Socket-Outlet Circuits
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            The IET On-Site Guide (9th Ed, Reg 7.5.3 / Figure 7.5.3(ii)) permits a duplicate
+            protective conductor (duplicate CPC) to be installed alongside the circuit conductors of
+            a radial final circuit supplying socket-outlets. Where fitted, the duplicate CPC must be
+            routed physically alongside the live, neutral, and main CPC conductors for the full
+            length of the run and terminated at the distribution board. Keeping the duplicate CPC
+            close to the other conductors also reduces electromagnetic compatibility (EMC) effects.
+            This is good practice where enhanced earth-fault performance is required, and is a
+            question regularly asked by installation assessors.
+          </p>
+        </div>
       </>
     ),
   },
@@ -600,9 +617,11 @@ const sections = [
               <strong>
                 <SEOInternalLink href="/rcd-testing-guide">RCD operation.</SEOInternalLink>
               </strong>{' '}
-              If the circuit is RCD-protected, test the trip time at rated residual operating
-              current (30mA for domestic circuits). The RCD must trip within 300ms at 1x and within
-              40ms at 5x.
+              If the circuit is RCD-protected, test using an alternating current test at the rated
+              residual operating current (IΔn — 30mA for domestic circuits), as required by BS
+              7671:2018+A4:2026 Regulation 643.3. Note: the previous Table 3A time/current criteria
+              (300ms at 1× IΔn, 40ms at 5× IΔn) have been deleted in A4:2026 — the revised
+              requirement is an AC test at IΔn regardless of RCD type (AC, A, F, B).
             </li>
           </ol>
         </div>
@@ -689,7 +708,7 @@ export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
       title="Radial Circuit Cable Size UK: 20A in 2.5mm² / 32A in 4mm²"
-      description="Radial circuits to BS 7671: 20A radial in 2.5mm² T&E, 32A in 4.0mm², MCB selection, A1/A2/A3 circuit types per Appendix 15. Worked examples + cable size tables."
+      description="Radial circuits to BS 7671:2018+A4:2026: 20A radial in 2.5mm² T&E (up to 50m²), 32A in 4mm² (up to 75m²), MCB/RCBO selection, RCD requirements, testing sequence. Worked examples + cable size tables."
       datePublished="2025-06-15"
       dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}

@@ -86,12 +86,12 @@ export default function CableTrayCalculatorPage() {
                 Sizing cable tray correctly ensures that cables fit without overcrowding, that the
                 tray can support the weight of the cables, and that current-carrying capacity is not
                 reduced by excessive grouping. The{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 determines the cable sizes, and the tray calculator determines the tray size needed
                 to carry them. For enclosed containment, see the{' '}
-                <SEOInternalLink href="/trunking-fill-calculator">
+                <SEOInternalLink href="/tools/trunking-fill-calculator">
                   trunking fill calculator
                 </SEOInternalLink>{' '}
                 and{' '}
@@ -146,11 +146,14 @@ export default function CableTrayCalculatorPage() {
                 </li>
               </ul>
               <p>
-                The choice of tray type affects the cable current-carrying capacity. BS 7671 Table
-                4C2 provides correction factors for different installation methods, and cables on
-                open tray (ladder or perforated) generally have higher ratings than cables in
-                enclosed tray or trunking. This connects directly with the{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                The choice of tray type affects the cable current-carrying capacity. The
+                installation method reference number — drawn from BS 7671 Appendix 4 Tables 4A1 and
+                4A2 — determines which current-carrying capacity column applies. Cables installed on
+                open tray (ladder or perforated) use Method E or F (multi-core cables in free air),
+                which typically gives higher ratings than Method B (enclosed in conduit or
+                trunking), because air can circulate freely around the cables. This connects
+                directly with the{' '}
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
                 for long cable runs.
@@ -197,7 +200,7 @@ export default function CableTrayCalculatorPage() {
                 BS 7671 Regulation 528.1 apply. The tray may need a divider or the cables may need
                 to be separated by a minimum distance. Compartmentalised tray or separate trays are
                 often the simplest solution. For more on containment sizing, see the{' '}
-                <SEOInternalLink href="/trunking-fill-calculator">
+                <SEOInternalLink href="/tools/trunking-fill-calculator">
                   trunking fill calculator
                 </SEOInternalLink>
                 .
@@ -307,8 +310,8 @@ export default function CableTrayCalculatorPage() {
                 </SEOInternalLink>{' '}
                 helps determine how many and what size cables each tray run will carry, feeding into
                 the tray sizing calculation. For overall project documentation, the{' '}
-                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
-                records the containment system used.
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> records
+                the containment system used.
               </p>
             </>
           ),
@@ -402,12 +405,18 @@ export default function CableTrayCalculatorPage() {
         {
           question: 'Do I need to earth cable tray?',
           answer:
-            'Yes. Metal cable tray must be earthed as an exposed-conductive-part in accordance with BS 7671. The tray should be bonded to the main earthing terminal, and all joints in the tray system must maintain electrical continuity. Many manufacturers supply tray joints with built-in continuity bonding. If the tray is used as a supplementary CPC, all connections must provide a reliable low-resistance path. Earth continuity should be tested during initial verification and periodic inspection.',
+            'Yes. Metal cable tray is an extraneous-conductive-part — a conductive part not forming part of the electrical installation that can introduce a dangerous potential difference (BS 7671 definition). As an extraneous-conductive-part it must be connected to the main earthing terminal by a protective bonding conductor in accordance with Reg 411.3.1. All joints in the tray system must maintain electrical continuity, and many manufacturers supply tray joints with built-in continuity bonding straps. If the tray is also used as a supplementary CPC, all connections must provide a reliable low-resistance path. Earth continuity should be verified during initial verification and periodic inspection.',
+        },
+        {
+          question:
+            'Does cable tray need to be fire-stopped where it passes through walls or floors?',
+          answer:
+            'Yes. Where cable tray penetrates a fire-resisting building element — such as a fire compartment wall or floor — the opening must be sealed in accordance with BS 7671 Reg 527.2.1. The seal must restore the fire resistance of the penetrated element and must resist products of combustion to the same degree as the building element itself (Reg 527.2.4). Type-tested intumescent sealing systems are the standard solution; cable cleats or ties installed within 750 mm of the seal can also be used to prevent strain being transferred to the seal if supports on the fire side collapse. Fire-stopping at cable tray penetrations is a frequent omission on commercial and industrial projects and a common inspection finding — it should be confirmed at practical completion and recorded on the electrical installation certificate.',
         },
         {
           question: 'Can I mix power cables and data cables on the same tray?',
           answer:
-            'BS 7671 Regulation 528.1 requires segregation between cables of different voltage bands. Mains voltage power cables (230 V / 400 V) must be separated from data cables (extra-low voltage) unless both are insulated for the highest voltage present. Options include using separate trays, using a tray with a central divider, or maintaining a minimum separation distance (typically 300 mm). Many installations use stacked trays — power on the top tray and data on a lower tray — with the required vertical separation between them.',
+            'BS 7671 Regulation 528.1 requires segregation between cables of different voltage bands. Mains voltage Band II cables (230 V / 400 V) must be separated from Band I extra-low voltage cables (data, telecoms, fire) unless specific conditions are met. Permitted methods under Reg 528.1 include: (a) separate containment systems (separate trays); (b) every cable insulated to the highest voltage present; (c) a tray fitted with an earthed metal partition or divider throughout the full run; or (d) for multicore cables, an earthed metal screen of equivalent current-carrying capacity to the largest Band II core (method (f), Reg 528.1). A "300 mm gap" is sometimes cited as common practice but is not a defined BS 7671 requirement — relying on it without meeting one of the above conditions does not satisfy the regulation. Many installations use stacked trays — Band II power cables on the upper tray and Band I data cables on a lower tray — as the simplest compliant solution.',
         },
       ]}
       relatedPages={[
@@ -420,7 +429,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/trunking-fill-calculator',
+          href: '/tools/trunking-fill-calculator',
           title: 'Trunking Fill Calculator',
           description:
             'Calculate trunking fill to the 45% rule for enclosed rectangular containment.',
@@ -428,7 +437,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for each circuit using BS 7671 current-carrying capacity tables and correction factors.',
@@ -436,7 +445,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Check voltage drop on long cable runs — critical for cables on tray in large commercial installations.',

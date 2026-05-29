@@ -419,9 +419,9 @@ export default function JobProfitabilityCalculatorPage() {
               the Business Hub, sitting alongside 56 technical calculators (cable sizing, voltage
               drop, fault current, Zs values, and more), 16 certificate types ({' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
-              Works, EV charger, and more), 8 Elec-AI agents with 12 AI tools, and 46+ training
-              courses. Everything works together in one platform. Quotes from the{' '}
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor Works, EV
+              charger, and more), 8 Elec-AI agents with 12 AI tools, and 46+ training courses.
+              Everything works together in one platform. Quotes from the{' '}
               <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink> feed
               directly into profit tracking, giving you real margin data per job.
             </p>
@@ -485,7 +485,6 @@ export default function JobProfitabilityCalculatorPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -493,14 +492,30 @@ export default function JobProfitabilityCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/on-the-job-training-guide">On-the-Job Training Guide</SEOInternalLink>
-            <SEOInternalLink href="/adiabatic-equation-calculator">Adiabatic Equation Calculator</SEOInternalLink>
-            <SEOInternalLink href="/tools/battery-backup-calculator">Battery Backup Calculator</SEOInternalLink>
-            <SEOInternalLink href="/tools/break-even-calculator">Break-Even Calculator for Electricians</SEOInternalLink>
-            <SEOInternalLink href="/tools/busbar-sizing-calculator">Busbar Sizing Calculator</SEOInternalLink>
-            <SEOInternalLink href="/tools/business-cost-calculator">Business Cost Calculator</SEOInternalLink>
-            <SEOInternalLink href="/tools/cable-derating-calculator">Cable Derating Calculator</SEOInternalLink>
-            <SEOInternalLink href="/cable-sizing-calculator">Cable Sizing Calculator BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/guides/on-the-job-training-guide">
+              On-the-Job Training Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+              Adiabatic Equation Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/battery-backup-calculator">
+              Battery Backup Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/break-even-calculator">
+              Break-Even Calculator for Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/busbar-sizing-calculator">
+              Busbar Sizing Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/business-cost-calculator">
+              Business Cost Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-derating-calculator">
+              Cable Derating Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-sizing-calculator">
+              Cable Sizing Calculator BS 7671
+            </SEOInternalLink>
           </div>
         </div>
       </section>

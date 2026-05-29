@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What is the difference between a split load and an RCBO consumer unit?',
     answer:
-      'A split load consumer unit contains two or more 30mA RCDs, each protecting a group of circuits. The MCBs within each group provide overcurrent protection, whilst the common RCD provides residual current (earth fault) protection for all circuits in that group. If a fault occurs on any circuit, the common RCD trips, cutting power to every circuit in the group. An RCBO consumer unit uses individual RCBOs — Residual Current Breakers with Overcurrent — for each circuit. Each RCBO provides both overcurrent protection (like an MCB) and residual current protection (like an RCD) for that individual circuit only. A fault on any circuit trips only that circuit\'s RCBO, leaving all other circuits unaffected.',
+      "A split load consumer unit contains two or more 30mA RCDs, each protecting a group of circuits. The MCBs within each group provide overcurrent protection, whilst the common RCD provides residual current (earth fault) protection for all circuits in that group. If a fault occurs on any circuit, the common RCD trips, cutting power to every circuit in the group. An RCBO consumer unit uses individual RCBOs — Residual Current Breakers with Overcurrent — for each circuit. Each RCBO provides both overcurrent protection (like an MCB) and residual current protection (like an RCD) for that individual circuit only. A fault on any circuit trips only that circuit's RCBO, leaving all other circuits unaffected.",
   },
   {
     question: 'What does BS 7671 Regulation 314.1 require about consumer unit circuit division?',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What causes nuisance tripping on a split load consumer unit?',
     answer:
-      'Nuisance tripping occurs when the accumulated earth leakage current from multiple healthy circuits exceeds the trip threshold of the shared RCD. Every circuit has a small inherent leakage to earth from cable capacitance, appliance EMC filters, and other sources. A single circuit may leak 1–3mA; perfectly healthy. But a group of 10 circuits sharing one RCD may have a combined leakage of 10–30mA — enough to approach or exceed the 30mA trip threshold. Any additional leakage (from an ageing appliance, a damp environment, or a long cable run) can cause the RCD to trip even though no actual fault exists. An RCBO board eliminates this problem: each circuit\'s individual RCBO only sees the leakage from that one circuit.',
+      "Nuisance tripping occurs when the accumulated earth leakage current from multiple healthy circuits exceeds the trip threshold of the shared RCD. Every circuit has a small inherent leakage to earth from cable capacitance, appliance EMC filters, and other sources. A single circuit may leak 1–3mA; perfectly healthy. But a group of 10 circuits sharing one RCD may have a combined leakage of 10–30mA — enough to approach or exceed the 30mA trip threshold. Any additional leakage (from an ageing appliance, a damp environment, or a long cable run) can cause the RCD to trip even though no actual fault exists. An RCBO board eliminates this problem: each circuit's individual RCBO only sees the leakage from that one circuit.",
   },
   {
     question: 'Is a split load consumer unit still acceptable under BS 7671?',
@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for all circuits in the consumer unit with correct RCBO protection.',
     icon: Calculator,
@@ -124,19 +124,18 @@ const sections = [
       <>
         <p>
           Consumer unit specification is one of the most common design decisions for UK domestic
-          electricians. The choice between a split load consumer unit (with grouped RCDs) and a
-          full RCBO consumer unit (with individual RCBOs per circuit) affects fault protection,
-          nuisance tripping, cost, and how the installation performs for the customer over its
-          lifetime.
+          electricians. The choice between a split load consumer unit (with grouped RCDs) and a full
+          RCBO consumer unit (with individual RCBOs per circuit) affects fault protection, nuisance
+          tripping, cost, and how the installation performs for the customer over its lifetime.
         </p>
         <p>
           Both types meet the requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>
-          , but the industry trend is firmly towards RCBO boards for all new domestic consumer
-          unit installations. This guide explains why — and when a split load board may still
-          be the appropriate choice.
+          , but the industry trend is firmly towards RCBO boards for all new domestic consumer unit
+          installations. This guide explains why — and when a split load board may still be the
+          appropriate choice.
         </p>
       </>
     ),
@@ -147,25 +146,35 @@ const sections = [
     content: (
       <>
         <p>
-          A split load consumer unit divides circuits into two or more groups, each protected
-          by a shared 30mA RCD. Within each group, individual MCBs provide overcurrent protection.
-          The RCD provides residual current (earth fault) protection for all circuits in that group.
+          A split load consumer unit divides circuits into two or more groups, each protected by a
+          shared 30mA RCD. Within each group, individual MCBs provide overcurrent protection. The
+          RCD provides residual current (earth fault) protection for all circuits in that group.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">Typical Split Load Layout</h3>
           <ul className="space-y-2 text-white text-sm">
-            <li>• <strong>Main switch:</strong> 100A double pole isolator</li>
-            <li>• <strong>RCD 1:</strong> 30mA 80A, protecting circuits 1–6 (e.g. ring final, cooker, immersion)</li>
-            <li>• <strong>RCD 2:</strong> 30mA 80A, protecting circuits 7–12 (e.g. lighting, garage, boiler)</li>
-            <li>• <strong>MCBs:</strong> Individual overcurrent protection within each group</li>
+            <li>
+              • <strong>Main switch:</strong> 100A double pole isolator
+            </li>
+            <li>
+              • <strong>RCD 1:</strong> 30mA 80A, protecting circuits 1–6 (e.g. ring final, cooker,
+              immersion)
+            </li>
+            <li>
+              • <strong>RCD 2:</strong> 30mA 80A, protecting circuits 7–12 (e.g. lighting, garage,
+              boiler)
+            </li>
+            <li>
+              • <strong>MCBs:</strong> Individual overcurrent protection within each group
+            </li>
             <li>• Fault on any circuit in RCD 1 group → all RCD 1 circuits lose supply</li>
           </ul>
         </div>
         <p>
-          The split load approach was the standard for UK consumer units from the introduction
-          of the 17th Edition (2008) until RCBO boards became more cost-competitive. It remains
-          a valid and compliant approach, but nuisance tripping and poor fault discrimination
-          are well-recognised limitations.
+          The split load approach was the standard for UK consumer units from the introduction of
+          the 17th Edition (2008) until RCBO boards became more cost-competitive. It remains a valid
+          and compliant approach, but nuisance tripping and poor fault discrimination are
+          well-recognised limitations.
         </p>
       </>
     ),
@@ -176,17 +185,21 @@ const sections = [
     content: (
       <>
         <p>
-          An RCBO (Residual Current Breaker with Overcurrent) combines the functions of an MCB
-          and an RCD in a single device. Each circuit in the consumer unit has its own RCBO,
-          providing both overcurrent protection (MCB function) and 30mA residual current
-          protection (RCD function) independently.
+          An RCBO (Residual Current Breaker with Overcurrent) combines the functions of an MCB and
+          an RCD in a single device. Each circuit in the consumer unit has its own RCBO, providing
+          both overcurrent protection (MCB function) and 30mA residual current protection (RCD
+          function) independently.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">RCBO Consumer Unit Advantages</h3>
           <ul className="space-y-2 text-white text-sm">
             <li>• Fault on one circuit trips only that circuit — all others remain live</li>
-            <li>• Eliminates nuisance tripping from accumulated leakage across multiple circuits</li>
-            <li>• Easier fault finding — the tripped RCBO identifies the faulty circuit immediately</li>
+            <li>
+              • Eliminates nuisance tripping from accumulated leakage across multiple circuits
+            </li>
+            <li>
+              • Easier fault finding — the tripped RCBO identifies the faulty circuit immediately
+            </li>
             <li>• Better compliance with BS 7671 Regulation 314.1 (circuit independence)</li>
             <li>• Preferred approach recommended in BS 7671 and the On-Site Guide</li>
           </ul>
@@ -204,43 +217,41 @@ const sections = [
     heading: 'BS 7671 Requirements for Consumer Units',
     content: (
       <>
-        <p>
-          The key BS 7671 regulations governing consumer unit design are:
-        </p>
+        <p>The key BS 7671 regulations governing consumer unit design are:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 314.1</strong> — every installation shall be divided into
-                circuits as necessary to avoid danger and minimise inconvenience in the event
-                of a fault. RCBO boards better satisfy this requirement than split load boards.
+                circuits as necessary to avoid danger and minimise inconvenience in the event of a
+                fault. RCBO boards better satisfy this requirement than split load boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.4</strong> — in domestic (household) premises, all
-                socket outlet circuits not exceeding 32A and all circuits in bathrooms must
-                be protected by a 30mA RCD. RCBO boards comply automatically; split load
-                boards must ensure these circuits are in an RCD group.
+                <strong>Regulation 411.3.4</strong> — in domestic (household) premises, all socket
+                outlet circuits not exceeding 32A and all circuits in bathrooms must be protected by
+                a 30mA RCD. RCBO boards comply automatically; split load boards must ensure these
+                circuits are in an RCD group.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 531.3</strong> — RCDs shall be selected and installed to
-                minimise the risk of unwanted tripping and to ensure that only the protective
-                device associated with the fault operates. This is the discrimination requirement
-                — RCBO boards provide inherently better discrimination than split load boards.
+                <strong>Regulation 531.3</strong> — RCDs shall be selected and installed to minimise
+                the risk of unwanted tripping and to ensure that only the protective device
+                associated with the fault operates. This is the discrimination requirement — RCBO
+                boards provide inherently better discrimination than split load boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 421.1.201</strong> — consumer units in domestic premises
-                must have a non-combustible enclosure (metal or thermoplastic with a metal
-                insert). Applies to both split load and RCBO board types.
+                <strong>Regulation 421.1.201</strong> — consumer units in domestic premises must
+                have a non-combustible enclosure (metal or thermoplastic with a metal insert).
+                Applies to both split load and RCBO board types.
               </span>
             </li>
           </ul>
@@ -254,9 +265,9 @@ const sections = [
     content: (
       <>
         <p>
-          Nuisance tripping is the most common complaint about split load consumer units. It
-          occurs when healthy circuits have combined earth leakage current approaching the 30mA
-          trip threshold of the shared RCD:
+          Nuisance tripping is the most common complaint about split load consumer units. It occurs
+          when healthy circuits have combined earth leakage current approaching the 30mA trip
+          threshold of the shared RCD:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
@@ -265,19 +276,26 @@ const sections = [
               <p className="font-bold text-white mb-2">Common Causes of Nuisance Tripping</p>
               <ul className="space-y-1 text-white text-sm">
                 <li>• Long cable runs — capacitive leakage increases with cable length</li>
-                <li>• Appliances with EMC filter capacitors (washing machines, dishwashers, computers)</li>
-                <li>• Older appliances with degraded insulation — increased leakage without actual fault</li>
+                <li>
+                  • Appliances with EMC filter capacitors (washing machines, dishwashers, computers)
+                </li>
+                <li>
+                  • Older appliances with degraded insulation — increased leakage without actual
+                  fault
+                </li>
                 <li>• Damp environments — higher leakage through cable insulation</li>
-                <li>• Solar PV inverters and EV chargers — may have significant leakage by design</li>
+                <li>
+                  • Solar PV inverters and EV chargers — may have significant leakage by design
+                </li>
               </ul>
             </div>
           </div>
         </div>
         <p>
-          An RCBO board eliminates nuisance tripping from accumulated leakage because each
-          RCBO only measures the leakage from its own single circuit. The leakage from a
-          healthy washing machine (2–3mA) is far below the 30mA trip threshold of its
-          individual RCBO, even if 20 other circuits have similar leakage.
+          An RCBO board eliminates nuisance tripping from accumulated leakage because each RCBO only
+          measures the leakage from its own single circuit. The leakage from a healthy washing
+          machine (2–3mA) is far below the 30mA trip threshold of its individual RCBO, even if 20
+          other circuits have similar leakage.
         </p>
       </>
     ),
@@ -362,12 +380,11 @@ const sections = [
     content: (
       <>
         <p>
-          Consumer unit replacement is one of the most common domestic electrical jobs. Always
-          carry out an EICR condition check on the existing installation before fitting a new
-          consumer unit — defects in the existing circuits (particularly high Zs values or
-          failed insulation resistance tests) must be rectified before the new board is
-          energised. The EIC for the new consumer unit is your certification of the new work,
-          not the existing wiring.
+          Consumer unit replacement is one of the most common domestic electrical jobs. Always carry
+          out an EICR condition check on the existing installation before fitting a new consumer
+          unit — defects in the existing circuits (particularly high Zs values or failed insulation
+          resistance tests) must be rectified before the new board is energised. The EIC for the new
+          consumer unit is your certification of the new work, not the existing wiring.
         </p>
         <SEOAppBridge
           title="Complete EIC certificates for consumer unit replacements"

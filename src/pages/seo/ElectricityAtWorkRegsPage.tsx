@@ -47,6 +47,7 @@ const keyTakeaways = [
   'Regulation 12 requires adequate precautions when working on equipment made dead — the legal basis for safe isolation procedures.',
   'Regulation 14 prohibits working on or near live conductors unless it is unreasonable for it to be dead, it is reasonable to work live, and suitable precautions are taken.',
   'Regulation 16 requires that persons carrying out electrical work must be competent — or supervised by a competent person — to prevent danger and injury.',
+  'BS 7671:2018+A4:2026 (A4) introduced new Regulation 4 construction requirements: AFDDs are recommended for socket-outlet circuits (mandatory in HMOs, HRRBs, care homes and student accommodation) under Reg 421.1.7, and 30 mA RCD protection is required for all domestic lighting circuits under Reg 411.3.4.',
 ];
 
 const faqs = [
@@ -76,7 +77,8 @@ const faqs = [
       'The EAWR apply to "workplaces," which is defined broadly. Any premises where a person is at work — including a private dwelling where electrical work is being carried out — is a workplace for the purpose of the regulations. This means that when you (as an electrician) are working in a domestic property, the EAWR apply to your work activities. You must follow safe isolation procedures (Regulation 12), you must not work live unless justified (Regulation 14), and you must be competent (Regulation 16). The EAWR do not apply to the homeowner in their own home for their own domestic activities — a homeowner changing a light bulb is not "at work." But any electrical work carried out by a professional electrician in a domestic property is covered by the regulations because the electrician is at work.',
   },
   {
-    question: 'What records must be kept to demonstrate compliance with the Electricity at Work Regulations?',
+    question:
+      'What records must be kept to demonstrate compliance with the Electricity at Work Regulations?',
     answer:
       'The EAWR do not specify a particular set of records that must be kept, but the HSE strongly recommends maintaining documentation that demonstrates the electrical systems are safe and maintained as required by Regulation 4. For workplaces, this means keeping records of periodic inspection and testing (EICRs), maintenance records for fixed electrical equipment, records of portable appliance testing (PAT), risk assessments for electrical work, any permits to work issued, and training and competence records for personnel carrying out electrical work. For electricians, the EIC or MEIWC issued at the completion of installation work is the primary documentary evidence that the installation was constructed and tested in accordance with BS 7671. Retaining copies of these certificates is important for demonstrating EAWR compliance in the event of an incident or HSE inspection.',
   },
@@ -277,9 +279,13 @@ const sections = [
               <span>
                 <strong>Maintenance</strong> — the installation must be periodically inspected and
                 tested by a competent person. Defects must be rectified promptly. Records of
-                inspections and tests must be kept. The recommended inspection interval depends on
-                the type of premises — typically 5 years for domestic, 3 to 5 years for commercial,
-                and 1 to 3 years for industrial.
+                inspections and tests must be kept. BS 7671 Regulation 652.1 requires that the
+                frequency of periodic inspection and testing be determined having regard to the type
+                of installation, its use, maintenance history, external influences, and previous
+                inspection reports (GN3 Ch. 2, Reg 2.4). As a general guide this is typically 5
+                years for domestic, 3 to 5 years for commercial, and 1 to 3 years for industrial —
+                but the inspector&apos;s assessed interval always takes precedence over these
+                defaults.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -292,12 +298,48 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-4">
+          <p className="text-yellow-300 font-semibold mb-2">
+            A4:2026 Update — New construction requirements
+          </p>
+          <p className="text-white text-sm leading-relaxed mb-2">
+            BS 7671:2018+A4:2026 introduced two new requirements that directly affect Regulation 4
+            compliance for new installations and EICRs:
+          </p>
+          <ul className="space-y-2 text-white text-sm">
+            <li>
+              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> AFDDs are
+              recommended for final circuits supplying socket-outlets. For Higher Risk Residential
+              Buildings, Houses in Multiple Occupation (HMOs), purpose-built student accommodation,
+              and care homes the requirement is mandatory. AFDDs shall conform to BS EN 62606.
+            </li>
+            <li>
+              <strong>Reg 411.3.4 — RCD protection for lighting circuits:</strong> In domestic
+              (household) premises, additional protection by an RCD with a rated residual operating
+              current not exceeding 30 mA is now required for all AC final circuits supplying
+              luminaires. An RCBO rated at or below 30 mA satisfies this requirement.
+            </li>
+          </ul>
+          <p className="text-white/70 text-xs mt-3">
+            Source: BS 7671:2018+A4:2026 Regs 421.1.7 and 411.3.4
+          </p>
+        </div>
         <p>
           The phrase "so far as is reasonably practicable" means the duty is not absolute — but the
           burden is on the duty holder to show that it was not reasonably practicable to prevent the
           danger. In practice, this is a high bar. If a defect could have been identified by a
           periodic inspection that was not carried out, the duty holder will struggle to argue that
           they took all reasonably practicable steps.
+        </p>
+        <p>
+          For landlords and building owners, Regulation 4 is further reinforced by statutory
+          obligations requiring that electrical installations in rented premises are maintained in a
+          safe condition. Periodic inspection and testing is the recognised means of satisfying that
+          duty — as GN3 Chapter 3 (Reg 3.10) states, it is the established method for ensuring that
+          electrical installations remain safe during use and under the duty holder&apos;s
+          responsibility. See the{' '}
+          <SEOInternalLink href="/guides/eicr-for-landlords">EICR for landlords</SEOInternalLink>{' '}
+          guide for the specific statutory requirements that apply to the private rented sector.
         </p>
       </>
     ),
@@ -524,10 +566,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prosecution</strong> — serious breaches can result in criminal prosecution
-                in the magistrates' court (fines up to £20,000 and/or imprisonment up to 6 months)
-                or the Crown Court (unlimited fines and/or imprisonment up to 2 years). Both
-                employers and individual employees can be prosecuted.
+                <strong>Prosecution</strong> — serious breaches can result in criminal prosecution.
+                Following the Legal Aid, Sentencing and Punishment of Offenders Act 2012 (effective
+                2015), fines are unlimited in both the magistrates&apos; court and the Crown Court.
+                The magistrates&apos; court can also impose imprisonment of up to 12 months; the
+                Crown Court up to 2 years. Both employers and individual employees can be
+                prosecuted.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -634,8 +678,8 @@ const sections = [
 export default function ElectricityAtWorkRegsPage() {
   return (
     <GuideTemplate
-      title="Electricity at Work Regulations 1989 | Employer Guide"
-      description="Complete guide to the Electricity at Work Regulations 1989. Regulation 4 (systems), Regulation 12 (safe isolation), Regulation 14 (live working)…"
+      title="Electricity at Work Regulations 1989: Electrician's Guide | Elec-Mate"
+      description="Complete guide to the Electricity at Work Regulations 1989 for electricians and employers. Regulation 4 (systems &amp; EICR), Regulation 12 (safe isolation), Regulation 14 (live working), Regulation 16 (competence)."
       datePublished="2025-04-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

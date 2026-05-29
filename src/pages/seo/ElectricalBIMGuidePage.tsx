@@ -258,7 +258,7 @@ export default function ElectricalBIMGuidePage() {
                 design. BS 7671-specific calculations (cable sizing with derating factors, Zs
                 calculations, prospective fault current) are not built into Revit and must be done
                 in separate tools. This is where complementary applications like{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculators
                 </SEOInternalLink>{' '}
                 and circuit design tools remain essential.
@@ -518,8 +518,8 @@ export default function ElectricalBIMGuidePage() {
                       <strong className="text-yellow-400">Digital O&M manuals</strong> — Traditional
                       paper O&M (operation and maintenance) manuals are being replaced by digital
                       O&M data linked to the BIM model. Test{' '}
-                      <SEOInternalLink href="/eic-certificate">certificates</SEOInternalLink>
-                      , commissioning records, and maintenance schedules are linked directly to the
+                      <SEOInternalLink href="/eic-certificate">certificates</SEOInternalLink>,
+                      commissioning records, and maintenance schedules are linked directly to the
                       relevant equipment in the model.
                     </span>
                   </li>
@@ -647,7 +647,7 @@ export default function ElectricalBIMGuidePage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'BS 7671 cable sizing for BIM projects.',
           icon: Calculator,

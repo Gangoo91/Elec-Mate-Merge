@@ -45,6 +45,8 @@ const keyTakeaways = [
   'Northern Powergrid is the Distribution Network Operator for Leeds and the wider Yorkshire region. All new connections, supply upgrades, and generation notifications go through Northern Powergrid.',
   'Leeds has a distinctive property mix including Yorkshire stone-built back-to-back terraces (unique to the region), Victorian through-terraces in Headingley and Chapel Allerton, city centre apartments, and new-build estates in the suburbs.',
   'Headingley, Hyde Park, and Woodhouse have the highest concentration of student HMOs in Leeds, with strict licensing and electrical compliance requirements enforced by Leeds City Council.',
+  'A4:2026 update (Reg 411.3.4): all domestic consumer units now require 30 mA RCD protection on every lighting circuit — not just socket circuits. Any consumer unit replacement in a Leeds dwelling must include this protection.',
+  'Since A4:2026 (Reg 534.4.1.6), electricians must assess and document whether surge protection devices (SPDs) are needed at consumer unit replacement. For installations with sensitive electronics or telecommunications links, SPDs add an additional cost item to budget.',
 ];
 
 const faqs = [
@@ -71,7 +73,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for my Leeds rental property?',
     answer:
-      'Yes. All landlords in England — including Leeds — must have a valid Electrical Installation Condition Report (EICR) for rented properties, carried out at least every 5 years or at change of tenancy. Leeds City Council actively enforces this requirement, particularly in areas with high concentrations of rental properties such as Headingley, Hyde Park, Woodhouse, Harehills, and the city centre. An EICR in Leeds typically costs £140 to £260 depending on property size. Failure to comply can result in civil penalties of up to £30,000. Leeds City Council has a dedicated private rented sector enforcement team.',
+      'Yes. All landlords in England — including Leeds — must have a valid Electrical Installation Condition Report (EICR) for rented properties, carried out at least every 5 years or at change of tenancy. Leeds City Council actively enforces this requirement, particularly in areas with high concentrations of rental properties such as Headingley, Hyde Park, Woodhouse, Harehills, and the city centre. An EICR in Leeds typically costs £140 to £260 depending on property size. Failure to comply can result in civil penalties of up to £30,000. Important: a valid EICR must be accompanied by the Condition Report Inspection Schedule (GN3 Reg 1.3) — landlords should confirm they received both documents, not just the headline report. Leeds City Council has a dedicated private rented sector enforcement team.',
   },
   {
     question: 'What are the HMO electrical requirements in Leeds?',
@@ -116,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
@@ -156,9 +158,13 @@ const sections = [
           commercial, and industrial sectors.
         </p>
         <p>
-          For any notifiable electrical work in Leeds, you need an electrician registered with a{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
-          competent person scheme. The main schemes are{' '}
+          Not all domestic electrical work requires notification — only certain work is notifiable
+          under <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>
+          . Notifiable work includes new circuits, consumer unit replacements, and additions to
+          circuits in kitchens, bathrooms, and outdoors. Like-for-like replacements of fittings and
+          accessories on existing circuits are generally not notifiable (OSG 9th Ed:2022). For
+          notifiable work, your electrician must be registered with a competent person scheme — the
+          main schemes are{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT, and
           ELECSA. NAPIT has a particularly strong presence across Yorkshire, with many local
           electricians registered under this scheme.
@@ -242,8 +248,12 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £400 to £650 including supply
-                isolation, new 18th Edition compliant unit with RCBOs, testing, and Part P
-                notification.
+                isolation, new BS 7671:2018+A4:2026 compliant unit with RCBOs, testing, and Part P
+                notification. Under A4:2026 (Reg 411.3.4), all lighting circuits in domestic
+                premises must now have 30 mA RCD protection — this is included in a properly
+                specified replacement. Electricians must also assess surge protection device (SPD)
+                provision under Reg 534.4.1.6; SPDs are typically an additional £50 to £150 where
+                installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -418,8 +428,10 @@ const sections = [
               <span>
                 <strong>EICR requirement</strong> — all HMOs in Leeds must have a valid{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with a
-                maximum 5-year interval. Leeds City Council is proactive in enforcement and
-                regularly inspects licensed HMOs.
+                maximum 5-year interval. The EICR must be accompanied by the Condition Report
+                Inspection Schedule (GN3 Reg 1.3) — both documents are required as part of the full
+                report. Leeds City Council is proactive in enforcement and regularly inspects
+                licensed HMOs.
               </span>
             </li>
             <li className="flex items-start gap-3">

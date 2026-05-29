@@ -47,6 +47,7 @@ const keyTakeaways = [
   "Ask for the electrician's qualifications: C&G 2382 (18th Edition), C&G 2391 (Inspection and Testing), and the relevant installation qualification (C&G 2365 or NVQ Level 3).",
   'Get at least three written quotes that itemise materials, labour, and certification costs separately. A verbal estimate is not a quote.',
   'Beware of red flags: no scheme registration, unwillingness to provide certification, cash-only requests, and prices dramatically below other quotes.',
+  'Always ask for the certificate AND the Schedule of Circuit Details and Test Results — both are mandatory under BS 7671 Reg 644.3. The Schedule records measured Zs values, insulation resistance readings, and RCD trip times for every circuit. Keep both documents safe.',
   'Elec-Mate-registered electricians deliver professional certificates, quotes, and invoices directly from their phone — giving homeowners a better experience and full documentation on the spot.',
 ];
 
@@ -75,6 +76,11 @@ const faqs = [
     question: 'How much should I expect to pay an electrician per hour?',
     answer:
       'Electrician hourly rates in the UK in 2026 typically range from £40 to £70 per hour depending on location, experience, and the type of work. London and the South East are at the higher end (£55 to £80 per hour), while the North of England, Wales, and Scotland tend to be at the lower end (£35 to £55 per hour). However, most electricians prefer to quote fixed prices for defined jobs rather than hourly rates. A fixed price gives both parties certainty — the customer knows the total cost upfront, and the electrician is rewarded for efficiency rather than penalised for working quickly. Fault-finding callouts are often charged at an hourly rate (typically £80 to £150 for the first hour) because the time needed is unpredictable. When comparing quotes, focus on the total price for the defined scope of work, not the hourly rate. An experienced electrician who charges £60 per hour and completes the work in 3 hours is cheaper than an inexperienced one who charges £40 per hour and takes 6 hours.',
+  },
+  {
+    question: 'What do EICR condition codes C1, C2, C3 and FI mean?',
+    answer:
+      'When an electrician carries out an Electrical Installation Condition Report (EICR), every defect or observation is classified with one of four codes as required by BS 7671 and GN3. C1 (Danger present) means there is an immediate risk of injury — the defect requires urgent remedial action before the installation is used again. C2 (Potentially dangerous) means the fault is not causing immediate danger but could become dangerous and requires urgent attention, typically within 28 days. C3 (Improvement recommended) means no immediate danger but the electrician recommends an improvement — the installation is not unsafe, and a C3 does not make the EICR unsatisfactory. FI (Further investigation required) means the inspector could not determine the extent of a problem with the equipment and access available — further investigation is required before the installation can be assessed. An EICR is classed as Satisfactory only if there are no C1 or C2 codes. If your report contains C1 or C2 items, you must arrange remedial work and obtain a new satisfactory EICR.',
   },
   {
     question: 'What happens if an electrician does bad work?',
@@ -248,10 +254,8 @@ const sections = [
               <span>
                 <strong>C&G 2391 — Inspection and Testing.</strong> Essential for any electrician
                 carrying out{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">
-                  EICR inspections
-                </SEOInternalLink>
-                . This qualification covers the theory and practice of initial verification and
+                <SEOInternalLink href="/tools/eicr-certificate">EICR inspections</SEOInternalLink>.
+                This qualification covers the theory and practice of initial verification and
                 periodic inspection.
               </span>
             </li>
@@ -362,13 +366,14 @@ const sections = [
               quote with an itemised breakdown of materials, labour, and certification.
             </li>
             <li>
-              <strong>What certification will I receive?</strong> For new installations, you should
-              receive an{' '}
-              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
+              <strong>What certification will I receive?</strong> For new circuits or a consumer
+              unit replacement, you should receive an{' '}
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A{' '}
               <SEOInternalLink href="/minor-works-certificate">
                 Minor Works Certificate
-              </SEOInternalLink>
-              . For inspections, an{' '}
+              </SEOInternalLink>{' '}
+              is only valid where no new circuit is introduced — adding a shower, EV charger, or
+              extra ring main always requires a full EIC (BS 7671 Reg 120.3). For inspections, an{' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>.
             </li>
             <li>
@@ -552,9 +557,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Certification.</strong> On completion, you should receive the appropriate
-                certificate (EIC, Minor Works, or EICR) with all test results recorded. This
-                document is yours — keep it safe.
+                <strong>Certification and Schedule of Tests.</strong> On completion, you should
+                receive the appropriate certificate (EIC, Minor Works, or EICR) together with the
+                Schedule of Circuit Details and Test Results — both are mandatory under BS 7671 Reg
+                644.3. The Schedule records measured earth fault loop impedance (Zs) values,
+                insulation resistance readings, and RCD trip times for every circuit. Ask for both
+                documents and keep them safe — you will need them when selling the property or
+                arranging future inspection work.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Pre-existing defects recorded in writing.</strong> Where the electrician
+                carries out additions or alterations, BS 7671 Reg 644.1.2 requires them to record
+                any defects found in the existing installation on your certificate — even if they
+                did not cause those faults. A professional electrician will flag pre-existing issues
+                clearly in writing. This is a quality indicator: if your certificate has no
+                observations at all on a property with older wiring, ask why.
               </span>
             </li>
             <li className="flex items-start gap-3">

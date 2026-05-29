@@ -26,6 +26,7 @@ const tocItems = [
   { id: 'heat-vs-cold-shrink', label: 'Heat Shrink vs Cold Shrink Joints' },
   { id: 'scotchlok-connectors', label: 'Scotchlok and Crimp Connectors' },
   { id: 'cable-stripping', label: 'Cable Stripping Techniques' },
+  { id: 'fault-location', label: 'Underground Fault Location' },
   { id: 'insulation-testing', label: 'Insulation Testing After Jointing' },
   { id: 'bs7671-requirements', label: 'BS 7671 Requirements for Joints' },
   { id: 'for-electricians', label: 'For Electricians' },
@@ -38,7 +39,7 @@ const keyTakeaways = [
   'Heat shrink jointing systems use thermoplastic tubing applied with a hot air gun to provide insulation, semi-conductive screening (MV joints), and mechanical protection in a single system. Cold shrink systems use pre-expanded silicone rubber that contracts when a support tube is removed — no heat source required.',
   'Insulation resistance must be tested before and after jointing. A significant reduction after jointing indicates moisture ingress, damaged insulation, or contamination of the conductor connection. Minimum values depend on the voltage rating of the cable per BS 7671 Chapter 64.',
   'Scotchlok (insulation displacement) connectors and mechanical crimp connectors are acceptable for LV jointing of small conductors but are not suitable for service entry cables, meter tails, or any conductor subject to significant current load without manufacturer testing evidence.',
-  'All cable joints must be accessible for inspection unless specifically designed and certified for permanent burial or submersion. Buried joints require waterproof jointing kits with gel-filled or resin-poured enclosures rated IP68.',
+  'All cable joints and connections must be accessible for inspection, testing, and maintenance per BS 7671 Regulation 543.3.2. Regulation 526.3 provides the permitted exceptions: compound-filled or encapsulated enclosures, and joints in conduit or trunking systems designed for concealed installation. Buried joints that cannot be made accessible must use specifically designed and certified waterproof kits (gel-filled or resin-poured enclosures, minimum IP68).',
 ];
 
 const faqs = [
@@ -65,7 +66,7 @@ const faqs = [
   {
     question: 'What insulation resistance values should I expect after jointing?',
     answer:
-      'BS 7671:2018+A4:2026 Chapter 64 requires insulation resistance to be measured at a test voltage appropriate to the circuit nominal voltage. For circuits up to 500V, the test voltage is 500V DC and the minimum acceptable reading is 1M\u03a9. For circuits between 500V and 1,000V, the test voltage is 1,000V DC and the minimum is also 1M\u03a9. In practice, well-made joints on new cable should measure hundreds or thousands of M\u03a9. A reading below 10M\u03a9 on a new joint warrants investigation. After a joint is made, allow the resin (if used) to cure fully before final testing — testing too soon may give falsely low readings.',
+      'BS 7671:2018+A4:2026 Regulation 643.3.2 and Table 64 specify three test conditions. For SELV and PELV circuits the test voltage is 250 V DC and the minimum insulation resistance is 0.5 M\u03a9 — use this lower voltage to avoid damaging sensitive PELV control or data equipment. For circuits up to and including 500 V (excluding SELV/PELV) the test voltage is 500 V DC and the minimum is 1.0 M\u03a9. For circuits above 500 V the test voltage is 1,000 V DC and the minimum is also 1.0 M\u03a9. In practice, well-made joints on new cable should measure hundreds or thousands of M\u03a9. A reading below 10 M\u03a9 on a new joint warrants investigation. Allow resin (if used) to cure fully before final testing — testing during cure may give falsely low readings.',
   },
   {
     question: 'What protection is required for buried cable joints?',
@@ -383,6 +384,77 @@ const sections = [
     ),
   },
   {
+    id: 'fault-location',
+    heading: 'Underground Cable Fault Location — The Workflow That Leads to Jointing',
+    content: (
+      <>
+        <p>
+          Most LV and HV underground cable jointing in the field is not planned new installation —
+          it follows fault location and excavation. Understanding the diagnostic sequence is as
+          important as the jointing technique itself.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="text-lg font-semibold text-white mb-3">
+            Fault Location to Joint Repair Sequence
+          </h3>
+          <ul className="space-y-3 text-white">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 1 — Isolate and prove dead:</strong> Isolate the affected circuit and
+                confirm it is dead using an approved voltage indicator. Co-ordinate with the network
+                operator for DNO-owned cables.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 2 — Insulation resistance test (megger):</strong> Perform IR tests
+                between all conductors and to earth to confirm the fault type (phase-to-earth,
+                phase-to-phase, open circuit) and verify it is permanent. Use 500 V DC for LV
+                cables. Record all readings.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 3 — TDR fault location:</strong> A time-domain reflectometer (TDR)
+                sends a pulse along the cable and measures the time to the reflected return, giving
+                an estimated fault distance. For buried HV or LV networks this narrows the
+                excavation zone to a few metres. Typical fault-location duration for HV/LV
+                underground networks is 4 to 6 hours, including megger confirmation and TDR
+                pin-pointing.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 4 — Excavate and inspect:</strong> Excavate at the TDR-predicted
+                location. Use a cable tracer or signal generator to confirm the route before
+                digging. Visually inspect the cable for physical damage — third-party excavation
+                strikes are the most common cause of permanent underground faults.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 5 — Joint repair and retest:</strong> Cut out the damaged section,
+                prepare and joint with an approved kit, then retest IR and continuity before
+                reinstatement. Mark the joint location per Regulation 522.8.10 (marker tape above
+                the cable) and record on as-installed drawings.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Common tools required: TDR unit, insulation resistance tester (megger), cable tracer or
+          signal generator, and standard jointing hand tools. For HV faults, a surge/arc-reflection
+          fault locator may supplement TDR for accurate pin-pointing.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'insulation-testing',
     heading: 'Insulation Testing After Jointing',
     content: (
@@ -398,17 +470,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test voltage (BS 7671 Chapter 64):</strong> 500V DC for circuits up to 500V
-                nominal; 1,000V DC for circuits 500V to 1,000V. The test voltage must not damage
-                sensitive equipment — disconnect electronic devices before testing.
+                <strong>Test voltages and minimums (BS 7671 Reg 643.3.2, Table 64):</strong>
+                <ul className="mt-2 space-y-1 text-white/90 text-sm">
+                  <li>SELV / PELV circuits: 250 V DC — minimum 0.5 M\u03a9</li>
+                  <li>
+                    Circuits up to 500 V (excluding SELV/PELV): 500 V DC — minimum 1.0 M\u03a9
+                  </li>
+                  <li>Circuits above 500 V: 1,000 V DC — minimum 1.0 M\u03a9</li>
+                </ul>
+                Always use 250 V DC when jointing PELV control or data cables to avoid equipment
+                damage. Disconnect all electronic devices before testing at any voltage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum acceptable values:</strong> BS 7671 Table 64 specifies 1M\u03a9
-                minimum for circuits up to 500V and 1M\u03a9 for 500V to 1,000V circuits. In
-                practice, values below 10M\u03a9 on a new joint warrant investigation.
+                <strong>Practical interpretation:</strong> Values below 10 M\u03a9 on a new joint
+                warrant investigation even though the regulatory minimum is 1.0 M\u03a9. Well-made
+                joints on new cable routinely measure hundreds or thousands of M\u03a9.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -450,16 +529,33 @@ const sections = [
               <span>
                 <strong>Regulation 526.1:</strong> Every connection between conductors or between a
                 conductor and equipment must provide durable electrical continuity and adequate
-                mechanical strength. Connections must use suitable accessories and be made by a
-                skilled person.
+                mechanical strength. Regulation 526.1 further requires that the means of connection
+                be selected taking account of: (a) the material of the conductor and its insulation;
+                (b) the conductor class, number and shape of wires forming the conductor (solid,
+                stranded, or fine-stranded); and (c) the cross-sectional area. This is why crimp
+                ferrules are mandatory for aluminium conductors — screw-type terminals cause cold
+                flow and loosening over time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 526.3:</strong> Joints must generally be accessible for
-                inspection unless in a compound-filled or encapsulated enclosure. Buried or enclosed
-                joints must be made with specifically designed and tested products.
+                <strong>Regulation 543.3.2:</strong> Every connection and joint shall be accessible
+                for inspection, testing and maintenance. This is the primary operative regulation
+                cited by EICR inspectors for a C2 or C3 observation on an inaccessible joint.
+                Regulation 526.3 provides the permitted exceptions: compound-filled or encapsulated
+                enclosures, and joints in conduit or trunking systems specifically designed for
+                concealed installation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 526.3:</strong> Sets out the permitted exceptions to the
+                accessibility requirement in Reg 543.3.2: joints in compound-filled or encapsulated
+                enclosures, or in conduit/trunking systems designed for concealed installation, need
+                not be accessible for inspection provided they are made with specifically designed
+                and tested products.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -473,22 +569,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mechanical protection:</strong> Regulation 522.6 requires that cables be
-                protected against mechanical damage appropriate to the installation. Joints in cable
-                ducts or underground should be enclosed in a suitably rated junction box or
-                compound-filled system.
+                <strong>Mechanical protection — Regulation 522.8.10:</strong> Buried cables and
+                their joints shall have their location marked by cable covers or a suitable marker
+                tape installed above the cable. This is the specific buried-cable protection
+                regulation. Joints in cable ducts or underground must also be enclosed in a suitably
+                rated junction box or compound-filled system.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Record all jointing work on a{' '}
-          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> for small
-          repairs or an{' '}
-          <SEOInternalLink
-            href="/eic-certificate"
-            label="Electrical Installation Certificate"
-          />{' '}
+          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> for
+          small repairs or an{' '}
+          <SEOInternalLink href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
           for new circuit work. Test results must be documented.
         </p>
       </>
@@ -509,18 +603,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
-                minor electrical installation works certificates for cable repairs and joint work,
-                including pre- and post-repair insulation resistance readings.
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
+                issue minor electrical installation works certificates for cable repairs and joint
+                work, including pre- and post-repair insulation resistance readings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge
-                  href="/eic-certificate"
-                  label="Electrical Installation Certificate"
-                />{' '}
+                <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — generate a compliant EIC for new underground cable installations including
                 jointing details and test schedules.
               </span>

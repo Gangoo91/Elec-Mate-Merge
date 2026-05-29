@@ -108,7 +108,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -219,11 +219,11 @@ export default function ThreePhasePowerCalculatorPage() {
               three-phase formulas are essential. The key difference from single-phase is the
               presence of the square root of 3 factor in the power and voltage/current
               relationships. Use the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size three-phase cables once the line current is known, and the{' '}
-              <SEOInternalLink href="/voltage-drop-calculator">
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify compliance with BS 7671 limits on three-phase distribution circuits.
@@ -515,14 +515,12 @@ export default function ThreePhasePowerCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -530,14 +528,30 @@ export default function ThreePhasePowerCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/single-phase-vs-three-phase">Single Phase vs Three Phase Power</SEOInternalLink>
-            <SEOInternalLink href="/guides/three-phase-calculations">Three Phase Calculations</SEOInternalLink>
-            <SEOInternalLink href="/guides/three-phase-installation">Three Phase Installation Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/testing-three-phase-installation">Testing a Three Phase Installation</SEOInternalLink>
-            <SEOInternalLink href="/guides/three-phase-installation-cost">3-Phase Installation Cost UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/tools/cable-volt-drop-three-phase">Three Phase Voltage Drop Calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/no-power-to-sockets">No Power to Sockets</SEOInternalLink>
-            <SEOInternalLink href="/tools/power-consumption-calculator">Power Consumption Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/single-phase-vs-three-phase">
+              Single Phase vs Three Phase Power
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-calculations">
+              Three Phase Calculations
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-installation">
+              Three Phase Installation Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/testing-three-phase-installation">
+              Testing a Three Phase Installation
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-installation-cost">
+              3-Phase Installation Cost UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-volt-drop-three-phase">
+              Three Phase Voltage Drop Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/no-power-to-sockets">
+              No Power to Sockets
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/power-consumption-calculator">
+              Power Consumption Calculator
+            </SEOInternalLink>
           </div>
         </div>
       </section>

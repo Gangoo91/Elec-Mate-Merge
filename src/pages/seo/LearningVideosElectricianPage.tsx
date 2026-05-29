@@ -323,12 +323,12 @@ const sections = [
         <p>
           Topics include the structure and key requirements of each chapter of BS 7671, electrical
           science principles (Ohm's Law, power, energy, magnetic fields, AC theory),{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculations
           </SEOInternalLink>{' '}
           using the tabulated method and the step-by-step process for selecting the correct cable,
           earth fault loop impedance and its relationship to disconnection times,{' '}
-          <SEOInternalLink href="/adiabatic-equation-calculator">
+          <SEOInternalLink href="/tools/adiabatic-equation-calculator">
             adiabatic equation
           </SEOInternalLink>{' '}
           verification of protective conductor sizing, and discrimination between protective

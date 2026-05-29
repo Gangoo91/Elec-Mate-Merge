@@ -62,7 +62,7 @@ export default function BestInvoiceAppPage() {
         { feature: 'AI Remedial Cost Estimator', values: [true, false, false, false] },
         {
           feature: 'Electrical Certificates (EICR, EIC etc.)',
-          values: ['8 Types', false, false, false],
+          values: ['15 Types', false, false, false],
         },
         { feature: '70+ BS 7671 Calculators', values: [true, false, false, false] },
         { feature: '8 Elec-AI Specialist Tools', values: [true, false, false, false] },
@@ -79,6 +79,7 @@ export default function BestInvoiceAppPage() {
         'The AI Remedial Cost Estimator converts EICR defects into priced remedial works quotations using real UK trade pricing data — a feature no accounting app can replicate.',
         'Paying for both an accounting app and a separate certificate app costs more than a single Elec-Mate subscription that includes everything an electrician needs.',
         'Elec-Mate works fully offline, so you can draft invoices in basements and plant rooms without mobile signal. QuickBooks, Xero, and FreeAgent all require an internet connection.',
+        'Elec-Mate certificates are updated for BS 7671:2018+A4:2026, including AFDD fields (Reg 421.1.7) and the updated EICR model form. No accounting app offers trade-specific compliance like this.',
       ]}
       sections={[
         {
@@ -113,7 +114,7 @@ export default function BestInvoiceAppPage() {
             <>
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform for UK electricians with invoicing,
-                quoting, Stripe payments, Xero integration, plus 16 certificate types, 70+ BS 7671
+                quoting, Stripe payments, Xero integration, plus 15 certificate types, 70+ BS 7671
                 calculators, 8 Elec-AI tools, and 46+ training courses. From £5.99/month.
               </p>
               <p>
@@ -164,11 +165,23 @@ export default function BestInvoiceAppPage() {
                 quote simultaneously, increasing conversion rates for follow-up work.
               </p>
               <p>
+                EICR observations are classified using the standard codes defined in IET Guidance
+                Note 3 (GN3 9th Ed, Table 3.5): <strong>C1</strong> — danger present, requiring
+                immediate action; <strong>C2</strong> — potentially dangerous, requiring urgent
+                remedial work; <strong>C3</strong> — improvement recommended; and{' '}
+                <strong>FI</strong> — further investigation required. Elec-Mate records each code
+                against the relevant observation and uses the C1/C2 items to drive the AI Remedial
+                Cost Estimator, so the highest-priority defects are priced first.
+              </p>
+              <p>
                 If you want the strongest version of that workflow, pair the invoice flow with the{' '}
                 <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>, the{' '}
                 <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
-                the <SEOInternalLink href="/tools/minimum-charge-calculator">minimum charge calculator</SEOInternalLink>.
-                That gives you one chain from estimate to certificate to payment instead of four
+                the{' '}
+                <SEOInternalLink href="/tools/minimum-charge-calculator">
+                  minimum charge calculator
+                </SEOInternalLink>
+                . That gives you one chain from estimate to certificate to payment instead of four
                 disconnected tools.
               </p>
             </>
@@ -213,9 +226,9 @@ export default function BestInvoiceAppPage() {
         },
         {
           icon: FileCheck2,
-          title: '8 Electrical Certificate Types',
+          title: '15 Electrical Certificate Types',
           description:
-            'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. Built into the same app as your invoicing tools.',
+            'EICR, EIC, Minor Works, EV Charging, Solar PV, Fire Alarm, Emergency Lighting, PAT, and more. All 15 certificate types built into the same app as your invoicing tools.',
         },
         {
           icon: Calculator,
@@ -261,7 +274,7 @@ export default function BestInvoiceAppPage() {
         {
           question: 'Is Elec-Mate cheaper than QuickBooks and Xero?',
           answer:
-            'Elec-Mate starts from £5.99 per month and includes everything: invoicing, quoting, 16 certificate types, 70+ calculators, 8 AI tools, and 46+ training courses. QuickBooks starts from around £12/month and Xero from £15/month — and neither includes electrical certificates or calculators. If you currently pay for both an accounting app and a certificate app, switching to Elec-Mate for daily use (with Xero for accounting) typically reduces your total software costs.',
+            'Elec-Mate starts from £5.99 per month and includes everything: invoicing, quoting, 15 certificate types, 70+ calculators, AI tools, and 46+ training courses. QuickBooks starts from around £12/month and Xero from £15/month — and neither includes electrical certificates or calculators (competitor prices correct as of May 2026; check provider websites for current rates). If you currently pay for both an accounting app and a certificate app, switching to Elec-Mate for daily use (with Xero for accounting) typically reduces your total software costs.',
         },
         {
           question: 'Does Elec-Mate work offline?',
@@ -319,7 +332,7 @@ export default function BestInvoiceAppPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 16 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
+            'All 15 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

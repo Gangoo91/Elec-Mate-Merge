@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables accurately for Bolton terraced house rewires and new circuit installations.',
@@ -474,7 +474,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Terraced Rewires</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for accurate voltage drop calculations on Bolton terraced house rewires. Long

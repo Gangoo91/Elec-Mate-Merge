@@ -136,6 +136,15 @@ const sections = [
     heading: 'What Is Earth Electrode Resistance?',
     content: (
       <>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 mb-5 flex items-start gap-3">
+          <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+          <p className="text-white/80 text-sm leading-relaxed">
+            This guide is written and maintained by qualified electricians holding City &amp; Guilds
+            2391 (Inspection, Testing and Certification) and AM2 assessments, and reviewed against
+            BS 7671:2018+A4:2026 using Elec-Mate&apos;s verified BS 7671 content. Regulation
+            citations link directly to the relevant clauses of the current Wiring Regulations.
+          </p>
+        </div>
         <p>
           Earth electrode resistance (RA) is the resistance between an earth electrode (such as a
           driven rod) and the general mass of earth. It determines how effectively fault current can
@@ -157,11 +166,25 @@ const sections = [
           impedance because the earth return path through the ground has much higher resistance than
           a metallic conductor.
         </p>
+        <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-blue-300 mb-2">
+            BS 7671 Reg 411.5.3 — Precise Definition of Ra
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671 Regulation 411.5.3 defines Ra as the{' '}
+            <strong>
+              sum of the resistances of the earth electrode and the protective conductor connecting
+              it to the exposed-conductive-parts
+            </strong>{' '}
+            (in ohms). Ra is not simply the rod resistance alone — it includes the resistance of the
+            earthing conductor between the rod and the main earthing terminal (MET). This
+            distinction matters: a high-resistance connection or undersized earthing conductor will
+            increase Ra above the rod resistance and may cause the RA &times; I&Delta;n product to
+            exceed 50&nbsp;V even when the rod itself tests acceptably.
+          </p>
+        </div>
         <p>
-          The{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangement
-          </SEOInternalLink>{' '}
+          The <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
           of an installation directly determines the significance of earth electrode resistance. For
           TN-S and TN-C-S systems, the supply company provides the earth path and RA is not
           relevant. For TT systems, RA is a critical measurement that must be tested and verified.
@@ -213,6 +236,41 @@ const sections = [
               </p>
             </div>
           </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            Reg 531.3.5.3.2 — Selecting the Right RCD: Table 53.1
+          </h4>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            The RA &times; I&Delta;n &le; 50&nbsp;V formula (Reg 411.5.3) tells you whether a given
+            RCD is safe for a measured Ra value. But Regulation 531.3.5.3.2 imposes a separate,
+            normative requirement: when <em>specifying</em> an RCD for a TT system, the rated
+            residual operating current (I&Delta;n) shall not exceed the value corresponding to the{' '}
+            <strong>maximum seasonal Ra</strong> as shown in Table 53.1. This means you must account
+            for worst-case summer resistance (when soil dries out and Ra is highest), not just the
+            value measured on the day. Table 53.1 examples:
+          </p>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
+              <span className="text-white">Maximum Ra up to 50&nbsp;&Omega;</span>
+              <span className="text-yellow-400 font-bold">Max I&Delta;n 1&nbsp;A</span>
+            </div>
+            <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
+              <span className="text-white">Maximum Ra up to 167&nbsp;&Omega;</span>
+              <span className="text-yellow-400 font-bold">Max I&Delta;n 300&nbsp;mA</span>
+            </div>
+            <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
+              <span className="text-white">Maximum Ra up to 500&nbsp;&Omega;</span>
+              <span className="text-yellow-400 font-bold">Max I&Delta;n 100&nbsp;mA</span>
+            </div>
+            <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
+              <span className="text-white">Maximum Ra up to 1667&nbsp;&Omega;</span>
+              <span className="text-yellow-400 font-bold">Max I&Delta;n 30&nbsp;mA</span>
+            </div>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            Source: BS 7671:2018+A4:2026, Reg 531.3.5.3.2, Table 53.1
+          </p>
         </div>
       </>
     ),
@@ -377,9 +435,13 @@ const sections = [
         </div>
         <p>
           In addition to purpose-built electrodes, BS 7671 also recognises the use of structural
-          metalwork (such as building foundations), metallic water pipes (where the water company
-          permits), and the lead sheath of underground cables as supplementary earth electrodes.
-          However, these should not be relied upon as the sole means of earthing.
+          metalwork (such as building foundations) and the lead sheath of underground cables as
+          supplementary earth electrodes. Note that Regulation 542.2.6 of BS 7671 imposes an
+          outright prohibition: the metallic pipe of a water utility supply shall not be used as an
+          earth electrode under any circumstances. Other internal metallic water pipework may only
+          be used as an earth electrode where precautions against its removal have been taken and
+          its suitability has been formally considered — and the water authority must be consulted
+          beforehand.
         </p>
       </>
     ),
@@ -499,6 +561,24 @@ const sections = [
             </li>
           </ol>
         </div>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">Test Under Worst-Case Conditions</h4>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671 Regulation 531.3.5.3.2 requires that RCD selection for TT systems accounts
+                for the <strong>maximum seasonal Ra</strong>, including soil drying and freezing.
+                Wherever possible, earth electrode resistance should be measured after a prolonged
+                dry period (late summer) to capture the worst-case value. If testing during wet
+                conditions, note the soil conditions on the certificate and apply a seasonal
+                uprating — a reading that appears acceptable in winter may exceed the limit during a
+                dry summer. A common site failure is measuring in favourable wet conditions without
+                recording that the reading is not worst-case.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           Most modern{' '}
           <SEOInternalLink href="/guides/multifunction-tester-guide">
@@ -521,6 +601,18 @@ const sections = [
           (EIC) or the electrical installation condition report (EICR) in the section for supply
           characteristics and earthing arrangements.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-yellow-400 mb-2">Legal Mandate to Measure and Record RA</h4>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671 Regulation 643.7.3 (Part 6 — Inspection and Testing) requires that where the
+            earthing system incorporates an earth electrode, the electrode resistance to Earth (RA)
+            shall be measured as part of initial verification. This is not optional — it is a
+            normative test requirement for TT installations. GN3 Regulation 5.9 and OSG Regulation
+            7.28 further require that the EICR records details of the installation earth electrode
+            (type, location, and measured RA) including any relevant soil conditions at the time of
+            test.
+          </p>
+        </div>
         <p>For TT installations, the following information should be recorded:</p>
         <ul className="space-y-2 my-4">
           <li className="flex items-start gap-3">

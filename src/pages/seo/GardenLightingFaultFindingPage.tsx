@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'All outdoor lighting circuits in UK gardens must be protected by a 30mA RCD under BS 7671 Regulation 411.3.3. If your garden lights are on a circuit without RCD protection, this is a C2 (potentially dangerous) finding that must be rectified.',
+  'Hard-wired garden lighting circuits in domestic premises must be protected by a 30mA RCD under BS 7671 Regulation 411.3.4 (A4:2026), which requires additional RCD protection for all AC final circuits supplying luminaires in domestic properties. Regulation 411.3.3 separately mandates 30mA RCD protection for socket-outlets rated up to 32A. If your garden lights are on a circuit without RCD protection, this is a C2 (potentially dangerous) finding that must be rectified.',
   'Garden lighting cables buried underground must comply with BS 7671 wiring regulations — either armoured cable (SWA) or cables in protective conduit at sufficient depth, with cable protection warning tape above.',
   'IP (Ingress Protection) ratings indicate how well a light fitting is protected against water and dust. Garden luminaires should be rated at minimum IP44 (splash-proof); fittings exposed to heavy rain or immersion require IP65 or higher.',
   'Low-voltage garden lighting systems (typically 12V) use a transformer to step down the mains voltage. Transformer failure is a common and easily replaced fault — most low-voltage garden lighting sets use plug-in or hard-wired transformers costing £20 to £80.',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'Do garden lights need RCD protection?',
     answer:
-      'Yes. Under BS 7671 Regulation 411.3.3, all circuits supplying socket outlets rated up to 32A and all circuits in gardens and outdoor areas must be protected by a 30mA RCD. This is not optional — it is a legal requirement under the wiring regulations and is also a condition of Part P Building Regulations compliance. If your garden lighting circuit does not have RCD protection, it is a potentially dangerous (C2) fault that should be rectified by a qualified electrician.',
+      'Yes. BS 7671:2018+A4:2026 requires 30mA RCD protection on garden lighting circuits under two regulations: Regulation 411.3.4 mandates additional RCD protection (IΔn not exceeding 30mA) for all AC final circuits supplying luminaires in domestic premises — this covers hard-wired garden lighting circuits directly. Regulation 411.3.3 separately requires 30mA RCD protection for socket-outlets rated up to 32A, covering outdoor sockets that feed plug-in garden lighting. This is not optional — it is a requirement under the wiring regulations and is also a condition of Part P Building Regulations compliance. If your garden lighting circuit does not have RCD protection, it is a potentially dangerous (C2) finding that should be rectified by a qualified electrician.',
   },
   {
     question: 'What IP rating do garden lights need?',
@@ -71,9 +71,9 @@ const faqs = [
       'A slight hum from a magnetic (toroidal) transformer is normal. A loud buzzing or vibrating hum indicates the transformer is overloaded (too many lamps connected), a lamp has partially failed causing high current draw, or the transformer is failing. Check the total wattage of connected lamps against the transformer rating. If the transformer is overloaded, reduce the number of lamps or upgrade to a higher-rated transformer.',
   },
   {
-    question: 'How deep should garden lighting cables be buried?',
+    question: 'How deep do garden lighting cables need to be buried?',
     answer:
-      'Under BS 7671 and BS 8666, buried cables in gardens must be at a depth that protects against damage. For armoured cables (SWA) in gardens, the minimum depth is 0.5 metres (500mm). For cables in conduit, the minimum is 0.45 metres (450mm). Shallower burial is permitted in areas protected from excavation (under paving or concrete), but cable protection warning tape must always be laid above buried cables at a depth of approximately 150mm to 200mm above the cable to warn future excavators.',
+      'Under BS 7671 (Regulation 522.8.10), buried cables in gardens must be installed at sufficient depth to avoid foreseeable damage from ground disturbance. BS 7671 does not prescribe a single fixed figure for all situations — the required depth depends on the type of mechanical protection used and the assessed risk of excavation. Unprotected cables require greater depth than cables within armoured sheaths (SWA) or protective conduit, which offer additional mechanical protection and may permit shallower installation where the local risk is assessed as acceptable. Cable route records (sketch or photograph) should always be provided to the customer to prevent future accidental damage.',
   },
   {
     question: 'What should I do if a garden light fitting fills with water?',
@@ -185,7 +185,8 @@ const sections = [
     content: (
       <>
         <p>
-          Residual Current Device (RCD) protection is mandatory for all outdoor circuits under BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). This requirement exists because
+          Residual Current Device (RCD) protection is mandatory for all outdoor circuits under BS
+          7671:2018+A4:2026 (the 18th Edition Wiring Regulations). This requirement exists because
           outdoor environments dramatically increase the risk of electric shock.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -193,10 +194,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.3</strong> — requires RCD protection with a rated residual
-                operating current (IΔn) not exceeding 30mA for all socket circuits rated up to 32A
-                and for all circuits in outdoor locations. This applies to garden lighting circuits
-                whether they are hard-wired or socket-fed.
+                <strong>Regulation 411.3.4 (A4:2026)</strong> — within domestic premises, requires
+                additional protection by an RCD with a rated residual operating current (IΔn) not
+                exceeding 30mA for all AC final circuits supplying luminaires. This is the primary
+                regulation requiring 30mA RCD protection on hard-wired garden lighting circuits in
+                domestic properties.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 411.3.3</strong> — requires 30mA RCD protection for all
+                socket-outlets with a rated current not exceeding 32A (with limited exceptions for
+                non-dwellings only). This applies to outdoor socket circuits feeding plug-in garden
+                lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -222,9 +233,11 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing</strong> — outdoor RCDs should be tested monthly using the test
-                button on the device. The test button simulates a fault and the RCD should trip
-                within 40 milliseconds. If the RCD does not trip when the test button is pressed, it
-                has failed and must be replaced immediately.
+                button on the device. The test button verifies the mechanical trip mechanism: the
+                RCD should trip promptly when the button is pressed with the circuit energised. If
+                it does not trip at all, the device has failed and must be replaced immediately. The
+                test button alone does not measure trip time or operating current; use a calibrated
+                RCD tester for formal periodic verification.
               </span>
             </li>
           </ul>
@@ -580,7 +593,11 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>30mA RCD protection on the outdoor circuit (Regulation 411.3.3)</span>
+              <span>
+                30mA RCD additional protection on hard-wired luminaire circuits in domestic premises
+                (Regulation 411.3.4, A4:2026) and on socket-outlet circuits rated up to 32A
+                (Regulation 411.3.3)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
@@ -589,15 +606,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                Underground cable at correct depth — SWA or cable in protective conduit with warning
-                tape above
+                Underground cable at sufficient depth to avoid foreseeable ground disturbance
+                (Regulation 522.8.10) — SWA or cable in protective conduit, with cable route records
+                provided to the customer
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                Cable route records provided to customer (sketch or photograph showing cable routes)
-                to prevent future accidental damage
+                Section 714 (Outdoor Lighting Installations) compliance — A4:2026 revised Section
+                714 with updated automatic disconnection requirements and additional protection
+                measures for outdoor lighting installations. Verify disconnection criteria against
+                the amended Section 714 alongside Regulations 411.3.3 and 411.3.4
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                AFDD consideration (Regulation 421.1.7, A4:2026) — Regulation 421.1.7 recommends the
+                installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed
+                installation to mitigate fire risk from arc fault currents. When installing a new
+                hard-wired outdoor lighting circuit, assess whether an AFDD is appropriate
               </span>
             </li>
           </ul>

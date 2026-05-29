@@ -135,7 +135,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -260,12 +260,12 @@ export default function VoltageDropCalculatorPage() {
               lower resistance than aluminium for the same cross-sectional area, and larger cables
               have lower resistance than smaller ones. This is why increasing the cable size is one
               of the primary methods of reducing voltage drop. Use the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               alongside this tool to ensure the selected cable meets both current-carrying capacity
               and voltage drop requirements. The{' '}
-              <SEOInternalLink href="/trunking-fill-calculator">
+              <SEOInternalLink href="/tools/trunking-fill-calculator">
                 trunking fill calculator
               </SEOInternalLink>{' '}
               helps plan containment for the sized cables.
@@ -695,14 +695,12 @@ export default function VoltageDropCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -710,12 +708,24 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">Voltage Drop Limits BS 7671</SEOInternalLink>
-            <SEOInternalLink href="/guides/high-voltage-electrical-work-uk">High Voltage Electrical Work UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/voltage-too-high-or-low">Voltage Too High or Too Low</SEOInternalLink>
-            <SEOInternalLink href="/tools/cable-volt-drop-three-phase">Three Phase Voltage Drop Calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/prosumer-low-voltage-electrical-installation">/guides/prosumer-low-voltage-electrical-installation</SEOInternalLink>
-            <SEOInternalLink href="/guides/reduced-low-voltage-110v-cte-site-supplies">/guides/reduced-low-voltage-110v-cte-site-supplies</SEOInternalLink>
+            <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
+              Voltage Drop Limits BS 7671
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/high-voltage-electrical-work-uk">
+              High Voltage Electrical Work UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/voltage-too-high-or-low">
+              Voltage Too High or Too Low
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-volt-drop-three-phase">
+              Three Phase Voltage Drop Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/prosumer-low-voltage-electrical-installation">
+              /guides/prosumer-low-voltage-electrical-installation
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/reduced-low-voltage-110v-cte-site-supplies">
+              /guides/reduced-low-voltage-110v-cte-site-supplies
+            </SEOInternalLink>
           </div>
         </div>
       </section>

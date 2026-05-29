@@ -36,7 +36,7 @@ const keyTakeaways = [
   'Common C2 observations include missing CPCs, absent RCD protection where required, damaged consumer unit enclosures, and lack of main protective bonding to services.',
   'Common C3 observations include absence of SPD protection, old wiring colours not re-identified, and lack of circuit charts at the distribution board.',
   'Elec-Mate has the complete Schedule of Inspections built into the EICR form matching BS 7671 Appendix 6 — tick items as you walk the installation, and any unticked items are flagged before you can complete the certificate.',
-  'Typical EICR cost in the UK (2026): £135–£500 per test — £248 average in the North West / Yorkshire, £261 in the West Midlands, £289 in Scotland, £344 in London. Standard domestic test runs 2.5 hours; complex commercial 4+ hours.',
+  'A4:2026 introduced new requirements relevant to domestic EICRs: Reg 411.3.4 mandates 30 mA RCD protection for AC lighting circuits in domestic premises; Reg 421.1.7 recommends AFDDs on AC final circuits to mitigate arc-fault fire risk. Both are codeable observations on a domestic EICR.',
 ];
 
 const faqs = [
@@ -59,12 +59,12 @@ const faqs = [
   {
     question: 'What are the most common C2 observations found during visual inspection?',
     answer:
-      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2; incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
+      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.1 requires exposed-conductive-parts to be connected to a protective conductor; Regulation 544.11 governs bonding conductor sizing); absence of 30 mA RCD protection on domestic lighting circuits as now required by Regulation 411.3.4 (A4:2026); incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
   },
   {
     question: 'How do I record an unsatisfactory item on the schedule of inspections?',
     answer:
-      'When you find an item on the schedule of inspections that is unsatisfactory, you should mark the item with a cross on the schedule. You must then record the deficiency as an observation in the observations section of the EICR, with a description of the issue, its location, and the appropriate classification code (C1, C2, C3, or FI). The description should be specific enough that a different electrician could locate and rectify the issue from your description alone. For example, rather than writing "bonding missing," write "Main protective bonding to incoming water service absent at point of entry, utility cupboard under stairs — Regulation 411.3.1.2." Include the relevant BS 7671 regulation reference where applicable. The classification code should reflect the severity of the risk: C1 for immediate danger, C2 for potentially dangerous conditions, C3 for improvements recommended, or FI if further investigation is needed to determine the classification.',
+      'When you find an item on the schedule of inspections that is unsatisfactory, you should mark the item with a cross on the schedule. You must then record the deficiency as an observation in the observations section of the EICR, with a description of the issue, its location, and the appropriate classification code (C1, C2, C3, or FI). The description should be specific enough that a different electrician could locate and rectify the issue from your description alone. For example, rather than writing "bonding missing," write "Main protective bonding to incoming water service absent at point of entry, utility cupboard under stairs — Regulation 411.3.1.1 / 544.11." Include the relevant BS 7671 regulation reference where applicable. The classification code should reflect the severity of the risk: C1 for immediate danger, C2 for potentially dangerous conditions, C3 for improvements recommended, or FI if further investigation is needed to determine the classification.',
   },
   {
     question: 'Can I use the Elec-Mate app for the schedule of inspections on site?',
@@ -155,7 +155,9 @@ const sections = [
               <span>
                 <strong>Circuit identification:</strong> Are all circuits clearly identified with a
                 circuit chart or schedule? Does the chart correspond to the actual circuit
-                arrangement? (Regulation 514.9.1)
+                arrangement? (Regulation 514.9.1 — note: A4:2026 introduced an exception for certain
+                domestic premises; check applicability before coding absent charts as C3 in domestic
+                installations)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -176,8 +178,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
+                <strong>AFDDs (arc fault detection devices):</strong> Regulation 421.1.7 (A4:2026)
+                recommends AFDDs on AC final circuits of a fixed installation to mitigate fire risk
+                from arc fault currents. Absence is typically coded C3 on new or rewired domestic
+                installations. Note the regulation is recommendatory (not mandatory).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
                 <strong>RCD quarterly test notice:</strong> Is the notice advising the user to test
-                the RCD quarterly present? (Regulation 514.12)
+                the RCD quarterly present? (Regulation 514.12 — note: A4:2026 introduced an
+                exception for domestic premises in certain situations; verify whether the exception
+                applies before coding absence as C3 in a domestic installation)
               </span>
             </li>
           </ul>
@@ -186,7 +199,7 @@ const sections = [
           Common C2 observations in this section include:{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           with a combustible (plastic) enclosure in a domestic premises where Regulation 421.1.201
-          requires non-combustible enclosure (applicable since 1 January 2016), missing or damaged
+          requires a non-combustible (or non-combustible-enclosed) enclosure, missing or damaged
           covers exposing live busbars, and absence of circuit identification.
         </p>
       </>
@@ -332,9 +345,11 @@ const sections = [
               <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding:</strong> Are main protective bonding conductors
-                connected to incoming water, gas, oil, and other metallic services as required by
-                Regulation 411.3.1.2? Check at the point of entry of each service. Verify conductor
-                size (minimum 10mm2 for PME, 6mm2 for TN-S, varies for TT).
+                connected to incoming water, gas, oil, and other metallic services? Regulation
+                411.3.1.1 requires exposed-conductive-parts to be connected to a protective
+                conductor; Regulation 544.11 governs bonding conductor sizing — under PME (TN-C-S),
+                Table 54.8 sets the minimum at 10 mm² copper where the PEN conductor is 35 mm² or
+                less. Check at the point of entry of each service.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,9 +363,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection:</strong> Are RCDs (30mA) fitted to circuits that require
-                additional protection? Socket outlet circuits up to 32A, bathroom circuits (Section
-                701), outdoor circuits, and circuits supplying mobile equipment used outdoors.
+                <strong>RCD protection — socket outlets and special locations:</strong> Are 30 mA
+                RCDs fitted to circuits that require additional protection? This includes socket
+                outlet circuits, bathroom circuits (Section 701), outdoor circuits, and circuits
+                supplying mobile equipment used outdoors.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>RCD protection — domestic lighting circuits (A4:2026):</strong> Regulation
+                411.3.4 requires that, within domestic (household) premises, AC final circuits
+                supplying luminaires shall have additional protection by an RCD with a rated
+                residual operating current not exceeding 30 mA. Absence of RCD protection on
+                domestic lighting circuits is a codeable C2 observation introduced by A4:2026.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -464,7 +490,8 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Warning and caution labels:</strong> Are all required warning labels
-                present? This includes RCD quarterly test notices (Regulation 514.12), dual supply
+                present? This includes RCD quarterly test notices (Regulation 514.12 — A4:2026
+                introduced an exception for domestic premises in certain situations), dual supply
                 warnings (where applicable), voltage warnings, and labels indicating the type of
                 earthing system.
               </span>
@@ -474,7 +501,8 @@ const sections = [
               <span>
                 <strong>Diagrams and documentation:</strong> Are circuit diagrams, schedules, and
                 as-installed drawings available and up to date? (Regulation 514.9.1 requires that a
-                durable circuit chart or schedule is provided at or near each distribution board.)
+                durable circuit chart or schedule is provided at or near each distribution board —
+                A4:2026 introduced an exception for certain domestic premises.)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,8 +525,10 @@ const sections = [
               <span>
                 <strong>Additional protection requirements:</strong> Where the current edition of BS
                 7671 requires protection that was not required when the installation was originally
-                installed (such as RCD protection for socket outlets or AFDDs), has it been assessed
-                and recorded?
+                installed (such as RCD protection for socket outlet circuits, 30 mA RCD protection
+                for domestic lighting circuits per Reg 411.3.4 A4:2026, or AFDDs per Reg 421.1.7
+                A4:2026), has it been assessed and recorded? Absence of AFDDs on new or rewired
+                domestic installations is typically coded C3 (Reg 421.1.7 is recommendatory).
               </span>
             </li>
           </ul>
@@ -521,8 +551,12 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-2">Common C2 Observations</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>Missing CPC on one or more circuits (older installations)</li>
-              <li>Absent main protective bonding to water, gas, or oil services</li>
+              <li>
+                Absent main protective bonding to water, gas, or oil services (Reg 411.3.1.1 /
+                544.11)
+              </li>
               <li>No RCD protection on socket outlet circuits up to 32A</li>
+              <li>No 30 mA RCD on domestic lighting circuits (Reg 411.3.4, A4:2026)</li>
               <li>Damaged consumer unit enclosure with exposed live parts</li>
               <li>Inadequate earthing conductor (undersized or damaged)</li>
               <li>Reversed polarity at socket outlets or light fittings</li>
@@ -532,6 +566,10 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-2">Common C3 Observations</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
+              <li>
+                Absence of AFDD on new/rewired domestic installation (Reg 421.1.7, A4:2026 —
+                recommendatory)
+              </li>
               <li>Absence of SPD protection (Regulation 443 requirements)</li>
               <li>Old wiring colours (red/black) not re-identified at the distribution board</li>
               <li>No circuit chart or schedule at the distribution board</li>

@@ -90,14 +90,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Interactive voltage drop calculator for BS 7671 compliant cable sizing.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Calculate cable size with correction factors, voltage drop, and Zs verification.',
     icon: Zap,
@@ -600,11 +600,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Built-in Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   , and other tools to check your manual calculations and understand how the numbers

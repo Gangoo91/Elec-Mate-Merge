@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'GS 38 is an HSE Guidance Note that specifies the requirements for electrical test equipment used by electricians when proving circuits dead. It is the accepted industry standard for safe testing.',
+  'GS 38 is an HSE Guidance Note titled "Electrical test equipment for use on low voltage electrical systems." It specifies the requirements for electrical test equipment used when proving circuits dead. It is the accepted industry standard for safe testing.',
   'A two-pole voltage indicator (not a multimeter) is strongly recommended by GS 38 for proving dead, as it has fewer failure modes and does not rely on batteries or correct range selection.',
   'Test leads must be fused with a maximum 500 mA HBC fuse as close as possible to the probe tip, and probe tips must be spring-loaded with no more than 4 mm of exposed metal.',
   'The prove-test-prove procedure is mandatory: prove the voltage indicator works on a known live source, test the circuit being worked on, then prove the indicator still works afterwards.',
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Is GS 38 a legal requirement?',
     answer:
-      'GS 38 is a Guidance Note published by the Health and Safety Executive (HSE), not a regulation. However, it represents the accepted industry standard for electrical test equipment and the proving dead procedure. While compliance with GS 38 is not a statutory legal requirement in itself, the Electricity at Work Regulations 1989 (Regulation 4) require all work activities involving electrical systems to be carried out in a manner that prevents danger. Using test equipment that does not meet GS 38 standards would be considered a failure to meet the duty to prevent danger. In practice, the HSE, competent person schemes (NICEIC, NAPIT, ELECSA), training providers, and the courts all treat GS 38 compliance as the minimum acceptable standard for test equipment.',
+      'GS 38 is a Guidance Note published by the Health and Safety Executive (HSE), not a regulation. However, it represents the accepted industry standard for electrical test equipment and the proving dead procedure. While compliance with GS 38 is not a statutory legal requirement in itself, the Electricity at Work Regulations 1989 (EAWR) create two relevant duties: Regulation 4 requires all work activities involving electrical systems to be carried out in a manner that prevents danger — using non-compliant test equipment would be a failure of this duty. Regulation 16 requires persons working on or near live electrical equipment to be competent to prevent danger; an incompetent person using sub-standard test leads therefore creates personal criminal liability, not merely a breach of guidance. In practice, the HSE, competent person schemes (NICEIC, NAPIT, ELECSA), training providers, and the courts all treat GS 38 compliance as the minimum acceptable standard for test equipment.',
   },
   {
     question: 'Can I use a multimeter instead of a voltage indicator for proving dead?',
@@ -151,9 +151,9 @@ const sections = [
       <>
         <p>
           GS 38 is a Guidance Note published by the Health and Safety Executive (HSE) titled
-          "Electrical test equipment for use by electricians." It specifies the requirements for
-          test probes, test leads, voltage indicators, and proving units used when proving circuits
-          dead before work begins.
+          "Electrical test equipment for use on low voltage electrical systems." It specifies the
+          requirements for test probes, test leads, voltage indicators, and proving units used when
+          proving circuits dead before work begins.
         </p>
         <p>
           The guidance was introduced because electricians were being injured and killed by electric
@@ -404,6 +404,25 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+                <span className="text-blue-400 font-bold text-sm">1b</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-white mb-1">SECURE — Lock Off the Isolation Point</h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Before approaching the load, secure the isolation device against inadvertent
+                  re-energisation. Fit a personal padlock to the isolating device and apply a
+                  warning label or tag at the point of isolation. Where you are not in full control
+                  of all isolation points, every point shall be locked off (OSG 12.5). BS 7671
+                  Regulation 462.1 requires that isolation provisions allow the installation to be
+                  worked on safely — securing against re-connection is integral to satisfying this
+                  requirement.
+                </p>
+              </div>
+            </div>
+          </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
@@ -412,9 +431,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">TEST — Test the Circuit</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Test the circuit that has been isolated. Test between all combinations: line to
-                  neutral, line to earth, and neutral to earth. If the indicator shows no voltage on
-                  any combination, the circuit appears dead. If voltage is detected, the circuit is
+                  Test at the <strong>load side</strong> of the isolation device — not the supply
+                  side. This is a critical spatial requirement: testing the supply side of the
+                  isolator will always read live and give a false sense of security. Test between
+                  all combinations at the load side and at the point of work: line to neutral, line
+                  to earth, and neutral to earth. If the indicator shows no voltage on any
+                  combination, the circuit appears dead. If voltage is detected, the circuit is
                   still live — do not proceed.
                 </p>
               </div>
@@ -434,6 +456,42 @@ const sections = [
                   replace the indicator and repeat the entire procedure.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">Multiple-Supply Installations</h4>
+              <p className="text-white text-sm leading-relaxed">
+                Isolating the incoming mains supply may not render all conductors dead. Modern
+                installations increasingly include solar PV inverters, battery storage systems, EV
+                chargers, or standby generators that can back-feed conductors even with the main
+                switch open. GN3 Regulation 2.9 requires a multiple-supplies warning notice at
+                distribution boards where alternative voltage sources are present. BS 7671
+                Regulation 462.1 requires that isolation provisions are provided for <em>each</em>{' '}
+                source of supply. Always check for an alternative-supply notice before commencing
+                work, and prove dead at the actual point of work — not just at the board.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Semiconductor Devices Cannot Be Used to Isolate
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671 Regulation 537.2.2 prohibits using semiconductor devices as the means of
+                isolation. Variable speed drives (VSDs), soft starters, solid state relays, AFDD
+                electronics, and smart switching modules are all semiconductor-based — none of them
+                constitute a safe means of isolation, even when in an off state. A mechanical
+                isolator (fused isolator, switch-disconnector, or MCB with visible contacts) must
+                always be used as the isolation point before proving dead.
+              </p>
             </div>
           </div>
         </div>

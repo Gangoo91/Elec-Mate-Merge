@@ -45,6 +45,7 @@ const keyTakeaways = [
   'NICEIC assessors review a sample of recent certificates during scheme visits — consistent quality across all certificates is essential, not just the ones you expect them to see.',
   'Digital certificates submitted through the NICEIC portal or produced by approved software like Elec-Mate are fully accepted and often preferred for their legibility and completeness.',
   'Elec-Mate automatically validates required fields and flags missing data before you finalise — reducing the risk of rejection at assessment.',
+  'BS 7671:2018+A4:2026 amended the Appendix 6 model forms to add mandatory SPD and AFDD fields on both EICs and EICRs — contractors using pre-A4 paper pads or outdated software will have missing fields and face rejection.',
 ];
 
 const faqs = [
@@ -56,7 +57,7 @@ const faqs = [
   {
     question: 'How does NICEIC assess my certificates during a scheme visit?',
     answer:
-      'During a scheme assessment visit, the NICEIC assessor will review a sample of your recent certificates. They check that all mandatory fields are completed, test results are within acceptable limits, observation codes are correctly classified (C1, C2, C3, FI), the schedule of inspections is properly completed (for EICRs), designer and installer declarations are present (for EICs), and the certificate layout follows the BS 7671 model forms. The assessor may also cross-reference your certificates with the jobs notified through the NICEIC portal to ensure all notifiable work has been certificated. Poor certificate quality is one of the most common reasons for concerns raised at assessment visits.',
+      'During a scheme assessment visit, the NICEIC assessor will review a sample of your recent certificates. They check that all mandatory fields are completed, test results are within acceptable limits, observation codes are correctly classified (C1, C2, C3, FI), the schedule of inspections is properly completed (for EICRs), the correct declaration section is present and signed (for EICs — single-signature where one person covered all roles, multiple-signature where responsibilities were split), and the certificate layout follows the BS 7671 model forms. The assessor may also cross-reference your certificates with the jobs notified through the NICEIC portal to ensure all notifiable work has been certificated. Poor certificate quality is one of the most common reasons for concerns raised at assessment visits.',
   },
   {
     question: 'What happens if NICEIC rejects one of my certificates?',
@@ -169,9 +170,7 @@ const sections = [
           Every electrical certificate — whether an{' '}
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, or{' '}
-          <SEOInternalLink href="/minor-works-certificate">
-            Minor Works Certificate
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           — has mandatory fields that must be completed. NICEIC assessors check for the following on
           every certificate:
         </p>
@@ -255,7 +254,13 @@ const sections = [
                 prospective fault current been measured (not estimated)? Are observation codes
                 correctly classified — is a C2 genuinely "potentially dangerous" or should it be a
                 C3? The assessor is an experienced electrician and will spot results that do not add
-                up.
+                up. One commonly missed point: measured Zs values are taken at ambient (site)
+                temperature, not at the conductor&apos;s maximum operating temperature. BS 7671 Reg
+                411.4.201 and GN3 Reg 3.18 require a temperature correction (using the Appendix 3
+                procedure and Table A7 correction factors) before comparing a measured Zs to the
+                tabulated maximum permitted values. Recording a raw measured Zs without confirming
+                it satisfies the corrected acceptance criterion is a common accuracy failure that
+                assessors flag.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -306,8 +311,11 @@ const sections = [
               <span>
                 <strong>Missing or incomplete test results.</strong> The most frequent issue. Earth
                 fault loop impedance (Zs) values left blank, insulation resistance not recorded for
-                every circuit, RCD operating times not tested at both 1x and 5x rated current, or
-                continuity values missing. Every circuit must have a complete set of test results.
+                every circuit, RCD operating times not recorded, or continuity values missing. Every
+                circuit must have a complete set of test results. Note: BS 7671 requires RCD
+                operating times to be verified at 1&times; rated tripping current (I&#x394;n) only —
+                testing at 5&times; I&#x394;n is an optional diagnostic test under GN3 Reg 5.6, not
+                a mandatory verification requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,9 +343,13 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing designer/installer declarations.</strong> For EICs, the designer
-                declaration and installer declaration are separate sections that both must be
-                completed. If the same person is both designer and installer (common in domestic
-                work), both declarations still need to be signed.
+                declaration and installer declaration are separate sections. When responsibilities
+                are split between different people, both declarations must be completed by the
+                respective individuals. Where the same person carries out design, construction,
+                inspection and testing, GN3 Reg 2.5 permits the use of the single-signature
+                declaration (Appendix 6, item (c)) in place of the multiple-signature section — but
+                that single-signature section must still be fully completed and signed. Leaving any
+                declaration section blank is the most common EIC omission flagged by NICEIC.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -388,6 +400,18 @@ const sections = [
                 Certificates produced on outdated forms (pre-18th Edition) will be flagged. Digital
                 apps like Elec-Mate are updated when the forms change, so you always use the current
                 version.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>A4:2026 Appendix 6 update — SPD and AFDD fields are now mandatory.</strong>{' '}
+                BS 7671:2018+A4:2026 (Reg 722.826.3.201) amended the Appendix 6 model forms for both
+                EICs and EICRs to include dedicated fields for recording surge protective devices
+                (SPDs) and arc fault detection devices (AFDDs) where installed. Contractors still
+                using pre-A4 paper pads or software that has not been updated will have these fields
+                missing — this is precisely the "wrong form version" reason that leads to rejection.
+                Check that your software supplier has applied the A4:2026 form update.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -458,6 +482,19 @@ const sections = [
                 observations and ageing wiring may warrant a 3-year interval.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>FI (Further Investigation) must be used sparingly.</strong> Per GN3 Reg
+                3.11, the FI code is permitted only <em>exceptionally</em> — where a hazard is
+                suspected but cannot be confirmed without further investigation (for example, a
+                concealed section of wiring that cannot be accessed). Only one classification code
+                may be recorded per observation. An FI code alone does not make the overall
+                assessment Unsatisfactory — that outcome is triggered by C1 or C2 observations.
+                NICEIC assessors scrutinise FI misuse heavily: if FI is used routinely in place of
+                C1, C2, or C3, expect a concern at assessment.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -486,10 +523,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC: Missing designer declaration.</strong> The EIC has separate sections
-                for the designer and the installer. Even when the same person fulfils both roles,
-                both declarations must be completed and signed. This is the single most common EIC
-                omission flagged by NICEIC.
+                <strong>EIC: Missing or incomplete declaration.</strong> The EIC has separate
+                sections for the designer and the installer. Where responsibilities are split, each
+                person must complete and sign their respective declaration. Where the same person
+                carries out all roles, GN3 Reg 2.5 requires the use of the single-signature
+                declaration in Appendix 6 — but that section must be fully completed and signed. An
+                unsigned or blank declaration section is the single most common EIC omission flagged
+                by NICEIC.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -524,6 +564,20 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">MEIWC and the EIC-as-alternative rule</h4>
+          <p className="text-white text-sm leading-relaxed">
+            Appendix 6 of BS 7671 also contains the Model Electrical Installation Works Certificate
+            (MEIWC) — a single-signature alternative to the standard EIC for use where a single
+            individual takes full responsibility for the work (GN3 Reg 2.5). Separately, BS 7671 Reg
+            120.3 confirms that a single EIC may be used to certify multiple additions, alterations,
+            or remedial works to an existing installation that do not extend to new circuits — as an
+            alternative to issuing a separate Minor Works Certificate for each job. Using the
+            correct form type for the scope of work is a basic assessment check: issuing individual
+            Minor Works Certificates where a single EIC (or MEIWC) is more appropriate, or vice
+            versa, will be queried.
+          </p>
         </div>
       </>
     ),

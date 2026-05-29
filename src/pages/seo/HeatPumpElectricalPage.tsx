@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated circuit for any heat pump installation with full BS 7671 correction factors.',
@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate the total maximum demand of the property including the new heat pump load.',
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on long SWA runs to outdoor heat pump units.',
     icon: Gauge,
@@ -209,7 +209,7 @@ const sections = [
           the specific model. Some heat pumps are available in both single-phase and three-phase
           variants. For borderline cases (around 12-14kW thermal output), check the maximum
           electrical input current and compare it with the available supply capacity using a{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             maximum demand calculation
           </SEOInternalLink>
           .
@@ -562,11 +562,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Circuit Design Tools</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   and{' '}
-                  <SEOInternalLink href="/max-demand-calculator">
+                  <SEOInternalLink href="/tools/max-demand-calculator">
                     max demand calculator
                   </SEOInternalLink>{' '}
                   to design the heat pump circuit. Check cable size, voltage drop, and supply

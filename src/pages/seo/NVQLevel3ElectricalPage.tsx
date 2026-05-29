@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'How much does the NVQ Level 3 cost?',
     answer:
-      'Total costs vary between approximately £800 and £2,500 depending on the training provider, your location, and the number of site visits required by your assessor. Some providers offer all-inclusive packages covering registration fees, assessment visits, and the final portfolio verification. Others charge per visit. Government funding may be available for eligible candidates through Adult Skills funding (for those aged 24 or over in England). Apprentices completing their programme through a training provider will typically have their NVQ funded as part of the apprenticeship package.',
+      'Total costs vary between approximately £800 and £2,500 depending on the training provider, your location, and the number of site visits required by your assessor. Some providers offer all-inclusive packages covering registration fees, assessment visits, and the final portfolio verification. Others charge per visit. Government funding may be available for eligible candidates through Adult Skills funding (for those aged 19 or over in England). The level of funding — co-funded or fully funded — varies by age, employment status, and household income; check with the training centre whether you qualify before paying full price. Apprentices completing their programme through a training provider will typically have their NVQ funded as part of the apprenticeship package.',
   },
 ];
 
@@ -173,10 +173,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 knowledge required</strong> — while there is no written exam,
-                candidates are expected to demonstrate working knowledge of BS 7671 (the IET Wiring
-                Regulations) during observations and assessor questioning. Regular study of the 18th
-                Edition Wiring Regulations is essential.
+                <strong>BS 7671:2018+A4:2026 knowledge required</strong> — while there is no written
+                exam, candidates are expected to demonstrate working knowledge of BS 7671 (the IET
+                Wiring Regulations, 18th Edition) during observations and assessor questioning. The
+                current edition is BS 7671:2018+A4:2026 — Amendment 4 was issued April 2026 and
+                introduced Regulation 421.1.7 recommending arc fault detection devices (AFDDs) in AC
+                final circuits. NVQ portfolios built now must evidence competence against A4
+                requirements. Study the consolidated A4:2026 text, not pre-amendment copies.
               </span>
             </li>
           </ul>
@@ -437,7 +440,9 @@ const sections = [
                 <strong>Preparation</strong> — practise your inspection and testing technique,
                 ensure you can complete test documentation quickly and accurately, and review common
                 fault-finding scenarios. The{' '}
-                <SEOInternalLink href="/guides/am2-assessment-preparation">AM2 preparation guide</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/am2-assessment-preparation">
+                  AM2 preparation guide
+                </SEOInternalLink>{' '}
                 covers the assessment in detail.
               </span>
             </li>
@@ -586,6 +591,25 @@ const sections = [
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written, itemised quotes and turn them into invoices in one tap.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="w-6 h-6 text-orange-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Part P and Competent Person Scheme Registration
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Under Building Regulations 2010 (Part P), certain electrical work in dwellings is
+                  notifiable — meaning it must either be reported to the local building control body
+                  or self-certified through a competent person scheme (such as NICEIC, NAPIT, or
+                  ELECSA). Registration with a competent person scheme is not optional: carrying out
+                  notifiable work without either notifying building control or being registered is a
+                  criminal offence. Your NVQ Level 3 and ECS Gold Card are the foundation evidence
+                  required by all major schemes when applying for registration.
                 </p>
               </div>
             </div>

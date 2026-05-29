@@ -54,7 +54,8 @@ export default function RCDTypesExplainedPage() {
         'Type AC detects only sinusoidal AC faults and is no longer suitable for most modern circuits. Type A (AC + pulsating DC) is now the standard for domestic and commercial installations under BS 7671 Regulation 531.3.3.',
         'Type B RCDs detect smooth DC faults and are required for EV chargers without built-in DC detection, three-phase VFDs, and some solar PV inverters. Significantly more expensive (£150-£300) than Type A (£25-£50).',
         'Type F RCDs protect against mixed-frequency faults from single-phase VFDs — used in heat pumps, inverter-driven air conditioning, and washing machines with variable-speed motors.',
-        '30mA RCDs provide personal protection against electric shock. 100mA and 300mA RCDs provide fire protection only and must not be used where personal protection is required.',
+        'A4:2026 Regulation 411.3.4 (NEW): 30mA RCD protection is now mandatory for ALL domestic AC lighting circuits — any new or rewired domestic lighting circuit requires an RCBO or 30mA RCD. Unprotected lighting circuits are an EICR defect.',
+        '30mA RCDs provide personal protection against electric shock. Regulation 411.3.3 applies to socket-outlets ≤32A; Regulation 411.3.4 (A4:2026) separately mandates 30mA protection for domestic luminaire circuits. 100mA and 300mA RCDs provide fire protection only.',
         'Elec-Mate EICR and EIC forms capture RCD type for every circuit. The board scanner reads RCD/RCBO labels from photos. Schedule of tests validates trip times against BS 7671 limits.',
       ]}
       sections={[
@@ -249,8 +250,8 @@ export default function RCDTypesExplainedPage() {
                   EV charger installations
                 </SEOInternalLink>{' '}
                 where the charger does not have built-in 6mA DC residual current monitoring. BS 7671
-                Regulation 722.531.3.101 requires that the RCD protecting an EV charging circuit
-                must be either:
+                Chapter 72 (Electric Vehicle Charging Installations) requires that the RCD
+                protecting an EV charging circuit must be either:
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
@@ -493,12 +494,25 @@ export default function RCDTypesExplainedPage() {
                   <h3 className="font-bold text-yellow-400 text-2xl mb-1">30mA</h3>
                   <h4 className="font-bold text-white mb-3">Personal Protection</h4>
                   <p className="text-white text-sm leading-relaxed">
-                    Provides additional protection against electric shock (BS 7671 Regulation
-                    411.3.3). The 30mA threshold is below the level that causes ventricular
-                    fibrillation in most adults (approximately 50mA for prolonged exposure).
-                    Required for socket outlets up to 32A, mobile equipment outdoors, cables in
-                    walls at less than 50mm depth, and EV charger circuits.
+                    Provides additional protection against electric shock. The 30mA threshold is
+                    below the level that causes ventricular fibrillation in most adults
+                    (approximately 50mA for prolonged exposure). Two separate A4:2026 regulations
+                    mandate 30mA protection:
                   </p>
+                  <ul className="mt-2 space-y-1 text-white text-sm leading-relaxed list-disc list-inside">
+                    <li>
+                      <strong className="text-yellow-400">Reg 411.3.3</strong> — socket-outlets with
+                      a rated current not exceeding 32A. Exception: in non-dwellings a documented
+                      risk assessment may permit omission; this exception does NOT apply to
+                      dwellings.
+                    </li>
+                    <li>
+                      <strong className="text-yellow-400">Reg 411.3.4 (A4:2026 — NEW)</strong> — all
+                      AC final circuits supplying luminaires within domestic (household) premises.
+                      No risk-assessment exception; this is a mandatory 'shall' requirement for
+                      every domestic lighting circuit.
+                    </li>
+                  </ul>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <h3 className="font-bold text-white text-2xl mb-1">100mA</h3>
@@ -521,12 +535,54 @@ export default function RCDTypesExplainedPage() {
                   </p>
                 </div>
               </div>
+              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-white mb-2">
+                      A4:2026 New Requirement — Domestic Lighting Circuits (Reg 411.3.4)
+                    </h4>
+                    <p className="text-white text-sm leading-relaxed">
+                      BS 7671:2018+A4:2026 Regulation 411.3.4 introduces a new mandatory
+                      requirement: within domestic (household) premises, additional protection by an
+                      RCD with a rated residual operating current not exceeding 30mA <em>shall</em>{' '}
+                      be provided for all AC final circuits supplying luminaires. This is distinct
+                      from Regulation 411.3.3 (socket-outlets) — there is no risk-assessment
+                      exception for lighting circuits in domestic premises.
+                    </p>
+                    <p className="text-white text-sm leading-relaxed mt-2">
+                      <strong className="text-yellow-400">Practical implication:</strong> Any new or
+                      rewired domestic lighting circuit requires an RCBO or a shared 30mA RCD.
+                      Existing domestic lighting circuits without 30mA RCD protection are an EICR
+                      defect against the current edition of BS 7671. This is the single most
+                      significant A4:2026 change affecting RCD specification on domestic
+                      installations.
+                    </p>
+                  </div>
+                </div>
+              </div>
               <p>
                 The golden rule: where BS 7671 requires 30mA additional protection, you cannot
                 substitute a higher-rated device. A 100mA RCD does not provide personal protection —
                 a person receiving a 100mA shock for the 300ms trip time of the RCD is at serious
                 risk of ventricular fibrillation.
               </p>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <h4 className="font-bold text-white mb-2">TT Systems — RCD as Primary ADS</h4>
+                <p className="text-white text-sm leading-relaxed">
+                  On TT earthing systems (common in rural properties, outbuildings, and older
+                  domestic installations), an RCD is not just additional protection — it is the
+                  primary means of automatic disconnection of supply (ADS). Because the earth fault
+                  loop impedance in a TT installation is dominated by the resistance of the earth
+                  electrode, it is typically too high for overcurrent devices (MCBs, fuses) to
+                  achieve the disconnection times required by BS 7671 Table 41.1. Per OSG Regulation
+                  3.76, RCDs shall be provided in TT systems since high earth fault loop impedance
+                  to earth electrodes often prevents achieving disconnection by overcurrent devices
+                  alone. A 30mA RCD on a TT system permits a maximum Zs of 1,667Ω (per BS 7671 Table
+                  41.5); a 100mA RCD reduces this to 500Ω. Confirm the earthing system before
+                  selecting RCD ratings on any installation.
+                </p>
+              </div>
             </>
           ),
         },
@@ -579,6 +635,25 @@ export default function RCDTypesExplainedPage() {
                 standard limits, potentially leading you to fail a device that is actually
                 performing correctly.
               </p>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <h4 className="font-bold text-white mb-2">
+                  GN3 Field Protocol — Recording RCD Trip Times
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  GN3 (Guidance Note 3: Inspection &amp; Testing) Regulation 2.32 requires that RCDs
+                  are tested at both 0% and 180% of rated residual operating current (I&#x394;n).
+                  The <strong className="text-yellow-400">longest trip time</strong> observed across
+                  both tests shall be recorded in{' '}
+                  <strong className="text-yellow-400">column 28</strong> of the Schedule of Test
+                  Results. Example: if the RCD trips in 80ms at 180% and 120ms at 0%, record 120ms.
+                </p>
+                <p className="text-white text-sm leading-relaxed mt-2">
+                  <strong className="text-yellow-400">Type B RCDs:</strong> GN3 Regulation 5.6 notes
+                  that carrying out the full suite of optional tests for a 30mA Type B RCD may
+                  require up to 12 trip operations. Plan the test sequence carefully to avoid
+                  exhausting mechanical operations during a single inspection.
+                </p>
+              </div>
               <SEOAppBridge
                 title="Schedule of Tests Validates RCD Trip Times"
                 description="Elec-Mate's schedule of test results validates every RCD trip time you enter against the correct BS 7671 limits — automatically distinguishing between…"
@@ -597,7 +672,7 @@ export default function RCDTypesExplainedPage() {
         {
           question: 'Do I need a Type B RCD for every EV charger installation?',
           answer:
-            'Not necessarily. BS 7671 Regulation 722.531.3.101 requires either a Type B RCD or a Type A RCD with additional 6mA DC residual current detection. Most modern domestic EV chargers (Zappi, Ohme, Pod Point, Easee, Wallbox, Tesla) include built-in DC residual current monitoring that disconnects the charger if the DC component exceeds 6mA. When the charger has this built-in protection, a standard Type A 30mA RCBO is sufficient — and at £25 to £50, it is dramatically cheaper than a Type B RCD at £150 to £300. Always check the charger manufacturer installation manual to confirm whether the charger includes DC detection. If it does, document this on the EIC and use a Type A RCBO. If it does not, a Type B RCD is mandatory.',
+            'Not necessarily. BS 7671 Chapter 72 (Electric Vehicle Charging Installations) requires either a Type B RCD or a Type A RCD with additional 6mA DC residual current detection. Most modern domestic EV chargers (Zappi, Ohme, Pod Point, Easee, Wallbox, Tesla) include built-in DC residual current monitoring that disconnects the charger if the DC component exceeds 6mA. When the charger has this built-in protection, a standard Type A 30mA RCBO is sufficient — and at £25 to £50, it is dramatically cheaper than a Type B RCD at £150 to £300. Always check the charger manufacturer installation manual to confirm whether the charger includes DC detection. If it does, document this on the EIC and use a Type A RCBO. If it does not, a Type B RCD is mandatory.',
         },
         {
           question: 'What RCD type does a heat pump circuit need?',

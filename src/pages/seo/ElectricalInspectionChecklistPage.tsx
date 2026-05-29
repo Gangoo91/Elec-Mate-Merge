@@ -46,6 +46,8 @@ const keyTakeaways = [
   'The consumer unit is the single most important item to inspect thoroughly: condition of enclosure, correct protective devices, labelling, adequate cable connections, signs of overheating, and compliance with current standards.',
   'Earthing and bonding defects are the most safety-critical findings -- missing or inadequate main bonding, deteriorated earth connections, and incorrect earthing arrangements can result in C1 (Danger Present) classifications.',
   'Every circuit and protective device must be correctly labelled and identified -- this is a regulatory requirement under BS 7671 and a common C3 observation on older installations.',
+  'BS 7671:2018+A4:2026 (Regulation 411.3.4) now requires 30mA RCD additional protection for all AC lighting circuits in domestic premises -- check that lighting circuits are RCD-protected when inspecting domestic consumer units.',
+  'BS 7671:2018+A4:2026 (Regulation 421.1.7) recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc faults -- absence of AFDDs on new or rewired domestic circuits is worth noting as a recommendation.',
   'Elec-Mate provides a structured digital inspection checklist that ensures nothing is missed, with AI-assisted observation code classification and automatic schedule of inspections generation.',
 ];
 
@@ -53,7 +55,7 @@ const faqs = [
   {
     question: 'What is the difference between inspection and testing?',
     answer:
-      'Inspection and testing are two distinct stages of the assessment process defined in BS 7671 Part 6. Inspection (Section 621) is a careful visual examination of the installation without the use of instruments -- looking at the condition, routing, and suitability of cables, the condition of accessories and equipment, the adequacy of earthing and bonding, labelling, and the general state of the installation. Testing (Section 622) uses calibrated instruments to measure electrical quantities: continuity, insulation resistance, earth fault loop impedance, RCD operation times, and others. Inspection must always be carried out before testing because visual defects can affect test results or make testing dangerous. For example, testing a circuit with visibly damaged insulation could cause a fault, and measuring Zs on a circuit with a loose earth connection gives a misleading result.',
+      'Inspection and testing are two distinct stages of the assessment process defined in BS 7671 Part 6, Chapter 62. Inspection covers a careful visual examination of the installation without the use of instruments -- looking at the condition, routing, and suitability of cables, the condition of accessories and equipment, the adequacy of earthing and bonding, labelling, and the general state of the installation. Testing (Regulations 622.x onward) uses calibrated instruments to measure electrical quantities: continuity, insulation resistance, earth fault loop impedance, RCD operation times, and others. Inspection must always be carried out before testing because visual defects can affect test results or make testing dangerous. For example, testing a circuit with visibly damaged insulation could cause a fault, and measuring Zs on a circuit with a loose earth connection gives a misleading result.',
   },
   {
     question: 'What items are on the Schedule of Inspections?',
@@ -68,7 +70,7 @@ const faqs = [
   {
     question: 'What are the most common inspection findings?',
     answer:
-      'The most frequently recorded observations during domestic electrical inspections are: lack of RCD protection on socket circuits (C2 -- Potentially Dangerous), missing or inadequate circuit identification and labelling (C3 -- Improvement Recommended), absence of main bonding to incoming services (C1 or C2 depending on the earthing arrangement), deteriorated or damaged cable insulation (C2 or C3 depending on severity), accessories with missing covers, cracked faceplates, or exposed terminals (C2), inadequate cable support and routing (C3), absence of fire stopping where cables pass through compartment walls or floors (C3 or C2), and overloaded socket outlets with adapters and extension leads (C3). The classification depends on the specific circumstances and the inspector must use professional judgement to determine the appropriate code.',
+      'The most frequently recorded observations during domestic electrical inspections are: lack of RCD protection on socket circuits (C2 -- Potentially Dangerous), absence of 30mA RCD protection on lighting circuits in domestic premises (C2 -- required by Regulation 411.3.4, introduced in BS 7671:2018+A4:2026), missing or inadequate circuit identification and labelling (C3 -- Improvement Recommended), absence of main bonding to incoming services (C1 or C2 depending on the earthing arrangement), deteriorated or damaged cable insulation (C2 or C3 depending on severity), accessories with missing covers, cracked faceplates, or exposed terminals (C2), inadequate cable support and routing (C3), absence of fire stopping where cables pass through compartment walls or floors (C3 or C2), and overloaded socket outlets with adapters and extension leads (C3). The classification depends on the specific circumstances and the inspector must use professional judgement to determine the appropriate code.',
   },
   {
     question: 'Do I inspect the whole installation or just the new work?',
@@ -152,7 +154,7 @@ const sections = [
         </p>
         <p>
           BS 7671 Section 621 requires that initial verification of every new installation begins
-          with a careful visual inspection. Chapter 64 (Section 643) requires the same for periodic
+          with a careful visual inspection. Chapter 65 (Section 651) requires the same for periodic
           inspection and testing. The visual inspection must be carried out before any instruments
           are connected, for two critical reasons: first, testing a circuit with a visible defect
           (damaged insulation, loose connections, exposed conductors) can cause a fault or injury;
@@ -296,10 +298,20 @@ const sections = [
         </div>
         <p>
           When inspecting a{' '}
-          <SEOInternalLink href="/guides/consumer-unit-change">consumer unit</SEOInternalLink>
-          , also note its age and type. Older rewirable fuse boards, early MCB boards without RCD
+          <SEOInternalLink href="/guides/consumer-unit-change">consumer unit</SEOInternalLink>, also
+          note its age and type. Older rewirable fuse boards, early MCB boards without RCD
           protection, and plastic consumer units in domestic premises are all common observations
           that may require recommendations for upgrade.
+        </p>
+        <p>
+          Two A4:2026 requirements are particularly relevant at the consumer unit. First, Regulation
+          411.3.4 now mandates 30mA RCD additional protection for AC final circuits supplying
+          luminaires in domestic premises -- check that lighting circuits are RCD-protected, not
+          just socket circuits. Second, Regulation 421.1.7 recommends the installation of arc fault
+          detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault
+          currents. Absence of AFDDs on a new or recently rewired domestic installation is worth
+          recording as a recommendation, though the regulation uses advisory rather than mandatory
+          language.
         </p>
       </>
     ),
@@ -481,9 +493,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safe zones</strong> -- cables concealed in walls should be installed within
-                the safe zones defined in BS 7671 (vertically or horizontally from accessories) or
-                protected by an RCD with a rated residual operating current not exceeding 30mA.
+                <strong>Prescribed zones</strong> -- cables concealed in walls should be installed
+                within the prescribed zones defined in BS 7671 Regulation 522.6.202 (within 150mm of
+                an angle formed by two adjoining walls, or vertically/horizontally from any
+                accessory) or protected by an RCD with a rated residual operating current not
+                exceeding 30mA (Table 52.1).
               </span>
             </li>
           </ul>

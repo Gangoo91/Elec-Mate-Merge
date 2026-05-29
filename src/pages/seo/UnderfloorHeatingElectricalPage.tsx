@@ -43,7 +43,8 @@ const keyTakeaways = [
   'Electric underfloor heating systems require a dedicated radial circuit from the consumer unit with appropriate MCB and RCD protection under BS 7671.',
   'Heating cables must not cross or overlap, and installation must follow the manufacturer spacing guidelines to prevent hot spots and cable damage.',
   'A floor-sensing thermostat with a dedicated back box is required, and the cable between the thermostat and the heating element must be correctly rated for the load.',
-  'RCD protection at 30mA is mandatory for all underfloor heating circuits under Regulation 411.3.3 of BS 7671:2018+A4:2026.',
+  'RCD protection at 30mA is mandatory for all underfloor heating circuits. Under BS 7671:2018+A4:2026, Regulation 411.3.3 covers socket-outlets; the requirement for fixed heating circuits in bathrooms arises under Regulation 701.415.2 and the general additional-protection provisions of Regulation 415.1.',
+  "Before installation begins, measure and record the heating element resistance between the two cores and confirm it matches the manufacturer's specified value. Keep this record in the handover pack alongside the EIC — once the cable is embedded it cannot be accessed for comparison.",
   'Elec-Mate cable sizing and circuit design calculators let you size the radial feed, check voltage drop, and produce the EIC certificate on site.',
 ];
 
@@ -61,7 +62,12 @@ const faqs = [
   {
     question: 'Can I install underfloor heating under tiles in a bathroom?',
     answer:
-      'Yes, electric underfloor heating is specifically designed for installation under tiles in bathrooms, kitchens, and other tiled areas. Heating mats are the most common choice for bathrooms because they are pre-spaced and simply roll out onto the prepared subfloor before tiling. The mat is embedded in the tile adhesive or a thin layer of self-levelling compound. However, there are important electrical considerations for bathroom installations. The heating element itself is typically located in Zone 3 (outside the zones) or below the floor surface and is not considered to be within the bathroom zones defined by BS 7671 Regulation 701. The thermostat and its wiring must be installed outside Zones 0, 1, and 2 — in practice, this means the thermostat is usually mounted on the wall outside the bathroom or just inside the door, well away from the bath and shower. The circuit must have 30mA RCD protection, and supplementary bonding may be required depending on the earthing arrangement.',
+      'Yes, electric underfloor heating is specifically designed for installation under tiles in bathrooms, kitchens, and other tiled areas. Heating mats are the most common choice for bathrooms because they are pre-spaced and simply roll out onto the prepared subfloor before tiling. The mat is embedded in the tile adhesive or a thin layer of self-levelling compound. However, there are important electrical considerations for bathroom installations. BS 7671:2018+A4:2026 Section 701 defines only Zones 0, 1 and 2 for rooms containing a bath or shower — there is no Zone 3 in the current edition. The heating element is typically below the floor surface and outside the defined zones, so it is not subject to the zone-specific restrictions that apply to accessories and fixed equipment above floor level. The thermostat and its wiring must be installed outside Zones 0, 1, and 2 — in practice, this means the thermostat is usually mounted on the wall outside the bathroom or just inside the door, well away from the bath and shower. The circuit must have 30mA RCD protection, and supplementary bonding under Regulation 701.415.2 may be required depending on the earthing arrangement — see the dedicated question below.',
+  },
+  {
+    question: 'Is supplementary bonding required in a bathroom with underfloor heating?',
+    answer:
+      'It depends on the earthing arrangement of the building. Under Regulation 701.415.2 of BS 7671:2018+A4:2026, local supplementary protective equipotential bonding is required in rooms containing a bath or shower, connecting together the protective conductors of all circuits supplying Class I and Class II equipment to accessible extraneous-conductive-parts — including metallic water and waste pipes, metallic central heating pipework, and accessible metallic structural parts. However, supplementary bonding may be omitted where three conditions are all satisfied: (d) all final circuits in the bathroom comply with the automatic disconnection requirements of Regulation 411.3.2; (e) all final circuits have additional RCD protection in accordance with Regulation 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to the main equipotential bonding system under Regulation 411.3.1.2. In practice, if the installation has main equipotential bonding at the consumer unit and every bathroom circuit — including the UFH circuit — is RCD-protected at 30mA, supplementary bonding can be omitted. Failing to check this and either omitting bonding that is required, or adding unnecessary bonding, is one of the most commonly noted mistakes on bathroom UFH installations. Always verify the earthing arrangement and document your decision on the EIC.',
   },
   {
     question: 'What type of thermostat is needed for electric underfloor heating?',
@@ -87,7 +93,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any circuit including underfloor heating radial feeds with voltage drop verification.',
@@ -119,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Verify voltage drop on long radial feeds to underfloor heating thermostats and mats.',
@@ -356,11 +362,15 @@ const sections = [
     content: (
       <>
         <p>
-          All electric underfloor heating circuits must be protected by a 30mA RCD. This is a
-          requirement of BS 7671:2018+A4:2026 under Regulation 411.3.3, which requires RCD
-          protection for all circuits in domestic premises. Heating cables embedded in floors are
-          particularly susceptible to mechanical damage during installation and subsequent building
-          work, making RCD protection essential.
+          All electric underfloor heating circuits must be protected by a 30mA RCD. Note that under
+          BS 7671:2018+A4:2026, Regulation 411.3.3 has been revised and now applies specifically to
+          socket-outlets with a rated current not exceeding 32A — it does not cover fixed heating
+          circuits. For bathroom UFH installations the RCD requirement arises under Regulation
+          701.415.2 (additional protection for all circuits in rooms with a bath or shower) and the
+          general additional-protection provisions in Regulation 415.1. Heating cables embedded in
+          floors are particularly susceptible to mechanical damage during installation and
+          subsequent building work, making RCD protection essential regardless of the specific
+          regulatory route.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -398,6 +408,17 @@ const sections = [
           not have spare RCD-protected ways, an RCBO is the simplest solution — it fits into any
           spare MCB way and provides both overcurrent and RCD protection in a single device.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>A4:2026 — Lighting circuits in domestic premises (Reg 411.3.4):</strong> If the
+            UFH installation involves replacing or modifying the consumer unit, be aware that
+            Regulation 411.3.4 of BS 7671:2018+A4:2026 now requires all AC final circuits supplying
+            luminaires in domestic premises to have additional protection by a 30mA RCD. This
+            applies to every lighting circuit in the dwelling — not just the bathroom. If the
+            consumer unit being worked on does not already have 30mA RCD protection on all lighting
+            circuits, this must be addressed as part of the installation.
+          </p>
+        </div>
       </>
     ),
   },
@@ -409,7 +430,7 @@ const sections = [
         <p>
           The supply cable from the consumer unit to the thermostat must be correctly sized for the
           heating load. This is a standard{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculation
           </SEOInternalLink>{' '}
           using the methods in Appendix 4 of BS 7671, but with some important considerations

@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Polarity verification confirms that line, neutral, and earth conductors are correctly connected at every point in the installation. Reversed polarity can leave equipment energised when apparently switched off, creating a lethal shock risk.',
-  'BS 7671 Section 643 (testing under initial verification) requires polarity to be verified on every circuit — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder.',
+  'BS 7671 Section 643 (testing under initial verification) requires polarity to be verified on every circuit — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder. Regulation 643.6(b) requires that, in earthed-neutral circuits, the outer contact of centre-contact bayonet and Edison screw lampholders connects to the neutral conductor. E14 and E27 lampholders to BS EN 60238 are excepted (Reg 643.5.201).',
   'Polarity is verified by continuity testing during dead testing (GN3 sequence). A dedicated polarity test using a continuity instrument confirms that the line conductor is connected to the correct terminal at every accessory.',
   'Common polarity faults include crossed line and neutral at a socket outlet, line connected to the neutral terminal of a single-pole switch, and reversed connections at the consumer unit busbar or RCBO.',
   'Elec-Mate schedule of test results captures polarity verification for every circuit. The app flags any circuit where polarity is not confirmed as a deficiency requiring immediate attention.',
@@ -145,9 +145,12 @@ const sections = [
         </p>
         <p>
           BS 7671 Regulation 132.14.1 requires that single-pole switching devices shall be connected
-          in the line conductor only. Section 643 requires verification of polarity during initial
-          verification. These are not optional checks — they are mandatory requirements that exist
-          because reversed polarity has directly caused fatalities in the UK.
+          in the line conductor only. Regulation 132.14.2 reinforces this by prohibiting any switch,
+          circuit-breaker, or fuse from being inserted in an earthed neutral conductor — except
+          where it is a linked device arranged to break all related line conductors simultaneously.
+          Section 643 requires verification of polarity during initial verification. These are not
+          optional checks — they are mandatory requirements that exist because reversed polarity has
+          directly caused fatalities in the UK.
         </p>
         <p>
           Polarity faults are more common than many electricians realise. They can occur through
@@ -359,6 +362,25 @@ const sections = [
             </li>
           </ol>
         </div>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">
+                OSG Method: Temporary Shorting Link (Lighting Circuits)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                For lighting circuits with single-pole switching arrangements, the On-Site Guide
+                (OSG Reg 10.3.4, Figure 10.3.4) permits the use of a temporary shorting link to aid
+                polarity verification. A short wire link is temporarily connected across the switch
+                terminals to bridge the switched line conductor back to the origin, allowing the
+                continuity instrument to confirm the line conductor path through to the lampholder
+                centre contact. The shorting link must be removed immediately after the test —
+                before the circuit is energised.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           This method simultaneously verifies continuity and polarity. When performing the{' '}
           <SEOInternalLink href="/guides/continuity-testing-r1-r2">
@@ -417,6 +439,21 @@ const sections = [
             </span>
           </li>
         </ul>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">Always Prove Your Instrument</h4>
+              <p className="text-white text-sm leading-relaxed">
+                Before and after any live polarity verification, prove your voltage indicator or
+                multifunction tester on a known source using a proving unit. A faulty instrument
+                that fails to indicate live voltage is a critical hazard. Proving before testing
+                confirms the instrument works; proving after confirms it still worked throughout.
+                This is a mandatory step in safe working procedure — not a suggestion.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           Remember that live testing must be carried out in accordance with the Electricity at Work
           Regulations 1989, which require that live working is only undertaken when it is
@@ -531,10 +568,14 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-2">Centre Contact Lamp Holder</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  BS 7671 Regulation 559.4.1 requires that the line conductor connects to the centre
-                  contact of a bayonet or Edison screw lamp holder. If the line is connected to the
-                  outer shell instead, touching the shell while inserting or removing a lamp could
-                  cause an electric shock, even with the switch on.
+                  BS 7671 Regulation 643.6(b) requires that, in circuits with an earthed neutral
+                  conductor, the outer or screwed contact of centre-contact bayonet and Edison screw
+                  lampholders is connected to the neutral conductor (so the centre contact carries
+                  the line). If the line is connected to the outer shell instead, touching the shell
+                  while inserting or removing a lamp could cause an electric shock, even with the
+                  switch off. Note: E14 and E27 lampholders to BS EN 60238 are excepted from this
+                  requirement — their outer or screwed contacts may be connected to either conductor
+                  (Reg 643.5.201).
                 </p>
               </div>
             </div>

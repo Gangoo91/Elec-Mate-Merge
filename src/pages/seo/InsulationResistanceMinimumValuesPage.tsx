@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Insulation Resistance Minimum Values | BS 7671 Guide';
 const PAGE_DESCRIPTION =
-  'Insulation resistance minimums per BS 7671 Table 61: 1 MΩ floor, test voltage by circuit voltage, what affects readings, low-IR troubleshooting.';
+  'Insulation resistance minimums per BS 7671 Table 64 (Chapter 64): 1 MΩ floor, test voltage by circuit voltage, Reg 643.3.3 two-stage procedure, what affects readings, low-IR troubleshooting.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -33,7 +33,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-insulation-resistance', label: 'What Is Insulation Resistance?' },
-  { id: 'minimum-values', label: 'Minimum Values (Table 61)' },
+  { id: 'minimum-values', label: 'Minimum Values (Table 64)' },
   { id: 'test-voltage-by-circuit', label: 'Test Voltage by Circuit Voltage' },
   { id: 'one-megohm-rule', label: 'The 1 Megohm Minimum' },
   { id: 'what-affects-readings', label: 'What Affects IR Readings' },
@@ -46,7 +46,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The minimum acceptable insulation resistance for standard circuits (up to 500V) per BS 7671 Table 61 is 1.0 megohm. For SELV and PELV circuits the minimum is 0.5 megohm. Any reading below the applicable minimum is a failure.',
+  'The minimum acceptable insulation resistance for standard circuits (up to 500V) per BS 7671 Table 64 (Reg 643.3.2) is 1.0 megohm. For SELV and PELV circuits the general minimum is 0.5 megohm, rising to 1.0 megohm where SPDs or similar equipment are included (GN3 Reg 4.8). Any reading below the applicable minimum is a failure.',
   'The test voltage depends on the circuit voltage: 250V DC for SELV and PELV circuits (up to 50V), 500V DC for circuits up to and including 500V (standard 230V circuits), and 1000V DC for circuits above 500V.',
   'Insulation resistance readings are affected by temperature, humidity, cable age, contamination, and cable length. Hot, humid conditions give lower readings — always note the environmental conditions.',
   'Low IR readings can be caused by moisture ingress, damaged cable insulation, contaminated accessories, over-long cable runs, or connected equipment with low insulation resistance.',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What is the minimum insulation resistance value per BS 7671?',
     answer:
-      'BS 7671 Table 61 specifies minimum insulation resistance values based on the circuit voltage. For SELV and PELV circuits (up to 50V), the test voltage is 250V DC and the minimum is 0.5 MΩ. For circuits up to and including 500V (standard 230V and 400V circuits), the test voltage is 500V DC and the minimum is 1.0 MΩ. For circuits above 500V, the test voltage is 1000V DC and the minimum is 1.0 MΩ. A reading below the applicable minimum indicates a fault in the insulation and requires investigation. In practice, new installations typically produce readings of 200 megohms or higher — readings in the low single digits (1 to 10 megohms) warrant investigation even though they technically pass.',
+      'BS 7671 Table 64 (Reg 643.3.2, Chapter 64) specifies minimum insulation resistance values based on the circuit voltage. For SELV and PELV circuits (up to 50V), the test voltage is 250V DC and the minimum is 0.5 MΩ — except where equipment such as SPDs is included, in which case the minimum rises to 1.0 MΩ at 250V DC (GN3 Reg 4.8). For circuits up to and including 500V (standard 230V and 400V circuits), the test voltage is 500V DC and the minimum is 1.0 MΩ. For circuits above 500V, the test voltage is 1000V DC and the minimum is 1.0 MΩ. A reading below the applicable minimum indicates a fault in the insulation and requires investigation. In practice, new installations typically produce readings of 200 megohms or higher — readings in the low single digits (1 to 10 megohms) warrant investigation even though they technically pass.',
   },
   {
     question: 'Why is the test voltage different for different circuit voltages?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Do I need to disconnect equipment before insulation resistance testing?',
     answer:
-      'Yes. You must disconnect all equipment and loads from the circuit before carrying out insulation resistance testing. The 500V DC test voltage can damage or destroy sensitive electronic equipment including LED drivers, dimmer switches, PIR sensors, programmable thermostats, USB socket outlets, and any equipment with electronic control circuits. Lamps should be removed from their holders or the lighting circuit switched off. Disconnect equipment by removing plug-in leads from sockets, switching off fused spurs supplying fixed equipment, and removing connections from terminal blocks where necessary. If equipment cannot be disconnected, it must be excluded from the test — note this on the schedule of test results and test the rest of the circuit.',
+      'BS 7671 Reg 643.3.3 sets out a normative two-stage procedure where sensitive equipment is present. Stage 1: test all cables at 500V DC per Table 64 before connecting any equipment likely to be damaged or to influence the result. Stage 2: after connecting the equipment, carry out a 250V DC test between live conductors and the protective conductor (with live conductors linked together) — the minimum acceptable reading at this stage is 1 MΩ. The 500V DC test voltage used in Stage 1 can damage LED drivers, dimmer switches, PIR sensors, programmable thermostats, and USB socket outlets; these must not be connected during Stage 1. Where equipment cannot be disconnected for Stage 1, note this on the schedule of test results. GN3 Section 2.24 illustrates the full sequence and confirms the reduced test voltage shall be recorded on the schedule.',
   },
   {
     question: 'What does a reading of 0.00 megohms mean?',
@@ -123,21 +123,41 @@ const sections = [
           and before live tests. It is performed with the circuit de-energised and all loads
           disconnected.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-2">A4:2026 changes to Chapter 64</h3>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 renumbered Chapter 61 (Inspection and Testing) to{' '}
+                <strong>Chapter 64</strong>. The insulation resistance requirements previously in
+                Reg 613.3 and Table 61 are now in <strong>Reg 643.3</strong> and{' '}
+                <strong>Table 64</strong>. Reg 643.3 was also redrafted to clarify testing
+                procedures for circuits where connected equipment is likely to influence the test or
+                be damaged — introducing the explicit two-stage test sequence in Reg 643.3.3.
+                Readers cross-referencing pre-A4 guidance should note that Table 61 and Table 64
+                carry the same numeric values.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
   {
     id: 'minimum-values',
-    heading: 'Minimum Values — BS 7671 Table 61',
+    heading: 'Minimum Values — BS 7671 Table 64',
     content: (
       <>
         <p>
-          BS 7671 Table 61 (Table 61.1 in the 18th Edition) sets out the minimum insulation
-          resistance values. The table is straightforward:
+          BS 7671 Table 64 (Regulation 643.3.2, Chapter 64) sets out the minimum insulation
+          resistance values. In earlier editions this table appeared as Table 61 or Table 61.1 in
+          Chapter 61 — A4:2026 renumbered Chapter 61 to Chapter 64. The values themselves are
+          unchanged:
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
-            BS 7671 Table 61 — Minimum Insulation Resistance Values
+            BS 7671 Table 64 — Minimum Insulation Resistance Values
           </h3>
           <div className="space-y-4">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
@@ -183,10 +203,29 @@ const sections = [
           </div>
         </div>
         <p>
-          Note that the minimum for SELV/PELV circuits is 0.5 MΩ, but for all standard circuits
-          (230V and 400V), the minimum is 1.0 MΩ. In everyday domestic and commercial testing, you
-          will almost always be testing at 500V DC with a minimum of 1.0 MΩ.
+          Note that the general minimum for SELV/PELV circuits is 0.5 MΩ, but for all standard
+          circuits (230V and 400V), the minimum is 1.0 MΩ. In everyday domestic and commercial
+          testing, you will almost always be testing at 500V DC with a minimum of 1.0 MΩ.
         </p>
+        <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-2">
+                GN3 exception — SELV/PELV circuits containing SPDs
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                Where a SELV or PELV circuit includes equipment such as surge protective devices
+                (SPDs) that may influence the test result or be damaged by higher test voltages, the
+                circuit is tested at 250V DC (rather than 500V DC). In this case GN3 Reg 4.8 raises
+                the minimum acceptable insulation resistance to{' '}
+                <strong className="text-blue-300">1.0 MΩ</strong> — not the standard 0.5 MΩ shown in
+                Table 64 for SELV/PELV. Always check whether SPDs or similar components are present
+                before recording a SELV/PELV reading against the 0.5 MΩ threshold.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -211,11 +250,45 @@ const sections = [
           lighting transformers, and bathroom shaver socket SELV supplies. Always check the circuit
           voltage before selecting the test voltage on your MFT.
         </p>
-        <p>
-          Before testing, ensure all electronic equipment is disconnected. The DC test voltage can
-          damage LED drivers, dimmer modules, PIR sensors, smart thermostats, USB sockets, and
-          similar electronic devices. Remove these from the circuit or isolate them before testing.
-        </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-2">
+                BS 7671 Reg 643.3.3 — mandatory two-stage procedure
+              </h3>
+              <p className="text-white text-sm leading-relaxed mb-3">
+                Where equipment is likely to influence the test or be damaged, Reg 643.3.3 requires
+                a specific two-stage sequence — simple disconnection is not the only option:
+              </p>
+              <ol className="space-y-2 text-white text-sm leading-relaxed list-none">
+                <li className="flex items-start gap-2">
+                  <span className="text-yellow-400 font-bold shrink-0">1.</span>
+                  <span>
+                    Test all cables at <strong>500V DC per Table 64</strong> before connecting any
+                    equipment that could be damaged or skew the result. This confirms the wiring
+                    insulation is sound.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-yellow-400 font-bold shrink-0">2.</span>
+                  <span>
+                    After connecting the equipment, apply a{' '}
+                    <strong>250V DC post-connection test</strong> between live conductors (linked
+                    together) and the protective conductor. The minimum acceptable reading is{' '}
+                    <strong>1 MΩ</strong>. Record the 250V DC test voltage on the schedule of test
+                    results (GN3 Reg 2.24).
+                  </span>
+                </li>
+              </ol>
+              <p className="text-white/70 text-xs mt-3">
+                Note: manufacturer instructions may still require some equipment to be disconnected
+                during the 250V DC stage — follow manufacturer guidance where it applies (Reg
+                643.3.3 Note).
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Auto-validates every IR reading on site"
           description="Enter your insulation resistance reading into Elec-Mate and the app instantly validates it against the BS 7671 minimum of 1 MΩ."
@@ -430,9 +503,9 @@ const sections = [
         <p>
           Insulation resistance results are recorded on the schedule of test results on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each circuit,
-          record the IR value in megohms, the test voltage used (250V, 500V, or 1000V), and the
-          conductor combination tested.
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each circuit, record
+          the IR value in megohms, the test voltage used (250V, 500V, or 1000V), and the conductor
+          combination tested.
         </p>
         <p>
           Where the instrument displays a reading greater than its maximum range (e.g., "&gt; 200
@@ -501,7 +574,8 @@ const relatedPages = [
   {
     href: '/guides/testing-sequence-guide',
     title: 'Testing Sequence BS 7671',
-    description: 'The correct dead and live testing order per GN3. IR testing is test number two.',
+    description:
+      'The correct dead and live testing order per GN3. IR testing is test number three.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -541,7 +615,7 @@ export default function InsulationResistanceMinimumValuesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-03-12"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"
@@ -552,7 +626,7 @@ export default function InsulationResistanceMinimumValuesPage() {
           <span className="text-yellow-400">BS 7671 Guide</span>
         </>
       }
-      heroSubtitle="Complete guide to insulation resistance minimum values per BS 7671 Table 61. The 1 megohm minimum, test voltage selection by circuit voltage, factors that affect IR readings, and how to troubleshoot low values."
+      heroSubtitle="Complete guide to insulation resistance minimum values per BS 7671 Table 64 (Reg 643.3.2). The 1 megohm minimum, two-stage test procedure (Reg 643.3.3), test voltage selection by circuit voltage, factors that affect IR readings, and how to troubleshoot low values."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

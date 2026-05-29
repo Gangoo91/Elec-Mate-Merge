@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Most smart lighting switches (Lutron, Shelly, Sonoff) require a neutral wire at the switch position — a requirement that is not met in older UK wiring, where switch drops carry only switched live and earth.',
   'DALI (Digital Addressable Lighting Interface) is the professional standard for commercial and high-end residential lighting control — each luminaire has an addressable digital driver and can be individually programmed.',
   'Recommended lux levels for domestic and commercial spaces are specified in CIBSE LG3 (domestic) and BS EN 12464-1 (workplace) — key levels: 300 lux at the working plane in offices, 500 lux for tasks requiring detailed work.',
-  'Presence detection (PIR or radar) and daylight harvesting (photocell dimming) are proven energy-saving technologies — correctly specified, they can reduce lighting energy consumption by 40 to 60% compared to manual switching.',
+  'Presence detection (PIR or radar) and daylight harvesting (photocell dimming) are proven energy-saving technologies — CIBSE TM52 notes that daylight harvesting in perimeter zones can reduce artificial lighting energy consumption by 20 to 50% compared to manual switching.',
 ];
 
 const faqs = [
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for smart lighting circuits, DALI bus wiring, and dimmer feeds.',
     icon: Calculator,
@@ -158,7 +158,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long lighting circuit runs for DALI bus and 12V SELV circuits.',
@@ -216,6 +216,15 @@ const sections = [
               commercial and high-end residential. Individual control, two-way communication, BREEAM
               compatible. Requires DALI bus wiring (standard 2-core cable). Cost: £150 to £400+ per
               point.
+            </p>
+            <p className="text-blue-300 text-xs leading-relaxed mt-2">
+              Where DALI drivers supply 12&nbsp;V LED tracks or other ELV luminaires operating as
+              SELV circuits,{' '}
+              <SEOInternalLink href="/guides/section-715-elv-lighting-a4-2026">
+                Section 715 of BS&nbsp;7671:2018+A4:2026
+              </SEOInternalLink>{' '}
+              applies. FELV shall not be used (Reg&nbsp;715.411.7.201); luminaires without a
+              protective conductor terminal shall be supplied from a SELV source only.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-600/15 border border-purple-600/25 p-5">
@@ -521,6 +530,41 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/25 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  BS 7671:2018+A4:2026 — New Circuit Compliance
+                </h4>
+                <p className="text-white text-sm leading-relaxed mb-3">
+                  Where smart lighting installation involves new or rewired final circuits in a
+                  domestic dwelling, two A4:2026 requirements apply:
+                </p>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400 font-bold shrink-0">Reg 411.3.4</span>
+                    <span>
+                      Within domestic (household) premises, AC final circuits supplying luminaires
+                      shall be provided with additional protection by an RCD with a rated residual
+                      operating current not exceeding 30&nbsp;mA. This is a mandatory requirement
+                      (the regulation uses &ldquo;shall&rdquo;).
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400 font-bold shrink-0">Reg 421.1.7</span>
+                    <span>
+                      BS 7671 recommends the installation of arc fault detection devices (AFDDs) in
+                      AC final circuits of a fixed installation to mitigate the risk of fire due to
+                      arc fault currents. Where new lighting circuits are being run, consider AFDDs
+                      at the consumer unit — particularly relevant for surface-routed cable behind
+                      plasterboard.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         <SEOAppBridge
           title="Quote and certify smart lighting installations"
@@ -539,7 +583,7 @@ const sections = [
 export default function SmartHomeLightingInstallationPage() {
   return (
     <GuideTemplate
-      title="Smart Home Lighting Installation UK | DALI, KNX, Zigbee and"
+      title="Smart Home Lighting Installation UK | DALI, KNX &amp; Zigbee Guide"
       description="Complete guide to smart home lighting installation in the UK. DALI vs KNX vs Zigbee, neutral wire requirements…"
       datePublished="2026-03-27"
       dateModified="2026-05-18"

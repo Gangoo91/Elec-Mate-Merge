@@ -98,7 +98,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size sub-main cables from house to annex with voltage drop and derating calculations.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Critical for long sub-main runs to detached annexes — check voltage drop before ordering cable.',
@@ -704,10 +704,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete annex electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Sub-main, consumer unit, all circuits, heating, testing, and certification — all
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Sub-main, consumer unit, all circuits, heating, testing, and certification — all
                   itemised with your margins. A professional PDF quote wins the job against
                   competitors who send a text message with a single number.
                 </p>

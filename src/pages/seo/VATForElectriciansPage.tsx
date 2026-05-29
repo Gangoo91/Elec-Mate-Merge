@@ -528,7 +528,7 @@ export default function VATForElectriciansPage() {
   return (
     <GuideTemplate
       title="VAT for Electricians UK | When to Register & VAT Schemes"
-      description="Complete VAT guide for UK electricians — the £85,000 registration threshold, voluntary registration, flat rate scheme (9.5%), cash accounting…"
+      description="Complete VAT guide for UK electricians — the £85,000 registration threshold, voluntary registration, flat rate scheme (9.5%), cash accounting, domestic reverse charge and MTD obligations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -542,6 +542,13 @@ export default function VATForElectriciansPage() {
         </>
       }
       heroSubtitle="Everything UK electricians need to know about VAT — when mandatory registration kicks in at £85,000, the benefits of voluntary registration, the 9.5% flat rate scheme, the cash accounting scheme, VAT on materials vs labour, and the domestic reverse charge for CIS subcontractors."
+      answerBox={{
+        question: 'When do electricians have to register for VAT in the UK?',
+        answer:
+          'UK electricians must register for VAT when taxable turnover exceeds £85,000 in any rolling 12-month period, with 30 days to notify HMRC. Once registered, the Flat Rate Scheme at 9.5% can simplify accounting and improve margins for most electrical installation businesses.',
+        detail:
+          'CIS subcontractors supplying VAT-registered contractors must also apply the Domestic Reverse Charge — the contractor accounts for the VAT rather than the electrician.',
+      }}
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

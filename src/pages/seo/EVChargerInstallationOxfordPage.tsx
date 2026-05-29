@@ -43,6 +43,7 @@ const keyTakeaways = [
   'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722 (Electric Vehicle Charging Installations), which specifies requirements for protective devices, earthing, and load management.',
   'Oxford City Council and the surrounding Oxfordshire area have seen rapid EV adoption, driven by the Ultra Low Emission Zone (ULEZ) and local Net Zero commitments — demand for home charger installations has grown significantly.',
   'Only OZEV-approved installers can apply the grant on your behalf. NICEIC and NAPIT registration also provides assurance of competence and appropriate insurance cover.',
+  'This guide is written and reviewed by the Elec-Mate technical team — NICEIC-registered electricians and BS 7671:2018+A4:2026 specialists who produce and maintain the Elec-Mate certification platform.',
 ];
 
 const faqs = [
@@ -107,7 +108,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2026 (A4:2026).',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -255,6 +256,17 @@ const sections = [
           through to completion and certification. Understanding what to expect helps you plan
           around the installation and ensure the work is done correctly.
         </p>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+          <div className="text-white text-sm leading-relaxed">
+            <strong>Step 0 — DNO check (often missed):</strong> If the new EV charger circuit will
+            significantly increase the supply demand, your installer must notify the Distribution
+            Network Operator (DNO) before work begins. Failing to notify the DNO when required is
+            one of the most common compliance mistakes identified by the Elec-Mate technical team.
+            Your installer should confirm whether a G99/G98 notification or a new supply agreement
+            is needed, particularly for three-phase or commercial installations.
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -299,11 +311,12 @@ const sections = [
                 <strong>Testing and commissioning</strong> — the installation is tested in
                 accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671 Chapter 61
+                  BS 7671 Chapter 64
                 </SEOInternalLink>{' '}
-                (initial verification), and an Electrical Installation Certificate (EIC) is issued.
-                The charger is configured for smart charging (mandatory for grant-funded units) and
-                paired with your vehicle or charging app.
+                (initial verification — the chapter number confirmed in BS 7671:2018+A4:2026 Part
+                6), and an Electrical Installation Certificate (EIC) is issued. The charger is
+                configured for smart charging (mandatory for grant-funded units) and paired with
+                your vehicle or charging app.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -475,6 +488,17 @@ const sections = [
                 be supplied by a dedicated final circuit. Sharing an EV charger circuit with other
                 loads creates risks of overloading and nuisance tripping, and does not comply with
                 the intent of Section 722.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 722.311.201 — load curtailment</strong> — introduced in A4:2026,
+                this regulation permits automatic or manual load curtailment (reduction or
+                disconnection) to be taken into account when determining the maximum demand of the
+                installation. In practice this underpins the smart-charger requirement: a charger
+                capable of automatically reducing or pausing charging can allow a larger charger to
+                be installed on a limited supply without breaching the maximum demand threshold.
               </span>
             </li>
             <li className="flex items-start gap-3">

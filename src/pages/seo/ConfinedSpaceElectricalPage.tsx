@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Is a permit to work always required for confined space entry?',
     answer:
-      'The Confined Spaces Regulations 1997 do not specifically mandate a permit to work system, but the HSE\'s Approved Code of Practice (L101) strongly recommends permits for all but the lowest-risk confined space entries. For electrical work in confined spaces — which involves additional hazards including electric shock, arc flash, and the use of test equipment that could ignite a flammable atmosphere — a permit to work is considered best practice and is required by most principal contractors and industrial clients. The permit confirms that the space has been gas-tested, isolations are in place, rescue arrangements are confirmed, and the hazards have been assessed.',
+      "The Confined Spaces Regulations 1997 do not specifically mandate a permit to work system, but the HSE's Approved Code of Practice (L101) strongly recommends permits for all but the lowest-risk confined space entries. For electrical work in confined spaces — which involves additional hazards including electric shock, arc flash, and the use of test equipment that could ignite a flammable atmosphere — a permit to work is considered best practice and is required by most principal contractors and industrial clients. The permit confirms that the space has been gas-tested, isolations are in place, rescue arrangements are confirmed, and the hazards have been assessed.",
   },
   {
     question: 'What voltage equipment should I use for electrical work in confined spaces?',
@@ -157,31 +157,31 @@ const sections = [
               <HardHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable ducts and conduit systems</strong> — large cable ducts requiring
-                physical entry may qualify, particularly in substation environments or where adjacent
-                gas mains create a risk of gas ingress.
+                physical entry may qualify, particularly in substation environments or where
+                adjacent gas mains create a risk of gas ingress.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <HardHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Roof voids, floor voids, and ceiling voids</strong> — particularly in
-                older buildings where decomposing material may produce carbon dioxide, or in
-                buildings near gas mains where leakage is possible.
+                <strong>Roof voids, floor voids, and ceiling voids</strong> — particularly in older
+                buildings where decomposing material may produce carbon dioxide, or in buildings
+                near gas mains where leakage is possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <HardHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Substation and switchgear rooms</strong> — SF6 (sulphur hexafluoride)
-                gas used in modern switchgear is heavier than air and can accumulate at low level,
+                <strong>Substation and switchgear rooms</strong> — SF6 (sulphur hexafluoride) gas
+                used in modern switchgear is heavier than air and can accumulate at low level,
                 displacing oxygen and causing asphyxiation with no warning.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          When in doubt, treat the space as a confined space and apply the appropriate controls.
-          The cost of unnecessary precautions is minor compared to the cost of a fatality.
+          When in doubt, treat the space as a confined space and apply the appropriate controls. The
+          cost of unnecessary precautions is minor compared to the cost of a fatality.
         </p>
       </>
     ),
@@ -192,10 +192,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Confined Spaces Regulations 1997 and their Approved Code of Practice (L101) set
-          out the legal duties for all work in confined spaces in Great Britain. The HSE enforces
-          these regulations, and breaches can result in prosecution under the Health and Safety
-          at Work etc. Act 1974.
+          The Confined Spaces Regulations 1997 and their Approved Code of Practice (L101) set out
+          the legal duties for all work in confined spaces in Great Britain. The HSE enforces these
+          regulations, and breaches can result in prosecution under the Health and Safety at Work
+          etc. Act 1974.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -211,9 +211,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 4 — Safe system of work</strong> — if entry cannot be avoided,
-                a safe system of work must be established before any person enters. This must
-                address all the identified specified risks through risk assessment.
+                <strong>Regulation 4 — Safe system of work</strong> — if entry cannot be avoided, a
+                safe system of work must be established before any person enters. This must address
+                all the identified specified risks through risk assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -242,18 +242,18 @@ const sections = [
       <>
         <p>
           Atmospheric monitoring is a critical control measure for confined space work. An
-          atmosphere that looks clear and smells normal can be lethal — oxygen deficiency and
-          most toxic gases are invisible and odourless at dangerous concentrations.
+          atmosphere that looks clear and smells normal can be lethal — oxygen deficiency and most
+          toxic gases are invisible and odourless at dangerous concentrations.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Oxygen level</strong> — must be between 19.5% and 23.5%. Normal
-                atmospheric oxygen is 20.9%. Below 19.5%, performance is impaired; below 16%,
-                loss of consciousness occurs rapidly; below 10%, death may be immediate. Oxygen
-                enrichment above 23.5% dramatically increases fire and explosion risk.
+                <strong>Oxygen level</strong> — must be between 19.5% and 23.5%. Normal atmospheric
+                oxygen is 20.9%. Below 19.5%, performance is impaired; below 16%, loss of
+                consciousness occurs rapidly; below 10%, death may be immediate. Oxygen enrichment
+                above 23.5% dramatically increases fire and explosion risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,19 +268,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hydrogen sulphide (H₂S)</strong> — found in sewers, drainage, and
-                wastewater systems. The Workplace Exposure Limit (WEL) is 1 ppm (8-hour TWA)
-                and 5 ppm (15-minute STEL). At concentrations above 100 ppm, a single breath
-                can cause unconsciousness. At 1,000 ppm, death is nearly immediate.
+                <strong>Hydrogen sulphide (H₂S)</strong> — found in sewers, drainage, and wastewater
+                systems. The Workplace Exposure Limit (WEL) is 1 ppm (8-hour TWA) and 5 ppm
+                (15-minute STEL). At concentrations above 100 ppm, a single breath can cause
+                unconsciousness. At 1,000 ppm, death is nearly immediate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Carbon monoxide (CO)</strong> — produced by incomplete combustion. Risk
-                in spaces where petrol or diesel equipment has been used, or where vehicle exhaust
-                can enter. WEL is 20 ppm (8-hour TWA). Odourless and colourless — a multi-gas
-                detector is the only reliable way to detect it.
+                <strong>Carbon monoxide (CO)</strong> — produced by incomplete combustion. Risk in
+                spaces where petrol or diesel equipment has been used, or where vehicle exhaust can
+                enter. WEL is 20 ppm (8-hour TWA). Odourless and colourless — a multi-gas detector
+                is the only reliable way to detect it.
               </span>
             </li>
           </ul>
@@ -288,8 +288,8 @@ const sections = [
         <p>
           Monitoring must continue throughout the period of entry. If readings change, work must
           stop and all entrants must leave immediately. Many confined space contractors use
-          continuous monitoring equipment worn by the entrant, with alarms audible outside
-          the space.
+          continuous monitoring equipment worn by the entrant, with alarms audible outside the
+          space.
         </p>
       </>
     ),
@@ -320,19 +320,19 @@ const sections = [
               <span>
                 <strong>Standby person</strong> — stationed outside the space for the entire
                 duration of the entry. Responsible for maintaining communication, monitoring the
-                atmosphere at the entry point, operating the rescue equipment (tripod, winch, lifeline),
-                and initiating the rescue plan if the entrant fails to respond or the alarm sounds.
-                The standby person must NOT enter the space alone.
+                atmosphere at the entry point, operating the rescue equipment (tripod, winch,
+                lifeline), and initiating the rescue plan if the entrant fails to respond or the
+                alarm sounds. The standby person must NOT enter the space alone.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rescue team</strong> — for high-risk confined spaces, a trained rescue
-                team (minimum two persons in addition to the standby) must be on standby and ready
-                to effect a rescue. Rescue must where possible be carried out without entry —
-                using a winch, lifeline, and rescue harness worn by the entrant. Entry-based rescue
-                is only a last resort and requires full self-contained breathing apparatus (SCBA).
+                <strong>Rescue team</strong> — for high-risk confined spaces, a trained rescue team
+                (minimum two persons in addition to the standby) must be on standby and ready to
+                effect a rescue. Rescue must where possible be carried out without entry — using a
+                winch, lifeline, and rescue harness worn by the entrant. Entry-based rescue is only
+                a last resort and requires full self-contained breathing apparatus (SCBA).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -357,8 +357,8 @@ const sections = [
       <>
         <p>
           Confined spaces create additional electrical hazards beyond those present in open
-          environments. The enclosed nature concentrates risks and limits the ability to
-          escape or seek assistance.
+          environments. The enclosed nature concentrates risks and limits the ability to escape or
+          seek assistance.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -367,16 +367,16 @@ const sections = [
               <span>
                 <strong>Reduced voltage requirements</strong> — use 110V CTE (centre-tapped earth)
                 supply from a transformer for all portable power tools. In wet or damp confined
-                spaces, consider 25V or battery-powered equipment. The HSE strongly recommends
-                110V as the maximum for portable tools in confined spaces.
+                spaces, consider 25V or battery-powered equipment. The HSE strongly recommends 110V
+                as the maximum for portable tools in confined spaces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — where 230V is unavoidable, a 30mA RCD must be
-                used. In wet conditions, a 10mA RCD should be considered. RCDs must be tested
-                before entry using the integral test button.
+                used. In wet conditions, a 10mA RCD should be considered. RCDs must be tested before
+                entry using the integral test button.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -384,8 +384,8 @@ const sections = [
               <span>
                 <strong>Increased shock risk from earth contact</strong> — in a confined space, the
                 body may be in contact with a conductive surface (metal tank, damp concrete, damp
-                earth) which provides a low-resistance path to earth. Contact with any live conductor
-                in this situation is more likely to be fatal than in an open environment.
+                earth) which provides a low-resistance path to earth. Contact with any live
+                conductor in this situation is more likely to be fatal than in an open environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,6 +402,18 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          All electrical work in a confined space should be carried out dead — with the supply
+          isolated and proved dead — as the default. Live working is only justified where it is
+          unreasonable in all the circumstances for the conductors to be made dead, as required by
+          Regulation 14 of the Electricity at Work Regulations 1989. Where live work is unavoidable,
+          Regulation 16 of EAWR 1989 requires that only persons who are suitably competent with
+          regard to the nature and type of the work may carry it out; GN3 explicitly references this
+          duty and recommends that persons consult HSR25 before undertaking any activity placing
+          them in close proximity to live parts. In a confined space — where escape is restricted
+          and earth contact is increased — the threshold for justifying live work is substantially
+          higher than in open environments.
+        </p>
       </>
     ),
   },
@@ -411,8 +423,8 @@ const sections = [
     content: (
       <>
         <p>
-          Where a confined space contains or may contain a flammable or explosive atmosphere,
-          all electrical equipment used must be rated for that zone under the ATEX requirements.
+          Where a confined space contains or may contain a flammable or explosive atmosphere, all
+          electrical equipment used must be rated for that zone under the ATEX requirements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -421,18 +433,18 @@ const sections = [
               <span>
                 <strong>Zone classification</strong> — Zone 0 (flammable atmosphere present
                 continuously or for long periods), Zone 1 (likely to occur occasionally in normal
-                operation), Zone 2 (not likely to occur, and if it does, only briefly). Equipment
-                is rated for specific zones — Zone 0 equipment can be used in Zone 1 and 2, but
-                not vice versa.
+                operation), Zone 2 (not likely to occur, and if it does, only briefly). Equipment is
+                rated for specific zones — Zone 0 equipment can be used in Zone 1 and 2, but not
+                vice versa.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>All equipment must be ATEX rated</strong> — this includes torches,
-                multi-gas detectors, radios, mobile phones, and test instruments. If you carry
-                an item into an ATEX zone that is not rated for that zone, you are introducing a
-                potential ignition source.
+                <strong>All equipment must be ATEX rated</strong> — this includes torches, multi-gas
+                detectors, radios, mobile phones, and test instruments. If you carry an item into an
+                ATEX zone that is not rated for that zone, you are introducing a potential ignition
+                source.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -448,10 +460,56 @@ const sections = [
         </div>
         <p>
           If you are working in a confined space and are unsure whether the atmosphere may be
-          flammable, treat it as an ATEX zone until atmospheric testing confirms otherwise.
-          Never introduce non-ATEX equipment into an unclassified confined space without
-          gas testing first.
+          flammable, treat it as an ATEX zone until atmospheric testing confirms otherwise. Never
+          introduce non-ATEX equipment into an unclassified confined space without gas testing
+          first.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-bold text-white mb-3">
+            Statutory References for Electricians — Potentially Explosive Atmospheres
+          </h4>
+          <p className="text-white/80 text-sm mb-3">
+            BS 7671 requires that for installations in potentially explosive atmospheres, reference
+            be made to all four of the following instruments:
+          </p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Electricity at Work Regulations 1989 (EAWR)</strong> — the overarching duty
+                to prevent danger from electrical systems.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)
+                </strong>{' '}
+                — requires employers to assess and control risks from flammable substances, classify
+                zones, and select appropriate equipment.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Petroleum (Consolidation) Regulations 2014</strong> — applies where
+                petroleum spirit is stored or handled; relevant to forecourts and fuel storage
+                installations.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Equipment and Protective Systems Intended for Use in Potentially Explosive
+                  Atmospheres Regulations 2016 (ATEX 2016)
+                </strong>{' '}
+                — governs the selection and use of ATEX-rated equipment in classified zones.
+              </span>
+            </li>
+          </ul>
+        </div>
       </>
     ),
   },
@@ -461,9 +519,9 @@ const sections = [
     content: (
       <>
         <p>
-          A permit to work is best practice for all confined space entry and is mandatory on
-          most industrial and commercial sites. It provides a documented record that all
-          precautions have been confirmed before entry begins.
+          A permit to work is best practice for all confined space entry and is mandatory on most
+          industrial and commercial sites. It provides a documented record that all precautions have
+          been confirmed before entry begins.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -472,19 +530,17 @@ const sections = [
               <span>
                 <strong>Confined space permit contents</strong> — space identification, hazard
                 assessment and specified risks, atmospheric test results (pre-entry), isolation
-                details (electrical, mechanical, process), PPE requirements, entry personnel
-                names, standby and rescue arrangements, communication method, duration of validity,
-                and authorising signature.
+                details (electrical, mechanical, process), PPE requirements, entry personnel names,
+                standby and rescue arrangements, communication method, duration of validity, and
+                authorising signature.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Integration with electrical isolation permit</strong> — where a
-                permit to work is also issued for electrical isolation (see{' '}
-                <SEOInternalLink href="/lockout-tagout-guide">
-                  the LOTO guide
-                </SEOInternalLink>
+                <strong>Integration with electrical isolation permit</strong> — where a permit to
+                work is also issued for electrical isolation (see{' '}
+                <SEOInternalLink href="/lockout-tagout-guide">the LOTO guide</SEOInternalLink>
                 ), the two permits must be cross-referenced. The confined space permit should
                 reference the isolation certificate number and confirm that isolation is confirmed.
               </span>
@@ -493,9 +549,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permit suspension and cancellation</strong> — if atmospheric conditions
-                change, work must stop and all personnel must exit. The permit is suspended and
-                a new atmospheric test must be carried out before re-entry. When work is complete,
-                the permit is formally cancelled by the authorising person after confirming all
+                change, work must stop and all personnel must exit. The permit is suspended and a
+                new atmospheric test must be carried out before re-entry. When work is complete, the
+                permit is formally cancelled by the authorising person after confirming all
                 personnel have exited and equipment has been removed.
               </span>
             </li>
@@ -515,10 +571,64 @@ const sections = [
     content: (
       <>
         <p>
-          Before undertaking any electrical work that may involve a confined space, you need
-          a site-specific risk assessment, method statement, and permit to work. This
-          documentation must be produced before work begins — not after an incident.
+          Before undertaking any electrical work that may involve a confined space, you need a
+          site-specific risk assessment, method statement, and permit to work. This documentation
+          must be produced before work begins — not after an incident.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-bold text-white mb-3">Pre-Entry Equipment Checklist</h4>
+          <p className="text-white/80 text-sm mb-3">
+            The following items are required before any person enters a confined space for
+            electrical work, in accordance with Confined Spaces Regulations 1997 safe systems:
+          </p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Gas detector / atmospheric monitor</strong> — calibrated, multi-gas (O₂,
+                %LEL, H₂S, CO as a minimum). Tested with a calibration gas before entry.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Intrinsically safe (Ex i) torch and lighting</strong> — specifically
+                ATEX-rated intrinsically safe luminaires, not just any battery torch, where the
+                atmosphere may be flammable.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Rescue kit</strong> — rescue harness worn by the entrant, lifeline attached
+                to a tripod or anchorage point, fall-arrest and retrieval lanyard.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Tripod and winch</strong> — required for all vertical entry confined spaces
+                (manholes, chambers). The standby person must be trained to operate the winch for
+                non-entry rescue.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Communication radio</strong> — two-way communication between the entrant and
+                the standby person. Where ATEX zones apply, the radio must be ATEX-rated for the
+                zone.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Harness and lanyard</strong> — a full-body rescue harness (not just a waist
+                belt) worn by the entrant for the duration of entry to enable mechanical retrieval.
+              </span>
+            </li>
+          </ul>
+        </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-4">
             <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
@@ -526,9 +636,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Confined Space RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/rams-generator">
-                  Elec-Mate RAMS generator
-                </SEOInternalLink>{' '}
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
                 to produce comprehensive risk assessments and method statements for confined space
                 electrical work. Covers atmospheric hazards, LOTO requirements, entry team roles,
                 rescue arrangements, and ATEX equipment requirements. Ready to share with your
@@ -549,10 +657,10 @@ const sections = [
 export default function ConfinedSpaceElectricalPage() {
   return (
     <GuideTemplate
-      title="Confined Space Electrical Work UK | Safety in Confined"
+      title="Confined Space Electrical Work UK | Safety Requirements"
       description="UK guide to electrical work in confined spaces. Confined Spaces Regulations 1997, what counts as a confined space, gas testing…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

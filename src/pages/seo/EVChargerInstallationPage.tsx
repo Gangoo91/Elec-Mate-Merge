@@ -90,7 +90,9 @@ export default function EVChargerInstallationPage() {
                     overnight in 6-8 hours. This is the charger type covered by the OZEV grant
                     scheme and the IET Code of Practice. Requires a dedicated 32A circuit with no
                     diversity, appropriate{' '}
-                    <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink>
+                    <SEOInternalLink href="/tools/cable-sizing-calculator">
+                      cable sizing
+                    </SEOInternalLink>
                     , and RCD protection.
                   </p>
                 </div>
@@ -158,7 +160,7 @@ export default function EVChargerInstallationPage() {
                       <strong className="text-yellow-400">Cable sizing</strong> — Minimum 6mm² PVC
                       twin-and-earth (for short runs clipped direct). 10mm² required for longer runs
                       to meet the{' '}
-                      <SEOInternalLink href="/voltage-drop-calculator">
+                      <SEOInternalLink href="/tools/voltage-drop-calculator">
                         5% voltage drop limit
                       </SEOInternalLink>
                       . SWA (steel wire armoured) cable for external underground runs.
@@ -535,7 +537,7 @@ export default function EVChargerInstallationPage() {
               <p>
                 The maximum demand of the property — including the new EV charger — must be assessed
                 before installation. Elec-Mate includes a{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 that factors in the EV charger load and checks it against the supply fuse rating.
@@ -612,14 +614,14 @@ export default function EVChargerInstallationPage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate the correct cable size for EV charging circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop compliance for long cable runs.',
           icon: Activity,

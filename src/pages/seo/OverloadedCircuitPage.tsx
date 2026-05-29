@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Maximum Demand Calculator',
     description:
       'Calculate the maximum demand for an installation with BS 7671 diversity factors applied.',
@@ -174,7 +174,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> cable
           sizing requirements is essential for diagnosing and preventing circuit overload.
           Elec-Mate's{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             maximum demand calculator
           </SEOInternalLink>{' '}
           helps you assess whether a circuit is properly sized for its load.
@@ -624,8 +624,8 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink> cover
-          circuit design, cable sizing, and maximum demand calculation in detail — essential
+          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink>{' '}
+          cover circuit design, cable sizing, and maximum demand calculation in detail — essential
           knowledge for every electrician advising customers on safe circuit loading.
         </p>
       </>

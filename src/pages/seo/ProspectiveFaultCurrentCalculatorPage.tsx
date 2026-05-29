@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'Why does prospective fault current matter for protective device selection?',
     answer:
-      'Every protective device (MCB, RCBO, fuse, MCCB) has a rated breaking capacity — the maximum fault current it can safely interrupt. If the prospective fault current at the point where the device is installed exceeds its breaking capacity, the device may fail catastrophically during a fault, potentially causing an arc flash, fire, or explosion. BS 7671 Regulation 434.5.1 requires that every protective device has a breaking capacity not less than the prospective fault current at its point of installation. For example, a standard domestic MCB typically has a breaking capacity of 6 kA. If the prospective fault current at the consumer unit is 4.5 kA, the MCB is suitable. If the PFC is 8 kA, a device with a higher breaking capacity (10 kA or 16 kA) must be used, or a backup protective device must provide the additional breaking capacity (Regulation 434.5.1, Note).',
+      'Every protective device (MCB, RCBO, fuse, MCCB) has a rated breaking capacity — the maximum fault current it can safely interrupt. If the prospective fault current at the point where the device is installed exceeds its breaking capacity, the device may fail catastrophically during a fault, potentially causing an arc flash, fire, or explosion. BS 7671 Reg 434.5.1 requires that every protective device capable of protecting against both overload and fault current has a breaking capacity not less than the prospective fault current at its point of installation. For example, a standard domestic MCB typically has a breaking capacity of 6 kA. If the prospective fault current at the consumer unit is 4.5 kA, the MCB is suitable. If the PFC is 8 kA, a device with a higher breaking capacity (10 kA or 16 kA) must be used, or the arrangement must comply with Reg 533.2.2, Reg 536.1, and Reg 536.5 (backup protection coordination with an upstream device of adequate breaking capacity).',
   },
   {
     question: 'What is a typical prospective fault current in a domestic installation?',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What if the prospective fault current exceeds the MCB breaking capacity?',
     answer:
-      'If the prospective fault current at a distribution board exceeds the breaking capacity of the MCBs installed in it, there are several options. First, you can replace the MCBs with devices that have a higher breaking capacity — some manufacturers offer MCBs rated at 10 kA or 16 kA instead of the standard 6 kA. Second, BS 7671 Regulation 434.5.1 Note 1 allows a device with a lower breaking capacity to be used if a backup protective device with adequate breaking capacity is installed upstream. For example, if the incoming main switch or fuse at the origin has a breaking capacity exceeding the PFC, and it provides backup protection (energy let-through coordination) for the downstream MCBs, the arrangement may be acceptable. Third, you can install a current-limiting device upstream to reduce the fault current reaching the board. The electrician must verify the coordination and document it.',
+      'If the prospective fault current at a distribution board exceeds the breaking capacity of the MCBs installed in it, there are several options. First, you can replace the MCBs with devices that have a higher breaking capacity — some manufacturers offer MCBs rated at 10 kA or 16 kA instead of the standard 6 kA. Second, BS 7671 Reg 533.2.2 permits a downstream device with a lower breaking capacity provided the arrangement complies with the last paragraph of Reg 536.1 and Reg 536.5 — in practice this means the upstream device must have adequate breaking capacity to clear the full prospective fault current and the energy let-through coordination between the two devices must be demonstrated (for example, using manufacturer coordination tables or calculated fault level evidence). Third, you can install a current-limiting device upstream to reduce the fault current reaching the board. The electrician must verify the coordination and document it.',
   },
 ];
 
@@ -151,13 +151,13 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://www.elec-mate.com/prospective-fault-current-calculator',
+  url: 'https://www.elec-mate.com/tools/prospective-fault-current-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial',
-  }
+  },
 };
 
 const faqSchema = {
@@ -219,10 +219,18 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             <span className="text-yellow-400">Prospective Fault Current</span> Calculator for
             Electricians
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-4">
+            Prospective fault current (Ipf) is calculated as Uo &divide; Zloop — for UK single-phase
+            this is 230&nbsp;V divided by the measured loop impedance in ohms. BS&nbsp;7671
+            Reg&nbsp;434.5.1 requires every protective device to have a breaking capacity at least
+            equal to the prospective fault current at its point of installation. BS&nbsp;7671
+            Reg&nbsp;643.7.3.201 requires that this value is measured, calculated or determined at
+            the origin and at every other relevant point.
+          </p>
+          <p className="text-base text-white/80 max-w-2xl mx-auto leading-relaxed mb-8">
             Calculate PSCC and PEFC instantly on your phone. Verify protective device breaking
-            capacity, check compliance with BS 7671, and access 70 electrical calculators — all in
-            one app.
+            capacity, check compliance with BS&nbsp;7671, and access 70 electrical calculators — all
+            in one app.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -281,16 +289,26 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               prospective fault current.
             </p>
             <p>
-              BS 7671 requires that prospective fault current is determined at the origin of every
-              installation and at other relevant points (Regulation 434.5.1 and Regulation 643.7).
-              This measurement or calculation is a mandatory part of initial verification and
-              periodic inspection, and the values must be recorded on the electrical installation
-              certificate or condition report. Use the{' '}
-              <SEOInternalLink href="/voltage-drop-calculator">
+              BS&nbsp;7671 Reg&nbsp;643.7.3.201 requires that prospective fault current is measured,
+              calculated or determined at the origin of every installation and at every other
+              relevant point. Reg&nbsp;434.5.1 separately requires that the breaking capacity of
+              every protective device is not less than the prospective fault current at its point of
+              installation. Both measurements and device checks are mandatory parts of initial
+              verification and periodic inspection, and the values must be recorded on the
+              electrical installation certificate or condition report. Use the{' '}
+              <SEOInternalLink href="/tools/earth-fault-loop-impedance-calculator">
+                earth fault loop impedance calculator
+              </SEOInternalLink>{' '}
+              to determine Zs at each point, the{' '}
+              <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+                adiabatic equation calculator
+              </SEOInternalLink>{' '}
+              to verify conductor sizing under fault conditions, the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
-              alongside PFC calculations for a complete circuit assessment, and the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              for a complete circuit assessment, and the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size conductors correctly.
@@ -388,6 +406,35 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               </div>
             </div>
           </div>
+          {/* GN3 0.8 temperature correction note */}
+          <div className="rounded-2xl bg-yellow-500/[0.06] border border-yellow-500/20 p-5 mt-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+              <div className="space-y-2 text-white text-sm leading-relaxed">
+                <p className="font-semibold text-yellow-400">
+                  Important: The 0.8 Temperature Correction Factor (GN3 Reg&nbsp;1.16.9)
+                </p>
+                <p>
+                  The worked examples above show Ipf calculated from a measured impedance. When
+                  comparing a measured Zs (taken at ambient temperature) against the maximum
+                  tabulated Zs values in BS&nbsp;7671, the conductor resistance will be higher at
+                  full operating temperature than when measured cold on site. To account for this,
+                  BS&nbsp;7671 Appendix&nbsp;3 and GN3 require that the measured Zs satisfies:
+                </p>
+                <p className="font-mono font-bold text-yellow-300">
+                  Zs(measured) &le; 0.8 &times; Zs(table)
+                </p>
+                <p>
+                  Equivalently, divide the tabulated maximum Zs by 0.8 to get the maximum
+                  permissible measured value — or confirm that your measured value is no more than
+                  80% of the table limit. If your measured Zs is within this limit you can be
+                  confident compliance is maintained at operating temperature. Instruments that
+                  apply this correction automatically will indicate a pass/fail against the adjusted
+                  limit.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -414,12 +461,15 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               installations are designed without properly considering the prospective fault current.
             </p>
             <p>
-              BS 7671 Regulation 434.5.1 states: "The prospective fault current shall be determined
-              at every relevant point of the installation. The breaking capacity of each protective
-              device shall be not less than the prospective fault current at the point at which the
-              device is installed." This is a fundamental safety requirement, and verifying it is a
-              mandatory part of both initial verification (when a new installation is commissioned)
-              and periodic inspection (EICR).
+              Two separate regulations govern this. Reg&nbsp;434.5.1 requires that every protective
+              device providing protection against both overload and fault current shall be capable
+              of breaking any overcurrent up to and including the maximum prospective fault current
+              at the point where the device is installed. Reg&nbsp;643.7.3.201 (Part 6) carries the
+              determination obligation: the prospective short-circuit current and prospective earth
+              fault current shall be measured, calculated or determined at the origin of the
+              installation and at every other relevant point. Both requirements are mandatory — one
+              governs device selection, the other governs measurement and verification during
+              initial verification and periodic inspection (EICR).
             </p>
             <p>
               In domestic installations, the prospective fault current at the consumer unit rarely
@@ -607,7 +657,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />

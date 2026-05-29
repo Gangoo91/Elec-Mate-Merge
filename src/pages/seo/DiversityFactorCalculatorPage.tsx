@@ -107,7 +107,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -219,7 +219,7 @@ export default function DiversityFactorCalculatorPage() {
               larger main tails, and an oversized distribution board. The IET On-Site Guide Table 1A
               provides standardised diversity allowances based on decades of measured usage patterns
               in UK installations. Use the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size main tails once your diversified demand is confirmed, and the{' '}
@@ -538,14 +538,12 @@ export default function DiversityFactorCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Hand-curated where slug-token matching couldn't surface peers. */}
@@ -553,14 +551,30 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/max-demand-calculator">Max Demand Calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/max-demand-calculation-guide">Max Demand Calculation Guide</SEOInternalLink>
-            <SEOInternalLink href="/electrical-load-calculation">Electrical Load Calculation — UK Guide 2024</SEOInternalLink>
-            <SEOInternalLink href="/tools/electrical-load-schedule">Electrical Load Schedule Calculator</SEOInternalLink>
-            <SEOInternalLink href="/cable-sizing-calculator">Cable Sizing Calculator BS 7671</SEOInternalLink>
-            <SEOInternalLink href="/voltage-drop-calculator">Voltage Drop Calculator</SEOInternalLink>
-            <SEOInternalLink href="/three-phase-power-calculator">Three Phase Power Calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/three-phase-calculations">Three Phase Calculations</SEOInternalLink>
+            <SEOInternalLink href="/tools/max-demand-calculator">
+              Max Demand Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/max-demand-calculation-guide">
+              Max Demand Calculation Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/electrical-load-calculation">
+              Electrical Load Calculation — UK Guide 2024
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/electrical-load-schedule">
+              Electrical Load Schedule Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-sizing-calculator">
+              Cable Sizing Calculator BS 7671
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/voltage-drop-calculator">
+              Voltage Drop Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/three-phase-power-calculator">
+              Three Phase Power Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-calculations">
+              Three Phase Calculations
+            </SEOInternalLink>
           </div>
         </div>
       </section>

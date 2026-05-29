@@ -42,6 +42,8 @@ const keyTakeaways = [
   'Battery-only installation costs (excluding solar panels) typically range from £2,000 to £6,000 depending on capacity and brand, plus installation labour of £300–£800.',
   'MCS certification is required for battery storage to qualify for 0% VAT (when installed alongside solar PV), the Smart Export Guarantee, and ECO4 funding. Standalone battery installations without solar attract 20% VAT.',
   'Round-trip efficiency for lithium-ion batteries ranges from 90–97%, meaning for every 100 kWh stored, 90–97 kWh is available for use. Lead-acid alternatives offer 70–80% efficiency and are rarely used in modern domestic installations.',
+  'A BESS supplying premises through an inverter is classified as a generating set under Reg 551.1.1 and is subject to all Chapter 55 requirements — including isolation, earthing, and protection coordination — in addition to Section 712 for PV-connected systems.',
+  'Initial verification of a BESS installation must be carried out with reference to the IET Code of Practice for Electrical Energy Storage Systems, covering battery isolation tests, DC earthing arrangements, and battery management system (BMS) checks (GN3 Reg 1.7).',
 ];
 
 const faqs = [
@@ -78,7 +80,7 @@ const faqs = [
   {
     question: 'What electrical regulations apply to battery storage installations?',
     answer:
-      "Battery storage installations must comply with BS 7671:2018+A4:2026, including Section 712 (for DC-coupled systems connected to a PV array) and relevant sections covering energy storage systems. The installation must be notified under the building regulations (Part P in England) via a competent person scheme such as NICEIC or NAPIT. Batteries must be installed in accordance with the manufacturer's requirements — including ventilation, temperature ranges, and separation distances. Large battery systems in commercial settings may require a fire risk assessment under BS EN 62619.",
+      "Battery storage installations must comply with BS 7671:2018+A4:2026. A BESS supplying premises through an inverter is classified as a 'generating set' under Reg 551.1.1, bringing all of Chapter 55 into scope (isolation, earthing, protection coordination) in addition to Section 712 for PV-connected systems. The installation must be notified under the building regulations (Part P in England) via a competent person scheme such as NICEIC or NAPIT. Batteries must be installed in accordance with the manufacturer's requirements — including ventilation, temperature ranges, and separation distances. Initial verification must follow the IET Code of Practice for Electrical Energy Storage Systems, covering battery isolation, DC earthing, and BMS checks (GN3 Reg 1.7). Large battery systems in commercial settings may require a fire risk assessment under BS EN 62619.",
   },
 ];
 
@@ -454,9 +456,21 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical protection:</strong> DC isolators, AC isolators, and appropriate
-                overcurrent protection must be installed. The installation must include clear
-                labelling identifying the battery system, all isolation points, and emergency
-                procedures.
+                overcurrent protection must be installed. For DC battery circuits, fuses shall
+                comply with BS EN IEC 60269-7, which provides specific requirements for the
+                protection of battery and battery energy storage systems (OSG Reg 7.2.7).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Mandatory warning notices (Reg 570.6.8.201):</strong> A warning notice
+                indicating the presence and location of the battery system must be fixed at three
+                locations: (a) the origin of each electrical installation; (b) each remote metering
+                position when remote from the origin; and (c) every consumer unit or distribution
+                board fed from the battery. All inverters must additionally carry a notice with
+                words similar to &quot;WARNING — Isolate both AC and DC sides before servicing&quot;
+                (Reg 712.514.103).
               </span>
             </li>
             <li className="flex items-start gap-3">

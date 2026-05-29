@@ -44,6 +44,7 @@ const keyTakeaways = [
   'Missing or disconnected main protective bonding to water and gas pipes is a major contributor to shock risk on metalwork.',
   'In properties with PME (TN-C-S) earthing, a broken PEN conductor (combined neutral and earth) on the DNO supply can put dangerous voltage on all bonded metalwork.',
   'Elec-Mate AI fault diagnosis helps electricians quickly identify whether the cause is an appliance fault, bonding issue, or supply-side problem.',
+  'A4:2026 (Reg 411.3.4) now mandates 30mA RCD protection on all domestic AC lighting circuits — a change that strengthens protection against fault currents reaching metalwork via luminaire wiring.',
 ];
 
 const faqs = [
@@ -60,12 +61,12 @@ const faqs = [
   {
     question: 'Can a faulty immersion heater electrify the water?',
     answer:
-      'Yes. An immersion heater has an electrical heating element sealed inside a metal sheath, immersed directly in the hot water cylinder. If the element sheath develops a crack or the insulation breaks down, the live conductor can make contact with the water. This energises the water itself and all connected metalwork — pipes, taps, radiators, and towel rails. The RCD should trip when this happens (because the current flowing through the water to earth is an earth leakage), but if the property has no RCD protection on the immersion heater circuit, or if the RCD is faulty, the fault can persist. This is why BS 7671 requires RCD protection (30mA) for circuits serving immersion heaters. If you suspect a faulty immersion heater, switch off the immersion heater circuit at the consumer unit immediately and call a qualified electrician.',
+      'Yes. An immersion heater has an electrical heating element sealed inside a metal sheath, immersed directly in the hot water cylinder. If the element sheath develops a crack or the insulation breaks down, the live conductor can make contact with the water. This energises the water itself and all connected metalwork — pipes, taps, radiators, and towel rails. The RCD should trip when this happens (because the current flowing through the water to earth is an earth leakage), but if the property has no RCD protection on the immersion heater circuit, or if the RCD is faulty, the fault can persist. In modern installations, consumer units are fully RCD-protected, so immersion heater circuits are typically covered. If you suspect a faulty immersion heater, switch off the immersion heater circuit at the consumer unit immediately and call a qualified electrician.',
   },
   {
     question: 'What is protective bonding and why does it matter?',
     answer:
-      'Main protective bonding is a fundamental safety measure required by BS 7671 (Regulation 411.3.1.2). It involves connecting the main earthing terminal of the electrical installation to extraneous-conductive-parts — metalwork that is not part of the electrical installation but could introduce an earth potential. In a domestic property, this means bonding conductors connected to the incoming water pipe, the incoming gas pipe, and (where applicable) incoming oil pipes and structural steelwork. The purpose is to ensure that all metalwork in the property is at the same potential — so if a fault puts a voltage on one piece of metalwork, the bonding ensures all metalwork rises to the same voltage, preventing a dangerous voltage difference. The bonding conductor for a typical domestic property must be at least 10mm² copper (or 6mm² if the supply is TT). If the bonding is missing, disconnected, or undersized, a fault can create a dangerous voltage difference between metalwork — which is exactly what causes a shock from a tap.',
+      'Main protective bonding is a fundamental safety measure required by BS 7671. It involves connecting the main earthing terminal of the electrical installation to extraneous-conductive-parts — metalwork that is not part of the electrical installation but could introduce a potential. Regulation 544.1.2 requires that the bonding connection to any extraneous-conductive-part (water pipe, gas pipe, other metallic service) shall be made as near as practicable to the point of entry into the premises. In a domestic property, this means bonding conductors connected to the incoming water pipe, the incoming gas pipe, and (where applicable) incoming oil pipes and structural steelwork. The purpose is to ensure that all metalwork in the property is at the same potential — so if a fault puts a voltage on one piece of metalwork, the bonding ensures all metalwork rises to the same voltage, preventing a dangerous voltage difference. Bonding conductor sizing is governed by Regulation 544.11: under PME (TN-C-S) supplies, sizing follows Table 54.8 based on the PEN conductor CSA; under non-PME supplies (TN-S or TT) the conductor must be at least half the CSA of the earthing conductor, with a minimum of 6mm² copper. If the bonding is missing, disconnected, or undersized, a fault can create a dangerous voltage difference between metalwork — which is exactly what causes a shock from a tap.',
   },
   {
     question: 'Could the shock be caused by my neighbour installation?',
@@ -216,10 +217,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The RCD should trip.</strong> Under BS 7671, immersion heater circuits must
-                have 30mA RCD protection. When the element fails, current flows from the live
-                conductor through the water to earth via the pipework and bonding — this earth
-                leakage should trip the RCD within 40ms at 150mA or within 200ms at 30mA.
+                <strong>The RCD should trip.</strong> Under BS 7671, socket-outlet circuits (Reg
+                411.3.3) and, since A4:2026, domestic lighting circuits (Reg 411.3.4) require 30mA
+                RCD protection. Many immersion heater circuits are also RCD-protected as part of a
+                fully RCD-protected consumer unit. When the element fails, current flows from the
+                live conductor through the water to earth via the pipework and bonding — this earth
+                leakage should cause the RCD to operate, interrupting the supply. For a
+                general-purpose non-delay 30mA RCD, the product standard (BS EN 61008/61009)
+                requires operation within 300ms at rated residual current IΔn and within 40ms at
+                5×IΔn (150mA); these are product standard limits, not BS 7671 values.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,8 +270,11 @@ const sections = [
           <SEOInternalLink href="/guides/eicr-for-landlords">EICR inspection</SEOInternalLink>.
         </p>
         <p>
-          Under BS 7671 Regulation 411.3.1.2, main protective bonding conductors must be connected
-          between the main earthing terminal and the following extraneous-conductive-parts:
+          Under BS 7671 Regulation 544.1.2, the main protective bonding connection to any
+          extraneous-conductive-part (gas, water, or other metallic pipework or service) shall be
+          made as near as practicable to the point of entry of that service into the premises. The
+          bonding conductors must be connected between the main earthing terminal and the following
+          extraneous-conductive-parts:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -295,10 +304,14 @@ const sections = [
           </ul>
         </div>
         <p>
-          The minimum bonding conductor size for TN-S and TN-C-S systems is 10mm² copper. For TT
-          systems, it is 6mm² copper. The bonding must be continuous, securely fixed, and connected
-          with BS EN 61238-1 compliant clamps (typically labelled "Safety Electrical Connection — Do
-          Not Remove").
+          The minimum bonding conductor size is determined by Regulation 544.11 and depends on the
+          earthing arrangement. Where PME (TN-C-S) conditions apply, the conductor shall be selected
+          in accordance with the PEN conductor CSA and Table 54.8 — typically 10mm², 16mm², or 25mm²
+          copper depending on the supply. Where PME does not apply (TN-S or TT), the conductor shall
+          be not less than half the CSA of the earthing conductor for the installation, with a
+          minimum of 6mm² copper. The bonding must be continuous, securely fixed, and connected with
+          BS EN 61238-1 compliant clamps (typically labelled "Safety Electrical Connection — Do Not
+          Remove").
         </p>
         <p>
           Common bonding failures include: clamps that have been removed during plumbing work and
@@ -535,8 +548,22 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify main protective bonding.</strong> Check that bonding conductors are
-                connected to water and gas pipes, correctly sized (10mm² minimum for TN-S/TN-C-S),
-                and securely clamped with labelled BS EN clamps.
+                connected to water and gas pipes, correctly sized per Reg 544.11 (Table 54.8 under
+                PME; minimum 6mm² half-earthing-conductor rule under non-PME), and securely clamped
+                with labelled BS EN clamps.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Ensure domestic lighting circuits have 30mA RCD protection (A4:2026).
+                </strong>{' '}
+                BS 7671 A4:2026 Regulation 411.3.4 now requires that, within domestic premises, all
+                AC final circuits supplying luminaires shall have additional protection by an RCD
+                with a rated residual operating current not exceeding 30mA. This directly reduces
+                the risk of fault currents from luminaire wiring reaching metalwork and causing a
+                shock — the same mechanism described on this page.
               </span>
             </li>
             <li className="flex items-start gap-3">

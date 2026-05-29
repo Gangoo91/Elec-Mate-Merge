@@ -43,6 +43,9 @@ const keyTakeaways = [
   'Validation is the formal documented process of demonstrating that systems do what they are designed to do. Electrical systems in pharmaceutical facilities are validated through Installation Qualification (IQ), Operational Qualification (OQ), and Performance Qualification (PQ).',
   'FDA 21 CFR Part 11 governs electronic records and electronic signatures for facilities supplying the US market. Electrical control systems, building management systems, and SCADA systems that record GMP-relevant data must comply.',
   'Isolation transformers are widely used in pharmaceutical cleanrooms to provide a floating earth reference, reduce electromagnetic interference to sensitive instrumentation, and provide an additional level of electrical safety for personnel working with critical equipment.',
+  'BS 7671 Reg 710.555.201 sets a mandatory acceptance criterion for medical IT systems: with all final circuits connected and without load, the total leakage current (transformer plus all connected final circuits) shall not exceed 10 mA. Reg 710.531.2.2.3 prohibits overload protection in the secondary circuit of the isolation transformer — protection against overload must be provided at each individual final circuit instead.',
+  'BS 7671 Reg 710.415.1 prohibits the use of RCDs as additional protection on final circuits supplied by a medical IT system. Where a second insulation fault occurs, automatic disconnection must be achieved via overcurrent protective devices in accordance with Reg 411.6.5 (Reg 717.411.6).',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire caused by arc fault currents. This recommendation applies across premises — including pharmaceutical facilities undertaking new installations or subject to EICR — and should be considered when upgrading or certifying electrical systems.',
 ];
 
 const faqs = [
@@ -71,7 +74,7 @@ const faqs = [
   {
     question: 'Why are isolation transformers used in pharmaceutical cleanrooms?',
     answer:
-      'Isolation transformers are used in pharmaceutical cleanrooms for several reasons. They provide a floating (unearthed) secondary winding, which means that a single earth fault on the secondary does not cause a circuit breaker trip — important in critical manufacturing processes where an unexpected power interruption could ruin a product batch. They also reduce electromagnetic interference (EMI) from the supply, which can affect sensitive analytical instruments. An insulation monitoring device (IMD) is used with an isolated power system to detect earth faults without tripping the supply. This combination of isolation transformer and IMD (as described in IEC 61557-8 and BS 7671 Section 710) is common in pharmaceutical operating theatre-type environments.',
+      'Isolation transformers are used in pharmaceutical cleanrooms for several reasons. They provide a floating (unearthed) secondary winding, which means that a single earth fault on the secondary does not cause a circuit breaker trip — important in critical manufacturing processes where an unexpected power interruption could ruin a product batch. They also reduce electromagnetic interference (EMI) from the supply, which can affect sensitive analytical instruments. An insulation monitoring device (IMD) is used with an isolated power system to detect earth faults without tripping the supply. Where an insulation fault location system (IFLS) is provided, it shall comply with BS EN IEC 61557-9 (BS 7671 Reg 411.6.3). Medical IT transformers must comply with BS EN 61558-2-15 (Reg 710.55.101.2), and the total leakage current of the transformer and all connected final circuits shall not exceed 10 mA with no load applied (Reg 710.555.201). Importantly, RCDs shall not be used as additional protection on final circuits supplied by a medical IT system (Reg 710.415.1) — second-fault disconnection relies on overcurrent protective devices instead.',
   },
   {
     question: 'What are the particle count limits for ISO 5, ISO 6, ISO 7, and ISO 8 cleanrooms?',
@@ -425,10 +428,12 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation monitoring device (IMD)</strong> — an IT system must be monitored
-                by an IMD (as required by BS 7671 and IEC 61557-8). The IMD detects the first earth
+                by an IMD (as required by BS 7671 Reg 411.6.3). The IMD detects the first earth
                 fault and raises an alarm, allowing the fault to be located and rectified without
-                interrupting the supply. This is the critical difference from a TN or TT system —
-                the first fault is detected but does not cause supply interruption.
+                interrupting the supply. Where an insulation fault location system (IFLS) is also
+                provided, it shall comply with BS EN IEC 61557-9 (Reg 411.6.3). This is the critical
+                difference from a TN or TT system — the first fault is detected but does not cause
+                supply interruption.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -439,6 +444,45 @@ const sections = [
                 from the supply. This is beneficial in pharmaceutical environments with sensitive
                 analytical instruments, GC-MS, HPLC, and other laboratory equipment that is
                 sensitive to supply noise.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Transformer product standard and leakage limit (Reg 710.55.101.2 / Reg
+                  710.555.201)
+                </strong>{' '}
+                — medical IT transformers shall comply with BS EN 61558-2-15. With all final
+                circuits connected and without load, the total leakage current of the medical IT
+                transformer and all connected final circuits combined shall not exceed 10 mA (Reg
+                710.555.201). This is a mandatory acceptance criterion verified at commissioning.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  No overload protection in the transformer secondary (Reg 710.531.2.2.3)
+                </strong>{' '}
+                — overload protection shall not be installed in the secondary circuit of the
+                isolation transformer. The primary-side OCPD provides fault current protection only;
+                each final circuit on the secondary side must have its own fault current and
+                overload protection. A double-pole circuit-breaker is required for each single-phase
+                final circuit fed from the medical IT system.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  RCDs prohibited as additional protection on IT final circuits (Reg 710.415.1)
+                </strong>{' '}
+                — additional protection by means of an RCD shall not be used on final circuits
+                supplied by a medical IT system. Where a second insulation fault occurs, automatic
+                disconnection must be achieved via overcurrent protective devices in accordance with
+                Reg 411.6.5 (Reg 717.411.6). This is a common design error — fitting 30 mA RCDs on
+                IT-supplied circuits is non-compliant.
               </span>
             </li>
           </ul>
@@ -592,6 +636,25 @@ const sections = [
                   electrical installation.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <Zap className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                A4:2026 Update: Arc Fault Detection Devices (AFDDs)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection
+                devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of
+                fire due to arc fault currents. Pharmaceutical facilities undergoing new electrical
+                installation work or periodic inspection (EICR) should consider AFDDs — particularly
+                on socket-outlet and lighting circuits — as part of a current-standard-compliant
+                design. AFDDs detect dangerous series and parallel arcing conditions that
+                conventional MCBs and RCDs cannot detect.
+              </p>
             </div>
           </div>
         </div>

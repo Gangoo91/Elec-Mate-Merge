@@ -385,6 +385,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
+                <strong>DC warning labelling (Reg 712.514.102):</strong> One of the most frequently
+                cited audit non-conformances. BS 7671 requires a permanent warning notice at every
+                combiner box and distribution board access point on the DC side, indicating that
+                live parts can remain energised after isolation. The standard example wording is:
+                &ldquo;SOLAR DC &#x2014; Live parts can remain energized after isolation.&rdquo;
+                Labels must be durable and fixed to the enclosure. Missing, damaged, or temporary
+                labels fail the audit.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+              <span>
                 <strong>Non-conformance process:</strong> Where issues are found, the certification
                 body issues a corrective action report with a deadline for remediation. Minor
                 non-conformances are typically resolved without impact on certification; major
@@ -405,7 +417,10 @@ const sections = [
           MCS 001 (Microgeneration Installation Standard: Issue 3.0 — Solar Photovoltaic Systems) is
           the technical standard that governs every aspect of an MCS-certified solar PV
           installation. Installers must demonstrate compliance with MCS 001 at every stage from
-          design to handover.
+          design to handover. Note that BS 7671 Section 712 — the wiring regulations chapter
+          underpinning MCS electrical compliance — was extensively revised and expanded in the
+          A4:2026 amendment. Installers who trained or last reviewed Section 712 before 2026 should
+          verify their working knowledge is current before the next audit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -437,9 +452,49 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on BS 7671:2018+A4:2026 Section 712. Compliance with BS 7671 is a prerequisite for MCS 001
+                <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on BS
+                7671:2018+A4:2026 Section 712. Compliance with BS 7671 is a prerequisite for MCS 001
                 compliance — MCS does not replace the wiring regulations, it supplements them with
                 microgeneration-specific requirements.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <p className="text-yellow-300 font-semibold mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 shrink-0" />
+            Key BS 7671 Section 712 requirements auditors check
+          </p>
+          <ul className="space-y-3 text-white text-sm">
+            <li className="flex items-start gap-2">
+              <span className="text-yellow-400 mt-0.5 shrink-0">&#9654;</span>
+              <span>
+                <strong>Reg 712.410.101 — DC side remains live after AC isolation:</strong> BS 7671
+                requires that DC-side equipment is treated as energised at all times, even when the
+                AC supply is disconnected from the grid. PV arrays continue to produce voltage in
+                daylight regardless of inverter or AC isolation state. This must be reflected in
+                risk assessments, isolation procedures, and any working-on notices.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-yellow-400 mt-0.5 shrink-0">&#9654;</span>
+              <span>
+                <strong>Reg 712.410.102 — Mandatory DC-side protective measure:</strong> One of the
+                following protective measures shall be applied on the DC side: (a) double or
+                reinforced insulation (Section 412), or (b) extra-low voltage — SELV or PELV
+                (Section 414). The chosen measure must be documented in the design assessment and
+                confirmed during commissioning. A missing or undocumented choice is a direct audit
+                non-conformance.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-yellow-400 mt-0.5 shrink-0">&#9654;</span>
+              <span>
+                <strong>Reg 712.421.101.1 — Insulation monitoring device (IMD) on DC side:</strong>{' '}
+                An IMD shall be installed on the DC side (subject to the exceptions in the
+                referenced cross-regulation). The IMD monitors insulation resistance to earth and
+                raises an alarm if insulation degrades — an important safety requirement on
+                unearthed DC systems. Its presence and correct operation are verified at audit.
               </span>
             </li>
           </ul>
@@ -519,7 +574,7 @@ export default function MCSCertificationGuidePage() {
   return (
     <GuideTemplate
       title="MCS Certification for Solar Installers UK | How to Become"
-      description="Complete guide to MCS certification for solar installers in the UK. What MCS is, why it matters for SEG and grants, how to get certified…"
+      description="Complete guide to MCS certification for solar installers in the UK — how to get certified, MCS 001 costs, annual audit checklist, and the BS 7671 Section 712 requirements auditors check on every solar PV installation."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

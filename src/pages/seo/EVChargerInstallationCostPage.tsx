@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long EV charger cable runs to garages and driveways.',
     icon: Zap,
@@ -280,7 +280,7 @@ const sections = [
         </p>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to determine the correct cable size for your specific installation, factoring in cable
@@ -521,12 +521,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI-Powered Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised EV installation quotes. Charger unit, cable (auto-sized for the
-                  run length), RCBO, earth rod if needed, labour, testing, and DNO notification —
-                  all itemised with your margins. Professional PDF sent to the customer from site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised EV installation quotes. Charger unit, cable (auto-sized for the run
+                  length), RCBO, earth rod if needed, labour, testing, and DNO notification — all
+                  itemised with your margins. Professional PDF sent to the customer from site.
                 </p>
               </div>
             </div>
@@ -538,7 +536,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the cable correctly on the survey with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Input the load (32A continuous), cable length, installation method, and ambient

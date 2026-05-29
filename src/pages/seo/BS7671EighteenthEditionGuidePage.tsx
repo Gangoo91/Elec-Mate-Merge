@@ -33,7 +33,6 @@ const tocItems = [
   { id: 'seven-parts', label: 'The 7 Parts' },
   { id: 'changes-from-17th', label: 'Changes from 17th Edition' },
   { id: 'amendment-2', label: 'Amendment 2 (2022)' },
-  { id: 'amendment-3', label: 'Amendment 4 (2026)' },
   { id: 'amendment-4', label: 'Amendment 4 (2026)' },
   { id: 'daily-practice', label: 'BS 7671 in Daily Practice' },
   { id: 'faq', label: 'FAQ' },
@@ -44,7 +43,7 @@ const keyTakeaways = [
   'BS 7671:2018+A2:2022 is the current base standard (the "brown book") — all new electrical work in the UK must comply.',
   'Amendment 4 (A4:2026), issued 31 July 2024, adds a new regulation within Section 530 covering bidirectional and unidirectional protective devices for battery storage and V2G installations.',
   'The 18th Edition introduced major changes including AFDDs (Regulation 421.1.1 and Section 421), surge protection (Section 534), metal consumer unit requirements, and EV charging provisions (Section 722).',
-  'Amendment 4 is expected in 2026 and will likely address evolving requirements for energy storage, smart grid integration, and prosumer installations.',
+  'Amendment 4 (A4:2026) is now published. Key new requirements include mandatory AFDDs for socket-outlet circuits in higher-risk residential buildings and HMOs (Reg 421.1.7), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), and a completely revised Section 534 with updated voltage protection level selection rules for SPDs.',
   'Elec-Mate has every BS 7671 regulation built into the app — tap any certificate field to see the relevant clause, with 70+ calculators based on BS 7671 tables.',
 ];
 
@@ -77,12 +76,12 @@ const faqs = [
   {
     question: 'How often is BS 7671 updated?',
     answer:
-      'Major new editions of BS 7671 are published approximately every 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address urgent changes, new technologies, or corrections. The 18th Edition has had three amendments so far: Amendment 1 (2020), Amendment 2 (2022), and Amendment 4 (2026). Amendment 4 is expected in 2026. The next full new edition (the 19th Edition) would typically be expected around 2028, but the IET has not confirmed a date. Each amendment requires electricians to update their knowledge and potentially their qualifications.',
+      'Major new editions of BS 7671 are published approximately every 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address urgent changes, new technologies, or corrections. The 18th Edition has had three amendments so far: Amendment 1 (2020), Amendment 2 (2022), and Amendment 4 (A4:2026, issued 31 July 2024, already in force). The next full new edition (the 19th Edition) would typically be expected around 2028, but the IET has not confirmed a date. Each amendment requires electricians to update their knowledge and potentially their qualifications.',
   },
   {
     question: 'What did Amendment 4 introduce for bidirectional devices?',
     answer:
-      'Amendment 4 (A4:2026), issued on 31 July 2024, added new requirements within Section 530 of BS 7671 for bidirectional and unidirectional protective devices in installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are typically designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. The Amendment 4 requirement is that protective devices installed are suitable for the direction(s) of fault current that can occur. This may require bidirectional MCBs, bidirectional RCDs, or specific arrangements to ensure that unidirectional devices are not subjected to reverse fault currents they cannot safely interrupt.',
+      'Amendment 4 (A4:2026), issued on 31 July 2024, added Regulation 530.3.201 within Section 530 of BS 7671, requiring that the selection and erection of protective equipment shall take account of the appropriate use of either a unidirectional or a bidirectional protective device. This applies to installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. Regulation 530.3.201 requires that protective devices are suitable for the direction(s) of fault current that can occur. Additionally, under Reg 133.1.3, the use of unidirectional or bidirectional devices must be recorded on the appropriate Part 6 electrical certificate.',
   },
 ];
 
@@ -209,9 +208,9 @@ const sections = [
                 initial verification and periodic inspection and testing
               </SEOInternalLink>
               . Specifies which tests must be carried out, in what order, and what the pass/fail
-              criteria are. Table 61 (insulation resistance minimum values) and the Zs tables for
-              maximum earth fault loop impedance are in this part. Part 6 is the legal basis for
-              every{' '}
+              criteria are. Table 64 (insulation resistance minimum values and DC test voltages per
+              Reg 643.3.2) and the Zs tables for maximum earth fault loop impedance are in this
+              part. Part 6 is the legal basis for every{' '}
               <SEOInternalLink href="/guides/electrical-certificate-types-uk">
                 electrical certificate
               </SEOInternalLink>{' '}
@@ -262,15 +261,17 @@ const sections = [
                   Arc Fault Detection Devices (Section 421)
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The 18th Edition introduced a recommendation (not a mandatory requirement) for
-                  AFDDs in certain higher-risk locations — specifically, premises with sleeping
-                  accommodation where particular risks of fire exist (such as locations with
-                  combustible building materials, furniture storage, or listed buildings). AFDDs
-                  detect dangerous arcing faults that do not trip conventional MCBs or RCDs — for
-                  example, a loose connection in a junction box or a damaged cable behind
-                  plasterwork. The regulation is worded as a recommendation ("shall be considered")
-                  rather than a requirement, giving designers discretion over whether to install
-                  AFDDs based on the risk assessment.
+                  The 18th Edition introduced Regulation 421.1.7, which recommends AFDDs for AC
+                  final circuits in premises with sleeping accommodation where fire risk is
+                  elevated. AFDDs detect dangerous arcing faults that do not trip conventional MCBs
+                  or RCDs — for example, a loose connection in a junction box or a damaged cable
+                  behind plasterwork. Under A4:2026, Reg 421.1.7 was redrafted: AFDD protection is
+                  now
+                  <strong> mandatory</strong> for socket-outlet final circuits (rated current not
+                  exceeding 32 A) in Higher Risk Residential Buildings, Houses in Multiple
+                  Occupation (HMOs), purpose-built student accommodation, and care homes. For
+                  standard domestic dwellings that do not fall into those categories, installation
+                  remains a recommendation rather than a prescriptive requirement.
                 </p>
               </div>
             </div>
@@ -286,8 +287,10 @@ const sections = [
                   overvoltage event would be serious — loss of important data, destruction of
                   valuable equipment, impact on safety services — surge protection devices (SPDs)
                   must be installed. In practice, this means most new domestic installations now
-                  include Type 2 SPDs. The cost is modest (typically £30 to £60 for the device plus
-                  installation) and the protection is significant.
+                  include Type 2 SPDs. Under A4:2026, Section 534 has been completely revised; the
+                  most significant technical change is the introduction of updated selection
+                  requirements for the voltage protection level (Up) of SPDs, which designers must
+                  now apply when specifying devices.
                 </p>
               </div>
             </div>
@@ -379,8 +382,8 @@ const sections = [
     ),
   },
   {
-    id: 'amendment-3',
-    heading: 'Amendment 4 (2026) — Bidirectional Device Requirements',
+    id: 'amendment-4',
+    heading: 'Amendment 4 (2026) — Key New Requirements',
     content: (
       <>
         <p>
@@ -389,22 +392,25 @@ const sections = [
           website and use alongside their existing copy of BS 7671:2018+A2:2022.
         </p>
         <p>
-          The headline change in Amendment 4 is a new requirement within Section 530 of BS 7671,
-          which addresses the selection of bidirectional and unidirectional protective devices. This
-          addition is a direct response to the growth of domestic battery energy storage systems
-          (BESS), solar PV installations with battery backup, and vehicle-to-grid (V2G) electric
-          vehicle charging — all of which can cause electrical energy to flow in the reverse
-          direction, from the installation back through the consumer unit towards the supply.
+          Amendment 4 introduces several significant new requirements. The headline addition is
+          Regulation 530.3.201 within Section 530, which addresses the selection of bidirectional
+          and unidirectional protective devices. This is a direct response to the growth of domestic
+          battery energy storage systems (BESS), solar PV installations with battery backup, and
+          vehicle-to-grid (V2G) electric vehicle charging — all of which can cause electrical energy
+          to flow in the reverse direction, from the installation back through the consumer unit
+          towards the supply. Under Reg 133.1.3 (also modified by A4:2026), use of unidirectional or
+          bidirectional devices must now be recorded on the appropriate Part 6 electrical
+          certificate.
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
-            What the Amendment 4 Section 530 requirement covers
+            Reg 530.3.201 — Bidirectional and unidirectional device selection
           </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Standard MCBs, RCDs, and RCBOs are designed to interrupt fault current flowing in one
             direction — from the supply, through the device, to the load. When a battery or V2G
-            charger exports energy, fault current can flow in the opposite direction. The Amendment
-            3 requirement within Section 530 states that:
+            charger exports energy, fault current can flow in the opposite direction. Regulation
+            530.3.201 states that:
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -435,6 +441,26 @@ const sections = [
           the standard. It does not change the fundamental structure or numbering of BS 7671 — it is
           a targeted amendment addressing specific technical gaps identified since Amendment 2.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">
+                Reg 411.3.4 — RCD protection for domestic lighting circuits (new in A4:2026)
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                One of the most practically significant A4:2026 changes for domestic electricians:
+                Regulation 411.3.4 now requires that, within domestic (household) premises, AC final
+                circuits supplying luminaires shall be provided with additional protection by an RCD
+                with a rated residual operating current not exceeding 30 mA. The regulation uses
+                'shall', making this a mandatory requirement — not a recommendation. On new domestic
+                installations and rewires, all lighting circuits must therefore be protected by a 30
+                mA RCD or RCBO. This has direct implications for consumer unit specification and
+                schedule-of-circuits documentation on Part 6 certificates.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           For electricians installing solar PV, battery storage, or EV chargers, Amendment 4 is
           essential reading. The requirement for bidirectional protection has implications for
@@ -446,58 +472,6 @@ const sections = [
           description="Cable sizing, voltage drop, Zs verification, maximum demand, adiabatic equation…"
           icon={Calculator}
         />
-      </>
-    ),
-  },
-  {
-    id: 'amendment-4',
-    heading: 'Expected Amendment 4 (2026)',
-    content: (
-      <>
-        <p>
-          Amendment 4 to BS 7671:2018 is expected in 2026, although the IET has not confirmed an
-          exact publication date. Based on the pattern of previous amendments and the current
-          direction of the industry, Amendment 4 is likely to address several emerging areas.
-        </p>
-        <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white mb-2">Battery Energy Storage Systems (BESS)</h3>
-            <p className="text-white text-sm leading-relaxed">
-              Domestic battery storage has grown significantly since the 18th Edition was published.
-              While Amendment 4 addressed bidirectional protection, further guidance on battery
-              installation, ventilation, fire suppression, and integration with the main
-              installation is expected. The fire risks associated with lithium-ion batteries in
-              domestic settings are an active area of concern for the fire services and building
-              control bodies.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white mb-2">Smart Grid and Demand-Side Response</h3>
-            <p className="text-white text-sm leading-relaxed">
-              As the UK electricity grid moves towards smarter management of supply and demand,
-              electrical installations will increasingly need to support demand-side response,
-              time-of-use tariffs, and automated load management. Amendment 4 may introduce
-              requirements for installations to be "smart grid ready" — with appropriate metering,
-              communication, and control provisions.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white mb-2">AFDD Requirements</h3>
-            <p className="text-white text-sm leading-relaxed">
-              The current BS 7671 Chapter 42 guidance recommends AFDDs but does not mandate them in
-              all cases. There is ongoing industry discussion about strengthening this to a
-              requirement for specific circuit types or building types — particularly in HMOs, care
-              homes, and buildings of historical significance where the fire risk is elevated.
-              Amendment 4 may move AFDDs from a recommendation to a requirement in defined
-              circumstances.
-            </p>
-          </div>
-        </div>
-        <p className="mt-6">
-          Until Amendment 4 is published, all new work must comply with BS 7671:2018+A4:2026.
-          Elec-Mate will be updated promptly when Amendment 4 is released to ensure all calculators,
-          regulation references, and certificate forms reflect the latest requirements.
-        </p>
       </>
     ),
   },
@@ -663,7 +637,7 @@ export default function BS7671EighteenthEditionGuidePage() {
           BS 7671: 18th Edition <span className="text-yellow-400">Wiring Regulations Guide</span>
         </>
       }
-      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), Amendment 4 (2026) covering bidirectional device requirements, and what to expect from Amendment 4 in 2026."
+      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), and Amendment 4 (A4:2026) covering bidirectional device requirements (Reg 530.3.201), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), updated AFDD rules (Reg 421.1.7), and a revised Section 534 for SPDs."
       readingTime={18}
       keyTakeaways={keyTakeaways}
       sections={sections}

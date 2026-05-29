@@ -354,7 +354,7 @@ const sections = [
         </p>
         <p>
           Electricians can use Elec-Mate's{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             maximum demand calculator
           </SEOInternalLink>{' '}
           to assess the total load on each circuit and the overall installation, identifying where

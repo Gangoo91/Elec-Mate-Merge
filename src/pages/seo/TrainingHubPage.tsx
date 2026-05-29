@@ -14,7 +14,7 @@ import {
   Users,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical Training Hub | Apprentice, 18th Edition, AM2 and 2391';
+const PAGE_TITLE = 'Electrical Training Hub | BS 7671:2018+A4:2026, 18th Edition, AM2, 2391';
 const PAGE_DESCRIPTION =
   'Elec-Mate training for apprentices + qualified UK electricians: 18th Edition, AM2, I&T, 2391, Level 2, Level 3, EPA prep, Study Centre.';
 
@@ -85,6 +85,15 @@ const trainingCollections = [
       { href: '/best-electrician-app', label: 'Best Electrician App Overview' },
     ],
   },
+  {
+    heading: 'Emerging topics',
+    links: [
+      { href: '/guides/ev-charging-regulations', label: 'EV Charging (Reg 722)' },
+      { href: '/guides/afdd-arc-fault-detection', label: 'AFDD — Reg 421.1.7' },
+      { href: '/guides/18th-edition-amendment-4', label: 'Amendment 4:2026 Changes' },
+      { href: '/tools/eicr-certificate', label: 'EICR Certificate Tool' },
+    ],
+  },
 ];
 
 const faqs = [
@@ -102,6 +111,11 @@ const faqs = [
     question: 'Does training content connect back into the app?',
     answer:
       'Yes. Once you sign up, you can move from training into the Study Centre, calculators, certificates, and AI support inside Elec-Mate.',
+  },
+  {
+    question: 'How does Elec-Mate keep 18th Edition content up to date?',
+    answer:
+      'All content is aligned to BS 7671:2018+A4:2026 — the current edition of the IET Wiring Regulations including Amendment 4 (April 2026). Where specialist topics such as EV charging (Chapter 72) or arc fault detection (Reg 421.1.7) require additional knowledge beyond the general standard, Elec-Mate follows the approach set out in IET Guidance Note 3 (Reg 1.7), directing learners to the relevant specialist guidance rather than simplifying it away.',
   },
 ];
 
@@ -134,12 +148,19 @@ export default function TrainingHubPage() {
             <span className="text-sm font-medium text-yellow-400">Training and Study</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Electrical Training for <span className="text-yellow-400">Apprentices and Electricians</span>
+            Electrical Training for{' '}
+            <span className="text-yellow-400">Apprentices and Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-3xl mx-auto leading-relaxed mb-8">
-            Find the right Elec-Mate training route for apprentice study, exam preparation, CPD,
-            and skills refreshers. Everything here is designed to help you learn faster and keep
+            Find the right Elec-Mate training route for apprentice study, exam preparation, CPD, and
+            skills refreshers. Everything here is designed to help you learn faster and keep
             progressing in the trade.
+          </p>
+          <p className="text-base text-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
+            All 18th Edition content on Elec-Mate is aligned to BS 7671:2018+A4:2026 — the current
+            edition of the wiring regulations — including the recommended installation of arc fault
+            detection devices under Regulation 421.1.7 and the expanded RCD requirements introduced
+            by Amendment 4.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -160,13 +181,15 @@ export default function TrainingHubPage() {
 
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Training for every stage</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            Training for every stage
+          </h2>
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             Whether you are starting out or topping up your knowledge, this hub ties together pages
             like{' '}
             <SEOInternalLink href="/training/18th-edition-course">18th Edition</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/training/am2-exam-preparation">AM2 preparation</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/training/city-guilds-2391">2391</SEOInternalLink>, and the{' '}
+            <SEOInternalLink href="/training/am2-exam-preparation">AM2 preparation</SEOInternalLink>
+            , <SEOInternalLink href="/training/city-guilds-2391">2391</SEOInternalLink>, and the{' '}
             <SEOInternalLink href="/study-centre">Study Centre</SEOInternalLink> so you can find the
             right learning path quickly.
           </p>
@@ -177,7 +200,7 @@ export default function TrainingHubPage() {
       <section id="training-collections" className="py-12 px-5 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">Training collections</h2>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {trainingCollections.map((collection) => (
               <div
                 key={collection.heading}
@@ -212,6 +235,15 @@ export default function TrainingHubPage() {
             , you can move straight into the{' '}
             <SEOInternalLink href="/tools/eicr-certificate">certificate workflow</SEOInternalLink>.
           </p>
+          <h3 className="text-xl font-bold text-white pt-2">Why stay current?</h3>
+          <p>
+            Regulation 16 of the Electricity at Work Regulations 1989 (EAWR) places a legal duty on
+            every person to work only within their level of competence. For qualified electricians,
+            that means structured CPD is not optional — it is a legal requirement that keeps you
+            working safely and lawfully as regulations evolve. Elec-Mate&apos;s CPD and 18th Edition
+            content is built around that obligation, giving employers and their teams a clear,
+            documented path to ongoing compliance.
+          </p>
         </div>
       </section>
 
@@ -220,7 +252,10 @@ export default function TrainingHubPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Training hub FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <div key={faq.question} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
+              <div
+                key={faq.question}
+                className="rounded-2xl border border-white/8 bg-white/[0.03] p-5"
+              >
                 <h3 className="text-lg font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white leading-relaxed">{faq.answer}</p>
               </div>

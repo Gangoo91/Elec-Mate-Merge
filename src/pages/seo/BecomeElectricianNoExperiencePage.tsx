@@ -225,7 +225,7 @@ const sections = [
           GBP 14,000-18,000 per year, which is a significant pay cut for most career changers.
           However, this increases each year, and upon qualification you immediately earn GBP
           28,000-35,000 with rapid progression beyond that. For a full breakdown, see our{' '}
-          <SEOInternalLink href="/guides/apprentice-electrician-salary-uk">
+          <SEOInternalLink href="/guides/apprentice-electrician-salary">
             apprentice salary guide
           </SEOInternalLink>
           .
@@ -287,8 +287,7 @@ const sections = [
               <span className="flex-1 text-left">
                 <strong>C&G 2391 (Inspection & Testing):</strong> How to inspect and test electrical
                 installations and complete certificates. See our{' '}
-                <SEOInternalLink href="/city-guilds2391">2391 guide</SEOInternalLink> for
-                exam tips.
+                <SEOInternalLink href="/city-guilds2391">2391 guide</SEOInternalLink> for exam tips.
               </span>
             </li>
             <li className="flex items-start gap-3">

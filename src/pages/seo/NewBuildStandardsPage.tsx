@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate correct cable sizes for new build circuits accounting for voltage drop, grouping, and thermal insulation.',

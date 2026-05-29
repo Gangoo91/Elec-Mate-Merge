@@ -42,6 +42,9 @@ const keyTakeaways = [
   'All electrical accessories in a cleanroom must be flush-mounted with sealed perimeters. Surface-mounted boxes create ledges that accumulate particles, disturb laminar airflow, and are difficult to clean effectively. Even small protruding features can disrupt cleanroom airflow patterns.',
   "Sealed cable entries through cleanroom walls, floors, and ceilings are critical to maintaining the room's pressure differential, preventing particle bypass, and preserving the thermal and acoustic separation between cleanroom and non-cleanroom spaces.",
   'UPS systems are essential in critical cleanroom environments — a mains power interruption that stops HVAC fans and HEPA filtration will cause rapid degradation of the cleanroom classification and may require a full recovery and re-certification process.',
+  'Under BS 7671:2018+A4:2026 Reg 710.560.7 (Chapter 71 — Special Installations), the circuit connecting a UPS or other electrical source for safety services to the main distribution board is classified as a safety circuit and must be designed and protected accordingly — with segregation from non-essential circuits and a reliability standard appropriate to safety services.',
+  'BS 7671:2018+A4:2026 Reg 134.1.1 requires that enclosures in a cleanroom installation are suitable for the IP (ingress protection) rating required for the location and equipment. Where cleaning agents or liquid ingress from wash-down procedures is foreseeable, enclosures must be selected and installed so that their declared IP rating is maintained throughout the installation.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault currents. In pharmaceutical or semiconductor cleanrooms, where an arc-fault-induced fire or contamination event could require costly decommissioning and re-qualification, AFDDs on socket-outlet and power circuits represent best-in-class risk management.',
   'Positive pressure monitoring is a GMP-critical or quality-critical function in pharmaceutical, semiconductor, and precision manufacturing cleanrooms. Electrical systems supporting pressure monitoring must be highly reliable, calibrated, and their data must be available to the building management system.',
 ];
 
@@ -389,11 +392,17 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire stopping</strong> — all penetrations through the cleanroom envelope
-                must also be fire-stopped to maintain the fire compartmentation of the building.
-                Cleanroom walls are typically fire-rated — penetrations must be sealed with
-                intumescent or equivalent fire-stopping products that maintain the fire rating. The
-                fire-stop must also maintain the cleanroom seal — some combined products are
-                available.
+                must also be fire-stopped to maintain the fire compartmentation of the building. BS
+                7671:2018+A4:2026 Reg 830.3.201 states that penetrations of fire-separating elements
+                by cables and installations shall be sealed and fire-stopped to maintain
+                compartmentation. GN3 (9th Ed) Reg 5.19 reinforces this: where cables, conduits or
+                services pass through fire-resisting walls, floors or partitions, a fire barrier or
+                equivalent sealing arrangement shall be provided to maintain the integrity of the
+                fire-resisting element and prevent spread of fire and smoke via the penetration.
+                Sealing materials must be compatible with the cables and services installed and must
+                maintain their declared fire-resistance period. The fire-stop must also maintain the
+                cleanroom seal — some combined intumescent and air-sealing products are available
+                for this dual requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">

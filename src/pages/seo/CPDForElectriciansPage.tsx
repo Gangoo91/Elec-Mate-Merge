@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Do I need CPD if I am not registered with a competent person scheme?',
     answer:
-      'If you are not registered with a competent person scheme (such as NICEIC, NAPIT, or ELECSA), there is no legal requirement for CPD. However, CPD is strongly recommended for all electricians regardless of scheme membership. The electrical industry is constantly evolving — BS 7671 is amended regularly (Amendment 4 was issued in 2024, Amendment 4 is expected in 2026), new technologies such as EV charging and battery storage are creating demand for new skills, and health and safety regulations are updated frequently. An electrician who does not keep their knowledge current risks making errors, using outdated practices, and losing work to competitors who can demonstrate up-to-date competence. Even without a formal requirement, CPD makes you a better, safer, and more employable electrician.',
+      'If you are not registered with a competent person scheme (such as NICEIC, NAPIT, or ELECSA), there is no legal requirement for CPD. However, CPD is strongly recommended for all electricians regardless of scheme membership. The electrical industry is constantly evolving — BS 7671 is amended regularly (A3:2024 was issued 31 July 2024; A4:2026 was issued 15 April 2026 and may be implemented immediately), new technologies such as EV charging and battery storage are creating demand for new skills, and health and safety regulations are updated frequently. An electrician who does not keep their knowledge current risks making errors, using outdated practices, and losing work to competitors who can demonstrate up-to-date competence. Even without a formal requirement, CPD makes you a better, safer, and more employable electrician.',
   },
   {
     question: 'What happens if I do not complete my CPD hours?',
@@ -165,11 +165,14 @@ const sections = [
         <p>
           <strong>Regulatory changes:</strong>{' '}
           <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is amended
-          regularly. Amendment 4 was issued in July 2024, adding requirements for bidirectional and
-          unidirectional devices (Section 530, A4:2026 addition). Amendment 4 is expected in 2026.
-          Each amendment changes how installations must be designed, installed, and tested. If you
-          are not aware of the changes, you risk non-compliant work — which can fail scheme
-          inspections, invalidate certificates, and create liability issues.
+          regularly. Amendment 3 (A3:2024) was issued on 31 July 2024, introducing two new
+          definitions and one new regulation covering bidirectional and unidirectional devices.
+          Amendment 4 (A4:2026) was issued on 15 April 2026, adding the new Chapter 82 for
+          Prosumer's Electrical Installations (solar PV, battery storage, V2G), overhauling Section
+          722 for EV charging, and introducing Section 753 for heating cables. Each amendment
+          changes how installations must be designed, installed, and tested. If you are not aware of
+          the changes, you risk non-compliant work — which can fail scheme inspections, invalidate
+          certificates, and create liability issues.
         </p>
         <p>
           <strong>New technologies:</strong> The growth of EV charging, solar PV, battery storage,
@@ -307,13 +310,47 @@ const sections = [
           have the biggest impact on your career.
         </p>
         <p>
-          <strong>BS 7671:2018+A4:2026 Update:</strong> If you qualified before Amendment 4 was
-          issued in July 2024, you need to understand the changes — including the new requirements
-          for bidirectional and unidirectional devices. The{' '}
+          <strong>BS 7671:2018+A4:2026 Update:</strong> A4:2026 was issued on 15 April 2026 and
+          represents the most significant revision since the 18th Edition itself. Key changes
+          include:
+        </p>
+        <ul>
+          <li>
+            <strong>Chapter 82 — Prosumer's Electrical Installations:</strong> A brand-new chapter
+            covering any installation with local energy production or storage — solar PV, battery
+            systems, and vehicle-to-grid (V2G) charging. If you install or inspect these systems,
+            Chapter 82 is essential reading.
+          </li>
+          <li>
+            <strong>Section 722 (EV charging) overhaul:</strong> Regulation 722.411.4.1(a) has been
+            deleted and the Annex to Part 722 has been redrafted to reflect current practice for EV
+            charging installations.
+          </li>
+          <li>
+            <strong>Section 753 — Heating cables and embedded heating systems:</strong> New
+            regulations for heating cables, relocated and revised from Chapter 53.
+          </li>
+          <li>
+            <strong>A3:2024 context:</strong> A3:2024 (issued 31 July 2024) added two new
+            definitions and one regulation for bidirectional and unidirectional devices — these
+            remain in force under A4:2026.
+          </li>
+        </ul>
+        <p>
+          The{' '}
           <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course on Elec-Mate
           </SEOInternalLink>{' '}
           covers the full regulations including all amendments.
+        </p>
+        <p>
+          <strong>Chapter 82 — Prosumer's Electrical Installations (A4:2026):</strong> Chapter 82 is
+          a brand-new chapter in A4:2026 covering all prosumer electrical installations — any site
+          with solar panels, battery storage, or vehicle-to-grid (V2G) charging. It provides
+          requirements for design, erection, and verification of low-voltage installations where
+          local production or storage of energy is present. If you install or inspect solar PV,
+          battery systems, or V2G equipment, Chapter 82 is essential CPD and required reading before
+          you certify this work.
         </p>
         <p>
           <strong>EV Charging Installation:</strong> The UK government's push towards electric

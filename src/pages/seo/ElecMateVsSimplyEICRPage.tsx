@@ -58,7 +58,7 @@ export default function ElecMateVsSimplyEICRPage() {
         { feature: '16 Certificate Types', values: [true, 'EICR focus'] },
         { feature: 'Digital Signatures', values: [true, true] },
         { feature: 'PDF Export', values: [true, true] },
-        { feature: '50+ BS 7671 Calculators', values: [true, false] },
+        { feature: '70+ BS 7671 Calculators', values: [true, false] },
         { feature: '5 AI Specialist Agents', values: [true, false] },
         { feature: '46+ Training Courses', values: [true, false] },
         { feature: 'Quoting & Invoicing', values: [true, false] },
@@ -123,7 +123,8 @@ export default function ElecMateVsSimplyEICRPage() {
                 Defect Code AI, Voice Test Entry, and Remedial Cost Estimator.
               </p>
               <p>
-                Elec-Mate also provides 46+ training courses covering the 18th Edition (BS 7671:2018+A4:2026), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
+                Elec-Mate also provides 46+ training courses covering the 18th Edition (BS
+                7671:2018+A4:2026), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
                 assessment preparation, EPA simulator, and specialist courses for EV charging, solar
                 PV, fire alarm systems, and BMS. Pricing starts from £5.99 per month with unlimited
                 usage across all features and a 7-day free trial.
@@ -187,10 +188,10 @@ export default function ElecMateVsSimplyEICRPage() {
                 certification:
               </p>
               <p>
-                <strong>50+ BS 7671 Calculators:</strong> Cable sizing to Appendix 4, voltage drop
-                verification, maximum demand, diversity factors, conduit and trunking fill rates,
-                earth fault loop impedance checks, prospective fault current, and more. All
-                referencing BS 7671:2018+A4:2026 tables. See the full{' '}
+                <strong>70+ BS 7671 Calculators:</strong> Cable sizing to Appendix 4, voltage drop
+                verification, maximum demand, diversity factors, earth fault loop impedance checks,
+                prospective fault current, disconnection times, and more. All referencing BS
+                7671:2018+A4:2026 tables. See the full{' '}
                 <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>
@@ -207,6 +208,14 @@ export default function ElecMateVsSimplyEICRPage() {
                 description="Certificates, calculators, AI tools, training, quoting, invoicing, and payments. One subscription, unlimited usage. No per-certificate charges."
                 icon={Sparkles}
               />
+              <p>
+                <strong>BS 7671:2018+A4:2026 Compliance Built In:</strong> Every Elec-Mate
+                certificate reflects the A4:2026 amendments — including the AFDD recommendation
+                field (Reg 421.1.7) for arc fault detection devices on AC final circuits, and the
+                mandatory 30 mA RCD field for domestic lighting circuits (Reg 411.3.4). Legacy tools
+                that have not been updated to A4:2026 may not capture these requirements, leaving
+                electricians exposed on inspections.
+              </p>
               <p>
                 <strong>Business Management:</strong> Job scheduling, professional quoting,
                 invoicing, Stripe payment collection, and Xero accounting integration. Complete a
@@ -270,9 +279,9 @@ export default function ElecMateVsSimplyEICRPage() {
         },
         {
           icon: Calculator,
-          title: '50+ BS 7671 Calculators',
+          title: '70+ BS 7671 Calculators',
           description:
-            'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more.',
+            'Cable sizing, voltage drop, maximum demand, diversity, Zs verification, disconnection times, prospective fault current, and dozens more.',
         },
         {
           icon: GraduationCap,
@@ -286,7 +295,7 @@ export default function ElecMateVsSimplyEICRPage() {
         {
           question: 'Is Elec-Mate better than SimplyEICR?',
           answer:
-            'For most electricians, yes. SimplyEICR is a focused EICR tool, and it does that job competently. But Elec-Mate includes everything SimplyEICR offers plus AI-powered features (Board Scanner, Voice Test Entry, Defect Code AI, Remedial Cost Estimator), 50+ BS 7671 calculators, 46+ training courses, and full business management tools (quoting, invoicing, Stripe payments, Xero integration). If you need more than just EICRs — and most electricians do — Elec-Mate provides significantly more value in a single subscription from £5.99 per month.',
+            'For most electricians, yes. SimplyEICR is a focused EICR tool, and it does that job competently. But Elec-Mate includes everything SimplyEICR offers plus AI-powered features (Board Scanner, Voice Test Entry, Defect Code AI, Remedial Cost Estimator), 70+ BS 7671 calculators, 46+ training courses, and full business management tools (quoting, invoicing, Stripe payments, Xero integration). If you need more than just EICRs — and most electricians do — Elec-Mate provides significantly more value in a single subscription from £5.99 per month.',
         },
         {
           question: 'Can I switch from SimplyEICR to Elec-Mate?',
@@ -297,6 +306,11 @@ export default function ElecMateVsSimplyEICRPage() {
           question: 'Does SimplyEICR have AI features?',
           answer:
             'No. As of 2026, SimplyEICR does not include AI features such as board scanning, voice test entry, defect code classification, or cost estimation. Elec-Mate is the only UK electrician app offering a comprehensive AI suite — including 5 specialist AI agents and 12 AI-powered tools — all included in the standard subscription at no extra cost.',
+        },
+        {
+          question: 'Do Elec-Mate certificates comply with BS 7671:2018+A4:2026?',
+          answer:
+            'Yes. Elec-Mate certificates are built to BS 7671:2018+A4:2026 and include the fields introduced by the A4 amendments. This covers the AFDD recommendation field (Reg 421.1.7 — arc fault detection devices recommended on AC final circuits to mitigate fire risk) and the domestic lighting RCD field (Reg 411.3.4 — 30 mA RCD additional protection is now mandatory for AC lighting circuits in household premises). If you are completing EICRs on domestic properties in 2026 and beyond, these fields must be addressed. Legacy software that has not been updated to A4:2026 may not include them, creating a compliance gap on every certificate issued.',
         },
         {
           question: 'How much does SimplyEICR cost compared to Elec-Mate?',

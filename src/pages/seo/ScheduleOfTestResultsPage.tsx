@@ -29,6 +29,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'The schedule of test results is the part of an EIC, EICR, or similar certificate that records the measured values for each circuit and proves testing was actually carried out.',
+  'BS 7671:2018+A4:2026 (Reg 722.826.3.201) redrafted the single-page generic schedule into two separate documents: a Schedule of Circuit Details and a Schedule of Test Results. Practitioners must use the updated forms for EIC and EICR documentation.',
+  'The model forms for both schedules are defined in Appendix 6 of BS 7671, as required by Reg 644.3. Always base your schedules on those models.',
   'Good schedules are clear, circuit-specific, and consistent with the protective device, earthing arrangement, and certificate type.',
   'The most common problems are guessed values, incomplete circuits, mixed-up circuit references, and readings that do not match the observations or design information.',
   'Digital completion is faster and more reliable because the software can validate ranges, carry forward data, and link readings directly to the certificate.',
@@ -59,6 +61,19 @@ const sections = [
           </SEOInternalLink>{' '}
           to show both what was observed visually and what was measured by test.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <p className="text-yellow-300 font-semibold mb-2">
+            A4:2026 Change — Two Separate Schedules
+          </p>
+          <p className="text-white text-sm">
+            BS 7671:2018+A4:2026 (Reg 722.826.3.201) has redrafted the single-page generic schedule
+            used for EIC and EICR documentation. The single form has been split into two separate
+            documents: a <strong>Schedule of Circuit Details</strong> and a{' '}
+            <strong>Schedule of Test Results</strong>. Both are based on the model forms in Appendix
+            6 of BS 7671 (Reg 644.3). Practitioners must use the updated separate forms — a combined
+            single-page schedule no longer meets the standard.
+          </p>
+        </div>
       </>
     ),
   },
@@ -91,15 +106,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dead test results</strong> such as continuity, insulation resistance, and
-                polarity.
+                <strong>Dead test results</strong> such as continuity (R1+R2 and Rz — the measured
+                resistance of the circuit protective conductor), insulation resistance, and
+                polarity. GN3 Reg 2.15 requires Rz to be recorded as its own field on the schedule.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Live test results</strong> such as Zs, Ze where relevant, PFC/PSCC, and
-                RCD trip times.
+                <strong>Live test results</strong> such as Zs, Ze where relevant, PFC/PSCC, and RCD
+                trip times. For RCDs, BS 7671 requires a test at <strong>1&times;I&Delta;n</strong>{' '}
+                (with the instrument set to Type AC where available) and the result must be recorded
+                in the schedule (GN3 Reg 4.7). The 0.5&times; and 5&times;I&Delta;n tests are
+                additional; do not record only a single generic &ldquo;trip time&rdquo; without
+                noting the test current applied.
               </span>
             </li>
           </ul>
@@ -123,14 +143,23 @@ const sections = [
           against the correct circuit while you are still on site.
         </p>
         <p>
-          For example, if you record R1+R2 on a lighting radial, that value should later support
-          the Zs result and the overall assessment of the circuit. If an RCD trip time is slow,
-          that should align with any observation or remedial recommendation. The schedule is not an
+          The model forms for the schedule are defined in <strong>Appendix 6 of BS 7671</strong>{' '}
+          (required by Reg 644.3). Your schedule should follow those column headings and structure —
+          they are the format scheme assessors and clients recognise and expect. Using the Appendix
+          6 layout also ensures you do not omit a required field such as Rz or the insulation
+          resistance test voltage.
+        </p>
+        <p>
+          For example, if you record R1+R2 on a lighting radial, that value should later support the
+          Zs result and the overall assessment of the circuit. If an RCD trip time is slow, that
+          should align with any observation or remedial recommendation. The schedule is not an
           isolated spreadsheet; it has to agree with the rest of the certificate.
         </p>
         <p>
           If you are working on an EIC or EICR in Elec-Mate, use the{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">digital certificate workflow</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">
+            digital certificate workflow
+          </SEOInternalLink>{' '}
           so readings, observations, and exported PDFs all stay linked to the same job.
         </p>
       </>
@@ -142,8 +171,8 @@ const sections = [
     content: (
       <>
         <p>
-          The schedule of test results is one of the easiest places for bad habits to show up.
-          Small errors here can make an otherwise decent certificate look weak.
+          The schedule of test results is one of the easiest places for bad habits to show up. Small
+          errors here can make an otherwise decent certificate look weak.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -157,7 +186,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Entering values that do not match the protective device or earthing system.</span>
+              <span>
+                Entering values that do not match the protective device or earthing system.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -165,13 +196,24 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Recording readings on paper, then re-keying them later and introducing transcription errors.</span>
+              <span>
+                Recording readings on paper, then re-keying them later and introducing transcription
+                errors.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                Omitting the test voltage when a reduced insulation resistance test (250 V DC) was
+                used for sensitive equipment. GN3 Reg 2.24 requires the actual test voltage to be
+                recorded on the schedule; without it, the result has no traceability.
+              </span>
             </li>
           </ul>
         </div>
         <p>
-          The easiest way to tighten this up is to capture results once, in the right place, and
-          let the software validate and format them consistently.
+          The easiest way to tighten this up is to capture results once, in the right place, and let
+          the software validate and format them consistently.
         </p>
       </>
     ),
@@ -230,6 +272,11 @@ const faqs = [
       'It records the measured test values for each circuit and forms the evidence base of an EIC, EICR, or similar certificate. It shows what was tested and what results were obtained.',
   },
   {
+    question: 'Has the schedule of test results changed in BS 7671:2018+A4:2026?',
+    answer:
+      'Yes. BS 7671:2018+A4:2026 (Reg 722.826.3.201) redrafted the single-page generic schedule into two separate documents: a Schedule of Circuit Details and a Schedule of Test Results. Both must be based on the model forms in Appendix 6 of BS 7671 (Reg 644.3). Using an old combined single-page schedule no longer meets the standard.',
+  },
+  {
     question: 'Is the schedule of test results the same as the schedule of inspections?',
     answer:
       'No. The schedule of inspections records visual and compliance checks. The schedule of test results records measured electrical test values. On an EICR, both are important and work together.',
@@ -255,14 +302,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete EICRs on your phone with digital schedules, observations, and instant PDF export.',
+    description:
+      'Complete EICRs on your phone with digital schedules, observations, and instant PDF export.',
     icon: FileCheck2,
     category: 'Tool',
   },
   {
     href: '/eic-certificate',
     title: 'EIC Certificate Guide',
-    description: 'Understand when to use an EIC and how the test-results schedule supports the certificate.',
+    description:
+      'Understand when to use an EIC and how the test-results schedule supports the certificate.',
     icon: CheckCircle2,
     category: 'Guide',
   },
@@ -283,7 +332,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
-    description: 'Step-by-step guide to completing the full EICR, including schedules and observations.',
+    description:
+      'Step-by-step guide to completing the full EICR, including schedules and observations.',
     icon: Calculator,
     category: 'Guide',
   },

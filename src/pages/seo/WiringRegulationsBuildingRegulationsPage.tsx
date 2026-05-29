@@ -42,6 +42,7 @@ const keyTakeaways = [
   'Notifiable work under Part P includes: installing a new circuit, replacing a consumer unit, and all work in kitchens, bathrooms, and outdoors in a dwelling. Non-notifiable work includes minor additions and alterations to existing circuits outside special locations.',
   'Registered electricians belonging to a competent person scheme (NICEIC, NAPIT, ELECSA) can self-certify notifiable work and notify building control on behalf of the client automatically. This avoids the need for a building notice or full plans application.',
   'A building owner or homeowner who uses an unregistered electrician for notifiable work must submit a building notice (or full plans application) to the local authority BEFORE work starts. Failure to notify is a breach of Building Regulations and can create problems when selling the property.',
+  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7, which recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate the risk of fire from arc fault currents. This is a recommendation, not a mandatory requirement, but it is directly relevant to consumer unit replacements and new circuits carried out as Part P-notifiable work.',
 ];
 
 const faqs = [
@@ -163,7 +164,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Updated periodically. The current edition is BS 7671:2018+A4:2026 (Amendment 4,
-                published 2024). Previous editions (16th and 17th editions) remain relevant for
+                published 2026). Previous editions (16th and 17th editions) remain relevant for
                 understanding existing installations but new work must comply with the current
                 edition.
               </span>
@@ -248,6 +249,46 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="text-lg font-semibold text-white mb-3">
+            Why Bathroom Work Is Always Notifiable — BS 7671 Zones
+          </h3>
+          <p className="text-white/80 text-sm mb-3">
+            BS 7671 Section 701 designates three hazard zones around bath and shower locations,
+            explaining why Part P treats all bathroom electrical work as notifiable regardless of
+            scope:
+          </p>
+          <ul className="space-y-2 text-white text-sm">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Zone 0</strong> — the interior of the bath tub or shower basin (Reg
+                701.32.4). Only IPX7-rated equipment may be installed here.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Zone 1</strong> — above the finished floor to 2.25 m (or the highest fixed
+                shower head if higher), within the lateral boundary of the bath or shower basin (Reg
+                701.32.3). Standard socket-outlets and switches are prohibited here.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Zone 2</strong> — beyond Zone 1 within the same room. Switchgear and
+                socket-outlets incorporating switches are prohibited in Zone 2, with limited
+                exceptions for SELV circuits and BS EN 61558-2-5 shaver units (Reg 701.512.3).
+              </span>
+            </li>
+          </ul>
+          <p className="text-white/80 text-sm mt-3">
+            The elevated risk of electric shock from proximity to water is the regulatory basis for
+            the Part P requirement that all electrical work in a bathroom or shower room is
+            notifiable — even replacing a light fitting.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Non-Notifiable Work</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -275,8 +316,8 @@ const sections = [
         </div>
         <p>
           Even where work is non-notifiable, it must still comply with BS 7671. A{' '}
-          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> should be
-          issued for non-notifiable additions or alterations to record what was done and confirm
+          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> should
+          be issued for non-notifiable additions or alterations to record what was done and confirm
           compliance.
         </p>
       </>
@@ -325,10 +366,7 @@ const sections = [
           Regulations Compliance Certificate (BRCC). This document is essential when selling the
           property — it proves the work was carried out by a competent person and is compliant with
           Building Regulations. Issue the{' '}
-          <SEOInternalLink
-            href="/eic-certificate"
-            label="Electrical Installation Certificate"
-          />{' '}
+          <SEOInternalLink href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
           alongside the BRCC as the technical record of the installation.
         </p>
       </>
@@ -464,9 +502,9 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Northern Ireland:</strong> Governed by the Building Regulations (Northern
-                Ireland) 2012. Technical Booklet E (Resistance to the passage of sound) and
-                Technical Booklet V cover electrical installation requirements. Building control
-                notification is required for all domestic electrical work.
+                Ireland) 2000 (as amended). A series of Technical Booklets provides guidance on
+                compliance; the relevant booklets cover electrical installation requirements.
+                Building control notification is required for all domestic electrical work.
               </span>
             </li>
           </ul>
@@ -489,10 +527,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge
-                  href="/eic-certificate"
-                  label="Electrical Installation Certificate"
-                />{' '}
+                <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — generate Part P-compliant EICs on your phone with circuit schedules, test results,
                 and instant PDF export. Issue to clients alongside the BRCC.
               </span>
@@ -500,8 +535,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
-                minor works certificates for non-notifiable additions and alterations to give
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
+                issue minor works certificates for non-notifiable additions and alterations to give
                 clients a record of compliant work.
               </span>
             </li>
@@ -519,7 +554,7 @@ const sections = [
 export default function WiringRegulationsBuildingRegulationsPage() {
   return (
     <GuideTemplate
-      title="Wiring Regulations vs Building Regulations — BS 7671 and"
+      title="Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained"
       description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA)…"
       datePublished="2024-06-01"
       dateModified="2026-05-18"

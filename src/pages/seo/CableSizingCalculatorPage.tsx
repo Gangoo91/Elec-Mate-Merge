@@ -30,7 +30,7 @@ const faqs = [
   {
     question: 'What factors affect cable sizing to BS 7671?',
     answer:
-      'There are five primary factors that determine the minimum cable size for any circuit to BS 7671. First, the design current (Ib) of the circuit — the maximum current the load will draw in normal service. Second, the rating of the protective device (In), which must be equal to or greater than the design current. Third, the current carrying capacity (Iz) of the cable, which must be equal to or greater than the protective device rating after applying correction factors. Fourth, the voltage drop in the cable, which must not exceed the limits set by BS 7671 Regulation 525 (typically 3% for lighting circuits and 5% for other circuits). Fifth, the cable must be able to withstand the let-through energy (I squared t) of the protective device under fault conditions without its insulation being damaged.',
+      'There are five primary factors that determine the minimum cable size for any circuit to BS 7671. First, the design current (Ib) of the circuit — the maximum current the load will draw in normal service. Second, the rating of the protective device (In), which must be equal to or greater than the design current. Third, the current carrying capacity (Iz) of the cable, which must be equal to or greater than the protective device rating after applying correction factors. Fourth, the voltage drop in the cable, which must not exceed the limits set by BS 7671 Regulation 525.202 (typically 3% for lighting circuits and 5% for other circuits, as detailed in Appendix 4, Section 6.4). Fifth, the cable must be able to withstand the let-through energy (I squared t) of the protective device under fault conditions without its insulation being damaged.',
   },
   {
     question: 'What are the BS 7671 correction factors for cable sizing?',
@@ -45,7 +45,12 @@ const faqs = [
   {
     question: 'How do I check voltage drop for a cable to BS 7671?',
     answer:
-      'BS 7671 Regulation 525.1 requires that the voltage drop between the origin of the installation and any load point does not impair the safe functioning of the equipment. Appendix 12 (formerly part of Appendix 4) provides the voltage drop per ampere per metre (mV/A/m) for each cable type and installation method. To calculate the voltage drop, multiply the mV/A/m value from the tables by the design current (Ib) in amps and the route length (L) in metres, then divide by 1000 to get the result in volts. For a 230V single-phase supply, the maximum voltage drop to the furthest point is typically 3% for lighting (6.9V) and 5% for other uses (11.5V). For three-phase circuits, a 5% limit gives 20V on a 400V supply. If the voltage drop exceeds the limit, you need to increase the cable size until the drop is within tolerance.',
+      'BS 7671 Regulation 525.202 requires that the voltage drop between the origin of the installation and any socket-outlet or fixed equipment terminals does not exceed the values stated in Appendix 4, Section 6.4. The mV/A/m values for each cable type and installation method are given in Appendix 4, Section 6.4. To calculate the voltage drop, multiply the mV/A/m value from the tables by the design current (Ib) in amps and the route length (L) in metres, then divide by 1000 to get the result in volts. For a 230V single-phase supply, the maximum voltage drop to the furthest point is typically 3% for lighting (6.9V) and 5% for other uses (11.5V). For three-phase circuits, a 5% limit gives 20V on a 400V supply. If the voltage drop exceeds the limit, you need to increase the cable size until the drop is within tolerance.',
+  },
+  {
+    question: 'What changed in BS 7671 Amendment 4 (2026) that affects cable sizing?',
+    answer:
+      'The 18th Edition Amendment 4:2026 introduced two changes that directly affect protective device selection and, in turn, cable sizing. First, Regulation 411.3.4 now requires that all AC final circuits supplying luminaires within domestic (household) premises are protected by a 30 mA RCD. This affects Zs calculations for those lighting circuits because the required disconnection time is now governed by the RCD rather than the overcurrent device, and the maximum Zs for a 30 mA RCD is 1667 Ω under BS 7671. Second, Regulation 421.1.7 recommends the installation of an Arc Fault Detection Device (AFDD) on AC final circuits to mitigate fire risk from series arcing faults. Where an AFDD is specified, the combined AFDD/RCBO protective device must be co-ordinated with the cable size to ensure discrimination and correct operation. These changes do not alter the fundamental cable sizing methodology in Appendix 4, but they do change which protective devices you are sizing against on domestic lighting and general circuits.',
   },
   {
     question: 'Does the Elec-Mate cable sizing calculator work offline?',
@@ -55,7 +60,7 @@ const faqs = [
   {
     question: 'What is the minimum cable size for a ring final circuit in a UK home?',
     answer:
-      'A standard domestic ring final circuit protected by a 32A Type B or C MCB (or 30A fuse) requires 2.5mm² copper twin-and-earth cable (6242Y) when clipped direct to a surface. The conductor must have a current-carrying capacity (It) of at least 20A per Regulation 433.1.1 — 2.5mm² copper clipped direct in reference method C gives 27A, which satisfies this requirement with an appropriate grouping factor. If the ring is installed in thermal insulation (for example, in a loft) the cable must be derated using the Ci correction factor from BS 7671 Table 52.2, which may require uprating to 4mm². The earth conductor in 6242Y (1.0mm²) is adequate for a 32A circuit when protected by an MCB, verified by the adiabatic equation in BS 7671.',
+      'A standard domestic ring final circuit protected by a 32A Type B or C MCB (or 30A fuse) requires 2.5mm² copper twin-and-earth cable (6242Y) when clipped direct to a surface. The conductor must have a current-carrying capacity (It) of at least 20A per Regulation 433.1.1 — 2.5mm² copper clipped direct in reference method C gives 27A, which satisfies this requirement with an appropriate grouping factor. If the ring is installed in thermal insulation (for example, in a loft) the cable must be derated using the Ci correction factor. Regulation 523.9 requires that a cable totally surrounded by thermally insulating material over 0.5 m or more is taken as having only 0.5 times the clipped-direct (Method C) current-carrying capacity; for shorter enclosed runs the derating is derived from Appendix 4, Section 2.6. This may require uprating to 4mm². The earth conductor in 6242Y (1.0mm²) is adequate for a 32A circuit when protected by an MCB, verified by the adiabatic equation in BS 7671.',
   },
 ];
 
@@ -82,7 +87,7 @@ const howToSteps = [
   },
   {
     name: 'Check voltage drop',
-    text: 'Calculate the voltage drop using the mV/A/m values from Appendix 12 for your selected cable size and installation method. Multiply by design current and route length, then divide by 1000. Ensure the result does not exceed 3% for lighting or 5% for other circuits. If it exceeds the limit, increase the cable size and re-check.',
+    text: 'Calculate the voltage drop using the mV/A/m values from Appendix 4, Section 6.4 for your selected cable size and installation method. Multiply by design current and route length, then divide by 1000. Ensure the result does not exceed 3% for lighting or 5% for other circuits, as required by Regulation 525.202. If it exceeds the limit, increase the cable size and re-check.',
   },
   {
     name: 'Verify fault current withstand',
@@ -95,7 +100,7 @@ const features = [
     icon: Calculator,
     title: 'BS 7671 Tables Built In',
     description:
-      'All current carrying capacity tables from Appendix 4 and voltage drop data from Appendix 12 are embedded in the calculator. No need to carry the book.',
+      'All current carrying capacity tables from Appendix 4 and voltage drop data from Appendix 4, Section 6.4 are embedded in the calculator. No need to carry the book.',
   },
   {
     icon: Thermometer,
@@ -153,7 +158,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://www.elec-mate.com/cable-sizing-calculator',
+  url: 'https://www.elec-mate.com/tools/cable-sizing-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -266,11 +271,11 @@ export default function CableSizingCalculatorPage() {
             <p>
               BS 7671:2018 (the IET Wiring Regulations, 18th Edition) sets out the methodology for
               cable sizing in Section 523, with the current carrying capacity tables in Appendix 4
-              and the voltage drop data in Appendix 12. The process involves calculating the design
-              current, selecting a protective device, determining the installation method, applying
-              correction factors for environmental conditions, selecting a cable with sufficient
-              current carrying capacity, and then verifying voltage drop and fault current
-              withstand.
+              and the voltage drop data in Appendix 4, Section 6.4. The process involves calculating
+              the design current, selecting a protective device, determining the installation
+              method, applying correction factors for environmental conditions, selecting a cable
+              with sufficient current carrying capacity, and then verifying voltage drop and fault
+              current withstand.
             </p>
             <p>
               The cable must be large enough to carry the full load current without its temperature
@@ -285,7 +290,7 @@ export default function CableSizingCalculatorPage() {
               designing a three-phase distribution board for a commercial fit-out, you need to
               verify the cable size against BS 7671 before you install it. The Elec-Mate cable
               sizing calculator does this in seconds, right on your phone. Use it alongside the{' '}
-              <SEOInternalLink href="/voltage-drop-calculator">
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               and the{' '}
@@ -354,11 +359,12 @@ export default function CableSizingCalculatorPage() {
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">Voltage Drop</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Regulation 525.1 requires that the voltage drop from the origin of the
-                  installation to any load point does not impair the functioning of the equipment.
-                  The standard limits are 3% for lighting circuits (6.9V on a 230V supply) and 5%
-                  for other circuits (11.5V on a 230V supply). Voltage drop is calculated using the
-                  mV/A/m values from Appendix 12, multiplied by the design current and cable length.
+                  Regulation 525.202 requires that the voltage drop from the origin of the
+                  installation to any socket-outlet or fixed equipment terminal does not exceed the
+                  values in Appendix 4, Section 6.4. The standard limits are 3% for lighting
+                  circuits (6.9V on a 230V supply) and 5% for other circuits (11.5V on a 230V
+                  supply). Voltage drop is calculated using the mV/A/m values from Appendix 4,
+                  Section 6.4, multiplied by the design current and cable length.
                 </p>
               </div>
             </div>
@@ -392,7 +398,12 @@ export default function CableSizingCalculatorPage() {
                   device to operate within the required disconnection time (0.4 seconds for final
                   circuits, 5 seconds for distribution circuits). A longer cable run increases the
                   circuit impedance, so in some cases you may need to increase the cable size (or
-                  the CPC size) to achieve an acceptable Zs value.
+                  the CPC size) to achieve an acceptable Zs value. Note: the tabulated maximum Zs
+                  values in BS 7671 assume conductors at maximum operating temperature. On-site
+                  measured Zs values (taken at ambient) must be multiplied by the 0.8 factor from
+                  GN3 Appendix 3 before comparing to the tabulated limits — an installation signed
+                  off without this correction may fail when conductors reach full operating
+                  temperature.
                 </p>
               </div>
             </div>

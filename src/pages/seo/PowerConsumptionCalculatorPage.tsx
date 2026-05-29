@@ -78,7 +78,7 @@ export default function PowerConsumptionCalculatorPage() {
                 For electricians, understanding power consumption is essential for several reasons.
                 When designing circuits, you need to know the load each appliance draws to calculate
                 the{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand
                 </SEOInternalLink>{' '}
                 of an installation. When advising customers, you can explain the running cost of
@@ -483,7 +483,7 @@ export default function PowerConsumptionCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate the total maximum demand for an electrical installation with diversity factors.',
@@ -515,7 +515,7 @@ export default function PowerConsumptionCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 based on the design current derived from power consumption calculations.',

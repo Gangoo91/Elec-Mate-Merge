@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with automatic voltage drop checks.',
     icon: Calculator,
@@ -333,7 +333,7 @@ const sections = [
                 <strong>Cable sizing for voltage drop</strong> — all cable sizing must be calculated
                 to ensure voltage drop does not exceed 3% for lighting circuits or 5% for other
                 circuits under BS 7671. Use{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify cable selection for the actual cable run length.
@@ -512,11 +512,9 @@ const sections = [
                   Factor in North East labour rates (£35 to £50/hour), typical cable run distances
                   (5 to 15 metres for most Newcastle semis and terraces), earth rod costs where
                   needed, and Northern Powergrid notification time. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build accurate itemised quotes on site, including all materials and
-                  certification costs.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build accurate itemised quotes on site, including all materials and certification
+                  costs.
                 </p>
               </div>
             </div>

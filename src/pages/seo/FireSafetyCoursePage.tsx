@@ -264,16 +264,16 @@ const sections = [
           starting work, clear all combustible materials within at least 3 metres of the work area,
           have a suitable fire extinguisher immediately available, use fire-retardant blankets or
           screens to contain sparks, and maintain a{' '}
-          <SEOInternalLink href="/guides/risk-assessment-electricians">fire watch</SEOInternalLink> for at
-          least 60 minutes after work is completed. The fire watch period is essential because
-          smouldering materials may not produce visible flames until well after the hot works
-          activity has finished.
+          <SEOInternalLink href="/guides/risk-assessment-electricians">fire watch</SEOInternalLink>{' '}
+          for at least 60 minutes after work is completed. The fire watch period is essential
+          because smouldering materials may not produce visible flames until well after the hot
+          works activity has finished.
         </p>
         <p>
           Electrical installation work also creates fire risks through incorrect cable sizing
           (leading to overheating), loose connections (creating high-resistance hot spots), and
           incorrect protective device selection (allowing sustained overcurrent). The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing process
           </SEOInternalLink>{' '}
           specified in BS 7671 Appendix 4 is a fire prevention measure — every correction factor and

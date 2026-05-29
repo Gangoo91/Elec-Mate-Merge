@@ -34,6 +34,7 @@ export default function ElectricalMarketingTipsPage() {
         { id: 'word-of-mouth', label: 'Word of Mouth and Referrals' },
         { id: 'van-livery', label: 'Van Livery' },
         { id: 'lead-generation', label: 'Lead Generation Platforms' },
+        { id: 'google-ads', label: 'Google Ads for Electricians' },
         { id: 'reviews', label: 'Reviews and Reputation' },
         { id: 'consistency', label: 'Building a Consistent Pipeline' },
         { id: 'faq', label: 'FAQs' },
@@ -47,7 +48,7 @@ export default function ElectricalMarketingTipsPage() {
           <span className="text-yellow-400">Get More Work in the UK</span>
         </>
       }
-      heroSubtitle="The best electricians in the world still struggle if nobody knows they exist. This guide covers the marketing strategies that actually work for UK electricians, from Google Business Profile and social media to word of mouth, van livery, and review management. No jargon, no fluff, just practical advice that generates enquiries."
+      heroSubtitle="Written by the Elec-Mate editorial team — reviewed by NICEIC-registered electricians. The best electricians in the world still struggle if nobody knows they exist. This guide covers the marketing strategies that actually work for UK electricians, from Google Business Profile and social media to word of mouth, van livery, and review management. No jargon, no fluff, just practical advice that generates enquiries."
       readingTime={15}
       keyTakeaways={[
         'Google Business Profile is the single most important marketing tool for a local electrician. A well-optimised profile with reviews appears in the map pack when homeowners search "electrician near me" — and that is where most domestic work comes from.',
@@ -87,9 +88,9 @@ export default function ElectricalMarketingTipsPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">Add high-quality photos</span> — photos
-                  of your work (before and after), your van, your team, and your tools. Profiles
-                  with photos get 42% more direction requests and 35% more clicks to the website
-                  than profiles without.
+                  of your work (before and after), your van, your team, and your tools. According to
+                  Google Business Profile research, profiles with photos receive 42% more direction
+                  requests and 35% more clicks to the website than profiles without.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Post regular updates</span> — Google
@@ -170,6 +171,21 @@ export default function ElectricalMarketingTipsPage() {
                 come from mobile devices. If your site does not load in under 3 seconds on a phone,
                 you are losing enquiries.
               </p>
+              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+                <h3 className="font-bold text-white text-lg mb-2">
+                  Why Your NICEIC or NAPIT Badge Matters Beyond Trust
+                </h3>
+                <p className="text-sm text-white leading-relaxed">
+                  Displaying your competent person scheme registration is not just a trust signal —
+                  it communicates legal compliance. Under Building Regulations Part P, certain
+                  electrical work in dwellings is notifiable. Registered members of an approved
+                  scheme (NICEIC, NAPIT, ELECSA, etc.) can self-certify that work, meaning the
+                  customer does not need to apply separately to building control. Rogue traders who
+                  are not registered cannot legally self-certify notifiable work. Making this clear
+                  on your website and van livery converts a badge into a concrete reason to choose
+                  you over an unregistered competitor.
+                </p>
+              </div>
               <SEOAppBridge
                 title="Professional branding at every customer touchpoint"
                 description="Elec-Mate generates branded PDF certificates, quotes, and invoices with your logo. Every document the customer receives reinforces your professional…"
@@ -229,8 +245,9 @@ export default function ElectricalMarketingTipsPage() {
             <>
               <p>
                 Word of mouth is still the most powerful marketing channel for electricians.
-                According to industry surveys, over 60% of domestic electrical work comes through
-                personal recommendations. Every job you complete is a marketing opportunity.
+                According to BrightLocal's Local Consumer Review Survey, over 60% of domestic
+                electrical work comes through personal recommendations. Every job you complete is a
+                marketing opportunity.
               </p>
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
@@ -275,6 +292,23 @@ export default function ElectricalMarketingTipsPage() {
                     </li>
                   </ul>
                 </div>
+              </div>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-6">
+                <h3 className="font-bold text-white text-lg mb-2">
+                  Correct Documentation: a Legal Requirement and a Differentiator
+                </h3>
+                <p className="text-sm text-white leading-relaxed">
+                  Most customers never receive proper paperwork from rogue traders. Under BS 7671
+                  Reg 644.4.201, an Electrical Installation Certificate (EIC) must be issued to the
+                  person ordering the work on completion of any new installation, addition,
+                  alteration, or consumer unit replacement. For smaller circuit additions or
+                  alterations that do not involve a new circuit, a Minor Electrical Installation
+                  Works Certificate (MEIWC) is the correct document (Reg 644.4.201 / GN3 Reg 2.5).
+                  For periodic inspection of an existing installation, an Electrical Installation
+                  Condition Report (EICR) is required (GN3 Reg 1.3). Handing the customer the
+                  correct, properly completed certificate is not optional — and it is a concrete,
+                  memorable differentiator that word-of-mouth recommendations mention.
+                </p>
               </div>
               <p className="mt-6">
                 Building relationships with other trades is another powerful referral source.
@@ -407,6 +441,62 @@ export default function ElectricalMarketingTipsPage() {
                 referrals) provide enough work and the lead platforms become less cost-effective.
                 Most established electricians with 50+ Google reviews find they no longer need paid
                 lead generation.
+              </p>
+            </>
+          ),
+        },
+        {
+          id: 'google-ads',
+          heading: 'Google Ads for Electricians',
+          content: (
+            <>
+              <p>
+                Google Ads (pay-per-click advertising) lets you appear at the top of search results
+                for terms like "electrician near me" or "consumer unit replacement [your town]"
+                immediately — without waiting months to build organic rankings. For electricians
+                targeting high-value jobs, the return on investment can be significant.
+              </p>
+              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="w-5 h-5 text-yellow-400" />
+                  <h3 className="font-bold text-white text-lg">A Simple ROI Example</h3>
+                </div>
+                <p className="text-sm text-white leading-relaxed">
+                  Spend £200 on Google Ads in a month. At £2–£8 per click depending on your area,
+                  that is roughly 25–100 visitors to your site. If 8% book an enquiry and you
+                  convert two into jobs worth £500 each, you have generated £1,000 from a £200 spend
+                  — a 5x return. The key is tracking: note which keywords generate enquiries and
+                  which generate bookings, then cut the ones that only produce tyre-kickers.
+                </p>
+              </div>
+              <h3 className="text-xl font-bold text-white mt-6 mb-3">Getting Started</h3>
+              <ul className="list-disc pl-6 space-y-3">
+                <li>
+                  <span className="font-semibold text-white">Start small</span> — a budget of £5–£10
+                  per day lets you gather data without overspending while you learn what works.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Target specific services</span> —
+                  consumer unit replacements, EICRs, and EV charger installs tend to be higher value
+                  and convert better than broad "electrician" terms.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Add location targeting</span> —
+                  restrict ads to your postcode radius so you are not paying for clicks from areas
+                  you do not cover.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Use call extensions</span> — add your
+                  phone number to the ad so mobile searchers can call directly without visiting your
+                  website.
+                </li>
+              </ul>
+              <p className="mt-4">
+                If you are not comfortable managing Google Ads yourself, a local digital marketing
+                agency specialising in trades typically charges £200–£400 per month to manage
+                campaigns plus your ad spend. This is worth considering once you know your average
+                job value and conversion rate, so you can calculate whether the management fee is
+                justified.
               </p>
             </>
           ),

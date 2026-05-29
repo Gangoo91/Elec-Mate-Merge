@@ -29,7 +29,6 @@ const ApprenticeAssessmentGuidePage = lazy(
   () => import('@/pages/seo/ApprenticeAssessmentGuidePage')
 );
 const ApprenticeSalaryPage = lazy(() => import('@/pages/seo/ApprenticeSalaryPage'));
-const ApprenticeSalaryUKPage = lazy(() => import('@/pages/seo/ApprenticeSalaryUKPage'));
 const ApprenticeFlashcardsPage = lazy(() => import('@/pages/seo/ApprenticeFlashcardsPage'));
 const ApprenticeMentalHealthPage = lazy(() => import('@/pages/seo/ApprenticeMentalHealthPage'));
 const ApprenticeRightsPayPage = lazy(() => import('@/pages/seo/ApprenticeRightsPayPage'));
@@ -2557,14 +2556,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ApprenticeSalaryPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/apprentice-electrician-salary-uk"
-        element={
-          <LazyRoute>
-            <ApprenticeSalaryUKPage />
           </LazyRoute>
         }
       />
@@ -10771,7 +10762,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/adiabatic-equation-calculator"
+        path="/tools/adiabatic-equation-calculator"
         element={
           <LazyRoute>
             <AdiabaticEquationCalculatorPage />
@@ -10827,7 +10818,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/cable-sizing-calculator"
+        path="/tools/cable-sizing-calculator"
         element={
           <LazyRoute>
             <CableSizingCalculatorPage />
@@ -10851,7 +10842,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/conduit-fill-calculator"
+        path="/tools/conduit-fill-calculator"
         element={
           <LazyRoute>
             <ConduitFillCalculatorPage />
@@ -10859,7 +10850,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/diversity-factor-calculator"
+        path="/tools/diversity-factor-calculator"
         element={
           <LazyRoute>
             <DiversityFactorCalculatorPage />
@@ -10867,7 +10858,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/earth-loop-impedance-calculator"
+        path="/tools/earth-loop-impedance-calculator"
         element={
           <LazyRoute>
             <EarthLoopImpedanceCalculatorPage />
@@ -10947,7 +10938,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/job-profitability-calculator"
+        path="/tools/job-profitability-calculator"
         element={
           <LazyRoute>
             <JobProfitabilityCalculatorPage />
@@ -10979,7 +10970,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/max-demand-calculator"
+        path="/tools/max-demand-calculator"
         element={
           <LazyRoute>
             <MaxDemandCalculatorPage />
@@ -11011,7 +11002,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/power-factor-calculator"
+        path="/tools/power-factor-calculator"
         element={
           <LazyRoute>
             <PowerFactorCalculatorPage />
@@ -11019,7 +11010,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/prospective-fault-current-calculator"
+        path="/tools/prospective-fault-current-calculator"
         element={
           <LazyRoute>
             <ProspectiveFaultCurrentCalculatorPage />
@@ -11035,7 +11026,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/ring-circuit-calculator"
+        path="/tools/ring-circuit-calculator"
         element={
           <LazyRoute>
             <RingCircuitCalculatorPage />
@@ -11051,7 +11042,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/three-phase-power-calculator"
+        path="/tools/three-phase-power-calculator"
         element={
           <LazyRoute>
             <ThreePhasePowerCalculatorPage />
@@ -11067,7 +11058,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/trunking-fill-calculator"
+        path="/tools/trunking-fill-calculator"
         element={
           <LazyRoute>
             <TrunkingFillCalculatorPage />
@@ -11083,7 +11074,7 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/voltage-drop-calculator"
+        path="/tools/voltage-drop-calculator"
         element={
           <LazyRoute>
             <VoltageDropCalculatorPage />

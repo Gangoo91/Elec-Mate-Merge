@@ -42,13 +42,19 @@ const tocItems = [
 const keyTakeaways = [
   'A "trip switch" can be either an MCB (Miniature Circuit Breaker) or an RCD (Residual Current Device). They trip for completely different reasons, and knowing which one is tripping tells you what type of fault you have.',
   'An MCB trips because of overcurrent — too much current flowing through the circuit. This is caused by overloading (too many appliances) or a short circuit (live touching neutral or earth). MCBs protect the cable from overheating.',
-  'An RCD trips because of an earth fault — current is leaking to earth through an unintended path. This could be a faulty appliance, damaged cable, or moisture. RCDs protect people from electric shock. Under Regulation 411.3.3 of BS 7671, additional protection by an RCD rated at 30mA is required for socket outlets up to 32A and mobile equipment up to 32A for outdoor use.',
+  'An RCD trips because of an earth fault — current is leaking to earth through an unintended path. This could be a faulty appliance, damaged cable, or moisture. RCDs protect people from electric shock. Under Regulation 411.3.3 of BS 7671:2018+A4:2026, additional protection by an RCD rated at 30mA is required for all socket-outlets rated up to 32A. In non-dwellings only, a documented risk assessment may justify omission; no such exception exists for dwellings.',
+  'Regulation 411.3.4 (A4:2026 addition) requires that AC final circuits supplying luminaires in domestic premises shall be provided with additional protection by an RCD rated at no more than 30mA. A split-load consumer unit with unprotected lighting MCBs is no longer compliant — a lighting circuit tripping an MCB without upstream RCD protection is both a nuisance and a compliance gap.',
   'The most common cause of repeated tripping is a faulty appliance. You can identify it by unplugging everything, resetting the trip, and plugging appliances back in one at a time until it trips again.',
   'Moisture ingress — from rain entering an outdoor socket, a leaking pipe near wiring, or condensation in a junction box — is a very common cause of RCD tripping, especially in autumn and winter.',
   'If your consumer unit is old (rewirable fuses, no RCD protection), repeated tripping may indicate it is time for a consumer unit upgrade to provide proper circuit-by-circuit protection with RCBOs.',
 ];
 
 const faqs = [
+  {
+    question: 'What is an AFDD and could it be what tripped?',
+    answer:
+      'An AFDD (Arc Fault Detection Device) is a third type of protective device introduced by Regulation 421.1.7 of BS 7671:2018+A4:2026. Unlike an MCB (which trips on overcurrent) or an RCD (which trips on earth leakage), an AFDD trips when it detects a hazardous arc fault — dangerous electrical arcing in cables or connections that can cause fires without necessarily blowing a fuse or tripping an MCB. AFDDs look similar to MCBs in the consumer unit and are increasingly fitted on new installations following the A4:2026 recommendation. If your consumer unit was recently installed or upgraded and a device trips without an obvious overload or earth fault, check whether it is an AFDD. Resetting it without finding the cause of the arc (e.g. a damaged cable, a loose connection) is not safe.',
+  },
   {
     question: 'What is the difference between an MCB and an RCD?',
     answer:
@@ -200,10 +206,10 @@ const sections = [
                 the current flowing out on the live conductor with the current returning on the
                 neutral. If there is a difference (even as small as 30 milliamps), it means current
                 is leaking to earth through an unintended path — possibly through a person. The RCD
-                disconnects in milliseconds to prevent electric shock. Regulation 411.3.3 of BS 7671
-                requires additional RCD protection (rated residual operating current not exceeding
-                30mA) for all socket outlets rated up to 32A and for mobile equipment rated up to
-                32A used outdoors.
+                disconnects in milliseconds to prevent electric shock. Regulation 411.3.3 of BS
+                7671:2018+A4:2026 requires additional RCD protection (rated residual operating
+                current not exceeding 30mA) for socket-outlets rated up to 32A. In dwellings there
+                is no exception; in non-dwellings a documented risk assessment may justify omission.
               </p>
             </div>
           </div>
@@ -478,6 +484,20 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h3 className="font-bold text-white mb-2">
+            A4:2026 Update: Lighting Circuits Now Need RCD Protection (Reg 411.3.4)
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            Amendment 4 of BS 7671 (2026) introduced Regulation 411.3.4, which requires that AC
+            final circuits supplying luminaires in domestic premises shall be provided with
+            additional protection by an RCD whose rated residual operating current does not exceed
+            30&nbsp;mA. An older split-load consumer unit where lighting circuits are protected only
+            by MCBs — with no RCD upstream — does not meet this requirement. If a lighting MCB is
+            tripping repeatedly in an older board, this is also the point at which an upgrade to
+            RCD- or RCBO-protected lighting circuits should be discussed with the homeowner.
+          </p>
+        </div>
       </>
     ),
   },
@@ -523,9 +543,9 @@ const sections = [
         <p>
           When the electrician visits, they will use insulation resistance testing, earth fault loop
           impedance testing, and circuit-by-circuit isolation to identify the fault. They may
-          recommend a full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
-          if the installation has not been inspected recently, as repeated tripping can be
-          symptomatic of wider installation problems.
+          recommend a full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> if
+          the installation has not been inspected recently, as repeated tripping can be symptomatic
+          of wider installation problems.
         </p>
       </>
     ),

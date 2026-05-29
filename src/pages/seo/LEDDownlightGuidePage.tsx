@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes for lighting circuits including LED loads with voltage drop verification.',
@@ -419,8 +419,8 @@ const sections = [
         <p>
           When quoting LED downlight installations with dimming, always specify the dimmer switch
           and confirm compatibility with the chosen downlight before ordering materials. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets
-          you build a detailed quote with specific fittings, switches, and cable quantities — so the
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets you
+          build a detailed quote with specific fittings, switches, and cable quantities — so the
           customer knows exactly what they are getting.
         </p>
       </>

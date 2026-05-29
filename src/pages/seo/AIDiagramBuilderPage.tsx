@@ -339,7 +339,7 @@ const sections = [
           as junction boxes, draw points, and fire stops. Where cables share common containment
           routes, the diagram shows the containment sizing and the cables it contains, linking to
           the{' '}
-          <SEOInternalLink href="/trunking-fill-calculator">
+          <SEOInternalLink href="/tools/trunking-fill-calculator">
             trunking fill calculator
           </SEOInternalLink>{' '}
           or{' '}

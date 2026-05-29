@@ -18,7 +18,7 @@ export default function AIvsManualDesignPage() {
       title="AI vs Manual Electrical Design | Comparison | Elec-Mate"
       description="Compare AI-powered and manual electrical design for speed, accuracy, BS 7671 compliance, cost savings, and practical application."
       datePublished="2026-01-25"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -54,6 +54,7 @@ export default function AIvsManualDesignPage() {
         'BS 7671 compliance is more consistent with AI because every design check is applied systematically to every circuit, with no possibility of overlooking a requirement.',
         'Human expertise remains essential for non-standard installations, site-specific judgement calls, and situations where BS 7671 permits alternative approaches.',
         'The most effective approach is hybrid — use AI for the calculation-heavy design work and apply human expertise for interpretation, judgement, and site-specific decisions.',
+        'A4:2026 introduced new mandatory requirements — including 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), AFDD recommendations for AC final circuits (Reg 421.1.7), and bidirectional device selection rules (Reg 530.3.201) — that AI checks automatically on every design.',
       ]}
       sections={[
         {
@@ -174,7 +175,8 @@ export default function AIvsManualDesignPage() {
               <p>
                 AI eliminates the first three categories almost entirely. It does not make
                 arithmetic mistakes, it applies every required check to every circuit without
-                exception, and it references the correct tables and regulations from BS 7671:2018+A4:2026. Inconsistency errors are also eliminated because the AI
+                exception, and it references the correct tables and regulations from BS
+                7671:2018+A4:2026. Inconsistency errors are also eliminated because the AI
                 recalculates all dependent values whenever any parameter changes.
               </p>
               <p>
@@ -201,7 +203,8 @@ export default function AIvsManualDesignPage() {
                 humans find tedious.
               </p>
               <p>
-                The AI Circuit Designer checks every design against the full scope of BS 7671:2018+A4:2026, including:
+                The AI Circuit Designer checks every design against the full scope of BS
+                7671:2018+A4:2026, including:
               </p>
               <ul className="list-disc pl-6 space-y-3">
                 <li>
@@ -222,13 +225,26 @@ export default function AIvsManualDesignPage() {
                   sizing method with all correction factors.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Appendix 12</span> — voltage drop
-                  limits for lighting (3%) and other circuits (5%).
+                  <span className="font-semibold text-white">
+                    Regulation 125.8 / Table 4Ab (Appendix 4)
+                  </span>{' '}
+                  — voltage drop limits for lighting (3%) and other circuits (5%) supplied from a
+                  public low voltage distribution system.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Amendment 4:2024</span> — Regulation
-                  530.3.2 for bidirectional protective devices in installations with solar PV,
-                  battery storage, or V2G capability.
+                  <span className="font-semibold text-white">A4:2026</span> — Regulation 530.3.201
+                  for bidirectional protective devices in installations with solar PV, battery
+                  storage, or V2G capability.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Regulation 411.3.4 (A4:2026)</span> —
+                  mandatory additional protection by an RCD rated at no more than 30 mA on AC final
+                  circuits supplying luminaires in domestic premises.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Regulation 421.1.7 (A4:2026)</span> —
+                  recommendation to install arc fault detection devices (AFDDs) in AC final circuits
+                  to mitigate the risk of fire due to arc fault currents.
                 </li>
               </ul>
               <p>
@@ -436,9 +452,11 @@ export default function AIvsManualDesignPage() {
                   </span>{' '}
                   — Manual: 20-30 minutes to verify the existing supply capacity, size the new
                   circuit, check that the existing installation can accommodate the additional load,
-                  and verify compliance with Type A or Type B RCD requirements. AI: under 30 seconds
-                  for the design, but the professional review is particularly important here because
-                  the electrician needs to verify the existing installation capacity on site.
+                  and verify compliance with Section 722 RCD requirements, which impose specific
+                  protection rules depending on supply type — including restrictions on PME (TN-C-S)
+                  earthing arrangements. AI: under 30 seconds for the design, but the professional
+                  review is particularly important here because the electrician needs to verify the
+                  existing installation capacity and supply type on site.
                 </li>
               </ul>
               <p>
@@ -518,7 +536,7 @@ export default function AIvsManualDesignPage() {
           category: 'Guides',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'BS 7671 Appendix 4 cable sizing with all correction factors — ambient temperature, grouping, thermal insulation.',

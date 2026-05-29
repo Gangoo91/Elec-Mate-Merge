@@ -35,7 +35,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The national apprentice minimum wage in 2026 is £6.40 per hour for apprentices under 19 or in their first year, rising to the age-appropriate national minimum wage rate from year 2 onwards. However, many electrical employers pay above this minimum.',
+  'The national apprentice minimum wage in 2026 is £7.55 per hour for apprentices under 19 or in their first year, rising to the age-appropriate national minimum wage rate from year 2 onwards. However, many electrical employers pay above this minimum.',
   'JIB/ECS graded rates are significantly higher than the legal minimum. JIB Stage 1 apprentice rates typically start around £8.00 to £9.50 per hour depending on the region and employer, making the electrical trade one of the better-paid apprenticeship pathways.',
   'Pay increases each year of the apprenticeship as you gain experience and pass qualifications. By year 3 or 4, apprentice wages typically reach £12.00 to £16.00 per hour, reflecting your growing contribution on site.',
   'After qualifying with the AM2, Level 3 diploma, and 18th Edition, starting salaries for newly qualified electricians range from £25,000 to £32,000 depending on location and employer. Experienced electricians and self-employed sparks can earn £40,000 to £55,000 or more.',
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'What is the apprentice electrician minimum wage in 2026?',
     answer:
-      'The national apprentice minimum wage rate in 2026 is £6.40 per hour. This rate applies to apprentices aged under 19, or to apprentices aged 19 and over who are in the first year of their apprenticeship. From the second year onwards (if you are aged 19 or over), you are entitled to the national minimum wage rate for your age group. For 2026, the rates are: £10.18 for ages 18 to 20, £11.44 for ages 21 to 22, and the National Living Wage of £12.21 for ages 23 and over. However, these are legal minimums — many electrical employers, particularly those operating under JIB/ECS graded rates, pay significantly above these figures. The apprentice rate is reviewed every April by the Low Pay Commission, so check the current rates if you are reading this after April 2026.',
+      'The national apprentice minimum wage rate in 2026 is £7.55 per hour. This rate applies to apprentices aged under 19, or to apprentices aged 19 and over who are in the first year of their apprenticeship. From the second year onwards (if you are aged 19 or over), you are entitled to the national minimum wage rate for your age group. For 2025/26, the rates are: £10.00 for ages 18 to 20, and the National Living Wage of £12.21 for ages 21 and over. However, these are legal minimums — many electrical employers, particularly those operating under JIB/ECS graded rates, pay significantly above these figures. The apprentice rate is reviewed every April by the Low Pay Commission, so check the current rates if you are reading this after April 2026.',
   },
   {
     question: 'Do I get paid for college days during my apprenticeship?',
@@ -74,6 +74,11 @@ const faqs = [
       'No, apprentice electrician pay varies significantly across the UK. London and the South East typically offer the highest rates due to higher living costs and strong demand for electricians. JIB rates include London and South East weighting allowances. Outside London, rates are generally lower but so are living costs. Scotland and Wales have similar rates to the English Midlands and North. Northern Ireland operates under separate employment legislation but follows broadly similar apprenticeship structures. As a general guide, a first-year apprentice in London might earn £10.00 to £12.00 per hour, while the same role in a rural area might pay £7.50 to £9.00 per hour. The difference narrows as you qualify — a qualified electrician in most parts of the UK can earn a comfortable living regardless of location, and self-employed electricians can choose to travel to higher-paying areas for specific projects.',
   },
   {
+    question: 'Does the 18th Edition exam now cover the A4:2026 changes?',
+    answer:
+      'Yes. The City & Guilds 2382 (18th Edition) qualification now covers BS 7671:2018+A4:2026, the current edition of the wiring regulations. Apprentices sitting the exam from 2025 onwards should be familiar with the key A4:2026 changes. Two of the most significant are: first, Regulation 421.1.7, which recommends the installation of arc fault detection devices (AFDDs) on AC final circuits of fixed installations to mitigate the risk of fire from arc faults; and second, Regulation 411.3.4, which requires that AC final circuits supplying luminaires (lighting circuits) in domestic premises must have additional protection by an RCD with a rated residual operating current not exceeding 30 mA. Both regulations appear in examination questions and in the Elec-Mate 18th Edition question bank. Understanding these changes also reflects directly on your value to employers — an electrician who can specify or verify AFDD and RCD protection correctly commands greater respect and, in time, higher rates.',
+  },
+  {
     question: 'What financial support is available for electrical apprentices?',
     answer:
       'Several forms of financial support are available for electrical apprentices beyond your wages. If you are aged 16 to 18, you may be eligible for a bursary from your training provider to help with travel costs, equipment, and course materials. Some employers provide tool allowances — either a one-off payment or a gradual tool kit built up over the apprenticeship. JIB-registered employers provide an annual tool allowance as part of the graded terms. If you are aged 19 or over and starting an apprenticeship, you may be eligible for a loan from the government for living costs, although apprentice wages should cover basic living expenses. Your training provider may also have a hardship fund for apprentices facing financial difficulty. Additionally, some industry bodies and charities offer grants for apprentice electricians — the IET (Institution of Engineering and Technology) and the Electrical Industries Charity both provide financial support programmes.',
@@ -85,7 +90,7 @@ const relatedPages = [
     href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description:
-      'Apprentice electrician pay UK 2026: £6.40/hr Year 1, then £10.18-£12.21/hr by age. JIB Stage 1-4 rates £8-£15/hr explained for apprentices + employers.',
+      'Apprentice electrician pay UK 2026: £7.55/hr Year 1, then £10.00-£12.21/hr by age. JIB Stage 1-4 rates £8-£15/hr explained for apprentices + employers.',
     icon: GraduationCap,
     category: 'Guide',
   },
@@ -138,18 +143,18 @@ const sections = [
           rates are as follows.
         </p>
         <p>
-          <strong>Year 1 (or under 19):</strong> The apprentice rate is £6.40 per hour. This applies
+          <strong>Year 1 (or under 19):</strong> The apprentice rate is £7.55 per hour. This applies
           to all apprentices under 19 regardless of which year they are in, and to apprentices aged
           19 and over who are in their first year. On a standard 37.5-hour week, this works out at
-          approximately £240 per week before deductions, or roughly £12,480 per year.
+          approximately £283 per week before deductions, or roughly £14,723 per year.
         </p>
         <p>
           <strong>Year 2 onwards (aged 19 or over):</strong> From the second year of the
           apprenticeship, if you are aged 19 or over, you are entitled to the national minimum wage
-          for your age group rather than the apprentice rate. For 2026, this is £10.18 per hour for
-          ages 18 to 20, £11.44 for ages 21 to 22, and the National Living Wage of £12.21 for ages
-          23 and over. This means a 21-year-old in year 2 of their apprenticeship on a 37.5-hour
-          week earns a minimum of approximately £429 per week, or around £22,308 per year.
+          for your age group rather than the apprentice rate. For 2025/26, this is £10.00 per hour
+          for ages 18 to 20, and the National Living Wage of £12.21 for ages 21 and over. This means
+          a 21-year-old in year 2 of their apprenticeship on a 37.5-hour week earns a minimum of
+          approximately £458 per week, or around £23,810 per year.
         </p>
         <p>
           These are legal minimums. Many electrical employers pay above these rates, particularly
@@ -207,10 +212,10 @@ const sections = [
           stages.
         </p>
         <p>
-          <strong>Year 1 at minimum rate (£6.40/hr, 37.5-hour week):</strong> Gross weekly pay of
-          approximately £240. At this level you are unlikely to pay income tax (the personal
+          <strong>Year 1 at minimum rate (£7.55/hr, 37.5-hour week):</strong> Gross weekly pay of
+          approximately £283. At this level you are unlikely to pay income tax (the personal
           allowance for 2025/26 is £12,570), and National Insurance contributions are minimal. Your
-          take-home will be close to your gross — approximately £230 to £240 per week.
+          take-home will be close to your gross — approximately £270 to £283 per week.
         </p>
         <p>
           <strong>Year 1 at JIB rate (approximately £9.00/hr):</strong> Gross weekly pay of
@@ -462,8 +467,8 @@ const sections = [
           <SEOInternalLink href="/guides/off-the-job-training-hours">
             off-the-job training tracker
           </SEOInternalLink>{' '}
-          ensures you stay compliant with the 400-hour target, preventing any delays to your
-          apprenticeship completion caused by insufficient training evidence.
+          ensures you stay compliant with the 20% off-the-job training requirement, preventing any
+          delays to your apprenticeship completion caused by insufficient training evidence.
         </p>
         <p>
           <strong>Career pathways:</strong> Elec-Mate's career pathway tools help you identify which
@@ -484,7 +489,7 @@ const sections = [
 export default function ApprenticeSalaryPage() {
   return (
     <GuideTemplate
-      title="Apprentice Electrician Pay UK 2026 | £6.40-£12.21 + JIB"
+      title="Apprentice Electrician Pay UK 2026 | £7.55-£12.21 + JIB"
       description="Complete guide to apprentice electrician pay rates in the UK for 2026. Minimum wage rates by age and year, JIB/ECS graded rates, weekly take-home pay…"
       datePublished="2025-09-10"
       dateModified="2026-05-19"
@@ -499,6 +504,11 @@ export default function ApprenticeSalaryPage() {
         </>
       }
       heroSubtitle="How much do apprentice electricians earn in 2026? This guide covers minimum wage rates by age, JIB/ECS graded rates, typical weekly take-home pay, overtime and travel allowances, how pay increases through the apprenticeship, and what to expect financially after you qualify."
+      answerBox={{
+        question: 'How much does an apprentice electrician earn in the UK?',
+        answer:
+          'In 2026, apprentice electricians earn a minimum of £7.55 per hour in Year 1. From Year 2, the age-appropriate National Minimum Wage applies — £10.00 (ages 18–20) or £12.21 (ages 21+). JIB-registered employers typically pay significantly more, with Stage 1 rates starting around £8.00 to £9.50 per hour.',
+      }}
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

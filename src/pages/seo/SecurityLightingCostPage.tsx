@@ -87,14 +87,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for security lighting circuits including SWA external runs.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long cable runs to remote security lights.',
     icon: Zap,
@@ -497,7 +497,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for security lighting circuits with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Check voltage drop on long SWA runs to remote lights.
@@ -512,10 +512,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price security lighting installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . PIR floodlights, SWA cable, RCBO, glands, fixings, CCTV preparation, labour, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. PIR
+                  floodlights, SWA cable, RCBO, glands, fixings, CCTV preparation, labour, and
                   testing — all itemised with your margins. Send a professional PDF quote from the
                   survey.
                 </p>

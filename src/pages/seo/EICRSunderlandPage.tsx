@@ -82,6 +82,11 @@ const faqs = [
     answer:
       'The inspector must be a qualified and competent person. For landlord compliance purposes this means registration with a competent person scheme such as NICEIC, NAPIT, or ELECSA. The inspector should hold City and Guilds 2391 (Inspection and Testing) or equivalent and a current 18th Edition BS 7671 qualification (C&G 2382). Registration can be verified on the NICEIC and NAPIT websites.',
   },
+  {
+    question: 'Does BS 7671:2018+A4:2026 affect what must appear on an EICR in Sunderland?',
+    answer:
+      'Yes. The A4:2026 amendment introduced Reg 133.1.3, which requires certain equipment usage — including the presence or absence of surge protective devices (SPDs) and arc fault detection devices (AFDDs) — to be recorded on the appropriate Part 6 electrical certification. The Appendix 6 model forms have been updated to include dedicated SPD and AFDD fields. An EICR produced in Sunderland from 2026 onwards must record AFDD status on qualifying circuits to be considered compliant with BS 7671:2018+A4:2026. Landlords receiving an updated report should check that the electrician is working to the current edition.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [
@@ -229,7 +234,9 @@ const sections = [
         <p>
           The regulations apply to assured shorthold tenancies and assured tenancies. Owner-occupied
           properties, social housing, and lodger arrangements where the landlord is resident are
-          outside the scope of the regulations.
+          outside the scope of the regulations. To find a NICEIC or NAPIT registered electrician in
+          Sunderland to carry out the inspection, use the{' '}
+          <SEOInternalLink href="/find-electrician">Elec-Mate electrician finder</SEOInternalLink>.
         </p>
       </>
     ),
@@ -434,6 +441,34 @@ const sections = [
                 overloading, such as overheating at accessories, attracts C1 or C2 observations.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Lighting circuits without RCD protection (A4:2026):</strong> Reg 411.3.4 of
+                BS 7671:2018+A4:2026 requires that AC final circuits supplying luminaires in
+                domestic premises are protected by a 30&nbsp;mA RCD. Many older consumer units in
+                Sunderland's Victorian and Edwardian stock protect lighting circuits by MCB only,
+                with no RCD. An EICR inspector will record this as a defect, and rectification
+                typically means a full consumer unit replacement — not just adding an individual
+                device. See{' '}
+                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+                  EICR observation codes explained
+                </SEOInternalLink>{' '}
+                for how this is classified.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Absence of arc fault detection devices (AFDD) — Reg 421.1.7:</strong> Reg
+                421.1.7 of BS 7671:2018+A4:2026 recommends the installation of arc fault detection
+                devices (AFDDs) in AC final circuits to mitigate the risk of fire from arc fault
+                currents. Where a consumer unit replacement is triggered by missing RCD protection,
+                the inspector will also note AFDD provision (or absence) on qualifying circuits.
+                Landlords and electricians in Sunderland should factor AFDD fitment into consumer
+                unit upgrade quotes where the A4:2026 recommendation applies.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -529,7 +564,32 @@ const sections = [
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords under the 28-day clock almost always proceed with the electrician who
-                  inspected the property.
+                  inspected the property. Minor remedial work following an EICR can be certified
+                  using a{' '}
+                  <SEOInternalLink href="/tools/minor-works-certificate">
+                    minor works certificate
+                  </SEOInternalLink>
+                  , keeping your paperwork complete in one place.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  A4:2026: AFDD and Certification Fields
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Since A4:2026, Reg 133.1.3 requires that SPD and AFDD provision (or absence) is
+                  recorded on the appropriate Part 6 certification. The Appendix 6 model forms have
+                  been updated to include dedicated SPD and AFDD fields. Electricians completing
+                  EICRs in Sunderland should ensure their report records AFDD status on qualifying
+                  circuits — an omission makes the report non-compliant with
+                  BS&nbsp;7671:2018+A4:2026. Reg 421.1.7 recommends AFDD installation on AC final
+                  circuits where arc fault fire risk is a concern; where not fitted, the inspector
+                  must note the absence.
                 </p>
               </div>
             </div>
@@ -555,7 +615,7 @@ export default function EICRSunderlandPage() {
       title="EICR Sunderland | Electrical Inspection Sunderland"
       description="EICR requirements for Sunderland landlords and homeowners. Legal obligations under the 2020 Regulations, Sunderland City Council enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

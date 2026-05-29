@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       "Size cables for rewires, new circuits, and long cable runs in Chester's period properties.",
@@ -487,7 +487,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Period Properties</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for accurate voltage drop calculations on longer cable runs in Chester's period

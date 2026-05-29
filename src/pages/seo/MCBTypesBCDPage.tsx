@@ -44,6 +44,8 @@ const keyTakeaways = [
   'Type C MCBs trip magnetically between 5 and 10 times rated current — designed for moderately inductive loads such as motors, discharge lighting, and fluorescent fittings with magnetic ballasts.',
   'Type D MCBs trip magnetically between 10 and 20 times rated current — reserved for highly inductive loads with very high inrush currents such as transformers, X-ray machines, and welding equipment.',
   'Using a higher-type MCB than necessary (e.g. Type C where Type B would suffice) reduces the maximum permitted Zs, making it harder to achieve compliant earth fault loop impedance readings.',
+  'A4:2026 Reg 411.3.4: all domestic AC final circuits supplying luminaires must have additional protection by a 30 mA RCD — this applies regardless of MCB type and affects every domestic lighting circuit design.',
+  'Maximum Zs values for MCBs to BS EN 60898 are given in Tables 41.3 and 41.6 of BS 7671. The x 0.8 corrected column in Zs tables is the on-site acceptance limit (GN3 / Appendix 3), accounting for conductors measured cold at ambient temperature.',
   'Elec-Mate includes 70+ calculators that automatically look up the correct maximum Zs for any MCB type and rating, and the AI board scanner identifies MCB types from a photograph of the consumer unit.',
 ];
 
@@ -85,7 +87,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/maximum-zs-values-bs-7671',
     title: 'Maximum Zs Values BS 7671',
     description:
-      'Complete Table 41.3 and 41.4 reference for maximum Zs by protective device type and rating.',
+      'Complete Tables 41.3 and 41.6 reference for maximum Zs for MCBs to BS EN 60898, plus Table 41.4 for fuses.',
     icon: Gauge,
     category: 'Guide',
   },
@@ -256,6 +258,25 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <Shield className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-2">
+                A4:2026 — Reg 411.3.4: 30 mA RCD now mandatory on domestic lighting circuits
+              </h4>
+              <p className="text-white/90 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 Regulation 411.3.4 requires that, within domestic premises, all
+                AC final circuits supplying luminaires shall have additional protection by an RCD
+                with a rated residual operating current not exceeding 30 mA. This is a mandatory
+                requirement introduced by A4:2026 — the MCB type (B, C, or D) does not affect this
+                obligation. In practice, domestic lighting circuits must be protected by an RCBO or
+                placed on an RCD-protected way in the consumer unit, regardless of which MCB type is
+                fitted.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           Type B should be the default choice unless there is a specific technical reason to use
@@ -484,6 +505,14 @@ const sections = [
             </div>
           </div>
         </div>
+        <p className="text-white/70 text-sm mt-3">
+          The <strong className="text-white">Max Zs (x 0.8)</strong> column is the on-site
+          acceptance limit per BS 7671 Appendix 3 and GN3. Conductors are measured cold at ambient
+          temperature during testing, but under fault conditions they heat up and their resistance
+          rises. Multiplying the tabulated Zs by 0.8 gives a conservative site limit that accounts
+          for this difference — your measured Zs must be below the corrected value to satisfy
+          Regulation 411.4.4. This is the figure you compare against your loop tester reading.
+        </p>
         <p>
           The difference is stark. A B32 gives you 1.10 ohms of headroom (corrected). A C32 cuts
           that in half to 0.54 ohms. A D32 reduces it further to just 0.27 ohms. On a TN-S
@@ -497,6 +526,15 @@ const sections = [
           <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR testing</SEOInternalLink>.
           Specifying the correct (lowest appropriate) MCB type at the design stage avoids compliance
           problems at the testing stage.
+        </p>
+        <p>
+          The tabulated Zs values for MCBs to BS EN 60898 appear in two places in BS 7671: Table
+          41.3 lists values for the standard disconnection times used in most final-circuit
+          verification, and Table 41.6 lists alternative values. Both tables apply to BS EN 60898
+          devices (domestic and light-commercial MCBs). Where a manufacturer supplies specific Zs
+          data for a device, that manufacturer&apos;s data may be used instead — the tabulated
+          values are described in BS 7671 as more onerous and may in some cases require a larger CPC
+          to achieve compliance.
         </p>
         <SEOAppBridge
           title="70+ calculators including Zs by MCB type"

@@ -468,9 +468,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Complete post-flood{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> for repair
-                  work on site. Send certificates directly to the customer and their insurance
-                  company.
+                  <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> for repair work on
+                  site. Send certificates directly to the customer and their insurance company.
                 </p>
               </div>
             </div>
@@ -482,7 +481,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Rewires</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for replacement circuits. Get the right cable sizes on the assessment visit and

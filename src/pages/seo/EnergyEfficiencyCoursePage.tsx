@@ -188,10 +188,8 @@ const sections = [
           </SEOInternalLink>
           , and power factor correction — win more work, command premium rates, and build stronger
           client relationships. The{' '}
-          <SEOInternalLink href="/training/bms-course">
-            BMS course
-          </SEOInternalLink>{' '}
-          covers the building automation systems that tie energy efficiency measures together.
+          <SEOInternalLink href="/training/bms-course">BMS course</SEOInternalLink> covers the
+          building automation systems that tie energy efficiency measures together.
         </p>
         <SEOAppBridge
           title="46+ courses including energy efficiency"
@@ -272,11 +270,11 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           and{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           help ensure your LED lighting circuits are correctly designed for both efficiency and
@@ -407,7 +405,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Minimising voltage drop reduces energy waste in cable runs across any installation.',

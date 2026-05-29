@@ -260,6 +260,22 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-4">
+          <p className="font-semibold text-white mb-2">
+            Why one RCD trip can kill both sockets and lights — BS 7671:2018+A4:2026 Reg 411.3.4
+          </p>
+          <p className="text-sm text-white/80 leading-relaxed">
+            A common source of homeowner confusion on split-load boards is that a single RCD trip
+            kills both socket circuits and lighting circuits simultaneously. This is explained by
+            Regulation 411.3.4 of BS 7671:2018+A4:2026, which requires that, in domestic premises,
+            AC final circuits supplying luminaires shall be provided with additional protection by
+            an RCD with a rated residual operating current not exceeding 30 mA. Because domestic
+            lighting circuits now require the same 30 mA RCD protection as socket circuits, both
+            circuit types sit behind the same RCD on a split-load board — so an earth leakage fault
+            on any one circuit, whether a socket or a light fitting, can trip the RCD protecting
+            both.
+          </p>
+        </div>
       </>
     ),
   },
@@ -315,10 +331,22 @@ const sections = [
           board. Disconnect both ends of the ring (line, neutral, and CPC at both legs). Measure R1
           (end-to-end line conductor resistance), Rn (end-to-end neutral conductor resistance), and
           R2 (end-to-end CPC resistance). If any of these reads open circuit, the ring is broken on
-          that conductor. Cross-connect the conductors and measure at each socket around the ring to
-          locate the break point — the readings will be inconsistent at the socket where the break
-          occurs.
+          that conductor. Cross-connect the conductors and measure the resistance between the line
+          and CPC at each socket around the ring to locate the break point.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="font-semibold text-white mb-2">Pass/fail criterion — GN3 Reg 2.20</p>
+          <p className="text-sm text-white/80 leading-relaxed">
+            When the CPC is the same cross-sectional area and material as the line conductor
+            (standard 2.5/1.5 mm² twin-and-earth), the line-to-CPC resistance measured at each
+            socket-outlet around the ring will be substantially the same — approximately one quarter
+            of the total line-plus-CPC loop resistance. Readings that are substantially equal
+            confirm acceptable ring continuity. A significant outlier (a reading materially higher
+            than the others) at a particular socket indicates a high-resistance joint or partial
+            break at or between that socket, and shall be investigated — it is not sufficient to
+            confirm only that no socket reads open circuit.
+          </p>
+        </div>
         <SEOAppBridge
           title="Ring circuit calculator for fault diagnosis"
           description="Enter your R1, Rn, and R2 values into Elec-Mate's ring circuit calculator. The app validates the ring integrity, flags any anomalies…"
@@ -386,6 +414,25 @@ const sections = [
           <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 or C2
           observation.
         </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-amber-300 mb-1">
+                Arc Fault Detection (AFDD) — BS 7671:2018+A4:2026 Reg 421.1.7
+              </p>
+              <p className="text-sm text-white/80 leading-relaxed">
+                Arcing at a loose socket terminal is precisely the hazard that arc fault detection
+                devices (AFDDs) are designed to detect. Regulation 421.1.7 of BS 7671:2018+A4:2026
+                recommends the installation of AFDDs on AC final circuits to mitigate the risk of
+                fire due to arc fault currents. For new domestic installations and rewires,
+                electricians should consider specifying AFDD-equipped consumer units on socket
+                circuits — the loose-connection fire risk described above is the regulatory
+                justification for the recommendation.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -466,6 +513,43 @@ const sections = [
           When called to diagnose dead sockets, follow this structured approach to identify the
           cause efficiently and avoid wasting time:
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="font-semibold text-white mb-3">Tools you will need</p>
+          <ul className="space-y-2 text-sm text-white/80">
+            <li className="flex items-start gap-2">
+              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-white">Low-reading ohmmeter</strong> — a standard continuity
+                buzzer is not sufficient for ring circuit continuity work; you need an instrument
+                capable of resolving milliohm differences to detect high-resistance joints.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-white">Proving unit</strong> — used to confirm your voltage
+                indicator is functioning correctly before and after proving dead (prove — test —
+                prove sequence).
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-white">Two-pole voltage indicator (GS38 compliant)</strong>{' '}
+                — for proving the circuit dead before opening any socket faceplate.
+              </span>
+            </li>
+          </ul>
+          <div className="mt-4 rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3">
+            <p className="text-sm text-amber-200 leading-relaxed">
+              <strong className="text-amber-300">Common mistake:</strong> Do not test continuity
+              without fully isolating adjacent live circuits. Energised parallel paths — for
+              example, a bonding conductor or a second circuit sharing a common neutral — will give
+              false low readings on the ohmmeter, making a broken conductor appear intact. Isolate
+              the circuit under test completely before measuring.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>

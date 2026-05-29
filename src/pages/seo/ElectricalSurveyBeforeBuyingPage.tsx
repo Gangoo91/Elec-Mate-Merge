@@ -241,6 +241,26 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">
+                A4:2026 update — RCD protection on lighting circuits
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                The 2024 amendment to BS 7671 (A4:2026) introduced Regulation 411.3.4, which
+                requires additional protection by a 30&nbsp;mA RCD on AC final circuits supplying
+                luminaires in domestic premises. Properties wired before 2026 will almost certainly
+                lack this protection. Inspectors carrying out EICRs on older domestic properties are
+                now expected to note its absence — typically as a C2 or C3 observation depending on
+                the overall installation condition. Buyers of any home wired before 2026 should
+                factor in the cost of upgrading lighting circuits to RCD protection as part of their
+                post-purchase plan.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -318,14 +338,20 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit and protective devices</strong> — condition, age, type of
-                protection (MCBs, RCDs, RCBOs), and compliance with current standards.
+                protection (MCBs, RCDs, RCBOs), and compliance with current standards. Inspectors
+                may also note the absence of arc fault detection devices (AFDDs) as a C3
+                observation: Regulation 421.1.7 of BS 7671 recommends AFDD installation on AC final
+                circuits to mitigate the risk of fire from arc fault currents. This is a
+                recommendatory provision — absence of AFDDs is not a safety emergency — but
+                retrofitting them when replacing a consumer unit represents a real cost buyers of
+                older properties should be aware of.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earthing terminal, main protective
-                bonding to gas and water services (Regulation 411.3.1.2), and supplementary bonding
+                bonding to gas and water services (Regulation 544.1.2), and supplementary bonding
                 where required.
               </span>
             </li>
@@ -365,9 +391,9 @@ const sections = [
     content: (
       <>
         <p>
-          The EICR uses a classification system defined in BS 7671 Section 631 to categorise
-          observations. Understanding the difference between codes is essential for assessing the
-          seriousness of any findings.
+          The EICR uses a classification system defined in IET Guidance Note 3 (Table 3.5) to
+          categorise observations. Understanding the difference between codes is essential for
+          assessing the seriousness of any findings.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -611,12 +637,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 findings are identified, quote the remedial work immediately using
-                  the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Buyers need quotes quickly to negotiate with vendors. The electrician who
-                  provides a quote on the day of the EICR almost always wins the work.
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Buyers need quotes quickly to negotiate with vendors. The electrician who provides
+                  a quote on the day of the EICR almost always wins the work.
                 </p>
               </div>
             </div>

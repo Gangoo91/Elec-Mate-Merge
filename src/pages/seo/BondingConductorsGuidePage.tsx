@@ -38,11 +38,11 @@ const tocItems = [
 
 const keyTakeaways = [
   'Main protective bonding connects all metallic services entering the building (gas, water, oil pipes) to the main earthing terminal, ensuring they are all at the same potential and preventing dangerous voltage differences between them.',
-  'BS 7671 18th Edition requires main bonding conductors to be of a minimum cross-sectional area based on the incoming neutral conductor size — typically 10mm² for most domestic supplies.',
+  'BS 7671:2018+A4:2026 (Reg 544.11) requires main bonding conductors to be at least half the csa of the earthing conductor on non-PME supplies (minimum 6mm², maximum 25mm²), or sized per Table 54.8 against the PEN conductor on PME/TN-C-S supplies — typically 10mm² for domestic PME supplies (PEN ≤35mm²), rising to 16mm² where the PEN is over 35mm² up to 50mm².',
   'Supplementary bonding in bathroom zones connects simultaneously accessible metallic parts (taps, pipework, radiators, baths, shower trays) to prevent dangerous potential differences within the bathroom.',
-  'Supplementary bonding in a bathroom can be omitted if all circuits serving the bathroom are protected by a 30mA RCD — a common approach in new installations with all-RCBO consumer units.',
+  'Supplementary bonding in a bathroom can be omitted only when all three conditions in Reg 701.415.2 are simultaneously met: (d) all circuits comply with automatic disconnection per Reg 411.3.2; (e) all circuits have 30mA RCD additional protection per Reg 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to main protective bonding per Reg 411.3.1.2.',
   'Missing or inadequate main bonding is one of the most common C2 observations on EICRs, particularly in older properties where gas or water services have been renewed without reconnecting bonding.',
-  'Bonding conductors must be labelled with the safety label "Safety Electrical Connection — Do Not Remove" at each connection point.',
+  'Bonding conductors must be labelled with the safety label "Safety Electrical Connection | ~ Do Not Remove" (Reg 514.13.1) at: (a) the connection of every earthing conductor to an earth electrode; (b) the connection of every bonding conductor to an extraneous-conductive-part; and (c) the main earthing terminal where it is separate from the main switchgear.',
 ];
 
 const faqs = [
@@ -59,12 +59,12 @@ const faqs = [
   {
     question: 'What size bonding conductor do I need?',
     answer:
-      'The minimum cross-sectional area (csa) of main bonding conductors is determined by reference to the cross-sectional area of the incoming neutral conductor (or the PEN conductor on PME supplies). BS 7671 18th Edition provides a table relating neutral conductor csa to the minimum main bonding conductor csa. For most domestic properties with a 100A single-phase supply (using 16mm² or 25mm² service cable), a 10mm² main bonding conductor is required. For larger supplies, the conductor must be proportionately larger. The absolute minimum is 6mm² regardless of supply size, and 25mm² is the maximum required. For supplementary bonding, the minimum is 2.5mm² if mechanically protected or 4mm² if not.',
+      'The minimum csa of main protective bonding conductors is determined by Reg 544.11. On non-PME supplies (TN-S, TT), the bonding conductor must be at least half the csa of the earthing conductor, subject to a minimum of 6mm² copper. On PME/TN-C-S supplies — which is the majority of UK domestic properties — the conductor is sized against the PEN conductor using Table 54.8: PEN ≤35mm² requires 10mm²; PEN over 35mm² up to 50mm² requires 16mm². The absolute maximum required is 25mm² for copper. In practice, 10mm² is the standard for most domestic TN-C-S supplies. For supplementary bonding, the minimum is 2.5mm² if mechanically protected or 4mm² if not.',
   },
   {
     question: 'Is supplementary bonding required in bathrooms?',
     answer:
-      'Supplementary bonding in bathrooms is required by BS 7671 18th Edition unless all circuits serving the bathroom are protected by a 30mA RCD. In practice, if the bathroom is served by an all-RCBO consumer unit or by circuits under a 30mA RCCB, supplementary bonding can be omitted. If any circuit serving the bathroom (lighting, socket in adjacent area, electric heating) is not RCD protected, supplementary bonding of all simultaneously accessible metallic parts within the bathroom is required. This assessment must be made on a circuit-by-circuit basis for the specific installation.',
+      'Supplementary bonding in bathrooms is required by BS 7671:2018+A4:2026 (Reg 701.415.2) unless all three of the following conditions are simultaneously met: (d) all final circuits of the location comply with automatic disconnection per Reg 411.3.2; (e) all final circuits have additional 30mA RCD protection per Reg 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to main protective bonding per Reg 411.3.1.2. All three conditions must be satisfied — meeting only one or two is not sufficient. In practice, a new installation with an all-RCBO consumer unit will typically satisfy all three, allowing supplementary bonding to be omitted. In an older installation with any unprotected circuit, supplementary bonding of all simultaneously accessible metallic parts remains required.',
   },
   {
     question: 'Can I remove a bonding conductor if I am replacing pipework with plastic?',
@@ -193,17 +193,22 @@ const sections = [
               <span>
                 <strong>Gas service</strong> — bond to the gas installation pipework as close as
                 practicable to the gas meter, on the consumer's side of the meter. The bonding must
-                be before the first fitting or appliance. Where plastic gas pipes are used for the
-                incoming service, bond to the first metallic fitting inside the building.
+                be before the first fitting or appliance. Under BS 7671:2018+A4:2026, where the
+                incoming metallic gas pipe has a qualifying insulating section at the point of entry
+                to the building, main protective bonding to that pipe is not required (see A4:2026
+                note below). Where no insulating section is present and plastic pipework gives way
+                to metallic internally, bond to the first metallic section.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Water service</strong> — bond to the incoming water main as close as
-                practicable to the water meter or the point of entry into the building. If the
-                incoming service is in plastic, bond to the first metallic section of the internal
-                pipework. Ensure the bond is before any branch to individual rooms or appliances.
+                practicable to the water meter or the point of entry into the building. Where the
+                incoming metallic water pipe has a qualifying insulating section at the point of
+                building entry, main protective bonding is not required under A4:2026. If no
+                insulating section is present, bond to the first metallic section of internal
+                pipework before any branch.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,6 +231,28 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                A4:2026 change — insulating section exemption
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 introduced an important change to bonding requirements: a
+                metallic service pipe (gas, water, oil) that enters the building via a qualifying
+                insulating section <strong>at the point of entry</strong> need not be connected to
+                the main protective equipotential bonding. The insulating section breaks any
+                conductive path from the external network into the building, removing the hazard
+                that bonding is intended to address. This exemption applies only where the
+                insulating section is genuinely at the point of building entry — if it is located
+                elsewhere in the run, the bonding requirement remains. Always verify the presence
+                and location of the insulating section before deciding to omit bonding, and record
+                the decision on the installation certificate as required by Reg 133.1.3.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -235,53 +262,70 @@ const sections = [
     content: (
       <>
         <p>
-          The minimum cross-sectional area (csa) of main protective bonding conductors is specified
-          in BS 7671 18th Edition Table 54.5 by reference to the csa of the incoming neutral (or
-          PEN) conductor — the bonding conductor must be at least half the csa of the line
-          conductor, subject to a minimum of 6mm² and a maximum of 25mm². In practice, for most
-          domestic properties with a 60A to 100A main fuse (typically served by a 16mm² or 25mm²
-          service cable), <strong>10mm² is the standard main bonding conductor size</strong>. The
-          6mm² minimum is the absolute minimum only and applies to installations with a smaller
-          supply cable — where in doubt, 10mm² should always be used.
+          The minimum cross-sectional area (csa) of main protective bonding conductors is governed
+          by Reg 544.11. The rule differs depending on whether PME (TN-C-S) or non-PME earthing
+          applies:
+        </p>
+        <ul className="list-disc pl-6 space-y-1 text-white my-2">
+          <li>
+            <strong>Non-PME supplies (TN-S, TT)</strong> — the bonding conductor must be at least
+            half the csa of the earthing conductor of the installation, subject to a minimum of 6mm²
+            and a maximum of 25mm² copper-equivalent (Reg 544.11).
+          </li>
+          <li>
+            <strong>PME / TN-C-S supplies</strong> — the bonding conductor is selected against the
+            PEN conductor of the supply using Table 54.8: PEN ≤35mm² → <strong>10mm²</strong>; PEN
+            &gt;35mm² up to 50mm² → <strong>16mm²</strong>; PEN &gt;50mm² up to 95mm² → 25mm² (Reg
+            544.11 / Table 54.8).
+          </li>
+        </ul>
+        <p>
+          Most UK domestic properties are supplied on PME (TN-C-S) with a PEN conductor of 16mm² or
+          25mm², so <strong>10mm² is the standard main bonding conductor size</strong>. The 6mm²
+          minimum is the absolute floor and applies only to non-PME installations with a small
+          earthing conductor — where in doubt, 10mm² should always be used.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical domestic supply (up to 100A)</strong> — a standard 100A single-phase
-                domestic supply uses a service cable with a 16mm² or 25mm² neutral. BS 7671 18th
-                Edition requires a minimum 10mm² main bonding conductor for these supplies. This is
-                the most common bonding conductor size for domestic properties in the UK.
+                <strong>Typical domestic PME supply (PEN ≤35mm²)</strong> — a standard 100A
+                single-phase domestic TN-C-S supply uses a PEN conductor of 16mm² or 25mm². Table
+                54.8 (Reg 544.11) requires a minimum <strong>10mm²</strong> main bonding conductor
+                for these supplies. This is the most common bonding conductor size for domestic
+                properties in the UK.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smaller supplies and the 6mm² minimum</strong> — 6mm² is the absolute
-                minimum main bonding conductor size under BS 7671, regardless of supply size. It
-                applies only to installations with a very small supply cable (below approximately
-                10mm² neutral). For the overwhelming majority of UK domestic properties — where the
-                supply neutral is 16mm² or 25mm² — 10mm² is correct and 6mm² would be undersized.
-                Never specify 6mm² on a standard domestic supply: it will typically be flagged C2 on
+                <strong>Larger PME supplies (PEN &gt;35mm² up to 50mm²)</strong> — where the network
+                PEN conductor exceeds 35mm² (common for larger commercial premises or upgraded
+                domestic supplies), Table 54.8 requires <strong>16mm²</strong> main bonding
+                conductors. Using 10mm² in this situation would be undersized and is typically
+                flagged C2 on an EICR.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Non-PME supplies (TN-S, TT) and the 6mm² minimum</strong> — on non-PME
+                supplies the bonding conductor is sized at half the csa of the earthing conductor,
+                with a floor of 6mm² copper. This applies only to TN-S or TT installations; the
+                overwhelming majority of UK properties are PME (TN-C-S) and so use Table 54.8. Never
+                specify 6mm² on a standard PME domestic supply: it will typically be flagged C2 on
                 the next EICR.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Maximum requirement</strong> — the maximum required csa for main bonding
-                conductors is 25mm², regardless of the supply neutral size. This prevents
-                impractically large conductors being specified for large industrial supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Older installations with 6mm²</strong> — many older properties have 6mm²
-                main bonding conductors installed when a smaller supply rating was standard. If the
-                supply has since been uprated (e.g. from a 60A to a 100A fuse), the bonding
-                conductor may now be undersized. This is commonly observed as a C2 during EICRs.
+                main bonding conductors installed to a previous edition's minimum. On a standard PME
+                (TN-C-S) supply, Reg 544.11 / Table 54.8 requires 10mm² where the PEN conductor is
+                ≤35mm². A 6mm² conductor on such a supply is undersized and is commonly observed as
+                a C2 during EICRs.
               </span>
             </li>
           </ul>
@@ -331,6 +375,20 @@ const sections = [
                 regardless of zone.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Door architraves and window frames — not extraneous-conductive-parts
+                </strong>{' '}
+                — Reg 701.415.2 expressly states that metallic door architraves, window frames and
+                similar parts are <em>not</em> considered extraneous-conductive-parts requiring
+                supplementary bonding unless they are connected to metallic structural parts of the
+                building. Do not bond these items unless they are genuinely structurally connected —
+                unnecessary bonding of non-extraneous parts is a common on-site error and adds cost
+                without safety benefit.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -342,40 +400,49 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 18th Edition allows supplementary bonding to be omitted in bathrooms provided that
-          all circuits serving the bathroom are protected by a 30mA RCD. This provision reflects the
-          understanding that rapid RCD disconnection limits the duration of any dangerous potential
-          difference to a level that is unlikely to cause harm.
+          BS 7671:2018+A4:2026 (Reg 701.415.2) allows supplementary bonding to be omitted in a
+          bathroom, but only where the building already has a main protective equipotential bonding
+          system in accordance with Reg 411.3.1.2 <strong>and</strong> all three of the following
+          conditions are simultaneously met:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>All circuits must be RCD protected</strong> — the omission of supplementary
-                bonding is only permitted if every circuit that could affect the bathroom is RCD
-                protected. This includes not just the bathroom lighting and electric shower
-                circuits, but also circuits in adjacent rooms that supply pipework or metal parts
-                accessible from the bathroom.
+                <strong>Condition (d) — automatic disconnection (Reg 411.3.2)</strong> — all final
+                circuits of the location shall comply with the requirements for automatic
+                disconnection according to Reg 411.3.2 (i.e. fault loop impedance Zs is within the
+                limit for the protective device).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Practical implication</strong> — in a new installation with an all-RCBO
-                consumer unit, all circuits are individually RCD protected, so supplementary bonding
-                in the bathroom can be omitted. In an older installation with some circuits not RCD
-                protected, supplementary bonding in the bathroom is required.
+                <strong>Condition (e) — 30mA RCD additional protection (Reg 415.1.1)</strong> — all
+                final circuits of the location shall have additional protection by a residual
+                current device with a rated residual operating current not exceeding 30mA. This
+                includes not just the bathroom lighting and shower circuits, but every circuit that
+                could introduce a potential difference into the bathroom.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Assessment responsibility</strong> — the electrician must assess and
-                document whether the RCD protection condition is met for the specific bathroom.
-                Simply assuming that supplementary bonding is not required without checking all
-                circuits is not acceptable — if the assessment is wrong, the installation may be
-                unsafe.
+                <strong>Condition (f) — main equipotential bonding (Reg 411.3.1.2)</strong> — all
+                extraneous-conductive-parts of the location shall be effectively connected to the
+                main protective equipotential bonding. Meeting this condition requires that main
+                bonding of all incoming metallic services is intact and compliant.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>All three conditions must be met simultaneously</strong> — failure on any
+                one condition means supplementary bonding is still required. In a new installation
+                with an all-RCBO consumer unit where all three conditions are satisfied,
+                supplementary bonding can be omitted. In an older installation with any unprotected
+                circuit, supplementary bonding remains necessary.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -383,7 +450,7 @@ const sections = [
               <span>
                 <strong>Main bonding still required</strong> — the omission of supplementary bonding
                 does not affect the requirement for main protective bonding of incoming services
-                (gas, water). Main bonding is always required regardless of RCD protection.
+                (gas, water, oil). Main bonding is always required regardless of RCD protection.
               </span>
             </li>
           </ul>
@@ -433,10 +500,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Missing safety labels</strong> — BS 7671 requires bonding conductors to be
-                labelled at each connection point with the safety label "Safety Electrical
-                Connection — Do Not Remove". Missing labels are a commonly observed FI (Further
-                Investigation) item on EICRs and a C3 observation in many cases.
+                <strong>Missing safety labels</strong> — BS 7671 Reg 514.13.1 requires a warning
+                notice "Safety Electrical Connection | ~ Do Not Remove" to be securely fixed at each
+                bonding connection point (and at the earthing conductor-to-electrode connection and
+                at any separate main earthing terminal). Missing labels are a commonly observed FI
+                (Further Investigation) item on EICRs and a C3 observation in many cases.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,10 +563,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safety labelling</strong> — fit the "Safety Electrical Connection — Do Not
-                Remove" label to the bonding clamp and conductor at each connection point. This is a
-                BS 7671 requirement and also alerts future workers (including gas fitters and
-                plumbers) not to disconnect the bonding without understanding the implications.
+                <strong>Safety labelling</strong> — fit a "Safety Electrical Connection | ~ Do Not
+                Remove" notice to the bonding clamp and conductor at each connection point (Reg
+                514.13.1). The notice is also required at any earthing conductor-to-electrode
+                connection and at the main earthing terminal if it is separate from the main
+                switchgear. BS 951 clamps may incorporate the notice on the clamp itself. The label
+                also alerts future workers (gas fitters, plumbers) not to disconnect the bonding.
               </span>
             </li>
           </ul>
@@ -621,9 +691,9 @@ export default function BondingConductorsGuidePage() {
   return (
     <GuideTemplate
       title="Bonding Conductor Sizes BS 7671: Main + Supplementary"
-      description="Bonding conductor sizes for UK installs: main protective bonding (gas, water, oil) and supplementary bonding to BS 7671 Table 54.5. Worked examples."
+      description="Bonding conductor sizes for UK installs: main protective bonding (gas, water, oil) and supplementary bonding to BS 7671:2018+A4:2026 Reg 544.11 / Table 54.8. Worked examples."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

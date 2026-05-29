@@ -172,7 +172,7 @@ export default function ElectricalExtensionGuidePage() {
                       <strong className="text-yellow-400">Cooker circuit</strong> — 6.0mm²
                       twin-and-earth, 32A RCBO, if the extension includes a kitchen with an electric
                       cooker or hob. Use{' '}
-                      <SEOInternalLink href="/cable-sizing-calculator">
+                      <SEOInternalLink href="/tools/cable-sizing-calculator">
                         cable sizing calculations
                       </SEOInternalLink>{' '}
                       to confirm the correct size based on the cooker's rated current.
@@ -608,7 +608,7 @@ export default function ElectricalExtensionGuidePage() {
           category: 'Regulation',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for extension circuits.',
           icon: Calculator,

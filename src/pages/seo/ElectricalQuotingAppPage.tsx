@@ -53,6 +53,16 @@ const faqs = [
     answer:
       'Yes. When you send a quote or invoice from Elec-Mate, the client receives a link to a simple, clean portal where they can view the document, accept quotes, make payments, and communicate with you. The portal is branded with your business details, not Elec-Mate, so it appears professional and consistent with your brand. Clients do not need to create an account or download an app — they simply click the link in the email. The portal shows the current status of each document (sent, viewed, accepted, paid, overdue) and allows clients to leave notes or ask questions. This reduces the number of phone calls and text messages you need to handle and keeps a clear record of all client communications.',
   },
+  {
+    question: 'What must a consumer unit upgrade quote include in 2026?',
+    answer:
+      'Since BS 7671:2018+A4:2026 came into force, a compliant consumer unit upgrade quote should address three key points. First, arc fault detection devices (AFDDs): Regulation 421.1.7 recommends — but does not mandate with "shall" — AFDD installation on AC final circuits to mitigate the risk of fire from arc fault currents. Because the wording is recommendatory rather than prescriptive, you cannot simply ignore it or treat it as automatically required: you must offer AFDDs as a clearly priced option and explain the recommendation to the client so they can make an informed decision. In practice this means a two-line quote — one price with AFDDs, one without — or a separate AFDD line item marked as a recommended addition. Second, RCD-protected lighting circuits: Regulation 411.3.4 requires that, within domestic premises, AC final circuits supplying luminaires (lighting) shall be provided with additional protection by a 30 mA RCD. A new consumer unit that leaves lighting circuits unprotected will not comply — this one is mandatory. Third, a non-combustible enclosure: Regulation 421.1.201 requires that in domestic premises, consumer units and similar switchgear assemblies shall be enclosed in a material of low flame spread — in practice, a metal (steel) enclosure. This is mandatory and affects your material specification and cost. Elec-Mate\'s quote builder lets you itemise AFDDs, RCBOs, and enclosure type per circuit so nothing is left out of the price.',
+  },
+  {
+    question: 'Should I include Part P notification fees in my quotes?',
+    answer:
+      "Yes — for notifiable domestic work, the notification fee is a legitimate and often overlooked cost. The IET On-Site Guide notes that all electrical work within dwellings, of which some is notifiable under Building Regulations Part P. Not every domestic job triggers a notification: minor additions such as adding a socket to an existing ring may be non-notifiable, whereas new circuits, consumer unit replacements, and work in kitchens or bathrooms typically are. If you are registered with a competent person scheme (NICEIC, NAPIT, ELECSA etc.), your annual scheme fee covers notifications — but it is still a real cost of doing business that should be factored into your overhead recovery. If you are not scheme-registered, a local authority building control (LABC) notification fee applies and must be quoted to the client as a separate line item. Elec-Mate's quote builder includes a miscellaneous line-item field specifically for scheme or building control fees so they appear clearly on the client-facing document.",
+  },
 ];
 
 const features = [
@@ -101,18 +111,12 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Smart quoting app for UK electricians. AI-powered cost estimation, professional PDF quotes, material pricing, labour calculation…',
-  url: 'https://www.elec-mate.com/electrical-quoting-app',
+  url: 'https://www.elec-mate.com/tools/electrical-quoting-app',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
   },
 };
 
@@ -163,7 +167,14 @@ export default function ElectricalQuotingAppPage() {
             Electrical Quoting App
             <span className="block text-yellow-400 mt-1">Smart Quotes for UK Electricians</span>
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-4 leading-relaxed">
+            An electrical quoting app helps UK electricians produce accurate, professional quotes
+            faster by combining material pricing, labour calculation, and PDF generation in one
+            tool. Elec-Mate is purpose-built for electrical contractors — not generic tradespeople —
+            with compliance-aware templates for consumer unit upgrades, rewires, EICR inspections,
+            and EV charger installations.
+          </p>
+          <p className="text-base text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
             Stop guessing job costs and spending hours on spreadsheets. Elec-Mate's AI-powered
             quoting tool produces accurate, professional quotes in minutes — with real UK trade
             pricing and labour data built in.
@@ -323,8 +334,8 @@ export default function ElectricalQuotingAppPage() {
               practical work intelligence data — real timing data from UK electricians — to estimate
               labour hours for common tasks. A 10-way consumer unit swap with existing wiring in
               good condition: 4 to 6 hours. A full rewire of a 3-bed semi with 12 circuits: 4 to 5
-              days. A single socket addition from an existing ring: 2 to 3 hours including testing
-              and certification.
+              days. A single socket addition from an existing ring: 1.25 to 2.5 hours including
+              testing and certification.
             </p>
             <p>
               You enter your hourly or daily rate, and the calculator produces the labour cost.
@@ -577,7 +588,6 @@ export default function ElectricalQuotingAppPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -585,14 +595,30 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/tools/electrical-app-with-ai">Electrical App with AI</SEOInternalLink>
-            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">AI for Electrical Apprentices</SEOInternalLink>
-            <SEOInternalLink href="/cleanroom-electrical">Cleanroom Electrical Installation UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">Electrical Apprenticeship UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-bim-guide">Electrical BIM Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-conduit-guide">Electrical Conduit Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-design-guide">Electrical Design Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-estimating-guide">Electrical Estimating Guide UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/electrical-app-with-ai">
+              Electrical App with AI
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">
+              AI for Electrical Apprentices
+            </SEOInternalLink>
+            <SEOInternalLink href="/cleanroom-electrical">
+              Cleanroom Electrical Installation UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
+              Electrical Apprenticeship UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-bim-guide">
+              Electrical BIM Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-conduit-guide">
+              Electrical Conduit Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-design-guide">
+              Electrical Design Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-estimating-guide">
+              Electrical Estimating Guide UK 2026
+            </SEOInternalLink>
           </div>
         </div>
       </section>

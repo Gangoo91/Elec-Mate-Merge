@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a detailed condition assessment with C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Chapter 65). It produces a detailed condition assessment with C1, C2, C3 and FI observation codes.",
   'Bath EICR costs are above the South West average due to high property values and a concentration of complex Georgian buildings. Expect to pay between £130 and £240 for a two-bedroom flat and £200 to £350 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Bath & North East Somerset Council enforces these requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'Bath is a UNESCO World Heritage Site with an exceptionally high concentration of Georgian listed buildings. Most of the city centre housing stock dates from 1750 to 1840 and requires careful EICR inspection. Remedial work in listed properties may need listed building consent.',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Bath properties?',
     answer:
-      "Bath's housing stock is dominated by Georgian and Victorian properties. Common EICR findings include absent RCD protection on socket circuits (a C2 finding under Regulation 411.3.3 of BS 7671), rubber-insulated or early PVC cables in properties not rewired since the mid-20th century, inadequate earthing and bonding, and concealed wiring in original stone-mullion and lath-and-plaster walls that cannot be traced without destructive investigation. FI (Further Investigation) observations are particularly common in Bath due to the restricted access to concealed cables in listed buildings.",
+      "Bath's housing stock is dominated by Georgian and Victorian properties. Common EICR findings include absent RCD protection on socket-outlets rated not exceeding 32 A (a C2 finding under Regulation 411.3.3 of BS 7671:2018+A4:2026), absent 30 mA RCD protection on lighting circuits in domestic premises (Regulation 411.3.4 — a new A4:2026 requirement and frequent C2 finding in pre-1990s properties), rubber-insulated or early PVC cables in properties not rewired since the mid-20th century, inadequate earthing and bonding, and concealed wiring in original stone-mullion and lath-and-plaster walls that cannot be traced without destructive investigation. FI (Further Investigation) observations are particularly common in Bath due to the restricted access to concealed cables in listed buildings.",
   },
   {
     question: "Do Bath's listed buildings need an EICR?",
@@ -154,7 +154,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
+          (Chapter 65). It is a detailed condition assessment using standardised C1, C2, C3, and FI
           observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
         </p>
         <p>
@@ -239,8 +239,8 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Every five years</strong> — the EICR must be renewed at least every five
-                years or sooner if the inspector recommends it. BS 7671 Regulation 134.2 requires
-                periodic inspection regimes.
+                years or sooner if the inspector recommends it. BS 7671 Chapter 65 and GN3 Chapter 3
+                set out the requirements and recommended intervals for periodic inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,10 +295,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
-                protection on socket circuits not exceeding 20A. This is the most common C2 finding
-                in Bath's pre-1990s rented properties, including the majority of Georgian and
-                Victorian conversions.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671:2018+A4:2026
+                requires RCD protection on socket-outlets rated not exceeding 32 A. This is the most
+                common C2 finding in Bath's pre-1990s rented properties, including the majority of
+                Georgian and Victorian conversions.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Absent RCD protection on lighting circuits</strong> — Regulation 411.3.4 of
+                BS 7671:2018+A4:2026 (introduced by Amendment A4:2026) requires 30 mA RCD additional
+                protection on AC final circuits supplying luminaires in domestic premises. Older
+                consumer units in Bath's Georgian and Victorian properties almost universally lack
+                this protection, making it a very common C2 finding under the current edition of the
+                Wiring Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,8 +421,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631, with
-                observation codes and an overall Satisfactory or Unsatisfactory assessment.
+                Schedules of Circuit Details and Test Results as required by BS 7671 Chapter 65 (Reg
+                651–653), with observation codes and an overall Satisfactory or Unsatisfactory
+                assessment.
               </span>
             </li>
           </ul>
@@ -507,6 +519,16 @@ const sections = [
           housing stock and the high proportion of older wiring mean that EICRs frequently identify
           remedial work, making Bath a commercially rewarding market for experienced inspectors.
         </p>
+        <p>
+          Amendment A4:2026 introduces Regulation 421.1.7, which recommends the installation of arc
+          fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate
+          the risk of fire from arc fault currents. Although the wording is advisory rather than
+          mandatory, Bath&apos;s concentration of ageing wiring — aluminium conductors, early PVC,
+          and rubber-insulated cables — is precisely the scenario where AFDDs add the greatest
+          protective value. Inspectors should note the absence of AFDDs as a C3 observation where
+          appropriate and be prepared to advise landlords on the benefits of upgrading consumer
+          units with AFDD-equipped devices during remedial work.
+        </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -533,10 +555,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Bath landlords face a 28-day deadline — quoting immediately gives you the best
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Bath landlords face a 28-day deadline — quoting immediately gives you the best
                   chance of winning the follow-on work.
                 </p>
               </div>

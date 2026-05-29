@@ -84,7 +84,7 @@ const faqs = [
   {
     question: 'How does Amendment 4 (A4:2026) affect special locations?',
     answer:
-      'Amendment 4 to BS 7671:2018 (published 31 July 2024) primarily introduces new requirements in Section 530 addressing bidirectional and unidirectional protective devices. While A4:2026 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A4:2026 and are aware of the new A4:2026 requirements. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
+      'Amendment 4 to BS 7671:2018 (A4:2026) brought significant changes that affect electricians working on special locations. Section 712 (Solar PV systems) was extensively revised and expanded — it is one of the most comprehensively updated sections in A4:2026, with new and updated requirements specific to PV installations. Beyond Section 712, two A4:2026 additions affect all installations including special locations: Regulation 421.1.7 introduces a recommendation to install arc fault detection devices (AFDDs) in AC final circuits to mitigate fire risk from arc fault currents; and Regulation 411.3.4 introduces a mandatory requirement for 30 mA RCD additional protection on AC final circuits supplying luminaires in domestic premises. Electricians working on any special location in a domestic setting must now ensure lighting circuits are RCD-protected. Elec-Mate AI regulations lookup always references BS 7671:2018+A4:2026 including all amendments.',
   },
 ];
 
@@ -234,6 +234,12 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          <strong>Socket-outlet siting (Reg 701.418.2):</strong> Low-voltage (230 V) socket-outlets
+          must be sited at least 2.5 m from Zone 1, measured horizontally from the Zone 1 boundary.
+          This is the regulation inspectors check when assessing socket positions in bathrooms. No
+          socket-outlet, however well protected, may be installed closer than 2.5 m to Zone 1.
+        </p>
         <p>
           All circuits in a bathroom must be protected by a 30 mA RCD. Supplementary bonding is
           required unless all circuits are RCD-protected and the main protective bonding complies
@@ -391,8 +397,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regular inspection and testing</strong> is required — BS 7671 recommends a
-                maximum interval of 3 months for construction site installations.
+                <strong>Regular inspection and testing</strong> is required throughout the duration
+                of the construction project. The frequency must be appropriate to the risks and
+                conditions on site; this is normally specified by the principal contractor.
               </span>
             </li>
           </ul>
@@ -449,9 +456,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Tractor className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Disconnection times</strong> — Regulation 705.411.1 requires a disconnection
-                time of 0.2 s for TN systems (compared with 0.4 s in general domestic installations)
-                because of the lower body impedance of livestock.
+                <strong>PEN conductor prohibition (Reg 705.411.4)</strong> — a PEN conductor shall
+                not be used within agricultural or horticultural premises. Note 1 clarifies that
+                this does not preclude a TN-C-S (PME) supply intake, but Note 2 advises against
+                using PME as the installation earth where no metal floor grid is present.
               </span>
             </li>
           </ul>
@@ -625,9 +633,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>All circuits must be protected by a 30 mA RCD.</strong> Where automatic
-                disconnection is used as the protective measure, the maximum disconnection time for
-                TN systems is 0.2 s.
+                <strong>Circuit protection (Reg 711.410.3.101)</strong> — all final circuits for
+                lighting, and all final circuits rated up to 32 A supplying socket-outlets or
+                handheld equipment, shall use one of: automatic disconnection of supply (ADS) with
+                an RCD rated at less than 30 mA (strictly {'<'}30 mA), SELV, PELV, or electrical
+                separation. Safety services circuits are excluded from this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -714,10 +724,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 4 (A4:2026) introduces new requirements in Section 530 regarding bidirectional
-          protective devices, which is directly relevant to PV installations where power flows both
-          into and out of the consumer unit. Electricians installing or inspecting PV systems must
-          be aware of this A4:2026 addition.
+          Section 712 was extensively revised and expanded in A4:2026. The updated section contains
+          new and updated requirements specific to PV systems, making it one of the most
+          significantly changed areas of the 18th Edition for solar installers. Electricians
+          installing or inspecting PV systems must work from BS 7671:2018+A4:2026 — earlier editions
+          do not reflect the current requirements.
         </p>
         <SEOAppBridge
           title="Special Locations BS 7671:2018+A4:2026"
@@ -783,7 +794,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Need to size a cable for an outdoor circuit, calculate maximum Zs for a bathroom
                   circuit, or work out{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                    voltage drop
+                  </SEOInternalLink>{' '}
                   for a long SWA run to a caravan park feeder pillar? Elec-Mate calculators handle
                   it all.
                 </p>
@@ -808,7 +821,7 @@ const sections = [
 export default function SpecialLocationsPart7Page() {
   return (
     <GuideTemplate
-      title="BS 7671 Special Locations List: Part 7 Sections 701-722"
+      title="BS 7671 Special Locations List: Part 7 Sections 701-712"
       description="Complete list of BS 7671 Part 7 special locations: bathrooms (701), pools (702), saunas (703), sites (704), agricultural (705), caravans, marinas + more."
       datePublished="2025-03-15"
       dateModified="2026-05-22"
@@ -824,6 +837,13 @@ export default function SpecialLocationsPart7Page() {
       }
       heroSubtitle="Part 7 of BS 7671:2018+A4:2026 contains supplementary regulations for locations where the risk of electric shock is increased. Bathrooms, swimming pools, saunas, construction sites, agricultural premises, caravan parks, marinas, exhibitions, and solar PV installations all have specific requirements. This guide covers every section."
       readingTime={12}
+      answerBox={{
+        question: 'What is Part 7 of BS 7671?',
+        answer:
+          'Part 7 of BS 7671 contains supplementary and amended regulations for special installations and locations where the risk of electric shock is increased — bathrooms (701), swimming pools (702), saunas, construction sites, agricultural premises, caravan parks, marinas, exhibitions, and solar PV (712). Each section defines specific zones, IP ratings, equipment restrictions, and protective measures for that environment.',
+        detail:
+          'Bathrooms (701) and swimming pools (702) are the most common special locations in domestic work; Section 712 covers solar PV DC isolation, string protection, and fire safety.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

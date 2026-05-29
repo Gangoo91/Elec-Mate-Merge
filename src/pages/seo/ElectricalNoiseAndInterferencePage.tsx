@@ -596,7 +596,7 @@ export default function ElectricalNoiseAndInterferencePage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Size cables correctly for all circuit types.',
           icon: Calculator,

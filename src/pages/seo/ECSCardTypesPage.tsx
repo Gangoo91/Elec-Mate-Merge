@@ -41,8 +41,9 @@ const tocItems = [
 const keyTakeaways = [
   'The ECS (Electrotechnical Certification Scheme) card is the industry-recognised identity card for electricians and electrical workers in the UK.',
   'There are multiple card types: Apprentice, Provisional, Installation Electrician (gold card), Technician, and more — each requires different qualifications.',
-  'The gold Installation Electrician card requires the AM2 practical assessment, C&G 2382 (18th Edition), C&G 2391, and an NVQ Level 3.',
-  'ECS cards must be renewed every 3 to 5 years and require evidence of ongoing CPD (Continuing Professional Development).',
+  'The gold Installation Electrician card requires the AM2 practical assessment, C&G 2382 (18th Edition), C&G 2391, and an NVQ Level 3. BS 7671 Reg 651.4 requires periodic inspection and testing to be carried out by skilled persons competent in such work — the 2391 qualification demonstrates exactly that competence.',
+  'ECS cards must be renewed every 3 to 5 years and require evidence of ongoing CPD. At renewal, your 18th Edition qualification must be current — the current edition is BS 7671:2018+A4:2026, which introduced AFDD recommendations (Reg 421.1.7) and revised SPD rules (Section 534). The C&G 2382 syllabus covers A4:2026.',
+  'GN3 (IET Guidance Note 3, 9th Edition) is the companion reference document for BS 7671 Part 6. It provides practical guidance for inspection and testing and notes that the person responsible shall be prepared to formally demonstrate competence.',
   'Elec-Mate helps you prepare for every qualification you need for your ECS card — 46+ training courses, flashcards, mock exams, and the AM2 simulator.',
 ];
 
@@ -167,6 +168,75 @@ const sections = [
         <p>
           The ECS scheme offers several card types. Here are the most common ones for electricians:
         </p>
+        <div className="overflow-x-auto my-6 rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="bg-white/[0.07] text-left">
+                <th className="px-4 py-3 font-semibold border-b border-white/10">Card type</th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10">Colour</th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10">
+                  Key qualifications required
+                </th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10">Validity</th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10">Who it is for</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.06]">
+              <tr className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
+                <td className="px-4 py-3 font-medium">Apprentice</td>
+                <td className="px-4 py-3">
+                  <span className="inline-block px-2 py-0.5 rounded bg-red-500/20 text-red-300 text-xs font-semibold">
+                    Red
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  Enrolled on a recognised apprenticeship; current HS&E test
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">Duration of apprenticeship</td>
+                <td className="px-4 py-3">Registered apprentices working under supervision</td>
+              </tr>
+              <tr className="hover:bg-white/[0.04] transition-colors">
+                <td className="px-4 py-3 font-medium">Provisional</td>
+                <td className="px-4 py-3">
+                  <span className="inline-block px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 text-xs font-semibold">
+                    Blue
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  Academic qualifications complete (e.g. Diploma); NVQ / AM2 not yet achieved
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">Up to 3 years</td>
+                <td className="px-4 py-3">Trainees building NVQ portfolio before AM2</td>
+              </tr>
+              <tr className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
+                <td className="px-4 py-3 font-medium">Installation Electrician</td>
+                <td className="px-4 py-3">
+                  <span className="inline-block px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-xs font-semibold">
+                    Gold
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  NVQ Level 3, AM2 pass, C&G 2382 (BS 7671:2018+A4:2026), C&G 2391, HS&E test
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">5 years</td>
+                <td className="px-4 py-3">Fully qualified electricians working independently</td>
+              </tr>
+              <tr className="hover:bg-white/[0.04] transition-colors">
+                <td className="px-4 py-3 font-medium">Technician</td>
+                <td className="px-4 py-3">
+                  <span className="inline-block px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs font-semibold">
+                    Black
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  All gold-card requirements plus HNC/HND or foundation degree
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">5 years</td>
+                <td className="px-4 py-3">Engineers, designers, and senior technical staff</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -211,15 +281,17 @@ const sections = [
                   The gold card is the standard card for fully qualified Installation Electricians.
                   Requires: NVQ Level 3, AM2 pass,{' '}
                   <SEOInternalLink href="/guides/18th-edition-exam-tips">
-                    C&G 2382 (18th Edition)
+                    C&G 2382 (18th Edition — current edition BS 7671:2018+A4:2026)
                   </SEOInternalLink>
                   ,{' '}
                   <SEOInternalLink href="/guides/2391-exam-tips">
                     C&G 2391 (Inspection and Testing)
                   </SEOInternalLink>
-                  , and a current HS&E test pass. This is the card most electricians are working
-                  towards. It confirms you are qualified to design, install, inspect, and test
-                  electrical installations. Valid for 5 years.
+                  , and a current HS&E test pass. The 2391 requirement is grounded in BS 7671
+                  itself: Reg 651.4 states that periodic inspection and testing shall be carried out
+                  by one or more skilled persons competent in such work. This is the card most
+                  electricians are working towards. It confirms you are qualified to design,
+                  install, inspect, and test electrical installations. Valid for 5 years.
                 </p>
               </div>
             </div>
@@ -403,9 +475,16 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Current qualifications:</strong> Your qualifications must still be current
-                at renewal. If a new edition of a qualification has been introduced (for example, a
-                new edition of the Wiring Regulations), you may need to update to the current
-                version before renewal.
+                at renewal. The current edition of the Wiring Regulations is{' '}
+                <strong>BS 7671:2018+A4:2026</strong> (effective 2026). Amendment A4:2026 introduced
+                significant new requirements including AFDD recommendations (Reg 421.1.7) and
+                revised surge protective device rules (Section 534). Gold card holders must hold the
+                C&G 2382 qualification to the current edition — the 2382 syllabus covers A4:2026. If
+                you qualified under an earlier edition, a{' '}
+                <SEOInternalLink href="/guides/18th-edition-exam-tips">
+                  BS 7671 update course
+                </SEOInternalLink>{' '}
+                will bring you current before renewal.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -417,6 +496,29 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-white text-sm font-semibold mb-1">
+                Keeping your 18th Edition knowledge current
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                IET Guidance Note 3 (GN3, 9th Edition) is the companion reference document for BS
+                7671 Part 6 — Inspection and Testing. It provides practical guidance for competent
+                persons performing inspection and testing and notes that the person responsible
+                shall be prepared to formally demonstrate competence. The current edition of GN3
+                incorporates A4:2026 changes. Elec-Mate's{' '}
+                <SEOInternalLink href="/guides/18th-edition-exam-tips">
+                  18th Edition training
+                </SEOInternalLink>{' '}
+                and{' '}
+                <SEOInternalLink href="/guides/cpd-for-electricians">CPD resources</SEOInternalLink>{' '}
+                cover both the core regulations and the A4:2026 updates.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           The JIB sends renewal reminders before your card expires. Do not let your card lapse —
@@ -540,7 +642,7 @@ export default function ECSCardTypesPage() {
       title="ECS Card Types | Which Card Do You Need?"
       description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards."
       datePublished="2025-05-10"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

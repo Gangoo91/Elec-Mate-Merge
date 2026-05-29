@@ -21,7 +21,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Swimming Pool Electrical Installation', href: '/guides/swimming-pool-electrical-installation' },
+  {
+    label: 'Swimming Pool Electrical Installation',
+    href: '/guides/swimming-pool-electrical-installation',
+  },
 ];
 
 const tocItems = [
@@ -85,23 +88,26 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for pool filtration pump circuits, heat pump supplies, and SELV transformer feeds.',
+    description:
+      'Size cables for pool filtration pump circuits, heat pump supplies, and SELV transformer feeds.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for swimming pool installations on site.',
+    description:
+      'Complete Electrical Installation Certificates for swimming pool installations on site.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Price swimming pool electrical packages including bonding, SELV lighting, and filtration circuits.',
+    description:
+      'Price swimming pool electrical packages including bonding, SELV lighting, and filtration circuits.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -122,7 +128,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to the 18th Edition wiring regulations including special locations.',
+    description:
+      'Complete guide to the 18th Edition wiring regulations including special locations.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -139,11 +146,11 @@ const sections = [
     content: (
       <>
         <p>
-          Swimming pool electrical installations are one of the highest-risk environments in domestic
-          and commercial electrical work. Water, wet surfaces, and the body's reduced electrical
-          resistance when wet create the potential for fatal shock at voltages that would be
-          survivable in dry conditions. BS 7671 Section 702 provides specific requirements that go
-          well beyond the standard domestic installation requirements.
+          Swimming pool electrical installations are one of the highest-risk environments in
+          domestic and commercial electrical work. Water, wet surfaces, and the body's reduced
+          electrical resistance when wet create the potential for fatal shock at voltages that would
+          be survivable in dry conditions. BS 7671 Section 702 provides specific requirements that
+          go well beyond the standard domestic installation requirements.
         </p>
         <p>
           Section 702 applies to: swimming pools, paddling pools, ornamental garden pools, garden
@@ -154,8 +161,8 @@ const sections = [
         <p>
           Electricians working on swimming pool installations must be familiar with Section 702 and
           the zone definitions before undertaking any design or installation work. This guide covers
-          the key requirements including zones, SELV, supplementary bonding, RCD protection, and
-          the filtration and heating circuits that make up the bulk of the electrical package.
+          the key requirements including zones, SELV, supplementary bonding, RCD protection, and the
+          filtration and heating circuits that make up the bulk of the electrical package.
         </p>
       </>
     ),
@@ -166,8 +173,8 @@ const sections = [
     content: (
       <>
         <p>
-          Section 702 defines three zones around a swimming pool, each with specific requirements for
-          electrical equipment:
+          Section 702 defines three zones around a swimming pool, each with specific requirements
+          for electrical equipment:
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-600/20 border border-blue-600/30 p-5">
@@ -184,19 +191,19 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-2">Zone 1</h3>
             <p className="text-white text-sm leading-relaxed">
               Within 2m horizontally from the pool edge, or 2.5m vertically above the pool floor.
-              Permitted: SELV equipment, Class II 230V equipment with IPX4 (or IPX5 where jets
-              are used). No standard 230V socket outlets. Filtration pumps in Zone 1 must be
-              Class II or SELV.
+              Permitted: SELV equipment, Class II 230V equipment with IPX4 (or IPX5 where jets are
+              used). No standard 230V socket outlets. Filtration pumps in Zone 1 must be Class II or
+              SELV.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-400/10 border border-blue-400/20 p-5">
             <Droplets className="w-6 h-6 text-blue-200 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Zone 2</h3>
             <p className="text-white text-sm leading-relaxed">
-              Between 2m and 3.5m from the pool edge (1.5m beyond Zone 1), or within 2.5m
-              vertically above Zone 1. Standard 230V equipment with IPX4 protection is permitted.
-              Socket outlets may be installed (with 30mA RCD) but should be avoided. AFDD
-              recommended for circuits in this zone.
+              Between 2m and 3.5m from the pool edge (1.5m beyond Zone 1), or within 2.5m vertically
+              above Zone 1. Standard 230V equipment with IPX4 protection is permitted. Socket
+              outlets may be installed (with 30mA RCD) but should be avoided. AFDD recommended for
+              circuits in this zone.
             </p>
           </div>
         </div>
@@ -215,9 +222,9 @@ const sections = [
     content: (
       <>
         <p>
-          Safety Extra Low Voltage (SELV) is mandatory for all luminaires in Zone 0 and Zone 1.
-          SELV operates at maximum 12V AC (RMS) or 30V DC, which is below the threshold at which
-          a shock current through wet skin becomes dangerous in most circumstances.
+          Safety Extra Low Voltage (SELV) is mandatory for all luminaires in Zone 0 and Zone 1. SELV
+          operates at maximum 12V AC (RMS) or 30V DC, which is below the threshold at which a shock
+          current through wet skin becomes dangerous in most circumstances.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -226,9 +233,9 @@ const sections = [
               <span>
                 <strong>Safety isolating transformer</strong> — the SELV circuit is supplied via a
                 safety isolating transformer (to BS EN 61558-2-6) installed outside Zones 0 and 1.
-                The transformer secondary (SELV) winding has no connection to earth — it is floating.
-                This means that a single fault to earth on the SELV circuit does not produce a shock
-                current.
+                The transformer secondary (SELV) winding has no connection to earth — it is
+                floating. This means that a single fault to earth on the SELV circuit does not
+                produce a shock current.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,19 +279,19 @@ const sections = [
                 <strong>What must be bonded</strong> — all simultaneously accessible exposed and
                 extraneous conductive parts: pool reinforcing steel (rebar in concrete pools),
                 metallic pool shell, stainless steel or chrome ladders and handrails, metallic water
-                pipework (supply and return), heat exchanger body, pump motor casing, water treatment
-                equipment (UV, dosing pumps), metallic pool surround (coping stones with metal
-                fixings), and any structural steelwork adjacent to the pool.
+                pipework (supply and return), heat exchanger body, pump motor casing, water
+                treatment equipment (UV, dosing pumps), metallic pool surround (coping stones with
+                metal fixings), and any structural steelwork adjacent to the pool.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bonding conductor size</strong> — the supplementary bonding conductor
-                must be sized in accordance with BS 7671 Section 702 requirements. A minimum of
-                4mm² copper is typically used. For connections to pool rebar (which may have a
-                large mass), the connection must be made by a purpose-designed clamp and the
-                conductor must be accessible for periodic inspection.
+                <strong>Bonding conductor size</strong> — the supplementary bonding conductor must
+                be sized in accordance with BS 7671 Section 702 requirements. A minimum of 4mm²
+                copper is typically used. For connections to pool rebar (which may have a large
+                mass), the connection must be made by a purpose-designed clamp and the conductor
+                must be accessible for periodic inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -300,8 +307,8 @@ const sections = [
         </div>
         <p>
           Supplementary bonding must be installed during construction, before the pool shell is
-          rendered or tiled. Access to the rebar bonding connection point must be maintained. Coordinate
-          with the pool builder before the shell is complete.
+          rendered or tiled. Access to the rebar bonding connection point must be maintained.
+          Coordinate with the pool builder before the shell is complete.
         </p>
       </>
     ),
@@ -312,8 +319,8 @@ const sections = [
     content: (
       <>
         <p>
-          All circuits supplying equipment associated with the pool (in any zone) must have 30mA
-          RCD protection. The type of RCD matters:
+          All circuits supplying equipment associated with the pool (in any zone) must have 30mA RCD
+          protection. The type of RCD matters:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -329,10 +336,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type A RCD (recommended)</strong> — detects both sinusoidal AC and pulsed
-                DC residual currents. Suitable for all pool equipment including variable speed pump
-                drives and electronic pool control systems. Type A should be used as the minimum
-                for any pool circuit with electronic equipment.
+                <strong>Type A RCD (recommended)</strong> — detects both sinusoidal AC and pulsed DC
+                residual currents. Suitable for all pool equipment including variable speed pump
+                drives and electronic pool control systems. Type A should be used as the minimum for
+                any pool circuit with electronic equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -364,9 +371,10 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Filtration pump circuit</strong> — a single-phase filtration pump for a
-                domestic pool (6m × 3m, 40,000 litres) is typically 0.75kW to 1.5kW, requiring a
-                10A or 16A circuit on 2.5mm cable. Variable speed pumps (which are more energy
-                efficient) may have higher starting current — check the manufacturer's specification.
+                domestic pool (6m × 3m, 40,000 litres) is typically 0.75kW to 1.5kW, requiring a 10A
+                or 16A circuit on 2.5mm cable. Variable speed pumps (which are more energy
+                efficient) may have higher starting current — check the manufacturer's
+                specification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -374,27 +382,27 @@ const sections = [
               <span>
                 <strong>Pool heat pump circuit</strong> — an air-source heat pump for pool heating
                 (6kW to 12kW output, COP 5 to 6) has a compressor input of 1kW to 2.5kW single-
-                phase, requiring a 16A or 32A circuit on 2.5mm or 6mm cable. Larger heat pumps
-                (over 10kW input) may be three-phase. A dedicated MCB or RCBO for the heat pump
-                is required — do not share with other pool equipment.
+                phase, requiring a 16A or 32A circuit on 2.5mm or 6mm cable. Larger heat pumps (over
+                10kW input) may be three-phase. A dedicated MCB or RCBO for the heat pump is
+                required — do not share with other pool equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pool control panel</strong> — most pool systems include an automated
-                control panel managing the pump programme, heating, chemical dosing, and lighting.
-                The control panel is typically located in the plant room and supplied from a
-                dedicated circuit. Allow for a 13A or 16A circuit for the control panel itself.
+                <strong>Pool control panel</strong> — most pool systems include an automated control
+                panel managing the pump programme, heating, chemical dosing, and lighting. The
+                control panel is typically located in the plant room and supplied from a dedicated
+                circuit. Allow for a 13A or 16A circuit for the control panel itself.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Where the plant room is more than 10m from the house consumer unit, consider installing a
-          dedicated pool sub-board in the plant room. This simplifies discrimination, reduces voltage
-          drop on individual circuit cables, and makes the pool system independently isolatable for
-          maintenance and winterisation.
+          dedicated pool sub-board in the plant room. This simplifies discrimination, reduces
+          voltage drop on individual circuit cables, and makes the pool system independently
+          isolatable for maintenance and winterisation.
         </p>
       </>
     ),
@@ -404,9 +412,7 @@ const sections = [
     heading: 'Typical Costs for Swimming Pool Electrical Installation',
     content: (
       <>
-        <p>
-          Indicative costs for a domestic outdoor swimming pool electrical installation:
-        </p>
+        <p>Indicative costs for a domestic outdoor swimming pool electrical installation:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -428,9 +434,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Indoor pool or commercial pool</strong> — £8,000 to £20,000+. Full
-                Section 702 compliance, HVAC controls integration, automated cover motor, emergency
-                stop provision, and potentially three-phase supply.
+                <strong>Indoor pool or commercial pool</strong> — £8,000 to £20,000+. Full Section
+                702 compliance, HVAC controls integration, automated cover motor, emergency stop
+                provision, and potentially three-phase supply.
               </span>
             </li>
           </ul>
@@ -478,8 +484,9 @@ const sections = [
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   must reference Section 702 compliance. Note the zone boundaries, SELV transformer
-                  details, bonding connections made, and the RCD type on the relevant circuits.
-                  A thorough EIC demonstrates competence and is essential for a specialist installation.
+                  details, bonding connections made, and the RCD type on the relevant circuits. A
+                  thorough EIC demonstrates competence and is essential for a specialist
+                  installation.
                 </p>
               </div>
             </div>

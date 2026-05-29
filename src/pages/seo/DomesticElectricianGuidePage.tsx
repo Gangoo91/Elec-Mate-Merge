@@ -272,9 +272,7 @@ const sections = [
         <p>
           Every one of these jobs requires certification. The type of certificate depends on the
           work: an EIC for new installations and rewires, a{' '}
-          <SEOInternalLink href="/minor-works-certificate">
-            Minor Works Certificate
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           for smaller alterations, and an EICR for periodic inspections. Elec-Mate handles all 8
           certificate types that a domestic electrician needs, directly from your phone.
         </p>
@@ -611,7 +609,7 @@ const sections = [
                 sizing, testing calculators, quote builder, invoice app, and AI-powered board
                 scanner — all in your pocket. One subscription replaces a stack of paper
                 certificates, a{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing app
                 </SEOInternalLink>
                 , a separate quoting tool, and a separate invoicing tool.
@@ -804,7 +802,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     Cable sizing calculator
                   </SEOInternalLink>{' '}
                   for every domestic circuit type — ring circuits, radials, showers, cookers, EV

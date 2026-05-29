@@ -42,6 +42,8 @@ const keyTakeaways = [
   'Your multifunction tester, voltage indicator, and proving unit are the three most critical items -- without them, you cannot test, certify, or prove dead safely.',
   'Cordless power tools have largely replaced corded equivalents for electricians -- the time saved not dealing with extension leads and RCDs pays for the premium in weeks.',
   'Calibrate your test equipment annually (or as specified by the manufacturer) to maintain accuracy, comply with scheme requirements, and ensure your test results are legally defensible.',
+  'When recording measured earth fault loop impedance (Zs), your reading must satisfy Zs(measured) ≤ 0.8 × (Uo / Ia) per GN3 Reg 1.16.9 -- the 0.8 factor corrects for conductors at operating temperature. Apply this check before marking a circuit as compliant.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 (Amendment A4) recommends Arc Fault Detection Devices (AFDDs) in AC final circuits. Verify that your test instruments support AFDD testing before working on new domestic installations where AFDDs are fitted.',
 ];
 
 const faqs = [
@@ -68,7 +70,7 @@ const faqs = [
   {
     question: 'How often should I calibrate my test equipment?',
     answer:
-      'Most manufacturers and competent person schemes recommend annual calibration for multifunction testers and other test instruments. However, BS 7671 does not specify a fixed calibration interval -- it requires that instruments are accurate, which means calibration should be done at whatever interval is necessary to maintain accuracy. In practice, annual calibration has become the industry standard and is what most scheme assessors expect to see. Calibration typically costs GBP 50-GBP 120 per instrument and takes 1-2 weeks (you send the instrument to the manufacturer or an accredited calibration laboratory). Keep the calibration certificate with the instrument and record the calibration date and due date in your records. Some instruments also need periodic checking between calibrations -- your proving unit should be checked before every use, and your multifunction tester should have a quick self-check performed at the start of each testing day. Elec-Mate tracks calibration dates for all your instruments and sends reminders when calibration is due.',
+      'Most manufacturers and competent person schemes recommend annual calibration for multifunction testers and other test instruments. GN3 Reg 4.8 states that instruments shall be periodically calibrated to control loss of accuracy and ensure measurements remain reliable; GN3 Reg 4.2 states that records of calibration shall be available for verification during certification. In practice, annual calibration is what most scheme assessors expect to see. Calibration typically costs GBP 50-GBP 120 per instrument and takes 1-2 weeks (you send the instrument to the manufacturer or an accredited calibration laboratory). Keep the calibration certificate with the instrument at all times -- competent person scheme assessors and building control officers may request to see it on site. The certificate is your evidence that your readings are traceable to national standards and legally defensible. Some instruments also need periodic checking between calibrations -- your proving unit should be checked before every use, and your multifunction tester should have a quick self-check performed at the start of each testing day. Elec-Mate tracks calibration dates for all your instruments and sends reminders when calibration is due.',
   },
   {
     question: 'What PPE does an electrician need?',
@@ -304,6 +306,32 @@ const sections = [
           fault finding and energy audits), and a power quality analyser (for commercial and
           industrial work).
         </p>
+        <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/30 p-5 my-6">
+          <h3 className="font-bold text-yellow-400 text-base mb-2">
+            Zs Temperature Correction — GN3 Reg 1.16.9
+          </h3>
+          <p className="text-white/90 text-sm">
+            When verifying earth fault loop impedance, your measured Zs must satisfy{' '}
+            <strong>Zs(measured) &le; 0.8 &times; (Uo / Ia)</strong> per GN3 Reg 1.16.9 and BS 7671
+            Appendix 3 — the 0.8 factor accounts for conductor resistance rising as conductors reach
+            operating temperature. A circuit that looks compliant on a cold installation can fail
+            this check at working temperature. Always apply the correction before recording a pass
+            on your schedule of test results.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-base mb-2">
+            AFDD Testing Capability — BS 7671:2018+A4:2026 Reg 421.1.7
+          </h3>
+          <p className="text-white/90 text-sm">
+            BS 7671:2018+A4:2026 Reg 421.1.7 (introduced by Amendment A4) recommends the
+            installation of Arc Fault Detection Devices (AFDDs) in AC final circuits of fixed
+            installations to mitigate fire risk from arc fault currents. Check that your
+            multifunction tester or a supplementary instrument supports AFDD operation testing — not
+            all older instruments do. Confirming AFDD operation is now an expected inspection item
+            on new domestic work where AFDDs are fitted.
+          </p>
+        </div>
         <SEOAppBridge
           title="Digital Test Results and Certificates"
           description="Record test results on your phone as you take them. Elec-Mate auto-populates your EICR, EIC, or Minor Works certificate from the test data."
@@ -511,8 +539,8 @@ const sections = [
         <p>
           All tool purchases are deductible business expenses. Under the Annual Investment
           Allowance, you can claim 100% of the cost against your taxable profit in the year of
-          purchase. At the basic tax rate, a GBP 2,000 tool kit reduces your tax bill by GBP 580.
-          Track all purchases with the{' '}
+          purchase. At the 20% basic tax rate, a GBP 2,000 tool kit reduces your tax bill by GBP
+          400. Track all purchases with the{' '}
           <SEOInternalLink href="/tools/expenses-manager-electrician">
             expenses manager
           </SEOInternalLink>{' '}

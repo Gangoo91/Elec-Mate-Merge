@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What load assessment is required before installing an EV charger?',
     answer:
-      'Before installing an EV charger, you must complete a maximum demand assessment of the existing electrical installation to confirm that the supply can handle the additional load. A typical 7kW single-phase home charger draws approximately 32A — this is a significant additional load on a domestic supply. The assessment involves calculating the existing maximum demand (using diversity factors from BS 7671 and the IET On-Site Guide), adding the EV charger load, and confirming the total does not exceed the rated capacity of the incoming supply (typically 60A or 80A for older properties, 100A for newer ones). If the existing supply is insufficient, options include upgrading the supply (applying to the DNO for a larger fuse), installing a load management device that limits the charger output when other loads are high, or fitting a smaller charger (e.g., 3.6kW instead of 7kW). The load assessment must be documented and retained as part of the installation records.',
+      'Before installing an EV charger, you must complete a maximum demand assessment of the existing electrical installation to confirm that the supply can handle the additional load. A typical 7kW single-phase home charger draws approximately 32A — this is a significant additional load on a domestic supply. The assessment involves calculating the existing maximum demand (using the diversity allowances in Appendix A of the IET On-Site Guide — Table A1 for typical current demands and Table A2 for diversity allowances), adding the EV charger load, and confirming the total does not exceed the rated capacity of the incoming supply (typically 60A or 80A for older properties, 100A for newer ones). If the existing supply is insufficient, options include upgrading the supply (applying to the DNO for a larger fuse), installing a load management device that limits the charger output when other loads are high (load curtailment — permitted under BS 7671 Reg 722.311.201), or fitting a smaller charger (e.g., 3.6kW instead of 7kW). The load assessment must be documented and retained as part of the installation records.',
   },
   {
     question: 'What is the IET Code of Practice for EV charging?',
@@ -87,7 +87,7 @@ const faqs = [
   {
     question: 'What RCD protection is required for an EV charger?',
     answer:
-      'BS 7671 Regulation 722.531.3 requires that the circuit supplying an EV charging point is protected by an RCD with a rated residual operating current not exceeding 30mA. The type of RCD depends on the charger: Mode 3 chargers with single-phase or three-phase output that could produce DC fault current require a Type B RCD or a Type A RCD combined with a device that provides equivalent protection against DC fault current (often built into the charger as a DC leakage detection module). If the charger has built-in DC fault protection (6mA DC detection), a Type A RCD may be sufficient. Check the charger manufacturer installation instructions — they will specify the RCD type required. Installing the wrong RCD type can lead to nuisance tripping or, worse, failure to trip on a DC fault. Document the RCD type and its compatibility with the charger in the installation records.',
+      "BS 7671 Regulation 722.531.3 requires that the circuit supplying an EV charging point is protected by an RCD with a rated residual operating current not exceeding 30mA. The type of RCD is governed by BS 7671 Reg 570.6.2.2: where a power conversion equipment (PCE) such as an EV charger does not provide at least simple separation between its AC and DC sides, a Type B RCD (to BS EN 62423 or BS EN 60947-2) is required. There are three exceptions: (a) a transformer provides winding separation; (b) equivalent protection by other means; or (c) the charger manufacturer explicitly states in their installation instructions that a Type B RCD is not required — in which case a Type A RCD may be used. GN3 confirms that inverter-type and EV charger equipment that produces DC components in fault currents requires a Type B device because Type AC devices will not operate correctly with DC-containing residual currents. The practical rule: always check the manufacturer's installation manual first — if it states a Type B is not required, a Type A ≥30mA is acceptable and you must retain that manufacturer's statement in the installation records. If no such statement exists, fit a Type B. Document the RCD type selected and the basis for that selection in the EIC.",
   },
 ];
 
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for EV charger circuits and other installations.',
@@ -214,7 +214,11 @@ const sections = [
                 <strong>Inspection and testing section:</strong> visual inspection results,
                 continuity of protective conductors (R1+R2), insulation resistance, polarity, earth
                 fault loop impedance (Zs), prospective fault current (PFC), and RCD operation (trip
-                time at 1x and 5x rated residual current).
+                time at 1x and 5x rated residual current). Measured Zs values must be compared
+                against the maximum permissible values in GN3 Appendix A (Guidance Note 3:
+                Inspection &amp; Testing) for the relevant protective device — EV charger circuits
+                with long cable runs frequently have Zs values near the limit and must be verified
+                against the tabulated maxima before the EIC is issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,6 +249,27 @@ const sections = [
           guidance document rather than a regulation, competent person schemes and building control
           treat compliance with the Code of Practice as the expected standard.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-yellow-300 mb-1">
+                BS 7671:2018+A4:2026 — Significant Changes to Section 722
+              </p>
+              <p className="text-white text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 introduced significant changes to Section 722 (Electric Vehicle
+                Charging Installations). Key updates include: <strong>Reg 722.311.201</strong> —
+                load curtailment (automatic or manual load reduction or disconnection) may now be
+                taken into account when determining maximum demand, enabling dynamic load management
+                to be formally documented in the installation design; updated PME protective
+                measures; and Appendix 6 model certification forms have been amended to include
+                fields for SPDs (surge protective devices) and AFDDs (arc fault detection devices) —
+                Reg 722.826.3.201 requires these to be recorded on the EIC where installed.
+                Installers and certifiers must work to the current edition.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>Key areas the Code of Practice covers that go beyond standard BS 7671 requirements:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -358,8 +383,9 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calculate existing maximum demand</strong> — list all existing circuits,
-                apply diversity factors from BS 7671 Appendix 1 / IET On-Site Guide, and calculate
-                the total diversified maximum demand.
+                apply diversity factors from Appendix A of the IET On-Site Guide (Table A1 for
+                typical current demands, Table A2 for allowances for diversity), and calculate the
+                total diversified maximum demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,7 +415,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate includes a{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             maximum demand calculator
           </SEOInternalLink>{' '}
           that automates this calculation and generates documentation you can include with the EIC.

@@ -15,6 +15,7 @@ import {
   Gauge,
   AlertTriangle,
   Plug,
+  CheckSquare,
 } from 'lucide-react';
 
 export default function BatteryBackupCalculatorPage() {
@@ -23,7 +24,7 @@ export default function BatteryBackupCalculatorPage() {
       title="Battery Backup Calculator UK | UPS Sizing + Ah Runtime Tool"
       description="Free UK battery backup calculator: size UPS capacity, calculate runtime in minutes, determine Ah requirements for any load. Built for UK electricians."
       datePublished="2026-01-25"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Battery Backup Calculator', href: '/tools/battery-backup-calculator' },
@@ -34,6 +35,8 @@ export default function BatteryBackupCalculatorPage() {
         { id: 'runtime-calculation', label: 'Runtime Calculation' },
         { id: 'battery-capacity', label: 'Battery Capacity (Ah)' },
         { id: 'ups-rating-selection', label: 'UPS Rating Selection' },
+        { id: 'bs7671-compliance', label: 'BS 7671 Compliance' },
+        { id: 'installation-checklist', label: 'Installation Checklist' },
         { id: 'how-to', label: 'Step-by-Step Guide' },
         { id: 'features', label: 'Features' },
         { id: 'faq', label: 'FAQs' },
@@ -62,6 +65,7 @@ export default function BatteryBackupCalculatorPage() {
         'A typical UPS should be loaded to no more than 75-80% of its rated capacity to allow for inrush currents and future load growth.',
         "Runtime is not linear — a battery providing 30 minutes at half load does not provide 60 minutes at quarter load due to Peukert's effect.",
         'Elec-Mate calculates UPS rating, battery Ah, and expected runtime instantly, taking derating factors and efficiency losses into account.',
+        'Fixed battery cabinets and stationary battery banks supplying a building fall within BS 7671 Chapter 57 (A4:2026) — plug-in desktop UPS units wholly within a BS EN 62040 product are excluded. Domestic fixed battery installations must also comply with Reg 570.6.7.203 and PAS 63100 for siting.',
       ]}
       sections={[
         {
@@ -87,11 +91,11 @@ export default function BatteryBackupCalculatorPage() {
                 critical care areas, retail point-of-sale systems, security installations, emergency
                 lighting central battery systems, and increasingly in domestic settings for home
                 offices and network equipment. The{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 helps determine the total load that the UPS needs to support, while the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 ensures the cables feeding the UPS are correctly rated.
@@ -265,6 +269,169 @@ export default function BatteryBackupCalculatorPage() {
             </>
           ),
         },
+        {
+          id: 'bs7671-compliance',
+          heading: 'BS 7671 Compliance — Chapter 57 Scope',
+          content: (
+            <>
+              <p>
+                BS 7671:2018+A4:2026 Chapter 57 governs stationary secondary battery installations
+                when used as a source of supply for electrical installations. Knowing where the
+                Chapter 57 boundary falls is essential before specifying or certifying any battery
+                backup system.
+              </p>
+              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 my-6 space-y-3">
+                <p className="font-semibold text-yellow-400">
+                  What is excluded from Chapter 57 (Reg 570.4)
+                </p>
+                <ul className="list-disc pl-5 space-y-2 text-sm text-white/90">
+                  <li>
+                    Pluggable UPS units whose batteries are <strong>wholly within</strong> a product
+                    conforming to BS EN IEC 62040 — the typical desktop or rack-mount UPS that plugs
+                    into a socket outlet.
+                  </li>
+                  <li>
+                    Central safety power supply systems conforming to BS EN 50171 (addressed by that
+                    standard instead).
+                  </li>
+                  <li>
+                    Fire detection and alarm system batteries (BS 5839 series) and alarm system
+                    batteries (BS EN 50132 series).
+                  </li>
+                  <li>
+                    Emergency lighting central battery systems conforming to the BS 5266 series.
+                  </li>
+                </ul>
+              </div>
+              <p>
+                <strong className="text-white">
+                  Fixed external battery cabinets and stationary battery banks
+                </strong>{' '}
+                that supply a building are squarely within Chapter 57 scope. Four requirements apply
+                to every in-scope installation:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-3">
+                <li>
+                  <span className="font-semibold text-white">
+                    BS EN IEC 62485 conformance (Reg 570.6.1.1.1)
+                  </span>{' '}
+                  — stationary secondary battery installations shall conform to the relevant parts
+                  of the BS EN IEC 62485 series covering safety requirements for stationary
+                  batteries.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    Adequate ventilation (Reg 570.6.3 / 570.6.7.202)
+                  </span>{' '}
+                  — the location or enclosure shall be adequately ventilated in accordance with the
+                  manufacturer&apos;s instructions and safety data sheets. Ventilation shall not
+                  create a hazard — gases may need to be discharged to an outdoor space.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    Warning notices (Reg 570.6.8.201)
+                  </span>{' '}
+                  — a notice indicating the presence and location of the battery system shall be
+                  fixed at: (a) the origin of each electrical installation, (b) each metering
+                  position that is remote from the origin, and (c) each consumer unit or
+                  distribution board supplied from the battery.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Isolation provision (Reg 462.1)</span>{' '}
+                  — each electrical installation shall have means for isolation from every supply,
+                  including the on-site battery source. The battery must be isolatable independently
+                  of the mains supply.
+                </li>
+              </ul>
+              <p className="mt-4 text-sm text-white/70">
+                For domestic installations, Reg 570.6.7.203 additionally requires that stationary
+                secondary batteries in dwellings are installed in a suitable location in accordance
+                with the manufacturer&apos;s instructions and PAS 63100. For non-dwelling premises,
+                the fire strategy for the building governs siting and fire protection requirements.
+              </p>
+            </>
+          ),
+          appBridge: {
+            title: 'Chapter 57 Battery Compliance Checklist',
+            description:
+              'Elec-Mate flags Chapter 57 obligations automatically when you select a fixed battery installation type — helping you certify with confidence.',
+            icon: FileCheck2,
+          },
+        },
+        {
+          id: 'installation-checklist',
+          heading: 'Installation Checklist — Common Mistakes on Site',
+          content: (
+            <>
+              <p>
+                The following errors appear repeatedly in practical UPS and battery bank
+                installations. Awareness of these before starting work reduces rework and
+                certification failures.
+              </p>
+              <ul className="list-disc pl-6 space-y-3">
+                <li>
+                  <span className="font-semibold text-white">
+                    Failure to segregate battery DC cables from AC mains cables
+                  </span>{' '}
+                  — DC battery and AC output conductors shall be routed in separate containment.
+                  Running them in the same tray or conduit creates both EMC problems and an
+                  increased fire risk. This is the most frequently recorded common mistake across
+                  UPS installation records.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    Insufficient clearance around batteries
+                  </span>{' '}
+                  — battery cabinets and battery rooms require minimum clearances for ventilation
+                  air movement and safe maintenance access. Blocking clearances by routing cables
+                  too close, or positioning adjacent equipment without reference to the
+                  manufacturer&apos;s layout drawings, restricts air flow and impedes safe cell
+                  replacement.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    Undersizing input cables by ignoring charging current
+                  </span>{' '}
+                  — the UPS input current is higher when the battery is in a discharged state and
+                  recharging simultaneously with supplying the load. Input cables must be sized for
+                  the maximum input current with a discharged battery, not just the steady-state
+                  load current. Manufacturer datasheets publish separate figures for charged and
+                  discharged battery input current; use the higher value.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Under-torqued terminals</span> — bolted
+                  busbar connections and cable lugs on battery terminals and UPS busbars must be
+                  torqued to the manufacturer&apos;s specified values. Under-torqued connections
+                  cause resistance heating, voltage drop under load, and eventual failure. Always
+                  use a calibrated torque wrench and record values on the commissioning sheet.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    Routing mains and bypass conductors in the same containment
+                  </span>{' '}
+                  — UPS bypass and input mains conductors shall be routed in segregated containment
+                  to prevent cross-coupling, maintain circuit integrity during fault conditions, and
+                  comply with wiring segregation requirements.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">
+                    Failing to commission with a discharge test
+                  </span>{' '}
+                  — the installation is not complete until the UPS is tested under rated load and
+                  the battery is confirmed to deliver the specified runtime. A discharge test
+                  validates the Ah capacity, confirms battery connections are correct, and verifies
+                  the inverter output voltage under load.
+                </li>
+              </ul>
+            </>
+          ),
+          appBridge: {
+            title: 'UPS Commissioning Support',
+            description:
+              'Use Elec-Mate to calculate expected runtime under discharge test conditions and verify your battery Ah against measured results.',
+            icon: CheckSquare,
+          },
+        },
       ]}
       howToSteps={[
         {
@@ -359,12 +526,12 @@ export default function BatteryBackupCalculatorPage() {
         {
           question: 'Can I use a UPS for emergency lighting?',
           answer:
-            'A UPS can technically power emergency lighting, but purpose-built central battery emergency lighting systems are preferred because they are designed to meet BS 5266-1 requirements, including 3-hour duration, automatic testing, and fault reporting. A standard UPS does not provide the automatic testing and monitoring functions required by BS 5266-1. If a UPS is used, it must be dedicated to the emergency lighting function and must not serve other loads that could drain the battery during an outage.',
+            'A UPS can technically power emergency lighting, but purpose-built central battery emergency lighting systems are preferred because they are designed to meet BS 5266-1 requirements, including 3-hour duration, automatic testing, and fault reporting. A standard UPS does not provide the automatic testing and monitoring functions required by BS 5266-1. If a UPS is used, it must be dedicated to the emergency lighting function and must not serve other loads that could drain the battery during an outage. Regarding BS 7671 scope: BS 7671:2018+A4:2026 Reg 570.4 excludes central safety power supply batteries conforming to BS EN 50171, and emergency lighting central battery systems conforming to the BS 5266 series, from the requirements of Chapter 57 — those systems are governed by their own product standards. However, a UPS used for emergency lighting is only excluded from Chapter 57 if it qualifies as a pluggable product wholly within the BS EN IEC 62040 series. A fixed UPS cabinet used solely for emergency lighting that does not meet that exclusion criterion remains subject to Chapter 57 ventilation, warning notice, and isolation requirements (Regs 570.6.3, 570.6.8.201, 462.1).',
         },
       ]}
       relatedPages={[
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate total maximum demand with IET diversity allowances for sizing supply and UPS systems.',
@@ -380,7 +547,7 @@ export default function BatteryBackupCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for UPS input and output circuits to BS 7671 current-carrying capacity tables.',

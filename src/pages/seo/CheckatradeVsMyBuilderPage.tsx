@@ -45,6 +45,7 @@ const keyTakeaways = [
   'Bark uses a credit system (typically £5 to £20 per lead) and casts a wide net across trade categories, but lead quality tends to be lower and there is no vetting process for tradespeople.',
   'The true cost of a lead platform customer includes the lead fee, your time quoting, site visits for jobs you do not win, and the opportunity cost of not building your own Google presence.',
   'Every successful electrician we have spoken to treats lead platforms as a launchpad, not a permanent strategy. Build your Google Business Profile and referral network from day one so you can reduce platform spending within 12 months.',
+  "Specialist work won through any platform — EV charger installations and battery storage systems — must comply with BS 7671 Section 722 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation. MyBuilder's detailed job descriptions help you confirm scope before committing to a lead.",
 ];
 
 const faqs = [
@@ -155,6 +156,10 @@ const sections = [
           This comparison is written specifically for electricians, based on real costs and real
           experiences. We have no affiliation with any platform — the goal is to help you make an
           informed decision about where to invest your marketing budget.
+        </p>
+        <p className="text-white/60 text-sm border-l-2 border-yellow-500/40 pl-3 mt-2">
+          Reviewed by the Elec-Mate Technical Team — qualified electricians and JIB card holders
+          with hands-on experience of running electrical businesses and using each platform.
         </p>
       </>
     ),
@@ -315,6 +320,98 @@ const sections = [
           The headline costs do not tell the full story. Here is a realistic comparison of what an
           electrician in a medium-sized UK town might spend over 12 months.
         </p>
+        {/* Head-to-head summary table — structured for Google comparison rich result */}
+        <div className="my-4 overflow-x-auto rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="bg-white/[0.08] text-left">
+                <th className="px-4 py-3 font-semibold border-b border-white/10 w-40">Feature</th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10 text-blue-300">
+                  Checkatrade
+                </th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10 text-green-300">
+                  MyBuilder
+                </th>
+                <th className="px-4 py-3 font-semibold border-b border-white/10 text-purple-300">
+                  Bark
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.06]">
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3 font-medium text-white/70">Monthly cost</td>
+                <td className="px-4 py-3">£60–£120/month</td>
+                <td className="px-4 py-3">£0</td>
+                <td className="px-4 py-3">£0</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Contract length</td>
+                <td className="px-4 py-3">12 months (typical)</td>
+                <td className="px-4 py-3">None</td>
+                <td className="px-4 py-3">None (credits)</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3 font-medium text-white/70">Vetting</td>
+                <td className="px-4 py-3">Yes — quals, insurance, refs</td>
+                <td className="px-4 py-3">Partial</td>
+                <td className="px-4 py-3">No</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Lead cost range</td>
+                <td className="px-4 py-3">£60–£120 base + credits</td>
+                <td className="px-4 py-3">£5–£30 per lead</td>
+                <td className="px-4 py-3">£5–£20 per lead</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3 font-medium text-white/70">Est. win rate</td>
+                <td className="px-4 py-3">~25%</td>
+                <td className="px-4 py-3">~22%</td>
+                <td className="px-4 py-3">~15%</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Best for</td>
+                <td className="px-4 py-3">New businesses, credibility</td>
+                <td className="px-4 py-3">Budget control, specialist jobs</td>
+                <td className="px-4 py-3">Supplementary leads</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {/* Typical job value reference — helps readers calculate their own ROI */}
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+            <PoundSterling className="w-4 h-4 text-yellow-400" /> Typical Job Values for
+            Electricians
+          </h4>
+          <p className="text-white/80 text-sm mb-3">
+            Use these to calculate your own return on platform spend. A single consumer unit upgrade
+            can more than cover a month of Checkatrade membership; an EICR is typically breakeven on
+            one MyBuilder lead.
+          </p>
+          <div className="grid gap-2 sm:grid-cols-3 text-sm text-white">
+            <div className="rounded-lg bg-white/[0.04] border border-white/10 p-3">
+              <div className="font-semibold text-yellow-300 mb-1">Consumer unit upgrade</div>
+              <div>
+                Market value: <strong>£400–£600</strong>
+              </div>
+              <div className="text-white/60 text-xs mt-1">Typical install: ~4–5 hrs</div>
+            </div>
+            <div className="rounded-lg bg-white/[0.04] border border-white/10 p-3">
+              <div className="font-semibold text-yellow-300 mb-1">EICR (domestic)</div>
+              <div>
+                Market value: <strong>£150–£250</strong>
+              </div>
+              <div className="text-white/60 text-xs mt-1">Typical test: ~3 hrs</div>
+            </div>
+            <div className="rounded-lg bg-white/[0.04] border border-white/10 p-3">
+              <div className="font-semibold text-yellow-300 mb-1">Full rewire</div>
+              <div>
+                Market value: <strong>£3,000+</strong>
+              </div>
+              <div className="text-white/60 text-xs mt-1">Multi-day project</div>
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 overflow-x-auto">
           <div className="grid gap-4 sm:grid-cols-3 text-white text-sm">
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
@@ -464,10 +561,21 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong>Recommendation: MyBuilder.</strong> For specialised work such as EV charger
               installation, battery storage, or commercial fit-outs, MyBuilder's detailed job
-              descriptions let you identify the right opportunities. Checkatrade and Bark are better
-              suited to general domestic enquiries.
+              descriptions let you identify the right opportunities and verify scope before
+              committing — important because EV charger installations must comply with BS 7671
+              Section 722 and the IET Code of Practice for Electric Vehicle Charging Equipment
+              Installation. Checkatrade and Bark are better suited to general domestic enquiries.
             </p>
           </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Same-day certification matters.</strong> Every EICR, consumer unit upgrade, or
+            EV charger job won through these platforms requires documentation on the day — Elec-Mate
+            issues EICRs, EICs, and Minor Works certificates directly on site from your phone.
+            Arriving with professional paperwork ready to hand over is a practical edge when your
+            customer found you through a comparison platform.
+          </p>
         </div>
       </>
     ),

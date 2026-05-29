@@ -41,6 +41,7 @@ const keyTakeaways = [
   'Running costs depend on the floor area heated, the insulation standard of the floor construction, and the tariff rate. A 10m² bathroom with 150W per m² element running 2 hours per day costs approximately 30p to 50p per day at typical electricity rates.',
   'Every electric underfloor heating installation requires a dedicated circuit from the consumer unit with appropriate cable sizing and RCD protection, and must be notified under Part P of the Building Regulations.',
   'A floor sensor (thermistor) embedded in the floor screed or tile adhesive, connected to the thermostat, prevents the element overheating and is a requirement of most manufacturers for warranty validity.',
+  'BS 7671:2018+A4:2026 Regulation 753.411.3.2 requires that the disconnecting device for a floor heating circuit is an RCD with characteristics per Reg 415.1.1 (rated residual operating current not exceeding 30 mA). Where the element is supplied without exposed-conductive-parts, a metal mesh with spacing not more than 30 mm shall be installed above the element and connected to the protective conductor. In bathroom locations, Reg 701.55 additionally requires a metal sheath, enclosure, or fine mesh grid connected to the protective conductor; protection by electrical separation is prohibited.',
 ];
 
 const faqs = [
@@ -77,13 +78,13 @@ const faqs = [
   {
     question: 'Can electric underfloor heating be used under laminate or engineered wood?',
     answer:
-      'Yes, but with important restrictions. The floor covering manufacturer must approve the use of electric underfloor heating under their product, and the maximum floor surface temperature must not exceed the manufacturer specification (typically 27°C for wood and laminate floors). The element must be a low-wattage system (typically 80 to 100W per m² rather than 150 to 200W per m² for tiles) to avoid overheating the wood. A dual-sensor thermostat (air sensor and floor sensor) is mandatory for wood and laminate installations so that both the air temperature and the floor temperature are monitored. Most heating mat and loose element manufacturers offer specific products approved for use under wood and laminate.',
+      'Yes, but with important restrictions. The floor covering manufacturer must approve the use of electric underfloor heating under their product, and the maximum floor surface temperature must not exceed the manufacturer specification (typically 27°C for most wood and laminate products — always check the specific product datasheet). Note that BS 7671:2018+A4:2026 Regulation 753.423 sets a broader protection-against-burns requirement: in floor areas where contact with skin or footwear is possible, the surface temperature shall be limited — the NOTE to Reg 753.423 gives 35°C as an example maximum for floor heating systems. Complying with the more restrictive manufacturer limit (often 27°C for wood) automatically satisfies Reg 753.423. The element must be a low-wattage system (typically 80 to 100W per m² rather than 150 to 200W per m² for tiles) to avoid overheating the wood. A dual-sensor thermostat (air sensor and floor sensor) is mandatory for wood and laminate installations so that both the air temperature and the floor temperature are monitored. Most heating mat and loose element manufacturers offer specific products approved for use under wood and laminate.',
   },
 ];
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the dedicated circuit cable for electric underfloor heating installations.',
     icon: Calculator,
@@ -120,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long circuit runs from consumer unit to underfloor heating thermostats.',
@@ -325,9 +326,13 @@ const sections = [
               <span>
                 <strong>Dual-sensor thermostat (mandatory for wood and laminate)</strong> — monitors
                 both air temperature (via sensor in thermostat body) and floor temperature (via
-                floor sensor). If the floor temperature reaches the maximum set point (typically
-                27°C for wood), the thermostat limits further heating regardless of the air sensor
-                reading. Prevents element overheating and floor covering damage.
+                floor sensor). If the floor temperature reaches the manufacturer's maximum set point
+                (typically 27°C for most wood and laminate products — confirm with the floor
+                covering datasheet), the thermostat limits further heating regardless of the air
+                sensor reading. BS 7671:2018+A4:2026 Reg 753.423 requires floor surface temperature
+                to be limited where skin or footwear contact is possible (the NOTE to Reg 753.423
+                gives 35°C as an example limit). Prevents element overheating and floor covering
+                damage.
               </span>
             </li>
           </ul>
@@ -359,7 +364,7 @@ const sections = [
                 <strong>Cable sizing</strong> — 2.5mm twin and earth is appropriate for most
                 domestic UFH circuits (up to 3kW element). For larger systems (3kW to 4kW), 4mm
                 cable may be required depending on the circuit length. Use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to confirm.
@@ -368,9 +373,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — 30mA RCD protection is required for all circuits
-                supplying electric heating in a domestic dwelling. An RCBO (combining the MCB and
-                RCD in one device) is the preferred solution for a dedicated UFH circuit.
+                <strong>RCD protection (Reg 753.411.3.2)</strong> — Regulation 753.411.3.2 of BS
+                7671:2018+A4:2026 requires that RCDs with the characteristics specified in
+                Regulation 415.1.1 (rated residual operating current not exceeding 30 mA) shall be
+                used as disconnecting devices for floor heating circuits. Where the heating unit is
+                supplied by the manufacturer without exposed-conductive-parts, a suitable conductive
+                covering — for example a metal grid with mesh spacing not more than 30 mm — shall be
+                provided on site above the element and connected to the protective conductor of the
+                supply circuit. An RCBO (combining the MCB and 30 mA RCD in one device) is the
+                preferred solution for a dedicated UFH circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -430,6 +441,51 @@ const sections = [
                   documentation for their property records.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+          <div className="flex items-start gap-4">
+            <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Bathroom UFH: BS 7671 Part 7 Requirements
+              </h4>
+              <p className="text-white text-sm leading-relaxed mb-2">
+                When installing electric underfloor heating in a bathroom or shower room, three
+                additional requirements under BS 7671:2018+A4:2026 apply beyond the standard UFH
+                rules:
+              </p>
+              <ul className="text-white text-sm leading-relaxed space-y-2 list-none">
+                <li>
+                  <strong>Reg 701.55 — metal sheath or mesh:</strong> the heating cables or thin
+                  sheet flexible heating elements shall have either a metal sheath, a metal
+                  enclosure, or a fine mesh metallic grid. That metallic covering shall be connected
+                  to the protective conductor of the supply circuit. Where the element is supplied
+                  by SELV, this connection is not required. Protection by electrical separation is
+                  expressly prohibited for bathroom floor heating systems.
+                </li>
+                <li>
+                  <strong>Reg 701.415.2 — supplementary bonding:</strong> supplementary protective
+                  equipotential bonding is required in rooms with a bath or shower, connecting the
+                  protective conductors of all Class I and Class II circuits to accessible
+                  extraneous-conductive-parts (pipework, metallic central heating, metallic
+                  structural parts). It may be omitted only where all three conditions are met: (d)
+                  all final circuits comply with automatic disconnection per Reg 411.3.2; (e) all
+                  final circuits have additional 30 mA RCD protection per Reg 415.1.1; and (f) all
+                  extraneous-conductive-parts are effectively connected to the main protective
+                  equipotential bonding per Reg 411.3.1.2. EICR inspectors check this against Reg
+                  830.3.201.
+                </li>
+                <li>
+                  <strong>Reg 753.522.6.201 — heating-free zone identification:</strong>{' '}
+                  heating-free areas (under toilet pedestals, vanity units, fixed bath panels, and
+                  other fixed furniture) shall be readily identifiable. Mark heating-free zones on
+                  the as-installed layout sketch and attach it to the EIC so the information is
+                  available for future inspection and to prevent accidental penetration by later
+                  trades.
+                </li>
+              </ul>
             </div>
           </div>
         </div>

@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What is the maximum voltage drop allowed on a three-phase circuit under BS 7671?',
     answer:
-      'BS 7671 Table 4Ab sets the maximum voltage drop for installations supplied from a public low-voltage distribution system. For three-phase power circuits, the limit is 5% of the nominal line-to-line voltage: 5% of 400 V = 20 V. For three-phase lighting circuits, the limit is 3% of 400 V = 12 V. For installations supplied from a private supply (generator or transformer), higher limits apply: 8% for power (32 V) and 6% for lighting (24 V). The voltage drop is measured from the origin of the installation to the most distant point of the circuit, including any sub-main cables in the path.',
+      'BS 7671 Table 4Ab sets the maximum voltage drop for installations supplied from a public low-voltage distribution system. For three-phase power circuits, the limit is 5% of the nominal line-to-line voltage: 5% of 400 V = 20 V. For three-phase lighting circuits, the limit is 3% of 400 V = 12 V. For installations supplied from a private supply (generator or transformer), Regulation 125.8 permits higher limits: 8% for power (32 V) and 6% for lighting (24 V). The voltage drop is measured from the origin of the installation to the most distant point of the circuit, including any sub-main cables in the path.',
   },
   {
     question: 'Why is the root 3 factor used in three-phase voltage drop calculations?',
@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'Does voltage drop on a sub-main count towards the final circuit limit?',
     answer:
-      'Yes. BS 7671 Regulation 525.1 requires the voltage drop from the origin of the installation to the most distant point of every final circuit to be within the permitted limits. This means the voltage drop across any sub-main cables in the path must be added to the voltage drop in the final circuit. For example, if a three-phase sub-main has a voltage drop of 8 V and the final circuit has a voltage drop of 10 V, the total is 18 V — which is within the 20 V (5%) limit for three-phase power circuits. When designing large installations with multiple distribution boards, it is good practice to allocate a voltage drop budget: for example, allow 2% for the sub-main and 3% for the final circuit, totalling 5%.',
+      'Yes. BS 7671 Regulation 125.8 and Table 4Ab require the voltage drop from the origin of the installation to the most distant point of every final circuit to be within the permitted limits. This means the voltage drop across any sub-main cables in the path must be added to the voltage drop in the final circuit. For example, if a three-phase sub-main has a voltage drop of 8 V and the final circuit has a voltage drop of 10 V, the total is 18 V — which is within the 20 V (5%) limit for three-phase power circuits. When designing large installations with multiple distribution boards, it is good practice to allocate a voltage drop budget: for example, allow 2% for the sub-main and 3% for the final circuit, totalling 5%.',
   },
   {
     question: 'How does cable temperature affect three-phase voltage drop?',
@@ -90,7 +90,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Single-phase voltage drop calculator with built-in BS 7671 tables and instant pass/fail indication.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables to BS 7671 with automatic correction factors, voltage drop check, and protective device coordination.',
@@ -231,7 +231,7 @@ const sections = [
         </p>
         <p>
           Three-phase voltage drop is a critical design consideration for{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> on
+          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink> on
           commercial and industrial installations. Sub-main cables feeding distribution boards,
           motor circuits, three-phase EV chargers, and large power supplies all require accurate
           voltage drop calculations to ensure compliance with{' '}
@@ -334,6 +334,21 @@ const sections = [
           </SEOInternalLink>{' '}
           where the power factor can be significantly less than unity.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">Frequency Limitation (Reg 125.8)</h4>
+              <p className="text-white text-sm leading-relaxed">
+                The BS 7671 mV/A/m table values are valid for AC operation at frequencies in the
+                range 49 to 61 Hz only. For cables operating at higher frequencies — such as
+                motor-drive output cables on variable-frequency drive (VFD) circuits — the voltage
+                drop may be substantially greater and shall be recalculated outside the standard
+                tables. Always use the tabulated values only for supply-frequency circuits.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Three Phase Calculation Tool | BS 7671:2026"
           description="Three phase voltage drop calculator built for BS 7671:2026. Get mV/A/m results instantly—no tables, no guesswork. Compliance check in seconds."
@@ -410,6 +425,27 @@ const sections = [
           loading is assumed to be approximately balanced, the three-phase calculation is
           acceptable.
         </p>
+        <div className="rounded-2xl bg-orange-500/5 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                Third Harmonic and Neutral Current (Reg 125.8)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                On three-phase circuits supplying high proportions of switched-mode power supplies
+                or LED drivers, third harmonic currents from each phase add rather than cancel in
+                the neutral conductor. BS 7671 Regulation 125.8 (Section 5.5) explicitly addresses
+                this: rating factors take account of the heating effect of the third harmonic in the
+                neutral as well as in each line conductor. Where third harmonic content is
+                significant, the neutral can carry more current than each phase conductor — which
+                affects both conductor sizing and voltage drop on the neutral. The standard
+                balanced/unbalanced framing does not capture this effect; the neutral conductor must
+                be assessed separately for such loads.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -422,7 +458,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Regulation 525.1 and Table 4Ab define the maximum permitted voltage drop for all
+          Regulation 125.8 and Table 4Ab define the maximum permitted voltage drop for all
           installations. The limits for three-phase circuits on a public LV supply are:
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -445,9 +481,9 @@ const sections = [
         </div>
         <p>
           For installations supplied from a private LV supply (such as a standby generator or
-          private transformer), higher limits apply: 8% (32 V) for power and 6% (24 V) for lighting.
-          These higher limits recognise that the electrician typically has more control over the
-          supply characteristics in a private installation.
+          private transformer), Regulation 125.8 permits higher limits: 8% (32 V) for power and 6%
+          (24 V) for lighting. These higher limits recognise that the electrician typically has more
+          control over the supply characteristics in a private installation.
         </p>
         <p>
           Remember that the voltage drop limit applies from the origin of the installation (the
@@ -604,6 +640,21 @@ const sections = [
           (3-core or 4-core cable, three-phase a.c.). Copper conductors. Always verify against the
           current edition for your specific installation method.
         </p>
+        <div className="rounded-2xl bg-orange-500/5 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">Single-Core Armoured Cable Caveat</h4>
+              <p className="text-white text-sm leading-relaxed">
+                Per Regulation 125.8, the tabulated mV/A/m voltage drop values for single-core
+                armoured cables apply only where the armour is bonded to earth at both ends. If the
+                armour is not bonded at both ends, the tabulated values do not apply and voltage
+                drop must be reassessed. Multicore SWA (3-core and 4-core) is not affected by this
+                restriction.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOInternalLink href="/guides/correction-factors-bs-7671">
           See also: Correction Factors Guide for derating and grouping factors
         </SEOInternalLink>

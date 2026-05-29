@@ -56,6 +56,11 @@ const faqs = [
       'Mobile towers are particularly susceptible to wind loading because of their height-to-base ratio and lightweight construction. PASMA guidance states that towers should not be used when wind speeds exceed 17 mph (7.7 m/s) as a general rule for occupied towers. If wind speed is likely to reach gale force (39 mph / 17.5 m/s), the tower should be tied to a rigid structure or dismantled. During erection and dismantling, wind speeds should be below the limits specified by the manufacturer. The operative should be aware that wind speed increases with height — a wind speed that feels moderate at ground level may be significantly stronger at the top of a 10-metre tower. Wind speed can be measured using a handheld anemometer, which many electricians now carry as part of their standard kit. If in doubt, the tower should not be used and alternative access methods should be considered.',
   },
   {
+    question: 'How long does PASMA training take?',
+    answer:
+      'The PASMA Towers for Users course is a one-day programme, typically running for six to seven contact hours plus a written theory test. The day covers legislation, tower components, the 3T assembly method, safe use, inspection requirements, and environmental hazards. Candidates who pass the theory test receive their PASMA card, which is valid for five years. The PASMA Combined course (Towers for Users plus Low Level Access) runs over a slightly longer day or across two shorter sessions depending on the training provider. There is no minimum practical experience required before attending — the course is designed for operatives who are new to mobile towers as well as those seeking renewal of an expired card.',
+  },
+  {
     question:
       'What is the difference between a PASMA Towers for Users and a PASMA Combined course?',
     answer:
@@ -96,7 +101,7 @@ const features = [
   },
   {
     icon: Award,
-    title: 'Part of 36+ Training Courses',
+    title: 'Part of 46+ Training Courses',
     description:
       "PASMA training sits within Elec-Mate's library of 46+ courses, including IPAF, asbestos awareness, working at height, and BS 7671:2018+A4:2026.",
   },
@@ -113,7 +118,7 @@ const courseSchema = {
   },
   offers: {
     '@type': 'Offer',
-    price: '4.99',
+    price: '5.99',
     priceCurrency: 'GBP',
     description: 'From £5.99/month — access all 46+ training courses',
   },
@@ -157,7 +162,7 @@ export default function PASMATrainingPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <Construction className="w-4 h-4" />
-            Part of 36+ Training Courses
+            Part of 46+ Training Courses
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             PASMA Training Course Online
@@ -402,7 +407,7 @@ export default function PASMATrainingPage() {
             Why Study PASMA with Elec-Mate?
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            AI-powered study tools, mock exams with instant feedback, and a complete library of 36+
+            AI-powered study tools, mock exams with instant feedback, and a complete library of 46+
             courses — all from your mobile device.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
@@ -452,7 +457,6 @@ export default function PASMATrainingPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -460,11 +464,21 @@ export default function PASMATrainingPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/tools/apprentice-training-app">Apprentice Training App</SEOInternalLink>
-            <SEOInternalLink href="/guides/on-the-job-training-guide">On-the-Job Training Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/best-electrical-training-app">Best Electrical Training App UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/off-job-training-hours">Off-the-Job Training Hours</SEOInternalLink>
-            <SEOInternalLink href="/guides/off-the-job-training-hours">Off-the-Job Training Hours</SEOInternalLink>
+            <SEOInternalLink href="/tools/apprentice-training-app">
+              Apprentice Training App
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/on-the-job-training-guide">
+              On-the-Job Training Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/best-electrical-training-app">
+              Best Electrical Training App UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/off-job-training-hours">
+              Off-the-Job Training Hours
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/off-the-job-training-hours">
+              Off-the-Job Training Hours
+            </SEOInternalLink>
           </div>
         </div>
       </section>

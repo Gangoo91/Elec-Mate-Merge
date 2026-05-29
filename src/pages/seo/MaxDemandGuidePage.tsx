@@ -41,27 +41,28 @@ const tocItems = [
 
 const keyTakeaways = [
   'Max demand is the maximum load in amperes or kilowatts that an electrical installation is expected to draw at any one time, taking into account that not all circuits operate simultaneously at full load.',
-  'Diversity factors from BS 7671 Appendix A (Table A1) and the IET On-Site Guide allow you to reduce the total connected load to a realistic maximum demand figure for each circuit type.',
+  'Diversity factors from IET On-Site Guide Appendix A (Table A2 — Allowances for Diversity) allow you to reduce the total connected load to a realistic maximum demand figure for each circuit type. Table A1 in the same appendix gives typical current demands per point of utilisation.',
   'Getting max demand wrong leads to undersized cables and protective devices (if too low) or unnecessary cost from oversized equipment (if too high).',
   'Domestic installations typically have a max demand of 60 to 100 A on a single-phase supply, depending on whether electric heating, showers, or EV chargers are installed.',
   'Elec-Mate includes a max demand calculator that applies the correct diversity factors automatically, plus 50+ other calculators including cable sizing, voltage drop, Zs, and PFC.',
+  'The max demand figure passed to the inspector and tester must be expressed in amps, kW or kVA after diversity has been taken into account — GN3 Regulation 2.3 (IET Guidance Note 3) places this obligation on whoever commissions the design.',
 ];
 
 const faqs = [
   {
     question: 'What is the difference between max demand and total connected load?',
     answer:
-      'Total connected load is the sum of the rated current of every circuit and appliance in the installation, assuming everything runs at full load simultaneously. Max demand is the realistic maximum load the installation is expected to draw at any one time, after diversity factors have been applied. For example, a domestic installation might have a total connected load of 200 A (adding up every socket, cooker, shower, and lighting circuit), but a max demand of 80 A because it is extremely unlikely that every circuit will draw full load at the same time. The diversity factors from BS 7671 Appendix A (Table A1) and the IET On-Site Guide provide the reduction percentages for each circuit type. Max demand is the figure that matters when sizing the main incoming cable, main switch, and distribution board.',
+      'Total connected load is the sum of the rated current of every circuit and appliance in the installation, assuming everything runs at full load simultaneously. Max demand is the realistic maximum load the installation is expected to draw at any one time, after diversity factors have been applied. For example, a domestic installation might have a total connected load of 200 A (adding up every socket, cooker, shower, and lighting circuit), but a max demand of 80 A because it is extremely unlikely that every circuit will draw full load at the same time. The diversity allowances are set out in IET On-Site Guide Appendix A, Table A2 (Allowances for Diversity). BS 7671 Regulation 311.1 requires the maximum demand to be assessed; the numeric percentage table is in the On-Site Guide, not in BS 7671 directly. Max demand is the figure that matters when sizing the main incoming cable, main switch, and distribution board.',
   },
   {
     question: 'Where do I find the diversity factors in BS 7671?',
     answer:
-      'The diversity factors for domestic and small commercial installations are set out in BS 7671 Appendix A, specifically Table A1 (Allowances for diversity). The IET On-Site Guide (Appendix H) also reproduces the same table with additional guidance notes. These tables break down diversity by circuit type: lighting, heating, cooking appliances, motors, socket outlets, water heaters, and so on. Each circuit type has a different percentage reduction. For larger commercial and industrial installations, diversity factors are typically agreed with the Distribution Network Operator (DNO) based on the specific load profile and historical data rather than applying the standard domestic table.',
+      'The diversity allowances for domestic and small commercial installations are set out in the IET On-Site Guide (OSG) Appendix A, specifically Table A2 (Allowances for Diversity). Table A1 in the same appendix gives typical current demands per point of utilisation. BS 7671 Regulation 311.1 requires diversity to be applied, but the numeric percentage table is in the OSG Appendix A, not in BS 7671 directly. These tables break down diversity by circuit type: lighting, heating and power, cooking appliances, motors, socket outlets, water heaters, and so on. Each circuit type has a different percentage reduction. For larger commercial and industrial installations, diversity factors are typically agreed with the Distribution Network Operator (DNO) based on the specific load profile and historical data rather than applying the standard domestic table.',
   },
   {
     question: 'Do I need to calculate max demand for every job?',
     answer:
-      'You need to calculate max demand whenever you are designing or significantly altering an electrical installation and need to determine the size of the incoming supply, main cable, or distribution board. For a simple like-for-like replacement (for example, swapping a socket for a socket on an existing circuit), a max demand calculation is not required because the existing supply capacity is not being changed. However, for new installations, consumer unit upgrades, additions that increase the load (such as adding an EV charger or electric shower), or commercial fit-outs, a max demand assessment is essential. It also forms part of the design documentation required by BS 7671 Part 3 (Assessment of General Characteristics) — specifically Regulation 311 (Purpose, Supplies, and Structure) and Regulation 313 (Assessment of Maximum Demand).',
+      'You need to calculate max demand whenever you are designing or significantly altering an electrical installation and need to determine the size of the incoming supply, main cable, or distribution board. For a simple like-for-like replacement (for example, swapping a socket for a socket on an existing circuit), a max demand calculation is not required because the existing supply capacity is not being changed. However, for new installations, consumer unit upgrades, additions that increase the load (such as adding an EV charger or electric shower), or commercial fit-outs, a max demand assessment is essential. It also forms part of the design documentation required by BS 7671 Part 3 (Assessment of General Characteristics) — specifically Regulation 311.1, which requires the maximum demand to be assessed so that the installation can be supplied safely.',
   },
   {
     question: 'How does max demand affect the DNO supply?',
@@ -71,23 +72,23 @@ const faqs = [
   {
     question: 'Can I use the max demand calculator on Elec-Mate?',
     answer:
-      'Yes. Elec-Mate includes a max demand calculator that lets you enter each circuit type and rating. It applies the correct diversity factors from BS 7671 Appendix A automatically and calculates the total max demand in amperes and kilowatts. The calculator covers all standard domestic circuit types — lighting, socket outlets, cooking appliances, water heaters, immersion heaters, electric showers, space heating, and EV chargers. It shows the diversity factor applied to each circuit and the resulting diversified load, so you can see exactly how the final figure is derived. The result can be included in your design documentation. Elec-Mate also includes 50+ other calculators covering cable sizing, voltage drop, Zs, PFC, adiabatic equation, conduit fill, trunking fill, power factor, and three-phase power.',
+      'Yes. Elec-Mate includes a max demand calculator that lets you enter each circuit type and rating. It applies the correct diversity factors from IET On-Site Guide Appendix A (Table A2) automatically and calculates the total max demand in amperes and kilowatts. The calculator covers all standard domestic circuit types — lighting, socket outlets, cooking appliances, water heaters, immersion heaters, electric showers, space heating, and EV chargers. It shows the diversity factor applied to each circuit and the resulting diversified load, so you can see exactly how the final figure is derived. The result can be included in your design documentation. Elec-Mate also includes 50+ other calculators covering cable sizing, voltage drop, Zs, PFC, adiabatic equation, conduit fill, trunking fill, power factor, and three-phase power.',
   },
   {
     question: 'What diversity factor applies to socket outlets?',
     answer:
-      'For a domestic installation, BS 7671 Appendix A (Table A1) applies the following diversity to socket outlets: 100% of the largest circuit plus 40% of the remaining circuits. For example, if you have a 32 A ring final circuit and two 20 A radial circuits, the diversified demand would be 32 A (100% of the largest) + 8 A (40% of 20 A) + 8 A (40% of 20 A) = 48 A. This reflects the reality that while one ring circuit might be heavily loaded (powering a kettle, microwave, and toaster in the kitchen), other socket circuits are unlikely to be at full load simultaneously. The On-Site Guide notes that for commercial installations with heavy socket loads (such as open-plan offices with many computer workstations), a higher diversity allowance or a specific load survey may be appropriate.',
+      'For a domestic installation, IET On-Site Guide Appendix A (Table A2) applies the following diversity to socket outlets: 100% of the largest circuit plus 40% of the remaining circuits. For example, if you have a 32 A ring final circuit and two 20 A radial circuits, the diversified demand would be 32 A (100% of the largest) + 8 A (40% of 20 A) + 8 A (40% of 20 A) = 48 A. This reflects the reality that while one ring circuit might be heavily loaded (powering a kettle, microwave, and toaster in the kitchen), other socket circuits are unlikely to be at full load simultaneously. The On-Site Guide notes that for commercial installations with heavy socket loads (such as open-plan offices with many computer workstations), a higher diversity allowance or a specific load survey may be appropriate.',
   },
   {
     question: 'Is max demand the same as design current (Ib)?',
     answer:
-      'They are related but not identical. Max demand is the overall maximum load of the entire installation (or a section of it), expressed in amperes or kilowatts. Design current (Ib) is the current a specific circuit is expected to carry in normal service — it is the starting point for selecting the cable size and protective device rating for that individual circuit. When calculating Ib for a circuit, you may apply diversity if the circuit feeds multiple loads that will not all operate simultaneously. The max demand calculation for the whole installation uses the individual circuit loads (which may already include some diversity) and then applies the overall diversity factors from Table A1 to arrive at the total maximum demand on the incoming supply.',
+      'They are related but not identical. Max demand is the overall maximum load of the entire installation (or a section of it), expressed in amperes or kilowatts. Design current (Ib) is the current a specific circuit is expected to carry in normal service — it is the starting point for selecting the cable size and protective device rating for that individual circuit. When calculating Ib for a circuit, you may apply diversity if the circuit feeds multiple loads that will not all operate simultaneously. The max demand calculation for the whole installation uses the individual circuit loads (which may already include some diversity) and then applies the overall diversity factors from OSG Appendix A, Table A2 to arrive at the total maximum demand on the incoming supply.',
   },
 ];
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate max demand for UK installs: BS 7671 + IET OSG diversity factors, ADMD, domestic 100A + commercial 3-phase worked examples. For UK electricians.',
@@ -95,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly using design current, correction factors, and current-carrying capacity tables.',
@@ -228,12 +229,14 @@ const sections = [
       <>
         <p>
           Diversity factors are percentage reductions applied to the rated load of each circuit type
-          to reflect the realistic likelihood of simultaneous use. They are set out in{' '}
+          to reflect the realistic likelihood of simultaneous use. BS 7671 Regulation 311.1 requires
+          the maximum demand to be assessed; the numeric allowances are set out in the{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671 Appendix A (Table A1)
-          </SEOInternalLink>{' '}
-          and reproduced in the IET On-Site Guide (Appendix H). The key circuit types and their
-          diversity allowances for a typical domestic installation are:
+            IET On-Site Guide Appendix A, Table A2 (Allowances for Diversity)
+          </SEOInternalLink>
+          . Table A1 in the same appendix gives typical current demands per point of utilisation.
+          The key circuit types and their diversity allowances for a typical domestic installation
+          are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 overflow-x-auto">
           <table className="w-full text-white text-sm">
@@ -286,14 +289,21 @@ const sections = [
                   <Flame className="w-4 h-4 text-yellow-400 shrink-0" />
                   Space heating (fixed)
                 </td>
-                <td className="py-3 pr-4">100% of largest + 40% of remaining</td>
+                <td className="py-3 pr-4">
+                  100% of total demand up to 10 A + 50% of any demand in excess of 10 A (individual
+                  household — OSG Table A2)
+                </td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 flex items-center gap-2">
                   <Activity className="w-4 h-4 text-yellow-400 shrink-0" />
                   EV charger
                 </td>
-                <td className="py-3 pr-4">100% (usually a dedicated circuit)</td>
+                <td className="py-3 pr-4">
+                  100% (dedicated circuit); where a load-curtailment or smart-charging system
+                  automatically reduces or disconnects the charger, that reduction may be taken into
+                  account when determining max demand (Reg 722.311.201)
+                </td>
               </tr>
             </tbody>
           </table>
@@ -494,8 +504,8 @@ const sections = [
               <span>
                 <strong>Forgetting to apply diversity.</strong> Adding up every circuit rating
                 without diversity produces a total connected load, not max demand. This leads to
-                massively oversized supplies and unnecessary cost. Always apply the factors from
-                Table A1.
+                massively oversized supplies and unnecessary cost. Always apply the allowances from
+                OSG Appendix A, Table A2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -520,9 +530,20 @@ const sections = [
               <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Using domestic diversity factors for commercial installations.</strong> The
-                Table A1 factors are designed for domestic premises. Commercial and industrial
-                installations may need higher diversity allowances — especially for socket outlets
-                in offices, commercial kitchens, or process loads.
+                OSG Table A2 factors are designed for domestic premises. Commercial and industrial
+                installations may need different diversity allowances — especially for socket
+                outlets in offices, commercial kitchens, or process loads.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Confusing diversity with load curtailment.</strong> Diversity factors reduce
+                the design demand figure for cable and device sizing; they cannot be used as a
+                mechanism to limit overload or as a substitute for positive load-shedding. Where
+                load curtailment is claimed — for example, a smart EV charger that automatically
+                reduces output — it must be achieved by a positive automatic or manual disconnection
+                or reduction scheme (Reg 722.311.201). Diversity alone does not fulfil that role.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -531,7 +552,7 @@ const sections = [
                 <strong>Not documenting the calculation.</strong> BS 7671 requires design records.
                 Your max demand calculation should be documented and retained with the Electrical
                 Installation Certificate. A{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   max demand calculator tool
                 </SEOInternalLink>{' '}
                 makes this straightforward.
@@ -562,8 +583,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Select the circuit type from a dropdown (lighting, sockets, cooker, shower,
                   immersion, space heating, EV charger, etc.) and enter the rated current. The
-                  calculator applies the correct diversity factor from BS 7671 Appendix A
-                  automatically.
+                  calculator applies the correct diversity factor from IET On-Site Guide Appendix A
+                  (Table A2) automatically.
                 </p>
               </div>
             </div>
@@ -589,7 +610,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Max demand is just one of over 70+ calculators on Elec-Mate. Others include{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink>,{' '}
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                    cable sizing
+                  </SEOInternalLink>
+                  ,{' '}
                   <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                     voltage drop
                   </SEOInternalLink>
@@ -602,7 +626,7 @@ const sections = [
                     PFC
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/adiabatic-equation-calculator">
+                  <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                     adiabatic equation
                   </SEOInternalLink>
                   , conduit fill, trunking fill, power factor, and three-phase power.

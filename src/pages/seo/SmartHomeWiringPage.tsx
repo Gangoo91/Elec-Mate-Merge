@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size power cables for smart home circuits, dedicated equipment feeds, and PoE switch power supplies.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on dedicated circuits for smart home hubs and server equipment.',
@@ -522,7 +522,7 @@ const sections = [
           Include the smart home equipment load in the maximum demand calculation when designing the
           installation. While the individual loads are small, they are continuous (24/7) and
           cumulative. The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           can help with dedicated circuit sizing for network cabinets and equipment rooms.
@@ -610,7 +610,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Size dedicated circuits for network cabinets, equipment rooms, and smart home hubs
                   with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic derating and voltage drop checks for every circuit.
@@ -625,12 +625,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote smart home packages with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Structured cabling, containment, access points, smart switches, network
-                  equipment, labour, and testing — all itemised with your margins. Professional PDF
-                  quote sent on the spot.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Structured cabling, containment, access points, smart switches, network equipment,
+                  labour, and testing — all itemised with your margins. Professional PDF quote sent
+                  on the spot.
                 </p>
               </div>
             </div>

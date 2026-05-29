@@ -47,6 +47,7 @@ const keyTakeaways = [
   'Commercial electrical surveys cost from £300 to £2,000+ depending on the size and complexity of the installation, and are required under the Electricity at Work Regulations 1989.',
   'Large installation assessments for industrial or multi-site properties are priced per distribution board or per day, typically £500 to £1,500 per day.',
   'Elec-Mate helps electricians complete surveys faster and produce professional reports on site, turning every inspection into a priced remedial quote before leaving the property.',
+  'BS 7671:2018+A4:2026 introduced two key changes that affect domestic survey scope: Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits, and Reg 411.3.4 mandates 30 mA RCD protection on lighting circuits in domestic premises. Older boards without these features will typically attract C3 observations under A4:2026 surveys.',
 ];
 
 const faqs = [
@@ -398,9 +399,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD testing</strong> — testing each RCD at 1x, 5x, and (where applicable)
-                1/2x rated residual operating current to confirm it disconnects within the required
-                time.
+                <strong>RCD testing</strong> — testing each RCD at ½I&Delta;n (no-trip verify) and
+                I&Delta;n (full rated current trip-time), with the longest tripping time recorded in
+                the Schedule of Test Results (GN3 Reg 2.32). Per BS 7671:2018+A4:2026 Reg 643.3, an
+                alternating current test at rated residual operating current shall be used to verify
+                RCD effectiveness regardless of RCD type (AC, A, F, B etc.).
               </span>
             </li>
           </ul>
@@ -413,6 +416,25 @@ const sections = [
           </SEOInternalLink>{' '}
           and the overall condition is classified as Satisfactory or Unsatisfactory.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">What you should receive</p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                Under GN3 (Reg 1.3), the inspector must give you the full EICR package — not just
+                the top-level report. A complete set comprises: the{' '}
+                <strong>Electrical Installation Condition Report</strong>, the{' '}
+                <strong>Condition Report Inspection Schedule</strong>, one or more{' '}
+                <strong>Schedules of Circuit Details</strong>, and one or more{' '}
+                <strong>Schedules of Test Results</strong>. If any of these documents is missing,
+                the documentation package is incomplete. Many clients — including landlords
+                satisfying council licensing checks — are entitled to all four elements and should
+                ask for them explicitly if not provided.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -421,6 +443,27 @@ const sections = [
     heading: 'Factors That Affect Electrical Survey Cost',
     content: (
       <>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 mb-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white mb-1">
+                BS 7671:2018+A4:2026 update — wider survey scope
+              </p>
+              <p className="text-white/90 text-sm leading-relaxed">
+                From 2026, surveys must assess compliance with two A4:2026 requirements that were
+                not in the 18th edition: <strong>Reg 421.1.7</strong> recommends arc fault detection
+                devices (AFDDs) in AC final circuits to mitigate fire risk, and{' '}
+                <strong>Reg 411.3.4</strong> requires 30&thinsp;mA RCD additional protection on AC
+                final circuits supplying luminaires in domestic premises. Older consumer units that
+                lack AFDD protection or have unprotected lighting circuits will typically attract C3
+                (Improvement Recommended) observations — and in some cases C2 where a specific risk
+                is identified. Homeowners and landlords should budget for potential remedial work
+                when having older domestic boards surveyed under A4:2026.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">

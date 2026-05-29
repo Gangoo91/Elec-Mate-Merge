@@ -387,13 +387,13 @@ export default function SolarPanelInstallationPage() {
                 wiring.
               </p>
               <p>
-                BS 7671:2018+A4:2026 Section 530 is particularly relevant to battery
-                storage installations. Because a battery can supply fault current back through the
-                consumer unit (bidirectional current flow), the protective devices must be suitable
-                for operation in both directions. Standard unidirectional MCBs and RCBOs may not
-                clear faults correctly when current flows in the reverse direction. Always check
-                with the device manufacturer and the battery system designer that the protective
-                devices are rated for bidirectional fault current.
+                BS 7671:2018+A4:2026 Section 530 is particularly relevant to battery storage
+                installations. Because a battery can supply fault current back through the consumer
+                unit (bidirectional current flow), the protective devices must be suitable for
+                operation in both directions. Standard unidirectional MCBs and RCBOs may not clear
+                faults correctly when current flows in the reverse direction. Always check with the
+                device manufacturer and the battery system designer that the protective devices are
+                rated for bidirectional fault current.
               </p>
               <p>
                 Battery storage installations are notifiable under Part P and require appropriate
@@ -706,14 +706,14 @@ export default function SolarPanelInstallationPage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for DC and AC solar PV circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop compliance for DC string cables and AC circuits.',
           icon: Activity,

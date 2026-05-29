@@ -47,6 +47,7 @@ const keyTakeaways = [
   'Electric shower installation in a bathroom is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or notified to Building Control.',
   "Elec-Mate's cable sizing calculator handles shower circuit design including correction factors, voltage drop, and Zs verification against BS 7671 tables.",
   'Typical UK installation cost (2026): £180–£500 per job depending on region — £270 average in the North West / Yorkshire, £285 in the West Midlands, £315 in Scotland, £375 in London. Labour time 1.5–2 hours on a straightforward swap.',
+  'A4:2026 Reg 411.3.4: within domestic premises, bathroom lighting circuits now also require 30mA RCD protection. When working on a shower circuit, check whether the existing lighting circuit is RCD-protected — the absence of RCD protection on a lighting circuit is a C2 defect under current regulations.',
 ];
 
 const faqs = [
@@ -84,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any electric shower rating with automatic correction factors and voltage drop check.',
@@ -92,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop for shower circuits — critical for longer cable runs on high-current circuits.',
@@ -420,12 +421,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary bonding</strong> — under BS 7671:2018+A4:2026, supplementary
-                bonding in bathrooms can be omitted if the installation meets certain conditions:
-                all circuits in the bathroom are RCD-protected, the main protective bonding is
-                confirmed, and all extraneous-conductive-parts are effectively bonded through the
-                main bonding. In practice, many electricians still install supplementary bonding as
-                a belt-and-braces approach.
+                <strong>Supplementary bonding</strong> — under BS 7671:2018+A4:2026 Reg 701.415.2,
+                supplementary bonding in bathrooms can be omitted where the building has main
+                protective equipotential bonding per Reg 411.3.1.2 and all three of the following
+                conditions are met: (d) all final circuits of the location comply with automatic
+                disconnection per Reg 411.3.2 (Zs within limits, correct disconnection time); (e)
+                all final circuits have additional RCD protection per Reg 415.1.1; and (f) all
+                extraneous-conductive-parts are effectively connected to the main equipotential
+                bonding. All three conditions must be satisfied — the Zs check is frequently
+                overlooked. In practice, many electricians still install supplementary bonding as a
+                belt-and-braces approach.
               </span>
             </li>
           </ul>
@@ -436,6 +441,16 @@ const sections = [
           residual operating current (30mA) and at 5x (150mA). The trip times must be within 300ms
           at 1x and 40ms at 5x.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm">
+            <strong>A4:2026 — Reg 411.3.4 (lighting circuits):</strong> Within domestic premises, AC
+            final circuits supplying luminaires must also have 30mA RCD additional protection. When
+            installing a new shower circuit in an older home, check whether the existing bathroom
+            lighting circuit is RCD-protected. An unprotected lighting circuit is a C2 observation
+            on an EICR under current regulations and may require remedial work as part of associated
+            works.
+          </p>
+        </div>
       </>
     ),
   },
@@ -532,6 +547,25 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">
+            Walk-in showers and wet rooms (no fixed basin)
+          </h3>
+          <p className="text-white text-sm mb-2">
+            Where there is no shower basin or tray — for example a walk-in wet room with a floor
+            drain — <strong>Zone 2 is absent</strong>. Instead, Zone 1 extends to a vertical surface
+            at <strong>1.20 m horizontally from the centre of the fixed water outlet</strong> on the
+            wall or ceiling (Reg 701.32.3). Electricians sometimes apply bath-type zone dimensions
+            to wet rooms; the correct reference point is the fixed outlet, not the room edge.
+          </p>
+          <p className="text-white text-sm">
+            <strong>Socket outlets (Reg 701.512.3):</strong> Standard socket outlets (other than
+            SELV sockets per Section 414 and BS EN 61558-2-5 shaver units) are prohibited within{' '}
+            <strong>2.50 m horizontally from the boundary of Zone 1</strong>. Measuring from the
+            wrong reference point — particularly in wet rooms where Zone 1 is defined from the
+            outlet centre rather than a tray edge — is a common EICR defect.
+          </p>
+        </div>
         <p>
           Outside all zones, standard accessories can be used. The distribution board and MCB are
           always outside the bathroom and outside all zones. Cable routes should avoid Zones 0 and 1
@@ -608,7 +642,7 @@ export default function ElectricShowerInstallationPage() {
   return (
     <GuideTemplate
       title="Electric Shower Cable Size: 7.5kW-12kW (UK Install Guide)"
-      description="Cable + MCB size for UK electric showers by kW: 7.5kW→6mm²/32A, 9.5kW→6mm²/40A, 10.5kW→10mm²/45A, 12kW→10mm²/50A. RCD, pull-cord, Section 701 zoning."
+      description="Cable + MCB size for UK electric showers by kW: 7.5kW→6mm²/32A, 8.5kW→10mm²/40A, 9.5kW→10mm²/45A, 10.5kW→16mm²/50A, 12kW→16mm²/50A. RCD, pull-cord, Section 701 zoning."
       datePublished="2025-06-20"
       dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}

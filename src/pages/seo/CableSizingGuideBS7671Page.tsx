@@ -19,7 +19,7 @@ export default function CableSizingGuideBS7671Page() {
   return (
     <GuideTemplate
       title="Cable Sizing Guide BS 7671 | How to Size Cables | Elec-Mate"
-      description="Complete cable sizing guide using BS 7671:2018+A4:2026. The 5-step process: design current, protective device, correction factors (Ca, Cg, Ci, Cf)…"
+      description="Complete cable sizing guide to BS 7671:2018+A4:2026. Master the 5-step process: design current, correction factors, Appendix 4 tables, and voltage drop — with worked examples."
       datePublished="2025-06-20"
       dateModified="2026-05-18"
       breadcrumbs={[
@@ -82,7 +82,7 @@ export default function CableSizingGuideBS7671Page() {
                 involves multiple lookups and calculations that are easy to get wrong. This is why
                 many electricians use a cable sizing calculator — and why Elec-Mate has built every
                 Appendix 4 table and correction factor into its{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>
                 .
@@ -520,11 +520,22 @@ export default function CableSizingGuideBS7671Page() {
                     </p>
                   </div>
                   <p className="text-white text-sm mt-3 leading-relaxed">
-                    From Table 4D5A, 2.5mm2 T&E clipped direct has I<sub>z</sub> = 27A per
-                    conductor. Since this is a ring circuit, both legs share the load, so 2.5mm2 is
-                    adequate. Voltage drop for a 50m ring with 20A load: VD = (18 x 20 x 25) / 1000
-                    = 9.0V (within 11.5V limit). <strong>Result: 2.5mm2 T&E.</strong>
+                    From Table 4D5A (XLPE 90°C T&amp;E), 2.5mm² clipped direct (Method C) has I
+                    <sub>z</sub> = 30A per conductor. Since this is a ring circuit, both legs share
+                    the load, so 2.5mm² is adequate. Voltage drop for a 50m ring with 20A load: VD =
+                    (18 x 20 x 25) / 1000 = 9.0V (within 11.5V limit).{' '}
+                    <strong>Result: 2.5mm² T&amp;E.</strong>
                   </p>
+                  <div className="mt-4 p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                    <p className="text-orange-300 text-sm leading-relaxed">
+                      <strong className="text-orange-400">A4:2026 — AFDD (Reg 421.1.7):</strong> BS
+                      7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
+                      detection devices (AFDDs) on AC final circuits of a fixed installation to
+                      mitigate the risk of fire from arc fault currents. For domestic ring final and
+                      radial circuits, consider AFDD requirements at the design stage. Note the
+                      wording is recommendatory rather than mandatory.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
@@ -585,11 +596,24 @@ export default function CableSizingGuideBS7671Page() {
                     </p>
                   </div>
                   <p className="text-white text-sm mt-3 leading-relaxed">
-                    From Table 4D5A, 1.0mm2 T&E Method C has I<sub>z</sub> = 15A — sufficient.
-                    1.5mm2 also works with I<sub>z</sub> = 20A. Voltage drop for 1.5mm2 with 5A over
+                    From Table 4D5A, 1.0mm² T&amp;E Method C has I<sub>z</sub> = 16A — sufficient.
+                    1.5mm² also works with I<sub>z</sub> = 20A. Voltage drop for 1.5mm² with 5A over
                     18m: VD = (29 x 5 x 18) / 1000 = 2.61V (within 6.9V lighting limit).{' '}
-                    <strong>Result: 1.5mm2 T&E (standard for lighting).</strong>
+                    <strong>Result: 1.5mm² T&amp;E (standard for lighting).</strong>
                   </p>
+                  <div className="mt-4 p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                    <p className="text-orange-300 text-sm leading-relaxed">
+                      <strong className="text-orange-400">
+                        A4:2026 — RCD on domestic lighting (Reg 411.3.4):
+                      </strong>{' '}
+                      BS 7671:2018+A4:2026 Regulation 411.3.4 requires that, within domestic
+                      (household) premises, AC final circuits supplying luminaires shall be provided
+                      with additional protection by an RCD with a rated residual operating current
+                      not exceeding 30 mA. A 6A MCB alone is no longer sufficient for a new domestic
+                      lighting circuit — an RCBO or RCD upstream is mandatory for compliance with
+                      A4:2026.
+                    </p>
+                  </div>
                 </div>
               </div>
             </>
@@ -636,9 +660,24 @@ export default function CableSizingGuideBS7671Page() {
                 essential check on commercial and industrial installations where fault levels can be
                 significantly higher.
               </p>
+              <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 my-4">
+                <p className="text-white text-sm leading-relaxed">
+                  <strong className="text-yellow-400">
+                    Site verification — Zs and the 0.8 factor:
+                  </strong>{' '}
+                  When verifying earth fault loop impedance (Z<sub>s</sub>) on site during initial
+                  verification, the measured value must satisfy Z<sub>s</sub>(measured) &lt; 0.8
+                  &times; the maximum tabulated Z<sub>s</sub> value. The 0.8 multiplier (per BS 7671
+                  Reg 411.4.4 / 411.5.4 and Reg 253.0) accounts for the fact that conductor
+                  resistance increases with temperature — a cable at full load is hotter than at the
+                  ambient conditions when measured. Measured Z<sub>s</sub> values that pass at
+                  ambient but exceed 80% of the tabulated maximum will fail under load; always apply
+                  the 0.8 factor before recording compliance.
+                </p>
+              </div>
               <p>
                 For more detail, see the{' '}
-                <SEOInternalLink href="/adiabatic-equation-calculator">
+                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                   adiabatic equation calculator
                 </SEOInternalLink>{' '}
                 guide.
@@ -661,6 +700,18 @@ export default function CableSizingGuideBS7671Page() {
                 for all standard cable types and installation methods. Understanding which table to
                 use is the first step in using them correctly.
               </p>
+              <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 my-4">
+                <p className="text-white text-sm leading-relaxed">
+                  <strong className="text-yellow-400">Start with Table 4A2:</strong> Before reading
+                  any current-carrying capacity table, consult Table 4A2 (referenced in BS 7671 Reg
+                  521.3 and Reg 125.8). Table 4A2 maps each physical installation method to the
+                  correct reference method and current-carrying capacity table — for example,
+                  T&amp;E clipped direct maps to Reference Method C and Table 4D1A (PVC 70°C) or
+                  4D5A (XLPE 90°C); singles in conduit on a wall map to Reference Method B and Table
+                  4D4A. Selecting the wrong table — even with the right reference method — will give
+                  incorrect Iz values.
+                </p>
+              </div>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-4">Main Appendix 4 Tables</h3>
                 <ul className="space-y-3 text-white">
@@ -757,7 +808,7 @@ export default function CableSizingGuideBS7671Page() {
         {
           question: 'What is the difference between Reference Method A and Method C?',
           answer:
-            'Reference Method A is for cables enclosed in conduit in an insulated wall (or enclosed in an insulated wall without conduit — commonly domestic T&E in insulated stud walls). The cable is surrounded by insulation which restricts heat dissipation, resulting in the lowest current-carrying capacity ratings. Reference Method C is for cables clipped directly to a surface, which allows much better heat dissipation and therefore higher current ratings. For example, 2.5mm2 T&E has Iz = 20A for Method A but Iz = 27A for Method C. The correct method depends on the actual installation route — use the worst-case method for any portion of the cable run.',
+            'Reference Method A is for cables enclosed in conduit in an insulated wall (or enclosed in an insulated wall without conduit — commonly domestic T&E in insulated stud walls). The cable is surrounded by insulation which restricts heat dissipation, resulting in the lowest current-carrying capacity ratings. Reference Method C is for cables clipped directly to a surface, which allows much better heat dissipation and therefore higher current ratings. For example, 2.5mm² XLPE 90°C T&E (Table 4D5A) has Iz = 30A for Method C. The correct method depends on the actual installation route — use the worst-case method for any portion of the cable run.',
         },
         {
           question: 'Does Elec-Mate have a cable sizing calculator?',
@@ -779,21 +830,21 @@ export default function CableSizingGuideBS7671Page() {
           category: 'Guide',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate the correct cable size with all correction factors.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Calculate voltage drop with Appendix 4 mV/A/m values.',
           icon: Zap,
           category: 'Calculator',
         },
         {
-          href: '/adiabatic-equation-calculator',
+          href: '/tools/adiabatic-equation-calculator',
           title: 'Adiabatic Equation Calculator',
           description: 'Verify fault current withstand for any cable.',
           icon: ShieldCheck,

@@ -45,6 +45,8 @@ const keyTakeaways = [
   'Part P of the Building Regulations (England and Wales) requires certain types of electrical work to be notified to building control — either through a competent person scheme or directly.',
   'Competent person self-certification (via NICEIC, NAPIT, ELECSA, etc.) allows registered electricians to certify their own notifiable work without involving building control directly.',
   'Elec-Mate generates all three certificate types on your phone with AI assistance, auto-populates test results, and sends the completed certificate to the client and building control notification body in one tap.',
+  'A4:2026 (Reg 411.3.4): all AC lighting circuits in domestic premises now require RCD protection at or below 30 mA — inspectors must code the absence C2 on an EICR, and new EICs must record that protection is provided.',
+  'A4:2026 updated Appendix 6 model forms to include mandatory fields for SPDs and AFDDs — pre-A4:2026 certificate templates are missing these fields.',
 ];
 
 const faqs = [
@@ -202,11 +204,10 @@ const sections = [
                   Minor Electrical Installation Works Certificate (MEIWC)
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Issued for minor work that does not include the provision of a new circuit.
-                  Examples include adding a socket to an existing circuit, replacing a consumer unit
-                  on a like-for-like basis, or installing a fused connection unit. The MEIWC is a
-                  simpler form than the EIC and does not require separate design and construction
-                  details.
+                  Issued for minor work that does not include the provision of a new circuit or the
+                  replacement of a consumer unit. Examples include adding a socket outlet to an
+                  existing circuit or installing a fused connection unit. The MEIWC is a simpler
+                  form than the EIC and does not require separate design and construction details.
                 </p>
               </div>
             </div>
@@ -229,6 +230,24 @@ const sections = [
                   by law for privately rented properties in England (every 5 years).
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white text-sm mb-1">
+                A4:2026 — Domestic lighting circuits: RCD protection now mandatory (Reg 411.3.4)
+              </p>
+              <p className="text-white/80 text-sm leading-relaxed">
+                BS 7671:2018+A4:2026 introduced Reg 411.3.4, which requires all AC final circuits
+                supplying luminaires in domestic premises to have additional protection by an RCD
+                rated at or below 30 mA. For new work, the EIC must record that RCD protection is
+                provided. On an EICR of an existing installation, the absence of RCD protection on
+                lighting circuits in a domestic property is a C2 observation (potentially
+                dangerous).
+              </p>
             </div>
           </div>
         </div>
@@ -422,8 +441,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement:</strong> EIC or MEIWC required, plus Part P
-                notification (this became notifiable from January 2005).
+                <strong>Consumer unit replacement:</strong> EIC required (not MEIWC — Reg 644.4
+                expressly excludes consumer unit replacement from the MEIWC scope), plus Part P
+                notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -514,6 +534,16 @@ const sections = [
           professionally you can produce it. Elec-Mate turns certificate production from desk-time
           paperwork into an on-site, real-time workflow:
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <p className="text-white/80 text-sm leading-relaxed">
+            <strong className="text-white">Who gets the certificate?</strong> Under Reg 644.4, the
+            original EIC or MEIWC must be issued to the person who ordered the work. The contractor
+            must retain a duplicate. Failing to retain your duplicate — or issuing the certificate
+            after the job is closed — is one of the most common practical compliance failures. With
+            Elec-Mate, the client copy is emailed automatically on completion and a copy is stored
+            against the job in your account.
+          </p>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -558,6 +588,24 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-bold text-white text-sm mb-1">
+                A4:2026 — Updated Appendix 6 model forms (Reg 722.826.3.201)
+              </p>
+              <p className="text-white/80 text-sm leading-relaxed">
+                The BS 7671:2018+A4:2026 amendment updated the Appendix 6 model forms (EIC and EICR)
+                to include mandatory fields for recording SPDs (surge protective devices) and AFDDs
+                (arc fault detection devices). Where these devices are installed, installers must
+                record the details on the certificate. If you are using pre-A4:2026 certificate
+                templates, they will be missing these fields — your certificates may not meet
+                current requirements.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Issue every certificate from your phone"
           description="Join 1,000+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation…"
@@ -576,7 +624,7 @@ export default function ElectricalComplianceCertificatePage() {
   return (
     <GuideTemplate
       title="Electrical Compliance Certificate | What You Need"
-      description="Complete guide to electrical compliance certificates in the UK. Types of certificates (EIC, MEIWC, EICR), Part P building regulations…"
+      description="Complete guide to UK electrical compliance certificates (EIC, MEIWC, EICR), Part P building regulations, competent person schemes, and landlord requirements."
       datePublished="2025-07-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

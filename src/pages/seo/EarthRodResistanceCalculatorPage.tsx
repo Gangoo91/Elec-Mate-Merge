@@ -58,9 +58,10 @@ export default function EarthRodResistanceCalculatorPage() {
       readingTime={9}
       keyTakeaways={[
         'Earth rod resistance depends on rod length, rod diameter, and soil resistivity — soil type is the dominant factor.',
-        'For TT systems, the earth electrode resistance must be low enough that RA x IΔn ≤ 50 V, where RA is the earth electrode resistance and IΔn is the RCD rated residual operating current.',
-        'With a 30 mA RCD, the maximum permitted earth electrode resistance is 1667 ohms (50 / 0.03). With a 100 mA RCD, it is 500 ohms.',
+        'For TT systems, Ra × IΔn ≤ 50 V must be satisfied per BS 7671 Reg 411.5.3, where Ra is the sum of the earth electrode resistance and the PE conductor connecting it to the exposed-conductive-parts, and IΔn is the RCD rated residual operating current.',
+        'The maximum Zs (total earth fault loop impedance) values from BS 7671 Table 41.5 are 1,667 Ω for a 30 mA RCD and 500 Ω for a 100 mA RCD — these are loop impedance limits, not electrode resistance targets. In practice, Table 41.5 Note 2 states that electrode resistance values above 200 Ω may be unstable due to soil condition changes; aim for Ra ≤ 200 Ω for any RCD rated 100 mA or below.',
         'Parallel earth rods reduce the combined resistance — two rods spaced at least their length apart give approximately half the resistance of a single rod.',
+        'A4:2026 update (Reg 411.3.4): in domestic premises, additional protection by a ≤30 mA RCD is now mandatory for all AC final circuits supplying luminaires — relevant for any TT domestic installation design.',
         'Elec-Mate calculates earth rod resistance instantly for single and parallel rod configurations, with UK soil resistivity values built in.',
       ]}
       sections={[
@@ -170,7 +171,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 single rod, your options are to use a longer rod, install parallel rods, or choose a
                 location with lower soil resistivity. Increasing the rod diameter has very little
                 benefit. These calculations feed into the overall{' '}
-                <SEOInternalLink href="/prospective-fault-current-calculator">
+                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                   fault current assessment
                 </SEOInternalLink>{' '}
                 for the installation.
@@ -276,8 +277,10 @@ export default function EarthRodResistanceCalculatorPage() {
                 The parallel rods must all be bonded together with a copper earth conductor, and the
                 conductor must be protected against mechanical damage and corrosion. The bonding
                 connections should be accessible for future testing. Correct{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> for
-                the earthing conductor is essential. This is part of the overall{' '}
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  cable sizing
+                </SEOInternalLink>{' '}
+                for the earthing conductor is essential. This is part of the overall{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR documentation</SEOInternalLink>{' '}
                 for the installation.
               </p>
@@ -353,7 +356,7 @@ export default function EarthRodResistanceCalculatorPage() {
         {
           question: 'What earth rod resistance do I need for a TT system with a 30 mA RCD?',
           answer:
-            'BS 7671 requires that RA x IΔn ≤ 50 V, where RA is the earth electrode resistance and IΔn is the RCD rated residual operating current. For a 30 mA RCD: RA ≤ 50 / 0.03 = 1,667 ohms. In practice, most electricians aim for well below this — typically under 200 ohms — to provide a safety margin and account for seasonal variations in soil moisture that can increase resistance.',
+            'BS 7671 Reg 411.5.3 requires Ra × IΔn ≤ 50 V, where Ra is the sum of the earth electrode resistance and the PE conductor connecting it to the exposed-conductive-parts. The maximum earth fault loop impedance (Zs) values in Table 41.5 are derived from this formula: 1,667 Ω for a 30 mA RCD, 500 Ω for a 100 mA RCD — but these are total loop impedance limits, not electrode resistance targets. Table 41.5 Note 2 states that electrode resistance values above 200 Ω may not be stable due to soil condition changes. In practice, aim for Ra ≤ 200 Ω for any RCD rated 100 mA or below.',
         },
         {
           question: 'How deep should an earth rod be driven?',
@@ -368,17 +371,17 @@ export default function EarthRodResistanceCalculatorPage() {
         {
           question: 'How do I test earth rod resistance on site?',
           answer:
-            'Earth electrode resistance is tested using the fall-of-potential method with a dedicated earth electrode resistance tester. Three electrodes are used: the earth rod under test, a current electrode driven into the ground approximately 30-50 metres away, and a potential electrode driven at 62% of the distance between the other two (approximately 18-31 metres). The tester injects a test current and measures the voltage to calculate the resistance. This is documented in the IET Guidance Note 3 (GN3) and must be recorded on the electrical installation certificate.',
+            'GN3 (Clause 4.6) defines three methods for earth electrode resistance testing. E1 — fall-of-potential: the installation must be isolated and any parallel metallic paths (bonded gas/water services) disconnected before the test; two temporary spikes are driven into the ground and a four-terminal tester measures resistance using the fall-of-potential principle. Failure to disconnect parallel paths produces a falsely low reading. E2 — clamp/stakeless tester: a single clamp induces a voltage in the earth loop and measures current without the need for temporary spikes; this method requires an existing earth return path to be present. E3 — EFLI tester: measures earth fault loop impedance at the origin using a loop impedance instrument. Results must be recorded on the electrical installation certificate (EIC) or EICR.',
         },
         {
           question: 'Can I use the earthing conductor as the earth electrode?',
           answer:
-            'No. The earthing conductor connects the main earthing terminal to the earth electrode — it is not the electrode itself. The earth electrode is the metallic component in direct contact with the ground — typically a driven rod, an earth mat, a buried tape, or a foundation earth electrode. The earthing conductor must be of adequate cross-sectional area (typically 16 mm² copper for domestic installations) and protected against corrosion and mechanical damage.',
+            'No. The earthing conductor connects the main earthing terminal to the earth electrode — it is not the electrode itself. The earth electrode is the metallic component in direct contact with the ground — typically a driven rod, an earth mat, a buried tape, or a foundation earth electrode. The earthing conductor must be sized in accordance with BS 7671 Table 54.1 (per Reg 544.1.1), which sets minimum cross-sectional areas according to the degree of mechanical and corrosion protection provided. It must also be protected against corrosion and mechanical damage.',
         },
         {
           question: 'Does soil moisture affect earth rod resistance?',
           answer:
-            'Yes, significantly. Soil resistivity drops as moisture content increases. A rod installed in summer when the soil is dry may show a resistance of 200 ohms, but the same rod in winter after heavy rain may show 50 ohms. The converse is also true — a rod that passes testing in winter may exceed the required resistance in a dry summer. This is why BS 7671 recommends testing in dry conditions when possible, and why a safety margin below the maximum permitted resistance is always advisable.',
+            'Yes, significantly. Soil resistivity drops as moisture content increases. IET Guidance Note 3 (GN3 Reg 2.25) states that the earth electrode resistance test should ideally be carried out under the least-favourable ground conditions — when the soil is dry or frozen — to obtain a conservative (worst-case) result. A result obtained in wet winter conditions does not confirm compliance; the same electrode may exceed 200 Ω in a dry summer. Always test when soil conditions are at their most resistive, or apply a conservative margin if testing wet ground is unavoidable.',
         },
       ]}
       relatedPages={[
@@ -399,7 +402,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/prospective-fault-current-calculator',
+          href: '/tools/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:
             'Calculate PSCC at the origin and at each distribution board for BS 7671 compliance.',

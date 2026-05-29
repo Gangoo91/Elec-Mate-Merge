@@ -46,8 +46,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit upgrade is one of the most important electrical safety improvements you can make — replacing outdated rewirable fuses with modern MCBs, RCDs, or RCBOs that disconnect in milliseconds.',
-  'Since Amendment 4 to BS 7671 (January 2016), all new or replacement consumer units in domestic premises must be housed in a non-combustible (metal) enclosure.',
-  'AFDDs (Arc Fault Detection Devices) are recommended by BS 7671:2018+A2:2022 for final circuits supplying socket outlets up to 32A in specific locations — expect them to become more widely required.',
+  'Since Amendment 3 to BS 7671 (effective January 2016), all new or replacement consumer units in domestic premises must be housed in a non-combustible (metal) enclosure complying with BS EN 61439-3 (Regulation 421.1.201).',
+  'BS 7671:2018+A4:2026 Regulation 411.3.4 requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic premises — meaning every lighting circuit in a house must have RCD protection.',
+  'AFDDs (Arc Fault Detection Devices) are recommended by BS 7671:2018+A4:2026 Regulation 421.1.7 for AC final circuits of a fixed installation to mitigate fire risk from arc fault currents — expect them to become more widely required.',
   'A consumer unit upgrade is notifiable work under Part P of the Building Regulations — it must be carried out by a registered electrician who will issue an Electrical Installation Certificate (EIC).',
   'Elec-Mate helps electricians complete consumer unit upgrades efficiently — AI board scanner reads the existing board, the app generates the EIC, and the remedial estimator prices the job.',
 ];
@@ -61,7 +62,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit by law?',
     answer:
-      'Amendment 4 to BS 7671 (effective from January 2016) requires that all new or replacement consumer units in domestic premises must be enclosed in a non-combustible enclosure. In practice, this means a metal consumer unit. The amendment was introduced following research by the Chief Fire Officers Association that showed plastic consumer units were more likely to contribute to fire spread if an internal fault caused overheating or arcing. The requirement applies to new installations and replacements — you are not required by law to replace an existing plastic consumer unit if no other work is being done. However, if your consumer unit is being replaced for any reason (upgrading protection devices, adding circuits, or following an unsatisfactory EICR), the replacement must be a metal unit. Many electricians recommend upgrading a plastic consumer unit as part of any significant work on the installation, even if the regulations do not strictly require it, because the safety benefit is substantial.',
+      'Amendment 3 to BS 7671 (effective from January 2016) introduced the requirement, now carried forward in BS 7671:2018+A4:2026 Regulation 421.1.201, that all new or replacement consumer units in domestic premises must be enclosed in a non-combustible enclosure. In practice, this means a metal consumer unit — ferrous metal (steel) is explicitly given as an example of a non-combustible material. The unit must also comply with BS EN 61439-3. The requirement was introduced following research by the Chief Fire Officers Association that showed plastic consumer units were more likely to contribute to fire spread if an internal fault caused overheating or arcing. The requirement applies to new installations and replacements — you are not required by law to replace an existing plastic consumer unit if no other work is being done. However, if your consumer unit is being replaced for any reason (upgrading protection devices, adding circuits, or following an unsatisfactory EICR), the replacement must be a metal unit. Many electricians recommend upgrading a plastic consumer unit as part of any significant work on the installation, even if the regulations do not strictly require it, because the safety benefit is substantial.',
   },
   {
     question: 'What is the difference between an MCB, RCD, and RCBO?',
@@ -71,7 +72,7 @@ const faqs = [
   {
     question: 'What is an AFDD and do I need one?',
     answer:
-      'An AFDD (Arc Fault Detection Device) detects dangerous arcing faults — electrical sparks caused by damaged cables, loose connections, or deteriorating insulation. Arcing faults can cause fires that conventional MCBs and RCDs may not detect, because the fault current may be too low to trip the overcurrent protection but hot enough to ignite surrounding materials. BS 7671:2018+A4:2026 Section 421 recommends AFDDs for final circuits supplying socket outlets with a rated current not exceeding 32 A in specific locations including higher-risk premises (buildings with sleeping accommodation, buildings constructed with combustible materials, locations with fire risk from stored materials, and locations with irreplaceable goods). AFDDs are currently a recommendation rather than a mandatory requirement in the UK, but many electricians expect them to become mandatory in future amendments. They are already required in several European countries. If you are upgrading your consumer unit, fitting AFDDs on bedroom and living room socket circuits is a sensible precaution.',
+      'An AFDD (Arc Fault Detection Device) detects dangerous arcing faults — electrical sparks caused by damaged cables, loose connections, or deteriorating insulation. Arcing faults can cause fires that conventional MCBs and RCDs may not detect, because the fault current may be too low to trip the overcurrent protection but hot enough to ignite surrounding materials. BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs in AC final circuits of a fixed installation to mitigate the risk of fire due to the effects of arc fault currents. AFDDs are currently a recommendation (the regulation uses "recommending" rather than "shall") and are not yet a mandatory requirement in the UK, but many electricians expect them to become mandatory in future amendments. They are already required in several European countries. If you are upgrading your consumer unit, fitting AFDDs on socket and other final circuits is a sensible precaution.',
   },
   {
     question: 'Can I add more circuits to my existing consumer unit?',
@@ -86,7 +87,7 @@ const faqs = [
   {
     question: 'What is an SPD and should my consumer unit have one?',
     answer:
-      'An SPD (Surge Protection Device) protects your electrical installation and connected equipment against transient overvoltages — voltage spikes caused by lightning strikes, switching of heavy loads on the network, or faults on the electricity supply. These surges can damage sensitive electronic equipment (computers, routers, smart home devices, TVs) and can also damage the fixed installation itself. BS 7671:2018+A2:2022 (Regulation 443.4) requires a risk assessment for transient overvoltages and requires SPD protection where the consequence of an overvoltage could cause serious injury, loss of life, or disruption to public services. For domestic installations, an SPD is required where the property has a lightning protection system, or where the risk assessment indicates that the consequences of a surge warrant protection. In practice, many electricians now recommend fitting an SPD as standard during a consumer unit upgrade — the cost is modest (£40 to £80 for the device) and the protection for expensive electronics is valuable.',
+      'An SPD (Surge Protection Device) protects your electrical installation and connected equipment against transient overvoltages — voltage spikes caused by lightning strikes, switching of heavy loads on the network, or faults on the electricity supply. These surges can damage sensitive electronic equipment (computers, routers, smart home devices, TVs) and can also damage the fixed installation itself. BS 7671:2018+A4:2026 Regulation 443.4 requires SPD protection where transient overvoltage could result in serious injury or loss of life, interruption of public services or damage to cultural heritage, interruption of commercial or industrial activity, or affect a large number of co-located individuals. In all other cases a risk assessment is required to determine whether protection is needed. Importantly, Regulation 443.4 includes an exception for single dwelling units in certain situations — meaning SPD protection is not automatically mandatory for a typical domestic installation, and the risk assessment may conclude none is strictly required. In practice, however, many electricians recommend fitting a Type 2 SPD as standard during a consumer unit upgrade, as best practice to protect expensive electronics against surges. Cost: approximately £40 to £80 for the device.',
   },
 ];
 
@@ -257,10 +258,12 @@ const sections = [
     content: (
       <>
         <p>
-          Before January 2016, consumer units could be housed in plastic enclosures. Amendment 4 to{' '}
+          Before January 2016, consumer units could be housed in plastic enclosures. Amendment 3 to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
-          changed this. All new or replacement consumer units in domestic premises must now be in a
-          non-combustible enclosure — which in practice means a metal unit.
+          (effective January 2016) changed this. All new or replacement consumer units in domestic
+          premises must now be in a non-combustible enclosure — which in practice means a metal unit
+          (Regulation 421.1.201). The current edition, BS 7671:2018+A4:2026, retains and builds on
+          this requirement.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -304,10 +307,13 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 4 to{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">BS 7671</SEOInternalLink>{' '}
-          (effective from January 2016) introduced several important changes for domestic consumer
-          units. Any consumer unit upgrade must comply with these requirements:
+          The current edition,{' '}
+          <SEOInternalLink href="/guides/consumer-unit-regulations">
+            BS 7671:2018+A4:2026
+          </SEOInternalLink>
+          , consolidates the requirements for domestic consumer units introduced from Amendment 3
+          (effective January 2016) and extended by Amendment 4 (2026). Any consumer unit upgrade
+          must comply with all of the following:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -316,17 +322,29 @@ const sections = [
               <span>
                 <strong>Non-combustible enclosure (Regulation 421.1.201)</strong> — all consumer
                 units and similar switchgear in domestic premises must be enclosed in a
-                non-combustible material (typically steel). This applies to new installations and
-                replacements.
+                non-combustible material (ferrous metal such as steel meets this requirement). The
+                consumer unit must also comply with <strong>BS EN 61439-3</strong> — confirm this
+                marking when selecting the unit. Applies to new installations and replacements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection on all circuits</strong> — every circuit in a domestic
-                installation should have RCD protection with a rated residual operating current not
-                exceeding 30mA. This can be achieved with a split-load board (two RCDs protecting
-                groups of circuits) or with individual RCBOs for each circuit.
+                <strong>30mA RCD on all lighting circuits (Regulation 411.3.4) — A4:2026</strong> —
+                BS 7671:2018+A4:2026 requires that, within domestic premises, all AC final circuits
+                supplying luminaires shall have additional protection by an RCD with a rated
+                residual operating current not exceeding 30mA. This is a mandatory requirement
+                ("shall"), not a recommendation. Every lighting circuit in the property must be
+                RCD-protected.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>RCD protection on all other circuits</strong> — every circuit in a domestic
+                installation should have 30mA RCD protection. This can be achieved with a split-load
+                board (two RCDs protecting groups of circuits) or with individual RCBOs for each
+                circuit. An all-RCBO board gives the best discrimination.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -341,9 +359,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          These requirements mean that a modern consumer unit upgrade typically involves a metal
-          enclosure, RCBO or dual-RCD protection on all circuits, and verification that the cable
-          installation meets the concealed cable protection requirements.
+          These requirements mean that a modern consumer unit upgrade typically involves a BS EN
+          61439-3 compliant metal enclosure, 30mA RCD or RCBO protection on all circuits (including
+          every lighting circuit under A4:2026), and verification that the cable installation meets
+          the concealed cable protection requirements.
         </p>
       </>
     ),
@@ -367,10 +386,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   AFDDs detect dangerous arcing faults — electrical sparks caused by damaged cables,
                   loose connections, or crushed wiring. These arcing faults can start fires that
-                  normal MCBs and RCDs will not detect. BS 7671:2018+A2:2022 recommends AFDDs on
-                  socket circuits up to 32A in higher-risk locations. Currently a recommendation —
-                  expected to become mandatory in future amendments. Cost: approximately £50 to £80
-                  per device.
+                  normal MCBs and RCDs will not detect. BS 7671:2018+A4:2026 Regulation 421.1.7
+                  recommends AFDDs in AC final circuits of a fixed installation to mitigate fire
+                  risk from arc fault currents. Currently a recommendation — expected to become
+                  mandatory in future amendments. Cost: approximately £50 to £80 per device.
                 </p>
               </div>
             </div>
@@ -383,10 +402,13 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   SPDs protect against transient voltage surges from lightning, network switching,
                   or supply faults. They divert surge energy safely to earth, protecting your
-                  electrical installation and connected equipment. BS 7671 requires a risk
-                  assessment and recommends SPDs where the consequences of a surge warrant
-                  protection. A Type 2 SPD is fitted at the consumer unit. Cost: approximately £40
-                  to £80 for the device.
+                  electrical installation and connected equipment. BS 7671:2018+A4:2026 Regulation
+                  443.4 requires SPD protection in specified situations (risk to life, public
+                  services, industrial activity) and requires a risk assessment in all other cases.
+                  Regulation 443.4 includes an exception for single dwelling units in certain
+                  situations — so SPDs are not automatically mandatory for a typical domestic
+                  installation, but are strongly recommended best practice. A Type 2 SPD is fitted
+                  at the consumer unit. Cost: approximately £40 to £80 for the device.
                 </p>
               </div>
             </div>

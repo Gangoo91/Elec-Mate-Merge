@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated circuit cable for heat pump installations with automatic derating.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on longer cable runs to outdoor heat pump units.',
     icon: Zap,
@@ -203,7 +203,7 @@ const sections = [
         </div>
         <p>
           Always carry out a{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             maximum demand assessment
           </SEOInternalLink>{' '}
           during the site survey to confirm the existing supply is adequate. If the supply needs
@@ -268,7 +268,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to determine the correct cable size for the specific installation, accounting for all
@@ -610,7 +610,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the dedicated ASHP circuit with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Account for compressor starting current, cable run length, and installation
@@ -626,10 +626,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price ASHP electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Dedicated circuit, SWA, isolator, immersion, controller wiring — all itemised.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Dedicated circuit, SWA, isolator, immersion, controller wiring — all itemised.
                 </p>
               </div>
             </div>

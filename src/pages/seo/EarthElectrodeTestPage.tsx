@@ -43,7 +43,8 @@ const keyTakeaways = [
   'Earth electrode resistance testing is essential for every TT earthing system to confirm the earth path is effective and protective devices will operate within disconnection times.',
   'The fall of potential method (using two temporary test spikes) is the standard measurement technique specified in BS 7671 and GN3.',
   'For a TT system protected by a 30 mA RCD, the maximum earth electrode resistance (RA) is 1667 ohms — but in practice, values below 200 ohms are preferred for reliability.',
-  'Test spike placement matters: the current spike should be at least 30 metres from the electrode under test, with the potential spike at 62% of that distance.',
+  'Test spike placement matters: GN3 (Reg 2.26) recommends a separation of 15&ndash;25 m between test spikes, with the current spike at least ten times the electrode length from the electrode under test. The potential spike is placed at approximately 62% of the electrode-to-current-spike distance.',
+  'Regulation 643.7.3 (Chapter 64 of BS 7671:2018+A4:2026) requires measurement of the earth electrode resistance RA as part of verifying TT system compliance with Regulation 411.5 — this applies to both initial verification and periodic inspection.',
   'Elec-Mate lets you record earth electrode test results by voice while your hands stay on the instrument leads — no putting probes down to type.',
 ];
 
@@ -61,7 +62,7 @@ const faqs = [
   {
     question: 'How far apart should the test spikes be from the earth electrode?',
     answer:
-      'For the standard fall of potential method, the current spike (C) should be driven into the ground at least 30 metres from the earth electrode under test (E). The potential spike (P) is placed at 62% of the distance between E and C — so if C is 30 metres from E, P should be approximately 18.6 metres from E. This 62% rule places the potential spike in the "flat" part of the voltage gradient curve, where the reading is least affected by the resistance zones around either E or C. If space is limited, you can reduce the distances, but the accuracy of the measurement decreases. In confined sites, some testers offer a stakeless (clamp-on) method that avoids test spikes entirely — but this only works where there is a parallel earth path (such as a metallic water pipe). GN3 (Guidance Note 3: Inspection and Testing) provides detailed diagrams of spike placement for different site configurations.',
+      'GN3 (Reg 2.26) recommends a separation of 15–25 m between the two test spikes (current spike C and potential spike P). The current spike should be placed at a distance from the earth electrode of at least ten times the maximum dimension of the electrode system — so for a standard 1.2 m rod, at least 12 m; for a 3 m rod, at least 30 m. The potential spike (P) is placed at approximately 62% of the electrode-to-current-spike distance. This 62% rule places the potential spike in the "flat" part of the voltage gradient curve, where the reading is least affected by the resistance zones around either the electrode or the current spike. If space is limited, reduce distances as far as necessary and verify accuracy using the 52%/62%/72% check — if the three readings converge within 5%, the result is valid. GN3 provides detailed diagrams of spike placement for different site configurations.',
   },
   {
     question: 'Why does the earth electrode resistance change with the weather?',
@@ -145,11 +146,9 @@ const sections = [
           An earth electrode is a conductor (usually a copper-clad steel rod) driven into the ground
           to provide a connection between the electrical installation's earthing system and the
           general mass of earth. It is the foundation of the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            TT earthing system
-          </SEOInternalLink>
-          , where the electricity supplier does not provide an earth terminal and the installation
-          must create its own earth path.
+          <SEOInternalLink href="/earthing-arrangements">TT earthing system</SEOInternalLink>, where
+          the electricity supplier does not provide an earth terminal and the installation must
+          create its own earth path.
         </p>
         <p>
           TT systems are common in rural areas, overhead supply lines, older properties, and
@@ -181,8 +180,9 @@ const sections = [
               <span>
                 <strong>Initial verification of a new TT installation.</strong> Before the
                 installation is energised, the earth electrode resistance must be measured and
-                confirmed to be within acceptable limits. This is part of the test sequence in
-                Chapter 61 of BS 7671.
+                confirmed to be within acceptable limits. Regulation 643.7.3 (Chapter 64 of BS 7671)
+                requires verification of compliance with Regulation 411.5 by measurement of the
+                earth electrode resistance RA before the installation is put into service.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -367,7 +367,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>100 mA RCD:</strong> RA = 50 / 0.1 = 500 ohms maximum
+                <strong>100 mA RCD:</strong> RA must not exceed 200 ohms (Table 41.5, Reg 411.5.3 —
+                the regulatory cap for I&#916;n &le; 100 mA is 200 ohms, not the arithmetic 500
+                ohms)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -533,17 +535,30 @@ const sections = [
         <p>
           The earth electrode resistance value (RA) is recorded on the schedule of test results for
           the <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. It should be entered
-          in the "Earth electrode resistance" field in the supply characteristics section of the
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. It should be entered in
+          the "Earth electrode resistance" field in the supply characteristics section of the
           certificate.
         </p>
-        <p>When recording the result, note the following:</p>
+        <p>
+          Regulation 643.7.3 (Chapter 64 of BS 7671) requires verification of earth electrode
+          resistance as part of TT system compliance with Regulation 411.5. When recording the
+          result, note the following:
+        </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Record the value in ohms</strong> — for example, "RA = 47 ohms."
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Record the electrode type and location.</strong> GN3 (Reg 5.9) requires the
+                EICR to include the type (e.g. copper-clad rod, plate), location (e.g. "front
+                garden, 1.2 m from consumer unit"), and measured resistance or soil conditions as
+                appropriate.
               </span>
             </li>
             <li className="flex items-start gap-3">

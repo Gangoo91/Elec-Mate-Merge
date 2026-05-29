@@ -330,10 +330,17 @@ const sections = [
           for Greater Manchester areas).
         </p>
         <p>
-          Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires RCD protection with a rated
-          residual operating current not exceeding 30 mA for socket outlets with a rated current not
-          exceeding 32 A. All new rewires must comply with this requirement. The electrician must
-          issue an{' '}
+          Under BS 7671:2018+A4:2026, Reg 411.3.3 requires RCD protection for all socket outlets
+          rated ≤&nbsp;32&nbsp;A in dwellings — no risk-assessment exemption is permitted for
+          domestic premises. High-sensitivity 30&nbsp;mA RCDs satisfy the additional protection
+          requirement of Reg&nbsp;415.1. A4:2026 also introduces Reg&nbsp;411.3.4, which mandates
+          RCD additional protection (≤&nbsp;30&nbsp;mA) for AC final circuits supplying luminaires
+          in domestic premises — meaning lighting circuits in a new rewire must be individually
+          RCD-protected, not just socket circuits. Additionally, Reg&nbsp;421.1.7 recommends arc
+          fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault
+          currents. Both requirements affect consumer unit specification and cost: an RCBO board
+          with per-circuit protection is the standard solution, and AFDDs add a further cost per
+          circuit where fitted. The electrician must issue an{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -393,8 +400,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing, EIC, and Part P</strong> — initial verification testing of every
-                circuit, the Electrical Installation Certificate, and Part P notification to the
-                local authority.
+                circuit, the Electrical Installation Certificate (based on the updated
+                Appendix&nbsp;6 model forms in BS&nbsp;7671:2018+A4:2026, which include columns for
+                SPD type, AFDD presence, and reference installation method per circuit), and Part P
+                notification to the local authority.
               </span>
             </li>
           </ul>
@@ -436,8 +445,19 @@ const sections = [
         </p>
         <p>
           The DNO for Greater Manchester is Electricity North West (ENW). Supply upgrades through
-          ENW typically take 2-6 weeks to schedule. If your rewire requires a supply upgrade (common
+          ENW typically take 2–6 weeks to schedule. If your rewire requires a supply upgrade (common
           in older properties with undersized service fuses), plan this early to avoid delays.
+        </p>
+        <p>
+          Most Manchester terraced and semi-detached properties are connected via a PME (Protective
+          Multiple Earthing) supply — also known as TN-C-S — where the protective earth is derived
+          from the neutral conductor at the distribution network. Under BS&nbsp;7671:2018+A4:2026
+          Reg&nbsp;312.2.1, the electrician must identify the earthing arrangement at the outset of
+          the rewire. This is particularly relevant if you plan to add an EV charger as part of the
+          works: Section&nbsp;722 of BS&nbsp;7671 (significantly revised in A4:2026) sets out
+          specific requirements for EV charging installations on PME supplies. Identifying the
+          earthing arrangement early — before the consumer unit is specified — avoids costly
+          remedial work later.
         </p>
       </>
     ),

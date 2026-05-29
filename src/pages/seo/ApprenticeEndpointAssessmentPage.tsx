@@ -43,6 +43,7 @@ const keyTakeaways = [
   'Two awarding bodies offer EPA for electrical apprenticeships: City & Guilds (C&G) and EAL (Excellence, Achievement & Learning). Both are recognised and widely accepted by employers.',
   'Grading is either pass or distinction — there is no fail grade at EPA, as you must meet gateway requirements first (which include achieving your Level 3 qualification).',
   'If you do not achieve the grade you hoped for, re-sits are available for individual components. You do not need to retake the whole EPA if you pass some components first time.',
+  'BS 7671:2018+A4:2026 introduced two new requirements that will be tested at EPA: Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits, and Reg 411.3.4 makes RCD protection (≤30 mA) mandatory for domestic lighting circuits. Expect knowledge test questions on both.',
 ];
 
 const faqs = [
@@ -54,7 +55,7 @@ const faqs = [
   {
     question: 'When do apprentices take the EPA?',
     answer:
-      "The EPA is taken after successfully passing the gateway. The gateway typically happens towards the end of Year 3 or in Year 4, depending on your training provider and employer. Gateway requirements include: completion of the Level 3 Electrical Installation qualification (C&G 2365 or EAL equivalent), achieving the AM2 or AM2S practical assessment, 36 months minimum on-programme (unless granted an exemption), and your employer confirming you have demonstrated the required knowledge, skills, and behaviours in the workplace. Once through gateway, the EPA itself typically takes 6 to 12 weeks to complete.",
+      'The EPA is taken after successfully passing the gateway. The gateway typically happens towards the end of Year 3 or in Year 4, depending on your training provider and employer. Gateway requirements include: completion of the Level 3 Electrical Installation qualification (C&G 2365 or EAL equivalent), achieving the AM2 or AM2S practical assessment, 36 months minimum on-programme (unless granted an exemption), and your employer confirming you have demonstrated the required knowledge, skills, and behaviours in the workplace. Once through gateway, the EPA itself typically takes 6 to 12 weeks to complete.',
   },
   {
     question: 'What is the difference between City & Guilds and EAL for EPA?',
@@ -69,17 +70,17 @@ const faqs = [
   {
     question: 'What does the practical observation involve?',
     answer:
-      "The practical observation is an on-site assessment where an independent assessor observes you carrying out real electrical work. The assessor will observe and ask questions about your installation methods, use of tools and test equipment, safe isolation procedures, correct cable routing and fixing, compliance with BS 7671, and your ability to complete installation work to a professional standard. The practical observation lasts typically 4 to 6 hours. Your employer must arrange a suitable workplace activity for the assessment. You are assessed against the EPA assessment plan criteria — not a pass/fail of a specific task, but holistic observation of your competence.",
+      'The practical observation is an on-site assessment where an independent assessor observes you carrying out real electrical work. The assessor will observe and ask questions about your installation methods, use of tools and test equipment, safe isolation procedures, correct cable routing and fixing, compliance with BS 7671, and your ability to complete installation work to a professional standard. The practical observation lasts typically 4 to 6 hours. Your employer must arrange a suitable workplace activity for the assessment. You are assessed against the EPA assessment plan criteria — not a pass/fail of a specific task, but holistic observation of your competence.',
   },
   {
     question: 'What is the professional discussion and how should I prepare?',
     answer:
-      "The professional discussion is a structured conversation between you and an independent assessor, typically lasting 45 to 60 minutes. It is not an interview for a job — it is an opportunity to demonstrate your knowledge, reflect on your experiences, and show you understand the work you do and why. The assessor uses a set of structured questions aligned to the apprenticeship standard. Prepare by reviewing the key knowledge areas: BS 7671, health and safety legislation, safe isolation, circuit design principles, inspection and testing, fault diagnosis, and the limits of your own competence (knowing when to seek advice). The Elec-Mate AI tutor can help you practise answering professional discussion questions.",
+      'The professional discussion is a structured conversation between you and an independent assessor, typically lasting 45 to 60 minutes. It is not an interview for a job — it is an opportunity to demonstrate your knowledge, reflect on your experiences, and show you understand the work you do and why. The assessor uses a set of structured questions aligned to the apprenticeship standard. Prepare by reviewing the key knowledge areas: BS 7671, health and safety legislation, safe isolation, circuit design principles, inspection and testing, fault diagnosis, and the limits of your own competence (knowing when to seek advice). The Elec-Mate AI tutor can help you practise answering professional discussion questions.',
   },
   {
     question: 'What is the difference between pass and distinction at EPA?',
     answer:
-      "All EPA components are assessed against specific criteria set out in the assessment plan. A pass means you have demonstrated that you meet the required standard across all components. A distinction means you have exceeded the required standard and demonstrated exceptional knowledge, skill, and behaviour. Distinctions are awarded to a relatively small proportion of apprentices. Achieving a distinction typically requires: thorough and detailed knowledge test answers that go beyond the minimum required, demonstrating excellent installation quality and safety awareness in the practical observation, and showing particularly deep and reflective understanding in the professional discussion. A distinction does not affect your qualification certificate — both pass and distinction result in the same apprenticeship completion.",
+      'All EPA components are assessed against specific criteria set out in the assessment plan. A pass means you have demonstrated that you meet the required standard across all components. A distinction means you have exceeded the required standard and demonstrated exceptional knowledge, skill, and behaviour. Distinctions are awarded to a relatively small proportion of apprentices. Achieving a distinction typically requires: thorough and detailed knowledge test answers that go beyond the minimum required, demonstrating excellent installation quality and safety awareness in the practical observation, and showing particularly deep and reflective understanding in the professional discussion. A distinction does not affect your qualification certificate — both pass and distinction result in the same apprenticeship completion.',
   },
 ];
 
@@ -87,14 +88,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/apprentice-progression-guide',
     title: 'Career Progression After Your Apprenticeship',
-    description: 'JIB Gold Card, AM2, self-employment, HNC/HND, and salary progression after completing.',
+    description:
+      'JIB Gold Card, AM2, self-employment, HNC/HND, and salary progression after completing.',
     icon: GraduationCap,
     category: 'Guide',
   },
   {
     href: '/city-guilds-level3-guide',
     title: 'City & Guilds Level 3 Guide',
-    description: 'The 2365 qualification — units, assessment methods, and how to achieve distinction.',
+    description:
+      'The 2365 qualification — units, assessment methods, and how to achieve distinction.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -108,14 +111,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/apprentice-maths-electrician',
     title: 'Maths for Electrical Apprentices',
-    description: 'Essential electrical calculations with worked examples — preparation for knowledge test.',
+    description:
+      'Essential electrical calculations with worked examples — preparation for knowledge test.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/study-centre',
     title: 'Elec-Mate Study Centre',
-    description: 'AI tutor, flashcards, and mock exams — prepare for your EPA knowledge test and professional discussion.',
+    description:
+      'AI tutor, flashcards, and mock exams — prepare for your EPA knowledge test and professional discussion.',
     icon: Lightbulb,
     category: 'Study Tool',
   },
@@ -132,30 +137,30 @@ const sections = [
     content: (
       <>
         <p>
-          The End-Point Assessment (EPA) is the culmination of your electrical apprenticeship. It
-          is the final, independent assessment that confirms you have achieved the knowledge,
-          skills, and behaviours set out in the Level 3 Electrical Installation apprenticeship
-          standard (ST0145). Unlike the exams and assignments you complete during your training,
-          the EPA is carried out by an independent End-Point Assessment Organisation (EPAO) — not
-          your employer or college.
+          The End-Point Assessment (EPA) is the culmination of your electrical apprenticeship. It is
+          the final, independent assessment that confirms you have achieved the knowledge, skills,
+          and behaviours set out in the Level 3 Electrical Installation apprenticeship standard
+          (ST0145). Unlike the exams and assignments you complete during your training, the EPA is
+          carried out by an independent End-Point Assessment Organisation (EPAO) — not your employer
+          or college.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Independent assessment</strong> — the EPA assessor is from the EPAO (City
-                & Guilds or EAL), not your employer or college. This ensures the outcome is
-                objective and nationally consistent.
+                <strong>Independent assessment</strong> — the EPA assessor is from the EPAO (City &
+                Guilds or EAL), not your employer or college. This ensures the outcome is objective
+                and nationally consistent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Gateway first</strong> — you must pass the gateway before you can take
-                the EPA. The gateway is a formal review confirming you have met all on-programme
-                requirements: your Level 3 qualification, AM2/AM2S, and your employer's
-                confirmation you are occupationally competent.
+                <strong>Gateway first</strong> — you must pass the gateway before you can take the
+                EPA. The gateway is a formal review confirming you have met all on-programme
+                requirements: your Level 3 qualification, AM2/AM2S, and your employer's confirmation
+                you are occupationally competent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -178,9 +183,9 @@ const sections = [
         </div>
         <p>
           The EPA has been a requirement for all apprenticeships in England since the introduction
-          of apprenticeship standards (replacing the old frameworks). For electrical apprenticeships,
-          the standard was developed by the Electrotechnical Skills Partnership (TESP) in
-          collaboration with industry employers.
+          of apprenticeship standards (replacing the old frameworks). For electrical
+          apprenticeships, the standard was developed by the Electrotechnical Skills Partnership
+          (TESP) in collaboration with industry employers.
         </p>
       </>
     ),
@@ -201,8 +206,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1. Knowledge test</strong> — a multiple-choice written exam that tests
-                your theoretical knowledge across the full range of the apprenticeship standard.
+                <strong>1. Knowledge test</strong> — a multiple-choice written exam that tests your
+                theoretical knowledge across the full range of the apprenticeship standard.
                 Typically 40 to 60 questions, 90 to 120 minutes. Covers BS 7671, health and safety,
                 circuit theory, installation methods, and inspection and testing.
               </span>
@@ -220,9 +225,10 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3. Professional discussion</strong> — a structured conversation with the
-                independent assessor, typically 45 to 60 minutes. Assesses your understanding of
-                the work you do, your ability to reflect on your practice, and your professional
-                knowledge. Often linked to a portfolio of evidence compiled during the apprenticeship.
+                independent assessor, typically 45 to 60 minutes. Assesses your understanding of the
+                work you do, your ability to reflect on your practice, and your professional
+                knowledge. Often linked to a portfolio of evidence compiled during the
+                apprenticeship.
               </span>
             </li>
           </ul>
@@ -236,9 +242,9 @@ const sections = [
     content: (
       <>
         <p>
-          The knowledge test is a written exam that takes place under controlled conditions —
-          either at a test centre or, with some EPAOs, online under remote invigilation. It covers
-          the full knowledge component of the apprenticeship standard.
+          The knowledge test is a written exam that takes place under controlled conditions — either
+          at a test centre or, with some EPAOs, online under remote invigilation. It covers the full
+          knowledge component of the apprenticeship standard.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -246,8 +252,8 @@ const sections = [
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Key topics:</strong> BS 7671 (Wiring Regulations), health and safety
-                legislation (HSWA 1974, Electricity at Work Regulations 1989), circuit theory,
-                cable selection and installation, inspection and testing procedures, fault diagnosis,
+                legislation (HSWA 1974, Electricity at Work Regulations 1989), circuit theory, cable
+                selection and installation, inspection and testing procedures, fault diagnosis,
                 electrical symbols and drawings, and relevant British Standards.
               </span>
             </li>
@@ -263,12 +269,35 @@ const sections = [
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Preparation:</strong> Revise using the{' '}
-                <SEOInternalLink href="/study-centre">
-                  Elec-Mate Study Centre
-                </SEOInternalLink>{' '}
-                flashcards and mock exam tools. Focus on areas you have not covered recently —
-                the knowledge test covers the entire apprenticeship, not just the final year.
+                <SEOInternalLink href="/study-centre">Elec-Mate Study Centre</SEOInternalLink>{' '}
+                flashcards and <SEOInternalLink href="/mock-exams">mock exam tools</SEOInternalLink>
+                . Focus on areas you have not covered recently — the knowledge test covers the
+                entire apprenticeship, not just the final year.
               </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <div className="flex items-start gap-3 mb-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <strong className="text-white">
+              What&apos;s new in BS 7671:2018+A4:2026 — expect these in your EPA knowledge test
+            </strong>
+          </div>
+          <ul className="space-y-3 text-white text-sm leading-relaxed pl-8">
+            <li>
+              <strong>Reg 421.1.7 — Arc fault detection devices (AFDDs):</strong> A4:2026 introduced
+              this regulation recommending the installation of AFDDs on AC final circuits of a fixed
+              installation. The purpose is to mitigate the risk of fire due to arc fault currents.
+              Note the wording is recommendatory rather than mandatory — but assessors expect you to
+              know what an AFDD is, why it is recommended, and where it applies.
+            </li>
+            <li>
+              <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits:</strong> A4:2026
+              made this mandatory. Within domestic (household) premises, AC final circuits supplying
+              luminaires shall be provided with additional protection by an RCD with a rated
+              residual operating current not exceeding 30&nbsp;mA. Lighting circuits have
+              historically been exempt — this is a significant change and a likely exam topic.
             </li>
           </ul>
         </div>
@@ -282,27 +311,27 @@ const sections = [
       <>
         <p>
           The practical observation is the on-site element of the EPA. An independent assessor
-          spends a working day (typically 4 to 6 hours) observing you carrying out installation
-          work in a real or realistic working environment arranged by your employer.
+          spends a working day (typically 4 to 6 hours) observing you carrying out installation work
+          in a real or realistic working environment arranged by your employer.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What is observed:</strong> Safe isolation procedures, correct tool
-                selection and use, installation quality (cable routing, fixing, terminations),
-                compliance with BS 7671, correct labelling, testing procedures, and how you
-                manage your work safely and professionally.
+                <strong>What is observed:</strong> Safe isolation procedures, correct tool selection
+                and use, installation quality (cable routing, fixing, terminations), compliance with
+                BS 7671, correct labelling, testing procedures, and how you manage your work safely
+                and professionally.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Assessor questioning:</strong> The assessor may ask you questions during
-                the observation — for example, why you have chosen a particular installation
-                method or what you would do if you encountered a specific fault. Answer honestly
-                and refer to BS 7671 or relevant regulations where appropriate.
+                <strong>Assessor questioning:</strong> The assessor may ask you questions during the
+                observation — for example, why you have chosen a particular installation method or
+                what you would do if you encountered a specific fault. Answer honestly and refer to
+                BS 7671 or relevant regulations where appropriate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -310,9 +339,44 @@ const sections = [
               <span>
                 <strong>On the day:</strong> Treat it as a normal working day. Be professional,
                 follow safe working practices without being prompted, and demonstrate that safe
-                isolation and correct PPE are habits, not performances. The assessor is looking
-                for natural competence, not a rehearsed display.
+                isolation and correct PPE are habits, not performances. The assessor is looking for
+                natural competence, not a rehearsed display.
               </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+            <ClipboardCheck className="w-5 h-5 text-yellow-400 shrink-0" />
+            Inspection and Testing: what the EPA assesses
+          </h4>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            Initial verification under BS 7671 Part 6 comprises three mandatory elements:
+            inspection, testing, and certification (Reg 643.11). Assessors observe and question
+            apprentices on all three. You must demonstrate you understand why each element is
+            required — not just how to carry it out.
+          </p>
+          <ul className="space-y-2 text-white text-sm leading-relaxed list-disc list-inside pl-2">
+            <li>
+              <strong>Inspection</strong> — visual check before testing that the installation
+              complies with BS 7671 and is safe to test. Defects observed during inspection shall be
+              corrected before testing begins (GN3 2.5).
+            </li>
+            <li>
+              <strong>Testing</strong> — continuity, insulation resistance, polarity, earth fault
+              loop impedance, RCD operation, and functional testing per Part 6.
+            </li>
+            <li>
+              <strong>Certification</strong> — on completion of verification, an Electrical
+              Installation Certificate (EIC) is issued for new work; an Electrical Installation
+              Condition Report (EICR) is used for periodic inspection of existing installations (Reg
+              641.7 &amp; 643.11).
+            </li>
+            <li>
+              <strong>Circuit division (Reg 314.1)</strong> — every installation shall be divided
+              into circuits as necessary to facilitate safe inspection, testing, and maintenance,
+              and to limit the effect of a fault. Understanding this principle underpins both safe
+              I&amp;T practice and professional discussion answers.
             </li>
           </ul>
         </div>
@@ -335,8 +399,8 @@ const sections = [
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Structure:</strong> The assessor asks structured questions covering
-                knowledge, skills, and behaviours from the apprenticeship standard. Questions
-                will often start with scenarios: "Tell me about a time when..." or "How would you
+                knowledge, skills, and behaviours from the apprenticeship standard. Questions will
+                often start with scenarios: "Tell me about a time when..." or "How would you
                 approach...". Duration is typically 45 to 60 minutes.
               </span>
             </li>
@@ -344,22 +408,19 @@ const sections = [
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Portfolio evidence:</strong> You may be asked to refer to specific examples
-                from your portfolio — installation photos, test results, risk assessments, or
-                method statements you have completed. Review your portfolio before the discussion
-                so you can speak confidently about each piece of evidence.
+                from your portfolio — installation photos, test results, risk assessments, or method
+                statements you have completed. Review your portfolio before the discussion so you
+                can speak confidently about each piece of evidence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key areas:</strong> Safe working practices, BS 7671 requirements,
-                inspection and testing, fault diagnosis methodology, working with other trades
-                and customers, professional ethics, and continuous professional development. Use
-                the{' '}
-                <SEOInternalLink href="/study-centre">
-                  Elec-Mate AI tutor
-                </SEOInternalLink>{' '}
-                to practise answering professional discussion questions out loud.
+                <strong>Key areas:</strong> Safe working practices, BS 7671 requirements, inspection
+                and testing, fault diagnosis methodology, working with other trades and customers,
+                professional ethics, and continuous professional development. Use the{' '}
+                <SEOInternalLink href="/study-centre">Elec-Mate AI tutor</SEOInternalLink> to
+                practise answering professional discussion questions out loud.
               </span>
             </li>
           </ul>
@@ -385,27 +446,33 @@ const sections = [
                 <strong>City & Guilds</strong> — the UK's largest vocational awarding organisation.
                 C&G has delivered electrical qualifications for over a century and is the dominant
                 provider in electrical apprenticeships. The C&G 2365 Level 3 is the standard
-                on-programme qualification. C&G's EPA is widely recognised and accepted by
-                employers across the UK.
+                on-programme qualification. C&G's EPA is widely recognised and accepted by employers
+                across the UK. See the{' '}
+                <SEOInternalLink href="/city-guilds-level3-guide">
+                  City &amp; Guilds Level 3 guide
+                </SEOInternalLink>{' '}
+                for full detail on the 2365 qualification structure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EAL (Excellence, Achievement & Learning)</strong> — a specialist
+                <strong>EAL (Excellence, Achievement &amp; Learning)</strong> — a specialist
                 technical awarding organisation originally focused on engineering and manufacturing.
                 EAL has a growing electrical portfolio and is an approved EPAO for the Level 3
                 Electrical Installation apprenticeship. EAL is accepted by JIB for ECS card
-                applications in the same way as C&G.
+                applications in the same way as C&G. The{' '}
+                <SEOInternalLink href="/eal-level-3-guide">EAL Level 3 guide</SEOInternalLink>{' '}
+                covers qualification structure and how it compares to C&G.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Does it matter?</strong> For most purposes, no. Both lead to the same
-                apprenticeship certificate and both are accepted for JIB ECS Gold Card
-                applications. If you have a preference, discuss it with your employer or training
-                provider before they register you with an EPAO.
+                apprenticeship certificate and both are accepted for JIB ECS Gold Card applications.
+                If you have a preference, discuss it with your employer or training provider before
+                they register you with an EPAO.
               </span>
             </li>
           </ul>
@@ -428,19 +495,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Gateway requirements:</strong> Completion of Level 3 Electrical
-                Installation qualification (C&G 2365 or EAL equivalent), achievement of AM2 or
-                AM2S practical assessment, minimum 36 months on-programme (unless given exemption),
-                employer sign-off confirming occupational competence, and English and maths at
-                Level 2 (GCSE grade 4 or equivalent) if not already held on entry.
+                <strong>Gateway requirements:</strong> Completion of Level 3 Electrical Installation
+                qualification (C&G 2365 or EAL equivalent), achievement of AM2 or AM2S practical
+                assessment, minimum 36 months on-programme (unless given exemption), employer
+                sign-off confirming occupational competence, and English and maths at Level 2 (GCSE
+                grade 4 or equivalent) if not already held on entry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical timing:</strong> Most electrical apprentices reach gateway in Year
-                3 or Year 4, depending on how quickly they progress through on-programme learning.
-                The EPA itself typically completes within 6 to 12 weeks of passing the gateway.
+                <strong>Typical timing:</strong> Most electrical apprentices reach gateway in Year 3
+                or Year 4, depending on how quickly they progress through on-programme learning. The
+                EPA itself typically completes within 6 to 12 weeks of passing the gateway.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,8 +516,8 @@ const sections = [
                 <strong>AM2 and AM2S:</strong> The AM2 (Achievement Measurement 2) is a practical
                 competency assessment set by JTL and SJIB/SELECT. The AM2S is an equivalent
                 assessment. Both assess your practical installation skills in a simulated working
-                environment. Passing the AM2 or AM2S is a gateway requirement — it is separate
-                from the EPA practical observation.
+                environment. Passing the AM2 or AM2S is a gateway requirement — it is separate from
+                the EPA practical observation.
               </span>
             </li>
           </ul>
@@ -464,9 +531,9 @@ const sections = [
     content: (
       <>
         <p>
-          The EPA is graded as pass or distinction. There is no fail grade at the EPA stage —
-          the gateway process is designed to ensure you only enter the EPA when you are ready.
-          However, individual components can result in 'not yet competent' which requires a re-sit.
+          The EPA is graded as pass or distinction. There is no fail grade at the EPA stage — the
+          gateway process is designed to ensure you only enter the EPA when you are ready. However,
+          individual components can result in 'not yet competent' which requires a re-sit.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -474,8 +541,8 @@ const sections = [
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pass</strong> — demonstrates you have met the required standard across all
-                three EPA components. This is the standard outcome and confirms your competence as
-                a qualified electrician. Employers treat pass and distinction holders the same for
+                three EPA components. This is the standard outcome and confirms your competence as a
+                qualified electrician. Employers treat pass and distinction holders the same for
                 most practical purposes.
               </span>
             </li>
@@ -483,8 +550,8 @@ const sections = [
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Distinction</strong> — demonstrates you have exceeded the required standard
-                and shown exceptional knowledge, skill, and professional behaviour. Distinctions
-                are awarded to a minority of apprentices. The specific distinction criteria are
+                and shown exceptional knowledge, skill, and professional behaviour. Distinctions are
+                awarded to a minority of apprentices. The specific distinction criteria are
                 published in the EPA assessment plan — review these when preparing.
               </span>
             </li>
@@ -492,9 +559,8 @@ const sections = [
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Component grades:</strong> Some EPAOs grade individual components and
-                combine them into the final grade. Others make a holistic judgement across all
-                three components. Check your EPAO's assessment plan for the exact grading
-                methodology.
+                combine them into the final grade. Others make a holistic judgement across all three
+                components. Check your EPAO's assessment plan for the exact grading methodology.
               </span>
             </li>
           </ul>
@@ -516,27 +582,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Component-specific re-sits:</strong> You only re-sit the component(s)
-                that were not achieved — you do not repeat the entire EPA. For example, if you
-                passed the knowledge test and practical observation but the professional discussion
-                requires re-sit, you only re-sit the professional discussion.
+                <strong>Component-specific re-sits:</strong> You only re-sit the component(s) that
+                were not achieved — you do not repeat the entire EPA. For example, if you passed the
+                knowledge test and practical observation but the professional discussion requires
+                re-sit, you only re-sit the professional discussion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Waiting period:</strong> EPAOs typically require a minimum waiting period
-                of six to eight weeks before a re-sit. This gives you time to address any gaps
+                <strong>Waiting period:</strong> EPAOs typically require a minimum waiting period of
+                six to eight weeks before a re-sit. This gives you time to address any gaps
                 identified in the assessor's feedback.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use assessor feedback:</strong> After any component result, ask for
-                detailed feedback from the assessor and your EPAO. Understand exactly what the
-                shortfall was before re-sitting. Targeted preparation based on specific feedback
-                is far more effective than general revision.
+                <strong>Use assessor feedback:</strong> After any component result, ask for detailed
+                feedback from the assessor and your EPAO. Understand exactly what the shortfall was
+                before re-sitting. Targeted preparation based on specific feedback is far more
+                effective than general revision.
               </span>
             </li>
           </ul>
@@ -563,10 +629,8 @@ const sections = [
                   Download the EPA assessment plan from your EPAO's website. It tells you exactly
                   what knowledge, skills, and behaviours are assessed and what distinction looks
                   like. Treat it as a checklist and use the{' '}
-                  <SEOInternalLink href="/study-centre">
-                    Elec-Mate Study Centre
-                  </SEOInternalLink>{' '}
-                  to address any gaps.
+                  <SEOInternalLink href="/study-centre">Elec-Mate Study Centre</SEOInternalLink> to
+                  address any gaps.
                 </p>
               </div>
             </div>
@@ -578,12 +642,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Practise Professional Discussion</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Ask your mentor, college tutor, or the{' '}
-                  <SEOInternalLink href="/study-centre">
-                    Elec-Mate AI tutor
-                  </SEOInternalLink>{' '}
-                  to run mock professional discussion sessions with you. Speaking your answers out
-                  loud is very different from writing them — practise until you can explain your
-                  work confidently and fluently.
+                  <SEOInternalLink href="/study-centre">Elec-Mate AI tutor</SEOInternalLink> to run
+                  mock professional discussion sessions with you. Speaking your answers out loud is
+                  very different from writing them — practise until you can explain your work
+                  confidently and fluently.
                 </p>
               </div>
             </div>

@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Whitehaven Georgian properties, rural TT-earthed systems, and coastal installations.',
@@ -277,9 +277,12 @@ const sections = [
                 stone or brick walls (no cavity), high ceilings, and original internal features.
                 Rewiring requires careful planning to avoid damage to plasterwork and cornicing.
                 Surface-mounted trunking in mini-trunking is the standard approach where walls
-                cannot be chased. Always survey period properties in person before quoting — the
-                visual inspection frequently reveals complications that are not apparent from the
-                outside.
+                cannot be chased. Reg 421.1.7 (A4:2026) recommends arc fault detection devices
+                (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents — solid
+                masonry buildings with concealed or surface wiring are exactly the higher-risk
+                scenario the regulation is designed for. Always survey period properties in person
+                before quoting — the visual inspection frequently reveals complications that are not
+                apparent from the outside.
               </span>
             </li>
           </ul>
@@ -304,7 +307,10 @@ const sections = [
                 <strong>New connections and upgrades</strong> — managed through ENW's connections
                 portal. Supply capacity upgrades are commonly needed for EV charger installations in
                 older town centre properties with 60A or 80A supplies that may already be
-                substantially loaded.
+                substantially loaded. Under Reg 722.311.201, dynamic load management (automatic or
+                manual load curtailment) may be taken into account when determining maximum demand —
+                potentially avoiding a costly supply upgrade where a smart charging scheme can be
+                demonstrated.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -322,9 +328,9 @@ const sections = [
                 <strong>Earthing arrangements</strong> — town centre properties are predominantly
                 TN-C-S (PME). Rural and coastal properties to the south and east of Whitehaven are
                 more likely to have TT earthing via overhead lines. Verify the earthing arrangement
-                at the intake before designing work, particularly for EV chargers where PME earthing
-                requires a supplementary earth electrode if protective equipotential bonding cannot
-                be established.
+                at the intake before designing work. For EV charger circuits on TN systems, Reg
+                722.312.2.1 prohibits including a PEN conductor in the EV charging circuit — the
+                circuit must be taken downstream of the PEN split with separate PE and N conductors.
               </span>
             </li>
           </ul>
@@ -364,8 +370,13 @@ const sections = [
               Post-war council and private housing in areas such as Woodhouse and Hensingham has
               1960s–1980s wiring that is reaching the end of its service life. Single-RCD or no-RCD
               consumer units, limited socket provision, and outdated wiring insulation make periodic
-              inspection findings and consumer unit replacements common. Many properties also need
-              socket and lighting circuit extensions for modern living.
+              inspection findings and consumer unit replacements common. Reg 411.3.4 now requires
+              RCD additional protection (≤30 mA) on all AC final circuits supplying luminaires in
+              domestic premises — a key upgrade driver in these properties. Replacement consumer
+              units should also include a Reg 443.4 consequence-based SPD assessment; overhead-line
+              properties with elevated transient overvoltage exposure may require surge protection
+              devices. Many properties also need socket and lighting circuit extensions for modern
+              living.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -493,7 +504,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for rewires in Georgian townhouses where surface-mounted trunking routes create

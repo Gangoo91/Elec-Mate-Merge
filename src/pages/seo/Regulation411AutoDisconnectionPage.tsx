@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Calculate R1+R2 values and verify Zs for your circuits automatically.',
     icon: Calculator,
@@ -444,10 +444,10 @@ const sections = [
         </div>
         <p>
           When carrying out an{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, always
-          confirm the earthing system type and measure Ze before assessing individual circuits. The
-          earthing system determines whether ADS by overcurrent device alone is feasible or whether
-          RCD protection is essential.
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, always confirm the
+          earthing system type and measure Ze before assessing individual circuits. The earthing
+          system determines whether ADS by overcurrent device alone is feasible or whether RCD
+          protection is essential.
         </p>
       </>
     ),
@@ -656,11 +656,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          On an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,
-          a circuit that fails ADS is typically coded C2 (potentially dangerous) — the protective
-          measure is impaired and may not operate in the event of a fault. If the touch voltage
-          exceeds 50V AC and disconnection will not occur, a C1 code (danger present) may be
-          appropriate.
+          On an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, a circuit
+          that fails ADS is typically coded C2 (potentially dangerous) — the protective measure is
+          impaired and may not operate in the event of a fault. If the touch voltage exceeds 50V AC
+          and disconnection will not occur, a C1 code (danger present) may be appropriate.
         </p>
       </>
     ),

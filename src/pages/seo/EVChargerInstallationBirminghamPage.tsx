@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -271,21 +271,24 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Section 722:
+          Section 722, alongside the IET Code of Practice for Electric Vehicle Charging Equipment
+          Installation. GN3 and the On-Site Guide both direct installers to the Code of Practice as
+          the primary companion document for selection, installation and inspection of EV charging
+          equipment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each charger requires
-                a dedicated circuit from the consumer unit.
+                <strong>Dedicated circuit (Section 722)</strong> — each charger requires a dedicated
+                circuit from the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD type
+                <strong>RCD protection (Regulation 722.531.3)</strong> — appropriate RCD type
                 required. Type B RCD or Type A with integrated DC fault detection (6mA DC RDC-DD).
               </span>
             </li>
@@ -293,14 +296,30 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing (Regulation 722.411.4.1)</strong> — additional earthing measures on
-                PME supplies for outdoor charging points.
+                PME supplies for outdoor charging points. A4:2026 amended this regulation — see PME
+                section below.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Isolation and switching</strong> — Section 722 includes specific isolation
+                and switching requirements that modify the general rules in Part 4.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>External influences and IP rating</strong> — outdoor Birmingham
+                installations must address external influences under Section 722, which modifies
+                general requirements for socket-outlets, connectors and equipment siting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to size correctly for the cable run distance and installation method.
@@ -338,6 +357,17 @@ const sections = [
               suitable for earth rod installation.
             </p>
           </div>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">
+            BS 7671:2018+A4:2026 Update — Regulation 722.411.4.1
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            A4:2026 amended Regulation 722.411.4.1 by adding indent (iv), which introduces an
+            additional alternative solution for outdoor EV charging on PME supplies. Indent (a) of
+            the previous version was also deleted. Always apply the current A4:2026 text — earlier
+            guides referencing A1:2020 will not reflect these changes.
+          </p>
         </div>
       </>
     ),
@@ -425,10 +455,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Pricing Birmingham Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build accurate itemised quotes. Factor in cable run distance, board upgrade
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build accurate itemised quotes. Factor in cable run distance, board upgrade
                   likelihood, and earth rod requirements.
                 </p>
               </div>
@@ -441,9 +469,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
-                  on your phone after installation and testing. NGED notification, Part P building
-                  control, and professional PDF certificate — all from site.
+                  <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> on your
+                  phone after installation and testing. NGED notification, Part P building control,
+                  and professional PDF certificate — all from site.
                 </p>
               </div>
             </div>
@@ -466,7 +494,7 @@ const sections = [
 export default function EVChargerInstallationBirminghamPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Birmingham 2026 | Costs, DNO, and"
+      title="EV Charger Installation Birmingham 2026 | Costs, DNO Notification and Grants"
       description="How much does EV charger installation cost in Birmingham in 2026? Local costs, NGED DNO notification, Clean Air Zone impact, property challenges…"
       datePublished="2026-03-27"
       dateModified="2026-05-18"

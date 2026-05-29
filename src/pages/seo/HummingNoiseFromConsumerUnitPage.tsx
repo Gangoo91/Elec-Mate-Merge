@@ -320,11 +320,11 @@ const sections = [
           The cables heat up, potentially affecting the insulation.
         </p>
         <p>
-          Regulation 826.1.4 of BS 7671 requires that overload and short-circuit currents must be
-          determined at every point where protection is installed, for every configuration of the
-          installation, to ensure correct protective device selection. If circuits have been added
-          or loads increased since the original installation, the protective devices may no longer
-          be correctly rated for the actual load.
+          BS 7671 requires that overload and short-circuit currents are determined at every point
+          where a protective device is installed, covering all possible configurations of the
+          installation, to ensure correct device selection (Reg 826.1.2.1). If circuits have been
+          added or loads increased since the original installation, the protective devices may no
+          longer be correctly rated for the actual load.
         </p>
         <p>Common signs of an overloaded circuit include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -379,18 +379,22 @@ const sections = [
     content: (
       <>
         <p>
-          Heat is the enemy of electrical connections. Regulation 133.2 of BS 7671 requires that
-          conductor cross-sectional area is determined considering maximum permissible temperature,
-          particularly when cables pass through thermal insulation where heat dissipation is
-          reduced. The same principle applies inside the consumer unit — heat must be able to
+          Heat is the enemy of electrical connections. BS 7671 requires that cable current-carrying
+          capacity is assessed accounting for ambient temperature and installation conditions,
+          including where cables are enclosed or grouped in ways that restrict heat dissipation
+          (Section 523). The same principle applies inside the consumer unit — heat must be able to
           dissipate from the devices and connections.
         </p>
         <p>
-          Modern consumer units are required to be metal-enclosed (since January 2016 under
-          Amendment 4 to BS 7671). The metal enclosure provides fire containment — if a fault causes
-          overheating inside the consumer unit, the metal box prevents the fire from spreading to
-          the surrounding building fabric. Older plastic consumer units do not provide this
-          protection and are one of the reasons why consumer unit upgrades are recommended.
+          Modern consumer units are required to have their enclosure manufactured from
+          non-combustible material — or be enclosed in a cabinet of non-combustible material — in
+          domestic premises (Reg 421.1.201, BS 7671:2018). Steel is the most common example. This
+          requirement has been in effect since the 2015 amendments to BS 7671 (effective January
+          2016) and pre-dates the current A4:2026 edition. The non-combustible enclosure provides
+          fire containment — if a fault causes overheating inside the consumer unit, the metal box
+          prevents fire from spreading to the surrounding building fabric. Older plastic consumer
+          units do not provide this protection and are one of the reasons why consumer unit upgrades
+          are recommended.
         </p>
         <p>Signs of thermal effects in a consumer unit include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -528,8 +532,8 @@ const sections = [
         <p>
           The electrician will carry out a visual inspection with the cover removed, tightness
           checks on all connections, thermal imaging (if available) to identify hot spots, and may
-          recommend a full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
-          if the consumer unit shows signs of ageing or the installation has not been inspected
+          recommend a full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> if
+          the consumer unit shows signs of ageing or the installation has not been inspected
           recently. If the consumer unit is an older plastic type, the electrician may recommend an
           upgrade to a modern metal-enclosed unit with RCBO protection.
         </p>
@@ -606,6 +610,38 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  5. A4:2026 Compliance When Recommending an Upgrade
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Where investigation reveals that a consumer unit replacement is warranted, any new
+                  unit must comply with BS 7671:2018+A4:2026. Two A4:2026 requirements are
+                  particularly relevant:
+                </p>
+                <ul className="mt-2 space-y-1 text-white text-sm leading-relaxed list-disc list-inside">
+                  <li>
+                    <strong>Reg 421.1.7 — AFDD recommendation:</strong> BS 7671 now recommends
+                    installation of arc fault detection devices (AFDDs) on AC final circuits of a
+                    fixed installation to mitigate the risk of fire due to arc fault currents. When
+                    specifying a replacement consumer unit, discuss AFDD provision with the
+                    customer.
+                  </li>
+                  <li>
+                    <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits:</strong>{' '}
+                    Within domestic premises, additional protection by an RCD with a rated residual
+                    operating current not exceeding 30&nbsp;mA shall be provided for AC final
+                    circuits supplying luminaires. A replacement consumer unit must include this
+                    protection — typically via RCBOs or a split-load arrangement covering the
+                    lighting circuits.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         <SEOAppBridge
           title="Document consumer unit inspections on your phone"
@@ -627,7 +663,7 @@ export default function HummingNoiseFromConsumerUnitPage() {
       title="Humming Noise From Consumer Unit | What It Means"
       description="Why is your consumer unit humming? Learn the difference between normal MCB buzz and dangerous loose connections, what thermal effects look like…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

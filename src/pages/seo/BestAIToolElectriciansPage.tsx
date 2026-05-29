@@ -112,7 +112,13 @@ export default function BestAIToolElectriciansPage() {
                 <strong>Elec-Mate AI</strong> — 8 specialist AI agents and 12 AI-powered tools built
                 exclusively for UK electricians. Trained on BS 7671:2018+A4:2026, GN3, On-Site
                 Guide, and real UK trade pricing data. Integrated with certificates, calculators,
-                and business tools. From £5.99/month.
+                and business tools. Includes a dedicated{' '}
+                <SEOInternalLink href="/tools/ai-circuit-designer">
+                  AI Circuit Designer
+                </SEOInternalLink>{' '}
+                and{' '}
+                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.{' '}
+                From £5.99/month.
               </p>
               <p>
                 <strong>ChatGPT (OpenAI)</strong> — The world's most popular general-purpose AI
@@ -149,10 +155,11 @@ export default function BestAIToolElectriciansPage() {
                 ChatGPT and Gemini have general awareness of electrical concepts from their web
                 training data, but they frequently produce regulation numbers that do not exist,
                 confuse different editions of BS 7671, and lack knowledge of Amendment 4 (A4:2026)
-                which added Regulation 530.3.2 for bidirectional devices. When asked specific
-                questions about Zs limits, cable grouping factors, or disconnection times, they
-                often hallucinate values that are close but incorrect — the most dangerous kind of
-                error.
+                which added Regulation 530.3.201 — requiring the installer to determine which
+                directional characteristic (unidirectional or bidirectional) is appropriate when
+                selecting protective devices. When asked specific questions about Zs limits, cable
+                grouping factors, or disconnection times, they often hallucinate values that are
+                close but incorrect — the most dangerous kind of error.
               </p>
               <p>
                 Elec-Mate AI is trained on the complete BS 7671:2018+A4:2026 standard, GN3 (Guidance
@@ -161,6 +168,31 @@ export default function BestAIToolElectriciansPage() {
                 against the source material. It also integrates with over 70 BS 7671 calculators, so
                 you can verify AI suggestions with actual calculations.
               </p>
+              <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 mt-4">
+                <p className="text-sm font-semibold text-yellow-400 mb-2">
+                  What BS 7671 A4:2026 actually added — and why ChatGPT cannot answer these
+                </p>
+                <ul className="text-sm space-y-2 text-foreground/90">
+                  <li>
+                    <strong>Reg 411.3.4</strong> — AC final circuits supplying luminaires in
+                    domestic premises must now have additional protection by a 30 mA RCD. Ask
+                    ChatGPT whether your new lighting circuit needs RCD protection under A4:2026 and
+                    it will not give a reliable answer.
+                  </li>
+                  <li>
+                    <strong>Reg 421.1.7</strong> — Arc fault detection devices (AFDDs) are now
+                    recommended on AC final circuits of a fixed installation to mitigate fire risk.
+                    General AI tools conflate recommendation with requirement and frequently
+                    misattribute which edition introduced this.
+                  </li>
+                  <li>
+                    <strong>Reg 722.311.201</strong> — For EV charging installations, load
+                    curtailment (automatic or manual load reduction or disconnection) may be taken
+                    into account when determining maximum demand. Sizing an EV charger installation
+                    correctly depends on knowing this rule exists.
+                  </li>
+                </ul>
+              </div>
             </>
           ),
         },
@@ -186,7 +218,12 @@ export default function BestAIToolElectriciansPage() {
             The practical approach: use ChatGPT or Gemini for general tasks, and use Elec-Mate AI
             for anything related to your electrical work. At £5.99 per month, Elec-Mate costs less
             than either ChatGPT Plus or Gemini Advanced — and includes everything else an
-            electrician needs: certificates, calculators, training, and business tools.
+            electrician needs: certificates, calculators, training, and business tools. If costing
+            and quoting is your priority, see our{' '}
+            <SEOInternalLink href="/compare/best-quoting-app-electricians">
+              best quoting app comparison
+            </SEOInternalLink>
+            .
           </p>
         </>
       }
@@ -243,7 +280,7 @@ export default function BestAIToolElectriciansPage() {
         {
           question: 'Does Elec-Mate AI know about BS 7671 Amendment 4?',
           answer:
-            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment which added Regulation 530.3.2 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 4, as their training data may not include this recent update issued in July 2024.',
+            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment which added Regulation 530.3.201 — requiring the installer to determine which directional characteristic (unidirectional or bidirectional) is appropriate when selecting protective devices. ChatGPT and Gemini have limited or no knowledge of Amendment 4 (edition label: BS 7671:2018+A4:2026), as their training data may not include this update.',
         },
         {
           question: 'How does the AI Cost Engineer work?',

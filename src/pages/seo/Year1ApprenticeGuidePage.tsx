@@ -41,6 +41,8 @@ const keyTakeaways = [
   'Your employer expects you to be punctual, willing to learn, ask questions, follow instructions, maintain a tidy workspace, and develop good safety habits from day one. They do not expect you to know everything — that is what the apprenticeship is for.',
   'Invest in a quality basic tool kit from the start: VDE screwdrivers, side cutters, long-nose pliers, cable strippers, a tape measure, a spirit level, and a sharp knife. Buy good tools that will last — cheap tools make the job harder and less safe.',
   'Elec-Mate is your companion from day 1. Level 2 courses cover exactly what you learn in year 1. Flashcards build core knowledge. The site diary records daily learning. The OJT tracker ensures compliance. The electrical symbols guide and mental health hub support you through the tough days.',
+  'A4:2026 update relevant from day one: BS 7671 Regulation 411.3.4 now requires all domestic lighting circuits (AC final circuits supplying luminaires) to have 30 mA RCD additional protection — not just socket and ring circuits. You will see this on every domestic consumer unit you work on.',
+  'BS 7671 Part 6 (Regulation 643.1) requires that a mandatory pre-energisation test sequence be carried out — in order — before any new installation is energised. Testing before switching on is a legal and regulatory requirement, not just best practice.',
 ];
 
 const faqs = [
@@ -77,7 +79,7 @@ const faqs = [
   {
     question: 'Will I be expected to work on live circuits in year 1?',
     answer:
-      'No. As a first-year apprentice, you should not be working on or near live electrical circuits. All work should be carried out on isolated (dead) circuits, and you will learn the safe isolation procedure early in your training. BS 7671 Regulation 132.15 states that "live working is not permitted unless it is unreasonable in all circumstances for the conductor to be made dead." In practice, this means virtually all installation work is done on dead circuits. You will observe and learn the safe isolation procedure — the prove-test-prove method using a voltage indicator and proving unit — and this will become one of the most important skills you develop. Your employer has a legal duty to ensure your safety, and no responsible employer would ask a first-year apprentice to work on live circuits. If you are ever asked to do so, refuse and report it to your training provider.',
+      'No. As a first-year apprentice, you should not be working on or near live electrical circuits. All work should be carried out on isolated (dead) circuits, and you will learn the safe isolation procedure early in your training. The Electricity at Work Regulations 1989, Regulation 14(a) permits work on or near live conductors only where "it is unreasonable in all the circumstances for it to be dead" — an exception that essentially never applies to routine installation work. BS 7671 Regulation 132.15.201 reinforces this by requiring that effective means of isolation be provided so that all voltage can be cut off from every circuit before work is carried out. In practice, this means virtually all installation work is done on dead circuits. You will observe and learn the safe isolation procedure — the prove-test-prove method using a voltage indicator and proving unit — and this will become one of the most important skills you develop. Your employer has a legal duty to ensure your safety, and no responsible employer would ask a first-year apprentice to work on live circuits. If you are ever asked to do so, refuse and report it to your training provider.',
   },
 ];
 
@@ -133,11 +135,14 @@ const sections = [
     content: (
       <>
         <p>
-          A typical week in year 1 of an electrical apprenticeship follows a predictable pattern:
-          four days with your employer on site and one day at college with your training provider.
-          Some training providers use a day-release model (one day per week), while others use
-          block-release (full weeks at college several times per year). Day release is more common
-          for electrical apprenticeships.
+          A typical week in year 1 of an{' '}
+          <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
+            electrical apprenticeship
+          </SEOInternalLink>{' '}
+          follows a predictable pattern: four days with your employer on site and one day at college
+          with your training provider. Some training providers use a day-release model (one day per
+          week), while others use block-release (full weeks at college several times per year). Day
+          release is more common for electrical apprenticeships.
         </p>
         <p>
           <strong>Employer days (4 days per week):</strong> You arrive on site (or at the workshop)
@@ -217,13 +222,24 @@ const sections = [
           to end. Insulation resistance testing — checking that insulation between conductors is
           intact. Polarity — confirming that line and neutral are correctly connected. You will not
           be carrying out independent testing in year 1, but you will observe and assist with
-          testing procedures.
+          testing procedures. BS 7671 Part 6, Regulation 643.1 prescribes a mandatory sequence: the
+          tests of Regulations 643.2 to 643.6 (covering continuity, insulation resistance, polarity,
+          earth electrode resistance, and earth fault loop impedance) shall be carried out in that
+          order before the installation is energised. Learning this sequence early — and
+          understanding <em>why</em> it is done before power is applied — is one of the most
+          important foundations of safe electrical work. Earth fault loop impedance (Zs and{' '}
+          <SEOInternalLink href="/guides/ze-values-uk">Ze values</SEOInternalLink>) is one of the
+          key concepts you will encounter when this testing is explained on site and at college.
         </p>
         <p>
           <strong>Introduction to BS 7671:</strong> The structure of the Wiring Regulations. Key
           concepts — protection against electric shock, overcurrent protection, earthing. You will
           not need to know BS 7671 in depth in year 1, but you begin building familiarity with the
-          document that governs every aspect of electrical installation work.
+          document that governs every aspect of electrical installation work. One A4:2026 change you
+          will see on every domestic job from the start: BS 7671 Regulation 411.3.4 now requires
+          that all AC final circuits supplying luminaires in domestic premises shall be protected by
+          an RCD with a rated residual operating current not exceeding 30 mA — so lighting circuits
+          must have 30 mA RCD protection, not just ring finals and socket circuits.
         </p>
         <SEOAppBridge
           title="Level 2 Courses — Everything You Learn in Year 1"

@@ -230,8 +230,8 @@ export default function CashFlowPlannerPage() {
                 business analytics dashboard
               </SEOInternalLink>{' '}
               to track profitability alongside cash position, and use the{' '}
-              <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
-              to reduce debtor days with automatic payment reminders.
+              <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> to
+              reduce debtor days with automatic payment reminders.
             </p>
           </div>
         </div>
@@ -425,7 +425,6 @@ export default function CashFlowPlannerPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Hand-curated where slug-token matching couldn't surface peers. */}
@@ -433,14 +432,30 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/tools/expenses-manager-electrician">Expenses Manager for Electricians</SEOInternalLink>
-            <SEOInternalLink href="/tools/vat-scheme-comparison">VAT Scheme Comparison</SEOInternalLink>
-            <SEOInternalLink href="/job-profitability-calculator">Job Profitability Calculator</SEOInternalLink>
-            <SEOInternalLink href="/tools/tax-ni-estimator">Tax & NI Estimator for Electricians</SEOInternalLink>
-            <SEOInternalLink href="/tools/pricing-strategy-electrician">Pricing Strategy for Electricians</SEOInternalLink>
-            <SEOInternalLink href="/guides/cash-flow-management-electricians">Cash Flow Management for Electricians UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/tools/business-cost-calculator">Business Cost Calculator</SEOInternalLink>
-            <SEOInternalLink href="/tools/business-analytics-electrician">Business Analytics for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/tools/expenses-manager-electrician">
+              Expenses Manager for Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/vat-scheme-comparison">
+              VAT Scheme Comparison
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/job-profitability-calculator">
+              Job Profitability Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/tax-ni-estimator">
+              Tax & NI Estimator for Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/pricing-strategy-electrician">
+              Pricing Strategy for Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/cash-flow-management-electricians">
+              Cash Flow Management for Electricians UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/business-cost-calculator">
+              Business Cost Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/business-analytics-electrician">
+              Business Analytics for Electricians
+            </SEOInternalLink>
           </div>
         </div>
       </section>

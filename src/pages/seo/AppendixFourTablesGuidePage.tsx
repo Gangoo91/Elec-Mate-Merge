@@ -81,7 +81,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Automated cable sizing using Appendix 4 tables with correction factors applied.',
     icon: Calculator,
@@ -373,7 +373,7 @@ const sections = [
           <strong>Iz = It × Ca × Cg × Ci</strong>, where It is the tabulated value from the
           appropriate Appendix 4 table. The protective device rating (In) must be less than or equal
           to Iz, and Iz must be greater than or equal to the design current (Ib). The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           applies all of these factors automatically.
@@ -442,7 +442,7 @@ const sections = [
           This example demonstrates why correction factors matter. Without them, 2.5 mm² T+E at 27 A
           looks adequate for a 32 A ring circuit. With correction factors applied, the effective
           capacity drops significantly. The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           does this entire process automatically.
@@ -525,7 +525,7 @@ const sections = [
         <p>
           Manually looking up Appendix 4 tables and applying correction factors is time-consuming
           and error-prone — especially on site. Elec-Mate automates the entire process with its{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>
           , one of 70+ calculators built into the app.

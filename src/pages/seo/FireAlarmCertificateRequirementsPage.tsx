@@ -47,6 +47,7 @@ const keyTakeaways = [
   'BS 5839-1 requires a design certificate confirming the system category, detector layout, sounder coverage, and cable routes before installation begins.',
   'The commissioning certificate must record functional tests of every device, cause-and-effect verification, sounder level measurements, and battery drain tests.',
   'Annual service records are a legal requirement under the Regulatory Reform (Fire Safety) Order 2005 and must be kept in the fire safety logbook.',
+  'The fire alarm panel’s mains supply circuit also requires a BS 7671 EIC. Under A4:2026 Reg 133.1.3, any AFDD or SPD on that circuit must be explicitly recorded on the Part 6 certificate.',
   'Elec-Mate provides digital fire alarm certificate templates for all five certificate types, with professional PDF export and cloud storage.',
 ];
 
@@ -305,6 +306,37 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-3">
+            Common Installation Certificate Failures
+          </h3>
+          <p className="text-white/80 text-sm mb-3">
+            These are the most frequent reasons an installation certificate is found to be
+            incomplete or non-compliant during verification:
+          </p>
+          <ul className="space-y-2 text-white/90 text-sm list-disc list-inside">
+            <li>
+              Alarm signal cables run in the same containment as mains power wiring — fire alarm
+              cables must be kept in separate, dedicated trunking or conduit.
+            </li>
+            <li>
+              Fire-resistant cable specified on the design but standard cable installed, with no
+              noted deviation on the certificate.
+            </li>
+            <li>
+              Fire stopping omitted or not recorded at cable penetrations through fire-rated walls
+              or floors.
+            </li>
+            <li>
+              Panel earth and battery connections present on site but not recorded on the
+              certificate.
+            </li>
+            <li>
+              Deviations from the design drawing made during installation but not documented on the
+              certificate.
+            </li>
+          </ul>
+        </div>
         <p>
           The installation certificate provides a record that the physical work has been completed
           to the required standard. If the installer is different from the designer, the
@@ -313,7 +345,10 @@ const sections = [
             electrical certificate types
           </SEOInternalLink>
           , the installation certificate for the fire alarm system is separate from the EIC for the
-          general electrical installation.
+          general electrical installation. That EIC — covering the panel&apos;s mains supply circuit
+          — must be completed in accordance with BS 7671 and, under A4:2026 Regulation 133.1.3, any
+          AFDD or SPD fitted on that supply circuit must be explicitly recorded on the Part 6
+          certificate.
         </p>
       </>
     ),
@@ -556,7 +591,9 @@ const sections = [
         <p>
           Third-party certification through schemes such as BAFE SP203-1 provides external
           verification of competence. Many insurers, building control bodies, and{' '}
-          <SEOInternalLink href="/guides/notifiable-electrical-work">notifiable work</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/notifiable-electrical-work">
+            notifiable work
+          </SEOInternalLink>{' '}
           authorities require BAFE registration as a condition of accepting fire alarm work.
         </p>
       </>
@@ -601,6 +638,20 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-3">System Modifications and Extensions</h3>
+          <p className="text-white/90 text-sm">
+            Any modification to a fire alarm system — adding a zone, replacing a detector type,
+            changing a sounder, upgrading the panel, or extending into a new area — requires its own
+            documentation. This means an updated or supplementary design certificate confirming the
+            change is still compliant with the system category, a commissioning certificate covering
+            the modified or new devices and any revised cause-and-effect logic, and a logbook entry
+            recording the date, scope, and engineer responsible. The original certificates are not
+            superseded; they remain in the logbook alongside the modification records to maintain a
+            complete audit trail. Failing to document modifications is one of the most common gaps
+            identified during fire safety audits.
+          </p>
+        </div>
         <p>
           Elec-Mate stores all{' '}
           <SEOInternalLink href="/guides/electrical-certificate-retention">
@@ -628,7 +679,7 @@ export default function FireAlarmCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="Fire Alarm Certificate Requirements | BS 5839 UK"
-      description="Complete guide to fire alarm certificate requirements under BS 5839. Covers design, installation, commissioning…"
+      description="Complete guide to fire alarm certificate requirements under BS 5839-1. Design, commissioning, and annual service records explained. Who can issue and how long to keep them."
       datePublished="2026-02-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

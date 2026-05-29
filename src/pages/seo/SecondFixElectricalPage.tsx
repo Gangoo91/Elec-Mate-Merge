@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Verify cable sizes at second fix — cross-check the first fix cable selections against actual circuit lengths.',
@@ -328,9 +328,9 @@ const sections = [
         </div>
         <p>
           Elec-Mate generates a professional circuit chart as part of the{' '}
-          <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> workflow.
-          Enter the circuit details once and the chart is included in the certificate PDF — no
-          separate chart to print.
+          <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> workflow. Enter
+          the circuit details once and the chart is included in the certificate PDF — no separate
+          chart to print.
         </p>
       </>
     ),
@@ -447,8 +447,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Elec-Mate's{' '}
-          <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink>{' '}
+          Elec-Mate's <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink>{' '}
           guides you through every section, auto-populates fields from previous jobs, and lets you
           enter test results by voice. The finished certificate exports as a professional PDF that
           you can send to the customer by email or WhatsApp before leaving the site.
@@ -555,16 +554,17 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 If the installation includes{' '}
-                <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink> or an SPD,
-                explain what they do and what the customer should do if they trip.
+                <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink> or
+                an SPD, explain what they do and what the customer should do if they trip.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Use Elec-Mate's <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
-          to send the final invoice alongside the certificate. The customer receives the EIC and the
-          invoice in one professional package — no chasing for payment later.
+          Use Elec-Mate's{' '}
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to send the
+          final invoice alongside the certificate. The customer receives the EIC and the invoice in
+          one professional package — no chasing for payment later.
         </p>
       </>
     ),

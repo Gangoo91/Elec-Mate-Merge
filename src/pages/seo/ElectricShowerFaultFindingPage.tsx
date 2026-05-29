@@ -40,7 +40,7 @@ const keyTakeaways = [
   'An electric shower that trips the RCD every time it is used almost certainly has a heating element with failed insulation — the element must be replaced, not just the RCD reset.',
   'Solenoid valve failure is one of the most common causes of an electric shower that runs cold or will not start the flow of water — the valve is replaceable without replacing the entire unit.',
   'Low water pressure is a plumbing issue, not an electrical one — the flow switch in the shower requires a minimum dynamic pressure (typically 0.7 to 1.0 bar) to activate the heating element.',
-  'Electric showers are wired on a dedicated radial circuit from the consumer unit, protected by a Type B MCB rated at 40A to 50A for a 10.5kW shower. The circuit requires RCD protection under BS 7671.',
+  'Electric showers are wired on a dedicated radial circuit from the consumer unit, protected by a Type B MCB rated at 40A to 50A for a 10.5kW shower. BS 7671 Reg 701.411.3.3 requires 30mA RCD additional protection for all LV circuits in rooms containing a bath or shower.',
   'Repair is usually more economical than replacement for showers under five years old. A new electric shower costs £150 to £400 for the unit, plus £150 to £300 for installation.',
 ];
 
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Why does my electric shower keep tripping the RCD?',
     answer:
-      'Repeated RCD tripping from an electric shower almost always indicates the heating element has developed a fault to earth — current is leaking through degraded element insulation to the earth conductor, which the RCD detects and trips within 30 milliseconds. This is a genuine safety fault. Do not continue to reset and use the shower. A qualified electrician will test the element insulation resistance and replace it if it has failed.',
+      'Repeated RCD tripping from an electric shower almost always indicates the heating element has developed a fault to earth — current is leaking through degraded element insulation to the earth conductor, which the RCD detects and disconnects within 300 milliseconds (the maximum permitted under BS 7671 Reg 643.7.3.201; in practice most RCDs trip considerably faster). This is a genuine safety fault. Do not continue to reset and use the shower. A qualified electrician will test the element insulation resistance and replace it if it has failed.',
   },
   {
     question: 'My electric shower runs cold — what is wrong?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Do I need Building Regulations approval to replace an electric shower?',
     answer:
-      'Yes. Electric shower installation and replacement is notifiable under Part P of the Building Regulations in England and Wales when the work is in a bathroom or shower room. An electrician registered with a competent person scheme (NICEIC, NAPIT, ELECSA) can self-certify the work. Alternatively, you must notify the local building authority before starting work and pay an inspection fee. An Electrical Installation Certificate must be issued on completion.',
+      'It depends on whether a new circuit is required. Under Approved Document P, a like-for-like replacement of an electric shower connected to an existing dedicated circuit and isolator is generally not notifiable. The work becomes notifiable when a new circuit from the consumer unit to the shower position is required — for example, when upgrading from a lower-rated shower or installing a shower for the first time. Where the work is notifiable, an electrician registered with a competent person scheme (NICEIC, NAPIT, ELECSA) can self-certify. Otherwise you must notify the local building authority before starting. An Electrical Installation Certificate must be issued on completion of any notifiable work.',
   },
 ];
 
@@ -284,6 +284,18 @@ const sections = [
                 may have penetrated the shower unit and is causing a leakage path to earth. Check
                 the unit casing and all cable entry points for signs of water ingress before
                 concluding the element has failed.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulatory requirement</strong> — BS 7671 Reg 701.411.3.3 (referencing Reg
+                415.1.1) requires a 30mA RCD to provide additional protection for all low-voltage
+                circuits in rooms containing a bath or shower. This applies to every circuit serving
+                or passing through the bathroom zone, including the dedicated shower circuit. Where
+                the shower circuit is the only circuit in that location, a dedicated RCBO or RCD
+                protecting the shower circuit alone is the correct approach and avoids nuisance
+                tripping affecting other circuits.
               </span>
             </li>
           </ul>
@@ -576,6 +588,26 @@ const sections = [
                   </SEOInternalLink>
                   . Customers who receive a professional quote while you are present approve work at
                   a significantly higher rate than those who receive a quote later by email.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Bonding &amp; A4:2026 Compliance Checks
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  When installing or replacing a shower in an older property, verify supplementary
+                  protective equipotential bonding under BS 7671 Reg 701.415.2 — metallic water and
+                  waste pipes, central heating pipework, and accessible metallic structural parts
+                  within the bathroom must all be bonded to the protective conductor of each
+                  supplying circuit. Where the consumer unit is being upgraded as part of the shower
+                  circuit work, BS 7671 Reg 421.1.7 (introduced in A4:2026) recommends fitting an
+                  arc fault detection device (AFDD) on AC final circuits to mitigate fire risk from
+                  arc fault currents.
                 </p>
               </div>
             </div>

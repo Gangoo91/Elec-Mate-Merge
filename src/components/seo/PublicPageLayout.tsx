@@ -157,6 +157,8 @@ const organizationWebsiteSchema = {
       '@type': 'Organization',
       '@id': 'https://www.elec-mate.com/#organization',
       name: 'Elec-Mate',
+      legalName: 'Elec-Mate Ltd',
+      alternateName: ['ElecMate', 'Elec Mate'],
       url: 'https://www.elec-mate.com',
       logo: {
         '@type': 'ImageObject',
@@ -173,6 +175,18 @@ const organizationWebsiteSchema = {
       description:
         "The UK's all-in-one platform for electricians — digital certificates, AI tools, training, calculators, and business management.",
       foundingDate: '2025',
+      founder: {
+        '@type': 'Person',
+        name: 'Andrew Moore',
+        jobTitle: 'Founder',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        email: 'info@elec-mate.com',
+        areaServed: 'GB',
+        availableLanguage: 'en-GB',
+      },
       areaServed: {
         '@type': 'Country',
         name: 'United Kingdom',

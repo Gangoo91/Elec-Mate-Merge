@@ -447,12 +447,12 @@ export default function HowToSizeCablesPage() {
                 <h3 className="text-xl font-bold text-white mb-3">Verify Voltage Drop</h3>
                 <p className="text-white leading-relaxed mb-4">
                   Check the cable selection meets BS 7671{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop
                   </SEOInternalLink>{' '}
                   limits: <strong>3% for lighting</strong> (6.9V from 230V) and{' '}
                   <strong>5% for power</strong> (11.5V from 230V). Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to automate these checks.
@@ -630,7 +630,6 @@ export default function HowToSizeCablesPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -638,14 +637,28 @@ export default function HowToSizeCablesPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/how-ai-helps-electricians">How AI Helps Electricians</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-electricity-works">How Electricity Works</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-become-electrician">How to Become an Electrician UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-find-electrician-uk">How to Find a Good Electrician UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-ai-helps-electricians">
+              How AI Helps Electricians
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-electricity-works">
+              How Electricity Works
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-become-electrician">
+              How to Become an Electrician UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-find-electrician-uk">
+              How to Find a Good Electrician UK
+            </SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-wire-a-plug">How to Wire a Plug</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-price-electrical-jobs">How to Price Electrical Jobs UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-read-electrical-drawings">How to Read Electrical Drawings</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">
+              How to Fill In a Minor Works Certificate
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-price-electrical-jobs">
+              How to Price Electrical Jobs UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-read-electrical-drawings">
+              How to Read Electrical Drawings
+            </SEOInternalLink>
           </div>
         </div>
       </section>

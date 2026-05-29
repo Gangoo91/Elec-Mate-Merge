@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size PVC and XLPE cables with correct current ratings and derating factors.',
     icon: Calculator,
@@ -92,7 +92,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/copper-vs-aluminium-cable',
     title: 'Copper vs Aluminium Cable Guide',
-    description: 'Compare conductor materials: current ratings, termination, and when aluminium is appropriate.',
+    description:
+      'Compare conductor materials: current ratings, termination, and when aluminium is appropriate.',
     icon: Cable,
     category: 'Guide',
   },
@@ -130,20 +131,20 @@ const sections = [
     content: (
       <>
         <p>
-          The insulation and sheathing material of a cable determines its temperature rating,
-          fire performance, and suitability for different environments. Three types dominate UK
-          electrical installations: PVC (polyvinyl chloride), XLPE (cross-linked polyethylene),
-          and LSOH (Low Smoke Zero Halogen). Each has distinct properties that affect where and
-          how it can be used under{' '}
+          The insulation and sheathing material of a cable determines its temperature rating, fire
+          performance, and suitability for different environments. Three types dominate UK
+          electrical installations: PVC (polyvinyl chloride), XLPE (cross-linked polyethylene), and
+          LSOH (Low Smoke Zero Halogen). Each has distinct properties that affect where and how it
+          can be used under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the Construction Products Regulation (CPR).
         </p>
         <p>
-          Cable selection is governed by BS 7671 Section 522 (selection and erection with respect
-          to external influences) and Section 422 (protection against fire). Since July 2017, the
-          CPR requires cables permanently installed in buildings to carry a reaction-to-fire
+          Cable selection is governed by BS 7671 Section 522 (selection and erection with respect to
+          external influences) and Section 422 (protection against fire). Since July 2017, the CPR
+          requires cables permanently installed in buildings to carry a reaction-to-fire
           classification under BS EN 50575.
         </p>
       </>
@@ -166,7 +167,10 @@ const sections = [
             <li>• Maximum short-circuit temperature: 160°C</li>
             <li>• Current ratings: BS 7671 Appendix 4 Tables 4D1A–4D5A</li>
             <li>• Cost: lowest of the three insulation types</li>
-            <li>• Fire performance: releases hydrogen chloride (HCl) gas and dense black smoke when burned</li>
+            <li>
+              • Fire performance: releases hydrogen chloride (HCl) gas and dense black smoke when
+              burned
+            </li>
             <li>• CPR class: typically Eca or Dca for standard 6242Y twin and earth cable</li>
             <li>• Minimum installation temperature: −5°C (cable becomes brittle below this)</li>
           </ul>
@@ -177,8 +181,8 @@ const sections = [
             <div>
               <p className="font-bold text-white mb-1">PVC Fire Performance Warning</p>
               <p className="text-white text-sm">
-                PVC releases hydrogen chloride gas when burned. HCl is toxic and highly corrosive
-                — it destroys electronic equipment and is hazardous in escape routes. In locations
+                PVC releases hydrogen chloride gas when burned. HCl is toxic and highly corrosive —
+                it destroys electronic equipment and is hazardous in escape routes. In locations
                 where fire safety requires minimal toxic gas emission, PVC must not be used.
               </p>
             </div>
@@ -224,20 +228,24 @@ const sections = [
     content: (
       <>
         <p>
-          LSOH (Low Smoke Zero Halogen) cable uses a halogen-free polymer compound — typically
-          a polyolefin mixture — for both insulation and sheathing. When burned, LSOH cable
-          produces minimal visible smoke and does not release corrosive halogen gases. This is
-          critical in enclosed public spaces where dense toxic smoke would impede evacuation.
+          LSOH (Low Smoke Zero Halogen) cable uses a halogen-free polymer compound — typically a
+          polyolefin mixture — for both insulation and sheathing. When burned, LSOH cable produces
+          minimal visible smoke and does not release corrosive halogen gases. This is critical in
+          enclosed public spaces where dense toxic smoke would impede evacuation.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">LSOH Cable Properties</h3>
           <ul className="space-y-2 text-white text-sm">
             <li>• Maximum conductor temperature: typically 70°C or 90°C depending on compound</li>
-            <li>• Smoke emission: very low (tested to IEC 61034 — minimum 60% light transmission)</li>
+            <li>
+              • Smoke emission: very low (tested to IEC 61034 — minimum 60% light transmission)
+            </li>
             <li>• Halogen content: zero (tested to IEC 60754 — maximum 0.5% halogen by weight)</li>
             <li>• Fire performance: CPR class Cca or better for compliant products</li>
             <li>• Cost: higher than PVC — especially for large-CSA cables</li>
-            <li>• Common applications: hospitals, schools, shopping centres, tunnels, data centres</li>
+            <li>
+              • Common applications: hospitals, schools, shopping centres, tunnels, data centres
+            </li>
           </ul>
         </div>
       </>
@@ -281,10 +289,10 @@ const sections = [
           </table>
         </div>
         <p>
-          When derating for high ambient temperature, the derating factor (BS 7671 Appendix 4
-          Table 4B) differs between PVC and XLPE cables because the reference temperature and
-          allowable temperature rise are different. Always use the correct column for the cable
-          insulation type when applying ambient temperature derating.
+          When derating for high ambient temperature, the derating factor (BS 7671 Appendix 4 Table
+          4B) differs between PVC and XLPE cables because the reference temperature and allowable
+          temperature rise are different. Always use the correct column for the cable insulation
+          type when applying ambient temperature derating.
         </p>
       </>
     ),
@@ -295,31 +303,46 @@ const sections = [
     content: (
       <>
         <p>
-          The Construction Products Regulation (CPR) requires cables permanently installed in
-          UK buildings to be UKCA or CE marked with a reaction-to-fire classification. The
-          classes under BS EN 50575:2014+A1:2016 are:
+          The Construction Products Regulation (CPR) requires cables permanently installed in UK
+          buildings to be UKCA or CE marked with a reaction-to-fire classification. The classes
+          under BS EN 50575:2014+A1:2016 are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>Aca</strong> — non-combustible. No contribution to fire. Concrete-encased conductors.</span>
+              <span>
+                <strong>Aca</strong> — non-combustible. No contribution to fire. Concrete-encased
+                conductors.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span><strong>B1ca / B2ca</strong> — very limited flame spread. Required for escape routes in high-rise and large public buildings.</span>
+              <span>
+                <strong>B1ca / B2ca</strong> — very limited flame spread. Required for escape routes
+                in high-rise and large public buildings.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Cca</strong> — limited flame spread. Required for fire alarm and emergency lighting cables in many applications.</span>
+              <span>
+                <strong>Cca</strong> — limited flame spread. Required for fire alarm and emergency
+                lighting cables in many applications.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-300 mt-0.5 shrink-0" />
-              <span><strong>Dca</strong> — flame spread limited. Common specification for commercial installations. Standard LSOH cables are often Dca-s1,d1,a1.</span>
+              <span>
+                <strong>Dca</strong> — flame spread limited. Common specification for commercial
+                installations. Standard LSOH cables are often Dca-s1,d1,a1.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-white mt-0.5 shrink-0" />
-              <span><strong>Eca</strong> — minimum CPR performance. Standard PVC 6242Y twin and earth is typically Eca. Acceptable for most domestic wiring.</span>
+              <span>
+                <strong>Eca</strong> — minimum CPR performance. Standard PVC 6242Y twin and earth is
+                typically Eca. Acceptable for most domestic wiring.
+              </span>
             </li>
           </ul>
         </div>
@@ -368,11 +391,11 @@ const sections = [
     content: (
       <>
         <p>
-          Cable selection must be recorded on the EIC schedule of test results — the cable type
-          and insulation material are required entries. When working on public buildings or
-          commercial projects, check the specification for CPR class requirements before ordering
-          cable. Installing PVC where LSOH (Cca or better) is specified is a non-compliance that
-          could result in the installation failing the handover inspection.
+          Cable selection must be recorded on the EIC schedule of test results — the cable type and
+          insulation material are required entries. When working on public buildings or commercial
+          projects, check the specification for CPR class requirements before ordering cable.
+          Installing PVC where LSOH (Cca or better) is specified is a non-compliance that could
+          result in the installation failing the handover inspection.
         </p>
         <SEOAppBridge
           title="Record cable type and CPR class on your EIC"
@@ -402,7 +425,9 @@ export default function PVCvsXLPECablePage() {
       heroTitle={
         <>
           PVC vs XLPE vs LSOH Cable:{' '}
-          <span className="text-yellow-400">Temperature Ratings, CPR Fire Classes and When to Use Each</span>
+          <span className="text-yellow-400">
+            Temperature Ratings, CPR Fire Classes and When to Use Each
+          </span>
         </>
       }
       heroSubtitle="PVC is rated to 70°C, XLPE to 90°C — giving XLPE a 15–25% higher current rating for the same cable size. LSOH is mandatory where fire-safe, halogen-free cable is required. This guide covers the differences, BS EN 50575 CPR classes, and how to specify the right cable for every application."

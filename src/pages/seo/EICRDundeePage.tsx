@@ -42,6 +42,7 @@ const keyTakeaways = [
   'Dundee has a significant stock of pre-war tenement properties, many of which retain original rubber-insulated wiring that degrades with age and is frequently found to be C1 or C2 on EICR inspection.',
   'EICR costs in Dundee typically range from £95 to £190 for a one-bedroom flat and £160 to £320 for a three-bedroom house, making Dundee one of the more affordable Scottish cities for inspection work.',
   'All EICR inspections must be carried out by a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, or ELECSA and holding City and Guilds 2391 or equivalent.',
+  'A4:2026 introduced two key domestic RCD requirements that frequently generate EICR findings in Dundee properties: Regulation 411.3.3 requires 30mA RCD protection on all socket-outlet circuits rated at 32A or below (with no risk-assessment exemption available in dwellings), and Regulation 411.3.4 additionally requires 30mA RCD protection on all AC lighting circuits in domestic premises.',
   'Dundee City Council operates a private landlord registration scheme; failure to maintain electrical compliance can result in registration sanctions as well as tenant enforcement action through the Housing and Property Chamber.',
 ];
 
@@ -257,11 +258,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — properties wired or last rewired before the
-                mid-1990s frequently lack RCD protection on socket-outlet circuits. BS 7671
-                Regulation 411.3.3 requires RCD protection (not exceeding 30mA rated operating
-                current) on socket-outlet circuits. Absence is coded C2 and makes the EICR
-                Unsatisfactory.
+                <strong>No RCD protection on socket-outlet circuits</strong> — properties wired or
+                last rewired before the mid-1990s frequently lack RCD protection on socket-outlet
+                circuits. BS 7671 Regulation 411.3.3 (A4:2026) requires additional protection by a
+                30mA RCD on all socket-outlets rated at 32A or below. In dwellings, omission via
+                risk assessment is expressly prohibited — unlike commercial premises, there is no
+                exception available. Absence of RCD protection on socket-outlet circuits is coded C2
+                and makes the EICR Unsatisfactory.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Unprotected lighting circuits</strong> — a common A4:2026 finding that
+                catches landlords by surprise: Regulation 411.3.4 requires that, in domestic
+                premises, all AC final circuits supplying luminaires must also be protected by a
+                30mA RCD. Properties with post-1990s wiring may have RCD-protected socket-outlet
+                circuits but still fail if lighting circuits run directly from an unprotected way.
+                Absence of 30mA RCD protection on lighting circuits in a domestic property is a C2
+                observation under BS 7671:2018+A4:2026.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -278,8 +293,12 @@ const sections = [
               <span>
                 <strong>Newer developments</strong> — properties built or comprehensively rewired
                 after 2000 are generally compliant with the then-current edition of BS 7671 but may
-                require assessment against the current 18th Edition requirements. Consumer units in
-                older new-builds may lack arc fault detection or updated RCD protection.
+                require assessment against the current A4:2026 requirements. Consumer units in older
+                new-builds may lack arc fault detection (AFDD) or updated RCD protection. Under BS
+                7671:2018+A4:2026 Regulation 421.1.7, installation of arc fault detection devices is
+                recommended in AC final circuits of domestic fixed installations to mitigate fire
+                risk from arc fault currents — where a consumer unit upgrade is triggered by EICR
+                findings, inspectors will commonly note the absence of AFDDs as a C3 observation.
               </span>
             </li>
           </ul>
@@ -377,8 +396,10 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-white mt-0.5 shrink-0" />
               <span>
                 <strong>FI — Further investigation required</strong> — a potential issue has been
-                identified that cannot be assessed without further investigation. Makes the EICR
-                Unsatisfactory until resolved.
+                identified that cannot be assessed without further investigation. An FI observation
+                is advisory and does not itself make the EICR Unsatisfactory; however, if the
+                further investigation reveals a C1 or C2 defect, the EICR must be updated
+                accordingly (GN3, Reg 3.11 &amp; Reg 5.9).
               </span>
             </li>
           </ul>
@@ -430,7 +451,11 @@ const sections = [
         <p>
           Remedial work identified during an EICR is quoted separately. A consumer unit upgrade to
           provide full RCD protection — one of the most common remedial requirements in Dundee —
-          typically costs £350 to £650 including materials and labour.
+          typically costs £350 to £650 including materials and labour. Where arc fault detection
+          devices (AFDDs) are included in the upgrade, as recommended under BS 7671:2018+A4:2026
+          Regulation 421.1.7, the cost will be higher; AFDD consumer units typically add £150 to
+          £350 to the unit price. Landlords should request a quote that clearly itemises whether
+          AFDD protection is included.
         </p>
       </>
     ),

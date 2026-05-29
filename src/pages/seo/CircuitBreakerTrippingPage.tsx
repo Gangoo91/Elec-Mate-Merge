@@ -48,6 +48,8 @@ const keyTakeaways = [
   'A short circuit (live touching neutral) will trip the MCB instantly and usually produces a loud bang or flash — this is a serious fault that requires immediate investigation by a qualified electrician.',
   "Elec-Mate's max demand calculator checks whether your circuits are overloaded by comparing connected load against the MCB rating, and the board scanner reads MCB ratings directly from a photo of your distribution board.",
   'If the MCB trips immediately on resetting with all appliances disconnected, the fault is in the fixed wiring — do not keep resetting the MCB, as this can cause further damage at the fault point.',
+  'BS 7671:2018+A4:2026 Regulation 421.1.7 recommends Arc Fault Detection Devices (AFDDs) for AC final circuits of fixed installations — when upgrading a consumer unit that has experienced repeated tripping from suspected cable damage or arcing, AFDDs provide fire protection that a standard MCB cannot offer.',
+  'Not all RCDs protect against the same fault types: Type AC devices detect only sinusoidal AC leakage, while modern appliances (washing machines, dishwashers, EV chargers) produce pulsed DC leakage that requires a Type A, F, or B RCD — per BS 7671 Reg 531.3.4.201.',
 ];
 
 const faqs = [
@@ -119,9 +121,11 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               An RCD protects against earth leakage — current escaping from the circuit through a
               fault, moisture, or a person. It monitors the balance between current flowing out on
-              the live conductor and returning on the neutral. If the difference exceeds 30 mA, the
-              RCD disconnects in under 40 milliseconds. When an RCD trips, every circuit protected
-              by that RCD loses power — often half the circuits in the house. If your{' '}
+              the live conductor and returning on the neutral. If the difference reaches the rated
+              residual operating current (typically 30 mA), the RCD shall disconnect within 300 ms
+              at rated IΔn — or within 40 ms at five times IΔn, as required by BS 7671 Chapter 41
+              and verified by GN3 Reg 2.36. When an RCD trips, every circuit protected by that RCD
+              loses power — often half the circuits in the house. If your{' '}
               <SEOInternalLink href="/guides/rcd-keeps-tripping">
                 RCD keeps tripping
               </SEOInternalLink>
@@ -135,6 +139,17 @@ const sections = [
           overcurrent or earth leakage. Most RCBOs have a trip indicator that shows which protection
           operated — check this before starting your diagnosis, as it determines whether you are
           dealing with an overcurrent problem or an earth leakage problem.
+        </p>
+        <p>
+          RCDs are also classified by type. A <strong className="text-white">Type AC</strong> RCD
+          responds only to sinusoidal AC residual currents. A{' '}
+          <strong className="text-white">Type A</strong> RCD additionally responds to pulsed DC
+          components — the type of leakage produced by modern appliances with electronic controls,
+          such as washing machines, dishwashers, and EV chargers. Per BS&nbsp;7671
+          Reg&nbsp;531.3.4.201, Type A (or Type F/B for more complex waveforms) is the appropriate
+          selection for circuits supplying such equipment, as a Type AC device may not reliably
+          detect pulsed DC leakage. This is relevant to diagnosing an RCD that trips specifically
+          when a modern appliance is switched on.
         </p>
       </>
     ),
@@ -154,10 +169,15 @@ const sections = [
               An overload occurs when the total current drawn by all appliances on a circuit exceeds
               the MCB rating. This is the most common cause of MCB tripping in UK homes. The MCB
               trips after a delay — anywhere from a few seconds to several minutes depending on how
-              far above the rating the current is. For example, a 32A MCB will carry 32 amps
-              indefinitely, but at 40 amps it will trip within about 60 seconds. At 50 amps it trips
-              within seconds. The thermal element inside the MCB heats up proportionally to the
-              overcurrent and eventually triggers the trip mechanism.
+              far above the rating the current is. The thermal (bimetallic) element inside the MCB
+              heats up proportionally to the overcurrent and eventually triggers the trip mechanism.
+              The speed of tripping also depends on the MCB&apos;s trip curve type: domestic Type B
+              devices trip instantaneously on their magnetic element at roughly 3–5&times; rated
+              current (the short-circuit range), while the thermal element handles sustained
+              overloads more slowly. Type C MCBs have a higher instantaneous threshold (5–10&times;)
+              and are used where motor start-up inrush would cause nuisance tripping of a Type B.
+              Type D (10–20&times;) is reserved for high-inrush industrial loads. In a domestic ring
+              circuit, almost all MCBs will be Type B.
             </p>
           </div>
 
@@ -406,11 +426,23 @@ const sections = [
           <SEOInternalLink href="/guides/insulation-resistance-testing">
             insulation resistance testing
           </SEOInternalLink>{' '}
-          at 500V DC on the affected circuit with all equipment disconnected. A reading below 1 MΩ
-          between live and neutral (L-N) confirms a short circuit in the fixed wiring. A reading
-          below 1 MΩ between live and earth (L-E) confirms an earth fault. These tests pinpoint
-          whether the cable insulation has broken down and help narrow down the location of the
-          fault.
+          at 500 V DC on the affected circuit with all equipment disconnected. The acceptance
+          criterion per BS&nbsp;7671 Reg&nbsp;643.3.3 is a minimum of 1&nbsp;M&#8486; — a reading
+          below this between live and neutral (L-N) confirms a short circuit in the fixed wiring,
+          and below 1&nbsp;M&#8486; between live and earth (L-E) confirms an earth fault.
+          GN3&nbsp;Reg&nbsp;2.21 confirms that 1&nbsp;M&#8486; is the regulatory minimum: any
+          reading at or above this value conforms to the Regulations. Where connected equipment is
+          present and likely to influence the test result, BS&nbsp;7671 Reg&nbsp;643.3 requires a
+          250&nbsp;V DC test to be used instead of the full 500&nbsp;V test.
+        </p>
+        <p>
+          When verifying earth fault loop impedance (Zs) on the same circuit during live testing,
+          note that measured values are taken at ambient temperature. Per BS&nbsp;7671 Reg&nbsp;253
+          (Appendix 3), a measured Zs is acceptable where it satisfies Zs(measured)&nbsp;&lt;&nbsp;
+          0.8&nbsp;&times;&nbsp;(U&#8320;/I&nbsp;&times;&nbsp;C<sub>min</sub>). In practice,
+          electricians commonly express this as ensuring the measured Zs does not exceed 80% of the
+          tabulated maximum — the 0.8 factor accounting for the increase in conductor resistance at
+          operating temperature compared with the ambient-temperature measurement.
         </p>
         <SEOAppBridge
           title="EICR — Identify Overloaded Circuits and Faulty Wiring"
@@ -555,6 +587,19 @@ const sections = [
                 <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span>Upgrade the consumer unit to provide better circuit distribution</span>
               </li>
+              <li className="flex items-start gap-2">
+                <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <span>
+                  Fit Arc Fault Detection Devices (AFDDs) on final circuits where repeated tripping
+                  is suspected to be caused by cable damage, loose connections, or arcing faults.
+                  BS&nbsp;7671:2018+A4:2026 Regulation 421.1.7 recommends AFDDs for AC final
+                  circuits of fixed installations to mitigate fire risk from arc fault currents.
+                  Unlike an MCB (which responds to sustained overcurrent), an AFDD detects the
+                  high-frequency signature of a dangerous arc before it develops into a full short
+                  circuit — providing an additional layer of fire protection when upgrading a
+                  consumer unit.
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -593,7 +638,7 @@ const relatedPages = [
     category: 'Certification',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description: 'Calculate total circuit load with BS 7671 diversity factors.',
     icon: Calculator,
@@ -618,7 +663,7 @@ export default function CircuitBreakerTrippingPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-10"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

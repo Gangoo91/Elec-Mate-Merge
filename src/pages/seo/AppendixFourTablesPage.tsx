@@ -46,6 +46,7 @@ const keyTakeaways = [
   'Tables are numbered systematically: the letter indicates cable type (D for multicore thermoplastic, E for multicore thermosetting), and the column indicates the reference method (A, B, C, etc.).',
   'Voltage drop values (mV/A/m) are now in Appendix 12 following Amendment 4 (A4:2026) — previously they were in Appendix 4. The values themselves are unchanged.',
   'You must use the correct table for your cable type AND the correct column for your reference method — getting either wrong gives the wrong current-carrying capacity.',
+  'When sizing cables for underground or buried runs, apply the Cs (soil thermal resistivity) correction factor in addition to Ca (ambient), Cg (grouping), and Ci (thermal insulation) — Cs is required by Appendix 4 for Method D installations and is listed in the underground tables (e.g. Table 4D4A).',
   'Elec-Mate has every Appendix 4 table built into the cable sizing calculator. Select cable type and reference method, and the app looks up the correct value instantly — no more flicking through the brown book.',
 ];
 
@@ -58,12 +59,12 @@ const faqs = [
   {
     question: 'How do I read the Appendix 4 current-carrying capacity tables?',
     answer:
-      'Each current-carrying capacity table has rows for cable sizes (1mm squared, 1.5mm squared, 2.5mm squared, etc.) and columns for different reference methods and conductor configurations. To read the table correctly: (1) Identify the correct table for your cable type — for example, Table 4D5A for multicore thermoplastic (PVC) cable such as twin and earth. (2) Find the column that matches your reference method — the column headers indicate which installation method each column covers (e.g., Reference Method A, B, C). (3) Find the row for your cable size. (4) Read the current-carrying capacity value at the intersection of the correct column and row. This value is the tabulated current-carrying capacity (Iz) under reference conditions. You then compare this against the minimum tabulated current rating (It) calculated after applying all correction factors. The cable is suitable if Iz is greater than or equal to It.',
+      'Each current-carrying capacity table has rows for cable sizes (1mm squared, 1.5mm squared, 2.5mm squared, etc.) and columns for different reference methods and conductor configurations. To read the table correctly: (1) Identify the correct table for your cable type — for example, Table 4D5A for XLPE (90 degrees Celsius) twin and earth cable, or Table 4D1A for PVC (70 degrees Celsius) twin and earth cable clipped direct. (2) Find the column that matches your reference method — the column headers indicate which installation method each column covers (e.g., Reference Method A, B, C). (3) Find the row for your cable size. (4) Read the current-carrying capacity value at the intersection of the correct column and row. This value is the tabulated current-carrying capacity (Iz) under reference conditions. You then compare this against the minimum tabulated current rating (It) calculated after applying all correction factors (Ca, Cg, Ci, Cf, and Cs for buried cables). The cable is suitable if Iz is greater than or equal to It.',
   },
   {
     question: 'What is the difference between the 4D and 4E tables?',
     answer:
-      'The 4D series tables cover thermoplastic insulated cables — cables with PVC insulation, which is by far the most common cable type in UK domestic and light commercial installations. Twin and earth cable, singles in conduit, and standard PVC-insulated flexible cables are all thermoplastic. The 4E series tables cover thermosetting insulated cables — cables with XLPE (cross-linked polyethylene) or LSF (low smoke and fume) insulation. Thermosetting cables can operate at a higher conductor temperature (90 degrees Celsius compared to 70 degrees Celsius for PVC), so they have higher current-carrying capacities for the same conductor size and installation method. They are used where higher current capacity is needed without increasing cable size, or in locations where the fire performance of PVC is inadequate (such as escape routes, where LSF cables are required). The table numbers follow the pattern: 4D for PVC, 4E for XLPE/LSF, 4F for armoured cables, 4H for MICC, and 4J for flexible cables.',
+      'Within the 4D and 4E series, individual tables cover specific cable constructions — always check the table heading for insulation type and operating temperature rather than assuming the letter alone determines the insulation. For example, Table 4D5A covers XLPE (90 degrees Celsius) twin and earth cable, while Table 4D1A covers PVC (70 degrees Celsius) twin and earth cable clipped direct. Thermosetting (XLPE/LSF) cables operate at 90 degrees Celsius versus 70 degrees Celsius for PVC, giving approximately 25 percent higher current-carrying capacity for the same conductor size and method. Thermosetting cables are used where higher current capacity is needed without increasing cable size, or where the fire performance of PVC is inadequate (such as escape routes). The table series follow the pattern: 4D and 4E for multicore non-armoured cables (various insulation types), 4F for armoured cables, 4H for MICC, and 4J for flexible cables.',
   },
   {
     question: 'What are mV/A/m voltage drop values and how do I use them?',
@@ -73,7 +74,7 @@ const faqs = [
   {
     question: 'Where can I find the tables for SWA cable?',
     answer:
-      'Steel wire armoured (SWA) cable current-carrying capacity tables are in the Appendix 4 series covering armoured cables. For multicore thermoplastic (PVC) armoured cable, use Table 4D4A (and associated columns). For multicore thermosetting (XLPE) armoured cable, use Table 4E4A. The SWA tables include columns for different installation methods, but the most commonly used methods for SWA are Method C (clipped direct to a surface), Method D (buried underground in a duct or directly buried), and Methods E/F (on a cable tray). SWA cable is the standard choice for underground runs to outbuildings, submain feeds, and external installations. When sizing SWA for underground use (Method D), remember to use the specific underground tables and apply the ground temperature and soil thermal resistivity corrections.',
+      'Steel wire armoured (SWA) cable current-carrying capacity tables are in the Appendix 4 series covering armoured cables. Table 4D4A covers 3-core XLPE-insulated (90 degrees Celsius) SWA cable — the most common SWA type used in the UK for submains and external runs. The SWA tables include columns for different installation methods: Method C (clipped direct to a surface), Method D (buried underground in a duct or directly buried), and Methods E/F (on a cable tray). SWA cable is the standard choice for underground runs to outbuildings, submain feeds, and external installations. When sizing SWA for underground use (Method D), apply the Cs (soil thermal resistivity) correction factor in addition to the standard Ca (ambient temperature) and Cg (grouping) corrections.',
   },
   {
     question: 'Have the Appendix 4 tables changed in Amendment 4 (A4:2026)?',
@@ -200,11 +201,12 @@ const sections = [
           </div>
         </div>
         <p>
-          So <strong className="text-yellow-400">Table 4D5A</strong> is: Appendix 4, thermoplastic
-          (PVC), multicore (non-armoured), current-carrying capacity. This is the table you use for
-          standard domestic twin and earth cable.{' '}
-          <strong className="text-yellow-400">Table 4D1A</strong> is for PVC single-core cables —
-          the type used in conduit and trunking installations.
+          So <strong className="text-yellow-400">Table 4D5A</strong> is: Appendix 4, thermosetting
+          (XLPE 90&deg;C), multicore non-armoured twin and earth — the table used for XLPE T&amp;E
+          cable clipped direct. <strong className="text-yellow-400">Table 4D1A</strong> is the
+          equivalent table for PVC (70&deg;C) twin and earth cable clipped direct. The letter D in
+          the table number refers to the conductor type series, not exclusively to thermoplastic
+          cable — always check the table heading for insulation type and operating temperature.
         </p>
       </>
     ),
@@ -232,9 +234,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Table 4D1A</strong> — Single-core PVC/copper
-                cables in conduit, trunking, or enclosed. Used for singles in conduit installations
-                (commercial/industrial).
+                <strong className="text-yellow-400">Table 4D1A</strong> — PVC/copper twin and earth
+                (70&deg;C) cable clipped direct (Method C). Values: 1.0mm&sup2;=13A,
+                1.5mm&sup2;=16A, 2.5mm&sup2;=24A, 4mm&sup2;=32A, 6mm&sup2;=41A.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -248,9 +250,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Table 4D5A</strong> — Multicore PVC/copper
-                cables (non-armoured), including twin and earth. The most frequently used table in
-                domestic work.
+                <strong className="text-yellow-400">Table 4D5A</strong> — XLPE/copper twin and earth
+                (90&deg;C) cable clipped direct (Method C). Higher capacity than 4D1A for the same
+                size. Values: 1.0mm&sup2;=16A, 1.5mm&sup2;=20A, 2.5mm&sup2;=30A, 4mm&sup2;=40A,
+                6mm&sup2;=51A.
               </span>
             </li>
           </ul>
@@ -263,6 +266,25 @@ const sections = [
           . Column 6 (two loaded conductors) is the standard column for single-phase circuits in
           twin and earth cable under the various reference methods.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">
+                T+E in thermal insulation (stud walls, ceiling voids)
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                Where flat twin and earth cable is in contact with, or enclosed within, thermal
+                insulation — for example in a stud wall containing insulation or above an insulated
+                ceiling — the standard Method C ratings do not apply. In these circumstances, the
+                installer must apply the derating factors and reduced current-carrying capacities
+                set out in BS 7671 Appendix 4 Table 4D5 for the relevant contact/enclosure condition
+                (OSG Reg 13.5). Failure to derate for thermal insulation is one of the most common
+                cable sizing errors in domestic work.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -287,7 +309,8 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
-            Capacity comparison: PVC vs XLPE (Method C, 2 loaded conductors)
+            Capacity comparison: PVC T+E (Table 4D1A) vs XLPE T+E (Table 4D5A), Method C clipped
+            direct
           </h3>
           <div className="grid grid-cols-3 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
@@ -295,47 +318,48 @@ const sections = [
               <p className="text-white text-xs mt-1">mm&sup2;</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white text-sm font-bold">PVC (4D)</p>
-              <p className="text-white text-xs mt-1">Amperes</p>
+              <p className="text-white text-sm font-bold">PVC 70&deg;C</p>
+              <p className="text-white text-xs mt-1">Table 4D1A</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white text-sm font-bold">XLPE (4E)</p>
-              <p className="text-white text-xs mt-1">Amperes</p>
+              <p className="text-white text-sm font-bold">XLPE 90&deg;C</p>
+              <p className="text-white text-xs mt-1">Table 4D5A</p>
             </div>
             <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20 text-center">
               <p className="text-yellow-400 font-bold">2.5</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white font-bold">27</p>
+              <p className="text-white font-bold">24</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white font-bold">36</p>
+              <p className="text-white font-bold">30</p>
             </div>
             <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20 text-center">
               <p className="text-yellow-400 font-bold">4.0</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white font-bold">36</p>
+              <p className="text-white font-bold">32</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white font-bold">49</p>
+              <p className="text-white font-bold">40</p>
             </div>
             <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20 text-center">
               <p className="text-yellow-400 font-bold">6.0</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white font-bold">47</p>
+              <p className="text-white font-bold">41</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
-              <p className="text-white font-bold">63</p>
+              <p className="text-white font-bold">51</p>
             </div>
           </div>
         </div>
         <p>
-          The capacity advantage of XLPE over PVC is approximately 30-35%. This means that in
-          situations where PVC cable sizing leads to an impractically large cable, switching to XLPE
-          or LSF cable of the same size may provide sufficient capacity without increasing the
-          conductor cross-section.
+          The capacity advantage of XLPE over PVC is approximately 25% for the same conductor size
+          and installation method — for example, 2.5mm&sup2; T+E clipped direct: 30A (XLPE) vs 24A
+          (PVC). This means that in situations where PVC cable sizing leads to an impractically
+          large cable, switching to XLPE T+E of the same size may provide sufficient capacity
+          without increasing the conductor cross-section.
         </p>
       </>
     ),
@@ -413,13 +437,15 @@ const sections = [
             <div className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h3 className="font-bold text-white mb-1">Twin and Earth (T&E)</h3>
+                <h3 className="font-bold text-white mb-1">Twin and Earth (T&amp;E)</h3>
                 <p className="text-white text-sm leading-relaxed">
                   The standard domestic cable. Flat profile with line, neutral, and CPC. Use
-                  <strong className="text-yellow-400"> Table 4D5A</strong> (multicore PVC
-                  non-armoured). Available in 1.0, 1.5, 2.5, 4.0, 6.0, 10, and 16mm&sup2;. The most
-                  commonly used sizes are 1.5mm&sup2; for lighting, 2.5mm&sup2; for ring circuits,
-                  and 6mm&sup2; or 10mm&sup2; for cookers and showers.
+                  <strong className="text-yellow-400"> Table 4D5A</strong> for XLPE 90&deg;C T+E
+                  (clipped direct, Method C) or{' '}
+                  <strong className="text-yellow-400">Table 4D1A</strong> for PVC 70&deg;C T+E.
+                  Available in 1.0, 1.5, 2.5, 4.0, 6.0, 10, and 16mm&sup2;. The most commonly used
+                  sizes are 1.5mm&sup2; for lighting, 2.5mm&sup2; for ring circuits, and 6mm&sup2;
+                  or 10mm&sup2; for cookers and showers.
                 </p>
               </div>
             </div>
@@ -430,11 +456,13 @@ const sections = [
               <div>
                 <h3 className="font-bold text-white mb-1">Singles in Conduit</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Single-core PVC-insulated cables drawn into conduit or trunking. Use
-                  <strong className="text-yellow-400"> Table 4D1A</strong> (single-core PVC in
-                  conduit). Standard in commercial and industrial work. The capacity is lower than
-                  T&E for the same conductor size because the conduit restricts airflow around the
-                  cables.
+                  Single-core PVC-insulated cables drawn into conduit or trunking. Standard in
+                  commercial and industrial work. Note that{' '}
+                  <strong className="text-yellow-400">Table 4D1A</strong> covers PVC twin and earth
+                  70&deg;C clipped direct — for singles in conduit, refer to the appropriate conduit
+                  installation column within the 4D series tables and check the column header for
+                  your reference method. The capacity is lower than T+E clipped direct for the same
+                  conductor size because the conduit restricts airflow around the cables.
                 </p>
               </div>
             </div>
@@ -446,10 +474,11 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">SWA (Steel Wire Armoured)</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Multicore armoured cable with mechanical protection from the steel wire armouring.
-                  Use <strong className="text-yellow-400">Table 4D4A</strong> (PVC armoured) or
-                  <strong className="text-yellow-400"> Table 4E4A</strong> (XLPE armoured). Standard
-                  for underground burial, external runs, and submain distribution. The armouring
-                  also serves as the circuit protective conductor (CPC) in many installations.
+                  Use <strong className="text-yellow-400">Table 4D4A</strong> for 3-core
+                  XLPE-insulated (90&deg;C) SWA cable. Standard for underground burial, external
+                  runs, and submain distribution. When buried (Method D), always apply the Cs soil
+                  thermal resistivity correction factor as well as Ca and Cg. The armouring also
+                  serves as the circuit protective conductor (CPC) in many installations.
                 </p>
               </div>
             </div>
@@ -529,8 +558,9 @@ const sections = [
                   <SEOInternalLink href="/guides/correction-factors-bs-7671">
                     correction factors
                   </SEOInternalLink>{' '}
-                  (Ca, Cg, Ci, Cf) to calculate the minimum tabulated current rating: It = In / (Ca
-                  x Cg x Ci x Cf).
+                  (Ca, Cg, Ci, Cf, and Cs for buried cables) to calculate the minimum tabulated
+                  current rating: It = In / (Ca &times; Cg &times; Ci &times; Cf). For underground
+                  installations, include Cs (soil thermal resistivity) in the denominator.
                 </p>
               </div>
             </div>
@@ -566,12 +596,13 @@ const sections = [
       <>
         <p>
           Here are the most frequently needed values from Appendix 4 for everyday domestic and light
-          commercial work. These are for PVC (thermoplastic) twin and earth cable from Table 4D5A,
-          Reference Method C (clipped direct), two loaded conductors.
+          commercial work. These are for XLPE (90&deg;C) twin and earth cable from Table 4D5A,
+          Reference Method C (clipped direct), two loaded conductors. For PVC (70&deg;C) T+E use
+          Table 4D1A — values are lower (e.g. 2.5mm&sup2;=24A, 4mm&sup2;=32A, 6mm&sup2;=41A).
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
-            Table 4D5A — T&E, Method C, 2 Loaded Conductors
+            Table 4D5A — XLPE T+E 90&deg;C, Method C, 2 Loaded Conductors
           </h3>
           <div className="grid grid-cols-3 gap-2 text-sm">
             <div className="p-2 rounded bg-white/[0.06] text-center font-bold text-white">Size</div>
@@ -593,27 +624,27 @@ const sections = [
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Lighting</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">2.5mm&sup2;</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
-              27
+              30
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Ring circuit</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">4.0mm&sup2;</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
-              36
+              40
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Immersion</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">6.0mm&sup2;</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
-              47
+              51
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Cooker/shower</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">10mm&sup2;</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
-              64
+              70
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Large cooker</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">16mm&sup2;</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
-              85
+              94
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Sub-main</div>
           </div>
@@ -623,9 +654,9 @@ const sections = [
           <SEOInternalLink href="/guides/correction-factors-bs-7671">
             correction factors
           </SEOInternalLink>
-          , the effective capacity of the cable is reduced. A 2.5mm&sup2; cable with Iz = 27A may
-          only be able to carry 19A after derating for grouping and insulation. Always calculate the
-          required It before selecting from the table.
+          , the effective capacity of the cable is reduced. A 2.5mm&sup2; XLPE T+E cable with Iz =
+          30A may only be able to carry around 21A after derating for grouping and insulation.
+          Always calculate the required It before selecting from the table.
         </p>
       </>
     ),
@@ -658,7 +689,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'All Appendix 4 tables built in. Select cable type and method, get the right cable size.',
@@ -666,7 +697,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop using mV/A/m values from Appendix 12 for any cable type and circuit.',
@@ -706,6 +737,13 @@ export default function AppendixFourTablesPage() {
       }
       heroSubtitle="The complete guide to BS 7671 Appendix 4. How to read the current-carrying capacity tables (4D1A to 4J4A), understand the table numbering system, use voltage drop tables (now Appendix 12), and look up the right values for PVC, XLPE, SWA, and flexible cables."
       readingTime={13}
+      answerBox={{
+        question: 'What is BS 7671 Appendix 4?',
+        answer:
+          'Appendix 4 of BS 7671 contains the current-carrying capacity tables for every cable type and installation method — the core reference for all cable sizing. Tables are numbered by cable type (e.g. 4D for multicore thermoplastic) and a reference-method column (A, B, C…). Since Amendment 4 (A4:2026), voltage-drop (mV/A/m) values moved to Appendix 12, unchanged.',
+        detail:
+          'Use the correct table for your cable type and the correct column for your reference method — getting either wrong gives the wrong current-carrying capacity.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

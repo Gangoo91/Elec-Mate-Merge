@@ -148,6 +148,9 @@ const sections = [
           electrical package, or an electrical contractor pricing a commercial rewire, this guide
           provides realistic per-square-metre costs based on current UK market rates.
         </p>
+        <p className="text-sm text-white/60 border-l-2 border-yellow-400/40 pl-3 mt-2">
+          Written by a qualified electrician and reviewed against BS 7671:2018+A4:2026.
+        </p>
       </>
     ),
   },
@@ -254,6 +257,17 @@ const sections = [
           Phase balancing is critical in commercial installations. The design should distribute
           single-phase loads evenly across the three phases to avoid excessive neutral current and
           voltage imbalance. This must be verified during commissioning.
+        </p>
+        <p>
+          Commercial fit-outs increasingly include EV charging provision. BS 7671:2018+A4:2026
+          Chapter 722 covers electric vehicle charging installations, and Regulation 722.311.201
+          specifically permits load curtailment — automatic or manual reduction or disconnection of
+          EV charger loads — to be taken into account when calculating maximum demand. This means
+          that multiple EV charging points can often be accommodated on an existing incoming supply
+          provided a suitable load management system is specified, without requiring a costly DNO
+          supply upgrade. Designers must document the curtailment assumptions used in the demand
+          calculation. Budget an additional £800 to £2,500 per charge point installed, plus
+          allowance for the load management controller where multiple points are provided.
         </p>
       </>
     ),
@@ -422,6 +436,17 @@ const sections = [
           inspection may be split across multiple schedules of test results.
         </p>
         <p>
+          Surge protection devices (SPDs) are effectively mandatory on commercial rewires under BS
+          7671:2018+A4:2026 Regulation 443.4. Specifically, Regulation 443.4(c) requires SPD
+          protection where a transient overvoltage could result in interruption of commercial or
+          industrial activity — a criterion that virtually all commercial premises meet. Where it is
+          not immediately clear whether criteria (a) to (d) of Regulation 443.4 are met, Regulation
+          443.4(e) requires a risk assessment to determine whether protection is necessary. In
+          practice this means a Type 1+2 SPD at the main distribution board is required on every
+          commercial rewire, with Type 2 SPDs at downstream sub-distribution boards where the
+          separation distance from the main SPD exceeds 10 metres.
+        </p>
+        <p>
           RCD protection is required for socket outlets up to 32A per Regulation 411.3.3 of BS 7671.
           In commercial installations, this is typically provided by RCBOs on individual circuits
           rather than bank RCDs, to avoid nuisance tripping affecting multiple circuits.
@@ -453,10 +478,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Walk the building and measure every containment route before pricing anything
                   else. Containment is the biggest variable cost. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised schedules of containment, distribution equipment, and final
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised schedules of containment, distribution equipment, and final
                   circuits.
                 </p>
               </div>
@@ -469,9 +492,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Include All Certification Costs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Allow adequate time for testing and completing the{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A 500m²
-                  commercial installation might take 2 to 3 days to test and certify properly. Do
-                  not squeeze this into the last afternoon of the contract.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A 500m² commercial
+                  installation might take 2 to 3 days to test and certify properly. Do not squeeze
+                  this into the last afternoon of the contract.
                 </p>
               </div>
             </div>
@@ -507,8 +530,8 @@ const sections = [
 export default function CommercialRewireCostPage() {
   return (
     <GuideTemplate
-      title="1000 sqft Commercial Rewire Cost 2026"
-      description="1000 sqft commercial rewire costs £3,000–8,000 in 2026. Get exact pricing for distribution, containment, data cabling, fire alarm…"
+      title="Commercial Rewire Cost UK 2026: Per m² Price Guide"
+      description="Commercial rewire costs £30–£80 per m² in 2026. Per square metre pricing for 3-phase distribution, containment, data cabling, fire alarm, and BS 7671:2018+A4:2026 compliance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'How do I notify building control for electrical work?',
     answer:
-      'If you are not registered with a competent person scheme, the homeowner submits a building notice to the local authority building control department before work commences. Most councils accept online submissions through the Planning Portal or their own website. The notice includes: a description of the work to be done, the address of the property, the applicant\'s details, and the fee payment. Building control will acknowledge the notice and arrange an inspection on completion. If you are registered with a competent person scheme (NICEIC, NAPIT, ELECSA, etc.), you notify building control through your scheme on behalf of the homeowner after the work is complete.',
+      "If you are not registered with a competent person scheme, the homeowner submits a building notice to the local authority building control department before work commences. Most councils accept online submissions through the Planning Portal or their own website. The notice includes: a description of the work to be done, the address of the property, the applicant's details, and the fee payment. Building control will acknowledge the notice and arrange an inspection on completion. If you are registered with a competent person scheme (NICEIC, NAPIT, ELECSA, etc.), you notify building control through your scheme on behalf of the homeowner after the work is complete.",
   },
   {
     question: 'How much does a building notice cost for electrical work?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Can I use an indemnity insurance policy instead of a completion certificate?',
     answer:
-      'Indemnity insurance policies are sometimes used in property transactions when a completion certificate cannot be produced for old work. The policy protects the buyer financially if the local authority takes enforcement action. However, indemnity policies are not a substitute for proper certification — they do not confirm the work is safe or compliant, and they do not protect against the consequences of a fault in the installation. Many mortgage lenders and buyers now refuse to accept indemnity policies for electrical work and require the work to be properly inspected and certified. An EICR carried out by a qualified electrician provides the buyer with actual evidence of the electrical installation\'s condition.',
+      "Indemnity insurance policies are sometimes used in property transactions when a completion certificate cannot be produced for old work. The policy protects the buyer financially if the local authority takes enforcement action. However, indemnity policies are not a substitute for proper certification — they do not confirm the work is safe or compliant, and they do not protect against the consequences of a fault in the installation. Many mortgage lenders and buyers now refuse to accept indemnity policies for electrical work and require the work to be properly inspected and certified. An EICR carried out by a qualified electrician provides the buyer with actual evidence of the electrical installation's condition.",
   },
   {
     question: 'How long does it take for building control to issue a completion certificate?',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for new circuits requiring Part P notification.',
     icon: Calculator,
@@ -140,11 +140,11 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations (England) introduced mandatory notification for
-          certain types of domestic electrical work in January 2005. The notification requirement
-          exists because electrical installations in dwellings had historically been carried out
-          without any form of oversight, and the consequences — house fires, electrocution, and
-          dangerous installations — were significant.
+          Part P of the Building Regulations (England) introduced mandatory notification for certain
+          types of domestic electrical work in January 2005. The notification requirement exists
+          because electrical installations in dwellings had historically been carried out without
+          any form of oversight, and the consequences — house fires, electrocution, and dangerous
+          installations — were significant.
         </p>
         <p>
           The system is based on two routes to compliance: self-certification by a registered
@@ -168,8 +168,8 @@ const sections = [
     content: (
       <>
         <p>
-          Approved Document P (2013) defines notifiable work precisely. The following categories
-          of electrical work in dwellings are notifiable:
+          Approved Document P (2013) defines notifiable work precisely. The following categories of
+          electrical work in dwellings are notifiable:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -179,9 +179,9 @@ const sections = [
                 <strong>New circuits originating at the consumer unit</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   Any new circuit — for an EV charger, heat pump, battery storage system, new
-                  kitchen appliance circuit, additional lighting circuit, or any other purpose —
-                  is notifiable. This includes new circuits installed as part of a loft conversion
-                  or extension.
+                  kitchen appliance circuit, additional lighting circuit, or any other purpose — is
+                  notifiable. This includes new circuits installed as part of a loft conversion or
+                  extension.
                 </p>
               </div>
             </li>
@@ -190,8 +190,8 @@ const sections = [
               <div>
                 <strong>Consumer unit replacement</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  Replacing a consumer unit (fuse board) with a new unit is notifiable regardless
-                  of the reason. This is one of the most common notifiable jobs — consumer unit
+                  Replacing a consumer unit (fuse board) with a new unit is notifiable regardless of
+                  the reason. This is one of the most common notifiable jobs — consumer unit
                   upgrades to provide RCD protection, metal enclosures (required post-2016), or
                   additional ways.
                 </p>
@@ -214,9 +214,9 @@ const sections = [
                 <strong>All electrical work in bathrooms and shower rooms</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   Any electrical work in a bathroom or shower room — other than like-for-like
-                  replacement of accessories on existing circuits — is notifiable. This includes
-                  new shower circuits, electric towel rail supplies, fan circuits, lighting
-                  changes, and shaver socket installation.
+                  replacement of accessories on existing circuits — is notifiable. This includes new
+                  shower circuits, electric towel rail supplies, fan circuits, lighting changes, and
+                  shaver socket installation.
                 </p>
               </div>
             </li>
@@ -226,8 +226,8 @@ const sections = [
                 <strong>Outdoor supplies and new garden circuits</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   New outdoor socket circuits, garden lighting circuits, and supplies to
-                  outbuildings (garages, sheds, summer houses, workshops) are all notifiable
-                  because they involve new circuits from the consumer unit.
+                  outbuildings (garages, sheds, summer houses, workshops) are all notifiable because
+                  they involve new circuits from the consumer unit.
                 </p>
               </div>
             </li>
@@ -242,9 +242,9 @@ const sections = [
     content: (
       <>
         <p>
-          Where the electrician is not registered with a competent person scheme, the homeowner
-          must notify the local authority building control department before notifiable work
-          commences. The process is:
+          Where the electrician is not registered with a competent person scheme, the homeowner must
+          notify the local authority building control department before notifiable work commences.
+          The process is:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
@@ -280,8 +280,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <span className="font-bold text-yellow-400 text-lg shrink-0">5.</span>
               <span>
-                Carry out the work to BS 7671 standards. Building control may visit during the
-                work; they will definitely inspect on completion.
+                Carry out the work to BS 7671 standards. Building control may visit during the work;
+                they will definitely inspect on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,8 +410,8 @@ const sections = [
         </div>
         <p>
           These fees represent a significant cost per job compared with the annual membership fee
-          for a competent person scheme. An electrician carrying out just 3 to 4 notifiable jobs
-          per year who is not scheme-registered would pay more in building notice fees than a year's
+          for a competent person scheme. An electrician carrying out just 3 to 4 notifiable jobs per
+          year who is not scheme-registered would pay more in building notice fees than a year's
           scheme membership. For electricians doing regular domestic work, competent person scheme
           membership is nearly always the more economical route.
         </p>
@@ -434,14 +434,12 @@ const sections = [
       <>
         <p>
           A completion certificate (also called a Building Regulations completion certificate) is
-          issued by building control after they have inspected the completed notifiable work and
-          are satisfied that it complies with the Building Regulations. For work self-certified
-          by a competent person scheme member, an equivalent certificate is issued by the
-          electrician on behalf of the scheme.
+          issued by building control after they have inspected the completed notifiable work and are
+          satisfied that it complies with the Building Regulations. For work self-certified by a
+          competent person scheme member, an equivalent certificate is issued by the electrician on
+          behalf of the scheme.
         </p>
-        <p>
-          The certificate confirms:
-        </p>
+        <p>The certificate confirms:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -451,8 +449,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                The work has been inspected and tested and is believed to comply with Part P and
-                BS 7671.
+                The work has been inspected and tested and is believed to comply with Part P and BS
+                7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -465,10 +463,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          The homeowner should keep the completion certificate indefinitely. It is a permanent record
-          of the electrical work carried out and will be requested by buyers' solicitors when the
-          property is sold. Losing the certificate does not extinguish the record — building control
-          maintains records, and the competent person scheme database retains records — but
+          The homeowner should keep the completion certificate indefinitely. It is a permanent
+          record of the electrical work carried out and will be requested by buyers' solicitors when
+          the property is sold. Losing the certificate does not extinguish the record — building
+          control maintains records, and the competent person scheme database retains records — but
           obtaining a copy retrospectively takes time and may cause delays in a property sale.
         </p>
         <p>
@@ -494,8 +492,8 @@ const sections = [
     content: (
       <>
         <p>
-          When a homeowner sells their property, the conveyancing process requires disclosure of
-          any building work carried out. The buyer's solicitors will ask for evidence of Building
+          When a homeowner sells their property, the conveyancing process requires disclosure of any
+          building work carried out. The buyer's solicitors will ask for evidence of Building
           Regulations compliance for any notifiable electrical work. Without a completion
           certificate, the sale can be delayed or complicated.
         </p>
@@ -504,18 +502,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Indemnity insurance requirement</strong> — without a certificate, the buyer's
-                solicitor may require an indemnity insurance policy, which can cost £100 to £500.
-                Some buyers refuse to accept indemnity policies and require the work to be properly
-                certified before exchange.
+                <strong>Indemnity insurance requirement</strong> — without a certificate, the
+                buyer's solicitor may require an indemnity insurance policy, which can cost £100 to
+                £500. Some buyers refuse to accept indemnity policies and require the work to be
+                properly certified before exchange.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Price renegotiation</strong> — a buyer may use missing certificates as a
-                basis for renegotiating the purchase price downwards, to cover the cost of having the
-                electrical installation inspected and certified retrospectively.
+                basis for renegotiating the purchase price downwards, to cover the cost of having
+                the electrical installation inspected and certified retrospectively.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -523,8 +521,8 @@ const sections = [
               <span>
                 <strong>Mortgage implications</strong> — some mortgage lenders require evidence of
                 Building Regulations compliance as a condition of the mortgage offer. If the buyer's
-                lender insists on a certificate, the sale may not be able to proceed until the
-                work is certified.
+                lender insists on a certificate, the sale may not be able to proceed until the work
+                is certified.
               </span>
             </li>
           </ul>
@@ -535,8 +533,8 @@ const sections = [
             EICR carried out at point of sale
           </SEOInternalLink>{' '}
           can provide some assurance about the condition of the electrical installation, but it does
-          not substitute for Part P compliance documentation for specific notifiable works. Both
-          the EICR and the original certificates serve different purposes.
+          not substitute for Part P compliance documentation for specific notifiable works. Both the
+          EICR and the original certificates serve different purposes.
         </p>
       </>
     ),
@@ -559,8 +557,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue Certificates on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Elec-Mate lets you complete your{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
-                  or{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
@@ -576,9 +573,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AI-Assisted Compliance Checks</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Not sure if a specific job is notifiable? Elec-Mate's AI assistant can check
-                  Part P requirements on site and help you advise the homeowner accurately. Avoid
-                  missing a notification or over-notifying non-notifiable work.
+                  Not sure if a specific job is notifiable? Elec-Mate's AI assistant can check Part
+                  P requirements on site and help you advise the homeowner accurately. Avoid missing
+                  a notification or over-notifying non-notifiable work.
                 </p>
               </div>
             </div>

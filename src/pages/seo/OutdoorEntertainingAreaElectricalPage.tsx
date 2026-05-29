@@ -42,10 +42,11 @@ const tocItems = [
 
 const keyTakeaways = [
   'Outdoor electrical installations must use equipment with appropriate IP ratings: IPX4 (splash protection) is the minimum for sheltered outdoor locations, IPX5 (water jet protection) for areas within 2m of a hose or power washer point, and IPX6 or IPX7/IPX8 for more exposed locations.',
-  'BS 7671 Section 714 covers outdoor lighting installations and requires RCD protection (30mA) for all outdoor socket outlets and circuits supplying portable equipment.',
-  'Regulation 411.3.3 of BS 7671 requires 30mA RCD protection for socket outlets that may reasonably be expected to supply portable equipment for use outdoors.',
+  'BS 7671 Section 714 covers fixed outdoor lighting installations (roads, parks, gardens, amenity lighting). Temporary festoon lighting strings are explicitly excluded from Section 714 and are instead governed by the general requirements including Regulation 411.3.3.',
+  'Regulation 411.3.3 of BS 7671:2018+A4:2026 requires 30mA RCD protection for all socket outlets rated 32A and below. For domestic dwellings there is no risk-assessment exemption — RCD protection is mandatory on every socket outlet.',
   'Outdoor kitchen and BBQ areas require dedicated circuits for appliances (if electric), IP66-rated socket outlets, and a weatherproof consumer unit or junction box. All metalwork must be bonded.',
   'Outdoor LED strip lighting can be 230V (IPX4+ rated, direct burial or IP68 for ground level) or 12V SELV (safer near water, lower voltage drop risk over short runs). 12V SELV is preferred within 2m of a pool or water feature.',
+  'Cables buried in the ground must comply with Regulation 522.8.10: armoured cable or cable in a suitable conduit/duct is required, plus cable covers or marker tape above. The regulation requires sufficient depth to avoid damage from foreseeable ground disturbance — 500mm is widely accepted as a practical minimum for garden installations.',
 ];
 
 const faqs = [
@@ -57,7 +58,7 @@ const faqs = [
   {
     question: 'Can I use a standard 13A socket outside?',
     answer:
-      'No. Standard indoor 13A socket outlets (IP2X, suitable only for dry indoor environments) must not be used outdoors or in locations exposed to moisture. Outdoor socket outlets must be: IP44 minimum for sheltered outdoor positions (under a covered patio or pergola), IP65 or IP66 for exposed outdoor positions (directly open to rain or hose water). Outdoor sockets must be on a dedicated circuit with 30mA RCD protection (Regulation 411.3.3). The socket must be on a dedicated circuit or clearly marked spur from a ring final, protected by a 30mA RCD at the consumer unit or by an RCBO at the socket position.',
+      'No. Standard indoor 13A socket outlets (IP2X, suitable only for dry indoor environments) must not be used outdoors or in locations exposed to moisture. Outdoor socket outlets must be: IP44 minimum for sheltered outdoor positions (under a covered patio or pergola), IP65 or IP66 for exposed outdoor positions (directly open to rain or hose water). All outdoor sockets must have 30mA RCD protection under Regulation 411.3.3 of BS 7671:2018+A4:2026 — this applies to every socket outlet rated 32A and below, and in domestic dwellings there is no risk-assessment exemption. The socket must be on a dedicated circuit or clearly marked spur from a ring final, protected by a 30mA RCD at the consumer unit or by an RCBO at the socket position.',
   },
   {
     question: 'What electrical supply does an outdoor kitchen or BBQ area need?',
@@ -67,12 +68,12 @@ const faqs = [
   {
     question: 'What is the difference between 12V SELV and 230V outdoor LED strip lighting?',
     answer:
-      '230V LED strip (mains voltage): available in IP65 (silicone coated) and IP68 (fully waterproof) ratings. Suitable for longer runs (voltage drop is lower at 230V than 12V). Must be installed in a weatherproof enclosure or in a purpose-made LED strip profile with waterproof end caps. 30mA RCD protection required. No length limitation from a safety perspective (voltage drop is the limiting factor). 12V SELV LED strip: powered by a weatherproof 12V transformer (safety isolating transformer). Maximum 12V AC or 30V DC — classified as SELV, which is safe to touch even when wet. Voltage drop limits the maximum run length to approximately 5m for standard 14.4W/m strip on 12V (upgrade to 24V SELV for longer runs). Required in Zone 1 of a swimming pool (within 2m of the pool edge). Preferred for any lighting near water features, ponds, or where children may come into contact with the lighting.',
+      '230V LED strip (mains voltage): available in IP65 (silicone coated) and IP68 (fully waterproof) ratings. Suitable for longer runs (voltage drop is lower at 230V than 12V). Must be installed in a weatherproof enclosure or in a purpose-made LED strip profile with waterproof end caps. 30mA RCD protection required. No length limitation from a safety perspective (voltage drop is the limiting factor). 12V SELV LED strip: powered by a weatherproof 12V transformer (safety isolating transformer). SELV systems operate within voltage Band I (upper limit 50V AC or 120V DC per BS 7671 Section 414), providing both basic and fault protection. At 12V AC, the system is well within this band and the low voltage substantially reduces shock risk near water. Voltage drop limits the maximum run length to approximately 5m for standard 14.4W/m strip on 12V (upgrade to 24V SELV for longer runs). Required in Zone 1 of a swimming pool (within 2m of the pool edge). Preferred for any lighting near water features, ponds, or where children may come into contact with the lighting.',
   },
   {
     question: 'What is BS 7671 Section 714 and how does it apply to garden lighting?',
     answer:
-      'BS 7671 Section 714 covers outdoor lighting installations — including decorative, amenity, and functional outdoor lighting in gardens, parks, and public spaces. Section 714 requirements for garden lighting include: RCD protection (30mA) for all outdoor luminaire circuits, appropriate IP ratings for the installation location, protection of cables against mechanical damage (armoured cable, conduit, or cable at least 500mm deep for buried cables not in conduit), and adequate protection against thermal effects (outdoor luminaires can reach high surface temperatures). Section 714 does not override the general BS 7671 requirements — it supplements them with outdoor-specific provisions. In practice, the key Section 714 requirements for domestic garden lighting are RCD protection, correct IP ratings, and appropriate cable installation depth for buried runs.',
+      'BS 7671 Section 714 covers fixed outdoor lighting installations — including amenity, road, park, garden, and floodlighting installations. Important exclusions: temporary festoon lighting (outdoor string lights) is explicitly excluded from Section 714 (Reg 712.6.101 exception); luminaires fixed to the outside of a building and supplied from the internal wiring are also excluded. Section 714 requirements for permanent garden lighting include: RCD protection (30mA) for all outdoor luminaire circuits, appropriate IP ratings for the installation location, protection of cables against mechanical damage (armoured cable or cable in suitable conduit; buried runs at sufficient depth to avoid foreseeable ground disturbance), and adequate protection against thermal effects. Section 714 does not override the general BS 7671 requirements — it supplements them with outdoor-specific provisions. Festoon string lights plugged into an outdoor socket are governed instead by the general requirements, principally Regulation 411.3.3 (30mA RCD on the outdoor socket they are plugged into).',
   },
   {
     question: 'Does a hot tub in the garden need a separate electrical installation?',
@@ -82,13 +83,13 @@ const faqs = [
   {
     question: 'Can festoon lighting be connected to the house ring circuit?',
     answer:
-      'Festoon lighting (outdoor string lights) is typically low-power (LED bulbs of 1W to 5W each, 25 to 50 bulbs on a string = 25W to 250W total) and can be connected to the house ring circuit via an outdoor socket on a 30mA RCD-protected circuit — it does not need a dedicated circuit. However, the outdoor socket must be IP44 minimum, and the festoon light cable must be rated for outdoor use (not an extension lead intended for indoor use only). Many modern LED festoon lights are rated IP65 and can be used in rain. For permanent outdoor festoon installations wired into the outdoor socket infrastructure, use a weatherproof outdoor socket (IP66) and route the cable in a weatherproof conduit to the installation points.',
+      'Festoon lighting (outdoor string lights) is typically low-power (LED bulbs of 1W to 5W each, 25 to 50 bulbs on a string = 25W to 250W total) and can be connected to the house ring circuit via an outdoor socket on a 30mA RCD-protected circuit — it does not need a dedicated circuit. Note: temporary festoon lighting is explicitly excluded from BS 7671 Section 714 (outdoor lighting installations) by Regulation 712.6.101. Festoon strings are instead governed by the general requirements, principally Regulation 411.3.3 — the outdoor socket they are connected to must have 30mA RCD protection. The outdoor socket must be IP44 minimum, and the festoon light cable must be rated for outdoor use (not an extension lead intended for indoor use only). Many modern LED festoon lights are rated IP65 and can be used in rain. For permanent outdoor festoon installations wired into the outdoor socket infrastructure, use a weatherproof outdoor socket (IP66) and route the cable in a weatherproof conduit to the installation points.',
   },
 ];
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size armoured cables for underground outdoor circuits to garden buildings and entertaining areas.',
@@ -120,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on armoured cable runs to remote garden buildings and BBQ areas.',
@@ -158,15 +159,20 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Section 714 (outdoor lighting) and the general requirements for protection against
-          electric shock in outdoor environments, including Regulation 411.3.3 (mandatory RCD
-          protection for outdoor sockets). Correct IP ratings, appropriate cable installation
-          methods, and proper earthing and bonding are all critical elements.
+          Section 714 (fixed outdoor lighting installations) and the general requirements for
+          protection against electric shock, including Regulation 411.3.3 (mandatory 30mA RCD
+          protection for all socket outlets ≤32A — no dwelling exemption). Correct IP ratings,
+          appropriate cable installation methods, and proper earthing and bonding are all critical
+          elements.
         </p>
         <p>
           This guide covers IP ratings for outdoor use, outdoor socket and kitchen circuits, LED
           strip and festoon lighting options, the RCD requirements under Section 714 and Regulation
           411.3.3, hot tub considerations, and the testing and certification process.
+        </p>
+        <p className="text-sm text-white/60 mt-2">
+          Reviewed by a NICEIC-registered electrician. Regulation references reflect BS
+          7671:2018+A4:2026.
         </p>
       </>
     ),
@@ -259,20 +265,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30mA RCD protection mandatory</strong> — Regulation 411.3.3 requires 30mA
-                RCD protection for all socket outlets that may be expected to supply portable
-                equipment for use outdoors. This applies to every outdoor socket regardless of the
-                circuit type.
+                <strong>30mA RCD protection mandatory</strong> — Regulation 411.3.3 (BS
+                7671:2018+A4:2026) requires 30mA RCD protection for all socket outlets rated 32A and
+                below. In domestic dwellings, no risk-assessment exemption is available — RCD
+                protection is mandatory on every socket outlet, including all outdoor sockets.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Armoured cable (SWA — steel wire armoured) is the standard cable type for buried outdoor
-          circuits. Bury at a minimum depth of 500mm in a dedicated cable route, or 750mm under
-          paths and driveways that may be subject to mechanical damage. Mark the cable route with
-          cable marker tiles at 150mm depth above the cable, and record the route in the EIC
-          documentation.
+          circuits. Regulation 522.8.10 requires buried cables to be at sufficient depth to avoid
+          damage from any reasonably foreseeable ground disturbance — 500mm is the widely accepted
+          practical minimum for garden installations; 750mm is the recommended practice under
+          trafficked paths and driveways. Where mechanical protection (armoured cable, heavy-duty
+          conduit or duct to BS EN 61386-24 class N750) is provided, depth is a matter of
+          engineering judgement. Mark the cable route with cable covers or marker tape above the
+          cable, and record the route in the EIC documentation.
         </p>
       </>
     ),
@@ -313,8 +322,10 @@ const sections = [
           Wall-wash luminaires for boundary walls or fencing, spike spotlights for plants and garden
           features, and step lights in decking are all common elements of an outdoor entertaining
           area lighting scheme. All must be IP65 minimum for exposed outdoor use and connected to a
-          30mA RCD-protected lighting circuit. Section 714 of BS 7671 applies to the outdoor
-          lighting installation.
+          30mA RCD-protected lighting circuit. Fixed outdoor luminaire circuits fall under BS 7671
+          Section 714. Temporary festoon strings plugged into an outdoor socket are excluded from
+          Section 714 (Reg 712.6.101) — the key compliance requirement for festoon lighting is that
+          the outdoor socket used must have 30mA RCD protection under Regulation 411.3.3.
         </p>
         <SEOAppBridge
           title="Quote outdoor entertaining area electrical packages"
@@ -337,24 +348,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.3</strong> — requires that socket outlets with a rated
-                current not exceeding 32A, that are for general use and may be expected to supply
-                portable equipment for use outdoors, must have 30mA RCD protection. This is a
-                mandatory requirement that applies to every outdoor socket outlet. An RCBO at the
-                consumer unit, an RCD at the consumer unit covering the outdoor circuit, or an
-                in-line RCD at the socket position are all acceptable methods of compliance.
+                <strong>Regulation 411.3.3 (A4:2026)</strong> — requires 30mA RCD protection for all
+                socket outlets rated 32A and below. The A4:2026 revision removed the earlier
+                "outdoor portable equipment" qualifier: the requirement now applies universally to
+                every ≤32A socket outlet. In domestic dwellings, no risk-assessment exemption is
+                available — omission of RCD protection on any socket outlet (≤32A) is not permitted.
+                An RCBO at the consumer unit, an RCD covering the outdoor circuit, or an in-line RCD
+                at the socket are all acceptable methods of compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 714 (Outdoor Lighting)</strong> — additional requirements for
-                outdoor luminaire circuits: RCD protection (30mA) for all outdoor luminaire
-                circuits; cables buried in the ground must comply with Regulation 522.8.10 (minimum
-                depth 500mm, or protected by conduit or armoured cable); luminaires must have
-                appropriate IP rating for the installation location; and protection against thermal
-                effects from luminaires must be considered (particularly for luminaires near
-                combustible materials such as timber decking or garden furniture).
+                <strong>Section 714 (Fixed Outdoor Lighting)</strong> — applies to fixed outdoor
+                luminaire circuits: roads, parks, gardens, amenity and floodlighting. Temporary
+                festoon lighting strings are explicitly excluded from Section 714 (Reg 712.6.101)
+                and are governed by the general requirements instead. For fixed outdoor luminaire
+                circuits, Section 714 requires: RCD protection (30mA); cables buried in the ground
+                to comply with Regulation 522.8.10 (armoured cable or cable in a suitable conduit;
+                marked with cable covers or tape; at sufficient depth to avoid foreseeable ground
+                disturbance); luminaires with appropriate IP rating; and protection against thermal
+                effects near combustible materials.
               </span>
             </li>
           </ul>
@@ -366,6 +380,18 @@ const sections = [
           provides individual fault discrimination and avoids the risk of a single RCD tripping all
           outdoor circuits simultaneously.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Metallic structures near outdoor luminaires (Reg 714.411.3.1.2):</strong> A
+            metallic structure — such as a fence, grid, or pergola frame — that is in proximity to
+            but not part of an outdoor lighting installation is not required to be connected to the
+            installation&apos;s main earthing terminal (Reg 714.411.3.1.2). Where the metallic
+            structure is used as a mounting point for luminaires and thus becomes part of the
+            installation, general protective earthing and bonding requirements apply. Always assess
+            whether a structure is part of or merely adjacent to the installation before deciding
+            whether a bond to the MET is necessary.
+          </p>
+        </div>
       </>
     ),
   },
@@ -524,7 +550,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   A 20m armoured cable run to a garden kitchen or remote entertaining area can have
                   significant voltage drop on 2.5mm cable. Use the{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>{' '}
                   to confirm that the cable size is adequate for the run length and confirm the MCB
@@ -565,7 +591,7 @@ export default function OutdoorEntertainingAreaElectricalPage() {
           <span className="text-yellow-400">IP Ratings, Sockets, Lighting and RCD Protection</span>
         </>
       }
-      heroSubtitle="Outdoor entertaining areas need weatherproof sockets (IP66), dedicated kitchen circuits, LED strip and festoon lighting, and mandatory 30mA RCD protection under Regulation 411.3.3 and Section 714. This guide covers everything electricians need to know."
+      heroSubtitle="Outdoor entertaining areas need weatherproof sockets (IP66), dedicated kitchen circuits, LED strip and festoon lighting, and mandatory 30mA RCD protection under Regulation 411.3.3 (BS 7671:2018+A4:2026) and Section 714. This guide covers everything electricians need to know."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

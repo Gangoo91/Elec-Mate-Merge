@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated 32A circuit for EV charger installations with full correction factors.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description: 'Check whether the existing supply can handle the additional EV charger load.',
     icon: Gauge,
@@ -547,7 +547,7 @@ const sections = [
         </div>
         <p>
           Before installation, check the{' '}
-          <SEOInternalLink href="/max-demand-calculator">maximum demand</SEOInternalLink> of
+          <SEOInternalLink href="/tools/max-demand-calculator">maximum demand</SEOInternalLink> of
           the property. Adding a 7kW (32A) continuous load to a property already drawing 60A at peak
           times may exceed the supply capacity. If the total demand exceeds the supply fuse rating,
           a DNO application for a supply upgrade is needed — or a charger with dynamic load
@@ -575,7 +575,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Circuit Design on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to size the circuit during the survey. Enter the charger rating, cable length,
@@ -606,12 +606,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Invoice from Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the EV charger installation using Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Charger unit, cable, RCBO, earth rod, labour, and margin. Send a professional
-                  PDF quote from the survey visit. Do the job. Send the invoice. All from your
-                  phone.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Charger unit, cable, RCBO, earth rod, labour, and margin. Send a professional PDF
+                  quote from the survey visit. Do the job. Send the invoice. All from your phone.
                 </p>
               </div>
             </div>

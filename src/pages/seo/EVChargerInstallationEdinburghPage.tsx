@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -464,10 +464,8 @@ const sections = [
                   Factor in Edinburgh day rates (£320 to £420), stone wall routing challenges,
                   listed building and conservation area constraints, PME earthing requirements, and
                   factor consent timescales for tenement installations. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes on site.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes on site.
                 </p>
               </div>
             </div>

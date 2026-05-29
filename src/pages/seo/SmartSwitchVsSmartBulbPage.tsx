@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Do smart bulbs work with existing dimmer switches?',
     answer:
-      'Smart bulbs must not be used with conventional dimmer switches. A smart bulb already contains its own dimming circuitry — applying a leading edge or trailing edge dimmer to the supply feeding the smart bulb will interfere with the bulb\'s driver and cause flickering, buzzing, or premature failure. Smart bulbs must be installed on a standard on/off circuit (no dimming). If the customer wants dimming with smart bulbs, dimming is controlled via the app or smart home hub — the wall switch (if any) must remain permanently on. If dimming via a wall switch is required, install a smart switch (with dimming capability) on a circuit with conventional (non-smart) LED or halogen lamps.',
+      "Smart bulbs must not be used with conventional dimmer switches. A smart bulb already contains its own dimming circuitry — applying a leading edge or trailing edge dimmer to the supply feeding the smart bulb will interfere with the bulb's driver and cause flickering, buzzing, or premature failure. Smart bulbs must be installed on a standard on/off circuit (no dimming). If the customer wants dimming with smart bulbs, dimming is controlled via the app or smart home hub — the wall switch (if any) must remain permanently on. If dimming via a wall switch is required, install a smart switch (with dimming capability) on a circuit with conventional (non-smart) LED or halogen lamps.",
   },
   {
     question: 'What is the difference between Zigbee, Z-Wave, and Wi-Fi smart switches?',
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'What is the maximum load for a smart switch?',
     answer:
-      'Smart switches are rated for a maximum load — typically 250W to 500W for resistive loads (filament lamps, halogen). For LED loads, the rated load is often significantly lower — typically 150–250W — because LED driver switching can cause higher peak currents that stress the relay contacts. Always check the smart switch manufacturer\'s rated load for LED lamps specifically, not just the general wattage rating. Exceeding the rated load causes premature relay contact wear and can cause the relay to stick in the closed position (permanently on). For multi-gang smart switches serving multiple circuits, the rating applies to each individual switch module, not the total.',
+      "Smart switches are rated for a maximum load — typically 250W to 500W for resistive loads (filament lamps, halogen). For LED loads, the rated load is often significantly lower — typically 150–250W — because LED driver switching can cause higher peak currents that stress the relay contacts. Always check the smart switch manufacturer's rated load for LED lamps specifically, not just the general wattage rating. Exceeding the rated load causes premature relay contact wear and can cause the relay to stick in the closed position (permanently on). For multi-gang smart switches serving multiple circuits, the rating applies to each individual switch module, not the total.",
   },
   {
     question: 'How should smart lighting be certified on an Electrical Installation Certificate?',
@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for lighting circuits including smart switch rewiring projects.',
     icon: Calculator,
@@ -130,10 +130,10 @@ const sections = [
       <>
         <p>
           Smart home lighting is one of the most common electrician enquiries from domestic
-          customers. The choice between a smart switch and a smart bulb has significant
-          practical implications: smart switches require a neutral wire at the switch position
-          (often not present in older UK wiring), whilst smart bulbs require the wall switch
-          to remain permanently on.
+          customers. The choice between a smart switch and a smart bulb has significant practical
+          implications: smart switches require a neutral wire at the switch position (often not
+          present in older UK wiring), whilst smart bulbs require the wall switch to remain
+          permanently on.
         </p>
         <p>
           Understanding the technical constraints of each approach — and the wiring requirements
@@ -141,10 +141,9 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          — enables electricians to advise customers correctly and deliver reliable
-          smart lighting installations. This guide covers the technical differences, the
-          neutral wire problem, and how to decide which approach is appropriate for each
-          property.
+          — enables electricians to advise customers correctly and deliver reliable smart lighting
+          installations. This guide covers the technical differences, the neutral wire problem, and
+          how to decide which approach is appropriate for each property.
         </p>
       </>
     ),
@@ -155,11 +154,11 @@ const sections = [
     content: (
       <>
         <p>
-          A smart switch replaces the standard wall switch and contains the wireless radio
-          and control circuitry within the switch plate itself. The switch controls the mains
-          supply to the light fitting — switching the relay on or off either via the wall switch
-          button, a wireless command, or an automation routine. The light fitting uses any
-          lamp type: standard LED, halogen, or filament.
+          A smart switch replaces the standard wall switch and contains the wireless radio and
+          control circuitry within the switch plate itself. The switch controls the mains supply to
+          the light fitting — switching the relay on or off either via the wall switch button, a
+          wireless command, or an automation routine. The light fitting uses any lamp type: standard
+          LED, halogen, or filament.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">Smart Switch Advantages</h3>
@@ -177,7 +176,10 @@ const sections = [
             <div>
               <p className="font-bold text-white mb-1">Smart Switch Limitations</p>
               <ul className="space-y-1 text-white text-sm">
-                <li>• Requires neutral wire at switch position — not present in most UK switch-drop wiring</li>
+                <li>
+                  • Requires neutral wire at switch position — not present in most UK switch-drop
+                  wiring
+                </li>
                 <li>• More expensive than smart bulbs for single-lamp fittings</li>
                 <li>• Electrical competence required for installation</li>
               </ul>
@@ -193,10 +195,10 @@ const sections = [
     content: (
       <>
         <p>
-          A smart bulb replaces the lamp in an existing fitting. The wireless radio, colour
-          control circuitry, and LED driver are all integrated within the bulb. The bulb
-          connects to Wi-Fi or Zigbee and is controlled via an app, smart speaker, or
-          automation system. No changes to the existing wiring are required.
+          A smart bulb replaces the lamp in an existing fitting. The wireless radio, colour control
+          circuitry, and LED driver are all integrated within the bulb. The bulb connects to Wi-Fi
+          or Zigbee and is controlled via an app, smart speaker, or automation system. No changes to
+          the existing wiring are required.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">Smart Bulb Advantages</h3>
@@ -214,7 +216,10 @@ const sections = [
             <div>
               <p className="font-bold text-white mb-1">Smart Bulb Limitations</p>
               <ul className="space-y-1 text-white text-sm">
-                <li>• Wall switch must remain permanently on — disconnect means losing network connection</li>
+                <li>
+                  • Wall switch must remain permanently on — disconnect means losing network
+                  connection
+                </li>
                 <li>• Higher cost per lamp for multi-lamp fittings</li>
                 <li>• Not compatible with conventional dimmer switches</li>
                 <li>• Guests or children switching the wall switch causes connectivity loss</li>
@@ -231,45 +236,44 @@ const sections = [
     content: (
       <>
         <p>
-          The fundamental constraint for smart switches in UK properties is the absence of
-          a neutral wire at the switch position. In standard UK switch wiring using the
-          switch-drop method:
+          The fundamental constraint for smart switches in UK properties is the absence of a neutral
+          wire at the switch position. In standard UK switch wiring using the switch-drop method:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switch-drop method (most common in UK domestic):</strong> A two-core
-                and earth cable runs from the ceiling rose or junction box to the switch. At
-                the switch, there is an unswitched live (from the loop-in point) and a switched
-                live (returning to the lamp). There is no neutral conductor at the switch.
+                <strong>Switch-drop method (most common in UK domestic):</strong> A two-core and
+                earth cable runs from the ceiling rose or junction box to the switch. At the switch,
+                there is an unswitched live (from the loop-in point) and a switched live (returning
+                to the lamp). There is no neutral conductor at the switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loop-in method (older UK wiring):</strong> The live, neutral, and
-                switched live all run through the ceiling rose. The switch is wired with only
-                the switched live — again, no neutral at the switch.
+                <strong>Loop-in method (older UK wiring):</strong> The live, neutral, and switched
+                live all run through the ceiling rose. The switch is wired with only the switched
+                live — again, no neutral at the switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Neutral available (less common):</strong> Some properties have a
-                three-core and earth cable to the switch, providing live, neutral, switched
-                live, and CPC. This is the ideal configuration for smart switch installation
-                and is standard for smart home new builds.
+                <strong>Neutral available (less common):</strong> Some properties have a three-core
+                and earth cable to the switch, providing live, neutral, switched live, and CPC. This
+                is the ideal configuration for smart switch installation and is standard for smart
+                home new builds.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The solution for properties without neutral at the switch position is either to
-          run a new cable (three-core and earth from the ceiling rose to the switch), or to
-          use smart bulbs (which do not require a smart switch), or to use a no-neutral
-          smart switch if it is compatible with the specific LED lamps installed.
+          The solution for properties without neutral at the switch position is either to run a new
+          cable (three-core and earth from the ceiling rose to the switch), or to use smart bulbs
+          (which do not require a smart switch), or to use a no-neutral smart switch if it is
+          compatible with the specific LED lamps installed.
         </p>
       </>
     ),
@@ -280,33 +284,33 @@ const sections = [
     content: (
       <>
         <p>
-          Smart switches and smart bulbs are wiring accessories and electrical equipment that
-          must comply with BS 7671 and be CE or UKCA marked. Key compliance considerations:
+          Smart switches and smart bulbs are wiring accessories and electrical equipment that must
+          comply with BS 7671 and be CE or UKCA marked. Key compliance considerations:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth connection:</strong> Smart switches must be earthed via the CPC
-                in the switch-drop cable (Regulation 411.4.3). Verify the CPC is correctly
-                connected and continuous before installing the smart switch.
+                <strong>Earth connection:</strong> Smart switches must be earthed via the CPC in the
+                switch-drop cable (Regulation 411.4.3). Verify the CPC is correctly connected and
+                continuous before installing the smart switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Load rating:</strong> Do not exceed the manufacturer's rated load for
-                the smart switch — particularly for LED loads, where the rated wattage for LED
-                lamps is often lower than for resistive loads.
+                <strong>Load rating:</strong> Do not exceed the manufacturer's rated load for the
+                smart switch — particularly for LED loads, where the rated wattage for LED lamps is
+                often lower than for resistive loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Certification:</strong> If new wiring is added to provide a neutral,
-                this constitutes new electrical work. An EIC or Minor Works Certificate must
-                be issued for the new wiring.
+                <strong>Certification:</strong> If new wiring is added to provide a neutral, this
+                constitutes new electrical work. An EIC or Minor Works Certificate must be issued
+                for the new wiring.
               </span>
             </li>
           </ul>
@@ -355,17 +359,16 @@ const sections = [
     content: (
       <>
         <p>
-          Smart lighting installation is a growing revenue stream for electricians. Customers
-          who ask about smart bulbs often don't realise that a smart switch — installed
-          correctly with a neutral wire — provides a much more reliable and user-friendly
-          experience. Identifying the need for neutral wire provision and offering to rewire
-          the switch position (or run a new cable) adds professional value and increases the
-          job value significantly.
+          Smart lighting installation is a growing revenue stream for electricians. Customers who
+          ask about smart bulbs often don't realise that a smart switch — installed correctly with a
+          neutral wire — provides a much more reliable and user-friendly experience. Identifying the
+          need for neutral wire provision and offering to rewire the switch position (or run a new
+          cable) adds professional value and increases the job value significantly.
         </p>
         <p>
-          For new builds and full rewires, always wire four-core to switch positions as
-          standard — this future-proofs every switch position for any smart switch
-          technology without additional work later.
+          For new builds and full rewires, always wire four-core to switch positions as standard —
+          this future-proofs every switch position for any smart switch technology without
+          additional work later.
         </p>
       </>
     ),

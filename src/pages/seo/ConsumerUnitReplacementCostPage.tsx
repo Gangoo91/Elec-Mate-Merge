@@ -43,8 +43,9 @@ const keyTakeaways = [
   'A consumer unit replacement in the UK typically costs between £450 and £2,500 including materials, labour, Part P notification, and an Electrical Installation Certificate (EIC).',
   'Material costs range from around £90 for a basic 6-way enclosure to over £930 for a high-integrity 14-way unit with SPD and Type A RCBOs (trade prices from Wylex, BG Electrical, and Crabtree).',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or inspected by Building Control.',
-  'BS 7671:2018+A4:2026 (Regulation 421.1.201) requires that consumer units in domestic premises as a type-tested coordinated assembly. Since January 2016, all new consumer units in domestic premises must be metal (non-combustible) enclosures.',
-  'An Electrical Installation Certificate (EIC) must be issued after every consumer unit replacement, as confirmed by Regulation 421.1.201.',
+  'BS 7671:2018+A4:2026 Regulation 421.1.201 requires that consumer units in domestic premises shall comply with BS EN 61439-3 and have their enclosure manufactured from non-combustible material (or be enclosed in a non-combustible cabinet complying with Regulation 132.12). Since January 2016, following Amendment 3 to BS 7671:2008, all new domestic consumer units must use a non-combustible (metal) enclosure.',
+  'An Electrical Installation Certificate (EIC) must be issued after every consumer unit replacement, as required by Regulation 644.4.201 (which explicitly covers replacement of a distribution board or consumer unit) read with Regulation 120.3.',
+  'Arc fault detection devices (AFDDs) may be included in a consumer unit assembly to mitigate the risk of fire from arc faults, as recognised by BS 7671:2018+A4:2026 and the On-Site Guide 9th Edition. They are an optional but increasingly specified addition, particularly on bedroom and living-room circuits.',
 ];
 
 const faqs = [
@@ -61,7 +62,7 @@ const faqs = [
   {
     question: 'Do I need an SPD when replacing a consumer unit?',
     answer:
-      'Since the introduction of Amendment 2 to BS 7671:2018, surge protection devices (SPDs) are required in most new installations and consumer unit replacements. The risk assessment under Regulation 443.4 almost always results in SPD installation being necessary for domestic properties. An SPD adds approximately £80 to £150 to the material cost but provides valuable protection against transient overvoltages from lightning strikes and switching surges on the supply network.',
+      'Since the introduction of Amendment 2 to BS 7671:2018, surge protection devices (SPDs) are required where specified by Regulation 443.4. That regulation mandates SPD protection where transient overvoltages could (a) result in serious injury or loss of life, (b) interrupt public services or damage cultural heritage, (c) interrupt commercial or industrial activity, or (d) affect a large number of co-located individuals. For all other situations — including many domestic properties — a risk assessment is required to determine whether an SPD is necessary. There is an exception for single dwelling units in certain circumstances. In practice, electricians often recommend including an SPD during a consumer unit replacement due to the modest additional cost (approximately £80 to £150) versus the protection it provides against transient overvoltages from lightning and switching surges, but the installer must carry out the Section 443 assessment rather than assuming SPD is always required.',
   },
   {
     question: 'How long does a consumer unit replacement take?',
@@ -168,11 +169,13 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>
-          , Regulation 421.1.201 requires that consumer units in domestic premises be as a
-          type-tested coordinated assembly designed for use by ordinary persons, providing manual
-          double-pole isolation on incoming circuits. Since January 2016, Amendment 4 to BS 7671
-          mandated that all new domestic consumer units must be housed in a non-combustible (metal)
-          enclosure — a critical fire safety improvement.
+          , Regulation 421.1.201 requires that consumer units in domestic premises shall comply with
+          BS EN 61439-3 and have their enclosure manufactured from non-combustible material — or,
+          alternatively, be enclosed in a cabinet of non-combustible material complying with
+          Regulation 132.12. This non-combustible enclosure requirement has applied to all new
+          domestic consumer units since January 2016, when it was introduced by Amendment 3 to BS
+          7671:2008 (BS 7671:2008+A3:2015) — a critical fire safety improvement that the current
+          18th Edition carries forward.
         </p>
         <p>
           If your property still has an old plastic consumer unit, a rewirable fuse board, or a
@@ -254,6 +257,16 @@ const sections = [
               <span>
                 <strong>SPD (Surge Protection Device)</strong> — £80 to £150 including the dedicated
                 MCB for the SPD circuit.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AFDDs (Arc Fault Detection Devices)</strong> — £40 to £70 each at trade
+                price. Permitted as a fire-risk mitigation measure under OSG 9th Edition guidance,
+                AFDDs detect hazardous arc faults and disconnect the circuit before ignition can
+                occur. Not mandatory on all circuits, but increasingly specified on bedroom and
+                lounge circuits where ignition risk is higher.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -431,10 +444,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Meter tail replacement</strong> — BS 7671 Regulation 528.3 requires secure
-                connections. If the existing meter tails are undersized, damaged, or use old
-                ferrules, they should be replaced. This typically requires coordination with the DNO
-                or meter operator.
+                <strong>Meter tail replacement</strong> — if the existing meter tails are
+                undersized, damaged, or use old ferrules, they should be replaced. Meter tails are
+                not within the scope of the installation controlled by the electrician (the DNO fuse
+                and meter equipment is network property), so tail replacement typically requires
+                coordination with the DNO or meter operator.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -508,6 +522,17 @@ const sections = [
                 required.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Arc fault detection (AFDD)</strong> — under BS 7671:2018+A4:2026 and OSG 9th
+                Edition guidance, a consumer unit assembly may include arc fault detection devices
+                (AFDDs) to mitigate the risk of arc-fault ignition. AFDDs detect the characteristic
+                signature of hazardous arc faults and disconnect the affected circuit to reduce the
+                risk of fire. Including AFDDs is a permitted enhancement when specifying a new
+                consumer unit; they add approximately £40 to £70 per circuit at trade price.
+              </span>
+            </li>
           </ul>
         </div>
       </>
@@ -528,11 +553,13 @@ const sections = [
           afterwards.
         </p>
         <p>
-          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate (EIC)
-          must be issued for all new installations, additions, or alterations that introduce new
-          circuits — including consumer unit replacements. The EIC documents the design,
-          construction, inspection, and testing of the installation and provides the homeowner with
-          proof of compliance.
+          Regulation 644.4.201 of BS 7671:2018+A4:2026 explicitly requires that an Electrical
+          Installation Certificate (EIC) — based on the model in Appendix 6 — shall be issued upon
+          completion of verification of a new installation, an addition or alteration, or the
+          replacement of a distribution board or consumer unit. Regulation 120.3 confirms that the
+          EIC is the correct certification document to use for a consumer unit replacement. The EIC
+          documents the design, construction, inspection, and testing of the installation and
+          provides the homeowner with proof of compliance.
         </p>
         <p>
           A registered electrician will self-certify the work and submit notification to the local
@@ -617,10 +644,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes with real trade pricing data. The AI cost engineer checks
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes with real trade pricing data. The AI cost engineer checks
                   your material costs against current wholesaler prices and flags anything that
                   looks too high or too low.
                 </p>

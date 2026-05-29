@@ -297,7 +297,9 @@ const sections = [
               Guide. Each cable has a cable factor based on its overall diameter, and the total of
               all cable factors must not exceed 45% of the trunking internal cross-sectional area.
               The AI selects the smallest standard{' '}
-              <SEOInternalLink href="/trunking-fill-calculator">trunking size</SEOInternalLink>{' '}
+              <SEOInternalLink href="/tools/trunking-fill-calculator">
+                trunking size
+              </SEOInternalLink>{' '}
               that satisfies this requirement and specifies the appropriate fixing method and
               spacing.
             </p>
@@ -306,7 +308,7 @@ const sections = [
             <h4 className="font-bold text-white mb-2">Conduit</h4>
             <p className="text-white text-sm leading-relaxed">
               For conduit installations, the AI uses the{' '}
-              <SEOInternalLink href="/conduit-fill-calculator">
+              <SEOInternalLink href="/tools/conduit-fill-calculator">
                 conduit factor tables
               </SEOInternalLink>{' '}
               to determine the correct conduit size based on the number and size of cables and the

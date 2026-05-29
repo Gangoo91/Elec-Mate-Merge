@@ -87,14 +87,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for outdoor socket installations including SWA buried cable runs.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long outdoor cable runs from consumer unit to socket.',
     icon: Zap,
@@ -359,7 +359,7 @@ const sections = [
         </div>
         <p>
           For cable runs exceeding 20 metres, voltage drop becomes a consideration. Use the{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           to check that the total voltage drop does not exceed 5% (11.5V) at full load. Longer runs
@@ -479,7 +479,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable run from consumer unit to outdoor socket with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Check voltage drop on longer runs. Get the correct cable size confirmed on site
@@ -495,10 +495,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete job with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . IP66 socket, SWA cable (per metre), RCBO, glands, trenching labour, testing, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  IP66 socket, SWA cable (per metre), RCBO, glands, trenching labour, testing, and
                   Part P notification — all itemised with your margins.
                 </p>
               </div>

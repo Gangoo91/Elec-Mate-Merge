@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Storage heaters require a dedicated off-peak circuit, separate from the normal power circuits. This circuit is controlled by a time switch or teleswitch that only provides power during off-peak hours.',
   'Element failure is common in older storage heaters. Elements are embedded in thermal bricks and cannot be easily replaced on most models — a failed element usually means replacing the entire heater.',
   'If none of your storage heaters are working, the most likely cause is a fault with the off-peak supply — the time switch, teleswitch, or the off-peak meter may have failed. Check whether the off-peak circuit MCB has tripped.',
-  'Regulation 411.3.3 of BS 7671 requires RCD protection where the risk of electric shock is increased. Storage heater circuits should have appropriate overcurrent protection matched to the cable rating and heater load.',
+  'Storage heater circuits are dedicated fixed-wiring circuits and must have overcurrent protection correctly rated for the cable size and connected load in accordance with Part 4 of BS 7671. BS 7671:2018+A4:2026 Reg 411.3.3 applies specifically to socket-outlets rated not exceeding 32 A and does not apply to fixed heating circuits.',
 ];
 
 const faqs = [
@@ -477,11 +477,54 @@ const sections = [
                   Modern storage heaters (Dimplex Quantum, Elnur, etc.) are significantly more
                   efficient with fan-assisted heat release and automatic controls. When replacing,
                   check the circuit capacity — modern high-output heaters may require a larger cable
-                  and MCB. Issue a{' '}
+                  and MCB. Where the existing circuit is unaltered, a{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
-                  for the replacement.
+                  (Reg 644.4.201) is appropriate. If the circuit cable or protective device is
+                  uprated, or a new circuit is provided, an{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">
+                    Electrical Installation Certificate
+                  </SEOInternalLink>{' '}
+                  is required instead. In dwellings, the work may also be notifiable under Part P of
+                  the Building Regulations.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  4. Regulatory Requirements — Chapter 75
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Storage heater installations fall within Part 7, Chapter 75 of BS 7671. Regulation
+                  753.515.1 requires that electric heating systems are selected and erected so as to
+                  avoid any harmful influence between the heating system and any electrical or
+                  non-electrical installations envisaged. In practice this means ensuring adequate
+                  clearance from combustible materials, that wiring routes do not suffer derating
+                  due to the heat output, and that protective devices in adjacent circuits are not
+                  adversely affected. Regulation 753.515.101 additionally prohibits heating units
+                  from crossing expansion joints in the building structure.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">5. A4:2026 — AFDD Recommendation</h4>
+                <p className="text-white text-sm leading-relaxed">
+                  BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
+                  detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate
+                  the risk of fire due to arc fault currents. The wording is recommendatory rather
+                  than mandatory, but for new or replacement storage heater circuits in dwellings
+                  the recommendation should be considered and, where not adopted, the decision
+                  documented. AFDDs are fitted at the consumer unit in place of, or combined with,
+                  the circuit MCB.
                 </p>
               </div>
             </div>

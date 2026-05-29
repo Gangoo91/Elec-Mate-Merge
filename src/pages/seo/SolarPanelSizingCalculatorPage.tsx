@@ -21,7 +21,7 @@ export default function SolarPanelSizingCalculatorPage() {
       title="Solar Panel Sizing Calculator UK | Free Tool"
       description="Calculate solar panel system size for UK installations. Determine kWp capacity, estimate annual yield based on roof orientation and tilt…"
       datePublished="2026-01-30"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Solar Panel Sizing Calculator', href: '/tools/solar-panel-sizing-calculator' },
@@ -33,6 +33,8 @@ export default function SolarPanelSizingCalculatorPage() {
         { id: 'annual-yield', label: 'Annual Yield Estimation' },
         { id: 'battery-sizing', label: 'Battery Storage Sizing' },
         { id: 'g98-g99', label: 'G98/G99 Grid Connection' },
+        { id: 'dc-side-safety', label: 'DC-Side Safety' },
+        { id: 'commissioning-testing', label: 'Commissioning and Testing' },
         { id: 'how-to', label: 'Step-by-Step Guide' },
         { id: 'features', label: 'Features' },
         { id: 'faq', label: 'FAQs' },
@@ -53,13 +55,15 @@ export default function SolarPanelSizingCalculatorPage() {
         { icon: Battery, label: 'Battery Sizing' },
         { icon: Shield, label: 'G98/G99 Limits' },
       ]}
-      readingTime={11}
+      readingTime={15}
       keyTakeaways={[
         'A typical UK domestic solar PV system is 3-4kWp, using 8-10 panels of 400-430W each, and generates approximately 3,000-4,000kWh per year depending on location and orientation.',
         'South-facing roofs at a tilt of 30-40 degrees produce the highest annual yield in the UK — approximately 850-1,050kWh per kWp installed, depending on geographic location.',
         'East and west-facing systems produce approximately 85-90% of the yield of a south-facing system, but spread generation more evenly across the day, which can improve self-consumption.',
         'Systems up to 3.68kW (single-phase) or 11.04kW (three-phase) can connect under G98 (simplified notification). Larger systems require G99 (full application) to the DNO.',
         'Battery storage of 5-10kWh is typical for domestic systems, allowing surplus daytime generation to be stored for evening use and increasing self-consumption from 30-40% to 60-80%.',
+        'DC strings remain live and at hazardous voltage whenever panels are in daylight — even with the AC isolator off and the inverter disconnected. All DC-side equipment must have double or reinforced insulation (BS 7671 Reg 712.410.101–102).',
+        'BS 7671:2018+A4:2026 has extensively revised Section 712. All current solar PV designs must use the A4:2026 edition. Commissioning requires IR test per string (≥1MΩ at 500V DC), Voc and polarity checks, and a recorded commissioning report.',
       ]}
       sections={[
         {
@@ -67,6 +71,18 @@ export default function SolarPanelSizingCalculatorPage() {
           heading: 'Solar Panel Sizing Basics for UK Installations',
           content: (
             <>
+              <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 mb-4">
+                <p className="font-semibold text-orange-300 mb-2">
+                  A4:2026 Compliance Alert — Section 712 Extensively Revised
+                </p>
+                <p className="text-white text-sm">
+                  BS 7671:2018+A4:2026 has extensively revised and expanded Section 712 (Solar
+                  Photovoltaic Power Supply Systems). All current PV system designs must use the
+                  A4:2026 edition. Earlier editions of Section 712 are superseded and do not reflect
+                  current regulatory requirements.{' '}
+                  <span className="text-orange-300 font-medium">(BS 7671 Reg 711.42)</span>
+                </p>
+              </div>
               <p>
                 Solar panel sizing is the process of determining the optimal system capacity
                 (measured in kilowatts peak, or kWp) for a specific property. The goal is to match
@@ -84,18 +100,17 @@ export default function SolarPanelSizingCalculatorPage() {
                 For electricians, solar PV represents one of the fastest-growing areas of work. The
                 electrical installation must comply with BS 7671 Part 712 (Solar Photovoltaic Power
                 Supply Systems), and the grid connection must meet Engineering Recommendation G98 or
-                G99. The{' '}
-                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> for
-                the solar installation must record the system details, inverter specifications, and
-                AC/DC isolation arrangements.
+                G99. The <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
+                for the solar installation must record the system details, inverter specifications,
+                and AC/DC isolation arrangements.
               </p>
               <p>
                 The Elec-Mate solar sizing calculator handles the design calculations, while the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 verify the AC and DC cabling for the installation.
@@ -311,9 +326,22 @@ export default function SolarPanelSizingCalculatorPage() {
                 </ul>
               </div>
               <p>
-                Battery installations require specific electrical design considerations under BS
-                7671 Part 712 and the battery manufacturer's installation requirements. Isolation,
-                ventilation, and fire safety must be considered. The{' '}
+                Battery installations carry specific regulatory obligations beyond standard Part 712
+                requirements. The IET Code of Practice for Electrical Energy Storage Systems is the
+                required reference for determining testing regimes, acceptance criteria, and safety
+                tests (including battery isolation, DC earthing arrangements, and battery management
+                system considerations) — see GN3 Reg 1.7.
+              </p>
+              <p>
+                Where a stationary secondary battery is installed, mandatory warning notices must be
+                fixed at the origin of the installation, at the metering position (if remote from
+                the origin), and at each consumer unit or distribution board supplied from the
+                battery — per GN3 Reg 2.37. Additionally, Reg 712.514.102 requires a permanent
+                warning notice at every point of access to DC live parts (distribution boards,
+                combiner boxes) stating that live parts may remain energised after isolation.
+              </p>
+              <p>
+                Isolation, ventilation, and fire safety must also be considered. The{' '}
                 <SEOInternalLink href="/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
@@ -375,6 +403,119 @@ export default function SolarPanelSizingCalculatorPage() {
               </p>
             </>
           ),
+        },
+        {
+          id: 'dc-side-safety',
+          heading: 'DC-Side Safety — Critical Considerations for Electricians',
+          content: (
+            <>
+              <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-5 mb-4">
+                <p className="font-semibold text-red-300 mb-2">
+                  Safety Warning — DC Strings Remain Live After AC Isolation
+                </p>
+                <p className="text-white text-sm">
+                  Under BS 7671 Reg 712.410.101, all electrical equipment on the DC side of a PV
+                  installation shall be considered to be energised — even when the AC side is
+                  disconnected from the grid and even when the inverter is isolated from the DC
+                  conductors. PV arrays continue to generate voltage in daylight regardless of
+                  isolation state.
+                </p>
+              </div>
+              <p>
+                This is one of the most critical safety distinctions between solar PV and
+                conventional electrical work. Switching off an AC isolator or the inverter does not
+                make the DC strings safe to work on. DC cable runs, combiner boxes, and string
+                fusing remain at hazardous voltages (potentially 600V DC or higher on residential
+                systems) whenever the panels are exposed to daylight.
+              </p>
+              <p>
+                To provide shock protection on the DC side, BS 7671 Reg 712.410.102 requires that
+                one of the following protective measures is applied to all DC-side equipment:
+              </p>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <ul className="space-y-2 text-white text-sm">
+                  <li>
+                    <strong className="text-yellow-400">
+                      (a) Double or reinforced insulation (Section 412):
+                    </strong>{' '}
+                    DC wiring, enclosures, and equipment use double insulation or reinforced
+                    insulation to provide protection against electric shock without relying on
+                    earthing.
+                  </li>
+                  <li>
+                    <strong className="text-yellow-400">(b) SELV or PELV (Section 414):</strong> The
+                    DC side is arranged so that voltage is maintained within extra-low voltage
+                    limits. This is only practicable for very small systems.
+                  </li>
+                </ul>
+              </div>
+              <p>
+                In practice, the double insulation route (option a) is used for virtually all
+                residential and commercial PV installations. This means specified double-insulated
+                DC cable (typically to EN 50618 / H1Z2Z2-K), double-insulated connectors (such as
+                MC4 or compatible), and double-insulated DC isolators throughout the DC string runs.
+                Single-insulated cable is not acceptable for exposed DC string wiring.
+              </p>
+            </>
+          ),
+        },
+        {
+          id: 'commissioning-testing',
+          heading: 'Commissioning and Testing — BS EN 62446 Requirements',
+          content: (
+            <>
+              <p>
+                Every PV system requires a commissioning test sequence before handover. BS 7671 Part
+                712 and BS EN 62446 (Grid-connected PV systems — minimum requirements for system
+                documentation, commissioning tests, and inspection) define the acceptance test
+                regime. The following tests must be completed and recorded in the commissioning
+                report:
+              </p>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <ul className="space-y-2 text-white text-sm">
+                  <li>
+                    <strong className="text-yellow-400">Insulation resistance (IR) test:</strong>{' '}
+                    Each string tested at 500V DC between live conductors and earth. Acceptance
+                    criterion: ≥1MΩ (per PWI acceptance criteria for PV strings).
+                  </li>
+                  <li>
+                    <strong className="text-yellow-400">Open-circuit voltage (Voc) check:</strong>{' '}
+                    Measure the open-circuit voltage of each string and compare against the expected
+                    value calculated from the panel datasheets and site temperature. A significant
+                    deviation indicates a wiring fault or damaged panel.
+                  </li>
+                  <li>
+                    <strong className="text-yellow-400">Polarity check:</strong> Verify correct
+                    polarity of all PV string connections, including MC4 connectors, before
+                    connecting to the inverter. Reversed polarity can damage the inverter.
+                  </li>
+                  <li>
+                    <strong className="text-yellow-400">Earth continuity:</strong> Verify continuity
+                    of all protective bonding conductors (dead test) prior to energisation.
+                  </li>
+                  <li>
+                    <strong className="text-yellow-400">AC output verification:</strong> Commission
+                    the inverter per manufacturer instructions and verify AC output voltage and
+                    frequency are within supply limits.
+                  </li>
+                </ul>
+              </div>
+              <p>
+                All test results must be recorded in the commissioning report. Failing to record
+                results is a common error on PV installations and means the system cannot be
+                formally signed off. The{' '}
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> for the
+                installation should reference the commissioning report and record the system
+                details, inverter type, string configuration, and verification results.
+              </p>
+            </>
+          ),
+          appBridge: {
+            title: 'Generate PV System EIC Certificates',
+            description:
+              'Elec-Mate EIC certificates support solar PV system details, commissioning test results, and BS 7671 Part 712 compliance sign-off.',
+            icon: FileCheck2,
+          },
         },
       ]}
       howToSteps={[
@@ -483,7 +624,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size AC and DC cables for solar PV installations to BS 7671 with voltage drop checks.',
@@ -499,7 +640,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate total installation demand including solar PV export and battery storage.',

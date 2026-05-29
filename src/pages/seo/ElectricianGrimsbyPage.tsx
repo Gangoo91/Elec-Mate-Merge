@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       "Size cables for rewires and new circuits across Grimsby's varied residential and commercial stock.",
@@ -502,7 +502,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculations</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to accurately size cables for rewires across Grimsby's inter-war and post-war

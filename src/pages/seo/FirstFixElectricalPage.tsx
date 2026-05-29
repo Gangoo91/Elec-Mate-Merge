@@ -42,6 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'First fix electrical covers all cabling, containment, back boxes, and infrastructure installed before plastering — getting it wrong means chasing out finished walls later.',
   'Cable routes must comply with BS 7671 safe zones (Regulation 522.6.202) to prevent future damage from nails, screws, and fixings driven into walls by other trades or occupants.',
+  'A4:2026 (BS 7671:2018+A4:2026) introduces two new requirements that affect consumer unit design at first fix: Regulation 411.3.4 mandates 30mA RCD protection for all domestic lighting circuits; Regulation 421.1.7 recommends AFDD installation on AC final circuits.',
   'Coordination with plumbers, plasterers, and carpenters is essential — agree back box positions, chase depths, and board access points before anyone starts work.',
   'Part P notification is required for new circuits in dwellings, new consumer units, and work in special locations (bathrooms, kitchens with new circuits, swimming pools, saunas).',
   "Elec-Mate's AI circuit designer helps plan the full first fix layout — circuit allocation, cable routes, and containment — before you pick up a drill.",
@@ -56,7 +57,7 @@ const faqs = [
   {
     question: 'What are the BS 7671 safe zones for cable routes?',
     answer:
-      'BS 7671 Regulation 522.6.202 defines prescribed zones (safe zones) where cables can be installed in walls to minimise the risk of damage from nails, screws, and fixings. Cables must be run horizontally or vertically from an accessory position (socket, switch, or other fixed electrical equipment). Horizontal runs must be within 150mm of the ceiling or floor. Vertical runs must be directly above or below the accessory, within 150mm of the corner of the wall, or within a defined zone around door and window frames. Cables outside safe zones must either be protected by an RCD with a rated residual current not exceeding 30mA, enclosed in earthed metallic containment, or buried at a depth of at least 50mm from the finished wall surface. In practice, staying within safe zones is the simplest approach and avoids reliance on RCD protection for mechanical protection.',
+      'BS 7671 Regulation 522.6.202 defines prescribed zones (safe zones) where cables can be installed in walls to minimise the risk of damage from nails, screws, and fixings. The three prescribed zones are: (a) within 150mm of the top of the wall or partition (ceiling line); (b) within 150mm of an angle formed by two adjoining walls or partitions (a wall corner); and (c) horizontally and vertically from any accessory, point, or switchgear on the wall — i.e. directly above, below, or to the side of a socket, switch, or other fixed equipment. There is no prescribed zone at the bottom of the wall (floor line). For cables installed in walls, Table 52.1 sets out the required protection based on depth from the surface and wall construction type. Cables in a prescribed zone must be protected by a 30mA RCD (Regulation 415.1.1) or alternatively comply with Regulation 522.6.204 (for example, installation in earthed metallic enclosure). In practice, routing within safe zones and ensuring 30mA RCD protection on all circuits — which is also now required for domestic lighting circuits under Regulation 411.3.4 — is the standard approach.',
   },
   {
     question: 'How deep should cable chases be in walls?',
@@ -72,6 +73,11 @@ const faqs = [
     question: 'What cables should I use for first fix in a new build?',
     answer:
       'For domestic first fix in a new build, the standard cable types are Twin and Earth (T+E) flat profile cable to BS 7671 and BS 6004. Common sizes are 1.0mm2 for lighting circuits, 2.5mm2 for socket ring circuits and radial socket circuits up to 20A, 4.0mm2 for dedicated cooker circuits, immersion heater circuits, or radial circuits up to 32A, 6.0mm2 for larger cooker circuits or electric shower circuits up to 40A, and 10.0mm2 for higher-rated shower or cooker circuits. For fire alarm cables, use fire-resistant cable (e.g., FP200 Gold or equivalent) to BS 5839. For data and telecommunications, Cat6 UTP cable is standard for future-proofing. All cables should be BASEC or equivalent approved. Cable colours follow BS 7671: brown (L), blue (N), green/yellow (E) for single phase T+E cable. Use cable markers or sleeving where cores are used for switching (e.g., the blue core of a switch drop must be sleeved brown to indicate it is a switched live).',
+  },
+  {
+    question: 'Do cables in insulated walls or loft spaces need to be derated?',
+    answer:
+      'Yes — this is one of the most commonly overlooked first fix issues in new builds. Where a cable is likely to be totally surrounded by thermal insulation for a length of more than 0.5m, its current-carrying capacity must be taken as 0.5 times the value for that cable clipped direct to a surface (Reference Method C). This is required by BS 7671 and confirmed by OSG Regulation 2.6. For shorter lengths in insulation (less than 0.5m), a graduated reduction applies using the Table F2 derating factors (0.88 at 50mm down to 0.51 at 400mm), depending on cable size and the thermal conductivity of the insulation. In Part L-compliant new builds, external walls, loft spaces, and ceiling voids are heavily insulated — meaning almost every cable run in those areas is affected. The practical consequence at first fix is that cable sizes chosen without accounting for insulation derating will be undersized. A 2.5mm² socket circuit that would normally be adequate may need to be 4.0mm² once the derating factor for a fully insulated route is applied. Size cables before ordering materials, not after.',
   },
   {
     question: 'How do I coordinate first fix electrical with the plumber?',
@@ -105,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for every circuit before ordering materials for first fix.',
     icon: Calculator,
@@ -194,28 +200,64 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Horizontal runs</strong> — within 150mm of the top of the wall (ceiling
-                line) or within 150mm of the bottom of the wall (floor line).
+                <strong>Zone (a) — top of wall</strong> — within 150mm of the top of the wall or
+                partition (the ceiling line).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Vertical runs</strong> — directly above or below an accessory position
-                (switch, socket, spur, etc.), or within 150mm of a wall corner.
+                <strong>Zone (b) — wall corners</strong> — within 150mm of an angle formed by two
+                adjoining walls or partitions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Door and window frames</strong> — within 150mm of the edge of the frame.
+                <strong>Zone (c) — from accessories</strong> — horizontally and vertically from any
+                accessory, point, or switchgear on the wall (i.e. directly above, below, or to the
+                side of a socket, switch, or spur).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outside safe zones</strong> — cables must be protected by 30mA RCD, enclosed
-                in earthed metallic containment, or buried at 50mm depth minimum.
+                <strong>All concealed cables (regardless of zone)</strong> — Table 52.1 applies to
+                every cable in a wall. Cables in a prescribed zone must additionally be protected by
+                a 30mA RCD (Reg 415.1.1) or comply with Reg 522.6.204 (e.g. earthed metallic
+                enclosure). There is no "floor line" prescribed zone — plan routes accordingly.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <h4 className="font-bold text-white mb-3">A4:2026 First Fix Planning Requirements</h4>
+          <p className="text-white text-sm mb-3">
+            BS 7671:2018+A4:2026 introduced two regulations that directly affect consumer unit
+            design and circuit allocation — both must be considered at first fix stage before the
+            board position is fixed and cable sizes are ordered.
+          </p>
+          <ul className="space-y-3 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 411.3.4 — 30mA RCD on domestic lighting circuits (mandatory)</strong> —
+                within domestic (household) premises, additional protection by an RCD with a rated
+                residual operating current not exceeding 30mA <em>shall</em> be provided for all AC
+                final circuits supplying luminaires. This is mandatory ("shall"), not advisory. At
+                first fix it means every lighting circuit cable run must be assigned to an
+                RCD-protected way on the board schedule.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Reg 421.1.7 — AFDDs on AC final circuits (recommended)</strong> — BS 7671
+                recommends installation of arc fault detection devices (AFDDs) to mitigate the risk
+                of fire in AC final circuits of a fixed installation due to arc fault currents. The
+                wording is advisory ("recommending"), not mandatory. At first fix, AFDD provision
+                affects the consumer unit type and the number of ways required — factor this into
+                the board schedule before ordering the unit.
               </span>
             </li>
           </ul>
@@ -327,7 +369,7 @@ const sections = [
               Mini-trunking and dado trunking are used for surface-mounted cable management,
               commonly in commercial offices and retail premises. Available in various sizes from
               16x16mm to 100x50mm and larger. Use Elec-Mate's{' '}
-              <SEOInternalLink href="/trunking-fill-calculator">
+              <SEOInternalLink href="/tools/trunking-fill-calculator">
                 trunking fill calculator
               </SEOInternalLink>{' '}
               to check the cable count does not exceed the 45% fill rate.
@@ -345,7 +387,9 @@ const sections = [
         </div>
         <p>
           When calculating containment fill rates, use Elec-Mate's{' '}
-          <SEOInternalLink href="/conduit-fill-calculator">conduit fill calculator</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/conduit-fill-calculator">
+            conduit fill calculator
+          </SEOInternalLink>{' '}
           to verify the cables fit within the maximum permitted fill percentage. Overfilled
           containment makes cable pulling difficult, can damage cable insulation, and reduces
           current-carrying capacity due to inadequate heat dissipation.
@@ -561,8 +605,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
+                EV charger circuit cable sized with consumer unit capacity assessed — Regulation
+                722.311.201 permits load curtailment (smart charging / automatic demand management)
+                to be taken into account when determining maximum demand, which can reduce the
+                required cable and board capacity. Required for new builds under Building
+                Regulations Part S.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
                 All cables follow safe zone routes (vertical/horizontal from accessories, within
-                150mm of corners, ceiling, or floor).
+                150mm of corners or ceiling line — not floor line).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -583,6 +637,15 @@ const sections = [
               <span>
                 Cables are labelled or identified at both ends (at the accessory position and at the
                 consumer unit position). This saves hours at second fix.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                Continuity and insulation resistance tests carried out on all circuits before
+                plastering — results recorded as part of initial verification. GN3 Regulation 2.5.1
+                requires that elements likely to be covered are inspected and tested before being
+                made inaccessible; this is part of compliance with Regulation 641.1.
               </span>
             </li>
             <li className="flex items-start gap-3">

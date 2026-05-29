@@ -38,9 +38,11 @@ const tocItems = [
 const keyTakeaways = [
   'Steel Wire Armoured (SWA) cable is the standard for underground and external electrical installations in the UK, providing mechanical protection against accidental damage.',
   'The armour wires on SWA cable must be connected to earth at both ends of the run using appropriate SWA cable glands with a lock-nut and earth tag — the armour itself provides the circuit protective conductor.',
-  'Minimum burial depth under footpaths is 500mm and under driveways or roads is 600mm, measured to the top of the cable. Route markers and warning tape should be installed above the cable.',
+  'Buried SWA cable must be at a sufficient depth to avoid damage from any reasonably foreseeable disturbance of the ground (BS 7671 Reg 522.8.10). The IET On-Site Guide recommends 500mm under footpaths and 600mm under driveways as practical benchmarks. The cable location must be marked with cable covers or marker tape.',
   'Select the correct number of cores for the application: 2-core for single-phase with separate earth, 3-core for single-phase with armour earth, 4-core for three-phase.',
   'SWA cable glands must be rated to at least the same IP rating as the enclosure they terminate into. IP66 and IP68 glands are common for outdoor and underground work.',
+  'Always fit the gland shroud over the cable before fitting the gland body — once the gland is tightened onto the enclosure the shroud cannot be fitted retrospectively.',
+  'Voltage drop for SWA runs must be checked against the limits in BS 7671 Appendix 4, Section 6.4 (4% for final circuits, 3% for lighting). On site, apply a 0.8 correction factor to the Table 41.2 Zs limit to account for conductor temperature at the time of test.',
 ];
 
 const faqs = [
@@ -52,7 +54,7 @@ const faqs = [
   {
     question: 'What is the minimum burial depth for SWA cable in the UK?',
     answer:
-      'Under BS 7671 and the IET Wiring Regulations, the minimum burial depth for SWA cable is 500mm under footpaths and areas unlikely to be disturbed, and 600mm under driveways, roads, or areas subject to vehicle loading. These depths are measured from the surface to the top of the cable. Cable route marker tape should be laid 150mm above the cable, and cable route markers should be installed at the surface at regular intervals and at every change of direction.',
+      'BS 7671 Regulation 522.8.10 requires buried cables to be at a sufficient depth to avoid damage from any reasonably foreseeable disturbance of the ground. The IET On-Site Guide gives practical guidance of 500mm under footpaths and garden areas, and 600mm under driveways and areas subject to vehicle loading, measured from the surface to the top of the cable. Regulation 522.8.10 also requires the cable location to be marked by cable covers or suitable marker tape. Cable route markers should be installed at the surface at regular intervals and at every change of direction.',
   },
   {
     question: 'Can SWA cable be used as the earth conductor?',
@@ -282,9 +284,9 @@ const sections = [
         <p>
           Always apply correction factors for grouping (Ca), ambient temperature (Cg), and soil
           thermal resistivity before selecting cable size. Verify voltage drop does not exceed the
-          limits in BS 7671 Appendix 12 (4% for final circuits, 3% for lighting circuits from the
-          origin of the installation). A cable sizing calculation should be documented and retained
-          as part of the installation records.
+          limits in BS 7671 Appendix 4, Section 6.4 (4% for final circuits, 3% for lighting circuits
+          from the origin of the installation). A cable sizing calculation should be documented and
+          retained as part of the installation records.
         </p>
       </>
     ),
@@ -331,7 +333,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — fit the gland</strong> — slide the back-nut and cone over the
+                <strong>Step 4 — fit the shroud first</strong> — slide the plastic shroud over the
+                cable before fitting the gland body. Once the gland is tightened onto the enclosure
+                the shroud cannot be passed over it. This is the single most common SWA termination
+                error in practice — a shroud omitted at this stage cannot be retrofitted without
+                stripping the termination back.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 5 — fit the gland</strong> — slide the back-nut and cone over the
                 armour wires (cone first, cone taper facing the gland body). Feed the cable through
                 the gland body entry hole in the enclosure. Tighten the back-nut to draw the cone
                 under the armour wires and clamp them firmly. Do not overtighten — the armour wires
@@ -341,7 +353,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 5 — earth connection</strong> — fit an earth tag (lug) between the
+                <strong>Step 6 — earth connection</strong> — fit an earth tag (lug) between the
                 gland body and the enclosure lock-nut. Connect a green/yellow earth conductor from
                 the earth tag to the enclosure earth bar. This provides the earth continuity between
                 the armour and the installation earth.
@@ -356,7 +368,11 @@ const sections = [
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
             BS 7671 Table 41.2
           </SEOInternalLink>{' '}
-          for the relevant protective device.
+          for the relevant protective device. On site, conductors are typically below their maximum
+          operating temperature at the time of test, so apply a 0.8 correction factor to the Table
+          41.2 limit (equivalently, multiply your measured Zs by 1.25) before comparing to the
+          tabulated value — this is the temperature-correction approach set out in GN3 and
+          referenced by BS 7671 Regs 411.4.201–411.4.204 and Appendix 3.
         </p>
       </>
     ),
@@ -369,32 +385,35 @@ const sections = [
         <p>
           Burial depth is a critical aspect of underground SWA cable installation. Insufficient
           depth increases the risk of accidental damage from digging, which can cause electrocution
-          and fire. BS 7671 and the IET On-Site Guide specify minimum depths.
+          and fire. BS 7671 Regulation 522.8.10 requires buried cables to be at a sufficient depth
+          to avoid damage from any reasonably foreseeable disturbance of the ground. The IET On-Site
+          Guide gives practical guidance on appropriate depths for different ground conditions.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>500mm minimum</strong> — under footpaths, garden areas, and other areas not
-                subject to vehicle loading. Measured from the finished ground level to the top of
-                the cable.
+                <strong>Footpaths and garden areas</strong> — IET On-Site Guide guidance indicates
+                500mm as a practical minimum for areas not subject to vehicle loading, measured from
+                the finished ground level to the top of the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>600mm minimum</strong> — under driveways, car parks, and areas subject to
-                vehicle loading. The additional depth provides protection from the increased risk of
-                damage from vehicles parked or driving over the cable.
+                <strong>Driveways, car parks, and roads</strong> — IET On-Site Guide guidance
+                indicates 600mm as a practical minimum for areas subject to vehicle loading. The
+                required depth may be greater where heavier loads or groundworks are foreseeable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Warning tape</strong> — yellow/black cable warning tape should be laid 150mm
-                above the cable for its full run length. This warns anyone digging above the cable
-                before they reach it.
+                <strong>Warning tape</strong> — Regulation 522.8.10 requires the location of buried
+                cables to be marked by cable covers or a suitable marker tape. Yellow/black cable
+                warning tape should be laid above the cable for its full run length to warn anyone
+                digging before they reach the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -408,12 +427,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bedding</strong> — lay the cable on 50mm of fine sand or selected fill (free
-                from sharp stones and debris). Cover with a further 50mm of sand or selected fill
-                before backfilling.
+                <strong>Bedding</strong> — lay the cable on a layer of fine sand or selected fill
+                free from sharp stones, glass, and debris. Cover with further selected fill before
+                backfilling. The bedding depth should be appropriate to the cable diameter and
+                ground conditions.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold text-white mb-1">PME / TN-C-S earthing — outbuildings</p>
+              <p className="text-white text-sm leading-relaxed">
+                When feeding a detached outbuilding via SWA on a PME (TN-C-S) supply, the SWA armour
+                must <strong>not</strong> carry the PME combined neutral-earth (PEN) to the
+                outbuilding. A PME earth that reaches a separate structure creates a shock risk if
+                the neutral is lost elsewhere on the network. In this situation a local TT earth
+                electrode must be installed at the outbuilding and the armour must not be used as
+                the earthing conductor between the two buildings. Confirm the earthing arrangement
+                with your DNO if in doubt.
+              </p>
+            </div>
+          </div>
         </div>
         <p>
           Where it is not practical to achieve minimum burial depths (for example where the cable
@@ -519,8 +556,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized cable for voltage drop</strong> — SWA cable runs are often long.
-                Voltage drop must be calculated for the full run length and verified against BS 7671
-                Appendix 12 limits.
+                Voltage drop must be calculated for the full run length and verified against the
+                limits in BS 7671 Appendix 4, Section 6.4.
               </span>
             </li>
           </ul>
@@ -562,6 +599,11 @@ const sections = [
           description="Elec-Mate's EIC and EICR apps let you certify underground and external cable installations on site."
           icon={FileCheck2}
         />
+        <p className="text-sm text-white/50 mt-4">
+          Reviewed by the Elec-Mate Technical Team — qualified electricians and IET Wiring
+          Regulations practitioners. Content is grounded in BS 7671:2018+A4:2026 and the IET
+          Guidance Notes series.
+        </p>
       </>
     ),
   },
@@ -577,7 +619,7 @@ export default function ArmaCableInstallationPage() {
       title="Armoured Cable Installation UK | SWA Cable Guide"
       description="Complete UK guide to Steel Wire Armoured (SWA) cable installation. Types, current ratings, stripping and terminating with SWA glands…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

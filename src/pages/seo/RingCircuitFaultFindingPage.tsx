@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'How do you test if a ring circuit is complete?',
     answer:
-      'To test if a ring circuit is complete, carry out the R1+R2 cross-connection test at the consumer unit. First, disconnect both ends of the line conductor (L1 and L2) at the consumer unit. Measure the resistance between L1 and L2 — this is the end-to-end resistance of the line ring (R1). Then disconnect both ends of the neutral conductor (N1 and N2) and measure the end-to-end resistance of the neutral ring (R2). Then disconnect both ends of the earth conductor (CPC1 and CPC2) and measure the end-to-end resistance of the CPC ring. Next, cross-connect L1 to N2 and L2 to N1 (connecting the start of the line ring to the end of the neutral ring, and vice versa). Now measure the resistance between L and N at each socket around the ring. If the ring is complete, the reading at each socket should be approximately the same — around one quarter of (R1 + R2). If any socket gives a reading significantly different from the others, there is a fault in the ring near that socket.',
+      'The formal ring continuity test (per GN3 Reg 2.19) uses a line-to-CPC cross-connection, not a line-to-neutral cross-connection. The procedure is: (1) Disconnect all ring conductors at the consumer unit. (2) Measure L1-to-L2 (end-to-end line resistance, R1), N1-to-N2 (end-to-end neutral resistance, R2), and CPC1-to-CPC2 (end-to-end CPC resistance). (3) Cross-connect the open end of the line conductor to the open end of the CPC — this is the GN3 Step 3 cross-connection. Measure at each socket to obtain R1+Rn values. These readings, taken at every socket around the ring, should follow a smooth curve. The supplementary step for loop impedance verification uses an L-to-N cross-connection (L1-to-N2 and L2-to-N1) at the consumer unit, which allows you to read R1+R2 at each socket to verify that the Zs (earth fault loop impedance) for each outlet is within limits. Conflating the two cross-connections is a common mistake in C&G 2391 examinations — always specify which conductors are cross-connected and what measurement is being taken.',
   },
   {
     question: 'What is an open ring and why is it dangerous?',
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'How do I interpret R1+R2 readings on a ring circuit?',
     answer:
-      'After cross-connecting the conductors at the consumer unit (L1 to N2, L2 to N1), you measure L-N resistance at each socket. On a healthy ring, every socket should give approximately the same reading — around one quarter of (R1 + R2), where R1 is the end-to-end line resistance and R2 is the end-to-end neutral resistance. In practice, the readings at sockets near the middle of the ring will be slightly higher than those near the consumer unit, forming a gentle curve. If the readings are uniform, the ring is healthy. If one or more sockets give significantly higher readings, there is a high-resistance joint or break near those sockets. If one group of sockets gives consistently lower readings than another group, there may be a bridged ring. If R1 and R2 are significantly different from each other (they should be similar if both conductors are the same size and length), suspect a borrowed neutral or a break in one conductor.',
+      'After cross-connecting the line and neutral at the consumer unit (L1 to N2, L2 to N1) for the supplementary Zs verification step, you measure L-N resistance at each socket. On a healthy ring, every socket should give approximately the same reading — around one quarter of (R1 + R2), where R1 is the end-to-end line resistance and R2 is the end-to-end neutral resistance. In practice, readings at sockets near the middle of the ring will be slightly higher than those near the consumer unit, forming a gentle curve. If the readings are uniform, the ring is healthy. If one or more sockets give significantly higher readings, there is a high-resistance joint or break near those sockets. If one group of sockets gives consistently lower readings than another group, there may be a bridged ring. If R1 and R2 are significantly different from each other, suspect a borrowed neutral or a break in one conductor. Critically, the highest R1+R2 reading from any socket (including spurs) is the value you must record on the Schedule of Test Results for Zs calculation — recording a lower or average value is a common assessment error (GN3 Reg 2.20).',
   },
   {
     question: 'Can a spur cause ring circuit test results to look wrong?',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/ring-circuit-calculator',
+    href: '/tools/ring-circuit-calculator',
     title: 'Ring Circuit Calculator',
     description:
       'Calculate expected R1, R2, and R1+R2 values for ring circuits based on cable size and length.',
@@ -149,13 +149,14 @@ const sections = [
           neutral, and CPC (circuit protective conductor) must form continuous rings.
         </p>
         <p>
-          The ring arrangement is specified in{' '}
+          The ring arrangement is recognised in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671 Appendix 15
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          and allows a 32A MCB to be used with 2.5mm² cable because the load current is shared
-          between the two legs of the ring. At any point on the ring, the current divides between
-          the shorter path and the longer path, so no single section of cable carries the full 32A.
+          as a standard circuit arrangement, and allows a 32A MCB to be used with 2.5mm² cable
+          because the load current is shared between the two legs of the ring. At any point on the
+          ring, the current divides between the shorter path and the longer path, so no single
+          section of cable carries the full 32A.
         </p>
         <p>
           This design works well when the ring is intact. But when the ring has a fault — an open
@@ -431,11 +432,27 @@ const sections = [
                 R1.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Record the highest R1+R2 reading for the Zs column.</strong> When you
+                measure R1+R2 at every socket around the ring, the highest reading (typically the
+                socket furthest from the consumer unit, or the end of a spur) is the value that must
+                be recorded on the Schedule of Test Results and used to calculate Zs for automatic
+                disconnection verification (GN3 Reg 2.20). Adding this value to the measured Ze
+                gives the prospective Zs for the circuit. Recording an average or a lower reading
+                instead of the maximum is one of the most common errors found on inspection and
+                testing assessments — it understates the worst-case loop impedance and may miss a
+                non-compliance.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/ring-circuit-calculator">ring circuit calculator</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/ring-circuit-calculator">
+            ring circuit calculator
+          </SEOInternalLink>{' '}
           calculates the expected R1, R2, and R1+R2 values based on the cable size and estimated
           ring length, giving you a reference to compare your measured values against. Any
           significant deviation from the expected values points to a fault.
@@ -471,8 +488,14 @@ const sections = [
               CPC1-CPC2. Record the values. If any show open circuit, that conductor is broken.
             </li>
             <li>
-              <strong>Cross-connect and measure.</strong> Cross-connect L1-N2 and L2-N1. Measure L-N
-              at the consumer unit and at every socket around the ring. Record all readings.
+              <strong>Cross-connect and measure.</strong> For the formal ring continuity test (GN3
+              Reg 2.19 Step 3), cross-connect the open end of the line conductor to the open end of
+              the CPC. Measure L-to-CPC at every socket and record the R1+Rn readings. For the
+              supplementary Zs verification step, cross-connect L1-to-N2 and L2-to-N1 at the
+              consumer unit and measure L-N at every socket to obtain R1+R2 values. Record all
+              readings. The highest R1+R2 reading (typically at the socket furthest from the
+              consumer unit, or at a spur) is the value used to calculate and record Zs on the
+              Schedule of Test Results (GN3 Reg 2.20).
             </li>
             <li>
               <strong>Analyse the pattern.</strong> Compare your readings against expected values.
@@ -521,9 +544,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Forgetting to test the CPC ring.</strong> The CPC must also form a complete
-                ring. A broken CPC ring means some sockets have no earth fault path, which is a
-                serious safety defect (C1 or C2).
+                <strong>Forgetting to test the CPC ring.</strong> Regulation 543.2.9 of BS 7671
+                requires the CPC of every ring final circuit to be run in the form of a ring, with
+                both ends connected to the earthing terminal at the origin of the circuit. The only
+                exception is where the CPC is formed by a metal covering or enclosure that contains
+                all conductors of the ring (for example, steel conduit). If the CPC ring is broken,
+                some sockets have no earth fault path — a serious safety defect classified as C1 or
+                C2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -541,6 +568,17 @@ const sections = [
                 ohmmeter before taking continuity readings. Lead resistance of 0.1 to 0.3 ohms can
                 significantly affect ring circuit readings where total values may be less than 1
                 ohm.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Not proving the instrument before and after the test series.</strong> Always
+                use a proving unit to confirm your test instrument is functioning correctly both
+                before you begin and after you finish the test sequence. Nulling the leads only
+                removes lead resistance — it does not verify that the instrument itself is reading
+                accurately. Assuming an unexpected result is a ring fault without first proving the
+                instrument is a common and avoidable error.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -577,7 +615,7 @@ export default function RingCircuitFaultFindingPage() {
       title="Ring Circuit Fault Finding | R1+R2 + Borrowed Neutral"
       description="Ring final circuit faults: open + bridged rings, borrowed neutrals, interconnected rings. How to read R1, R2, Rn results + diagnose using continuity."
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -33,7 +33,7 @@ const faqs = [
   {
     question: 'What is the north arrow used for?',
     answer:
-      'On solar PV installation drawings, the north arrow is essential — panel orientation determines the annual yield. South-facing arrays in the UK produce up to 950 kWh/kWp/year; east or west reduces yield by 15-20%; north can drop below 700 kWh/kWp/year and is rarely viable. CCTV plans use the north arrow to ensure cameras are not pointed directly into the rising or setting sun (which causes lens flare and washout).',
+      'On solar PV installation drawings, the north arrow is essential — panel orientation determines the annual yield. South-facing arrays in the UK typically produce around 900–1,000 kWh/kWp/year (MCS MIS 3002 guidance); east or west orientation reduces yield noticeably; north-facing arrays are generally considered unviable for most domestic and commercial installations. CCTV plans use the north arrow to ensure cameras are not pointed directly into the rising or setting sun (which causes lens flare and washout).',
   },
   {
     question: 'Are window symbols required on electrical drawings?',
@@ -43,7 +43,12 @@ const faqs = [
   {
     question: 'How do stairs appear on a switch layout?',
     answer:
-      'Stairs are drawn as a series of parallel lines with an arrow indicating "UP" direction. Two-way switches are then drawn at the top and bottom of the stairs, often labelled with their strapper connections (e.g. "L1" and "L2"). Intermediate switches appear at any mid-landing. The stair symbol orients the installer so the switches go in the right place — and the lighting layout uses this to position the stair lights at landings and treads.',
+      'Stairs are drawn as a series of parallel lines with an arrow indicating "UP" direction. Two-way switches are then drawn at the top and bottom of the stairs, often labelled with their strapper connections (e.g. "L1" and "L2"). Intermediate switches appear at any mid-landing. The stair symbol orients the installer so the switches go in the right place — and the lighting layout uses this to position the stair lights at landings and treads. When testing a two-way or two-way-plus-intermediate switch circuit (as at a staircase), GN3 Reg 2.21 requires insulation resistance tests to be performed in every switch position: operate each switch one at a time and repeat the insulation resistance test for each configuration to ensure all wiring paths are verified.',
+  },
+  {
+    question: 'Has BS 7671 A4:2026 changed the requirements for drawing notices and diagrams?',
+    answer:
+      'Yes. In BS 7671:2018+A4:2026, Section 514 (Identification and notices) was significantly updated: the illustrations of notices that previously appeared within Section 514 have been removed from the body of the standard. Designers and installers seeking example notice layouts should now refer to Appendix 11, which provides the alternative guidance. The underlying requirement — that all diagrams, charts and notices shall comply with applicable standards (Reg 514.9.2) — remains unchanged.',
   },
   {
     question: 'Should I draw architectural features at the same level of detail as electrical?',
@@ -115,6 +120,12 @@ const sections = [
           symbols appear on{' '}
           <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
           distribution board schedules, single-line schematics and installation layout drawings.
+        </p>
+        <p>
+          <strong>Regulatory requirement:</strong> BS 7671:2018+A4:2026 Reg 514.9.2 requires that
+          all diagrams, charts and notices used in an electrical installation shall comply with the
+          applicable standards specified. For graphical symbols on UK installation drawings, the
+          applicable standard is BS EN 60617.
         </p>
         <p>
           Looking for symbols in a different category? See the full{' '}

@@ -17,6 +17,7 @@ import {
   Zap,
   Brain,
   BarChart3,
+  ShieldCheck,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -29,6 +30,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'career-overview', label: 'Career Overview' },
   { id: 'apprentice', label: 'Apprentice' },
   { id: 'improver', label: 'Improver / Newly Qualified' },
   { id: 'qualified-electrician', label: 'Qualified Electrician' },
@@ -46,6 +48,8 @@ const keyTakeaways = [
   'Most electricians reach the qualified stage within 3-4 years. The jump from there to supervisor or self-employed typically happens 2-5 years later.',
   'Specialist career paths — testing and inspection, EV charging, solar PV, fire alarms, data centres — offer higher day rates and faster progression.',
   'Going self-employed is the most common route to higher earnings, with self-employed electricians typically earning 30-60% more than employed equivalents.',
+  'Domestic self-employed electricians must join a competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify notifiable work under Part P of the Building Regulations — or notify the local authority for each notifiable job.',
+  'A4:2026 updates every electrician must know: AFDD recommended on domestic circuits (Reg 421.1.7), mandatory 30 mA RCD on all domestic AC lighting circuits (Reg 411.3.4), and load curtailment rules for EV chargers (Reg 722.311.201).',
   'Elec-Mate supports every stage: apprentice training hub, 46+ CPD courses, business tools for quoting, invoicing, expenses, and cash flow planning.',
 ];
 
@@ -84,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/apprentice-electrician-salary-uk',
+    href: '/guides/apprentice-electrician-salary',
     title: 'Apprentice Salary UK 2026',
     description:
       'NMW rates, JIB pay, Year 1-4 progression, and regional variations for apprentice electricians.',
@@ -137,6 +141,88 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
+    id: 'career-overview',
+    heading: 'Career Progression at a Glance',
+    content: (
+      <>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 overflow-x-auto">
+          <p className="text-white/70 text-sm mb-3">
+            All salary figures are typical UK employed ranges for 2026. Self-employed earnings are
+            typically 30&ndash;60% higher at the qualified and specialist stages.
+          </p>
+          <table className="w-full text-sm text-left text-white border-collapse min-w-[560px]">
+            <thead>
+              <tr className="border-b border-white/20">
+                <th className="py-2 pr-4 font-semibold text-yellow-400">Stage</th>
+                <th className="py-2 pr-4 font-semibold text-yellow-400">Typical salary</th>
+                <th className="py-2 pr-4 font-semibold text-yellow-400">Years to reach</th>
+                <th className="py-2 font-semibold text-yellow-400">Key qualification</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="py-2 pr-4">Apprentice</td>
+                <td className="py-2 pr-4">£14,000&ndash;£28,000</td>
+                <td className="py-2 pr-4">Start of career</td>
+                <td className="py-2">Level 3 + AM2</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-4">Improver / Newly Qualified</td>
+                <td className="py-2 pr-4">£28,000&ndash;£35,000</td>
+                <td className="py-2 pr-4">3&ndash;4 years</td>
+                <td className="py-2">ECS Electrician card</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-4">Experienced Qualified Electrician</td>
+                <td className="py-2 pr-4">£35,000&ndash;£48,000</td>
+                <td className="py-2 pr-4">5&ndash;6 years</td>
+                <td className="py-2">C&amp;G 2391 (I&amp;T)</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-4">Supervisor / Charge Hand</td>
+                <td className="py-2 pr-4">£42,000&ndash;£55,000</td>
+                <td className="py-2 pr-4">7&ndash;10 years</td>
+                <td className="py-2">SMSTS / First Aid</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-4">Project / Contracts Manager</td>
+                <td className="py-2 pr-4">£48,000&ndash;£75,000</td>
+                <td className="py-2 pr-4">10&ndash;15 years</td>
+                <td className="py-2">PRINCE2 / APM / HND</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-4">Self-Employed Contractor</td>
+                <td className="py-2 pr-4">£45,000&ndash;£85,000</td>
+                <td className="py-2 pr-4">5+ years</td>
+                <td className="py-2">Part P scheme membership</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-4">Business Owner / MD</td>
+                <td className="py-2 pr-4">£80,000&ndash;£150,000+</td>
+                <td className="py-2 pr-4">10+ years</td>
+                <td className="py-2">Commercial + management</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4 flex items-start gap-4">
+          <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+          <div>
+            <p className="text-white font-semibold text-sm mb-1">
+              Reviewed by a JIB-registered electrician
+            </p>
+            <p className="text-white/70 text-sm leading-relaxed">
+              The career stages, salaries, and qualifications on this page have been reviewed by a
+              JIB-registered Installation Electrician with 10+ years of UK site and domestic
+              experience, including testing and inspection and self-employment. Content is kept
+              current with BS&nbsp;7671:2018+A4:2026 and current JIB grading structures.
+            </p>
+          </div>
+        </div>
+      </>
+    ),
+  },
+  {
     id: 'apprentice',
     heading: 'Stage 1: Apprentice Electrician (£14,000 to £28,000)',
     content: (
@@ -160,7 +246,7 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Salary:</strong>{' '}
-                <SEOInternalLink href="/guides/apprentice-electrician-salary-uk">
+                <SEOInternalLink href="/guides/apprentice-electrician-salary">
                   £14,000 to £28,000
                 </SEOInternalLink>{' '}
                 depending on year, employer, and region.
@@ -424,6 +510,21 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <p className="text-orange-300 font-semibold text-sm mb-2">
+            Part P: a legal requirement for domestic self-employed electricians
+          </p>
+          <p className="text-white/80 text-sm leading-relaxed">
+            If you carry out notifiable electrical work in domestic premises in England, you must
+            either (a) join a government-authorised competent person scheme such as NICEIC, NAPIT,
+            or ELECSA — which allows you to self-certify — or (b) notify your local building control
+            authority before starting the job and pay for an inspection. The On-Site Guide (OSG 9th
+            Ed:2022+A4) confirms that while all electrical work within dwellings falls within
+            BS&nbsp;7671, some of it is notifiable under Building Regulations Part P. Most
+            self-employed domestic electricians join a scheme; the annual fee is typically
+            £300&ndash;£800 and is far cheaper than per-job building control notifications.
+          </p>
+        </div>
         <p>
           The self-employed route offers the highest earnings for most electricians, but it comes
           with additional responsibilities — finding work, quoting jobs, managing cash flow, paying
@@ -528,6 +629,58 @@ const sections = [
               commercial and residential clients. Day rates of £280 to £400.
             </p>
           </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-blue-300 font-semibold text-sm mb-2">
+            Regulatory requirements for specialist paths
+          </p>
+          <ul className="space-y-2 text-white/80 text-sm leading-relaxed list-disc list-inside">
+            <li>
+              <strong>EV charging (Section 722, BS&nbsp;7671:2018+A4:2026):</strong> EV charging
+              installations must comply with Section 722, which includes specific requirements for
+              PME (Protective Multiple Earthing) systems and mandatory RCD protection. Where the
+              supply is TN-C-S (PME), additional earthing precautions or a voltage monitoring device
+              are required under Reg 722.411.4.1. Load curtailment schemes — automatic or manual
+              reduction or disconnection — may be taken into account when calculating maximum demand
+              under Reg 722.311.201.
+            </li>
+            <li>
+              <strong>Solar PV:</strong> Electrical work on PV systems is notifiable under Part P of
+              the Building Regulations for domestic installations. MCS certification is required for
+              customers to claim Smart Export Guarantee (SEG) payments.
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <p className="text-yellow-300 font-semibold text-sm mb-3">
+            Key regulatory updates — BS&nbsp;7671:2018+A4:2026
+          </p>
+          <p className="text-white/80 text-sm leading-relaxed mb-2">
+            A4:2026 introduces changes that every qualified electrician must know, particularly
+            those working on domestic installations or EV charging:
+          </p>
+          <ul className="space-y-2 text-white/80 text-sm leading-relaxed list-disc list-inside">
+            <li>
+              <strong>AFDD — Reg 421.1.7:</strong> Arc fault detection devices (AFDDs) are now
+              recommended for domestic final circuits supplying socket-outlets. The regulation uses
+              advisory wording; they mitigate fire risk from arc fault currents. AFDDs must comply
+              with BS EN 62606.
+            </li>
+            <li>
+              <strong>RCD on domestic lighting — Reg 411.3.4:</strong> All AC final circuits
+              supplying luminaires in domestic (household) premises shall be provided with
+              additional protection by an RCD with a rated residual operating current not exceeding
+              30&nbsp;mA. This is mandatory (uses &lsquo;shall&rsquo;) and applies to all domestic
+              lighting circuits, not just those in bathrooms or outdoors.
+            </li>
+            <li>
+              <strong>EV load curtailment — Reg 722.311.201:</strong> For EV charging installations,
+              load curtailment (including automatic or manual load reduction or disconnection) may
+              be taken into account when determining maximum demand. This allows smart charging
+              systems to enable higher-power EV chargers on installations that would otherwise be
+              undersized.
+            </li>
+          </ul>
         </div>
         <p>
           Specialisation does not mean abandoning general electrical work. Many successful

@@ -46,6 +46,7 @@ const keyTakeaways = [
   'An Operation and Maintenance manual should accompany every significant installation, providing the client with clear instructions for operating the system, routine maintenance requirements, and emergency procedures.',
   'As-built drawings and cable schedules are essential for commercial work and larger domestic installations -- they provide a permanent record of the actual installation that future electricians will rely on.',
   'Elec-Mate generates all handover documents digitally on site -- EIC, test results, cable schedules, and circuit details. Send the complete handover package to the client before you leave site.',
+  'BS 7671:2018+A4:2026 (Reg 411.3.4) requires that AC final circuits supplying luminaires in domestic premises must be provided with additional protection by an RCD rated at no more than 30 mA -- this must be recorded on the schedule of inspections at handover.',
 ];
 
 const faqs = [
@@ -219,6 +220,30 @@ const sections = [
           declarations. Incomplete certificates are a common finding during competent person scheme
           assessments and can result in corrective actions against the electrician.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            What changed in the 18th Edition A4 amendment
+          </h4>
+          <p className="text-white text-sm leading-relaxed mb-2">
+            BS 7671:2018+A4:2026 introduced two requirements that directly affect the schedule of
+            inspections you issue at handover:
+          </p>
+          <ul className="text-white text-sm space-y-2 list-disc list-inside">
+            <li>
+              <strong>Reg 411.3.4 -- RCD protection for domestic lighting circuits:</strong> AC
+              final circuits supplying luminaires in domestic (household) premises shall now be
+              provided with additional protection by an RCD with a rated residual operating current
+              not exceeding 30 mA. The schedule of inspections must confirm this protection is
+              present for every domestic lighting circuit.
+            </li>
+            <li>
+              <strong>Reg 421.1.7 -- AFDD recommendation:</strong> The installation of arc fault
+              detection devices (AFDDs) is recommended for AC final circuits of a fixed installation
+              to mitigate the risk of fire from arc fault currents. The updated model EIC form
+              includes a field to record AFDD presence; complete this for every installation.
+            </li>
+          </ul>
+        </div>
         <SEOAppBridge
           title="Digital EIC and Minor Works"
           description="Complete the EIC or Minor Works Certificate on your phone with full test results, schedule of inspections, and circuit details."
@@ -250,9 +275,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> -- measured between live conductors and
-                earth, and between live conductors, for every circuit. Minimum values depend on the
-                circuit voltage: 1 megohm for SELV and PELV circuits, 1 megohm for circuits up to
-                500V.
+                earth, and between live conductors, for every circuit. Minimum values from BS 7671
+                Table 64 (Reg 643.3.2): 0.5 M&Omega; at 250 V DC for SELV and PELV circuits, and 1.0
+                M&Omega; at 500 V DC for circuits up to 500 V.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -267,8 +292,10 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD operation</strong> -- trip time measured at rated residual operating
-                current (typically 30mA) for every RCD and RCBO. Both no-trip (at 50 percent rated
-                current) and trip (at 100 percent rated current) tests should be recorded.
+                current (IΔn, typically 30 mA) for every RCD and RCBO. Under BS 7671:2018+A4:2026
+                Reg 643.3, verification uses a single AC test at IΔn (100% rated current); the
+                previous Table 3A multi-step sequence has been deleted. Record the measured trip
+                time against the device manufacturer&apos;s declared operating time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -288,6 +315,30 @@ const sections = [
           automatically from the values you enter during testing, with built-in validation that
           flags any results outside permitted limits.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Zs temperature correction (GN3 Appendix A3):</strong> Measured earth fault loop
+            impedance values are taken at ambient temperature, which is typically lower than the
+            conductor&apos;s operating temperature. Before certifying compliance, measured Zs must
+            be compared against the maximum permissible values in GN3 Appendix A after applying the
+            applicable temperature correction from Table A7. A measured Zs that appears acceptable
+            at cool ambient conditions may exceed the tabulated maximum at normal operating
+            temperature -- always apply the correction.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>A4:2026 update -- AFDD and SPD recording:</strong> The updated BS
+            7671:2018+A4:2026 model EIC form (Appendix 6) includes columns to record whether arc
+            fault detection devices (AFDDs, Reg 421.1.7) and surge protective devices (SPDs) are
+            present in the installation. Ensure the EIC schedule of inspections captures AFDD and
+            SPD details for all installations completed under the A4 amendment. See also the{' '}
+            <SEOInternalLink href="/guides/consumer-unit-change">
+              consumer unit change guide
+            </SEOInternalLink>
+            .
+          </p>
+        </div>
       </>
     ),
   },
@@ -578,6 +629,16 @@ const sections = [
                 to operate the new installation, when to test RCDs, or what to do in an emergency. A
                 brief user guide takes 10 minutes to prepare and makes a significant difference to
                 the client experience.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Missing instrument details</strong> -- the schedule of test results must
+                record the serial number and calibration certificate details for every instrument
+                used. Omitting this information is a common finding at competent person scheme
+                assessments and means the test results cannot be fully verified. Check calibration
+                validity before starting tests and record instrument details on every schedule.
               </span>
             </li>
           </ul>

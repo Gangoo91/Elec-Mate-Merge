@@ -22,7 +22,7 @@ export default function LightingLuxCalculatorPage() {
       title="Lux Level Calculator UK | BS EN 12464-1 Lighting Design Tool"
       description="Free UK lux level calculator: 20+ room types, BS EN 12464-1 illuminance values for offices, warehouses, retail, schools, residential. No signup."
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Lighting Lux Calculator', href: '/tools/lighting-lux-calculator' },
@@ -33,6 +33,7 @@ export default function LightingLuxCalculatorPage() {
         { id: 'calculation-method', label: 'Lux Calculation Method' },
         { id: 'room-index', label: 'Room Index and Utilisation Factor' },
         { id: 'maintenance-factor', label: 'Maintenance Factor' },
+        { id: 'bs7671-compliance', label: 'BS 7671 Compliance' },
         { id: 'how-to', label: 'Step-by-Step Guide' },
         { id: 'features', label: 'Features' },
         { id: 'faq', label: 'FAQs' },
@@ -59,6 +60,8 @@ export default function LightingLuxCalculatorPage() {
         'CIBSE and BS EN 12464-1 publish maintained illuminance recommendations for every room type, from 100 lux in corridors to 500 lux in offices and 750 lux in detailed inspection areas.',
         'The lumen method is the standard calculation: Number of luminaires = (Lux x Area) / (Lumens per fitting x Utilisation Factor x Maintenance Factor).',
         'Room index, reflectance values, and maintenance factor all affect the result — ignoring them leads to under-lit or over-lit spaces.',
+        'BS 7671 Reg 411.3.4 requires all AC final circuits supplying luminaires in domestic premises to have additional RCD protection with a rated residual operating current not exceeding 30 mA.',
+        'BS 7671 Reg 314.1 requires every installation to be divided into circuits to prevent a single circuit failure causing a hazard — lighting is the primary example given in the regulation.',
         'Elec-Mate calculates lux levels instantly with CIBSE data built in, saving you time on every lighting design job.',
       ]}
       sections={[
@@ -161,9 +164,11 @@ export default function LightingLuxCalculatorPage() {
               <p>
                 These values should be treated as minimums. Many designers specify higher levels for
                 premium fit-outs or where the client has specific requirements. For{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> on
-                lighting circuits, the total wattage derived from the lux calculation feeds directly
-                into the circuit design.
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  cable sizing
+                </SEOInternalLink>{' '}
+                on lighting circuits, the total wattage derived from the lux calculation feeds
+                directly into the circuit design.
               </p>
             </>
           ),
@@ -201,7 +206,7 @@ export default function LightingLuxCalculatorPage() {
                 select the room type, input the luminaire lumen output, and the calculator returns
                 the number of fittings needed. It also calculates the achieved lux level if you want
                 to check a fixed number of luminaires against the target. This pairs well with the{' '}
-                <SEOInternalLink href="/max-demand-calculator">
+                <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 when sizing the supply for a lighting-heavy installation.
@@ -243,7 +248,7 @@ export default function LightingLuxCalculatorPage() {
               </p>
               <p>
                 Understanding room index is also important when working with{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
                 for long lighting circuit runs in large commercial spaces.
@@ -304,6 +309,49 @@ export default function LightingLuxCalculatorPage() {
                 </SEOInternalLink>{' '}
                 and lighting calculator work together when planning wiring routes for large lighting
                 installations.
+              </p>
+            </>
+          ),
+        },
+        {
+          id: 'bs7671-compliance',
+          heading: 'BS 7671 Compliance for Lighting Circuits',
+          content: (
+            <>
+              <div className="p-5 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 my-4">
+                <p className="text-sm font-bold text-yellow-400 uppercase tracking-wide mb-2">
+                  BS 7671 Compliance Note
+                </p>
+                <p className="text-sm text-white leading-relaxed">
+                  Under BS 7671 Reg 411.3.4, all AC final circuits supplying luminaires in domestic
+                  premises must have additional RCD protection with a rated residual operating
+                  current not exceeding 30 mA. When you size a domestic lighting circuit with this
+                  calculator, ensure the circuit is protected by a ≤30 mA RCD or RCBO in the
+                  consumer unit.
+                </p>
+              </div>
+              <p>
+                This requirement applies to every AC final circuit feeding light fittings in a
+                dwelling — whether new-build, rewire, or an addition to an existing installation.
+                The regulation uses the word 'shall', making it a mandatory obligation, not a
+                recommendation.
+              </p>
+              <p>
+                Beyond the RCD requirement, Reg 314.1 requires every installation to be divided into
+                circuits to prevent a single circuit failure causing a hazardous situation. Lighting
+                is explicitly identified as the primary example: failure of a single lighting
+                circuit could cause loss of escape route illumination. In commercial and industrial
+                premises, this means a single lighting circuit serving an entire floor is likely
+                non-compliant — multiple circuits (or sub-circuits via a lighting distribution
+                board) are required so that failure of one circuit does not plunge the whole floor
+                into darkness.
+              </p>
+              <p>
+                When specifying recessed LED downlighters, check that the luminaire carries the
+                correct marking for installation on or near combustible surfaces (refer to Table
+                55.3 of BS 7671 and Reg 559.3). Insufficient ventilation around tightly fitted
+                downlighters is one of the most common installation defects found on EICR
+                inspections.
               </p>
             </>
           ),
@@ -397,7 +445,13 @@ export default function LightingLuxCalculatorPage() {
         {
           question: 'Can I use the lux calculator for emergency lighting?',
           answer:
-            'The lux calculator can be used to check emergency lighting illuminance levels. BS 5266-1 requires a minimum of 1 lux along escape routes (measured at floor level on the centre line) and 0.5 lux in open areas. For high-risk task areas, the emergency lighting must provide 10% of the normal illuminance or 15 lux, whichever is greater. You would set the target lux to the emergency requirement and use only the emergency luminaires in the calculation.',
+            'The lux calculator can be used to check emergency lighting illuminance levels. BS 5266-1 requires a minimum of 1 lux along escape routes (measured at floor level on the centre line) and 0.5 lux in open areas. For high-risk task areas, the emergency lighting must provide 10% of the normal illuminance or 15 lux, whichever is greater. You would set the target lux to the emergency requirement and use only the emergency luminaires in the calculation. Note also that BS 7671 Reg 740.415.1 (exhibitions, shows and stands) requires all final circuits for lighting to be protected by RCDs — always check which Special Installation chapter applies to the premises you are designing for.',
+        },
+        {
+          question:
+            'How many lighting circuits does BS 7671 require — can I run a whole floor on one circuit?',
+          answer:
+            'BS 7671 Reg 314.1 requires every installation to be divided into circuits as necessary to prevent a single circuit failure causing a hazardous situation. Lighting is the primary example given by the regulation: if a single lighting circuit fails, the resulting loss of light could be hazardous — particularly in commercial premises where it could extinguish escape route lighting. A single circuit serving an entire commercial floor is therefore likely non-compliant. In practice, separate circuits are required for each area, floor, or zone, with enough circuits so that failure of any one leaves adequate illumination. Use this calculator to size each circuit individually, then feed the wattage per circuit into the cable sizing and maximum demand calculators.',
         },
         {
           question: 'What is uniformity ratio in lighting design?',
@@ -407,7 +461,7 @@ export default function LightingLuxCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for lighting circuits using BS 7671 current-carrying capacity tables and correction factors.',
@@ -415,7 +469,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Check voltage drop on long lighting circuit runs to ensure lamps operate at their rated voltage.',
@@ -423,7 +477,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/max-demand-calculator',
+          href: '/tools/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate total maximum demand including lighting loads with IET diversity allowances.',

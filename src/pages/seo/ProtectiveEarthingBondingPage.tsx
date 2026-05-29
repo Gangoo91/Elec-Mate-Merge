@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Protective earthing connects all exposed-conductive-parts to the main earthing terminal, ensuring that fault current can flow and protective devices can operate within the required disconnection time.',
   'Main protective bonding conductors connect extraneous-conductive-parts (water pipes, gas pipes, oil pipes, structural steelwork) to the main earthing terminal — typically 10 mm or 6 mm copper depending on the supply.',
   'The main earthing terminal is the central connection point where all earthing and bonding conductors meet — it must be accessible and labelled with a permanent BS 951 safety label.',
-  'Regulation 411.3.1.1 requires disconnection within 0.4 seconds for socket outlet circuits and 5 seconds for fixed equipment circuits in TN systems — earthing must be adequate to achieve these times.',
+  'Regulation 411.3.1.2 and Table 41.1 require disconnection within 0.4 seconds for final circuits up to 32 A (fixed equipment) or up to 63 A (with socket outlets) in TN systems — earthing must be adequate to achieve these times.',
   'Elec-Mate includes calculators for earth fault loop impedance, protective conductor sizing, and bonding requirements to help electricians verify compliance on site.',
 ];
 
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What size bonding conductor do I need?',
     answer:
-      'The size of the main protective bonding conductor depends on the size of the supply neutral conductor. Under BS 7671 Table 54.8, for a supply with a copper neutral conductor up to 35 mm cross-section, the main bonding conductor must be at least 10 mm copper (or 16 mm aluminium). For a supply with a neutral conductor larger than 35 mm, the bonding conductor must be at least half the cross-section of the neutral, with a minimum of 6 mm copper. In practice, for a typical domestic installation with a single-phase 100A supply and 25 mm tails, a 10 mm copper bonding conductor is the standard requirement. For three-phase supplies or larger commercial installations, the bonding conductor size may need to increase. The bonding conductor must run in a continuous length from the main earthing terminal to the point of connection on the service pipe — it must not pass through any intermediate connection or junction box. Where the conductor is liable to mechanical damage, it must be protected with conduit, trunking, or mechanical protection.',
+      "The size of the main protective bonding conductor depends on the earthing arrangement. For TN-C-S (PME) supplies — the most common arrangement in the UK — Regulation 544.11 requires selection in accordance with Table 54.8 based on the cross-sectional area of the supply PEN conductor. Where the PEN conductor is 35 mm² or less (which covers virtually all single-phase domestic PME supplies), the minimum bonding conductor is 10 mm² copper. For larger PEN conductors, Table 54.8 gives increasing minimum sizes. For non-PME supplies (TN-S or TT), Regulation 544.11 requires the bonding conductor to be not less than half the cross-sectional area of the installation's earthing conductor, with a minimum of 6 mm² copper (and need not exceed 25 mm² copper). In practice, for a typical domestic PME installation with 25 mm² tails, a 10 mm² copper bonding conductor is the standard requirement. The bonding conductor must run in a continuous length from the main earthing terminal to the point of connection on the service pipe — it must not pass through any intermediate connection or junction box. Where the conductor is liable to mechanical damage, it must be protected with conduit, trunking, or mechanical protection.",
   },
   {
     question: 'Where should the main bonding connection be made on a water pipe?',
@@ -152,8 +152,9 @@ const sections = [
           When an earth fault occurs — for example, a live conductor touches the metal casing of an
           appliance — fault current must flow through the protective conductor back to the supply
           transformer. This fault current must be high enough to trip the protective device within
-          the required disconnection time (0.4 seconds for socket circuits, 5 seconds for fixed
-          equipment in TN systems). If the earthing path has too much impedance (resistance), the
+          the required disconnection time (0.4 seconds for final circuits up to 32 A supplying fixed
+          equipment, or up to 63 A where socket outlets are present, in TN systems — per Regulation
+          411.3.1.2 and Table 41.1). If the earthing path has too much impedance (resistance), the
           fault current will be too low to trip the device quickly, and the metalwork will remain
           live — creating a risk of electric shock.
         </p>
@@ -198,8 +199,8 @@ const sections = [
                   The supply has a separate earth conductor (typically the lead sheath of the
                   underground supply cable). This provides a reliable, low-impedance earth path. The
                   earthing terminal at the consumer intake is connected to the cable sheath. TN-S is
-                  common in older urban areas with lead-sheathed cables. External earth fault loop
-                  impedance (Ze) is typically 0.35 to 0.8 ohms.
+                  common in older urban areas with lead-sheathed cables. The On-Site Guide assumes a
+                  typical maximum external earth fault loop impedance (Ze) of 0.8 &Omega; for TN-S.
                 </p>
               </div>
             </div>
@@ -214,10 +215,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   The most common arrangement in the UK. The supply uses a combined PEN (Protective
                   Earth and Neutral) conductor, which is separated into individual neutral and earth
-                  connections at the consumer intake. This provides very low earth impedance (Ze
-                  typically 0.2 to 0.35 ohms) but carries the risk of open PEN faults. Main bonding
-                  is critical in TN-C-S systems to limit touch voltages in the event of a PEN
-                  conductor failure.
+                  connections at the consumer intake. This provides very low earth impedance (the
+                  On-Site Guide assumes a typical maximum Ze of 0.35 &Omega;) but carries the risk
+                  of open PEN faults. Main bonding is critical in TN-C-S systems to limit touch
+                  voltages in the event of a PEN conductor failure.
                 </p>
               </div>
             </div>
@@ -403,19 +404,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>10 mm copper</strong> — the standard requirement for most domestic
-                installations. This applies where the supply neutral conductor is up to 35 mm
-                cross-section (which covers virtually all single-phase domestic supplies with 16 mm
-                or 25 mm tails).
+                <strong>10 mm copper</strong> — the standard requirement for TN-C-S (PME)
+                installations, which is the most common UK supply type. Under Table 54.8, where the
+                supply PEN conductor is 35 mm&sup2; or less, the minimum main protective bonding
+                conductor is 10 mm&sup2; copper — this covers virtually all single-phase domestic
+                PME supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>6 mm copper</strong> — permitted where the supply is TN-S with a supply
-                neutral of 16 mm or less, and the bonding conductor is mechanically protected. In
-                practice, 6 mm is used in some older installations and smaller flats, but 10 mm is
-                now the standard.
+                <strong>6 mm copper minimum (non-PME)</strong> — where PME does not apply,
+                Regulation 544.11 requires the bonding conductor to be not less than half the
+                cross-sectional area of the installation's earthing conductor, with a minimum of 6
+                mm&sup2; copper (and need not exceed 25 mm&sup2; copper). In practice, 6 mm is found
+                in some older or smaller non-PME installations, but 10 mm is now the common
+                standard.
               </span>
             </li>
           </ul>
@@ -434,10 +438,11 @@ const sections = [
           point along its length.
         </p>
         <p>
-          For larger installations (three-phase supplies, commercial premises), refer to Table 54.8
-          and calculate the bonding conductor size based on the supply neutral conductor size. The
-          minimum is always 6 mm copper, and for TN-C-S systems with a supply neutral over 35 mm,
-          the bonding conductor must be at least half the cross-section of the neutral.
+          For larger PME installations (three-phase supplies, commercial premises), refer to Table
+          54.8 and select the bonding conductor size based on the supply PEN conductor
+          cross-sectional area. The minimum is always 6 mm&sup2; copper, and where the local
+          distributor's network conditions require it, a larger size than the Table 54.8 minimum may
+          be necessary — always check with the DNO for very large supplies.
         </p>
       </>
     ),
@@ -521,7 +526,7 @@ const sections = [
                 (twin and earth), the CPC size is determined by the cable manufacturer — for
                 example, a 2.5 mm twin and earth cable has a 1.5 mm CPC, and a 6 mm cable has a 2.5
                 mm CPC. For separate CPCs in conduit or trunking, use Table 54.7 or the{' '}
-                <SEOInternalLink href="/adiabatic-equation-calculator">
+                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                   adiabatic equation calculator
                 </SEOInternalLink>{' '}
                 to verify the CPC is adequate.

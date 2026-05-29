@@ -48,6 +48,7 @@ const keyTakeaways = [
   'Lighting control is the gateway service for smart home electricians — DALI, DMX, and wireless dimming protocols allow you to deliver sophisticated scenes and schedules that clients value highly.',
   'Smart home installations require careful planning of containment, power supplies, and data cabling during first fix — retrofitting is significantly more expensive and disruptive.',
   'Voice assistant integration (Amazon Alexa, Google Home, Apple HomeKit) is now expected by homeowners — electricians who can configure these platforms alongside hardware installations command higher day rates.',
+  'Smart home installations involve extensive concealed wiring runs — exactly the scenario targeted by Reg 421.1.7 (BS 7671:2018+A4:2026), which recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk. Specifying AFDDs demonstrates up-to-date compliance knowledge and is a genuine client safety differentiator.',
 ];
 
 const faqs = [
@@ -80,6 +81,11 @@ const faqs = [
     question: 'What is the Matter protocol and why does it matter?',
     answer:
       'Matter is a new unified connectivity standard developed by Apple, Google, Amazon, and Samsung (among others) through the Connectivity Standards Alliance. It aims to solve the fragmentation problem in smart homes by providing a single protocol that works across all major ecosystems. Matter devices work with HomeKit, Google Home, and Alexa without needing separate hubs or bridges. For electricians, Matter simplifies device selection and customer conversations — you can recommend Matter-certified devices knowing they will work with whatever voice assistant or app the homeowner prefers. Matter runs over Wi-Fi and Thread (a low-power mesh network), so solid network infrastructure is still essential.',
+  },
+  {
+    question: 'Do smart home panels and IoT hub installations need surge protection?',
+    answer:
+      'Yes — and the regulations are clear. Reg 534.4.5.1 of BS 7671:2018+A4:2026 requires that surge protective devices (SPDs) installed in an electrical installation are protected against overcurrent with respect to short-circuit currents, with the OCPD rating selected in accordance with Section 434. KNX actuator panels, IoT hub enclosures, and structured cabling distribution frames all benefit from SPD protection given the sensitive electronics involved. Where SPDs are installed in non-domestic premises, Reg 514.16.1 also requires a label indicating their presence (there is an exception for domestic household premises). Specifying SPDs on smart home projects is both a compliance requirement in many installations and a practical upsell — protecting client equipment from transient overvoltages caused by nearby lightning or switching events.',
   },
 ];
 
@@ -200,6 +206,15 @@ const sections = [
           client, they typically return to you for additions and modifications rather than seeking a
           new contractor.
         </p>
+        <p>
+          Compliance knowledge is also a differentiator. Smart home installations typically involve
+          long, concealed wiring runs to sensors, actuators, and distribution points — precisely the
+          scenario addressed by Reg 421.1.7 of BS 7671:2018+A4:2026, which recommends arc fault
+          detection devices (AFDDs) on AC final circuits to mitigate the risk of fire caused by arc
+          fault currents. Installers who specify AFDDs and can explain the regulatory background to
+          clients demonstrate current, up-to-date knowledge that builds trust and justifies premium
+          pricing. This course covers the A4:2026 requirements directly relevant to smart home work.
+        </p>
       </>
     ),
   },
@@ -296,6 +311,19 @@ const sections = [
           luminaires and a controller capable of scheduling colour temperature shifts from warm
           (2700K) in the evening to cool (5000K) during the day.
         </p>
+        <div className="border-l-4 border-yellow-400 bg-yellow-400/10 rounded-r-lg px-4 py-3 mt-2">
+          <p className="font-semibold text-foreground mb-1">
+            Compliance Note — Reg 411.3.4 (BS 7671:2018+A4:2026)
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Within domestic (household) premises, all AC final circuits supplying luminaires must
+            now be provided with additional protection by an RCD with a rated residual operating
+            current not exceeding 30&nbsp;mA. This is a mandatory A4:2026 requirement — every smart
+            lighting circuit you design or install in a domestic property must be protected
+            accordingly. Ensure the consumer unit design accounts for RCD coverage of all lighting
+            circuits, not just socket-outlet and high-risk circuits.
+          </p>
+        </div>
       </>
     ),
   },
@@ -357,12 +385,14 @@ const sections = [
           and justification.
         </p>
         <p>
-          Smart lock installation requires careful attention to fire safety regulations. BS 7671 and
-          Building Regulations require that final exit doors can be opened from inside without a key
-          in an emergency. Smart locks on escape routes must have a manual override or fail-safe
-          (unlock on power failure) configuration. Integration with the smart home system allows
-          features such as automatic locking at night, temporary access codes for visitors, and
-          activity logs.
+          Smart lock installation requires careful attention to fire safety regulations. Building
+          Regulations Approved Document B (fire safety) and BS EN 13637 require that final exit
+          doors can be opened from inside without a key in an emergency. Smart locks on escape
+          routes must have a manual override or fail-safe (unlock on power failure) configuration.
+          Note that BS 7671 does not govern door hardware — fire safety compliance here falls under
+          Building Regulations, not wiring regulations. Integration with the smart home system
+          allows features such as automatic locking at night, temporary access codes for visitors,
+          and activity logs.
         </p>
       </>
     ),
@@ -441,6 +471,18 @@ const extraSchemas = [
       availability: 'https://schema.org/InStock',
       description: '7-day free trial, then from £5.99/month',
     },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
   },
 ];
 

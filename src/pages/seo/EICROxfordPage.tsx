@@ -40,11 +40,12 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026. It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
   'Oxford EICR costs are among the highest outside London, driven by extremely high property values, strong demand, and elevated local labour rates. Expect to pay between £150 and £270 for a two-bedroom flat and £220 to £380 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Oxford City Council enforces these requirements with fines of up to £30,000 for non-compliance.',
   'Oxford has one of the highest proportions of Victorian and Edwardian terraced housing in England, much of it converted into student HMOs. The city also contains a significant number of listed buildings in and around the city centre.',
   'Oxford City Council operates one of the most proactive HMO licensing and enforcement regimes in England. The council actively investigates complaints and has issued substantial civil penalties to non-compliant landlords.',
+  'EICRs produced under BS 7671:2018+A4:2026 include new model form fields confirming AFDD operational status (Regulations 421.1.7, 532.6, 651.2(e)) and SPD functional indication (Regulation 651.4). Oxford landlords receiving post-A4:2026 reports will see these fields for the first time; inspectors must be able to explain them.',
 ];
 
 const faqs = [
@@ -61,7 +62,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Oxford properties?',
     answer:
-      "Oxford's large stock of Victorian terraced properties converted into student HMOs produces characteristic EICR findings. Absent RCD protection on socket circuits is the most common C2 finding under Regulation 411.3.3 of BS 7671. Rubber-insulated cables in unmodernised properties are a C1 or C2 concern. Multi-era wiring in Victorian conversions, inadequate earthing and bonding, overloaded circuits, and poorly documented circuit arrangements are all common findings. Properties in East Oxford, Cowley, and Headington with 1960s and 1970s wiring may have ageing PVC insulation showing signs of degradation.",
+      "Oxford's large stock of Victorian terraced properties converted into student HMOs produces characteristic EICR findings. Absent RCD protection on socket-outlet circuits (Regulation 411.3.3, BS 7671:2018+A4:2026 — rated current not exceeding 32 A) is the most common C2 finding. Under the A4:2026 amendment, absent RCD protection on domestic lighting circuits (Regulation 411.3.4 — 30 mA RCD required on AC luminaire circuits in dwellings) is also now a codified C2 finding. Rubber-insulated cables in unmodernised properties are a C1 or C2 concern. Multi-era wiring in Victorian conversions, inadequate earthing and bonding, overloaded circuits, and poorly documented circuit arrangements are all common findings. Properties in East Oxford, Cowley, and Headington with 1960s and 1970s wiring may have ageing PVC insulation showing signs of degradation.",
   },
   {
     question: 'How long does an EICR take in Oxford?',
@@ -153,9 +154,9 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
-          observation codes — not a simple pass or fail. The overall outcome is either Satisfactory
-          or Unsatisfactory.
+          (Part 6, Chapter 65). It is a detailed condition assessment using standardised C1, C2, C3,
+          and FI observation codes — not a simple pass or fail. The overall outcome is either
+          Satisfactory or Unsatisfactory.
         </p>
       </>
     ),
@@ -281,9 +282,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
-                protection on socket circuits not exceeding 20A. This is the most common C2 finding
-                in Oxford's large stock of pre-1990s rented properties.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671:2018+A4:2026
+                requires RCD protection on all socket-outlets rated not exceeding 32 A in domestic
+                premises (no risk-assessment exception is available for dwellings). Absent socket
+                RCD protection is the most common C2 finding in Oxford's large stock of pre-1990s
+                rented properties.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>
+                  Absent RCD protection on lighting circuits (new A4:2026 requirement)
+                </strong>{' '}
+                — Regulation 411.3.4 of BS 7671:2018+A4:2026 now mandates additional RCD protection
+                (rated residual operating current not exceeding 30 mA) on all AC final circuits
+                supplying luminaires in domestic premises. This is a codified C2 finding alongside
+                absent socket RCD protection. The majority of pre-2026 EICRs in Oxford's Victorian
+                HMOs will not have captured this deficiency, making it one of the most significant
+                new findings inspectors will encounter post-A4:2026.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -340,9 +357,11 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
-              Could become dangerous. Urgent remedial action required. Absent RCD protection
-              (Regulation 411.3.3) and inadequate earthing are the most frequent C2 findings in
-              Oxford's private rented sector.
+              Could become dangerous. Urgent remedial action required. Absent RCD protection on
+              socket circuits (Regulation 411.3.3, &le;32 A) and absent RCD protection on domestic
+              lighting circuits (Regulation 411.3.4, &le;30 mA) are the most frequent C2 findings
+              under BS 7671:2018+A4:2026 in Oxford's private rented sector. Inadequate earthing is
+              also commonly cited.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -396,8 +415,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631, with
-                observation codes and an overall Satisfactory or Unsatisfactory assessment.
+                Schedules of Circuit Details and Test Results as required by BS 7671:2018+A4:2026
+                (Chapter 65, Appendix 6 model forms), with observation codes and an overall
+                Satisfactory or Unsatisfactory assessment.
               </span>
             </li>
           </ul>
@@ -509,6 +529,26 @@ const sections = [
               </div>
             </div>
           </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <Zap className="w-6 h-6 text-orange-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  AFDD Observations (Regulation 421.1.7)
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  BS 7671:2018+A4:2026 Regulation 421.1.7 recommends installation of arc fault
+                  detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate
+                  the risk of fire from arc fault currents. The wording is advisory rather than
+                  mandatory, so inspectors in Oxford's older Victorian HMOs may raise an FI or C3
+                  observation where boards lack AFDD provision — particularly where the risk profile
+                  (aged wiring, multi-circuit boards in converted terraces) supports the
+                  recommendation. Be familiar with this regulation: it is a growing area of
+                  observation on post-A4:2026 EICRs.
+                </p>
+              </div>
+            </div>
+          </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
@@ -517,11 +557,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Oxford landlords face a 28-day deadline — quoting on the day is the most
-                  effective way to win the follow-on work.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Oxford landlords face a 28-day deadline — quoting on the day is the most effective
+                  way to win the follow-on work.
                 </p>
               </div>
             </div>

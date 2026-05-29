@@ -46,7 +46,7 @@ const keyTakeaways = [
   'Most commercial kitchens require a three-phase supply to support high-demand equipment such as combi ovens, commercial dishwashers, and extract systems — single-phase supply is rarely sufficient.',
   'Extract ventilation in commercial kitchens must comply with Building Regulations Part F, Gas Safety (Installation and Use) Regulations 1998, and DW/172 (Specification for Kitchen Ventilation Systems) — an interlock between the gas supply and extract fan is mandatory.',
   'Emergency lighting must comply with BS 5266-1:2016 and requires monthly functional testing, annual full-duration testing, and a 3-hour battery duration for most restaurant premises.',
-  'EICR inspections for restaurants and commercial kitchens should be carried out at intervals of no more than 5 years, though 3-year intervals are recommended by many insurers and local authority licensing teams.',
+  'EICR inspection intervals for restaurants are not fixed by BS 7671 — per IET Guidance Note 3 (GN3 9th Ed, Reg 2.4), the inspector must determine and recommend the next interval based on the findings of each inspection. For harsh commercial kitchen environments, a 1–3 year interval is typically appropriate.',
   'Elec-Mate lets electricians complete EICR certificates, fire alarm certificates, and emergency lighting certificates for restaurant clients on site — with AI defect coding, professional PDF export, and instant delivery.',
 ];
 
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'How often does a restaurant need an EICR?',
     answer:
-      'BS 7671:2018+A4:2026 recommends periodic inspection intervals of no more than 5 years for commercial premises. However, many local authorities, insurers, and premises licence conditions specify 3-year intervals for restaurants and food establishments due to the harsh operating environment — heat, steam, grease, and frequent cleaning all accelerate deterioration of electrical installations. The Environmental Health team or Fire and Rescue Service may request a copy of the EICR as part of their inspection regime. Under the Health and Safety at Work Act 1974 and the Electricity at Work Regulations 1989, the duty holder (usually the restaurant owner or operator) is responsible for ensuring the electrical installation is maintained in a safe condition. Failure to provide a current EICR can affect your premises licence, insurance validity, and compliance status.',
+      'There is no fixed maximum interval set by BS 7671. IET Guidance Note 3 (9th Edition, GN3 Reg 2.4) requires that the subsequent inspection interval be determined and recommended by the inspector during each periodic inspection, based on their findings and the risk environment of the installation — not taken from a generic table. For a commercial kitchen, inspectors will typically recommend a 1–3 year interval given the harsh operating conditions (heat, steam, grease, moisture, aggressive cleaning chemicals). Many local authorities, insurers, and premises licence conditions independently specify a 3-year interval for restaurants. The Environmental Health team or Fire and Rescue Service may request a copy of the EICR as part of their inspection regime. Under the Health and Safety at Work Act 1974 and the Electricity at Work Regulations 1989, the duty holder (usually the restaurant owner or operator) is responsible for ensuring the electrical installation is maintained in a safe condition. Failure to provide a current EICR can affect your premises licence, insurance validity, and compliance status.',
   },
   {
     question: 'What are the emergency lighting requirements for a restaurant?',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/max-demand-calculator',
+    href: '/tools/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate maximum demand for commercial kitchens with diversity factors applied to three-phase loads.',
@@ -236,10 +236,10 @@ const sections = [
         </div>
         <p>
           The total connected load can easily reach 60 to 120 kW before diversity is applied. After
-          applying diversity factors from BS 7671 Appendix 1, the maximum demand typically falls to
-          40 to 80 kW. A three-phase 100A supply provides approximately 69 kW, which is sufficient
-          for many mid-size restaurants. Larger operations may require a 200A or even 400A
-          three-phase supply.
+          applying diversity (permitted under BS 7671 Reg 311.1 and the OSG notes on allowances for
+          diversity), the maximum demand typically falls to 40 to 80 kW. A three-phase 100A supply
+          provides approximately 69 kW, which is sufficient for many mid-size restaurants. Larger
+          operations may require a 200A or even 400A three-phase supply.
         </p>
         <p>
           If the premises currently has a single-phase supply, a three-phase upgrade must be
@@ -364,12 +364,28 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">
+            Reg 730.55.1.4 — One Socket-Outlet Per Vessel
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            Where cooking vessels (such as electric fryers, induction hobs, or heated holding units)
+            are connected via plug-and-socket, BS 7671:2018+A4:2026 Reg 730.55.1.4 requires that
+            each socket-outlet shall supply only one vessel. Multi-way adaptors, socket bars, and
+            Y-leads feeding multiple cooking vessels from a single outlet are non-compliant. In
+            practice this means the kitchen socket layout must provide a dedicated outlet for each
+            plug-connected cooking appliance — a common deficiency found on EICR inspections of
+            older commercial kitchen installations.
+          </p>
+        </div>
         <p>
           Before starting any commercial kitchen fit-out, obtain the manufacturer data sheets for
           every piece of equipment. Calculate the total connected load, apply diversity, and design
           the distribution board schedule accordingly. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/max-demand-calculator">max demand calculator</SEOInternalLink> to
-          verify the supply capacity is adequate.
+          <SEOInternalLink href="/tools/max-demand-calculator">
+            max demand calculator
+          </SEOInternalLink>{' '}
+          to verify the supply capacity is adequate.
         </p>
       </>
     ),
@@ -521,42 +537,44 @@ const sections = [
     content: (
       <>
         <p>
-          IET Guidance Note 3 (9th Edition) — Periodic Inspection Intervals table — recommends a
-          maximum periodic inspection interval of 5 years for commercial premises. However, the
-          harsh environment of a commercial kitchen — heat, steam, grease, water, aggressive
-          cleaning chemicals, and heavy daily use — means that deterioration occurs faster than in a
-          typical office or retail premises.
+          IET Guidance Note 3 (9th Edition, Reg 2.4) is clear: there is no fixed BS 7671 maximum
+          interval for commercial premises. The subsequent inspection period must be determined
+          during each periodic inspection and test, based on the inspector's assessment of the
+          installation's condition, the risk environment, and the findings of the current
+          inspection. The inspector's recommended interval must be recorded on the EICR and the duty
+          holder is bound by it.
         </p>
         <p>
-          Many insurers, local authorities, and fire and rescue services recommend or require a
-          3-year EICR interval for restaurants. Some premises licence conditions specify this
-          directly. If the previous EICR inspector recommended a 3-year interval, the duty holder
-          must follow that recommendation.
+          In practice, the harsh environment of a commercial kitchen — heat, steam, grease, water,
+          aggressive cleaning chemicals, and heavy daily use — accelerates deterioration. Inspectors
+          will typically recommend a shorter interval than for a low-risk commercial premises. Many
+          insurers, local authorities, and fire and rescue services also specify 3-year intervals
+          for restaurants as a condition of cover or premises licensing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>5 years maximum</strong> — the BS 7671 recommended maximum interval for
-                commercial premises. Adequate for restaurants with well-maintained, modern
-                installations.
+                <strong>Inspector-determined interval</strong> — per GN3 9th Ed Reg 2.4, the
+                recommended interval must be based on the findings of each inspection, not a generic
+                table. The inspector's reasoning must be recorded on the EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3 years recommended</strong> — appropriate for most restaurants,
-                particularly those with older installations, heavy use, or premises where the
-                kitchen environment is particularly harsh.
+                <strong>1–3 years typical for restaurants</strong> — appropriate for most restaurant
+                kitchens given the harsh operating environment, particularly where the installation
+                is older, heavily loaded, or regularly exposed to moisture and cleaning chemicals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1 year for caravans and temporary structures</strong> — food vans, pop-up
-                restaurants, and temporary food stalls should be inspected annually due to the
-                portable nature of the installation and exposure to weather.
+                <strong>1 year for food vans and temporary structures</strong> — pop-up restaurants
+                and temporary food stalls should be inspected annually due to the portable nature of
+                the installation and exposure to weather.
               </span>
             </li>
           </ul>
@@ -605,9 +623,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — appropriate RCD protection on all circuits as
-                required by BS 7671. Socket circuits, circuits supplying equipment in zones of
-                increased risk.
+                <strong>RCD protection</strong> — appropriate RCD protection on all final circuits
+                as required by BS 7671 Reg 551.4.4.2. Socket circuits, circuits supplying equipment
+                in zones of increased risk.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>AFDD consideration (Reg 421.1.7, A4:2026)</strong> — BS 7671:2018+A4:2026
+                recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire
+                risk from arc fault currents. For mixed-use buildings with residential flats above a
+                restaurant, the residential floors may be within scope. Electricians quoting
+                restaurant fit-outs in these buildings should discuss AFDD provision with the
+                client.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -638,6 +667,22 @@ const sections = [
               <span>
                 <strong>EICR</strong> — current EICR in place with Satisfactory outcome. Next
                 inspection date recorded and tracked.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Dedicated socket per cooking vessel (Reg 730.55.1.4)</strong> — each
+                plug-connected cooking appliance has its own dedicated socket-outlet. No multi-way
+                adaptors feeding multiple cooking vessels from a single outlet.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Cable adequacy verified (Reg 622.85)</strong> — at EICR, cables confirmed
+                adequate for current-carrying capacity with correction factors for ambient
+                temperature, grouping, and installation method checked against Section 523.
               </span>
             </li>
             <li className="flex items-start gap-3">

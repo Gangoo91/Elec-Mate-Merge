@@ -5,12 +5,11 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // published 15 April 2026) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-05-29';
 
 export const knxWiringInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/knx-wiring-installation-guide-uk',
-  title:
-    'KNX Wiring Installation Guide for UK Electricians — Bus',
+  title: 'KNX Wiring & Bus Installation Guide for UK Electricians (BS 7671)',
   description:
     'KNX wiring installation guide for UK electricians — TP1 bus topology, J-Y(St)Y cable selection, line/area/backbone architecture, power supply sizing…',
   datePublished: published,
@@ -40,25 +39,21 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX is the international open standard for home and building electronic systems, defined by BS EN 50090 in Europe and ISO/IEC 14543-3 worldwide. It is the convergence of EIB, BatiBUS and EHS into a single manufacturer-independent specification administered by the KNX Association in Brussels. Over 500 companies produce KNX-certified devices, and any certified device interoperates on the same bus, commissioned through a single tool called ETS.',
+          text: 'KNX is the international open standard for home and building electronic systems, defined by BS EN 50090 in Europe and ISO/IEC 14543-3 worldwide. It is the convergence of EIB, BatiBUS and EHS into a single manufacturer-independent specification administered by the KNX Association in Brussels. Over 500 companies produce KNX-certified devices, and any certified device interoperates on the same bus, commissioned through a single tool called ETS.',
         },
         {
           type: 'paragraph',
-          text:
-            'In UK projects, KNX is specified on commercial fit-outs, large residential properties, hotels, schools and corporate campuses where lighting, HVAC, shading and energy metering must talk to each other and to a building management system. Unlike a centralised DDC controller, every KNX device contains its own microprocessor and exchanges short telegrams over a common bus. Remove any single device and the rest carries on running.',
+          text: 'In UK projects, KNX is specified on commercial fit-outs, large residential properties, hotels, schools and corporate campuses where lighting, HVAC, shading and energy metering must talk to each other and to a building management system. Unlike a centralised DDC controller, every KNX device contains its own microprocessor and exchanges short telegrams over a common bus. Remove any single device and the rest carries on running.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Decentralised intelligence, single bus',
-          text:
-            'KNX has no central controller. Each device is intelligent in its own right and the bus is the shared medium — fundamentally different from a Modbus master/slave or polled BACnet system. KNX devices speak when they have something to say, not when they are asked.',
+          text: 'KNX has no central controller. Each device is intelligent in its own right and the bus is the shared medium — fundamentally different from a Modbus master/slave or polled BACnet system. KNX devices speak when they have something to say, not when they are asked.',
         },
         {
           type: 'paragraph',
-          text:
-            'For a UK electrician, KNX sits in the same territory as [DALI lighting control](/guides/dali-lighting-control-wiring-bs-en-62386) and [building management systems](/guides/building-management-systems-electrical) — extra-low-voltage control wiring layered on top of mains power, governed by BS 7671 Section 528 for segregation, and commissioned in software once the wiring is complete.',
+          text: 'For a UK electrician, KNX sits in the same territory as [DALI lighting control](/guides/dali-lighting-control-wiring-bs-en-62386) and [building management systems](/guides/building-management-systems-electrical) — extra-low-voltage control wiring layered on top of mains power, governed by BS 7671 Section 528 for segregation, and commissioned in software once the wiring is complete.',
         },
       ],
     },
@@ -69,8 +64,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX defines four physical media. In practice, UK projects use TP1 for the structured backbone and IP for inter-line / inter-building routing; RF appears in retrofit and where chasing cables is impractical; PL is essentially obsolete for new build.',
+          text: 'KNX defines four physical media. In practice, UK projects use TP1 for the structured backbone and IP for inter-line / inter-building routing; RF appears in retrofit and where chasing cables is impractical; PL is essentially obsolete for new build.',
         },
         {
           type: 'list',
@@ -85,8 +79,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'TP1 is the default — design the project around it',
-          text:
-            'Unless the project is explicitly a retrofit using KNX RF, every KNX system in this guide assumes TP1 twisted pair as the structured backbone. IP is used between areas and into the BMS, not as a substitute for TP1 on a single line.',
+          text: 'Unless the project is explicitly a retrofit using KNX RF, every KNX system in this guide assumes TP1 twisted pair as the structured backbone. IP is used between areas and into the BMS, not as a substitute for TP1 on a single line.',
         },
       ],
     },
@@ -97,8 +90,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'TP1 is electrically simple. The bus is a two-wire pair carrying 30V DC supply and 9600 bit/s differential telegrams on the same conductors. A 21V minimum must be maintained at every device terminal. Polarity is enforced by the red/black KNX terminal — reverse polarity will not damage a certified device but will prevent it communicating.',
+          text: 'TP1 is electrically simple. The bus is a two-wire pair carrying 30V DC supply and 9600 bit/s differential telegrams on the same conductors. A 21V minimum must be maintained at every device terminal. Polarity is enforced by the red/black KNX terminal — reverse polarity will not damage a certified device but will prevent it communicating.',
         },
         {
           type: 'list',
@@ -117,13 +109,11 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'No rings, ever',
-          text:
-            'A closed loop on KNX TP1 will appear to work intermittently but produces signal collisions and unpredictable device behaviour. Every cable run must terminate at a device or be left as an unterminated spur — never join the head of a line back to the tail.',
+          text: 'A closed loop on KNX TP1 will appear to work intermittently but produces signal collisions and unpredictable device behaviour. Every cable run must terminate at a device or be left as an unterminated spur — never join the head of a line back to the tail.',
         },
         {
           type: 'paragraph',
-          text:
-            'TP1 is class 2 / SELV in BS 7671 terms — extra-low voltage from a safety-isolated source. That classification is what underpins the Section 528 segregation rules covered later in this guide.',
+          text: 'TP1 is class 2 / SELV in BS 7671 terms — extra-low voltage from a safety-isolated source. That classification is what underpins the Section 528 segregation rules covered later in this guide.',
         },
       ],
     },
@@ -134,8 +124,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The standardised KNX cable is J-Y(St)Y 2x2x0.8 — a green-sheathed, screened twisted-pair instrument cable. UK distributors stock it from Hager, Belden, Schneider and ABB. It is recognised by its bright green sheath, the de facto colour code for KNX bus cable in UK installations.',
+          text: 'The standardised KNX cable is J-Y(St)Y 2x2x0.8 — a green-sheathed, screened twisted-pair instrument cable. UK distributors stock it from Hager, Belden, Schneider and ABB. It is recognised by its bright green sheath, the de facto colour code for KNX bus cable in UK installations.',
         },
         {
           type: 'list',
@@ -150,15 +139,13 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'Only the red/black pair is required for a functioning TP1 bus. The white/yellow pair may be used for an auxiliary, but the safest convention is to cap it and reserve it as a spare.',
+          text: 'Only the red/black pair is required for a functioning TP1 bus. The white/yellow pair may be used for an auxiliary, but the safest convention is to cap it and reserve it as a spare.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Use KNX-certified bus cable — not Cat5e',
-          text:
-            'It is tempting to substitute Cat5e or Cat6 for KNX, especially on a job that is already pulling structured cabling. KNX will function on Cat5e over short runs, but the impedance characteristics, screen continuity and segregation rating are wrong. KNX Association certification is granted on the basis of J-Y(St)Y compliance.',
+          text: 'It is tempting to substitute Cat5e or Cat6 for KNX, especially on a job that is already pulling structured cabling. KNX will function on Cat5e over short runs, but the impedance characteristics, screen continuity and segregation rating are wrong. KNX Association certification is granted on the basis of J-Y(St)Y compliance.',
         },
       ],
     },
@@ -169,8 +156,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX is hierarchically structured so that a single project can scale from a small flat (one line, twenty devices) to a corporate campus (multiple areas, thousands of devices) without changing the underlying protocol. The hierarchy is line, area, backbone — and the limits are fixed by the KNX standard, not by manufacturer convention.',
+          text: 'KNX is hierarchically structured so that a single project can scale from a small flat (one line, twenty devices) to a corporate campus (multiple areas, thousands of devices) without changing the underlying protocol. The hierarchy is line, area, backbone — and the limits are fixed by the KNX standard, not by manufacturer convention.',
         },
         {
           type: 'list',
@@ -187,13 +173,11 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'success',
           title: 'Use IP backbone for anything multi-floor',
-          text:
-            'For commercial projects beyond a single floor plate, KNXnet/IP as the backbone is the default. It uses the structured Ethernet that the project already has, separates the high-traffic spine from the slower 9600 bit/s TP1 lines, and lets ETS reach every device from any switch port.',
+          text: 'For commercial projects beyond a single floor plate, KNXnet/IP as the backbone is the default. It uses the structured Ethernet that the project already has, separates the high-traffic spine from the slower 9600 bit/s TP1 lines, and lets ETS reach every device from any switch port.',
         },
         {
           type: 'paragraph',
-          text:
-            'Each device on the project has a unique physical address in the form Area.Line.Device — for example 1.2.34 — and one or more group addresses (the logical channels that link, say, a light switch to the dimming actuator that drives a luminaire). Physical addresses are set at commissioning; group addresses are the project designer\'s logical scheme.',
+          text: "Each device on the project has a unique physical address in the form Area.Line.Device — for example 1.2.34 — and one or more group addresses (the logical channels that link, say, a light switch to the dimming actuator that drives a luminaire). Physical addresses are set at commissioning; group addresses are the project designer's logical scheme.",
         },
       ],
     },
@@ -204,8 +188,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Every KNX TP1 line requires a dedicated KNX bus power supply (BPS). The BPS is a DIN-rail module that takes a mains input (230V AC, sometimes 110V) and produces a regulated 30V DC bus output through an integrated 100 mH choke. The choke is what allows data and DC supply to share the pair without the data being short-circuited by the supply.',
+          text: 'Every KNX TP1 line requires a dedicated KNX bus power supply (BPS). The BPS is a DIN-rail module that takes a mains input (230V AC, sometimes 110V) and produces a regulated 30V DC bus output through an integrated 100 mH choke. The choke is what allows data and DC supply to share the pair without the data being short-circuited by the supply.',
         },
         {
           type: 'list',
@@ -221,13 +204,11 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'Never use a generic 30V DC supply',
-          text:
-            'A bench DC bench supply or generic industrial 30V module will power the LEDs on a KNX device but will not allow communication. The integrated 100 mH choke in a KNX-certified BPS is what makes TP1 work. Only KNX-certified bus power supplies are permitted.',
+          text: 'A bench DC bench supply or generic industrial 30V module will power the LEDs on a KNX device but will not allow communication. The integrated 100 mH choke in a KNX-certified BPS is what makes TP1 work. Only KNX-certified bus power supplies are permitted.',
         },
         {
           type: 'paragraph',
-          text:
-            'For wider redundancy patterns see our [building management systems guide](/guides/building-management-systems-electrical) and the [commercial lighting guide](/guides/commercial-lighting-guide).',
+          text: 'For wider redundancy patterns see our [building management systems guide](/guides/building-management-systems-electrical) and the [commercial lighting guide](/guides/commercial-lighting-guide).',
         },
       ],
     },
@@ -238,8 +219,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX TP1 is forgiving by industrial protocol standards — no termination resistors, no impedance matching, no master device — but it has hard rules. Breaking them produces installations that pass continuity testing but fail commissioning, and that is the worst place for a fault to surface because it adds days to programme.',
+          text: 'KNX TP1 is forgiving by industrial protocol standards — no termination resistors, no impedance matching, no master device — but it has hard rules. Breaking them produces installations that pass continuity testing but fail commissioning, and that is the worst place for a fault to surface because it adds days to programme.',
         },
         {
           type: 'list',
@@ -259,8 +239,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'The 1000 m budget is total cable, not point-to-point',
-          text:
-            'Every metre of bus cable on the line — main run, spurs, drops to devices — counts towards the 1000 m budget. For long buildings, plan the structured backbone as KNXnet/IP and break the project into multiple short lines rather than stretching a single line to its limit.',
+          text: 'Every metre of bus cable on the line — main run, spurs, drops to devices — counts towards the 1000 m budget. For long buildings, plan the structured backbone as KNXnet/IP and break the project into multiple short lines rather than stretching a single line to its limit.',
         },
       ],
     },
@@ -271,21 +250,20 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX TP1 is a SELV circuit derived from a safety-isolated source (the bus power supply). As a SELV circuit installed alongside LV mains, it falls under BS 7671:2018+A4:2026 Section 528 — segregation between circuits at different voltage bands.',
+          text: 'KNX TP1 is a SELV circuit derived from a safety-isolated source (the bus power supply). As a SELV circuit installed alongside LV mains, it falls under BS 7671:2018+A4:2026 Section 528 — segregation between circuits at different voltage bands.',
         },
         {
           type: 'paragraph',
-          text:
-            'Section 528.1 prohibits SELV/PELV circuits from sharing a wiring system with LV circuits unless one of the recognised segregation arrangements is in place. The principal options are:',
+          text: 'BS 7671 Reg 528.1 (reflected in GN3 Reg 4.8.5 and OSG Reg 7.4.1) classifies KNX TP1 as a Band I (extra-low voltage) circuit and mains as Band II (low voltage). Band I circuits must not share a wiring enclosure with Band II circuits unless one of the following conditions is satisfied:',
         },
         {
           type: 'list',
           ordered: true,
           items: [
             'Physical separation — the KNX bus cable runs on a separate tray, in a separate conduit, or in a separate compartment of multi-compartment trunking from the LV mains conductors.',
-            'Partitioned trunking — a single trunking is permitted provided an internal partition maintains separation between the SELV bus and the LV conductors.',
-            'Cable to LV insulation rating — if the bus cable shares trunking or conduit with LV mains without partition, the bus cable must have insulation rated for the highest voltage present (300/500V minimum, often 600/1000V). Standard J-Y(St)Y 2x2x0.8 is NOT rated for this — a different KNX-rated multicore would be required.',
+            'Partitioned trunking — a single trunking is permitted provided an internal partition maintains separation between the Band I bus and the Band II conductors (Reg 528.1 / OSG 7.4.1 condition (c)).',
+            'Cable rated for highest voltage present — if the bus cable shares trunking or conduit with LV mains without partition, every cable in the enclosure must have insulation rated for the highest voltage present (300/500V minimum, often 600/1000V). Standard J-Y(St)Y 2x2x0.8 is NOT rated for this — a different KNX-rated multicore would be required (OSG 7.4.1 condition (a)).',
+            'Earthed metal screen multicore — for a multicore cable containing both Band I and Band II conductors, an earthed metal screen of equivalent current-carrying capacity to the largest Band II circuit conductor separates the bands (OSG 7.4.1 condition (e)). The screen must be earthed and sized to carry prospective fault current.',
             'Mechanical protection at crossings — where KNX bus must cross LV mains (e.g. in a panel), maintain separation or use a sleeve to prevent contact.',
           ],
         },
@@ -293,13 +271,17 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'Default to physical separation',
-          text:
-            'On almost every UK project the cleanest answer to Section 528 for KNX is physical separation — a dedicated containment route, ideally on the same tray system but a separate compartment. Mixing J-Y(St)Y 2x2x0.8 with mains in a shared compartment is a Section 528 non-conformity and will be flagged at M&E sign-off.',
+          text: 'On almost every UK project the cleanest answer to Section 528 for KNX is physical separation — a dedicated containment route, ideally on the same tray system but a separate compartment. Mixing J-Y(St)Y 2x2x0.8 with mains in a shared compartment is a Section 528 non-conformity and will be flagged at M&E sign-off.',
+        },
+        {
+          type: 'callout',
+          tone: 'info',
+          title: 'Reg 528.3.4 — fault protection also required on shared routes',
+          text: 'Where the KNX bus cable runs in close proximity to mains wiring, BS 7671 Reg 528.3.4(b) requires that fault protection is also afforded in accordance with Section 411 — not just physical separation. Inspectors check protective device selection, disconnection times and earthing arrangements (Section 411) independently of the segregation check (Section 528). Segregation alone does not discharge the fault-protection obligation.',
         },
         {
           type: 'paragraph',
-          text:
-            'At the panel, the same principles apply — KNX bus terminations, the BPS, line couplers and IP routers sit in a dedicated low-voltage section with a partition from the mains busbar, and on separate glands. For wider containment design see our [building management systems electrical guide](/guides/building-management-systems-electrical).',
+          text: 'At the panel, the same principles apply — KNX bus terminations, the BPS, line couplers and IP routers sit in a dedicated low-voltage section with a partition from the mains busbar, and on separate glands. For wider containment design see our [building management systems electrical guide](/guides/building-management-systems-electrical).',
         },
       ],
     },
@@ -310,13 +292,11 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A wired KNX installation does nothing until it is commissioned. Commissioning assigns each device a unique physical address, downloads the application programme into each device, and creates the group addresses that link inputs (switches, sensors) to outputs (actuators, dimmers, gateways). This is done in ETS — Engineering Tool Software — produced and licensed by the KNX Association.',
+          text: 'A wired KNX installation does nothing until it is commissioned. Commissioning assigns each device a unique physical address, downloads the application programme into each device, and creates the group addresses that link inputs (switches, sensors) to outputs (actuators, dimmers, gateways). This is done in ETS — Engineering Tool Software — produced and licensed by the KNX Association.',
         },
         {
           type: 'paragraph',
-          text:
-            'ETS is Windows-only in practice, licensed in tiers (Demo, Lite, Home, Professional). UK commercial projects almost always use ETS Professional, with licences bound to the engineer\'s KNX Association ID and the project file.',
+          text: "ETS is Windows-only in practice, licensed in tiers (Demo, Lite, Home, Professional). UK commercial projects almost always use ETS Professional, with licences bound to the engineer's KNX Association ID and the project file.",
         },
         {
           type: 'list',
@@ -325,7 +305,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
             'Create the project — define the building structure (areas, lines, rooms), import device catalogues from the manufacturer ETS database, and place each physical device in the topology.',
             'Assign physical addresses — each device gets a unique Area.Line.Device address (e.g. 1.2.34). Push the device programming button; ETS writes the assigned address.',
             'Assign group addresses — create the logical communication channels (e.g. "Kitchen ceiling lights on/off", "AHU 1 setpoint") and link device objects to them.',
-            'Configure parameters — set each device\'s application-specific behaviour (dimming curve, scene memory, timer durations, sensor thresholds, HVAC PID values).',
+            "Configure parameters — set each device's application-specific behaviour (dimming curve, scene memory, timer durations, sensor thresholds, HVAC PID values).",
             'Download the application — push the configured programme into every device over the bus. ETS handles partial and full downloads.',
             'Test and document — run group address, scene and fault-injection tests, then generate the documentation pack (wiring lists, group address tables, device parameter dumps).',
           ],
@@ -334,8 +314,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'ETS is a structured engineering tool, not a configuration',
-          text:
-            'ETS rewards rigorous group address schemes, structured project trees, and disciplined notes. Disorganised projects are unmaintainable by the next engineer — and KNX projects routinely outlive their original installer.',
+          text: 'ETS rewards rigorous group address schemes, structured project trees, and disciplined notes. Disorganised projects are unmaintainable by the next engineer — and KNX projects routinely outlive their original installer.',
         },
       ],
     },
@@ -346,8 +325,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX is specified on UK commercial projects because one bus carries lighting, HVAC, shading and energy metering — all addressable from the same wall panel, sensor or BMS gateway.',
+          text: 'KNX is specified on UK commercial projects because one bus carries lighting, HVAC, shading and energy metering — all addressable from the same wall panel, sensor or BMS gateway.',
         },
         {
           type: 'list',
@@ -361,8 +339,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'For deeper DALI integration see our [DALI lighting control wiring guide](/guides/dali-lighting-control-wiring-bs-en-62386); for BMS context see [building management systems electrical](/guides/building-management-systems-electrical); for ELV drivers under A4:2026 see [Section 715 ELV lighting](/guides/section-715-elv-lighting-a4-2026).',
+          text: 'For deeper DALI integration see our [DALI lighting control wiring guide](/guides/dali-lighting-control-wiring-bs-en-62386); for BMS context see [building management systems electrical](/guides/building-management-systems-electrical); for ELV drivers under A4:2026 see [Section 715 ELV lighting](/guides/section-715-elv-lighting-a4-2026).',
         },
       ],
     },
@@ -373,8 +350,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'KNX is one of four protocols a UK electrician routinely encounters on building automation. Understanding where each fits — and where they meet — turns a wiring exercise into a coherent system.',
+          text: 'KNX is one of four protocols a UK electrician routinely encounters on building automation. Understanding where each fits — and where they meet — turns a wiring exercise into a coherent system.',
         },
         {
           type: 'list',
@@ -389,8 +365,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'KNX backbone + DALI luminaire is the UK commercial default',
-          text:
-            'For new commercial lighting, the pragmatic pattern is a KNX backbone for switches, sensors and scenes, with DALI-2 drivers in each luminaire group, joined by a KNX-DALI gateway. KNX talks to the BMS, DALI talks to the lamps.',
+          text: 'For new commercial lighting, the pragmatic pattern is a KNX backbone for switches, sensors and scenes, with DALI-2 drivers in each luminaire group, joined by a KNX-DALI gateway. KNX talks to the BMS, DALI talks to the lamps.',
         },
       ],
     },
@@ -401,8 +376,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The KNX Association certifies both products and people. A device is KNX-certified if it has passed conformance and interoperability testing in an accredited lab. A person becomes a KNX Partner by completing the five-day KNX Basic Course at an accredited training centre and is then listed in the KNX Association partner directory.',
+          text: 'The KNX Association certifies both products and people. A device is KNX-certified if it has passed conformance and interoperability testing in an accredited lab. A person becomes a KNX Partner by completing the five-day KNX Basic Course at an accredited training centre and is then listed in the KNX Association partner directory.',
         },
         {
           type: 'list',
@@ -416,8 +390,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'KNX certification is not the same as 18th Edition',
-          text:
-            'A KNX Partner certification covers the protocol, the bus topology and ETS commissioning. It does not replace BS 7671:2018+A4:2026 competence, JIB grading, or the [usual UK electrical qualifications](/guides/smart-home-lighting-installation) needed to install the mains side. Both are required on a real KNX project.',
+          text: 'A KNX Partner certification covers the protocol, the bus topology and ETS commissioning. It does not replace BS 7671:2018+A4:2026 competence, JIB grading, or the [usual UK electrical qualifications](/guides/smart-home-lighting-installation) needed to install the mains side. Both are required on a real KNX project.',
         },
       ],
     },
@@ -428,33 +401,27 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
   howToSteps: [
     {
       name: 'Design the topology and choose the media',
-      text:
-        'Plan the line, area and backbone structure for the project. Default to TP1 twisted pair for each line, with KNXnet/IP as the backbone for any multi-floor or multi-area project. Allocate physical addresses on a coherent scheme that matches the building zoning, and reserve spare device counts on every line for future expansion.',
+      text: 'Plan the line, area and backbone structure for the project. Default to TP1 twisted pair for each line, with KNXnet/IP as the backbone for any multi-floor or multi-area project. Allocate physical addresses on a coherent scheme that matches the building zoning, and reserve spare device counts on every line for future expansion.',
     },
     {
       name: 'Specify the cable and the segregation route',
-      text:
-        'Specify J-Y(St)Y 2x2x0.8 KNX bus cable (LSZH variant where the route demands it). Plan the containment so that the bus cable is physically segregated from LV mains in accordance with BS 7671:2018+A4:2026 Section 528 — dedicated tray compartment, partitioned trunking, or separate conduit. Earth the cable screen at one end only, at the bus power supply.',
+      text: 'Specify J-Y(St)Y 2x2x0.8 KNX bus cable (LSZH variant where the route demands it). Plan the containment so that the bus cable is physically segregated from LV mains in accordance with BS 7671:2018+A4:2026 Section 528 — dedicated tray compartment, partitioned trunking, or separate conduit. Earth the cable screen at one end only, at the bus power supply.',
     },
     {
       name: 'Install the bus power supply and line couplers',
-      text:
-        'Mount the bus power supply on the DIN rail of the relevant distribution board, with a clearly labelled mains supply circuit. Install line couplers / area couplers per the topology design. Maintain a partition between the SELV bus side of the enclosure and the LV mains side. Test continuity of the bus and confirm 30V DC at every device drop before energising.',
+      text: 'Mount the bus power supply on the DIN rail of the relevant distribution board, with a clearly labelled mains supply circuit. Install line couplers / area couplers per the topology design. Maintain a partition between the SELV bus side of the enclosure and the LV mains side. Test continuity of the bus and confirm 30V DC at every device drop before energising.',
     },
     {
       name: 'Energise, address and download in ETS',
-      text:
-        'Energise the line, confirm 30V DC at every device, and confirm device LEDs are active. In ETS, assign physical addresses to each device using the device\'s programming button, then download the application programme, group addresses and parameters. Work line by line — full commissioning of one line before moving to the next.',
+      text: "Energise the line, confirm 30V DC at every device, and confirm device LEDs are active. In ETS, assign physical addresses to each device using the device's programming button, then download the application programme, group addresses and parameters. Work line by line — full commissioning of one line before moving to the next.",
     },
     {
       name: 'Configure scenes, gateways and BMS integration',
-      text:
-        'Build the scene logic in ETS — lighting recall, HVAC setpoints, blind positions. Configure KNX-DALI gateways, KNX-Modbus gateways and KNX-BACnet gateways as the project specifies. Push the resulting visualisation to the touch panels and BMS supervisory layer. Test scene recall, fault-injection, and edge cases (out-of-hours, fire alarm interface).',
+      text: 'Build the scene logic in ETS — lighting recall, HVAC setpoints, blind positions. Configure KNX-DALI gateways, KNX-Modbus gateways and KNX-BACnet gateways as the project specifies. Push the resulting visualisation to the touch panels and BMS supervisory layer. Test scene recall, fault-injection, and edge cases (out-of-hours, fire alarm interface).',
     },
     {
       name: 'Test, document and hand over the project file',
-      text:
-        'Test every group address, every scene, and every gateway integration. Produce the BS 7671 documentation for the mains side and the KNX project documentation pack (group address list, device list, wiring schematics, ETS .knxproj archive). Hand over the project file to the client and, where contracted, lodge it with the KNX Association.',
+      text: 'Test every group address, every scene, and every gateway integration. Produce the BS 7671 documentation for the mains side and the KNX project documentation pack (group address list, device list, wiring schematics, ETS .knxproj archive). Hand over the project file to the client and, where contracted, lodge it with the KNX Association.',
     },
   ],
   faqs: [
@@ -498,42 +465,48 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
     {
       href: '/guides/dali-lighting-control-wiring-bs-en-62386',
       title: 'DALI Lighting Control Wiring (BS EN 62386)',
-      description: 'The lower-tier luminaire-level lighting protocol that pairs with a KNX backbone via a KNX-DALI gateway — wiring rules, addressing and commissioning.',
+      description:
+        'The lower-tier luminaire-level lighting protocol that pairs with a KNX backbone via a KNX-DALI gateway — wiring rules, addressing and commissioning.',
       icon: 'Cable',
       category: 'Guide',
     },
     {
       href: '/guides/smart-home-lighting-installation',
       title: 'Smart Home Lighting Installation',
-      description: 'How KNX sits alongside the wider smart-home options for residential lighting — switches, dimmers, scenes and gateways.',
+      description:
+        'How KNX sits alongside the wider smart-home options for residential lighting — switches, dimmers, scenes and gateways.',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/guides/smart-home-wiring-cost',
       title: 'Smart Home Wiring Cost',
-      description: 'Budget envelopes for residential smart wiring including KNX, with cost comparisons against proprietary alternatives.',
+      description:
+        'Budget envelopes for residential smart wiring including KNX, with cost comparisons against proprietary alternatives.',
       icon: 'PoundSterling',
       category: 'Guide',
     },
     {
       href: '/guides/building-management-systems-electrical',
       title: 'Building Management Systems — Electrical',
-      description: 'Where KNX fits in the wider BMS picture, alongside BACnet and Modbus, on UK commercial projects.',
+      description:
+        'Where KNX fits in the wider BMS picture, alongside BACnet and Modbus, on UK commercial projects.',
       icon: 'Building2',
       category: 'Guide',
     },
     {
       href: '/guides/commercial-lighting-guide',
       title: 'Commercial Lighting Guide',
-      description: 'Commercial lighting design for UK projects — DALI, KNX backbones, daylight harvesting and emergency lighting interfaces.',
+      description:
+        'Commercial lighting design for UK projects — DALI, KNX backbones, daylight harvesting and emergency lighting interfaces.',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/guides/section-715-elv-lighting-a4-2026',
       title: 'Section 715 ELV Lighting — A4:2026',
-      description: 'Extra-low-voltage lighting installations under BS 7671:2018+A4:2026 Section 715 — drivers, segregation, and how it interacts with KNX/DALI control.',
+      description:
+        'Extra-low-voltage lighting installations under BS 7671:2018+A4:2026 Section 715 — drivers, segregation, and how it interacts with KNX/DALI control.',
       icon: 'BookOpen',
       category: 'Guide',
     },

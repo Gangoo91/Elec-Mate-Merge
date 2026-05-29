@@ -39,7 +39,7 @@ const keyTakeaways = [
   'A consumer unit replacement in Leeds typically costs between £350 and £550 for most domestic properties, which is in line with Yorkshire averages and competitive compared to other major UK cities.',
   'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for all socket-outlet circuits up to 32 A, for cables concealed in walls at a depth less than 50 mm, and — under A4:2026 Regulation 411.3.4 — for all AC lighting circuits in domestic premises. Individual RCBOs on every circuit are the preferred solution.',
   'Leeds has a large stock of Victorian back-to-back terraced housing in areas such as Headingley, Hyde Park, and Beeston — many still have original or early consumer units that require replacement.',
 ];
 
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Leeds?',
     answer:
-      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In a modern installation, individual RCBOs on every circuit are the preferred solution, providing both overcurrent and residual current protection without nuisance tripping.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD additional protection for all socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. A4:2026 also introduces Regulation 411.3.4, which extends this requirement to AC lighting circuits in domestic premises — meaning virtually every circuit in the house now requires RCD protection. Individual RCBOs on every circuit are the preferred solution, providing both overcurrent and residual current protection without nuisance tripping.',
   },
   {
     question: 'Why do many Leeds properties need a fuse board upgrade?',
@@ -68,7 +68,13 @@ const faqs = [
     question:
       'Do I need a surge protection device (SPD) during a consumer unit replacement in Leeds?',
     answer:
-      'In most cases, yes. Since Amendment 2 to BS 7671:2018, the risk assessment under Regulation 443.4 almost always results in SPD installation being required for domestic consumer unit replacements. A Type 2 SPD adds approximately £60 to £120 to the material cost. Your electrician must carry out the assessment and document the outcome on the EIC.',
+      'In most cases, yes. Regulation 443.4 of BS 7671:2018+A4:2026 lists four categories (a–d) where SPD protection is mandatory regardless of assessment — including where a transient overvoltage could result in loss of human life or interruption of commercial activity. For domestic installations not falling into those categories, a risk assessment must be carried out. Note that Regulation 443.4 does include an exception for single dwelling units in certain circumstances — your electrician must assess whether this exception applies and document the outcome on the EIC. A Type 2 SPD adds approximately £60 to £120 to the material cost.',
+  },
+  {
+    question:
+      'Do I need an Arc Fault Detection Device (AFDD) when replacing a consumer unit in Leeds?',
+    answer:
+      'A4:2026 introduces Regulation 421.1.7, which recommends the installation of Arc Fault Detection Devices (AFDDs) on AC final circuits to mitigate fire risk caused by arc fault currents. The regulation is advisory rather than mandatory — it uses the word "recommending" rather than "shall". However, Leeds has a large stock of Victorian housing with aged rubber-insulated wiring in areas such as Hyde Park, Harehills, and Beeston, where the risk of arc faults from deteriorated insulation is elevated. Your electrician should assess whether AFDDs are appropriate for the installation and discuss the recommendation with you. Where fitted, AFDDs are typically installed per circuit alongside RCBOs.',
   },
   {
     question: 'How long does a consumer unit replacement take in a Leeds property?',
@@ -78,7 +84,7 @@ const faqs = [
   {
     question: 'What paperwork should I receive after a consumer unit replacement in Leeds?',
     answer:
-      'You should receive an Electrical Installation Certificate (EIC) documenting the design, construction, inspection, and testing of the new consumer unit. Where your electrician is registered with a competent person scheme, you will also receive a Building Regulations Compliance Certificate within 30 days. Both documents should be kept safely as they are required when selling the property.',
+      'You should receive three documents. First, an Electrical Installation Certificate (EIC) issued under Regulation 644.4.201 of BS 7671, documenting the design, construction, inspection, and testing of the new consumer unit. Second, a Schedule of Test Results — a mandatory separate document that must accompany the EIC, recording all measured values including insulation resistance, earth fault loop impedance (Zs), and RCD operating times for every circuit. Third, where your electrician is registered with a competent person scheme, a Building Regulations Compliance Certificate within 30 days. Keep all three documents safely as they are required when selling the property.',
   },
 ];
 
@@ -253,9 +259,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on socket
-                circuits and concealed cables. Boards without RCDs or RCBOs present a significant
-                electric shock risk.
+                <strong>No RCD protection</strong> — BS 7671:2018+A4:2026 requires 30 mA RCD
+                additional protection on socket circuits, concealed cables, and — under A4:2026
+                Regulation 411.3.4 — all AC lighting circuits in domestic premises. Boards without
+                RCDs or RCBOs on all circuits present a significant electric shock and fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,9 +302,11 @@ const sections = [
         </p>
         <p>
           An Electrical Installation Certificate (EIC) must be issued for the work under Regulation
-          421.1.201 of BS 7671. The EIC documents the design, construction, inspection, and testing
-          of the installation. A registered electrician will self-certify the work and submit Part P
-          notification automatically through their scheme provider.
+          644.4.201 of BS 7671, which explicitly requires an EIC upon completion of the verification
+          of a consumer unit replacement. The EIC must be accompanied by a Schedule of Test Results
+          recording all measured values for every circuit. A registered electrician will
+          self-certify the work and submit Part P notification automatically through their scheme
+          provider.
         </p>
         <p>
           You should receive a copy of the EIC and a Building Regulations Compliance Certificate
@@ -318,8 +327,10 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — the electrician surveys the existing
-                board, identifies all circuits, and safely isolates the mains at the DNO cutout. All
-                power is off for the duration of the work.
+                board and identifies all circuits. If the service fuse or DNO seal must be broken to
+                connect the new unit or replace meter tails, the electrician must notify Northern
+                Powergrid (the DNO for Leeds and West Yorkshire) before breaking the seal. The
+                supply is then safely isolated at the DNO cutout for the duration of the work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -351,7 +362,9 @@ const sections = [
                 <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
-                and submits Part P notification through their competent person scheme.
+                (required under Reg 644.4.201) together with the mandatory Schedule of Test Results
+                recording all measured values, and submits Part P notification through their
+                competent person scheme.
               </span>
             </li>
           </ul>

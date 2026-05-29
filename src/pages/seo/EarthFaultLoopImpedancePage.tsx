@@ -41,11 +41,12 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Earth fault loop impedance (Zs) is the total impedance of the fault loop path from the point of fault, through the protective conductor, back to the transformer, and via the phase conductor to the point of fault: Zs = Ze + (R1+R2).',
+  'Earth fault loop impedance (Zs) is the total impedance of the fault loop path from the point of fault, through the circuit protective conductor (CPC), back to the transformer, and via the phase conductor to the point of fault: Zs = Ze + (R1+R2).',
   'Zs must be low enough to ensure the protective device (MCB, RCBO, or fuse) operates within the required disconnection time — 0.4 seconds for final circuits and 5 seconds for distribution circuits under BS 7671.',
-  'The measured Zs at the furthest point of each circuit must not exceed the maximum Zs value listed in BS 7671 Tables 41.2 to 41.5 for the type and rating of the protective device.',
+  'The measured Zs at the furthest point of each circuit must not exceed the maximum Zs value listed in BS 7671 Chapter 41 — Table 41.2 for fuses (BS 88, BS 3036, BS 1362) and Table 41.3(a)/(b)/(c) for Type B, C, and D MCBs respectively.',
   'Temperature correction must be applied when comparing designed (calculated) Zs values with the maximum permitted values, because conductor resistance increases as temperature rises during normal operation.',
   'Elec-Mate includes a Zs calculator that checks measured values against the BS 7671 maximum Zs tables, plus 50+ other calculators including cable sizing, voltage drop, PFC, max demand, and adiabatic equation.',
+  'MCB Zs limits (BS 7671:2018+A4:2026 Table 41.3) cover both final circuits (0.4 s) and distribution circuits (5 s) — a single table entry applies because the instantaneous magnetic trip governs, not the thermal element. For installations with BS 88 or BS 3036 fuses, use Table 41.2 (Reg 411.4.201): the 32 A BS 88-2 gG limit is 0.99 Ω, compared with 1.37 Ω for a 32 A Type B MCB — a lower limit that catches circuits which would otherwise pass.',
 ];
 
 const faqs = [
@@ -57,7 +58,7 @@ const faqs = [
   {
     question: 'How is Zs measured on site?',
     answer:
-      'Zs is measured using a multifunction tester or a dedicated loop impedance meter. The instrument is connected between the phase and earth terminals at the furthest point of the circuit being tested (for example, at the last socket on a ring or radial circuit). The instrument injects a brief test current, measures the voltage drop, and calculates the impedance using Ohm law. The result is displayed in ohms. Zs must be measured at every circuit during initial verification and at representative points during periodic inspection. The test should be performed with the circuit energised and all connections made. A no-trip loop impedance test mode is available on most modern instruments — this is essential for circuits protected by RCDs, because a standard loop test may trip the RCD. The measured Zs must be compared with the maximum Zs value from BS 7671 Tables 41.2 to 41.5 for the specific protective device type and rating.',
+      "Zs is measured using a multifunction tester or a dedicated loop impedance meter. The instrument is connected between the phase and earth terminals at the furthest point of the circuit being tested (for example, at the last socket on a ring or radial circuit). The instrument injects a brief test current, measures the voltage drop, and calculates the impedance using Ohm's law. The result is displayed in ohms. Zs must be measured at every circuit during initial verification and at representative points during periodic inspection. The test should be performed with the circuit energised and all connections made. A no-trip loop impedance test mode is available on most modern instruments — this is essential for circuits protected by RCDs, because a standard loop test may trip the RCD. The measured Zs must be compared with the maximum Zs value from BS 7671 Chapter 41 — Table 41.2 for fuse-protected circuits (Reg 411.4.201) or Table 41.3(a)/(b)/(c) for Type B/C/D MCB-protected circuits (Reg 411.4.204).",
   },
   {
     question: 'What is Ze and how is it different from Zs?',
@@ -77,7 +78,7 @@ const faqs = [
   {
     question: 'Where do I find the maximum Zs values in BS 7671?',
     answer:
-      'The maximum Zs values are listed in BS 7671 Chapter 41, specifically in Tables 41.2 (BS 88 fuses), 41.3 (BS 3036 fuses), 41.4 (Type B MCBs), and 41.5 (Type C MCBs). Additional tables cover Type D MCBs and RCBOs. Each table lists the maximum Zs value for each protective device rating (6 A, 10 A, 16 A, 20 A, 32 A, etc.) that will ensure the required disconnection time. For final circuits (0.4 second disconnection), the maximum Zs values are lower (requiring lower impedance and therefore higher fault current). For distribution circuits (5 second disconnection), the maximum Zs values are higher (allowing more impedance). The IET On-Site Guide also reproduces these tables with additional guidance. When using these tables, remember that the tabulated maximum Zs values are at the maximum conductor operating temperature — so you must apply the temperature correction factor when comparing measured or calculated values taken at ambient temperature.',
+      'The maximum Zs values are listed in BS 7671 Chapter 41. Under BS 7671:2018+A4:2026: Table 41.2 (Reg 411.4.201) covers all fuse types — BS 88-2 gG/gM, BS 88-3, BS 3036, and BS 1362 fuses all appear in this single table. Table 41.3(a) (Reg 411.4.204) covers Type B MCBs and RCBOs; Table 41.3(b) covers Type C; Table 41.3(c) covers Type D. Each sub-table lists the maximum Zs for each protective device rating (6 A, 10 A, 16 A, 20 A, 32 A, etc.). Importantly, MCB table values in Table 41.3 apply to both 0.4 s (final circuit) and 5 s (distribution circuit) disconnection — the instantaneous magnetic trip governs MCB operation, so a single Zs limit covers both circuit types. GN3 (Guidance Note 3: Inspection and Testing) provides 80% of maximum Zs as the cold-measured site limit — for example, 1.37 Ω maximum becomes 1.10 Ω site limit for a 32 A Type B MCB. The IET On-Site Guide also reproduces these values. When using the tables, remember the tabulated maximum Zs values assume conductors at their maximum operating temperature — so you must apply temperature correction when comparing values measured at ambient temperature.',
   },
   {
     question: 'What happens if Zs is too high?',
@@ -103,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables with automatic Zs verification to ensure disconnection times are met.',
@@ -226,9 +227,7 @@ const sections = [
           outside the installation, belonging to the supply company. It includes the impedance of
           the supply transformer winding, the phase conductor of the supply cable from the
           transformer to the property, and the earth return path (which varies depending on the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangement
-          </SEOInternalLink>
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>
           ).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -368,9 +367,12 @@ const sections = [
         <p>
           When comparing a <strong>measured</strong> Zs (taken during live testing at ambient
           temperature) against the BS 7671 maximum values, you should check that the measured value
-          does not exceed 80% of the tabulated maximum (the IET On-Site Guide provides "rule of
-          thumb" 80% values). This accounts for the fact that the measured Zs will increase when the
-          cable reaches operating temperature under normal load.
+          does not exceed 80% of the tabulated maximum. GN3 (Guidance Note 3: Inspection and
+          Testing) formalises this as a 0.80 site factor — the cold-measured limit is 80% of the BS
+          7671 maximum Zs. For example, the 32 A Type B MCB maximum of 1.37 Ω becomes a GN3 site
+          limit of 1.10 Ω. The IET On-Site Guide also reproduces these adjusted values. This
+          accounts for the fact that measured Zs will increase when the cable reaches operating
+          temperature under normal load.
         </p>
       </>
     ),
@@ -381,14 +383,16 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Chapter 41 (Tables 41.2 to 41.5) lists the maximum earth fault loop impedance (Zs)
-          for each type and rating of protective device. These values ensure the device disconnects
-          within the required time — 0.4 seconds for final circuits and 5 seconds for distribution
-          circuits.
+          BS 7671 Chapter 41 lists the maximum earth fault loop impedance (Zs) for each type and
+          rating of protective device. Under BS 7671:2018+A4:2026, Table 41.2 (Reg 411.4.201) covers
+          fuses (BS 88-2, BS 88-3, BS 3036, and BS 1362), and Table 41.3(a)/(b)/(c) (Reg 411.4.204)
+          covers Type B, C, and D MCBs respectively. The MCB table values apply to both 0.4 s (final
+          circuit) and 5 s (distribution circuit) disconnection, because the instantaneous magnetic
+          trip governs — a single Zs column covers both circuit types.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 overflow-x-auto">
           <h4 className="font-bold text-white mb-4">
-            Maximum Zs for MCBs (0.4s Disconnection, 230V)
+            Maximum Zs for MCBs — BS 7671:2018+A4:2026 Table 41.3 (0.4 s and 5 s, 230 V)
           </h4>
           <table className="w-full text-white text-sm">
             <thead>
@@ -452,10 +456,28 @@ const sections = [
           the required disconnection time when RCD protection is provided.
         </p>
         <p>
-          The IET On-Site Guide provides "80% of maximum Zs" values for field comparison — these
-          account for temperature correction and are the values you should compare your measured Zs
-          against during testing.
+          GN3 (Guidance Note 3: Inspection and Testing) provides cold-measured site limits at 80% of
+          the BS 7671 maximum Zs values — for example, 1.37 Ω becomes 1.10 Ω for a 32 A Type B MCB.
+          These GN3 0.80-factor limits are the values to compare your measured Zs against on site.
+          The IET On-Site Guide also reproduces these adjusted limits.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h4 className="font-bold text-white mb-1">
+                BS 88 and BS 3036 fuses: lower Zs limits (Table 41.2)
+              </h4>
+              <p className="text-white text-sm leading-relaxed">
+                Older installations protected by BS 88-2 gG fuses have stricter maximum Zs limits
+                than MCBs of the same rating (Reg 411.4.201, Table 41.2). At 32 A, a BS 88-2 gG fuse
+                has a maximum Zs of 0.99 Ω, compared with 1.37 Ω for a 32 A Type B MCB. On EICRs,
+                circuits that pass the MCB limit may fail if the protective device is a fuse —
+                always identify the device type before selecting the table.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -567,8 +589,8 @@ const sections = [
               Note: If Ze were higher (for example, 0.80 ohms on a property far from the
               transformer), Zs would be 0.939 ohms — still within the maximum but above the 80% rule
               of thumb. This shows why{' '}
-              <SEOInternalLink href="/earthing-arrangements">Ze values</SEOInternalLink>{' '}
-              matter for high-current circuits.
+              <SEOInternalLink href="/earthing-arrangements">Ze values</SEOInternalLink> matter for
+              high-current circuits.
             </p>
           </div>
         </div>
@@ -630,7 +652,7 @@ const sections = [
                 Zs and PFC are inversely related. A high Zs means a low earth fault current. While
                 this may still be within limits for disconnection time (especially with RCD
                 protection), it should be considered alongside the{' '}
-                <SEOInternalLink href="/adiabatic-equation-calculator">
+                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                   adiabatic equation
                 </SEOInternalLink>{' '}
                 check.
@@ -670,9 +692,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Built-In BS 7671 Tables</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  All the maximum Zs values from Tables 41.2 to 41.5 are built into the calculator.
-                  No need to look up the tables in the regulation book — select the device type and
-                  rating and the correct maximum Zs is applied automatically.
+                  All the maximum Zs values from BS 7671:2018+A4:2026 are built into the calculator
+                  — Table 41.2 for fuses (BS 88, BS 3036, BS 1362) and Table 41.3(a)/(b)/(c) for
+                  Type B, C, and D MCBs. Select the device type and rating and the correct maximum
+                  Zs is applied automatically, including the GN3 0.80 cold-measured site limit.
                 </p>
               </div>
             </div>
@@ -684,7 +707,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Zs is one of over 70+ calculators on Elec-Mate. Others include{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
                   ,{' '}

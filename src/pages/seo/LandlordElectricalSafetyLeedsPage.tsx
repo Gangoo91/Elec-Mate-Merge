@@ -40,6 +40,7 @@ const keyTakeaways = [
   'Leeds City Council operates selective licensing in designated areas and has a dedicated private rented sector team that investigates complaints and issues civil penalties of up to £30,000.',
   'Leeds has a large student rental market concentrated around Headingley, Hyde Park, and Woodhouse, with significant numbers of HMOs requiring additional licensing and EICR compliance.',
   'RCD protection on socket-outlet circuits is required under Regulation 411.3.3 of BS 7671. Back-to-back terraces in inner Leeds frequently lack RCD protection, resulting in C2 observations.',
+  'Regulation 411.3.4 (A4:2026) additionally requires 30 mA RCD protection on AC final circuits supplying luminaires in domestic premises. Pre-A4 consumer units in Leeds terraces and HMOs will commonly fail on both 411.3.3 and 411.3.4.',
   'The Distribution Network Operator for Leeds is Northern Powergrid. Inspectors should be familiar with their earthing provisions and supply arrangements.',
 ];
 
@@ -67,7 +68,7 @@ const faqs = [
   {
     question: 'What happens if my Leeds rental property fails the EICR?',
     answer:
-      'If the EICR is Unsatisfactory (C1 or C2 observations), landlords must complete remedial work within 28 days or sooner if specified. Written confirmation must be provided to the tenant and council. Failure to act is a separate breach with its own penalty.',
+      'If the EICR is Unsatisfactory, the response timescale depends on the code. C1 (danger present) requires immediate remedial action — the installation or circuit must be made safe before tenants are re-exposed to it. C2 (potentially dangerous) must be remedied within 28 days of the EICR date, or sooner if the inspector specifies. Written confirmation of completion must be provided to the tenant and council. Failure to act is a separate breach with its own penalty.',
   },
   {
     question: 'Can a Leeds tenant request an electrical safety check?',
@@ -121,7 +122,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631) before a new tenancy begins and at least every five years.
+          (Part 6, Chapter 64 — Regulations 641–651) before a new tenancy begins and at least every
+          five years.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -149,8 +151,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
-                days or sooner if specified.
+                <strong>Remedial work</strong> — C1 (danger present) requires immediate remedial
+                action; C2 (potentially dangerous) must be remedied within 28 days or sooner if
+                specified.
               </span>
             </li>
           </ul>
@@ -231,8 +234,17 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety</strong> — HMO fire alarm and emergency lighting systems must be
-                tested as part of the EICR. RCD protection (Regulation 411.3.3) is particularly
-                important in shared properties.
+                tested as part of the EICR. RCD protection (Regulations 411.3.3 and 411.3.4) is
+                particularly important in shared properties.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Arc fault detection (A4:2026)</strong> — Regulation 421.1.7 recommends the
+                installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate
+                fire risk from arc fault currents. For older Leeds HMOs where wiring condition is
+                unknown, electricians should raise AFDDs as a recommended upgrade for landlords.
               </span>
             </li>
           </ul>
@@ -317,22 +329,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>28 days maximum</strong> — from the date of the EICR, or sooner if the
-                inspector specifies.
+                <strong>C1 — immediate action required</strong> — a C1 (danger present) observation
+                means risk of injury exists. The installation or circuit must be made safe
+                immediately; the 28-day window does not apply. The landlord must act before tenants
+                are re-exposed to the danger.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 — immediate</strong> — danger present observations require emergency
-                remedial action.
+                <strong>C2 — 28 days maximum</strong> — a C2 (potentially dangerous) observation
+                must be remedied within 28 days of the EICR date, or sooner if the inspector
+                specifies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common remedial work in Leeds</strong> — RCD protection (Regulation
-                411.3.3), consumer unit replacements, earthing upgrades on older terraces, and
+                <strong>Common remedial work in Leeds</strong> — RCD protection (Regulations 411.3.3
+                and 411.3.4), consumer unit replacements, earthing upgrades on older terraces, and
                 rewiring of deteriorated cables.
               </span>
             </li>

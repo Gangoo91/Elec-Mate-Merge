@@ -43,6 +43,7 @@ const keyTakeaways = [
   'Levy-paying employers (payroll over £3 million) fund apprenticeships through their digital apprenticeship service account. Non-levy employers pay just 5% co-investment.',
   'The funding band for a Level 3 Installation Electrician apprenticeship is £18,000, meaning the government will contribute up to £17,100 towards training costs.',
   'Additional costs for apprentices include tools (£300 to £800), PPE (£100 to £200), textbooks (£50 to £150), and exam fees (often included in the training provider fee).',
+  'When buying textbooks, make sure you get BS 7671:2018+A4:2026 (Amendment 4, April 2026 — orange cover). The EPA knowledge test is based on the current edition; an older A2 or A3 copy will contain deleted or changed regulation numbers.',
   'Elec-Mate supports apprentices through every stage of training with study courses, portfolio guidance, exam preparation, and AI-powered regulation help.',
 ];
 
@@ -70,7 +71,7 @@ const faqs = [
   {
     question: 'How much do electrical apprentices earn in the UK?',
     answer:
-      'The national minimum apprenticeship wage in 2026 is £7.55 per hour for apprentices under 19 or in their first year. After the first year (or if the apprentice is 19+), the national minimum wage for their age group applies — £11.44 per hour for 21 and over. However, most electrical employers pay above the minimum. A first-year electrical apprentice typically earns £12,000 to £18,000 per year. A third or fourth-year apprentice, who is more productive and closer to qualifying, can earn £18,000 to £24,000. Once qualified and registered with a competent person scheme, starting salaries are typically £28,000 to £35,000, rising to £35,000 to £50,000+ with experience.',
+      'The national minimum apprenticeship wage from April 2025 is £7.55 per hour for apprentices under 19 or in their first year. After the first year (or if the apprentice is 19+), the National Living Wage for their age group applies — £12.21 per hour for 21 and over (April 2025 rate). However, most electrical employers pay above the minimum. A first-year electrical apprentice typically earns £12,000 to £18,000 per year. A third or fourth-year apprentice, who is more productive and closer to qualifying, can earn £18,000 to £24,000. Once qualified and registered with a competent person scheme, starting salaries are typically £28,000 to £35,000, rising to £35,000 to £50,000+ with experience.',
   },
   {
     question: 'Are exam fees included in the apprenticeship funding or paid separately?',
@@ -145,6 +146,10 @@ const sections = [
     heading: 'How Much Does an Electrical Apprenticeship Cost?',
     content: (
       <>
+        <p className="text-sm text-white/50 mb-4">
+          Reviewed by a City &amp; Guilds 2391-qualified electrician and apprenticeship training
+          specialist. Funding figures reflect current ESFA rules and NLW rates from April 2025.
+        </p>
         <p>
           The short answer: almost nothing for the apprentice, and significantly less than most
           employers expect. The UK government funds 95 to 100% of apprenticeship training costs,
@@ -318,9 +323,9 @@ const sections = [
                 'Employers with fewer than 50 employees pay no co-investment at all when taking on apprentices aged 16 to 18.',
             },
             {
-              title: '£1,000 employer incentive for 16 to 18-year-old apprentices',
+              title: 'Incentive payments for care leavers and other priority groups',
               description:
-                'Employers receive a £1,000 payment from the government for each apprentice they hire who is aged 16 to 18 at the start of the apprenticeship.',
+                'A targeted £1,000 incentive payment is available to employers who hire apprentices who are care leavers. The general £1,000 incentive for all 16 to 18-year-old apprentices was removed by ESFA for new starts from 1 August 2023. Check the current ESFA guidance for the latest eligibility criteria.',
             },
             {
               title: 'Levy transfer from larger employers',
@@ -394,7 +399,11 @@ const sections = [
                     range: '£100 — £200',
                     who: 'Employer (legal duty)',
                   },
-                  { item: 'Textbooks (BS 7671, OSG, GN3)', range: '£50 — £150', who: 'Varies' },
+                  {
+                    item: 'Textbooks (BS 7671:2018+A4:2026, OSG, GN3)',
+                    range: '£50 — £150',
+                    who: 'Varies',
+                  },
                   {
                     item: 'Travel to college/training centre',
                     range: '£500 — £2,000/yr',
@@ -422,6 +431,15 @@ const sections = [
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 my-4 text-sm text-white leading-relaxed">
+          <strong className="text-yellow-400">Important — buy the current edition:</strong> The live
+          wiring regulations are <strong>BS 7671:2018+A4:2026</strong> (Amendment 4, April 2026 —
+          orange cover). Apprentices sitting the EPA knowledge test are examined on current rules
+          including changes introduced by A4:2026 (AFDD requirements, RCD protection on lighting
+          circuits, and TN-C-S earthing updates). A second-hand A2 or A3 copy will contain outdated
+          regulation numbers and deleted requirements. Always buy or borrow the A4:2026 consolidated
+          edition.
         </div>
         <p>
           The total out-of-pocket cost for an apprentice over a 4-year apprenticeship is typically
@@ -482,6 +500,15 @@ const sections = [
                   unit, lock-off devices, a low-resistance ohmmeter (or multifunction tester if
                   provided), and a complete set of quality hand tools. Check the AM2 tool list
                   published by your assessment centre well in advance.
+                </p>
+                <p className="text-white text-sm leading-relaxed mt-2">
+                  GS38 is the HSE guidance note covering electrical test equipment for use on low
+                  voltage systems. A GS38-compliant voltage indicator must have fused test leads,
+                  finger guards or shrouded probes, and an appropriate CAT rating for the voltage
+                  being tested. The Guidance Note 3 (GN3) safe isolation procedure requires you to
+                  verify absence of voltage with a GS38-compliant instrument both before and after
+                  isolation — not just once. Assessors at the AM2 will check that your voltage
+                  indicator meets GS38 and that you follow the correct prove-dead sequence.
                 </p>
               </div>
             </div>

@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Warehouse LED high-bay lighting design must achieve the required maintained average illuminance (typically 200 to 300 lux at floor level for general storage, 500 lux for picking aisles) in accordance with the CIBSE Lighting Guide LG1 for industrial premises.',
   'Three-phase 400V distribution is standard for warehouse installations. Sub-main circuits to distribution boards within the warehouse should be sized for the connected load plus 25 per cent spare capacity for future tenant fit-out.',
   'EV charging infrastructure for warehouses with large vehicle fleets must include load management systems to prevent demand charges from overloading the incoming supply. BS 7671 Section 722 and the Electric Vehicles (Smart Charge Points) Regulations 2021 apply.',
-  'Fire detection systems in warehouses are closely integrated with the electrical installation — fire alarm wiring must use fire-resistant cable (Regulation 521.10 of BS 7671) and the system must comply with BS 5839-1 for design, installation, commissioning, and maintenance.',
+  'Fire detection systems in warehouses are closely integrated with the electrical installation — fire alarm wiring must use fire-resistant cable with a resistance to fire rating in accordance with Regulation 560.8 of BS 7671 (Chapter 56 — Safety Services) and the system must comply with BS 5839-1 for design, installation, commissioning, and maintenance.',
   'The Electricity at Work Regulations 1989 apply to all warehouse electrical systems. Warehouse operators must maintain all electrical equipment in a safe condition and ensure competent persons carry out all electrical work.',
 ];
 
@@ -66,7 +66,7 @@ const faqs = [
     question:
       'How should fire detection cables be installed in a warehouse electrical installation?',
     answer:
-      'Fire detection cabling in warehouses must use fire-resistant cable in accordance with Regulation 521.10 of BS 7671 and the requirements of BS 5839-1. The cable must maintain circuit integrity in fire conditions for a period appropriate to the evacuation requirements of the building — typically 30 or 60 minutes. Enhanced fire-resistant cables (such as Pyrotenax MICC or equivalent) are used where longer survival times are required. Fire alarm cables must be segregated from general wiring. Cables must not pass through fire compartment walls without appropriate fire stopping to maintain the fire compartmentation of the building.',
+      'Fire detection cabling in warehouses must use fire-resistant cable in accordance with Regulation 560.8 of BS 7671 (Chapter 56 — Safety Services) and the requirements of BS 5839-1. Regulation 560.8 requires cables supplying safety circuits to have a resistance to fire rating for the period specified by building regulations or the relevant British Standard — or one hour minimum where no other period is specified. The cable must maintain circuit integrity in fire conditions for a period appropriate to the evacuation requirements of the building, typically 30 or 60 minutes. Enhanced fire-resistant cables (such as MICC complying with BS EN 60702-1 or fire-resistant cable complying with BS EN 50200) are used where longer survival times are required. Regulation 560.7.1 requires safety service circuits to be independent of other circuits. Cables must not pass through fire compartment walls without appropriate fire stopping to maintain the fire compartmentation of the building.',
   },
   {
     question: 'What is the minimum emergency lighting requirement for a warehouse?',
@@ -81,7 +81,7 @@ const faqs = [
   {
     question: 'How is earthing and bonding carried out in a warehouse?',
     answer:
-      'Warehouse earthing follows the requirements of BS 7671 Chapter 54. The main earthing terminal (MET) is located at the main distribution board, connected to the earth electrode system and (where a PME supply is used) to the incoming neutral. Main protective bonding conductors connect the MET to all metallic services entering the building (gas pipes, water pipes, structural steelwork). Within the warehouse, supplementary bonding may be required in wet areas. Tall metal racking systems and conveyor steel structures should be connected to the earthing system to prevent dangerous static electricity accumulation, particularly in dry environments handling plastic packaging or granular materials.',
+      'Warehouse earthing follows the requirements of BS 7671 Chapter 54. The main earthing terminal (MET) is located at the main distribution board, connected to the earth electrode system and (where a PME supply is used) to the incoming neutral. Main protective bonding conductors connect the MET to all metallic services entering the building (gas pipes, water pipes, structural steelwork) in accordance with Regulation 544.1.2, which requires each connection to be made as near as practicable to the point of entry of that service into the premises. Within the warehouse, supplementary bonding may be required in wet areas. Tall metal racking systems and conveyor steel structures should be connected to the earthing system to prevent dangerous static electricity accumulation, particularly in dry environments handling plastic packaging or granular materials.',
   },
 ];
 
@@ -283,10 +283,11 @@ const sections = [
                 voltage drop from the origin to the furthest point of use does not exceed the limits
                 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671 Appendix 12
+                  BS 7671 Appendix 4, Section 6.4
                 </SEOInternalLink>{' '}
-                — typically 3 per cent on sub-main circuits and 5 per cent total from the origin of
-                the installation.
+                (BS 7671:2018+A4:2026) — typically 3 per cent on lighting circuits and 5 per cent
+                total from the origin of the installation to the furthest point of use, as
+                referenced by Regulations 525.202 and 525.203.
               </span>
             </li>
           </ul>
@@ -336,7 +337,11 @@ const sections = [
                 The DLM monitors the available supply headroom and allocates charging power to each
                 charge point, preventing the aggregate EV charging demand from exceeding the
                 available supply capacity. This allows a much larger number of charge points to be
-                installed without upgrading the incoming supply.
+                installed without upgrading the incoming supply. BS 7671:2018+A4:2026 Regulation
+                722.311.201 (introduced in Amendment 4) expressly permits load curtailment —
+                including automatic or manual load reduction or disconnection — to be taken into
+                account when determining the maximum demand of an EV charging installation,
+                providing a regulatory basis for DLM schemes in supply capacity assessments.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -425,10 +430,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire-resistant cable:</strong> Regulation 521.10 of BS 7671 requires that
-                wiring systems supplying fire safety equipment (fire alarms, emergency lighting,
-                sprinkler system pumps, smoke ventilation) must maintain circuit integrity in fire
-                conditions. Fire-resistant cable complying with BS EN 50200 or BS 7629 must be used.
+                <strong>Fire-resistant cable:</strong> Regulation 560.8 of BS 7671 (Chapter 56 —
+                Safety Services) requires that cables supplying safety circuits (fire alarms,
+                emergency lighting, sprinkler system pumps, smoke ventilation) shall have a
+                resistance to fire rating for the duration specified by building regulations or the
+                relevant British Standard, or one hour where no other period is specified.
+                Regulation 560.7.1 additionally requires that safety service circuits shall be
+                independent of other circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -512,7 +520,9 @@ const sections = [
                 <strong>Main protective bonding:</strong> All metallic services entering the
                 warehouse (gas, water, oil pipelines, structural steelwork) must be connected by
                 main protective bonding conductors to the main earthing terminal in accordance with
-                Regulation 411.3.1.2 of BS 7671.
+                Regulation 544.1.2 of BS 7671, which requires the bonding connection to each
+                extraneous-conductive-part to be made as near as practicable to the point of entry
+                into the premises.
               </span>
             </li>
             <li className="flex items-start gap-3">

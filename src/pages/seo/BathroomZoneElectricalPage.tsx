@@ -42,8 +42,10 @@ const keyTakeaways = [
   'BS 7671 Section 701 defines three zones in bathrooms and shower rooms (Zone 0, Zone 1, Zone 2) based on proximity to water — each with specific IP rating requirements and restrictions on equipment permitted.',
   'Zone 0 (inside the bath or shower tray) requires IPX7 rated equipment and only SELV at a maximum of 12V AC is permitted. No switches or socket outlets are allowed.',
   'Zone 1 (above the bath or shower tray up to 2.25m) requires IPX4 minimum. No switches are permitted; SELV equipment rated IPX4 is acceptable.',
-  'Zone 2 (extending 0.6m beyond Zone 1 boundary) requires IPX4 minimum. Shaver sockets to BS EN 61558-2-5 are permitted.',
+  'Zone 2 (extending 0.6m beyond Zone 1 boundary) requires IPX4 minimum. Shaver sockets to BS EN 61558-2-5 are permitted. Note: a shaver socket conforming to BS EN 61558-2-5 is not required to be IPX4 rated in Zone 2 provided it is sited where direct spray from showers is unlikely (Reg 701.512.2 exception).',
   'RCD protection (30mA) is mandatory for all circuits in bathroom zones under Regulation 701.411.3.3 of BS 7671.',
+  'A4:2026 Reg 411.3.4: all AC final circuits supplying luminaires in domestic premises now require additional protection by an RCD ≤30mA — this applies to the whole lighting circuit, not just as a Section 701 measure.',
+  'Supplementary bonding (Reg 701.415.2) may be omitted only where the building has a protective equipotential bonding system per Reg 411.3.1.2 AND three conditions are all satisfied: (d) all final circuits comply with automatic disconnection per Reg 411.3.2; (e) all final circuits have RCD additional protection per Reg 415.1.1; (f) all extraneous-conductive-parts are effectively connected to main bonding per Reg 411.3.1.2.',
 ];
 
 const faqs = [
@@ -65,7 +67,7 @@ const faqs = [
   {
     question: 'Where can a shaver socket be installed in a bathroom?',
     answer:
-      'Shaver sockets conforming to BS EN 61558-2-5 (which include an isolating transformer) are permitted in Zone 2 and outside the zones. They must not be installed in Zone 0 or Zone 1. In practice, the shaver socket is typically mounted on the bathroom wall at mirror height, which is usually within Zone 2 (within 0.6m of the bath or shower) or outside the zones (more than 0.6m from the bath). The shaver socket must be IP44 rated if it is within Zone 2. Standard 13A socket outlets are not permitted in bathrooms under any circumstances (except in rooms containing only a toilet and basin with no bath or shower, where a socket can be installed outside the zones).',
+      'Shaver sockets conforming to BS EN 61558-2-5 (which include an isolating transformer) are permitted in Zone 2 and outside the zones. They must not be installed in Zone 0 or Zone 1. In practice, the shaver socket is typically mounted on the bathroom wall at mirror height, which is usually within Zone 2 (within 0.6m of the bath or shower) or outside the zones (more than 0.6m from the bath). Under Reg 701.512.2, a shaver supply unit conforming to BS EN 61558-2-5 is not required to be IPX4 rated in Zone 2 provided it is sited where direct spray from showers is unlikely; where direct spray is possible, IPX4 is required. Standard 13A socket outlets are prohibited within 2.5m horizontally of the Zone 1 boundary (Reg 701.512.3); in a large bathroom a socket positioned beyond that distance is compliant, but in most bathrooms the entire room falls within the 2.5m limit.',
   },
   {
     question: 'What electrical equipment is allowed in Zone 0?',
@@ -115,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size shower and bathroom circuit cables correctly.',
     icon: Calculator,
@@ -514,11 +516,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary bonding</strong> — BS 7671 Regulation 701.415.2 states that
-                supplementary protective equipotential bonding is not required where all circuits
-                are RCD protected at 30mA and the installation is in accordance with BS 7671. In
-                most modern bathrooms, supplementary bonding is therefore not required if the
-                circuits are correctly RCD protected.
+                <strong>Supplementary bonding</strong> — Regulation 701.415.2 requires supplementary
+                protective equipotential bonding connecting all circuit protective conductors to
+                accessible extraneous-conductive-parts. It may be omitted only where the building
+                already has a protective equipotential bonding system per Reg 411.3.1.2 AND all
+                three of the following conditions are satisfied: (d) all final circuits comply with
+                automatic disconnection per Reg 411.3.2; (e) all final circuits have additional RCD
+                protection per Reg 415.1.1; (f) all extraneous-conductive-parts are effectively
+                connected to main equipotential bonding per Reg 411.3.1.2. Where main bonding is
+                absent, supplementary bonding cannot be omitted regardless of RCD protection.
               </span>
             </li>
           </ul>
@@ -573,9 +579,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard socket outlets in bathrooms</strong> — fitting a 13A socket outlet
-                inside a bathroom is not permitted. Only shaver sockets to BS EN 61558-2-5 are
-                allowed, and only in Zone 2 or outside the zones.
+                <strong>Standard socket outlets within the prohibited distance</strong> — Reg
+                701.512.3 prohibits socket outlets within 2.50m horizontally of the Zone 1 boundary,
+                except for SELV socket outlets (Section 414) and shaver supply units (BS EN
+                61558-2-5). In most bathrooms the entire floor area falls within that 2.50m limit,
+                making a standard 13A socket non-compliant anywhere in the room. In a large bathroom
+                where a socket would be more than 2.50m from Zone 1, it is permitted — measure
+                horizontally from the Zone 1 boundary to the socket centre.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Glass shower screen assumed to limit Zone 1</strong> — a frameless glass
+                screen or low partition does not reduce zone dimensions unless it is at least 2.25m
+                high (Reg 701.32.2). A screen lower than 2.25m must be ignored when calculating zone
+                boundaries; the full horizontal and vertical zone distances still apply beyond it.
+                This causes non-compliant equipment placement on many installations where the
+                installer assumed the screen ended Zone 1.
               </span>
             </li>
           </ul>
@@ -623,11 +644,30 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Bathroom Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to correctly size shower circuits (typically 6mm to 10mm depending on the shower
                   rating) and towel rail circuits.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  A4:2026 — RCD Protection for Lighting Circuits (Reg 411.3.4)
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  BS 7671:2018+A4:2026 introduced Regulation 411.3.4, which requires all AC final
+                  circuits supplying luminaires in domestic premises to have additional protection
+                  by an RCD rated at no more than 30mA. This is a standalone Part 4 requirement,
+                  separate from the Section 701 bathroom RCD rule (Reg 701.411.3.3). When fitting
+                  new bathroom lights, the whole lighting circuit must satisfy both requirements.
+                  Consumer units without RCD-protected lighting ways will need an RCBO or rewiring
+                  to comply with the latest edition.
                 </p>
               </div>
             </div>

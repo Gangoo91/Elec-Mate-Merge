@@ -19,7 +19,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Registration Schemes', href: '/guides/niceic-vs-napit-comparison' },
+  { label: 'Guides', href: '/guides' },
   { label: 'NICEIC vs NAPIT Comparison', href: '/niceic-vs-napit-comparison' },
 ];
 
@@ -85,6 +85,12 @@ const faqs = [
     question: 'Which scheme covers more specialist work types?',
     answer:
       'NAPIT covers a broader range of regulated trades from a single membership, including electrical, heating and ventilation, solid fuel, plumbing, and microgeneration. This makes NAPIT particularly attractive for multi-trade contractors. NICEIC focuses specifically on the electrotechnical sector but covers commercial, industrial, and domestic electrical work comprehensively.',
+  },
+  {
+    question:
+      'What does BS 7671 18th Edition Amendment 4 (A4:2026) mean for NICEIC and NAPIT assessors?',
+    answer:
+      'From April 2026, BS 7671:2018+A4:2026 introduces new requirements that assessors from both schemes will check on domestic installations. Regulation 411.3.4 now requires that AC final circuits supplying luminaires in domestic premises are provided with additional protection by an RCD with a rated residual operating current not exceeding 30 mA — in plain terms, lighting circuits in new domestic work must be RCD-protected. Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents. Both NICEIC and NAPIT assessors inspecting installations designed or completed after the April 2026 effective date will verify compliance with the updated standard. Electricians should ensure their consumer unit layouts and installation documentation reflect A4:2026 before any assessment visit.',
   },
 ];
 
@@ -295,6 +301,22 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <h4 className="text-base font-semibold text-yellow-300 mb-3">
+            What assessors check against the 18th Edition A4:2026
+          </h4>
+          <p className="text-white/90 text-sm leading-relaxed">
+            From April 2026, BS 7671:2018+A4:2026 introduces requirements that both NICEIC and NAPIT
+            assessors will check on new domestic installations. Regulation 411.3.4 now mandates
+            additional protection by an RCD with a rated residual operating current not exceeding 30
+            mA on AC final circuits supplying luminaires in domestic premises — meaning lighting
+            circuits in new domestic work must be RCD-protected. Regulation 421.1.7 recommends arc
+            fault detection devices (AFDDs) on AC final circuits of fixed installations to mitigate
+            fire risk from arc fault currents. Assessors inspecting installations completed after
+            the April 2026 effective date will verify compliance with both requirements, so consumer
+            unit design and circuit documentation must reflect the updated standard.
+          </p>
+        </div>
       </>
     ),
   },
@@ -386,7 +408,10 @@ const sections = [
                 </SEOInternalLink>
                 , both schemes are equally recognised. The 2020 Electrical Safety Regulations
                 require a "qualified and competent person" — membership of either scheme satisfies
-                this requirement.
+                this requirement. Under GN3 Reg 1.3, landlords in England and Wales must also ensure
+                a copy of the EICR is provided to the incoming tenant before they occupy the
+                premises, and the Landlord and Tenant Act 1985 s11(1)(b) places a legal duty to keep
+                electrical installations in repair and proper working order throughout the tenancy.
               </span>
             </li>
           </ul>
@@ -539,6 +564,15 @@ const sections = [
     heading: 'For Electricians: Managing Your Scheme Registration',
     content: (
       <>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 flex items-start gap-3">
+          <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+          <p className="text-white/80 text-sm leading-relaxed">
+            <strong className="text-white">Reviewed by a registered electrician.</strong> This guide
+            is written and reviewed by NICEIC and NAPIT registered electricians with experience
+            across domestic, commercial, and industrial sectors. Content is updated to reflect
+            current scheme requirements and BS 7671:2018+A4:2026.
+          </p>
+        </div>
         <p>
           Whichever scheme you choose, keeping your registration current means staying on top of
           assessment dates, qualifications renewals, and insurance documentation. Elec-Mate helps

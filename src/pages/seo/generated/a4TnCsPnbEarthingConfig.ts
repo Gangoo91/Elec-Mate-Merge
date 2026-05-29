@@ -11,8 +11,7 @@ const modified = '2026-05-18';
 
 export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
-  title:
-    'BS 7671 A4:2026 — TN-C-S (PNB) Earthing Arrangement',
+  title: 'BS 7671 A4:2026 — TN-C-S (PNB) Earthing Arrangement',
   description:
     'Amendment 4 (January 2026) formally split TN-C-S into two distinct earthing arrangements on the EICR/EIC model form: TN-C-S (PME) and TN-C-S (PNB).',
   datePublished: published,
@@ -27,8 +26,8 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   heroSubtitle:
     'Amendment 4 split the previous single TN-C-S option on the BS 7671 model forms into two distinct earthing arrangements: TN-C-S (PME) and TN-C-S (PNB). This guide explains the difference, when each applies, and what the new Section I tick-box choice means for design and inspection decisions.',
   keyTakeaways: [
-    'TN-C-S (PME) — Protective Multiple Earthing. The combined protective-and-neutral (PEN) conductor is on the distributor\'s side. Most UK domestic and small commercial installations.',
-    'TN-C-S (PNB) — Protective Neutral Bonding. The combined PEN conductor is on the consumer\'s side, typically from a privately-owned HV/LV transformer. Most large industrial and some institutional sites.',
+    "TN-C-S (PME) — Protective Multiple Earthing. The combined protective-and-neutral (PEN) conductor is on the distributor's side. Most UK domestic and small commercial installations.",
+    "TN-C-S (PNB) — Protective Neutral Bonding. The combined PEN conductor is on the consumer's side, typically from a privately-owned HV/LV transformer. Most large industrial and some institutional sites.",
     'Before A4:2026, both arrangements were ticked as "TN-C-S" on the EICR Section I. From A4 onwards, the certificate distinguishes them explicitly — the choice affects bonding, RCD selection, EV charger compatibility and earth electrode requirements.',
     'PME arrangements: the distributor accepts responsibility for the integrity of the PEN conductor up to the supply terminals. The installer is responsible for the bonding requirements within the installation.',
     'PNB arrangements: the installation owner is responsible for the integrity of the PEN conductor from the privately-owned transformer to the point where it splits into separate N and PE. Different bonding and earthing rules apply.',
@@ -42,13 +41,12 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The Electrical Installation Condition Report (EICR), Electrical Installation Certificate (EIC) and Minor Electrical Installation Works Certificate (MEIWC) model forms in BS 7671:2018+A4:2026 published 15 April 2026 separate the previously single TN-C-S option into two distinct tick-boxes:',
+          text: 'The Electrical Installation Condition Report (EICR), Electrical Installation Certificate (EIC) and Minor Electrical Installation Works Certificate (MEIWC) model forms in BS 7671:2018+A4:2026 published 15 April 2026 separate the previously single TN-C-S option into two distinct tick-boxes:',
         },
         {
           type: 'list',
           items: [
-            'TN-C-S (PME) — the supply is a TN-C-S system with Protective Multiple Earthing on the distributor\'s side.',
+            "TN-C-S (PME) — the supply is a TN-C-S system with Protective Multiple Earthing on the distributor's side.",
             'TN-C-S (PNB) — the supply is a TN-C-S system with Protective Neutral Bonding within the installation, typically downstream of a privately-owned transformer.',
           ],
         },
@@ -56,8 +54,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Why this matters',
-          text:
-            'PME and PNB look very similar on paper — both have a combined PEN conductor at some point. The location of that PEN/N split changes which party (distributor or installation owner) is responsible for its integrity, and triggers different bonding and protection rules in BS 7671. A4 made the distinction visible on the certificate so the responsible person and any subsequent inspector know which set of rules applies.',
+          text: 'PME and PNB look very similar on paper — both have a combined PEN conductor at some point. The location of that PEN/N split changes which party (distributor or installation owner) is responsible for its integrity, and triggers different bonding and protection rules in BS 7671. A4 made the distinction visible on the certificate so the responsible person and any subsequent inspector know which set of rules applies.',
         },
       ],
     },
@@ -68,8 +65,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'TN-C-S (PME) is the most common UK supply arrangement for domestic and small commercial premises. The distributor provides a combined protective-and-neutral (PEN) conductor from the substation to the cut-out at each property. Inside the property, the PEN conductor is split into separate N and PE conductors at the supply terminals — typically at the meter or main switch.',
+          text: 'TN-C-S (PME) is the most common UK supply arrangement for domestic and small commercial premises. The distributor provides a combined protective-and-neutral (PEN) conductor from the substation to the cut-out at each property. Inside the property, the PEN conductor is split into separate N and PE conductors at the supply terminals — typically at the meter or main switch.',
         },
         {
           type: 'list',
@@ -84,8 +80,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'PME bonding requirements',
-          text:
-            'Main protective bonding conductor sizes for PME installations are typically larger than for non-PME TN-C-S arrangements — see BS 7671 Regulation 544.1.1 and Table 54.8. This reflects the higher fault current that can flow through the PEN under broken-neutral conditions in a PME network.',
+          text: 'Main protective bonding conductor sizes for PME installations are governed by Regulation 544.11 and Table 54.8. Where the PME supply PEN conductor is 35 mm² or less (the most common domestic and small commercial case), the minimum copper main protective bonding conductor is 10 mm². Larger PEN conductors require proportionally larger bonding conductors — consult Table 54.8 for the full schedule. This reflects the higher fault current that can flow through the PEN under broken-neutral conditions in a PME network.',
         },
       ],
     },
@@ -96,8 +91,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'TN-C-S (PNB) is typically used in larger commercial, industrial and institutional sites where the supply originates at a privately-owned HV/LV transformer (often a substation on the customer\'s land). Between the transformer secondary and the main LV distribution board there is a combined PEN conductor — and downstream of that distribution board, the conductor splits into separate N and PE for the rest of the installation.',
+          text: "TN-C-S (PNB) is typically used in larger commercial, industrial and institutional sites where the supply originates at a privately-owned HV/LV transformer (often a substation on the customer's land). Between the transformer secondary and the main LV distribution board there is a combined PEN conductor — and downstream of that distribution board, the conductor splits into separate N and PE for the rest of the installation.",
         },
         {
           type: 'list',
@@ -111,9 +105,8 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'Where you\'ll see PNB in practice',
-          text:
-            'Large hospitals, university campuses, manufacturing plants, data centres, large retail parks with their own substation, water treatment works, motorway-services electrical infrastructure. Any site where the customer takes HV supply and steps it down to LV themselves typically operates under PNB rather than PME.',
+          title: "Where you'll see PNB in practice",
+          text: 'Large hospitals, university campuses, manufacturing plants, data centres, large retail parks with their own substation, water treatment works, motorway-services electrical infrastructure. Any site where the customer takes HV supply and steps it down to LV themselves typically operates under PNB rather than PME.',
         },
       ],
     },
@@ -124,18 +117,24 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'The choice between PME and PNB affects several specific BS 7671 decisions:',
+          text: 'The choice between PME and PNB affects several specific BS 7671 decisions:',
         },
         {
           type: 'list',
           items: [
-            'Main protective bonding conductor sizing — PME sizing rules (Regulation 544.1.1, Table 54.8) apply where the supply is PME. PNB sizing follows the standard TN-S rules once downstream of the split.',
-            'EV charger installation — PME supplies have specific additional requirements for EV charging final circuits to mitigate broken-neutral risk (Regulation 722.411.4.1 and associated guidance). PNB installations downstream of the privately-owned transformer have different exposure to broken-neutral effects.',
+            'Main protective bonding conductor sizing — PME sizing rules (Regulation 544.11, Table 54.8) apply where the supply is PME. For a PEN conductor of 35 mm² or less the minimum bonding conductor is 10 mm² copper; larger PEN conductors scale upward per Table 54.8. PNB sizing follows the standard TN-S rules once downstream of the split.',
+            'EV charger installation — PME supplies have specific additional requirements for EV charging final circuits to mitigate broken-neutral risk (Chapter 72 / Section 722 of BS 7671 and associated IET guidance). A4:2026 also introduced Regulation 722.311.201, which permits load curtailment (automatic or manual load reduction or disconnection) to be taken into account when determining maximum demand — directly relevant to multi-charger installations on PNB industrial and campus sites. PNB installations downstream of the privately-owned transformer have different exposure to broken-neutral effects and must be assessed separately.',
             'Distributor consultation — modifications affecting the means of earthing on a PME supply require consultation with the distributor. PNB installations have no equivalent distributor relationship (because the PEN is privately owned).',
             'Earthing electrode requirements — PME supplies do not require a separate consumer earth electrode (the PEN provides the means of earthing). PNB installations may also use the privately-owned transformer earthing system, but check the design documentation.',
-            'Maintenance ownership — PME network maintenance is the distributor\'s responsibility. PNB network maintenance is the consumer\'s responsibility — including testing, earth electrode resistance verification and condition reports on the privately-owned transformer earthing.',
+            "Maintenance ownership — PME network maintenance is the distributor's responsibility. PNB network maintenance is the consumer's responsibility — including testing, earth electrode resistance verification and condition reports on the privately-owned transformer earthing.",
+            'PEN conductor boundary — BS 7671 Regulation 543.4.2 (NOTE) and the Electricity Safety, Quality and Continuity Regulations (ESQCR) require that the PEN conductor shall not continue within the consumer installation. Installers must ensure correct separation into distinct N and PE conductors at the supply boundary and that bonding is completed at that point. This is a statutory obligation on all PME-supplied installations.',
           ],
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'ESQCR requirement: PEN must not enter the consumer installation',
+          text: 'Regulation 543.4.2 (NOTE) of BS 7671 and the ESQCR both require that the PEN conductor is separated into individual neutral (N) and protective (PE) conductors at the incoming supply termination. The combined PEN must not continue as a single combined conductor within the consumer installation. Inspectors should verify this separation is present and correctly bonded at the boundary — record any deficiency as a C2 or C3 observation on the EICR as appropriate.',
         },
       ],
     },
@@ -146,8 +145,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Section I of the A4:2026 EICR model form has the earthing-arrangement tick-boxes. The inspector ticks one of:',
+          text: 'Section I of the A4:2026 EICR model form has the earthing-arrangement tick-boxes. The inspector ticks one of:',
         },
         {
           type: 'list',
@@ -155,7 +153,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
           items: [
             'TN-C — combined PEN throughout. Rare in UK installations.',
             'TN-S — separate N and PE throughout. Older UK supplies and on-site generation arrangements.',
-            'TN-C-S (PME) — distributor\'s PEN conductor, multiple earthing on the network. Most common UK domestic/small commercial.',
+            "TN-C-S (PME) — distributor's PEN conductor, multiple earthing on the network. Most common UK domestic/small commercial.",
             'TN-C-S (PNB) — privately-owned PEN within the installation, downstream of a privately-owned transformer. Larger industrial/institutional sites.',
             'TT — installation earth electrode, no distributor earth provided. Common in some rural and older overhead-supply areas.',
             'IT — isolated/IT earthing. Specialised applications (some hospitals, mines, industrial).',
@@ -164,9 +162,14 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'If you\'re not sure which TN-C-S to tick',
-          text:
-            'Trace the supply backwards from the consumer unit to where the conductor splits from PEN into separate N and PE. If that split is at the cut-out / supply terminals provided by the distributor, it\'s TN-C-S (PME). If the split is downstream of a privately-owned transformer (substation on the customer\'s land), it\'s TN-C-S (PNB). When in doubt, consult the original installation documentation or the distributor / private network owner.',
+          title: "If you're not sure which TN-C-S to tick",
+          text: "Trace the supply backwards from the consumer unit to where the conductor splits from PEN into separate N and PE. If that split is at the cut-out / supply terminals provided by the distributor, it's TN-C-S (PME). If the split is downstream of a privately-owned transformer (substation on the customer's land), it's TN-C-S (PNB). When in doubt, consult the original installation documentation or the distributor / private network owner.",
+        },
+        {
+          type: 'callout',
+          tone: 'info',
+          title: 'Inspector checks for PME installations (GN3 Ch.8, Reg 8.2)',
+          text: 'IET Guidance Note 3 (9th Edition, Chapter 8, Reg 8.2) requires inspectors to verify and record the following on PME (TN-C-S) installations: (1) PEN conductor integrity — confirm the combined PEN is terminated correctly at the supply boundary and has not continued within the consumer installation contrary to ESQCR. (2) Continuity of main protective bonding conductors — verify that all extraneous-conductive-parts are correctly bonded and continuity is satisfactory. (3) Adequacy of precautions — confirm that any special precautions required for PME supplies (such as supplementary bonding in high-risk locations) are in place. Record any deficiencies in Section K of the EICR.',
         },
       ],
     },
@@ -177,8 +180,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'EICRs issued before 15 April 2026 used the previous model form which had a single "TN-C-S" option without the PME/PNB distinction. Those reports remain valid for their stated periodic inspection interval — A4 is not retrospective.',
+          text: 'EICRs issued before 15 April 2026 used the previous model form which had a single "TN-C-S" option without the PME/PNB distinction. Those reports remain valid for their stated periodic inspection interval — A4 is not retrospective.',
         },
         {
           type: 'list',
@@ -200,12 +202,12 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need to redo old EICRs to record PNB instead of TN-C-S?',
       answer:
-        'No. EICRs are point-in-time records; the form in use at the time of inspection was correct. The next periodic inspection (under A4) will record the arrangement using the new terminology. There\'s no statutory requirement to re-issue earlier EICRs, but where an installation is being significantly modified or a change-of-use occurs, the new design certificate (EIC) will use the A4 terminology naturally.',
+        "No. EICRs are point-in-time records; the form in use at the time of inspection was correct. The next periodic inspection (under A4) will record the arrangement using the new terminology. There's no statutory requirement to re-issue earlier EICRs, but where an installation is being significantly modified or a change-of-use occurs, the new design certificate (EIC) will use the A4 terminology naturally.",
     },
     {
       question: 'My EV charger installation guide mentions PME — does it apply to PNB too?',
       answer:
-        'Not always. The PME-specific requirements for EV chargers (notably Regulation 722.411.4.1 covering open-PEN-conductor scenarios) are designed for the distributor-owned PME network, where a broken neutral upstream can cause dangerous voltages on accessible metalwork. PNB installations downstream of a privately-owned transformer have different broken-neutral exposure characteristics — consult the latest IET guidance for EV charging on PNB supplies, and verify the manufacturer\'s installation instructions specify both supply types.',
+        "Not always. The PME-specific requirements for EV chargers (Chapter 72 / Section 722 of BS 7671 and the IET Code of Practice for EV Charging Equipment Installation) are designed for the distributor-owned PME network, where a broken neutral upstream can cause dangerous voltages on accessible metalwork. A4:2026 added Regulation 722.311.201, which allows load curtailment — automatic or manual load reduction or disconnection — to be factored into maximum demand calculations, easing the capacity constraint on multi-charger sites. PNB installations downstream of a privately-owned transformer have different broken-neutral exposure characteristics — consult the latest IET guidance for EV charging on PNB supplies, and verify the manufacturer's installation instructions specify both supply types.",
     },
     {
       question: 'Can I tick both "TN-C-S (PME)" and "TN-C-S (PNB)" if the installation has both?',
@@ -227,14 +229,16 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-amendment-4-2026',
       title: 'BS 7671 Amendment 4 (2026) — All Changes',
-      description: 'Overview of every A4:2026 change including AFDD, luminaire RCD and new model forms.',
+      description:
+        'Overview of every A4:2026 change including AFDD, luminaire RCD and new model forms.',
       icon: 'BookOpen',
       category: 'Guide',
     },
     {
       href: '/guides/bs-7671-a4-2026-schedule-of-tests',
       title: 'A4:2026 Schedule of Tests New Columns',
-      description: 'Reference method, maximum permitted Zs, SPD type, "Supplied from" — every new column explained.',
+      description:
+        'Reference method, maximum permitted Zs, SPD type, "Supplied from" — every new column explained.',
       icon: 'ClipboardCheck',
       category: 'Guide',
     },
@@ -248,7 +252,8 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
     {
       href: '/tools/eicr-certificate',
       title: 'EICR Certificate Tool',
-      description: 'Digital A4:2026 EICR with TN-C-S (PME) and TN-C-S (PNB) earthing arrangement options.',
+      description:
+        'Digital A4:2026 EICR with TN-C-S (PME) and TN-C-S (PNB) earthing arrangement options.',
       icon: 'FileCheck2',
       category: 'Tool',
     },
@@ -269,5 +274,5 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Tick the right earthing arrangement every time',
   ctaSubheading:
-    'Elec-Mate\'s A4:2026 digital EICR has TN-C-S (PME) and TN-C-S (PNB) as separate options, with built-in guidance on which applies based on the installation type. 7-day free trial.',
+    "Elec-Mate's A4:2026 digital EICR has TN-C-S (PME) and TN-C-S (PNB) as separate options, with built-in guidance on which applies based on the installation type. 7-day free trial.",
 };

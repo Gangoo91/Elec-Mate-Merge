@@ -43,7 +43,7 @@ const tocItems = [
 const keyTakeaways = [
   'Section 722 of BS 7671:2018+A4:2026 requires a dedicated circuit for each EV charging point, protected by an appropriate RCD.',
   'Regulation 722.411.4.1 restricts the use of PME (TN-C-S) earthing for EV charging — an earth electrode or other permitted arrangement is required where the charging point is outdoors or in a location accessible to livestock.',
-  'A Type A RCD is the minimum for Mode 3 EV charging equipment with integral DC leakage protection. Where the charger does not have integral DC leakage detection, a Type B RCD is required.',
+  'Regulation 722.531.3 requires RCD protection for EV charging circuits. A charger with an integral RDC-DD (to BS IEC 62955:2018) enables use of a Type A RCD; without integral DC leakage detection, a Type B RCD is required.',
   'Load management (smart charging) is essential where the existing supply cannot support the additional EV charging demand without exceeding the supply capacity.',
   'The IET Code of Practice for Electric Vehicle Charging Equipment Installation provides detailed guidance supplementing BS 7671 Section 722.',
 ];
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Do I need a Type B RCD for every EV charger?',
     answer:
-      'Not necessarily. If the EV charging equipment has built-in DC fault detection (as most Mode 3 smart chargers now do), a Type A RCD is sufficient. The charger manufacturer documentation will state whether the unit includes DC leakage detection to 6mA. If the charger does NOT include DC leakage protection, a Type B or Type B+ RCD is required per Regulation 722.531.3.101. Type B RCDs are significantly more expensive, so specifying a charger with integral DC detection is the cost-effective approach. Always check the charger manufacturer data sheet and installation manual.',
+      'Not necessarily. Regulation 722.531.3 requires RCD protection for EV charging circuits. The type depends on the charger design. If the equipment includes a built-in RDC-DD (Residual Direct Current Detecting Device) meeting BS IEC 62955:2018, a Type A RCD (30 mA) is sufficient — the RDC-DD handles DC fault current detection to 6 mA, which is what prevents a standard Type A from being used on its own. Most modern Mode 3 smart chargers include an integral RDC-DD; the manufacturer data sheet will confirm this. If the charger does NOT include DC leakage protection, a Type B or Type B+ RCD is required, as it detects both AC and DC residual currents. Type B RCDs are significantly more expensive than Type A, which is why chargers with integral RDC-DD are the cost-effective choice. Always verify against the charger manufacturer data sheet and installation manual.',
   },
   {
     question: 'What cable size do I need for a 7.4kW EV charger?',
@@ -72,12 +72,12 @@ const faqs = [
   {
     question: 'Can I install two EV chargers on one circuit?',
     answer:
-      'No. Regulation 722.312 requires each EV charging point to be supplied by its own dedicated final circuit from the distribution board. Two chargers require two circuits, each with their own overcurrent protection and RCD. This ensures that a fault on one charger does not affect the other and allows independent control of each charging point. For multiple chargers, a load management system is usually essential to avoid exceeding the supply capacity.',
+      'No. Section 722 requires each EV charging point to be supplied by its own dedicated final circuit from the distribution board. Two chargers require two circuits, each with their own overcurrent protection and RCD. This ensures that a fault on one charger does not affect the other and allows independent control of each charging point. Additionally, Regulation 722.312.2.1 independently prohibits the inclusion of a PEN conductor in any TN-system circuit supplying EV charging equipment — so the circuit must use separate PE and N conductors throughout. For multiple chargers, a load management system is usually essential to avoid exceeding the supply capacity.',
   },
   {
     question: 'What earth electrode resistance is acceptable for an EV charger TT circuit?',
     answer:
-      'The earth electrode resistance must be low enough to ensure automatic disconnection within the required time. For a TT installation protected by a 30mA RCD, the maximum earth electrode resistance (Ra) is calculated as Ra x I Delta n is no greater than 50V. With a 30mA RCD: 50V / 0.03A = 1,667 ohms maximum. In practice, a resistance below 200 ohms is considered good, and the IET Code of Practice recommends achieving as low a resistance as reasonably practicable. The electrode must be tested and the result recorded on the EIC.',
+      'The answer depends on the earthing arrangement. Where an earth electrode is used under Regulation 722.411.4(b) on a PME (TN-C-S) supply, the design criterion is specific to Section 722: the electrode resistance must be low enough that the voltage between the main earthing terminal (MET) and true earth does not exceed 70 V RMS in the event of an open-circuit fault in the PEN conductor of the DNO supply. Annex A722, Item A722.3 gives guidance on calculating the maximum electrode resistance to meet this 70 V RMS limit. This is a more stringent requirement than the standard TT formula. Where the EV circuit operates as a standalone TT circuit (no PME at all), the general rule applies: Ra × IΔn must not exceed 50 V. With a 30 mA RCD: 50 V ÷ 0.03 A = 1,667 ohms maximum. In practice, achieving below 200 ohms is good practice. The electrode resistance must be tested and recorded on the EIC.',
   },
   {
     question: 'Do I need to notify the DNO when installing an EV charger?',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for EV charger circuits with automatic voltage drop checking.',
     icon: Calculator,
@@ -215,6 +215,14 @@ const sections = [
           The circuit must be designed as a continuously-rated load — EV charging can run for hours
           at the full rated current. No diversity can be applied to a single EV charger circuit.
         </p>
+        <p>
+          Regulation 722.312.2.1 adds a further requirement for TN systems: the circuit supplying EV
+          charging equipment must not include a PEN conductor (a combined protective earth and
+          neutral). This means the final circuit wiring must use separate PE and N conductors
+          throughout. On a TN-C-S (PME) installation, the separation of PE and N occurs at the
+          origin of the installation; the EV charging circuit must then be wired with a separate
+          earth conductor and must not re-combine the functions of PE and N at any point downstream.
+        </p>
       </>
     ),
   },
@@ -224,8 +232,12 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 722.531.3.101 requires appropriate RCD protection for EV charging circuits. The
-          type of RCD depends on the charger design:
+          Regulation 722.531.3 requires RCD protection for EV charging circuits. The type of RCD
+          depends on the charger design. Where the equipment includes a built-in RDC-DD (Residual
+          Direct Current Detecting Device) to BS IEC 62955:2018, a Type A RCD is permitted. Without
+          integral DC leakage detection, a Type B RCD is required. Note: Regulation 722.531.3.101 is
+          a separate requirement covering transformer placement and the one-charger-per-transformer
+          rule — it is not the RCD selection regulation.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -284,10 +296,19 @@ const sections = [
           </p>
         </div>
         <p>
+          Under A4:2026, the structure of Regulation 722.411.4.1 changed. Indent (a) was deleted
+          (Reg 722.826.3.201 records this deletion). A new indent (iv) was added as an alternative
+          solution. The current A4:2026 regulation provides methods (b), (c), (d), (e), and the
+          newly added (iv) — a PME earthing facility must not be used directly for an outdoor EV
+          charging point protective conductor contact unless one of these alternatives is applied.
+          The Annex to Part 722 has also been redrafted, with updated guidance on method (c) (the
+          voltage-monitoring disconnect device). Always apply the A4:2026 text; earlier editions
+          with indent (a) are superseded.
+        </p>
+        <p>
           The regulation requires that where the EV charger is connected to a PME supply and the
           charging point is accessible from outside the main equipotential zone, an earth electrode
-          must be provided, or one of the alternative arrangements described in the IET Code of
-          Practice must be used.
+          must be provided, or one of the other permitted arrangements must be used.
         </p>
       </>
     ),
@@ -338,6 +359,20 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">
+            70 V RMS Design Criterion (Reg 722.411.4(b))
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            Where an earth electrode is used under method (b), the electrode resistance must be
+            sized so that the voltage between the main earthing terminal (MET) and true earth does
+            not exceed 70 V RMS in the event of an open-circuit fault in the PEN conductor of the
+            DNO supply. This is a Section 722-specific design criterion — it is not the generic TT
+            formula (Ra × IΔn ≤ 50 V). Annex 722, Item A722.3 gives guidance on calculating the
+            maximum electrode resistance to satisfy the 70 V RMS limit. The electrode resistance
+            must be measured on site and recorded on the EIC.
+          </p>
         </div>
         <p>
           For TN-S supplies (separate neutral and earth from the DNO), the PME restriction does not
@@ -430,7 +465,7 @@ const sections = [
                 <strong>Voltage drop</strong>: BS 7671 limits voltage drop to 5% for lighting and 5%
                 for other uses (from the origin of the installation). For a 32A circuit, voltage
                 drop must be checked carefully on longer runs. Use the{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -541,6 +576,13 @@ const sections = [
           <SEOInternalLink href="/ev-charger-certificate">EV charger certificate</SEOInternalLink>{' '}
           alongside the EIC.
         </p>
+        <p>
+          Under A4:2026, the Appendix 6 model forms (EIC and EICR) include new fields for recording
+          SPDs (surge protective devices) and AFDDs (arc fault detection devices). Where either
+          device is installed as part of the EV charger circuit, its details must be recorded in the
+          relevant fields. Where no SPD or AFDD is installed, record N/A in those fields. This
+          requirement applies to all EIC certificates issued against BS 7671:2018+A4:2026.
+        </p>
       </>
     ),
   },
@@ -564,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for EV Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size SWA and twin-and-earth cables for EV charger circuits with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic voltage drop check and derating for burial depth and ambient

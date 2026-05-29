@@ -10,8 +10,7 @@ const modified = '2026-05-18';
 
 export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cat6-cat6a-current-rating-poe',
-  title:
-    'Cat6 vs Cat6a Current Rating for PoE Installations | Bundle',
+  title: 'Cat6 vs Cat6a Current Rating for PoE Installations | Bundle',
   description:
     'Cat6 vs Cat6a current rating for PoE — conductor area, current per pair by PoE type, bundle de-rating, ambient impact, LSZH vs PVC…',
   datePublished: published,
@@ -30,7 +29,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
     'Conductor cross-sectional area dominates thermal performance. Cat5e (24 AWG) is 0.205 mm², Cat6 (23 AWG) is 0.258 mm², Cat6a is 23 AWG stranded or 22 AWG solid (up to 0.326 mm²). More copper means lower DC loop resistance and cooler running.',
     'Bundle de-rating is the real design constraint. TIA TSB-184-A reports approximately 5 °C rise inside a 24-cable Cat6 UTP bundle at full Type 4, and around 15 °C for a 100-cable Cat5e bundle — past the 60 °C rated operating temperature.',
     'Ambient stacks on top of bundle rise. A 40 °C ceiling void plus a 10 °C rise puts the cable jacket at 50 °C, leaving minimal margin before performance and life degrade.',
-    'LSZH jackets are required by BS 7671:2018+A4:2026 Section 422 and Approved Document B in escape routes, risers and protected zones. LSZH does not give thermal headroom over PVC — the choice is driven by fire and smoke behaviour, not PoE heat.',
+    'Cables in escape routes and risers must satisfy the CPR reaction-to-fire classification required by Reg 422.2.1 (as redrafted in A4:2026) — see Appendix 2 item 17 for the reference table. In practice this means Cca-s1b,d1,a1 minimum for most commercial new-builds, Dca as a lower bound in some cases. LSZH does not give thermal headroom over PVC — the choice is driven by CPR fire classification and smoke behaviour, not PoE heat.',
     'BS EN 50174 limits pull tension to 110 N (about 11.3 kgf) for Cat6/Cat6a UTP. Exceeding this stretches conductors and raises DC loop resistance — which directly raises PoE heat.',
     'Open ladder rack and basket trays are materially better than enclosed conduit. The same bundle in sealed conduit can more than double its temperature rise.',
   ],
@@ -42,25 +41,21 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'For most of the history of Ethernet, installers only worried about signal performance — return loss, NEXT, insertion loss, and the 100 m channel limit. Current was negligible.',
+          text: 'For most of the history of Ethernet, installers only worried about signal performance — return loss, NEXT, insertion loss, and the 100 m channel limit. Current was negligible.',
         },
         {
           type: 'paragraph',
-          text:
-            'PoE changed that. IEEE 802.3af introduced 15.4 W per port; 802.3at took it to 30 W; 802.3bt, ratified in 2018, brought Type 3 at 60 W and Type 4 at 90 W — both spreading load across all four pairs. At Type 4 with a PD voltage near 50 V, total cable current is roughly 1.8 A, giving 0.45 to 0.6 A per conductor.',
+          text: 'PoE changed that. IEEE 802.3af introduced 15.4 W per port; 802.3at took it to 30 W; 802.3bt, ratified in 2018, brought Type 3 at 60 W and Type 4 at 90 W — both spreading load across all four pairs. At Type 4 with a PD voltage near 50 V, total cable current is roughly 1.8 A, giving 0.45 to 0.6 A per conductor.',
         },
         {
           type: 'paragraph',
-          text:
-            'On a single isolated cable, 0.6 A is unremarkable. But PoE cables are bundled — 24, 48, sometimes 96 cables packed together for tens of metres through ceiling voids, risers and conduit. The problem is bundle heat dissipation with nowhere to escape.',
+          text: 'On a single isolated cable, 0.6 A is unremarkable. But PoE cables are bundled — 24, 48, sometimes 96 cables packed together for tens of metres through ceiling voids, risers and conduit. The problem is bundle heat dissipation with nowhere to escape.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'PoE is now a continuous current load',
-          text:
-            'Cameras, access control panels, LED lighting and digital signage all run effectively 24/7. The "continuous current" assumption that drives BS 7671 derating for mains circuits applies to PoE in everything but name. See our [PoE++ Type 4 90 W installation guide](/guides/poe-plus-plus-type-4-90w-installation) for wider Type 4 design context.',
+          text: 'Cameras, access control panels, LED lighting and digital signage all run effectively 24/7. The "continuous current" assumption that drives BS 7671 derating for mains circuits applies to PoE in everything but name. See our [PoE++ Type 4 90 W installation guide](/guides/poe-plus-plus-type-4-90w-installation) for wider Type 4 design context.',
         },
       ],
     },
@@ -71,8 +66,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Category determines conductor gauge, which determines DC loop resistance — the biggest single factor in PoE heat. More copper, lower I²R loss per metre, cooler bundle.',
+          text: 'Category determines conductor gauge, which determines DC loop resistance — the biggest single factor in PoE heat. More copper, lower I²R loss per metre, cooler bundle.',
         },
         {
           type: 'list',
@@ -85,15 +79,13 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'In a 48-cable bundle running Type 4, the gap between Cat5e and Cat6a is roughly 10 °C vs 5 °C rise — which decides whether the install passes or fails.',
+          text: 'In a 48-cable bundle running Type 4, the gap between Cat5e and Cat6a is roughly 10 °C vs 5 °C rise — which decides whether the install passes or fails.',
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'Stranded patch cable is not solid-core horizontal cable',
-          text:
-            'Stranded cable used for patch leads has measurably higher DC resistance than solid-core for the same nominal AWG. Permanent horizontal runs must be solid-core. Using stranded patch as fixed cabling is a common cause of PoE under-voltage at the PD and excess heat in the bundle.',
+          text: 'Stranded cable used for patch leads has measurably higher DC resistance than solid-core for the same nominal AWG. Permanent horizontal runs must be solid-core. Using stranded patch as fixed cabling is a common cause of PoE under-voltage at the PD and excess heat in the bundle.',
         },
       ],
     },
@@ -104,8 +96,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'IEEE 802.3 specifies maximum power at the PSE, minimum power at the PD, and a voltage band. Current per pair falls out of those once you fix PD voltage and cable resistance.',
+          text: 'IEEE 802.3 specifies maximum power at the PSE, minimum power at the PD, and a voltage band. Current per pair falls out of those once you fix PD voltage and cable resistance.',
         },
         {
           type: 'list',
@@ -119,8 +110,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'The key number is I²R loss per metre. For Cat6 at 600 mA per conductor that is around 0.27 W per metre across all four conductors. Multiply by a 24-cable bundle and you have 6 to 7 W per metre dissipating into the bundle.',
+          text: 'The key number is I²R loss per metre. For Cat6 at 600 mA per conductor that is around 0.27 W per metre across all four conductors. Multiply by a 24-cable bundle and you have 6 to 7 W per metre dissipating into the bundle.',
         },
       ],
     },
@@ -131,8 +121,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'TIA TSB-184-A is the industry design reference for PoE bundle sizing. BS EN 50174-1 references the same body of work via informative annexes. Headline figures in free air at 20 °C lab ambient:',
+          text: 'TIA TSB-184-A is the industry design reference for PoE bundle sizing. BS EN 50174-1 references the same body of work via informative annexes. Headline figures in free air at 20 °C lab ambient:',
         },
         {
           type: 'list',
@@ -149,8 +138,11 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'The TIA numbers assume 20 °C ambient — yours may not',
-          text:
-            'TSB-184-A measurements are conducted at lab ambient. In a UK summer ceiling void above an open-plan office, ambient can sit at 35 to 40 °C continuously; in an unventilated south-facing riser, 45 to 50 °C is not unusual. The bundle rise stacks on top of whatever ambient your building actually delivers.',
+          text: 'TSB-184-A measurements are conducted at lab ambient. In a UK summer ceiling void above an open-plan office, ambient can sit at 35 to 40 °C continuously; in an unventilated south-facing riser, 45 to 50 °C is not unusual. The bundle rise stacks on top of whatever ambient your building actually delivers.',
+        },
+        {
+          type: 'paragraph',
+          text: 'This bundle de-rating discipline maps directly onto the BS 7671 cable-grouping framework electricians already apply to mains cabling. BS 7671 Section 523 and the IET On-Site Guide (OSG Reg 12.513) require that conductor current-carrying capacity be assessed taking into account grouping, ambient temperature and installation method — exactly the same variables that drive TSB-184-A bundle sizing. If you already think in terms of BS 7671 correction factors (Ca for ambient, Cg for grouping), PoE bundle de-rating is the same discipline applied to 50 V DC.',
         },
       ],
     },
@@ -161,8 +153,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Most Category cable is rated for continuous operation up to 60 °C conductor temperature. Above that the dielectric drifts (degrading signal performance) and the jacket begins long-term creep. Rule: ambient plus bundle rise must stay below 60 °C with margin.',
+          text: 'Most Category cable is rated for continuous operation up to 60 °C conductor temperature. Above that the dielectric drifts (degrading signal performance) and the jacket begins long-term creep. Rule: ambient plus bundle rise must stay below 60 °C with margin.',
         },
         {
           type: 'list',
@@ -177,8 +168,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'For how ambient correction integrates with the wider BS 7671 derating framework for parallel mains cabling, see our [correction factors guide](/guides/correction-factors-guide).',
+          text: 'For how ambient correction integrates with the wider BS 7671 derating framework for parallel mains cabling, see our [correction factors guide](/guides/correction-factors-guide).',
         },
       ],
     },
@@ -189,8 +179,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A horizontal bundle on an open mesh basket above a suspended ceiling behaves very differently from the same bundle in a riser conduit or sealed firestop. The difference is whether convective airflow can carry heat away.',
+          text: 'A horizontal bundle on an open mesh basket above a suspended ceiling behaves very differently from the same bundle in a riser conduit or sealed firestop. The difference is whether convective airflow can carry heat away.',
         },
         {
           type: 'list',
@@ -206,8 +195,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'Firestop sleeves trap heat',
-          text:
-            'Intumescent firestop sleeves at fire compartment boundaries are airtight by design and concentrate heat at the crossing point. Where possible, split bundles into multiple smaller sleeves with thermal breaks between them rather than routing the entire bundle through a single sealed sleeve.',
+          text: 'Intumescent firestop sleeves at fire compartment boundaries are airtight by design and concentrate heat at the crossing point. Where possible, split bundles into multiple smaller sleeves with thermal breaks between them rather than routing the entire bundle through a single sealed sleeve.',
         },
       ],
     },
@@ -218,8 +206,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Jacket choice has a fire-safety dimension (mandated by BS 7671:2018+A4:2026, Approved Document B and BS 6701) and a thermal dimension (driven by PoE bundle heat). The two are not always aligned.',
+          text: 'Jacket choice has a fire-safety dimension (mandated by BS 7671:2018+A4:2026, Approved Document B and BS 6701) and a thermal dimension (driven by PoE bundle heat). The two are not always aligned.',
         },
         {
           type: 'list',
@@ -231,8 +218,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'For the wider rules on installing data cabling — including jacket selection by building type, routing and segregation — see our [BS EN 50174 data cable installation guide](/guides/bs-en-50174-data-cable-installation). For the underlying generic cabling standard that defines what Cat6 and Cat6a actually mean, see our [structured cabling BS EN 50173 guide](/guides/structured-cabling-bs-en-50173-electricians).',
+          text: 'For the wider rules on installing data cabling — including jacket selection by building type, routing and segregation — see our [BS EN 50174 data cable installation guide](/guides/bs-en-50174-data-cable-installation). For the underlying generic cabling standard that defines what Cat6 and Cat6a actually mean, see our [structured cabling BS EN 50173 guide](/guides/structured-cabling-bs-en-50173-electricians).',
         },
       ],
     },
@@ -243,8 +229,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Installation damage is the silent killer of PoE bundles. A cable pulled too hard passes signal certification but fails thermally months later under Type 4 load — the pull stretched the conductors, adding 10 to 20 per cent to DC loop resistance, which becomes extra I²R heat.',
+          text: 'Installation damage is the silent killer of PoE bundles. A cable pulled too hard passes signal certification but fails thermally months later under Type 4 load — the pull stretched the conductors, adding 10 to 20 per cent to DC loop resistance, which becomes extra I²R heat.',
         },
         {
           type: 'list',
@@ -260,8 +245,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'Use a tension-measuring puller for long runs',
-          text:
-            'Hand-pulling Cat6/Cat6a through long conduit runs almost always exceeds 110 N — a determined two-person pull on a stuck cable can exceed 200 N. Use a winch puller with a calibrated tension limiter, or pull in shorter stages with intermediate access points. Over-pull damage is invisible from outside the jacket.',
+          text: 'Hand-pulling Cat6/Cat6a through long conduit runs almost always exceeds 110 N — a determined two-person pull on a stuck cable can exceed 200 N. Use a winch puller with a calibrated tension limiter, or pull in shorter stages with intermediate access points. Over-pull damage is invisible from outside the jacket.',
         },
       ],
     },
@@ -272,8 +256,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Combining conductor area, current per pair, ambient, pathway type and the TSB-184-A curve, the practical design recommendations for UK installations:',
+          text: 'Combining conductor area, current per pair, ambient, pathway type and the TSB-184-A curve, the practical design recommendations for UK installations:',
         },
         {
           type: 'list',
@@ -290,8 +273,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'These figures assume 25 to 30 °C pathway ambient and continuous current at design maximum. For higher ambient — plant rooms, south-facing risers, unventilated voids over IT rooms — reduce bundle sizes by 25 to 50 per cent.',
+          text: 'These figures assume 25 to 30 °C pathway ambient and continuous current at design maximum. For higher ambient — plant rooms, south-facing risers, unventilated voids over IT rooms — reduce bundle sizes by 25 to 50 per cent.',
         },
       ],
     },
@@ -302,8 +284,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'TIA TSB-184-A "Guidelines for Supporting Power Delivery Over Balanced Twisted-Pair Cabling" is advisory under UK law but universally followed and underpins manufacturer PoE warranties.',
+          text: 'TIA TSB-184-A "Guidelines for Supporting Power Delivery Over Balanced Twisted-Pair Cabling" is advisory under UK law but universally followed and underpins manufacturer PoE warranties.',
         },
         {
           type: 'list',
@@ -319,8 +300,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'BS EN 50174-2:2018 informative annex',
-          text:
-            'BS EN 50174-2:2018 includes an informative annex on PoE thermal considerations that mirrors the TSB-184-A approach. The annex is informative (not normative), but UK specifiers including NHS Estates, MoD and large commercial new-build reference BS EN 50174-2 explicitly in cabling specifications.',
+          text: 'BS EN 50174-2:2018 includes an informative annex on PoE thermal considerations that mirrors the TSB-184-A approach. The annex is informative (not normative), but UK specifiers including NHS Estates, MoD and large commercial new-build reference BS EN 50174-2 explicitly in cabling specifications.',
         },
       ],
     },
@@ -331,8 +311,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'For BS 7671 mains cabling, conduit is the gold standard. For PoE-heavy data cabling, it is the worst choice — PoE bundles need airflow to manage I²R heat, and conduit removes it.',
+          text: 'For BS 7671 mains cabling, conduit is the gold standard. For PoE-heavy data cabling, it is the worst choice — PoE bundles need airflow to manage I²R heat, and conduit removes it.',
         },
         {
           type: 'list',
@@ -348,8 +327,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         },
         {
           type: 'paragraph',
-          text:
-            'BS 7671 Section 528 separation between Band I (data, ELV) and Band II (mains) for EMC reasons incidentally also helps PoE thermally — the bundle is not in contact with warm mains cables.',
+          text: 'BS 7671 Section 528 separation between Band I (data, ELV) and Band II (mains) for EMC reasons incidentally also helps PoE thermally — the bundle is not in contact with warm mains cables.',
         },
       ],
     },
@@ -360,16 +338,15 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'BS 7671:2018+A4:2026 governs the mains supply side of any PoE installation — the circuits feeding the switches, distribution-board protection, and bonding of network equipment. The PoE cabling itself (Cat6/Cat6a at 50 to 57 V DC) is SELV.',
+          text: 'BS 7671:2018+A4:2026 governs the mains supply side of any PoE installation — the circuits feeding the switches, distribution-board protection, and bonding of network equipment. The PoE cabling itself (Cat6/Cat6a at 50 to 57 V DC) is SELV.',
         },
         {
           type: 'list',
           items: [
             'Section 414 — protection by SELV and PELV. PoE at 50 to 57 V DC qualifies as SELV when the source is double-insulated and isolated from earth.',
-            'Section 422 — protection against fire. Where PoE cables run in protected escape routes, risers or assembly buildings, LSZH (or higher) fire performance is required.',
+            'Section 422 — protection against fire. Reg 422.2.1 (redrafted in A4:2026) requires cables in escape routes, risers and protected zones to satisfy the CPR reaction-to-fire classification — Appendix 2 item 17 is the reference table. LSZH at the appropriate Cca or B2ca CPR class is the typical compliance route for data cabling in these locations.',
             'Section 528 — proximity to other services. Maintain segregation from Band II mains cabling to satisfy both BS 7671 and BS EN 50174-2 EMC requirements.',
-            'Section 542 — earthing arrangements. Network cabinets and PoE switch chassis must be bonded to the main earthing terminal. Functional earth connections for shielded Cat6a (F/UTP, S/FTP) are covered here.',
+            'Section 542 — earthing arrangements. Network cabinets and PoE switch chassis must be bonded to the main earthing terminal. Functional earth connections for shielded Cat6a (F/UTP, S/FTP) are covered here. New Reg 542.2.8 (introduced in A4:2026) addresses earth electrodes — relevant where IT equipment in a data room or comms cabinet connects to the installation earth electrode system.',
             'Section 715 — ELV lighting installations. Applies to PoE-driven lighting under A4:2026. See our [Section 715 ELV lighting A4:2026 guide](/guides/section-715-elv-lighting-a4-2026).',
           ],
         },
@@ -377,8 +354,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'pricing',
           title: 'EICR and EIC implications',
-          text:
-            'For BS 7671 inspection and testing, PoE switches are fixed equipment. The supply circuit is tested in the normal way — IR, polarity, Zs, RCD operation. The PoE cabling itself is not a BS 7671 circuit and is not tested on the EIC or EICR — but manufacturers require a structured-cabling certification test (Fluke DSX or equivalent) for warranty validity.',
+          text: 'For BS 7671 inspection and testing, PoE switches are fixed equipment. The supply circuit is tested in the normal way — IR, polarity, Zs, RCD operation. The PoE cabling itself is not a BS 7671 circuit and is not tested on the EIC or EICR — but manufacturers require a structured-cabling certification test (Fluke DSX or equivalent) for warranty validity.',
         },
       ],
     },
@@ -389,8 +365,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A practical checklist for the design stage of a PoE-heavy commercial project:',
+          text: 'A practical checklist for the design stage of a PoE-heavy commercial project:',
         },
         {
           type: 'list',
@@ -417,8 +392,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Hand-calculating PoE bundle thermal performance for a 200-luminaire office traditionally fell to a building services consultant. Most UK contractors taking on PoE work will be doing the design themselves.',
+          text: 'Hand-calculating PoE bundle thermal performance for a 200-luminaire office traditionally fell to a building services consultant. Most UK contractors taking on PoE work will be doing the design themselves.',
         },
         {
           type: 'list',
@@ -434,8 +408,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'pricing',
           title: 'Included on the Electrician tier',
-          text:
-            'The BS 7671 calculator and certificate tools are included with the Elec-Mate Electrician subscription. 7-day free trial, cancel anytime.',
+          text: 'The BS 7671 calculator and certificate tools are included with the Elec-Mate Electrician subscription. 7-day free trial, cancel anytime.',
         },
       ],
     },
@@ -446,33 +419,27 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
   howToSteps: [
     {
       name: 'Total the PoE load and find the worst-case bundle',
-      text:
-        'List every powered device, its PoE type, and its location. Identify the longest, hottest, most densely-bundled pathway — that is the worst-case bundle, and the rest of the design works inwards from it.',
+      text: 'List every powered device, its PoE type, and its location. Identify the longest, hottest, most densely-bundled pathway — that is the worst-case bundle, and the rest of the design works inwards from it.',
     },
     {
       name: 'Choose the cable category from the worst-case bundle',
-      text:
-        'Apply the practical bundle-size table. If the worst case would exceed 24 cables of Cat6 UTP at Type 4, upgrade the whole installation to Cat6a — partial upgrades are not warrantied by major manufacturers.',
+      text: 'Apply the practical bundle-size table. If the worst case would exceed 24 cables of Cat6 UTP at Type 4, upgrade the whole installation to Cat6a — partial upgrades are not warrantied by major manufacturers.',
     },
     {
       name: 'Calculate ambient + bundle rise for each pathway',
-      text:
-        'For each pathway take the design ambient from the building services HVAC schedule, add the TSB-184-A bundle rise, and confirm the result stays below 60 °C with margin. See the [correction factors guide](/guides/correction-factors-guide) for parallel mains cabling considerations.',
+      text: 'For each pathway take the design ambient from the building services HVAC schedule, add the TSB-184-A bundle rise, and confirm the result stays below 60 °C with margin. See the [correction factors guide](/guides/correction-factors-guide) for parallel mains cabling considerations.',
     },
     {
       name: 'Select the routing method',
-      text:
-        'Open ladder rack and basket trays are preferred for any high-density PoE bundle. Where conduit is mandated, derate the bundle to 50 per cent of the free-air figure and document the derating in the design submission.',
+      text: 'Open ladder rack and basket trays are preferred for any high-density PoE bundle. Where conduit is mandated, derate the bundle to 50 per cent of the free-air figure and document the derating in the design submission.',
     },
     {
       name: 'Specify the jacket compound and firestop strategy',
-      text:
-        'LSZH for any escape route, riser or protected zone (Section 422 and Approved Document B). Plan firestop crossings so the entire bundle does not pass through a single sealed sleeve.',
+      text: 'LSZH for any escape route, riser or protected zone (Section 422 and Approved Document B). Plan firestop crossings so the entire bundle does not pass through a single sealed sleeve.',
     },
     {
       name: 'Document, certify and schedule a thermal recheck',
-      text:
-        'Issue the design with the bundle sizing calculations as part of the cabling specification. After installation, run a full structured-cabling certification. Schedule a thermal recheck 3 to 6 months after full PoE load is applied, measuring jacket temperature at the hottest point of the worst-case bundle.',
+      text: 'Issue the design with the bundle sizing calculations as part of the cabling specification. After installation, run a full structured-cabling certification. Schedule a thermal recheck 3 to 6 months after full PoE load is applied, measuring jacket temperature at the hottest point of the worst-case bundle.',
     },
   ],
   faqs: [
@@ -502,7 +469,8 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
         '110 N — about 11.3 kgf or 25 lbf — for 4-pair Cat6 and Cat6a UTP, per BS EN 50174-2 and major manufacturer specifications. Cat7 and Cat7a S/FTP tolerate 130 to 150 N. Hand-pulling long conduit runs almost always exceeds 110 N — use a calibrated winch puller or pull in shorter stages. Over-pulling stretches conductors, increases DC loop resistance, and causes the cable to run hotter under PoE load months later.',
     },
     {
-      question: 'Is there a real difference between standard Cat6a and "jumbo" large-conductor Cat6a?',
+      question:
+        'Is there a real difference between standard Cat6a and "jumbo" large-conductor Cat6a?',
       answer:
         'Yes. Standard Cat6a is 23 AWG (0.258 mm² conductor area). Some manufacturers produce 22 AWG solid Cat6a (often marketed as "jumbo" or "PoE-rated") with a 0.326 mm² conductor — roughly 26 per cent more copper. The larger conductor reduces DC loop resistance by 15 to 25 per cent, directly reducing I²R heat. For Type 4 on large bundles or high-ambient pathways, 22 AWG solid Cat6a is worth the modest extra cost. For standard office PoE the difference is academic.',
     },

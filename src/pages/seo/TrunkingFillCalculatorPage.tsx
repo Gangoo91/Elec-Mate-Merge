@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'Can I mix different cable types in the same trunking?',
     answer:
-      "Yes, you can install different cable types and sizes in the same trunking, provided the total cross-sectional area of all cables does not exceed 45% of the trunking's internal cross-sectional area. However, you must also consider grouping factors for current-carrying capacity. When multiple circuits share the same trunking, the current rating of each cable must be reduced by a grouping factor to account for the mutual heating effect. The grouping factors depend on the number of circuits and the installation method. Additionally, cables from different voltage bands (such as mains voltage and extra-low voltage) should be segregated — either by using compartmentalised trunking with a fixed divider, or by using a physical barrier that provides the same level of insulation as the cable insulation. BS 7671 Regulation 528.1 specifies the segregation requirements.",
+      "Yes, you can install different cable types and sizes in the same trunking, provided the total cross-sectional area of all cables does not exceed 45% of the trunking's internal cross-sectional area. However, you must also consider grouping factors for current-carrying capacity under BS 7671 Regulation 523.4. When multiple circuits share the same trunking, the current rating of each cable must be reduced by a grouping factor (from Appendix 4 Tables 4C1–4C6) to account for the mutual heating effect. Two important points from Reg 523.4 are frequently overlooked on site. First, the 30% exception: if a cable is expected to carry no more than 30% of its grouped current-carrying capacity due to known operating conditions, it may be excluded from the group count when calculating the rating factor for the remaining cables — useful for sparsely loaded sub-circuits sharing a trunking run with heavily loaded circuits. Second, mixed insulation temperatures: when 70°C PVC cables and 90°C XLPE cables are installed in the same trunking, the current-carrying capacity of the entire group must be based on the lowest maximum operating temperature present — that is, 70°C — not the higher rating of the XLPE cables. Using the XLPE rating for a mixed group is a common site error that results in the PVC cables being operated above their rated temperature. Additionally, cables from different voltage bands (Band I ELV and Band II mains) must be segregated per Regulation 528.1 — either by compartmentalised trunking with a fixed divider, by insulating all cables to the highest voltage present, or by using MIMS cable.",
   },
   {
     question: 'What is compartmentalised trunking and when should I use it?',
@@ -125,13 +125,13 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard sizes, mixed cable types…',
-  url: 'https://www.elec-mate.com/trunking-fill-calculator',
+  url: 'https://www.elec-mate.com/tools/trunking-fill-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -215,6 +215,30 @@ export default function TrunkingFillCalculatorPage() {
         </div>
       </section>
 
+      {/* E-E-A-T byline — YMYL-adjacent technical content; Google quality rater guidelines penalise anonymous authorship */}
+      <section className="px-5 pb-0">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs text-white text-center">
+            Reviewed by the Elec-Mate technical team — IET Wiring Regulations (BS 7671) specialists
+            and C&amp;G 2382 qualified assessors.
+          </p>
+        </div>
+      </section>
+
+      {/* Answer-first formula box — captures featured snippet for 'trunking fill rule' / '45% trunking rule' queries */}
+      <section className="px-5 pb-2">
+        <div className="max-w-4xl mx-auto">
+          <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center">
+            <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              Total cable CSA ≤ 45% of trunking internal CSA
+            </p>
+            <p className="mt-3 text-sm text-white">
+              The fundamental trunking fill rule — BS 7671:2018+A4:2026 and IET Guidance Note 1
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
@@ -265,11 +289,11 @@ export default function TrunkingFillCalculatorPage() {
               existing services. A trunking system designed to 45% fill on day one has no spare
               capacity; designing to 30 to 35% fill on day one leaves room for growth. When planning
               containment, use the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to determine the required cable cross-section before checking trunking fill, and the{' '}
-              <SEOInternalLink href="/voltage-drop-calculator">
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify the circuit meets BS 7671 limits.
@@ -432,11 +456,31 @@ export default function TrunkingFillCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               BS 7671 Regulation 528.1 requires that cables of different voltage bands are
-              segregated from each other unless they are all insulated for the highest voltage
-              present. In practice, this means that mains voltage cables (230 V / 400 V) must be
-              physically separated from extra-low voltage cables (data, telecommunications, fire
-              alarm, emergency lighting control) within any shared containment system.
+              segregated from each other. BS 7671 classifies circuits into two bands:{' '}
+              <strong className="text-yellow-400">Band I</strong> covers extra-low voltage (ELV)
+              circuits such as data, telecommunications, fire alarm, and emergency lighting control
+              wiring; <strong className="text-yellow-400">Band II</strong> covers mains voltage
+              circuits operating at 230 V / 400 V. Regulation 528.1 (confirmed in GN3 Section 4.8.5
+              and OSG Section 7.4.1) prohibits Band I and Band II circuits from sharing the same
+              wiring enclosure unless at least one of three conditions is met:
             </p>
+            <ul className="list-disc list-inside space-y-1 pl-2 text-white text-sm">
+              <li>
+                <strong>Partitioned compartments</strong> — a fixed physical divider within the
+                trunking that prevents contact between bands (OSG 7.4.1 condition c).
+              </li>
+              <li>
+                <strong>Insulation for highest voltage present</strong> — every cable in the shared
+                enclosure is insulated to a level suitable for the highest voltage present, so a
+                Band I cable insulated to Band II voltage level may share the same trunking without
+                a divider (OSG 7.4.1 condition a).
+              </li>
+              <li>
+                <strong>Mineral-insulated metal-sheathed (MIMS) cable</strong> — the inherent metal
+                sheath of MIMS cable provides the required separation; MIMS Band I circuits may
+                therefore share trunking with Band II circuits (GN3 4.8.5).
+              </li>
+            </ul>
             <p>
               <strong className="text-yellow-400">Compartmentalised trunking</strong> provides this
               segregation by including fixed internal dividers that create separate channels. A
@@ -458,6 +502,17 @@ export default function TrunkingFillCalculatorPage() {
               space. A 100 x 50 mm trunking divided into two equal compartments does not provide two
               50 x 50 mm channels — the divider itself occupies space, and the two channels may be
               closer to 48 x 48 mm each.
+            </p>
+          </div>
+          {/* Reg 622.85 EICR connection */}
+          <div className="mt-6 p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <p className="text-sm text-white leading-relaxed">
+              <strong className="text-yellow-400">At EICR inspection stage:</strong> the 45% fill
+              rule must be verified per compartment individually. BS 7671 Regulation 622.85 requires
+              the inspector to confirm that cables are adequate for current-carrying capacity in
+              accordance with Section 523 — which includes grouping, ambient temperature, and
+              installation method. An overfilled compartment that compromises thermal dissipation is
+              a recordable defect.
             </p>
           </div>
         </div>
@@ -645,14 +700,12 @@ export default function TrunkingFillCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -660,11 +713,21 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/conduit-fill-calculator">/conduit-fill-calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/trunking-installation-guide">Trunking Installation Guide</SEOInternalLink>
-            <SEOInternalLink href="/how-to-fill-in-eicr">How to Fill In an EICR Form</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
-            <SEOInternalLink href="/guides/minor-works-certificate-how-to-fill-in">/guides/minor-works-certificate-how-to-fill-in</SEOInternalLink>
+            <SEOInternalLink href="/tools/conduit-fill-calculator">
+              /conduit-fill-calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/trunking-installation-guide">
+              Trunking Installation Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/how-to-fill-in-eicr">
+              How to Fill In an EICR Form
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">
+              How to Fill In a Minor Works Certificate
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/minor-works-certificate-how-to-fill-in">
+              /guides/minor-works-certificate-how-to-fill-in
+            </SEOInternalLink>
           </div>
         </div>
       </section>

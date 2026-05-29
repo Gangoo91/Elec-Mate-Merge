@@ -43,6 +43,7 @@ const keyTakeaways = [
   'CCTV integration with car park lighting columns can share trenching and power supplies, reducing combined installation costs by 15% to 25% compared to separate installations.',
   'BMS controls, photocell switching, and time scheduling reduce car park lighting energy consumption by 30% to 50% and are typically required by planning conditions for new developments.',
   'Car park lighting design must comply with BS 5489-1 (road lighting) and BS EN 12464-2 (outdoor workplaces), with typical lux levels of 5 to 20 lux depending on the risk assessment.',
+  'Electrical installations for car park lighting are governed by BS 7671:2018+A4:2026 Section 714 (Outdoor lighting installations), which sets specific requirements for additional protection and automatic disconnection of supply. SWA cables buried in vehicle movement areas require a minimum depth of 0.6 m unless additional mechanical protection is provided (Reg 730.521.101.3.2).',
 ];
 
 const faqs = [
@@ -84,7 +85,7 @@ const faqs = [
   {
     question: 'What cable is used for car park lighting?',
     answer:
-      'Car park lighting columns are typically fed by SWA (steel wire armoured) cable buried at a minimum depth of 450mm in a trench with marker tape. The cable size depends on the circuit length and load — 2.5mm² or 4mm² 3-core SWA is common for lighting circuits. Each column requires an isolation switch (typically a fused spur inside the column base) for safe maintenance. The SWA cable provides mechanical protection and the steel wire armour can be used as the circuit protective conductor (CPC), though a separate CPC within the cable is preferred.',
+      'Car park lighting columns are typically fed by SWA (steel wire armoured) cable buried in a trench with marker tape. BS 7671 Reg 730.521.101.3.2 requires unprotected buried cables to be at a sufficient depth to avoid damage from vehicle movement — 0.6 m is generally considered the minimum for unprotected cables in areas subject to vehicles. Where additional mechanical protection is provided (such as ducting or concrete encasement), a lesser depth may be acceptable. The cable size depends on the circuit length and load — 2.5mm² or 4mm² 3-core SWA is common for lighting circuits. Each column requires an isolation switch (typically a fused spur inside the column base) for safe maintenance. The SWA cable provides mechanical protection and the steel wire armour can be used as the circuit protective conductor (CPC), though a separate CPC within the cable is preferred.',
   },
 ];
 
@@ -391,10 +392,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A4:2026</strong> — The wiring regulations. External
-                installations must comply with Section 708 (caravan and camping parks have specific
-                requirements) and general requirements for buried cables and external equipment. RCD
-                protection per Regulation 411.3.3 applies to external circuits.
+                <strong>BS 7671:2018+A4:2026 — Section 714</strong> — The wiring regulations. Car
+                park and outdoor lighting installations are governed by Section 714 (Outdoor
+                lighting installations), which covers luminaires, wiring systems, and accessories
+                for roads, car parks, and places open to the public (Reg 712.6.101). Section 714
+                includes specific requirements for additional protection and automatic disconnection
+                of supply. RCD protection under Regulation 411.3.3 applies to socket-outlets rated
+                at 32 A or below — it does not extend to lighting circuits. For lighting circuits,
+                the additional protection requirements are set out in Section 714. Where the supply
+                includes domestic premises, Reg 411.3.4 (A4:2026) additionally requires ≤30 mA RCD
+                protection for all AC final circuits supplying luminaires.
               </span>
             </li>
             <li className="flex items-start gap-3">

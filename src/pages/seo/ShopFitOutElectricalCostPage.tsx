@@ -45,7 +45,7 @@ const keyTakeaways = [
   'A shop fit-out electrical installation in the UK typically costs between £3,000 and £15,000+ depending on the size of the unit, the power supply requirements, and the complexity of the lighting, fire alarm, and data cabling.',
   'Commercial premises may require a 3-phase supply from the DNO if the single-phase supply is insufficient for the projected load — this can add £1,000 to £3,000+ for the supply upgrade.',
   'Emergency lighting and fire alarm systems are mandatory in commercial premises and must comply with BS 5266 (emergency lighting) and BS 5839 (fire detection and alarm systems).',
-  'An EICR (Electrical Installation Condition Report) is required for commercial premises under the Electricity at Work Regulations 1989, typically every 5 years or at change of tenancy.',
+  'An EICR (Electrical Installation Condition Report) is required for commercial premises under the Electricity at Work Regulations 1989. The recommended inspection interval is set by the designer based on risk — GN3 guidance suggests 5 years as a starting point for most commercial premises, but this is not a statutory fixed period. The recommended interval to the first periodic inspection must be recorded on the EIC at handover (BS 7671 Reg 644.4).',
   'Data cabling (Cat6 for EPOS, WiFi, CCTV, and back-office connectivity) should be installed during the fit-out to avoid costly retrospective work once fixtures and fittings are in place.',
 ];
 
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for a commercial property?',
     answer:
-      'Yes. The Electricity at Work Regulations 1989 require that electrical installations in commercial premises are maintained in a safe condition. An EICR (Electrical Installation Condition Report) is the formal inspection and testing that demonstrates compliance. Commercial EICRs are typically required every 5 years, at change of tenancy, or when there is reason to believe the installation may be unsafe. The landlord is usually responsible for the supply and distribution up to the tenant demarcation point. The tenant is responsible for the installation beyond that point. The EICR must be carried out by a competent person and the report retained for the premises fire safety file.',
+      'Yes. The Electricity at Work Regulations 1989 require that electrical installations in commercial premises are maintained in a safe condition. An EICR (Electrical Installation Condition Report) is the formal inspection and testing that demonstrates compliance. The recommended inspection interval is not a statutory fixed period — it is set by the designer based on risk assessment and recorded on the EIC at handover (BS 7671 Reg 644.4). IET Guidance Note 3 (GN3 Reg 3.4) suggests 5 years as a typical starting point for most commercial premises, but the actual interval may be shorter for high-risk or heavily used installations. EICRs are also required at change of tenancy or when there is reason to believe the installation may be unsafe. The landlord is usually responsible for the supply and distribution up to the tenant demarcation point. The tenant is responsible for the installation beyond that point. The EICR must be carried out by a competent person and the report retained for the premises fire safety file.',
   },
   {
     question: 'Can I use domestic-rated accessories in a shop?',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for commercial distribution boards and sub-mains.',
     icon: Calculator,
@@ -282,6 +282,20 @@ const sections = [
                 sized for the load and protected against overcurrent and earth faults.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Surge Protection Devices (SPDs)</strong> — new commercial fit-outs
+                increasingly specify SPD protection at the main or sub-distribution board to protect
+                sensitive electronic equipment (EPOS, DALI lighting controls, CCTV) from transient
+                overvoltages. A Type 2 SPD is installed at the distribution board as standard; a
+                Type 1 SPD is fitted at the incoming service where lightning current may enter the
+                installation. Guidance on SPD selection is given in BS 7671 Appendix 16
+                (Informative). SPD details must be recorded on the EIC Part 6 model form where
+                fitted (Reg 133.1.3). DIN-rail mounted Type 2 SPDs typically cost £50 to £150 at
+                trade price.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -355,8 +369,10 @@ const sections = [
           Emergency lighting is a legal requirement in all commercial premises. It must provide
           sufficient illumination for safe evacuation when the normal lighting fails. The system
           must comply with{' '}
-          <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">BS 5266-1</SEOInternalLink> and
-          be specified based on the fire risk assessment:
+          <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
+            BS 5266-1
+          </SEOInternalLink>{' '}
+          and be specified based on the fire risk assessment:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -506,10 +522,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
+                <strong>RCD additional protection — Reg 411.3.3</strong> — all socket-outlet
+                circuits rated 32 A or below in the commercial fit-out must be provided with
+                additional protection by an RCD with a rated residual operating current not
+                exceeding 30 mA. This is a mandatory requirement under BS 7671:2018+A4:2026 Reg
+                411.3.3 and applies to all such circuits unless a documented risk assessment (for
+                non-dwellings) determines protection is not necessary. This requirement directly
+                affects distribution board design and protective device selection for the fit-out.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
                 <strong>Electricity at Work Regulations 1989</strong> — the employer or premises
                 controller has a duty to ensure the electrical installation is maintained in a safe
-                condition. An EICR demonstrates compliance. Commercial EICRs are typically carried
-                out every 5 years.
+                condition. An EICR demonstrates compliance. The recommended interval is determined
+                by the designer based on risk assessment; GN3 guidance suggests 5 years as a
+                starting point for most commercial premises, but this is not a statutory fixed
+                period (GN3 Reg 3.4).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -533,9 +563,17 @@ const sections = [
         <p>
           An Electrical Installation Certificate (EIC) must be issued for all new commercial
           installations. The certificate confirms compliance with BS 7671 and should be retained in
-          the premises fire safety file. An EICR should be carried out at handover and subsequently
-          at intervals specified in the IET Guidance Note 3 (typically every 5 years for commercial
-          premises).
+          the premises fire safety file. BS 7671 Reg 644.4 requires the designer to record the
+          recommended interval to the first periodic inspection on the EIC at handover — this is a
+          mandatory entry, not an optional note. The interval is based on risk assessment; GN3
+          guidance suggests 5 years as a starting point for most commercial premises, subject to the
+          specific conditions of the installation (GN3 Reg 3.4).
+        </p>
+        <p>
+          Under BS 7671 Reg 133.1.3 (A4:2026), where RCDs, AFDDs, or SPDs are installed, their usage
+          must be explicitly recorded on the EIC Part 6 certificate. Electricians completing an EIC
+          for a commercial fit-out that includes these protective devices must ensure the relevant
+          fields on the model form are completed.
         </p>
       </>
     ),
@@ -559,7 +597,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Maximum Demand</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Calculate sub-mains and distribution board sizing with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Verify 3-phase balance and voltage drop on longer sub-mains runs.
@@ -574,10 +612,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Commercial Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised commercial quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Lighting, power, emergency lighting, fire alarm, data cabling — all broken down
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Lighting, power, emergency lighting, fire alarm, data cabling — all broken down
                   with materials, labour, and your margins. Present a professional quotation to the
                   main contractor or tenant.
                 </p>

@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for rewires and EV charger installations. Ring final and radial circuit calculations.',
@@ -334,7 +334,9 @@ const sections = [
           circuits (ground floor and first floor) for the main socket outlets, with radials for the
           kitchen (dedicated 32A ring or 20A radials for individual appliances), garage, and any
           extension or loft conversion. This balances efficiency, simplicity, and compliance. The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
+            cable sizing calculator
+          </SEOInternalLink>{' '}
           can verify the cable sizes for both ring and radial options.
         </p>
       </>
@@ -560,7 +562,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for rewires and EV charger installations with the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Verify ring final and radial circuit designs. Check voltage drop on long EV

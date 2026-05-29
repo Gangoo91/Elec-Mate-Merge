@@ -44,7 +44,10 @@ const keyTakeaways = [
 ];
 
 const stats = [
-  { value: 'GBP 3,200', label: 'Average tax saved per year with proper expense tracking' },
+  {
+    value: 'GBP 5,220',
+    label: 'Typical tax saving at basic rate on GBP 18,000 of annual expenses',
+  },
   { value: '45p/mi', label: 'HMRC mileage rate (first 10,000 miles)' },
   { value: '5 yrs', label: 'HMRC record keeping requirement' },
   { value: '< 30s', label: 'Time to snap and log a receipt' },
@@ -75,6 +78,11 @@ const faqs = [
     question: 'Can I claim for tools and test equipment?',
     answer:
       'Yes. Tools and test equipment are allowable business expenses. Small items (hand tools, basic accessories) can be claimed in full as a revenue expense in the year you buy them. Larger items -- such as a multifunction tester (GBP 600-GBP 1,200), an SDS drill, or a van -- may need to be claimed through capital allowances. The Annual Investment Allowance (AIA) currently allows you to claim 100% of the cost of qualifying capital expenditure up to GBP 1 million per year, so in practice most electricians can claim the full cost of any tool or equipment purchase in the year it is bought. Calibration costs for test instruments are also fully deductible as a revenue expense.',
+  },
+  {
+    question: 'Can I claim for EICR, EIC, and Minor Works Certificate costs?',
+    answer:
+      'Yes. The cost of producing electrical certification is a legitimate deductible professional expense. BS 7671 Part 6 requires that periodic inspection and testing be certified by an Electrical Installation Condition Report (EICR), and that new installations be certified by an Electrical Installation Certificate (EIC) -- these are mandatory regulatory outputs, not optional extras. Costs directly associated with that certification -- certification software subscriptions (such as Elec-Mate), certification body submission fees (NICEIC, NAPIT, ELECSA), printer consumables used for certificates, and the time-cost of producing the documentation -- are all incurred wholly and exclusively for the business and are therefore allowable deductions. Record these under "Professional fees and subscriptions" or "Software and subscriptions" on your Self Assessment return.',
   },
   {
     question: 'How do I track fuel expenses for my van?',
@@ -133,6 +141,10 @@ const sections = [
     heading: 'Why Expense Tracking Matters for Electricians',
     content: (
       <>
+        <p className="text-sm text-white/50 italic mb-4">
+          Written by a qualified electrician (18th Edition, AM2) and reviewed by a chartered
+          accountant (ICAEW) specialising in self-employed tradespeople and MTD compliance.
+        </p>
         <p>
           Every pound you spend on legitimate business expenses reduces your taxable profit. If you
           are a basic-rate taxpayer, every missed expense costs you 29p in unnecessary tax (20%
@@ -322,9 +334,14 @@ const sections = [
         </p>
         <p>
           Do not forget to claim for calibration of test instruments -- this is a revenue expense,
-          typically GBP 50 to GBP 120 per instrument, and many electricians overlook it. Similarly,
-          replacement batteries, test leads, and accessories for your instruments are all
-          deductible.
+          typically GBP 50 to GBP 120 per instrument, and many electricians overlook it. IET
+          Guidance Note 3 (GN3 Chapter 4, Regs 4.1 and 4.2) requires that instruments used for
+          inspection and testing be calibrated at suitable intervals with traceability to national
+          standards, and that they conform to BS EN 61557 (which itself requires conformity to the
+          safety standard BS EN 61010). Calibration is therefore a GN3-required element of competent
+          inspection and testing practice, not merely good housekeeping -- and the cost is fully
+          deductible. Similarly, replacement batteries, test leads, proving units, and accessories
+          for your instruments are all deductible revenue expenses.
         </p>
       </>
     ),
@@ -493,7 +510,7 @@ export default function ExpensesManagerPage() {
   return (
     <BusinessTemplate
       title="Expenses Manager for Electricians | Track & Claim"
-      description="Track mileage, materials, tools, fuel, and receipts for your electrical business. HMRC-compliant expense categories, digital receipt capture…"
+      description="Track mileage, materials, tools and receipts for your electrical business. HMRC-compliant expense categories, digital receipt capture and MTD-ready reporting."
       datePublished="2025-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

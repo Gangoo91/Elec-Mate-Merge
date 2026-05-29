@@ -30,6 +30,7 @@ const tocItems = [
   { id: 'overview', label: 'What Is the 2396?' },
   { id: 'who-needs-it', label: 'Who Needs It?' },
   { id: 'course-content', label: 'Course Content' },
+  { id: 'a4-2026-updates', label: 'A4:2026 Design Updates' },
   { id: 'exam-format', label: 'Exam Format' },
   { id: 'prerequisites', label: 'Prerequisites and Entry Requirements' },
   { id: 'career-benefits', label: 'Career Benefits' },
@@ -45,6 +46,8 @@ const keyTakeaways = [
   'The course covers design calculations (cable sizing, voltage drop, fault current, earth fault loop impedance, protective device discrimination), load assessment, circuit arrangements, and documentation.',
   'The exam consists of a written design project — you are given a scenario and must produce a complete electrical installation design with calculations, schedules, and specification. It is not multiple choice.',
   'The 2396 is increasingly valued by employers and clients. It distinguishes you from electricians who install but do not design, and it is essential if you want to tender for larger commercial and industrial projects.',
+  'BS 7671:2018+A4:2026 introduced three changes designers must now address: arc fault detection devices (AFDDs) recommended for AC final circuits (Reg 421.1.7), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), and a design requirement to consider surge protective devices in accordance with Section 534.',
+  'A key distinction-level exam point: the tabulated maximum Zs values in BS 7671 Table 41.3 are calculated at operating temperature. On-site cold-measured Zs must not exceed 80% of the tabulated value (the GN3 site limit). For a 32 A Type B MCB the tabulated max Zs is 1.37 Ω — so the maximum acceptable cold-measured site reading is 1.10 Ω.',
 ];
 
 const faqs = [
@@ -99,14 +102,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Practise the cable sizing calculations that form a major part of the 2396 exam.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on circuit designs — a core 2396 exam skill.',
     icon: Zap,
@@ -249,7 +252,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Calculating minimum cable sizes using Appendix 4 of BS 7671. Applying correction
                   factors for ambient temperature (Ca), grouping (Cg), thermal insulation (Ci), and
-                  BS 3036 fuses (Cf). Voltage drop calculations for long cable runs.
+                  BS 3036 rewirable fuses (Cf). Voltage drop calculations for long cable runs. Where
+                  cables are buried in or pass through thermal insulation, consult the Appendix F
+                  tables in the IET On-Site Guide for the appropriate Ci correction factors — these
+                  directly determine whether a larger cable cross-section is required (OSG Reg 2.6).
                 </p>
               </div>
             </div>
@@ -264,6 +270,19 @@ const sections = [
                   current, and disconnection time requirements. Understanding discrimination
                   (selectivity) between upstream and downstream devices.
                 </p>
+                <div className="mt-3 rounded-xl bg-white/[0.06] border border-white/10 p-4">
+                  <p className="text-white text-xs font-semibold mb-2 uppercase tracking-wide">
+                    Key design threshold: maximum Zs
+                  </p>
+                  <p className="text-white/80 text-xs leading-relaxed">
+                    BS 7671 Table 41.3 gives maximum earth fault loop impedance (Zs) values at
+                    operating temperature. Example: a 32 A Type B MCB has a tabulated max Zs of 1.37
+                    &Omega; (Reg 411.4.204(a)). On-site cold-measured Zs must not exceed 80% of this
+                    tabulated value — the GN3 site limit — giving a maximum acceptable cold-measured
+                    reading of 1.10 &Omega;. This distinction between designed Zs and site-measured
+                    Zs is a common exam and interview question.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -294,6 +313,79 @@ const sections = [
             </div>
           </div>
         </div>
+      </>
+    ),
+  },
+  {
+    id: 'a4-2026-updates',
+    heading: 'A4:2026 Design Updates — What Changed for Designers',
+    content: (
+      <>
+        <p>
+          The 2396 exam is now set against BS 7671:2018+A4:2026. Three A4 changes are directly
+          relevant to electrical installation designers and are likely to feature in exam scenarios:
+        </p>
+        <div className="space-y-4 my-4">
+          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <Zap className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Arc Fault Detection Devices — Reg 421.1.7
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Regulation 421.1.7 recommends the installation of arc fault detection devices
+                  (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire
+                  due to arc fault currents. The wording is advisory rather than mandatory — it uses
+                  &apos;recommending&apos; rather than &apos;shall&apos; — but designers should
+                  consider AFDDs and document their decision, particularly for domestic
+                  installations where cables may be concealed or routed through combustible
+                  materials.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <CheckCircle2 className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  30 mA RCD Protection for Domestic Lighting — Reg 411.3.4
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Regulation 411.3.4 requires that, within domestic (household) premises, additional
+                  protection by an RCD with a rated residual operating current not exceeding 30 mA
+                  shall be provided for AC final circuits supplying luminaires. This is a mandatory
+                  requirement — note the word &apos;shall&apos;. Domestic lighting circuits must now
+                  be protected by a 30 mA RCD or RCBO, not just an MCB. This changes the consumer
+                  unit design for new domestic installations and rewires.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <Building2 className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Surge Protective Devices — Section 534
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  Section 534 sets out requirements for the selection and installation of surge
+                  protective devices (SPDs). Designers must now assess whether SPD protection is
+                  required and document that assessment. Where SPDs are installed, Regulation
+                  534.4.5.2 requires that operation of an overcurrent protective device caused by
+                  SPD failure must not interrupt continuity of supply to the connected equipment —
+                  this determines how SPDs must be arranged relative to their backup overcurrent
+                  protection.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p className="text-sm text-white/70 mt-2">
+          Last reviewed for BS 7671:2018+A4:2026 (effective January 2026).
+        </p>
       </>
     ),
   },

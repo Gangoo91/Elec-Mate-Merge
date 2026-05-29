@@ -47,7 +47,7 @@ export default function IPRatingGuidePage() {
           for UK Electricians
         </>
       }
-              calculator={<IPRatingCalculator />}
+      calculator={<IPRatingCalculator />}
       heroSubtitle="Understand every IP rating from IP00 to IP69K. This guide explains the first digit (solid object protection), the second digit (liquid protection), and what ratings like IP20, IP44, IP55, IP65, and IP68 mean in practice. Essential knowledge for selecting equipment to BS EN 60529."
       heroFeaturePills={[
         { icon: Shield, label: 'BS EN 60529' },
@@ -367,8 +367,8 @@ export default function IPRatingGuidePage() {
                 Bathroom zones have specific IP requirements too. Zone 1 requires at least IPX4
                 (splash protection), and equipment in Zone 0 must be at least IPX7 (temporary
                 immersion). The{' '}
-                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
-                records the IP rating of equipment installed in special locations.
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> records
+                the IP rating of equipment installed in special locations.
               </p>
             </>
           ),
@@ -509,7 +509,7 @@ export default function IPRatingGuidePage() {
           category: 'Calculators',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for circuits in wet or outdoor locations where derating for installation method applies.',

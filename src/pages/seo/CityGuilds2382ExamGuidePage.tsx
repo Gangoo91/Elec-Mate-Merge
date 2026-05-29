@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Practise Appendix 4 cable sizing calculations — the most common fail area in the 2382.',
@@ -316,7 +316,7 @@ const sections = [
                   Practise the method: determine the design current, select the protective device
                   rating, apply correction factors (Ca, Cg, Ci, Cf), calculate the tabulated current
                   (It), and read the table to find the minimum cable size. Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to check your manual calculations.

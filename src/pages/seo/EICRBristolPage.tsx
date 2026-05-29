@@ -171,6 +171,30 @@ const sections = [
           Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
           present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h3 className="font-bold text-white mb-2">A4:2026 Changes Relevant to Bristol EICRs</h3>
+          <p className="text-white text-sm leading-relaxed mb-2">
+            BS 7671:2018+A4:2026 introduced two requirements that directly affect how domestic EICRs
+            are assessed in Bristol:
+          </p>
+          <ul className="space-y-2 text-white text-sm">
+            <li>
+              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> A4:2026 recommends
+              the installation of AFDDs on AC final circuits to mitigate fire risk from arc fault
+              currents. The wording is recommendatory rather than mandatory. Inspectors must now
+              check for AFDD presence and record it on the EICR; absence may attract a C3
+              observation on circuits in higher-risk contexts.
+            </li>
+            <li>
+              <strong>Reg 411.3.4 — RCD protection on domestic lighting circuits:</strong> Within
+              domestic premises, additional protection by an RCD with a rated residual operating
+              current not exceeding 30 mA <em>shall</em> be provided for AC final circuits supplying
+              luminaires. This is a mandatory requirement. Domestic lighting circuits without RCD
+              protection (&le;30 mA) are now non-compliant and should attract a C2 observation on an
+              EICR of an existing installation.
+            </li>
+          </ul>
+        </div>
       </>
     ),
   },
@@ -262,7 +286,8 @@ const sections = [
               <span>
                 <strong>Every five years</strong> — the EICR must be renewed at least every five
                 years, or sooner if the inspector recommends a shorter interval. BS 7671 Regulation
-                134.2 requires periodic inspection regimes that confirm installations remain safe.
+                651.1 (Part 6, Chapter 65) requires that periodic inspection and testing of every
+                electrical installation is carried out in accordance with the Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -297,7 +322,7 @@ const sections = [
           Multiple Occupation (HMOs). Social housing providers have separate obligations under the
           Homes (Fitness for Human Habitation) Act 2018. Owner-occupied properties are not covered
           by these regulations but periodic inspection is recommended as best practice under
-          Regulation 134.2 of BS 7671.
+          Regulation 651.1 of BS 7671.
         </p>
       </>
     ),
@@ -480,6 +505,18 @@ const sections = [
           and Victorian properties. A three-bedroom Victorian terrace in Bedminster may take 4 to 5
           hours compared to 2 to 3 hours for a modern flat of the same size.
         </p>
+        <p>
+          Under BS 7671:2018+A4:2026, older Bristol properties face two additional compliance
+          considerations. First, domestic lighting circuits that have never had RCD protection are
+          now non-compliant under Reg 411.3.4, which requires that all AC final circuits supplying
+          luminaires in domestic premises are protected by an RCD with a rated residual operating
+          current not exceeding 30 mA. Victorian terraces in Bedminster and Southville that were
+          rewired before RCD protection on lighting became standard will typically attract a C2
+          observation on this point. Second, properties with aluminium wiring, ageing
+          rubber-insulated cables, or complex multi-conversion wiring are prime candidates for AFDD
+          under Reg 421.1.7, which recommends arc fault detection devices on AC final circuits to
+          mitigate fire risk from arc fault currents.
+        </p>
       </>
     ),
   },
@@ -547,9 +584,10 @@ const sections = [
     content: (
       <>
         <p>
-          The required frequency of EICRs depends on the property type and use. BS 7671 Regulation
-          Section 621 establishes that installations must be periodically inspected at intervals
-          suited to the property type:
+          The required frequency of EICRs depends on the property type and use. BS 7671 Section 651
+          (Part 6, Chapter 65) establishes that where required, periodic inspection and testing of
+          every electrical installation shall be carried out in accordance with the Regulations, at
+          intervals suited to the property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -686,10 +724,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Landlords are legally obligated to act within 28 days — the electrician who
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Landlords are legally obligated to act within 28 days — the electrician who
                   delivers the quote on the day of the EICR is most likely to win the remedial work.
                 </p>
               </div>

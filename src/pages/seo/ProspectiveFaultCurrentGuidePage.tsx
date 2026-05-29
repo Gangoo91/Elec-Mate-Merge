@@ -42,10 +42,12 @@ const tocItems = [
 
 const keyTakeaways = [
   'Prospective fault current (PFC or Ipf) is the maximum current that would flow under a short-circuit or earth fault condition — every protective device must be capable of safely interrupting this current.',
-  'PFC must be measured or determined at the origin of every installation and at every distribution board. The highest value (typically the line-to-neutral short circuit) is the one that matters.',
+  'PFC must be measured, calculated, or determined at the origin of every installation and at every relevant point — defined in GN3 as every point where a protective device is required to operate under fault conditions. The highest value (typically the line-to-neutral short circuit) is the one that matters.',
   'Typical domestic PFC values range from 1kA to 6kA. Standard domestic MCBs to BS EN 60898 have a minimum breaking capacity of 6kA — but installations close to transformers can exceed this.',
   'PFC is directly related to Ze: the lower the Ze (earth fault loop impedance at the origin), the higher the prospective fault current. TN-C-S supplies with low Ze can have high PFC values.',
   "Elec-Mate's PFC calculator and adiabatic calculator verify that protective devices and cables can handle the fault current. Schedule of tests validates PFC values against device ratings automatically.",
+  'Where site measurement is not possible before energisation — for example on a new installation — PFC may be determined by enquiry to the DNO/distributor, who can provide Ze and Ipsc figures for the supply point (OSG Reg 1.2.7).',
+  'Appendix 14 of BS 7671 contains worked examples for calculating Ips at relevant points in the installation. The Elec-Mate PFC calculator applies the same methodology.',
 ];
 
 const faqs = [
@@ -72,7 +74,7 @@ const faqs = [
   {
     question: 'Do I need to measure PFC at every distribution board?',
     answer:
-      'BS 7671 Regulation 434.5.1 requires that the prospective fault current is determined at every relevant point in the installation. In practice, this means PFC should be measured at the origin (the main consumer unit or main distribution board) and at every sub-distribution board. The PFC at a sub-distribution board is always lower than at the origin because the impedance of the submain cable between the main board and the sub-board reduces the fault current. However, the protective devices at the sub-board must still have a breaking capacity that exceeds the PFC at that point. Recording PFC at each distribution board also allows verification that the protective devices are correctly rated for their location. For domestic installations with a single consumer unit, PFC is typically measured only at the origin. For commercial installations with multiple distribution boards, PFC should be measured at each board.',
+      'BS 7671 Regulation 643.7.3.201 (Part 6 — Inspection and Testing) requires that the prospective fault current is measured, calculated, or determined at the origin and at every other relevant point in the installation. GN3 Reg 2.29 defines a relevant point as every point where a protective device is required to operate under fault conditions. In practice, PFC should be determined at the origin (the main consumer unit or main distribution board) and at every sub-distribution board. The PFC at a sub-distribution board is always lower than at the origin because the impedance of the submain cable adds to the total fault loop impedance, reducing the fault current. However, the protective devices at the sub-board must still have a breaking capacity that exceeds the PFC at that point. For domestic installations with a single consumer unit, PFC is typically measured only at the origin. For commercial installations with multiple distribution boards or switchboards, PFC should be determined at each board — and at each MCCB location on a large switchboard. Appendix 14 of BS 7671 provides worked examples of Ips determination at relevant points.',
   },
   {
     question: 'What is the difference between PFC and breaking capacity?',
@@ -179,8 +181,35 @@ const sections = [
         <p>
           PFC is measured using a multifunction tester (MFT) or a dedicated loop impedance tester.
           Most modern MFTs have a PFC function that measures the supply impedance and calculates the
-          maximum fault current automatically.
+          maximum fault current automatically. Where site measurement is not yet possible — for
+          example on a new installation before energisation — PFC may be determined by enquiry to
+          the DNO/distributor, who can supply Ze and prospective short-circuit current (Ipsc)
+          figures for the supply point. The OSG states that measurement shall be made &lsquo;if not
+          determined by enquiry of the distributor&rsquo;, so the two routes are equally valid under
+          BS 7671.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">
+                Defining &lsquo;every relevant point&rsquo; — GN3 Reg 2.29
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                Reg 643.7.3.201 requires PFC to be determined at the origin and at every other
+                relevant point. GN3 Reg 2.29 defines this precisely:{' '}
+                <em>
+                  &ldquo;every relevant point shall mean every point where a protective device is
+                  required to operate under fault conditions, and includes the origin of the
+                  installation.&rdquo;
+                </em>{' '}
+                For a large commercial switchboard feeding multiple MCCBs, each MCCB location is a
+                relevant point — not only the incoming incomer. Appendix 14 of BS 7671 provides
+                worked examples of Ips determination at such points.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">At the Origin</h3>
@@ -472,32 +501,35 @@ const sections = [
               The rated short-circuit capacity of each protective device shall be not less than the
               prospective fault current at the point at which the device is installed. This is the
               fundamental requirement — every device must be able to safely interrupt the maximum
-              fault current it could face. There is an exception within Section 434 for back-up
-              protection.
+              fault current it could face.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-2">
-              Section 434 — Back-up Protection Exception
+              Regs 536.1 (last paragraph) &amp; 536.5 — Back-up Protection
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              A device with a rated breaking capacity less than the prospective fault current may be
-              used if a device with adequate breaking capacity is installed upstream and the
-              characteristics of the two devices are coordinated so that the energy let-through of
-              the upstream device does not exceed the energy that the downstream device and the
-              cables it protects can withstand. This is the basis for using HRC fuses upstream of
-              standard MCBs.
+              Where a protective device has a rated breaking capacity lower than the maximum
+              prospective fault current at its point of installation, Reg 533.2.2 requires
+              compliance with the last paragraph of Reg 536.1 and Reg 536.5. The operative
+              acceptance criterion is that the I&sup2;t let-through energy of the upstream device
+              must not exceed the withstand capability of the downstream device (and the cables it
+              protects). This is the regulatory basis for back-up protection arrangements — for
+              example an HRC BS 88 fuse upstream of standard 6kA MCBs.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">
-              Regulation 313.1 — Supply Characteristics
+              Reg 643.7.3.201 — Testing-Stage Determination of PFC
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              The prospective fault current at the origin of the installation shall be determined.
-              This is part of the assessment of general characteristics (Part 3 of BS 7671) that
-              must be carried out before the design of the installation begins. The PFC influences
-              the selection of protective devices, consumer unit specification, and cable sizing.
+              Regulation 643.7.3.201 (Part 6, Chapter 64) requires that the prospective
+              short-circuit current and prospective earth fault current are measured, calculated, or
+              determined at the origin of the installation and at every other relevant point as part
+              of initial verification. This is the testing-stage duty. The design-stage obligation
+              to assess supply characteristics — including PFC — is covered by Part 3, Chapter 31,
+              which requires the assessment to be made before design begins and informs protective
+              device selection, consumer unit specification, and cable sizing.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -528,7 +560,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/prospective-fault-current-calculator',
+    href: '/tools/prospective-fault-current-calculator',
     title: 'PFC Calculator',
     description:
       'Calculate prospective fault current from supply impedance. Verify against device breaking capacities.',
@@ -536,7 +568,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/adiabatic-equation-calculator',
+    href: '/tools/adiabatic-equation-calculator',
     title: 'Adiabatic Equation Calculator',
     description:
       'Verify cable can withstand fault current using k squared S squared vs I squared t.',

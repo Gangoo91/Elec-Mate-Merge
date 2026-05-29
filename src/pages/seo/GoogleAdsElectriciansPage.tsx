@@ -62,12 +62,12 @@ const faqs = [
   {
     question: 'What is Google Guaranteed for electricians?',
     answer:
-      'Google Guaranteed is the badge shown on Local Services Ads. To qualify, your business must pass Google\'s verification process: identity verification, business registration check, insurance verification, and licence check (for electricians, this includes checking NICEIC, NAPIT, or equivalent registration). Once verified, your ads show the Google Guaranteed badge, which significantly increases trust and click-through rates. Google also offers a financial guarantee to customers who are unhappy with Google Guaranteed work — up to £1,500 in the UK. You pay per qualified lead, typically £15–£40 per lead for electrical work.',
+      "Google Guaranteed is the badge shown on Local Services Ads. To qualify, your business must pass Google's verification process: identity verification, business registration check, insurance verification, and licence check (for electricians, this includes checking NICEIC, NAPIT, STROMA, or ELECSA registration). Once verified, your ads show the Google Guaranteed badge, which significantly increases trust and click-through rates. Google also offers a financial guarantee to customers who are unhappy with Google Guaranteed work — up to £1,500 in the UK. You pay per qualified lead, typically £15–£40 per lead for electrical work.",
   },
   {
     question: 'How do I set up conversion tracking for my Google Ads?',
     answer:
-      'Conversion tracking tells Google Ads which clicks lead to actual enquiries. Set up two types: (1) Website form submissions — install the Google Ads conversion tag on your thank-you page (the page shown after a form is submitted). Your website builder or WordPress plugin can do this. (2) Phone calls — use Google\'s call tracking (free within Google Ads) or a dedicated call tracking service like CallRail. Without conversion tracking, Google\'s automated bidding has no data to optimise against and your campaigns will underperform. Set this up before spending any money.',
+      "Conversion tracking tells Google Ads which clicks lead to actual enquiries. Set up two types: (1) Website form submissions — install the Google Ads conversion tag on your thank-you page (the page shown after a form is submitted). Your website builder or WordPress plugin can do this. (2) Phone calls — use Google's call tracking (free within Google Ads) or a dedicated call tracking service like CallRail. Without conversion tracking, Google's automated bidding has no data to optimise against and your campaigns will underperform. Set this up before spending any money.",
   },
   {
     question: 'What are negative keywords and why do they matter?',
@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'Should I manage Google Ads myself or hire someone?',
     answer:
-      'If you are starting with less than £500/month in ad spend, managing it yourself makes sense — the potential saving on management fees is worth the learning curve. Google\'s own guided setup (Smart campaigns) is a reasonable starting point, though it gives less control than Expert Mode. When your monthly budget exceeds £1,000 or you are spending significant time managing campaigns without improving performance, hiring a PPC specialist (£200–£500/month management fee for a small account) typically pays for itself. Look for specialists with experience in home services or trades — electrical PPC is different from e-commerce.',
+      "If you are starting with less than £500/month in ad spend, managing it yourself makes sense — the potential saving on management fees is worth the learning curve. Google's own guided setup (Smart campaigns) is a reasonable starting point, though it gives less control than Expert Mode. When your monthly budget exceeds £1,000 or you are spending significant time managing campaigns without improving performance, hiring a PPC specialist (£200–£500/month management fee for a small account) typically pays for itself. Look for specialists with experience in home services or trades — electrical PPC is different from e-commerce.",
   },
 ];
 
@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/seo-for-electricians',
     title: 'SEO for Electricians',
-    description: 'How to rank organically on Google — free, long-term traffic that compounds over time.',
+    description:
+      'How to rank organically on Google — free, long-term traffic that compounds over time.',
     icon: Search,
     category: 'Guide',
   },
@@ -118,7 +119,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrical-quoting-app',
     title: 'Elec-Mate Quoting App',
-    description: 'Convert ad leads into booked jobs with professional quotes sent in under two minutes.',
+    description:
+      'Convert ad leads into booked jobs with professional quotes sent in under two minutes.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -134,12 +136,16 @@ const sections = [
     heading: 'Google Local Services Ads — The Google Guaranteed Badge',
     content: (
       <>
+        <p className="text-sm text-white/50 mb-4">
+          Written by the Elec-Mate technical team — qualified electricians and NICEIC-registered
+          contractors who have run Google Ads campaigns for their own businesses.
+        </p>
         <p>
           Google Local Services Ads (LSAs) are the most powerful paid advertising format available
           to local electricians. They appear at the very top of the page — above organic results,
           above regular Google Ads — and carry the "Google Guaranteed" badge, which significantly
-          increases trust and click-through rates. Unlike regular ads, you pay per qualified lead
-          (a phone call or message), not per click.
+          increases trust and click-through rates. Unlike regular ads, you pay per qualified lead (a
+          phone call or message), not per click.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -148,9 +154,9 @@ const sections = [
               <span>
                 <strong>Verification requirements</strong> — to become Google Guaranteed you must
                 pass: identity check (passport or driving licence), business registration
-                verification, public liability insurance check, and professional licence verification
-                (NICEIC, NAPIT, or ELECSA registration). The process takes one to four weeks. Start
-                this now — do not wait until you want to advertise.
+                verification, public liability insurance check, and professional licence
+                verification (NICEIC, NAPIT, STROMA, or ELECSA registration). The process takes one
+                to four weeks. Start this now — do not wait until you want to advertise.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -203,17 +209,25 @@ const sections = [
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Campaign structure</strong> — create separate ad groups for each main
-                service: EICR, consumer unit upgrade, EV charger installation, emergency electrician,
-                rewire. Each ad group should have its own keywords, ad copy, and ideally its own
-                landing page. Mixing all services into one campaign produces poor results.
+                service: <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
+                <SEOInternalLink href="/guides/consumer-unit-upgrade">
+                  consumer unit upgrade
+                </SEOInternalLink>
+                ,{' '}
+                <SEOInternalLink href="/guides/ev-charger-installation">
+                  EV charger installation
+                </SEOInternalLink>
+                , emergency electrician, rewire. Each ad group should have its own keywords, ad
+                copy, and ideally its own landing page. Mixing all services into one campaign
+                produces poor results.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Match types</strong> — use Phrase Match for most keywords (e.g., "electrician
-                coventry") to balance reach and relevance. Avoid Broad Match until you have
-                significant conversion data — it will spend your budget on irrelevant searches.
+                <strong>Match types</strong> — use Phrase Match for most keywords (e.g.,
+                "electrician coventry") to balance reach and relevance. Avoid Broad Match until you
+                have significant conversion data — it will spend your budget on irrelevant searches.
                 Exact Match (e.g., [electrician coventry]) is for your highest-converting, most
                 specific terms.
               </span>
@@ -258,8 +272,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>"Electrician [town]" — £3–£8 per click</strong>: Most competitive term in
-                most UK markets. Higher in major cities. A well-optimised campaign with a good Quality
-                Score will pay towards the lower end.
+                most UK markets. Higher in major cities. A well-optimised campaign with a good
+                Quality Score will pay towards the lower end.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -276,15 +290,18 @@ const sections = [
               <span>
                 <strong>"EV charger installation [town]" — £3–£8 per click</strong>: Growing market,
                 moderate competition. Higher average job value (£500–£1,500) makes this keyword
-                highly profitable even at higher CPC.
+                highly profitable even at higher CPC. EV charger installations are governed by
+                BS&nbsp;7671 Section&nbsp;722 and may require DNO notification — scheme registration
+                and regulatory compliance are legitimate credentials to call out in ad copy and
+                distinguish you from unregistered competitors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>"EICR [town]" — £2–£5 per click</strong>: Less competitive than general
-                "electrician" terms. Lower average job value but predictable work volume. Good
-                for building relationships with landlords who generate repeat business.
+                "electrician" terms. Lower average job value but predictable work volume. Good for
+                building relationships with landlords who generate repeat business.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -308,8 +325,8 @@ const sections = [
       <>
         <p>
           Your ad copy must stand out in a results page where multiple electricians are all claiming
-          to be the best. Differentiation and trust signals are what drive clicks. Here is what works
-          for electrical trade advertising.
+          to be the best. Differentiation and trust signals are what drive clicks. Here is what
+          works for electrical trade advertising.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -325,8 +342,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Include a price signal</strong> — "EICRs from £X" or "Consumer Unit from
-                £X" attracts customers who are price-researching and sets expectations. It also
+                <strong>Include a price signal</strong> — "EICRs from £X" or "Consumer Unit from £X"
+                attracts customers who are price-researching and sets expectations. It also
                 pre-qualifies leads — customers who click knowing your approximate price are more
                 likely to proceed.
               </span>
@@ -335,8 +352,8 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use your location</strong> — "Coventry Electrician" in the headline signals
-                local relevance. Include the searcher's location where possible using dynamic keyword
-                insertion or location-specific ad groups.
+                local relevance. Include the searcher's location where possible using dynamic
+                keyword insertion or location-specific ad groups.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,8 +385,8 @@ const sections = [
       <>
         <p>
           Negative keywords are the most underused feature in Google Ads. They prevent your ads from
-          showing for irrelevant searches, saving budget that would otherwise be wasted on people who
-          will never hire you. Build your negative keyword list before spending a pound.
+          showing for irrelevant searches, saving budget that would otherwise be wasted on people
+          who will never hire you. Build your negative keyword list before spending a pound.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -401,8 +418,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Out-of-area locations</strong> — if you cover Birmingham only, add
-                Manchester, London, Bristol, and all other major cities as negatives. Without
-                this, your ads may show nationally for broad terms.
+                Manchester, London, Bristol, and all other major cities as negatives. Without this,
+                your ads may show nationally for broad terms.
               </span>
             </li>
           </ul>
@@ -422,7 +439,8 @@ const sections = [
       <>
         <p>
           Without conversion tracking, you are spending money with no idea what is working. Setting
-          up conversion tracking correctly takes one to two hours and will save you money from day one.
+          up conversion tracking correctly takes one to two hours and will save you money from day
+          one.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -440,10 +458,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Form submission tracking</strong> — install the Google Ads conversion
-                tag on your enquiry form thank-you page. In Wix and Squarespace, this can be added
-                via the site's analytics or custom code section. In WordPress, use the Google
-                Site Kit plugin or add the tag via Google Tag Manager.
+                <strong>Form submission tracking</strong> — install the Google Ads conversion tag on
+                your enquiry form thank-you page. In Wix and Squarespace, this can be added via the
+                site's analytics or custom code section. In WordPress, use the Google Site Kit
+                plugin or add the tag via Google Tag Manager.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -474,7 +492,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Sole trader testing the channel — £200–£400/month</strong>
+                <strong className="block mb-1">
+                  Sole trader testing the channel — £200–£400/month
+                </strong>
                 <span>
                   Enough to generate 30–80 clicks at typical CPC rates. Run for three months before
                   evaluating. Focus on one or two high-value services (EICR, consumer unit) rather
@@ -485,10 +505,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Sole trader or small team growing actively — £500–£1,000/month</strong>
+                <strong className="block mb-1">
+                  Sole trader or small team growing actively — £500–£1,000/month
+                </strong>
                 <span>
-                  Sufficient to cover multiple service types and a reasonable geographic area.
-                  At this spend level, hiring a part-time PPC specialist (£200–£300/month management
+                  Sufficient to cover multiple service types and a reasonable geographic area. At
+                  this spend level, hiring a part-time PPC specialist (£200–£300/month management
                   fee) begins to make sense.
                 </span>
               </div>
@@ -496,20 +518,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Established business or multi-van operation — £1,500–£5,000/month</strong>
+                <strong className="block mb-1">
+                  Established business or multi-van operation — £1,500–£5,000/month
+                </strong>
                 <span>
                   Competitive positioning across a wide service area. At this level, professional
                   agency management (£400–£800/month) typically pays for itself through better
-                  campaign optimisation. Requires professional tracking and reporting infrastructure.
+                  campaign optimisation. Requires professional tracking and reporting
+                  infrastructure.
                 </span>
               </div>
             </li>
           </ul>
         </div>
         <p>
-          Never spend money on Google Ads without first ensuring your website and phone response
-          are optimised to convert the traffic. A £1,000/month ad spend is wasted if your landing
-          page is slow, your contact form does not work, or you miss half the calls.
+          Never spend money on Google Ads without first ensuring your website and phone response are
+          optimised to convert the traffic. A £1,000/month ad spend is wasted if your landing page
+          is slow, your contact form does not work, or you miss half the calls.
         </p>
       </>
     ),
@@ -548,10 +573,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Convert Jobs Into Reviews</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Every Google Ad job is an opportunity to generate a review that improves your
-                  ad ranking, your LSA ranking, and your organic ranking simultaneously. Build
-                  review requests into your job completion process — ask in person, follow up
-                  via WhatsApp or SMS within the hour.
+                  Every Google Ad job is an opportunity to generate a review that improves your ad
+                  ranking, your LSA ranking, and your organic ranking simultaneously. Build review
+                  requests into your job completion process — ask in person, follow up via WhatsApp
+                  or SMS within the hour.
                 </p>
               </div>
             </div>
@@ -575,7 +600,7 @@ export default function GoogleAdsElectriciansPage() {
   return (
     <GuideTemplate
       title="Google Ads for Electricians UK | PPC Guide for Electrical"
-      description="Complete Google Ads guide for UK electricians. Local Services Ads (Google Guaranteed), traditional search ads, typical cost per click (£3–£10)…"
+      description="Google Ads for UK electricians: Local Services Ads, Google Guaranteed badge, costs of £3–£10 per click, and realistic budgets for every business size."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

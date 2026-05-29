@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cooker cables, appliance radial circuits, and kitchen ring finals.',
     icon: Calculator,
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/voltage-drop-calculator',
+    href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long cooker cable runs.',
     icon: Zap,
@@ -140,9 +140,9 @@ const sections = [
       <>
         <p>
           Kitchens have some of the highest electrical demands of any room in a dwelling. High-power
-          appliances (electric ranges, ovens, dishwashers, washing machines), numerous socket outlets,
-          and the proximity of water from the sink all create a complex electrical environment that
-          must be carefully designed and installed to comply with BS 7671.
+          appliances (electric ranges, ovens, dishwashers, washing machines), numerous socket
+          outlets, and the proximity of water from the sink all create a complex electrical
+          environment that must be carefully designed and installed to comply with BS 7671.
         </p>
         <p>
           The key regulatory requirements for kitchen electrical installations are found in BS 7671
@@ -189,10 +189,10 @@ const sections = [
               <div>
                 <strong>45A radial circuit — larger range cookers</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  For range cookers rated up to 10.8kW or where the design current calculated
-                  using BS 7671 Appendix 15 diversity exceeds 32A. Cable: 10.0mm two-core and
-                  earth, protected by a 45A Type B MCB. A 45A double-pole cooker switch (switch
-                  outlet unit) is required regardless of the circuit protective device rating.
+                  For range cookers rated up to 10.8kW or where the design current calculated using
+                  BS 7671 Appendix 15 diversity exceeds 32A. Cable: 10.0mm two-core and earth,
+                  protected by a 45A Type B MCB. A 45A double-pole cooker switch (switch outlet
+                  unit) is required regardless of the circuit protective device rating.
                 </p>
               </div>
             </li>
@@ -201,21 +201,21 @@ const sections = [
               <div>
                 <strong>Cooker outlet unit</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  The cooker outlet unit (cooker switch) must be rated at 45A double-pole and
-                  must be positioned so that it can be reached without leaning over the hob — the
-                  IET On-Site Guide recommends positioning it within 2 metres of the cooker and
-                  not directly above it. Many units include a 13A socket outlet, which is
-                  permitted provided the socket is not directly above the hob.
+                  The cooker outlet unit (cooker switch) must be rated at 45A double-pole and must
+                  be positioned so that it can be reached without leaning over the hob — the IET
+                  On-Site Guide recommends positioning it within 2 metres of the cooker and not
+                  directly above it. Many units include a 13A socket outlet, which is permitted
+                  provided the socket is not directly above the hob.
                 </p>
               </div>
             </li>
           </ul>
         </div>
         <p>
-          Voltage drop on the cooker circuit must be calculated. BS 7671 limits voltage drop to
-          3% for lighting circuits and 5% for power circuits from the origin of the installation.
-          For a 32A cooker circuit, the{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
+          Voltage drop on the cooker circuit must be calculated. BS 7671 limits voltage drop to 3%
+          for lighting circuits and 5% for power circuits from the origin of the installation. For a
+          32A cooker circuit, the{' '}
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           will confirm whether the cable size is adequate for the cable run length.
@@ -236,7 +236,8 @@ const sections = [
         <p>
           Fixed kitchen appliances should each have a dedicated radial circuit from the consumer
           unit. This ensures that a fault or trip on one appliance circuit does not affect other
-          loads, and that the circuit protection is correctly matched to the appliance rated current.
+          loads, and that the circuit protection is correctly matched to the appliance rated
+          current.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <table className="w-full text-white text-sm">
@@ -286,8 +287,8 @@ const sections = [
           Each dedicated appliance circuit should terminate at a fused connection unit (FCU) or
           switched outlet, not a 13A socket outlet. A 13A FCU with the appropriate fuse rating
           (typically 13A for dishwashers and washing machines, or the rated fuse matching the
-          appliance flex size) provides a permanent, non-removable connection point and prevents
-          the socket from being used for other purposes.
+          appliance flex size) provides a permanent, non-removable connection point and prevents the
+          socket from being used for other purposes.
         </p>
       </>
     ),
@@ -301,8 +302,8 @@ const sections = [
           The kitchen ring final circuit supplies the general-purpose 13A socket outlets in the
           kitchen. A kitchen ring final circuit should be dedicated to the kitchen — BS 7671
           Appendix 15 recommends that a kitchen has its own ring final circuit separate from the
-          rest of the dwelling, given the high number of socket outlets and the loading from
-          small kitchen appliances.
+          rest of the dwelling, given the high number of socket outlets and the loading from small
+          kitchen appliances.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -325,18 +326,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Number of sockets:</strong> There is no maximum number of socket outlets
-                on a ring final circuit in BS 7671, but the floor area served must not exceed
-                100m² and the circuit loading must not exceed the design current of the protective
-                device.
+                <strong>Number of sockets:</strong> There is no maximum number of socket outlets on
+                a ring final circuit in BS 7671, but the floor area served must not exceed 100m² and
+                the circuit loading must not exceed the design current of the protective device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Number of outlets needed:</strong> The IET On-Site Guide and good practice
-                guidance recommend a minimum of 8 to 10 double socket outlets in a family kitchen
-                to avoid the use of extension leads.
+                guidance recommend a minimum of 8 to 10 double socket outlets in a family kitchen to
+                avoid the use of extension leads.
               </span>
             </li>
           </ul>
@@ -351,26 +351,26 @@ const sections = [
       <>
         <p>
           BS 7671 Regulation 553.1.3 requires that socket outlets shall not be installed in a
-          position where they are likely to cause danger — specifically where they are accessible
-          to a person who is in contact with earthed metalwork such as a sink. This regulation
-          governs socket placement relative to the kitchen sink.
+          position where they are likely to cause danger — specifically where they are accessible to
+          a person who is in contact with earthed metalwork such as a sink. This regulation governs
+          socket placement relative to the kitchen sink.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>300mm minimum horizontal distance from the edge of a sink</strong> — the
-                IET Guidance Notes and On-Site Guide recommend a minimum 300mm horizontal clearance
+                <strong>300mm minimum horizontal distance from the edge of a sink</strong> — the IET
+                Guidance Notes and On-Site Guide recommend a minimum 300mm horizontal clearance
                 between the edge of the sink and any socket outlet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No sockets directly above the sink</strong> — socket outlets should not
-                be positioned where water from the tap could reach them, or where a person
-                operating the tap could reach up and touch the socket with wet hands.
+                <strong>No sockets directly above the sink</strong> — socket outlets should not be
+                positioned where water from the tap could reach them, or where a person operating
+                the tap could reach up and touch the socket with wet hands.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,8 +379,8 @@ const sections = [
                 <strong>Socket height:</strong> No specific height is mandated by BS 7671 for
                 kitchen sockets, but good practice is 150mm to 200mm above the worktop surface
                 (approximately 1.0m to 1.1m from the floor) for worktop-level sockets. Sockets
-                positioned below worktop height should be avoided in kitchens for convenience
-                and to avoid splash risk.
+                positioned below worktop height should be avoided in kitchens for convenience and to
+                avoid splash risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -404,8 +404,8 @@ const sections = [
         <p>
           Kitchen islands create specific electrical challenges because they are free-standing
           structures in the middle of the room, away from the walls where electrical circuits
-          typically run. Supplying power to a kitchen island requires careful planning for the
-          cable route and socket positioning.
+          typically run. Supplying power to a kitchen island requires careful planning for the cable
+          route and socket positioning.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -414,11 +414,11 @@ const sections = [
               <div>
                 <strong>Floor-mounted supply</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
-                  The most common approach for fixed islands. A cable runs under the floor to
-                  a floor outlet box beneath the island, then up through the island cabinetry to
-                  the socket outlets or pop-up unit. The cable should be in conduit or armoured
-                  cable below the floor to protect it from damage. The floor outlet point must
-                  be accessible for future inspection.
+                  The most common approach for fixed islands. A cable runs under the floor to a
+                  floor outlet box beneath the island, then up through the island cabinetry to the
+                  socket outlets or pop-up unit. The cable should be in conduit or armoured cable
+                  below the floor to protect it from damage. The floor outlet point must be
+                  accessible for future inspection.
                 </p>
               </div>
             </li>
@@ -428,9 +428,9 @@ const sections = [
                 <strong>Pop-up socket units</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   Purpose-designed pop-up socket units installed in the island worktop surface
-                  retract when not in use, keeping the worktop clear. These must be connected to
-                  an RCD-protected circuit and should be positioned away from any island sink.
-                  The 300mm sink distance rule applies to pop-up units as well as fixed sockets.
+                  retract when not in use, keeping the worktop clear. These must be connected to an
+                  RCD-protected circuit and should be positioned away from any island sink. The
+                  300mm sink distance rule applies to pop-up units as well as fixed sockets.
                 </p>
               </div>
             </li>
@@ -440,9 +440,9 @@ const sections = [
                 <strong>PELV considerations</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   Where the island includes a sink (making the island worktop a potentially
-                  conductive surface), consideration should be given to supplementary bonding
-                  of the island metalwork to the main protective bonding system. If the kitchen
-                  island is entirely non-metallic, supplementary bonding is not required.
+                  conductive surface), consideration should be given to supplementary bonding of the
+                  island metalwork to the main protective bonding system. If the kitchen island is
+                  entirely non-metallic, supplementary bonding is not required.
                 </p>
               </div>
             </li>
@@ -462,8 +462,8 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations requires notification for new circuits in kitchens.
-          The following kitchen work is notifiable:
+          Part P of the Building Regulations requires notification for new circuits in kitchens. The
+          following kitchen work is notifiable:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -492,8 +492,8 @@ const sections = [
         <p>
           Like-for-like replacement of existing socket outlets or switches in a kitchen (on an
           existing circuit, with no changes to the circuit itself) is non-notifiable. For all
-          notifiable kitchen work, register with an approved competent person scheme to
-          self-certify and issue the{' '}
+          notifiable kitchen work, register with an approved competent person scheme to self-certify
+          and issue the{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
@@ -512,8 +512,8 @@ const sections = [
     content: (
       <>
         <p>
-          Kitchen rewires and upgrades are high-value domestic jobs that require careful planning.
-          A full kitchen electrical installation for a new kitchen typically involves the cooker
+          Kitchen rewires and upgrades are high-value domestic jobs that require careful planning. A
+          full kitchen electrical installation for a new kitchen typically involves the cooker
           circuit, multiple appliance circuits, a ring final, lighting, and island supply — and all
           of it is notifiable under Part P.
         </p>
@@ -525,7 +525,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to size the cooker circuit cable, appliance radial circuits, and ring final.

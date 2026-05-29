@@ -46,6 +46,8 @@ const keyTakeaways = [
   'Extraction interlock systems — which prevent gas cooking appliances from operating unless the extraction system is running — are a legal requirement under the Gas Safety (Installation and Use) Regulations 1998 and IGEM/UP/19.',
   'All socket outlets and equipment connections in a commercial kitchen must be appropriately rated for the environment. IP44 minimum is required in wet areas, with IP65 recommended near wash-down zones.',
   'An emergency stop button (large red mushroom-head type) must be provided to isolate the gas supply and extraction system in an emergency, typically positioned near the kitchen exit.',
+  'BS 7671:2018+A4:2026 Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits in high fire-risk locations — commercial kitchens are a prime candidate given the combination of heat, grease, and concealed wiring.',
+  'Surge protective devices (SPDs) are required under Regulation 443.4(c) where a transient overvoltage could interrupt commercial or industrial activity — a commercial kitchen with refrigeration, POS systems, and BMS controls meets this criterion.',
 ];
 
 const faqs = [
@@ -87,7 +89,7 @@ const faqs = [
   {
     question: 'Can I use standard domestic socket outlets in a commercial kitchen?',
     answer:
-      'No. Standard domestic socket outlets (BS 1363) rated IP20 are not suitable for commercial kitchen environments where water, steam, and grease are present. Use IP44 rated socket outlets with spring-loaded covers in general kitchen areas. In wet zones near sinks and wash-down areas, use IP65 rated outlets. All socket outlets must have RCD protection per Regulation 411.3.3 of BS 7671. Consider using industrial-type sockets (BS EN 60309, blue 240V or red 415V) for larger equipment connections.',
+      'No. Standard domestic socket outlets (BS 1363) rated IP20 are not suitable for commercial kitchen environments where water, steam, and grease are present. Use IP44 rated socket outlets with spring-loaded covers in general kitchen areas. In wet zones near sinks and wash-down areas, use IP65 rated outlets. Regulation 411.3.3 of BS 7671:2018+A4:2026 requires RCD protection for socket outlets rated up to 32 A; in non-domestic premises a documented risk assessment may support omission in specific circumstances, but a commercial kitchen environment rarely justifies that exception given the wet and contaminated conditions. Consider using industrial-type sockets (BS EN 60309, blue 240 V or red 415 V) for larger equipment connections.',
   },
 ];
 
@@ -104,6 +106,27 @@ const relatedPages: RelatedPage[] = [
     title: 'Consumer Unit Replacement Cost',
     description: 'Distribution board costs for commercial and domestic installations.',
     icon: PoundSterling,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/single-phase-vs-three-phase',
+    title: 'Single Phase vs Three Phase',
+    description: 'When to specify 3-phase supply: load thresholds, DNO applications, and costs.',
+    icon: Zap,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/commercial-eicr-guide',
+    title: 'Commercial EICR Guide',
+    description: 'Periodic inspection requirements for commercial premises including kitchens.',
+    icon: ShieldCheck,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/initial-verification',
+    title: 'Initial Verification Guide',
+    description: 'Testing and commissioning sequence for new commercial electrical installations.',
+    icon: Wrench,
     category: 'Guide',
   },
   {
@@ -133,6 +156,10 @@ const sections = [
     heading: 'Restaurant Kitchen Electrical Overview',
     content: (
       <>
+        <p className="text-sm text-white/60 flex items-center gap-1.5 mb-4">
+          <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
+          Reviewed by a qualified electrician — BS&nbsp;7671:2018+A4:2026 compliant
+        </p>
         <p>
           Restaurant kitchen electrical installation is specialist commercial work that combines
           high-power equipment connections, safety-critical interlock systems, environmental
@@ -144,6 +171,17 @@ const sections = [
           commercial refrigeration, extraction and ventilation systems, lighting suitable for food
           preparation, and emergency provisions — all in a hot, wet, greasy environment that demands
           robust IP-rated equipment and containment.
+        </p>
+        <p>
+          For a broader overview of 3-phase supply decisions, see the{' '}
+          <SEOInternalLink href="/guides/single-phase-vs-three-phase">
+            single phase vs three phase guide
+          </SEOInternalLink>
+          . For periodic inspection requirements once the installation is complete, see the{' '}
+          <SEOInternalLink href="/guides/commercial-eicr-guide">
+            commercial EICR guide
+          </SEOInternalLink>
+          .
         </p>
       </>
     ),
@@ -420,6 +458,29 @@ const sections = [
                 lighting and fire alarm provisions in commercial kitchen premises.
               </span>
             </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)</strong> —
+                BS&nbsp;7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs on
+                AC final circuits to mitigate the risk of fire due to arc fault currents. The
+                wording is recommendatory rather than mandatory, but the combination of concealed
+                wiring, heat, and grease in a commercial kitchen makes this a strong best-practice
+                case. Where AFDDs are fitted, they should comply with BS&nbsp;EN&nbsp;62606 and be
+                installed in the distribution board protecting the kitchen final circuits.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 443.4(c) — Surge Protective Devices (SPDs)</strong> — Where a
+                transient overvoltage could result in interruption of commercial or industrial
+                activity, Regulation 443.4(c) requires protection against transient overvoltages. A
+                commercial kitchen with refrigeration, BMS controls, POS systems, and extraction
+                interlock panels meets this criterion. An SPD rated to the equipment category should
+                be installed at the origin of the installation or at the kitchen distribution board.
+              </span>
+            </li>
           </ul>
         </div>
         <p>
@@ -479,6 +540,26 @@ const sections = [
                   thoroughly, photograph interlock wiring and emergency stop positions, and provide
                   a clear hand-over document to the client. This protects you and demonstrates
                   professionalism.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <Wrench className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  Measure Prospective Fault Current at the TPN Board
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  During commissioning of the 3-phase distribution board, measure prospective fault
+                  current (PFC) both live-to-live and live-to-earth at the board, in accordance with
+                  OSG Regulation 10.3.7. Ensure all main bonding is connected before taking
+                  readings. Record both values on the{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> schedule — the
+                  higher of the two values determines the required breaking capacity of the MCCB
+                  incomer and outgoing MCBs. For a typical commercial premises TN-S or TN-C-S
+                  supply, live-to-live PFC is usually the higher figure.
                 </p>
               </div>
             </div>

@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'The Electric Vehicles (Smart Charge Points) Regulations 2021 (SI 2021/1467) make smart functionality mandatory for all new AC charge points up to 22kW sold or installed in Great Britain from 30 June 2022.',
   'Building Regulations Part S (England) requires new non-residential buildings with more than 10 parking spaces to have at least one active charge point per 5 spaces, and cable ducting for all remaining spaces, from 15 June 2022.',
-  'BS 7671:2018+A2:2022 Section 722 sets out the electrical installation requirements for EV charging installations, including earthing, protective devices, cable sizing, and testing requirements.',
+  'BS 7671:2018+A4:2026 Section 722 sets out the electrical installation requirements for EV charging installations, including earthing, protective devices, cable sizing, and testing requirements. A4:2026 was issued 15 April 2026 (may be implemented immediately) and replaces A2:2022+A3:2024 from 15 October 2026.',
   'The IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition, 2023) is the authoritative installation guidance document referenced by OZEV, NICEIC, and NAPIT for EV installer certification.',
   'The Public Charge Point Regulations 2023 require publicly accessible charge points above 8kW to support contactless payment and meet 99% availability requirements — enforced by the Office for Zero Emission Vehicles.',
 ];
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'What legislation governs EV charger installation in the UK?',
     answer:
-      'EV charger installation in the UK is governed by multiple overlapping pieces of legislation and technical standards. The primary regulations are: the Electric Vehicles (Smart Charge Points) Regulations 2021 (SI 2021/1467), which mandate smart functionality; Building Regulations Part S (for new and renovated buildings in England); BS 7671:2018+A2:2022 Section 722, which covers the electrical installation requirements; and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition, 2023), which provides detailed installation guidance. Public charge points must also comply with the Public Charge Point Regulations 2023.',
+      'EV charger installation in the UK is governed by multiple overlapping pieces of legislation and technical standards. The primary regulations are: the Electric Vehicles (Smart Charge Points) Regulations 2021 (SI 2021/1467), which mandate smart functionality; Building Regulations Part S (for new and renovated buildings in England); BS 7671:2018+A4:2026 Section 722, which covers the electrical installation requirements (A4:2026 issued 15 April 2026, replacing A2:2022+A3:2024 from 15 October 2026); and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition, 2023), which provides detailed installation guidance. Public charge points must also comply with the Public Charge Point Regulations 2023.',
   },
   {
     question: 'What does Building Regulations Part S cover?',
@@ -56,17 +56,17 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 722 require for EV charging?',
     answer:
-      'BS 7671:2018+A2:2022 Section 722 sets out the specific requirements for electrical installations supplying EV charging equipment. Key requirements include: protective devices — circuit protection against overcurrent and fault current; earthing — earth electrode or PME earthing arrangements with specific requirements for outdoor charging; RCD protection — 30mA RCD protection for EV charging circuits; cable sizing — cables must be rated for continuous operation at the maximum charging current; labelling — the charging point and its supply circuit must be labelled; and testing — the installation must be tested and certificated in accordance with Part 6 (inspection and testing). The IET Code of Practice provides detailed guidance on meeting these requirements in practice.',
+      'BS 7671:2018+A4:2026 Section 722 sets out the specific requirements for electrical installations supplying EV charging equipment. Key requirements include: protective devices — circuit protection against overcurrent and fault current; earthing — on TN-C-S (PME) supplies, the PME facility shall not be used directly for the outdoor charging point protective contact; one of the compliant alternatives under Reg 722.411.4(b)–(e) must be used (e.g. an installation earth electrode sized so that the voltage between the MET and Earth does not exceed 70 V RMS under an O-PEN fault); RCD protection — 30mA RCD protection for EV charging circuits; cable sizing — cables must be rated for continuous operation at the maximum charging current; labelling — the charging point and its supply circuit must be labelled; and testing — the installation must be tested and certificated in accordance with Part 6 (inspection and testing). The IET Code of Practice provides detailed guidance on meeting these requirements in practice.',
   },
   {
     question: 'Is the IET Code of Practice a legal requirement?',
     answer:
-      'The IET Code of Practice for Electric Vehicle Charging Equipment Installation is not itself statutory legislation, but it is recognised by OZEV as the authoritative guidance for EV charger installation. OZEV-approved installer schemes (required for grant-funded installations) assess installers against the Code of Practice. In practice, following the Code of Practice is the standard method of demonstrating compliance with BS 7671 Section 722 and the Smart Charge Points Regulations. The 5th Edition (2023) is the current version and covers smart charging, load management, and DC charging.',
+      'The IET Code of Practice for Electric Vehicle Charging Equipment Installation is not itself statutory legislation, but it is recognised by OZEV as the authoritative guidance for EV charger installation. OZEV-approved installer schemes (required for grant-funded installations) assess installers against the Code of Practice. In practice, following the Code of Practice is the standard method of demonstrating compliance with BS 7671:2018+A4:2026 Section 722 and the Smart Charge Points Regulations. The 5th Edition (2023) is the current version and covers smart charging, load management, and DC charging. GN3 (Guide to Inspection and Testing) also requires that inspectors of EV charging installations consult the IET Code of Practice to determine appropriate inspection items, tests, and acceptance criteria.',
   },
   {
     question: 'What are the earthing requirements for EV charge points under BS 7671?',
     answer:
-      'Earthing is a critical and frequently misunderstood aspect of EV charger installation under BS 7671 Section 722. For TN-C-S (PME) systems — the most common in the UK — a separate earth electrode must be provided for outdoor charge points or where EV charging takes place outdoors, due to the risk of elevated protective conductor potential in fault conditions. The earth electrode must achieve a resistance of 200 ohms or less (Regulation 722.411.4.1). For TN-S systems, a separate earth electrode is not required for outdoor charging but is best practice. For IT and TT systems, different arrangements apply. The IET Code of Practice Section 6 covers earthing in detail.',
+      'Earthing is a critical and frequently misunderstood aspect of EV charger installation under BS 7671:2018+A4:2026 Section 722. For TN-C-S (PME) systems — the most common in the UK — a PME earthing facility shall not be used directly as the means of earthing for the protective conductor contact(s) of an outdoor charging point (Regulation 722.411.4). Instead, one of four compliant alternatives (b)–(e) must be used: (b) an installation earth electrode connected to the MET, sized so that the voltage between the MET and Earth does not exceed 70 V RMS in the event of an open-circuit fault in the PEN conductor (O-PEN fault) — Annex A722.3 gives the calculation method; (c) a device that disconnects the vehicle from live conductors and from protective earth within 5 s if the CPC-to-Earth voltage exceeds 70 V RMS; (d) a device that disconnects within 5 s if the line-to-neutral voltage falls outside 207–253 V RMS; or (e) equivalent protective functionality built into the charging equipment. Note that 200 Ω is not the normative criterion — the actual requirement is the 70 V RMS voltage limit under O-PEN fault conditions. For TN-S systems, a separate earth electrode is not required for outdoor charging but is best practice. The IET Code of Practice Section 6 covers earthing arrangements in detail.',
   },
   {
     question: 'What are the Public Charge Point Regulations 2023?',
@@ -245,24 +245,34 @@ const sections = [
   },
   {
     id: 'bs7671-section-722',
-    heading: 'BS 7671:2018+A2:2022 Section 722 — EV Charging Installations',
+    heading: 'BS 7671:2018+A4:2026 Section 722 — EV Charging Installations',
     content: (
       <>
         <p>
-          Section 722 of BS 7671:2018+A2:2022 (the 18th Edition IET Wiring Regulations) sets out the
-          specific electrical installation requirements for EV charging equipment. It supplements
-          the general requirements of Parts 1–6 with EV-specific provisions.
+          Section 722 of BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations, Amendment 4)
+          sets out the specific electrical installation requirements for EV charging equipment.
+          A4:2026 contains significant changes to Section 722 — installers working to A2:2022 should
+          review the revised regulation text before certifying new work. A4:2026 was issued 15 April
+          2026 and may be implemented immediately; A2:2022+A3:2024 will be withdrawn on 15 October
+          2026.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.411.4 — Earthing</strong> — for outdoor EV charging or where
-                the charge point is in a location accessible from outdoors, and where the supply is
-                TN-C-S (PME), a separate earth electrode is required. The electrode must achieve
-                200Ω or less. For TN-S systems, a separate electrode is not required but is
-                recommended.
+                <strong>Regulation 722.411.4 — Earthing (TN-C-S/PME)</strong> — a PME earthing
+                facility shall not be used directly for the protective conductor contact(s) of an
+                outdoor charging point. One of four compliant alternatives must be used: (b) an
+                installation earth electrode connected to the MET, sized so that the voltage between
+                the MET and Earth does not exceed 70 V RMS under an O-PEN (open-circuit PEN
+                conductor) fault — Annex A722.3 gives the calculation method; (c) a device that
+                disconnects the vehicle from live conductors and from protective earth within 5 s if
+                the CPC-to-Earth voltage exceeds 70 V RMS; (d) a device that disconnects within 5 s
+                if the line-to-neutral voltage falls outside 207–253 V RMS; or (e) equivalent
+                protective functionality within the charging equipment. Note: 200 Ω is not the
+                normative criterion — the actual requirement is the 70 V RMS voltage limit. For TN-S
+                systems, a separate electrode is not required but is best practice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -292,6 +302,17 @@ const sections = [
                 isolation must be provided for the EV charging installation, capable of isolating
                 both live conductors (L and N on single-phase). This is typically provided by a
                 double-pole MCB or isolator at the consumer unit.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Regulation 722.311.201 — Load curtailment (A4:2026)</strong> — load
+                curtailment, including automatic or manual load reduction or disconnection, may be
+                taken into account when determining the maximum demand of the installation or part
+                thereof. This is the regulatory basis for dynamic load management systems on
+                multi-charger commercial or fleet sites, allowing the supply to be sized for managed
+                simultaneous demand rather than worst-case peak load.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -349,6 +370,30 @@ const sections = [
                 qualification (required for grant-funded installations) tests knowledge of the Code
                 of Practice. Installers must demonstrate understanding of earthing, protective
                 device selection, load management, and certification requirements.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>GN3 inspection requirement</strong> — when inspecting EV charging
+                installations, GN3 (IET Guidance Note 3: Inspection and Testing, 9th Edition)
+                requires that the inspector shall consult the IET Code of Practice to determine
+                appropriate inspection items, tests, and acceptance criteria specific to EV
+                equipment. Inspectors cannot rely solely on the standard Appendix 6 schedule for EV
+                work.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Chapter 82 — Prosumer's Electrical Installations (A4:2026)</strong> — EV
+                installations that incorporate solar PV generation, battery storage, or
+                bidirectional (V2G) charging must also comply with Chapter 82 of BS
+                7671:2018+A4:2026. Chapter 82 is a new chapter covering design, erection, and
+                verification of all low-voltage installations where local production or storage of
+                energy is present (Prosumer's Electrical Installations). This is increasingly
+                relevant given the growth of solar-integrated and energy-storage-backed EV
+                installations covered by the IET Code of Practice 5th Edition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -546,7 +591,7 @@ export default function EVChargingLegislationUKPage() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          EV Charging Regulations UK 2025:{' '}
+          EV Charging Regulations UK 2026:{' '}
           <span className="text-yellow-400">Laws & Standards for EV Chargers</span>
         </>
       }

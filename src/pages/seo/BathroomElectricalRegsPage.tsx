@@ -84,9 +84,9 @@ export default function BathroomElectricalRegsPage() {
               <p>
                 For electricians, bathroom work is some of the most regulation-intensive domestic
                 electrical work. An{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink>{' '}
-                of a property always requires careful assessment of the bathroom installation, and
-                new bathroom circuits require detailed design consideration.
+                <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink> of
+                a property always requires careful assessment of the bathroom installation, and new
+                bathroom circuits require detailed design consideration.
               </p>
             </>
           ),
@@ -127,10 +127,12 @@ export default function BathroomElectricalRegsPage() {
                     against splashing water from all directions). Only fixed equipment suitable for
                     the conditions is permitted — this includes electric showers (which are
                     specifically designed for Zone 1), instantaneous water heaters, and whirlpool
-                    units. Switches are not permitted in Zone 1 (except as integral parts of fixed
-                    equipment like shower pull-cord switches that are part of the shower unit). SELV
-                    at a maximum of 25V AC is permitted, with the SELV source located outside Zones
-                    0, 1, and 2.
+                    units. Switches are not permitted in Zone 1 except as integral parts of fixed
+                    equipment; where SELV switches are installed in Zone 1, the circuit voltage must
+                    not exceed 12V AC RMS or 30V ripple-free DC (Reg 701.512.3). Current-using
+                    equipment (e.g. luminaires, heaters) protected by SELV or PELV is permitted at
+                    up to 25V AC RMS or 60V ripple-free DC (Reg 701.55), with the safety source
+                    located outside Zones 0, 1, and 2.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -156,7 +158,9 @@ export default function BathroomElectricalRegsPage() {
                     regulations. However, 30mA RCD protection is still mandatory for all circuits in
                     the bathroom, including those serving equipment outside the zones. Socket
                     outlets (other than shaver sockets) are permitted outside the zones, provided
-                    they are at least 3 metres from the boundary of Zone 1.
+                    they are at least 2.5 metres horizontally from the boundary of Zone 1 (Reg
+                    701.418.2). Exceptions include SELV socket-outlets and shaver units complying
+                    with BS EN 61558-2-5.
                   </p>
                 </div>
               </div>
@@ -222,9 +226,9 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <p>
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink>{' '}
-                includes fields for recording the IP ratings of equipment installed in each bathroom
-                zone, ensuring nothing is missed during inspection.
+                <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink> includes
+                fields for recording the IP ratings of equipment installed in each bathroom zone,
+                ensuring nothing is missed during inspection.
               </p>
             </>
           ),
@@ -241,7 +245,9 @@ export default function BathroomElectricalRegsPage() {
                 requirements under the 18th Edition are as follows.
               </p>
               <p>
-                <strong className="text-white">The rule since the 17th Edition:</strong>{' '}
+                <strong className="text-white">
+                  The rule since the 17th Edition (Reg 701.415.2):
+                </strong>{' '}
                 Supplementary bonding in a bathroom is not required provided that all of the
                 following conditions are met:
               </p>
@@ -251,11 +257,14 @@ export default function BathroomElectricalRegsPage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        All circuits in the bathroom are protected by 30mA RCD
+                        All final circuits comply with automatic disconnection (Reg 411.3.2) and
+                        have additional 30mA RCD protection (Reg 415.1.1)
                       </strong>{' '}
-                      — This means every circuit, without exception, must have 30mA RCD protection.
-                      If even one circuit lacks RCD protection, supplementary bonding is required
-                      for the entire bathroom.
+                      — These are two distinct requirements (conditions (d) and (e) of Reg
+                      701.415.2). Condition (d) requires that disconnection times are met for the
+                      earth fault loop impedance Zs of each circuit. Condition (e) requires the
+                      additional 30mA RCD. Both must be satisfied — RCD presence alone does not
+                      fulfil condition (d) if Zs is out of limit.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -358,6 +367,25 @@ export default function BathroomElectricalRegsPage() {
                   </span>
                 </li>
               </ul>
+              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-white mb-2">
+                      A4:2026 Update — Reg 411.3.4: 30mA RCD on All Lighting Circuits (Domestic)
+                    </h4>
+                    <p className="text-white text-sm leading-relaxed">
+                      BS 7671:2018+A4:2026 introduces Reg 411.3.4, which requires additional
+                      protection by a 30mA RCD for all AC final circuits supplying luminaires in
+                      domestic premises. This reinforces and extends the bathroom-specific
+                      requirement of Reg 701.411.3.3 — bathroom lighting circuits must comply with
+                      both regulations. For EICRs on domestic properties, an unprotected lighting
+                      circuit feeding bathroom luminaires is now a non-compliance under both Part 4
+                      and Part 7.
+                    </p>
+                  </div>
+                </div>
+              </div>
               <p>
                 The RCD can be provided by an RCBO protecting the individual circuit, or by an RCD
                 protecting a group of circuits (as in a split-load consumer unit). In either case,
@@ -518,11 +546,13 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <p>
                 Cable sizing is critical —{' '}
-                <SEOInternalLink href="/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  voltage drop
+                </SEOInternalLink>{' '}
                 must be calculated for the specific cable length and installation method. A 10.5 kW
                 shower on a long cable run can easily exceed the 5% voltage drop limit if the cable
                 is undersized. Use the{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -607,7 +637,7 @@ export default function BathroomElectricalRegsPage() {
         {
           question: 'Can I install a standard 13A socket outlet in a bathroom?',
           answer:
-            'Standard 13A socket outlets should not be installed in bathroom zones (0, 1, or 2). In the area outside the zones, a 13A socket outlet is technically permitted under BS 7671, but only if it is at least 3 metres from the boundary of Zone 1. In most domestic bathrooms, this distance requirement effectively rules out 13A sockets entirely — the room is simply not large enough. The only type of socket outlet routinely installed in bathrooms is a shaver socket complying with BS EN 61558-2-5, which incorporates an isolating transformer. These are permitted in Zone 2 and outside the zones. For EV shavers, electric toothbrushes, and similar appliances, a shaver socket is the appropriate solution.',
+            'Standard 13A socket outlets should not be installed in bathroom zones (0, 1, or 2). In the area outside the zones, a 13A socket outlet is technically permitted under BS 7671 Reg 701.418.2, but only if it is at least 2.5 metres horizontally from the boundary of Zone 1. Exceptions to the 2.5 m rule are made for SELV socket-outlets and for shaver units complying with BS EN 61558-2-5. In most domestic bathrooms, the 2.5 m distance requirement effectively rules out 13A sockets entirely — the room is simply not large enough. The only type of socket outlet routinely installed in bathrooms is a shaver socket complying with BS EN 61558-2-5, which incorporates an isolating transformer. These are permitted in Zone 2 and outside the zones. For EV shavers, electric toothbrushes, and similar appliances, a shaver socket is the appropriate solution.',
         },
         {
           question: 'Is supplementary bonding still required in bathrooms?',
@@ -651,14 +681,14 @@ export default function BathroomElectricalRegsPage() {
           category: 'Certification',
         },
         {
-          href: '/cable-sizing-calculator',
+          href: '/tools/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for shower circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/voltage-drop-calculator',
+          href: '/tools/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop on shower circuits and long cable runs.',
           icon: Activity,

@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Low Insulation Resistance: Causes + Fix (BS 7671)';
 const PAGE_DESCRIPTION =
-  'Low insulation resistance (BS 7671): 1 MΩ minimum, when <2 MΩ needs investigation, damp + nail-strike + degraded cable causes, step-by-step diagnosis + fix.';
+  'Low insulation resistance (BS 7671 Table 64): 1 MΩ minimum, when <2 MΩ needs investigation, damp + nail-strike + degraded cable causes, step-by-step diagnosis + fix.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },
@@ -44,18 +44,19 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Any insulation resistance reading below 1 MΩ is a failure per BS 7671 Table 61 and the circuit must not be energised until the fault is identified and corrected.',
+  'Any insulation resistance reading below 1 MΩ is a failure per BS 7671 Table 64 (Reg 643.3.2) and the circuit must not be energised until the fault is identified and corrected.',
   'Readings between 1 MΩ and 2 MΩ on older installations, while technically passing, indicate significant insulation deterioration and should be investigated further and monitored closely.',
   'Moisture ingress is the most common and most easily reversible cause of low insulation resistance — drying out affected enclosures and resealing cable entries often restores acceptable readings without cable replacement.',
   'Carbonised insulation from arcing or persistent overheating is a serious fire risk and cannot be repaired — the affected cable must be replaced entirely.',
-  "Elec-Mate's schedule of tests auto-validates every insulation resistance reading against the BS 7671 Table 61 minimum and suggests the appropriate EICR observation code for failures.",
+  "Elec-Mate's schedule of tests auto-validates every insulation resistance reading against the BS 7671 Table 64 minimum and suggests the appropriate EICR observation code for failures.",
+  'A4:2026 update (Reg 411.3.4): domestic lighting circuits with low insulation resistance and no 30 mA RCD additional protection present two simultaneous EICR issues — the IR failure and missing RCD protection both require coding.',
 ];
 
 const faqs = [
   {
     question: 'What is the minimum acceptable insulation resistance per BS 7671?',
     answer:
-      'BS 7671 Table 61 specifies minimum insulation resistance based on circuit voltage. For SELV/PELV circuits (up to 50 V), the test voltage is 250 V DC and the minimum is 0.5 MΩ. For standard circuits up to and including 500 V — which covers all domestic (230 V single-phase) and most commercial (400 V three-phase) installations — the test voltage is 500 V DC and the minimum is 1.0 MΩ. For circuits above 500 V, the test voltage is 1000 V DC and the minimum is 1.0 MΩ. These are absolute minimums. A healthy new installation should return readings of 200 MΩ or higher, and even older wiring in good condition should read above 2 MΩ.',
+      'BS 7671 Table 64 (Reg 643.3.2) specifies minimum insulation resistance based on circuit voltage. For SELV/PELV circuits (up to 50 V), the test voltage is 250 V DC and the minimum is 0.5 MΩ. For standard circuits up to and including 500 V — which covers all domestic (230 V single-phase) and most commercial (400 V three-phase) installations — the test voltage is 500 V DC and the minimum is 1.0 MΩ. For circuits above 500 V, the test voltage is 1000 V DC and the minimum is 1.0 MΩ. These are absolute minimums. A healthy new installation should return readings of 200 MΩ or higher, and even older wiring in good condition should read above 2 MΩ.',
   },
   {
     question: 'Can moisture cause a low insulation resistance reading?',
@@ -75,7 +76,7 @@ const faqs = [
   {
     question: 'Should I condemn a circuit with an insulation resistance of 1.5 MΩ?',
     answer:
-      'A reading of 1.5 MΩ technically passes the BS 7671 Table 61 minimum of 1 MΩ, so it does not require immediate disconnection. However, 1.5 MΩ on its own is cause for concern and warrants further investigation. For a new installation, this reading would be very poor — new wiring should read 200 MΩ or higher. For an older installation (25+ years), 1.5 MΩ suggests significant insulation deterioration. The correct approach is to record the value on the EICR schedule of test results, assign an appropriate observation code (likely C3 — improvement recommended, or potentially C2 — potentially dangerous if trending downward from previous inspections), and recommend further investigation or rewiring of the affected circuit. Compare with previous test results if available — if the reading was 5 MΩ at the last inspection, the insulation is deteriorating and intervention is needed before it drops below 1 MΩ.',
+      'A reading of 1.5 MΩ technically passes the BS 7671 Table 64 minimum of 1 MΩ, so it does not require immediate disconnection. However, 1.5 MΩ on its own is cause for concern and warrants further investigation. For a new installation, this reading would be very poor — new wiring should read 200 MΩ or higher. For an older installation (25+ years), 1.5 MΩ suggests significant insulation deterioration. The correct approach is to record the value on the EICR schedule of test results, assign an appropriate observation code (likely C3 — improvement recommended, or potentially C2 — potentially dangerous if trending downward from previous inspections), and recommend further investigation or rewiring of the affected circuit. Compare with previous test results if available — if the reading was 5 MΩ at the last inspection, the insulation is deteriorating and intervention is needed before it drops below 1 MΩ.',
   },
   {
     question: 'Does temperature affect insulation resistance readings?',
@@ -91,8 +92,8 @@ const sections = [
     content: (
       <>
         <p>
-          "Low" insulation resistance is defined by BS 7671 Table 61, which sets the absolute
-          minimum acceptable value for circuits to be considered safe. However, there is a
+          "Low" insulation resistance is defined by BS 7671 Table 64 (Reg 643.3.2), which sets the
+          absolute minimum acceptable value for circuits to be considered safe. However, there is a
           significant difference between the bare minimum pass value and what constitutes a
           genuinely healthy circuit. Understanding these thresholds is essential for accurate EICR
           reporting and for advising clients on the condition of their installation.
@@ -104,9 +105,10 @@ const sections = [
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-red-400">Below 1 MΩ — Failure.</strong> The circuit does not
-                meet the BS 7671 Table 61 minimum. It must not be energised until the fault is
-                identified and corrected. This is a Code C1 (danger present) or C2 (potentially
-                dangerous) observation on an EICR, depending on the severity and context.
+                meet the BS 7671 Table 64 minimum (Reg 643.3.2). It must not be energised until the
+                fault is identified and corrected. This is a Code C1 (danger present) or C2
+                (potentially dangerous) observation on an EICR, depending on the severity and
+                context.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -116,7 +118,11 @@ const sections = [
                 passes the minimum, but in older installations this indicates significant insulation
                 deterioration. For wiring over 25 years old, readings in this range suggest the
                 insulation is approaching end of life. Likely a C3 (improvement recommended)
-                observation, or C2 if trending downward from previous inspections.
+                observation, or C2 if trending downward from previous inspections.{' '}
+                <strong className="text-yellow-400">A4:2026 note:</strong> on domestic lighting
+                circuits, also check for 30 mA RCD additional protection — BS 7671:2018+A4:2026 Reg
+                411.3.4 mandates this, so a low IR reading and absent RCD protection are two
+                concurrent EICR issues requiring separate codes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -233,6 +239,17 @@ const sections = [
                   cable must be replaced. Common near halogen downlighters, immersion heaters, and
                   at loose connections where arcing has occurred over extended periods.
                 </p>
+                <p className="text-white text-sm leading-relaxed mt-2">
+                  <strong className="text-yellow-400">
+                    A4:2026 — AFDD recommendation (Reg 421.1.7):
+                  </strong>{' '}
+                  BS 7671:2018+A4:2026 Reg 421.1.7 recommends installation of arc fault detection
+                  devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk
+                  of fire due to arc fault currents — precisely the arcing events that lead to
+                  carbonisation. While the wording is recommendatory rather than mandatory, AFDDs
+                  provide early detection before carbonisation can develop and are increasingly
+                  expected on new domestic circuits.
+                </p>
               </div>
             </div>
           </div>
@@ -288,9 +305,11 @@ const sections = [
             </span>
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Disconnect all equipment.</strong> Remove all
-              appliances, luminaires, LED drivers, dimmer switches, SPDs, and any electronic
-              equipment. The 500 V DC test voltage can damage these devices, and connected equipment
-              provides parallel leakage paths that produce falsely low readings.
+              appliances, luminaires, LED drivers, and dimmer switches. RCCBs, RCBOs, AFDDs, and
+              surge protection devices (SPDs) can present a low resistance during an insulation
+              resistance test and must also be bridged out or temporarily disconnected (GN3 Reg
+              2.22). The 500 V DC test voltage can damage sensitive electronic devices, and any
+              connected equipment provides parallel leakage paths that produce falsely low readings.
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
@@ -340,9 +359,29 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <h3 className="font-bold text-white mb-1">
+                When You Cannot Disconnect Equipment (GN3 Reg 2.21)
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                In occupied premises it is sometimes impracticable to remove lamps or disconnect
+                current-using equipment before testing. In this situation GN3 Reg 2.21 permits an
+                alternative: connect the line and neutral conductors together and test the combined
+                conductors to earth using a reduced 250 V DC test voltage. This avoids applying
+                damaging voltage to connected equipment while still verifying insulation integrity
+                between the wiring and earth. Note that this alternative does not verify insulation
+                between L and N, so a full disconnected test should be arranged as soon as
+                practicable.
+              </p>
+            </div>
+          </div>
+        </div>
         <SEOAppBridge
           title="Schedule of Tests with Auto-Validation"
-          description="Enter insulation resistance readings into Elec-Mate's schedule of test results and the app instantly validates every value against the BS 7671 Table 61…"
+          description="Enter insulation resistance readings into Elec-Mate's schedule of test results and the app instantly validates every value against the BS 7671 Table 64 minimum…"
           icon={ClipboardCheck}
         />
       </>
@@ -536,7 +575,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-validated Schedule of Tests"
-          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates every value against the BS 7671 Table 61 minimum…"
+          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates every value against the BS 7671 Table 64 minimum…"
           icon={ClipboardCheck}
         />
         <SEOAppBridge

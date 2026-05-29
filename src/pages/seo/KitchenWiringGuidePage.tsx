@@ -43,6 +43,7 @@ const keyTakeaways = [
   'A modern kitchen typically requires 5-8 separate circuits: ring or radial for worktop sockets, cooker circuit, hob circuit (if separate), dishwasher, washing machine, fridge/freezer, extractor fan, and lighting.',
   'Dedicated circuits for high-power appliances (cooker, hob, dishwasher, washing machine) prevent nuisance tripping and ensure adequate current capacity — do not share a circuit between a cooker and anything else.',
   'All socket outlets in a kitchen require 30mA RCD protection under BS 7671 Regulation 411.3.3. Using individual RCBOs prevents a fault on one circuit tripping the entire kitchen.',
+  'Under A4:2026 Regulation 411.3.4, every AC lighting circuit in a domestic kitchen must have 30mA RCD protection — a mandatory addition introduced by the 18th Edition Amendment 4.',
   'The fridge/freezer should be on a non-RCD circuit or a separate RCBO — if an RCD protecting multiple circuits trips, the fridge/freezer will defrost, potentially spoiling food without the occupant noticing.',
   "Elec-Mate's AI circuit designer creates complete kitchen wiring schedules — enter the appliance list and it allocates circuits, sizes cables, and selects protective devices automatically.",
 ];
@@ -66,7 +67,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection on every kitchen circuit?',
     answer:
-      'BS 7671 Regulation 411.3.3 requires 30mA RCD protection for all socket outlets rated up to 32A. This covers all kitchen socket circuits, including the worktop sockets, dishwasher socket, washing machine socket, and any other socket outlets. The cooker circuit (connected via a cooker control unit, not a socket) does not technically require 30mA RCD protection under Regulation 411.3.3 — but it does require RCD protection if the cable is concealed in a wall or partition at a depth of less than 50mm (Regulation 411.3.4). In practice, most modern consumer units use RCBOs on every circuit, which provides 30mA RCD protection across all circuits including the cooker. The key consideration is the fridge/freezer — it should be on a separate RCBO so that a fault on another kitchen circuit does not trip the fridge/freezer circuit.',
+      'BS 7671 Regulation 411.3.3 requires 30mA RCD protection for all socket outlets rated up to 32A. This covers all kitchen socket circuits, including the worktop sockets, dishwasher socket, washing machine socket, and any other socket outlets. Under A4:2026 Regulation 411.3.4, all AC final circuits supplying luminaires within domestic premises must also have 30mA RCD protection — so the kitchen lighting circuit requires an RCD or RCBO. The cooker circuit (connected via a cooker control unit, not a socket) does not require RCD protection under Regulation 411.3.3, but Regulation 522.6.202 requires RCD protection where a cable is concealed in a wall or partition within a prescribed zone (within 150mm of the top of the wall, within 150mm of a corner between two adjoining walls, or running horizontally/vertically to or from an accessory). In practice, most modern consumer units use RCBOs on every circuit. The key consideration is the fridge/freezer — it should be on a separate RCBO so that a fault on another kitchen circuit does not trip the fridge/freezer circuit.',
   },
   {
     question: 'Where should kitchen worktop sockets be positioned?',
@@ -82,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for cooker circuits, hob circuits, and kitchen radials with all BS 7671 correction factors.',
@@ -239,7 +240,7 @@ const sections = [
         </div>
         <p>
           Use Elec-Mate's{' '}
-          <SEOInternalLink href="/max-demand-calculator">
+          <SEOInternalLink href="/tools/max-demand-calculator">
             max demand calculator
           </SEOInternalLink>{' '}
           to calculate the total kitchen demand with diversity factors applied. This helps determine
@@ -359,6 +360,23 @@ const sections = [
           description="Elec-Mate's cable sizing calculator handles cooker circuits, hob circuits, and kitchen radials."
           icon={Calculator}
         />
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-yellow-400 shrink-0" />
+            A4:2026 — Arc Fault Detection Devices (AFDDs)
+          </h4>
+          <p className="text-white/80 text-sm leading-relaxed">
+            BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
+            detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate the
+            risk of fire caused by arc fault currents. The regulation uses advisory wording
+            (&lsquo;recommends&rsquo;) rather than a mandatory &lsquo;shall&rsquo;, so AFDDs are not
+            currently a prescriptive requirement. In practice, a kitchen is a realistic candidate
+            for AFDD protection given the density of high-power circuits and the concealed cable
+            runs behind fitted units. Where a client requests or a designer specifies AFDD
+            protection, the devices fit in place of standard MCBs or RCBOs in most modern consumer
+            units.
+          </p>
+        </div>
       </>
     ),
   },
@@ -394,10 +412,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                The cooker circuit requires RCD protection if the cable is concealed in a wall at a
-                depth of less than 50mm (BS 7671 Regulation 522.6.202). In most kitchen
-                installations, the cooker cable runs through the wall behind the cooker position —
-                an RCBO on the cooker circuit is therefore standard practice.
+                The cooker circuit requires RCD protection where its cable is concealed in a wall
+                within a prescribed zone — defined by Regulation 522.6.202 as within 150mm of the
+                top of a wall or partition, within 150mm of a corner between two adjoining walls, or
+                running horizontally or vertically to or from any accessory. The threshold for
+                additional protection at depths less than 50mm is set by Table 52.1. In most kitchen
+                installations the cooker cable runs through the wall behind the cooker position — an
+                RCBO is therefore standard practice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -558,6 +579,22 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+          <h4 className="font-bold text-yellow-400 mb-2 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 shrink-0" />
+            A4:2026 — Regulation 411.3.4: RCD on Lighting Circuits
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671:2018+A4:2026 Regulation 411.3.4 introduces a mandatory requirement: within
+            domestic (household) premises, all AC final circuits supplying luminaires shall have
+            additional protection by an RCD with a rated residual operating current not exceeding
+            30&nbsp;mA. This applies to the kitchen lighting circuit regardless of whether the cable
+            is concealed or surface-run. Compliance requires that the protective device for the
+            kitchen lighting circuit is an RCBO (or that the circuit sits under a 30&nbsp;mA RCD in
+            the consumer unit). This requirement was absent in the 17th and pre-A4 18th Editions and
+            is one of the most commonly missed points on new domestic installations.
+          </p>
         </div>
         <p>
           Kitchen lighting should be on a separate lighting circuit from the general house lighting

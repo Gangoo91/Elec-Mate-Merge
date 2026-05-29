@@ -45,6 +45,8 @@ const keyTakeaways = [
   'Per-point rates that include materials cover standard accessories (back box, cable, front plate) but NOT the consumer unit, specialist fittings, long cable runs, or making good beyond basic filling.',
   'Labour-only per-point rates (common on new builds where the main contractor supplies materials) are typically 40% to 50% lower than supply-and-fix rates.',
   'Per-point pricing is fast and effective for domestic work but breaks down on commercial jobs, complex routing, or specialist installations where the labour per point varies significantly.',
+  'BS 7671:2018+A4:2026 Reg 411.3.4: every domestic lighting circuit must have additional protection by an RCD rated ≤30 mA. On a rewire this means RCBO-per-circuit or a dual RCD board — a plain MCB on a lighting circuit is non-compliant. Factor the device cost into your per-point rate for lighting.',
+  'Consumer unit replacement triggers a mandatory Electrical Installation Certificate under Reg 644.4.201. Allow for inspection, testing, and certification time when pricing CU work — this is a regulatory requirement, not an optional extra.',
 ];
 
 const faqs = [
@@ -56,7 +58,7 @@ const faqs = [
   {
     question: 'Does a per-point rate include the consumer unit?',
     answer:
-      'No. The consumer unit (or distribution board) is always priced separately because the cost varies enormously depending on the specification. A basic 6-way split-load board costs £80 to £150 in materials, while a fully populated RCBO board costs £300 to £600+. The consumer unit is a separate line item on your quote, typically £450 to £850 supply-and-fit for domestic, depending on specification and region.',
+      'No. The consumer unit (or distribution board) is always priced separately because the cost varies enormously depending on the specification. A basic 6-way split-load board costs £80 to £150 in materials, while a fully populated RCBO board costs £300 to £600+. The consumer unit is a separate line item on your quote, typically £450 to £850 supply-and-fit for domestic, depending on specification and region. Consumer unit replacement also triggers a mandatory Electrical Installation Certificate under BS 7671:2018+A4:2026 Reg 644.4.201 — allow for inspection and testing time (typically 1–2 hours) plus certification when pricing the work. This is a regulatory obligation, not an optional add-on.',
   },
   {
     question: 'How do I price a point in a loft conversion or extension?',
@@ -77,6 +79,11 @@ const faqs = [
     question: 'How do I handle extra points added after the quote?',
     answer:
       'Agree a per-point rate for additional points in your original quote. For example: "Additional points added during the works will be charged at £120 per point." This is fair to both parties — the customer knows the cost upfront, and you are not doing extra work for free. Always confirm additional points in writing (a text message or email is sufficient) before installing them.',
+  },
+  {
+    question: 'Do I need to notify Building Control for domestic rewires and new circuits?',
+    answer:
+      'Yes, for work in England. The On-Site Guide (9th Ed:2022, A4) notes that all electrical work within dwellings includes work that is notifiable under Building Regulations Part P. Full rewires, new circuits, and consumer unit replacements are all notifiable. If you are registered with a competent person scheme (such as NICEIC, NAPIT, or ELECSA), you self-certify and notify via the scheme. If you are not scheme-registered, the homeowner must apply for building control approval before work starts. Either way, include the cost of scheme registration or building control notification as a line item in your quote — typically £150 to £250 for a domestic rewire — so the customer understands this is a regulatory cost, not a discretionary one.',
   },
   {
     question: 'Are per-point rates going up in 2026?',
@@ -356,6 +363,21 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
+          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+            <ClipboardCheck className="w-4 h-4 text-orange-400" /> BS 7671:2018+A4:2026 — Lighting
+            Circuit Compliance
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            Reg 411.3.4 makes it a mandatory requirement that all AC final circuits supplying
+            luminaires in domestic premises are protected by an RCD with a rated residual operating
+            current not exceeding 30 mA. A plain MCB on a domestic lighting circuit does not meet
+            this requirement. On a rewire your per-point rate for lighting should include an RCBO
+            per circuit, or the board should be configured with dual RCD protection covering all
+            lighting circuits. This applies on supply-and-fix and labour-only jobs alike — you still
+            carry responsibility for the installation.
+          </p>
+        </div>
         <p>
           <strong>Important:</strong> If working labour-only, ensure your quote states clearly that
           you are not responsible for the suitability of customer-supplied materials. You still
@@ -483,6 +505,21 @@ const sections = [
             </div>
           </div>
         </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+            <Lightbulb className="w-4 h-4 text-blue-400" /> AFDD — Arc Fault Detection (Reg 421.1.7)
+          </h4>
+          <p className="text-white text-sm leading-relaxed">
+            BS 7671:2018+A4:2026 Reg 421.1.7 makes AFDDs <strong>mandatory</strong> on AC
+            socket-outlet final circuits (≤32 A) in Higher Risk Residential Buildings (HRRBs),
+            Houses in Multiple Occupation (HMOs), purpose-built student accommodation, and care
+            homes. For all other premises, AFDDs are strongly recommended. When pricing CU-inclusive
+            rewires on any of those property types, AFDD-equipped RCBOs are not optional — price the
+            uplift as a separate line item. AFDD-RCBOs typically cost £40 to £80 more per way than a
+            standard RCBO. Make the cost transparent on your quote so the customer understands both
+            the regulatory obligation and the protection they are receiving.
+          </p>
+        </div>
       </>
     ),
   },
@@ -529,6 +566,13 @@ export default function PricingPerPointGuidePage() {
       }
       heroSubtitle="What is a point, what does it include, and how much should you charge? Per-point rates by region, supply-and-fix vs labour only, and when this pricing method works best."
       readingTime={11}
+      answerBox={{
+        question: 'How much should I charge per point for electrical work?',
+        answer:
+          'Typical UK per-point rates in 2026 range from £80 to £150, depending on region, property type (new build vs existing), and whether materials are included. A "point" is one accessory position — a socket, light, switch, FCU, or data point — and a double socket counts as one point. Labour-only rates, common on new builds, run 40–50% lower than supply-and-fix.',
+        detail:
+          'Per-point pricing is fast for domestic work but breaks down on commercial jobs, complex routing, or specialist installs where labour per point varies.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

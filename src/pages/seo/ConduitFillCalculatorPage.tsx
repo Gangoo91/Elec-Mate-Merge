@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'What is the difference between conduit fill and trunking fill?',
     answer:
-      'Conduit fill uses the cable factor method — a dimensionless number system where you compare the sum of cable factors against the conduit factor. Trunking fill uses the cross-sectional area method — you calculate the actual cross-sectional area of each cable in square millimetres, sum them, and check that the total does not exceed 45% of the internal cross-sectional area of the trunking. The 45% limit for trunking is explicit in BS 7671 and the IET Guidance Note 1. For conduit, the approximately 40% limit is built into the cable factor tables. The two methods exist because conduit and trunking have different installation challenges: conduit requires cables to be pulled through a tube (friction is the main constraint), while trunking has a removable lid allowing cables to be laid in (packing density is the main constraint).',
+      'Conduit fill uses the cable factor method — a dimensionless number system where you compare the sum of cable factors against the conduit factor. Trunking fill uses the cross-sectional area method — you calculate the actual cross-sectional area of each cable in square millimetres, sum them, and check that the total does not exceed 45% of the internal cross-sectional area of the trunking. The IET On-Site Guide and Guidance Note 1 recommend a maximum fill of 45% for trunking; BS 7671 itself does not state a percentage fill limit in normative text. For conduit, the approximately 40% limit is built into the cable factor tables. The two methods exist because conduit and trunking have different installation challenges: conduit requires cables to be pulled through a tube (friction is the main constraint), while trunking has a removable lid allowing cables to be laid in (packing density is the main constraint).',
   },
   {
     question: 'Can I mix different cable sizes in the same conduit?',
@@ -131,7 +131,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -279,7 +279,7 @@ export default function ConduitFillCalculatorPage() {
                 cable derating calculator
               </SEOInternalLink>{' '}
               to account for grouping factors, and the{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to confirm your conductor sizes before pulling.
@@ -517,6 +517,40 @@ export default function ConduitFillCalculatorPage() {
               </div>
             </div>
 
+            {/* Band I / Band II segregation warning */}
+            <div className="p-5 rounded-2xl border border-amber-500/30 bg-amber-500/5">
+              <h3 className="font-bold text-amber-400 text-base mb-2">
+                Band I / Band II Segregation (OSG 7.4.1)
+              </h3>
+              <p className="text-white text-sm leading-relaxed mb-3">
+                When planning to mix circuits in the same conduit or trunking, check whether any
+                circuit is Band I (extra-low voltage, e.g. SELV, data, fire, security) alongside
+                Band II (low voltage, 230 V). OSG Reg 7.4.1 prohibits Band I and Band II circuits in
+                the same wiring system part <strong className="text-white">unless</strong> one of
+                these five conditions is satisfied:
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-white text-sm">
+                <li>(a) Every cable is insulated for the highest voltage present.</li>
+                <li>
+                  (b) Each conductor of a multicore cable is insulated for the highest voltage
+                  present.
+                </li>
+                <li>
+                  (c) Cables are installed in separate compartments within the same
+                  trunking/conduit.
+                </li>
+                <li>(d) Cables on cable tray are separated by a partition.</li>
+                <li>
+                  (e) Band I and Band II conductors in a multicore cable are separated by an earthed
+                  metal screen of equivalent current-carrying capacity to the largest Band II
+                  circuit.
+                </li>
+              </ul>
+              <p className="text-white/70 text-xs mt-3">
+                Source: IET On-Site Guide 9th Ed (A4:2026), Reg 7.4.1; BS 7671 Reg 528.1.
+              </p>
+            </div>
+
             {/* Example 3 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">
@@ -594,6 +628,14 @@ export default function ConduitFillCalculatorPage() {
               factor calculation, but it makes the practical installation easier and reduces the
               risk of cable damage.
             </p>
+            <div className="p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/5 text-sm text-white leading-relaxed">
+              <strong className="text-yellow-400">Reg 522.8.2 — buried conduit:</strong> Where a
+              conduit system is buried in the structure, cables shall not be drawn in until the
+              conduit is completely erected between access points. This is a frequently overlooked
+              site-sequencing requirement: all joints, bends and boxes must be in place before
+              pulling commences. Pre-wired conduit assemblies specifically designed for the
+              installation are exempt.
+            </div>
           </div>
         </div>
       </section>
@@ -612,9 +654,11 @@ export default function ConduitFillCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               While conduit fill uses the cable factor method, trunking fill uses a direct
-              cross-sectional area calculation. The rule from BS 7671 and the IET Guidance Note 1 is
+              cross-sectional area calculation. The IET On-Site Guide and Guidance Note 1 recommend
               that the total cross-sectional area of all cables installed in trunking must not
-              exceed 45% of the internal cross-sectional area of the trunking.
+              exceed 45% of the internal cross-sectional area of the trunking. BS 7671 does not
+              state this percentage limit in normative regulation text, but the guidance is
+              universally applied in UK practice.
             </p>
             <p>
               To perform a trunking fill calculation, you need the overall diameter of each cable
@@ -639,6 +683,12 @@ export default function ConduitFillCalculatorPage() {
               The Elec-Mate calculator includes a trunking fill mode alongside the conduit fill
               mode. Select the trunking dimensions, add the cables, and the calculator shows the
               fill percentage with a pass/fail indication against the 45% limit.
+            </p>
+            <p>
+              Note also that BS 7671 Reg 530.4.3 requires any trunking system used to carry
+              electrical equipment (such as switches or socket-outlets) to comply with the BS EN
+              50085 series. Always verify that the trunking product is BS EN 50085-certified before
+              mounting equipment within it.
             </p>
           </div>
         </div>
@@ -729,14 +779,12 @@ export default function ConduitFillCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -744,13 +792,27 @@ export default function ConduitFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/conduit-installation-guide">Conduit Installation Guide UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-conduit-guide">Electrical Conduit Guide</SEOInternalLink>
-            <SEOInternalLink href="/trunking-fill-calculator">/trunking-fill-calculator</SEOInternalLink>
-            <SEOInternalLink href="/electrical-installation-conduit">Electrical Installation Conduit Guide — Steel, PVC, Fill Calculations & Earthing</SEOInternalLink>
-            <SEOInternalLink href="/how-to-fill-in-eicr">How to Fill In an EICR Form</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
-            <SEOInternalLink href="/guides/minor-works-certificate-how-to-fill-in">/guides/minor-works-certificate-how-to-fill-in</SEOInternalLink>
+            <SEOInternalLink href="/conduit-installation-guide">
+              Conduit Installation Guide UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-conduit-guide">
+              Electrical Conduit Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/trunking-fill-calculator">
+              Trunking Fill Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/electrical-installation-conduit">
+              Electrical Installation Conduit Guide — Steel, PVC, Fill Calculations & Earthing
+            </SEOInternalLink>
+            <SEOInternalLink href="/how-to-fill-in-eicr">
+              How to Fill In an EICR Form
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">
+              How to Fill In a Minor Works Certificate
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/minor-works-certificate-how-to-fill-in">
+              Minor Works Certificate Guide
+            </SEOInternalLink>
           </div>
         </div>
       </section>

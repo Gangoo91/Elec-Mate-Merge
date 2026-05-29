@@ -27,7 +27,7 @@ const faqs = [
   {
     question: 'When should I issue a Minor Works certificate instead of an EIC?',
     answer:
-      'A Minor Electrical Installation Works Certificate (commonly called an EWC or Minor Works) should be issued for work that does not include the provision of a new circuit. This covers additions and alterations to an existing circuit, such as adding a socket outlet to an existing ring final circuit, repositioning a light switch, or replacing a consumer unit on existing circuits. If the work involves installing a new circuit — for example running a new radial circuit for an electric shower or cooker — a full Electrical Installation Certificate (EIC) is required instead. BS 7671 Regulation 631.2 covers the requirement for the Minor Works certificate.',
+      'A Minor Electrical Installation Works Certificate (commonly called an EWC or Minor Works) should be issued for work that does not include the provision of a new circuit. This covers additions and alterations to an existing circuit, such as adding a socket outlet to an existing ring final circuit, repositioning a light switch, or replacing a consumer unit on existing circuits. If the work involves installing a new circuit — for example running a new radial circuit for an electric shower or cooker — a full Electrical Installation Certificate (EIC) is required instead. The requirement to issue a Minor Works certificate is set out in BS 7671 Regulation 644.4.201 (which permits a Minor Electrical Installation Works Certificate as an alternative to a full EIC for additions or alterations to an existing circuit) and Regulation 644.5 (which requires the certificate to be compiled and signed by a skilled person competent to verify that BS 7671 requirements have been met).',
   },
   {
     question: 'Do I need to issue a Minor Works certificate for a like-for-like replacement?',
@@ -201,6 +201,13 @@ export default function MinorWorksCertificatePage() {
             Minor Works Certificate App
             <span className="block text-yellow-400 mt-1">Digital EWC Form</span>
           </h1>
+          <p className="text-base sm:text-lg text-yellow-100/90 max-w-2xl mx-auto mb-3 leading-relaxed font-medium">
+            A Minor Electrical Installation Works Certificate (Minor Works or EWC) is the BS 7671
+            document required when adding to or altering an existing electrical circuit — any work
+            that does not extend to the provision of a new circuit. Under Regulation 644.4.201, it
+            is the correct certificate for jobs such as adding a socket to an existing ring,
+            extending a lighting circuit, or fitting an FCU on an existing circuit.
+          </p>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Create Minor Electrical Installation Works Certificates on site in minutes. Auto-fill
             company details, capture digital signatures, and export professional PDFs instantly.
@@ -239,9 +246,12 @@ export default function MinorWorksCertificatePage() {
             <p>
               Minor electrical installation works are additions or alterations to an existing
               electrical circuit that do not involve the provision of a new circuit. BS 7671
-              Regulation 631.2 requires that a Minor Electrical Installation Works Certificate be
-              issued upon completion of such work to confirm that the addition or alteration
-              complies with the current edition of the wiring regulations.
+              Regulation 644.4.201 permits a Minor Electrical Installation Works Certificate to be
+              issued upon completion of such work — as an alternative to a full Electrical
+              Installation Certificate — to confirm that the addition or alteration complies with
+              the current edition of the wiring regulations. Regulation 644.5 requires that the
+              certificate be compiled and signed by a skilled person competent to verify compliance
+              with BS 7671.
             </p>
             <p>
               Common examples of minor works include adding a socket outlet to an existing ring
@@ -291,8 +301,8 @@ export default function MinorWorksCertificatePage() {
               </SEOInternalLink>{' '}
               depends on whether new circuits are being installed. Understanding the distinction is
               essential for compliance and avoiding potential liability issues. For condition
-              reporting, <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> are the
-              appropriate document.
+              reporting, <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> are
+              the appropriate document.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
@@ -542,9 +552,9 @@ export default function MinorWorksCertificatePage() {
             </h2>
           </div>
           <p className="text-white mb-6 leading-relaxed">
-            The Minor Works certificate is one of eight electrical certificate types available in
-            Elec-Mate. Each follows BS 7671 Appendix 6 model forms and includes auto-fill, digital
-            signatures, and PDF export.
+            The Minor Works certificate is one of sixteen certificate types available in Elec-Mate.
+            Each follows BS 7671 Appendix 6 model forms and includes auto-fill, digital signatures,
+            and PDF export.
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
@@ -727,7 +737,45 @@ export default function MinorWorksCertificatePage() {
                   circuits.
                 </span>
               </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <span className="text-white">
+                  <strong className="text-yellow-400">
+                    Missing risk assessment in non-domestic premises (Reg 411.3.3)
+                  </strong>{' '}
+                  — In non-domestic installations, Regulation 411.3.3 allows RCD additional
+                  protection on socket-outlets (≤32 A) to be omitted only where a documented risk
+                  assessment determines it is not necessary. That written risk assessment must be
+                  provided with the Minor Works certificate — absence of the document is the most
+                  frequently flagged omission on non-domestic minor works by scheme inspectors. In
+                  dwellings, no such exception applies: RCD protection on socket-outlets is always
+                  required.
+                </span>
+              </li>
             </ul>
+            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/30 my-4">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h3 className="font-bold text-yellow-400 text-base mb-2">
+                    A4:2026 Change — 30 mA RCD on Domestic Lighting Circuits (Reg 411.3.4)
+                  </h3>
+                  <p className="text-white text-sm leading-relaxed">
+                    BS 7671:2018+A4:2026 introduced Regulation 411.3.4, which requires that within
+                    domestic (household) premises, additional protection by an RCD with a rated
+                    residual operating current not exceeding 30 mA shall be provided for all AC
+                    final circuits supplying luminaires. This is a new A4:2026 requirement. If you
+                    carry out minor works on a domestic lighting circuit — for example extending a
+                    lighting circuit or adding a light point — you must confirm that 30 mA RCD
+                    additional protection is already in place for that circuit. If it is absent,
+                    record this as a C2 (potentially dangerous) or C3 (improvement recommended)
+                    observation on the certificate, depending on the age and condition of the
+                    installation. Failure to identify this is increasingly flagged on scheme
+                    inspections following the A4:2026 amendment.
+                  </p>
+                </div>
+              </div>
+            </div>
             <p>
               Elec-Mate helps prevent these mistakes with built-in validation. The app flags
               incomplete fields, checks test results against BS 7671 limits, and prompts you for RCD
@@ -739,7 +787,6 @@ export default function MinorWorksCertificatePage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -748,13 +795,27 @@ export default function MinorWorksCertificatePage() {
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             <SEOInternalLink href="/guides/minor-works-vs-eic">Minor Works vs EIC</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
-            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/napit-certificate-guide">NAPIT Certificate Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">EV Charger Certificate Requirements UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-certificate-retention">How Long to Keep Electrical Certificates UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-certificate-types-uk">Electrical Certificate Types UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-compliance-certificate">Electrical Compliance Certificate</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">
+              How to Fill In a Minor Works Certificate
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">
+              EICR Certificate Guide 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/napit-certificate-guide">
+              NAPIT Certificate Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">
+              EV Charger Certificate Requirements UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-certificate-retention">
+              How Long to Keep Electrical Certificates UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-certificate-types-uk">
+              Electrical Certificate Types UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-compliance-certificate">
+              Electrical Compliance Certificate
+            </SEOInternalLink>
           </div>
         </div>
       </section>

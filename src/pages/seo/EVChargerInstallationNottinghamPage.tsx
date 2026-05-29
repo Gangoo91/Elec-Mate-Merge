@@ -44,6 +44,8 @@ const keyTakeaways = [
   'BS 7671:2018 Section 722 governs all EV charging installations. PME earthing is common across Nottingham, requiring earth rods for outdoor chargers in most cases.',
   "Nottingham's high proportion of student lettings and HMOs creates opportunities for landlords installing EV chargers, though tenancy and planning considerations apply.",
   'NICEIC and NAPIT-registered electricians can self-certify EV charger installations to Part P of the Building Regulations without a separate building control application.',
+  'BS 7671:2018+A4:2026 Regulation 722.311.201 explicitly permits automatic or manual load curtailment to be taken into account for maximum demand — the regulatory basis for smart load-management systems in Nottingham flat blocks and HMOs.',
+  'Properties with solar PV are prosumer installations under A4:2026 Section 722. An electrician must assess generation and protective device coordination before connecting an EV charger.',
 ];
 
 const faqs = [
@@ -102,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop calculations.',
     icon: Calculator,
@@ -281,18 +283,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit (Regulation 722.533.101)</strong> — a dedicated 32A final
-                circuit from the consumer unit. Older Nottingham consumer units may not have a spare
-                way, requiring a board upgrade or separate enclosure.
+                <strong>Dedicated circuit</strong> — a dedicated 32A final circuit from the consumer
+                unit is required. Older Nottingham consumer units may not have a spare way,
+                requiring a board upgrade or separate enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
+                <strong>RCD protection</strong> — Section 722 (A4:2026) requires appropriate RCD
                 protection covering the EV circuit. Most quality smart chargers include integrated
                 DC fault protection, satisfying the requirement for a Type B RCD or Type A RCD with
-                6mA DC RDC-DD.
+                6mA DC RDC-DD. Verify the current edition of BS 7671 with your installer for the
+                specific regulation reference applicable at time of installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -307,7 +310,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — verify cable selection against{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
+                <SEOInternalLink href="/tools/cable-sizing-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
                 for the actual cable run length. 6mm² cable is typically adequate for runs up to 15
@@ -315,6 +318,18 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">
+            BS 7671:2018+A4:2026 — Section 722 Updates
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            Amendment 4:2026 made significant revisions to Section 722. The changes address PME
+            systems, socket-outlets and connectors, external influences, isolation and switching,
+            and RCD protection simultaneously. Any EV charger installation carried out from 2026
+            onwards must be assessed against the current A4:2026 edition of BS 7671 — not the
+            earlier A1:2020 version that many installers were trained on.
+          </p>
         </div>
       </>
     ),
@@ -443,10 +458,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>City-centre flats</strong> — shared parking, communal electricity supplies,
-                and freeholder permissions add complexity. Load management systems may be needed
-                where multiple residents install chargers. Flat owners are eligible for the OZEV
-                grant.
+                <strong>City-centre flats and HMOs</strong> — shared parking, communal electricity
+                supplies, and freeholder permissions add complexity. Where multiple residents
+                install chargers, Regulation 722.311.201 (BS 7671:2018+A4:2026) explicitly permits
+                load curtailment — including automatic or manual load reduction or disconnection —
+                to be taken into account when calculating maximum demand. This is the regulatory
+                basis for smart load-management systems in Nottingham flat blocks and HMOs: the
+                installation can be designed around a curtailed simultaneous demand rather than the
+                full connected load. Flat owners are eligible for the OZEV grant.
               </span>
             </li>
           </ul>
@@ -475,10 +494,8 @@ const sections = [
                   Factor in East Midlands labour rates (£38 to £50/hour), site survey time for older
                   properties, earth rod costs, NGED G98 notification, and EIC certification. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build itemised quotes that clearly show all costs to the customer.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build itemised quotes that clearly show all costs to the customer.
                 </p>
               </div>
             </div>
@@ -496,6 +513,41 @@ const sections = [
                   from your phone before leaving site. Every EV charger installation requires a full
                   EIC under BS 7671 Section 722. Elec-Mate's certificate app includes all required
                   test fields and can be emailed to the customer instantly.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-bold text-white mb-1">
+                  A4:2026 Compliance Points for Nottingham Jobs
+                </h4>
+                <p className="text-white text-sm leading-relaxed">
+                  <strong>Load curtailment (Reg 722.311.201):</strong> For HMO and flat-block jobs
+                  in Lenton, Dunkirk, and the city centre, note that A4:2026 explicitly permits
+                  automatic or manual load curtailment to be taken into account when calculating
+                  maximum demand. Quote load-management systems with confidence — the regulatory
+                  basis is clear.
+                </p>
+                <p className="text-white text-sm leading-relaxed mt-2">
+                  <strong>Charger enclosure bonding:</strong> The metalwork of an outdoor EV charger
+                  enclosure is an extraneous-conductive-part. Regulation 411.3.1.1 requires
+                  extraneous-conductive-parts liable to introduce a dangerous potential difference
+                  to be connected to the main earthing terminal by a protective bonding conductor
+                  complying with Chapter 54. Confirm this bonding is in place on every outdoor
+                  installation — it is a separate requirement from the earth rod TT arrangement
+                  under Regulation 722.411.4.1.
+                </p>
+                <p className="text-white text-sm leading-relaxed mt-2">
+                  <strong>Prosumer properties (solar PV):</strong> A4:2026 updated Section 722 to
+                  explicitly take account of prosumer electrical installations — premises that both
+                  consume and generate electricity (reference: Regulation 717.411.6.2(b)). Clifton
+                  and Arnold new builds increasingly have solar PV. Where a customer already has PV,
+                  assess generation, export, import, and protective device coordination before
+                  connecting the EV charger. Do not treat a prosumer installation as a standard
+                  import-only supply.
                 </p>
               </div>
             </div>
@@ -521,7 +573,7 @@ export default function EVChargerInstallationNottinghamPage() {
       title="EV Charger Installation Nottingham | Home EV Charging"
       description="EV charger installation costs in Nottingham 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, NGED DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Nottingham Guide"

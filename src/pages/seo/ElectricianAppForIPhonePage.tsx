@@ -172,6 +172,12 @@ export default function ElectricianAppForiPhonePage() {
                 display and precise touch input produce clean, professional signatures. You can sign
                 with your finger or an Apple Pencil (on compatible models).
               </p>
+              <p>
+                The EICR and EIC workflows include all A4:2026 fields: AFDD presence (Reg 421.1.7 —
+                recommended in AC final circuits), RCD on lighting circuits (Reg 411.3.4 —
+                30&nbsp;mA RCD mandatory in domestic premises), and SPD labelling (Reg 514.16.1),
+                keeping your certificates current with the latest edition of BS&nbsp;7671.
+              </p>
             </>
           ),
         },
@@ -197,25 +203,30 @@ export default function ElectricianAppForiPhonePage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  <SEOInternalLink href="/cable-sizing-calculator">
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
                     Cable sizing calculator
                   </SEOInternalLink>{' '}
                   — BS 7671 cable selection with all correction factors
                 </li>
                 <li>
-                  <SEOInternalLink href="/voltage-drop-calculator">
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
                     Voltage drop calculator
                   </SEOInternalLink>{' '}
-                  — verify compliance with Regulation 525
+                  — verify compliance with Regulation 525.202 (Appendix 4, Section 6.4 — 3% lighting
+                  / 5% other circuits)
                 </li>
                 <li>
-                  <SEOInternalLink href="/max-demand-calculator">
+                  <SEOInternalLink href="/tools/max-demand-calculator">
                     Maximum demand calculator
                   </SEOInternalLink>{' '}
                   — total installation demand with diversity factors
                 </li>
                 <li>Earth fault loop impedance verification</li>
-                <li>Prospective fault current calculation</li>
+                <li>
+                  Prospective fault current calculation — follows GN3 Reg 7.5 procedure, calculating
+                  both short-circuit current (between live conductors) and earth-fault current (line
+                  to MET), then returning the greater value for entry on the EIC or EICR
+                </li>
               </ul>
             </>
           ),
@@ -286,8 +297,9 @@ export default function ElectricianAppForiPhonePage() {
                 On iPhone, that creates a proper mobile workflow rather than just a form filler:
                 capture the certificate, run the calculator, price the remedial using the{' '}
                 <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, then
-                finish with the <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
-                from the same device.
+                finish with the{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> from
+                the same device.
               </p>
             </>
           ),
@@ -383,6 +395,11 @@ export default function ElectricianAppForiPhonePage() {
           question: 'How much storage does Elec-Mate use on iPhone?',
           answer:
             'The base app is approximately 50MB. With a typical month of certificates, test data, and downloaded training courses, total storage usage is typically under 200MB. The app manages storage efficiently and does not consume excessive space even with heavy use over extended periods.',
+        },
+        {
+          question: 'Does the app support A4:2026 BS 7671 requirements?',
+          answer:
+            'Yes. Elec-Mate certificates are current with BS 7671:2018+A4:2026. The EICR and EIC forms include fields for AFDD presence (Reg 421.1.7 — recommended in AC final circuits to mitigate fire risk from arc fault currents), RCD protection on lighting circuits (Reg 411.3.4 — 30 mA RCD mandatory on AC luminaire circuits in domestic premises), and SPD labelling (Reg 514.16.1 — label required where surge protective devices are installed). This keeps your certificates compliant with the current edition rather than the superseded A3 forms used by older tools.',
         },
         {
           question: 'Can I share certificates from iPhone via AirDrop?',

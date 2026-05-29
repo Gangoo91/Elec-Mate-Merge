@@ -53,7 +53,7 @@ const softwareApplicationSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description: PAGE_DESCRIPTION,
-  url: 'https://www.elec-mate.com/electrical-testing-calculators',
+  url: 'https://www.elec-mate.com/tools/electrical-testing-calculators',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -72,7 +72,7 @@ const faqData = [
   {
     question: 'What is a Zs calculator and why do electricians need one?',
     answer:
-      'A Zs (earth loop impedance) calculator determines the total impedance of the earth fault loop path in an electrical installation. Electricians need it to verify that protective devices (MCBs, RCBOs, fuses) will disconnect within the required time stated in BS 7671 Table 41.2, 41.3, and 41.4. If Zs is too high, the fault current will be too low to trip the protective device quickly enough, creating a serious electric shock risk. Elec-Mate calculates Zs from Ze (external earth fault loop impedance) plus R1+R2 (circuit protective conductors), and compares the result against BS 7671 maximum values with temperature correction applied.',
+      'A Zs (earth loop impedance) calculator determines the total impedance of the earth fault loop path in an electrical installation. Electricians need it to verify that protective devices (MCBs, RCBOs, fuses) will disconnect within the required time stated in BS 7671. Table 41.2 gives maximum Zs for fuses (BS 88-2, BS 88-3, BS 3036, BS 1362) at 0.4 s disconnection. Table 41.3 gives maximum Zs for circuit-breakers and RCBOs at both 0.4 s and 5 s disconnection. Table 41.4 gives maximum Zs for fuse-protected distribution and final circuits at 5 s. For TT systems where an RCD provides fault protection, compliance is verified using Table 41.5 (Ra × IΔn ≤ 50 V). If Zs is too high, the fault current will be too low to trip the protective device quickly enough, creating a serious electric shock risk. Elec-Mate calculates Zs from Ze (external earth fault loop impedance) plus R1+R2 (circuit protective conductors), and compares the result against BS 7671 maximum values with temperature correction applied.',
   },
   {
     question: 'How do I calculate prospective fault current for an EICR?',
@@ -82,7 +82,7 @@ const faqData = [
   {
     question: 'What RCD testing values should I expect on site?',
     answer:
-      'For a standard 30mA Type AC RCD, BS 7671 requires tripping within 300ms at rated residual current (30mA) and within 40ms at five times rated current (150mA). In practice, a healthy RCD should trip at roughly 50-70% of its rated current, so between 15-21mA for a 30mA device. At 150mA (5x), trip times are typically under 25ms. For Type A RCDs used with EV chargers and heat pumps, the same thresholds apply but the device also detects pulsating DC residual currents. Elec-Mate provides pass/fail thresholds for all RCD types including Type A, Type AC, Type B, and Type F, with automatic comparison to BS 7671 requirements.',
+      'For a standard 30mA Type AC RCD, BS 7671 requires tripping within 300ms at rated residual current (30mA) and within 40ms at five times rated current (5×IΔn = 150mA for a 30mA device). Note: per GN3 Reg 5.6, a manufacturer may declare 250mA as the test current for the 40ms trip test instead of the standard 5×IΔn value — if the manufacturer has declared 250mA, that figure takes precedence on site. In practice, a healthy RCD should trip at roughly 50–70% of its rated current, so between 15–21mA for a 30mA device. At 5×IΔn, trip times are typically under 25ms. For Type A RCDs used with EV chargers and heat pumps, the same thresholds apply but the device also detects pulsating DC residual currents. Elec-Mate provides pass/fail thresholds for all RCD types including Type A, Type AC, Type B, and Type F, with automatic comparison to BS 7671 requirements.',
   },
   {
     question: 'How does the conduit and trunking fill calculator work?',
@@ -90,9 +90,19 @@ const faqData = [
       'The conduit fill calculator uses the cable factor method from the IET On-Site Guide (OSG) tables. Each cable size has a factor representing its cross-sectional area including insulation. You select the conduit size (which has a maximum capacity factor), enter the number and type of cables, and the calculator checks the total cable factor does not exceed the conduit capacity. For example, a 20mm round conduit has a factor of 460, and 2.5mm twin and earth cables each have a factor of 43. The trunking fill calculator works similarly but uses the percentage fill method — IET guidance limits trunking fill to 45% of the internal cross-sectional area. Elec-Mate covers all standard conduit sizes from 16mm to 50mm and trunking from 50x50mm to 300x100mm.',
   },
   {
+    question: 'Do domestic lighting circuits now need RCD protection under A4:2026?',
+    answer:
+      'Yes. Regulation 411.3.4, introduced in BS 7671:2018+A4:2026, requires that within domestic (household) premises, additional protection by a 30mA RCD shall be provided for all AC final circuits supplying luminaires. This is a mandatory obligation — the regulation uses "shall". Pre-A4 domestic installations without RCD-protected lighting circuits are therefore non-compliant with current Wiring Regulations and will typically receive a C2 (potentially dangerous) or C3 (improvement recommended) observation on an EICR depending on the age of the installation and the specific circumstances. When testing a domestic board, verify that every lighting circuit is protected by a 30mA RCD and record any unprotected lighting circuits as an observation on the schedule.',
+  },
+  {
+    question: 'What is an AFDD and does A4:2026 make them mandatory?',
+    answer:
+      'An AFDD (arc fault detection device) detects arc fault currents on AC final circuits — the kind of electrical arcing caused by damaged insulation, loose connections, or chafed cables that conventional MCBs and RCDs do not detect. Regulation 421.1.7, introduced by Amendment A4:2026, recommends (but does not mandate) the installation of AFDDs in AC final circuits of fixed installations to mitigate the risk of fire from arc fault currents. Because the regulation uses recommendatory language rather than "shall", AFDDs are not a legal requirement under BS 7671 for all installations. However, omitting them where there is a clear fire risk may result in a C3 improvement observation on an EICR, and they are increasingly expected practice on new domestic installations.',
+  },
+  {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
     answer:
-      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 4:2024 where applicable. Amendment 4 (A4:2026), issued 31 July 2024, adds new Section 530 requirements covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
+      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 4 where applicable. Key A4:2026 changes relevant to testing include: Reg 551.7.1, which has been redrafted to add new indents (c) and (d) requiring a suitable protective device where energy flow is bidirectional (for example export-capable solar PV or battery storage) and restricting connection of sources to the load side of RCDs; Reg 411.3.4, which now requires 30mA RCD additional protection for domestic lighting circuits; and Reg 421.1.7, which recommends AFDDs on AC final circuits. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments are published, we update all affected calculators within 30 days.',
   },
 ];
 
@@ -238,9 +248,16 @@ export default function ElectricalTestingCalculatorsPage() {
             Electrical Testing Calculators for{' '}
             <span className="text-yellow-400">UK Electricians</span>
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-lg text-white max-w-2xl mx-auto mb-4 leading-relaxed">
+            Elec-Mate provides 70 electrical calculators covering Zs, prospective fault current, RCD
+            trip thresholds, volt drop, cable sizing, and more — all referenced against BS
+            7671:2018+A4:2026. Enter your measured values and get instant pass/fail results with the
+            correct BS 7671 table values applied.
+          </p>
+          <p className="text-base text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
             Every calculation you need on site, from earth loop impedance and fault current to
-            conduit fill and maximum demand. All values cross-referenced against BS 7671:2018+A4:2026 and Amendment 4:2024.
+            conduit fill and maximum demand. All values cross-referenced against BS
+            7671:2018+A4:2026.
           </p>
           <Link to="/auth/signup">
             <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -297,14 +314,16 @@ export default function ElectricalTestingCalculatorsPage() {
               conditions.
             </p>
             <p>
-              If your measured Zs exceeds the maximum value stated in BS 7671 Tables 41.2 (for a TN
-              system with a 0.4-second disconnection time), 41.3 (for 5-second disconnection), or
-              41.4 (for circuits where an RCD provides fault protection, including all TT systems),
-              the circuit fails. A failed Zs test typically means the CPC has a poor connection
-              somewhere, the circuit is too long for the cable size, or the external earth fault
-              loop impedance is unusually high. Our Zs calculator lets you enter Ze and R1+R2,
-              automatically applies the temperature correction, and instantly tells you whether the
-              circuit passes or fails for every common protective device type and rating.
+              If your measured Zs exceeds the maximum value stated in BS 7671 — Table 41.2 for
+              fuse-protected circuits at 0.4 s, Table 41.3 for circuit-breakers and RCBOs at 0.4 s
+              or 5 s, or Table 41.4 for fuse-protected distribution and final circuits at 5 s — the
+              circuit fails. For TT systems where an RCD provides fault protection, compliance is
+              checked using the condition Ra × IΔn ≤ 50 V per Table 41.5 rather than a Zs table
+              limit. A failed Zs test typically means the CPC has a poor connection somewhere, the
+              circuit is too long for the cable size, or the external earth fault loop impedance is
+              unusually high. Our Zs calculator lets you enter Ze and R1+R2, automatically applies
+              the temperature correction, and instantly tells you whether the circuit passes or
+              fails for every common protective device type and rating.
             </p>
           </div>
         </div>
@@ -368,11 +387,23 @@ export default function ElectricalTestingCalculatorsPage() {
             <p>
               RCD testing involves applying a known residual current and measuring the disconnection
               time. At rated current (typically 30mA), the RCD must trip within 300ms. At five times
-              rated current (150mA for a 30mA device), it must trip within 40ms. You also perform a
-              half-rated (15mA) test — the RCD should not trip at this level, confirming it is not
-              oversensitive. For each test, our calculator displays the expected trip time range,
-              the pass/fail threshold, and explains what a failure at each level typically
-              indicates.
+              rated current (5×IΔn — 150mA for a 30mA device), it must trip within 40ms. One
+              important on-site nuance: GN3 Reg 5.6 states that for Type AC RCDs, a manufacturer may
+              declare 250mA as the test current for the 40ms test instead of the standard 5×IΔn
+              value. Where the manufacturer has declared 250mA, that figure takes precedence and
+              your tester must be set accordingly. You also perform a half-rated (15mA) test — the
+              RCD should not trip at this level, confirming it is not oversensitive. For each test,
+              our calculator displays the expected trip time range, the pass/fail threshold, and
+              explains what a failure at each level typically indicates.
+            </p>
+            <p>
+              BS 7671:2018+A4:2026 Reg 411.3.4 introduced a new requirement for domestic premises:
+              all AC final circuits supplying luminaires (lighting circuits) shall now have
+              additional protection by a 30mA RCD. This is a mandatory obligation and a common EICR
+              failure point on pre-A4 installations where lighting circuits were historically left
+              unprotected. When running our RCD testing calculator, ensure you have verified and
+              recorded RCD protection for every lighting circuit in domestic properties — any
+              unprotected lighting circuit requires an EICR observation.
             </p>
             <p>
               The landscape of RCD types has expanded significantly. Type AC RCDs detect sinusoidal
@@ -464,13 +495,13 @@ export default function ElectricalTestingCalculatorsPage() {
               divided by the product of all these factors. You then select a cable from the
               appropriate table in Appendix 4 whose tabulated current rating meets or exceeds this
               value. Finally, you verify that the cable also satisfies the{' '}
-              <SEOInternalLink href="/adiabatic-equation-calculator">
+              <SEOInternalLink href="/tools/adiabatic-equation-calculator">
                 adiabatic equation
               </SEOInternalLink>{' '}
               for fault protection, and that the{' '}
-              <SEOInternalLink href="/voltage-drop-calculator">volt drop</SEOInternalLink> is
+              <SEOInternalLink href="/tools/voltage-drop-calculator">volt drop</SEOInternalLink> is
               within limits. Our{' '}
-              <SEOInternalLink href="/cable-sizing-calculator">
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               performs all of these steps in one go, showing the full working and the selected cable
@@ -528,7 +559,6 @@ export default function ElectricalTestingCalculatorsPage() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -536,14 +566,30 @@ export default function ElectricalTestingCalculatorsPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/electrical-testing-cost-uk">Electrical Testing Cost UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/tools/electrical-app-with-ai">Electrical App with AI</SEOInternalLink>
-            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">AI for Electrical Apprentices</SEOInternalLink>
-            <SEOInternalLink href="/cleanroom-electrical">Cleanroom Electrical Installation UK</SEOInternalLink>
-            <SEOInternalLink href="/continuity-testing-guide">Continuity Testing Guide UK</SEOInternalLink>
-            <SEOInternalLink href="/guides/continuity-testing-r1-r2">Continuity Testing R1+R2</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">Electrical Apprenticeship UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/electrical-bim-guide">Electrical BIM Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-testing-cost-uk">
+              Electrical Testing Cost UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/electrical-app-with-ai">
+              Electrical App with AI
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">
+              AI for Electrical Apprentices
+            </SEOInternalLink>
+            <SEOInternalLink href="/cleanroom-electrical">
+              Cleanroom Electrical Installation UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/continuity-testing-guide">
+              Continuity Testing Guide UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/continuity-testing-r1-r2">
+              Continuity Testing R1+R2
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
+              Electrical Apprenticeship UK 2026
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-bim-guide">
+              Electrical BIM Guide
+            </SEOInternalLink>
           </div>
         </div>
       </section>

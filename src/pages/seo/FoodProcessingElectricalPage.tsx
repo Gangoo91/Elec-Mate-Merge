@@ -30,6 +30,7 @@ const tocItems = [
   { id: 'cable-management', label: 'Hygienic Cable Management' },
   { id: 'brc-global-standards', label: 'BRC Global Standards' },
   { id: 'allergen-segregation', label: 'Allergen Zone Segregation' },
+  { id: 'bs7671-design-requirements', label: 'BS 7671 Design Requirements' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -42,6 +43,9 @@ const keyTakeaways = [
   'BRC Global Standards (specifically BRC Food Safety) require that all equipment and structures in food manufacturing areas be hygienic in design and construction, cleanable without contaminating the product, and maintained in a condition that does not create a food safety risk.',
   'Allergen zone segregation may require dedicated electrical systems, separate cable routes, and physical separation of control panels to prevent cross-contamination between allergen and non-allergen production areas.',
   'CompEx qualification is required for electricians carrying out electrical work in ATEX dust-classified zones in flour mills, grain stores, and sugar processing facilities.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc faults. Food factory environments — where cable damage from wash-down equipment, pest activity, vibration, and frequent maintenance are common — represent elevated arc fault risk. AFDDs are a recommended (not mandatory) measure under the current wording.',
+  'In high-ambient-temperature zones (near ovens, dryers, tunnel pasteurisers), cable current-carrying capacity must be derated. BS 7671 Reg 523.4 requires that where cables with different maximum operating temperatures are grouped together, the current-carrying capacity of all cables in the group shall be based on the lowest maximum operating temperature of any cable in the group, together with the appropriate group rating factor from Appendix 4 Tables 4C1 to 4C6.',
+  'Food factories with large VFD-driven conveyors, refrigeration compressors, and motor-heavy plant generate switching transients that can damage sensitive control equipment. BS 7671 Reg 534.4.1.6 requires that consideration be given to the provision of surge protective devices (SPDs) to protect against switching overvoltages produced by current-using equipment within the installation — including large motors and variable speed drives.',
 ];
 
 const faqs = [
@@ -551,6 +555,69 @@ const sections = [
                 segregation. This is a site-specific procedural control but the electrical
                 installation can support it through consistent use of zone-specific colours for
                 socket outlets, isolators, and other field equipment.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'bs7671-design-requirements',
+    heading: 'BS 7671 Design Requirements: AFDDs, Cable Derating, and SPDs',
+    content: (
+      <>
+        <p>
+          Beyond the food-industry-specific requirements covered above, food factory electrical
+          installations must satisfy several BS 7671:2018+A4:2026 design obligations that are
+          particularly relevant in these environments.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Arc fault detection — BS 7671 Reg 421.1.7</strong> — BS 7671:2018+A4:2026
+                Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC
+                final circuits to mitigate the risk of fire due to arc fault currents. The
+                regulation's wording is advisory rather than mandatory. Food factory environments
+                present elevated arc fault risk factors: mechanical damage to cables from wash-down
+                equipment and machinery, pest activity gnawing cable insulation, vibration from
+                plant and conveyors, and frequent maintenance disturbing terminations. AFDDs should
+                be considered as part of the electrical design for food factory final circuits,
+                particularly in concealed or inaccessible cable runs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Cable derating in high-temperature zones — BS 7671 Reg 523.4</strong> —
+                Areas adjacent to ovens, tunnel pasteurisers, hot-fill lines, and drying plant can
+                sustain ambient temperatures well above the 30&deg;C reference used in standard
+                cable sizing tables. BS 7671 Reg 523.4 requires that ambient temperature be taken as
+                the temperature of the surrounding medium when the cable is not loaded, and that the
+                appropriate correction factor from Appendix 4 be applied. Where cables of different
+                maximum operating temperatures are grouped together, the current-carrying capacity
+                of all cables in the group shall be based on the lowest maximum operating
+                temperature of any cable in the group, together with the appropriate group rating
+                factor from Tables 4C1 to 4C6 of Appendix 4. Using a cable rated at 90&deg;C in a
+                group also containing a 70&deg;C cable requires the whole group to be sized on the
+                70&deg;C basis.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Surge protective devices (SPDs) — BS 7671 Reg 534.4.1.6</strong> — Food
+                factories typically contain large numbers of VFD-driven conveyors, refrigeration
+                compressors, pump motors, and contactors. BS 7671 Reg 534.4.1.6 requires that
+                consideration be given to the provision of SPDs to protect against switching
+                overvoltages produced by current-using equipment within the installation — with
+                large motor switching and variable speed drives explicitly cited as examples.
+                Switching transients from VFDs can damage PLCs, HMIs, instrumentation, and other
+                sensitive control equipment if SPDs are not provided at appropriate points in the
+                distribution system. SPD requirements should form part of the electrical design
+                scope for any food factory with significant motor or VFD loading.
               </span>
             </li>
           </ul>

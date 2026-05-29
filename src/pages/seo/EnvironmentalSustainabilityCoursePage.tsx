@@ -189,10 +189,8 @@ const sections = [
         <p>
           For electricians, this represents the biggest opportunity in a generation. Those who
           develop green skills now — understanding{' '}
-          <SEOInternalLink href="/training/energy-efficiency">
-            energy efficiency
-          </SEOInternalLink>
-          , renewable energy technologies, and sustainable installation practices — will be in the
+          <SEOInternalLink href="/training/energy-efficiency">energy efficiency</SEOInternalLink>,
+          renewable energy technologies, and sustainable installation practices — will be in the
           strongest position to capture this growing market.
         </p>
         <p>
@@ -240,7 +238,7 @@ const sections = [
           Even <strong>cable sizing</strong> affects energy efficiency. Over-long cable runs with
           undersized conductors increase resistive losses (I squared R losses), wasting energy as
           heat. Using the{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           in Elec-Mate ensures cables are sized for both safety and efficiency.
@@ -513,7 +511,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for both safety and efficiency — minimise resistive losses while meeting BS 7671 requirements.',

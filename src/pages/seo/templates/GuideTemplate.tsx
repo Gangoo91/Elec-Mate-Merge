@@ -2,6 +2,7 @@ import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import { SEOPageShell } from '@/components/seo/SEOPageShell';
 import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
 import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { type RelatedPage } from '@/components/seo/SEORelatedPages';
 import { RecentReviews } from '@/components/seo/RecentReviews';
@@ -52,6 +53,13 @@ export interface GuideTemplateProps {
   heroTitle: React.ReactNode;
   heroSubtitle: string;
   readingTime: number;
+  /**
+   * Answer-first block rendered directly under the hero. The `question` is the
+   * exact query searchers/AI engines ask; the `answer` is a concise (40-60 word)
+   * direct answer. Wins featured snippets + Google AI Overview / LLM citations.
+   * Ground the answer in the page's own content — do not introduce new facts.
+   */
+  answerBox?: { question: string; answer: string; detail?: string };
   /** Content */
   keyTakeaways?: string[];
   sections: ContentSection[];
@@ -100,6 +108,7 @@ export default function GuideTemplate({
   heroTitle,
   heroSubtitle,
   readingTime,
+  answerBox,
   keyTakeaways,
   sections,
   howToSteps,
@@ -140,6 +149,12 @@ export default function GuideTemplate({
       name: 'Elec-Mate Technical Team',
       url: 'https://www.elec-mate.com',
     },
+    reviewedBy: {
+      '@type': 'Organization',
+      '@id': 'https://www.elec-mate.com/#organization',
+      name: 'Elec-Mate Technical Team',
+    },
+    lastReviewed: dateModified || datePublished,
     breadcrumb: {
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -213,11 +228,23 @@ export default function GuideTemplate({
           <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
         </div>
 
+        <p className="mt-3 text-[11.5px] text-white/55 leading-relaxed">
+          Written and reviewed by the Elec-Mate technical team against BS 7671:2018+A4:2026, IET
+          Guidance Note 3 and the IET On-Site Guide.
+        </p>
+
         <div className="mt-4 flex flex-wrap items-center gap-6">
           <SEOSocialShare url={breadcrumbs[breadcrumbs.length - 1]?.href || '/'} title={title} />
           <SEOSocialFollow />
         </div>
       </section>
+
+      {/* Answer-first block — direct answer under the H1 for featured snippets + AI citations */}
+      {answerBox && (
+        <section className="pb-8">
+          <SEOAnswerBox {...answerBox} />
+        </section>
+      )}
 
       {/* Live embedded tool — free, no signup, BS 7671:2018+A4:2026 compliant.
           Guides about a calculation ship the working calc, not a screenshot. */}

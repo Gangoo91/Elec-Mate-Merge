@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly for any circuit with correction factors and voltage drop checks.',
@@ -625,7 +625,7 @@ const sections = [
             Elec-Mate calculators
           </SEOInternalLink>{' '}
           to verify conductor sizes, earth fault loop impedance, and{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> for
+          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink> for
           SPD installations. Getting the basics right prevents callbacks and ensures the SPD
           performs when it is needed most.
         </p>
@@ -655,7 +655,7 @@ export default function SPDGuidePage() {
           <span className="text-yellow-400">443.4 Risk Assessment to Final Sign-Off</span>
         </>
       }
-              noindex={true}
+      noindex={true}
       heroSubtitle="Surge Protective Devices are required in almost every new domestic installation under BS 7671. This guide covers Type 1, 2, and 3 SPDs, the Regulation 443.4 risk assessment, installation methods, coordination, and the common mistakes that catch electricians out."
       readingTime={10}
       keyTakeaways={keyTakeaways}

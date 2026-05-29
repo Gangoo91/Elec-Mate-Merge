@@ -262,7 +262,7 @@ const sections = [
           extends this to 400 metres, and OM5 adds support for wavelength division multiplexing for
           future-proofed data centre deployments. Multimode uses lower-cost LED or VCSEL light
           sources and is the standard for building backbone and{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">data centre</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/cable-sizing-calculator">data centre</SEOInternalLink>{' '}
           interconnections within a single building or campus.
         </p>
         <p>
@@ -306,9 +306,32 @@ const sections = [
           allow for future additions and adequate ventilation). Separation from power cables must
           comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671 Chapter 52
-          </SEOInternalLink>{' '}
-          electromagnetic compatibility requirements.
+            BS 7671 Reg 444.4.1 (Chapter 44)
+          </SEOInternalLink>
+          , which sets the minimum separation between IT and mains power cables in three dimensions
+          and requires any unavoidable crossings to be made at 90 degrees for a distance no less
+          than the minimum separation on either side. Note: BS 7671:2018+A4:2026 removed the former
+          Section 444 (&ldquo;Measures against electromagnetic disturbances&rdquo;) as a standalone
+          section; the separation and EMC requirements now sit in Chapter 44.
+        </p>
+        <p>
+          <strong>Band I / Band II segregation (Reg 444.6.1):</strong> Data and signal circuits
+          operate at voltage Band I (extra-low voltage). Where Band I cables share the same
+          containment or route as Band II (230 V mains) circuits, Reg 444.6.1 requires the
+          installation to follow the segregation requirements referenced in Chapter 44. Where Band I
+          and Band II conductors share the same multicore cable, an earthed metal screen of
+          equivalent current-carrying capacity to the largest Band II core is mandatory (OSG 9th
+          Ed:2022 A4, Reg 7.4.1). Failure to segregate is one of the most common compliance gaps on
+          commercial data cabling projects and is routinely identified at inspection.
+        </p>
+        <p>
+          On multi-trade commercial projects, data cables frequently run in close proximity to HVAC
+          ductwork, water pipework, and other non-electrical services. Where this occurs, BS 7671
+          Reg 528.3.4 (Chapter 52) requires that the wiring system is suitably protected against the
+          hazards likely to arise from those services in normal use, and that fault protection is
+          provided in accordance with Section 411. This is a direct, site-level obligation: pathway
+          routes near HVAC or mechanical services require protection review at design stage, not
+          just containment fill calculations.
         </p>
       </>
     ),
@@ -332,7 +355,10 @@ const sections = [
           management that maintains pair twist within the connector body. Shielded systems require
           the drain wire or foil to make reliable 360-degree contact with the jack or patch panel
           shield connection — a poor shield termination can cause worse performance than an
-          unshielded system.
+          unshielded system. Under BS 7671 Reg 444.5.7, earthing and equipotential bonding of ICT
+          installations may be provided for functional purposes (signal integrity, EMC); such
+          functional earthing is expressly permitted but must not compromise the protective earthing
+          arrangements required for safety and must not defeat automatic disconnection of supply.
         </p>
         <p>
           Testing and certification is mandatory for every installed link. A Level III field tester
@@ -404,7 +430,7 @@ const relatedPages = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'The wiring regulations covering electromagnetic compatibility and data cable separation requirements.',
+      'The wiring regulations covering IT/mains cable separation (Reg 444.4.1), Band I/II segregation (Reg 444.6.1), and proximity to non-electrical services (Reg 528.3.4).',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -425,7 +451,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/cable-sizing-calculator',
+    href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes for power circuits that supply network equipment rooms and switch cabinets.',
@@ -454,7 +480,7 @@ const extraSchemas = [
     },
     offers: {
       '@type': 'Offer',
-      price: '4.99',
+      price: '5.99',
       priceCurrency: 'GBP',
       availability: 'https://schema.org/InStock',
       description: '7-day free trial, then from £5.99/month',
