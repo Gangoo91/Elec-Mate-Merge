@@ -283,79 +283,81 @@ async function runVisionPrepass(supabase: any, job: RAMSJobRow): Promise<string 
     return null;
   }
 
-  // Fetch each image as bytes, base64-encode for Gemini inline_data.
-  const parts: any[] = [
-    {
-      text: `Extract a hazards-context block from these ${images.length} site photo(s) submitted with a RAMS brief. Output PLAIN TEXT (not JSON). Use bullet points led by the hazard noun phrase. Rules:
+  const PER_IMAGE_PROMPT = `You are looking at a site photo submitted with a RAMS brief. Extract visible hazards as plain-text bullets. Rules:
 - Only describe what is clearly visible. Do NOT speculate. If ambiguous, say so.
 - UK English. Imperative voice for recommended actions.
 - Look for: exposed live parts, lost / suspect earthing, working at height (≥1 m), asbestos suspicion (AIB / textured coatings / old lagging), dust, hot works, manual handling, lone working, public access, vehicle movement, fire load, confined space, dampness, poor housekeeping.
-- 3-6 bullets per image, lead with the hazard noun phrase.
-- Open each image's bullets with a one-line title like "Photo 1: short scene description".`,
-    },
-  ];
+- 3-6 bullets, lead each with the hazard noun phrase.
+- Open with a one-line scene description.`;
 
-  for (const a of images) {
-    try {
-      const { data: signed } = await supabase.storage
-        .from('safety-photos')
-        .createSignedUrl(a.path, 60 * 10);
-      if (!signed?.signedUrl) continue;
-      const imgResp = await fetch(signed.signedUrl);
-      if (!imgResp.ok) continue;
-      const bytes = new Uint8Array(await imgResp.arrayBuffer());
-      // Base64 encode without going through binary-string (which truncates large
-      // images in some Deno versions).
-      let binary = '';
-      const chunkSize = 0x8000;
-      for (let i = 0; i < bytes.length; i += chunkSize) {
-        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  // Process each image in its own Gemini call (parallel). Single-image
+  // requests stay under any inline-data ceiling and match the established
+  // parse-snag-photo pattern in this codebase.
+  const results = await Promise.all(
+    images.map(async (a, idx): Promise<string | null> => {
+      try {
+        const { data: signed } = await supabase.storage
+          .from('safety-photos')
+          .createSignedUrl(a.path, 60 * 10);
+        if (!signed?.signedUrl) return null;
+        const imgResp = await fetch(signed.signedUrl);
+        if (!imgResp.ok) return null;
+        const bytes = new Uint8Array(await imgResp.arrayBuffer());
+
+        let binary = '';
+        const chunkSize = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+        }
+        const base64 = btoa(binary);
+
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    { text: PER_IMAGE_PROMPT },
+                    {
+                      inline_data: {
+                        mime_type: a.type ?? 'image/jpeg',
+                        data: base64,
+                      },
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                maxOutputTokens: 600,
+                temperature: 0.15,
+              },
+            }),
+          }
+        );
+        if (!response.ok) {
+          console.warn(
+            `[rams-core] vision pass for photo ${idx + 1} failed:`,
+            response.status,
+            (await response.text()).slice(0, 200)
+          );
+          return null;
+        }
+        const j = await response.json();
+        const text = String(j?.candidates?.[0]?.content?.parts?.[0]?.text ?? '').trim();
+        return text.length > 0 ? `Photo ${idx + 1}\n${text}` : null;
+      } catch (err) {
+        console.warn(`[rams-core] vision pass for photo ${idx + 1} threw:`, err);
+        return null;
       }
-      const base64 = btoa(binary);
-      parts.push({
-        inline_data: {
-          mime_type: a.type ?? 'image/jpeg',
-          data: base64,
-        },
-      });
-    } catch (err) {
-      console.warn(`[rams-core] could not fetch ${a.path}:`, err);
-    }
-  }
+    })
+  );
 
-  // If no images successfully attached, bail.
-  if (parts.length === 1) return null;
-
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts }],
-          generationConfig: {
-            maxOutputTokens: 1500,
-            temperature: 0.15,
-          },
-        }),
-      }
-    );
-    if (!response.ok) {
-      console.warn(
-        '[rams-core] vision prepass (Gemini) failed:',
-        response.status,
-        (await response.text()).slice(0, 300)
-      );
-      return null;
-    }
-    const j = await response.json();
-    const text = String(j?.candidates?.[0]?.content?.parts?.[0]?.text ?? '').trim();
-    return text.length > 0 ? text : null;
-  } catch (err) {
-    console.warn('[rams-core] vision prepass threw:', err);
-    return null;
-  }
+  const blocks = results.filter((s): s is string => !!s);
+  if (blocks.length === 0) return null;
+  return blocks.join('\n\n');
 }
 
 type WorkType = 'domestic' | 'commercial' | 'industrial';

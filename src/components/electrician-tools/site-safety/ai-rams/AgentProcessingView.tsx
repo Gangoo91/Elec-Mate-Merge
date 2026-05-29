@@ -211,10 +211,13 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               ? 'Your risk assessment and method statement are ready for review.'
               : (() => {
                   // Pick the copy from the timeline row currently live, so the
-                  // status sentence tracks what's actually happening.
-                  const liveIdx = TIMELINE.findIndex(
-                    (r) => !partials.has(r.completedBy)
-                  );
+                  // status sentence tracks what's actually happening. A
+                  // streaming partial counts as "not finished" — picking the
+                  // first row with no partial OR a streaming one.
+                  const liveIdx = TIMELINE.findIndex((r) => {
+                    const p = partials.get(r.completedBy);
+                    return !p || p.streaming === true;
+                  });
                   if (liveIdx === -1) return TIMELINE[TIMELINE.length - 1].sub;
                   return TIMELINE[liveIdx].sub;
                 })()}
