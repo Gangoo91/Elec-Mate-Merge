@@ -22,8 +22,6 @@ const SignUp = lazyWithRetry(() => import('@/pages/auth/SignUp'));
 const InviteLanding = lazyWithRetry(() => import('@/pages/InviteLanding'));
 const ForgotPassword = lazyWithRetry(() => import('@/pages/auth/ForgotPassword'));
 const ResetPassword = lazyWithRetry(() => import('@/pages/auth/ResetPassword'));
-const ConfirmEmail = lazyWithRetry(() => import('@/pages/auth/ConfirmEmail'));
-const CheckEmail = lazyWithRetry(() => import('@/pages/auth/CheckEmail'));
 const CompleteProfile = lazyWithRetry(() => import('@/pages/auth/CompleteProfile'));
 const OAuthComplete = lazyWithRetry(() => import('@/pages/OAuthComplete'));
 const CheckoutTrial = lazyWithRetry(() => import('@/pages/auth/CheckoutTrial'));
@@ -402,22 +400,6 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <ResetPassword />
-            </LazyRoute>
-          }
-        />
-        <Route
-          path="/auth/confirm-email"
-          element={
-            <LazyRoute>
-              <ConfirmEmail />
-            </LazyRoute>
-          }
-        />
-        <Route
-          path="/auth/check-email"
-          element={
-            <LazyRoute>
-              <CheckEmail />
             </LazyRoute>
           }
         />

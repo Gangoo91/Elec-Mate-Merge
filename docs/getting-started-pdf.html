@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Elec-Mate · Getting Started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Inter+Tight:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C1B2A;          /* deep navy */
+    --ink-soft:#15263A;      /* cards / pills */
+    --gold:#F3B70A;
+    --gold-deep:#B5840A;     /* gold text on light tint */
+    --paper:#FFFFFF;
+    --tint:#F4F6F9;          /* cool callout panel */
+    --tint-gold:#FFFAEC;     /* warm "do first" fill */
+    --line:#E6E9EE;
+    --line-gold:#EFD489;
+    --muted:#51606F;
+    --muted-2:#8B95A3;
+    --rail:#D8DEE6;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{
+    background:#fff;
+    color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+
+  @page{ size:A4; margin:0; }
+
+  .page{
+    position:relative;
+    width:210mm;
+    height:297mm;
+    overflow:hidden;
+    page-break-after:always;
+    background:var(--paper);
+  }
+  .page:last-child{ page-break-after:auto; }
+
+  /* ---------- shared type ---------- */
+  .display{ font-family:"Inter Tight",sans-serif; letter-spacing:-0.018em; }
+  .eyebrow{
+    font-family:"Inter Tight",sans-serif;
+    font-weight:700; font-size:9.5px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--gold-deep);
+  }
+  .tickrule{ width:46px; height:4px; border-radius:2px; background:var(--gold); }
+  .lead{
+    font-size:11.6pt; line-height:1.62; color:var(--muted); font-weight:400;
+    max-width:128mm;
+  }
+  .lead b, .lead strong{ color:var(--ink); font-weight:600; }
+  strong, b{ font-weight:600; }
+
+  /* ---------- interior page chrome ---------- */
+  .sheet{
+    position:absolute; inset:0;
+    padding:19mm 18mm 16mm 30mm;   /* extra left padding for the rail */
+    display:flex; flex-direction:column;
+  }
+  /* left spine rail */
+  .rail{
+    position:absolute; top:19mm; bottom:16mm; left:18mm;
+    width:0; border-left:1px solid var(--rail);
+  }
+  .rail .rail-tag{
+    position:absolute; left:-2.4mm; top:0;
+    transform:rotate(180deg); writing-mode:vertical-rl;
+    font-family:"Inter Tight",sans-serif; font-weight:700;
+    font-size:8.5px; letter-spacing:0.24em; text-transform:uppercase;
+    color:var(--muted-2);
+  }
+  .rail .rail-dot{
+    position:absolute; left:-1px; top:42%;
+    width:6px; height:6px; margin-left:-3px; border-radius:50%;
+    background:var(--gold);
+  }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:9mm;
+  }
+  .wordmark{
+    font-family:"Inter Tight",sans-serif; font-weight:800; font-size:15px;
+    letter-spacing:-0.02em; color:var(--ink);
+  }
+  .wordmark .h{ color:var(--gold); }
+  /* real logo lock-up (app-icon tile) */
+  .logo-mark{ display:block; width:9.5mm; height:9.5mm; border-radius:2.2mm; border:1px solid var(--line); }
+  .logo-hero{ display:block; width:26mm; height:26mm; border-radius:6mm; border:1px solid rgba(255,255,255,0.10); }
+  .topbar .kick{
+    font-family:"Inter Tight",sans-serif; font-weight:700; font-size:9px;
+    letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-deep);
+  }
+
+  .pagehead .eyebrow{ display:block; margin-bottom:8px; }
+  .pagehead h1{
+    font-family:"Inter Tight",sans-serif; font-weight:800;
+    font-size:25pt; line-height:1.05; letter-spacing:-0.02em; color:var(--ink);
+  }
+  .pagehead .tickrule{ margin:11px 0 13px; }
+
+  .body-area{ flex:1 1 auto; }
+
+  .footer{
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid var(--line);
+    padding-top:7px; margin-top:7mm;
+    font-size:8.5px; letter-spacing:0.04em; color:var(--muted-2);
+  }
+  .footer b{ color:var(--muted); font-weight:600; }
+  .footer .pg{ font-family:"Inter Tight",sans-serif; font-weight:700; color:var(--muted); }
+
+  /* ---------- components ---------- */
+  .callout{
+    position:relative; background:var(--tint);
+    border-radius:0 12px 12px 0;
+    padding:12px 18px 12px 20px;
+    font-size:10pt; line-height:1.52; color:var(--muted);
+  }
+  .callout::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+    background:var(--gold); border-radius:4px 0 0 4px;
+  }
+  .callout b{ color:var(--ink); }
+  .callout .lbl{ color:var(--ink); font-weight:700; }
+
+  /* hairline / do-first cards */
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .card{
+    border:1px solid var(--line); border-radius:13px;
+    padding:9px 14px; background:#fff;
+  }
+  .card .t{ font-size:11.5pt; font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+  .card .s{ font-size:9.4pt; color:var(--muted-2); margin-top:3px; line-height:1.4; }
+  .card.full{ grid-column:1 / -1; }
+  .card.gold{
+    background:var(--tint-gold); border-color:var(--line-gold);
+    position:relative; padding-left:17px;
+  }
+  .card.gold::before{
+    content:""; position:absolute; left:0; top:9px; bottom:9px; width:3px;
+    border-radius:3px; background:var(--gold);
+  }
+  .tag{
+    display:inline-block; font-family:"Inter Tight",sans-serif; font-weight:700;
+    font-size:7.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold-deep); background:rgba(243,183,10,0.16);
+    border-radius:4px; padding:2px 6px; margin-left:7px; vertical-align:1.5px;
+  }
+
+  /* numbered section index (01 IDENTITY) */
+  .ixrow{ display:flex; align-items:center; gap:9px; margin:7px 0 5px; }
+  .ixnum{
+    width:21px; height:21px; border-radius:6px; background:var(--ink);
+    color:#fff; font-family:"Inter Tight",sans-serif; font-weight:700;
+    font-size:10px; display:flex; align-items:center; justify-content:center;
+    font-feature-settings:"tnum";
+  }
+  .ixlabel{
+    font-family:"Inter Tight",sans-serif; font-weight:700; font-size:10.5px;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--ink);
+  }
+
+  /* numbered steps (apprentice + search) */
+  .steps{ border-top:1px solid var(--line); }
+  .step{
+    display:flex; gap:15px; padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .step .num{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:var(--ink); color:#fff;
+    font-family:"Inter Tight",sans-serif; font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step .num.gold{ background:var(--gold); color:var(--ink); }
+  .step .st-body{ padding-top:1px; }
+  .step .st-t{ font-size:12.5pt; font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+  .step .st-d{ font-size:10pt; line-height:1.5; color:var(--muted); margin-top:3px; }
+  .step .st-d .loc{ color:var(--ink); font-weight:600; }
+  .step .st-d .hl{ color:var(--gold-deep); font-weight:600; }
+
+  /* hub list rows */
+  .hubgroup-label{
+    font-family:"Inter Tight",sans-serif; font-weight:700; font-size:9px;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--muted-2);
+    margin:13px 0 2px;
+  }
+  .hub{ display:flex; gap:14px; padding:11px 0; border-bottom:1px solid var(--line); align-items:flex-start; }
+  .hub .ic{
+    flex:0 0 auto; width:30px; height:30px; border-radius:9px;
+    background:var(--ink); display:flex; align-items:center; justify-content:center;
+  }
+  .hub .ic svg{ width:15px; height:15px; stroke:#fff; fill:none; stroke-width:1.7; }
+  .hub .ic.gold{ background:var(--gold); }
+  .hub .ic.gold svg{ stroke:var(--ink); }
+  .hub .h-t{ font-size:12pt; font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+  .hub .h-d{ font-size:9.8pt; line-height:1.45; color:var(--muted); margin-top:2px; }
+
+  /* badges (FOR THE ELECTRICIAN / APPRENTICE) */
+  .badge{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:"Inter Tight",sans-serif; font-weight:700; font-size:9px;
+    letter-spacing:0.18em; text-transform:uppercase;
+    padding:5px 12px; border-radius:100px;
+  }
+  .badge.dark{ background:var(--ink); color:#fff; }
+  .badge.gold{ background:var(--gold); color:var(--ink); }
+
+  /* flow diagram (page 1) */
+  .flow{ display:flex; align-items:center; gap:0; margin:6px 0 4px; }
+  .flow .src{
+    flex:0 0 auto; width:62mm; background:var(--tint-gold);
+    border:1px solid var(--line-gold); border-radius:14px;
+    padding:18px 16px; text-align:center;
+  }
+  .flow .src .st{ font-size:13pt; font-weight:700; color:var(--ink); letter-spacing:-0.01em; }
+  .flow .src .ss{ font-size:9pt; color:var(--gold-deep); font-weight:600; margin-top:3px; text-transform:uppercase; letter-spacing:0.08em; }
+  .flow .conn{ flex:1 1 auto; height:1.5px; background:var(--rail); position:relative; }
+  .flow .conn::after{
+    content:""; position:absolute; right:0; top:50%; transform:translateY(-50%);
+    border-left:7px solid var(--rail); border-top:5px solid transparent; border-bottom:5px solid transparent;
+  }
+  .flow .outs{ flex:0 0 auto; width:54mm; display:flex; flex-direction:column; gap:8px; }
+  .pill-out{
+    display:flex; align-items:center; gap:10px;
+    background:var(--ink); color:#fff; border-radius:10px;
+    padding:11px 15px; font-size:11pt; font-weight:600; letter-spacing:-0.01em;
+  }
+  .pill-out .d{ width:6px; height:6px; border-radius:50%; background:var(--gold); flex:0 0 auto; }
+
+  /* checklist */
+  .check{ display:flex; gap:13px; padding:11px 0; border-bottom:1px solid var(--line); align-items:flex-start; }
+  .check .box{ flex:0 0 auto; width:17px; height:17px; border:2px solid var(--gold); border-radius:5px; margin-top:1px; }
+  .check .ct{ font-size:10.6pt; line-height:1.45; color:var(--muted); }
+  .check .ct b{ color:var(--ink); font-weight:600; }
+
+  /* search mock */
+  .searchbar{
+    display:flex; align-items:center; gap:11px;
+    border:1.5px solid var(--line); border-radius:13px;
+    padding:14px 18px; background:#fff; margin:4px 0 6px;
+  }
+  .searchbar svg{ width:17px; height:17px; stroke:var(--muted-2); fill:none; stroke-width:2; }
+  .searchbar .ph{ font-size:12pt; color:var(--muted-2); }
+  .kbd{
+    font-family:"JetBrains Mono",monospace; font-size:9pt; font-weight:600;
+    background:var(--ink); color:#fff; border-radius:5px; padding:2px 7px;
+    letter-spacing:0.02em;
+  }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
+  .chip{
+    font-size:9.5pt; font-weight:500; color:var(--ink);
+    border:1px solid var(--line); border-radius:100px; padding:4px 13px;
+  }
+
+  /* ===================================================== COVER */
+  .cover{ background:var(--ink); color:#fff; }
+  .cover-in{ position:absolute; inset:0; padding:24mm 22mm; display:flex; flex-direction:column; }
+  .cover .wordmark{ font-size:19px; color:#fff; }
+  .cover .cv-mark{ position:absolute; top:20mm; right:18mm; width:74mm; opacity:0.92; }
+  .cover .cv-mark line,.cover .cv-mark path{ stroke:var(--gold); stroke-width:1.4; fill:none; opacity:0.85; }
+  .cover .cv-mark circle{ fill:none; stroke:var(--gold); stroke-width:1.4; }
+  .cover .cv-mark circle.f{ fill:var(--gold); stroke:none; }
+  .cover .cv-eyebrow{ color:var(--gold); }
+  .cover .cv-mid{ margin-top:auto; }
+  .cover h1{
+    font-family:"Inter Tight",sans-serif; font-weight:800;
+    font-size:46pt; line-height:0.98; letter-spacing:-0.03em; color:#fff;
+    margin:18px 0 0;
+  }
+  .cover .cv-sub{
+    font-size:12.5pt; line-height:1.6; color:#9DAAB9; font-weight:400;
+    max-width:118mm; margin-top:20px;
+  }
+  .cover .cv-chips{ display:flex; gap:9px; margin-top:26px; }
+  .cover .cv-chip{
+    font-family:"Inter Tight",sans-serif; font-weight:600; font-size:9.5px;
+    letter-spacing:0.1em; text-transform:uppercase;
+    border:1px solid rgba(255,255,255,0.22); color:#C4CEDA;
+    border-radius:100px; padding:6px 13px;
+  }
+  .cover .cv-foot{
+    margin-top:48px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.14);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:#7E8C9B;
+  }
+  .cover .cv-foot .gold{ color:var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<section class="page cover">
+  <svg class="cv-mark" viewBox="0 0 220 200">
+    <line x1="40" y1="20" x2="40" y2="70"/><circle cx="40" cy="14" r="7"/>
+    <line x1="40" y1="70" x2="150" y2="70"/>
+    <line x1="150" y1="40" x2="150" y2="120"/><circle class="f" cx="150" cy="34" r="7"/>
+    <line x1="95" y1="70" x2="95" y2="150"/><circle cx="95" cy="156" r="7"/>
+    <line x1="20" y1="120" x2="150" y2="120"/><circle cx="14" cy="120" r="7"/>
+    <line x1="150" y1="120" x2="210" y2="120"/><circle class="f" cx="210" cy="120" r="6"/>
+    <line x1="95" y1="150" x2="200" y2="150"/><circle cx="200" cy="150" r="7"/>
+    <line x1="150" y1="95" x2="190" y2="95"/><circle cx="196" cy="95" r="6"/>
+  </svg>
+
+  <div class="cover-in">
+    <img class="logo-hero" src="elec-mate-logo.png" alt="Elec-Mate — Your trade. Your app.">
+
+
+    <div class="cv-mid">
+      <span class="eyebrow cv-eyebrow">Getting Started</span>
+      <div class="tickrule" style="margin-top:12px"></div>
+      <h1>Set it up once.<br>It follows you<br>everywhere.</h1>
+      <p class="cv-sub">Fifteen minutes now, and every quote, invoice and certificate you create carries your details automatically. Here's exactly what to set up — and how to find your way around.</p>
+      <div class="cv-chips">
+        <span class="cv-chip">For electricians &amp; apprentices</span>
+        <span class="cv-chip">≈ 15 minute setup</span>
+      </div>
+    </div>
+
+    <div class="cv-foot">
+      <span>Your trade. Your app.</span>
+      <span class="gold">elec-mate.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 1 — EVERYONE ============================== -->
+<section class="page">
+  <div class="rail"><span class="rail-tag">Start here</span><span class="rail-dot"></span></div>
+  <div class="sheet">
+    <div class="topbar"><img class="logo-mark" src="elec-mate-logo.png" alt="Elec-Mate"><span class="kick">Getting Started</span></div>
+    <div class="pagehead">
+      <span class="eyebrow">Start here · Everyone</span>
+      <h1>Set up your profile<br>before anything else</h1>
+      <div class="tickrule"></div>
+    </div>
+    <div class="body-area">
+      <p class="lead" style="margin-bottom:14mm">It's tempting to dive straight into a certificate or a quote. Don't — not for ten minutes. Fill in your details once and Elec-Mate drops them into everything you create from then on. No re-typing your company name, registration, signature or bank details on every single job.</p>
+
+      <div class="flow" style="margin-bottom:13mm">
+        <div class="src"><div class="st">Your Settings</div><div class="ss">filled in once</div></div>
+        <div class="conn"></div>
+        <div class="outs">
+          <div class="pill-out"><span class="d"></span>Quotes</div>
+          <div class="pill-out"><span class="d"></span>Invoices</div>
+          <div class="pill-out"><span class="d"></span>Certificates</div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-bottom:11mm">
+        <span class="lbl">Two places to look:</span> <b>Settings → Account</b> is who you are (your name, role and trade details). <b>Settings → Business</b> is everything your documents need — company, payments, accounting, inspector and test instruments. A completion ring shows how far you've got.
+      </div>
+
+      <p class="lead">The steps differ slightly for a working electrician and an apprentice — find your path over the page.</p>
+    </div>
+    <div class="footer"><span>Getting Started with <b>Elec-Mate</b></span><span class="pg">1</span></div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 2 — ELECTRICIAN ============================== -->
+<section class="page">
+  <div class="rail"><span class="rail-tag">For the electrician</span><span class="rail-dot"></span></div>
+  <div class="sheet">
+    <div class="topbar"><img class="logo-mark" src="elec-mate-logo.png" alt="Elec-Mate"><span class="kick">Getting Started</span></div>
+    <div class="pagehead">
+      <span class="badge dark" style="margin-bottom:11px">For the electrician</span>
+      <h1>Your business setup,<br>box by box</h1>
+      <div class="tickrule"></div>
+    </div>
+    <div class="body-area">
+      <p class="lead" style="margin-bottom:5mm">In <b>Settings → Business</b> you'll find these grouped boxes. Work down the list — the gold ones matter most. <b style="color:var(--gold-deep)">Gold = do these first.</b></p>
+
+      <div class="ixrow"><span class="ixnum">01</span><span class="ixlabel">Identity</span></div>
+      <div class="grid2">
+        <div class="card"><div class="t">Company</div><div class="s">Name, logo and contact</div></div>
+        <div class="card"><div class="t">Brand</div><div class="s">Colours and styling</div></div>
+      </div>
+
+      <div class="ixrow"><span class="ixnum">02</span><span class="ixlabel">Financials</span></div>
+      <div class="grid2">
+        <div class="card gold"><div class="t">Payment <span class="tag">Get paid</span></div><div class="s">Banking &amp; Stripe Connect — card payments</div></div>
+        <div class="card"><div class="t">Pricing</div><div class="s">Rates and margins</div></div>
+        <div class="card gold full"><div class="t">Accounting <span class="tag">Sync</span></div><div class="s">Connect Xero and QuickBooks — invoices flow across automatically</div></div>
+      </div>
+
+      <div class="ixrow"><span class="ixnum">03</span><span class="ixlabel">Documents</span></div>
+      <div class="grid2">
+        <div class="card"><div class="t">Quotes</div><div class="s">Terms and defaults</div></div>
+        <div class="card"><div class="t">Invoices</div><div class="s">Terms and payment</div></div>
+      </div>
+
+      <div class="ixrow"><span class="ixnum">04</span><span class="ixlabel">Scheduling</span></div>
+      <div class="grid2">
+        <div class="card full"><div class="t">Booking availability</div><div class="s">Working hours, buffer and daily cap</div></div>
+      </div>
+
+      <div class="ixrow"><span class="ixnum">05</span><span class="ixlabel">Professional</span></div>
+      <div class="grid2">
+        <div class="card gold"><div class="t">Inspector <span class="tag">Certs</span></div><div class="s">Credentials, scheme &amp; signature</div></div>
+        <div class="card gold"><div class="t">Instruments <span class="tag">Certs</span></div><div class="s">Test equipment &amp; calibration dates</div></div>
+        <div class="card full"><div class="t">Regional</div><div class="s">Currency and locale</div></div>
+      </div>
+
+      <div class="callout" style="margin-top:6mm">
+        <span class="lbl">What flows where:</span> Company, Brand, Inspector and Instruments fill your <b>certificates</b>; Payment, Pricing, Quotes and Invoices power your <b>quotes, invoices and getting paid</b>. Set <b>who you are</b> in <b>Settings → Account</b> too (job title, specialisation, ECS card), then claim your <b>Elec-ID</b>.
+      </div>
+    </div>
+    <div class="footer"><span>Getting Started with <b>Elec-Mate</b></span><span class="pg">2</span></div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 3 — APPRENTICE ============================== -->
+<section class="page">
+  <div class="rail"><span class="rail-tag">For the apprentice</span><span class="rail-dot"></span></div>
+  <div class="sheet">
+    <div class="topbar"><img class="logo-mark" src="elec-mate-logo.png" alt="Elec-Mate"><span class="kick">Getting Started</span></div>
+    <div class="pagehead">
+      <span class="badge gold" style="margin-bottom:11px">For the apprentice</span>
+      <h1>Your first five steps</h1>
+      <div class="tickrule"></div>
+    </div>
+    <div class="body-area">
+      <div class="steps" style="margin-top:6mm">
+        <div class="step"><div class="num gold">1</div><div class="st-body">
+          <div class="st-t">Set up who you are</div>
+          <div class="st-d"><span class="loc">Settings → Account.</span> Course level (Level 2 or 3), current year, training provider, ECS card status and your supervisor. <span class="hl">Personalises your whole app — including your AI mentor.</span></div>
+        </div></div>
+        <div class="step"><div class="num gold">2</div><div class="st-body">
+          <div class="st-t">Choose your qualification in the Portfolio</div>
+          <div class="st-d"><span class="loc">Apprentice → Portfolio.</span> Pick the standard you're working towards so every bit of evidence maps to the right assessment criteria. <span class="hl">Drives your evidence and off-the-job hours tracking.</span></div>
+        </div></div>
+        <div class="step"><div class="num">3</div><div class="st-body">
+          <div class="st-t">Claim your Elec-ID</div>
+          <div class="st-d"><span class="loc">Settings → Elec-ID.</span> Start your verified professional identity early — it grows with you and is ready the day you qualify.</div>
+        </div></div>
+        <div class="step"><div class="num">4</div><div class="st-body">
+          <div class="st-t">Tell Ask Dave where you are</div>
+          <div class="st-d">Your AI mentor already knows your course. Ask it what to focus on this week, or to explain anything you got stuck on today.</div>
+        </div></div>
+        <div class="step"><div class="num gold">5</div><div class="st-body">
+          <div class="st-t">Now start building momentum</div>
+          <div class="st-d">Practise on the AM2 simulator, log your first off-the-job hours, or take a mock exam to see where you stand.</div>
+        </div></div>
+      </div>
+    </div>
+    <div class="footer"><span>Getting Started with <b>Elec-Mate</b></span><span class="pg">3</span></div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 4 — HUBS ============================== -->
+<section class="page">
+  <div class="rail"><span class="rail-tag">Getting around</span><span class="rail-dot"></span></div>
+  <div class="sheet">
+    <div class="topbar"><img class="logo-mark" src="elec-mate-logo.png" alt="Elec-Mate"><span class="kick">Getting Started</span></div>
+    <div class="pagehead">
+      <span class="eyebrow">Getting around</span>
+      <h1>Finding your way around</h1>
+      <div class="tickrule"></div>
+    </div>
+    <div class="body-area">
+      <p class="lead" style="margin-bottom:5mm">Everything lives in a handful of <b>hubs</b> down the side menu. You'll only see the ones that apply to you — here's what each is for.</p>
+
+      <div class="hubgroup-label">If you're a working electrician</div>
+      <div class="hub"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <div><div class="h-t">Dashboard</div><div class="h-d">Your daily home — alerts, quick actions, certificates due and what needs attention.</div></div></div>
+      <div class="hub"><div class="ic gold"><svg viewBox="0 0 24 24"><polygon points="13 2 4 14 11 14 11 22 20 10 13 10 13 2"/></svg></div>
+        <div><div class="h-t">Electrical Hub</div><div class="h-d">Your working surface: jobs and site visits, every certificate, the business suite (quotes, invoices, customers), materials and pricing, 70+ calculators, AI tools and site safety / RAMS.</div></div></div>
+      <div class="hub"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg></div>
+        <div><div class="h-t">Elec-AI</div><div class="h-d">Ask any BS 7671 question — every answer cites the regulation.</div></div></div>
+      <div class="hub"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z"/><path d="M20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg></div>
+        <div><div class="h-t">Study Centre</div><div class="h-d">CPD courses, 18th Edition, specialist upskilling and mock exams.</div></div></div>
+
+      <div class="hubgroup-label" style="margin-top:7mm">If you're an apprentice</div>
+      <div class="hub"><div class="ic gold"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></div>
+        <div><div class="h-t">Apprentice Hub</div><div class="h-d">Your training: portfolio and off-the-job hours, the AM2 and EPA simulators, Ask Dave, and your live link to college.</div></div></div>
+      <div class="hub"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z"/><path d="M20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg></div>
+        <div><div class="h-t">Study Centre</div><div class="h-d">Level 2, Level 3 and AM2 courses with 2,000+ practice questions.</div></div></div>
+
+      <div class="callout" style="margin-top:8mm">
+        <span class="lbl">Everyone gets:</span> <b>Elec-AI</b> for instant BS 7671 answers, a <b>Wellbeing</b> hub, and <b>Settings</b> for your profile, Elec-ID and billing.
+      </div>
+    </div>
+    <div class="footer"><span>Getting Started with <b>Elec-Mate</b></span><span class="pg">4</span></div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 5 — SEARCH ============================== -->
+<section class="page">
+  <div class="rail"><span class="rail-tag">Getting around</span><span class="rail-dot"></span></div>
+  <div class="sheet">
+    <div class="topbar"><img class="logo-mark" src="elec-mate-logo.png" alt="Elec-Mate"><span class="kick">Getting Started</span></div>
+    <div class="pagehead">
+      <span class="eyebrow">Getting around</span>
+      <h1>Jump straight to anything</h1>
+      <div class="tickrule"></div>
+    </div>
+    <div class="body-area">
+      <p class="lead" style="margin-bottom:6mm">Don't go hunting through menus. The search in the top bar gets you anywhere in two taps — it covers over 130 pages across the whole app.</p>
+
+      <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><span class="ph">Where do you want to go?</span></div>
+
+      <div class="steps" style="margin-top:6mm">
+        <div class="step"><div class="num">1</div><div class="st-body">
+          <div class="st-t">Open it</div>
+          <div class="st-d">Tap the <b style="color:var(--ink)">magnifying glass</b> in the top bar — or press <span class="kbd">Cmd + K</span> on a Mac, <span class="kbd">Ctrl + K</span> on Windows.</div>
+        </div></div>
+        <div class="step"><div class="num">2</div><div class="st-body">
+          <div class="st-t">Type where you want to go</div>
+          <div class="st-d">A word is enough — the page you need rises to the top.</div>
+          <div class="chips"><span class="chip">EICR</span><span class="chip">quote</span><span class="chip">calculators</span><span class="chip">invoice</span><span class="chip">RAMS</span><span class="chip">business</span><span class="chip">AM2</span></div>
+        </div></div>
+        <div class="step"><div class="num gold">3</div><div class="st-body">
+          <div class="st-t">Tap it — you're there</div>
+          <div class="st-d">Pick from the list and it takes you straight to that screen. No digging through menus.</div>
+        </div></div>
+      </div>
+
+      <div class="callout" style="margin-top:9mm">
+        <span class="lbl">One more thing:</span> the <b>(i)</b> button next to the search gives you quick tips and guidance wherever you are in the app.
+      </div>
+    </div>
+    <div class="footer"><span>Getting Started with <b>Elec-Mate</b></span><span class="pg">5</span></div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 6 — CHECKLIST ============================== -->
+<section class="page">
+  <div class="rail"><span class="rail-tag">After fifteen minutes</span><span class="rail-dot"></span></div>
+  <div class="sheet">
+    <div class="topbar"><img class="logo-mark" src="elec-mate-logo.png" alt="Elec-Mate"><span class="kick">Getting Started</span></div>
+    <div class="pagehead">
+      <span class="eyebrow">After fifteen minutes</span>
+      <h1>You're set up —<br>and it stays set up</h1>
+      <div class="tickrule"></div>
+    </div>
+    <div class="body-area">
+      <p class="lead" style="margin-bottom:6mm">Everything you create from here carries your details automatically. Here's your quick checklist — tick it off in the app.</p>
+
+      <div class="steps" style="border-top:1px solid var(--line)">
+        <div class="check"><div class="box"></div><div class="ct"><b>Account — who you are</b> — name, job title &amp; ECS card (electricians) or course, provider &amp; supervisor (apprentices)</div></div>
+        <div class="check"><div class="box"></div><div class="ct"><b>Business — Company &amp; Brand</b> — name, logo and contact (electricians)</div></div>
+        <div class="check"><div class="box"></div><div class="ct"><b>Business — Payment &amp; Accounting</b> — Stripe Connect, plus Xero or QuickBooks (electricians)</div></div>
+        <div class="check"><div class="box"></div><div class="ct"><b>Business — Inspector &amp; Instruments</b> — credentials, signature and test kit, so certificates are ready (electricians)</div></div>
+        <div class="check"><div class="box"></div><div class="ct"><b>Elec-ID</b> — your verified digital identity</div></div>
+        <div class="check"><div class="box"></div><div class="ct"><b>Your first real action</b> — a certificate, a quote, or your first AM2 practice</div></div>
+      </div>
+
+      <div class="callout" style="margin-top:9mm">
+        <span class="lbl">Stuck, or not sure where something is?</span> Just reply to your welcome email — it comes straight to Andrew, the founder, and he reads every one.
+      </div>
+    </div>
+    <div class="footer"><span>Getting Started with <b>Elec-Mate</b></span><span class="pg">6</span></div>
+  </div>
+</section>
+
+</body>
+</html>

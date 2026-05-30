@@ -66,7 +66,7 @@ export function useAuthentication() {
       logger.api('auth/signIn', requestId).success({ email: data?.user?.email });
 
       // Check for pending onboarding data and apply ONLY if onboarding not completed
-      // This prevents race conditions with ConfirmEmail which is authoritative for initial setup
+      // (guards against overwriting profile data already set during signup)
       if (data?.user) {
         const onboardingData = storageGetSync('elec-mate-onboarding');
         if (onboardingData) {
@@ -79,7 +79,6 @@ export function useAuthentication() {
               .single();
 
             // Only apply onboarding data if NOT already completed
-            // ConfirmEmail.tsx is the authoritative source for initial profile setup
             if (!profile?.onboarding_completed) {
               const parsed = JSON.parse(onboardingData);
               // Update profile with onboarding data
