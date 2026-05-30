@@ -3,6 +3,7 @@ import { ActionSheet } from '@/components/native/SwipeableBottomSheet';
 import {
   Edit,
   Download,
+  Share2,
   ArrowRight,
   Users,
   Trash2,
@@ -24,6 +25,8 @@ export interface CertificateActionSheetProps {
   } | null;
   onEdit: () => void;
   onPreview: () => void;
+  /** Share the generated PDF (native share / copy link) — completed certs only. */
+  onShare?: () => void;
   onConvertToEICR?: () => void;
   onExportToEIC?: () => void;
   onLinkCustomer?: () => void;
@@ -43,6 +46,7 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   certificate,
   onEdit,
   onPreview,
+  onShare,
   onConvertToEICR,
   onExportToEIC,
   onLinkCustomer,
@@ -84,6 +88,15 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
       onClick: onPreview,
     },
   ];
+
+  // Share the PDF straight to the client (native share sheet / copy link).
+  if (onShare) {
+    actions.push({
+      label: 'Share PDF',
+      icon: <Share2 className="h-5 w-5 text-elec-yellow" />,
+      onClick: onShare,
+    });
+  }
 
   // Add EIC to EICR conversion option (prominent)
   if (certificate.reportType === 'eic' && certificate.canExportToEICR && onConvertToEICR) {

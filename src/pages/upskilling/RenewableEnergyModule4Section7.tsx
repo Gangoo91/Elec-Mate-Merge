@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -495,11 +494,6 @@ export default function RenewableEnergyModule4Section7() {
               <li><strong className="text-white">Failure mode</strong> — if CT cable disconnected / damaged: system defaults to SAFE state (typically full limit or inverter shutdown). Verify at commissioning</li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="EREC decision tree for hybrid PV+BESS — three-branch flowchart. Branch 1 (≤16 A combined AC): G98 fit-and-notify, 28-day notification. Branch 2 (above 16 A, no export limit): G99 apply-and-wait, 4-8 weeks DNO assessment. Branch 3 (above 16 A, with export limit): G100 export limit to ≤16 A or DNO-approved level, may keep under G98. Annotated with Reg 551.7.2.1 (batteries as generating sets) + Reg 551.7.1(c) bidirectional device + BS EN 50549-1 type approval."
-            filename="renewable/m4s7-erec-decision-tree.png"
-          />
 
           <InlineCheck {...inlineChecks[2]} />
 

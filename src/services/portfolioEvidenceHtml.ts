@@ -32,12 +32,16 @@ const fmtDate = (iso: string | null) => {
 };
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 const prettyCat = (c: string) => (c ? c.replace(/[_-]/g, ' ').replace(/\b\w/g, (x) => x.toUpperCase()) : 'Evidence');
-const truncate = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
+// Trim to a length but always break on a word boundary — never chop mid-word.
+const truncate = (s: string, n: number) => {
+  if (s.length <= n) return s;
+  const cut = s.slice(0, n);
+  const sp = cut.lastIndexOf(' ');
+  return (sp > n * 0.6 ? cut.slice(0, sp) : cut).trimEnd() + '…';
+};
 
 const MAX_PHOTOS = 6;
 const MAX_CRITERIA_WITH_TEXT = 12;
-const AC_TEXT_CAP = 130;
-const WRITEUP_CAP = 460;
 
 const STYLES = `
 *{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -122,7 +126,7 @@ html,body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',R
 .toc-p{font-size:12px;font-weight:700;color:#64748b;font-variant-numeric:tabular-nums}
 .units{margin-top:8px}
 .urow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:7px 0;border-bottom:1px solid #f1f5f9}
-.uc{font-size:11.5px;color:#475569;min-width:0}
+.uc{font-size:11.5px;color:#475569;min-width:0;line-height:1.4}
 .uc b{color:#0d1628;font-weight:800;margin-right:6px;font-variant-numeric:tabular-nums}
 .up{display:flex;align-items:center;gap:8px;flex:0 0 170px}
 .ubar{flex:1;height:6px;background:#eef1f5;border-radius:999px;overflow:hidden}
@@ -156,7 +160,7 @@ html,body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',R
 .covpct b{color:#111827;font-weight:700}
 .covu{margin-top:15px}
 .covu-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
-.covu-h .u{font-size:12px;color:#475569;min-width:0}
+.covu-h .u{font-size:12px;color:#475569;min-width:0;line-height:1.4}
 .covu-h .u b{color:#0d1628;font-weight:800;margin-right:7px;font-variant-numeric:tabular-nums}
 .covu-h .n{font-size:10.5px;font-weight:700;color:#64748b;white-space:nowrap}
 .tiles{display:flex;flex-wrap:wrap;gap:3px}
@@ -259,7 +263,7 @@ function critList(items: PortfolioCriterion[], label: string): string {
   const rows = shown
     .map((c) => {
       const code = c.code ? `<b>${esc(c.code)}</b>` : '';
-      const text = c.text ? esc(truncate(c.text, AC_TEXT_CAP)) : '';
+      const text = c.text ? esc(c.text) : '';
       return `<div class="crit">${code}${text}</div>`;
     })
     .join('');
@@ -283,7 +287,7 @@ function itemBlock(it: PortfolioPackItem): string {
   const meta = [it.evidenceType, fmtDate(it.date), prettyCat(it.category), it.timeSpentMins > 0 ? `${(it.timeSpentMins / 60).toFixed(1)}h` : null, it.grade ? `Grade: ${it.grade}` : null]
     .filter(Boolean)
     .join('  ·  ');
-  const writeUp = it.writeUp ? `<div class="writeup">${esc(truncate(it.writeUp, WRITEUP_CAP))}</div>` : '';
+  const writeUp = it.writeUp ? `<div class="writeup">${esc(it.writeUp)}</div>` : '';
   const criteria = critList(it.criteria, 'Assessment criteria evidenced');
   const outcomes = critList(it.outcomes, 'Learning outcomes');
   const skills = it.skills.length
@@ -304,13 +308,24 @@ function itemBlock(it: PortfolioPackItem): string {
   </div>`;
 }
 
+// Estimate the rendered height of one criterion row, accounting for the now
+// full-length AC/LO wording wrapping over several lines (~80 chars/line @ 11px).
+function critHeight(items: PortfolioCriterion[]): number {
+  const shown = items.slice(0, MAX_CRITERIA_WITH_TEXT);
+  let h = 22; // sub-heading
+  for (const c of shown) {
+    const len = (c.code?.length || 0) + (c.text?.length || 0);
+    h += 10 + Math.max(1, Math.ceil(len / 80)) * 16;
+  }
+  if (items.length > MAX_CRITERIA_WITH_TEXT) h += 16;
+  return h;
+}
+
 function estimateHeight(it: PortfolioPackItem): number {
   let h = 64;
-  if (it.writeUp) h += Math.min(Math.ceil(Math.min(it.writeUp.length, WRITEUP_CAP) / 92), 6) * 17 + 8;
-  const crit = Math.min(it.criteria.length, MAX_CRITERIA_WITH_TEXT);
-  if (crit) h += 22 + crit * 32 + (it.criteria.length > MAX_CRITERIA_WITH_TEXT ? 16 : 0);
-  const out = Math.min(it.outcomes.length, MAX_CRITERIA_WITH_TEXT);
-  if (out) h += 22 + out * 30;
+  if (it.writeUp) h += Math.ceil(it.writeUp.length / 90) * 17 + 8;
+  if (it.criteria.length) h += critHeight(it.criteria);
+  if (it.outcomes.length) h += critHeight(it.outcomes);
   if (it.skills.length) h += Math.ceil(it.skills.length / 6) * 22 + 4;
   if (it.photos.length) h += 146;
   if (it.verified && it.supervisorFeedback) h += 54;
@@ -436,7 +451,7 @@ const TILE: Record<AcState, string> = {
 };
 function unitBlock(u: CoverageUnit): string {
   const tiles = u.acs.map((a) => `<span class="t ${TILE[a.state]}" title="AC ${esc(a.code)}"></span>`).join('');
-  return `<div class="covu"><div class="covu-h"><div class="u"><b>${esc(u.unitCode)}</b>${esc(truncate(u.unitTitle || '', 58))}</div><div class="n">${u.done}/${u.total}</div></div><div class="tiles">${tiles}</div></div>`;
+  return `<div class="covu"><div class="covu-h"><div class="u"><b>${esc(u.unitCode)}</b>${esc(u.unitTitle || '')}</div><div class="n">${u.done}/${u.total}</div></div><div class="tiles">${tiles}</div></div>`;
 }
 function uEstimate(u: CoverageUnit): number {
   const rows = Math.max(1, Math.ceil(u.acs.length / 39));
@@ -512,7 +527,7 @@ function contentsPage(
   const unitRows = units
     .map((u) => {
       const pct = u.total > 0 ? Math.round((u.done / u.total) * 100) : 0;
-      return `<div class="urow"><div class="uc"><b>${esc(u.unitCode)}</b>${esc(truncate(u.unitTitle || '', 52))}</div><div class="up"><span class="ubar"><i style="width:${pct}%"></i></span><span class="un">${u.done}/${u.total}</span></div></div>`;
+      return `<div class="urow"><div class="uc"><b>${esc(u.unitCode)}</b>${esc(u.unitTitle || '')}</div><div class="up"><span class="ubar"><i style="width:${pct}%"></i></span><span class="un">${u.done}/${u.total}</span></div></div>`;
     })
     .join('');
   return `<div class="page"><div class="content">

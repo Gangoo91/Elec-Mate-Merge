@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -385,11 +384,6 @@ export default function RenewableEnergyModule4Section8() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Integrated commissioning workflow — flowchart of the 8-step sequence. Each step labelled with the applicable standard (BS EN 62446-1 / BS EN IEC 62485 / PAS 63100 / Chapter 82 / Section 712 / EREC G100). Arrows show dependencies (e.g. BS EN 62446-1 tests must pass before hybrid inverter functional). Final step: cert evidence bundle assembly + customer handover."
-            filename="renewable/m4s8-commissioning-workflow.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -543,11 +537,6 @@ export default function RenewableEnergyModule4Section8() {
               <li><strong className="text-white">10. Customer information pack</strong> — operating manual, mode descriptions, maintenance schedule, EPS behaviour, emergency contacts, manufacturer app credentials</li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Cert evidence bundle architecture — three-section layout: (1) DESIGN section: MCS MIS 3002 + Chapter 57 + Chapter 82 design packs; (2) COMMISSIONING section: BS EN 62446-1 + BS EN IEC 62485 + PAS 63100 + EPS + G100 records; (3) HANDOVER section: MCS cert + DNO confirmation + EREC paperwork + warranty registrations + customer information pack + install photographs. Each component labelled with the relevant standard + chapter / regulation. Bundle wraps all into the customer-deliverable package."
-            filename="renewable/m4s8-cert-evidence-bundle.png"
-          />
 
           <InlineCheck {...inlineChecks[6]} />
 

@@ -62,6 +62,7 @@ import { LinkEntitySheet } from '@/components/project-management/LinkEntitySheet
 import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
 import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { ProjectAINotes } from '@/components/project-management/ProjectAINotes';
+import { ProjectSafetyPack } from '@/components/electrician/project-detail/ProjectSafetyPack';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
@@ -1338,6 +1339,11 @@ const ProjectDetailPage = () => {
               )}
             </CollapsibleContent>
           </Collapsible>
+        </motion.div>
+
+        {/* ── Safety Pack Section — every Site Safety doc linked to this project ── */}
+        <motion.div variants={itemVariants}>
+          <ProjectSafetyPack projectId={project.id} />
         </motion.div>
 
         {/* ── Circuit Design Section ── */}

@@ -743,11 +743,6 @@ export default function RenewableEnergyModule4Section5() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Chapter 82 PEI design pack structure — flowchart showing the relationship between PEI design pack and per-domain packs. PEI design pack at top (integration layer) with arrows to: MCS MIS 3002 PV design pack (Section 712); Chapter 57 BESS design pack (Reg 570.x); Section 722 EV charging design pack; EREC G98/G99/G100 paperwork; PAS 63100 BESS installation spec; manufacturer compliance statements (hybrid inverter / BESS / EV charger / SPDs / etc.). Cert evidence bundle wraps all of these into the customer handover."
-            filename="renewable/m4s5-pei-design-pack-structure.png"
-          />
-
           <SectionRule />
 
           <ContentEyebrow>What it looks like in the wild</ContentEyebrow>

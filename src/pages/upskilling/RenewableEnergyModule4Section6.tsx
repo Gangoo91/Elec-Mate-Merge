@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { EpsSld } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -370,10 +370,7 @@ export default function RenewableEnergyModule4Section6() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="EPS architecture diagram — hybrid PV+BESS install. DNO supply → main isolator → EPS contactor (4-pole) → split into (a) protected loads circuit (EPS-output side) + (b) non-protected loads circuit (AC-OUT side). Hybrid inverter: grid-tied AC output to non-protected side; EPS-output stage to protected loads + EPS contactor logic. BESS DC bus + PV DC bus into inverter. Annotated with mode transitions: grid-following (DNO-tracking) ↔ grid-forming (local V/freq generation)."
-            filename="renewable/m4s6-eps-architecture.png"
-          />
+          <EpsSld caption="A backup (EPS) arrangement — on a grid outage the inverter switches to grid-forming and powers only the protected consumer unit; non-essential loads are shed." />
 
           <InlineCheck {...inlineChecks[0]} />
 

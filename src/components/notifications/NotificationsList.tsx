@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { NotificationCard } from './NotificationCard';
 import { NotificationFilters } from './NotificationFilters';
 import { Notification, NotificationStatus } from '@/hooks/useNotifications';
 import { getDaysUntilDeadline } from '@/utils/notificationHelper';
-// Icons removed — clean text-only design
 
 interface NotificationsListProps {
   notifications: Notification[];
@@ -24,6 +25,7 @@ export const NotificationsList = ({
   showNiceic = true,
   showNapit = true,
 }: NotificationsListProps) => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<NotificationStatus | 'all'>('all');
   const [reportTypeFilter, setReportTypeFilter] = useState('all');
@@ -103,6 +105,14 @@ export const NotificationsList = ({
             <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 max-w-sm mx-auto">
               No Part P notifications pending. When you complete notifiable work, it will appear here.
             </p>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/inspection-testing?section=certificates')}
+              className="mt-4 inline-flex items-center gap-1.5 h-10 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-transform active:scale-[0.98]"
+            >
+              Create a notifiable cert
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45 text-center mb-3">

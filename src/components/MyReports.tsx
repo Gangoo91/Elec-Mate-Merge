@@ -636,6 +636,37 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   };
 
   // Download PDF handler (replaces preview - viewer was unreliable)
+  // Share the cert's PDF straight to a client — native share sheet where
+  // supported, clipboard fallback otherwise. Uses the stored pdf_url, so it's
+  // offered only on completed certs (which have a generated PDF).
+  const handleSharePdf = async (report: CloudReport | null) => {
+    if (!report) return;
+    setActionSheetOpen(false);
+    const url = report.pdf_url;
+    const client = (report.data?.clientName as string | undefined) || '';
+    const title = `${report.report_type.replace(/-/g, ' ').toUpperCase()}${client ? ` — ${client}` : ''}`;
+    if (!url) {
+      toast({
+        title: 'No PDF to share yet',
+        description: 'Open the cert and download the PDF once, then share it.',
+      });
+      return;
+    }
+    try {
+      if (typeof navigator !== 'undefined' && navigator.share) {
+        await navigator.share({ title, text: 'Electrical certificate', url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      toast({ title: 'Link copied', description: 'Certificate PDF link copied to clipboard.' });
+    } catch (err) {
+      // AbortError = user dismissed the share sheet; only surface real errors.
+      if (err instanceof Error && err.name !== 'AbortError') {
+        toast({ title: 'Could not share', description: err.message, variant: 'destructive' });
+      }
+    }
+  };
+
   const handleDownloadPdf = async (reportId: string) => {
     setActionSheetOpen(false);
 
@@ -1319,6 +1350,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             handleDownloadPdf(selectedCertificate.report_id);
           }
         }}
+        onShare={
+          selectedCertificate?.status === 'completed'
+            ? () => handleSharePdf(selectedCertificate)
+            : undefined
+        }
         onConvertToEICR={() => {
           if (selectedCertificate) {
             handleExportToEICR(selectedCertificate.report_id);
