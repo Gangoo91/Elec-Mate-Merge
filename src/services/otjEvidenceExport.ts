@@ -1,18 +1,16 @@
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import Papa from 'papaparse';
-import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { buildOtjHtml } from './otjEvidenceHtml';
 
 /* ==========================================================================
-   OTJ evidence pack export. The PDF is rendered from the editorial HTML
-   template (otjEvidenceHtml) via html2canvas → jsPDF, so the in-app output
-   matches the headless-Chrome design preview. CSV via papaparse.
+   OTJ evidence pack export. The PDF is produced by rendering the editorial
+   HTML template (otjEvidenceHtml) through the browser's own print engine
+   (window.print on an off-screen iframe), so the output is vector-crisp and
+   pixel-matches the design — html2canvas was dropping inter-word spaces and
+   softening text. The user picks "Save as PDF" in the print dialog. CSV via
+   papaparse.
    ========================================================================== */
 
 const LOGO_URL = '/images/elec-mate-logo-512.png';
-const PAGE_PX_W = 794; // A4 @ 96dpi
-const PAGE_PX_H = 1123;
 
 export interface OtjExportEntry {
   date: string;
@@ -83,62 +81,58 @@ export async function exportOtjEvidencePack(data: OtjExportData): Promise<void> 
   });
   const html = buildOtjHtml(data, logo, generated);
 
-  // Render the template inside an isolated off-screen iframe so the app's
-  // global CSS can't bleed into the document.
+  // Off-screen iframe carrying just the document; we print THAT window so the
+  // browser's print engine (not the app UI) renders the A4 pages.
   const iframe = document.createElement('iframe');
   iframe.setAttribute('aria-hidden', 'true');
-  iframe.style.cssText = `position:fixed;left:-10000px;top:0;width:${PAGE_PX_W}px;height:${PAGE_PX_H}px;border:0;background:#fff`;
+  iframe.style.cssText =
+    'position:fixed;right:0;bottom:0;width:0;height:0;border:0;overflow:hidden';
   document.body.appendChild(iframe);
 
-  try {
-    const idoc = iframe.contentDocument;
-    if (!idoc) throw new Error('Could not prepare the document');
-    idoc.open();
-    idoc.write(html);
-    idoc.close();
-
-    // Let layout settle, then wait for fonts + images.
-    await new Promise((r) => setTimeout(r, 60));
-    try {
-      await (idoc as Document & { fonts?: { ready?: Promise<unknown> } }).fonts?.ready;
-    } catch {
-      /* fonts API optional */
-    }
-    await Promise.all(
-      Array.from(idoc.images).map((im) =>
-        im.complete
-          ? Promise.resolve()
-          : new Promise<void>((res) => {
-              im.onload = () => res();
-              im.onerror = () => res();
-            })
-      )
-    );
-
-    const pages = Array.from(idoc.querySelectorAll<HTMLElement>('.page'));
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    for (let i = 0; i < pages.length; i++) {
-      const canvas = await html2canvas(pages[i], {
-        scale: 2,
-        backgroundColor: '#ffffff',
-        width: PAGE_PX_W,
-        height: PAGE_PX_H,
-        windowWidth: PAGE_PX_W,
-        windowHeight: PAGE_PX_H,
-        useCORS: true,
-        logging: false,
-      });
-      const img = canvas.toDataURL('image/jpeg', 0.92);
-      if (i > 0) pdf.addPage();
-      pdf.addImage(img, 'JPEG', 0, 0, 210, 297);
-    }
-
-    const stamp = new Date().toISOString().split('T')[0];
-    const safe = data.learner.name.replace(/[^a-zA-Z0-9]/g, '_') || 'Apprentice';
-    await saveOrSharePdf(pdf, `${safe}_Off-the-Job_Record_${stamp}.pdf`);
-  } finally {
+  const idoc = iframe.contentDocument;
+  const win = iframe.contentWindow;
+  if (!idoc || !win) {
     document.body.removeChild(iframe);
+    throw new Error('Could not prepare the document for printing');
   }
+
+  idoc.open();
+  idoc.write(html);
+  idoc.close();
+
+  // Wait for layout, fonts and the embedded images before printing.
+  await new Promise((r) => setTimeout(r, 80));
+  try {
+    await idoc.fonts?.ready;
+  } catch {
+    /* fonts API optional */
+  }
+  await Promise.all(
+    Array.from(idoc.images).map((im) =>
+      im.complete
+        ? Promise.resolve()
+        : new Promise<void>((res) => {
+            im.onload = () => res();
+            im.onerror = () => res();
+          })
+    )
+  );
+
+  let removed = false;
+  const cleanup = () => {
+    if (removed) return;
+    removed = true;
+    try {
+      document.body.removeChild(iframe);
+    } catch {
+      /* already gone */
+    }
+  };
+  win.onafterprint = () => setTimeout(cleanup, 200);
+  win.focus();
+  win.print();
+  // Safety net if afterprint never fires (some browsers).
+  setTimeout(cleanup, 60_000);
 }
 
 export function exportOtjCsv(data: OtjExportData): void {

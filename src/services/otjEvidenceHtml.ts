@@ -20,7 +20,11 @@ const esc = (s: unknown) =>
 const fmtDate = (iso: string | null) => {
   if (!iso) return '—';
   try {
-    return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(iso).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   } catch {
     return iso;
   }
@@ -54,7 +58,7 @@ html,body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',R
 .lede{font-size:14px;color:#8b97a8;margin-top:10px;max-width:520px;line-height:1.55}
 .chips{margin-top:22px;display:flex;gap:9px}
 .chip{background:#1e293b;color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.08em;padding:9px 15px;border-radius:999px}
-.cover-stats{display:flex;gap:0;border-top:1px solid #243248;border-bottom:1px solid #243248}
+.cover-stats{display:flex;gap:0;margin-top:30px;border-top:1px solid #243248;border-bottom:1px solid #243248}
 .cstat{flex:1;padding:18px 0}
 .cstat + .cstat{border-left:1px solid #243248;padding-left:22px}
 .cstat .k{font-size:10px;font-weight:700;letter-spacing:.14em;color:#7c889b;text-transform:uppercase;line-height:1.3;min-height:26px}
@@ -65,8 +69,8 @@ html,body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',R
 .cover-foot .r{color:#f5c518}
 
 /* ---- content pages ---- */
-.content{height:100%;padding:40px 44px 56px;display:flex;flex-direction:column}
-.chead{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.content{height:100%;padding:34px 40px 32px;display:flex;flex-direction:column}
+.chead{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
 .chead .logo-sm{width:34px;height:34px;border-radius:8px;display:block}
 .chead .tag{font-size:11px;font-weight:800;letter-spacing:.2em;color:#94a3b8}
 .chip-dark{display:inline-block;background:#0d1628;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.14em;padding:6px 12px;border-radius:7px}
@@ -124,7 +128,10 @@ function coverPage(d: OtjExportData, logo: string): string {
       ? `${d.learner.standard} (${d.learner.level})`
       : d.learner.standard
     : 'Apprenticeship off-the-job training';
-  const pct = d.totalTargetHours > 0 ? Math.min(Math.round((d.summary.defensibleHours / d.totalTargetHours) * 100), 100) : 0;
+  const pct =
+    d.totalTargetHours > 0
+      ? Math.min(Math.round((d.summary.defensibleHours / d.totalTargetHours) * 100), 100)
+      : 0;
   return `
   <div class="page"><div class="cover">
     <div class="cover-top">
@@ -142,12 +149,12 @@ function coverPage(d: OtjExportData, logo: string): string {
         <span class="chip">${pct}% BANKED</span>
         <span class="chip">VERIFIED RECORD</span>
       </div>
-    </div>
-    <div class="cover-stats">
-      <div class="cstat"><div class="k">Banked — counts to gateway</div><div class="v accent">${d.summary.defensibleHours.toFixed(1)}h</div></div>
-      <div class="cstat"><div class="k">Off-the-job required</div><div class="v">${d.totalTargetHours}h</div></div>
-      <div class="cstat"><div class="k">Awaiting verification</div><div class="v">${d.summary.pendingHours.toFixed(1)}h</div></div>
-      <div class="cstat"><div class="k">Verification rate</div><div class="v">${d.summary.verificationRatePct}%</div></div>
+      <div class="cover-stats">
+        <div class="cstat"><div class="k">Banked — counts to gateway</div><div class="v accent">${d.summary.defensibleHours.toFixed(1)}h</div></div>
+        <div class="cstat"><div class="k">Off-the-job required</div><div class="v">${d.totalTargetHours}h</div></div>
+        <div class="cstat"><div class="k">Awaiting verification</div><div class="v">${d.summary.pendingHours.toFixed(1)}h</div></div>
+        <div class="cstat"><div class="k">Verification rate</div><div class="v">${d.summary.verificationRatePct}%</div></div>
+      </div>
     </div>
     <div class="cover-foot"><span class="l">YOUR TRADE. YOUR APP.</span><span class="r">ELEC-MATE.COM</span></div>
   </div></div>`;
@@ -163,10 +170,24 @@ function sectionHead(chip: string, title: string, sub?: string): string {
   return `<div><span class="chip-dark">${esc(chip.toUpperCase())}</span><div class="h2">${esc(title)}</div><div class="rule2"></div>${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div>`;
 }
 
-function detailsPage(d: OtjExportData, logo: string, page: number, total: number, generated: string): string {
-  const std = d.learner.standard ? (d.learner.level ? `${d.learner.standard} (${d.learner.level})` : d.learner.standard) : '—';
-  const pct = d.totalTargetHours > 0 ? Math.min(Math.round((d.summary.defensibleHours / d.totalTargetHours) * 100), 100) : 0;
-  const row = (k: string, v: string) => `<div class="row"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`;
+function detailsPage(
+  d: OtjExportData,
+  logo: string,
+  page: number,
+  total: number,
+  generated: string
+): string {
+  const std = d.learner.standard
+    ? d.learner.level
+      ? `${d.learner.standard} (${d.learner.level})`
+      : d.learner.standard
+    : '—';
+  const pct =
+    d.totalTargetHours > 0
+      ? Math.min(Math.round((d.summary.defensibleHours / d.totalTargetHours) * 100), 100)
+      : 0;
+  const row = (k: string, v: string) =>
+    `<div class="row"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`;
   return `
   <div class="page"><div class="content">
     ${chead(logo)}
@@ -193,7 +214,14 @@ function detailsPage(d: OtjExportData, logo: string, page: number, total: number
   </div></div>`;
 }
 
-function logPage(rows: OtjExportEntry[], d: OtjExportData, logo: string, page: number, total: number, partLabel: string): string {
+function logPage(
+  rows: OtjExportEntry[],
+  d: OtjExportData,
+  logo: string,
+  page: number,
+  total: number,
+  partLabel: string
+): string {
   const body = rows
     .map(
       (e) => `<tr>
@@ -219,7 +247,13 @@ function logPage(rows: OtjExportEntry[], d: OtjExportData, logo: string, page: n
   </div></div>`;
 }
 
-function signoffPage(rows: OtjVerification[], logo: string, page: number, total: number, isEmpty: boolean): string {
+function signoffPage(
+  rows: OtjVerification[],
+  logo: string,
+  page: number,
+  total: number,
+  isEmpty: boolean
+): string {
   const inner = isEmpty
     ? `<div class="empty">No manual sign-offs recorded yet. In-app activity is system-attested automatically; tutor and employer verifications appear here once recorded.</div>`
     : `<table>
@@ -247,10 +281,18 @@ function signoffPage(rows: OtjVerification[], logo: string, page: number, total:
   </div></div>`;
 }
 
-export function buildOtjHtml(data: OtjExportData, logoDataUrl: string, generatedLabel: string): string {
+export function buildOtjHtml(
+  data: OtjExportData,
+  logoDataUrl: string,
+  generatedLabel: string
+): string {
   const logEntries = data.entries.length ? data.entries : [];
-  const logChunks = chunk(logEntries, LOG_ROWS_PER_PAGE).filter((c) => c.length || data.entries.length === 0);
-  const signoffChunks = data.verifications.length ? chunk(data.verifications, SIGNOFF_ROWS_PER_PAGE) : [[]];
+  const logChunks = chunk(logEntries, LOG_ROWS_PER_PAGE).filter(
+    (c) => c.length || data.entries.length === 0
+  );
+  const signoffChunks = data.verifications.length
+    ? chunk(data.verifications, SIGNOFF_ROWS_PER_PAGE)
+    : [[]];
 
   // total content pages = details(1) + log pages + signoff pages
   const contentTotal = 1 + logChunks.length + signoffChunks.length;
@@ -266,5 +308,6 @@ export function buildOtjHtml(data: OtjExportData, logoDataUrl: string, generated
     pages.push(signoffPage(c, logoDataUrl, p++, contentTotal, data.verifications.length === 0));
   });
 
-  return `<!doctype html><html><head><meta charset="utf-8"/><style>@page{size:794px 1123px;margin:0}${STYLES}</style></head><body>${pages.join('')}</body></html>`;
+  const title = `${titleCase(data.learner.name || 'Apprentice')} - Off-the-Job Training Record`;
+  return `<!doctype html><html><head><meta charset="utf-8"/><title>${esc(title)}</title><style>@page{size:794px 1123px;margin:0}${STYLES}</style></head><body>${pages.join('')}</body></html>`;
 }
