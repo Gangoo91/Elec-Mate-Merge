@@ -98,7 +98,9 @@ const formatDate = (timestamp: number | string) => {
 };
 
 /**
- * Certificate card — HubCard style with gradient accent, swipeable
+ * Certificate card — editorial tile (mirrors DocCard on Labels & Warnings):
+ * status accent dot + mono type badge, big tracking-tight title, address, and
+ * a hairline footer with the meta line + a single yellow "Open →". Swipeable.
  */
 export const CertificateCard: React.FC<CertificateCardProps> = ({
   certificate,
@@ -161,7 +163,10 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         </span>
       </div>
 
-      <h3 className="mt-3 text-[17px] sm:text-[18px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors truncate">
+      <h3
+        title={title}
+        className="mt-3 text-[17px] sm:text-[18px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors truncate"
+      >
         {title}
       </h3>
       <p
@@ -171,13 +176,16 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         )}
       >
         <MapPin className="h-3 w-3 shrink-0" aria-hidden />
-        <span className={cn('truncate', !certificate.installationAddress && 'italic')}>
+        <span
+          title={certificate.installationAddress || undefined}
+          className={cn('truncate', !certificate.installationAddress && 'italic')}
+        >
           {certificate.installationAddress || 'No address'}
         </span>
       </p>
 
-      <div className="mt-3.5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.06]">
-        <span className="text-[11px] uppercase tracking-[0.1em] text-white/45 truncate">
+      <div className="mt-3 flex items-center justify-between gap-3">
+        <span className="min-w-0 truncate text-[11px] uppercase tracking-[0.1em] text-white/45">
           {statusLabel}
           <span className="mx-1.5 text-white/20">·</span>
           <span className="normal-case tracking-normal tabular-nums">
@@ -185,8 +193,8 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </span>
         </span>
         <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow shrink-0">
-          {canConvert ? 'Convert' : 'Open'}
-          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+          {canConvert ? 'Convert to EICR' : 'Open'}
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </span>
       </div>
     </button>

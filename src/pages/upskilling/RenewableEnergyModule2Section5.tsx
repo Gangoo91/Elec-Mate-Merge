@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { InverterTopologies } from '@/components/study-centre/diagrams/renewableM2';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -513,15 +513,7 @@ export default function RenewableEnergyModule2Section5() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Four inverter topologies side-by-side — block diagrams of: (1) string inverter (modules → DC string → DC isolator → string inverter → AC consumer unit); (2) microinverter (modules with rear-mounted microinverters → AC trunk → consumer unit); (3) power optimiser (modules with rear-mounted optimisers → fixed-voltage DC string → central inverter → AC consumer unit); (4) hybrid inverter (PV string + battery → hybrid inverter → AC consumer unit + backup port)."
-            filename="renewable/m2s5-inverter-topologies.png"
-          />
-
-          <DiagramPlaceholder
-            caption="Engineering Mindset video — &lsquo;String inverter vs microinverter&rsquo; or &lsquo;How solar inverters work&rsquo;. Animated walk-through of the four topologies and their use cases. Recommended companion to this section."
-            filename="renewable/m2s5-engineering-mindset-inverter-video.placeholder"
-          />
+          <InverterTopologies caption="The four inverter topologies compared — string, microinverter, power optimiser and hybrid — on conversion point, shade tolerance, monitoring and cost." />
 
           <InlineCheck {...inlineChecks[0]} />
 

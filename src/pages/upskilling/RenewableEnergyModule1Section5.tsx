@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { DnoDecisionTree } from '@/components/study-centre/diagrams/renewableM1';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -385,10 +385,7 @@ export default function RenewableEnergyModule1Section5() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="DNO connection decision tree — Is the inverter ≤ 16 A per phase? Yes → G98 fit-and-notify. No → G99 apply-and-wait. Is export limitation needed to fit unconstrained connection capacity? Yes → add G100 documentation. Capacity-bound (ANM) region? Expect 12+ month timeline regardless."
-            filename="renewable/m1s5-dno-decision-tree.png"
-          />
+          <DnoDecisionTree caption="Choosing the DNO connection route under EREC G98 / G99 / G100." />
 
           <InlineCheck {...inlineChecks[0]} />
 

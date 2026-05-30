@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -431,11 +430,6 @@ export default function RenewableEnergyModule5Section4() {
             source="BS 7671:2018+A4:2026 · Reg 570.6.7.203 — PAS 63100 reference for dwellings"
             clause="Stationary secondary batteries in dwellings shall be installed in a suitable location taking account of manufacturer&rsquo;s instructions and PAS 63100. In other premises, the location of storage batteries and fire protection requirements shall be selected taking into account the fire strategy for the premises."
             meaning="Reg 570.6.7.203 is the regulatory anchor for PAS 63100:2024 in UK domestic BESS installs. &ldquo;Taking account of&rdquo; means both manufacturer instructions AND PAS 63100 — both must be satisfied. For dwellings: PAS 63100 is the operational rulebook. For other premises (commercial, industrial, multi-occupancy): the building&rsquo;s fire strategy is the reference; PAS 63100 doesn&rsquo;t directly apply but its principles inform best practice. Cert evidence bundle for dwelling install records both: PAS 63100 compliance evidence (location, clearances, fire detection, signage) AND manufacturer install instructions evidence (clearances, mounting, environmental)."
-          />
-
-          <DiagramPlaceholder
-            caption="Standards stack diagram for UK domestic LFP BESS — vertical layer cake. Bottom layer: BS EN 62619 (cell + pack safety, the BATTERY is safe). Second layer: BS EN IEC 62485 series — Part -1 (general safety) + Part -5 (Li-ion stationary, the INSTALL is safe). Third layer: BS 7671:2018+A4:2026 Chapter 57 (regulatory framework, Reg 570.x). Fourth layer: BS 7671 Chapter 82 (PEI integration, Reg 826.x) where hybrid PV+BESS or multi-source. Fifth layer: PAS 63100:2024 (UK domestic install specification). Sixth layer: BS 5839-6 (fire detection grades). Top layer: Approved Document B (Building Regulations Part B, fire safety). Plus MCS MIS 3002 sidebar where grant-funded. Cert evidence bundle integrates all layers."
-            filename="renewable/m5s4-standards-stack.png"
           />
 
           <InlineCheck {...inlineChecks[1]} />

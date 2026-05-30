@@ -21,6 +21,7 @@ import {
 } from '@/components/college/primitives';
 import { SafetyMasthead } from '../common/SafetyModuleShell';
 import { ReadinessGate } from '../common/ReadinessGate';
+import { JobLinkField } from '../common/JobLinkField';
 
 // Map pre-use check equipment types to equipment register categories
 const CHECK_TYPE_TO_CATEGORIES: Record<string, string[]> = {
@@ -79,6 +80,8 @@ export function ChecklistForm({
   const [inspectorSigDate, setInspectorSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const createCheck = useCreatePreUseCheck();
 
   // Equipment register integration
@@ -129,6 +132,7 @@ export function ChecklistForm({
       photos: photoUrls,
       checked_by: inspectorSigName.trim() || undefined,
       signature: inspectorSigData || undefined,
+      job_id: linkedJobId,
     });
     setPhotoUrls([]);
     onSubmit();
@@ -250,6 +254,14 @@ export function ChecklistForm({
             onChange={setSiteAddress}
             placeholder="e.g. 14 King Street, London"
             label="Site address (optional)"
+          />
+          <JobLinkField
+            jobId={linkedJobId}
+            jobTitle={linkedJobTitle}
+            onSelect={(id, title) => {
+              setLinkedJobId(id);
+              setLinkedJobTitle(title);
+            }}
           />
         </FormCard>
 

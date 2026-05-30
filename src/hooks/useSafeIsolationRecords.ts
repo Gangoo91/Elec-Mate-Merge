@@ -30,6 +30,7 @@ export interface SafeIsolationRecord {
   user_id: string;
   rams_id: string | null;
   permit_id: string | null;
+  job_id: string | null;
   site_address: string;
   circuit_description: string;
   distribution_board: string | null;
@@ -138,6 +139,7 @@ export function useCreateIsolationRecord() {
       voltage_detector_calibration_date?: string;
       rams_id?: string;
       permit_id?: string;
+      job_id?: string;
       photos?: string[];
       isolator_name?: string;
       isolator_signature?: string;

@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { SelfConsumptionKnee } from '@/components/study-centre/diagrams/renewableM5';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -580,10 +580,7 @@ export default function RenewableEnergyModule5Section6() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Self-consumption curve plot. X-axis: BESS nameplate kWh (0, 4.5, 9.5, 13.5, 19, 27). Y-axis: PV self-consumption (%). Curve starts at ~30% (PV-only, no BESS), rises steeply to ~73% at 9.5 kWh (the KNEE POINT — circled), then flattens: 79% at 13.5 kWh, 81% at 19 kWh, 82% at 27 kWh. Annotation: marginal £/kWh-uplift drops from ~£8/kWh in the steep section to ~£0.50/kWh past the knee. The recommendation arrow points at 9.5 kWh."
-            filename="renewable/m5s6-knee-point-curve.png"
-          />
+          <SelfConsumptionKnee caption="Self-consumption rises sharply with the first few kWh of storage, then flattens — past the knee, a bigger battery adds little, so size to the knee not beyond it." />
 
           <InlineCheck {...inlineChecks[3]} />
 

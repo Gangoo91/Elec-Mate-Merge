@@ -1173,10 +1173,19 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 />
               )
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2.5">
+                {/* Editorial section label — mirrors HubSection on the I&T pages */}
+                <div className="flex items-end justify-between gap-3 px-0.5">
+                  <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                    {typeFilter === 'all' ? 'Certificates' : typeFilter.replace(/-/g, ' ')}
+                  </h2>
+                  <span className="text-[10.5px] text-white/30 tabular-nums">
+                    {sortedReports.length}
+                  </span>
+                </div>
                 <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden">
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-                  <div className="divide-y divide-white/[0.14]">
+                  <div className="divide-y divide-white/[0.18]">
                   {sortedReports.map((report) => (
                   <CertificateCard
                     key={report.report_id}

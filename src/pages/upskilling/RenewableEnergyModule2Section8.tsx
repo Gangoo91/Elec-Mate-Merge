@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { ResidentialPvSld } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -405,10 +405,7 @@ export default function RenewableEnergyModule2Section8() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Standard residential PV SLD example — single string of 12 modules → DC isolator → string inverter → AC isolator → dedicated RCBO at consumer unit → grid. All components labelled with type, rating, and key parameters (STC V_oc, cold-day V_oc, inverter MPPT range, AC output capacity). Reference SLD for a typical 4.8 kWp domestic install."
-            filename="renewable/m2s8-residential-sld-example.png"
-          />
+          <ResidentialPvSld caption="A reference residential PV + storage single-line — DNO supply through the meter and consumer unit, feeding the hybrid inverter, EV charger, heat pump and final circuits. This is the drawing you reproduce on the EIC." />
 
           <InlineCheck {...inlineChecks[0]} />
 
@@ -486,11 +483,6 @@ export default function RenewableEnergyModule2Section8() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="PV SLD symbol library — visual reference for the 12 most common symbols (PV module, string, DC isolator, inverter, AC isolator, fuse, MCB / RCBO, RCD with type annotation, SPD, meter, battery, grid connection). Each labelled with the BS EN 60617 / IEC 60617 reference and the typical annotation conventions."
-            filename="renewable/m2s8-sld-symbol-library.png"
-          />
 
           <InlineCheck {...inlineChecks[2]} />
 
@@ -677,11 +669,6 @@ export default function RenewableEnergyModule2Section8() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Three SLD patterns side-by-side — Pattern 1 (residential single-string PV), Pattern 2 (residential hybrid PV+BESS), Pattern 3 (commercial multi-MPPT PV+BESS+EV). Each pattern shown at appropriate detail with the BS 7671 chapter cross-references annotated (Section 712 for PV, Chapter 57 for BESS, Section 722 for EV, Section 551 for generator interface, Chapter 82 for PEI system design)."
-            filename="renewable/m2s8-three-sld-patterns.png"
-          />
 
           <InlineCheck {...inlineChecks[5]} />
 

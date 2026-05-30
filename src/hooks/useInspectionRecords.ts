@@ -18,6 +18,7 @@ export interface InspectionRecord {
   na_count: number;
   total_items: number;
   additional_notes: string | null;
+  job_id: string | null;
   pdf_url: string | null;
   photos: string[] | null;
   inspector_signature: string | null;

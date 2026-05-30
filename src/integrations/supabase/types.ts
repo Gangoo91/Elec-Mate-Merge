@@ -31,6 +31,7 @@ export type Database = {
       }
       accident_records: {
         Row: {
+          job_id: string | null
           activity_at_time: string | null
           additional_notes: string | null
           archived_at: string | null
@@ -86,6 +87,7 @@ export type Database = {
           witnesses: string | null
         }
         Insert: {
+          job_id?: string | null
           activity_at_time?: string | null
           additional_notes?: string | null
           archived_at?: string | null
@@ -141,6 +143,7 @@ export type Database = {
           witnesses?: string | null
         }
         Update: {
+          job_id?: string | null
           activity_at_time?: string | null
           additional_notes?: string | null
           archived_at?: string | null
@@ -6589,6 +6592,7 @@ export type Database = {
       }
       coshh_assessments: {
         Row: {
+          job_id: string | null
           assessed_by: string
           assessment_date: string
           assessor_signature: string | null
@@ -6628,6 +6632,7 @@ export type Database = {
           wel_oel_limit: string | null
         }
         Insert: {
+          job_id?: string | null
           assessed_by: string
           assessment_date?: string
           assessor_signature?: string | null
@@ -6667,6 +6672,7 @@ export type Database = {
           wel_oel_limit?: string | null
         }
         Update: {
+          job_id?: string | null
           assessed_by?: string
           assessment_date?: string
           assessor_signature?: string | null
@@ -12533,6 +12539,7 @@ export type Database = {
       }
       fire_watch_records: {
         Row: {
+          job_id: string | null
           check_in_interval_minutes: number | null
           check_ins: Json | null
           checklist: Json | null
@@ -12556,6 +12563,7 @@ export type Database = {
           wind_conditions: string | null
         }
         Insert: {
+          job_id?: string | null
           check_in_interval_minutes?: number | null
           check_ins?: Json | null
           checklist?: Json | null
@@ -12579,6 +12587,7 @@ export type Database = {
           wind_conditions?: string | null
         }
         Update: {
+          job_id?: string | null
           check_in_interval_minutes?: number | null
           check_ins?: Json | null
           checklist?: Json | null
@@ -13717,6 +13726,7 @@ export type Database = {
       }
       inspection_records: {
         Row: {
+          job_id: string | null
           additional_notes: string | null
           created_at: string
           custom_template_id: string | null
@@ -13743,6 +13753,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          job_id?: string | null
           additional_notes?: string | null
           created_at?: string
           custom_template_id?: string | null
@@ -13769,6 +13780,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          job_id?: string | null
           additional_notes?: string | null
           created_at?: string
           custom_template_id?: string | null
@@ -18066,6 +18078,7 @@ export type Database = {
       }
       near_miss_reports: {
         Row: {
+          job_id: string | null
           assigned_to: string | null
           briefed_to_team: boolean | null
           briefing_created_at: string | null
@@ -18113,6 +18126,7 @@ export type Database = {
           witnesses: Json | null
         }
         Insert: {
+          job_id?: string | null
           assigned_to?: string | null
           briefed_to_team?: boolean | null
           briefing_created_at?: string | null
@@ -18160,6 +18174,7 @@ export type Database = {
           witnesses?: Json | null
         }
         Update: {
+          job_id?: string | null
           assigned_to?: string | null
           briefed_to_team?: boolean | null
           briefing_created_at?: string | null
@@ -19288,6 +19303,7 @@ export type Database = {
           id: string
           issuer_name: string
           issuer_signature: string | null
+          job_id: string | null
           linked_rams_id: string | null
           linked_rams_title: string | null
           location: string
@@ -19327,6 +19343,7 @@ export type Database = {
           id?: string
           issuer_name: string
           issuer_signature?: string | null
+          job_id?: string | null
           linked_rams_id?: string | null
           linked_rams_title?: string | null
           location: string
@@ -19366,6 +19383,7 @@ export type Database = {
           id?: string
           issuer_name?: string
           issuer_signature?: string | null
+          job_id?: string | null
           linked_rams_id?: string | null
           linked_rams_title?: string | null
           location?: string
@@ -20877,6 +20895,7 @@ export type Database = {
       }
       pre_use_checks: {
         Row: {
+          job_id: string | null
           actions_required: string | null
           approval_comments: string | null
           approval_signature: string | null
@@ -20899,6 +20918,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          job_id?: string | null
           actions_required?: string | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -20921,6 +20941,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          job_id?: string | null
           actions_required?: string | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -23918,6 +23939,7 @@ export type Database = {
       }
       safe_isolation_records: {
         Row: {
+          job_id: string | null
           additional_circuits: Json | null
           approval_comments: string | null
           approval_signature: string | null
@@ -23953,6 +23975,7 @@ export type Database = {
           voltage_detector_serial: string | null
         }
         Insert: {
+          job_id?: string | null
           additional_circuits?: Json | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -23988,6 +24011,7 @@ export type Database = {
           voltage_detector_serial?: string | null
         }
         Update: {
+          job_id?: string | null
           additional_circuits?: Json | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -24538,6 +24562,7 @@ export type Database = {
       }
       safety_observations: {
         Row: {
+          job_id: string | null
           campaign_id: string | null
           category: string
           created_at: string | null
@@ -24555,6 +24580,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          job_id?: string | null
           campaign_id?: string | null
           category: string
           created_at?: string | null
@@ -24572,6 +24598,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          job_id?: string | null
           campaign_id?: string | null
           category?: string
           created_at?: string | null
@@ -25384,6 +25411,7 @@ export type Database = {
       }
       site_diary_entries: {
         Row: {
+          job_id: string | null
           created_at: string
           date: string
           id: string
@@ -25402,6 +25430,7 @@ export type Database = {
           what_i_learned: string | null
         }
         Insert: {
+          job_id?: string | null
           created_at?: string
           date: string
           id?: string
@@ -25420,6 +25449,7 @@ export type Database = {
           what_i_learned?: string | null
         }
         Update: {
+          job_id?: string | null
           created_at?: string
           date?: string
           id?: string

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { type FireWatchRecord, type FireWatchChecklistItem } from '@/hooks/useFireWatchRecords';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import {
   FilterBar,
@@ -94,6 +95,8 @@ function RecordRow({
   const [expanded, setExpanded] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const { data: jobs = [] } = useSparkProjects('active');
+  const linkedJobTitle = record.job_id ? jobs.find((j) => j.id === record.job_id)?.title ?? null : null;
 
   const checklist: FireWatchChecklistItem[] = Array.isArray(record.checklist)
     ? record.checklist
@@ -162,6 +165,10 @@ function RecordRow({
                     </div>
                   ))}
                 </div>
+              )}
+
+              {record.job_id && (
+                <p className="text-[12px] text-white/55">Project: {linkedJobTitle || 'Linked project'}</p>
               )}
 
               {record.completed_by && (

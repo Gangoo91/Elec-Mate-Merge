@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -415,11 +414,6 @@ export default function RenewableEnergyModule1Section4() {
               marginally cheaper.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="MCS scheme architecture — installer side (MIS 3002–3008, one per LCT technology) and product side (MCS Product Standards / MCS Product List), feeding into the funded-market gates (SEG, BUS, ECO4). TrustMark administers the Consumer Code layer."
-            filename="renewable/m1s4-mcs-architecture.png"
-          />
 
           <InlineCheck {...inlineChecks[1]} />
 

@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -635,11 +634,6 @@ export default function RenewableEnergyModule5Section7() {
           />
 
           <InlineCheck {...inlineChecks[3]} />
-
-          <DiagramPlaceholder
-            caption="BESS commissioning sequence flowchart — 7 ordered steps from left to right. Step 1: Visual + dead-test + AC IR (Reg 643.3 — 500 V DC, 1 MΩ). Step 2: Post-connection 250 V IR (Reg 643.3.3 — 1 MΩ). Step 3: Manufacturer DC commissioning (polarity, voltage, DC IR per BS EN IEC 62485). Step 4: BMS config (DoD cut-off, charge/discharge profile, comms). Step 5: Baseline capacity test (the EICR-reference number). Step 6: Type B RCD operate/trip-time test (Reg 643.7.1). Step 7: SoR + EIC + customer walkthrough. Annotation: each step has a cert evidence bundle deliverable."
-            filename="renewable/m5s7-commissioning-flow.png"
-          />
 
           <SectionRule />
 

@@ -38,6 +38,8 @@ import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
+import { JobLinkField } from './common/JobLinkField';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 // ─── Types ───
 
@@ -87,6 +89,7 @@ interface CompletedInspection {
   na_count: number;
   total_items: number;
   additional_notes: string;
+  job_id: string | null;
   created_at: string;
 }
 
@@ -820,6 +823,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
     na_count: r.na_count,
     total_items: r.total_items,
     additional_notes: r.additional_notes ?? '',
+    job_id: r.job_id ?? null,
     created_at: r.created_at,
   }));
 
@@ -874,6 +878,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  const { data: jobs = [] } = useSparkProjects('active');
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
 
   // ─── Draft Auto-save ───
   const inspectionDraftData = useMemo(
@@ -1075,6 +1083,8 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
     setInspectorSigName('');
     setInspectorSigData('');
     setPhotoUrls([]);
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
   };
 
   const submitInspection = async () => {
@@ -1097,6 +1107,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
         na_count: naCount,
         total_items: totalItems,
         additional_notes: additionalNotes || null,
+        job_id: linkedJobId,
         photos: photoUrls,
         inspector_signature: inspectorSigData || undefined,
         inspector_signature_name: inspectorSigName.trim() || undefined,
@@ -1191,6 +1202,14 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
               placeholder="Site / area"
             />
           </Field>
+          <JobLinkField
+            jobId={linkedJobId}
+            jobTitle={linkedJobTitle}
+            onSelect={(id, title) => {
+              setLinkedJobId(id);
+              setLinkedJobTitle(title);
+            }}
+          />
         </FormCard>
 
         {/* Sections */}
@@ -1764,6 +1783,15 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                       <Eyebrow className="mb-1.5">Additional notes</Eyebrow>
                       <p className="text-[13px] text-white/85 leading-relaxed">
                         {viewingInspection.additional_notes}
+                      </p>
+                    </div>
+                  )}
+
+                  {viewingInspection.job_id && (
+                    <div>
+                      <Eyebrow className="mb-1.5">Linked project</Eyebrow>
+                      <p className="text-[13px] text-white/85 leading-relaxed">
+                        {jobTitleFor(viewingInspection.job_id) ?? 'Linked project'}
                       </p>
                     </div>
                   )}

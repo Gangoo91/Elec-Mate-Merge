@@ -10,6 +10,7 @@ import {
 } from '@/hooks/useElectricianSiteDiary';
 import { useActivePermits } from '@/hooks/usePermitsToWork';
 import { useRAMSDocumentsByStatus } from '@/hooks/useRAMSDocuments';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useFieldValidation } from '@/hooks/useFieldValidation';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
@@ -37,6 +38,7 @@ import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
+import { JobLinkField } from '../common/JobLinkField';
 
 interface ElectricianSiteDiaryProps {
   onBack: () => void;
@@ -97,9 +99,13 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [selectedRamsIds, setSelectedRamsIds] = useState<string[]>([]);
   const [selectedPermitIds, setSelectedPermitIds] = useState<string[]>([]);
   const [recorderSig, setRecorderSig] = useState('');
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
 
   const { data: activePermits = [] } = useActivePermits();
   const { data: approvedRams = [] } = useRAMSDocumentsByStatus('approved');
+  const { data: jobs = [] } = useSparkProjects('active');
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
 
   const { status: draftStatus, recoveredData: recoveredDraft, clearDraft, dismissRecovery: dismissDraft } = useLocalDraft({
     key: 'site-diary',
@@ -153,6 +159,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setSiteAddress(''); setWeather(''); setStartTime(''); setEndTime(''); setPersonnelCount('');
     setWorkCompleted(''); setIssues(''); setMaterialsUsed(''); setNotes(''); setDiaryPhotos([]);
     setSelectedRamsIds([]); setSelectedPermitIds([]); setRecorderSig('');
+    setLinkedJobId(null); setLinkedJobTitle(null);
     clearDraft();
   };
 
@@ -163,6 +170,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setPersonnelCount(entry.personnel_count != null ? String(entry.personnel_count) : '');
     setSelectedRamsIds(entry.rams_ids ?? []);
     setSelectedPermitIds(entry.permit_ids ?? []);
+    setLinkedJobId(entry.job_id ?? null);
+    setLinkedJobTitle(jobTitleFor(entry.job_id ?? null));
     setStartTime(''); setEndTime(''); setWorkCompleted(''); setIssues(''); setMaterialsUsed(''); setNotes(''); setDiaryPhotos([]);
     setShowForm(true);
     haptic.success();
@@ -192,6 +201,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       notes: notes.trim() || null,
       recorder_signature: recorderSig || null,
       recorder_name: null,
+      job_id: linkedJobId,
     });
     haptic.success();
     resetForm();
@@ -382,6 +392,17 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   </FormCard>
                 )}
 
+                <FormCard eyebrow="Project">
+                  <JobLinkField
+                    jobId={linkedJobId}
+                    jobTitle={linkedJobTitle}
+                    onSelect={(id, title) => {
+                      setLinkedJobId(id);
+                      setLinkedJobTitle(title);
+                    }}
+                  />
+                </FormCard>
+
                 <FormCard eyebrow="Evidence & sign-off">
                   <SafetyPhotoCapture photos={diaryPhotos} onPhotosChange={setDiaryPhotos} maxPhotos={5} label="Site photos" />
                   <SignatureField label="Recorder signature" value={recorderSig} onChange={setRecorderSig} />
@@ -421,6 +442,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       if (entry.weather) meta.push(entry.weather);
                       if (entry.start_time || entry.end_time) meta.push(`${entry.start_time ?? '?'}–${entry.end_time ?? '?'}`);
                       if (entry.personnel_count != null) meta.push(`${entry.personnel_count} on site`);
+                      const linkedJob = jobTitleFor(entry.job_id);
+                      if (linkedJob) meta.push(linkedJob);
                       return (
                         <SwipeableListItem
                           key={entry.id}

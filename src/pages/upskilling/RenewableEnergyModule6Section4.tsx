@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -453,11 +452,6 @@ export default function RenewableEnergyModule6Section4() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="DLM topology diagram. Top: DNO supply at 100 A. Meter + Henley block + CU. Incoming tails with CT clamp around them. CU houses: house final circuits + dedicated EV final circuit (Type A RCBO). EV cable to outdoor wallbox. Wallbox connects: AC supply + CT clamp signal + Type 2 connector to vehicle. Annotations: CT clamp measures household total current; wallbox calculates available current and announces via CP PWM to vehicle; vehicle complies. Reg 311.1 max demand calc with Reg 722.311.201 load curtailment via DLM."
-            filename="renewable/m6s4-dlm-topology.png"
-          />
 
           <InlineCheck {...inlineChecks[2]} />
 

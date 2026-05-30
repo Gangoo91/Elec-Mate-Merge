@@ -28,6 +28,7 @@ import { SignatureField } from '../common/SignatureField';
 import { RemoteSignShareSheet } from '../common/RemoteSignShareSheet';
 import { createSafetySignToken, buildSignUrl, useRecordSignatures } from '@/hooks/useRemoteSignToken';
 import { useRequestApproval } from '@/hooks/useSupervisorApproval';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { ReEnergisationSheet } from './ReEnergisationSheet';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
@@ -114,6 +115,8 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const requestApproval = useRequestApproval();
   const updateRecord = useUpdateIsolationRecord();
+  const { data: jobs = [] } = useSparkProjects('active');
+  const linkedJobTitle = record.job_id ? jobs.find((j) => j.id === record.job_id)?.title ?? null : null;
 
   // Inline signature capture state
   const [isolatorName, setIsolatorName] = useState(record.isolator_name || '');
@@ -359,6 +362,9 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               <p className="text-sm text-white/70">{record.circuit_description}</p>
               {record.distribution_board && (
                 <p className="text-sm text-white/70">Board: {record.distribution_board}</p>
+              )}
+              {record.job_id && (
+                <p className="text-sm text-white/70">Project: {linkedJobTitle || 'Linked project'}</p>
               )}
               {record.created_at && (
                 <p className="text-[12px] text-white/55 tabular-nums">

@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { EarthingDecisionTree } from '@/components/study-centre/diagrams/renewableM6';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -445,10 +445,7 @@ export default function RenewableEnergyModule6Section2() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Decision tree for the earthing tree. Top: confirm supply type via DNO + visual + test. If TN-S, use route (b). If TN-C-S (PME): check wallbox model. If wallbox includes OPDD, use route (d). If wallbox doesn’t include OPDD, evaluate dedicated TT electrode for route (c). If neither practical, evaluate (e) with engineering safety case. Annotations: lost-PEN hazard is REAL, RCD is blind to it, OPDD route is preferred for cost and install simplicity."
-            filename="renewable/m6s2-earthing-decision-tree.png"
-          />
+          <EarthingDecisionTree caption="Choosing the EV earthing route on a PME supply — when the PME earth can be used and, when it cannot, which Reg 722.411.4 method (b)–(e) applies." />
 
           <InlineCheck {...inlineChecks[1]} />
 

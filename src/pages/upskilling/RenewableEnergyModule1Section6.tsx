@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -398,11 +397,6 @@ export default function RenewableEnergyModule1Section6() {
               described before the survey took place.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="The LCT site survey checklist — eight standing items every LCT survey must capture, organised in survey order. Supply → DNO precheck → CU readiness → Load projection → Structural / mechanical → Access → Planning → Customer-acknowledged risks. Each item produces a written record."
-            filename="renewable/m1s6-survey-checklist.png"
-          />
 
           <InlineCheck {...inlineChecks[0]} />
 

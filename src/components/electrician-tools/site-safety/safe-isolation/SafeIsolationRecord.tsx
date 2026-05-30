@@ -35,6 +35,7 @@ import { SignatureField } from '../common/SignatureField';
 import { LocationAutoFill } from '../common/LocationAutoFill';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
+import { JobLinkField } from '../common/JobLinkField';
 import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { LoadMoreButton } from '../common/LoadMoreButton';
@@ -97,6 +98,7 @@ interface NewRecordPayload {
   verifier_name?: string;
   verifier_signature?: string;
   permit_id?: string;
+  job_id?: string;
 }
 
 function NewRecordForm({
@@ -112,6 +114,8 @@ function NewRecordForm({
   const [verifierSig, setVerifierSig] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
 
   const validation = useFieldValidation({
     site_address: { required: true, message: 'Site address is required' },
@@ -163,6 +167,7 @@ function NewRecordForm({
       ...(verifierName.trim() ? { verifier_name: verifierName.trim() } : {}),
       ...(verifierSig ? { verifier_signature: verifierSig } : {}),
       ...(selectedPermitId ? { permit_id: selectedPermitId } : {}),
+      ...(linkedJobId ? { job_id: linkedJobId } : {}),
     };
     clearDraft();
     onSubmit(payload);
@@ -191,6 +196,15 @@ function NewRecordForm({
           if (permit?.location && !f.site_address?.value) validation.setValue('site_address', permit.location);
         }}
         label="Link to isolation permit (optional)"
+      />
+
+      <JobLinkField
+        jobId={linkedJobId}
+        jobTitle={linkedJobTitle}
+        onSelect={(id, title) => {
+          setLinkedJobId(id);
+          setLinkedJobTitle(title);
+        }}
       />
 
       <div ref={validation.registerRef('site_address')}>

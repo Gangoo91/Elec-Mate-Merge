@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
   AmendmentDiff,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
@@ -411,11 +410,6 @@ export default function RenewableEnergyModule1Section1() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Worked example — installer ROI on MIS 3003 training: £2,500 course fee + 5–10 days off the tools (~£1,500 lost margin) ≈ £4,000 total cost. Average gross margin per funded heat-pump install at 2026 rates: £3,500–£5,000. Break-even on the first job."
-            filename="renewable/m1s1-mis3003-roi.png"
-          />
-
           <Pullquote>The installer market is supply-constrained — that's the pricing power.</Pullquote>
 
           <RegsCallout
@@ -463,11 +457,6 @@ export default function RenewableEnergyModule1Section1() {
               domestic vs workplace vs public DC fast.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Disaggregation of the 70 GW solar by 2035 target — utility-scale ground-mount, large commercial rooftop, and domestic rooftop as proportional slices."
-            filename="renewable/m1s1-70gw-disaggregation.png"
-          />
 
           <Pullquote>Disaggregate the headline before it informs the business plan.</Pullquote>
 
@@ -644,11 +633,6 @@ export default function RenewableEnergyModule1Section1() {
             source="BS 7671:2018+A4:2026 · Chapter 82 (new in A4) — Prosumer\'s Electrical Installations"
             clause="Chapter 82 is a new chapter providing requirements, measures and recommendations for design, erection and verification of all types of low-voltage electrical installations designated as Prosumer\'s Electrical Installations (PEIs). It applies where local production and/or storage of energy is present in a low-voltage installation. The objective is compatibility with current and future ways to deliver electrical energy from the public network or local sources."
             meaning="Chapter 82 is the regulatory acknowledgement that the hybrid LCT install is a coherent system. Per-technology chapters (712, 722, Chapter 57) still apply at their layer; Chapter 82 adds the system-level discipline. The 19th Edition is expected to deepen the PEI treatment."
-          />
-
-          <DiagramPlaceholder
-            caption="The 19th Edition trajectory — A1:2020 → A2:2022 → A3:2024 → A4:2026 → 19th Edition (committee 2026, consultation 2027–2028, publication 2028–2029, transition 2029–2030). Appendix 17 promoted to Part 8 and Chapter 82 (PEIs) deepened in the new edition."
-            filename="renewable/m1s1-19th-edition-trajectory.png"
           />
 
           <Pullquote>The next revision is the 19th Edition. There is no A5.</Pullquote>

@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -517,11 +516,6 @@ export default function RenewableEnergyModule4Section3() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Off-grid generator fuel-comparison chart — three-column comparison: Diesel (high energy density, 12-24 month shelf, reliable cold-start, UK service network, particulate emissions, fuel waxing risk), LPG (cleaner burn, indoor-safe, long shelf life, lower energy density, pressure-regulation needed, cold-weather vapour-pressure drop), Petrol (small portable use, fast fuel turnover required, volatile storage hazard, cold-start challenges, not recommended for permanent off-grid)."
-            filename="renewable/m4s3-fuel-comparison.png"
-          />
-
           <InlineCheck {...inlineChecks[1]} />
 
           <SectionRule />
@@ -614,11 +608,6 @@ export default function RenewableEnergyModule4Section3() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="ATS integrated vs external — two-panel diagram. Panel 1 (integrated, modern): hybrid inverter with AC-IN (generator), AC-OUT (loads), internal contactor switches between battery-supplied and generator-supplied modes. Panel 2 (external, legacy): separate ATS panel with three feeds — inverter AC-OUT, generator AC-OUT, load. Contactor coil energised by control logic. Annotated with Reg 551.2.4 isolation requirement per source."
-            filename="renewable/m4s3-ats-integrated-vs-external.png"
-          />
 
           <InlineCheck {...inlineChecks[2]} />
 

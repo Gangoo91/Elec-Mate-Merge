@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -379,11 +378,6 @@ export default function RenewableEnergyModule4Section1() {
               (large daytime load, EV charging during day, existing heat pump).
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="PV diverter ecosystem — single-line schematic. PV inverter feeds AC bus; CT clamp on incoming supply tail measures net export; diverter (between AC bus and target loads) modulates power to cascade-priority loads (heat pump → EV → immersion → UFH). Annotated with current flow direction and the import / export decision logic."
-            filename="renewable/m4s1-diverter-ecosystem.png"
-          />
 
           <InlineCheck {...inlineChecks[0]} />
 

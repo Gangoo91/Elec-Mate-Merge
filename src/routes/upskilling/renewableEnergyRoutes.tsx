@@ -479,6 +479,30 @@ const RenewableEnergyModule8Section5 = lazy(() =>
     )
   )
 );
+const RenewableEnergyModule8Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule8Section6',
+      () => import('@/pages/upskilling/RenewableEnergyModule8Section6')
+    )
+  )
+);
+const RenewableEnergyModule8Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule8Section7',
+      () => import('@/pages/upskilling/RenewableEnergyModule8Section7')
+    )
+  )
+);
+const RenewableEnergyModule8Section8 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule8Section8',
+      () => import('@/pages/upskilling/RenewableEnergyModule8Section8')
+    )
+  )
+);
 const RenewableEnergyModule9 = lazy(() =>
   withTimeout(() =>
     trackImport('RenewableEnergyModule9', () => import('@/pages/upskilling/RenewableEnergyModule9'))
@@ -532,11 +556,235 @@ const RenewableEnergyModule9Section6 = lazy(() =>
     )
   )
 );
+const RenewableEnergyModule9Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule9Section7',
+      () => import('@/pages/upskilling/RenewableEnergyModule9Section7')
+    )
+  )
+);
+const RenewableEnergyModule9Section8 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule9Section8',
+      () => import('@/pages/upskilling/RenewableEnergyModule9Section8')
+    )
+  )
+);
 const RenewableEnergyModule10 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'RenewableEnergyModule10',
       () => import('@/pages/upskilling/RenewableEnergyModule10')
+    )
+  )
+);
+const RenewableEnergyModule10Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section1',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section1')
+    )
+  )
+);
+const RenewableEnergyModule10Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section2',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section2')
+    )
+  )
+);
+const RenewableEnergyModule10Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section3',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section3')
+    )
+  )
+);
+const RenewableEnergyModule10Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section4',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section4')
+    )
+  )
+);
+const RenewableEnergyModule10Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section5',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section5')
+    )
+  )
+);
+const RenewableEnergyModule10Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section6',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section6')
+    )
+  )
+);
+const RenewableEnergyModule10Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section7',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section7')
+    )
+  )
+);
+const RenewableEnergyModule10Section8 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule10Section8',
+      () => import('@/pages/upskilling/RenewableEnergyModule10Section8')
+    )
+  )
+);
+const RenewableEnergyModule11 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11',
+      () => import('@/pages/upskilling/RenewableEnergyModule11')
+    )
+  )
+);
+const RenewableEnergyModule11Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section1',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section1')
+    )
+  )
+);
+const RenewableEnergyModule11Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section2',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section2')
+    )
+  )
+);
+const RenewableEnergyModule11Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section3',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section3')
+    )
+  )
+);
+const RenewableEnergyModule11Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section4',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section4')
+    )
+  )
+);
+const RenewableEnergyModule11Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section5',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section5')
+    )
+  )
+);
+const RenewableEnergyModule11Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section6',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section6')
+    )
+  )
+);
+const RenewableEnergyModule11Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section7',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section7')
+    )
+  )
+);
+const RenewableEnergyModule11Section8 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule11Section8',
+      () => import('@/pages/upskilling/RenewableEnergyModule11Section8')
+    )
+  )
+);
+const RenewableEnergyModule12 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12',
+      () => import('@/pages/upskilling/RenewableEnergyModule12')
+    )
+  )
+);
+const RenewableEnergyModule12Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section1',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section1')
+    )
+  )
+);
+const RenewableEnergyModule12Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section2',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section2')
+    )
+  )
+);
+const RenewableEnergyModule12Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section3',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section3')
+    )
+  )
+);
+const RenewableEnergyModule12Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section4',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section4')
+    )
+  )
+);
+const RenewableEnergyModule12Section5 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section5',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section5')
+    )
+  )
+);
+const RenewableEnergyModule12Section6 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section6',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section6')
+    )
+  )
+);
+const RenewableEnergyModule12Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section7',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section7')
+    )
+  )
+);
+const RenewableEnergyModule12Section8 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule12Section8',
+      () => import('@/pages/upskilling/RenewableEnergyModule12Section8')
     )
   )
 );
@@ -776,6 +1024,18 @@ export const renewableEnergyRoutes = (
       path="renewable-energy-module-8-section-5"
       element={<RenewableEnergyModule8Section5 />}
     />
+    <Route
+      path="renewable-energy-module-8-section-6"
+      element={<RenewableEnergyModule8Section6 />}
+    />
+    <Route
+      path="renewable-energy-module-8-section-7"
+      element={<RenewableEnergyModule8Section7 />}
+    />
+    <Route
+      path="renewable-energy-module-8-section-8"
+      element={<RenewableEnergyModule8Section8 />}
+    />
     <Route path="renewable-energy-module-9" element={<RenewableEnergyModule9 />} />
     <Route
       path="renewable-energy-module-9-section-1"
@@ -801,7 +1061,113 @@ export const renewableEnergyRoutes = (
       path="renewable-energy-module-9-section-6"
       element={<RenewableEnergyModule9Section6 />}
     />
+    <Route
+      path="renewable-energy-module-9-section-7"
+      element={<RenewableEnergyModule9Section7 />}
+    />
+    <Route
+      path="renewable-energy-module-9-section-8"
+      element={<RenewableEnergyModule9Section8 />}
+    />
     <Route path="renewable-energy-module-10" element={<RenewableEnergyModule10 />} />
+    <Route
+      path="renewable-energy-module-10-section-1"
+      element={<RenewableEnergyModule10Section1 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-2"
+      element={<RenewableEnergyModule10Section2 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-3"
+      element={<RenewableEnergyModule10Section3 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-4"
+      element={<RenewableEnergyModule10Section4 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-5"
+      element={<RenewableEnergyModule10Section5 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-6"
+      element={<RenewableEnergyModule10Section6 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-7"
+      element={<RenewableEnergyModule10Section7 />}
+    />
+    <Route
+      path="renewable-energy-module-10-section-8"
+      element={<RenewableEnergyModule10Section8 />}
+    />
+    <Route path="renewable-energy-module-11" element={<RenewableEnergyModule11 />} />
+    <Route
+      path="renewable-energy-module-11-section-1"
+      element={<RenewableEnergyModule11Section1 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-2"
+      element={<RenewableEnergyModule11Section2 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-3"
+      element={<RenewableEnergyModule11Section3 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-4"
+      element={<RenewableEnergyModule11Section4 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-5"
+      element={<RenewableEnergyModule11Section5 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-6"
+      element={<RenewableEnergyModule11Section6 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-7"
+      element={<RenewableEnergyModule11Section7 />}
+    />
+    <Route
+      path="renewable-energy-module-11-section-8"
+      element={<RenewableEnergyModule11Section8 />}
+    />
+    <Route path="renewable-energy-module-12" element={<RenewableEnergyModule12 />} />
+    <Route
+      path="renewable-energy-module-12-section-1"
+      element={<RenewableEnergyModule12Section1 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-2"
+      element={<RenewableEnergyModule12Section2 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-3"
+      element={<RenewableEnergyModule12Section3 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-4"
+      element={<RenewableEnergyModule12Section4 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-5"
+      element={<RenewableEnergyModule12Section5 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-6"
+      element={<RenewableEnergyModule12Section6 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-7"
+      element={<RenewableEnergyModule12Section7 />}
+    />
+    <Route
+      path="renewable-energy-module-12-section-8"
+      element={<RenewableEnergyModule12Section8 />}
+    />
     <Route path="renewable-energy-mock-exam" element={<RenewableEnergyMockExam />} />
   </>
 );

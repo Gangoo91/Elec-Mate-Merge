@@ -24,6 +24,7 @@ export interface PreUseCheck {
   checked_by: string | null;
   signature: string | null;
   actions_required: string | null;
+  job_id: string | null;
   requires_approval: boolean;
   approval_status: 'not_required' | 'pending' | 'approved' | 'rejected';
   approved_by: string | null;
@@ -464,6 +465,7 @@ export function useCreatePreUseCheck() {
       signature?: string;
       actions_required?: string;
       photos?: string[];
+      job_id?: string | null;
     }) => {
       const {
         data: { user },

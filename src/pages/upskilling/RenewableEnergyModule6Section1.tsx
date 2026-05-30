@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { FourModesComparison } from '@/components/study-centre/diagrams/renewableM6';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -447,10 +447,7 @@ export default function RenewableEnergyModule6Section1() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Four-Mode comparison diagram. Left column: Mode 1 (direct socket, no signalling, OBSOLETE marker). Mode 2 (granny lead with ICCPD midway, 8-13 A, OCCASIONAL marker). Mode 3 (dedicated wallbox with CP/PP, 7-22 kW AC, UK DOMESTIC DEFAULT marker). Mode 4 (DC fast charging, 50-350 kW DC, COMMERCIAL marker). Each row shows: power range, signalling, where the protection lives, typical UK 2025-26 use case. Annotations: BS EN 61851-1 (general) + BS EN 61851-22 (AC stations) + BS EN 61851-23 (DC stations)."
-            filename="renewable/m6s1-four-modes.png"
-          />
+          <FourModesComparison caption="EV charging Modes 1–4 compared — connection, signalling and protection. UK fixed installs are almost always Mode 3 (AC) or Mode 4 (DC)." />
 
           <InlineCheck {...inlineChecks[1]} />
 

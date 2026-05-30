@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -380,11 +379,6 @@ export default function RenewableEnergyModule1Section3() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="The BS 7671 documentation stack — BS 7671 (regulatory framework), OSG (mass-market navigation), GN3 (Part 6 inspection-and-test companion), IET Codes of Practice (PV, EESS, EV — technology-specific operational manuals), manufacturer instructions (equipment-specific). Each layer addresses a distinct competence question."
-            filename="renewable/m1s3-documentation-stack.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -501,11 +495,6 @@ export default function RenewableEnergyModule1Section3() {
               the same thing.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="The GN3 inspect-then-test sequence — flowchart showing the procedural gate: Inspection → identify defects → correct defects → test methodology → record. The 'safety might be impaired' gate blocks testing until defects are corrected."
-            filename="renewable/m1s3-inspect-then-test-flowchart.png"
-          />
 
           <RegsCallout
             source="GN3 — sequence of inspection and testing"

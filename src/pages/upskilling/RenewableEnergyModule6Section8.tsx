@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -484,11 +483,6 @@ export default function RenewableEnergyModule6Section8() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="EV wallbox commissioning + EICR procedure flowchart. Top: install-day commissioning 10-step sequence (Part 6 visual + IR + post-connection IR + RCD + ADS + OPDD + RDC-DD + CP/PP + BS EN 61851 + SCP-Regs). Middle: cert evidence bundle assembled. Bottom: year-5 EICR procedure (visual + functional + Part 6 tests + manufacturer self-tests + cable inspection + label check + SCP-Regs verification). Annotations: instrument requirements (Type B-capable RCD tester); baseline comparison; typical findings (label removal C3; RCBO trip drift C2; OPDD failure C2; thermal damage C2)."
-            filename="renewable/m6s8-commissioning-eicr-flow.png"
-          />
 
           <Pullquote>
             The instrument decides what the EICR can actually verify. A Type B install needs a Type B-capable tester — anything else is reconstruction theatre.

@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { LfpFadeCurve } from '@/components/study-centre/diagrams/renewableM5';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -471,10 +471,7 @@ export default function RenewableEnergyModule5Section8() {
             meaning="Reg 643.1 is a mandatory selection requirement for test apparatus. On a BESS install, this has a specific bite: a Type B RCD trip-time test demands a Type B-capable tester. Older Type AC / A-only testers (Megger MFT1502, MFT1721 and similar) cannot generate the smooth-DC waveform required to test a Type B device correctly. Using them on a Type B install gives a misleading pass. Inspectors carrying out BESS EICRs need a Type B-capable instrument (Megger MFT1731, Fluke 1664 FC, Kewtech KT64DL or equivalent). Cert evidence bundle for the EICR records the instrument used; failure to use a Type B-capable instrument on a Type B install is itself a Reg 643.1 non-compliance."
           />
 
-          <DiagramPlaceholder
-            caption="LFP capacity fade curve. X-axis: years (0-15). Y-axis: % of original nameplate capacity (0-100%). Curve starts at 100%, drops to ~97% at year 1, ~90% at year 5, ~82% at year 10, ~75% at year 15. Annotations: 80%-of-rated industry replacement convention (horizontal dashed line at 80%); typical UK domestic warranty boundary (10 years, 70% capacity). Two vertical markers: 5-year EICR (expect ~90% of baseline), 10-year EICR (expect ~80-85%)."
-            filename="renewable/m5s8-lfp-fade-curve.png"
-          />
+          <LfpFadeCurve caption="LFP capacity fades gradually to roughly 80% of nameplate over a 15-year life — the point manufacturers warrant to and where replacement is typically considered." />
 
           <Scenario
             title="5-year EICR on a hybrid + 9.5 kWh LFP install"

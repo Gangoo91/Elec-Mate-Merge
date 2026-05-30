@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -394,11 +393,6 @@ export default function RenewableEnergyModule2Section3() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="String topology diagram — 12 modules in series (string topology A) labelled with V_oc stacking and I_sc shared; alongside 2 parallel strings of 6 modules (topology B) showing V shared and I added; and 3 parallel strings of 4 (topology C). Each annotated with calculated V_oc, I_sc and the implications for inverter MPPT compatibility."
-            filename="renewable/m2s3-string-topology.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <SectionRule />
@@ -464,11 +458,6 @@ export default function RenewableEnergyModule2Section3() {
               during peak production hours.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Cold-morning V_oc calculation worked example — flowchart showing the 6-step calculation from module datasheet through to the comparison with inverter Vmax. Annotated with the 14-module string example: STC V_oc 582 V → cold-morning rise 9.45% → cold-morning V_oc (Uoc_max) 637 V → exceeds 600 V inverter limit → reduce to 13 modules."
-            filename="renewable/m2s3-cold-morning-voc.png"
-          />
 
           <ConceptBlock
             title="The conservative defaults — when temperature data isn\'t available"
@@ -665,11 +654,6 @@ export default function RenewableEnergyModule2Section3() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Mismatch loss illustration — showing two scenarios. Scenario A: single string of 12 modules all on south roof, all matched — operating at MPP with no mismatch loss. Scenario B: 6 south + 6 east modules in one string — irradiance mismatch driving 10–20% string loss because the south-facing modules are dragged to the lower east-facing current. Scenario C: 6 south + 6 east in TWO strings on separate MPPT inputs — each string at its own MPP, mismatch loss eliminated."
-            filename="renewable/m2s3-mismatch-losses.png"
-          />
-
           <InlineCheck {...inlineChecks[4]} />
 
           <InlineCheck {...inlineChecks[5]} />
@@ -761,11 +745,6 @@ export default function RenewableEnergyModule2Section3() {
               the durable record for the install\'s 25+ year operational life.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Commissioning baseline record template — example of the per-string fields to capture: string ID, modules in string, expected STC V_oc, measured V_oc, expected I_sc, measured I_sc, insulation resistance, continuity, test conditions (date, time, ambient, irradiance). Highlighted as part of the BS EN 62446-1 commissioning methodology referenced by GN3 and the IET CoP for Grid-Connected Solar PV Installations."
-            filename="renewable/m2s3-commissioning-baseline.png"
-          />
 
           <SectionRule />
 

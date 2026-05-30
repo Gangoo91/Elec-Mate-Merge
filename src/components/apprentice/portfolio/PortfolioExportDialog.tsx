@@ -22,6 +22,11 @@ import { Download, FileText, File, Globe } from 'lucide-react';
 import { PortfolioEntry, ExportOptions } from '@/types/portfolio';
 import { useToast } from '@/hooks/use-toast';
 import { PortfolioExportService, ExportProgress } from '@/services/portfolioExportService';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  buildPortfolioPackData,
+  exportPortfolioEvidencePack,
+} from '@/services/portfolioEvidenceExport';
 
 interface PortfolioExportDialogProps {
   entries: PortfolioEntry[];
@@ -49,7 +54,15 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
       });
 
       if (exportOptions.format === 'pdf') {
-        await exportService.exportToPDF(entries, exportOptions);
+        // Premium evidence pack — branded cover, photos inline, supervisor
+        // sign-offs. Rendered via the browser print engine (Save as PDF).
+        const { data: u } = await supabase.auth.getUser();
+        const uid = u.user?.id;
+        if (!uid) throw new Error('You must be signed in to export.');
+        const pack = await buildPortfolioPackData(uid);
+        await exportPortfolioEvidencePack(pack);
+        setOpen(false);
+        return;
       } else if (exportOptions.format === 'html') {
         await exportService.exportToHTML(entries, exportOptions);
       } else if (exportOptions.format === 'word') {

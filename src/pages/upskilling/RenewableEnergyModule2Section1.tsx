@@ -15,8 +15,15 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import {
+  PvCellCrossSection,
+  IVCurve,
+  CellTypeComparison,
+  PvTemperatureCurve,
+  TempDerationFigure,
+} from '@/components/study-centre/diagrams/renewablePv';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -387,14 +394,15 @@ export default function RenewableEnergyModule2Section1() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="The photovoltaic effect — cross-section of a crystalline silicon PV cell showing the p-type and n-type doped layers, the depletion region (p-n junction), the front contact (busbars / fingers), the anti-reflective coating, and the back contact. A photon arrives from above, frees an electron in the depletion region, and the built-in electric field drives the electron to the n-side and the hole to the p-side."
-            filename="renewable/m2s1-photovoltaic-effect.png"
+          <PvCellCrossSection
+            caption="The photovoltaic effect in a crystalline silicon cell: a photon frees an electron in the depletion region (the p–n junction), and the built-in electric field drives the electron to the n-side and the hole to the p-side — producing a DC current."
           />
 
-          <DiagramPlaceholder
-            caption="Engineering Mindset video — &lsquo;How a solar cell works&rsquo;. The 5-minute animated explanation of the photovoltaic effect, the p-n junction, and the electron-hole pair drift. Recommended companion to this section."
-            filename="renewable/m2s1-engineering-mindset-cell-video.placeholder"
+          <VideoCard
+            url="https://www.youtube.com/watch?v=Yxt72aDjFgY"
+            title="Solar Panels Explained — How They Work"
+            channel="The Engineering Mindset"
+            topic="The photovoltaic effect, the p–n junction, and electron-hole pair drift — animated companion to this section."
           />
 
           <InlineCheck {...inlineChecks[0]} />
@@ -440,9 +448,8 @@ export default function RenewableEnergyModule2Section1() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="The I-V curve of a PV cell at STC — showing V_oc on the voltage axis, I_sc on the current axis, the knee of the curve where the maximum power point (MPP) lies (V_mp, I_mp, P_max), and the fill factor as the ratio of the MPP rectangle to the (V_oc × I_sc) rectangle. Three curves overlaid at different irradiance levels (1000, 500, 250 W/m²) showing how I_sc scales linearly with irradiance while V_oc changes only logarithmically."
-            filename="renewable/m2s1-iv-curve.png"
+          <IVCurve
+            caption="The I-V curve at STC. The maximum power point (MPP) sits at the knee; the fill factor is the ratio of the MPP rectangle to the V_oc × I_sc rectangle. Across irradiance (1000 / 500 / 250 W/m²), I_sc scales roughly linearly while V_oc changes only logarithmically."
           />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -515,9 +522,8 @@ export default function RenewableEnergyModule2Section1() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Cell type comparison — side-by-side visual of monocrystalline (uniform dark surface), polycrystalline (blue grain pattern), amorphous thin-film (uniform thin layer on substrate). Each with efficiency range, temperature coefficient, typical price/W, and characteristic applications. Plus a sidebar showing perovskite-silicon tandem as the emerging technology."
-            filename="renewable/m2s1-cell-types-comparison.png"
+          <CellTypeComparison
+            caption="Monocrystalline, polycrystalline and amorphous thin-film compared on efficiency, temperature coefficient, cost per watt and typical application — with perovskite-silicon tandem flagged as the emerging technology."
           />
 
           <InlineCheck {...inlineChecks[3]} />
@@ -575,14 +581,12 @@ export default function RenewableEnergyModule2Section1() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="P-V curves at three operating temperatures (25°C STC, 50°C real-world hot, 75°C extreme-hot) showing the visible reduction in maximum power as temperature rises. Annotated with the 70–100 mm standoff arrangement and the natural convection airflow that delivers the cooling discipline."
-            filename="renewable/m2s1-temperature-effect.png"
+          <PvTemperatureCurve
+            caption="P-V curves at 25 °C (STC), 50 °C and 75 °C — maximum power falls visibly as cell temperature rises, which is why a 70–100 mm standoff for natural-convection cooling matters on a UK roof."
           />
 
-          <DiagramPlaceholder
-            caption="Worked example — a 400 W module rated at STC with a P_max temperature coefficient of -0.36%/°C, operating at 55°C cell temperature on a UK summer roof: (55 – 25) °C × -0.36%/°C × 400 W = -43 W. Actual operating P_max ≈ 357 W. The STC nameplate vs the real-world output."
-            filename="renewable/m2s1-temperature-worked-example.png"
+          <TempDerationFigure
+            caption="A 400 W module at STC with a P_max coefficient of −0.36 %/°C, running at 55 °C on a UK summer roof: (55 − 25) °C × −0.36 %/°C × 400 W = −43 W, so real output ≈ 357 W — the gap between the nameplate and the roof."
           />
 
           <InlineCheck {...inlineChecks[4]} />

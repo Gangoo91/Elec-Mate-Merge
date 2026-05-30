@@ -51,7 +51,11 @@ import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { RemoteSignShareSheet } from './common/RemoteSignShareSheet';
+import { createSafetySignToken, buildSignUrl, useRecordSignatures } from '@/hooks/useRemoteSignToken';
 import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
+import { JobLinkField } from './common/JobLinkField';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 // ─── Types ───
 
@@ -93,6 +97,7 @@ interface COSHHAssessment {
   photos: string[];
   assessment_date: string;
   review_date: string;
+  job_id: string | null;
   created_at: string;
 }
 
@@ -497,14 +502,48 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     photos: ((a as Record<string, unknown>).photos as string[]) || [],
     assessment_date: a.assessment_date,
     review_date: a.review_date,
+    job_id: a.job_id ?? null,
     created_at: a.created_at,
   }));
 
   const [showWizard, setShowWizard] = useState(false);
   const [showSubstanceSheet, setShowSubstanceSheet] = useState(false);
   const [viewingAssessment, setViewingAssessment] = useState<COSHHAssessment | null>(null);
+  // Remote reviewer sign-off (generic engine)
+  const [showSignShare, setShowSignShare] = useState(false);
+  const [signUrl, setSignUrl] = useState('');
+  const [signLoading, setSignLoading] = useState(false);
+  const { data: coshhSignatures = [] } = useRecordSignatures('coshh', viewingAssessment?.id ?? null);
+  const remoteReviewer = coshhSignatures.find((s) => s.role === 'reviewer' && s.signed_signature);
   const [searchQuery, setSearchQuery] = useState('');
   const [substanceSearch, setSubstanceSearch] = useState('');
+
+  const requestReviewerSignOff = async (a: COSHHAssessment) => {
+    setSignLoading(true);
+    try {
+      const token = await createSafetySignToken({
+        documentType: 'coshh',
+        recordId: a.id,
+        role: 'reviewer',
+        summary: {
+          title: 'COSHH Assessment — Reviewer Sign-off',
+          subtitle: a.substance_name,
+          lines: [
+            { label: 'Substance', value: a.substance_name || '—' },
+            { label: 'Risk rating', value: String(a.risk_rating || '—') },
+            { label: 'Review date', value: a.review_date || '—' },
+          ],
+          statement:
+            'By signing you confirm you have reviewed this COSHH assessment and agree it is suitable and sufficient for the task.',
+        },
+      });
+      if (!token) return;
+      setSignUrl(buildSignUrl(token));
+      setShowSignShare(true);
+    } finally {
+      setSignLoading(false);
+    }
+  };
   const [riskFilter, setRiskFilter] = useState('all');
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -546,6 +585,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [riskRating, setRiskRating] = useState<'low' | 'medium' | 'high' | 'very-high'>('medium');
   const [assessedBy, setAssessedBy] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  const { data: jobs = [] } = useSparkProjects('active');
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
 
   // Signature state
   const [assessorSigName, setAssessorSigName] = useState('');
@@ -741,6 +784,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setRiskRating('medium');
     setAssessedBy('');
     setPhotoUrls([]);
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
     setAssessorSigName('');
     setAssessorSigDataUrl('');
     setReviewerSigName('');
@@ -784,6 +829,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setMonitoringRequired(assessment.monitoring_required);
     setMonitoringDetails(assessment.monitoring_details);
     setRiskRating(assessment.risk_rating);
+    setLinkedJobId(assessment.job_id);
+    setLinkedJobTitle(jobTitleFor(assessment.job_id));
     // Clear assessed_by and signatures — fresh draft
     setSdsReference('');
     setPhotoUrls([]);
@@ -859,6 +906,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         assessor_signature: assessorSigDataUrl || null,
         reviewer_signature: reviewerSigDataUrl || null,
         reviewer_name: reviewerSigName || null,
+        job_id: linkedJobId,
         assessment_date: now.toISOString().split('T')[0],
         review_date: reviewDate.toISOString().split('T')[0],
       });
@@ -1112,6 +1160,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 placeholder="e.g. SDS-2024-001 or manufacturer reference"
               />
             </Field>
+            <JobLinkField
+              jobId={linkedJobId}
+              jobTitle={linkedJobTitle}
+              onSelect={(id, title) => {
+                setLinkedJobId(id);
+                setLinkedJobTitle(title);
+              }}
+            />
           </FormCard>
 
           {/* Hazard classification */}
@@ -1829,8 +1885,36 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   </div>
                 </div>
 
+                {/* Linked project */}
+                {viewingAssessment.job_id && (
+                  <div>
+                    <Eyebrow className="mb-1">Linked project</Eyebrow>
+                    <p className="text-[13px] text-white/85">
+                      {jobTitleFor(viewingAssessment.job_id) || 'Linked project'}
+                    </p>
+                  </div>
+                )}
+
                 {/* Corrective Actions Tracker */}
                 <CorrectiveActionsPanel sourceType="coshh" sourceId={viewingAssessment.id} />
+
+                {/* Reviewer sign-off (remote) */}
+                <div>
+                  <Eyebrow className="mb-2">Reviewer sign-off</Eyebrow>
+                  {remoteReviewer?.signed_signature ? (
+                    <div className="p-3 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06]">
+                      <p className="text-[11.5px] text-emerald-400 mb-2">
+                        Reviewed by {remoteReviewer.signed_name || 'reviewer'}
+                        {remoteReviewer.signed_at ? ` · ${new Date(remoteReviewer.signed_at).toLocaleDateString('en-GB')}` : ''}
+                      </p>
+                      <img src={remoteReviewer.signed_signature} alt="Reviewer signature" className="h-12 opacity-80" />
+                    </div>
+                  ) : (
+                    <SecondaryButton fullWidth disabled={signLoading} onClick={() => requestReviewerSignOff(viewingAssessment)}>
+                      {signLoading ? 'Preparing link…' : 'Request reviewer sign-off'}
+                    </SecondaryButton>
+                  )}
+                </div>
 
                 {/* Signatures */}
                 {((viewingAssessment as Record<string, unknown>).assessor_signature ||
@@ -1900,6 +1984,13 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           documentTitle={`COSHH Assessment — ${viewingAssessment.substance_name}`}
         />
       )}
+
+      <RemoteSignShareSheet
+        open={showSignShare}
+        onOpenChange={setShowSignShare}
+        url={signUrl}
+        roleLabel="reviewer sign-off"
+      />
 
       <DeleteConfirmSheet
         open={!!deleteTarget}

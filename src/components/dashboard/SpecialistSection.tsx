@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useResumeDrafts, type ResumeDraftInfo } from '@/hooks/inspection/useResumeDrafts';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,6 +20,7 @@ interface CertDef {
   title: string;
   description: string;
   standard: string;
+  /** Tailwind gradient string — only the "from-" token is used, for the accent dot. */
   accentColor: string;
   comingSoon?: boolean;
   category: 'electrical' | 'fire-safety' | 'security' | 'renewables';
@@ -142,12 +144,93 @@ const specialistCerts: CertDef[] = [
   },
 ];
 
+const GROUPS: { key: CertDef['category']; label: string }[] = [
+  { key: 'electrical', label: 'Electrical' },
+  { key: 'renewables', label: 'Renewables & Energy' },
+  { key: 'fire-safety', label: 'Fire & Life Safety' },
+];
+
+// Editorial tile — mirrors DocCard on the Labels & Warnings page: an accent dot
+// + a mono standard badge, a big tracking-tight title, the scope line, and a
+// single yellow "Open →". Sits inside a seam grid with hairline separators.
+const SpecCard = ({
+  cert,
+  onOpen,
+  draft,
+  onResume,
+}: {
+  cert: CertDef;
+  onOpen: () => void;
+  draft?: ResumeDraftInfo;
+  onResume: () => void;
+}) => {
+  const disabled = !!cert.comingSoon;
+  // Solid accent dot derived from the gradient's "from-" token.
+  const dot = cert.accentColor.split(' ')[0].replace('from-', 'bg-');
+
+  return (
+    <div className="relative flex flex-col bg-[hsl(0_0%_11%)]">
+      <button
+        type="button"
+        onClick={() => !disabled && onOpen()}
+        disabled={disabled}
+        className={cn(
+          'group relative flex flex-1 flex-col text-left min-h-[120px] p-4 transition-colors touch-manipulation',
+          'focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50',
+          disabled ? 'opacity-50' : 'hover:bg-elec-yellow/[0.05] active:bg-white/[0.05]'
+        )}
+      >
+        <div className="flex items-start justify-between gap-2">
+          <span className={cn('mt-1 w-2 h-2 rounded-full shrink-0', dot)} aria-hidden />
+          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
+            {cert.standard}
+          </span>
+        </div>
+
+        <h3 className="mt-3 text-[16.5px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+          {cert.title}
+        </h3>
+        <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 line-clamp-2">
+          {cert.description}
+        </p>
+
+        <div className="flex-grow min-h-[10px]" />
+
+        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow">
+          {disabled ? 'Coming soon' : draft ? 'New' : 'Open'}
+          {!disabled && (
+            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+          )}
+        </span>
+      </button>
+
+      {/* Resume strip — only when in-progress drafts of this type exist */}
+      {!disabled && draft && (
+        <button
+          type="button"
+          onClick={onResume}
+          className="group flex w-full items-center justify-between gap-2 border-t border-elec-yellow/15 bg-elec-yellow/[0.06] px-4 py-2 text-left transition-colors touch-manipulation hover:bg-elec-yellow/[0.1] active:bg-elec-yellow/[0.14] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+        >
+          <span className="text-[10px] font-medium uppercase tracking-[0.1em] text-elec-yellow/90">
+            {draft.count} in progress
+          </span>
+          <span className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-elec-yellow">
+            Resume
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+};
+
 interface SpecialistSectionProps {
   onBack: () => void;
 }
 
 const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
   const navigate = useNavigate();
+  const { data: drafts } = useResumeDrafts();
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
@@ -175,86 +258,38 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
         animate="visible"
         className="px-4 py-4 space-y-5"
       >
-        {[
-          { key: 'electrical', label: 'Electrical' },
-          { key: 'renewables', label: 'Renewables & Energy' },
-          { key: 'fire-safety', label: 'Fire & Life Safety' },
-        ].map((group) => {
+        {GROUPS.map((group) => {
           const certs = specialistCerts.filter((c) => c.category === group.key);
           if (certs.length === 0) return null;
+          // A 2-col seam grid with an odd count would leave one cell showing the
+          // light seam colour — fill it with a matching dark cell instead.
+          const needsFiller = certs.length % 2 === 1;
+
           return (
-            <motion.section key={group.key} variants={itemVariants} className="space-y-3">
-              <div className="border-b border-white/[0.06] pb-1">
-                <div className={cn(
-                  'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-                  group.key === 'electrical' ? 'from-blue-500/40 to-blue-500/10' :
-                  group.key === 'renewables' ? 'from-emerald-500/40 to-emerald-500/10' :
-                  'from-red-500/40 to-red-500/10'
-                )} />
-                <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+            <motion.section key={group.key} variants={itemVariants} className="space-y-2.5">
+              <div className="flex items-end justify-between gap-3 px-0.5">
+                <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                   {group.label}
                 </h2>
+                <span className="text-[10.5px] text-white/30 tabular-nums">{certs.length}</span>
               </div>
-              <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+              <div className="relative grid grid-cols-2 gap-[1.5px] bg-white/[0.14] border border-white/[0.14] rounded-2xl overflow-hidden">
+                {/* Single gold hairline along the top of the whole grid */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
                 {certs.map((cert) => (
-                  <motion.div key={cert.id} variants={itemVariants} className="h-full">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        !cert.comingSoon &&
-                        navigate(`/electrician/inspection-testing/${cert.id}/new`)
-                      }
-                      className={cn(
-                        'block w-full h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation',
-                        cert.comingSoon && 'cursor-default'
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          'group relative overflow-hidden h-full',
-                          'card-surface-interactive',
-                          'active:scale-[0.98] transition-all duration-200',
-                          cert.comingSoon && 'opacity-60'
-                        )}
-                      >
-                        <div
-                          className={cn(
-                            'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200',
-                            cert.accentColor
-                          )}
-                        />
-                        <div className="relative z-10 flex flex-col h-full p-4">
-                          <div className="flex items-center justify-end mb-3">
-                            <span className="text-[10px] font-bold text-white bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded">
-                              {cert.standard}
-                            </span>
-                          </div>
-                          <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
-                            {cert.title}
-                          </h3>
-                          <p className="mt-1 text-[12px] text-white leading-tight">
-                            {cert.description}
-                          </p>
-                          <div className="flex-grow min-h-[12px]" />
-                          <div className="flex items-center justify-between">
-                            {cert.comingSoon ? (
-                              <span className="text-[11px] font-medium text-white">
-                                Coming Soon
-                              </span>
-                            ) : (
-                              <span className="text-[11px] font-medium text-elec-yellow">Open</span>
-                            )}
-                            {!cert.comingSoon && (
-                              <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                                <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </motion.div>
+                  <SpecCard
+                    key={cert.id}
+                    cert={cert}
+                    draft={drafts?.[cert.id]}
+                    onOpen={() => navigate(`/electrician/inspection-testing/${cert.id}/new`)}
+                    onResume={() =>
+                      navigate(
+                        `/electrician/inspection-testing/${cert.id}/${drafts?.[cert.id]?.latestReportId}`
+                      )
+                    }
+                  />
                 ))}
+                {needsFiller && <div className="bg-[hsl(0_0%_11%)]" aria-hidden />}
               </div>
             </motion.section>
           );

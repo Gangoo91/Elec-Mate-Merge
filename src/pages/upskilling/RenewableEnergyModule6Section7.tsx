@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -453,11 +452,6 @@ export default function RenewableEnergyModule6Section7() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Daily charging timeline diagram. X-axis: 00:00 to 24:00. Show: Octopus Intelligent Go cheap window 23:30-05:30 (highlighted green); Octopus Flux cheap import 02:00-05:00 + peak export 16:00-19:00; Octopus Cosy twin cheap windows 04:00-07:00 + 13:00-16:00 + expensive evening 16:00-19:00; SCP-Regs default off-peak prohibition 08:00-11:00 + 16:00-22:00. Annotate: randomised delay up to 600 s after schedule start; customer override per-session permitted. Customer plugs in at 18:00 example — Intelligent Go waits until 23:30 + delay before drawing."
-            filename="renewable/m6s7-tariff-timeline.png"
-          />
 
           <InlineCheck {...inlineChecks[3]} />
 

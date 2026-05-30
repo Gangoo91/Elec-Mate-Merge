@@ -26,8 +26,10 @@ import {
   Clock,
   CircleDot,
   Share2,
+  Briefcase,
 } from 'lucide-react';
 import { NearMissReport, Witness } from './types';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -140,6 +142,9 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   const currentStatus = report.status || 'open';
   const statusConf = STATUS_CONFIG[currentStatus] || STATUS_CONFIG.open;
   const StatusIcon = statusConf.icon;
+
+  const { data: jobs = [] } = useSparkProjects('active');
+  const linkedJobTitle = report.job_id ? jobs.find((j) => j.id === report.job_id)?.title ?? null : null;
 
   const handleStatusChange = async (newStatus: 'open' | 'in_progress' | 'closed') => {
     setIsUpdating(true);
@@ -325,6 +330,15 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
                 <p className="text-foreground">{report.reporter_name || 'Anonymous'}</p>
               </div>
             </div>
+            {report.job_id && (
+              <div className="flex items-start gap-3">
+                <Briefcase className="h-5 w-5 text-white mt-0.5 shrink-0" />
+                <div className="flex-1">
+                  <p className="text-xs text-white uppercase tracking-wide">Linked Project</p>
+                  <p className="text-foreground">{linkedJobTitle || 'Linked project'}</p>
+                </div>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

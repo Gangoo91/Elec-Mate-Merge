@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { BatteryChemistryComparison } from '@/components/study-centre/diagrams/renewableM5';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -378,11 +378,6 @@ export default function RenewableEnergyModule5Section1() {
             meaning="Reg 570.1 defines what Chapter 57 covers and what it doesn&rsquo;t. INCLUDED: stationary secondary battery installs as a supply source — typical UK domestic PV+BESS, off-grid PV+battery, hardwired UPS at scale, commercial BESS. EXCLUDED: pluggable UPS (tower / desktop), central safety power supplies (BS EN 50171), fire alarm / alarm / machinery / emergency lighting batteries — these are covered by their own product / application standards. The NOTE on EV: V2X / vehicle-to-fixed-installation is handled by Section 722 + Chapter 82, not Chapter 57. Cert evidence bundle records which framework applies."
           />
 
-          <DiagramPlaceholder
-            caption="Chapter 57 scope map — central node BESS with arrows to two zones. Zone 1 (IN SCOPE): typical UK domestic LFP BESS 5-15 kWh wall-mounted; commercial 50-500 kWh containerised BESS; hardwired data centre UPS; off-grid Pb-acid bank. Zone 2 (OUT OF SCOPE): pluggable tower UPS (BS EN IEC 62040); central safety supplies (BS EN 50171); fire alarm batteries (BS 5839); alarm system batteries (BS EN 50132); machinery batteries (BS EN IEC 60204); emergency lighting batteries (BS 5266). EV pointer to Section 722 + Chapter 82 (separate path)."
-            filename="renewable/m5s1-chapter-57-scope.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -499,10 +494,7 @@ export default function RenewableEnergyModule5Section1() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Chemistry comparison chart — four-column visual. Columns: LFP / NMC / Lead-acid / Flow. Rows: Thermal runaway threshold (270 / 210 / N/A / N/A °C), Cycle life @ 80% DoD (6k-10k / 2k-3k / 500-1.5k / 20k+), Calendar life (15-20 / 10-12 / 5-10 / 25+ years), Energy density (160/330 / 250/700 / 30-40 / 25 Wh/kg Wh/L), Cost per kWh (£250-400 / £350-500 / £150-250 / £400-600 installed), UK 2025-2026 use case (DOMESTIC DEFAULT / EVs only / legacy off-grid / commercial+grid). Pullquote LFP wins the domestic case on every axis that matters."
-            filename="renewable/m5s1-chemistry-comparison.png"
-          />
+          <BatteryChemistryComparison caption="The home-storage battery chemistries compared — LFP, NMC and lead-acid — on energy density, cycle life, safety and cost. LFP dominates UK home storage." />
 
           <InlineCheck {...inlineChecks[3]} />
 

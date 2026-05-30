@@ -41,6 +41,7 @@ export interface AccidentRecord {
   recorded_by: string;
   additional_notes: string | null;
   corrective_actions: string | null;
+  job_id: string | null;
   reporter_signature: string | null;
   pdf_url: string | null;
   photos: string[] | null;

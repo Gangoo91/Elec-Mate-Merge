@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -378,11 +377,6 @@ export default function RenewableEnergyModule5Section2() {
             source="BS 7671:2018+A4:2026 · Reg 570.6.1.1.1 — BS EN IEC 62485 conformance"
             clause="Stationary secondary battery installations shall conform to the relevant parts of the BS EN IEC 62485 series. Where appropriate, bidirectional protective devices shall be selected."
             meaning="Reg 570.6.1.1.1 anchors UK BESS install safety to the BS EN IEC 62485 series. Five parts: -1 general safety principles; -2 stationary Pb-acid + VRLA + NiCd; -3 traction batteries; -4 small Li-ion; -5 Li-ion stationary (the most relevant for UK domestic LFP BESS). The standard covers BMS function: V/I/T monitoring, balancing, fault detection, contactor control, communication, safe-state behaviour. The manufacturer&rsquo;s product certification declares 62485 conformance; the installer verifies via the manufacturer compliance statement. Cert evidence bundle records the declaration. The &ldquo;bidirectional protective devices&rdquo; note pairs with Reg 826.1.2.2 (Chapter 82) — current flows either way in a hybrid PV+BESS install, so OCPDs must operate in either direction."
-          />
-
-          <DiagramPlaceholder
-            caption="BMS three-layer architecture diagram — battery enclosure cutaway showing: bottom layer cells (16-48 cells in series for typical 48V or HV LFP); middle layer slave monitoring boards (one per ~12 cells, reading V + T, balancing current bypass resistors); top layer master controller (CAN bus interface to PCE, SoC/SoH calculation, fault logic, pack contactor control). Arrows showing data flow (cells → slaves → master → PCE via CAN bus). Annotated with typical V thresholds (LFP 2.5V-3.65V cell), T thresholds, balancing currents (~50-200 mA per cell)."
-            filename="renewable/m5s2-bms-architecture.png"
           />
 
           <InlineCheck {...inlineChecks[0]} />

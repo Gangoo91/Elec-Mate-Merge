@@ -31,6 +31,7 @@ export interface COSHHAssessment {
   assessor_signature: string | null;
   reviewer_signature: string | null;
   reviewer_name: string | null;
+  job_id: string | null;
   pdf_url: string | null;
   created_at: string;
   updated_at: string;

@@ -10,6 +10,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import type { SafetyObservation, ObservationStatus } from '@/hooks/useSafetyObservations';
 import { useUpdateObservation } from '@/hooks/useSafetyObservations';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { AuditTimeline } from '../common/AuditTimeline';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from '../common/CorrectiveActionsPanel';
@@ -71,6 +72,10 @@ export function ObservationDetailSheet({ observation, open, onClose }: Observati
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [showShare, setShowShare] = useState(false);
   const updateObservation = useUpdateObservation();
+  const { data: jobs = [] } = useSparkProjects('active');
+  const linkedJobTitle = observation?.job_id
+    ? jobs.find((j) => j.id === observation.job_id)?.title ?? 'Linked project'
+    : null;
 
   const handleStatusChange = (newStatus: ObservationStatus) => {
     if (!observation) return;
@@ -177,6 +182,12 @@ export function ObservationDetailSheet({ observation, open, onClose }: Observati
                         {formattedDate} at {formattedTime}
                       </span>
                     </div>
+                    {linkedJobTitle && (
+                      <div className="flex items-center justify-between gap-3 px-5 py-3">
+                        <span className="text-[12px] text-white/55">Project</span>
+                        <span className="text-[13px] text-white text-right">{linkedJobTitle}</span>
+                      </div>
+                    )}
                   </ListCard>
                 </div>
 

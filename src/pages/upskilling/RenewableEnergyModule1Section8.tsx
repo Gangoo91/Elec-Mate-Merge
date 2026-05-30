@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -465,11 +464,6 @@ export default function RenewableEnergyModule1Section8() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="The model form decision tree — Is this new install or new circuit? Yes → EIC. Existing-circuit work, no new circuit? → MEIWC. Inspection report on existing installation? → EICR with C1/C2/C3/FI coding. A4:2026 brought minor changes to all three forms in Appendix 6."
-            filename="renewable/m1s8-model-form-decision-tree.png"
-          />
-
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Appendix 6"
             clause="Appendix 6 of BS 7671 contains model forms intended for the initial certification of a new electrical installation or for an addition or alteration to an existing installation. Appendix 6 includes minor changes to the certificates, changes to the inspections for new installation work only for domestic and similar premises with up to 100 A supply, and examples of items requiring inspection for an electrical installation condition report."
@@ -712,11 +706,6 @@ export default function RenewableEnergyModule1Section8() {
               the unavoidable failure mode.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="The cert evidence bundle — eleven items that make the install defensible over a 25+ year lifespan. EIC + 133.1.3 records + departure register + CPS notification + DNO notification + MCS certificates + survey artefact + manufacturer commissioning + customer handover + planning consents + funding application references. Retained electronically with off-site backup."
-            filename="renewable/m1s8-cert-evidence-bundle.png"
-          />
 
           <InlineCheck {...inlineChecks[7]} />
 

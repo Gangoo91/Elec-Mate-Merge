@@ -15,7 +15,7 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
+  VideoCard,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -405,15 +405,7 @@ export default function RenewableEnergyModule2Section4() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="The I-V and P-V curves overlaid — showing the MPP at the &ldquo;knee&rdquo; on the I-V curve and as the peak on the P-V curve. Three I-V curves at three irradiance levels (1000, 700, 400 W/m²) and three temperature levels (25°C, 45°C, 65°C cell temp) — illustrating how the MPP moves with conditions. Annotated with V_mp, I_mp, P_max at each operating point."
-            filename="renewable/m2s4-mpp-position.png"
-          />
-
-          <DiagramPlaceholder
-            caption="Engineering Mindset video — &lsquo;MPPT explained&rsquo; or &lsquo;How MPPT solar charge controllers work&rsquo;. Animated walk-through of the I-V curve, the MPP, and the perturb-and-observe algorithm. Recommended companion to this section."
-            filename="renewable/m2s4-engineering-mindset-mppt-video.placeholder"
-          />
+          <VideoCard url="https://www.youtube.com/watch?v=BJpCWKgW8Ac" title="How an MPPT Solar Charge Controller Works" channel="The Engineering Mindset" topic="Maximum power point tracking — how the controller keeps the panel at its MPP across changing irradiance and temperature." />
 
           <InlineCheck {...inlineChecks[0]} />
 
@@ -483,11 +475,6 @@ export default function RenewableEnergyModule2Section4() {
               benchmark, never achievable in practice.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="P&O algorithm flowchart — measure P, perturb V, measure new P, compare, step in direction of increasing power, repeat. Annotated with typical step sizes (0.5–1 V) and cycle rates (5–10 Hz). Alongside a P-V curve showing the operating point oscillating within a small range around MPP — the characteristic steady-state P&O behaviour."
-            filename="renewable/m2s4-perturb-and-observe.png"
-          />
 
           <InlineCheck {...inlineChecks[3]} />
 
@@ -626,11 +613,6 @@ export default function RenewableEnergyModule2Section4() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Multi-MPPT inverter architecture — dual-MPPT inverter with two independent strings. String 1 (south, 10 modules) into MPPT 1; String 2 (east, 4 modules) into MPPT 2. Each MPPT tracks its own string independently. Diagram shows the internal block structure: per-MPPT DC-DC converter, common DC bus, single DC-AC inverter stage, grid connection."
-            filename="renewable/m2s4-multi-mppt-architecture.png"
-          />
-
           <InlineCheck {...inlineChecks[5]} />
 
           <SectionRule />
@@ -683,11 +665,6 @@ export default function RenewableEnergyModule2Section4() {
               the design pack and looks for all three calculations completed.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="The three MPPT voltage rules visualised — operating envelope chart showing the inverter\'s voltage limits (absolute max, MPPT max, MPPT min) on the vertical axis, and temperature on the horizontal axis. The string\'s operating voltage band (V_mp at min temp through V_mp at max temp; V_oc at min temp) overlaid — must fit within the inverter\'s envelope at all operating temperatures with margin."
-            filename="renewable/m2s4-mppt-voltage-rules.png"
-          />
 
           <InlineCheck {...inlineChecks[6]} />
 

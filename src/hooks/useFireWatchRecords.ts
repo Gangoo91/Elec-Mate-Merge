@@ -10,6 +10,7 @@ export interface FireWatchChecklistItem {
 export interface FireWatchRecord {
   id: string;
   permit_id: string | null;
+  job_id: string | null;
   user_id: string;
   start_time: string;
   end_time: string | null;

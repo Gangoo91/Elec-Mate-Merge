@@ -1,596 +1,633 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'MCS Requirements and Certification Pathways - Renewable Energy Module 8';
-const DESCRIPTION =
-  'Learn about Microgeneration Certification Scheme requirements, certification pathways, and how to become an MCS certified installer for solar PV, heat pumps, and battery storage systems.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'mcs-check-1',
-    question: 'What does MCS certification primarily demonstrate?',
-    options: [
-      'Basic electrical competence',
-      'Competence in installing microgeneration technologies to recognised standards',
-      'Experience in commercial electrical work',
-      'Knowledge of general building regulations',
-    ],
-    correctIndex: 1,
-    explanation:
-      'MCS certification demonstrates that an installer is competent to install microgeneration technologies (solar PV, heat pumps, batteries) to recognised industry standards, giving consumers confidence in quality installations.',
-  },
-  {
-    id: 'mcs-check-2',
-    question: 'Which certification body accredits MCS installers?',
-    options: [
-      'NICEIC only',
-      'Any electrical trade body',
-      'UKAS-accredited certification bodies',
-      'Local building control',
-    ],
-    correctIndex: 2,
-    explanation:
-      'MCS installers must be certified by UKAS-accredited certification bodies such as NICEIC, NAPIT, or HIES to ensure consistent assessment standards across the industry.',
-  },
-  {
-    id: 'mcs-check-3',
+    id: 'm8s1-architectures',
     question:
-      'What is required for customers to access government incentives like the Smart Export Guarantee?',
+      'Which three heat pump architectures dominate UK 2025-26 domestic and light-commercial installs?',
     options: [
-      'Any qualified electrician can certify',
-      'Installation by an MCS certified installer',
-      'Self-certification by the homeowner',
-      'Approval from the local council',
+      'Solar thermal only',
+      'Air Source Heat Pump (ASHP — extracts heat from outside air; outdoor unit + indoor cylinder); Ground Source Heat Pump (GSHP — extracts heat from ground via borehole or horizontal collector; indoor unit + ground loop); exhaust-air heat pump (extracts heat from extracted ventilation air; integrated unit, common in MVHR-equipped new builds). All driven by an electric motor compressor running a refrigerant cycle. Electrical installer integrates the supply + controls; refrigeration installer handles the gas-tight refrigerant circuit',
+      'Wood burner only',
+      'Direct electric only',
     ],
     correctIndex: 1,
     explanation:
-      'Access to government incentives such as the Smart Export Guarantee (SEG) requires installation by an MCS certified installer, making MCS certification essential for customers seeking financial support.',
+      'UK 2025-26 dominant heat pump architectures: (1) ASHP — air-to-water (heating + DHW via water cylinder) or air-to-air (split AC-style, less common in UK heating). Outdoor unit houses compressor + outdoor coil + fan; indoor side has hydraulic interface + circulation pumps + cylinder. (2) GSHP — extracts heat from ground via borehole (vertical, typical for higher heat loads) or horizontal collector (typical for rural with land available). Indoor unit only; ground loop drilled / trenched by specialist. (3) Exhaust-air — extracts heat from exhaust ventilation air; integrated unit; typical in MVHR-equipped airtight new builds. All run a vapour-compression refrigerant cycle driven by an electric compressor. UK 2025-26 stock heavily ASHP (~85% of new installs); GSHP minority (higher upfront cost; longer payback); exhaust-air a niche pattern.',
   },
   {
-    id: 'mcs-check-4',
-    question: 'What ongoing requirement must MCS installers meet?',
+    id: 'm8s1-installer-scope',
+    question: 'Where does the BS 7671 electrical installer’s scope end on a heat pump install?',
     options: [
-      'No ongoing requirements after initial certification',
-      'Annual recertification only',
-      'Continuous professional development and periodic surveillance audits',
-      'Monthly reporting to MCS',
+      'The electrician does everything',
+      'Electrical installer scope: supply assessment, dedicated circuit, RCD architecture, ADS verification, cable + RCBO + isolator, control wiring, immersion backup, commissioning per Part 6, Reg 643 testing. NOT the installer’s scope: refrigerant circuit (REFCOM F-Gas certified person), heat pump sizing (MCS / MIS 3005-D:2025 designer), hydraulic loop (heating engineer), MCS handover paperwork (MCS-certified company). Heat pump install is multi-trade — electrical install is one engineering layer',
+      'Refrigerant work',
+      'Hydraulic design',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'MCS installers must complete continuous professional development (CPD), maintain competence records, and undergo periodic surveillance audits by their certification body to retain their certification.',
+      'Heat pump install is multi-trade. ELECTRICAL installer (BS 7671 + Part P + competent person scheme): supply assessment + DNO liaison; dedicated circuit + RCBO + RCD architecture; ADS verification + Zs measurement; cable sizing + outdoor SWA + indoor cable run; isolator at outdoor unit; control wiring; immersion backup circuit; commissioning per Part 6 / Chapter 64; certification (EIC). NOT the electrical installer’s scope: refrigerant circuit (REFCOM F-Gas Cat 1 certified person; F-Gas Regs 2015 / 517/2014); heat pump sizing per MCS / MIS 3005-D:2025 methodology (room-by-room heat loss calc + MCS-approved product list); hydraulic loop / radiator / UFH design (heating engineer); MCS handover paperwork (MCS-certified company only). Cert evidence bundle for the electrical scope records the BS 7671 EIC; MCS handover is a separate document.',
+  },
+  {
+    id: 'm8s1-load-profile',
+    question: 'Typical UK 2025-26 domestic ASHP electrical load profile?',
+    options: [
+      '0.1 kW continuous',
+      'Single-phase ASHP 5-12 kW thermal output ≈ 1.5-4 kW electrical input continuous when running (COP ~3); start-up inrush 3-8× running current (~25-60 A peak for ~100-500 ms). Add 3 kW immersion backup + 100-300 W circulation pumps + 50-150 W controls = typical 5-7 kW peak electrical demand. Larger units (16-30 kW thermal) typically three-phase',
+      '100 kW continuous',
+      'Random',
+    ],
+    correctIndex: 1,
+    explanation:
+      'UK 2025-26 domestic ASHP load profile: 5-12 kW thermal output is dominant for typical 3-4 bed property; COP ~3 (so electrical input ~1.5-4 kW continuous when compressor runs). Compressor start-up inrush: 3-8× running current for ~100-500 ms (~25-60 A peak from ~6-15 A running) — design constraint for protective device curve selection (C or D curve for motor inrush vs B for resistive). Add: 3 kW immersion backup element (for boost / legionella cycle / fault fallback); 100-300 W circulation pumps (primary + secondary); 50-150 W controls + sensors. Typical peak electrical demand: 5-7 kW for full-power running + immersion + pumps. Larger units (16-30 kW thermal, big houses / agricultural / commercial) move to three-phase. Cert evidence bundle records the manufacturer’s rated electrical input + sustained operating current + inrush characteristics.',
+  },
+  {
+    id: 'm8s1-bs7671-scope',
+    question: 'Where does BS 7671 specifically apply to a heat pump install?',
+    options: [
+      'Nowhere',
+      'Multiple regulatory anchors: Reg 311.1 (max demand for supply assessment); Reg 314 (division of installation — heat pump on dedicated circuit); Reg 411.4 ADS + earth fault loop impedance verification; Reg 415.1 30 mA RCD additional protection; Reg 421.11 + 421.1.4 + 422.3.2 thermal protection of fixed equipment; Reg 522.2.1 wiring protection from external heat sources; Reg 554.2 / 554.3 (backup immersion element — heaters with immersed heating elements); Reg 643 testing; EREC G98 / G99 DNO notification',
+      'Only outdoors',
+      'Only DHW',
+    ],
+    correctIndex: 1,
+    explanation:
+      'BS 7671 has no dedicated Section for heat pumps (no "Section 754") — they’re treated as fixed equipment under general Parts 4-7. Regulatory anchors: Reg 311.1 (max demand calc — drives supply assessment); Reg 314 (division of installation — heat pump on its own dedicated circuit, mirroring M6 / M7 EV pattern); Reg 411.4 ADS + earth fault loop impedance verified at outdoor unit; Reg 415.1 30 mA RCD additional protection; Reg 421.11 + 421.1.4 + 422.3.2 thermal protection of fixed equipment (Section 421/422 explicitly addresses fixed equipment with concentration of heat — applies to compressor + immersion + circulation pump motors); Reg 522.2.1 wiring protection from external heat sources (relevant where cable runs near hot pipework or outdoor unit fan); Reg 554.2 / 554.3 heaters for liquids having immersed heating elements (the backup immersion in DHW cylinder — note 554.1 is electrode heaters, a different appliance); Reg 643.x Part 6 testing; EREC G98 / G99 for DNO notification. Cert evidence bundle records each regulation’s application per the install.',
   },
 ];
 
 const quizQuestions = [
   {
-    id: 1,
-    question: 'What is the primary purpose of the Microgeneration Certification Scheme (MCS)?',
+    question:
+      'A customer asks an electrician to "install a heat pump" — what is the realistic delivery model in UK 2025-26?',
     options: [
-      'To regulate electricity prices',
-      'To certify microgeneration products and installer competence',
-      'To provide grants for renewable energy',
-      'To manage the national grid',
+      'Electrician does the whole job',
+      'Multi-trade delivery. MCS-certified heat pump company sizes + supplies + commissions the heat pump unit (MCS / MIS 3005-I / -D:2025). F-Gas Cat 1 person makes the refrigerant connections (REFCOM accredited). Heating engineer fits the hydraulic loop + radiators / UFH. Electrical installer (this course’s scope) does the supply + dedicated circuit + RCD architecture + ADS + commissioning per Part 6 + EIC. Customer-facing single quote often from the MCS company who subcontracts the electrical scope',
+      'Customer DIY',
+      'Plumber does electrical',
     ],
     correctAnswer: 1,
     explanation:
-      'MCS is a quality assurance scheme that certifies both microgeneration products (ensuring they meet performance standards) and installer competence (ensuring installations meet quality requirements).',
+      'UK 2025-26 heat pump install reality: multi-trade. MCS-certified heat pump company (e.g. Octopus Energy Heat Pumps, British Gas Net Zero, Daikin Sustainable Home Network installers) sizes + supplies the unit per MCS / MIS 3005-D:2025 methodology; their subcontracted trades cover refrigerant (F-Gas Cat 1 person — REFCOM accredited), hydraulic loop (heating engineer / plumber), and electrical (this course’s scope — BS 7671 electrician under Part P competent person scheme). Customer typically signs a single contract with the MCS company; subcontractors deliver under that umbrella. Cert evidence bundle: electrical scope delivers BS 7671 EIC; MCS company delivers MCS handover pack which includes the EIC as one input. Boundary clarity at quote stage protects everyone.',
   },
   {
-    id: 2,
-    question: 'Which technologies does MCS cover?',
+    question: 'What is the role of MCS / MIS 3005-I / -D:2025 for a heat pump install?',
     options: [
-      'Solar PV only',
-      'Heat pumps only',
-      'Solar PV, solar thermal, heat pumps, wind, hydro, and battery storage',
-      'Large-scale commercial installations only',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'MCS covers multiple microgeneration technologies including solar PV, solar thermal, heat pumps (ASHP and GSHP), small wind, micro-hydro, and battery storage systems, providing certification pathways for each.',
-  },
-  {
-    id: 3,
-    question: 'What training is typically required before applying for MCS certification?',
-    options: [
-      'No formal training required',
-      'Technology-specific training from an MCS-approved training provider',
-      'University degree in renewable energy',
-      'Online course completion only',
+      'Same as BS 7671',
+      'MCS = Microgeneration Certification Scheme (UK certification body). The old monolithic MIS 3005 was restructured in 2025 into two mandatory standards: MIS 3005-I:2025 (Heat Pump Installation Standard) and MIS 3005-D:2025 (Heat Pump Design Standard). Together they set requirements for: heat pump SIZING / DESIGN methodology (room-by-room heat loss calc per BS EN 12831-1:2017 / SAP / PHPP — the -D standard), product approval (only MCS-approved heat pumps qualify for grants), installation + commissioning competence (the -I standard), and customer handover documentation. Separate from BS 7671 (electrical wiring regs). MCS handover paperwork is required for UK Government grant funding (Boiler Upgrade Scheme £7,500 typical 2025-26)',
+      'MCS does not exist',
+      'Replaces BS 7671',
     ],
     correctAnswer: 1,
     explanation:
-      'Prospective MCS installers must complete technology-specific training from MCS-approved training providers, covering system design, installation standards, commissioning, and relevant regulations.',
+      'MCS (Microgeneration Certification Scheme) is the UK certification body for low-carbon energy products + installers. The old monolithic MIS 3005 split in 2025 into MIS 3005-I:2025 (Installation Standard) and MIS 3005-D:2025 (Design Standard) — together the rulebook for heat pump design + install. Sets requirements for: sizing / design methodology (heat loss calc per BS EN 12831-1:2017 / SAP / Passivhaus PHPP — the -D standard); product approval (only MCS-approved heat pumps qualify for UK Government Boiler Upgrade Scheme grant funding, currently £7,500 in 2025-26); installer company competence (must be MCS-certified to issue handover paperwork that unlocks grant); customer-facing documentation including the MCS handover pack. Separate regulatory layer from BS 7671 (electrical wiring regs). The MCS company issues the MCS handover; the BS 7671 electrical scope is one input to that pack. Cert evidence bundle for the electrical scope records the BS 7671 EIC; MCS handover is the MCS company’s deliverable.',
   },
   {
-    id: 4,
-    question: 'What does the MCS Installation Standard (MIS) document specify?',
+    question: 'F-Gas Regulations 2015 — relevance to heat pump electrical install?',
     options: [
-      'Product pricing guidelines',
-      'Marketing requirements for installers',
-      'Detailed technical requirements for installation quality and safety',
-      'Customer service standards only',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'MCS Installation Standards (MIS) documents specify detailed technical requirements for installation quality, safety, performance, and compliance that all MCS certified installers must follow.',
-  },
-  {
-    id: 5,
-    question: 'How often do MCS certified installers typically undergo surveillance audits?',
-    options: [
-      'Never after initial certification',
-      'Every 5 years',
-      'Annually or according to certification body requirements',
-      'Monthly',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'MCS certified installers undergo regular surveillance audits, typically annually, where the certification body reviews installations, documentation, and competence to ensure ongoing compliance.',
-  },
-  {
-    id: 6,
-    question: 'What documentation must be provided for each MCS registered installation?',
-    options: [
-      'Invoice only',
-      'Handover pack including commissioning records, certificates, warranties, and user guides',
-      'Photograph only',
-      'Verbal confirmation',
+      'No relevance',
+      'F-Gas Regulations 2015 (EU Regulation 517/2014 retained UK law) govern refrigerants in heat pumps (typically R32 / R290 in UK 2025-26 new install — lower GWP than legacy R410A). Refrigerant connection / break / leak repair requires F-Gas Cat 1 certified person (REFCOM accredited). NOT the electrical installer’s scope — but the electrical installer should not make refrigerant connections, even temporarily. Heat pump units arrive pre-charged (factory sealed) for direct connection by F-Gas Cat 1',
+      'Same as BS 7671',
+      'No certification needed',
     ],
     correctAnswer: 1,
     explanation:
-      'Every MCS installation requires a comprehensive handover pack including commissioning records, MCS certificate, product warranties, user operating guides, and maintenance schedules.',
+      'F-Gas Regulations 2015 (UK retained law from EU Regulation 517/2014) govern refrigerants with high Global Warming Potential. UK 2025-26 typical refrigerants in new ASHP install: R32 (GWP 675, mainstream 2020-onwards) or R290 (propane, GWP 3 — emerging premium option). Legacy R410A (GWP 2088) being phased out. Refrigerant work (making / breaking / charging / repairing the gas-tight refrigerant circuit) requires F-Gas Cat 1 certified person, typically REFCOM accredited under the UK F-Gas scheme. Electrical installer scope explicitly does NOT include refrigerant work — even temporarily disconnecting a refrigerant line to move an outdoor unit triggers F-Gas requirements. Heat pump units typically arrive factory pre-charged + sealed; F-Gas Cat 1 person makes the install-time refrigerant connection. Cert evidence bundle for the electrical scope records the BS 7671 EIC + notes the F-Gas certified person on file for the refrigerant scope (boundary clarity).',
   },
   {
-    id: 7,
-    question: 'What is the MCS database used for?',
+    question: 'Single-phase 7 kW ASHP vs three-phase 16 kW ASHP — what changes electrically?',
     options: [
-      'Marketing purposes only',
-      'Registering certified installations and enabling access to government schemes',
-      'Storing customer payment details',
-      'Tracking installer locations',
+      'Nothing changes',
+      'Single-phase 7 kW thermal ASHP ≈ 2-3 kW electrical input continuous (~10-13 A on 230 V) → existing typical 100 A single-phase domestic supply usually adequate. Three-phase 16 kW thermal ASHP ≈ 5-6 kW electrical input continuous (~8-9 A per phase on 400 V three-phase) → three-phase supply required (most existing UK domestic is single-phase only → DNO upgrade typically needed). Larger units shift the install to three-phase + DNO involvement + supply upgrade timeline (3-12 months)',
+      'Same scope',
+      'No difference',
     ],
     correctAnswer: 1,
     explanation:
-      'The MCS database records all certified installations, providing verification for customers and enabling access to government incentive schemes like the Smart Export Guarantee.',
+      'Single-phase 7 kW thermal ASHP: ~2-3 kW electrical input continuous (COP ~3); 10-13 A on 230 V running; existing 100 A single-phase domestic supply usually adequate after diversity + max demand calc per Reg 311.1. Three-phase 16 kW thermal ASHP: ~5-6 kW electrical input continuous; 8-9 A per phase on 400 V three-phase. Most existing UK domestic supplies are single-phase only — three-phase upgrade required from the DNO (timeline 3-12 months + cost £3-15k typical 2025-26). DNO heat pump notification portal (per-phase ≤16 A analogous to G98 generation threshold) typically covers pure-load heat pump; G99 if site has co-located generation (PV / BESS / V2G). Cert evidence bundle records: phase configuration + max demand calc + DNO correspondence + reference number.',
   },
   {
-    id: 8,
-    question: 'What happens if an MCS installer fails to meet scheme requirements?',
+    question: 'A new build with 8 kW ASHP + MVHR + future EV charging — what is the supply design implication?',
     options: [
-      'Nothing - certification is permanent',
-      'Verbal warning only',
-      'Suspension or withdrawal of certification with potential re-assessment requirements',
-      'Automatic transfer to another certification body',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Non-compliance can result in suspension or withdrawal of MCS certification. Installers may need to address non-conformities, undergo re-assessment, or face removal from the scheme.',
-  },
-  {
-    id: 9,
-    question: 'Which insurance requirement applies to MCS certified installers?',
-    options: [
-      'No insurance required',
-      'Basic public liability only',
-      'Public liability, professional indemnity, and appropriate workmanship warranties',
-      'Health insurance only',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'MCS installers must maintain adequate public liability insurance, professional indemnity insurance, and offer appropriate workmanship warranties/guarantees to protect consumers.',
-  },
-  {
-    id: 10,
-    question: 'What is the benefit of MCS certification for consumers?',
-    options: [
-      'Lower equipment costs only',
-      'Quality assurance, access to incentives, and consumer protection mechanisms',
-      'Faster installation times',
-      'No planning permission required',
+      'Just match heat pump now',
+      'Design for the total electrified-load future. 8 kW ASHP (~3 kW electrical) + 7 kW EV charger + 3 kW immersion + base load = ~15 kW peak with diversity; single-phase 60-80 A. Adding three-phase upfront (extra cost ~£500-1,500 at build stage) future-proofs for: larger EV (22 kW three-phase), PV + BESS + V2G integration, GSHP upgrade later, solar export / EREC G99 generation. UK 2025-26 best practice: three-phase as default for any new build with electrified heat + EV',
+      'Single 16 A circuit',
+      'No design',
     ],
     correctAnswer: 1,
     explanation:
-      'MCS certification provides consumers with quality assurance through certified products and installers, access to government incentives, warranty protection, and dispute resolution mechanisms.',
+      'New build with electrified heat + EV — design for the total future load, not just today’s install. Coincident peak: 8 kW ASHP electrical (~3 kW) + 7 kW EV charger + 3 kW immersion + 2-4 kW base load ≈ 15 kW peak with diversity; single-phase 60-80 A. Adding three-phase at construction stage costs an extra £500-1,500 typically (vs £3-15k to upgrade retrospectively). Three-phase future-proofs for: 22 kW three-phase EV charger; co-located PV + BESS + V2G (Chapter 82 PEI integration); GSHP retrofit (typically larger thermal output); solar export EREC G99 generation; full house electrification. UK 2025-26 best-practice for new-build with electrified heat + EV: three-phase as default. Cert evidence bundle records the supply design rationale + future-proofing headroom + DNO connection agreement.',
+  },
+  {
+    question: 'Heat-pump-ready electrical infrastructure as a separate scope from heat pump install — what does this mean?',
+    options: [
+      'Not a real concept',
+      'Heat-pump-ready = preparing the electrical infrastructure BEFORE the heat pump arrives, often months or years ahead. Includes: dedicated CU way reserved, dedicated outdoor cable routed + terminated, isolator fitted at outdoor location, three-phase supply upgrade if needed. UK 2025-26 emerging service offering — electricians prep the infrastructure for the future heat pump that the MCS company will install later. Reduces install-day complexity + lets customers stage the cost',
+      'Customer responsibility',
+      'No prep needed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Heat-pump-ready electrical infrastructure = preparing the electrical scope ahead of the heat pump install. UK 2025-26 emerging service offering: customer commits to heat pump direction but stages the cost — electrical scope (dedicated CU way + outdoor cable routed + isolator at outdoor unit location + supply upgrade if three-phase) is done first; heat pump procurement + MCS install happens 3-24 months later when customer is ready. Reduces install-day complexity + lets customers plan the budget. Electrical scope deliverables: dedicated final circuit terminated at a junction box at the future outdoor unit location; supply upgraded; CU labelled. When the heat pump arrives, the MCS company connects the existing terminated cable + commissions. Cert evidence bundle records the heat-pump-ready scope + the future heat pump model expected + the planned connection.',
   },
 ];
 
 const faqs = [
   {
-    question: 'How long does it take to become MCS certified?',
+    question: 'Why doesn’t BS 7671 have a dedicated heat pump section?',
     answer:
-      'The timeline varies depending on your existing qualifications. Typically, completing approved training takes 3-5 days per technology, followed by application processing and initial assessment which can take 4-8 weeks. Some installers achieve certification within 3 months, while others may take 6 months or more depending on their experience level and assessment scheduling.',
+      'BS 7671 treats heat pumps as fixed current-using equipment — subject to general Parts 4-7. The thermal protection (Section 421/422), wiring protection (Reg 522.2), ADS (Reg 411), additional protection (Reg 415), and verification (Part 6) all apply. The heat pump industry has its own dedicated standards (MCS / MIS 3005-I / -D:2025 for design + install; F-Gas Regs for refrigerant; BS EN 14511 / BS EN 14825 for product performance). The electrical install side is a small slice of the total scope — but it’s the slice this course addresses.',
   },
   {
-    question: 'Can I be MCS certified for multiple technologies?',
+    question: 'Boiler Upgrade Scheme grant — what is it in UK 2025-26?',
     answer:
-      'Yes, you can hold MCS certification for multiple technologies simultaneously. Each technology requires separate training, assessment, and certification. Many installers hold certifications for complementary technologies such as solar PV and battery storage, or heat pumps and solar thermal, allowing them to offer comprehensive renewable energy solutions.',
+      'UK Government grant administered by Ofgem. £7,500 for an ASHP install (£7,500 for GSHP as of 2025-26). Eligibility: domestic property in England + Wales (Scotland + NI separate schemes), valid EPC, MCS-certified installer company, MCS-approved heat pump product. Customer’s scope: own the property + commit to operating + EPC. Installer’s scope: MCS certification + sizing per MIS 3005-D:2025 + handover pack + claim through Ofgem portal. Verify the current grant rate + eligibility at install / quote stage — scheme rates evolve.',
   },
   {
-    question: 'What are the costs involved in MCS certification?',
+    question: 'Does a heat pump need its own consumer unit?',
     answer:
-      'Costs include approved training courses (typically 500-1500 per technology), certification body application and assessment fees (varying by body), annual certification fees, and ongoing costs for insurance, CPD, and surveillance audits. Total initial costs typically range from 2000-5000 depending on the technology and certification body chosen.',
+      'Industry-norm best practice: dedicated CU way (one RCBO) per heat pump on the existing CU. Where the heat pump is large (three-phase) or installed alongside extensive electrified heat / EV / PV / BESS, a separate sub-CU at the heat pump location (with its own busbar + RCBOs for compressor + immersion + pumps + controls) is common. Reflects M6 / M7 EV install pattern. Cert evidence bundle records the topology.',
   },
   {
-    question: 'Do I need to be an electrician to become MCS certified for solar PV?',
+    question: 'What about hybrid heat pump (gas + heat pump combined) installs?',
     answer:
-      'While you do not need to be a fully qualified electrician, you must demonstrate electrical competence. Many installers hold qualifications such as NVQ Level 3 Electrical, City & Guilds 2365/2357, or equivalent. You must also be able to self-certify electrical work under Part P or work under supervision of a competent person scheme member.',
+      'Hybrid = heat pump as primary heat source with a gas / oil boiler backup for cold-weather peaks. UK 2025-26 niche but growing — useful for properties where full heat pump sizing would be prohibitive. Electrical scope: heat pump electrical install as normal; the gas / oil boiler is separate scope (Gas Safe / OFTEC). Controls integration to coordinate the two heat sources is the operational interface. MCS / MIS 3005-I / -D:2025 covers the hybrid system; F-Gas covers the heat pump refrigerant.',
   },
   {
-    question: 'What happens if I receive a customer complaint about an MCS installation?',
+    question: 'Heat pump noise — relevant to the electrical installer?',
     answer:
-      'MCS has a Consumer Code that requires installers to have complaints procedures in place. If complaints cannot be resolved directly, customers can access MCS dispute resolution services. Serious or repeated complaints may trigger additional surveillance visits or affect your certification status. Maintaining high installation standards and good customer communication helps prevent complaints.',
-  },
-  {
-    question: 'How do I maintain my MCS certification once obtained?',
-    answer:
-      'Maintaining certification requires completing annual CPD requirements, passing surveillance audits, maintaining required insurance levels, correctly registering all installations on the MCS database, following current MIS standards, and promptly addressing any non-conformities identified. Annual fees must also be paid to your certification body.',
+      'Marginally. The compressor + fan generate noise (typically 40-55 dB(A) at 1m). Planning permission / Permitted Development Rights specify maximum noise at neighbouring property boundary (usually 42 dB(A) at 1m from the neighbour’s building per UK PDR 2019). Outdoor unit siting must meet this; planning consent may be needed for non-PDR-compliant locations. Electrical installer’s indirect involvement: the outdoor unit location drives the cable run, isolator placement, condensate drain access — site survey at quote stage.',
   },
 ];
 
-const RenewableEnergyModule8Section1 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+export default function RenewableEnergyModule8Section1() {
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Heat pumps in the UK electrical context | Renewable Energy 8.1 | Elec-Mate',
+    description:
+      'Heat pumps from the installer’s electrical side — ASHP / GSHP / exhaust-air, MCS / MIS 3005-I / -D:2025 framework as external installer competency, BS 7671 scope delineated, UK 2025-26 typical install patterns + load profile + multi-trade delivery model.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <Link to="/electrician/upskilling/renewable-energy-module-8">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <span className="text-white font-medium truncate">
-            MCS Requirements and Certification Pathways
-          </span>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-8')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 8
+          </button>
 
-      {/* Hero Section */}
-      <div className="px-4 py-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
-          <Zap className="w-4 h-4 text-elec-yellow" />
-          <span className="text-elec-yellow text-sm font-medium">Module 8 - Section 1</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-          MCS Requirements and Certification Pathways
-        </h1>
-        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
-          The Microgeneration Certification Scheme - your pathway to certified renewable energy
-          installation
-        </p>
-      </div>
+          <PageHero
+            eyebrow="Module 8 · Section 1 · BS 7671:2018+A4:2026 · Fixed equipment scope"
+            title="Heat pumps in the UK electrical context"
+            description="ASHP / GSHP / exhaust-air heat pumps from the installer’s electrical perspective. What an electrician’s scope covers vs the MCS / MIS 3005-I / -D:2025 / F-Gas framework that surrounds it. UK 2025-26 install patterns, typical load profiles, multi-trade delivery model, where BS 7671 enters."
+            tone="yellow"
+          />
 
-      {/* Quick Summary */}
-      <div className="px-4 pb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Quality Assurance:</span> MCS ensures
-              installers meet recognised industry standards
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Consumer Access:</span> Required for
-              customers to access government incentives
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Multiple Technologies:</span> Covers
-              solar PV, heat pumps, wind, and battery storage
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Ongoing Compliance:</span> Requires
-              CPD and regular surveillance audits
-            </p>
-          </div>
-        </div>
-      </div>
+          <TLDR
+            points={[
+              'Heat pumps are NOT a dedicated BS 7671 Section. Treated as fixed equipment under general Parts 4-7 — Reg 311.1, Reg 314, Reg 411.4, Reg 415.1, Reg 421/422, Reg 522.2, Reg 554, Reg 643.',
+              'UK 2025-26 architectures: ASHP (dominant, ~85% new installs), GSHP (minority — higher upfront, longer payback), exhaust-air (niche — MVHR-equipped new builds).',
+              'Heat pump install is multi-trade. Electrical scope = one engineering layer alongside MCS-certified company (sizing + procurement), F-Gas Cat 1 person (refrigerant), heating engineer (hydraulic loop).',
+              'MCS / MIS 3005-I / -D:2025 = the heat pump install (-I) and design (-D) standards. Required for the Boiler Upgrade Scheme grant (£7,500 typical 2025-26). Separate regulatory layer from BS 7671.',
+              'F-Gas Regs 2015 govern refrigerants (typically R32 or R290 in UK 2025-26). Refrigerant work requires F-Gas Cat 1 certified person (REFCOM accredited). NOT electrical installer scope.',
+              'Typical load profile: single-phase ASHP 5-12 kW thermal ≈ 1.5-4 kW electrical input continuous + 3 kW immersion + 100-300 W pumps. Larger units (16-30 kW thermal) shift to three-phase.',
+              'Heat-pump-ready electrical infrastructure = emerging service offering. Customer stages the cost by doing electrical prep first, heat pump install later.',
+              'BS 7671 enters at: supply assessment (Reg 311.1), dedicated circuit (Reg 314 + industry norm), thermal protection of fixed equipment (Reg 421/422), wiring from heat sources (Reg 522.2), ADS (Reg 411.4), 30 mA RCD (Reg 415.1), immersion backup (Reg 554), Part 6 verification (Reg 643).',
+            ]}
+          />
 
-      {/* Learning Outcomes */}
-      <div className="px-4 pb-6">
-        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
-        <div className="space-y-2">
-          {[
-            'Purpose and benefits of MCS certification',
-            'Technologies covered by the MCS scheme',
-            'Certification pathways and requirements',
-            'Training and assessment processes',
-            'Ongoing compliance and maintenance',
-          ].map((outcome, index) => (
-            <div key={index} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white text-sm">{outcome}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+          <LearningOutcomes
+            outcomes={[
+              'Classify the three heat pump architectures (ASHP / GSHP / exhaust-air) and identify the electrical scope per architecture.',
+              'Distinguish the BS 7671 electrical installer’s scope from the MCS / MIS 3005-I / -D:2025 / F-Gas / hydraulic engineer scopes.',
+              'Apply the BS 7671 regulatory anchors that DO cover heat pumps: Reg 311.1, Reg 314, Reg 411.4, Reg 415.1, Reg 421/422, Reg 522.2, Reg 554, Reg 643.',
+              'Estimate UK 2025-26 typical electrical load profile for single-phase and three-phase heat pump installs.',
+              'Apply the multi-trade delivery model: MCS-certified company + F-Gas Cat 1 + heating engineer + electrical installer; boundary clarity at quote stage.',
+              'Recognise the Boiler Upgrade Scheme grant context (£7,500 UK 2025-26) and the MCS / MIS 3005-I / -D:2025 certification requirement that unlocks it.',
+              'Offer heat-pump-ready electrical infrastructure as a separate scope where customer is staging the cost.',
+            ]}
+            initialVisibleCount={3}
+          />
 
-      <div className="px-4 space-y-6 pb-8">
-        {/* Section 01 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-xl font-semibold text-white">Understanding MCS</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              The Microgeneration Certification Scheme (MCS) is an industry-led quality assurance
-              scheme that certifies both microgeneration products and the competence of installers.
-              Established to give consumers confidence in renewable energy installations, MCS has
-              become the recognised standard across the UK.
-            </p>
-            <p>
-              MCS serves two primary functions: certifying that products meet stringent performance
-              and safety standards, and certifying that installers have the competence to design,
-              install, and commission systems correctly. This dual approach ensures that quality is
-              maintained throughout the entire supply chain.
-            </p>
-            <p>
-              For installers, MCS certification opens significant business opportunities. It is a
-              requirement for customers wishing to access government incentives such as the Smart
-              Export Guarantee (SEG), Boiler Upgrade Scheme, and various local authority grants.
-              Without MCS certification, customers cannot benefit from these financial support
-              mechanisms.
-            </p>
-            <p>
-              The scheme is overseen by a board including industry representatives and consumer
-              groups, ensuring that standards remain relevant and protect both installers and
-              customers. Regular updates to installation standards reflect technological advances
-              and lessons learned from the field.
-            </p>
-          </div>
-        </section>
+          <Pullquote>
+            BS 7671 has no Section for heat pumps. The wiring regs don’t need one — fixed equipment under Parts 4-7 already covers it. The heat pump industry has its own standards on top.
+          </Pullquote>
 
-        <InlineCheck questions={[quickCheckQuestions[0]]} />
+          <ContentEyebrow>What the heat pump industry looks like to an electrician</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-xl font-semibold text-white">Technologies Covered</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              MCS covers a comprehensive range of microgeneration technologies, each with specific
-              installation standards (MIS documents) that define requirements for design,
-              installation, commissioning, and documentation.
-            </p>
-            <p>
-              <span className="text-white font-medium">Solar Photovoltaics (MIS 3002):</span> The
-              most common MCS technology, covering domestic and small commercial PV installations.
-              The standard addresses system design, structural considerations, electrical safety,
-              and performance requirements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Heat Pumps (MIS 3005):</span> Covering air
-              source heat pumps (ASHP), ground source heat pumps (GSHP), and water source heat
-              pumps. This standard includes heat loss calculations, system sizing, refrigerant
-              handling, and integration with heating systems.
-            </p>
-            <p>
-              <span className="text-white font-medium">Battery Storage (MIS 3012):</span> A newer
-              addition addressing the growing battery storage market. This covers electrical safety,
-              fire risk management, system integration with PV and grid connections, and appropriate
-              isolation arrangements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Solar Thermal (MIS 3001):</span> Solar hot
-              water systems using collectors to heat water. The standard covers collector selection,
-              cylinder sizing, frost protection, and integration with existing heating systems.
-            </p>
-            <p>
-              Additional technologies include small wind turbines (MIS 3003), biomass heating (MIS
-              3004), and micro-hydro (MIS 3006), each with their own specific standards and
-              certification requirements.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="The three heat pump architectures"
+            plainEnglish="UK 2025-26 domestic + light-commercial heat pump installs cluster around three architectures: Air Source (ASHP — air-to-water dominant), Ground Source (GSHP — borehole or horizontal collector), and exhaust-air (integrated, MVHR-equipped new builds). All driven by an electric compressor running a vapour-compression refrigerant cycle."
+            onSite="ASHP dominates because it has the lowest install complexity (no ground loop, no MVHR retrofit). GSHP suits larger heat loads + properties with land availability. Exhaust-air suits airtight new builds with mechanical ventilation. The electrical installer integrates with all three — the architecture changes the outdoor / indoor layout but not the BS 7671 scope materially."
+          >
+            <p>Architecture summary:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">ASHP air-to-water</strong> — outdoor
+                unit (compressor + outdoor coil + fan) + indoor hydraulic interface +
+                DHW cylinder. UK 2025-26 dominant (~85% new domestic installs)
+              </li>
+              <li>
+                <strong className="text-white">ASHP air-to-air</strong> — split-system
+                style (no water loop); less common in UK heating context but used in
+                some apartment / commercial settings
+              </li>
+              <li>
+                <strong className="text-white">GSHP borehole</strong> — vertical bore
+                (typical 50-150 m deep per kW thermal); specialist drilling required;
+                indoor unit only. Higher upfront cost; longer payback; minority share
+              </li>
+              <li>
+                <strong className="text-white">GSHP horizontal collector</strong> —
+                trenched ground loop (typical 1-1.5 m deep); needs land area (~150-300
+                m² per kW thermal); rural / agricultural pattern
+              </li>
+              <li>
+                <strong className="text-white">Exhaust-air</strong> — extracts heat
+                from the home’s exhaust ventilation air; integrated unit; suits
+                MVHR-equipped airtight new builds
+              </li>
+              <li>
+                <strong className="text-white">Hybrid (gas + heat pump)</strong>
+                — heat pump as primary; gas / oil boiler as cold-peak backup. Niche but
+                growing for properties where full heat pump sizing would be prohibitive
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck questions={[quickCheckQuestions[1]]} />
+          <ConceptBlock
+            title="MCS / MIS 3005-I / -D:2025 — the installer competency framework that surrounds the heat pump"
+            plainEnglish="MCS (Microgeneration Certification Scheme) is the UK certification body for low-carbon energy products + installers. The old monolithic MIS 3005 split in 2025 into MIS 3005-I:2025 (Installation Standard) and MIS 3005-D:2025 (Design Standard) — together the rulebook covering design / sizing methodology, product approval, installer competence, and customer handover documentation. Required to issue the handover paperwork that unlocks the Boiler Upgrade Scheme grant."
+            onSite="The MCS company is the customer’s primary contractor. They size the heat pump (per BS EN 12831 heat loss calc), select an MCS-approved product, coordinate the multi-trade install, and issue the MCS handover. The electrical installer (Part P competent person under BS 7671) delivers the electrical scope as a subcontract or partnership under that umbrella. Cert evidence bundle for the electrical scope sits inside the larger MCS handover pack."
+          >
+            <p>MCS framework elements:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Sizing methodology</strong> — BS EN
+                12831 room-by-room heat loss calc + SAP / PHPP for whole-house; the
+                heat pump is sized to match the building’s loss at design temperature
+              </li>
+              <li>
+                <strong className="text-white">Product approval</strong> — only
+                MCS-approved heat pumps qualify for UK Government grants. Approved
+                products listed on the MCS website per category + capacity
+              </li>
+              <li>
+                <strong className="text-white">Installer competence</strong> — company
+                must be MCS-certified to issue the handover. Individual installers
+                trained per MCS curriculum (typically LCL Awards Level 3 Award in the
+                Installation + Maintenance of Heat Pumps)
+              </li>
+              <li>
+                <strong className="text-white">Customer handover documentation</strong>
+                — MCS pack includes sizing calc + commissioning record + product details +
+                warranties + maintenance schedule + EIC (from the electrical install) +
+                F-Gas record (from the refrigerant scope)
+              </li>
+              <li>
+                <strong className="text-white">Boiler Upgrade Scheme
+                  grant</strong> — UK Government grant £7,500 typical 2025-26;
+                administered by Ofgem; customer claim submitted by MCS company;
+                requires MCS handover + MCS-approved product
+              </li>
+              <li>
+                <strong className="text-white">Boundary with BS 7671</strong> — MCS is
+                the heat pump industry framework; BS 7671 is the wiring regs framework.
+                Both apply to the same install; the cert evidence bundle records each
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-xl font-semibold text-white">Certification Bodies and Process</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              MCS certification is delivered through UKAS-accredited certification bodies. These
-              include well-known organisations such as NICEIC, NAPIT, HIES, and others who are
-              authorised to assess installers against MCS requirements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Choosing a Certification Body:</span> While
-              all certification bodies assess against the same MCS standards, they may differ in
-              their fee structures, support services, and additional benefits. Research options
-              carefully and consider factors such as existing memberships, geographic coverage, and
-              customer service reputation.
-            </p>
-            <p>
-              <span className="text-white font-medium">The Certification Process:</span> After
-              completing approved training, you apply to your chosen certification body. The
-              application requires evidence of qualifications, training certificates, insurance
-              documentation, and business credentials. The certification body reviews your
-              application and schedules an initial assessment.
-            </p>
-            <p>
-              <span className="text-white font-medium">Initial Assessment:</span> This typically
-              involves a witnessed installation where an assessor observes your work on a live
-              project, reviewing design decisions, installation quality, safety practices, and
-              documentation. You may also face technical questioning to demonstrate understanding.
-            </p>
-            <p>
-              Upon successful assessment, you receive MCS certification for the specific technology
-              assessed. Your company is added to the MCS Installer Directory, and you can begin
-              registering installations on the MCS database.
-            </p>
-          </div>
-        </section>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 421.11 — Protection against thermal effects (fixed equipment context)"
+            clause="Persons, livestock and property shall be protected against harmful effects of heat or fire which may be generated or propagated in electrical installations. Manufacturers’ instructions shall be taken into account in addition to the requirements of BS 7671."
+            meaning="Reg 421.11 is the foundational fixed-equipment thermal-protection regulation. Heat pumps (compressor + fan + immersion + circulation pumps) generate heat in normal operation; the install must protect adjacent material from harmful thermal effects. Manufacturer’s install manual specifies clearance, ventilation, vibration isolation — these instructions are read TOGETHER with BS 7671 not in place of it. Cert evidence bundle records: outdoor unit clearance dimensions; cable routing distance from hot pipework / outdoor unit fan; immersion + cylinder enclosure thermal envelope; manufacturer install manual reference + version + date."
+          />
 
-        <InlineCheck questions={[quickCheckQuestions[2]]} />
+          <InlineCheck {...inlineChecks[0]} />
 
-        {/* Section 04 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-xl font-semibold text-white">Training Requirements</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              MCS requires installers to complete technology-specific training from approved
-              training providers before certification. This training ensures you understand the
-              relevant MIS standards and can apply them correctly in practice.
-            </p>
-            <p>
-              <span className="text-white font-medium">Solar PV Training:</span> Typically 3-5 days
-              covering system design, DC electrical safety, string sizing, inverter selection,
-              G98/G99 requirements, structural considerations, and commissioning procedures.
-              Practical exercises reinforce theoretical knowledge.
-            </p>
-            <p>
-              <span className="text-white font-medium">Heat Pump Training:</span> Comprehensive
-              courses covering thermodynamics, heat loss calculations, system design, refrigerant
-              handling (F-Gas requirements), controls integration, and MCS heat pump standard
-              requirements. Courses typically run 5-10 days depending on depth.
-            </p>
-            <p>
-              <span className="text-white font-medium">Battery Storage Training:</span> Addresses
-              energy storage principles, battery chemistry and safety, system sizing, AC/DC coupling
-              options, integration with PV and grid, fire safety requirements, and the specific
-              requirements of MIS 3012.
-            </p>
-            <p>
-              <span className="text-white font-medium">Prerequisites:</span> Most training providers
-              require relevant background qualifications. For electrical technologies, this
-              typically means proven electrical competence. For heat pumps, plumbing and heating
-              backgrounds are advantageous but not always mandatory.
-            </p>
-            <p>
-              Training providers must be approved by MCS to deliver certification-qualifying
-              courses. Approved providers are listed on the MCS website, and completion certificates
-              from these providers are required as part of your certification application.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...inlineChecks[1]} />
 
-        <InlineCheck questions={[quickCheckQuestions[3]]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-xl font-semibold text-white">Maintaining Certification</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              MCS certification is not a one-time achievement but requires ongoing commitment to
-              quality and professional development. Certification bodies conduct regular
-              surveillance to ensure continued compliance with scheme requirements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Surveillance Audits:</span> Typically annual,
-              these audits review a sample of your installations, checking documentation,
-              workmanship, and compliance with current standards. Auditors may visit installed
-              systems, review your processes, and verify that installations match your records.
-            </p>
-            <p>
-              <span className="text-white font-medium">Continuous Professional Development:</span>{' '}
-              MCS requires installers to maintain and develop their competence. This includes
-              staying current with standard updates, attending relevant training, and demonstrating
-              ongoing learning. Your certification body will specify CPD requirements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Installation Registration:</span> All MCS
-              installations must be registered on the MCS database within specified timeframes. This
-              creates an auditable record and enables customers to access incentive schemes. Failure
-              to register installations correctly can affect your certification status.
-            </p>
-            <p>
-              <span className="text-white font-medium">Insurance and Warranties:</span> You must
-              maintain appropriate insurance levels and offer workmanship warranties that meet
-              scheme requirements. Your certification body will verify these during annual renewals.
-            </p>
-            <p>
-              <span className="text-white font-medium">Responding to Changes:</span> When MIS
-              standards are updated, you must implement changes within specified transition periods.
-              Certification bodies provide guidance on significant changes and may require
-              additional training for major updates.
-            </p>
-          </div>
-        </section>
+          <ContentEyebrow>The multi-trade delivery model</ContentEyebrow>
 
-        {/* Practical Guidance */}
-        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
-          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-elec-yellow" />
-            Practical Guidance
-          </h3>
-          <div className="space-y-2 text-white text-sm">
-            <p>
-              <span className="text-white font-medium">Start with one technology:</span> Rather than
-              attempting multiple certifications simultaneously, focus on achieving competence and
-              certification in one technology first. This allows you to build experience and
-              reputation before expanding your offerings.
-            </p>
-            <p>
-              <span className="text-white font-medium">Document everything:</span> Good
-              documentation practices from the start make surveillance audits straightforward. Use
-              consistent templates, take photographs at key stages, and maintain organised records
-              of every installation.
-            </p>
-            <p>
-              <span className="text-white font-medium">Network with other installers:</span> Join
-              industry groups, attend trade events, and connect with experienced MCS installers.
-              Sharing knowledge and experiences helps you improve your practice and stay informed
-              about industry developments.
-            </p>
-          </div>
-        </div>
+          <Pullquote>
+            Electrical install is one engineering layer of four on a heat pump job. Knowing where your scope ends — and where the next person’s starts — is the install competence.
+          </Pullquote>
 
-        {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
+          <ConceptBlock
+            title="Four trades on every heat pump install"
+            plainEnglish="A UK 2025-26 heat pump install involves four distinct trades. MCS-certified company owns the customer relationship + sizing + product selection + handover. F-Gas Cat 1 certified person (REFCOM accredited) makes the refrigerant connections. Heating engineer fits the hydraulic loop + radiators / UFH. Electrical installer (this course’s scope) delivers the BS 7671 electrical install."
+            onSite="Customer signs one contract with the MCS company. Subcontractors deliver their layer. Each trade keeps their own competence + paperwork + certification. The MCS company orchestrates + issues the master handover. Cert evidence bundle for the electrical scope sits inside the larger pack."
+          >
+            <p>The four trades + boundaries:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">MCS-certified
+                  company</strong> — sizing per MIS 3005-D:2025 + BS EN 12831-1:2017; product
+                selection from MCS approved list; customer contract; MCS handover pack;
+                Boiler Upgrade Scheme grant claim
+              </li>
+              <li>
+                <strong className="text-white">F-Gas Cat 1 person
+                  (REFCOM)</strong> — refrigerant circuit. Makes the install-time
+                connection of the factory-charged outdoor unit; tests for leaks;
+                commissions the refrigerant side; F-Gas record. NOT an electrical
+                scope
+              </li>
+              <li>
+                <strong className="text-white">Heating engineer</strong> — hydraulic
+                loop, radiators / UFH, hot water cylinder hydraulic connections,
+                circulation pumps, expansion vessel, system fill + balance.
+                Traditional plumber / heating engineer trade
+              </li>
+              <li>
+                <strong className="text-white">BS 7671 electrical
+                  installer</strong> — this course’s scope. Supply assessment + DNO
+                liaison; dedicated circuit + protective devices; RCD architecture; ADS
+                verification + Zs; cable + isolator; immersion backup circuit; control
+                wiring; commissioning per Part 6; EIC
+              </li>
+              <li>
+                <strong className="text-white">Boundary clarity at
+                  quote stage</strong> — define which trade does what. Especially
+                important at the refrigerant / electrical interface (the outdoor unit
+                electrical connection follows the refrigerant connection — sequence
+                matters)
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle
+                  structure</strong> — electrical scope delivers the BS 7671 EIC
+                + Schedule of Inspections + Schedule of Test Results; MCS handover pack
+                includes the EIC as one input alongside the F-Gas record + sizing
+                calc + commissioning report
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="F-Gas Regulations 2015 — what an electrician needs to know"
+            plainEnglish="F-Gas Regulations 2015 (UK retained law from EU Regulation 517/2014) govern fluorinated greenhouse gas refrigerants. UK 2025-26 typical refrigerants in new ASHP install: R32 (GWP 675) or R290 (propane, GWP 3, emerging). Legacy R410A (GWP 2088) being phased out. Refrigerant work requires F-Gas Cat 1 certified person — NOT electrical installer scope."
+            onSite="The electrical installer does not touch the refrigerant circuit. Even temporarily disconnecting a refrigerant line to reposition an outdoor unit triggers F-Gas certification requirements. Heat pump units arrive factory pre-charged + sealed; the F-Gas Cat 1 person makes the install-time refrigerant connection. Boundary clarity protects the electrician from F-Gas liability."
+          >
+            <p>F-Gas context for the electrical installer:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Refrigerants
+                  governed</strong> — fluorinated greenhouse gases (R32, R410A
+                legacy, R134a) + recently R290 propane (technically a hydrocarbon, F-Gas
+                framework still relevant). High GWP = high regulatory attention
+              </li>
+              <li>
+                <strong className="text-white">Cat 1 certified
+                  person</strong> — required for refrigerant connection + leak repair
+                + commissioning + decommissioning. UK 2025-26 typical accreditation
+                via REFCOM
+              </li>
+              <li>
+                <strong className="text-white">R290 propane</strong> —
+                emerging premium refrigerant; lower GWP (3 vs 675 for R32); used in some
+                new ASHP models (Vaillant aroTHERM Plus, Mitsubishi Ecodan R290).
+                Hydrocarbon — flammable; additional siting + safety considerations
+              </li>
+              <li>
+                <strong className="text-white">Electrical
+                  installer’s role</strong> — none on refrigerant; presence at
+                install for sequencing + electrical commissioning coordination
+              </li>
+              <li>
+                <strong className="text-white">Sequencing on
+                  install day</strong> — typically: hydraulic + electrical first
+                fix (cable terminated at junction box at outdoor location);
+                refrigerant Cat 1 person makes refrigerant connection + tests; electrical
+                installer makes electrical connection at outdoor unit + commissioning
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — electrical scope records: F-Gas Cat 1 person’s
+                name + REFCOM number + refrigerant connection date on file (for
+                handover-pack cross-reference); electrical install only proceeds after
+                refrigerant connection complete
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>UK 2025-26 install patterns + load profile</ContentEyebrow>
+
+          <ConceptBlock
+            title="Typical electrical load profile"
+            plainEnglish="UK 2025-26 domestic ASHP electrical load profile: 5-12 kW thermal output (typical 3-4 bed property) ≈ 1.5-4 kW electrical input continuous when running (COP ~3). Start-up inrush 3-8× running current. Add 3 kW immersion backup + 100-300 W circulation pumps + 50-150 W controls = typical 5-7 kW peak electrical demand."
+            onSite="Inrush drives protective device curve selection (C or D curve for motor inrush vs B for resistive loads). Continuous compressor running drives cable thermal sizing. Peak with immersion + pumps drives supply max demand assessment. UK 2025-26 typical wallbox-style approach: dedicated circuit + 32 A RCBO C-curve + 6 mm² T+E or 10 mm² SWA outdoor."
+          >
+            <p>Load profile breakdown:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Single-phase 7 kW
+                  thermal ASHP</strong> — 2-3 kW electrical input continuous
+                (COP ~3); 10-13 A on 230 V running; standard for 3-bed terraced /
+                semi-detached property
+              </li>
+              <li>
+                <strong className="text-white">Single-phase 12 kW
+                  thermal ASHP</strong> — 3-4 kW electrical input continuous;
+                13-18 A on 230 V running; standard for 4-bed detached property
+              </li>
+              <li>
+                <strong className="text-white">Start-up inrush</strong>
+                — 3-8× running current for ~100-500 ms (motor compressor starting +
+                stabilising). Compressor start-current driver of protective device
+                curve choice (C or D curve preferred over B)
+              </li>
+              <li>
+                <strong className="text-white">Backup immersion</strong>
+                — 3 kW typical; used for boost + legionella cycle + fault fallback.
+                Reg 554.x applies (Section 6 details)
+              </li>
+              <li>
+                <strong className="text-white">Circulation pumps</strong>
+                — primary (between heat pump + buffer) + secondary (between buffer +
+                emitters); 100-300 W combined typical
+              </li>
+              <li>
+                <strong className="text-white">Controls + sensors</strong>
+                — 50-150 W typical (thermostat + zone valves + OAT sensor + controller)
+              </li>
+              <li>
+                <strong className="text-white">Three-phase
+                  threshold</strong> — units &gt;12 kW thermal (typical 16, 20, 25, 30
+                kW thermal for larger properties / agricultural / light commercial) move
+                to three-phase 400 V supply for electrical reasons (higher input
+                current would need uneconomically large single-phase cable / supply)
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — manufacturer’s rated electrical input + sustained
+                operating current + inrush characteristics; supply max demand calc;
+                protective device selection rationale
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Four UK 2025-26 install patterns"
+            plainEnglish="UK 2025-26 heat pump installs cluster around four patterns. Retrofit gas-boiler swap (~70% by volume); new-build first-fit (~20%); upgrade from existing electric heating (~5%); leisure / agricultural / commercial-curtilage (~5%). Each pattern has distinct electrical implications."
+            onSite="Pattern drives the supply assessment + DNO involvement + cable routing + customer experience. Retrofit gas swap is the dominant scenario but most disruptive (existing supply often inadequate). New-build first-fit is the cleanest (electrical infrastructure designed in from start). Site classification at quote stage."
+          >
+            <p>The four patterns:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Retrofit gas-boiler
+                  swap</strong> — dominant pattern. Customer’s existing supply often
+                inadequate (typical 60-100 A single-phase). New dedicated circuit for
+                ASHP from CU. Possibly supply upgrade for larger units. Customer
+                experience disruptive (heating off for 1-3 days)
+              </li>
+              <li>
+                <strong className="text-white">New-build
+                  first-fit</strong> — heat pump + electrical infrastructure
+                designed in from start. Three-phase often default. Dedicated CU way
+                + outdoor cable run + isolator at design stage. Boiler Upgrade Scheme
+                grant applicable
+              </li>
+              <li>
+                <strong className="text-white">Upgrade from
+                  existing electric heating</strong> — replacing old direct-electric
+                heating (storage heaters, electric boilers, immersion-only DHW) with
+                heat pump. Electrical demand DROPS (heat pump uses ~1/3 the energy of
+                direct electric for same output). Supply usually already adequate
+              </li>
+              <li>
+                <strong className="text-white">Leisure / agricultural /
+                  commercial-curtilage</strong> — caravan parks, holiday lets, rural
+                cottages, agricultural buildings, small commercial premises. Often
+                three-phase. Specialist supply considerations
+              </li>
+              <li>
+                <strong className="text-white">Heat-pump-ready
+                  prep</strong> — emerging UK 2025-26 service offering. Customer pays
+                for electrical infrastructure now (CU way + outdoor cable + isolator +
+                supply upgrade if needed); heat pump installed later when customer is
+                financially ready or technology has matured further
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 311.1 + Reg 314 — max demand + division of installation"
+            clause="Reg 311.1: For economic and reliable design, the maximum demand of the installation, including current demand, shall be determined. Reg 314.1: Every installation shall be divided into circuits, as necessary, to avoid danger and minimise inconvenience in the event of a fault, to facilitate safe operation, inspection, testing and maintenance, and to take account of hazards that may arise from the failure of a single circuit such as a lighting circuit."
+            meaning="Reg 311.1 + Reg 314 frame the supply assessment + circuit-design conversation. For heat pump installs: Reg 311.1 max demand assessment determines whether the existing supply can accommodate the heat pump’s electrical input (continuous + inrush) plus existing site load with diversity; Reg 314 division of installation drives the industry-norm dedicated-circuit-per-heat-pump topology (mirroring M6 / M7 EV pattern). Cert evidence bundle records: max demand calc + diversity assumptions + supply capacity verification + dedicated circuit + protective device selection per circuit + DNO correspondence + reference if upgrade required."
+          />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="Retrofit gas-boiler swap — 4-bed semi-detached"
+            situation="Customer commits to replacing 35-year-old gas combi boiler with an ASHP. 4-bed semi-detached; current supply 100 A single-phase; existing CU 12-way with 4 spare ways. MCS-certified company has quoted: 9 kW Vaillant aroTHERM Plus R290 ASHP + 200 L unvented DHW cylinder + radiator upgrade. Customer eligible for £7,500 Boiler Upgrade Scheme grant."
+            whatToDo="Electrical scope: max demand assessment per Reg 311.1 — 9 kW ASHP thermal ≈ 3 kW electrical input + 3 kW immersion + 200 W pumps + existing site load ~5 kW peak (cooker + appliances) = ~11 kW with diversity. 100 A single-phase supply (23 kW capacity) adequate. Dedicated circuit per Reg 314 + industry norm: 32 A Type A RCBO C-curve + 6 mm² T+E indoor + 10 mm² 3-core SWA from indoor termination to outdoor unit + outdoor isolator (BS EN 60947-3) + Earth electrode if PME-on-outdoor-equipment alternative applied per Reg 411.4 (heat pump outdoor unit similar to EV PME challenge — manufacturer typically supplies OPDD-equivalent or specifies TT electrode). Type A RCD covers AC + pulsating DC; if VSD inverter compressor declared internal smooth-DC leakage in DoC, escalate to Type F or B per §8.5. Backup immersion circuit: 16 A Type A RCBO + 30 mA additional protection per Reg 415.1. Controls wiring: low-voltage 0.75 mm² screened cable for OAT sensor + thermostat. Commissioning per Part 6: visual + IR + ADS + Zs + RCD trip-time + functional test of compressor + immersion + pumps + controls. EIC delivered to MCS company for inclusion in handover pack. F-Gas Cat 1 person (REFCOM) handles refrigerant + delivers F-Gas record separately. Heating engineer fits hydraulic loop + radiator upgrade. Customer experience: 2-day install (day 1: refrigerant + hydraulic + electrical first fix; day 2: electrical second fix + commissioning + handover)."
+            whyItMatters="Retrofit gas swap is the dominant UK 2025-26 heat pump install pattern. The electrical scope is the smallest of the four trades by labour-hours (~4-8 hours typical) but critical: without the electrical commissioning + EIC, the MCS handover can’t complete + the grant can’t be claimed. Boundary clarity at quote stage (signed scope-of-works between MCS company + electrical subcontractor) protects everyone. Cert evidence bundle for the electrical scope sits inside the larger MCS handover pack delivered to customer + Ofgem for grant administration."
+          />
+
+          <Scenario
+            title="New-build with heat pump + EV + PV — three-phase as default"
+            situation="New-build 5-bed detached. Builder + architect designing-in: 8 kW ASHP + 7 kW EV charger (futureproofed for 22 kW three-phase upgrade) + 6 kWp PV + 5 kWh BESS for self-consumption. Customer wants minimum-fuss energy infrastructure."
+            whatToDo="Three-phase 100 A supply specified at construction stage (extra ~£800 over single-phase 100 A; future-proofs the property). Dedicated three-phase CU + EV CU sub-distribution + heat pump dedicated circuit + PV dedicated circuit + BESS dedicated circuit. Heat pump electrical scope: 8 kW thermal ≈ 3 kW electrical input continuous; on single-phase from the three-phase supply (heat pump in this size range typically single-phase even on three-phase supply); dedicated 32 A Type A RCBO C-curve + 6 mm² T+E + 10 mm² SWA outdoor + isolator. Coordinate the install: heat pump + EV + PV + BESS all integrated under Chapter 82 PEI framework (Reg 826.x). Heat-pump-ready infrastructure: even if customer wants heat pump installed at handover, the design accommodates future capacity expansion (10-12 kW thermal upgrade later). Cert evidence bundle integrates Section 712 PV + Chapter 57 BESS + heat pump electrical scope + EV M6 / M7 scope under the PEI Chapter 82 umbrella. MCS handover pack incorporates the EIC."
+            whyItMatters="New-build first-fit is the cleanest heat pump install pattern. Three-phase as default future-proofs for full house electrification + co-located PV + BESS + EV. UK 2025-26 best-practice for new builds with electrified heat: three-phase + PEI Chapter 82 integration. The marginal cost of three-phase at construction stage is small (~£800) compared to retrospective upgrade (£3-15k). Cert evidence bundle is structured + integrated across all four chapters from day one."
+          />
+
+          <CommonMistake
+            title="Quoting the heat pump electrical scope as a single afternoon job"
+            whatHappens="Electrician quotes 4 hours for the install — based on the wallbox-style mental model. Reality on the day: supply assessment reveals existing CU is full (no spare way), needs CU change first; outdoor cable run is 25 m through a non-existent containment route (needs new conduit + brick chasing); isolator location at outdoor unit clashes with refrigerant routing (sequencing issue); commissioning + functional test of integrated compressor + immersion + pump + controls + OAT sensor takes 2 hours alone. Reality: 1.5-2 days. Customer + MCS company unhappy; install delayed."
+            doInstead="Quote with full site survey first. Walk the property: existing CU capacity, outdoor unit location + cable route, condensate drain path, isolator clearance, indoor termination point, controls wiring route, existing supply assessment. Coordinate with the MCS company on F-Gas / hydraulic sequencing. Allow 1-1.5 days typical for a domestic ASHP electrical scope. Cert evidence bundle records the survey + the scoped-out work; clear customer expectations from quote stage."
+          />
+
+          <CommonMistake
+            title="Treating refrigerant work as ‘just unplugging something’"
+            whatHappens="Outdoor unit needs to move 1 m to accommodate a customer planning request. Electrician assumes the disconnect-move-reconnect can be done quickly without specialist certification — has neither F-Gas Cat 1 certification nor REFCOM accreditation. Refrigerant escapes; F-Gas regulation breach; £-thousands fine + reportable incident; customer left without functional heating + a damaged outdoor unit."
+            doInstead="Refrigerant work — ANY connection / disconnection / repositioning that affects the refrigerant circuit — requires F-Gas Cat 1 certified person (typically REFCOM accredited). Electrical installer’s role at this stage is COORDINATION not action. Even temporary line disconnections trigger F-Gas requirements. Move the outdoor unit BEFORE the F-Gas person makes the install-time refrigerant connection, or call the F-Gas person back to disconnect + reconnect. Cert evidence bundle records the boundary."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Heat pumps are NOT a dedicated BS 7671 section. Treated as fixed equipment under general Parts 4-7.',
+              'Three UK 2025-26 architectures: ASHP (dominant), GSHP (minority — higher upfront), exhaust-air (niche — MVHR new builds).',
+              'Heat pump install is multi-trade: MCS company (sizing + handover) + F-Gas Cat 1 (refrigerant) + heating engineer (hydraulic) + BS 7671 electrical installer (supply + circuit + commissioning).',
+              'MCS / MIS 3005-I / -D:2025 are the heat pump install (-I) and design (-D) competency standards. Required for the Boiler Upgrade Scheme grant (£7,500 UK 2025-26).',
+              'F-Gas Regs 2015 govern refrigerants — refrigerant work is F-Gas Cat 1 certified person scope, NOT electrical installer. UK 2025-26 typical refrigerants: R32 or R290 (propane).',
+              'Single-phase 5-12 kW thermal ASHP ≈ 1.5-4 kW electrical input continuous (COP ~3); typical UK domestic range.',
+              'Three-phase threshold: units &gt;12 kW thermal typically move to three-phase.',
+              'BS 7671 enters at: Reg 311.1 max demand, Reg 314 division of installation (dedicated circuit per heat pump), Reg 411.4 ADS, Reg 415.1 30 mA RCD, Reg 421/422 thermal protection, Reg 522.2 wiring from heat sources, Reg 554 immersion backup, Reg 643 verification.',
+              'Four UK 2025-26 install patterns: retrofit gas swap (~70%), new-build first-fit (~20%), upgrade from existing electric (~5%), leisure / agricultural / commercial-curtilage (~5%).',
+              'Heat-pump-ready electrical infrastructure as an emerging service offering — customer stages the cost by doing the electrical prep before the heat pump arrives.',
+              'Cert evidence bundle for the electrical scope: BS 7671 EIC + Schedule of Inspections + Schedule of Test Results. Sits inside the MCS handover pack alongside F-Gas record + sizing calc + commissioning report.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 1 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-8')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 8
               </div>
-            ))}
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-8-section-2')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                8.2 Supply assessment + DNO notification
+              </div>
+            </button>
           </div>
-        </section>
-
-        {/* Quiz */}
-        <Quiz title="MCS Requirements and Certification Quiz" questions={quizQuestions} />
-
-        {/* Bottom Navigation */}
-        <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="/electrician/upskilling/renewable-energy-module-8">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module
-            </Button>
-          </Link>
-          <Link to="../section-2">
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Button>
-          </Link>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default RenewableEnergyModule8Section1;
+}

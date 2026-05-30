@@ -50,6 +50,8 @@ export interface PermitToWork {
   /** Controlling Risk Assessment / RAMS this permit sits on top of. */
   linked_rams_id: string | null;
   linked_rams_title: string | null;
+  /** Job-pack link (employer_jobs). */
+  job_id: string | null;
   /** 'accepted' (signed in person) | 'awaiting_receiver' (remote sign pending). */
   acceptance_status: string;
   receiver_signed_at: string | null;
@@ -91,6 +93,7 @@ export type CreatePermitInput = Omit<
   | 'linked_rams_title'
   | 'acceptance_status'
   | 'receiver_signed_at'
+  | 'job_id'
 > & {
   photos?: Json;
   auto_fire_watch?: boolean;
@@ -98,6 +101,7 @@ export type CreatePermitInput = Omit<
   linked_rams_id?: string | null;
   linked_rams_title?: string | null;
   acceptance_status?: string;
+  job_id?: string | null;
 };
 
 /** Fields a user may change when amending a live permit. */
@@ -119,6 +123,7 @@ export type AmendPermitFields = Partial<
     | 'auto_fire_watch'
     | 'linked_rams_id'
     | 'linked_rams_title'
+    | 'job_id'
   >
 > & { hazards?: Json };
 

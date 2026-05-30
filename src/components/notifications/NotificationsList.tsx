@@ -92,37 +92,36 @@ export const NotificationsList = ({
   // ── Empty state ──
   if (notifications.length === 0) {
     return (
-      <div className="relative overflow-hidden card-surface-interactive rounded-2xl p-6">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500/50 via-emerald-500/25 to-transparent" />
+      <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden bg-[hsl(0_0%_11%)] p-6">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
         <div className="relative z-10">
           <div className="text-center mb-6">
-            <p className="text-base font-bold text-emerald-400 mb-1">All Clear</p>
-            <p className="text-[12px] text-white max-w-sm mx-auto">
+            <div className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden />
+              <p className="text-[15px] font-semibold tracking-tight text-white">All clear</p>
+            </div>
+            <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 max-w-sm mx-auto">
               No Part P notifications pending. When you complete notifiable work, it will appear here.
             </p>
           </div>
 
-          <div className="border-b border-white/[0.06] pb-1 mb-3">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-            <p className="text-xs font-medium text-white uppercase tracking-wider text-center">How It Works</p>
-          </div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45 text-center mb-3">
+            How it works
+          </p>
 
-          <div className="space-y-2 max-w-md mx-auto">
+          <div className="relative max-w-md mx-auto border border-white/[0.12] rounded-xl overflow-hidden divide-y divide-white/[0.12] text-left">
             {[
-              { step: '1', title: 'Create EIC or Minor Works', desc: 'Tick "Part P notification required"', accent: 'from-elec-yellow via-amber-400 to-orange-400' },
-              { step: '2', title: 'Generate Certificate', desc: 'Notification auto-created with 30-day deadline', accent: 'from-blue-500 via-blue-400 to-cyan-400' },
-              { step: '3', title: 'Submit to Scheme / Building Control', desc: 'Track submissions and stay compliant', accent: 'from-emerald-500 via-green-400 to-teal-400' },
-            ].map(({ step, title, desc, accent }) => (
-              <div key={title} className="relative overflow-hidden card-surface-interactive rounded-xl">
-                <div className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${accent} opacity-30`} />
-                <div className="relative z-10 flex items-center gap-3 p-3">
-                  <div className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
-                    <span className="text-[11px] font-bold text-white">{step}</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white">{title}</p>
-                    <p className="text-[11px] text-white">{desc}</p>
-                  </div>
+              { step: '1', title: 'Create EIC or Minor Works', desc: 'Tick "Part P notification required"' },
+              { step: '2', title: 'Generate Certificate', desc: 'Notification auto-created with 30-day deadline' },
+              { step: '3', title: 'Submit to Scheme / Building Control', desc: 'Track submissions and stay compliant' },
+            ].map(({ step, title, desc }) => (
+              <div key={title} className="flex items-center gap-3 p-3.5 bg-[hsl(0_0%_13%)]">
+                <span className="w-5 shrink-0 text-center text-[11px] font-semibold tabular-nums tracking-[0.1em] text-elec-yellow/80">
+                  0{step}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-white">{title}</p>
+                  <p className="text-[11.5px] text-white/50">{desc}</p>
                 </div>
               </div>
             ))}

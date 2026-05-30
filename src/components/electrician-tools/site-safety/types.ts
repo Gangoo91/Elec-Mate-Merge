@@ -37,4 +37,5 @@ export interface NearMissReport {
   incident_number?: string;
   likelihood?: number;
   risk_rating?: number;
+  job_id?: string | null;
 }

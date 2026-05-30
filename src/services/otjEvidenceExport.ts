@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
 import { buildOtjHtml } from './otjEvidenceHtml';
+import { printHtmlDocument } from '@/utils/printHtmlDocument';
 
 /* ==========================================================================
    OTJ evidence pack export. The PDF is produced by rendering the editorial
@@ -80,59 +81,7 @@ export async function exportOtjEvidencePack(data: OtjExportData): Promise<void> 
     year: 'numeric',
   });
   const html = buildOtjHtml(data, logo, generated);
-
-  // Off-screen iframe carrying just the document; we print THAT window so the
-  // browser's print engine (not the app UI) renders the A4 pages.
-  const iframe = document.createElement('iframe');
-  iframe.setAttribute('aria-hidden', 'true');
-  iframe.style.cssText =
-    'position:fixed;right:0;bottom:0;width:0;height:0;border:0;overflow:hidden';
-  document.body.appendChild(iframe);
-
-  const idoc = iframe.contentDocument;
-  const win = iframe.contentWindow;
-  if (!idoc || !win) {
-    document.body.removeChild(iframe);
-    throw new Error('Could not prepare the document for printing');
-  }
-
-  idoc.open();
-  idoc.write(html);
-  idoc.close();
-
-  // Wait for layout, fonts and the embedded images before printing.
-  await new Promise((r) => setTimeout(r, 80));
-  try {
-    await idoc.fonts?.ready;
-  } catch {
-    /* fonts API optional */
-  }
-  await Promise.all(
-    Array.from(idoc.images).map((im) =>
-      im.complete
-        ? Promise.resolve()
-        : new Promise<void>((res) => {
-            im.onload = () => res();
-            im.onerror = () => res();
-          })
-    )
-  );
-
-  let removed = false;
-  const cleanup = () => {
-    if (removed) return;
-    removed = true;
-    try {
-      document.body.removeChild(iframe);
-    } catch {
-      /* already gone */
-    }
-  };
-  win.onafterprint = () => setTimeout(cleanup, 200);
-  win.focus();
-  win.print();
-  // Safety net if afterprint never fires (some browsers).
-  setTimeout(cleanup, 60_000);
+  await printHtmlDocument(html);
 }
 
 export function exportOtjCsv(data: OtjExportData): void {

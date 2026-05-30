@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -372,11 +371,6 @@ export default function RenewableEnergyModule4Section5() {
               <li><strong className="text-white">Pure consumer (no generation, no storage)</strong> — most existing UK homes. NOT a PEI</li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="PEI vs non-PEI install — two-panel comparison. Panel 1 (non-PEI): traditional consumer install — DNO supply → consumer unit → loads. Single source, no generation. Panel 2 (PEI hybrid PV+BESS): DNO supply + PV array + BESS + EV charger → consumer unit / inverter / orchestration → loads + grid export. Multiple sources, generation, storage, coordination. Annotated with Chapter 82 applicability, the per-domain regs (Section 712 / Chapter 57 / Section 722) and the Chapter 82 integration layer."
-            filename="renewable/m4s5-pei-vs-non-pei.png"
-          />
 
           <InlineCheck {...inlineChecks[0]} />
 

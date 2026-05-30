@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -476,11 +475,6 @@ export default function RenewableEnergyModule6Section6() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Type 2 connector cross-section + CP/PP signalling diagram. Left: Type 2 connector pin layout — 7 pins (L1, L2, L3, N, PE, CP, PP). Right: CP signalling timeline — +12 V no vehicle → +9 V vehicle plugged → +6 V vehicle ready + PWM announcing current → +12 V on unplug. Bottom: PP resistance values table (1.5 kΩ / 680 Ω / 220 Ω / 100 Ω = 13/20/32/63 A). Annotations: BS EN 61851-1 Annex A (CP) and Annex B (PP); BS EN IEC 62196-2:2022 connector dimensions; DLM modulates CP duty cycle in real time for current throttling."
-            filename="renewable/m6s6-type-2-signalling.png"
-          />
 
           <SectionRule />
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight, ArrowRight, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -208,15 +208,15 @@ interface LabelsWarningsSectionProps {
   onBack: () => void;
 }
 
-const DOC_TYPE_LABELS: Record<string, { label: string; color: string }> = {
-  'danger-notice': { label: 'DN', color: 'bg-red-500/15 text-red-400' },
-  'isolation-cert': { label: 'ISO', color: 'bg-amber-500/15 text-amber-400' },
-  'permit-to-work': { label: 'PTW', color: 'bg-orange-500/15 text-orange-400' },
-  'warning-labels': { label: 'LABELS', color: 'bg-yellow-500/15 text-yellow-400' },
-  'safe-isolation': { label: 'SIP', color: 'bg-emerald-500/15 text-emerald-400' },
-  'limitation-notice': { label: 'LIM', color: 'bg-blue-500/15 text-blue-400' },
-  'non-compliance-notice': { label: 'NCN', color: 'bg-red-500/15 text-red-400' },
-  'completion-notice': { label: 'COMP', color: 'bg-emerald-500/15 text-emerald-400' },
+const DOC_TYPE_LABELS: Record<string, { label: string }> = {
+  'danger-notice': { label: 'DN' },
+  'isolation-cert': { label: 'ISO' },
+  'permit-to-work': { label: 'PTW' },
+  'warning-labels': { label: 'LABELS' },
+  'safe-isolation': { label: 'SIP' },
+  'limitation-notice': { label: 'LIM' },
+  'non-compliance-notice': { label: 'NCN' },
+  'completion-notice': { label: 'COMP' },
 };
 
 const DOC_TYPE_ROUTES: Record<string, string> = {
@@ -315,65 +315,71 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
               </h2>
               <span className="text-[10.5px] text-white/30 tabular-nums">{savedDocs.length}</span>
             </div>
-            <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden divide-y divide-white/[0.14]">
+            <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-              {savedDocs.map((doc) => {
-                const typeInfo =
-                  DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC', color: 'bg-white/[0.06] text-white' };
-                const route = DOC_TYPE_ROUTES[doc.report_type];
-                const title = doc.client_name || doc.installation_address || 'Untitled';
+              <div className="divide-y divide-white/[0.18]">
+                {savedDocs.map((doc) => {
+                  const typeInfo = DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC', color: '' };
+                  const route = DOC_TYPE_ROUTES[doc.report_type];
+                  const title = doc.client_name || doc.installation_address || 'Untitled';
 
-                return (
-                  <button
-                    key={doc.report_id}
-                    onClick={() =>
-                      route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)
-                    }
-                    className="group w-full flex items-center gap-3 p-3.5 bg-[hsl(0_0%_11%)] hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] transition-colors text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
-                  >
-                    {/* type tile */}
-                    <div
-                      className={cn(
-                        'w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border border-white/[0.08]',
-                        typeInfo.color
-                      )}
+                  return (
+                    <button
+                      key={doc.report_id}
+                      onClick={() =>
+                        route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)
+                      }
+                      className="group relative flex w-full flex-col text-left p-4 sm:p-5 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
                     >
-                      <span className="text-[9px] font-bold leading-none">{typeInfo.label}</span>
-                    </div>
+                      {/* status dot + mono type badge */}
+                      <div className="flex items-start justify-between gap-2">
+                        <span
+                          className="mt-1 w-2 h-2 rounded-full shrink-0 bg-emerald-400"
+                          aria-hidden
+                        />
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
+                          {typeInfo.label}
+                        </span>
+                      </div>
 
-                    {/* title + address */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-white text-[15px] leading-tight truncate group-hover:text-elec-yellow transition-colors">
+                      <h3
+                        title={title}
+                        className="mt-3 text-[17px] sm:text-[18px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors truncate"
+                      >
                         {title}
                       </h3>
-                      <div
+                      <p
                         className={cn(
-                          'mt-1 flex items-center gap-1 text-[11.5px] leading-snug min-w-0',
-                          doc.installation_address ? 'text-white/45' : 'text-white/30'
+                          'mt-1.5 flex items-center gap-1.5 text-[12px] leading-relaxed min-w-0',
+                          doc.installation_address ? 'text-white/55' : 'text-white/35'
                         )}
                       >
                         <MapPin className="h-3 w-3 shrink-0" aria-hidden />
-                        <span className={cn('truncate', !doc.installation_address && 'italic')}>
+                        <span
+                          title={doc.installation_address || undefined}
+                          className={cn('truncate', !doc.installation_address && 'italic')}
+                        >
                           {doc.installation_address || 'No address'}
                         </span>
-                      </div>
-                    </div>
+                      </p>
 
-                    {/* status + date + chevron */}
-                    <div className="flex items-center gap-2.5 shrink-0">
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="text-[9px] font-semibold uppercase tracking-[0.1em] rounded-md px-1.5 py-0.5 bg-emerald-500/15 text-emerald-400">
+                      <div className="mt-3 flex items-center justify-between gap-3">
+                        <span className="min-w-0 truncate text-[11px] uppercase tracking-[0.1em] text-white/45">
                           Issued
+                          <span className="mx-1.5 text-white/20">·</span>
+                          <span className="normal-case tracking-normal tabular-nums">
+                            {formatTimeAgo(doc.updated_at)}
+                          </span>
                         </span>
-                        <span className="text-[10.5px] text-white/40 tabular-nums">
-                          {formatTimeAgo(doc.updated_at)}
+                        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow shrink-0">
+                          Open
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                         </span>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-white/25 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0" />
-                    </div>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </motion.section>
         )}

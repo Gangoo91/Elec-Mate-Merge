@@ -49,9 +49,13 @@ import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { fmtCardDate } from './common/SafetyRecordCard';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { RemoteSignShareSheet } from './common/RemoteSignShareSheet';
+import { createSafetySignToken, buildSignUrl, useRecordSignatures } from '@/hooks/useRemoteSignToken';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
 import { RIDDORCountdown } from './common/RIDDORCountdown';
+import { JobLinkField } from './common/JobLinkField';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 // ─── Types ───
 
@@ -136,6 +140,7 @@ interface AccidentRecord {
   recorded_by: string;
   additional_notes: string;
   corrective_actions: string;
+  job_id: string | null;
   photos?: string[];
   incident_number?: string;
   is_archived?: boolean;
@@ -354,6 +359,7 @@ const emptyForm = (): Partial<AccidentRecord> => ({
   recorded_by: '',
   additional_notes: '',
   corrective_actions: '',
+  job_id: null,
 });
 
 const softTextareaClass =
@@ -448,6 +454,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     recorded_by: r.recorded_by,
     additional_notes: r.additional_notes || '',
     corrective_actions: r.corrective_actions || '',
+    job_id: r.job_id ?? null,
     incident_number: r.incident_number || undefined,
     is_archived: r.is_archived ?? false,
     created_at: r.created_at,
@@ -455,6 +462,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Partial<AccidentRecord>>(emptyForm);
+
+  // Spark project link
+  const { data: jobs = [] } = useSparkProjects('active');
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
 
   // ─── Draft persistence ───
   const {
@@ -475,6 +486,39 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   };
 
   const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
+  // Remote supervisor sign-off (generic engine)
+  const [showSignShare, setShowSignShare] = useState(false);
+  const [signUrl, setSignUrl] = useState('');
+  const [signLoading, setSignLoading] = useState(false);
+  const { data: accidentSignatures = [] } = useRecordSignatures('accident', viewingRecord?.id ?? null);
+  const remoteSupervisor = accidentSignatures.find((s) => s.role === 'supervisor' && s.signed_signature);
+
+  const requestSupervisorSignOff = async (rec: AccidentRecord) => {
+    setSignLoading(true);
+    try {
+      const token = await createSafetySignToken({
+        documentType: 'accident',
+        recordId: rec.id,
+        role: 'supervisor',
+        summary: {
+          title: 'Accident Record — Supervisor Sign-off',
+          subtitle: rec.incident_number || undefined,
+          lines: [
+            { label: 'Injury', value: injuryLabelOf(rec.injury_type) },
+            { label: 'Severity', value: SEV_LABEL[rec.severity] },
+            { label: 'Location', value: rec.location || '—' },
+          ],
+          statement:
+            'By signing you confirm, as the responsible manager/supervisor, that this accident record has been reviewed and the corrective actions are appropriate.',
+        },
+      });
+      if (!token) return;
+      setSignUrl(buildSignUrl(token));
+      setShowSignShare(true);
+    } finally {
+      setSignLoading(false);
+    }
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [showArchived, setShowArchived] = useState(false);
@@ -567,6 +611,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         recorded_by: form.recorded_by || '',
         additional_notes: form.additional_notes || '',
         corrective_actions: form.corrective_actions || '',
+        job_id: form.job_id ?? null,
         photos: photoUrls,
         reporter_signature: reporterSigData || undefined,
       });
@@ -727,6 +772,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 className={inputClass}
               />
             </Field>
+            <JobLinkField
+              jobId={form.job_id ?? null}
+              jobTitle={jobTitleFor(form.job_id ?? null)}
+              onSelect={(id) => updateForm({ job_id: id })}
+            />
           </FormCard>
 
           {/* What happened */}
@@ -1295,6 +1345,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <DetailField label="What happened" value={viewingRecord.incident_description} />
                 <DetailField label="Cause" value={viewingRecord.cause} />
                 <DetailField label="Witnesses" value={viewingRecord.witnesses} />
+                {viewingRecord.job_id && (
+                  <DetailField label="Linked project" value={jobTitleFor(viewingRecord.job_id) || 'Linked project'} />
+                )}
               </FormCard>
 
               {/* Injury */}
@@ -1350,6 +1403,24 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
               {/* Corrective actions tracker */}
               <CorrectiveActionsPanel sourceType="accident" sourceId={viewingRecord.id} />
+
+              {/* Supervisor sign-off (remote) */}
+              <div>
+                <Eyebrow className="mb-2">Supervisor sign-off</Eyebrow>
+                {remoteSupervisor?.signed_signature ? (
+                  <div className="p-3 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06]">
+                    <p className="text-[11.5px] text-emerald-400 mb-2">
+                      Signed by {remoteSupervisor.signed_name || 'supervisor'}
+                      {remoteSupervisor.signed_at ? ` · ${new Date(remoteSupervisor.signed_at).toLocaleDateString('en-GB')}` : ''}
+                    </p>
+                    <img src={remoteSupervisor.signed_signature} alt="Supervisor signature" className="h-12 opacity-80" />
+                  </div>
+                ) : (
+                  <SecondaryButton fullWidth disabled={signLoading} onClick={() => requestSupervisorSignOff(viewingRecord)}>
+                    {signLoading ? 'Preparing link…' : 'Request supervisor sign-off'}
+                  </SecondaryButton>
+                )}
+              </div>
 
               {/* Meta */}
               <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
@@ -1479,6 +1550,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           documentTitle={`Accident Record — ${viewingRecord.injured_name || 'Unknown'}`}
         />
       )}
+
+      <RemoteSignShareSheet
+        open={showSignShare}
+        onOpenChange={setShowSignShare}
+        url={signUrl}
+        roleLabel="supervisor sign-off"
+      />
     </SafetyModuleShell>
   );
 }

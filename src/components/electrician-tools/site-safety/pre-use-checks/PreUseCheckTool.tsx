@@ -26,6 +26,7 @@ import { ChecklistForm } from './ChecklistForm';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 interface PreUseCheckToolProps {
   onBack: () => void;
@@ -88,6 +89,8 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey | null>(null);
   const [showForm, setShowForm] = useState(false);
   const { data: checks = [], isLoading } = usePreUseChecks();
+  const { data: jobs = [] } = useSparkProjects('active');
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
   const [searchQuery, setSearchQuery] = useState('');
   const [resultFilter, setResultFilter] = useState('all');
 
@@ -242,6 +245,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
               const passN = check.items.filter((i) => i.result === 'pass').length;
               const failN = check.items.filter((i) => i.result === 'fail').length;
               const exporting = isExporting && exportingId === check.id;
+              const jobTitle = jobTitleFor(check.job_id);
               return (
                 <ListCard key={check.id}>
                   <ListRow
@@ -250,6 +254,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                     subtitle={[
                       check.equipment_description || (reg ? reg.shortName : ''),
                       check.site_address || '',
+                      jobTitle ? `Project: ${jobTitle}` : '',
                       `${passN}P / ${failN}F / ${check.items.length} items`,
                     ]
                       .filter(Boolean)

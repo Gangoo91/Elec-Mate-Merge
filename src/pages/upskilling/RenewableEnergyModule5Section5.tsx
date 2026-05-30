@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -343,11 +342,6 @@ export default function RenewableEnergyModule5Section5() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="DC-coupled topology SLD. Left: PV array (3 strings) → DC isolator → MPPT charge controller. Bottom-left: battery pack → DC isolator → same DC bus into controller. Right: controller → single hybrid inverter → AC isolator → consumer unit (DNO supply on the right side). Three isolation symbols at PV DC, battery DC, AC out. Earth bonding shown on PV frame, inverter chassis and CU MET. Annotations: shared DC bus, single AC conversion, Reg 570.6.5.201 isolator count = 3."
-            filename="renewable/m5s5-dc-coupled.png"
-          />
-
           <ConceptBlock
             title="AC-coupled topology"
             plainEnglish="In an AC-coupled system, the PV array has its OWN inverter (PV → AC), and the battery has its OWN bidirectional inverter (battery DC ↔ AC). Both connect to the AC busbar — typically at the consumer unit via dedicated ways. Each can be specified, replaced, or expanded independently."
@@ -384,11 +378,6 @@ export default function RenewableEnergyModule5Section5() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="AC-coupled topology SLD. Top-left: PV array → DC isolator → PV inverter → AC isolator → consumer unit way 1. Bottom-left: battery → DC isolator → bidirectional battery inverter → AC isolator → consumer unit way 2. Right: consumer unit busbar → henley → DNO supply. Two distinct AC paths meeting at the CU busbar. Four isolation symbols: PV DC, PV AC, battery DC, battery AC. Reg 570.6.5.201 isolator count = 4 (assuming both PCE separate from battery assembly)."
-            filename="renewable/m5s5-ac-coupled.png"
-          />
 
           <ConceptBlock
             title="Hybrid (all-in-one) inverter topology"
@@ -430,11 +419,6 @@ export default function RenewableEnergyModule5Section5() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Hybrid (all-in-one) topology SLD. Centre: single PCE box with four ports — top: PV DC inputs (3 MPPTs shown); left: battery DC port to floor-stack battery; right: AC grid port to consumer unit; bottom: AC EPS port to switched essential-circuits sub-board. Isolation symbols on each of the four external ports. Annotations: internal DC bus (no external DC connection between PV and battery), Reg 570.6.5.201 isolator count = 4 external, Reg 826.1.1.2.2 neutral re-bond shown inside EPS leg."
-            filename="renewable/m5s5-hybrid.png"
-          />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 570.6.5.201 — Means of isolation for PCE"

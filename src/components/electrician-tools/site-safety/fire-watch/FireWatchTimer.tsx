@@ -11,6 +11,7 @@ import { SignatureField } from '../common/SignatureField';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
 import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
+import { JobLinkField } from '../common/JobLinkField';
 import { FireWatchHistory } from './FireWatchHistory';
 import { PageHero, FilterBar, Field, Eyebrow, PrimaryButton, SecondaryButton, inputClass } from '@/components/college/primitives';
 
@@ -59,6 +60,8 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
   const [selectedPermitTitle, setSelectedPermitTitle] = useState('');
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const [location, setLocation] = useState('');
   const [completerName, setCompleterName] = useState('');
   const [completerSig, setCompleterSig] = useState('');
@@ -113,6 +116,8 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
     setPhotoUrls([]);
     setSelectedPermitId(null);
     setSelectedPermitTitle('');
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
     setLocation('');
     setCheckIns([]);
     setShowCancelConfirm(false);
@@ -135,6 +140,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         end_time: new Date().toISOString(),
         duration_minutes: durationMins,
         permit_id: selectedPermitId || null,
+        job_id: linkedJobId || null,
         location: location.trim() || null,
         checklist: checklist.map((c) => ({ id: c.id, label: c.label, checked: c.checked })),
         status: 'completed',
@@ -155,7 +161,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
       setIsSaving(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canComplete, startedAt, checklist, photoUrls, durationMins, selectedPermitId, location, completerName, completerSig, checkIns, toast, haptic, refetchHistory]);
+  }, [canComplete, startedAt, checklist, photoUrls, durationMins, selectedPermitId, linkedJobId, location, completerName, completerSig, checkIns, toast, haptic, refetchHistory]);
 
   const circumference = 2 * Math.PI * 90;
   const strokeDashoffset = circumference * (1 - progress);
@@ -217,6 +223,15 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                       <input value={location} onChange={(e) => setLocation(e.target.value)} className={inputClass} placeholder="e.g. Plant Room 2, 3rd Floor" />
                     </Field>
 
+                    <JobLinkField
+                      jobId={linkedJobId}
+                      jobTitle={linkedJobTitle}
+                      onSelect={(id, title) => {
+                        setLinkedJobId(id);
+                        setLinkedJobTitle(title);
+                      }}
+                    />
+
                     <Field label="Watch duration">
                       <div className="flex gap-2">
                         {DURATION_OPTIONS.map((mins) => (
@@ -240,9 +255,10 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                   </motion.div>
                 ) : (
                   <motion.div key="active" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.25 }} className="space-y-5">
-                    {(selectedPermitId || location) && (
+                    {(selectedPermitId || linkedJobId || location) && (
                       <div className="p-3 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] space-y-1 text-[13px]">
                         {selectedPermitId && <div className="text-white font-medium">{selectedPermitTitle || 'Linked permit'}</div>}
+                        {linkedJobId && <div className="text-white/60">Project: {linkedJobTitle || 'Linked project'}</div>}
                         {location && <div className="text-white/60">{location}</div>}
                       </div>
                     )}

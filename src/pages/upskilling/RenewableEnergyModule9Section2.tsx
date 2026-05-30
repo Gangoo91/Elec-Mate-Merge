@@ -1,567 +1,575 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'ROI, Payback Periods, and System Lifespan - Renewable Energy Module 9';
-const DESCRIPTION =
-  'Learn to calculate return on investment, payback periods, and understand system lifespan considerations for solar PV, battery storage, and heat pump installations.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'roi-check-1',
-    question: 'What does payback period measure in renewable energy investments?',
+    id: 'm9s2-hawt-vs-vawt',
+    question:
+      'HAWT vs VAWT — what are they + when does each suit?',
     options: [
-      'The total cost of the system',
-      'The time taken for savings to equal the initial investment',
-      'The lifespan of the equipment',
-      'The annual return percentage',
+      'Same thing',
+      'HAWT = Horizontal Axis Wind Turbine — rotor spins on a horizontal shaft; classic three-blade design; needs yaw mechanism to face wind; dominant globally + in domestic micro-wind (1-15 kW). VAWT = Vertical Axis Wind Turbine — rotor spins on a vertical shaft (Darrieus, Savonius, hybrid); omni-directional (no yaw needed); typically quieter; suits urban / low-wind / turbulent sites; lower capacity factor than HAWT; niche application',
+      'Random',
+      'Only HAWT',
     ],
     correctIndex: 1,
     explanation:
-      'Payback period measures how long it takes for the cumulative savings (from reduced bills and export income) to equal the initial investment cost, after which the system generates net positive returns.',
+      'HAWT (Horizontal Axis Wind Turbine): rotor on horizontal shaft, blades like an airplane propeller. Three-blade design dominant (best aerodynamic balance). Needs yaw mechanism (active motor or passive tail vane) to face the wind. Dominant in utility-scale wind (multi-MW) + domestic micro-wind (1-15 kW). Higher capacity factor in clean wind conditions. VAWT (Vertical Axis Wind Turbine): rotor on vertical shaft. Variants: Darrieus (eggbeater shape, lift-based), Savonius (cup-based, drag-driven, lower efficiency), hybrid Darrieus-Savonius. Omni-directional — no yaw needed; works in any wind direction. Typically quieter (no tip-vortex from horizontal blades). Suits: urban roof-mounted, turbulent / variable wind, low-wind sites. Lower capacity factor in clean wind. UK 2025-26 reality: HAWT dominant for rural / agricultural / open-site micro-wind; VAWT niche for urban / restricted-space sites. Both are wind microgeneration covered by Section 551 + MCS MIS 3003.',
   },
   {
-    id: 'roi-check-2',
-    question: 'What is the typical expected lifespan of solar PV panels?',
-    options: ['10-15 years', '15-20 years', '25-30+ years', '5-10 years'],
-    correctIndex: 2,
-    explanation:
-      'Solar PV panels typically have expected lifespans of 25-30+ years, with most manufacturers offering 25-year performance warranties. Actual lifespans often exceed warranty periods.',
-  },
-  {
-    id: 'roi-check-3',
-    question: 'Which component typically has the shortest lifespan in a PV system?',
-    options: ['Solar panels', 'Mounting system', 'DC cables', 'Inverter'],
-    correctIndex: 3,
-    explanation:
-      "Inverters typically have shorter lifespans than panels, usually 10-15 years. Financial calculations should include provision for at least one inverter replacement during the system's lifetime.",
-  },
-  {
-    id: 'roi-check-4',
-    question: 'How does electricity price inflation affect payback calculations?',
+    id: 'm9s2-mis-3003-scope',
+    question:
+      'MCS MIS 3003 — what does it cover?',
     options: [
-      'It has no effect',
-      'Higher inflation typically shortens payback periods',
-      'Higher inflation lengthens payback periods',
-      'Only affects commercial systems',
+      'All wind',
+      'MCS Installer Standard 3003 — small wind turbines ≤50 kW. Sizing methodology (wind speed assessment, site survey), product approval (MCS-approved turbines), installer competence (MCS-certified company + training), customer handover documentation. Required for any UK Government grant (where applicable). Larger turbines (>50 kW commercial / utility) fall outside MIS 3003 scope into commercial-scale wind frameworks',
+      'Only domestic',
+      'No standard',
     ],
     correctIndex: 1,
     explanation:
-      'Higher electricity price inflation increases the value of self-consumed electricity over time, typically shortening effective payback periods as savings grow faster than initially projected.',
+      'MCS Installer Standard 3003 (current version MIS 3003 issue 5.0) covers small wind turbines up to 50 kW rated power. Requirements include: (1) site wind assessment per MCS sizing methodology (typically MET data + on-site anemometer for 12 months for larger installs); (2) turbine product on MCS-approved list; (3) installer company MCS-certified for small wind; (4) BS EN 61400-2 (small wind turbines) product standard conformity declared; (5) customer handover documentation including expected annual energy yield. Above 50 kW: commercial-scale wind regulatory frameworks apply (planning, EIA Environmental Impact Assessment if very large, separate DNO connection processes). UK 2025-26 reality: domestic micro-wind market much smaller than 2010-2014 peak; commercial / agricultural / community-scale wind continues. Cert evidence bundle: MCS handover pack + BS 7671 electrical EIC + planning consent + DNO correspondence.',
+  },
+  {
+    id: 'm9s2-erec-wind',
+    question:
+      'Wind turbine 6 kW single-phase grid-tied — what EREC notification?',
+    options: [
+      'No notification',
+      '6 kW single-phase ≈ 26 A continuous export at 230 V — exceeds G98 Type A ≤16 A per phase fast-track threshold. EREC G99 formal pre-installation application required: DNO design assessment + connection offer + customer acceptance + outage scheduling (if required) + completion notification + DNO-witnessed (sometimes) anti-islanding test. Lead time typically 6-18 weeks',
+      'G98 always',
+      'EU regulation',
+    ],
+    correctIndex: 1,
+    explanation:
+      'EREC G99 formal process triggered. 6 kW single-phase ≈ 26 A continuous export current at 230 V — well above the G98 Type A ≤16 A per phase fast-track threshold. G99 process: (1) customer application via DNO portal (with site details, turbine spec, installer details, expected yield); (2) DNO design assessment (network capacity check, anti-islanding verification, connection scheme); (3) DNO connection offer + price; (4) customer acceptance + payment (where applicable); (5) outage scheduling (if connection upgrade needed); (6) installer completes install per the connection offer; (7) commissioning + DNO-witnessed anti-islanding test (for some DNOs / sizes); (8) completion notification to DNO + final connection. Lead time: 6-18 weeks typical UK 2025-26. Cert evidence bundle records: G99 application reference + connection offer + completion + DNO witnessed test (if applicable).',
+  },
+  {
+    id: 'm9s2-cable-run-voltage-drop',
+    question:
+      '60 m run from rural mast-top wind turbine to indoor inverter — what cable sizing?',
+    options: [
+      '1.5 mm² T+E',
+      'Long-run voltage drop is the limiting factor. 60 m × continuous current × cable per-mV/A/m → typically need oversized cable to keep Reg 525.202 voltage drop ≤5%. For 6 kW single-phase (26 A): 60 × 26 × 4.4 mV/A/m (10 mm²) = 6.9 V = 3% — within 5% but tight. Practical UK 2025-26: 16 mm² SWA or larger; voltage drop calc per Appendix 4 Section 6.4; SWA armour as CPC per Reg 543',
+      'No calc',
+      'Bare wire',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Wind turbine cable run to indoor inverter is typically long (50-200 m at agricultural / rural sites where mast is sited for clean wind). Voltage drop becomes the limiting factor for cable sizing — sustained current carrying capacity is usually well within smaller cable, but Reg 525.202 + Appendix 4 Section 6.4 ≤5% drop forces oversize. Worked example: 6 kW single-phase 26 A continuous; 60 m run; 10 mm² SWA at 4.4 mV/A/m → drop = 60 × 26 × 4.4 / 1000 = 6.9 V = 3% of 230 V. Within 5% but margin tight. Step up to 16 mm² SWA: drop = 60 × 26 × 2.8 / 1000 = 4.4 V = 1.9% — comfortable. UK 2025-26 mature install practice: 16 mm² 3-core SWA (single-phase) or 4-core (three-phase) buried in trench from turbine base to building. Armour as CPC per Reg 543 (16 mm² SWA armour cross-section well above Table 54.7 minimum). Cert evidence bundle: cable type + length + Appendix 4 calc + voltage drop result.',
   },
 ];
 
 const quizQuestions = [
   {
-    id: 1,
-    question: 'What is the formula for simple payback period?',
+    question:
+      'Rural farm install: 10 kW HAWT three-phase grid-tied micro-wind. What is the regulatory + electrical scope?',
     options: [
-      'Total cost multiplied by annual savings',
-      'Total cost divided by annual savings',
-      'Annual savings divided by total cost',
-      'Total cost minus annual savings',
+      'Plug into socket',
+      'Multi-trade install: MCS-certified company (MIS 3003), turbine specialist, mast erector / civils, electrical installer, planning consultant. Electrical scope: dedicated three-phase circuit from indoor inverter to AC supply panel; AC isolator at inverter; per-Section 551 architecture; 4-pole Type A RCBO C-curve; Reg 551.7.5 anti-islanding (typically integrated into inverter); EREC G99 formal application; BS EN 62305-3 lightning protection for mast + bonding; Reg 643 commissioning + EIC',
+      'No scope',
+      'Random',
     ],
     correctAnswer: 1,
     explanation:
-      'Simple payback period is calculated as the total investment cost divided by the annual savings, giving the number of years to recoup the initial investment.',
+      'Multi-trade rural HAWT install per UK 2025-26 standard practice: (1) MCS-certified company orchestrates + holds MIS 3003 cert; (2) turbine specialist commissions turbine + control electronics; (3) mast erector / civils handles guyed lattice or monopole foundation + mast assembly; (4) electrical installer does the BS 7671 electrical side; (5) planning consultant handles permitted-development assessment + planning permission if needed. Electrical scope: dedicated three-phase circuit (or single-phase for smaller units) from indoor inverter location to AC supply panel; AC isolator at inverter (BS EN 60947-3, lockable OFF); per-Section 551 architecture (Reg 551.7.2.1 supply-side connection); 4-pole Type A RCBO C-curve typically; Reg 551.7.5 anti-islanding integrated into the inverter (verified at commissioning, sometimes DNO-witnessed); EREC G99 formal application from quote stage; BS EN 62305-3 lightning protection for mast (mast = exposed metallic structure; lightning bond + earth electrode at mast base; covered in detail in M11); Reg 643 commissioning sequence + EIC. Cert evidence bundle: MCS handover pack + Section 551 compliance + EREC G99 reference + lightning protection + EIC.',
   },
   {
-    id: 2,
-    question: 'What does ROI (Return on Investment) express?',
+    question:
+      'Wind turbine commissioning — what unique tests vs PV?',
     options: [
-      'The payback period in months',
-      'The total lifetime savings',
-      'The annual return as a percentage of investment',
-      'The system efficiency',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'ROI expresses the annual return (savings plus income) as a percentage of the initial investment, allowing comparison with other investment opportunities.',
-  },
-  {
-    id: 3,
-    question: 'Why is NPV (Net Present Value) considered more accurate than simple payback?',
-    options: [
-      'It is easier to calculate',
-      'It accounts for the time value of money through discounting',
-      'It only considers first year returns',
-      'It ignores inflation',
+      'Same as PV',
+      'Wind-specific tests beyond standard Reg 643: yaw mechanism functional (HAWT — must rotate to face wind); brake operation (mechanical + electrical brake for over-speed / shutdown); over-speed protection cut-out test; cut-in + cut-out wind speed verification (where wind conditions permit); dump load operation (for off-grid / grid-loss scenarios); blade balance + rotation noise check. Plus standard Section 551 anti-islanding + Reg 643 framework',
+      'No tests',
+      'Customer tests',
     ],
     correctAnswer: 1,
     explanation:
-      'NPV discounts future cash flows to present value, recognising that money received in the future is worth less than money today. This provides a more financially accurate assessment.',
+      'Wind turbine commissioning adds tests specific to mechanical + control aspects of the turbine: (1) Yaw mechanism functional (HAWT only) — turbine head rotates to face the wind direction; passive vane or active motorised yaw; must operate smoothly without binding. (2) Brake operation — mechanical disc brake AND electrical brake (short-circuit braking via inverter / generator) for emergency stop, over-speed shutdown, maintenance isolation. (3) Over-speed protection — verify cut-out activates at manufacturer-specified rotor RPM; typically tested via simulated over-speed signal not actual wind condition. (4) Cut-in + cut-out wind speed — verify turbine starts generating at ~3-4 m/s, reaches rated power at ~12 m/s, cuts out for safety at ~25 m/s. Verification opportunistic — depends on wind conditions on commissioning day. (5) Dump load — for off-grid + grid-loss scenarios where generated power needs dissipating; resistor bank typically. (6) Blade balance — visual + vibration check; imbalanced blades cause structural stress + noise. Plus standard Reg 643 Part 6 sequence + Section 551 anti-islanding test. Cert evidence bundle: wind-specific test results + manufacturer commissioning procedure + Part 6 EIC.',
   },
   {
-    id: 4,
-    question: 'What performance degradation rate is typical for quality solar panels?',
-    options: ['5% per year', '2-3% per year', '0.3-0.5% per year', 'No degradation occurs'],
-    correctAnswer: 2,
-    explanation:
-      'Quality solar panels typically degrade at 0.3-0.5% per year. After 25 years, a panel might still produce 85-90% of its original output, which should be factored into long-term yield calculations.',
-  },
-  {
-    id: 5,
-    question: 'What is a typical warranty period for inverters?',
-    options: ['1-2 years', '5-10 years', '25 years', 'Lifetime warranty'],
-    correctAnswer: 1,
-    explanation:
-      'Inverter warranties typically range from 5-10 years, though some manufacturers offer extended warranties. Given inverter lifespans of 10-15 years, replacement costs should be included in financial planning.',
-  },
-  {
-    id: 6,
-    question: 'How should battery replacement costs be factored into financial calculations?',
+    question:
+      'Planning permission for domestic micro-wind — UK 2025-26 reality?',
     options: [
-      'Batteries never need replacing',
-      'Include provision for replacement after typical cycle life is reached',
-      'Only consider if the battery fails',
-      'Battery costs are refunded by manufacturers',
+      'Never needed',
+      'PDR (Permitted Development Rights) for domestic wind in England: building-mounted ≤4 m above ridge OR free-standing ≤11.1 m total height + ≤5 m highest blade tip from ground for safety, with restrictions (no listed buildings, conservation areas, NSIPs). Most sites require full planning permission. Scotland/Wales have similar but different rules. PDR existed 2011-2017 with various rule changes; current rules per 2026 may differ — verify locally',
+      'PDR everywhere',
+      'EU approval',
     ],
     correctAnswer: 1,
     explanation:
-      'Battery systems have finite cycle lives and may need replacement after 10-15 years depending on usage. Financial models should include provision for replacement to accurately represent lifetime costs.',
+      'Planning permission for UK domestic micro-wind is restrictive vs solar PV. England PDR for wind: (1) Building-mounted turbine — ≤4 m above the highest point of the ridge; ≤0.6 m blade swept area; restrictions on protected sites (no listed buildings, conservation areas, World Heritage Sites). (2) Free-standing turbine — ≤11.1 m total height including blades; ≤5 m highest blade tip from ground level; ≥0.5 of blade-tip height from property boundary; one per property. (3) Scotland / Wales / Northern Ireland — similar PDR but separate rules per devolved planning. Most domestic micro-wind sites trigger full planning permission (PP) — site-specific assessment of visual impact, noise, ecological impact, shadow flicker (rotating shadow on neighbours). PP timeline: 8-16 weeks typical. Cost: £200-400 application fee + consultant if visual impact / noise assessment needed. UK 2025-26 reality: planning consent is the biggest project-timeline risk after DNO G99 for domestic wind. Many projects don\'t proceed past planning. Cert evidence bundle includes planning consent reference + conditions imposed.',
   },
   {
-    id: 7,
-    question: 'What electricity price assumption significantly impacts payback calculations?',
+    question:
+      'UK 2025-26 reality of domestic micro-wind vs solar PV — what should an installer tell the customer?',
     options: [
-      'Only current prices matter',
-      'Future price trends and inflation rates',
-      'Wholesale prices only',
-      'Standing charges only',
+      'Wind is best',
+      'Direct comparison: solar PV is the dominant UK 2025-26 microgeneration technology (cheap, simple, predictable yield, easy planning). Micro-wind: highly site-dependent (wind speed assessment critical, ~20-25% UK capacity factor vs ~10-12% PV), higher install cost (£3-8k per kW vs ~£1.5-2k per kW for PV), planning permission usually required, MCS competence harder to find, mast structural / civils overhead. Most domestic sites are better served by PV + BESS. Wind suits: very windy rural sites, large-acreage farms, off-grid properties',
+      'Random',
+      'PV is bad',
     ],
     correctAnswer: 1,
     explanation:
-      'Assumptions about future electricity prices significantly impact payback calculations. Higher assumed inflation shortens payback but should be realistic to avoid misleading customers.',
+      'Honest UK 2025-26 customer answer: solar PV is the dominant domestic microgeneration technology for clear reasons — predictable yield (irradiance models well-understood), easy planning (PDR for most domestic), low install cost (£1.5-2k per kW), MCS competence widespread, ROI 8-12 years typical. Micro-wind: highly site-dependent — wind speed assessment via MET data + ideally on-site anemometer for 6-12 months is needed to predict yield; UK average capacity factor 20-25% (only slightly above PV but only at the right sites); install cost £3-8k per kW (mast + civils + planning + MCS competence harder to source); planning permission usually required; ROI 10-20 years or never. Honest answer to customer: domestic micro-wind suits a small subset of UK sites — very windy rural locations (Highland farms, exposed coastal, Welsh / Scottish uplands), large-acreage agricultural sites with space for proper mast siting, off-grid properties. Most UK domestic sites are better served by PV (+ BESS, + heat pump, + EV) than wind. Don\'t install wind unless site is genuinely wind-favourable + customer understands the timeline + cost vs PV. Cert evidence bundle documents the customer\'s informed choice + site assessment.',
   },
   {
-    id: 8,
-    question: 'What is the typical heat pump lifespan compared to a gas boiler?',
+    question:
+      'Dump load — what is it + why does it matter for wind?',
     options: [
-      'Much shorter than gas boilers',
-      'Similar or longer than gas boilers (15-25 years)',
-      'Only 5 years',
-      'Cannot be compared',
+      'Nothing',
+      'Dump load = resistor bank that dissipates generated power when grid is not available to absorb it. For wind: if grid is lost / disconnected (per Reg 551.7.5 anti-islanding) BUT wind is still blowing, the turbine continues rotating + generating; without dump load, the unloaded generator over-speeds (no resistive torque to brake against) → damaged generator + safety hazard. Dump load typically engages automatically on grid-loss; mechanical brake follows',
+      'No load',
+      'Customer fault',
     ],
     correctAnswer: 1,
     explanation:
-      'Heat pumps typically have lifespans of 15-25 years, similar to or longer than gas boilers. Fewer moving parts and lower operating temperatures can contribute to longevity.',
+      'Dump load is critical for wind safety. Scenario: DNO grid loss occurs → Reg 551.7.5 anti-islanding device disconnects inverter from grid → BUT wind is still blowing → turbine still rotating, generator still producing power. Without somewhere for that power to go: generator unloads → no resistive torque → rotor over-speeds → exceeds mechanical design limits → blade failure / structural damage / safety hazard. Dump load solution: large resistor bank (sized per turbine power rating); automatically engages on grid-loss detection; dissipates the generated power as heat; provides electrical braking torque to keep rotor speed within design limits. Typically followed by mechanical disc brake engaging to bring rotor to full stop. Sized per turbine: e.g. 5 kW turbine needs ~5 kW resistor bank. Located near turbine (not in habitable space — gets hot). Cert evidence bundle: dump load product + sizing + commissioning test (simulated grid-loss verifies dump load + mechanical brake sequence).',
   },
   {
-    id: 9,
-    question: 'What factor makes comparing solar PV ROI to other investments challenging?',
+    question:
+      'Wind turbine inverter — what type + what does it do?',
     options: [
-      'Solar produces no returns',
-      'Returns depend on uncertain future energy prices',
-      'Solar is always the best investment',
-      'Banks do not recognise solar returns',
+      'No inverter',
+      'Grid-tie inverter — converts variable-frequency variable-voltage AC from the wind generator to grid-synchronised 50 Hz 230 V (single-phase) or 400 V (three-phase) AC. Includes anti-islanding loss-of-mains protection per Reg 551.7.5. Typically integrated into the turbine controller package. Some small turbines use rectifier + DC-link + grid-tie inverter; some use direct AC matching. BS EN 50549 series for power generators connected to LV grid',
+      'Customer DIY',
+      'Random',
     ],
     correctAnswer: 1,
     explanation:
-      'Solar returns depend on future energy prices, consumption patterns, and export rates, all of which involve uncertainty. This makes direct comparison with fixed-return investments challenging.',
-  },
-  {
-    id: 10,
-    question: 'What maintenance costs should be included in long-term financial planning?',
-    options: [
-      'No maintenance costs for solar PV',
-      'Periodic cleaning, inspection, inverter replacement, and potential repairs',
-      'Only inverter replacement',
-      'Monthly servicing costs',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Long-term financial planning should include periodic professional inspections, cleaning costs (if applicable), inverter replacement, and a contingency for unexpected repairs.',
+      'Wind turbine grid-tie inverter is the electrical interface between the turbine generator + the AC grid. Function: wind turbine generator output is variable-frequency variable-voltage AC (wind speed varies → rotor RPM varies → generator output varies); the inverter converts this into stable 50 Hz grid-synchronised AC at the required voltage. Architecture variants: (1) Variable AC → rectifier → DC link → grid-tie inverter (most modern small wind). (2) Direct AC matching with electronic control (older / synchronous generator designs). Anti-islanding protection per Reg 551.7.5 is integrated into the inverter — loss-of-mains detection (ROCOF + voltage / frequency deviation; G99 disallows Vector Shift for type-tested generation, so RoCoF is the standard required method for the type-tested inverters used in virtually all LCT installs, with VS legacy / non-type-tested sites only) → automatic disconnect. Product standards: BS EN 50549-1 (power generators connected to LV) + BS EN 61400 series (wind turbine specific). UK 2025-26 typical inverter brands: SMA Sunny Boy / Tripower (PV inverters used for wind also), ABB, Bornay, FuturEnergy. Cert evidence bundle: inverter product + DoC + Reg 551.7.5 compliance + manufacturer commissioning procedure.',
   },
 ];
 
 const faqs = [
   {
-    question: 'What is a good payback period for domestic solar PV?',
+    question: 'Why has UK domestic micro-wind declined since 2014?',
     answer:
-      'Payback periods for domestic solar PV currently range from 6-12 years depending on system size, electricity prices, consumption patterns, and self-consumption rates. With high electricity prices, paybacks under 8 years are common. Systems typically have 25+ year lifespans, so even 12-year paybacks still provide substantial lifetime returns.',
+      'Combination: (1) Feed-in Tariff (FIT) closure for new entrants 2019 — removed the subsidy that made micro-wind viable at marginal sites; (2) PV cost-collapse 2010-2020 made PV the dominant residential renewable + reset the comparison; (3) Planning permission complexity vs PV PDR; (4) Real-world yield disappointment at sites without rigorous wind assessment; (5) MCS installer count declined for wind as the market shrank. Commercial / agricultural / community wind continues; domestic micro-wind is niche.',
   },
   {
-    question: 'How do I explain ROI to customers unfamiliar with financial concepts?',
+    question: 'What anemometer assessment is needed for wind sizing?',
     answer:
-      'Focus on relatable terms: the payback period shows when the system has paid for itself, and after that point, all savings are effectively profit. Compare annual returns to savings account interest rates - solar often provides better returns. Use charts showing cumulative savings over time to visualise the value created.',
+      'MCS MIS 3003 sizing: (1) Desktop assessment using NOABL UK wind speed database (gives broad site average); (2) For larger installs (>5 kW) or marginal sites, on-site anemometer at hub height for 6-12 months gives true site data. Annual mean wind speed at hub height < 5 m/s = marginal; 5-7 m/s = viable; >7 m/s = good. UK 2025-26 reality: many sites that looked viable on NOABL turn out marginal on real measurement.',
   },
   {
-    question: 'Should I include potential electricity price increases in quotes?',
+    question: 'BS EN 61400 — what does it cover?',
     answer:
-      'Show calculations at current prices as the baseline, then demonstrate sensitivity to price changes. This is transparent and allows customers to see how their investment performs under different scenarios. Avoid guaranteeing specific future prices but note historical trends for context.',
+      'BS EN 61400 series = wind turbine product safety + performance standards. Most relevant: BS EN 61400-2 (small wind turbines ≤200 m² swept area — covers most domestic + small commercial micro-wind); BS EN 61400-12 (power performance measurement); BS EN 61400-25 (data communication). Manufacturer DoC declares conformity. MCS MIS 3003 requires BS EN 61400-2 compliance.',
   },
   {
-    question: 'How do I account for panel degradation in yield estimates?',
+    question: 'Shadow flicker — what is it + why does it matter?',
     answer:
-      'Apply the degradation rate annually to calculate expected output in future years. For example, with 0.5% annual degradation, Year 1 output of 4000kWh becomes approximately 3600kWh by Year 25. Software tools often include degradation automatically. Lifetime yield is the sum of annual outputs accounting for this reduction.',
+      'Shadow flicker = rotating shadow cast by turbine blades onto neighbouring properties when sun + blade rotation align. Can cause visual discomfort for occupants. Planning condition typically: shadow flicker not exceeding 30 hours per year + ≤30 minutes any single day at any habitable window. Mitigation: smart turbine controller can stop rotation at trigger times. Material in planning permission decision + customer-facing handover education.',
   },
   {
-    question: 'What happens to payback calculations if electricity prices fall?',
+    question: 'Off-grid wind install — what changes vs grid-tie?',
     answer:
-      'Lower electricity prices lengthen payback periods as savings reduce. However, wholesale prices strongly influence retail prices, and demand for electricity is expected to grow with electrification of transport and heating. Most analysts expect long-term price trends to remain upward, though short-term volatility can occur.',
-  },
-  {
-    question: 'How do I compare heat pump payback to gas boiler economics?',
-    answer:
-      'Compare the lifetime cost of ownership including installation, fuel costs over the expected lifetime, maintenance, and replacement. Heat pumps have higher upfront costs but lower running costs depending on efficiency (COP/SPF) and relative gas/electricity prices. Include carbon considerations for customers with environmental priorities.',
+      'Off-grid: no grid connection → battery storage essential; inverter is grid-forming (not grid-following); dump load critical (always active when battery is full); typically combined with PV for diversified generation. Section 551 still applies (Reg 551.1.1 covers all generating sets). Reg 551.7.5 anti-islanding may not apply (no public supply to island from) but the dump load + over-speed protection is essential. M10 covers grid-forming inverters in detail.',
   },
 ];
 
-const RenewableEnergyModule9Section2 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+export default function RenewableEnergyModule9Section2() {
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Wind microgeneration (HAWT / VAWT) | Renewable Energy 9.2 | Elec-Mate',
+    description:
+      'Wind microgeneration electrical install — HAWT vs VAWT, MCS MIS 3003 small wind framework, Section 551 + Reg 551.7.5 anti-islanding, BS EN 61400 product standards, mast install, planning permission, long-run cable sizing, dump load, grid-tie inverter.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <Link to="/electrician/upskilling/renewable-energy-module-9">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <span className="text-white font-medium truncate">ROI, Payback & System Lifespan</span>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-9')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 9
+          </button>
 
-      {/* Hero Section */}
-      <div className="px-4 py-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
-          <Zap className="w-4 h-4 text-elec-yellow" />
-          <span className="text-elec-yellow text-sm font-medium">Module 9 - Section 2</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-          ROI, Payback Periods & System Lifespan
-        </h1>
-        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
-          Financial metrics that drive renewable energy investment decisions
-        </p>
-      </div>
+          <PageHero
+            eyebrow="Module 9 · Section 2 · BS 7671:2018+A4:2026 · Section 551 + MCS MIS 3003 + BS EN 61400-2"
+            title="Wind microgeneration (HAWT / VAWT)"
+            description="Wind microgeneration from the BS 7671 electrical install perspective. HAWT vs VAWT, MCS MIS 3003 small wind framework, Section 551 + Reg 551.7.5 anti-islanding, BS EN 61400-2 product standard, mast install + planning permission, long-run cable + voltage drop, grid-tie inverter, dump load."
+            tone="yellow"
+          />
 
-      {/* Quick Summary */}
-      <div className="px-4 pb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Payback:</span> Time to recoup
-              initial investment
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">ROI:</span> Annual return as
-              percentage of investment
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Panel Life:</span> 25-30+ years
-              typical lifespan
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Inverter Life:</span> 10-15 years,
-              plan for replacement
-            </p>
-          </div>
-        </div>
-      </div>
+          <TLDR
+            points={[
+              'HAWT (Horizontal Axis Wind Turbine) dominates micro-wind. VAWT (Vertical Axis — Darrieus, Savonius, hybrid) suits urban / turbulent / low-wind niche sites.',
+              'MCS MIS 3003 = small wind installer standard ≤50 kW. Required for grant funding (where applicable) + UK industry competence baseline.',
+              'BS EN 61400-2 = small wind turbine product safety + performance standard. Manufacturer DoC declares conformity. Required by MIS 3003.',
+              'Section 551 applies — Reg 551.7.5 anti-islanding mandatory (integrated in grid-tie inverter), Reg 551.7.2.1 supply-side connection.',
+              'EREC G98 fast-track only for ≤16 A per phase export. Most domestic micro-wind (3-15 kW) triggers G99 formal application.',
+              'Long cable run from mast to indoor inverter (50-200 m typical at rural sites) — voltage drop is limiting factor; 16 mm² SWA or larger typical.',
+              'Dump load critical — when grid lost but wind still blowing, dump load + mechanical brake prevent over-speed. Sized per turbine rating.',
+              'Planning permission: PDR limited for wind vs PV; most sites require full planning permission (8-16 weeks + £200-400 fee + consultant if visual / noise / shadow flicker concerns).',
+            ]}
+          />
 
-      {/* Learning Outcomes */}
-      <div className="px-4 pb-6">
-        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
-        <div className="space-y-2">
-          {[
-            'Calculate payback periods accurately',
-            'Understand ROI and its limitations',
-            'Account for component lifespans',
-            'Factor in degradation and maintenance',
-            'Present financial information clearly to customers',
-          ].map((outcome, index) => (
-            <div key={index} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white text-sm">{outcome}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+          <LearningOutcomes
+            outcomes={[
+              'Distinguish HAWT vs VAWT and identify which suits a given site.',
+              'Apply MCS MIS 3003 framework — site assessment, product approval, installer competence, handover.',
+              'Apply Section 551 + Reg 551.7.5 anti-islanding for grid-tie wind.',
+              'Determine EREC G98 vs G99 path per export size.',
+              'Size cable for long mast-to-inverter runs per Reg 525.202 + Appendix 4 Section 6.4 voltage drop.',
+              'Specify dump load + mechanical brake architecture for grid-loss scenarios.',
+              'Identify BS EN 61400-2 + BS EN 50549 product standards for wind install.',
+              'Plan planning permission timeline + customer expectations + shadow flicker / noise considerations.',
+            ]}
+            initialVisibleCount={3}
+          />
 
-      <div className="px-4 space-y-6 pb-8">
-        {/* Section 01 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-xl font-semibold text-white">Understanding Payback Period</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Payback period is the most commonly requested financial metric for renewable energy
-              investments. It answers the fundamental question: how long until this system pays for
-              itself?
-            </p>
-            <p>
-              <span className="text-white font-medium">Simple Payback Calculation:</span> Divide the
-              total investment cost by the annual savings. For example, a 7000 system generating 600
-              annual savings has a simple payback of 11.7 years (7000 / 600 = 11.67).
-            </p>
-            <p>
-              <span className="text-white font-medium">Components of Annual Savings:</span> Savings
-              comprise avoided import costs (self-consumed electricity) plus any export income (SEG
-              payments). If a system generates 4000kWh, 70% is self-consumed at 28p/kWh (784), and
-              30% is exported at 5p/kWh (60), total annual savings are 844.
-            </p>
-            <p>
-              <span className="text-white font-medium">Limitations of Simple Payback:</span> Simple
-              payback assumes constant prices and does not account for inflation, degradation, or
-              the time value of money. It is a useful rule of thumb but should not be the only
-              financial metric considered.
-            </p>
-            <p>
-              <span className="text-white font-medium">Discounted Payback:</span> A more accurate
-              approach discounts future savings to present value, recognising that 600 received in
-              10 years is worth less than 600 today. This typically lengthens calculated payback
-              slightly but is more financially rigorous.
-            </p>
-          </div>
-        </section>
+          <Pullquote>
+            Wind microgeneration is electrically simple, mechanically complex, and politically interesting. The cable run is long, the mast is exposed, the dump load is non-negotiable.
+          </Pullquote>
 
-        <InlineCheck questions={[quickCheckQuestions[0]]} />
+          <ContentEyebrow>HAWT vs VAWT + MCS MIS 3003 framework</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-xl font-semibold text-white">Return on Investment (ROI)</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              ROI expresses returns as a percentage of the initial investment, enabling comparison
-              with other investment opportunities such as savings accounts, bonds, or stock market
-              investments.
-            </p>
-            <p>
-              <span className="text-white font-medium">Basic ROI Formula:</span> Annual Return /
-              Initial Investment x 100 = ROI%. Using the previous example, 844 annual savings on a
-              7000 investment gives an ROI of 12% (844 / 7000 x 100 = 12.05%).
-            </p>
-            <p>
-              <span className="text-white font-medium">Comparing to Alternatives:</span> A 12%
-              annual return compares favourably to savings accounts (typically 2-5%) or average
-              stock market returns (historically 7-10%). However, renewable energy returns are
-              partially inflation-protected as electricity prices typically rise with inflation.
-            </p>
-            <p>
-              <span className="text-white font-medium">Lifetime ROI:</span> Consider total returns
-              over the system lifetime. A 7000 investment generating 844 annually for 25 years
-              (ignoring degradation and inflation) provides 21,100 total return - a 301% lifetime
-              ROI.
-            </p>
-            <p>
-              <span className="text-white font-medium">Internal Rate of Return (IRR):</span> IRR is
-              a more sophisticated metric that calculates the discount rate at which the net present
-              value of all cash flows equals zero. It accounts for timing of returns and is useful
-              for comparing investments of different sizes and durations.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="HAWT vs VAWT architectures"
+            plainEnglish="HAWT = Horizontal Axis Wind Turbine — rotor on horizontal shaft, three-blade airfoil design, needs yaw to face the wind, dominant in micro + utility wind. VAWT = Vertical Axis — rotor on vertical shaft (Darrieus / Savonius / hybrid), omni-directional, typically quieter, niche urban / low-wind sites, lower capacity factor."
+            onSite="UK 2025-26 micro-wind market: HAWT dominates for rural / agricultural / open-site installs; VAWT for urban / restricted-space / turbulent-wind locations. Capacity factor in UK averages 20-25% for HAWT at good sites, lower for VAWT or marginal sites. Electrical install scope similar between architectures — the differences are mechanical + control."
+          >
+            <p>HAWT vs VAWT comparison:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">HAWT design</strong> — horizontal
+                shaft + three-blade airfoil + yaw mechanism (active motor or passive
+                tail vane) to face wind direction. Higher tip speed = more noise +
+                more efficient lift-based extraction
+              </li>
+              <li>
+                <strong className="text-white">HAWT capacity
+                  factor</strong> — UK average ~20-25% at good sites (annual mean wind
+                speed ≥6 m/s at hub height). Marginal sites &lt;15%
+              </li>
+              <li>
+                <strong className="text-white">VAWT design</strong> —
+                vertical shaft, several variants. Darrieus (lift-based, eggbeater
+                shape — high efficiency but needs starting motor). Savonius
+                (drag-based, scoop / cup — low efficiency, self-starting). Hybrid
+                Darrieus-Savonius
+              </li>
+              <li>
+                <strong className="text-white">VAWT capacity
+                  factor</strong> — typically 5-10 percentage points lower than HAWT at
+                clean-wind sites; more competitive at turbulent / variable / urban
+                sites
+              </li>
+              <li>
+                <strong className="text-white">Mounting</strong> —
+                HAWT typically on mast (8-25 m hub height) or building-mounted (≤4 m
+                above ridge per PDR). VAWT typically rooftop / pole-mount; lower
+                hub height
+              </li>
+              <li>
+                <strong className="text-white">Noise</strong> — HAWT
+                tip-vortex generates aerodynamic noise scaled with tip speed; ~40-50
+                dB(A) at hub height typical small wind. VAWT lower tip speed →
+                typically quieter
+              </li>
+              <li>
+                <strong className="text-white">UK 2025-26 market
+                  share</strong> — HAWT dominates volume (~85% of installs); VAWT
+                niche urban / aesthetic / specialist applications
+              </li>
+              <li>
+                <strong className="text-white">Electrical install
+                  scope</strong> — similar between architectures: generator → inverter
+                → AC grid-tie. Differences are mechanical (yaw, brake) + control logic
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck questions={[quickCheckQuestions[1]]} />
+          <ConceptBlock
+            title="MCS MIS 3003 small wind installer framework"
+            plainEnglish="MCS MIS 3003 is the UK installer competency + product approval framework for small wind turbines ≤50 kW. Required for grant eligibility (where applicable) + the customer-facing accreditation. Sizing methodology + product approval + installer competence + handover documentation."
+            onSite="MCS-certified company orchestrates the multi-trade install. Electrical scope is one engineering layer. UK 2025-26 reality: domestic micro-wind market is small + MCS-certified small-wind installer count is limited; most M9 wind installs are at rural / agricultural / commercial sites where install scale + economics work."
+          >
+            <p>MIS 3003 framework elements:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Scope</strong> — small wind
+                turbines ≤50 kW rated power. Single + three-phase. Grid-tied + off-grid
+                variants
+              </li>
+              <li>
+                <strong className="text-white">Site wind
+                  assessment</strong> — desktop NOABL UK wind speed database for
+                broad site average; on-site anemometer for marginal sites or larger
+                installs (6-12 months at hub height)
+              </li>
+              <li>
+                <strong className="text-white">Product
+                  approval</strong> — turbine + inverter on MCS-approved list. BS EN
+                61400-2 conformity declared (small wind turbine product standard)
+              </li>
+              <li>
+                <strong className="text-white">Installer
+                  competence</strong> — MCS-certified company; individual installer
+                training (turbine-specific manufacturer + general small-wind training)
+              </li>
+              <li>
+                <strong className="text-white">Customer handover
+                  documentation</strong> — sizing calc + product details +
+                commissioning record + expected annual energy yield + maintenance
+                schedule + warranty + EIC
+              </li>
+              <li>
+                <strong className="text-white">UK Government grant
+                  position</strong> — Boiler Upgrade Scheme heat-pump-focused; no
+                current widespread grant for wind. Smart Export Guarantee (SEG) tariff
+                for export earnings (covered in M10)
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — MIS 3003 handover pack + BS 7671 electrical EIC +
+                planning consent + EREC G99 reference + manufacturer DoC
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-xl font-semibold text-white">Component Lifespans</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Different components have different expected lifespans, affecting both financial
-              planning and maintenance requirements. Understanding these lifespans ensures realistic
-              financial projections.
-            </p>
-            <p>
-              <span className="text-white font-medium">Solar Panels:</span> Modern panels typically
-              carry 25-year performance warranties guaranteeing at least 80-85% of original output.
-              Actual lifespans often exceed 30 years, with panels continuing to produce usable power
-              well beyond warranty periods.
-            </p>
-            <p>
-              <span className="text-white font-medium">Inverters:</span> String inverters typically
-              last 10-15 years, with warranties of 5-10 years (sometimes extendable). Microinverters
-              and optimisers often have longer warranties (up to 25 years) reflecting their design
-              for longer service life. Budget for at least one inverter replacement during system
-              lifetime.
-            </p>
-            <p>
-              <span className="text-white font-medium">Battery Storage:</span> Lithium-ion batteries
-              are typically warranted for 10 years or a specified number of cycles. Capacity
-              gradually reduces over time. Depending on usage patterns, replacement after 10-15
-              years may be needed to maintain desired performance.
-            </p>
-            <p>
-              <span className="text-white font-medium">Heat Pumps:</span> Air source heat pumps
-              typically last 15-20 years with proper maintenance. Ground source systems may last
-              longer due to fewer moving parts exposed to weather. Compressor life is often the
-              limiting factor.
-            </p>
-            <p>
-              <span className="text-white font-medium">Balance of System:</span> Mounting systems,
-              cables, junction boxes, and other components generally last the life of the
-              installation if properly specified and installed. Quality during installation pays
-              dividends in longevity.
-            </p>
-          </div>
-        </section>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Section 551 + Reg 551.7.5 — applied to wind microgeneration"
+            clause="Reg 551.1.1 lists generating set power sources including (b) turbines — wind microgeneration falls here. Reg 551.7.5 mandates anti-islanding: means shall be provided to prevent the connection of a generating set to the system for distribution of electricity to the public in the event of loss of that supply or deviation of the voltage or frequency at the supply terminals from values required by Regulation 551.7.4."
+            meaning="Wind microgeneration is a Section 551 generating set (turbine per Reg 551.1.1(b)). Reg 551.7.5 anti-islanding is mandatory — the grid-tie inverter must disconnect the turbine from the grid on supply loss. Detection methods integrated into the inverter: ROCOF (rate of change of frequency) + voltage / frequency deviation + active anti-islanding methods. G99 disallows Vector Shift for type-tested generation, so RoCoF is the standard required method for the type-tested inverters used in virtually all LCT installs; Vector Shift is legacy and only on older or non-type-tested sites. Verified at commissioning via simulated grid-loss test (some DNOs witness directly for larger installs). On grid-loss: anti-islanding disconnects inverter; dump load engages to dissipate continued wind-driven generation; mechanical brake follows. Cert evidence bundle: inverter manufacturer DoC declaring Reg 551.7.5 compliance + commissioning test result + dump load functional verification."
+          />
 
-        <InlineCheck questions={[quickCheckQuestions[2]]} />
+          <InlineCheck {...inlineChecks[0]} />
 
-        {/* Section 04 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-xl font-semibold text-white">Degradation and Yield Over Time</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Solar panels gradually lose efficiency over time. Accurate financial projections must
-              account for this degradation to avoid overstating long-term returns.
-            </p>
-            <p>
-              <span className="text-white font-medium">Typical Degradation Rates:</span> Quality
-              crystalline silicon panels typically degrade at 0.3-0.5% per year. Premium panels may
-              specify lower rates (0.25%). This means a panel producing 400W when new might produce
-              around 350W after 25 years.
-            </p>
-            <p>
-              <span className="text-white font-medium">Impact on Yield:</span> A 4kW system
-              generating 4000kWh in Year 1 at 0.5% annual degradation would generate approximately
-              3550kWh in Year 25. Total 25-year output would be around 94,500kWh rather than
-              100,000kWh without degradation.
-            </p>
-            <p>
-              <span className="text-white font-medium">Warranty Guarantees:</span> Performance
-              warranties typically guarantee 90% output after 10 years and 80-85% after 25 years. If
-              panels degrade faster than warranted, manufacturers should provide remediation or
-              replacement.
-            </p>
-            <p>
-              <span className="text-white font-medium">Battery Degradation:</span> Batteries also
-              degrade with use. A 10kWh battery might retain only 70-80% capacity after its
-              warranted cycle count. This affects the value of stored energy and should be factored
-              into financial models.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...inlineChecks[1]} />
 
-        <InlineCheck questions={[quickCheckQuestions[3]]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-xl font-semibold text-white">Comprehensive Financial Modelling</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Realistic financial projections combine all factors: initial cost, annual savings,
-              degradation, maintenance, component replacement, and assumptions about future prices.
-            </p>
-            <p>
-              <span className="text-white font-medium">Year-by-Year Modelling:</span> Build a
-              spreadsheet showing each year: expected generation (accounting for degradation),
-              self-consumption, export, electricity price (with assumed inflation), resulting
-              savings, and cumulative savings. This shows both payback point and lifetime returns.
-            </p>
-            <p>
-              <span className="text-white font-medium">Maintenance Costs:</span> Include periodic
-              inspection costs, cleaning (if required), and a contingency for repairs. Professional
-              inspections every 3-5 years cost 100-200. Cleaning costs depend on location and
-              access.
-            </p>
-            <p>
-              <span className="text-white font-medium">Component Replacement:</span> Budget for
-              inverter replacement around Year 12-15. Current inverter prices provide a guide,
-              though technology changes may affect future costs. For batteries, consider replacement
-              around Year 10-12 if cycling has been heavy.
-            </p>
-            <p>
-              <span className="text-white font-medium">Sensitivity Analysis:</span> Show how results
-              change with different assumptions. What if electricity prices rise 5% annually versus
-              3%? What if self-consumption is 50% instead of 70%? This demonstrates the range of
-              possible outcomes.
-            </p>
-            <p>
-              <span className="text-white font-medium">Transparent Communication:</span> Present
-              financial information clearly and honestly. State assumptions explicitly. Avoid
-              guaranteed returns language. Customers make better decisions when they understand both
-              the opportunity and the uncertainties.
-            </p>
-          </div>
-        </section>
+          <ContentEyebrow>Cable, controls, dump load — the electrical scope</ContentEyebrow>
 
-        {/* Practical Guidance */}
-        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
-          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-elec-yellow" />
-            Practical Guidance
-          </h3>
-          <div className="space-y-2 text-white text-sm">
-            <p>
-              <span className="text-white font-medium">Use conservative assumptions:</span>{' '}
-              Under-promise and over-deliver. Conservative assumptions that prove pessimistic leave
-              customers pleasantly surprised rather than disappointed.
-            </p>
-            <p>
-              <span className="text-white font-medium">Document your methodology:</span> Record the
-              assumptions used in financial projections. This protects you if questioned later and
-              helps with follow-up discussions.
-            </p>
-            <p>
-              <span className="text-white font-medium">Update for current prices:</span> Energy
-              prices change frequently. Ensure your financial models use current prices and update
-              them regularly.
-            </p>
-          </div>
-        </div>
+          <Pullquote>
+            The wind installer\'s biggest electrical question isn\'t the inverter — it\'s the 60 m of armoured cable buried in a trench from the mast base to the building.
+          </Pullquote>
 
-        {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
+          <ConceptBlock
+            title="Long-run cable from mast to indoor inverter"
+            plainEnglish="Wind turbines sit at the windiest site location — typically a mast on a hill / field / exposed location. Cable from mast base to indoor inverter is typically 50-200 m. Voltage drop is the limiting cable-sizing factor; Reg 525.202 + Appendix 4 Section 6.4 ≤5% limit forces cable upsize."
+            onSite="Cable route: from turbine generator (top of mast) down through mast (inside or alongside) → mast-base junction box (weatherproof, gland-sealed) → underground SWA in trench (typical 600 mm deep) → through-wall penetration into building → indoor inverter location. UK 2025-26 typical: 16 mm² 3-core or 4-core SWA for 6-10 kW units at 50-100 m run."
+          >
+            <p>Cable sizing considerations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Sustained current
+                  carrying capacity</strong> — per Appendix 4 + cable type +
+                installation method. Usually well within smaller cable; voltage drop
+                drives the upsize
+              </li>
+              <li>
+                <strong className="text-white">Reg 525.202 voltage
+                  drop ≤5%</strong> — per Appendix 4 Section 6.4. Long runs require
+                oversize cable. 60 m × 26 A × 4.4 mV/A/m (10 mm²) = 6.9 V = 3% — tight
+                but within limit. 16 mm² (2.8 mV/A/m) reduces drop to ~1.9% — comfortable
+              </li>
+              <li>
+                <strong className="text-white">SWA (Steel Wire
+                  Armoured)</strong> — standard for buried cable. Mechanical protection
+                + UV / weather resistance + armour as CPC option per Reg 543
+              </li>
+              <li>
+                <strong className="text-white">Cable in mast</strong>
+                — manufacturer-provided routing inside the mast (typical lattice or
+                monopole). Junction box at mast base for transition to underground
+                SWA
+              </li>
+              <li>
+                <strong className="text-white">Underground
+                  trench</strong> — typically 600 mm deep, sand bedding + cable +
+                marker tape + backfill. Cable continuous (no underground joints)
+              </li>
+              <li>
+                <strong className="text-white">Through-wall
+                  penetration</strong> — drilled at downward angle outside; sleeved;
+                fire-stopped per Reg 527 + Building Regs Part B
+              </li>
+              <li>
+                <strong className="text-white">CPC arrangement</strong>
+                — armour-as-CPC per Reg 543 with manufacturer DoC confirming armour
+                cross-section meets Table 54.7 + continuity at both ends. Alternative
+                separate green-yellow CPC conductor
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — cable type + length + Appendix 4 sizing calc +
+                voltage drop result + route + gland details + Reg 543 CPC arrangement
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Dump load + brake architecture"
+            plainEnglish="Dump load = resistor bank that dissipates wind-generated power when grid is unavailable. Critical safety component: if grid is lost (Reg 551.7.5 anti-islanding triggered) but wind is still blowing, the turbine keeps generating with no load → over-speed → mechanical damage. Dump load + mechanical brake bring rotor safely to stop."
+            onSite="Dump load typically sized to match turbine rated power (5 kW turbine → 5 kW resistor bank). Located near turbine base (gets hot — not in habitable space). Automatically engages on grid-loss detection from the inverter controller. Mechanical disc brake follows once rotor speed is brought down by dump load. Functional test at commissioning via simulated grid-loss."
+          >
+            <p>Dump load + brake architecture:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Function</strong> — when
+                grid lost / inverter disconnected (Reg 551.7.5), dump load engages to
+                absorb continuing wind-driven generation; provides resistive load that
+                creates electromagnetic braking torque in the generator
+              </li>
+              <li>
+                <strong className="text-white">Sizing</strong> — matched
+                to turbine rated power. 5 kW turbine → 5 kW resistor bank. Bank rated
+                for continuous duty at maximum wind condition (cut-out wind speed,
+                typically 25 m/s)
+              </li>
+              <li>
+                <strong className="text-white">Location</strong> —
+                near turbine base (NOT in habitable space — gets very hot under load).
+                Weather-protected enclosure; ventilation for heat dissipation
+              </li>
+              <li>
+                <strong className="text-white">Engagement</strong> —
+                automatic via turbine controller on grid-loss detection. Mechanical
+                brake follows once rotor speed reduced
+              </li>
+              <li>
+                <strong className="text-white">Mechanical
+                  brake</strong> — disc brake on rotor shaft; engages once rotor speed
+                brought below threshold by dump load. Brings rotor to full stop +
+                holds during maintenance
+              </li>
+              <li>
+                <strong className="text-white">Over-speed
+                  protection</strong> — separate cut-out activates if rotor speed
+                exceeds manufacturer limit (regardless of grid state); engages dump
+                load + mechanical brake even with grid present
+              </li>
+              <li>
+                <strong className="text-white">Commissioning
+                  test</strong> — simulated grid-loss: inverter disconnects → dump load
+                engages → rotor decelerates → mechanical brake engages → rotor at full
+                stop. Verify sequence completes within manufacturer-specified time
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — dump load product + rating + location + functional
+                test result + over-speed cut-out test
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 525.202 + Appendix 4 Section 6.4 — voltage drop for long wind cable runs"
+            clause="The above requirements [Reg 525.1 + 525.201 minimum voltage at terminals] are deemed to be satisfied if the voltage drop between the origin of the installation (usually the supply terminals) and a socket-outlet or the terminals of fixed current-using equipment does not exceed that stated in Appendix 4, Section 6.4."
+            meaning="Reg 525.202 + Appendix 4 Section 6.4 set the voltage drop limit (5% for non-lighting fixed current-using equipment / generation circuits). For wind installs: the long cable run from mast to indoor inverter is the constraint. Worked example: 6 kW single-phase 26 A continuous; 60 m run; 10 mm² SWA at 4.4 mV/A/m → 60 × 26 × 4.4 / 1000 = 6.9 V drop = 3% of 230 V (within 5% but tight). 16 mm² SWA (2.8 mV/A/m) → drop = 4.4 V = 1.9% (comfortable margin). Three-phase variant: drop = single-phase ÷ √3 (≈58%). Cert evidence bundle: voltage drop calc per Appendix 4 + cable choice + per-segment drop result + total drop + percentage of nominal voltage + margin to 5%."
+          />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="Rural farm — 6 kW HAWT grid-tied micro-wind on a 12 m mast"
+            situation="Highland farm. Existing 100 A three-phase supply (already upgraded for previous PV + BESS install). Field with clean wind exposure 80 m from farmhouse. Customer wants 6 kW HAWT grid-tied micro-wind (Bergey Excel 6 / Skystream / similar). NOABL UK wind speed database shows 7.2 m/s annual mean at hub height — viable site. 12 m guyed lattice mast."
+            whatToDo="Multi-trade: MCS company (MIS 3003) + turbine specialist + civils for mast foundation + electrical installer. Electrical scope: dedicated single-phase circuit (turbine is single-phase 230 V output ~26 A continuous at rated power) from AC supply panel; 32 A Type A RCBO C-curve at CU (allows for inrush + headroom); AC isolator at indoor inverter (BS EN 60947-3, lockable OFF); cable: 16 mm² 3-core SWA from inverter to mast base (80 m run); voltage drop calc: 80 × 26 × 2.8 / 1000 = 5.8 V = 2.5% of 230 V (within Reg 525.202 5%); armour as CPC per Reg 543 (16 mm² SWA armour cross-section ~110 mm² steel — well above Table 54.7 minimum). Mast base: weatherproof junction box, gland-sealed entries; cable transitions to mast-internal flex to turbine head. Mast lightning protection per BS EN 62305-3: separate lightning earth electrode at mast base, bonded to building MET via supplementary equipotential bonding. Dump load: 6 kW resistor bank at mast base in vented enclosure. EREC G99 formal application (26 A export > 16 A G98 threshold). Planning permission: 12 m mast triggers full planning (PDR limit 11.1 m); 8-16 week timeline, ~£300 fee + visual / noise consultant ~£800. Cert evidence bundle: MCS MIS 3003 handover pack + BS 7671 EIC + Section 551 compliance + Reg 551.7.5 anti-islanding test + EREC G99 reference + planning consent + BS EN 62305-3 lightning protection install + BS EN 61400-2 turbine DoC. Total project cost ~£30-50k; payback 12-18 years (SEG tariff dependent — covered in M10)."
+            whyItMatters="This is the typical UK 2025-26 rural farm wind install. Multi-source PEI site (Chapter 82) with PV + BESS + wind. Electrical scope is the BS 7671 install side; MCS company orchestrates the multi-trade delivery. The long cable run + voltage drop + dump load + lightning protection are the wind-specific electrical considerations beyond the standard Section 551 framework. Cert evidence bundle integrates with existing PV + BESS records."
+          />
+
+          <Scenario
+            title="Urban rooftop VAWT install — small commercial office"
+            situation="Small commercial office building, flat roof, urban location with turbulent wind. Customer wants a 3 kW VAWT (Quietrevolution QR5 / Windside / similar) rooftop-mounted for ESG branding + modest export earnings. Existing three-phase 100 A supply. Tight planning + noise constraints due to neighbouring residential."
+            whatToDo="VAWT suits this site over HAWT (turbulent urban wind, lower noise, smaller visual impact). Multi-trade: MCS company (MIS 3003) + structural engineer (roof load assessment — VAWT + framework typically 200-400 kg) + electrical installer + planning consultant (noise assessment essential due to residential proximity). Electrical scope: dedicated single-phase circuit (3 kW VAWT typical single-phase ~13 A continuous); 20 A Type A RCBO C-curve at CU; AC isolator at indoor inverter; cable 6 mm² 3-core SWA (shorter run, ~15-20 m typical rooftop to indoor); voltage drop comfortable. EREC G98 fast-track eligible (3 kW ~13 A < 16 A per phase threshold) — post-installation notification + DNO heat pump portal equivalent for generation. Section 551 + Reg 551.7.5 anti-islanding integrated in inverter. Dump load: 3 kW resistor bank rooftop in vented enclosure. Planning permission: VAWT building-mounted typically requires full planning (no PDR for commercial wind in most cases); noise assessment shows ≤42 dB(A) at neighbouring property at 1 m — within typical planning condition. Roof structural assessment: load + dynamic / vibration assessment by structural engineer. Cert evidence bundle: MCS handover pack + BS 7671 EIC + structural engineer report + planning consent + noise assessment + EREC G98 notification. Total project cost ~£15-25k."
+            whyItMatters="VAWT urban install is a niche but real UK 2025-26 pattern — commercial properties valuing ESG / visual statement / quieter operation. Cost / kWh is higher than rural HAWT but viable for the specific use case. Cert evidence bundle integrates planning + structural + electrical scopes."
+          />
+
+          <CommonMistake
+            title="Specifying wind based on NOABL without site anemometer"
+            whatHappens="Installer accepts NOABL UK wind speed database value (showing 6 m/s annual mean) without on-site anemometer. Real site has buildings / trees / terrain causing local wind shadowing — actual hub-height wind speed is 4.5 m/s. Real capacity factor 10% not the predicted 22%. Customer expected £800/year electricity savings; actual ~£250/year. Customer angry; reputation damage."
+            doInstead="MCS MIS 3003 + UK 2025-26 best practice: on-site anemometer at hub height for 6-12 months on any install ≥5 kW or marginal NOABL site. Even smaller installs benefit from 3-month assessment. NOABL is a broad geographic average; real sites have significant local wind variation due to terrain + obstacles. Honest customer expectation setting: present yield ranges (NOABL-derived) + caveat that real performance depends on site-measured wind. Cert evidence bundle records the assessment method + measured / estimated wind speed + projected yield."
+          />
+
+          <CommonMistake
+            title="Cable sized to current capacity but failing voltage drop on long run"
+            whatHappens="6 kW single-phase wind at 80 m run. Installer sizes cable to current capacity: 10 mm² SWA (~55 A capacity Method E) seems ample for 26 A continuous. Doesn\'t do voltage drop calc. Real result: 80 × 26 × 4.4 / 1000 = 9.2 V = 4.0% drop — within 5% but Cable Operating Temperature de-rates further; on hot summer day at peak generation, voltage at inverter terminals dropping outside the inverter\'s operational window → inverter trips repeatedly → poor yield + customer complaint."
+            doInstead="Long wind cable run = voltage drop drives cable size, not current capacity. Always do Reg 525.202 + Appendix 4 Section 6.4 calc. Step up cable size to keep voltage drop comfortable (≤2-3% target, not at 5% limit). Worked example: 80 m × 26 A; 10 mm² SWA = 4.0% drop (tight); 16 mm² SWA = 2.5% drop (comfortable); 25 mm² SWA = 1.5% drop (premium). The cost differential is small vs the inverter trip + customer impact. Cert evidence bundle records Appendix 4 calc explicitly."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Wind microgeneration is Section 551 generating set (Reg 551.1.1(b) turbines). Reg 551.7.5 anti-islanding mandatory + integrated in grid-tie inverter.',
+              'HAWT (Horizontal Axis) dominates micro-wind. VAWT (Vertical Axis — Darrieus / Savonius) suits urban / turbulent / low-wind niche.',
+              'MCS MIS 3003 small wind installer standard ≤50 kW. Required for grant + UK competence baseline.',
+              'BS EN 61400-2 small wind turbine product standard. BS EN 50549-1 LV generator grid-connection standard.',
+              'EREC G98 fast-track only ≤16 A per phase. Most domestic / commercial micro-wind (>3 kW) triggers G99 formal application.',
+              'Long cable run from mast to indoor inverter (50-200 m) — Reg 525.202 voltage drop ≤5% is the cable sizing constraint, not current capacity.',
+              '16 mm² SWA typical for 6-10 kW units at 50-100 m; 25 mm² for longer runs. Buried 600 mm deep + armour as CPC per Reg 543.',
+              'Dump load mandatory: resistor bank dissipates wind-driven generation when grid lost. Sized to match turbine rated power. Engages automatically on grid-loss + mechanical brake follows.',
+              'Planning permission usually required (PDR limited to ≤11.1 m height / ≤4 m above ridge); 8-16 week timeline + visual / noise / shadow flicker assessment for residential-proximity sites.',
+              'Site wind assessment: NOABL UK wind speed database desktop; on-site anemometer 6-12 months at hub height for ≥5 kW or marginal NOABL site.',
+              'UK 2025-26 reality: domestic micro-wind small market vs solar PV; commercial / agricultural / rural community wind continues. Honest customer comparison: PV easier + cheaper + more predictable at most sites.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 2 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-9-section-1')
+              }
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Section 1
               </div>
-            ))}
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                The other-LCT landscape + Section 551 framework
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-9-section-3')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                9.3 Solar thermal (collectors + electrical scope)
+              </div>
+            </button>
           </div>
-        </section>
-
-        {/* Quiz */}
-        <Quiz title="ROI and Payback Quiz" questions={quizQuestions} />
-
-        {/* Bottom Navigation */}
-        <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="../section-1">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Button>
-          </Link>
-          <Link to="../section-3">
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Button>
-          </Link>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default RenewableEnergyModule9Section2;
+}

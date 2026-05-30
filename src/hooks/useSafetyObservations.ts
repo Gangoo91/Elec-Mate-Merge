@@ -22,6 +22,7 @@ export interface SafetyObservation {
   completed_date: string | null;
   observer_signature: string | null;
   observer_name: string | null;
+  job_id: string | null;
   created_at: string;
 }
 
@@ -75,6 +76,7 @@ export function useCreateObservation() {
       photos?: string[];
       observer_signature?: string;
       observer_name?: string;
+      job_id?: string | null;
     }) => {
       const {
         data: { user },
@@ -94,6 +96,7 @@ export function useCreateObservation() {
           photos: observation.photos ?? [],
           observer_signature: observation.observer_signature ?? null,
           observer_name: observation.observer_name ?? null,
+          job_id: observation.job_id ?? null,
         })
         .select()
         .single();

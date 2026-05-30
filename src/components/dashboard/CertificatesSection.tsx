@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useResumeDrafts } from '@/hooks/inspection/useResumeDrafts';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,6 +20,7 @@ interface CertDef {
   subtitle: string;
   description: string;
   standard: string;
+  /** Tailwind gradient string — only the "from-" token is used, for the accent dot. */
   accentColor: string;
 }
 
@@ -28,7 +30,7 @@ const coreCerts: CertDef[] = [
     title: 'EICR',
     subtitle: 'Electrical Installation Condition Report',
     description: 'Periodic inspection & testing of existing installations',
-    standard: 'BS 7671:2018+A3:2024',
+    standard: 'BS 7671:2018+A4:2026',
     accentColor: 'from-blue-500 via-blue-400 to-cyan-400',
   },
   {
@@ -36,7 +38,7 @@ const coreCerts: CertDef[] = [
     title: 'EIC',
     subtitle: 'Electrical Installation Certificate',
     description: 'New installations, rewires & consumer unit changes',
-    standard: 'BS 7671:2018+A3:2024',
+    standard: 'BS 7671:2018+A4:2026',
     accentColor: 'from-emerald-500 via-emerald-400 to-green-400',
   },
   {
@@ -44,7 +46,7 @@ const coreCerts: CertDef[] = [
     title: 'Minor Works',
     subtitle: 'Minor Electrical Installation Works Certificate',
     description: 'Additions, alterations & circuit modifications',
-    standard: 'BS 7671:2018+A3:2024',
+    standard: 'BS 7671:2018+A4:2026',
     accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
   },
   {
@@ -63,6 +65,8 @@ interface CertificatesSectionProps {
 }
 
 const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) => {
+  const { data: drafts } = useResumeDrafts();
+
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
@@ -87,65 +91,82 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-5 space-y-4"
+        className="px-4 py-4 space-y-2.5"
       >
-        {/* Section intro */}
-        <motion.div variants={itemVariants} className="mb-2">
-          <p className="text-sm text-white">Select a certificate type to begin</p>
+        {/* Editorial section label — mirrors HubSection across the I&T pages */}
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-3 px-0.5">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+            Select a type
+          </h2>
+          <span className="text-[10.5px] text-white/30 tabular-nums">{coreCerts.length}</span>
         </motion.div>
 
-        {/* Cert cards — full width, one per row */}
-        {coreCerts.map((cert) => (
-          <motion.div key={cert.id} variants={itemVariants}>
-            <button
-              type="button"
-              onClick={() => onNavigate(cert.id)}
-              className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
-            >
-              <div
-                className={cn(
-                  'group relative overflow-hidden',
-                  'card-surface-interactive',
-                  'active:scale-[0.98] transition-all duration-200'
-                )}
-              >
-                {/* Gradient accent line */}
-                <div
-                  className={cn(
-                    'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-100 transition-opacity duration-200',
-                    cert.accentColor
+        {/* Core cert types — framed list, hairline-separated, gold top hairline */}
+        <motion.div
+          variants={itemVariants}
+          className="relative border border-white/[0.14] rounded-2xl overflow-hidden"
+        >
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+          <div className="divide-y divide-white/[0.18]">
+            {coreCerts.map((cert) => {
+              // Solid accent dot derived from the gradient's "from-" token.
+              const dot = cert.accentColor.split(' ')[0].replace('from-', 'bg-');
+              const draft = drafts?.[cert.id];
+
+              return (
+                <div key={cert.id} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => onNavigate(cert.id)}
+                    className="group relative flex w-full flex-col text-left p-5 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+                  >
+                    {/* accent dot + mono standard badge */}
+                    <div className="flex items-start justify-between gap-3">
+                      <span className={cn('mt-1.5 w-2 h-2 rounded-full shrink-0', dot)} aria-hidden />
+                      <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
+                        {cert.standard}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-3 text-[20px] sm:text-[22px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
+                      {cert.title}
+                    </h3>
+                    <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/45 leading-snug">
+                      {cert.subtitle}
+                    </p>
+                    <p className="mt-2.5 text-[13px] leading-relaxed text-white/55">
+                      {cert.description}
+                    </p>
+
+                    <div className="mt-4 flex items-center justify-end">
+                      <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-elec-yellow">
+                        New
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </button>
+
+                  {/* Resume strip — only when in-progress drafts of this type exist */}
+                  {draft && (
+                    <button
+                      type="button"
+                      onClick={() => onNavigate(cert.id, draft.latestReportId, cert.id)}
+                      className="group flex w-full items-center justify-between gap-2 border-t border-elec-yellow/15 bg-elec-yellow/[0.06] px-5 py-2.5 text-left transition-colors touch-manipulation hover:bg-elec-yellow/[0.1] active:bg-elec-yellow/[0.14] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+                    >
+                      <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-elec-yellow/90">
+                        {draft.count} in progress
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-elec-yellow">
+                        Resume
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </button>
                   )}
-                />
-                <div className="relative z-10 p-5">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-bold text-white leading-tight group-hover:text-elec-yellow transition-colors">
-                        {cert.title}
-                      </h3>
-                      <p className="mt-0.5 text-[11px] font-medium text-white uppercase tracking-wide">
-                        {cert.subtitle}
-                      </p>
-                      <p className="mt-2 text-[13px] text-white leading-snug">
-                        {cert.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mt-4">
-                    <span className="text-[10px] font-bold text-white bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded">
-                      {cert.standard}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-medium text-elec-yellow">Create</span>
-                      <div className="w-7 h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                        <ChevronRight className="w-4 h-4 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </button>
-          </motion.div>
-        ))}
+              );
+            })}
+          </div>
+        </motion.div>
       </motion.main>
     </div>
   );

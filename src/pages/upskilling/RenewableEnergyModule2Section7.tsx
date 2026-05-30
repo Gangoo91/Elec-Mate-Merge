@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -441,11 +440,6 @@ export default function RenewableEnergyModule2Section7() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="DC-coupled vs AC-coupled hybrid architectures side-by-side. Left: DC-coupled hybrid — PV → DC bus → battery and/or DC-AC → grid + backup port, single inverter product. Right: AC-coupled — PV → PV inverter → AC, battery → battery inverter → AC, both sharing the consumer unit. Energy flow paths annotated with conversion-loss percentages."
-            filename="renewable/m2s7-dc-vs-ac-coupling.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -522,11 +516,6 @@ export default function RenewableEnergyModule2Section7() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="DC vs AC coupling decision flowchart — four-question framework. New-build PV+BESS together → DC-coupled. Retrofit battery on existing PV → check existing PV inverter remaining life → if &gt; 5 years, AC-coupled; if &lt; 5 years, consider DC-coupled with PV inverter replacement. Backup required → DC-coupled with backup port. Different ownership → AC-coupled."
-            filename="renewable/m2s7-coupling-decision-tree.png"
-          />
 
           <InlineCheck {...inlineChecks[3]} />
 

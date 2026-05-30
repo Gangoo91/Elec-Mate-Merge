@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { PvModuleCrossSection, BypassDiodeTopology } from '@/components/study-centre/diagrams/renewableM2';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -404,10 +404,7 @@ export default function RenewableEnergyModule2Section2() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="PV module cross-section — labelled layers from front (tempered glass) through EVA encapsulant, cell matrix with tinned-copper ribbon interconnections, rear EVA, polymer backsheet, aluminium frame, junction box with bypass diodes and MC4 tails. Annotated dimensions for a typical 1755 × 1038 × 35 mm 400 W module."
-            filename="renewable/m2s2-module-cross-section.png"
-          />
+          <PvModuleCrossSection caption="How a PV module is built up — tempered glass, EVA encapsulant, the cells, backsheet and aluminium frame, with the junction box and bypass diodes on the back." />
 
           <InlineCheck {...inlineChecks[0]} />
 
@@ -476,10 +473,7 @@ export default function RenewableEnergyModule2Section2() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Bypass diode topology — a 60-cell module showing three 20-cell sub-strings each with a bypass diode in the junction box. Normal operation: diodes reverse-biased, current flows through cells. Shaded cell in sub-string 2: bypass diode 2 forward-biased, current bypasses sub-string 2, sub-strings 1 and 3 continue normal operation."
-            filename="renewable/m2s2-bypass-diode-topology.png"
-          />
+          <BypassDiodeTopology caption="When one sub-string is shaded it stops generating and would block the whole string — its bypass diode conducts so the string current flows around it instead." />
 
           <InlineCheck {...inlineChecks[1]} />
 
@@ -549,11 +543,6 @@ export default function RenewableEnergyModule2Section2() {
               <li>I_mp / I_sc = 11.8 / 12.5 = 0.944 ✓ (typical 0.92–0.96 — I_mp always &lt; I_sc)</li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="The I-V curve with the five parameters labelled — V_oc at the right (current = 0), I_sc at the top (voltage = 0), the knee at MPP labelled with V_mp and I_mp, and the P_max = V_mp × I_mp rectangle visible. Fill factor shown as the ratio of the MPP rectangle to the (V_oc × I_sc) envelope. Three curves overlaid at three irradiance levels showing I_sc scaling linearly with irradiance."
-            filename="renewable/m2s2-iv-curve-parameters.png"
-          />
 
           <InlineCheck {...inlineChecks[2]} />
 
@@ -676,11 +665,6 @@ export default function RenewableEnergyModule2Section2() {
               MCS audits sample the connector workmanship.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="MC4 connector cross-section — showing the male and female halves with the spring-contact pair inside, the cable lug crimped to the cable conductor, the connector body torqued to maintain spring-contact pressure, and the seal at the cable entry. Annotated with typical manufacturer spec for crimp tool, crimp force and connector body torque."
-            filename="renewable/m2s2-mc4-connector.png"
-          />
 
           <InlineCheck {...inlineChecks[5]} />
 

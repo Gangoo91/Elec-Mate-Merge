@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -378,11 +377,6 @@ export default function RenewableEnergyModule5Section3() {
             source="BS 7671:2018+A4:2026 · Reg 570.6.1.1.1, .1.1.2, .1.1.3 — Foundational safety"
             clause="570.6.1.1.1: Stationary secondary battery installations shall conform to the relevant parts of the BS EN IEC 62485 series. Where appropriate, bidirectional protective devices shall be selected. 570.6.1.1.2: Voltage at the terminals of cells or monobloc batteries shall be assumed to be always present, and appropriate provisions for safe maintenance shall be provided in accordance with the BS EN IEC 62485 series. 570.6.1.1.3: Where the protective measures of automatic disconnection of supply or extra-low voltage provided by PELV are used, battery racks or battery cabinets made from conductive materials shall be connected to the protective conductor. Irrespective of the nominal voltage, live parts of batteries, cells, monoblocs and related connections shall only be accessible to skilled and/or instructed persons."
             meaning="Three regs together set the foundational safety floor for any UK BESS install. .1.1.1 ties to BS EN IEC 62485 series (international standard for battery safety); UK domestic LFP refers primarily to Part -5. The bidirectional OCPD line is the cross-reference to Chapter 82&rsquo;s bidirectional protection principle (Reg 826.1.2.2). .1.1.2 reflects the physical reality of cells: terminal V is always present regardless of isolation; safe maintenance procedures account for this (insulated tools, lock-out, sequence). .1.1.3 requires PE bonding of conductive enclosures + restricted access to live cells. Cert evidence bundle records the BS EN IEC 62485 conformance declaration + the PE bonding test result + the enclosure access provisions."
-          />
-
-          <DiagramPlaceholder
-            caption="Chapter 57 protection-reg map — central node BESS with branches to each 570.6.x sub-reg family. Foundational: 570.6.1.1.1 (BS EN IEC 62485) → 570.6.1.1.2 (always-live cells) → 570.6.1.1.3 (PE bonding + restricted access). Earthing: 570.6.1.2.1 (DC earthing permitted with simple separation) → 570.6.1.2.2 (single-point for TN-S/TT). Protective devices: 570.6.2.1.201 (battery connections basic protection) + 570.6.2.2 (Type B RCD rules). Hazards + location: 570.6.3 (ventilation) + 570.6.4 (fault current battery + PCE) + 570.6.5 (isolation both ends + all PCE ports) + 570.6.7 (arcing/explosion + control logic) → 570.6.7.201 (DC fuse access) + 570.6.7.202 (location + ventilation) + 570.6.7.203 (dwellings + PAS 63100). Notices: 570.6.8.201 (origin/metering/CU) + 570.6.8.202 (battery enclosure always-live) + 570.6.8.203 (PCE both-sides isolation)."
-            filename="renewable/m5s3-chapter-57-reg-map.png"
           />
 
           <InlineCheck {...inlineChecks[0]} />

@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -485,11 +484,6 @@ export default function RenewableEnergyModule2Section6() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Four PV architectures side-by-side — sectional diagrams of: (1) on-roof rail system with 70–100 mm standoff above tiles; (2) in-roof system with modules replacing tiles, integrated flashings at array perimeter; (3) ground-mount frame with concrete ballast or pile foundations; (4) BIPV façade with PV cladding. Each labelled with typical applications and the BS 7671 Section 712 heat-dissipation implications."
-            filename="renewable/m2s6-pv-architectures.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -542,11 +536,6 @@ export default function RenewableEnergyModule2Section6() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Solar carport architecture — side elevation showing the PV roof above 4 parking bays, structural supports, EV chargepoints at each bay, central BESS unit, hybrid inverter, grid connection, and the cross-chapter design (Section 712 for PV, Section 722 for EV, Chapter 57 for BESS, Chapter 82 for the system-level PEI design). Cost / load distribution annotated."
-            filename="renewable/m2s6-solar-carport.png"
-          />
 
           <SectionRule />
 

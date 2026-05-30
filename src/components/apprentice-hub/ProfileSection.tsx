@@ -6,9 +6,11 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  buildPortfolioPackData,
+  exportPortfolioEvidencePack,
+} from '@/services/portfolioEvidenceExport';
 import JSZip from 'jszip';
 import {
   User,
@@ -148,91 +150,18 @@ export function ProfileSection() {
     window.location.replace('/');
   };
 
-  // Handle export to PDF
+  // Handle export to PDF — premium evidence pack (branded cover, photos
+  // inline, supervisor sign-offs) rendered via the browser print engine.
   const handleExportPDF = async () => {
     setIsExportingPDF(true);
     try {
-      const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
-
-      // Title
-      doc.setFontSize(20);
-      doc.setTextColor(40);
-      doc.text('Portfolio Summary', pageWidth / 2, 20, { align: 'center' });
-
-      // Apprentice Info
-      doc.setFontSize(12);
-      doc.setTextColor(100);
-      doc.text(`${fullName}`, pageWidth / 2, 30, { align: 'center' });
-      doc.text(`${qualification}`, pageWidth / 2, 36, { align: 'center' });
-      doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, pageWidth / 2, 42, {
-        align: 'center',
-      });
-
-      // OJT Hours Summary
-      doc.setFontSize(14);
-      doc.setTextColor(40);
-      doc.text('Off-the-Job Training Hours', 14, 55);
-      doc.setFontSize(11);
-      doc.setTextColor(80);
-      doc.text(`Total Hours: ${totalTime.hours}h ${totalTime.minutes}m`, 14, 62);
-      doc.text(`Sessions Logged: ${timeEntries.length}`, 14, 68);
-
-      // Assessment Criteria Coverage
-      const evidencedACs = parseEvidencedACs(portfolioEntries);
-      const totalACs = acTree?.totalACs || 0;
-      const evidencedCount = evidencedACs.size;
-      const acPercent = totalACs > 0 ? Math.round((evidencedCount / totalACs) * 100) : 0;
-
-      doc.setFontSize(14);
-      doc.setTextColor(40);
-      doc.text('Assessment Criteria Coverage', 14, 78);
-      doc.setFontSize(11);
-      doc.setTextColor(80);
-      doc.text(
-        `${evidencedCount} of ${totalACs} assessment criteria evidenced (${acPercent}%)`,
-        14,
-        85
-      );
-
-      // Evidence Table
-      doc.setFontSize(14);
-      doc.setTextColor(40);
-      doc.text('Portfolio Evidence', 14, 98);
-
-      if (portfolioEntries.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const tableData = portfolioEntries.map((entry: any) => [
-          entry.title?.slice(0, 40) || 'Untitled',
-          (typeof entry.category === 'object' ? entry.category?.name : entry.category) || 'N/A',
-          entry.status || 'draft',
-          new Date(entry.dateCreated || entry.created_at).toLocaleDateString('en-GB'),
-          entry.skills?.slice(0, 3).join(', ') || 'None',
-        ]);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (doc as any).autoTable({
-          startY: 104,
-          head: [['Title', 'Category', 'Status', 'Date', 'KSBs']],
-          body: tableData,
-          theme: 'striped',
-          headStyles: { fillColor: [252, 185, 0] },
-          styles: { fontSize: 9 },
-        });
-      } else {
-        doc.setFontSize(10);
-        doc.setTextColor(100);
-        doc.text('No evidence entries found.', 14, 106);
-      }
-
-      // Save PDF
-      await saveOrSharePdf(
-        doc,
-        `${fullName.replace(/\s+/g, '_')}_Portfolio_${new Date().toISOString().split('T')[0]}.pdf`
-      );
-
-      toast.success('PDF exported successfully!', {
-        description: 'Your portfolio has been downloaded.',
+      const { data: u } = await supabase.auth.getUser();
+      const uid = u.user?.id;
+      if (!uid) throw new Error('You must be signed in to export.');
+      const pack = await buildPortfolioPackData(uid);
+      await exportPortfolioEvidencePack(pack);
+      toast.success('Opening your evidence pack', {
+        description: 'Choose "Save as PDF" in the print dialog.',
       });
     } catch (error) {
       console.error('PDF export error:', error);

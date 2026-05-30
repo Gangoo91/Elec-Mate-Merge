@@ -811,7 +811,7 @@ const Dashboard = ({
                 eyebrow: '14 types',
                 title: 'All cert types',
                 description: 'Fire, EV, solar, BESS, lightning, PAT and more.',
-                onClick: () => onNavigate('certificates'),
+                onClick: () => onNavigate('specialist'),
               },
             ]}
           />

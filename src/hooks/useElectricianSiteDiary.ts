@@ -22,6 +22,7 @@ export interface SiteDiaryEntry {
   notes: string | null;
   recorder_signature: string | null;
   recorder_name: string | null;
+  job_id: string | null;
   created_at: string;
   updated_at: string;
 }

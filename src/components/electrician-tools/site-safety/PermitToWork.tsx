@@ -67,6 +67,8 @@ import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { ReadinessGate } from './common/ReadinessGate';
 import { CloseOutSheet } from './common/CloseOutSheet';
+import { JobLinkField } from './common/JobLinkField';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 // ─── Types ───
 
@@ -109,6 +111,7 @@ interface Permit {
   linked_rams_id: string | null;
   linked_rams_title: string | null;
   acceptance_status: string;
+  job_id: string | null;
   requires_approval: boolean;
   approval_status: 'not_required' | 'pending' | 'approved' | 'rejected';
   approved_by: string | null;
@@ -336,6 +339,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     linked_rams_id: p.linked_rams_id,
     linked_rams_title: p.linked_rams_title,
     acceptance_status: p.acceptance_status || 'accepted',
+    job_id: p.job_id ?? null,
     requires_approval: p.requires_approval,
     approval_status: p.approval_status,
     approved_by: p.approved_by,
@@ -385,6 +389,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [autoFireWatch, setAutoFireWatch] = useState(false);
   const [linkedRamsId, setLinkedRamsId] = useState<string | null>(null);
   const [linkedRamsTitle, setLinkedRamsTitle] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  const { data: jobs = [] } = useSparkProjects('active');
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
   // Remote receiver sign-off
   const [receiverRemote, setReceiverRemote] = useState(false);
   const [showShareLink, setShowShareLink] = useState(false);
@@ -486,6 +494,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setAutoFireWatch(false);
     setLinkedRamsId(null);
     setLinkedRamsTitle(null);
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
     setReceiverRemote(false);
   };
 
@@ -521,6 +531,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setAutoFireWatch(permit.auto_fire_watch);
     setLinkedRamsId(permit.linked_rams_id);
     setLinkedRamsTitle(permit.linked_rams_title);
+    setLinkedJobId(permit.job_id);
+    setLinkedJobTitle(jobTitleFor(permit.job_id));
     setWizardStep(1);
     setViewingPermit(null);
     setShowWizard(true);
@@ -551,6 +563,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setAutoFireWatch(permit.auto_fire_watch);
     setLinkedRamsId(permit.linked_rams_id);
     setLinkedRamsTitle(permit.linked_rams_title);
+    setLinkedJobId(permit.job_id);
+    setLinkedJobTitle(jobTitleFor(permit.job_id));
     setReceiverRemote(false); // amendments are re-signed in person
     setWizardStep(1);
     setViewingPermit(null);
@@ -638,6 +652,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         auto_fire_watch: autoFireWatch,
         linked_rams_id: linkedRamsId,
         linked_rams_title: linkedRamsTitle,
+        job_id: linkedJobId,
         acceptance_status: receiverRemote ? 'awaiting_receiver' : 'accepted',
       });
       clearDraft();
@@ -672,6 +687,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           auto_fire_watch: autoFireWatch,
           linked_rams_id: linkedRamsId,
           linked_rams_title: linkedRamsTitle,
+          job_id: linkedJobId,
         },
       });
       setShowWizard(false);
@@ -876,6 +892,14 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 </p>
               )}
             </Field>
+            <JobLinkField
+              jobId={linkedJobId}
+              jobTitle={linkedJobTitle}
+              onSelect={(id, title) => {
+                setLinkedJobId(id);
+                setLinkedJobTitle(title);
+              }}
+            />
           </div>
         );
 
@@ -1337,6 +1361,16 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       <Eyebrow className="mb-1.5">Controlling RAMS</Eyebrow>
                       <div className="px-3 py-2.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-[13px] text-white">
                         {viewingPermit.linked_rams_title}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Linked project (job pack) */}
+                  {viewingPermit.job_id && (
+                    <div>
+                      <Eyebrow className="mb-1.5">Project</Eyebrow>
+                      <div className="px-3 py-2.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-[13px] text-white">
+                        {jobTitleFor(viewingPermit.job_id) || 'Linked to a project'}
                       </div>
                     </div>
                   )}

@@ -2,9 +2,10 @@ import type { OtjExportData, OtjExportEntry, OtjVerification } from './otjEviden
 
 /* ==========================================================================
    otjEvidenceHtml — builds the print-ready HTML for the OTJ evidence pack.
-   One source of truth, rendered at runtime (html2canvas → jsPDF) and used for
-   design preview (headless Chrome). A4 pages (794×1123px @96dpi), editorial
-   navy + amber design language matching the Elec-Mate Getting-Started pack.
+   One source of truth, rendered at runtime via the browser print engine
+   (window.print on an off-screen iframe) and validated with headless Chrome.
+   A4 pages (794×1123px @96dpi), editorial navy + amber design language
+   matching the Elec-Mate Getting-Started pack.
    ========================================================================== */
 
 const LOG_ROWS_PER_PAGE = 15;
@@ -93,6 +94,8 @@ html,body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',R
 .prog-k{font-size:11px;font-weight:700;letter-spacing:.1em;color:#94a3b8;text-transform:uppercase;margin-top:30px}
 .prog{height:8px;background:#eef1f5;border-radius:999px;margin-top:9px;overflow:hidden}
 .prog > i{display:block;height:100%;background:#f5c518;border-radius:999px}
+.note{margin-top:34px;border:1px solid #e6eaef;border-left:3px solid #f5c518;background:#fbfcfd;border-radius:0 10px 10px 0;padding:16px 20px;font-size:12.5px;color:#475569;line-height:1.65}
+.note b{color:#111827}
 
 /* tables */
 table{width:100%;border-collapse:collapse;margin-top:22px;font-size:11.5px}
@@ -114,8 +117,8 @@ td.c,th.c{text-align:center}
 
 // Circuit motif as an <img> data-URI — renders reliably in both headless
 // Chrome (preview) and html2canvas (runtime), unlike inline <svg>.
-const CIRCUIT_SVG = `<svg width="220" height="118" viewBox="0 0 220 118" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#f5c518" stroke-width="2" fill="none"><path d="M18 18 V86 M18 86 H92 M92 30 V118 M92 86 H196 M150 48 H196 M92 118 H150 M150 118 V48"/></g><g fill="#f5c518"><circle cx="92" cy="30" r="7"/><circle cx="196" cy="86" r="7"/></g><g fill="#0d1628" stroke="#f5c518" stroke-width="2"><circle cx="18" cy="18" r="7"/><circle cx="18" cy="86" r="7"/><circle cx="196" cy="48" r="7"/><circle cx="92" cy="118" r="7"/><circle cx="150" cy="118" r="7"/></g></svg>`;
-const CIRCUIT = `<img class="circuit" width="220" height="118" alt="" src="data:image/svg+xml,${encodeURIComponent(CIRCUIT_SVG)}"/>`;
+const CIRCUIT_SVG = `<svg width="228" height="128" viewBox="-4 -4 228 132" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#f5c518" stroke-width="2" fill="none"><path d="M18 18 V86 M18 86 H92 M92 30 V118 M92 86 H196 M150 48 H196 M92 118 H150 M150 118 V48"/></g><g fill="#f5c518"><circle cx="92" cy="30" r="7"/><circle cx="196" cy="86" r="7"/></g><g fill="#0d1628" stroke="#f5c518" stroke-width="2"><circle cx="18" cy="18" r="7"/><circle cx="18" cy="86" r="7"/><circle cx="196" cy="48" r="7"/><circle cx="92" cy="118" r="7"/><circle cx="150" cy="118" r="7"/></g></svg>`;
+const CIRCUIT = `<img class="circuit" width="228" height="132" alt="" src="data:image/svg+xml,${encodeURIComponent(CIRCUIT_SVG)}"/>`;
 
 function statusPill(status: string): string {
   const isPending = /pending|returned|refer/i.test(status);
@@ -210,6 +213,7 @@ function detailsPage(
     </div>
     <div class="prog-k">Progress — ${pct}% of ${d.totalTargetHours}h</div>
     <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="note"><b>How these hours are counted.</b> Banked hours — what counts toward gateway — are auto-tracked in-app learning plus entries verified by a tutor or employer. Hours awaiting verification are shown separately and count once signed off. The off-the-job requirement is the fixed total set for the apprenticeship standard. This record supports, but does not replace, the training provider's official records.</div>
     ${cfoot(page, total)}
   </div></div>`;
 }

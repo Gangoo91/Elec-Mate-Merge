@@ -1,578 +1,579 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Green Finance and Funding Options - Renewable Energy Module 9';
-const DESCRIPTION =
-  'Explore government schemes, commercial finance structures, and green loan products available for funding renewable energy installations in the UK.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'finance-check-1',
-    question: 'What is the Boiler Upgrade Scheme?',
+    id: 'm9s5-chp-definition',
+    question: 'What is CHP (Combined Heat and Power) + why is it different from heat-only biomass?',
     options: [
-      'A loan for boiler repairs',
-      'A government grant towards heat pump installation costs',
-      'A discount on gas boilers',
-      'A maintenance contract',
+      'Same thing',
+      'CHP generates BOTH electricity AND useful heat from a single fuel source. Combined efficiency 80-90% vs grid electricity ~35% + boiler heat ~85% separately = roughly 2× primary-energy efficiency. Reg 551.1.1 generating set framework applies (combustion engine / turbine variants). Reg 551.7.5 anti-islanding mandatory. Heat-only biomass: no electrical generation, NOT in Section 551',
+      'Random',
+      'No difference',
     ],
     correctIndex: 1,
     explanation:
-      'The Boiler Upgrade Scheme provides government grants towards the cost of installing heat pumps and biomass boilers in eligible properties, reducing the upfront cost for customers.',
+      'CHP (Combined Heat and Power) is unique among M9 technologies: it generates BOTH electricity AND useful heat from a single fuel source — typically natural gas, with biogas / biofuel / hydrogen variants emerging. The combined efficiency (~80-90%) is the value proposition. Compare: grid electricity ~35-40% efficient at point of generation (centralised power station + transmission losses); separate gas boiler ~85-90% efficient for heat. CHP captures the waste heat from electrical generation + uses it locally — roughly 2× the primary-energy efficiency vs separate grid + boiler. Section 551 framework applies (Reg 551.1.1(a) combustion engines OR (b) turbines depending on architecture). Reg 551.7.5 anti-islanding mandatory — CHP must NOT continue exporting to lost public supply. Reg 551.7.2.1 supply-side connection. Reg 551.4.2 RCD effectiveness across source combinations. Heat-only biomass (§9.4): no electrical generation, no inverter, no export, no Section 551. CHP technologies span: Stirling engine micro-CHP (declining), fuel cell micro-CHP (PEM + SOFC — niche premium), internal combustion micro-CHP (Honda Ecowill global, limited UK), commercial CHP (10 kW - 5 MW IC engines / turbines — covered §9.6).',
   },
   {
-    id: 'finance-check-2',
-    question: 'What distinguishes a green loan from a standard personal loan?',
+    id: 'm9s5-mis-3007',
+    question: 'MCS MIS 3007 — what does it cover?',
     options: [
-      'Green loans are always interest-free',
-      'Green loans may offer preferential rates for environmental improvements',
-      'Green loans can only be used for solar panels',
-      'There is no difference',
+      'All CHP',
+      'MCS Installer Standard 3007 — micro-CHP ≤50 kWe (electrical output). Domestic + light-commercial scale. Sizing methodology (heat + electrical demand match), product approval (MCS-approved micro-CHP units), installer competence (MCS-certified company + manufacturer-specific training), customer handover documentation. Commercial CHP &gt;50 kWe = separate framework (covered §9.6). Required for grant eligibility (where applicable)',
+      'Only commercial',
+      'No standard',
     ],
     correctIndex: 1,
     explanation:
-      'Green loans are specifically designed for environmental improvements and may offer lower interest rates or special terms to encourage investment in renewable energy and efficiency measures.',
+      'MCS MIS 3007 covers micro-CHP up to 50 kWe (electrical output). Scope: domestic + light-commercial scale; Stirling / fuel cell / IC variants. Requirements: (1) Sizing methodology — match CHP electrical + heat output to site demand (heat-led design typical: size for site heat demand, accept electrical output as by-product); (2) Product on MCS-approved list (BS EN 50465 stationary fuel cell, BS EN 50438 / 50549 grid-connection product standards, BS EN 5xx for IC variants); (3) Installer company MCS-certified for micro-CHP; (4) Customer handover documentation — sizing calc, commissioning record, expected annual electrical + heat output, maintenance schedule. Above 50 kWe = commercial CHP framework (covered §9.6). UK 2025-26 grant landscape: limited current grant for micro-CHP (RHI closed 2022; BUS heat-pump-focused; Smart Export Guarantee tariff applies to electrical export). Cert evidence bundle: MCS MIS 3007 handover pack + BS 7671 EIC + EREC G98 / G99 reference + manufacturer DoC + Section 551 compliance.',
   },
   {
-    id: 'finance-check-3',
-    question: 'What must installers verify for customers to access the Boiler Upgrade Scheme?',
+    id: 'm9s5-stirling-vs-fuel-cell',
+    question: 'Stirling engine vs fuel cell micro-CHP — what are the differences?',
     options: [
-      "Customer's credit score",
-      'MCS certification and property eligibility requirements',
-      "Customer's income level",
-      'Previous energy usage',
+      'Same technology',
+      'Stirling engine: external combustion + sealed gas working fluid + piston-driven generator. Whispergen / Baxi Ecogen variants; market declined post-2014. 1-2 kWe + 5-25 kWth typical. Fuel cell: electrochemical (NOT combustion); PEM + SOFC variants; Viessmann Vitovalor + BlueGen typical UK 2025-26 niche. 0.7-1.5 kWe + 1-3 kWth typical. Different fuel use (gas-fired both); different reliability + maintenance profile',
+      'Random',
+      'No difference',
     ],
     correctIndex: 1,
     explanation:
-      'The Boiler Upgrade Scheme requires installation by MCS certified installers, and properties must meet eligibility criteria including having a valid EPC and not being connected to the gas grid for certain grants.',
+      'Stirling engine micro-CHP: external combustion (gas flame heats sealed gas working fluid) + piston-driven generator (typically free-piston linear generator or kinematic Stirling). Electrical output 1-2 kWe + heat output 5-25 kWth. UK 2025-26 market mostly historic — Whispergen + Baxi Ecogen sold 2010-2015 era; market largely exited; ongoing installs are predominantly replacement / maintenance of existing units. Fuel cell micro-CHP: electrochemical conversion (NOT combustion) — hydrogen-rich fuel (typically natural gas reformed to hydrogen on-board) reacts electrochemically with oxygen at electrolyte → DC electricity + heat. Two technology variants: PEM (Proton Exchange Membrane — lower temperature 60-80 °C, smaller residential units); SOFC (Solid Oxide Fuel Cell — high temperature 600-1000 °C, higher efficiency, niche premium). UK 2025-26: Viessmann Vitovalor PT2 (PEM, sub-1 kWe), BlueGen BG-15 (SOFC, 1.5 kWe). 0.7-1.5 kWe + 1-3 kWth typical. Fuel cell advantages: quieter, longer life, higher electrical efficiency, lower emissions. Disadvantages: high upfront cost, limited service network, smaller heat output. Internal combustion micro-CHP: standard Otto / Diesel cycle engine + generator. Honda Ecowill widespread globally, limited UK presence. From BS 7671 perspective: all three architectures are Section 551 generating sets (Reg 551.1.1(a) combustion engines for Stirling + IC; Reg 551.1.1(f) other suitable sources for fuel cell). Same anti-islanding + supply-side connection requirements.',
   },
   {
-    id: 'finance-check-4',
-    question: 'What is a key advantage of 0% finance offers for customers?',
+    id: 'm9s5-section-551-erec',
+    question: 'A 1.5 kWe SOFC fuel cell micro-CHP single-phase grid-tied — what EREC notification?',
     options: [
-      'The system is free',
-      'No interest charges on repayments over the promotional period',
-      'No credit check required',
-      'Unlimited repayment period',
+      'G99 formal',
+      '1.5 kWe single-phase ≈ 6.5 A continuous export at 230 V — well below G98 Type A ≤16 A per phase threshold. EREC G98 fast-track post-installation notification typically applies. Verify with DNO at design stage; some DNOs request notification of all generation regardless. Section 551 framework still applies in full (Reg 551.7.5 anti-islanding, Reg 551.7.2.1 supply-side, Reg 551.4.2 RCD)',
+      'No notification',
+      'Random',
     ],
     correctIndex: 1,
     explanation:
-      '0% finance offers allow customers to spread the cost of installation over a set period without paying interest, making renewable energy more accessible while preserving savings for other uses.',
+      'Small micro-CHP fits EREC G98 fast-track. 1.5 kWe single-phase ≈ 6.5 A continuous export at 230 V — well within the G98 Type A ≤16 A per phase threshold. G98 process: post-installation notification via DNO portal (online form within 28 days of commissioning); DNO acknowledges + records. Simpler + faster than G99 (no formal pre-installation application). UK 2025-26 reality: some DNOs prefer notification of ALL generation regardless of size (via dedicated generation portal); verify with local DNO at design stage. Section 551 + Reg 551.7.5 anti-islanding STILL apply — G98 fast-track notification does NOT exempt from anti-islanding verification at commissioning. Reg 551.7.2.1 supply-side connection STILL applies — fuel cell sits on supply side of all protective devices. Reg 551.4.2 RCD effectiveness STILL applies. EREC G98 is the DNO notification process; Section 551 is the BS 7671 safety framework — both must be satisfied. Cert evidence bundle: DNO G98 notification reference + Section 551 compliance + Reg 551.7.5 commissioning test + MCS MIS 3007 handover + BS 7671 EIC.',
   },
 ];
 
 const quizQuestions = [
   {
-    id: 1,
-    question:
-      'What is the typical grant value under the Boiler Upgrade Scheme for air source heat pumps?',
-    options: ['1,000', '5,000-7,500 depending on technology', '15,000', 'Full installation cost'],
-    correctAnswer: 1,
-    explanation:
-      'The Boiler Upgrade Scheme offers grants of 5,000-7,500 depending on the technology (ASHP, GSHP, or biomass), significantly reducing the upfront cost of installation.',
-  },
-  {
-    id: 2,
-    question: 'What is ECO4 (Energy Company Obligation)?',
+    question: 'Domestic install: 1 kWe Viessmann Vitovalor fuel cell micro-CHP + existing gas boiler — what scope?',
     options: [
-      'A tax on energy companies',
-      'A scheme requiring energy suppliers to fund efficiency measures for eligible households',
-      'An electricity tariff',
-      'A solar panel manufacturer',
+      'Plug into socket',
+      'Multi-trade: MCS company (MIS 3007) + gas-safe engineer (fuel cell uses gas) + heating engineer (heat output integration) + BS 7671 electrician. Electrical scope: dedicated 16 A single-phase circuit for fuel cell unit; Type A RCBO C-curve; Reg 551.7.5 anti-islanding integrated (verify at commissioning); Reg 551.7.2.1 supply-side connection; EREC G98 notification (1 kWe = ~4 A < 16 A); BS 7671 EIC. Plus heat output integration with existing boiler + cylinder',
+      'No scope',
+      'Random',
     ],
     correctAnswer: 1,
     explanation:
-      'ECO4 requires large energy suppliers to fund energy efficiency improvements for low-income and vulnerable households, potentially including insulation, heating systems, and renewable technologies.',
+      'Domestic 1 kWe fuel cell micro-CHP install: multi-trade. (1) MCS-certified company (MIS 3007) holds customer relationship + grant claim. (2) Gas-safe engineer handles fuel cell gas supply (natural gas to fuel cell reformer); separate competence. (3) Heating engineer integrates fuel cell heat output (typical 2 kWth at 60-70 °C) with existing boiler + DHW cylinder + heating circuit. (4) BS 7671 electrician scope: dedicated 16 A single-phase circuit from CU (fuel cell electrical demand: 1 kWe export when running, plus internal control loads 100-200 W when active OR standby); Type A RCBO C-curve; AC isolator at fuel cell unit (BS EN 60947-3); cable per Reg 525.202 voltage drop calc. Reg 551 framework: Reg 551.7.5 anti-islanding integrated in fuel cell inverter (verified at commissioning via simulated grid loss); Reg 551.7.2.1 supply-side connection; Reg 551.4.2 RCD coordination if site has other generation (existing PV typical). EREC G98 fast-track notification (1 kWe = 4 A < 16 A per phase threshold). BS EN 50549-1 + BS EN 50438 grid-connection product standards declared by manufacturer. Cert evidence bundle: BS 7671 EIC + Section 551 compliance + Reg 551.7.5 commissioning test + EREC G98 reference + MCS MIS 3007 handover + Gas Safe commissioning record (separate) + heating engineer integration record. Total project ~£12-18k typical; electrical scope ~£500-700.',
   },
   {
-    id: 3,
-    question: 'What is the Home Upgrade Grant (HUG)?',
+    question: 'Reg 551.7.5 anti-islanding for micro-CHP — how is it verified?',
     options: [
-      'A loan for home improvements',
-      'A scheme providing grants for energy efficiency in off-gas-grid homes',
-      'A mortgage product',
-      'A rental assistance programme',
+      'Customer test',
+      'Verified at commissioning via simulated grid-loss test. Typical method: open the main supply isolator (or equivalent) → CHP control system detects voltage / frequency deviation → anti-islanding device disconnects CHP from grid within manufacturer-specified time (typically 200ms-1s). Restore supply → CHP reconnects after manufacturer reconnect delay (typically 1-3 min). For some DNOs / larger installs: DNO-witnessed test',
+      'Inverter does it',
+      'Random',
     ],
     correctAnswer: 1,
     explanation:
-      'The Home Upgrade Grant provides funding for energy efficiency measures in low-income households that are off the gas grid, potentially including heat pumps and solar panels.',
+      'Reg 551.7.5 anti-islanding commissioning verification — applies to every Section 551 generating set including micro-CHP. Method: (1) Pre-test verification — confirm anti-islanding device (typically integrated in CHP control electronics) is enabled + configured per manufacturer DoC. (2) Simulated grid-loss test — typically by opening the main supply isolator OR a manufacturer-specified disconnection method. Some manufacturers provide a test feature in the controller (loss-of-mains simulation). (3) Observe anti-islanding response — CHP control system detects voltage / frequency deviation; disconnects CHP electrical output from grid within manufacturer-specified time (typical 200ms-1s per ENA EREC G99 + G98 specifications). (4) Verify CHP STOPS generating (no continued export) — at the meter or via clamp meter. (5) Restore supply — close main isolator. (6) Verify reconnect delay — CHP waits manufacturer-specified time (typically 1-3 minutes) before resuming export; ensures grid is stable + prevents oscillating reconnect. (7) For some DNOs OR larger installs (commercial CHP >50 kWe): DNO-witnessed test mandatory per G99. For micro-CHP <50 kWe + G98 fast-track: customer-side commissioning typically sufficient. Cert evidence bundle records: anti-islanding device type (per manufacturer DoC) + commissioning test method + result + DNO-witnessed if applicable.',
   },
   {
-    id: 4,
-    question: 'How do Property Assessed Clean Energy (PACE) schemes work?',
+    question: 'Reg 551.7.2.1 supply-side connection — practical install meaning?',
     options: [
-      'They are government grants',
-      'Financing secured against property, repaid through council tax or rates',
-      'Personal loans from banks',
-      'Credit card finance',
+      'Random',
+      'CHP electrical output connects to the supply side of all protective devices in the installation — typically at the consumer unit busbar (incoming) before any RCD / RCBO / MCB protecting load circuits. Ensures: (1) protective devices coordinate correctly with CHP fault contribution; (2) RCDs see all relevant fault paths per Reg 551.4.2; (3) CHP isolation works correctly. BESS treated as generating set per the same rule (not load-side)',
+      'Load-side OK',
+      'No requirement',
     ],
     correctAnswer: 1,
     explanation:
-      'PACE financing secures the loan against the property, with repayments collected through local authority bills. This enables long-term financing that can transfer with property ownership.',
+      'Reg 551.7.2.1 — generating set on supply side of all protective devices. Practical meaning for micro-CHP install: CHP electrical output cable connects to the installation\'s electrical infrastructure at the CONSUMER UNIT INCOMING busbar OR a dedicated supply-side bus arrangement — BEFORE any RCD / RCBO / MCB protecting load circuits. NOT on the load side of any protective device. Reasons: (1) Fault current contribution from CHP must be visible to protective devices for correct coordination — if CHP is load-side of an RCD, an upstream fault may not see the CHP\'s contribution; (2) RCDs in the installation must remain effective for every combination of sources (Reg 551.4.2) — load-side connection breaks this; (3) Isolation works in both energy directions — CHP isolated correctly when the supply-side switch operates. Implementation: typically a dedicated supply-side terminal or a sub-distribution panel between meter + main CU. Reg 551.7.1 prohibits source connection on load side of certain RCDs (specifically). BESS classification per Reg 551.7.2.1 = generating set (not load) — same rule applies. PV inverter + wind inverter + hydro inverter + CHP + BESS all sit on supply side. Cert evidence bundle records connection topology + protective device hierarchy verification + Reg 551.4.2 multi-source RCD test result.',
   },
   {
-    id: 5,
-    question: 'What should installers check before promoting specific finance products?',
+    question: 'UK 2025-26 micro-CHP market reality — what should an installer know?',
     options: [
-      'Nothing - all installers can offer finance',
-      'FCA authorisation requirements and consumer credit regulations',
-      "Customer's previous purchases",
-      'Competitor pricing',
+      'Booming',
+      'Niche + selective. Stirling engine micro-CHP market largely exited 2014-2018 (Whispergen, Baxi Ecogen — limited new units; service / replacement only). Fuel cell micro-CHP (Viessmann Vitovalor, BlueGen) ongoing but premium-priced + limited UK service network. Internal combustion micro-CHP (Honda Ecowill) limited UK presence. Heat pump dominant for low-carbon heating; PV + BESS for electricity. Micro-CHP suits: customers with high simultaneous heat + electrical demand (B&B, hospitality, off-grid, hydrogen-ready future)',
+      'Random',
+      'Mainstream',
     ],
     correctAnswer: 1,
     explanation:
-      'Promoting consumer credit products requires understanding of FCA (Financial Conduct Authority) regulations. Installers typically partner with authorised finance providers rather than offering credit directly.',
+      'UK 2025-26 micro-CHP market is niche + selective. (1) Stirling engine variant largely exited the market 2014-2018: Whispergen wound down; Baxi Ecogen discontinued for new sales (replacements / spares ongoing). Reasons: high upfront cost vs heat pump + PV combination; declining FIT support; reliability concerns; market preference shift. (2) Fuel cell variant ongoing but premium / niche: Viessmann Vitovalor PT2 (~£14-18k installed) + BlueGen BG-15 (~£15-20k installed) — limited UK service network; longer payback. (3) Internal combustion variant: Honda Ecowill widespread in Japan + parts of Europe; limited UK install presence. (4) Market displacement: heat pump dominant for low-carbon heating (M8); PV + BESS dominant for low-carbon electricity (M2-M5). Micro-CHP gets squeezed in the middle. Genuine niche viable use cases: customers with high simultaneous heat + electrical demand (B&B, hospitality, residential care); off-grid properties (no grid to connect heat pump electrical demand to); customers anticipating hydrogen-ready future (some fuel cells are hydrogen-compatible). Honest installer answer: most customers better served by heat pump + PV + BESS combination than micro-CHP. Cert evidence bundle records the customer\'s informed choice + sizing rationale.',
   },
   {
-    id: 6,
-    question: 'What is a potential disadvantage of Power Purchase Agreements for customers?',
+    question: 'Fuel cell hydrogen-ready upgrade path — UK 2025-26 reality?',
     options: [
-      'No electricity savings',
-      'Lower total savings compared to ownership as the PPA provider takes a share',
-      'System must be removed after 5 years',
-      'Higher electricity costs than grid',
+      'Imaginary',
+      'Some fuel cell variants are dual-fuel capable (natural gas + hydrogen blend OR pure hydrogen) via firmware / hardware update. UK 2025-26 hydrogen direction is largely policy + trial (HyDeploy etc.) NOT widespread deployment. Fuel cells marketed as "hydrogen-ready" but actual hydrogen supply is limited / unavailable. Customer expectation: be honest about UK hydrogen timeline uncertainty',
+      'Random',
+      'Mainstream',
     ],
     correctAnswer: 1,
     explanation:
-      'While PPAs avoid upfront costs, the customer shares savings with the PPA provider. Outright ownership typically provides higher total financial returns over the system lifetime.',
+      'Fuel cell hydrogen-ready capability: some current PEM + SOFC fuel cell models are designed for natural gas now, with documented upgrade paths to hydrogen-blend (typical 20% blend per HyDeploy spec) or pure hydrogen via firmware / hardware update. Hydrogen-ready marketing common 2024-2026. UK 2025-26 hydrogen reality: predominantly POLICY DIRECTION + LIMITED TRIALS, NOT widespread deployment. (1) HyDeploy trials at Keele University + Winlaton — 20% hydrogen blend in natural gas at limited sites; continues at trial scale. (2) Hydrogen heating village trials (Whitby, Redcar) cancelled / scaled back over public + technical concerns. (3) Strategic decision on UK hydrogen for heating deferred — originally targeted 2026, now later or possibly no widespread deployment. (4) Customer\'s actual gas supply unlikely to be hydrogen-blended or pure-hydrogen in foreseeable future. Honest customer position: hydrogen-ready capability is future-proofing value; current operation is on natural gas. Don\'t oversell the hydrogen narrative. Cert evidence bundle records the fuel cell\'s hydrogen-ready specification + upgrade path documentation + customer expectations.',
   },
   {
-    id: 7,
-    question: 'What type of finance might suit a customer who wants to avoid interest charges?',
+    question: 'Commissioning a fuel cell micro-CHP — what differs from a Stirling engine?',
     options: [
-      'Credit card finance',
-      '0% finance deals, savings, or grants',
-      'Payday loans',
-      'Overdraft',
+      'Same',
+      'Fuel cell commissioning: electrochemical start-up sequence (controller warm-up to operating temperature 60-80 °C for PEM or 600-1000 °C for SOFC; takes minutes to hours); membrane / cell stack monitoring (controller reports SoH / Voltage / current per cell); hydrogen-reformer commissioning (natural gas to hydrogen-rich reformate). Stirling engine commissioning: simpler engine + generator + flue commissioning sequence; gas combustion + heat capture verified. Both: Section 551 + Reg 551.7.5 + EREC notification',
+      'Random',
+      'Customer DIY',
     ],
     correctAnswer: 1,
     explanation:
-      'Customers seeking to avoid interest might use savings for outright purchase, access grants where eligible, or take advantage of 0% finance promotional offers from installers or lenders.',
-  },
-  {
-    id: 8,
-    question: 'What documentation do customers typically need for finance applications?',
-    options: [
-      'No documentation required',
-      'Proof of income, identity, address, and sometimes property ownership',
-      'Only email address',
-      'Social media profiles',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Finance applications typically require identity verification, proof of address, income evidence (employment, self-employment, pension), and for secured loans, property documentation.',
-  },
-  {
-    id: 9,
-    question: 'What is the Social Housing Decarbonisation Fund (SHDF)?',
-    options: [
-      'A private loan scheme',
-      'Government funding for energy efficiency in social housing',
-      'A charity for homeless people',
-      'A solar panel subsidy',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'SHDF provides government funding to social housing providers for energy efficiency improvements, including renewable technologies. This creates opportunities for installers working with housing associations and councils.',
-  },
-  {
-    id: 10,
-    question: 'How should installers present finance options to customers?',
-    options: [
-      'Push the highest commission option',
-      'Present options clearly, including costs, terms, and alternatives, without pressure',
-      'Avoid discussing finance',
-      'Only mention cash purchase',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Ethical sales require clear presentation of all options including total costs, interest rates, terms, and alternatives. Customers should make informed decisions without sales pressure.',
+      'Fuel cell commissioning differs significantly from combustion-engine CHP due to fundamental architecture: (1) Cell stack warm-up — fuel cell operates at specific temperature (PEM 60-80 °C, SOFC 600-1000 °C). Initial commissioning includes controlled warm-up to operating temperature; can take 1-3 hours for PEM, longer for SOFC. (2) Membrane / cell stack health monitoring — controller reports per-cell voltage + current + state-of-health; commissioning baseline established. (3) Hydrogen reformer commissioning — natural gas is catalytically reformed to hydrogen-rich reformate on-board; reformer temperature + steam ratio + gas composition all monitored at commissioning. (4) Electrochemical operation — no combustion noise (much quieter than IC / Stirling); operating quietly. (5) Electrical commissioning per Section 551 + Reg 551.7.5 + EREC G98 / G99 framework — same as other Section 551 generating sets. Stirling engine commissioning: gas combustion verification (HETAS or gas-safe), flue commissioning (BS EN 15287), engine + generator commissioning per manufacturer procedure (oil-free design, sealed working fluid), shorter start cycle (minutes), engine noise during operation. IC engine commissioning: standard engine commissioning, lubrication, exhaust system, generator. Cert evidence bundle: fuel cell - electrochemical commissioning record + Section 551 EIC; Stirling - gas-safe + HETAS + Section 551 EIC; IC engine - mechanical + electrical commissioning.',
   },
 ];
 
 const faqs = [
   {
-    question: 'Can customers combine grants with other finance?',
+    question: 'Why is BS EN 50549 important for micro-CHP?',
     answer:
-      'Yes, in most cases grants can be combined with other finance. For example, a customer might receive a Boiler Upgrade Scheme grant and use a green loan for the remaining balance. However, some schemes have specific rules - always check current eligibility criteria and whether combining funding sources affects eligibility.',
+      'BS EN 50549-1 + -2: power generators connected to low-voltage / medium-voltage networks. Product standard covering generator-to-grid connection requirements (voltage / frequency limits, anti-islanding, protection settings, communication). Manufacturer DoC declares conformity. Reg 551.7.5 anti-islanding compliance evidenced via BS EN 50549. EREC G99 references BS EN 50549 directly. Replaces older standards like BS EN 50438.',
   },
   {
-    question: 'What happens if a customer defaults on renewable energy finance?',
+    question: 'Can micro-CHP integrate with PV + BESS + heat pump on the same site?',
     answer:
-      'The consequences depend on the finance type. Unsecured loans affect credit rating and may result in debt collection. Secured loans (like PACE) could affect property ownership. PPAs typically result in the provider reclaiming equipment. Always ensure customers understand repayment obligations before proceeding.',
+      'Yes — Chapter 82 PEI (Prosumer\'s Electrical Installation) framework integrates multiple sources. Reg 826.x family covers. Each source under Section 551; Reg 551.4.2 RCD multi-source effectiveness; per-source anti-islanding; EREC G99 formal application for the aggregate site. UK 2025-26 reality: micro-CHP + PV + BESS combinations rare due to overlapping function (CHP+heat pump both heat; CHP+PV both generate); customer typically picks one approach.',
   },
   {
-    question: 'How do I help customers access government schemes?',
+    question: 'EICR cycle for micro-CHP install?',
     answer:
-      'Stay updated on current schemes and eligibility criteria through MCS, government websites, and industry news. Check eligibility early in the sales process. Complete required installer registrations (many schemes require MCS certification). Assist with application paperwork and provide accurate quotes that meet scheme requirements.',
+      'BS 7671 EICR: 10-year owner-occupied domestic; 5-year landlord-rented; 5-year commercial. Micro-CHP EICR items: per-circuit RCD trip-time + Section 551 compliance + Reg 551.7.5 anti-islanding still operational (functional test via simulated grid-loss) + Reg 551.4.2 multi-source RCD if other generation present + manufacturer-specified service schedule (typically annual for fuel cells, 2-yearly for Stirling, oil + filter for IC). MCS MIS 3007 service requirements also apply.',
   },
   {
-    question: 'Are there grants specifically for businesses?',
+    question: 'Smart Export Guarantee (SEG) tariff + micro-CHP?',
     answer:
-      'Various schemes support business renewable investment including capital allowances (tax relief), Low Carbon Workspaces grants (regional), local authority green business grants, and sector-specific support programmes. The availability varies by region and time. Check current offerings through local growth hubs and business support organisations.',
+      'SEG = UK Government tariff for renewable / low-carbon electricity export. Applies to PV, wind, hydro, anaerobic digestion, micro-CHP. Tariff rates vary by supplier (Octopus, Bulb (Octopus), OVO, Drax, Good Energy etc.) — typically 4-15p / kWh exported. Customer signs SEG contract with supplier; export metering installed (smart meter typical); supplier pays for exported energy. Doesn\'t apply when CHP consumed on-site (only export). M10 covers SEG in detail.',
   },
   {
-    question: 'What is the difference between secured and unsecured green loans?',
+    question: 'Reg 551.4.2 RCD effectiveness — practical micro-CHP example?',
     answer:
-      'Unsecured loans do not require property as collateral - approval depends on creditworthiness and income. Secured loans use property as security, potentially offering lower rates and higher amounts but putting the property at risk if payments default. Secured options suit larger installations where customers have equity.',
-  },
-  {
-    question: 'How do I stay updated on changing grant schemes?',
-    answer:
-      'Subscribe to MCS newsletters and updates, follow relevant government departments (DESNZ), join trade associations that track policy changes, and check scheme websites regularly. Schemes change frequently - keeping current knowledge is essential for serving customers well and maintaining credibility.',
+      'Site with PV + micro-CHP + grid. Three sources can feed the installation simultaneously OR in different combinations. RCD must trip correctly for fault on any circuit regardless of which sources are active. Practical: per-source RCD on each generator (PV, CHP); central RCD architecture (main RCD + per-circuit RCBOs) coordinates with per-source RCDs. Reg 531.3.6 discrimination + Reg 551.4.2 multi-source verification at commissioning (induce fault under each combination; verify trip).',
   },
 ];
 
-const RenewableEnergyModule9Section5 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+export default function RenewableEnergyModule9Section5() {
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Micro-CHP (domestic) + Section 551 | Renewable Energy 9.5 | Elec-Mate',
+    description:
+      'Micro-CHP (Combined Heat and Power) for domestic + light-commercial. Stirling engine, fuel cell, internal combustion variants. BS 7671 Section 551 framework deep — Reg 551.1.1 + 551.7.5 anti-islanding + 551.7.2.1 supply-side + 551.4.2 multi-source RCD. MCS MIS 3007 + EREC G98 / G99 + BS EN 50549.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <Link to="/electrician/upskilling/renewable-energy-module-9">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <span className="text-white font-medium truncate">Green Finance & Funding</span>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-9')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 9
+          </button>
 
-      {/* Hero Section */}
-      <div className="px-4 py-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
-          <Zap className="w-4 h-4 text-elec-yellow" />
-          <span className="text-elec-yellow text-sm font-medium">Module 9 - Section 5</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-          Green Finance and Funding Options
-        </h1>
-        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
-          Government schemes, loans, and funding for renewable energy investment
-        </p>
-      </div>
+          <PageHero
+            eyebrow="Module 9 · Section 5 · BS 7671:2018+A4:2026 · Section 551 + Reg 551.7.5 + MCS MIS 3007 + BS EN 50549"
+            title="Micro-CHP (domestic) + Section 551 deep"
+            description="Micro-CHP (Combined Heat and Power) for domestic + light-commercial — Stirling engine, fuel cell (PEM + SOFC), internal combustion variants. BS 7671 Section 551 framework deep — Reg 551.1.1 power source + Reg 551.7.5 anti-islanding + Reg 551.7.2.1 supply-side connection + Reg 551.4.2 multi-source RCD effectiveness. MCS MIS 3007 + EREC G98 / G99 + BS EN 50549 grid-connection standard."
+            tone="yellow"
+          />
 
-      {/* Quick Summary */}
-      <div className="px-4 pb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">BUS:</span> Government grants for
-              heat pump installation
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Green Loans:</span> Preferential
-              rates for environmental projects
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">ECO4:</span> Supplier-funded
-              efficiency for eligible households
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">0% Finance:</span> Interest-free
-              payment options
-            </p>
-          </div>
-        </div>
-      </div>
+          <TLDR
+            points={[
+              'CHP = Combined Heat and Power. Generates BOTH electricity AND useful heat from a single fuel source. Combined efficiency 80-90% (~2× separate grid + boiler).',
+              'Section 551 framework applies — Reg 551.1.1(a) combustion engines (Stirling + IC) or (f) other suitable sources (fuel cells). Reg 551.7.5 anti-islanding mandatory.',
+              'Micro-CHP scope (this section): ≤50 kWe — domestic + light-commercial. MCS MIS 3007 installer standard. Commercial CHP >50 kWe covered §9.6.',
+              'Three technology variants: Stirling engine (market largely exited UK), fuel cell (PEM + SOFC — niche premium), internal combustion (limited UK presence).',
+              'Typical micro-CHP: 0.7-2 kWe + 1-25 kWth (heat-led sizing). Single-phase typical. EREC G98 fast-track for ≤16 A; G99 for larger / multi-source.',
+              'Reg 551.7.5 anti-islanding verified at commissioning via simulated grid-loss test (manufacturer self-test feature OR open main supply isolator + observe disconnect within manufacturer time spec).',
+              'Reg 551.7.2.1 supply-side connection — CHP electrical output sits on supply side of all protective devices; never load-side.',
+              'UK 2025-26 market reality: micro-CHP is niche. Heat pump + PV + BESS dominates low-carbon residential. Micro-CHP niche: high simultaneous heat + electrical demand (B&B, hospitality), off-grid, hydrogen-ready future.',
+            ]}
+          />
 
-      {/* Learning Outcomes */}
-      <div className="px-4 pb-6">
-        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
-        <div className="space-y-2">
-          {[
-            'Current government grant schemes',
-            'Green loan products and providers',
-            'Energy Company Obligation funding',
-            'Commercial finance options',
-            'Ethical finance presentation',
-          ].map((outcome, index) => (
-            <div key={index} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white text-sm">{outcome}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+          <LearningOutcomes
+            outcomes={[
+              'Define CHP + understand the combined heat + electrical generation value proposition.',
+              'Distinguish Stirling engine / fuel cell / IC micro-CHP technology variants + UK 2025-26 market reality.',
+              'Apply Section 551 framework deep — Reg 551.1.1 + 551.7.5 + 551.7.2.1 + 551.4.2 — to micro-CHP install.',
+              'Verify Reg 551.7.5 anti-islanding at commissioning via simulated grid-loss test.',
+              'Apply Reg 551.7.2.1 supply-side connection topology in practice.',
+              'Apply MCS MIS 3007 installer framework + BS EN 50549 grid-connection product standard.',
+              'Choose EREC G98 vs G99 path per micro-CHP output size.',
+              'Recognise UK 2025-26 niche use cases for micro-CHP vs the dominant heat pump + PV alternative.',
+            ]}
+            initialVisibleCount={3}
+          />
 
-      <div className="px-4 space-y-6 pb-8">
-        {/* Section 01 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-xl font-semibold text-white">Government Grant Schemes</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Government grants reduce the upfront cost of renewable energy installations, making
-              them more accessible to a wider range of customers. Understanding current schemes is
-              essential for helping customers maximise available support.
-            </p>
-            <p>
-              <span className="text-white font-medium">Boiler Upgrade Scheme (BUS):</span> This
-              scheme provides grants towards heat pump and biomass boiler installations. Grants of
-              5,000-7,500 are available depending on the technology, significantly reducing customer
-              costs. Properties must have a valid EPC and installations must be by MCS certified
-              installers.
-            </p>
-            <p>
-              <span className="text-white font-medium">Home Upgrade Grant (HUG):</span> Targeting
-              low-income households in off-gas-grid properties, HUG provides substantial funding for
-              energy efficiency measures including insulation and renewable heating. Eligibility is
-              based on income and property criteria.
-            </p>
-            <p>
-              <span className="text-white font-medium">Local Authority Schemes:</span> Many local
-              authorities offer additional grants or support for renewable energy. These vary
-              significantly by location and often have specific eligibility criteria. Check with
-              local councils for current offerings.
-            </p>
-            <p>
-              <span className="text-white font-medium">Social Housing Funding:</span> The Social
-              Housing Decarbonisation Fund supports energy efficiency in social housing. If you work
-              with housing associations or councils, this funding stream creates significant
-              opportunities for larger installation programmes.
-            </p>
-          </div>
-        </section>
+          <Pullquote>
+            CHP is the only Section 551 technology that does heat AND electricity from one fuel. The double duty makes Section 551 + heat-network integration intersect — manage both or fail both.
+          </Pullquote>
 
-        <InlineCheck questions={[quickCheckQuestions[0]]} />
+          <ContentEyebrow>CHP value proposition + technology variants</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-xl font-semibold text-white">Green Loans and Finance Products</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Green loans are financial products specifically designed to fund environmental
-              improvements. They may offer preferential terms compared to standard personal loans,
-              encouraging investment in renewable energy.
-            </p>
-            <p>
-              <span className="text-white font-medium">Bank Green Loans:</span> Many high street and
-              specialist banks offer green loan products with competitive interest rates for home
-              energy improvements. These unsecured loans typically require good credit history and
-              stable income.
-            </p>
-            <p>
-              <span className="text-white font-medium">Credit Union Green Loans:</span> Credit
-              unions often offer ethical lending with competitive rates for members. Some have
-              specific green loan products supporting community renewable energy adoption.
-            </p>
-            <p>
-              <span className="text-white font-medium">0% Finance Offers:</span> Some installers
-              offer 0% finance arrangements through partnerships with finance providers. These allow
-              customers to spread costs without interest charges, though promotional periods are
-              typically limited (12-60 months).
-            </p>
-            <p>
-              <span className="text-white font-medium">Comparison Considerations:</span> When
-              comparing finance options, consider the total cost of credit (including all fees and
-              interest), repayment terms, early repayment penalties, and credit requirements. The
-              lowest headline rate is not always the best overall deal.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="What CHP is + why it matters"
+            plainEnglish="CHP (Combined Heat and Power) generates both electricity AND useful heat from a single fuel source. Combined efficiency 80-90% (vs grid electricity ~35-40% + boiler heat ~85% separately) = roughly 2× primary-energy efficiency. The waste heat from electrical generation is captured + used locally for space heating + DHW."
+            onSite="UK 2025-26 micro-CHP market is niche but real. Customer use cases: high simultaneous heat + electrical demand (always running heat = always running CHP = high utilisation), off-grid properties (CHP provides electrical generation where no grid; less common than PV + battery), hydrogen-ready future investment."
+          >
+            <p>CHP value comparison:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Separate grid + gas
+                  boiler</strong> — grid electricity ~35-40% efficient at point of
+                generation (centralised power station + transmission losses); gas
+                boiler ~85-90% efficient for heat. Combined ~50% primary-energy
+                efficient overall (depending on demand split)
+              </li>
+              <li>
+                <strong className="text-white">CHP combined</strong>
+                — single fuel converts to electricity (~25-30%) + heat (~55-65%) =
+                total useful output ~80-90% of fuel input. Roughly 2× primary-energy
+                efficiency vs separate
+              </li>
+              <li>
+                <strong className="text-white">Heat-led sizing</strong>
+                — typical micro-CHP design: size CHP to match site heat demand;
+                electrical output is the by-product. Avoids dumping excess heat (which
+                negates the CHP value proposition)
+              </li>
+              <li>
+                <strong className="text-white">Electrical
+                  output</strong> — typical micro-CHP 0.7-2 kWe; mostly consumed
+                on-site (powering lights / appliances) with small surplus export to
+                grid
+              </li>
+              <li>
+                <strong className="text-white">Heat output</strong>
+                — typical micro-CHP 1-25 kWth depending on technology. Matches
+                domestic central heating + DHW demand
+              </li>
+              <li>
+                <strong className="text-white">Fuel</strong> —
+                natural gas dominant; biogas / biofuel / hydrogen variants emerging
+              </li>
+              <li>
+                <strong className="text-white">UK 2025-26 reality</strong>
+                — micro-CHP niche; heat pump + PV + BESS dominates residential
+                low-carbon. CHP commercial / industrial widespread (covered §9.6)
+              </li>
+              <li>
+                <strong className="text-white">Customer
+                  appropriateness</strong> — high simultaneous heat + electrical
+                demand sites (B&B, residential care, off-grid properties, hospitality)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck questions={[quickCheckQuestions[1]]} />
+          <ConceptBlock
+            title="Three micro-CHP technology variants"
+            plainEnglish="Three main micro-CHP architectures: Stirling engine (external combustion + piston generator — market largely exited UK), fuel cell (electrochemical — PEM + SOFC variants — niche premium), internal combustion engine (Otto / Diesel cycle + generator — limited UK)."
+            onSite="UK 2025-26: fuel cell variant has the most ongoing market presence (Viessmann Vitovalor, BlueGen — premium). Stirling: replacement / spares only. IC: limited UK installs."
+          >
+            <p>Variant comparison:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Stirling engine
+                  micro-CHP</strong> — external combustion (gas flame heats sealed
+                working fluid) + piston-driven generator. 1-2 kWe + 5-25 kWth. UK
+                market largely exited 2014-2018: Whispergen wound down, Baxi Ecogen
+                discontinued. Reg 551.1.1(a) combustion engine
+              </li>
+              <li>
+                <strong className="text-white">Fuel cell
+                  micro-CHP — PEM</strong> — Proton Exchange Membrane fuel cell;
+                operates 60-80 °C; hydrogen-rich reformate from natural gas reacts
+                with oxygen at electrolyte → DC electricity + heat. 0.7-1.5 kWe + 1-3
+                kWth typical. UK: Viessmann Vitovalor PT2 (~£14-18k installed).
+                Reg 551.1.1(f) other suitable sources
+              </li>
+              <li>
+                <strong className="text-white">Fuel cell
+                  micro-CHP — SOFC</strong> — Solid Oxide Fuel Cell; high temperature
+                (600-1000 °C); higher efficiency. UK: BlueGen BG-15 1.5 kWe (~£15-20k
+                installed). Reg 551.1.1(f)
+              </li>
+              <li>
+                <strong className="text-white">IC micro-CHP</strong>
+                — internal combustion engine (Otto / Diesel) + generator. Honda
+                Ecowill globally widespread; limited UK presence. 1-3 kWe + 2-8 kWth.
+                Reg 551.1.1(a) combustion engine
+              </li>
+              <li>
+                <strong className="text-white">Hydrogen-ready
+                  variant</strong> — some fuel cell models documented hydrogen-blend
+                or pure-hydrogen upgrade path (firmware / hardware). Marketing
+                position; UK hydrogen supply largely unavailable to date
+              </li>
+              <li>
+                <strong className="text-white">Section 551
+                  applicability</strong> — all three variants: Reg 551.7.5
+                anti-islanding, Reg 551.7.2.1 supply-side, Reg 551.4.2 RCD
+              </li>
+              <li>
+                <strong className="text-white">EREC notification</strong>
+                — most micro-CHP at ≤16 A per phase export → G98 fast-track. Larger /
+                multi-source / co-located generation → G99 formal
+              </li>
+              <li>
+                <strong className="text-white">MCS competence</strong>
+                — MIS 3007 micro-CHP installer standard
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-xl font-semibold text-white">Energy Company Obligation (ECO)</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              The Energy Company Obligation requires large energy suppliers to fund energy
-              efficiency improvements in eligible households. This creates opportunities for fully
-              funded installations for qualifying customers.
-            </p>
-            <p>
-              <span className="text-white font-medium">ECO4:</span> The current phase of ECO focuses
-              on improving the worst-performing homes to EPC Band C or above. Eligible measures
-              include insulation, heating system upgrades, and in some cases renewable technologies
-              including heat pumps and solar thermal.
-            </p>
-            <p>
-              <span className="text-white font-medium">Eligibility Criteria:</span> ECO funding is
-              typically available to households receiving certain benefits (Universal Credit,
-              Pension Credit, Child Tax Credit, etc.) or meeting low-income criteria. Some local
-              authority schemes broaden eligibility through LA Flex arrangements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Working with ECO:</span> Installers can work
-              with ECO managing agents or directly with energy suppliers to deliver funded
-              installations. This requires understanding scheme requirements, maintaining
-              appropriate accreditations, and meeting quality standards.
-            </p>
-            <p>
-              <span className="text-white font-medium">Great British Insulation Scheme:</span>{' '}
-              Running alongside ECO, this scheme focuses specifically on insulation measures for a
-              wider range of households, improving home efficiency as a foundation for renewable
-              heating.
-            </p>
-          </div>
-        </section>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 551.7.5 — Anti-islanding for micro-CHP (verified by simulated grid-loss test)"
+            clause="Means shall be provided to prevent the connection of a generating set to the system for distribution of electricity to the public in the event of loss of that supply or deviation of the voltage or frequency at the supply terminals from values required by Regulation 551.7.4. NOTE: For a generating set with an output not exceeding 16 A intended to operate in parallel with a system for distribution of electricity to the public, the requirements are given in BS EN 50549-1. Separately, the ENA Engineering Recommendations — G98 (up to and including 16 A per phase) and G99 (greater than 16 A per phase) — set the DNO notification and connection framework for parallel operation; they are the connection-process route, not a deemed-to-satisfy substitute for Reg 551.7."
+            meaning="Reg 551.7.5 applies to every micro-CHP generating set. Anti-islanding device typically integrated in the CHP control electronics (inverter or generator controller); detection methods include ROCOF + voltage / frequency deviation + active anti-islanding methods. Note: G99 disallows Vector Shift for type-tested generation, so RoCoF (with voltage / frequency protection) is the standard required LoM method for the type-tested micro-CHP / inverter units used in virtually all LCT installs; Vector Shift is legacy and only appears on older or non-type-tested sites. Commissioning verification mandatory: simulated grid-loss test (open main supply isolator OR manufacturer self-test feature) → observe CHP disconnect from grid within manufacturer-specified time (typical 200ms-1s per ENA EREC G99 + G98). Verify CHP stops generating (no continued export at meter). Restore supply; verify reconnect delay (typical 1-3 min). The NOTE clarifies that G98 compliance deems Reg 551.7 satisfied for ≤16 A small generators. Cert evidence bundle: anti-islanding device per manufacturer DoC + commissioning test method + result. For commercial CHP >50 kWe + G99: DNO-witnessed test typical (covered §9.6)."
+          />
 
-        <InlineCheck questions={[quickCheckQuestions[2]]} />
+          <InlineCheck {...inlineChecks[0]} />
 
-        {/* Section 04 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-xl font-semibold text-white">Commercial and Innovative Finance</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Commercial customers have access to additional financing mechanisms that can enable
-              renewable energy investment without significant upfront capital outlay.
-            </p>
-            <p>
-              <span className="text-white font-medium">Asset Finance:</span> Equipment leasing and
-              hire purchase arrangements allow businesses to spread costs while gaining immediate
-              benefit from reduced energy costs. The equipment may serve as security, enabling
-              larger installations.
-            </p>
-            <p>
-              <span className="text-white font-medium">Power Purchase Agreements:</span> As
-              discussed in earlier sections, PPAs allow third-party ownership where the customer
-              purchases generated electricity at agreed rates. This avoids capital expenditure while
-              providing energy cost savings.
-            </p>
-            <p>
-              <span className="text-white font-medium">Green Bonds and Community Energy:</span>{' '}
-              Community energy schemes use investment from local residents to fund renewable
-              installations. This model can work for larger community buildings or shared generation
-              schemes.
-            </p>
-            <p>
-              <span className="text-white font-medium">Property-Linked Finance (PACE):</span> Though
-              not yet widespread in the UK, Property Assessed Clean Energy financing secures loans
-              against the property, with repayments through property-related bills. This enables
-              longer repayment terms and may transfer with property ownership.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...inlineChecks[1]} />
 
-        <InlineCheck questions={[quickCheckQuestions[3]]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-xl font-semibold text-white">Ethical Finance Guidance</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Presenting finance options ethically is essential for customer protection, regulatory
-              compliance, and maintaining professional reputation.
-            </p>
-            <p>
-              <span className="text-white font-medium">Regulatory Awareness:</span> Consumer credit
-              is regulated by the Financial Conduct Authority (FCA). Installers cannot offer credit
-              directly without appropriate authorisation. Most work through authorised finance
-              partners who handle credit agreements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Clear Communication:</span> Always present
-              the total cost of credit including all interest and fees, not just monthly payments.
-              Explain terms clearly including repayment period, interest rates, and consequences of
-              default.
-            </p>
-            <p>
-              <span className="text-white font-medium">Affordability Assessment:</span> Help
-              customers consider whether they can afford repayments. Avoid encouraging customers to
-              take on debt they may struggle to repay. If in doubt about affordability, suggest they
-              seek independent financial advice.
-            </p>
-            <p>
-              <span className="text-white font-medium">Alternative Options:</span> Always present
-              alternatives including saving up, grants where available, and different finance
-              products. Customers should make informed choices, not feel pressured into particular
-              arrangements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Documentation:</span> Keep records of finance
-              discussions and ensure customers receive all required documentation. This protects
-              both parties if questions arise later.
-            </p>
-          </div>
-        </section>
+          <ContentEyebrow>Section 551 framework applied + RCD coordination</ContentEyebrow>
 
-        {/* Practical Guidance */}
-        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
-          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-elec-yellow" />
-            Practical Guidance
-          </h3>
-          <div className="space-y-2 text-white text-sm">
-            <p>
-              <span className="text-white font-medium">Stay current:</span> Government schemes
-              change frequently. Bookmark key scheme websites and check regularly. Incorrect
-              information about grant availability damages credibility and customer trust.
-            </p>
-            <p>
-              <span className="text-white font-medium">Check eligibility early:</span> Assess grant
-              and scheme eligibility at the initial enquiry stage. This avoids wasted time quoting
-              systems that customers cannot fund and enables accurate financial projections from the
-              start.
-            </p>
-            <p>
-              <span className="text-white font-medium">Partner wisely:</span> If offering finance
-              through partners, choose reputable, FCA-authorised providers. Your reputation is
-              linked to your partners' conduct.
-            </p>
-          </div>
-        </div>
+          <Pullquote>
+            Anti-islanding, supply-side connection, multi-source RCD. Three Section 551 rules; non-negotiable on every CHP install.
+          </Pullquote>
 
-        {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
+          <ConceptBlock
+            title="Reg 551.7.2.1 supply-side connection — practical implementation"
+            plainEnglish="CHP electrical output connects to the supply side of all protective devices in the installation — typically at the consumer unit incoming busbar before any RCD / RCBO / MCB. NOT on the load side of any protective device. Ensures correct protective device coordination + RCD effectiveness across source combinations."
+            onSite="Practical install: dedicated supply-side terminal at the CU OR a sub-distribution panel between meter + main CU. Some CUs have a dedicated generation incoming way; others require additional supply-side terminal block. Cert evidence bundle documents the connection topology."
+          >
+            <p>Supply-side connection in practice:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Connection point</strong>
+                — CHP electrical output cable terminates at: (a) dedicated
+                generation incoming terminal at the CU (some modern CUs have this),
+                OR (b) sub-distribution / Henley block between meter + main CU, OR
+                (c) supply-side terminal block at the meter tails
+              </li>
+              <li>
+                <strong className="text-white">Protective device
+                  hierarchy</strong> — CHP supply enters before main RCD + RCBOs.
+                Fault current contribution from CHP visible to all downstream
+                protective devices
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.7.1
+                  prohibition</strong> — source must NOT be connected on the load
+                side of an RCD under certain conditions. Practical: never put CHP
+                output downstream of an RCD that protects load circuits
+              </li>
+              <li>
+                <strong className="text-white">AC isolator</strong>
+                — between CHP electrical output + supply-side connection point.
+                Lockable in OFF position (BS EN 60947-3). For service / maintenance
+                isolation
+              </li>
+              <li>
+                <strong className="text-white">Per-source
+                  protective device</strong> — typically a dedicated 16 A or 20 A
+                Type A RCBO C-curve on the CHP supply line; provides over-current +
+                fault protection for the CHP cable. Coordinates with the main RCD
+                architecture
+              </li>
+              <li>
+                <strong className="text-white">BESS classification</strong>
+                — Reg 551.7.2.1 explicitly: BESS treated as generating set, not load.
+                Same supply-side connection topology applies (covered M5 BESS)
+              </li>
+              <li>
+                <strong className="text-white">Multi-source
+                  site</strong> — PV + BESS + CHP + grid all coexist on supply side.
+                Coordinated protective device hierarchy + Reg 551.4.2 RCD
+                effectiveness verification at commissioning
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — connection topology diagram + protective device
+                hierarchy + commissioning test result
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Reg 551.4.2 multi-source RCD effectiveness"
+            plainEnglish="Reg 551.4.2: any RCD protection in the installation must remain effective for every intended combination of sources operating. Practical: induce fault under each combination at commissioning; verify the appropriate RCD trips. Multi-source CHP install requires this verification."
+            onSite="UK 2025-26 multi-source domestic install commonly = PV + BESS + CHP + grid. Four sources. Each combination must trigger RCD correctly. Per-source RCD + central RCD architecture + commissioning test under each combination."
+          >
+            <p>Multi-source RCD considerations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Per-source RCD</strong>
+                — each generator has its own RCD on its supply connection. CHP: 30 mA
+                Type A typical (or Type B per manufacturer DoC for VSD electronics).
+                PV / BESS: 30 mA Type B per manufacturer DoC (modern inverters declare
+                Type B per BS EN 62423)
+              </li>
+              <li>
+                <strong className="text-white">Central RCD
+                  architecture</strong> — main RCD Type S 100 mA (time-delayed
+                upstream) + per-circuit 30 mA RCBOs. Reg 531.3.6 discrimination
+              </li>
+              <li>
+                <strong className="text-white">Combinations to
+                  test at commissioning</strong> — induce fault on a sample circuit
+                under: grid-only, grid + PV, grid + CHP, grid + BESS, grid + PV + CHP,
+                grid + PV + CHP + BESS, etc. Verify appropriate RCD trips for each
+              </li>
+              <li>
+                <strong className="text-white">RCD type
+                  selection</strong> — Reg 531.3.3 prohibits Type AC where DC
+                components present (CHP with VSD electronics produces pulsating DC).
+                Type A minimum; Type F or B per manufacturer DoC
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.7.1(d)
+                  prohibition</strong> — source must NOT be connected on load side of
+                an RCD under certain conditions. Practical: never put CHP load-side
+                of any RCD that would not see the CHP\'s fault contribution
+              </li>
+              <li>
+                <strong className="text-white">Type B for fuel
+                  cell + IC variants</strong> — VSD electronics in modern micro-CHP
+                produce smooth DC fault current; Type B RCD per manufacturer DoC if
+                declared
+              </li>
+              <li>
+                <strong className="text-white">Coordination
+                  verification</strong> — sequential trip-time test (downstream RCBO
+                trips first; upstream Type S follows after delay only if downstream
+                fails)
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — RCD architecture diagram + per-source RCD + central
+                RCD + per-combination commissioning test result + Reg 551.4.2
+                compliance verified
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 551.7.2.1 — Generating set on supply side"
+            clause="The generating set is to be installed on the supply side of all the protective devices for the final circuits of a distribution board, and stationary batteries (Chapter 57) are to be considered a generating set and not a load."
+            meaning="Reg 551.7.2.1 is the fundamental electrical-architecture rule for Section 551 generating sets — applies to micro-CHP equally with PV, wind, hydro, BESS. CHP electrical output enters the installation on the supply side of all protective devices (at the CU incoming busbar, OR a sub-distribution panel between meter + main CU). NEVER on the load side of any protective device. Reasons: (1) protective devices coordinate correctly with CHP fault contribution; (2) RCDs see all relevant fault paths per Reg 551.4.2; (3) isolation works correctly when energy flows in either direction. BESS explicitly: treated as generating set (not load) per the same rule — covered in M5. Multi-source sites: all generation sources on supply side, coordinated central + per-source protective device architecture. Cert evidence bundle: connection topology diagram + protective device hierarchy + multi-source RCD verification at commissioning."
+          />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="Domestic Viessmann Vitovalor PT2 fuel cell micro-CHP retrofit"
+            situation="4-bed detached. Existing gas combi boiler being supplemented with a fuel cell micro-CHP for primary baseload heat + electricity. Customer is hydrogen-ready / future-proofing motivated; accepts premium upfront cost (£14-18k). Existing PV + BESS already installed (Chapter 82 PEI site). UK 2025-26."
+            whatToDo="Multi-trade: MCS company (MIS 3007) + gas-safe engineer (fuel cell gas supply + reformer) + heating engineer (heat output integration with existing boiler + cylinder) + BS 7671 electrician. Electrical scope: (1) Dedicated 16 A single-phase circuit from CU; Type A RCBO C-curve + 30 mA additional protection per Reg 415.1; 2.5 mm² T+E. (2) CHP electrical output to dedicated supply-side terminal at CU (existing PV + BESS already supply-side connected from the M2-M5 install — fuel cell joins the same supply-side bus). (3) AC isolator at CHP unit (BS EN 60947-3 lockable OFF) for service / maintenance. (4) Section 551 compliance: Reg 551.7.5 anti-islanding integrated in fuel cell controller (verify at commissioning via simulated grid-loss test); Reg 551.7.2.1 supply-side connection; Reg 551.4.2 RCD effectiveness verified across PV + BESS + CHP + grid combinations. (5) EREC G98 fast-track notification (1 kWe = ~4 A < 16 A per phase) — though existing PV + BESS site may already be on G99; verify with DNO whether new G99 amendment needed or G98 amendment to existing G99 reference. Multi-trade integration: gas-safe engineer commissions fuel cell gas supply + reformer; heating engineer integrates heat output with existing cylinder + heating; MCS company orchestrates handover. Cert evidence bundle: BS 7671 EIC + Section 551 compliance + Reg 551.4.2 multi-source RCD test + MCS MIS 3007 handover + Gas Safe + heating engineer integration. Total project ~£14-18k; electrical scope ~£500-800. Customer expectation: ~1 kWe electrical generation continuous (typical winter); export to grid via SEG tariff (covered M10); hydrogen-ready future capability documented."
+            whyItMatters="Hydrogen-ready fuel cell + multi-source PEI is one of the more sophisticated UK 2025-26 domestic Section 551 + Chapter 82 installs. Customer motivation is future-proofing + sustainability + the value of high simultaneous heat + electrical generation. Cert evidence bundle integrates Section 712 (PV) + Chapter 57 (BESS) + Section 551 (CHP) + Chapter 82 (PEI) coherently. Demonstrates the multi-trade coordination + the BS 7671 electrician\'s scope within the wider install."
+          />
+
+          <Scenario
+            title="Off-grid Highland cottage — 2 kWe IC engine CHP + BESS"
+            situation="Remote Highland cottage with no grid connection. Customer has decided against grid-connection cost (~£40k for 2 km supply extension) + chosen off-grid renewable. Existing PV array (4 kWp) + small wind (~3 kW) + 20 kWh lead-acid BESS. Heating need + winter electrical demand exceeding PV / wind capacity → adding 2 kWe IC engine CHP (LPG-fuelled) as winter / dark-day backup."
+            whatToDo="Off-grid Section 551 install — no EREC G98 / G99 (no grid). Section 551 framework still applies (Reg 551.1.1(a) combustion engine; Reg 551.4.2 RCD effectiveness across PV + wind + CHP + BESS combinations). Reg 551.7.5 anti-islanding NOT applicable (no public supply to island against) BUT dump load / over-speed protection per manufacturer design. Electrical scope: dedicated 16 A circuit from off-grid AC supply panel; Type A RCBO C-curve; AC isolator at CHP for service. Heat output integrated with existing DHW cylinder + heating circuit. LPG fuel supply per Gas Safe / LPGA. CHP electrical output integrates with grid-forming inverter architecture (off-grid sites use grid-forming inverters, not grid-following — covered M10). Cert evidence bundle: BS 7671 EIC + Section 551 compliance + off-grid AC supply architecture + Gas Safe LPG commissioning + heating engineer integration + multi-source RCD verification. Total project ~£8-12k; electrical scope ~£400-600."
+            whyItMatters="Off-grid sites with diversified renewable + CHP backup are a real UK 2025-26 niche — remote Highland / island properties, agricultural sites, conservation properties. Section 551 framework applies fully but EREC G98 / G99 + grid-tied anti-islanding don\'t (no grid). Cert evidence bundle documents the off-grid architecture + multi-source coordination. Grid-forming inverter detail covered M10."
+          />
+
+          <CommonMistake
+            title="Connecting CHP load-side of an RCD"
+            whatHappens="Lazy install routes CHP electrical output through an existing RCD-protected sub-circuit (treating CHP as just another load). Reg 551.7.2.1 violation. Reg 551.4.2 RCD effectiveness compromised — fault current contribution from CHP may not be seen correctly by the protective devices. Safety + compliance failure. EICR finding C1 / C2 depending on severity."
+            doInstead="Reg 551.7.2.1 is non-negotiable: CHP on supply side of ALL protective devices. Install at CU incoming busbar OR dedicated supply-side terminal between meter + main CU. AC isolator + per-source 16 A RCBO on the CHP supply line. NEVER load-side of an RCD. Cert evidence bundle documents the connection topology + protective device hierarchy + Reg 551.4.2 RCD effectiveness test."
+          />
+
+          <CommonMistake
+            title="Skipping Reg 551.4.2 multi-source RCD test at commissioning"
+            whatHappens="Multi-source site (PV + BESS + CHP + grid). Commissioning verifies each source individually but doesn\'t test fault scenarios under the combinations. Months later, real fault occurs with PV + CHP + grid active simultaneously — RCD response is non-optimal; either over-trips (loses too much) or fails to trip cleanly. Customer issue + reputation."
+            doInstead="Reg 551.4.2 requires RCD effectiveness for EVERY intended combination of sources operating. Commissioning sequence: (1) Test each source individually (PV-only, BESS-only, CHP-only); (2) Test each pair (PV+CHP, PV+BESS, BESS+CHP, PV+grid, BESS+grid, CHP+grid); (3) Test combinations (PV+BESS+grid, PV+CHP+grid, BESS+CHP+grid, all-active). Induce sample fault under each + verify trip. Cert evidence bundle records per-combination test result + Reg 551.4.2 compliance."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'CHP = Combined Heat and Power. Generates electricity + heat from single fuel. Combined efficiency 80-90% (~2× separate grid + boiler).',
+              'Reg 551.1.1(a) combustion engines (Stirling + IC variants) OR Reg 551.1.1(f) other suitable sources (fuel cell variants). All Section 551 generating sets.',
+              'Three micro-CHP technology variants: Stirling engine (UK market largely exited), fuel cell (PEM + SOFC — niche premium), internal combustion (limited UK).',
+              'Typical micro-CHP: 0.7-2 kWe + 1-25 kWth (heat-led sizing). Single-phase typical. ≤16 A per phase usually fits EREC G98 fast-track.',
+              'Reg 551.7.5 anti-islanding mandatory + verified at commissioning via simulated grid-loss test. Anti-islanding device integrated in CHP control.',
+              'Reg 551.7.2.1 supply-side connection — CHP at CU incoming busbar OR dedicated supply-side terminal, NEVER load-side of protective devices.',
+              'Reg 551.4.2 RCD effectiveness across every combination of sources. Multi-source commissioning tests each combination.',
+              'RCD type per manufacturer DoC: Type A typical, Type B if VSD electronics produce smooth DC. Reg 531.3.3 prohibits Type AC where DC components.',
+              'MCS MIS 3007 micro-CHP ≤50 kWe installer standard. BS EN 50549-1 + -2 grid-connection product standards.',
+              'UK 2025-26 market reality: micro-CHP niche; heat pump + PV + BESS dominates residential low-carbon. Customer niche: high simultaneous heat + electrical demand, off-grid, hydrogen-ready future.',
+              'Commercial CHP (>50 kWe) covered §9.6 — biofuel, biogas, hydrogen variants + grid services revenue + heat-network integration.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 5 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-9-section-4')
+              }
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Section 4
               </div>
-            ))}
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Biomass interfaces
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-9-section-6')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                9.6 Commercial CHP + biofuel / biogas / hydrogen
+              </div>
+            </button>
           </div>
-        </section>
-
-        {/* Quiz */}
-        <Quiz title="Green Finance Quiz" questions={quizQuestions} />
-
-        {/* Bottom Navigation */}
-        <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="../section-4">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Button>
-          </Link>
-          <Link to="../section-6">
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Button>
-          </Link>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default RenewableEnergyModule9Section5;
+}

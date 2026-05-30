@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -391,11 +390,6 @@ export default function RenewableEnergyModule1Section7() {
               regulatory frameworks entirely.
             </p>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="LCT Building Regulations engagement map — which Approved Document applies to which LCT activity. Part P → all notifiable electrical work in dwellings. Part L → heat pump retrofit energy-efficiency framework. Part S → new-build EV chargepoint provision. Part F → ventilation impact on heat pumps. Part B → BESS fire-safety considerations."
-            filename="renewable/m1s7-building-regs-map.png"
-          />
 
           <InlineCheck {...inlineChecks[0]} />
 

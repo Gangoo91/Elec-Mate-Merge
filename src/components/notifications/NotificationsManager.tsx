@@ -19,7 +19,7 @@ import { useFinanceAlerts } from '@/hooks/useFinanceAlerts';
 import { useTaskAlerts } from '@/hooks/useTaskAlerts';
 import { useSafetyEquipmentAlerts } from '@/hooks/useSafetyEquipmentAlerts';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Loader2, ChevronDown } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -46,52 +46,48 @@ interface KPICardProps {
   isLoading: boolean;
 }
 
-const accentGradients: Record<KPICardProps['highlight'], string> = {
-  green: 'from-emerald-400 to-emerald-600',
-  amber: 'from-amber-400 to-amber-600',
-  red: 'from-red-400 to-red-600',
-  neutral: 'from-white/20 to-white/5',
+// Urgency accent dot — the one colour signal; numbers stay mono.
+const highlightDot: Record<KPICardProps['highlight'], string> = {
+  green: 'bg-emerald-400',
+  amber: 'bg-amber-400',
+  red: 'bg-red-400',
+  neutral: 'bg-white/25',
 };
 
-const valueColourClasses: Record<KPICardProps['highlight'], string> = {
-  green: 'text-emerald-400',
-  amber: 'text-amber-400',
-  red: 'text-red-400',
-  neutral: 'text-white',
-};
-
+// Flat seam-grid cell — sits inside the framed KPI grid below.
 function KPICard({ label, value, highlight, isLoading }: KPICardProps) {
   return (
-    <div className="group relative overflow-hidden card-surface-interactive rounded-xl">
-      <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40', accentGradients[highlight])} />
-      <div className="relative z-10 p-3">
-        {isLoading ? (
-          <>
-            <Skeleton className="h-3 w-16 mb-1.5" />
-            <Skeleton className="h-5 w-12" />
-          </>
-        ) : (
-          <>
-            <p className="text-[11px] font-medium text-white leading-tight">{label}</p>
-            <p className={cn('text-xl font-bold leading-tight mt-1', valueColourClasses[highlight])}>{value}</p>
-          </>
-        )}
-      </div>
+    <div className="relative flex flex-col p-4 bg-[hsl(0_0%_11%)]">
+      {isLoading ? (
+        <>
+          <Skeleton className="h-3 w-16 mb-2.5" />
+          <Skeleton className="h-6 w-12" />
+        </>
+      ) : (
+        <>
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', highlightDot[highlight])} aria-hidden />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/45 truncate">
+              {label}
+            </span>
+          </div>
+          <span className="mt-2.5 text-[26px] font-semibold tracking-tight tabular-nums leading-none text-white">
+            {value}
+          </span>
+        </>
+      )}
     </div>
   );
 }
 
-// ── Section Header (gradient line pattern) ──────────────────────────
+// ── Section Header (editorial micro-label) ──────────────────────────
 function SectionHeading({ title, count }: { title: string; count?: number }) {
   return (
-    <div className="border-b border-white/[0.06] pb-1">
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-      <div className="flex items-center justify-between">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-        {count !== undefined && count > 0 && (
-          <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white">{count}</span>
-        )}
-      </div>
+    <div className="flex items-end justify-between gap-3 px-0.5">
+      <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">{title}</h2>
+      {count !== undefined && count > 0 && (
+        <span className="text-[10.5px] text-white/30 tabular-nums">{count}</span>
+      )}
     </div>
   );
 }
@@ -202,9 +198,10 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
   if (partPOnly) {
     return (
       <>
-        {/* KPI Strip */}
+        {/* KPI Strip — editorial seam grid */}
         <motion.div variants={iv}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-[1.5px] bg-white/[0.14] border border-white/[0.14] rounded-2xl overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
             <KPICard
               label="Pending"
               value={String(pendingCount)}
@@ -264,16 +261,14 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
             <SectionHeading title="Resources" />
             <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between card-surface-interactive rounded-2xl p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
+                <button className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_11%)] p-4 touch-manipulation transition-colors hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
                   <div className="text-left">
-                    <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
-                    <p className="text-[13px] text-white">What to submit</p>
+                    <p className="text-[15px] font-semibold tracking-tight text-white">Building Control Guide</p>
+                    <p className="text-[12px] text-white/55">What to submit</p>
                   </div>
-                  {isFormGuideOpen ? (
-                    <ChevronUp className="h-5 w-5 text-white" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-white" />
-                  )}
+                  <ChevronDown
+                    className={cn('h-5 w-5 text-white/40 transition-transform', isFormGuideOpen && 'rotate-180')}
+                  />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-3">
@@ -391,12 +386,14 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
       {!compact && (
         <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen} className="mb-6">
           <CollapsibleTrigger asChild>
-            <button className="w-full flex items-center justify-between card-surface-interactive rounded-2xl p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
+            <button className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_11%)] p-4 touch-manipulation transition-colors hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
               <div className="text-left">
-                <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
-                <p className="text-[13px] text-white">What to submit</p>
+                <p className="text-[15px] font-semibold tracking-tight text-white">Building Control Guide</p>
+                <p className="text-[12px] text-white/55">What to submit</p>
               </div>
-              {isFormGuideOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
+              <ChevronDown
+                className={cn('h-5 w-5 text-white/40 transition-transform', isFormGuideOpen && 'rotate-180')}
+              />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3">

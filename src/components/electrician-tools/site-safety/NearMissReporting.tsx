@@ -49,6 +49,7 @@ import { RiskMatrix } from './common/RiskMatrix';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templates';
+import { JobLinkField } from './common/JobLinkField';
 import { NearMissReport, Witness } from './types';
 
 interface FormData {
@@ -186,6 +187,8 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [reporterSig, setReporterSig] = useState('');
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
   const [peopleOpen, setPeopleOpen] = useState(false);
@@ -286,6 +289,8 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     setEnvironmentOpen(false);
     setInvestigationOpen(false);
     setReporterSig('');
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
   };
 
   const { status: draftStatus, recoveredData: recoveredDraft, clearDraft, dismissRecovery: dismissDraft } = useLocalDraft({
@@ -374,6 +379,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         reporter_signature: reporterSig || null,
         likelihood: formData.likelihood > 0 ? formData.likelihood : null,
         risk_rating: formData.likelihood > 0 && formData.severity ? formData.likelihood * severityToNumber(formData.severity) : null,
+        job_id: linkedJobId,
       };
       const { data, error } = await supabase.from('near_miss_reports').insert(insertData as Record<string, unknown>).select().single();
       if (error) throw error;
@@ -514,6 +520,14 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
               onChange={(v) => setFormData((p) => ({ ...p, location: v }))}
               label="Location"
               placeholder="Where did it happen?"
+            />
+            <JobLinkField
+              jobId={linkedJobId}
+              jobTitle={linkedJobTitle}
+              onSelect={(id, title) => {
+                setLinkedJobId(id);
+                setLinkedJobTitle(title);
+              }}
             />
           </FormCard>
 

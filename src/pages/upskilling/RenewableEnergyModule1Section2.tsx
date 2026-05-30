@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { LctChapterMap } from '@/components/study-centre/diagrams/renewableM1';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -395,10 +395,7 @@ export default function RenewableEnergyModule1Section2() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="LCT chapter map — which BS 7671 chapter governs which technology. PV → Section 712; EV → Section 722; BESS → Chapter 57; ELV lighting → Section 715; inland-vessel onshore → Section 730; embedded heating (UFH alongside heat pumps) → Section 753; energy efficiency → Appendix 17. Section 551 sits across all of them as the generator-side interface. Chapter 82 (PEIs) sits ABOVE all of them as the system-level chapter for the hybrid prosumer install."
-            filename="renewable/m1s2-lct-chapter-map.png"
-          />
+          <LctChapterMap caption="Which BS 7671 chapters apply to each low-carbon technology — and the two cross-cutting anchors (Section 551 and Chapter 82)." />
 
           <InlineCheck {...inlineChecks[0]} />
 
@@ -772,11 +769,6 @@ export default function RenewableEnergyModule1Section2() {
             situation="A homeowner wants a 6 kWp grid-tied PV array, a 10 kWh AC-coupled battery, and a 7.4 kW EV chargepoint with V2G. Existing supply TN-C-S (PME), single-phase 100 A, CU with three spare ways, EPC C with planned heat pump retrofit in the following 12 months."
             whatToDo="Map the chapter set first. Section 712 governs the PV-side. Chapter 57 governs the BESS — chemistry, BMS interface, ventilation, isolation. Section 722 governs the EV chargepoint, including the A4 deletion of the 'reasonably practicable' PME exception. Section 551 governs the supply-boundary interface for all three sources — bidirectional protective device (551.7.1(c)), supply-side installation (551.7.2.1, with the BESS treated as a generating set), automatic disconnection (551.7.4), prevention of reconnection (551.7.5), isolation (551.7.6). The forthcoming heat pump retrofit may engage Section 753 if electric UFH is paired with it. Appendix 17 design considerations may apply to cable sizing. The IET Codes of Practice (PV, EESS, EV) are the operational references. G99 notification applies because the aggregate inverter capacity is likely above the G98 16 A per-phase threshold."
             whyItMatters="The single most expensive design failure on hybrid installs is reading only the 'dominant' chapter. A designer who reads Section 712 and treats the BESS as a load downstream of the PV inverter has missed Reg 551.7.2.1 — the BESS is a generating set under Section 551 rules, and the bidirectional protective device under 551.7.1(c) is required at the BESS interface as well as at the PV interface. The corrected design typically requires additional protective devices and additional commissioning evidence — much cheaper to design in than to retrofit after the EICR observation."
-          />
-
-          <DiagramPlaceholder
-            caption="Hybrid PV + BESS + EV interaction map — showing which BS 7671 chapters touch each component. PV inverter engages 712 + 551. BESS engages Chapter 57 + 551. EV chargepoint engages 722 + 551 (V2G case). 551.7.2.1 is the chapter-interplay anchor."
-            filename="renewable/m1s2-hybrid-chapter-interplay.png"
           />
 
           <CommonMistake

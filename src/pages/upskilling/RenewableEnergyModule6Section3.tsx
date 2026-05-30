@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { RcdArchitectures } from '@/components/study-centre/diagrams/renewableM6';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -399,10 +399,7 @@ export default function RenewableEnergyModule6Section3() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Two-architecture comparison diagram. Left: Type B RCBO architecture — single Type B RCBO in CU, EV circuit, wallbox (no integrated DC detector). Type B detects AC + pulsating DC + smooth DC at 30 mA. Right: Type A + RDC-DD architecture — Type A RCBO in CU, EV circuit, wallbox (with integrated 6 mA RDC-DD per BS EN IEC 62955). Type A handles AC + pulsating DC at 30 mA; RDC-DD inside wallbox handles smooth DC at 6 mA. Both architectures cover the same fault profile. Annotations: Type B kit cost ~£150 vs Type A + RDC-DD-equipped wallbox incremental ~£75."
-            filename="renewable/m6s3-rcd-architectures.png"
-          />
+          <RcdArchitectures caption="The two compliant EV RCD architectures — a Type B RCD, or a Type A RCD plus a residual-DC detecting device (RDC-DD) for the smooth-DC requirement." />
 
           <InlineCheck {...inlineChecks[1]} />
 

@@ -25,6 +25,7 @@ import {
 } from '@/hooks/useSafetyObservations';
 
 import { SafetyModuleShell } from '../common/SafetyModuleShell';
+import { JobLinkField } from '../common/JobLinkField';
 import { SignatureField } from '../common/SignatureField';
 import { LocationAutoFill } from '../common/LocationAutoFill';
 import { SmartTextarea } from '../common/SmartTextarea';
@@ -87,6 +88,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [observerSigName, setObserverSigName] = useState('');
   const [observerSigDataUrl, setObserverSigDataUrl] = useState('');
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
 
   // Templates
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
@@ -138,6 +141,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
     setPhotoUrls([]);
     setObserverSigName('');
     setObserverSigDataUrl('');
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
   };
 
   const canSubmit = category.length > 0 && description.trim().length > 0;
@@ -163,6 +168,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       photos: photoUrls,
       observer_signature: observerSigDataUrl || undefined,
       observer_name: observerSigName || undefined,
+      job_id: linkedJobId,
     });
     haptic.success();
     clearDraft();
@@ -380,6 +386,15 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                 onChange={setLocation}
                 placeholder="e.g. Ground floor, distribution board area"
                 label="Location"
+              />
+
+              <JobLinkField
+                jobId={linkedJobId}
+                jobTitle={linkedJobTitle}
+                onSelect={(id, title) => {
+                  setLinkedJobId(id);
+                  setLinkedJobTitle(title);
+                }}
               />
             </FormCard>
 

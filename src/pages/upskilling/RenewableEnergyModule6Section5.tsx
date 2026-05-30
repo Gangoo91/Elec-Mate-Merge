@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -483,11 +482,6 @@ export default function RenewableEnergyModule6Section5() {
               </li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Outdoor wallbox install cross-section. Left: indoor CU with dedicated EV way. Cable routes through external wall via weather sleeve. Drip loop on outside before entry to wall. Cable continues to wallbox on external masonry wall. Wallbox shows: IP65 housing, IK10 housing rating, Type 2 socket at 1.2 m mounting height, factory-supplied glanding at the cable entry. Annotations: Reg 522 external influences AD/AE/AG codes; BS EN 60529 IP rating; BS EN 62262 IK rating. Fire-rated mastic on party-wall penetrations per Approved Document B."
-            filename="renewable/m6s5-outdoor-cross-section.png"
-          />
 
           <InlineCheck {...inlineChecks[2]} />
 

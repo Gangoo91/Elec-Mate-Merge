@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { CouplingComparison } from '@/components/study-centre/diagrams/renewableM4';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -385,10 +385,7 @@ export default function RenewableEnergyModule4Section4() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Hybrid PV+BESS coupling comparison — two-panel diagram. Panel 1 (AC-coupled): PV array → PV inverter (DC→AC) → AC bus → battery inverter (AC↔DC) → DC battery; loads tap AC bus; grid via main isolator. Two PCE icons; annotated conversion stages 1-3. Panel 2 (DC-coupled): PV array → hybrid inverter (PV MPPT, battery charging/discharging, AC inversion in one unit) → AC bus; battery on the inverter\'s DC bus. Single PCE icon; annotated conversion stages 1-2. Round-trip efficiency labels: 84% AC-coupled, 89-91% DC-coupled."
-            filename="renewable/m4s4-coupling-architectures.png"
-          />
+          <CouplingComparison caption="DC- vs AC-coupled vs hybrid storage — where PV and the battery connect, and how many conversion stages each involves. DC-coupled suits new installs; AC-coupled is the clean way to add a battery to existing PV." />
 
           <InlineCheck {...inlineChecks[0]} />
 
@@ -594,11 +591,6 @@ export default function RenewableEnergyModule4Section4() {
               <li><strong className="text-white">Failure isolation</strong> — AC-coupled: PV survives battery PCE failure; DC-coupled: hybrid inverter failure takes both offline. Warranty + service contract mitigates</li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Hybrid coupling decision tree — flowchart starting from customer scenario. Branch 1 (new-build PV+BESS together): DC-coupled hybrid inverter — GivEnergy / Solis / Sigenergy / Huawei / FoxESS / SolarEdge Energy Hub / Powerwall 3 DC mode. Branch 2 (retrofit BESS to existing PV): AC-coupled — Tesla Powerwall 2/3 AC mode / Enphase IQ Battery (microinverter ecosystem) / GivEnergy AC / SolarEdge AC. Branch 3 (special cases): existing brand ecosystem dictates. Annotated with Reg 570.5.2 authorisation and the efficiency / cost / install-time trade-offs."
-            filename="renewable/m4s4-coupling-decision-tree.png"
-          />
 
           <SectionRule />
 

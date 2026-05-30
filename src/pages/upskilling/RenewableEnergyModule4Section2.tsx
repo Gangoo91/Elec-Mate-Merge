@@ -15,7 +15,6 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
@@ -394,11 +393,6 @@ export default function RenewableEnergyModule4Section2() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
-            caption="Off-grid regulatory framework map — three-zone diagram showing how Section 712, Section 551, and Section 414 (SELV/PELV) interact for off-grid PV. Zone 1 (small / boats / caravans, ≤120V DC): SELV/PELV + Section 551. Zone 2 (typical UK rural home, &gt;120V DC PV side): Class II per 712.412.101 + Section 551 + Section 712 (electrical equipment). Zone 3 (large commercial off-grid): same as Zone 2 with additional commercial / agricultural considerations. Annotated with the relevant reg numbers and the IET CoP for Stand-alone PV Systems."
-            filename="renewable/m4s2-regulatory-framework.png"
-          />
-
           <InlineCheck {...inlineChecks[0]} />
 
           <InlineCheck {...inlineChecks[4]} />
@@ -459,11 +453,6 @@ export default function RenewableEnergyModule4Section2() {
               <li><strong className="text-white">Module 5 covers BESS in depth</strong> — chemistry, BMS, Reg 570 (Chapter 57) requirements</li>
             </ul>
           </ConceptBlock>
-
-          <DiagramPlaceholder
-            caption="Off-grid sizing decision tree — flowchart starting from customer\'s daily load + UK location + autonomy needs. Branches to: (a) PV array kWp = daily load ÷ (December PSH × system efficiency); (b) battery kWh = daily load × autonomy days ÷ DoD; (c) generator backup decision (yes / no based on autonomy and worst-case winter). Annotated with typical UK values (PSH 0.7-1.5 Dec; DoD 80-90% LFP; autonomy 3-5 days general)."
-            filename="renewable/m4s2-sizing-decision-tree.png"
-          />
 
           <InlineCheck {...inlineChecks[1]} />
 
