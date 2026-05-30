@@ -53,7 +53,9 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
   // Dynamic Zdb placeholder based on earthing arrangement
   const zdbPlaceholder = useMemo(() => {
     switch (formData.earthingArrangement) {
-      case 'TN-C-S':
+      case 'TN-C-S-PME':
+      case 'TN-C-S-PNB':
+      case 'TN-C-S': // legacy value
         return '0.20-0.35 typical for PME';
       case 'TN-S':
         return '0.35-0.80 typical for TN-S';
@@ -73,7 +75,17 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
     }
   };
 
-  const earthingOptions = ['TN-S', 'TN-C-S', 'TT', 'IT'];
+  // BS 7671:2018+A4:2026 MEIWC Section B — six system earthing arrangements.
+  // Stored `value` must match the PDF template (TN-C-S-PME / TN-C-S-PNB / TN-C);
+  // `label` is the friendly display. Legacy 'TN-C-S' is still treated as PME.
+  const earthingOptions = [
+    { value: 'TN-S', label: 'TN-S' },
+    { value: 'TN-C-S-PME', label: 'TN-C-S (PME)' },
+    { value: 'TN-C-S-PNB', label: 'TN-C-S (PNB)' },
+    { value: 'TT', label: 'TT' },
+    { value: 'TN-C', label: 'TN-C' },
+    { value: 'IT', label: 'IT' },
+  ];
   const voltageOptions = ['230V', '400V'];
   const phaseOptions = ['Single', 'Three'];
   const conductorMaterialOptions = ['Copper', 'Aluminium'];
@@ -433,7 +445,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               label: 'Domestic',
               sub: '1ph 230V TN-C-S',
               values: {
-                earthingArrangement: 'TN-C-S',
+                earthingArrangement: 'TN-C-S-PME',
                 supplyVoltage: '230V',
                 supplyPhases: 'Single',
               },
@@ -443,7 +455,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               label: 'Commercial',
               sub: '3ph 400V TN-C-S',
               values: {
-                earthingArrangement: 'TN-C-S',
+                earthingArrangement: 'TN-C-S-PME',
                 supplyVoltage: '400V',
                 supplyPhases: 'Three',
               },
@@ -490,12 +502,28 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
       </div>
 
       <FormField label="Earthing Arrangement" required>
-        <div data-field="earthingArrangement" className="rounded-lg">
-          <ToggleButtons
-            options={earthingOptions}
-            value={(formData.earthingArrangement as string) || ''}
-            onSelect={(v) => onUpdate('earthingArrangement', v)}
-          />
+        <div data-field="earthingArrangement" className="grid grid-cols-3 gap-1.5">
+          {earthingOptions.map((opt) => {
+            const stored = (formData.earthingArrangement as string) || '';
+            // legacy 'TN-C-S' (no PME/PNB suffix) maps onto the PME button
+            const isActive =
+              stored === opt.value || (opt.value === 'TN-C-S-PME' && stored === 'TN-C-S');
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => onUpdate('earthingArrangement', opt.value)}
+                className={cn(
+                  'h-11 rounded-lg px-1 text-xs font-medium touch-manipulation transition-all active:scale-[0.98]',
+                  isActive
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
       </FormField>
 

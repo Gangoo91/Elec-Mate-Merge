@@ -985,6 +985,21 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         ? String(formData.earthingArrangement)
         : normaliseEarthing(get('earthingArrangement')),
       earthing_arrangement_note: note('earthingArrangement'),
+      // A4:2026 — TN-C-S splits into PME / PNB. EICR encodes PNB as a distinct
+      // value ('TN-C-S-PNB'); surface a clean, template-friendly signal matching
+      // the EIC payload. Purely additive — earthing_arrangement is unchanged.
+      tncs_variant: (() => {
+        const raw = String(get('earthingArrangement') || '').toLowerCase();
+        if (!raw.includes('tn-c-s') && !raw.includes('tncs')) return '';
+        return raw.includes('pnb') ? 'pnb' : 'pme';
+      })(),
+      earthing_tncs_pme: (() => {
+        const raw = String(get('earthingArrangement') || '').toLowerCase();
+        return (raw.includes('tn-c-s') || raw.includes('tncs')) && !raw.includes('pnb');
+      })(),
+      earthing_tncs_pnb: String(get('earthingArrangement') || '')
+        .toLowerCase()
+        .includes('pnb'),
       // supply_type: derived from phases when not explicitly set (no UI control for supplyType in EICR form)
       supply_type: (() => {
         const explicit = get('supplyType');

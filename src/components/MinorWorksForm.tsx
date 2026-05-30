@@ -1188,6 +1188,7 @@ const MinorWorksForm = ({
               formData={formData}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onJumpToTab={(tab) => setTab(tab as any)}
+              isLastTab={currentTab === 'declaration'}
             />
           </div>
           <SmartTabs

@@ -15,6 +15,8 @@ interface MinorWorksValidationPanelProps {
   className?: string;
   /** Optional jump-to-tab handler. Each missing item becomes tappable when provided. */
   onJumpToTab?: (tab: MWTabId) => void;
+  /** When true (user is on the final tab), the missing-items list auto-expands. */
+  isLastTab?: boolean;
 }
 
 const groupByTab = (rules: MWValidationRule[]): Map<MWTabId, MWValidationRule[]> => {
@@ -31,9 +33,14 @@ const MinorWorksValidationPanel: React.FC<MinorWorksValidationPanelProps> = ({
   formData,
   className = '',
   onJumpToTab,
+  isLastTab = false,
 }) => {
   const validation = useMinorWorksValidation(formData);
   const [showWarnings, setShowWarnings] = useState(false);
+  // Missing-items list behaves as a dropdown: collapsed by default, and only
+  // auto-expands once the user reaches the final tab. A manual tap overrides.
+  const [openOverride, setOpenOverride] = useState<boolean | null>(null);
+  const errorsExpanded = openOverride === null ? isLastTab : openOverride;
 
   // Jump to a tab and (optionally) flash the specific field that's missing.
   // Tab-only header taps pass no field; row taps pass the rule's field name.
@@ -75,8 +82,16 @@ const MinorWorksValidationPanel: React.FC<MinorWorksValidationPanelProps> = ({
 
   return (
     <div className={cn('rounded-lg border border-white/[0.06] bg-white/[0.03] overflow-hidden', className)}>
-      {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
+      {/* Header — tap to expand/collapse the missing-items list */}
+      <button
+        type="button"
+        onClick={() => totalErrors > 0 && setOpenOverride(!errorsExpanded)}
+        className={cn(
+          'w-full flex items-center gap-2 px-3 py-2 text-left',
+          totalErrors > 0 && 'touch-manipulation',
+          errorsExpanded && totalErrors > 0 && 'border-b border-white/[0.06]'
+        )}
+      >
         {ready ? (
           <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
         ) : (
@@ -90,10 +105,18 @@ const MinorWorksValidationPanel: React.FC<MinorWorksValidationPanelProps> = ({
         <span className="ml-auto text-[10px] text-white/60">
           {validation.completionPercentage}%
         </span>
-      </div>
+        {totalErrors > 0 && (
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-white/40 shrink-0 transition-transform',
+              errorsExpanded && 'rotate-180'
+            )}
+          />
+        )}
+      </button>
 
-      {/* Errors — grouped by tab */}
-      {totalErrors > 0 && (
+      {/* Errors — grouped by tab (collapsed until the final tab or a manual tap) */}
+      {totalErrors > 0 && errorsExpanded && (
         <div className="divide-y divide-white/[0.04]">
           {Array.from(errorGroups.entries()).map(([tab, rules]) => (
             <div key={tab} className="px-3 py-2">

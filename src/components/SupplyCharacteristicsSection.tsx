@@ -1101,7 +1101,7 @@ const SupplyCharacteristicsSectionInner = ({
                 className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
               />
             ) : (
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 {earthingOptions.map((option) => (
                   <button
                     key={option.value}
@@ -1111,13 +1111,13 @@ const SupplyCharacteristicsSectionInner = ({
                       onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
                     }}
                     className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      'h-11 rounded-lg px-1 font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
                       formData.earthingArrangement === option.value
                         ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                         : 'bg-white/[0.05] text-white border border-white/[0.08]'
                     )}
                   >
-                    {option.value}
+                    {option.label}
                   </button>
                 ))}
               </div>

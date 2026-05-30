@@ -51,31 +51,27 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChan
           <h3 className="font-semibold text-lg">Earthing Arrangement</h3>
           <p className="text-sm text-muted-foreground">Select the earthing system type</p>
 
+          {/* BS 7671:2018+A4:2026 — six system earthing arrangements.
+              Values match SupplyCharacteristicsSection so the formatter treats them identically. */}
           <div className="grid grid-cols-3 gap-3">
-            <SelectionCard
-              selected={data.earthingArrangement === 'TN-S'}
-              onClick={() => onChange({ earthingArrangement: 'TN-S' })}
-              title="TN-S"
-              description="Separate earth"
-              compact
-              isMobile={isMobile}
-            />
-            <SelectionCard
-              selected={data.earthingArrangement === 'TN-C-S'}
-              onClick={() => onChange({ earthingArrangement: 'TN-C-S' })}
-              title="TN-C-S"
-              description="Combined neutral/earth"
-              compact
-              isMobile={isMobile}
-            />
-            <SelectionCard
-              selected={data.earthingArrangement === 'TT'}
-              onClick={() => onChange({ earthingArrangement: 'TT' })}
-              title="TT"
-              description="Local earth electrode"
-              compact
-              isMobile={isMobile}
-            />
+            {[
+              { value: 'TN-S', title: 'TN-S', description: 'Separate earth' },
+              { value: 'TN-C-S', title: 'TN-C-S (PME)', description: 'Combined neutral/earth' },
+              { value: 'TN-C-S-PNB', title: 'TN-C-S (PNB)', description: 'Protective neutral bonding' },
+              { value: 'TT', title: 'TT', description: 'Local earth electrode' },
+              { value: 'TN-C', title: 'TN-C', description: 'Combined throughout' },
+              { value: 'IT', title: 'IT', description: 'Isolated/impedance earth' },
+            ].map((opt) => (
+              <SelectionCard
+                key={opt.value}
+                selected={data.earthingArrangement === opt.value}
+                onClick={() => onChange({ earthingArrangement: opt.value })}
+                title={opt.title}
+                description={opt.description}
+                compact
+                isMobile={isMobile}
+              />
+            ))}
           </div>
         </CardContent>
       </Card>

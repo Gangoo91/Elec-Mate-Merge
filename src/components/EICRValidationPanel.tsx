@@ -14,6 +14,8 @@ interface EICRValidationPanelProps {
   formData: any;
   className?: string;
   onJumpToTab?: (tab: EICRTabId) => void;
+  /** When true (user is on the final tab), the missing-items list auto-expands. */
+  isLastTab?: boolean;
 }
 
 const groupByTab = (rules: EICRValidationRule[]): Map<EICRTabId, EICRValidationRule[]> => {
@@ -30,9 +32,15 @@ const EICRValidationPanel: React.FC<EICRValidationPanelProps> = ({
   formData,
   className = '',
   onJumpToTab,
+  isLastTab = false,
 }) => {
   const validation = useEICRValidation(formData);
   const [showWarnings, setShowWarnings] = useState(false);
+  // Missing-items list behaves as a dropdown: collapsed by default, and only
+  // auto-expands once the user reaches the final tab (so a freshly-opened cert
+  // doesn't blast the full list). A manual tap overrides the auto behaviour.
+  const [openOverride, setOpenOverride] = useState<boolean | null>(null);
+  const errorsExpanded = openOverride === null ? isLastTab : openOverride;
 
   // Header taps jump to the tab; row taps also flash the specific field.
   const handleJump = (tab?: EICRTabId, field?: string) => {
@@ -72,8 +80,16 @@ const EICRValidationPanel: React.FC<EICRValidationPanelProps> = ({
 
   return (
     <div className={cn('rounded-lg border border-white/[0.06] bg-white/[0.03] overflow-hidden', className)}>
-      {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
+      {/* Header — tap to expand/collapse the missing-items list */}
+      <button
+        type="button"
+        onClick={() => totalErrors > 0 && setOpenOverride(!errorsExpanded)}
+        className={cn(
+          'w-full flex items-center gap-2 px-3 py-2 text-left',
+          totalErrors > 0 && 'touch-manipulation',
+          errorsExpanded && totalErrors > 0 && 'border-b border-white/[0.06]'
+        )}
+      >
         {ready ? (
           <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
         ) : (
@@ -87,10 +103,18 @@ const EICRValidationPanel: React.FC<EICRValidationPanelProps> = ({
         <span className="ml-auto text-[10px] text-white/60">
           {validation.completionPercentage}%
         </span>
-      </div>
+        {totalErrors > 0 && (
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-white/40 shrink-0 transition-transform',
+              errorsExpanded && 'rotate-180'
+            )}
+          />
+        )}
+      </button>
 
-      {/* Errors — grouped by tab */}
-      {totalErrors > 0 && (
+      {/* Errors — grouped by tab (collapsed until the final tab or a manual tap) */}
+      {totalErrors > 0 && errorsExpanded && (
         <div className="divide-y divide-white/[0.04]">
           {Array.from(errorGroups.entries()).map(([tab, rules]) => (
             <div key={tab} className="px-3 py-2">

@@ -335,6 +335,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           <EICRValidationPanel
             formData={formData}
             onJumpToTab={(tab) => setCurrentTab(tab)}
+            isLastTab={currentTabIndex === TAB_ORDER.length - 1}
           />
         </div>
         <EICRFormContent

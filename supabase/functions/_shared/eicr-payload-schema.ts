@@ -400,6 +400,7 @@ export const eicrPayloadSchema = z
         dc_conductor_config: z.string().default(''),
         phases: z.string().default(''),
         earthing_arrangement: z.string().default(''),
+        tncs_variant: z.string().default(''), // A4:2026 — 'pme' | 'pnb' for TN-C-S
         supply_type: z.string().default(''),
         supply_pme: z.string().default(''),
         dno_name: z.string().default(''),

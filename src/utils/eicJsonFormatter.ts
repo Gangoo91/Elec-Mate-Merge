@@ -238,6 +238,11 @@ export async function formatEicJson(
       })(),
       // Template checkboxes compare lowercase without hyphens (tncs, tns, tt, it)
       earthing_arrangement: (formData.earthingArrangement || '').toLowerCase(),
+      // A4:2026 — TN-C-S splits into PME / PNB. Legacy 'tncs' with no variant = PME.
+      tncs_variant:
+        (formData.earthingArrangement || '').toLowerCase() === 'tncs'
+          ? formData.tncsVariant || 'pme'
+          : '',
       supply_type: formData.supplyType || '',
       supply_pme: formData.supplyPME || '',
       live_conductor_type: formData.liveCondutorType || formData.liveConductorType || '',
@@ -660,6 +665,14 @@ export async function formatEicJson(
     earthing_tnc: normaliseEarthing(formData.earthingArrangement || '') === 'TN-C',
     earthing_tt: normaliseEarthing(formData.earthingArrangement || '') === 'TT',
     earthing_it: normaliseEarthing(formData.earthingArrangement || '') === 'IT',
+    // A4:2026 TN-C-S PME/PNB split — earthing_tncs stays true for both so existing
+    // template logic is unaffected; these two pick the correct sub-box.
+    earthing_tncs_pme:
+      normaliseEarthing(formData.earthingArrangement || '') === 'TN-C-S' &&
+      (formData.tncsVariant || 'pme') !== 'pnb',
+    earthing_tncs_pnb:
+      normaliseEarthing(formData.earthingArrangement || '') === 'TN-C-S' &&
+      formData.tncsVariant === 'pnb',
 
     // Earth electrode flat copies (edge fn debug confirms template reads these at root)
     earth_electrode_type: formData.earthElectrodeNA

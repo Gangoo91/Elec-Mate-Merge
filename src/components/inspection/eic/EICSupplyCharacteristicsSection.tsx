@@ -31,11 +31,16 @@ interface EICSupplyCharacteristicsSectionProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const EARTHING_OPTIONS = [
-  { value: 'tncs', label: 'TN-C-S' },
-  { value: 'tns', label: 'TN-S' },
-  { value: 'tt', label: 'TT' },
-  { value: 'it', label: 'IT' },
+// BS 7671:2018+A4:2026 EIC Section F — six system earthing arrangements.
+// `value` stays as the legacy code (templates/normaliser compare these); the
+// TN-C-S options carry a `variant` (PME/PNB) tracked in `tncsVariant`.
+const EARTHING_OPTIONS: { key: string; value: string; variant?: 'pme' | 'pnb'; label: string }[] = [
+  { key: 'tns', value: 'tns', label: 'TN-S' },
+  { key: 'tncs-pme', value: 'tncs', variant: 'pme', label: 'TN-C-S (PME)' },
+  { key: 'tncs-pnb', value: 'tncs', variant: 'pnb', label: 'TN-C-S (PNB)' },
+  { key: 'tt', value: 'tt', label: 'TT' },
+  { key: 'tnc', value: 'tnc', label: 'TN-C' },
+  { key: 'it', value: 'it', label: 'IT' },
 ];
 
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({
@@ -53,13 +58,27 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     }
   };
 
-  const handleEarthingArrangementChange = (value: string) => {
+  // A TN-C-S option matches when the arrangement is 'tncs' AND the variant lines
+  // up (legacy 'tncs' with no variant is treated as PME). Other types match by value.
+  const isEarthingActive = (option: (typeof EARTHING_OPTIONS)[number]) => {
+    if (option.value !== 'tncs') return formData.earthingArrangement === option.value;
+    if (formData.earthingArrangement !== 'tncs') return false;
+    return (formData.tncsVariant || 'pme') === (option.variant || 'pme');
+  };
+
+  const handleEarthingArrangementChange = (option: (typeof EARTHING_OPTIONS)[number]) => {
     haptic.light();
-    const newValue = formData.earthingArrangement === value ? '' : value;
-    onUpdate('earthingArrangement', newValue);
-    if (newValue === 'tncs') {
-      onUpdate('supplyPME', 'yes');
-    } else if (['tns', 'tt', 'it'].includes(newValue)) {
+    if (isEarthingActive(option)) {
+      onUpdate('earthingArrangement', '');
+      onUpdate('tncsVariant', '');
+      return;
+    }
+    onUpdate('earthingArrangement', option.value);
+    onUpdate('tncsVariant', option.variant || '');
+    if (option.value === 'tncs') {
+      // PME → PME supply; PNB is a distinct TN-C-S variant, not PME.
+      onUpdate('supplyPME', option.variant === 'pnb' ? 'no' : 'yes');
+    } else if (['tns', 'tt', 'it', 'tnc'].includes(option.value)) {
       onUpdate('supplyPME', 'no');
     }
   };
@@ -109,23 +128,26 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
       {/* Earthing Arrangement — toggle buttons */}
       <FormField label="Earthing Arrangement" required>
-        <div className="grid grid-cols-4 gap-2">
-          {EARTHING_OPTIONS.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => handleEarthingArrangementChange(option.value)}
-              className={cn(
-                'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-1.5',
-                formData.earthingArrangement === option.value
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              {formData.earthingArrangement === option.value && <Check className="h-3.5 w-3.5" />}
-              {option.label}
-            </button>
-          ))}
+        <div className="grid grid-cols-3 gap-2">
+          {EARTHING_OPTIONS.map((option) => {
+            const active = isEarthingActive(option);
+            return (
+              <button
+                key={option.key}
+                type="button"
+                onClick={() => handleEarthingArrangementChange(option)}
+                className={cn(
+                  'h-11 rounded-lg px-1 font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+                  active
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {active && <Check className="h-3.5 w-3.5 shrink-0" />}
+                {option.label}
+              </button>
+            );
+          })}
         </div>
       </FormField>
 
