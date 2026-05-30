@@ -1218,23 +1218,37 @@ async function tryCreateQBCustomer(
     const errorText = await createResponse.text();
     console.error('QuickBooks customer creation failed:', createResponse.status, errorText);
 
-    // Parse error to check if it's a duplicate name issue
+    // Parse the QuickBooks Fault so we can (a) retry on duplicate names and
+    // (b) surface the REAL error for anything else instead of swallowing it.
+    let qbMessage = errorText;
+    let qbCode = '';
+    let qbDetail = '';
     try {
-      const errorJson = JSON.parse(errorText);
-      const errorMessage = errorJson?.Fault?.Error?.[0]?.Message || '';
-      console.log('QuickBooks error message:', errorMessage);
+      const fault = JSON.parse(errorText)?.Fault?.Error?.[0];
+      qbMessage = fault?.Message || errorText;
+      qbCode = fault?.code ? String(fault.code) : '';
+      qbDetail = fault?.Detail || '';
+      console.log('QuickBooks error message:', qbCode, qbMessage, qbDetail);
 
-      // If it's a duplicate name error, return null to allow retry with unique name
-      if (errorMessage.includes('Duplicate') || errorMessage.includes('already exists')) {
+      // Duplicate name (code 6240) — return null so the caller retries with a unique name
+      if (qbMessage.includes('Duplicate') || qbMessage.includes('already exists') || qbCode === '6240') {
         console.log('Duplicate name detected, will retry with unique suffix');
         return null;
       }
     } catch {
-      // Error text wasn't JSON, continue
+      // Error text wasn't JSON — fall through and surface the raw text
     }
 
-    return null;
+    // Non-duplicate failure: surface QuickBooks' actual fault instead of the
+    // generic "may already exist / configuration issue" message. (ELE-1009 / QB sync)
+    throw new Error(
+      `QuickBooks rejected the customer create [HTTP ${createResponse.status}${qbCode ? `, code ${qbCode}` : ''}]: ${qbMessage}${qbDetail ? ` — ${qbDetail}` : ''}`
+    );
   } catch (fetchError) {
+    // Re-throw our explicit QB fault; only swallow genuine network/fetch errors.
+    if (fetchError instanceof Error && fetchError.message.startsWith('QuickBooks rejected')) {
+      throw fetchError;
+    }
     console.error('Customer creation fetch error:', fetchError);
     return null;
   }

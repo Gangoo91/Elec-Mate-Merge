@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 export interface ComplianceGoal {
   id: string;
@@ -59,7 +60,7 @@ export const useComplianceTracking = () => {
 
     // Set up realtime subscription
     const channel = supabase
-      .channel('compliance-goals')
+      .channel(realtimeChannelName('compliance-goals'))
       .on(
         'postgres_changes',
         {

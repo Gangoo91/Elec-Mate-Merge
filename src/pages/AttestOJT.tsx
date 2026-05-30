@@ -124,8 +124,8 @@ export default function AttestOJT() {
           </h1>
           <p className="text-[13px] text-white/70 leading-relaxed">
             Your apprentice has shared this entry for your sign-off. By attesting
-            you confirm they completed this work. The college and ESFA use this
-            to verify their 20% off-the-job training.
+            you confirm they completed this work. The college uses this to verify
+            their off-the-job training hours.
           </p>
         </header>
 

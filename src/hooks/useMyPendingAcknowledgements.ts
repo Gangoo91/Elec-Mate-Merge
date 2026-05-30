@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useMyPendingAcknowledgements — live policies that require a signature and
@@ -81,7 +82,7 @@ export function useMyPendingAcknowledgements() {
   // Realtime — refetch when policies change or our acks change
   useEffect(() => {
     const channel = supabase
-      .channel('my_pending_acks')
+      .channel(realtimeChannelName('my_pending_acks'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'college_policies' }, () =>
         fetch()
       )

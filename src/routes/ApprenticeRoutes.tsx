@@ -47,7 +47,6 @@ const ContinuingEducationPage = lazy(
 const IndustryNetworkingPage = lazy(
   () => import('@/pages/apprentice/professional-development/IndustryNetworking')
 );
-const ApprenticeOJT = lazy(() => import('@/pages/apprentice/ApprenticeOJT'));
 const AdvancedHelp = lazy(() => import('@/pages/apprentice/AdvancedHelp'));
 const ProfessionalToolGuide = lazy(() => import('@/pages/apprentice/ProfessionalToolGuide'));
 const PortfolioBuilding = lazy(() => import('@/pages/apprentice/toolbox/PortfolioBuilding'));
@@ -213,14 +212,11 @@ const ApprenticeRoutes = () => (
         </LazyRoute>
       }
     />
-    <Route
-      path="ojt"
-      element={
-        <LazyRoute>
-          <ApprenticeOJT />
-        </LazyRoute>
-      }
-    />
+    {/* Retired — the standalone time_entries OJT page is superseded by the
+        college-hub-integrated OJT hub at /apprentice/ojt-hub. Goals &
+        Assessments were migrated into that hub; evidence consolidated onto the
+        portfolio workspace. Redirect keeps old deep links + tips working. */}
+    <Route path="ojt" element={<Navigate to="/apprentice/ojt-hub" replace />} />
     <Route
       path="advanced-help"
       element={

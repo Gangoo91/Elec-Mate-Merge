@@ -9,7 +9,14 @@ import { supabase } from '@/integrations/supabase/client';
    iqa, admin (plus is_dsl/is_prevent_lead etc. boolean flags).
    ========================================================================== */
 
-export type StaffRole = 'tutor' | 'assessor' | 'iqa' | 'head_of_department' | 'admin' | 'unknown';
+export type StaffRole =
+  | 'tutor'
+  | 'assessor'
+  | 'iqa'
+  | 'eqa'
+  | 'head_of_department'
+  | 'admin'
+  | 'unknown';
 
 export interface StaffRoleData {
   loading: boolean;
@@ -18,6 +25,8 @@ export interface StaffRoleData {
   /** Convenience booleans for the most common buckets. */
   isAssessor: boolean;
   isIqa: boolean;
+  /** External quality assurer — READ-ONLY across the college. */
+  isEqa: boolean;
   isTutor: boolean;
   isAdmin: boolean;
   /** Safeguarding lead — orthogonal to role (boolean column on college_staff). */
@@ -62,6 +71,7 @@ export function useStaffRole(): StaffRoleData {
         role: cached.role as StaffRole,
         isAssessor: !!cached.isAssessor,
         isIqa: !!cached.isIqa,
+        isEqa: !!cached.isEqa,
         isTutor: !!cached.isTutor,
         isAdmin: !!cached.isAdmin,
         isDsl: !!cached.isDsl,
@@ -74,6 +84,7 @@ export function useStaffRole(): StaffRoleData {
       role: 'unknown',
       isAssessor: false,
       isIqa: false,
+      isEqa: false,
       isTutor: false,
       isAdmin: false,
       isDsl: false,
@@ -112,6 +123,7 @@ export function useStaffRole(): StaffRoleData {
         if (rawRole === 'tutor') return 'tutor';
         if (rawRole === 'assessor') return 'assessor';
         if (rawRole === 'iqa') return 'iqa';
+        if (rawRole === 'eqa') return 'eqa';
         if (rawRole === 'head_of_department') return 'head_of_department';
         if (rawRole === 'admin') return 'admin';
         return 'unknown';
@@ -121,6 +133,7 @@ export function useStaffRole(): StaffRoleData {
         role,
         isAssessor: role === 'assessor',
         isIqa: role === 'iqa',
+        isEqa: role === 'eqa',
         isTutor: TUTOR_ROLES.includes(role),
         isAdmin: ADMIN_ROLES.includes(role),
         isDsl: Boolean(row?.is_dsl) || Boolean(row?.is_deputy_dsl),

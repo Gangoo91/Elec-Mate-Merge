@@ -1,76 +1,72 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+
+import { supabase } from '@/integrations/supabase/client';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
-import { AuditTimeline } from './common/AuditTimeline';
-import { ApprovalBadge, ApprovalInfoCard } from './common/ApprovalBadge';
-import { ApprovalSheet } from './common/ApprovalSheet';
+import { useShowMore } from '@/hooks/useShowMore';
 import { useRequestApproval } from '@/hooks/useSupervisorApproval';
-import { LocationAutoFill } from './common/LocationAutoFill';
-import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
-import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
-import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SmartTextarea } from './common/SmartTextarea';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Switch } from '@/components/ui/switch';
-import { toast } from 'sonner';
 import {
   usePermits,
   useCreatePermit,
   useClosePermit,
   useCancelPermit,
   useExtendPermit,
+  useAmendPermit,
+  usePermitRevisions,
   usePermitExpiryCheck,
 } from '@/hooks/usePermitsToWork';
 import { useFireWatchRecords } from '@/hooks/useFireWatchRecords';
 import { useSafeIsolationRecords } from '@/hooks/useSafeIsolationRecords';
+import { useRAMSDocuments } from '@/hooks/useRAMSDocuments';
 import type { Json } from '@/integrations/supabase/types';
+
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+
 import {
-  ArrowLeft,
-  Plus,
-  Flame,
-  Lock,
-  Zap,
-  ArrowUpFromLine,
-  Shovel,
-  Shield,
-  Clock,
-  CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  ChevronRight,
-  FileText,
-  User,
-  MapPin,
-  Calendar,
-  Timer,
-  Pencil,
-  Trash2,
-  Search,
-  Filter,
-  FileDown,
-  Loader2,
-  Copy,
-  Share2,
-} from 'lucide-react';
-import { LoadMoreButton } from './common/LoadMoreButton';
-import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
-import { useShowMore } from '@/hooks/useShowMore';
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  TextAction,
+  Field,
+  FormCard,
+  SheetShell,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  toneAccent,
+  type Tone,
+} from '@/components/college/primitives';
+
+import { SafetyModuleShell } from './common/SafetyModuleShell';
+import { SignatureField } from './common/SignatureField';
+import { LocationAutoFill } from './common/LocationAutoFill';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+import { SmartTextarea } from './common/SmartTextarea';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { AuditTimeline } from './common/AuditTimeline';
+import { ApprovalInfoCard } from './common/ApprovalBadge';
+import { ApprovalSheet } from './common/ApprovalSheet';
+import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
-import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
+import { LoadMoreButton } from './common/LoadMoreButton';
+import { ReadinessGate } from './common/ReadinessGate';
+import { CloseOutSheet } from './common/CloseOutSheet';
 
 // ─── Types ───
 
@@ -108,6 +104,11 @@ interface Permit {
   emergency_procedures: string;
   additional_notes: string;
   photos: string[];
+  auto_fire_watch: boolean;
+  version: number;
+  linked_rams_id: string | null;
+  linked_rams_title: string | null;
+  acceptance_status: string;
   requires_approval: boolean;
   approval_status: 'not_required' | 'pending' | 'approved' | 'rejected';
   approved_by: string | null;
@@ -124,9 +125,6 @@ interface Permit {
 const PERMIT_TYPES: {
   id: PermitType;
   label: string;
-  icon: React.ElementType;
-  colour: string;
-  gradient: string;
   description: string;
   defaultHazards: string[];
   defaultPPE: string[];
@@ -135,47 +133,26 @@ const PERMIT_TYPES: {
   {
     id: 'hot-work',
     label: 'Hot Work',
-    icon: Flame,
-    colour: 'text-orange-400',
-    gradient: 'from-orange-400 to-red-500',
     description: 'Welding, cutting, brazing, soldering or any work producing sparks or flame',
-    defaultHazards: [
-      'Fire risk from sparks and hot metal',
-      'Fume inhalation',
-      'Burns from hot surfaces',
-      'Ignition of nearby combustibles',
-    ],
-    defaultPPE: [
-      'Welding helmet/goggles',
-      'Heat-resistant gloves',
-      'Fire-retardant overalls',
-      'Steel toe-cap boots',
-    ],
+    defaultHazards: ['Fire risk from sparks and hot metal', 'Fume inhalation', 'Burns from hot surfaces', 'Ignition of nearby combustibles'],
+    defaultPPE: ['Welding helmet/goggles', 'Heat-resistant gloves', 'Fire-retardant overalls', 'Steel toe-cap boots'],
     defaultPrecautions: [
-      'Remove combustible materials within 10m radius \u2014 BS 9999',
-      'Fire extinguisher (CO\u2082 or dry powder) within 2m \u2014 RRO 2005',
-      'Fire watch for minimum 60 minutes after completion \u2014 HSG168',
+      'Remove combustible materials within 10m radius — BS 9999',
+      'Fire extinguisher (CO₂ or dry powder) within 2m — RRO 2005',
+      'Fire watch for minimum 60 minutes after completion — HSG168',
       'Check area above, below and behind work area for fire spread risk',
-      'Smoke/heat detectors isolated with permit from fire alarm panel \u2014 BS 5839-1',
+      'Smoke/heat detectors isolated with permit from fire alarm panel — BS 5839-1',
     ],
   },
   {
     id: 'confined-space',
     label: 'Confined Space',
-    icon: Lock,
-    colour: 'text-purple-400',
-    gradient: 'from-purple-400 to-purple-600',
     description: 'Entry into enclosed spaces with limited access/egress or poor ventilation',
     defaultHazards: ['Oxygen depletion', 'Toxic atmosphere', 'Engulfment', 'Limited access/egress'],
-    defaultPPE: [
-      'Gas monitor (4-head)',
-      'Safety harness & lanyard',
-      'Breathing apparatus',
-      'Communication equipment',
-    ],
+    defaultPPE: ['Gas monitor (4-head)', 'Safety harness & lanyard', 'Breathing apparatus', 'Communication equipment'],
     defaultPrecautions: [
-      'Continuous atmospheric monitoring (O\u2082, LEL, CO, H\u2082S) \u2014 Confined Spaces Regs 1997',
-      'Written rescue plan in place before entry \u2014 ACOP L101',
+      'Continuous atmospheric monitoring (O₂, LEL, CO, H₂S) — Confined Spaces Regs 1997',
+      'Written rescue plan in place before entry — ACOP L101',
       'Trained standby person at entry point with communication equipment',
       'Forced ventilation if natural ventilation inadequate',
       'Entry permit time-limited; re-test atmosphere if work paused >30 min',
@@ -184,274 +161,156 @@ const PERMIT_TYPES: {
   {
     id: 'electrical-isolation',
     label: 'Electrical Isolation',
-    icon: Zap,
-    colour: 'text-yellow-400',
-    gradient: 'from-yellow-400 to-amber-500',
     description: 'Isolation of electrical systems for safe working — lock-off/tag-out',
-    defaultHazards: [
-      'Electric shock',
-      'Arc flash',
-      'Residual stored energy',
-      'Incorrect identification of circuits',
-    ],
-    defaultPPE: [
-      'Insulated gloves (Class 0 min.)',
-      'Safety glasses/face shield',
-      'Arc-flash rated clothing',
-      'Insulated tools',
-    ],
+    defaultHazards: ['Electric shock', 'Arc flash', 'Residual stored energy', 'Incorrect identification of circuits'],
+    defaultPPE: ['Insulated gloves (Class 0 min.)', 'Safety glasses/face shield', 'Arc-flash rated clothing', 'Insulated tools'],
     defaultPrecautions: [
-      'Prove dead at point of work using 3-point test \u2014 GS38',
-      'Lock-off with personal padlock and unique key \u2014 BS 7671 Reg 537.2',
-      'Danger tags applied at all points of isolation \u2014 EAWR 1989 Reg 12',
-      'Voltage indicator proved on known live source before AND after test \u2014 GS38',
+      'Prove dead at point of work using 3-point test — GS38',
+      'Lock-off with personal padlock and unique key — BS 7671 Reg 537.2',
+      'Danger tags applied at all points of isolation — EAWR 1989 Reg 12',
+      'Voltage indicator proved on known live source before AND after test — GS38',
       'All sources of supply identified including back-feeds, UPS, generators',
     ],
   },
   {
     id: 'working-at-height',
     label: 'Working at Height',
-    icon: ArrowUpFromLine,
-    colour: 'text-blue-400',
-    gradient: 'from-blue-400 to-blue-600',
     description: 'Work where a person could fall a distance liable to cause personal injury',
-    defaultHazards: [
-      'Falls from height',
-      'Falling objects',
-      'Scaffold/platform collapse',
-      'Adverse weather conditions',
-    ],
-    defaultPPE: [
-      'Safety harness & lanyard',
-      'Hard hat with chin strap',
-      'Non-slip footwear',
-      'Tool tethers',
-    ],
+    defaultHazards: ['Falls from height', 'Falling objects', 'Scaffold/platform collapse', 'Adverse weather conditions'],
+    defaultPPE: ['Safety harness & lanyard', 'Hard hat with chin strap', 'Non-slip footwear', 'Tool tethers'],
     defaultPrecautions: [
-      'Guard rails (min 950mm), mid-rails, and toe boards in place \u2014 WAH Regs 2005 Sch 2',
-      'Check weather conditions \u2014 cease work in winds >40 mph or heavy rain',
-      'Exclusion zone below marked with barriers and signage \u2014 CDM 2015',
-      'Rescue plan in place and communicated to all operatives \u2014 WAH Regs 2005 Reg 4',
-      'All access equipment inspected before use \u2014 INDG401',
+      'Guard rails (min 950mm), mid-rails, and toe boards in place — WAH Regs 2005 Sch 2',
+      'Check weather conditions — cease work in winds >40 mph or heavy rain',
+      'Exclusion zone below marked with barriers and signage — CDM 2015',
+      'Rescue plan in place and communicated to all operatives — WAH Regs 2005 Reg 4',
+      'All access equipment inspected before use — INDG401',
     ],
   },
   {
     id: 'excavation',
     label: 'Excavation',
-    icon: Shovel,
-    colour: 'text-amber-400',
-    gradient: 'from-amber-400 to-amber-600',
     description: 'Digging, trenching or ground disturbance work',
-    defaultHazards: [
-      'Trench collapse',
-      'Underground services strike',
-      'Falling into excavation',
-      'Flooding',
-    ],
+    defaultHazards: ['Trench collapse', 'Underground services strike', 'Falling into excavation', 'Flooding'],
     defaultPPE: ['Hard hat', 'Hi-vis vest', 'Steel toe-cap boots', 'Gloves'],
     defaultPrecautions: [
-      'CAT & Genny scan completed and results recorded \u2014 HSG47',
-      'Up-to-date service drawings obtained from all utility providers \u2014 PAS 128',
-      'Trench support/battering in place for excavations >1.2m \u2014 CDM 2015',
-      'Barriers, edge protection, and warning signs around excavation \u2014 CDM 2015 Reg 22',
-      'Hand-dig within 500mm of identified services \u2014 HSG47',
+      'CAT & Genny scan completed and results recorded — HSG47',
+      'Up-to-date service drawings obtained from all utility providers — PAS 128',
+      'Trench support/battering in place for excavations >1.2m — CDM 2015',
+      'Barriers, edge protection, and warning signs around excavation — CDM 2015 Reg 22',
+      'Hand-dig within 500mm of identified services — HSG47',
     ],
   },
 ];
 
-const STATUS_CONFIG: Record<
-  PermitStatus,
-  { label: string; colour: string; bg: string; icon: React.ElementType }
-> = {
-  active: { label: 'Active', colour: 'text-green-400', bg: 'bg-green-500/15', icon: CheckCircle2 },
-  expired: { label: 'Expired', colour: 'text-red-400', bg: 'bg-red-500/15', icon: Clock },
-  cancelled: { label: 'Cancelled', colour: 'text-white', bg: 'bg-gray-500/15', icon: XCircle },
-  closed: { label: 'Closed', colour: 'text-blue-400', bg: 'bg-blue-500/15', icon: CheckCircle2 },
+const STATUS_LABEL: Record<PermitStatus, string> = {
+  active: 'Active',
+  expired: 'Expired',
+  cancelled: 'Cancelled',
+  closed: 'Closed',
 };
 
-// ─── Signature Pad ───
+// ─── Small presentational helpers (monochrome, no icons) ───
 
-function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void; label: string }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [hasContent, setHasContent] = useState(false);
+const fmtDate = (d?: string | null) =>
+  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
 
-  // Resize canvas to match container width for responsive rendering
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
+// Colour follows one meaningful dimension: status + expiry urgency.
+function statusTone(status: PermitStatus, expiring?: boolean): Tone | undefined {
+  if (expiring && status === 'active') return 'amber';
+  if (status === 'active') return 'green';
+  if (status === 'expired') return 'red';
+  if (status === 'closed') return 'blue';
+  return undefined; // cancelled → neutral
+}
 
-    const resizeCanvas = () => {
-      const { width } = container.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = width * dpr;
-      canvas.height = 120 * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = '120px';
-      const ctx = canvas.getContext('2d');
-      if (ctx) ctx.scale(dpr, dpr);
-    };
+const STATUS_PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string> = {
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+};
 
-    resizeCanvas();
-    const observer = new ResizeObserver(resizeCanvas);
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
-
-  const getCoords = (e: React.TouchEvent | React.MouseEvent) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-    const rect = canvas.getBoundingClientRect();
-    if ('touches' in e) {
-      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-    }
-    return {
-      x: (e as React.MouseEvent).clientX - rect.left,
-      y: (e as React.MouseEvent).clientY - rect.top,
-    };
-  };
-
-  const startDraw = (e: React.TouchEvent | React.MouseEvent) => {
-    e.preventDefault();
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
-    const { x, y } = getCoords(e);
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    setIsDrawing(true);
-    setHasContent(true);
-  };
-
-  const draw = (e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDrawing) return;
-    e.preventDefault();
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
-    const { x, y } = getCoords(e);
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#fbbf24';
-    ctx.lineTo(x, y);
-    ctx.stroke();
-  };
-
-  const endDraw = () => {
-    setIsDrawing(false);
-    if (hasContent && canvasRef.current) {
-      onSave(canvasRef.current.toDataURL());
-    }
-  };
-
-  const clear = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      const dpr = window.devicePixelRatio || 1;
-      ctx.save();
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.restore();
-    }
-    setHasContent(false);
-  };
-
+function StatusPill({ status, expiring }: { status: PermitStatus; expiring?: boolean }) {
+  const tone = statusTone(status, expiring);
+  const key = (tone as 'amber' | 'green' | 'red' | 'blue') ?? 'neutral';
+  const label = expiring && status === 'active' ? 'Expiring' : STATUS_LABEL[status];
   return (
-    <div className="space-y-2">
-      <Label className="text-white text-sm">{label}</Label>
-      <div
-        ref={containerRef}
-        className="relative border border-white/20 rounded-xl overflow-hidden bg-white/[0.03]"
-      >
-        <canvas
-          ref={canvasRef}
-          className="w-full h-[120px] touch-none"
-          onMouseDown={startDraw}
-          onMouseMove={draw}
-          onMouseUp={endDraw}
-          onMouseLeave={endDraw}
-          onTouchStart={startDraw}
-          onTouchMove={draw}
-          onTouchEnd={endDraw}
-        />
-        {!hasContent && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="text-white text-sm">Sign here</span>
-          </div>
-        )}
-      </div>
-      {hasContent && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={clear}
-          className="text-white text-xs h-11 touch-manipulation"
-        >
-          Clear signature
-        </Button>
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        STATUS_PILL[key]
       )}
-    </div>
+    >
+      {label}
+    </span>
   );
 }
 
-// ─── Time Remaining ───
+function remainingClasses(endTime: string, now: Date): string {
+  const diff = new Date(endTime).getTime() - now.getTime();
+  if (diff <= 0) return 'text-red-400';
+  if (diff < 3600000) return 'text-amber-400';
+  return 'text-white/45';
+}
 
-function TimeRemaining({ endTime }: { endTime: string }) {
-  const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const end = new Date(endTime);
-  const diff = end.getTime() - now.getTime();
-
-  if (diff <= 0) {
-    return (
-      <span className="text-red-400 text-xs font-semibold flex items-center gap-1">
-        <Clock className="h-3 w-3" /> EXPIRED
-      </span>
-    );
-  }
-
-  const hours = Math.floor(diff / 3600000);
-  const minutes = Math.floor((diff % 3600000) / 60000);
-  const isUrgent = diff < 3600000; // less than 1 hour
-
+function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <span
-      className={`text-xs font-semibold flex items-center gap-1 ${isUrgent ? 'text-amber-400' : 'text-green-400'}`}
-    >
-      <Timer className="h-3 w-3" />
-      {hours}h {minutes}m remaining
+    <span className="inline-flex items-center px-2 py-1 rounded-lg text-[11.5px] text-white/75 bg-white/[0.05] border border-white/10">
+      {children}
     </span>
   );
+}
+
+// Type-aware close-out checklist — confirm the area is safe before closing.
+function closeOutItems(type: PermitType): string[] {
+  const base = [
+    'Work is complete',
+    'Work area made safe and left clean',
+    'All tools and personnel removed from the area',
+  ];
+  const extra: Record<PermitType, string[]> = {
+    'hot-work': ['Fire watch completed (min. 60 min) and area checked for smouldering'],
+    'electrical-isolation': ['Locks-off and danger tags removed; system safely re-energised or handed over'],
+    'working-at-height': ['Access equipment removed or made safe; exclusion zone cleared'],
+    'confined-space': ['All personnel accounted for and signed out of the space'],
+    excavation: ['Excavation made safe — barriers, covers and edge protection in place'],
+  };
+  return [...base, ...(extra[type] || [])];
+}
+
+function remainingLabel(endTime: string, now: Date): string {
+  const diff = new Date(endTime).getTime() - now.getTime();
+  if (diff <= 0) return 'Expired';
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  return `${h}h ${m}m left`;
 }
 
 // ─── Main Component ───
 
 export function PermitToWork({ onBack }: { onBack: () => void }) {
-  // ─── DB hooks ───
   const { data: dbPermits = [], isLoading: permitsLoading } = usePermits();
   const createPermitMutation = useCreatePermit();
   const closePermitMutation = useClosePermit();
   const cancelPermitMutation = useCancelPermit();
   const extendPermitMutation = useExtendPermit();
+  const amendPermit = useAmendPermit();
   usePermitExpiryCheck();
-  const [showExtendSheet, setShowExtendSheet] = useState(false);
-  const [showApprovalSheet, setShowApprovalSheet] = useState(false);
-  const [extensionHours, setExtensionHours] = useState(2);
   const requestApproval = useRequestApproval();
 
-  // Related records for inter-tool linking
   const { data: allFireWatchRecords = [] } = useFireWatchRecords();
   const { data: allIsolationRecords = [] } = useSafeIsolationRecords();
+  const { data: ramsDocs = [] } = useRAMSDocuments();
 
-  // Map DB records to local Permit shape
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(t);
+  }, []);
+
   const permits: Permit[] = dbPermits.map((p) => ({
     id: p.id,
     type: p.type,
@@ -472,6 +331,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     emergency_procedures: p.emergency_procedures || '',
     additional_notes: p.additional_notes || '',
     photos: Array.isArray(p.photos) ? (p.photos as unknown as string[]) : [],
+    auto_fire_watch: !!p.auto_fire_watch,
+    version: p.version ?? 1,
+    linked_rams_id: p.linked_rams_id,
+    linked_rams_title: p.linked_rams_title,
+    acceptance_status: p.acceptance_status || 'accepted',
     requires_approval: p.requires_approval,
     approval_status: p.approval_status,
     approved_by: p.approved_by,
@@ -483,25 +347,24 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     closed_by: p.closed_by || undefined,
   }));
 
+  // View state
   const [showWizard, setShowWizard] = useState(false);
   const [viewingPermit, setViewingPermit] = useState<Permit | null>(null);
   const [wizardStep, setWizardStep] = useState(0);
+  const [wizardMode, setWizardMode] = useState<'create' | 'amend'>('create');
+  const [amendingId, setAmendingId] = useState<string | null>(null);
+  const [amendReason, setAmendReason] = useState('');
   const [filterStatus, setFilterStatus] = useState<PermitStatus | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showExtendSheet, setShowExtendSheet] = useState(false);
+  const [showApprovalSheet, setShowApprovalSheet] = useState(false);
+  const [extensionHours, setExtensionHours] = useState(2);
+  const [showShare, setShowShare] = useState(false);
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+  const [showRamsPicker, setShowRamsPicker] = useState(false);
 
-  // Related records filtered for the currently-viewed permit
-  const relatedFireWatches = useMemo(
-    () =>
-      viewingPermit ? allFireWatchRecords.filter((fw) => fw.permit_id === viewingPermit.id) : [],
-    [allFireWatchRecords, viewingPermit]
-  );
-  const relatedIsolations = useMemo(
-    () =>
-      viewingPermit ? allIsolationRecords.filter((ir) => ir.permit_id === viewingPermit.id) : [],
-    [allIsolationRecords, viewingPermit]
-  );
-
-  // Wizard state
+  // Wizard form state
   const [selectedType, setSelectedType] = useState<PermitType | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -519,11 +382,30 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [precautions, setPrecautions] = useState<string[]>([]);
   const [ppeRequired, setPpeRequired] = useState<string[]>([]);
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [autoFireWatch, setAutoFireWatch] = useState(false);
+  const [linkedRamsId, setLinkedRamsId] = useState<string | null>(null);
+  const [linkedRamsTitle, setLinkedRamsTitle] = useState<string | null>(null);
+  // Remote receiver sign-off
+  const [receiverRemote, setReceiverRemote] = useState(false);
+  const [showShareLink, setShowShareLink] = useState(false);
+  const [signLink, setSignLink] = useState('');
+  const [linkLoading, setLinkLoading] = useState(false);
+  // Close-out sign-off
+  const [showCloseOut, setShowCloseOut] = useState(false);
+  const [closeOutName, setCloseOutName] = useState('');
 
-  // ─── Template state ───
-  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
-  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+  const { data: revisions = [] } = usePermitRevisions(viewingPermit?.id ?? null);
 
+  const relatedFireWatches = useMemo(
+    () => (viewingPermit ? allFireWatchRecords.filter((fw) => fw.permit_id === viewingPermit.id) : []),
+    [allFireWatchRecords, viewingPermit]
+  );
+  const relatedIsolations = useMemo(
+    () => (viewingPermit ? allIsolationRecords.filter((ir) => ir.permit_id === viewingPermit.id) : []),
+    [allIsolationRecords, viewingPermit]
+  );
+
+  // ─── Templates ───
   const getTemplateData = () => ({
     type: selectedType,
     title: formData.title,
@@ -537,33 +419,23 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
   const handleLoadTemplate = (data: Record<string, unknown>) => {
     if (data.type) setSelectedType(data.type as PermitType);
-    if (data.title || data.description || data.emergency_procedures || data.duration_hours) {
-      setFormData((prev) => ({
-        ...prev,
-        ...(data.title && { title: data.title as string }),
-        ...(data.description && { description: data.description as string }),
-        ...(data.emergency_procedures && {
-          emergency_procedures: data.emergency_procedures as string,
-        }),
-        ...(data.duration_hours && { duration_hours: data.duration_hours as number }),
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      ...(data.title ? { title: data.title as string } : {}),
+      ...(data.description ? { description: data.description as string } : {}),
+      ...(data.emergency_procedures ? { emergency_procedures: data.emergency_procedures as string } : {}),
+      ...(data.duration_hours ? { duration_hours: data.duration_hours as number } : {}),
+    }));
     if (data.hazards) setHazards(data.hazards as PermitHazard[]);
     if (data.precautions) setPrecautions(data.precautions as string[]);
     if (data.ppeRequired) setPpeRequired(data.ppeRequired as string[]);
+    if (data.type) setWizardStep(1);
   };
 
-  // ─── Draft persistence ───
+  // ─── Draft persistence (create only) ───
   const permitDraftData = useMemo(
-    () => ({
-      formData,
-      selectedType,
-      hazards,
-      precautions,
-      ppeRequired,
-      wizardStep,
-    }),
-    [formData, selectedType, hazards, precautions, ppeRequired, wizardStep]
+    () => ({ formData, selectedType, hazards, precautions, ppeRequired, autoFireWatch, linkedRamsId, linkedRamsTitle, wizardStep }),
+    [formData, selectedType, hazards, precautions, ppeRequired, autoFireWatch, linkedRamsId, linkedRamsTitle, wizardStep]
   );
 
   const {
@@ -571,11 +443,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     recoveredData: recoveredDraft,
     clearDraft,
     dismissRecovery: dismissDraft,
-  } = useLocalDraft({
-    key: 'permit-to-work',
-    data: permitDraftData,
-    enabled: showWizard && wizardStep > 0,
-  });
+  } = useLocalDraft({ key: 'permit-to-work', data: permitDraftData, enabled: showWizard && wizardMode === 'create' && wizardStep > 0 });
 
   const restoreDraft = () => {
     if (!recoveredDraft) return;
@@ -584,6 +452,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     if (recoveredDraft.hazards) setHazards(recoveredDraft.hazards);
     if (recoveredDraft.precautions) setPrecautions(recoveredDraft.precautions);
     if (recoveredDraft.ppeRequired) setPpeRequired(recoveredDraft.ppeRequired);
+    if (typeof recoveredDraft.autoFireWatch === 'boolean') setAutoFireWatch(recoveredDraft.autoFireWatch);
+    if (recoveredDraft.linkedRamsId !== undefined) setLinkedRamsId(recoveredDraft.linkedRamsId);
+    if (recoveredDraft.linkedRamsTitle !== undefined) setLinkedRamsTitle(recoveredDraft.linkedRamsTitle);
     if (recoveredDraft.wizardStep !== undefined) setWizardStep(recoveredDraft.wizardStep);
     dismissDraft();
   };
@@ -592,6 +463,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
   const resetWizard = () => {
     setWizardStep(0);
+    setWizardMode('create');
+    setAmendingId(null);
+    setAmendReason('');
     setSelectedType(null);
     setFormData({
       title: '',
@@ -609,9 +483,25 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setPrecautions([]);
     setPpeRequired([]);
     setPhotoUrls([]);
+    setAutoFireWatch(false);
+    setLinkedRamsId(null);
+    setLinkedRamsTitle(null);
+    setReceiverRemote(false);
+  };
+
+  const selectPermitType = (type: PermitType) => {
+    const config = PERMIT_TYPES.find((t) => t.id === type)!;
+    setSelectedType(type);
+    setFormData((prev) => ({ ...prev, title: `${config.label} Permit`, description: config.description }));
+    setHazards(config.defaultHazards.map((h, i) => ({ id: `h-${i}`, description: h, controls: '' })));
+    setPrecautions([...config.defaultPrecautions]);
+    setPpeRequired([...config.defaultPPE]);
+    setAutoFireWatch(type === 'hot-work');
+    setWizardStep(1);
   };
 
   const handleDuplicate = (permit: Permit) => {
+    resetWizard();
     setSelectedType(permit.type);
     setFormData({
       title: permit.title,
@@ -628,39 +518,105 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setHazards(permit.hazards.map((h) => ({ ...h })));
     setPrecautions([...permit.precautions]);
     setPpeRequired([...permit.ppe_required]);
+    setAutoFireWatch(permit.auto_fire_watch);
+    setLinkedRamsId(permit.linked_rams_id);
+    setLinkedRamsTitle(permit.linked_rams_title);
     setWizardStep(1);
+    setViewingPermit(null);
     setShowWizard(true);
     toast.success('Permit duplicated — complete the details to issue');
   };
 
-  const selectPermitType = (type: PermitType) => {
-    const config = PERMIT_TYPES.find((t) => t.id === type)!;
-    setSelectedType(type);
-    setFormData((prev) => ({
-      ...prev,
-      title: `${config.label} Permit`,
-      description: config.description,
-    }));
-    setHazards(
-      config.defaultHazards.map((h, i) => ({
-        id: `h-${i}`,
-        description: h,
-        controls: '',
-      }))
-    );
-    setPrecautions([...config.defaultPrecautions]);
-    setPpeRequired([...config.defaultPPE]);
+  // Amend → reopen wizard prefilled, signatures cleared (must be re-signed).
+  const startAmend = (permit: Permit) => {
+    setWizardMode('amend');
+    setAmendingId(permit.id);
+    setAmendReason('');
+    setSelectedType(permit.type);
+    setFormData({
+      title: permit.title,
+      location: permit.location,
+      description: permit.description,
+      issuer_name: permit.issuer_name,
+      issuer_signature: '',
+      receiver_name: permit.receiver_name,
+      receiver_signature: '',
+      duration_hours: permit.duration_hours,
+      emergency_procedures: permit.emergency_procedures,
+      additional_notes: permit.additional_notes,
+    });
+    setHazards(permit.hazards.map((h) => ({ ...h })));
+    setPrecautions([...permit.precautions]);
+    setPpeRequired([...permit.ppe_required]);
+    setAutoFireWatch(permit.auto_fire_watch);
+    setLinkedRamsId(permit.linked_rams_id);
+    setLinkedRamsTitle(permit.linked_rams_title);
+    setReceiverRemote(false); // amendments are re-signed in person
     setWizardStep(1);
+    setViewingPermit(null);
+    setShowWizard(true);
+  };
+
+  // Tokenised remote sign-off link (mirrors the briefing pattern).
+  const getOrCreateSignToken = async (permitId: string): Promise<string | null> => {
+    const { data: existing } = await supabase
+      .from('permit_signing_tokens')
+      .select('public_token')
+      .eq('permit_id', permitId)
+      .maybeSingle();
+    if (existing?.public_token) return existing.public_token as string;
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return null;
+    const token = crypto.randomUUID();
+    const { error } = await supabase
+      .from('permit_signing_tokens')
+      .insert({ permit_id: permitId, user_id: user.id, public_token: token });
+    if (error) return null;
+    return token;
+  };
+
+  const openSignLink = async (permitId: string) => {
+    setLinkLoading(true);
+    try {
+      const token = await getOrCreateSignToken(permitId);
+      if (!token) {
+        toast.error('Could not create signing link');
+        return;
+      }
+      setSignLink(`${window.location.origin}/permit-sign/${token}`);
+      setShowShareLink(true);
+    } finally {
+      setLinkLoading(false);
+    }
+  };
+
+  const copySignLink = async () => {
+    try {
+      await navigator.clipboard.writeText(signLink);
+      toast.success('Link copied');
+    } catch {
+      toast.error('Copy failed');
+    }
+  };
+
+  const shareSignLink = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Permit to Work — sign-off', url: signLink });
+      } catch { /* cancelled */ }
+    } else {
+      copySignLink();
+    }
   };
 
   const issuePermit = async () => {
     if (!selectedType) return;
-
-    const now = new Date();
-    const end = new Date(now.getTime() + formData.duration_hours * 3600000);
-
+    const start = new Date();
+    const end = new Date(start.getTime() + formData.duration_hours * 3600000);
     try {
-      await createPermitMutation.mutateAsync({
+      const created = await createPermitMutation.mutateAsync({
         type: selectedType,
         title: formData.title,
         location: formData.location,
@@ -672,53 +628,79 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         hazards: hazards as unknown as Json,
         precautions,
         ppe_required: ppeRequired,
-        start_time: now.toISOString(),
+        start_time: start.toISOString(),
         end_time: end.toISOString(),
         duration_hours: formData.duration_hours,
         status: 'active',
         emergency_procedures: formData.emergency_procedures,
         additional_notes: formData.additional_notes,
         photos: photoUrls as unknown as Json,
+        auto_fire_watch: autoFireWatch,
+        linked_rams_id: linkedRamsId,
+        linked_rams_title: linkedRamsTitle,
+        acceptance_status: receiverRemote ? 'awaiting_receiver' : 'accepted',
       });
       clearDraft();
       setShowWizard(false);
+      const remote = receiverRemote;
       resetWizard();
-    } catch {
-      // Error toast handled by the hook
-    }
+      // Remote receiver → immediately surface the signing link to share.
+      if (remote && created?.id) await openSignLink(created.id);
+    } catch { /* toast handled by hook */ }
   };
 
-  const closePermit = async (id: string) => {
+  const submitAmendment = async () => {
+    if (!amendingId) return;
     try {
-      await closePermitMutation.mutateAsync({ id });
-      setViewingPermit(null);
-    } catch {
-      // error toast handled by hook
-    }
+      await amendPermit.mutateAsync({
+        id: amendingId,
+        changeReason: amendReason,
+        fields: {
+          title: formData.title,
+          location: formData.location,
+          description: formData.description,
+          duration_hours: formData.duration_hours,
+          emergency_procedures: formData.emergency_procedures,
+          additional_notes: formData.additional_notes,
+          issuer_name: formData.issuer_name,
+          issuer_signature: formData.issuer_signature,
+          receiver_name: formData.receiver_name,
+          receiver_signature: formData.receiver_signature,
+          hazards: hazards as unknown as Json,
+          precautions,
+          ppe_required: ppeRequired,
+          auto_fire_watch: autoFireWatch,
+          linked_rams_id: linkedRamsId,
+          linked_rams_title: linkedRamsTitle,
+        },
+      });
+      setShowWizard(false);
+      resetWizard();
+    } catch { /* toast handled by hook */ }
   };
 
+  const closePermit = async (id: string, closedBy?: string) => {
+    try {
+      await closePermitMutation.mutateAsync({ id, closedBy });
+      setShowCloseOut(false);
+      setViewingPermit(null);
+    } catch { /* handled */ }
+  };
+  const cancelPermit = async (id: string) => {
+    try {
+      await cancelPermitMutation.mutateAsync(id);
+      setViewingPermit(null);
+    } catch { /* handled */ }
+  };
   const extendPermit = async (id: string) => {
     try {
       await extendPermitMutation.mutateAsync({ id, additionalHours: extensionHours });
       setShowExtendSheet(false);
       setExtensionHours(2);
-    } catch {
-      // error toast handled by hook
-    }
+    } catch { /* handled */ }
   };
 
-  const cancelPermit = async (id: string) => {
-    try {
-      await cancelPermitMutation.mutateAsync(id);
-      setViewingPermit(null);
-    } catch {
-      // error toast handled by hook
-    }
-  };
-
-  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
-  const [showShare, setShowShare] = useState(false);
-
+  // ─── Derived ───
   const filteredPermits = permits.filter((p) => {
     if (filterStatus !== 'all' && p.status !== filterStatus) return false;
     if (
@@ -730,251 +712,338 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     return true;
   });
 
-  const {
-    visible: visiblePermits,
-    hasMore: hasMorePermits,
-    remaining: remainingPermits,
-    loadMore: loadMorePermits,
-  } = useShowMore(filteredPermits);
+  // Active first (soonest-expiring first), then expired, then the rest by recency.
+  const rank = (p: Permit) => (p.status === 'active' ? 0 : p.status === 'expired' ? 1 : 2);
+  const sortedPermits = [...filteredPermits].sort((a, b) => {
+    if (rank(a) !== rank(b)) return rank(a) - rank(b);
+    if (a.status === 'active' && b.status === 'active') {
+      return new Date(a.end_time).getTime() - new Date(b.end_time).getTime();
+    }
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+
+  const { visible: visiblePermits, hasMore, remaining, loadMore } = useShowMore(sortedPermits);
 
   const activeCount = permits.filter((p) => p.status === 'active').length;
+  const expiringCount = permits.filter(
+    (p) => p.status === 'active' && new Date(p.end_time).getTime() - now.getTime() < 3600000
+  ).length;
+  const pendingApprovalCount = permits.filter((p) => p.approval_status === 'pending').length;
 
-  // ─── Wizard Content ───
+  const statusCounts: Record<PermitStatus, number> = {
+    active: permits.filter((p) => p.status === 'active').length,
+    expired: permits.filter((p) => p.status === 'expired').length,
+    closed: permits.filter((p) => p.status === 'closed').length,
+    cancelled: permits.filter((p) => p.status === 'cancelled').length,
+  };
 
+  // ─── Pre-issue readiness (Delta 1) ───
+  const hazardsHaveControls = hazards.length > 0 && hazards.every((h) => h.controls.trim().length > 0);
+  const differentPeople =
+    !!formData.issuer_name &&
+    !!formData.receiver_name &&
+    formData.issuer_name.trim().toLowerCase() !== formData.receiver_name.trim().toLowerCase();
+
+  const receiverReadiness: { ok: boolean; label: string }[] = receiverRemote
+    ? [{ ok: true, label: 'Receiver will sign on their own device' }]
+    : [
+        { ok: !!formData.receiver_name && !!formData.receiver_signature, label: 'Receiver name and signature' },
+        { ok: differentPeople, label: 'Issuer and receiver are different people' },
+      ];
+
+  const readiness: { ok: boolean; label: string }[] = [
+    { ok: !!formData.title && !!formData.location, label: 'Permit title and location' },
+    { ok: hazards.length > 0, label: 'At least one hazard identified' },
+    { ok: hazardsHaveControls, label: 'Every hazard has a control measure' },
+    { ok: precautions.length > 0, label: 'Required precautions listed' },
+    { ok: !!formData.emergency_procedures.trim(), label: 'Emergency procedures recorded' },
+    { ok: !!formData.issuer_name && !!formData.issuer_signature, label: 'Issuer name and signature' },
+    ...receiverReadiness,
+  ];
+  const allReady = readiness.every((r) => r.ok);
+  const amendReady = allReady && (wizardMode === 'create' || amendReason.trim().length > 0);
+
+  const canProceed = () => {
+    switch (wizardStep) {
+      case 1:
+        return !!formData.title && !!formData.location;
+      case 2:
+        return hazardsHaveControls && precautions.length > 0 && !!formData.emergency_procedures.trim();
+      case 3:
+        return amendReady;
+      default:
+        return true;
+    }
+  };
+
+  const isSaving = createPermitMutation.isPending || amendPermit.isPending;
+
+  // ─── Wizard steps ───
   const renderWizardStep = () => {
     switch (wizardStep) {
       case 0:
         return (
-          <div className="space-y-3">
-            <h3 className="text-base font-bold text-white px-1">Select Permit Type</h3>
-            <button
-              type="button"
-              onClick={() => setShowLoadTemplate(true)}
-              className="w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-            >
-              Load from Template
-            </button>
-            {PERMIT_TYPES.map((type) => {
-              const Icon = type.icon;
-              return (
-                <motion.button
+          <div className="space-y-4">
+            <TextAction onClick={() => setShowLoadTemplate(true)}>Load from a saved template →</TextAction>
+            <ListCard>
+              {PERMIT_TYPES.map((type, i) => (
+                <ListRow
                   key={type.id}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => selectPermitType(type.id)}
-                  className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br ${type.gradient}`}
-                    >
-                      <Icon className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-[15px] font-bold text-white">{type.label}</h4>
-                      <p className="text-xs text-white line-clamp-1">{type.description}</p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </div>
-                </motion.button>
-              );
-            })}
+                  lead={
+                    <span className="text-[11px] font-medium tabular-nums text-elec-yellow/80 w-5">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  }
+                  title={type.label}
+                  subtitle={type.description}
+                  trailing={<span aria-hidden className="text-elec-yellow/80">→</span>}
+                />
+              ))}
+            </ListCard>
           </div>
         );
 
       case 1:
         return (
           <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Job Details</h3>
-            <div className="space-y-3">
-              <div>
-                <Label className="text-white text-sm">Permit Title</Label>
-                <Input
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. Hot Work — DB Board Replacement"
-                />
-              </div>
-              <LocationAutoFill
-                value={formData.location}
-                onChange={(val) => setFormData({ ...formData, location: val })}
-                placeholder="e.g. Plant Room, Building A, Level 2"
-                label="Location"
+            <Field label="Permit title" required>
+              <input
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                className={inputClass}
+                placeholder="e.g. Hot Work — DB Board Replacement"
               />
-              <div>
-                <Label className="text-white text-sm">Description of Work</Label>
-                <SmartTextarea
-                  value={formData.description}
-                  onChange={(val) => setFormData({ ...formData, description: val })}
-                  className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Describe the work to be carried out..."
-                />
-              </div>
-              <div>
-                <Label className="text-white text-sm">Duration (hours)</Label>
-                <Select
-                  value={String(formData.duration_hours)}
-                  onValueChange={(v) => setFormData({ ...formData, duration_hours: Number(v) })}
+            </Field>
+            <LocationAutoFill
+              value={formData.location}
+              onChange={(val) => setFormData({ ...formData, location: val })}
+              placeholder="e.g. Plant Room, Building A, Level 2"
+              label="Location"
+            />
+            <Field label="Description of work">
+              <SmartTextarea
+                value={formData.description}
+                onChange={(val) => setFormData({ ...formData, description: val })}
+                className="touch-manipulation text-[13px] min-h-[100px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Describe the work to be carried out…"
+              />
+            </Field>
+            <Field label="Duration">
+              <Select
+                value={String(formData.duration_hours)}
+                onValueChange={(v) => setFormData({ ...formData, duration_hours: Number(v) })}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {[1, 2, 3, 4, 6, 8, 10, 12, 24].map((h) => (
+                    <SelectItem key={h} value={String(h)}>
+                      {h} {h === 1 ? 'hour' : 'hours'}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field label="Controlling RAMS / risk assessment" hint="The assessment this permit sits on top of.">
+              {linkedRamsId ? (
+                <div className="flex items-center justify-between gap-2 px-3 h-11 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]">
+                  <span className="text-[13px] text-white truncate">{linkedRamsTitle}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLinkedRamsId(null);
+                      setLinkedRamsTitle(null);
+                    }}
+                    className="text-[11.5px] text-white/50 hover:text-white shrink-0 touch-manipulation"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setShowRamsPicker(true)}
+                  className={cn(inputClass, 'flex items-center text-white/45')}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow mt-1">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                    {[1, 2, 3, 4, 6, 8, 10, 12, 24].map((h) => (
-                      <SelectItem key={h} value={String(h)}>
-                        {h} {h === 1 ? 'hour' : 'hours'}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+                  Link a RAMS…
+                </button>
+              )}
+              {!linkedRamsId && ramsDocs.length > 0 && (
+                <p className="text-[11px] text-amber-400/90 mt-1.5">
+                  Recommended — a permit should sit on top of a risk assessment. You have {ramsDocs.length} saved RAMS to link.
+                </p>
+              )}
+            </Field>
           </div>
         );
 
       case 2:
         return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Hazards & Controls</h3>
-            <div className="space-y-3">
+          <div className="space-y-5">
+            <div className="space-y-2.5">
+              <Eyebrow>Hazards &amp; controls</Eyebrow>
               {hazards.map((hazard, index) => (
-                <div
-                  key={hazard.id}
-                  className="p-3 rounded-xl border border-white/10 bg-white/[0.03] space-y-2"
-                >
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <div className="flex-1">
-                      <p className="text-sm text-white font-medium">{hazard.description}</p>
-                      <Input
-                        value={hazard.controls}
-                        onChange={(e) => {
-                          const updated = [...hazards];
-                          updated[index] = { ...hazard, controls: e.target.value };
-                          setHazards(updated);
-                        }}
-                        className="h-11 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-2"
-                        placeholder="Control measures..."
-                      />
-                    </div>
-                  </div>
+                <div key={hazard.id} className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] space-y-2">
+                  <p className="text-[13px] text-white font-medium">{hazard.description}</p>
+                  <input
+                    value={hazard.controls}
+                    onChange={(e) => {
+                      const updated = [...hazards];
+                      updated[index] = { ...hazard, controls: e.target.value };
+                      setHazards(updated);
+                    }}
+                    className={inputClass}
+                    placeholder="Control measures (required)…"
+                  />
                 </div>
               ))}
+              {!hazardsHaveControls && (
+                <p className="text-[11px] text-amber-400/90">Add a control measure to every hazard before issuing.</p>
+              )}
             </div>
 
-            <h4 className="text-sm font-bold text-white mt-4">Required Precautions</h4>
             <div className="space-y-2">
-              {precautions.map((p, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 p-2.5 rounded-lg border border-white/10 bg-white/[0.03]"
-                >
-                  <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
-                  <span className="text-sm text-white">{p}</span>
-                </div>
-              ))}
+              <Eyebrow>Required precautions</Eyebrow>
+              <ListCard>
+                {precautions.map((p, i) => (
+                  <div key={i} className="px-5 py-3 text-[12.5px] text-white/90 leading-relaxed">
+                    {p}
+                  </div>
+                ))}
+              </ListCard>
             </div>
 
-            <h4 className="text-sm font-bold text-white mt-4">Required PPE</h4>
-            <div className="flex flex-wrap gap-2">
-              {ppeRequired.map((item, i) => (
-                <Badge key={i} className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs">
-                  <Shield className="h-3 w-3 mr-1" />
-                  {item}
-                </Badge>
-              ))}
+            <div className="space-y-2">
+              <Eyebrow>Required PPE</Eyebrow>
+              <div className="flex flex-wrap gap-1.5">
+                {ppeRequired.map((item, i) => (
+                  <Chip key={i}>{item}</Chip>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-4">
-              <Label className="text-white text-sm">Emergency Procedures</Label>
+            <Field label="Emergency procedures" required>
               <SmartTextarea
                 value={formData.emergency_procedures}
                 onChange={(val) => setFormData({ ...formData, emergency_procedures: val })}
-                className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                placeholder="Emergency procedures specific to this permit..."
+                className="touch-manipulation text-[13px] min-h-[80px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Emergency procedures specific to this permit…"
               />
-            </div>
+            </Field>
 
-            {/* Site Photos */}
-            <div className="mt-4">
-              <SafetyPhotoCapture
-                photos={photoUrls}
-                onPhotosChange={setPhotoUrls}
-                label="Site Photos"
-              />
+            {selectedType === 'hot-work' && (
+              <FormCard>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[13px] font-medium text-white">Schedule fire watch</span>
+                  <Switch checked={autoFireWatch} onCheckedChange={setAutoFireWatch} />
+                </div>
+                <p className="text-[11.5px] text-white/55">
+                  Minimum 60 minutes after completion — HSG168. We'll flag this permit so you can log the fire
+                  watch when work finishes.
+                </p>
+              </FormCard>
+            )}
+
+            <div>
+              <Eyebrow className="mb-2">Site photos</Eyebrow>
+              <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
             </div>
           </div>
         );
 
       case 3:
         return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Authorisation & Signatures</h3>
-
-            <div className="space-y-4">
-              <div className="p-3 rounded-xl border border-orange-500/20 bg-orange-500/5">
-                <h4 className="text-sm font-bold text-orange-300 mb-3 flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Permit Issuer
-                </h4>
-                <div className="space-y-3">
-                  <div>
-                    <Label className="text-white text-sm">Full Name</Label>
-                    <Input
-                      value={formData.issuer_name}
-                      onChange={(e) => setFormData({ ...formData, issuer_name: e.target.value })}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                      placeholder="Issuer's full name"
-                    />
-                  </div>
-                  <SignaturePadInline
-                    label="Issuer Signature"
-                    onSave={(sig) => setFormData({ ...formData, issuer_signature: sig })}
-                  />
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl border border-blue-500/20 bg-blue-500/5">
-                <h4 className="text-sm font-bold text-blue-300 mb-3 flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Permit Receiver
-                </h4>
-                <div className="space-y-3">
-                  <div>
-                    <Label className="text-white text-sm">Full Name</Label>
-                    <Input
-                      value={formData.receiver_name}
-                      onChange={(e) => setFormData({ ...formData, receiver_name: e.target.value })}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                      placeholder="Receiver's full name"
-                    />
-                    {formData.issuer_name &&
-                      formData.receiver_name &&
-                      formData.issuer_name.trim().toLowerCase() ===
-                        formData.receiver_name.trim().toLowerCase() && (
-                        <p className="text-xs text-red-400 mt-1 flex items-center gap-1">
-                          <span className="w-1 h-1 bg-red-400 rounded-full" />
-                          Issuer and receiver must be different people
-                        </p>
-                      )}
-                  </div>
-                  <SignaturePadInline
-                    label="Receiver Signature"
-                    onSave={(sig) => setFormData({ ...formData, receiver_signature: sig })}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Additional Notes</Label>
-                <SmartTextarea
-                  value={formData.additional_notes}
-                  onChange={(val) => setFormData({ ...formData, additional_notes: val })}
-                  className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Any additional notes or conditions..."
+          <div className="space-y-5">
+            {wizardMode === 'amend' && (
+              <FormCard eyebrow="Reason for change">
+                <input
+                  value={amendReason}
+                  onChange={(e) => setAmendReason(e.target.value)}
+                  className={inputClass}
+                  placeholder="e.g. Extended scope to second board"
                 />
+                <p className="text-[11.5px] text-white/55">
+                  Signatures have been cleared and must be re-captured. Saving creates a new version; any
+                  required approval resets to pending.
+                </p>
+              </FormCard>
+            )}
+
+            <ReadinessGate items={readiness} />
+
+            <FormCard eyebrow="Permit issuer">
+              <Field label="Full name" required>
+                <input
+                  value={formData.issuer_name}
+                  onChange={(e) => setFormData({ ...formData, issuer_name: e.target.value })}
+                  className={inputClass}
+                  placeholder="Issuer's full name"
+                />
+              </Field>
+              <SignatureField
+                label="Issuer signature"
+                value={formData.issuer_signature}
+                onChange={(sig) => setFormData({ ...formData, issuer_signature: sig })}
+              />
+            </FormCard>
+
+            <FormCard eyebrow="Permit receiver">
+              {/* In-person vs remote sign-off */}
+              <div className="grid grid-cols-2 gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl">
+                {[
+                  { v: false, label: 'Signs now' },
+                  { v: true, label: 'Signs on their device' },
+                ].map((opt) => (
+                  <button
+                    key={String(opt.v)}
+                    type="button"
+                    onClick={() => setReceiverRemote(opt.v)}
+                    className={cn(
+                      'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
+                      receiverRemote === opt.v ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
               </div>
-            </div>
+
+              <Field label={receiverRemote ? 'Full name (optional)' : 'Full name'} required={!receiverRemote}>
+                <input
+                  value={formData.receiver_name}
+                  onChange={(e) => setFormData({ ...formData, receiver_name: e.target.value })}
+                  className={inputClass}
+                  placeholder="Receiver's full name"
+                />
+                {!receiverRemote && formData.issuer_name && formData.receiver_name && !differentPeople && (
+                  <p className="text-[11px] text-red-400 mt-1.5">Issuer and receiver must be different people.</p>
+                )}
+              </Field>
+
+              {receiverRemote ? (
+                <p className="text-[11.5px] text-white/55">
+                  A secure signing link is created when you issue the permit. The receiver reviews it and signs on
+                  their own phone — you'll see "Awaiting receiver" until they do.
+                </p>
+              ) : (
+                <SignatureField
+                  label="Receiver signature"
+                  value={formData.receiver_signature}
+                  onChange={(sig) => setFormData({ ...formData, receiver_signature: sig })}
+                />
+              )}
+            </FormCard>
+
+            <Field label="Additional notes">
+              <SmartTextarea
+                value={formData.additional_notes}
+                onChange={(val) => setFormData({ ...formData, additional_notes: val })}
+                className="touch-manipulation text-[13px] min-h-[80px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Any additional notes or conditions…"
+              />
+            </Field>
           </div>
         );
 
@@ -983,184 +1052,160 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     }
   };
 
-  const canProceed = () => {
-    switch (wizardStep) {
-      case 1:
-        return formData.title && formData.location;
-      case 2:
-        return hazards.length > 0 && precautions.length > 0;
-      case 3:
-        return (
-          formData.issuer_name &&
-          formData.receiver_name &&
-          formData.issuer_signature &&
-          formData.receiver_signature &&
-          formData.issuer_name.trim().toLowerCase() !== formData.receiver_name.trim().toLowerCase()
-        );
-      default:
-        return true;
-    }
-  };
-
   // ─── Render ───
-
   return (
-    <div className="bg-background min-h-screen animate-fade-in">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-          {activeCount > 0 && (
-            <Badge className="bg-green-500/15 text-green-400 border-green-500/20">
-              {activeCount} Active
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      <div className="px-4 py-4 space-y-4">
-        {/* Hero */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-            <FileText className="h-6 w-6 text-amber-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Permit to Work</h1>
-            <p className="text-sm text-white">Issue, manage and close work permits</p>
-          </div>
-        </div>
-
-        {/* New Permit Button */}
-        <Button
-          onClick={() => {
+    <SafetyModuleShell
+      onBack={onBack}
+      moduleName="Permit to Work"
+      trailing={activeCount > 0 ? <StatusPill status="active" /> : undefined}
+      hero={
+        <PageHero
+          eyebrow="Permit to Work"
+          title="Issue, track and close work permits"
+          description="Hot work, confined space, isolation, height and excavation — issued with the right controls, sign-offs, version control and live expiry."
+          tone="amber"
+          actions={
+            <PrimaryButton
+              onClick={() => {
+                resetWizard();
+                setShowWizard(true);
+              }}
+            >
+              Issue permit
+            </PrimaryButton>
+          }
+        />
+      }
+      stats={
+        permits.length > 0 ? (
+          <StatStrip
+            stats={[
+              { value: activeCount, label: 'Active', accent: true, onClick: () => setFilterStatus('active') },
+              { value: expiringCount, label: 'Expiring', sub: 'within 1 hour', onClick: () => setFilterStatus('active') },
+              { value: pendingApprovalCount, label: 'Approvals', sub: 'awaiting' },
+              { value: permits.length, label: 'Total', onClick: () => setFilterStatus('all') },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        permits.length > 0 ? (
+          <FilterBar
+            tabs={[
+              { value: 'all', label: 'All', count: permits.length },
+              { value: 'active', label: 'Active', count: statusCounts.active },
+              { value: 'expired', label: 'Expired', count: statusCounts.expired },
+              { value: 'closed', label: 'Closed', count: statusCounts.closed },
+              { value: 'cancelled', label: 'Cancelled', count: statusCounts.cancelled },
+            ]}
+            activeTab={filterStatus}
+            onTabChange={(v) => setFilterStatus(v as PermitStatus | 'all')}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search permits…"
+          />
+        ) : undefined
+      }
+    >
+      {permitsLoading ? (
+        <LoadingState />
+      ) : permits.length === 0 ? (
+        <EmptyState
+          title="No permits issued yet"
+          description="Issue your first permit to work — pick a type and we'll pre-fill the standard hazards, controls and PPE."
+          action="Issue permit"
+          onAction={() => {
             resetWizard();
             setShowWizard(true);
           }}
-          className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          Issue New Permit
-        </Button>
-
-        {/* Filter / Search */}
-        {permits.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <Input
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
-                  placeholder="Search permits..."
-                />
-              </div>
-            </div>
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
-              {(['all', 'active', 'expired', 'closed', 'cancelled'] as const).map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilterStatus(status)}
-                  className={`px-4 py-2 min-h-[36px] rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-colors active:scale-[0.97] ${
-                    filterStatus === status
-                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                      : 'bg-white/[0.05] text-white border border-white/10'
-                  }`}
-                >
-                  {status === 'all' ? 'All' : STATUS_CONFIG[status].label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Permits List */}
-        {filteredPermits.length === 0 && permits.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <FileText className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-base font-bold text-white mb-1">No Permits Issued</h3>
-            <p className="text-sm text-white">Issue your first permit to work to get started</p>
-          </div>
-        ) : filteredPermits.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-sm text-white">No permits match your filter</p>
-          </div>
-        ) : (
-          <div className="space-y-2 pb-20">
-            {visiblePermits.map((permit, idx) => {
-              const typeConf = PERMIT_TYPES.find((t) => t.id === permit.type);
-              const TypeIcon = typeConf?.icon || Shield;
+        />
+      ) : filteredPermits.length === 0 ? (
+        <EmptyState title="No permits match your filter" description="Try a different status tab or clear your search." />
+      ) : (
+        <div className="space-y-3">
+          <ListCard>
+            {visiblePermits.map((permit) => {
+              const typeLabel = PERMIT_TYPES.find((t) => t.id === permit.type)?.label || permit.type;
+              const isActive = permit.status === 'active';
+              const expiring = isActive && new Date(permit.end_time).getTime() - now.getTime() < 3600000;
               return (
-                <SafetyRecordCard
+                <ListRow
                   key={permit.id}
-                  id={permit.id}
+                  onClick={() => setViewingPermit(permit)}
+                  accent={statusTone(permit.status, expiring)}
                   title={permit.title}
-                  subtitle={typeConf?.label || permit.type}
-                  status={permit.status}
-                  statusLabel={STATUS_CONFIG[permit.status]?.label || permit.status}
-                  regulation="HSG250"
-                  icon={TypeIcon}
-                  meta={[
-                    { icon: MapPin, label: permit.location },
-                    { icon: Calendar, label: fmtCardDate(permit.start_time || permit.created_at) },
-                    ...(permit.duration_hours
-                      ? [{ icon: Clock, label: `${permit.duration_hours}h` }]
-                      : []),
-                  ]}
-                  actions={[
-                    { label: 'Duplicate', icon: Copy, onClick: () => handleDuplicate(permit) },
-                  ]}
-                  onTap={() => setViewingPermit(permit)}
-                  pdfType="permit"
-                  index={idx}
+                  subtitle={`${typeLabel} · ${permit.location}`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <StatusPill status={permit.status} expiring={expiring} />
+                      {isActive && permit.acceptance_status === 'awaiting_receiver' ? (
+                        <span className="text-[11px] text-amber-400">Awaiting receiver</span>
+                      ) : (
+                        <span className={cn('text-[11px] tabular-nums', isActive ? remainingClasses(permit.end_time, now) : 'text-white/45')}>
+                          {isActive ? remainingLabel(permit.end_time, now) : fmtDate(permit.start_time || permit.created_at)}
+                        </span>
+                      )}
+                    </div>
+                  }
                 />
               );
             })}
-            {hasMorePermits && (
-              <LoadMoreButton onLoadMore={loadMorePermits} remaining={remainingPermits} />
-            )}
-          </div>
-        )}
-      </div>
+          </ListCard>
+          {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
+        </div>
+      )}
 
-      {/* Wizard Sheet */}
+      {/* ─── Create / amend wizard ─── */}
       <Sheet open={showWizard} onOpenChange={setShowWizard}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            {/* Wizard Header */}
-            <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {wizardStep > 0 && (
-                  <button
-                    onClick={() => setWizardStep((s) => s - 1)}
-                    className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
+        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <SheetShell
+            eyebrow={
+              wizardStep === 0
+                ? wizardMode === 'amend'
+                  ? 'Amend permit'
+                  : 'New permit'
+                : `${wizardMode === 'amend' ? 'Amend' : 'New permit'} · Step ${wizardStep} of 3${typeConfig ? ` · ${typeConfig.label}` : ''}`
+            }
+            title={
+              wizardStep === 0
+                ? 'Select permit type'
+                : wizardStep === 1
+                  ? 'Job details'
+                  : wizardStep === 2
+                    ? 'Hazards & controls'
+                    : 'Authorisation & sign-off'
+            }
+            description={wizardMode === 'create' ? <DraftSaveIndicator status={draftStatus} /> : undefined}
+            footer={
+              wizardStep > 0 ? (
+                <>
+                  <SecondaryButton onClick={() => setWizardStep((s) => s - 1)}>Back</SecondaryButton>
+                  {wizardStep === 3 && wizardMode === 'create' && (
+                    <SecondaryButton onClick={() => setShowSaveTemplate(true)}>Save template</SecondaryButton>
+                  )}
+                  <PrimaryButton
+                    fullWidth
+                    disabled={!canProceed() || isSaving}
+                    onClick={() => {
+                      if (wizardStep < 3) setWizardStep((s) => s + 1);
+                      else if (wizardMode === 'amend') submitAmendment();
+                      else issuePermit();
+                    }}
                   >
-                    <ArrowLeft className="h-4 w-4 text-white" />
-                  </button>
-                )}
-                <h2 className="text-base font-bold text-white">
-                  {wizardStep === 0 ? 'New Permit' : `Step ${wizardStep} of 3`}
-                </h2>
-                <DraftSaveIndicator status={draftStatus} />
-              </div>
-              {typeConfig && (
-                <Badge className={`${typeConfig.colour} bg-white/10 border-none text-xs`}>
-                  {typeConfig.label}
-                </Badge>
-              )}
-            </div>
-
-            {/* Progress bar */}
+                    {isSaving
+                      ? 'Saving…'
+                      : wizardStep === 3
+                        ? wizardMode === 'amend'
+                          ? 'Save new version'
+                          : 'Issue permit'
+                        : 'Continue'}
+                  </PrimaryButton>
+                </>
+              ) : undefined
+            }
+          >
             {wizardStep > 0 && (
-              <div className="h-1 bg-white/[0.05]">
+              <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-elec-yellow"
                   initial={{ width: 0 }}
@@ -1169,431 +1214,393 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 />
               </div>
             )}
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
-              <AnimatePresence>
-                {recoveredDraft && (
-                  <div className="mb-4">
-                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-                  </div>
-                )}
-              </AnimatePresence>
-              {renderWizardStep()}
-            </div>
-
-            {/* Footer */}
-            {wizardStep > 0 && (
-              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))] space-y-2">
-                <Button
-                  onClick={() => {
-                    if (wizardStep < 3) {
-                      setWizardStep((s) => s + 1);
-                    } else {
-                      issuePermit();
-                    }
-                  }}
-                  disabled={!canProceed()}
-                  className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
-                >
-                  {wizardStep === 3 ? 'Issue Permit' : 'Continue'}
-                </Button>
-                {wizardStep === 3 && (
-                  <button
-                    type="button"
-                    onClick={() => setShowSaveTemplate(true)}
-                    className="w-full h-10 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-                  >
-                    Save as Template
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+            <AnimatePresence>
+              {recoveredDraft && wizardMode === 'create' && (
+                <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+              )}
+            </AnimatePresence>
+            {renderWizardStep()}
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
-      {/* Permit Detail Sheet */}
+      {/* ─── Detail ─── */}
       <Sheet open={!!viewingPermit} onOpenChange={() => setViewingPermit(null)}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
           {viewingPermit &&
             (() => {
               const typeConf = PERMIT_TYPES.find((t) => t.id === viewingPermit.type)!;
-              const statusConf = STATUS_CONFIG[viewingPermit.status];
-              const TypeIcon = typeConf.icon;
-
+              const isLive = viewingPermit.status === 'active' || viewingPermit.status === 'expired';
+              const detailExpiring =
+                viewingPermit.status === 'active' &&
+                new Date(viewingPermit.end_time).getTime() - now.getTime() < 3600000;
+              const detailTone = statusTone(viewingPermit.status, detailExpiring) ?? 'blue';
+              const needsFireWatchPrompt =
+                viewingPermit.type === 'hot-work' && viewingPermit.auto_fire_watch && relatedFireWatches.length === 0;
               return (
-                <div className="flex flex-col h-full bg-background">
-                  <div className="px-4 py-3 border-b border-white/10">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${typeConf.gradient}`}
-                      >
-                        <TypeIcon className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h2 className="text-base font-bold text-white">{viewingPermit.title}</h2>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <Badge
-                            className={`${statusConf.bg} ${statusConf.colour} border-none text-[10px]`}
-                          >
-                            {statusConf.label}
-                          </Badge>
-                          {viewingPermit.status === 'active' && (
-                            <TimeRemaining endTime={viewingPermit.end_time} />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
-                    {/* Details */}
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="h-4 w-4 text-white" />
-                        <span className="text-white">{viewingPermit.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="h-4 w-4 text-white" />
-                        <span className="text-white">
-                          {new Date(viewingPermit.start_time).toLocaleString('en-GB')} —{' '}
-                          {new Date(viewingPermit.end_time).toLocaleString('en-GB')}
+                <SheetShell
+                  eyebrow={`${typeConf.label}${viewingPermit.version > 1 ? ` · Version ${viewingPermit.version}` : ''}`}
+                  title={viewingPermit.title}
+                  description={
+                    <span className="inline-flex items-center gap-2">
+                      <StatusPill status={viewingPermit.status} expiring={detailExpiring} />
+                      {viewingPermit.status === 'active' && (
+                        <span className={cn('text-[12px] tabular-nums', remainingClasses(viewingPermit.end_time, now))}>
+                          {remainingLabel(viewingPermit.end_time, now)}
                         </span>
-                      </div>
-                      <p className="text-sm text-white mt-2">{viewingPermit.description}</p>
+                      )}
+                    </span>
+                  }
+                  footer={
+                    <>
+                      <PrimaryButton
+                        fullWidth
+                        disabled={isExporting && exportingId === viewingPermit.id}
+                        onClick={() => exportPDF('permit', viewingPermit.id)}
+                      >
+                        {isExporting && exportingId === viewingPermit.id ? 'Exporting…' : 'Export PDF'}
+                      </PrimaryButton>
+                      <SecondaryButton onClick={() => setShowShare(true)}>Share</SecondaryButton>
+                    </>
+                  }
+                >
+                  {/* Status accent line — bleeds to the sheet edges */}
+                  <div className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[detailTone])} />
+
+                  {needsFireWatchPrompt && (
+                    <div className="p-3 rounded-xl bg-orange-500/[0.08] border border-orange-500/20">
+                      <p className="text-[12px] text-white/85">
+                        Fire watch required — minimum 60 minutes after completion (HSG168). Log it in the Fire
+                        Watch tool when work finishes.
+                      </p>
                     </div>
+                  )}
 
-                    {/* Hazards */}
-                    <div>
-                      <h4 className="text-sm font-bold text-white mb-2">Hazards & Controls</h4>
-                      <div className="space-y-2">
-                        {viewingPermit.hazards.map((h) => (
-                          <div
-                            key={h.id}
-                            className="p-2.5 rounded-lg border border-white/10 bg-white/[0.03]"
-                          >
-                            <div className="flex items-start gap-2">
-                              <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5" />
-                              <div>
-                                <p className="text-sm text-white font-medium">{h.description}</p>
-                                {h.controls && (
-                                  <p className="text-xs text-white mt-0.5">{h.controls}</p>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                  {/* Awaiting remote receiver acceptance */}
+                  {viewingPermit.acceptance_status === 'awaiting_receiver' && (
+                    <div className="p-3 rounded-xl bg-amber-500/[0.08] border border-amber-500/20 space-y-2.5">
+                      <p className="text-[12px] text-white/85">
+                        Awaiting receiver acceptance — the receiver hasn't signed yet. Work shouldn't start until
+                        they accept.
+                      </p>
+                      <SecondaryButton
+                        fullWidth
+                        disabled={linkLoading}
+                        onClick={() => openSignLink(viewingPermit.id)}
+                      >
+                        {linkLoading ? 'Preparing…' : 'Send signing link'}
+                      </SecondaryButton>
                     </div>
+                  )}
 
-                    {/* PPE */}
-                    <div>
-                      <h4 className="text-sm font-bold text-white mb-2">Required PPE</h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {viewingPermit.ppe_required.map((item, i) => (
-                          <Badge
-                            key={i}
-                            className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs"
-                          >
-                            {item}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Precautions */}
-                    <div>
-                      <h4 className="text-sm font-bold text-white mb-2">Precautions</h4>
-                      <div className="space-y-1.5">
-                        {viewingPermit.precautions.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                            <span className="text-sm text-white">{p}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Signatures */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                        <p className="text-[10px] text-white mb-1">ISSUER</p>
-                        <p className="text-sm text-white font-medium">
-                          {viewingPermit.issuer_name}
-                        </p>
-                        {viewingPermit.issuer_signature && (
-                          <img
-                            src={viewingPermit.issuer_signature}
-                            alt="Issuer signature"
-                            className="h-12 mt-1 opacity-80"
-                          />
-                        )}
-                      </div>
-                      <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                        <p className="text-[10px] text-white mb-1">RECEIVER</p>
-                        <p className="text-sm text-white font-medium">
-                          {viewingPermit.receiver_name}
-                        </p>
-                        {viewingPermit.receiver_signature && (
-                          <img
-                            src={viewingPermit.receiver_signature}
-                            alt="Receiver signature"
-                            className="h-12 mt-1 opacity-80"
-                          />
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Corrective Actions */}
-                    <CorrectiveActionsPanel sourceType="permit" sourceId={viewingPermit.id} />
-
-                    {/* Related Records */}
-                    {(relatedFireWatches.length > 0 || relatedIsolations.length > 0) && (
-                      <div>
-                        <h4 className="text-sm font-bold text-white mb-2">Related Records</h4>
-                        <div className="space-y-2">
-                          {relatedFireWatches.map((fw) => (
-                            <div
-                              key={fw.id}
-                              className="flex items-center gap-3 p-3 rounded-xl border border-orange-500/20 bg-orange-500/[0.06]"
-                            >
-                              <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                                <Flame className="h-4 w-4 text-orange-400" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-white">Fire Watch</p>
-                                <p className="text-xs text-white">
-                                  {fw.duration_minutes} min
-                                  {fw.location ? ` \u00B7 ${fw.location}` : ''}
-                                  {' \u00B7 '}
-                                  {new Date(fw.start_time).toLocaleDateString('en-GB')}
-                                </p>
-                              </div>
-                              <Badge
-                                className={`text-[10px] border-none ${
-                                  fw.status === 'completed'
-                                    ? 'bg-green-500/15 text-green-400'
-                                    : 'bg-amber-500/15 text-amber-400'
-                                }`}
-                              >
-                                {fw.status === 'completed' ? 'Complete' : 'Active'}
-                              </Badge>
-                            </div>
-                          ))}
-                          {relatedIsolations.map((ir) => (
-                            <div
-                              key={ir.id}
-                              className="flex items-center gap-3 p-3 rounded-xl border border-blue-500/20 bg-blue-500/[0.06]"
-                            >
-                              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                                <Zap className="h-4 w-4 text-blue-400" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-white">Safe Isolation</p>
-                                <p className="text-xs text-white">
-                                  {ir.circuit_description}
-                                  {ir.distribution_board ? ` \u00B7 ${ir.distribution_board}` : ''}
-                                  {' \u00B7 '}
-                                  {new Date(ir.created_at).toLocaleDateString('en-GB')}
-                                </p>
-                              </div>
-                              <Badge
-                                className={`text-[10px] border-none ${
-                                  ir.status === 'isolated'
-                                    ? 'bg-green-500/15 text-green-400'
-                                    : ir.status === 're_energised'
-                                      ? 'bg-blue-500/15 text-blue-400'
-                                      : ir.status === 'cancelled'
-                                        ? 'bg-red-500/15 text-red-400'
-                                        : 'bg-amber-500/15 text-amber-400'
-                                }`}
-                              >
-                                {ir.status === 'isolated'
-                                  ? 'Isolated'
-                                  : ir.status === 're_energised'
-                                    ? 'Re-energised'
-                                    : ir.status === 'cancelled'
-                                      ? 'Cancelled'
-                                      : 'In Progress'}
-                              </Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Audit Trail */}
-                    <div>
-                      <AuditTimeline recordType="permit" recordId={viewingPermit.id} />
-                    </div>
-
-                    {/* Approval */}
-                    {viewingPermit.approval_status !== 'not_required' && (
-                      <div>
-                        <ApprovalInfoCard
-                          status={viewingPermit.approval_status}
-                          approvedBy={viewingPermit.approved_by}
-                          approvedAt={viewingPermit.approved_at}
-                          comments={viewingPermit.approval_comments}
-                          approvalSignature={viewingPermit.approval_signature}
-                        />
-                      </div>
-                    )}
-
-                    {/* Approval actions */}
+                  {/* Lifecycle actions */}
+                  {isLive && (
                     <div className="space-y-2">
-                      {viewingPermit.status === 'active' &&
-                        viewingPermit.approval_status === 'not_required' && (
-                          <button
-                            onClick={() =>
-                              requestApproval.mutate({
-                                table: 'permits_to_work',
-                                recordId: viewingPermit.id,
-                              })
-                            }
-                            disabled={requestApproval.isPending}
-                            className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-                          >
-                            <Shield className="h-4 w-4" />
-                            Request Supervisor Approval
-                          </button>
-                        )}
-
-                      {viewingPermit.approval_status === 'pending' && (
-                        <button
-                          onClick={() => setShowApprovalSheet(true)}
-                          className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+                      <div className="flex gap-2">
+                        <SecondaryButton fullWidth onClick={() => startAmend(viewingPermit)}>
+                          Amend
+                        </SecondaryButton>
+                        <SecondaryButton fullWidth onClick={() => setShowExtendSheet(true)}>
+                          {viewingPermit.status === 'active' ? 'Extend' : 'Re-activate'}
+                        </SecondaryButton>
+                      </div>
+                      <div className="flex gap-2">
+                        <PrimaryButton
+                          fullWidth
+                          onClick={() => {
+                            setCloseOutName(viewingPermit.issuer_name || '');
+                            setShowCloseOut(true);
+                          }}
                         >
-                          <Shield className="h-4 w-4" />
-                          Review and Approve
-                        </button>
-                      )}
+                          Close permit
+                        </PrimaryButton>
+                        <DestructiveButton onClick={() => cancelPermit(viewingPermit.id)}>Cancel</DestructiveButton>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Details */}
+                  <div className="space-y-1.5 text-[13px]">
+                    <div className="text-white/90">{viewingPermit.location}</div>
+                    <div className="text-white/65">
+                      {new Date(viewingPermit.start_time).toLocaleString('en-GB')} —{' '}
+                      {new Date(viewingPermit.end_time).toLocaleString('en-GB')}
+                    </div>
+                    {viewingPermit.description && (
+                      <p className="text-white/80 leading-relaxed pt-1">{viewingPermit.description}</p>
+                    )}
+                  </div>
+
+                  {/* Controlling RAMS */}
+                  {viewingPermit.linked_rams_title && (
+                    <div>
+                      <Eyebrow className="mb-1.5">Controlling RAMS</Eyebrow>
+                      <div className="px-3 py-2.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-[13px] text-white">
+                        {viewingPermit.linked_rams_title}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Hazards */}
+                  <div>
+                    <Eyebrow className="mb-2">Hazards &amp; controls</Eyebrow>
+                    <ListCard>
+                      {viewingPermit.hazards.map((h) => (
+                        <div key={h.id} className="px-5 py-3">
+                          <p className="text-[13px] text-white font-medium">{h.description}</p>
+                          {h.controls && <p className="text-[12px] text-white/60 mt-0.5">{h.controls}</p>}
+                        </div>
+                      ))}
+                    </ListCard>
+                  </div>
+
+                  {/* PPE */}
+                  <div>
+                    <Eyebrow className="mb-2">Required PPE</Eyebrow>
+                    <div className="flex flex-wrap gap-1.5">
+                      {viewingPermit.ppe_required.map((item, i) => (
+                        <Chip key={i}>{item}</Chip>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Actions — sticky footer outside scroll container */}
-                  <div className="flex-shrink-0 px-4 py-3 border-t border-white/10 flex gap-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-                    <Button
-                      onClick={() => exportPDF('permit', viewingPermit.id)}
-                      disabled={isExporting && exportingId === viewingPermit.id}
-                      className="flex-1 h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                    >
-                      {isExporting && exportingId === viewingPermit.id ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <FileDown className="h-4 w-4 mr-2" />
-                      )}
-                      Export PDF
-                    </Button>
-                    <Button
-                      onClick={() => setShowShare(true)}
-                      variant="outline"
-                      className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow rounded-xl touch-manipulation active:scale-[0.98]"
-                    >
-                      <Share2 className="h-4 w-4" />
-                    </Button>
-                    {(viewingPermit.status === 'active' || viewingPermit.status === 'expired') && (
-                      <>
-                        {viewingPermit.status === 'active' && (
-                          <Button
-                            onClick={() => setShowExtendSheet(true)}
-                            className="h-11 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl touch-manipulation"
-                          >
-                            <Timer className="h-4 w-4 mr-2" />
-                            Extend
-                          </Button>
-                        )}
-                        {viewingPermit.status === 'expired' && (
-                          <Button
-                            onClick={() => setShowExtendSheet(true)}
-                            className="h-11 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl touch-manipulation"
-                          >
-                            <Timer className="h-4 w-4 mr-2" />
-                            Re-activate
-                          </Button>
-                        )}
-                        <Button
-                          onClick={() => closePermit(viewingPermit.id)}
-                          className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
-                        >
-                          <CheckCircle2 className="h-4 w-4 mr-2" />
-                          Close
-                        </Button>
-                        <Button
-                          onClick={() => cancelPermit(viewingPermit.id)}
-                          variant="outline"
-                          className="h-11 border-red-500/30 text-red-400 rounded-xl touch-manipulation"
-                        >
-                          <XCircle className="h-4 w-4" />
-                        </Button>
-                      </>
-                    )}
+                  {/* Precautions */}
+                  <div>
+                    <Eyebrow className="mb-2">Precautions</Eyebrow>
+                    <ListCard>
+                      {viewingPermit.precautions.map((p, i) => (
+                        <div key={i} className="px-5 py-3 text-[12.5px] text-white/90 leading-relaxed">
+                          {p}
+                        </div>
+                      ))}
+                    </ListCard>
                   </div>
-                </div>
+
+                  {/* Signatures */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {(['issuer', 'receiver'] as const).map((role) => {
+                      const name = role === 'issuer' ? viewingPermit.issuer_name : viewingPermit.receiver_name;
+                      const sig = role === 'issuer' ? viewingPermit.issuer_signature : viewingPermit.receiver_signature;
+                      return (
+                        <div key={role} className="p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                          <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 mb-1">{role}</p>
+                          <p className="text-[13px] text-white font-medium">{name}</p>
+                          {sig && <img src={sig} alt={`${role} signature`} className="h-12 mt-1 opacity-80" />}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Version history */}
+                  {(viewingPermit.version > 1 || revisions.length > 0) && (
+                    <div>
+                      <Eyebrow className="mb-2">Version history</Eyebrow>
+                      <ListCard>
+                        <ListRow
+                          title={`Version ${viewingPermit.version} — current`}
+                          subtitle={`Issued ${fmtDate(viewingPermit.created_at)}`}
+                          trailing={<StatusPill status={viewingPermit.status} />}
+                        />
+                        {revisions.map((rev) => (
+                          <ListRow
+                            key={rev.id}
+                            title={`Version ${rev.version}`}
+                            subtitle={rev.change_reason || 'Superseded'}
+                            trailing={<span className="text-[11px] text-white/45 tabular-nums">{fmtDate(rev.created_at)}</span>}
+                          />
+                        ))}
+                      </ListCard>
+                    </div>
+                  )}
+
+                  {/* Corrective actions */}
+                  <CorrectiveActionsPanel sourceType="permit" sourceId={viewingPermit.id} />
+
+                  {/* Related records */}
+                  {(relatedFireWatches.length > 0 || relatedIsolations.length > 0) && (
+                    <div>
+                      <Eyebrow className="mb-2">Related records</Eyebrow>
+                      <ListCard>
+                        {relatedFireWatches.map((fw) => (
+                          <ListRow
+                            key={fw.id}
+                            title="Fire Watch"
+                            subtitle={`${fw.duration_minutes} min${fw.location ? ` · ${fw.location}` : ''} · ${new Date(fw.start_time).toLocaleDateString('en-GB')}`}
+                            trailing={<StatusPill status={fw.status === 'completed' ? 'closed' : 'active'} />}
+                          />
+                        ))}
+                        {relatedIsolations.map((ir) => (
+                          <ListRow
+                            key={ir.id}
+                            title="Safe Isolation"
+                            subtitle={`${ir.circuit_description}${ir.distribution_board ? ` · ${ir.distribution_board}` : ''} · ${new Date(ir.created_at).toLocaleDateString('en-GB')}`}
+                            trailing={
+                              <span className="text-[11px] text-white/55 capitalize">{String(ir.status).replace('_', ' ')}</span>
+                            }
+                          />
+                        ))}
+                      </ListCard>
+                    </div>
+                  )}
+
+                  {/* Audit trail */}
+                  <AuditTimeline recordType="permit" recordId={viewingPermit.id} />
+
+                  {/* Approval */}
+                  {viewingPermit.approval_status !== 'not_required' && (
+                    <ApprovalInfoCard
+                      status={viewingPermit.approval_status}
+                      approvedBy={viewingPermit.approved_by}
+                      approvedAt={viewingPermit.approved_at}
+                      comments={viewingPermit.approval_comments}
+                      approvalSignature={viewingPermit.approval_signature}
+                    />
+                  )}
+                  {viewingPermit.status === 'active' && viewingPermit.approval_status === 'not_required' && (
+                    <SecondaryButton
+                      fullWidth
+                      disabled={requestApproval.isPending}
+                      onClick={() => requestApproval.mutate({ table: 'permits_to_work', recordId: viewingPermit.id })}
+                    >
+                      Request supervisor approval
+                    </SecondaryButton>
+                  )}
+                  {viewingPermit.approval_status === 'pending' && (
+                    <SecondaryButton fullWidth onClick={() => setShowApprovalSheet(true)}>
+                      Review and approve
+                    </SecondaryButton>
+                  )}
+                </SheetShell>
               );
             })()}
         </SheetContent>
       </Sheet>
-      {/* Extend Permit Sheet */}
+
+      {/* ─── RAMS picker ─── */}
+      <Sheet open={showRamsPicker} onOpenChange={setShowRamsPicker}>
+        <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <SheetShell eyebrow="Controlling document" title="Link a RAMS / risk assessment">
+            {ramsDocs.length === 0 ? (
+              <EmptyState
+                title="No saved RAMS yet"
+                description="Create a RAMS first, then link it to this permit so they travel together."
+              />
+            ) : (
+              <ListCard>
+                {ramsDocs.map((r) => (
+                  <ListRow
+                    key={r.id}
+                    onClick={() => {
+                      setLinkedRamsId(r.id);
+                      setLinkedRamsTitle(r.project_name);
+                      setShowRamsPicker(false);
+                    }}
+                    title={r.project_name}
+                    subtitle={`${r.location || ''}${r.location ? ' · ' : ''}${fmtDate(r.date)}`}
+                    trailing={
+                      linkedRamsId === r.id ? (
+                        <span className="text-[11px] text-elec-yellow">Linked</span>
+                      ) : (
+                        <span aria-hidden className="text-elec-yellow/70">→</span>
+                      )
+                    }
+                  />
+                ))}
+              </ListCard>
+            )}
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+
+      {/* ─── Extend ─── */}
       <Sheet open={showExtendSheet} onOpenChange={setShowExtendSheet}>
-        <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden">
-          <div className="bg-background p-5 space-y-4">
-            <div className="pt-1 pb-2 flex justify-center">
+        <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
+            <div className="flex justify-center pt-1">
               <div className="w-10 h-1 bg-white/20 rounded-full" />
             </div>
-            <h3 className="text-lg font-bold text-white">Extend Permit Duration</h3>
-            <p className="text-sm text-white">
-              Select additional time. Conditions must remain safe before extending.
-            </p>
+            <div>
+              <Eyebrow>Extend permit</Eyebrow>
+              <h3 className="mt-1 text-[18px] font-semibold text-white">Add more time</h3>
+              <p className="mt-1 text-[12.5px] text-white/60">Conditions must remain safe before extending.</p>
+            </div>
             <div className="grid grid-cols-4 gap-2">
               {[1, 2, 4, 8].map((hours) => (
                 <button
                   key={hours}
                   onClick={() => setExtensionHours(hours)}
-                  className={`h-12 rounded-xl border text-center font-semibold touch-manipulation active:scale-[0.97] transition-all ${
+                  className={cn(
+                    'h-12 rounded-xl border text-center font-semibold touch-manipulation active:scale-[0.97] transition-all',
                     extensionHours === hours
-                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-400'
-                      : 'border-white/10 bg-white/5 text-white'
-                  }`}
+                      ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow'
+                      : 'border-white/10 bg-white/[0.04] text-white'
+                  )}
                 >
                   {hours}h
                 </button>
               ))}
             </div>
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <p className="text-xs text-white font-medium flex items-center gap-2">
-                <AlertTriangle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
-                Confirm that site conditions remain safe and all controls are still in place before
-                extending.
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
+              <p className="text-[11.5px] text-white/75">
+                Confirm that site conditions remain safe and all controls are still in place before extending.
               </p>
             </div>
             <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
-              <Button
-                onClick={() => viewingPermit && extendPermit(viewingPermit.id)}
+              <PrimaryButton
+                fullWidth
                 disabled={extendPermitMutation.isPending}
-                className="flex-1 h-12 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl touch-manipulation"
+                onClick={() => viewingPermit && extendPermit(viewingPermit.id)}
               >
-                {extendPermitMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                ) : (
-                  <Timer className="h-4 w-4 mr-2" />
-                )}
-                Extend by {extensionHours}h
-              </Button>
-              <Button
-                onClick={() => setShowExtendSheet(false)}
-                variant="outline"
-                className="h-12 border-white/20 text-white rounded-xl touch-manipulation"
-              >
-                Cancel
-              </Button>
+                {extendPermitMutation.isPending ? 'Extending…' : `Extend by ${extensionHours}h`}
+              </PrimaryButton>
+              <SecondaryButton onClick={() => setShowExtendSheet(false)}>Cancel</SecondaryButton>
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Supervisor Approval Sheet */}
+      {/* ─── Receiver signing link ─── */}
+      <Sheet open={showShareLink} onOpenChange={setShowShareLink}>
+        <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
+            <div className="flex justify-center pt-1">
+              <div className="w-10 h-1 bg-white/20 rounded-full" />
+            </div>
+            <div>
+              <Eyebrow>Receiver sign-off</Eyebrow>
+              <h3 className="mt-1 text-[18px] font-semibold text-white">Send for signing</h3>
+              <p className="mt-1 text-[12.5px] text-white/60">
+                The receiver opens this on their phone, reviews the permit and signs. The link expires in 7 days.
+              </p>
+            </div>
+            <div className="px-3 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08] text-[12px] text-white/70 break-all">
+              {signLink}
+            </div>
+            <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
+              <PrimaryButton fullWidth onClick={shareSignLink}>
+                Share link
+              </PrimaryButton>
+              <SecondaryButton onClick={copySignLink}>Copy</SecondaryButton>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* ─── Close-out sign-off ─── */}
+      {viewingPermit && (
+        <CloseOutSheet
+          open={showCloseOut}
+          onOpenChange={setShowCloseOut}
+          items={closeOutItems(viewingPermit.type)}
+          closerName={closeOutName}
+          onCloserNameChange={setCloseOutName}
+          isPending={closePermitMutation.isPending}
+          confirmLabel="Close permit"
+          onConfirm={() => closePermit(viewingPermit.id, closeOutName.trim())}
+        />
+      )}
+
+      {/* Supervisor approval */}
       {viewingPermit && (
         <ApprovalSheet
           open={showApprovalSheet}
@@ -1604,19 +1611,16 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         />
       )}
 
+      {/* Templates */}
       <SaveAsTemplateSheet
         open={showSaveTemplate}
         onOpenChange={setShowSaveTemplate}
         moduleType="permit"
         getTemplateData={getTemplateData}
       />
-      <LoadTemplateSheet
-        open={showLoadTemplate}
-        onOpenChange={setShowLoadTemplate}
-        moduleType="permit"
-        onLoad={handleLoadTemplate}
-      />
+      <LoadTemplateSheet open={showLoadTemplate} onOpenChange={setShowLoadTemplate} moduleType="permit" onLoad={handleLoadTemplate} />
 
+      {/* Share */}
       {viewingPermit && (
         <SafetyDocumentShare
           open={showShare}
@@ -1626,7 +1630,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           documentTitle={`Permit to Work — ${viewingPermit.title}`}
         />
       )}
-    </div>
+    </SafetyModuleShell>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 
@@ -482,7 +483,7 @@ export function useDocumentVerification() {
     if (!elecIdProfile?.id) return;
 
     const subscription = supabase
-      .channel('elec_id_documents_changes')
+      .channel(realtimeChannelName('elec_id_documents_changes'))
       .on(
         'postgres_changes',
         {

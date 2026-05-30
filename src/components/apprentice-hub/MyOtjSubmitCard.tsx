@@ -250,8 +250,8 @@ export function MyOtjSubmitCard() {
           </div>
 
           <p className="mt-3 text-[11.5px] sm:text-[12px] text-white/85 leading-snug">
-            ESFA needs your verified hours to total at least 20% of your paid time on the
-            apprenticeship. Submit work activities here and your tutor signs them off.
+            Your apprenticeship has a set number of off-the-job training hours to reach by
+            gateway. Submit work activities here and your tutor signs them off.
           </p>
 
           {/* CTA row — primary submit, secondary AI write-up shortcut. The

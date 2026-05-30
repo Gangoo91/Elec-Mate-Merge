@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useVerifierInbox — list of records awaiting verification, plus an
@@ -109,7 +110,7 @@ export function useVerifierInbox(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return;
     const channel = supabase
-      .channel('verifier_inbox')
+      .channel(realtimeChannelName('verifier_inbox'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'staff_compliance_records' },

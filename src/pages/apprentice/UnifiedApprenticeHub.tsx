@@ -43,15 +43,23 @@ export default function UnifiedApprenticeHub() {
   // Capture sheet state
   const [showCapture, setShowCapture] = useState(false);
 
-  // Sync URL with active tab - use replace: false to create history entries for back button
+  // Sync URL with active tab. Clone the params (never mutate the live
+  // URLSearchParams in place) and replace the entry rather than pushing, so
+  // tab switches don't spam browser history or trap the back button.
   useEffect(() => {
-    if (activeTab === 'home') {
-      searchParams.delete('tab');
-    } else {
-      searchParams.set('tab', activeTab);
-    }
-    setSearchParams(searchParams, { replace: false });
-  }, [activeTab, searchParams, setSearchParams]);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (activeTab === 'home') {
+          next.delete('tab');
+        } else {
+          next.set('tab', activeTab);
+        }
+        return next;
+      },
+      { replace: true }
+    );
+  }, [activeTab, setSearchParams]);
 
   // Sync active tab with URL on mount; deep-links with ?tab=hours redirect to OJT.
   useEffect(() => {

@@ -200,7 +200,7 @@ export function useDailyTips(): UseDailyTipsResult {
         body:
           'Pending hours don\'t count toward your 20% off-the-job target until verified. Nudge your tutor — the longer you leave it, the harder evidence is to defend.',
         actionLabel: 'Open OTJ log',
-        actionHref: '/apprentice/ojt',
+        actionHref: '/apprentice/ojt-hub',
         priority: 60,
       });
     }

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { InternalVacancy } from '@/components/electrician/vacancies/InternalVacancyCard';
 
 // Query keys
@@ -24,7 +25,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
   // Real-time subscription for new vacancies
   useEffect(() => {
     const channel = supabase
-      .channel('internal-vacancies-changes')
+      .channel(realtimeChannelName('internal-vacancies-changes'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_vacancies' }, () => {
         queryClient.invalidateQueries({ queryKey: INTERNAL_VACANCIES_KEY });
       })
@@ -361,7 +362,7 @@ export function useMyInvitations() {
   // Real-time subscription
   useEffect(() => {
     const channel = supabase
-      .channel('my-invitations-changes')
+      .channel(realtimeChannelName('my-invitations-changes'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'employer_vacancy_invitations' },

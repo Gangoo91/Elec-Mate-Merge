@@ -1,61 +1,48 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
+
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SmartTextarea } from './common/SmartTextarea';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { toast } from 'sonner';
-import { SignaturePad } from './common/SignaturePad';
-import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { useInspectionRecords, useCreateInspectionRecord } from '@/hooks/useInspectionRecords';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { useShowMore } from '@/hooks/useShowMore';
+import type { Json } from '@/integrations/supabase/types';
+
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  Field,
+  FormCard,
+  SheetShell,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  toneAccent,
+  type Tone,
+} from '@/components/college/primitives';
+
+import { SafetyModuleShell } from './common/SafetyModuleShell';
+import { SignatureField } from './common/SignatureField';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+import { SmartTextarea } from './common/SmartTextarea';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import {
-  ArrowLeft,
-  Plus,
-  ClipboardCheck,
-  CheckCircle2,
-  XCircle,
-  MinusCircle,
-  Camera,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  Search,
-  Calendar,
-  MapPin,
-  User,
-  Clock,
-  AlertTriangle,
-  Shield,
-  Zap,
-  Flame,
-  HardHat,
-  Wrench,
-  Eye,
-  FileDown,
-  Loader2,
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  Share2,
-} from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
-import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
-import { useShowMore } from '@/hooks/useShowMore';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
-import { useCustomInspectionTemplates } from '@/hooks/useCustomInspectionTemplates';
 
 // ─── Types ───
 
 type CheckResult = 'pass' | 'fail' | 'na' | null;
 type NonConformanceClass = 'critical' | 'major' | 'minor' | null;
-
 type NonConformanceStatus = 'open' | 'in_progress' | 'closed' | null;
 
 interface ChecklistItem {
@@ -82,8 +69,6 @@ interface ChecklistTemplate {
   id: string;
   title: string;
   description: string;
-  icon: React.ElementType;
-  gradient: string;
   sections: { title: string; items: string[] }[];
   regulation: string;
 }
@@ -112,8 +97,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'workplace-safety',
     title: 'Workplace Safety',
     description: 'General workplace safety audit',
-    icon: Shield,
-    gradient: 'from-blue-400 to-blue-600',
     regulation: 'Workplace (Health, Safety and Welfare) Regulations 1992',
     sections: [
       {
@@ -163,8 +146,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'ladder-inspection',
     title: 'Ladder Inspection',
     description: 'Pre-use ladder safety check',
-    icon: ArrowLeft,
-    gradient: 'from-orange-400 to-orange-600',
     regulation: 'Work at Height Regulations 2005',
     sections: [
       {
@@ -204,8 +185,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'scaffold-check',
     title: 'Scaffold Inspection',
     description: 'Scaffold safety pre-use check',
-    icon: HardHat,
-    gradient: 'from-purple-400 to-purple-600',
     regulation: 'Work at Height Regulations 2005 / NASC TG20',
     sections: [
       {
@@ -261,8 +240,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'electrical-safety',
     title: 'Electrical Safety Audit',
     description: 'Electrical installation safety check',
-    icon: Zap,
-    gradient: 'from-yellow-400 to-amber-500',
     regulation: 'Electricity at Work Regulations 1989 / BS 7671',
     sections: [
       {
@@ -322,8 +299,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'fire-safety',
     title: 'Fire Safety Inspection',
     description: 'Fire prevention and protection check',
-    icon: Flame,
-    gradient: 'from-red-400 to-rose-600',
     regulation: 'Regulatory Reform (Fire Safety) Order 2005',
     sections: [
       {
@@ -373,8 +348,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'pat-area',
     title: 'PAT Testing Area',
     description: 'PAT testing workspace safety check',
-    icon: Wrench,
-    gradient: 'from-cyan-400 to-teal-500',
     regulation: 'IET Code of Practice for In-Service Inspection and Testing',
     sections: [
       {
@@ -413,8 +386,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'db-inspection',
     title: 'Distribution Board Inspection',
     description: 'Consumer unit & distribution board check',
-    icon: Zap,
-    gradient: 'from-amber-400 to-yellow-600',
     regulation: 'BS 7671:2018+A2:2022 / Electricity at Work Regulations 1989',
     sections: [
       {
@@ -467,8 +438,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'socket-lighting-check',
     title: 'Socket & Lighting Circuit Check',
     description: 'Final circuit inspection walkthrough',
-    icon: Zap,
-    gradient: 'from-green-400 to-emerald-600',
     regulation: 'BS 7671:2018+A2:2022 Section 7',
     sections: [
       {
@@ -520,8 +489,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'rcd-test-schedule',
     title: 'RCD Testing Schedule',
     description: 'Periodic RCD functional testing record',
-    icon: Shield,
-    gradient: 'from-blue-400 to-indigo-600',
     regulation: 'BS 7671:2018+A2:2022 Reg 514.12.2 / IET Guidance Note 3',
     sections: [
       {
@@ -571,8 +538,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'earth-bonding-verification',
     title: 'Earth Bonding Verification',
     description: 'Earthing & bonding system inspection',
-    icon: Shield,
-    gradient: 'from-emerald-400 to-green-600',
     regulation: 'BS 7671:2018+A2:2022 Chapter 54 / Reg 411.3.1.2',
     sections: [
       {
@@ -623,8 +588,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'fire-alarm-check',
     title: 'Fire Alarm System Check',
     description: 'Fire detection & alarm system inspection',
-    icon: Flame,
-    gradient: 'from-red-400 to-orange-600',
     regulation: 'BS 5839-1:2017 / Regulatory Reform (Fire Safety) Order 2005',
     sections: [
       {
@@ -677,8 +640,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'emergency-lighting-test',
     title: 'Emergency Lighting Test',
     description: 'Emergency lighting system inspection & test',
-    icon: AlertTriangle,
-    gradient: 'from-yellow-400 to-orange-500',
     regulation: 'BS 5266-1:2016 / BS EN 1838',
     sections: [
       {
@@ -730,8 +691,6 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'ev-charger-commissioning',
     title: 'EV Charger Commissioning Check',
     description: 'Electric vehicle charge point inspection',
-    icon: Zap,
-    gradient: 'from-teal-400 to-cyan-600',
     regulation: 'BS 7671:2018+A2:2022 Section 722 / IET Code of Practice for EV Charging',
     sections: [
       {
@@ -782,42 +741,66 @@ const TEMPLATES: ChecklistTemplate[] = [
   },
 ];
 
-const RESULT_CONFIG = {
-  pass: { icon: CheckCircle2, colour: 'text-green-400', bg: 'bg-green-500/15', label: 'Pass' },
-  fail: { icon: XCircle, colour: 'text-red-400', bg: 'bg-red-500/15', label: 'Fail' },
-  na: { icon: MinusCircle, colour: 'text-white', bg: 'bg-gray-500/15', label: 'N/A' },
+// ─── Status / classification mapping ───
+// Single colour dimension = inspection result / non-conformance severity.
+
+const RESULT_LABEL: Record<Exclude<CheckResult, null>, string> = {
+  pass: 'Pass',
+  fail: 'Fail',
+  na: 'N/A',
 };
 
-const CLASSIFICATION_CONFIG = {
-  critical: {
-    label: 'Critical',
-    description: 'Stop work immediately',
-    colour: 'text-red-400',
-    bg: 'bg-red-500/15',
-    border: 'border-red-500/30',
-    badge: 'bg-red-500/20 text-red-300 border-red-500/30',
-  },
-  major: {
-    label: 'Major',
-    description: 'Rectify within 24 hours',
-    colour: 'text-orange-400',
-    bg: 'bg-orange-500/15',
-    border: 'border-orange-500/30',
-    badge: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-  },
-  minor: {
-    label: 'Minor',
-    description: 'Advisory — rectify when practical',
-    colour: 'text-yellow-400',
-    bg: 'bg-yellow-500/15',
-    border: 'border-yellow-500/30',
-    badge: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
-  },
-} as const;
+const RESULT_TONE: Record<Exclude<CheckResult, null>, Tone | 'neutral'> = {
+  pass: 'green',
+  fail: 'red',
+  na: 'neutral',
+};
+
+const CLASSIFICATION_CONFIG: Record<
+  'critical' | 'major' | 'minor',
+  { label: string; description: string; tone: Tone }
+> = {
+  critical: { label: 'Critical', description: 'Stop work immediately', tone: 'red' },
+  major: { label: 'Major', description: 'Rectify within 24 hours', tone: 'orange' },
+  minor: { label: 'Minor', description: 'Advisory — rectify when practical', tone: 'amber' },
+};
+
+// Overall inspection result → colour dimension.
+function resultTone(result: CompletedInspection['overall_result']): Tone {
+  if (result === 'fail') return 'red';
+  if (result === 'advisory') return 'amber';
+  return 'green';
+}
+
+const PILL_TONE: Record<'green' | 'amber' | 'red' | 'orange' | 'neutral', string> = {
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+};
+
+function StatusPill({ children, tone }: { children: React.ReactNode; tone: keyof typeof PILL_TONE }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        PILL_TONE[tone]
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+const fmtDate = (d?: string | null) =>
+  d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
 
 // ─── Main Component ───
 
-export function InspectionChecklists({ onBack }: { onBack: () => void }) {
+export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
   const { data: dbRecords, isLoading: isLoadingRecords } = useInspectionRecords();
   const createInspectionRecord = useCreateInspectionRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
@@ -840,12 +823,45 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
     created_at: r.created_at,
   }));
 
+  // View / filter state
+  const [filterResult, setFilterResult] = useState<'all' | 'pass' | 'advisory' | 'fail'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredInspections = completedInspections.filter((i) => {
+    if (filterResult !== 'all' && i.overall_result !== filterResult) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      if (
+        !i.template_title.toLowerCase().includes(q) &&
+        !i.inspector_name.toLowerCase().includes(q) &&
+        !i.location.toLowerCase().includes(q)
+      )
+        return false;
+    }
+    return true;
+  });
+
+  // Fails sort to the top (most urgent), then advisory, then pass — recency within.
+  const rank = (r: CompletedInspection['overall_result']) =>
+    r === 'fail' ? 0 : r === 'advisory' ? 1 : 2;
+  const sortedInspections = [...filteredInspections].sort((a, b) => {
+    if (rank(a.overall_result) !== rank(b.overall_result))
+      return rank(a.overall_result) - rank(b.overall_result);
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   const {
     visible: visibleInspections,
     hasMore: hasMoreInspections,
     remaining: remainingInspections,
     loadMore: loadMoreInspections,
-  } = useShowMore(completedInspections);
+  } = useShowMore(sortedInspections);
+
+  const resultCounts = {
+    pass: completedInspections.filter((i) => i.overall_result === 'pass').length,
+    advisory: completedInspections.filter((i) => i.overall_result === 'advisory').length,
+    fail: completedInspections.filter((i) => i.overall_result === 'fail').length,
+  };
 
   const [activeTemplate, setActiveTemplate] = useState<ChecklistTemplate | null>(null);
   const [sections, setSections] = useState<ChecklistSection[]>([]);
@@ -855,9 +871,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const [viewingInspection, setViewingInspection] = useState<CompletedInspection | null>(null);
   const [showTemplates, setShowTemplates] = useState(false);
   const [inspectorSigName, setInspectorSigName] = useState('');
-  const [inspectorSigDate, setInspectorSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   // ─── Draft Auto-save ───
   const inspectionDraftData = useMemo(
@@ -902,6 +918,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         setActiveTemplate(template);
         if (recoveredDraft.sections?.length) {
           setSections(recoveredDraft.sections);
+          setOpenSections({ [recoveredDraft.sections[0].id]: true });
         } else {
           startInspection(template);
           return;
@@ -922,25 +939,25 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
 
   const startInspection = (template: ChecklistTemplate) => {
     setActiveTemplate(template);
-    setSections(
-      template.sections.map((s, si) => ({
-        id: `section-${si}`,
-        title: s.title,
-        isOpen: si === 0,
-        items: s.items.map((item, ii) => ({
-          id: `item-${si}-${ii}`,
-          text: item,
-          result: null,
-          notes: '',
-          photo: null,
-          classification: null,
-          remedial_action: '',
-          assigned_to: '',
-          due_date: '',
-          nc_status: null,
-        })),
-      }))
-    );
+    const built = template.sections.map((s, si) => ({
+      id: `section-${si}`,
+      title: s.title,
+      isOpen: si === 0,
+      items: s.items.map((item, ii) => ({
+        id: `item-${si}-${ii}`,
+        text: item,
+        result: null as CheckResult,
+        notes: '',
+        photo: null,
+        classification: null as NonConformanceClass,
+        remedial_action: '',
+        assigned_to: '',
+        due_date: '',
+        nc_status: null as NonConformanceStatus,
+      })),
+    }));
+    setSections(built);
+    setOpenSections(built.length > 0 ? { [built[0].id]: true } : {});
     setShowTemplates(false);
   };
 
@@ -1034,9 +1051,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
     });
   };
 
-  const toggleSection = (index: number) => {
-    setSections((prev) => prev.map((s, i) => (i === index ? { ...s, isOpen: !s.isOpen } : s)));
-  };
+  const toggleSection = (id: string) =>
+    setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const allItems = sections.flatMap((s) => s.items);
   const answeredCount = allItems.filter((i) => i.result !== null).length;
@@ -1048,6 +1064,18 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const criticalCount = allItems.filter((i) => i.classification === 'critical').length;
   const majorCount = allItems.filter((i) => i.classification === 'major').length;
   const minorCount = allItems.filter((i) => i.classification === 'minor').length;
+
+  const resetInspection = () => {
+    setActiveTemplate(null);
+    setSections([]);
+    setOpenSections({});
+    setInspectorName('');
+    setLocation('');
+    setAdditionalNotes('');
+    setInspectorSigName('');
+    setInspectorSigData('');
+    setPhotoUrls([]);
+  };
 
   const submitInspection = async () => {
     if (!activeTemplate) return;
@@ -1062,7 +1090,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         location: location || null,
         inspector_name: inspectorName,
         date: new Date().toISOString().split('T')[0],
-        sections: sections as unknown as import('@/integrations/supabase/types').Json,
+        sections: sections as unknown as Json,
         overall_result: overallResult,
         pass_count: passCount,
         fail_count: failCount,
@@ -1075,191 +1103,194 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
       });
 
       clearDraft();
-      setActiveTemplate(null);
-      setSections([]);
-      setInspectorName('');
-      setLocation('');
-      setAdditionalNotes('');
-      setInspectorSigName('');
-      setInspectorSigDate(new Date().toISOString().split('T')[0]);
-      setInspectorSigData('');
-      setPhotoUrls([]);
+      resetInspection();
     } catch {
       // error toast handled by hook
     }
   };
 
+  const overallResultLive: 'pass' | 'fail' | 'advisory' =
+    failCount > 0 ? 'fail' : passCount < totalItems - naCount ? 'advisory' : 'pass';
+
   // ─── Active Inspection View ───
 
   if (activeTemplate) {
     return (
-      <div className="bg-background min-h-screen animate-fade-in">
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-          <div className="px-4 py-2 flex items-center justify-between">
-            <button
-              onClick={() => {
-                setActiveTemplate(null);
-                setSections([]);
-              }}
-              className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="text-sm font-medium">Cancel</span>
-            </button>
-            <div className="flex items-center gap-2">
-              <DraftSaveIndicator status={draftStatus} />
-              <div className="text-right">
-                <p className="text-xs text-white">
-                  {answeredCount}/{totalItems} items
-                </p>
-                <div className="w-20 h-1.5 bg-white/10 rounded-full mt-1">
-                  <div
-                    className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-green-400' : 'bg-elec-yellow'}`}
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-            </div>
+      <SafetyModuleShell
+        onBack={() => {
+          resetInspection();
+        }}
+        backLabel="Cancel"
+        moduleName={activeTemplate.title}
+        trailing={
+          <div className="flex items-center gap-2">
+            <DraftSaveIndicator status={draftStatus} />
+            <span className="text-[11px] tabular-nums text-white/60">
+              {answeredCount}/{totalItems}
+            </span>
           </div>
-        </div>
-
-        {/* Draft Recovery Banner */}
+        }
+        hero={
+          <PageHero
+            eyebrow="Inspection in progress"
+            title={activeTemplate.title}
+            description={activeTemplate.regulation}
+            tone={
+              answeredCount === 0
+                ? 'blue'
+                : resultTone(overallResultLive)
+            }
+          />
+        }
+      >
+        {/* Draft recovery */}
         <AnimatePresence>
           {recoveredDraft && (
-            <div className="px-4 pt-3">
-              <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-            </div>
+            <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
           )}
         </AnimatePresence>
 
-        <div className="px-4 py-4 space-y-4">
-          <div>
-            <h1 className="text-lg font-bold text-white">{activeTemplate.title}</h1>
-            <p className="text-xs text-white mt-0.5">{activeTemplate.regulation}</p>
+        {/* Progress + score strip */}
+        <div className="space-y-3">
+          <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+            <motion.div
+              className={cn('h-full', progress === 100 ? 'bg-emerald-400' : 'bg-elec-yellow')}
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.3 }}
+            />
           </div>
-
-          {/* Inspector details */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <Label className="text-white text-xs">Inspector</Label>
-              <Input
-                value={inspectorName}
-                onChange={(e) => setInspectorName(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                placeholder="Your name"
-                autoComplete="name"
-              />
-            </div>
-            <div>
-              <Label className="text-white text-xs">Location</Label>
-              <Input
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                placeholder="Site / area"
-              />
-            </div>
-          </div>
-
-          {/* Score summary */}
           {answeredCount > 0 && (
-            <div className="flex gap-2">
-              <div className="flex-1 p-2 rounded-lg bg-green-500/10 text-center">
-                <p className="text-lg font-bold text-green-400">{passCount}</p>
-                <p className="text-[10px] text-green-300">Pass</p>
-              </div>
-              <div className="flex-1 p-2 rounded-lg bg-red-500/10 text-center">
-                <p className="text-lg font-bold text-red-400">{failCount}</p>
-                <p className="text-[10px] text-red-300">Fail</p>
-              </div>
-              <div className="flex-1 p-2 rounded-lg bg-gray-500/10 text-center">
-                <p className="text-lg font-bold text-white">{naCount}</p>
-                <p className="text-[10px] text-white">N/A</p>
-              </div>
-            </div>
+            <StatStrip
+              columns={3}
+              stats={[
+                { value: passCount, label: 'Pass', tone: 'green' },
+                { value: failCount, label: 'Fail', tone: failCount > 0 ? 'red' : undefined },
+                { value: naCount, label: 'N/A' },
+              ]}
+            />
           )}
+        </div>
 
-          {/* Sections */}
-          <div className="space-y-3 pb-32">
-            {sections.map((section, sectionIdx) => {
-              const sectionAnswered = section.items.filter((i) => i.result !== null).length;
-              const sectionFails = section.items.filter((i) => i.result === 'fail').length;
+        {/* Inspector details */}
+        <FormCard eyebrow="Inspection details">
+          <Field label="Inspector" required>
+            <input
+              value={inspectorName}
+              onChange={(e) => setInspectorName(e.target.value)}
+              className={inputClass}
+              placeholder="Your name"
+              autoComplete="name"
+            />
+          </Field>
+          <Field label="Location">
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className={inputClass}
+              placeholder="Site / area"
+            />
+          </Field>
+        </FormCard>
 
-              return (
-                <div
-                  key={section.id}
-                  className="rounded-xl border border-white/[0.08] bg-white/[0.02] overflow-hidden"
+        {/* Sections */}
+        <div className="space-y-3">
+          {sections.map((section, sectionIdx) => {
+            const sectionAnswered = section.items.filter((i) => i.result !== null).length;
+            const sectionFails = section.items.filter((i) => i.result === 'fail').length;
+            const isOpen = openSections[section.id] ?? false;
+
+            return (
+              <div
+                key={section.id}
+                className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
+              >
+                <button
+                  onClick={() => toggleSection(section.id)}
+                  className="w-full flex items-center justify-between gap-3 px-5 py-4 min-h-[48px] touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
                 >
-                  <button
-                    onClick={() => toggleSection(sectionIdx)}
-                    className="w-full flex items-center justify-between p-3 min-h-[48px] touch-manipulation active:bg-white/[0.04]"
-                  >
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-bold text-white">{section.title}</h3>
-                      {sectionFails > 0 && (
-                        <Badge className="bg-red-500/15 text-red-400 border-none text-[10px]">
-                          {sectionFails} fail
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-white">
-                        {sectionAnswered}/{section.items.length}
-                      </span>
-                      {section.isOpen ? (
-                        <ChevronUp className="h-4 w-4 text-white" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-white" />
-                      )}
-                    </div>
-                  </button>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <h3 className="text-[15px] font-semibold text-white truncate">
+                      {section.title}
+                    </h3>
+                    {sectionFails > 0 && <StatusPill tone="red">{sectionFails} fail</StatusPill>}
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-[11px] tabular-nums text-white/55">
+                      {sectionAnswered}/{section.items.length}
+                    </span>
+                    <span aria-hidden className="text-white/40 text-sm">
+                      {isOpen ? '▲' : '▼'}
+                    </span>
+                  </div>
+                </button>
 
-                  {section.isOpen && (
-                    <div className="px-3 pb-3 space-y-2">
-                      {section.items.map((item, itemIdx) => (
+                {isOpen && (
+                  <div className="px-4 pb-4 space-y-2 border-t border-white/[0.06] pt-3">
+                    {section.items.map((item, itemIdx) => {
+                      const tone =
+                        item.result === 'fail'
+                          ? 'red'
+                          : item.result === 'pass'
+                            ? 'green'
+                            : undefined;
+                      return (
                         <div
                           key={item.id}
-                          className={`p-3 rounded-lg border transition-colors ${
-                            item.result === 'fail'
-                              ? 'border-red-500/20 bg-red-500/5'
-                              : item.result === 'pass'
-                                ? 'border-green-500/20 bg-green-500/5'
-                                : 'border-white/10 bg-white/[0.02]'
-                          }`}
+                          className={cn(
+                            'p-3 rounded-xl border bg-[hsl(0_0%_10%)] transition-colors',
+                            tone === 'red'
+                              ? 'border-red-500/25'
+                              : tone === 'green'
+                                ? 'border-emerald-500/25'
+                                : 'border-white/[0.06]'
+                          )}
                         >
-                          <p className="text-sm text-white mb-2">{item.text}</p>
+                          <p className="text-[13px] text-white mb-2 leading-relaxed">{item.text}</p>
                           <div className="flex gap-1.5">
                             {(['pass', 'fail', 'na'] as const).map((result) => {
-                              const config = RESULT_CONFIG[result];
-                              const Icon = config.icon;
                               const isActive = item.result === result;
+                              const rTone = RESULT_TONE[result];
+                              const activeClass =
+                                rTone === 'green'
+                                  ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40'
+                                  : rTone === 'red'
+                                    ? 'bg-red-500/15 text-red-400 border-red-500/40'
+                                    : 'bg-white/[0.08] text-white border-white/25';
                               return (
                                 <button
                                   key={result}
                                   onClick={() =>
                                     setItemResult(sectionIdx, itemIdx, isActive ? null : result)
                                   }
-                                  className={`flex-1 flex items-center justify-center gap-1.5 h-11 rounded-lg border touch-manipulation active:scale-[0.97] transition-all ${
+                                  className={cn(
+                                    'flex-1 flex items-center justify-center h-11 rounded-xl border text-[12.5px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
                                     isActive
-                                      ? `${config.bg} ${config.colour} border-current`
-                                      : 'border-white/10 bg-white/[0.03] text-white'
-                                  }`}
+                                      ? activeClass
+                                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white/70'
+                                  )}
                                 >
-                                  <Icon className="h-3.5 w-3.5" />
-                                  <span className="text-xs font-semibold">{config.label}</span>
+                                  {RESULT_LABEL[result]}
                                 </button>
                               );
                             })}
                           </div>
+
                           {item.result === 'fail' && (
-                            <div className="mt-2 space-y-2">
+                            <div className="mt-3 space-y-2.5">
                               {/* Classification */}
                               <div>
-                                <p className="text-xs text-white mb-1.5">Classification</p>
+                                <Eyebrow className="mb-1.5">Classification</Eyebrow>
                                 <div className="flex gap-1.5">
                                   {(['critical', 'major', 'minor'] as const).map((cls) => {
                                     const cfg = CLASSIFICATION_CONFIG[cls];
                                     const isActive = item.classification === cls;
+                                    const activeClass =
+                                      cfg.tone === 'red'
+                                        ? 'bg-red-500/15 text-red-400 border-red-500/40'
+                                        : cfg.tone === 'orange'
+                                          ? 'bg-orange-500/15 text-orange-400 border-orange-500/40'
+                                          : 'bg-amber-500/15 text-amber-400 border-amber-500/40';
                                     return (
                                       <button
                                         key={cls}
@@ -1270,14 +1301,15 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                             isActive ? null : cls
                                           )
                                         }
-                                        className={`flex-1 flex flex-col items-center justify-center py-2 rounded-lg border touch-manipulation active:scale-[0.97] transition-all ${
+                                        className={cn(
+                                          'flex-1 flex flex-col items-center justify-center py-2 rounded-xl border touch-manipulation active:scale-[0.97] transition-all',
                                           isActive
-                                            ? `${cfg.bg} ${cfg.colour} ${cfg.border}`
-                                            : 'border-white/10 bg-white/[0.03] text-white'
-                                        }`}
+                                            ? activeClass
+                                            : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white/70'
+                                        )}
                                       >
-                                        <span className="text-xs font-semibold">{cfg.label}</span>
-                                        <span className="text-[10px] mt-0.5 opacity-80">
+                                        <span className="text-[12px] font-semibold">{cfg.label}</span>
+                                        <span className="text-[10px] mt-0.5 opacity-75 text-center px-1">
                                           {cfg.description}
                                         </span>
                                       </button>
@@ -1286,556 +1318,461 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                 </div>
                               </div>
                               {/* Defect description */}
-                              <Input
+                              <input
                                 value={item.notes}
                                 onChange={(e) => setItemNotes(sectionIdx, itemIdx, e.target.value)}
-                                className="h-11 text-sm touch-manipulation border-red-500/20 focus:border-red-500 focus:ring-red-500/20 bg-transparent"
-                                placeholder="Describe the defect or issue..."
+                                className={inputClass}
+                                placeholder="Describe the defect or issue…"
                               />
                               {/* Remedial action */}
                               <SmartTextarea
                                 value={item.remedial_action}
                                 onChange={(val) => setItemRemedialAction(sectionIdx, itemIdx, val)}
-                                className="touch-manipulation text-sm min-h-[60px] border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
-                                placeholder="Remedial action required..."
+                                className="touch-manipulation text-[13px] min-h-[60px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                                placeholder="Remedial action required…"
                               />
                               {/* Assigned to & due date */}
                               <div className="flex gap-2">
-                                <Input
+                                <input
                                   value={item.assigned_to}
                                   onChange={(e) =>
                                     setItemAssignedTo(sectionIdx, itemIdx, e.target.value)
                                   }
-                                  className="flex-1 h-11 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
-                                  placeholder="Assigned to..."
+                                  className={cn(inputClass, 'flex-1')}
+                                  placeholder="Assigned to…"
                                 />
-                                <Input
+                                <input
                                   type="date"
                                   value={item.due_date}
                                   onChange={(e) =>
                                     setItemDueDate(sectionIdx, itemIdx, e.target.value)
                                   }
-                                  className="w-[140px] h-11 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
+                                  className={cn(inputClass, 'w-[150px]')}
                                 />
                               </div>
                             </div>
                           )}
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-            {/* Non-conformance summary */}
-            {failCount > 0 && (
-              <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
-                <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                  Non-Conformance Summary
-                </h4>
-                <div className="flex gap-2">
-                  {criticalCount > 0 && (
-                    <Badge
-                      variant="outline"
-                      className={`${CLASSIFICATION_CONFIG.critical.badge} text-xs`}
-                    >
-                      {criticalCount} Critical
-                    </Badge>
-                  )}
-                  {majorCount > 0 && (
-                    <Badge
-                      variant="outline"
-                      className={`${CLASSIFICATION_CONFIG.major.badge} text-xs`}
-                    >
-                      {majorCount} Major
-                    </Badge>
-                  )}
-                  {minorCount > 0 && (
-                    <Badge
-                      variant="outline"
-                      className={`${CLASSIFICATION_CONFIG.minor.badge} text-xs`}
-                    >
-                      {minorCount} Minor
-                    </Badge>
-                  )}
-                  {failCount - criticalCount - majorCount - minorCount > 0 && (
-                    <Badge variant="outline" className="text-xs border-white/20 text-white">
-                      {failCount - criticalCount - majorCount - minorCount} Unclassified
-                    </Badge>
-                  )}
-                </div>
-                {criticalCount > 0 && (
-                  <p className="text-xs text-red-300 mt-2 font-medium">
-                    Critical non-conformance detected — stop work and rectify before proceeding
-                  </p>
+                      );
+                    })}
+                  </div>
                 )}
               </div>
-            )}
+            );
+          })}
+        </div>
 
-            {/* Additional notes */}
-            <div>
-              <Label className="text-white text-sm">Additional Notes</Label>
-              <SmartTextarea
-                value={additionalNotes}
-                onChange={setAdditionalNotes}
-                className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                placeholder="Any additional observations..."
-              />
+        {/* Non-conformance summary */}
+        {failCount > 0 && (
+          <FormCard eyebrow="Non-conformance summary">
+            <div className="flex flex-wrap gap-1.5">
+              {criticalCount > 0 && <StatusPill tone="red">{criticalCount} Critical</StatusPill>}
+              {majorCount > 0 && <StatusPill tone="orange">{majorCount} Major</StatusPill>}
+              {minorCount > 0 && <StatusPill tone="amber">{minorCount} Minor</StatusPill>}
+              {failCount - criticalCount - majorCount - minorCount > 0 && (
+                <StatusPill tone="neutral">
+                  {failCount - criticalCount - majorCount - minorCount} Unclassified
+                </StatusPill>
+              )}
             </div>
+            {criticalCount > 0 && (
+              <p className="text-[12px] text-red-400/90 font-medium">
+                Critical non-conformance detected — stop work and rectify before proceeding.
+              </p>
+            )}
+          </FormCard>
+        )}
 
-            {/* Defect Evidence Photos */}
-            <SafetyPhotoCapture
-              photos={photoUrls}
-              onPhotosChange={setPhotoUrls}
-              label="Defect Evidence Photos"
+        {/* Additional notes + evidence + signature */}
+        <FormCard eyebrow="Sign-off">
+          <Field label="Additional notes">
+            <SmartTextarea
+              value={additionalNotes}
+              onChange={setAdditionalNotes}
+              className="touch-manipulation text-[13px] min-h-[80px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+              placeholder="Any additional observations…"
             />
-
-            {/* Inspector Signature */}
-            <SignaturePad
-              label="Inspector Signature"
-              name={inspectorSigName}
-              date={inspectorSigDate}
-              signatureDataUrl={inspectorSigData}
-              onSignatureChange={setInspectorSigData}
-              onNameChange={setInspectorSigName}
-              onDateChange={setInspectorSigDate}
+          </Field>
+          <SafetyPhotoCapture
+            photos={photoUrls}
+            onPhotosChange={setPhotoUrls}
+            label="Defect evidence photos"
+          />
+          <Field label="Inspector name">
+            <input
+              value={inspectorSigName}
+              onChange={(e) => setInspectorSigName(e.target.value)}
+              className={inputClass}
+              placeholder="Name on signature"
+              autoComplete="name"
             />
-          </div>
-        </div>
+          </Field>
+          <SignatureField
+            label="Inspector signature"
+            value={inspectorSigData}
+            onChange={setInspectorSigData}
+          />
+        </FormCard>
 
-        {/* Submit button */}
-        <div className="fixed bottom-0 left-0 right-0 px-4 py-3 bg-background/95 backdrop-blur-sm border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-          <Button
+        {/* Sticky submit */}
+        <div className="sticky bottom-0 -mx-4 px-4 py-3 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+          <PrimaryButton
+            fullWidth
+            size="lg"
             onClick={submitInspection}
-            disabled={answeredCount === 0 || !inspectorName}
-            className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+            disabled={answeredCount === 0 || !inspectorName || createInspectionRecord.isPending}
           >
-            <ClipboardCheck className="h-5 w-5 mr-2" />
-            Submit Inspection ({progress}% Complete)
-          </Button>
+            {createInspectionRecord.isPending
+              ? 'Saving…'
+              : `Submit inspection (${progress}% complete)`}
+          </PrimaryButton>
         </div>
-      </div>
+      </SafetyModuleShell>
     );
   }
 
   // ─── Main List View ───
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="bg-background min-h-screen"
+    <SafetyModuleShell
+      onBack={onBack ?? (() => {})}
+      moduleName="Inspection Checklists"
+      hero={
+        <PageHero
+          eyebrow="Inspection Checklists"
+          title="Run standardised safety inspections"
+          description="Workplace, scaffold, electrical, fire and BS 7671 check sheets — record pass / fail / N/A results, classify non-conformances and track them to close-out."
+          tone="indigo"
+          actions={<PrimaryButton onClick={() => setShowTemplates(true)}>Start inspection</PrimaryButton>}
+        />
+      }
+      stats={
+        completedInspections.length > 0 ? (
+          <StatStrip
+            stats={[
+              { value: completedInspections.length, label: 'Total', accent: true, onClick: () => setFilterResult('all') },
+              { value: resultCounts.pass, label: 'Pass', tone: 'green', onClick: () => setFilterResult('pass') },
+              { value: resultCounts.advisory, label: 'Advisory', tone: 'amber', onClick: () => setFilterResult('advisory') },
+              { value: resultCounts.fail, label: 'Fail', tone: resultCounts.fail > 0 ? 'red' : undefined, onClick: () => setFilterResult('fail') },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        completedInspections.length > 0 ? (
+          <FilterBar
+            tabs={[
+              { value: 'all', label: 'All', count: completedInspections.length },
+              { value: 'pass', label: 'Pass', count: resultCounts.pass },
+              { value: 'advisory', label: 'Advisory', count: resultCounts.advisory },
+              { value: 'fail', label: 'Fail', count: resultCounts.fail },
+            ]}
+            activeTab={filterResult}
+            onTabChange={(v) => setFilterResult(v as typeof filterResult)}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search inspections…"
+          />
+        ) : undefined
+      }
     >
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="px-4 py-4 space-y-4">
-        {/* Hero */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-            <ClipboardCheck className="h-6 w-6 text-indigo-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Inspection Checklists</h1>
-            <p className="text-sm text-white">Standardised safety inspection forms</p>
-          </div>
-        </div>
-
-        {/* Start New Inspection */}
-        <Button
-          onClick={() => setShowTemplates(true)}
-          className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          Start New Inspection
-        </Button>
-
-        {/* Completed Inspections */}
-        {isLoadingRecords ? (
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 rounded-xl bg-white/[0.05] animate-pulse" />
-            ))}
-          </div>
-        ) : completedInspections.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <ClipboardCheck className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-base font-bold text-white mb-1">No Inspections Yet</h3>
-            <p className="text-sm text-white">Start an inspection to build your records</p>
-          </div>
-        ) : (
-          <div className="space-y-2 pb-20">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              Completed Inspections
-            </h3>
-            {visibleInspections.map((inspection, index) => {
-              const template = TEMPLATES.find((t) => t.id === inspection.template_id);
-              const Icon = template?.icon || ClipboardCheck;
+      {isLoadingRecords ? (
+        <LoadingState />
+      ) : completedInspections.length === 0 ? (
+        <EmptyState
+          title="No inspections yet"
+          description="Start an inspection to build your records — pick a template and we'll pre-fill the standard check items and regulation reference."
+          action="Start inspection"
+          onAction={() => setShowTemplates(true)}
+        />
+      ) : filteredInspections.length === 0 ? (
+        <EmptyState title="No inspections match your filter" description="Try a different result tab or clear your search." />
+      ) : (
+        <div className="space-y-3">
+          <ListCard>
+            {visibleInspections.map((inspection) => {
+              const tone = resultTone(inspection.overall_result);
+              const pillTone: keyof typeof PILL_TONE =
+                inspection.overall_result === 'fail'
+                  ? 'red'
+                  : inspection.overall_result === 'advisory'
+                    ? 'amber'
+                    : 'green';
               const passRate =
                 inspection.total_items > 0
                   ? Math.round((inspection.pass_count / inspection.total_items) * 100)
                   : 0;
               return (
-                <SafetyRecordCard
+                <ListRow
                   key={inspection.id}
-                  id={inspection.id}
+                  onClick={() => setViewingInspection(inspection)}
+                  accent={tone}
                   title={inspection.template_title}
-                  subtitle={inspection.inspector_name || undefined}
-                  status={inspection.overall_result || 'pending'}
-                  statusLabel={(inspection.overall_result || 'Pending').toUpperCase()}
-                  icon={Icon}
-                  meta={[
-                    { icon: MapPin, label: inspection.location || 'No location' },
-                    { icon: Calendar, label: fmtCardDate(inspection.date) },
-                    {
-                      label: `${inspection.pass_count}P / ${inspection.fail_count}F / ${inspection.na_count}NA — ${passRate}%`,
-                    },
-                  ]}
-                  onTap={() => setViewingInspection(inspection)}
-                  pdfType="inspection"
-                  index={index}
+                  subtitle={`${inspection.inspector_name || 'Unknown'} · ${inspection.location || 'No location'}`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <StatusPill tone={pillTone}>
+                        {inspection.overall_result.toUpperCase()}
+                      </StatusPill>
+                      <span className="text-[11px] tabular-nums text-white/45">
+                        {inspection.pass_count}P · {inspection.fail_count}F · {passRate}%
+                      </span>
+                    </div>
+                  }
                 />
               );
             })}
-            {hasMoreInspections && (
-              <LoadMoreButton onLoadMore={loadMoreInspections} remaining={remainingInspections} />
-            )}
-          </div>
-        )}
-      </div>
+          </ListCard>
+          {hasMoreInspections && (
+            <LoadMoreButton onLoadMore={loadMoreInspections} remaining={remainingInspections} />
+          )}
+        </div>
+      )}
 
-      {/* Template Picker Sheet */}
+      {/* ─── Template picker ─── */}
       <Sheet open={showTemplates} onOpenChange={setShowTemplates}>
-        <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <div className="px-4 py-3 border-b border-white/10">
-              <h2 className="text-base font-bold text-white">Choose Checklist Template</h2>
-              <p className="text-xs text-white mt-0.5">Select the type of inspection</p>
-            </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-2">
-              {TEMPLATES.map((template, index) => {
-                const Icon = template.icon;
+        <SheetContent side="bottom" className="h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <SheetShell
+            eyebrow="New inspection"
+            title="Choose a checklist template"
+            description="Select the type of inspection to run."
+          >
+            <ListCard>
+              {TEMPLATES.map((template, i) => {
+                const itemCount = template.sections.reduce((acc, s) => acc + s.items.length, 0);
                 return (
-                  <motion.button
+                  <ListRow
                     key={template.id}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.03, duration: 0.2 }}
-                    whileTap={{ scale: 0.98 }}
                     onClick={() => startInspection(template)}
-                    className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br ${template.gradient} flex-shrink-0`}
-                      >
-                        <Icon className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-[15px] font-bold text-white">{template.title}</h4>
-                        <p className="text-xs text-white">{template.description}</p>
-                        <p className="text-[10px] text-white mt-0.5">
-                          {template.sections.reduce((acc, s) => acc + s.items.length, 0)} check
-                          items
-                        </p>
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                    </div>
-                  </motion.button>
+                    lead={
+                      <span className="text-[11px] font-medium tabular-nums text-elec-yellow/80 w-6">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                    }
+                    title={template.title}
+                    subtitle={`${template.description} · ${itemCount} check items`}
+                    trailing={<span aria-hidden className="text-elec-yellow/80">→</span>}
+                  />
                 );
               })}
-            </div>
-          </div>
+            </ListCard>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
-      {/* Inspection Detail Sheet */}
+      {/* ─── Inspection detail ─── */}
       <Sheet open={!!viewingInspection} onOpenChange={() => setViewingInspection(null)}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          {viewingInspection && (
-            <div className="flex flex-col h-full bg-background">
-              <div className="px-4 py-3 border-b border-white/10">
-                <h2 className="text-base font-bold text-white">
-                  {viewingInspection.template_title}
-                </h2>
-                <div className="flex items-center gap-2 text-xs text-white mt-1">
-                  <User className="h-3 w-3" />
-                  <span>{viewingInspection.inspector_name}</span>
-                  <span>•</span>
-                  <Calendar className="h-3 w-3" />
-                  <span>{viewingInspection.date}</span>
-                  <span>•</span>
-                  <MapPin className="h-3 w-3" />
-                  <span>{viewingInspection.location}</span>
-                </div>
-              </div>
+        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          {viewingInspection &&
+            (() => {
+              const detailTone = resultTone(viewingInspection.overall_result);
+              const pillTone: keyof typeof PILL_TONE =
+                viewingInspection.overall_result === 'fail'
+                  ? 'red'
+                  : viewingInspection.overall_result === 'advisory'
+                    ? 'amber'
+                    : 'green';
+              const answered = viewingInspection.pass_count + viewingInspection.fail_count;
+              const overallRate =
+                answered > 0 ? Math.round((viewingInspection.pass_count / answered) * 100) : 0;
+              const failedItems = viewingInspection.sections.flatMap((s) =>
+                s.items.filter((i) => i.result === 'fail')
+              );
+              const viewCritical = failedItems.filter((i) => i.classification === 'critical').length;
+              const viewMajor = failedItems.filter((i) => i.classification === 'major').length;
+              const viewMinor = failedItems.filter((i) => i.classification === 'minor').length;
+              return (
+                <SheetShell
+                  eyebrow={`Inspection · ${fmtDate(viewingInspection.date)}`}
+                  title={viewingInspection.template_title}
+                  description={
+                    <span className="inline-flex items-center gap-2">
+                      <StatusPill tone={pillTone}>
+                        {viewingInspection.overall_result.toUpperCase()}
+                      </StatusPill>
+                      <span className="text-[12px] text-white/65">
+                        {viewingInspection.inspector_name || 'Unknown'}
+                        {viewingInspection.location ? ` · ${viewingInspection.location}` : ''}
+                      </span>
+                    </span>
+                  }
+                  footer={
+                    <>
+                      <PrimaryButton
+                        fullWidth
+                        disabled={isExporting && exportingId === viewingInspection.id}
+                        onClick={() => exportPDF('inspection', viewingInspection.id)}
+                      >
+                        {isExporting && exportingId === viewingInspection.id
+                          ? 'Exporting…'
+                          : 'Export PDF'}
+                      </PrimaryButton>
+                      <SecondaryButton onClick={() => setShowShare(true)}>Share</SecondaryButton>
+                    </>
+                  }
+                >
+                  {/* Result accent line — bleeds to the sheet edges */}
+                  <div className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[detailTone])} />
 
-              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
-                {/* Result summary */}
-                {(() => {
-                  const answered = viewingInspection.pass_count + viewingInspection.fail_count;
-                  const overallRate =
-                    answered > 0 ? Math.round((viewingInspection.pass_count / answered) * 100) : 0;
-                  return (
-                    <div className="space-y-2">
-                      <div className="grid grid-cols-3 gap-2">
-                        <div className="p-3 rounded-xl bg-green-500/10 text-center">
-                          <p className="text-2xl font-bold text-green-400">
-                            {viewingInspection.pass_count}
-                          </p>
-                          <p className="text-xs text-green-300">Pass</p>
-                        </div>
-                        <div className="p-3 rounded-xl bg-red-500/10 text-center">
-                          <p className="text-2xl font-bold text-red-400">
-                            {viewingInspection.fail_count}
-                          </p>
-                          <p className="text-xs text-red-300">Fail</p>
-                        </div>
-                        <div className="p-3 rounded-xl bg-gray-500/10 text-center">
-                          <p className="text-2xl font-bold text-white">
-                            {viewingInspection.na_count}
-                          </p>
-                          <p className="text-xs text-white">N/A</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-sm text-white">Overall Pass Rate:</span>
-                        <span
-                          className={`text-lg font-bold ${
-                            overallRate >= 80
-                              ? 'text-green-400'
-                              : overallRate >= 50
-                                ? 'text-amber-400'
-                                : 'text-red-400'
-                          }`}
-                        >
-                          {overallRate}%
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })()}
+                  {/* Result summary */}
+                  <StatStrip
+                    columns={3}
+                    stats={[
+                      { value: viewingInspection.pass_count, label: 'Pass', tone: 'green' },
+                      { value: viewingInspection.fail_count, label: 'Fail', tone: viewingInspection.fail_count > 0 ? 'red' : undefined },
+                      { value: viewingInspection.na_count, label: 'N/A' },
+                    ]}
+                  />
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-[12.5px] text-white/65">Overall pass rate</span>
+                    <span
+                      className={cn(
+                        'text-lg font-semibold tabular-nums',
+                        overallRate >= 80
+                          ? 'text-emerald-400'
+                          : overallRate >= 50
+                            ? 'text-amber-400'
+                            : 'text-red-400'
+                      )}
+                    >
+                      {overallRate}%
+                    </span>
+                  </div>
 
-                {/* Failed items with classification */}
-                {viewingInspection.fail_count > 0 &&
-                  (() => {
-                    const failedItems = viewingInspection.sections.flatMap((s) =>
-                      s.items.filter((i) => i.result === 'fail')
-                    );
-                    const viewCritical = failedItems.filter(
-                      (i) => i.classification === 'critical'
-                    ).length;
-                    const viewMajor = failedItems.filter(
-                      (i) => i.classification === 'major'
-                    ).length;
-                    const viewMinor = failedItems.filter(
-                      (i) => i.classification === 'minor'
-                    ).length;
-                    return (
-                      <div>
-                        <h4 className="text-sm font-bold text-red-400 mb-2 flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4" />
-                          Non-Conformances ({failedItems.length})
-                        </h4>
-                        {(viewCritical > 0 || viewMajor > 0 || viewMinor > 0) && (
-                          <div className="flex gap-2 mb-2">
-                            {viewCritical > 0 && (
-                              <Badge
-                                variant="outline"
-                                className={`${CLASSIFICATION_CONFIG.critical.badge} text-xs`}
-                              >
-                                {viewCritical} Critical
-                              </Badge>
-                            )}
-                            {viewMajor > 0 && (
-                              <Badge
-                                variant="outline"
-                                className={`${CLASSIFICATION_CONFIG.major.badge} text-xs`}
-                              >
-                                {viewMajor} Major
-                              </Badge>
-                            )}
-                            {viewMinor > 0 && (
-                              <Badge
-                                variant="outline"
-                                className={`${CLASSIFICATION_CONFIG.minor.badge} text-xs`}
-                              >
-                                {viewMinor} Minor
-                              </Badge>
-                            )}
-                          </div>
-                        )}
-                        <div className="space-y-1.5">
-                          {failedItems.map((item) => {
-                            const cls = item.classification;
-                            const clsCfg = cls ? CLASSIFICATION_CONFIG[cls] : null;
-                            return (
-                              <div
-                                key={item.id}
-                                className={`p-2.5 rounded-lg border ${clsCfg ? `${clsCfg.border} ${clsCfg.bg}` : 'border-red-500/20 bg-red-500/5'}`}
-                              >
-                                <div className="flex items-start justify-between gap-2">
-                                  <p className="text-sm text-white">{item.text}</p>
-                                  {clsCfg && (
-                                    <Badge
-                                      variant="outline"
-                                      className={`${clsCfg.badge} text-[10px] shrink-0`}
+                  {/* Failed items / non-conformances */}
+                  {failedItems.length > 0 && (
+                    <div>
+                      <Eyebrow className="mb-2">Non-conformances ({failedItems.length})</Eyebrow>
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {viewCritical > 0 && <StatusPill tone="red">{viewCritical} Critical</StatusPill>}
+                        {viewMajor > 0 && <StatusPill tone="orange">{viewMajor} Major</StatusPill>}
+                        {viewMinor > 0 && <StatusPill tone="amber">{viewMinor} Minor</StatusPill>}
+                      </div>
+                      <ListCard>
+                        {failedItems.map((item) => {
+                          const cls = item.classification;
+                          const clsCfg = cls ? CLASSIFICATION_CONFIG[cls] : null;
+                          return (
+                            <div key={item.id} className="px-5 py-3">
+                              <div className="flex items-start justify-between gap-2">
+                                <p className="text-[13px] text-white">{item.text}</p>
+                                {clsCfg && (
+                                  <span className="shrink-0">
+                                    <StatusPill
+                                      tone={clsCfg.tone === 'amber' ? 'amber' : clsCfg.tone === 'orange' ? 'orange' : 'red'}
                                     >
                                       {clsCfg.label}
-                                    </Badge>
-                                  )}
-                                </div>
-                                {item.notes && (
-                                  <p className="text-xs text-red-300 mt-1">{item.notes}</p>
-                                )}
-                                {item.remedial_action && (
-                                  <p className="text-xs text-yellow-300 mt-1">
-                                    Remedial action: {item.remedial_action}
-                                  </p>
-                                )}
-                                {(item.assigned_to || item.due_date || item.nc_status) && (
-                                  <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                                    {item.assigned_to && (
-                                      <span className="text-[10px] text-white bg-white/5 px-2 py-0.5 rounded-full">
-                                        Assigned: {item.assigned_to}
-                                      </span>
-                                    )}
-                                    {item.due_date && (
-                                      <span className="text-[10px] text-white bg-white/5 px-2 py-0.5 rounded-full">
-                                        Due: {new Date(item.due_date).toLocaleDateString('en-GB')}
-                                      </span>
-                                    )}
-                                    {item.nc_status && (
-                                      <Badge
-                                        variant="outline"
-                                        className={`text-[10px] ${
-                                          item.nc_status === 'closed'
-                                            ? 'border-green-500/30 text-green-400'
-                                            : item.nc_status === 'in_progress'
-                                              ? 'border-amber-500/30 text-amber-400'
-                                              : 'border-red-500/30 text-red-400'
-                                        }`}
-                                      >
-                                        {item.nc_status === 'in_progress'
-                                          ? 'In Progress'
-                                          : item.nc_status.charAt(0).toUpperCase() +
-                                            item.nc_status.slice(1)}
-                                      </Badge>
-                                    )}
-                                  </div>
+                                    </StatusPill>
+                                  </span>
                                 )}
                               </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })()}
-
-                {/* All sections with per-section summary */}
-                {viewingInspection.sections.map((section) => {
-                  const sPass = section.items.filter((i) => i.result === 'pass').length;
-                  const sFail = section.items.filter((i) => i.result === 'fail').length;
-                  const sNa = section.items.filter((i) => i.result === 'na').length;
-                  const sTotal = section.items.length;
-                  const sAnswered = sPass + sFail;
-                  const sRate = sAnswered > 0 ? Math.round((sPass / sAnswered) * 100) : 0;
-                  return (
-                    <div key={section.id}>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-sm font-bold text-white">{section.title}</h4>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] text-green-400">{sPass}P</span>
-                          <span className="text-[10px] text-white">/</span>
-                          <span className="text-[10px] text-red-400">{sFail}F</span>
-                          <span className="text-[10px] text-white">/</span>
-                          <span className="text-[10px] text-white">{sNa}NA</span>
-                          {sAnswered > 0 && (
-                            <Badge
-                              variant="outline"
-                              className={`text-[9px] ml-1 ${
-                                sRate >= 80
-                                  ? 'border-green-500/30 text-green-400'
-                                  : sRate >= 50
-                                    ? 'border-amber-500/30 text-amber-400'
-                                    : 'border-red-500/30 text-red-400'
-                              }`}
-                            >
-                              {sRate}%
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                      <div className="space-y-1">
-                        {section.items.map((item) => {
-                          const result = item.result;
-                          if (!result) return null;
-                          const config = RESULT_CONFIG[result];
-                          const ResultIcon = config.icon;
-                          return (
-                            <div key={item.id} className="flex items-center gap-2 py-1">
-                              <ResultIcon
-                                className={`h-3.5 w-3.5 ${config.colour} flex-shrink-0`}
-                              />
-                              <span className="text-xs text-white">{item.text}</span>
+                              {item.notes && (
+                                <p className="text-[12px] text-red-400/85 mt-1">{item.notes}</p>
+                              )}
+                              {item.remedial_action && (
+                                <p className="text-[12px] text-amber-400/85 mt-1">
+                                  Remedial action: {item.remedial_action}
+                                </p>
+                              )}
+                              {(item.assigned_to || item.due_date || item.nc_status) && (
+                                <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                  {item.assigned_to && (
+                                    <span className="text-[10px] text-white/70 bg-white/[0.05] px-2 py-0.5 rounded-full border border-white/10">
+                                      Assigned: {item.assigned_to}
+                                    </span>
+                                  )}
+                                  {item.due_date && (
+                                    <span className="text-[10px] text-white/70 bg-white/[0.05] px-2 py-0.5 rounded-full border border-white/10">
+                                      Due: {new Date(item.due_date).toLocaleDateString('en-GB')}
+                                    </span>
+                                  )}
+                                  {item.nc_status && (
+                                    <StatusPill
+                                      tone={
+                                        item.nc_status === 'closed'
+                                          ? 'green'
+                                          : item.nc_status === 'in_progress'
+                                            ? 'amber'
+                                            : 'red'
+                                      }
+                                    >
+                                      {item.nc_status === 'in_progress'
+                                        ? 'In Progress'
+                                        : item.nc_status.charAt(0).toUpperCase() + item.nc_status.slice(1)}
+                                    </StatusPill>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           );
                         })}
-                      </div>
+                      </ListCard>
                     </div>
-                  );
-                })}
+                  )}
 
-                {viewingInspection.additional_notes && (
-                  <div>
-                    <h4 className="text-sm font-bold text-white mb-1">Additional Notes</h4>
-                    <p className="text-sm text-white">{viewingInspection.additional_notes}</p>
-                  </div>
-                )}
-                {/* Corrective Actions Tracker */}
-                <CorrectiveActionsPanel sourceType="inspection" sourceId={viewingInspection.id} />
-              </div>
-              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    onClick={() => exportPDF('inspection', viewingInspection.id)}
-                    disabled={isExporting && exportingId === viewingInspection.id}
-                    className="h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    {isExporting && exportingId === viewingInspection.id ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <FileDown className="h-4 w-4 mr-2" />
-                    )}
-                    Export PDF
-                  </Button>
-                  <Button
-                    onClick={() => setShowShare(true)}
-                    variant="outline"
-                    className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
+                  {/* All sections with per-section summary */}
+                  {viewingInspection.sections.map((section) => {
+                    const sPass = section.items.filter((i) => i.result === 'pass').length;
+                    const sFail = section.items.filter((i) => i.result === 'fail').length;
+                    const sNa = section.items.filter((i) => i.result === 'na').length;
+                    const sAnswered = sPass + sFail;
+                    const sRate = sAnswered > 0 ? Math.round((sPass / sAnswered) * 100) : 0;
+                    return (
+                      <div key={section.id}>
+                        <div className="flex items-center justify-between mb-2 gap-2">
+                          <Eyebrow>{section.title}</Eyebrow>
+                          <div className="flex items-center gap-1.5 text-[10px] tabular-nums shrink-0">
+                            <span className="text-emerald-400">{sPass}P</span>
+                            <span className="text-white/40">/</span>
+                            <span className="text-red-400">{sFail}F</span>
+                            <span className="text-white/40">/</span>
+                            <span className="text-white/55">{sNa}NA</span>
+                            {sAnswered > 0 && (
+                              <StatusPill
+                                tone={sRate >= 80 ? 'green' : sRate >= 50 ? 'amber' : 'red'}
+                              >
+                                {sRate}%
+                              </StatusPill>
+                            )}
+                          </div>
+                        </div>
+                        <ListCard>
+                          {section.items.map((item) => {
+                            const result = item.result;
+                            if (!result) return null;
+                            const itemPillTone: keyof typeof PILL_TONE =
+                              result === 'pass' ? 'green' : result === 'fail' ? 'red' : 'neutral';
+                            return (
+                              <div
+                                key={item.id}
+                                className="flex items-center justify-between gap-3 px-5 py-2.5"
+                              >
+                                <span className="text-[12.5px] text-white/85">{item.text}</span>
+                                <span className="shrink-0">
+                                  <StatusPill tone={itemPillTone}>{RESULT_LABEL[result]}</StatusPill>
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </ListCard>
+                      </div>
+                    );
+                  })}
+
+                  {viewingInspection.additional_notes && (
+                    <div>
+                      <Eyebrow className="mb-1.5">Additional notes</Eyebrow>
+                      <p className="text-[13px] text-white/85 leading-relaxed">
+                        {viewingInspection.additional_notes}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Corrective actions tracker */}
+                  <CorrectiveActionsPanel sourceType="inspection" sourceId={viewingInspection.id} />
+                </SheetShell>
+              );
+            })()}
         </SheetContent>
       </Sheet>
 
@@ -1845,10 +1782,10 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
           onClose={() => setShowShare(false)}
           pdfType="inspection"
           recordId={viewingInspection.id}
-          documentTitle={`Inspection — ${viewingInspection.equipment_name || viewingInspection.checklist_name}`}
+          documentTitle={`Inspection — ${viewingInspection.template_title}`}
         />
       )}
-    </motion.div>
+    </SafetyModuleShell>
   );
 }
 

@@ -83,7 +83,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
           {/* Primary action */}
           <button
             onClick={onCapture}
-            className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
+            className="inline-flex items-center gap-1.5 h-11 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
             aria-label="Add evidence"
           >
             <Plus className="h-4 w-4" strokeWidth={2.5} />

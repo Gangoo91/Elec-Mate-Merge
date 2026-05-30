@@ -1,55 +1,65 @@
+/**
+ * ObservationDetailSheet — editorial detail view for a single safety observation.
+ * Monochrome with one colour dimension (type / severity / status) carried by a
+ * thin accent line and small uppercase pills. SheetShell layout, sticky footer.
+ */
+
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  ThumbsUp,
-  AlertTriangle,
-  User,
-  MapPin,
-  Calendar,
-  X,
-  Download,
-  Loader2,
-  CheckCircle2,
-  Clock,
-  CircleDot,
-  Shield,
-  ArrowUpRight,
-  Share2,
-} from 'lucide-react';
-import type { SafetyObservation } from '@/hooks/useSafetyObservations';
+import type { SafetyObservation, ObservationStatus } from '@/hooks/useSafetyObservations';
 import { useUpdateObservation } from '@/hooks/useSafetyObservations';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { AuditTimeline } from '../common/AuditTimeline';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from '../common/CorrectiveActionsPanel';
 import { storageSetJSONSync } from '@/utils/storage';
+import {
+  SheetShell,
+  Eyebrow,
+  ListCard,
+  PrimaryButton,
+  SecondaryButton,
+  toneAccent,
+  type Tone,
+} from '@/components/college/primitives';
 
-const STATUS_CONFIG: Record<
-  string,
-  { label: string; colour: string; bg: string; icon: React.ElementType }
-> = {
-  open: {
-    label: 'Open',
-    colour: 'text-amber-400',
-    bg: 'bg-amber-500/15 border-amber-500/30',
-    icon: CircleDot,
-  },
-  in_progress: {
-    label: 'In Progress',
-    colour: 'text-blue-400',
-    bg: 'bg-blue-500/15 border-blue-500/30',
-    icon: Clock,
-  },
-  closed: {
-    label: 'Closed',
-    colour: 'text-green-400',
-    bg: 'bg-green-500/15 border-green-500/30',
-    icon: CheckCircle2,
-  },
+// ─── Status / type / severity colour (the single colour dimension) ───
+
+const STATUS_LABEL: Record<ObservationStatus, string> = {
+  open: 'Open',
+  in_progress: 'In Progress',
+  closed: 'Closed',
 };
+
+const PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string> = {
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+};
+
+function StatusPill({ status }: { status: ObservationStatus }) {
+  const key = status === 'open' ? 'amber' : status === 'in_progress' ? 'blue' : 'green';
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        PILL[key]
+      )}
+    >
+      {STATUS_LABEL[status]}
+    </span>
+  );
+}
+
+function severityTone(sev: SafetyObservation['severity']): Tone | undefined {
+  if (sev === 'high') return 'red';
+  if (sev === 'medium') return 'amber';
+  if (sev === 'low') return 'green';
+  return undefined;
+}
 
 interface ObservationDetailSheetProps {
   observation: SafetyObservation | null;
@@ -57,36 +67,13 @@ interface ObservationDetailSheetProps {
   onClose: () => void;
 }
 
-export function ObservationDetailSheet({
-  observation,
-  open,
-  onClose,
-}: ObservationDetailSheetProps) {
+export function ObservationDetailSheet({ observation, open, onClose }: ObservationDetailSheetProps) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [showShare, setShowShare] = useState(false);
   const updateObservation = useUpdateObservation();
 
-  if (!observation) return null;
-
-  const isPositive = observation.observation_type === 'positive';
-  const currentStatus = observation.status || 'open';
-  const statusConf = STATUS_CONFIG[currentStatus] || STATUS_CONFIG.open;
-  const StatusIcon = statusConf.icon;
-  const showFollowUp = !isPositive;
-
-  const formattedDate = new Date(observation.created_at).toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-
-  const formattedTime = new Date(observation.created_at).toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-
-  const handleStatusChange = (newStatus: 'open' | 'in_progress' | 'closed') => {
+  const handleStatusChange = (newStatus: ObservationStatus) => {
+    if (!observation) return;
     updateObservation.mutate({
       id: observation.id,
       status: newStatus,
@@ -96,310 +83,237 @@ export function ObservationDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Handle bar */}
-          <div className="pt-3 pb-2 flex justify-center">
-            <div className="w-10 h-1 bg-white/20 rounded-full" />
-          </div>
+      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        {observation &&
+          (() => {
+            const isPositive = observation.observation_type === 'positive';
+            const currentStatus: ObservationStatus = observation.status || 'open';
+            const showFollowUp = !isPositive;
+            const sevTone = severityTone(observation.severity);
+            const accentTone: Tone = isPositive
+              ? 'green'
+              : sevTone ?? (currentStatus === 'closed' ? 'green' : currentStatus === 'in_progress' ? 'blue' : 'amber');
 
-          {/* Close button */}
-          <div className="flex items-center justify-end px-4 pb-2">
-            <button
-              onClick={onClose}
-              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 active:bg-white/20 transition-colors touch-manipulation"
-              aria-label="Close"
-            >
-              <X className="h-5 w-5 text-white" />
-            </button>
-          </div>
+            const formattedDate = new Date(observation.created_at).toLocaleDateString('en-GB', {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            });
+            const formattedTime = new Date(observation.created_at).toLocaleTimeString('en-GB', {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+            const overdue =
+              !!observation.due_date &&
+              new Date(observation.due_date) < new Date() &&
+              currentStatus !== 'closed';
 
-          {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto px-5 pb-[env(safe-area-inset-bottom)]">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-5"
-            >
-              {/* Type badge + Category badge + Status badge */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <Badge
-                  className={`text-sm px-3 py-1 ${
-                    isPositive
-                      ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                      : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    {isPositive ? (
-                      <ThumbsUp className="w-4 h-4" />
-                    ) : (
-                      <AlertTriangle className="w-4 h-4" />
-                    )}
-                    {isPositive ? 'Positive' : 'Improvement Needed'}
-                  </span>
-                </Badge>
-                <Badge className="bg-white/10 text-white border-white/20 text-sm px-3 py-1">
-                  {observation.category}
-                </Badge>
-                {observation.severity && (
-                  <Badge
-                    className={`text-xs px-2 py-0.5 ${
-                      observation.severity === 'high'
-                        ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                        : observation.severity === 'medium'
-                          ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                          : 'bg-green-500/20 text-green-400 border-green-500/30'
-                    }`}
-                  >
-                    {observation.severity.charAt(0).toUpperCase() + observation.severity.slice(1)}{' '}
-                    Severity
-                  </Badge>
-                )}
-                {showFollowUp && (
-                  <Badge
-                    className={`${statusConf.bg} border ${statusConf.colour} text-xs flex items-center gap-1`}
-                  >
-                    <StatusIcon className="h-3 w-3" />
-                    {statusConf.label}
-                  </Badge>
-                )}
-              </div>
-
-              {/* Full description */}
-              <div>
-                <h3 className="text-sm font-semibold text-white mb-2">Description</h3>
-                <p className="text-base text-white leading-relaxed">{observation.description}</p>
-              </div>
-
-              {/* Details card */}
-              {(observation.person_observed || observation.location || observation.created_at) && (
-                <div className="rounded-xl bg-white/5 border border-white/10 p-4 space-y-3">
-                  {observation.person_observed && (
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center flex-shrink-0">
-                        <User className="w-4 h-4 text-blue-400" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-white font-medium">Person Observed</p>
-                        <p className="text-sm text-white">{observation.person_observed}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {observation.location && (
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-4 h-4 text-purple-400" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-white font-medium">Location</p>
-                        <p className="text-sm text-white">{observation.location}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="w-4 h-4 text-elec-yellow" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-white font-medium">Date & Time</p>
-                      <p className="text-sm text-white">
-                        {formattedDate} at {formattedTime}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Follow-up status section — improvement_needed only */}
-              {showFollowUp && (
-                <div className="rounded-xl bg-white/5 border border-elec-yellow/20 p-4 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-elec-yellow" />
-                    <h3 className="text-sm font-semibold text-white">Follow-Up</h3>
-                  </div>
-
-                  {observation.follow_up_required && (
-                    <div className="flex items-center gap-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                      <AlertTriangle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
-                      <span className="text-xs text-white font-medium">Follow-up required</span>
-                    </div>
-                  )}
-
-                  {observation.assigned_to && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <User className="h-4 w-4 text-white" />
-                      <span className="text-white">Assigned to: {observation.assigned_to}</span>
-                    </div>
-                  )}
-
-                  {observation.due_date && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <Calendar className="h-4 w-4 text-white" />
-                      <span className="text-white">
-                        Due: {new Date(observation.due_date).toLocaleDateString('en-GB')}
-                      </span>
-                      {new Date(observation.due_date) < new Date() &&
-                        currentStatus !== 'closed' && (
-                          <Badge className="bg-red-500/15 text-red-400 border-red-500/30 text-[10px]">
-                            Overdue
-                          </Badge>
+            return (
+              <SheetShell
+                eyebrow={`${isPositive ? 'Positive observation' : 'Improvement needed'} · ${observation.category}`}
+                title={observation.description.length > 64 ? `${observation.description.slice(0, 64)}…` : observation.description}
+                description={
+                  <span className="inline-flex items-center gap-2 flex-wrap">
+                    {showFollowUp && <StatusPill status={currentStatus} />}
+                    {observation.severity && (
+                      <span
+                        className={cn(
+                          'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+                          PILL[(severityTone(observation.severity) as 'amber' | 'green' | 'red') ?? 'neutral']
                         )}
-                    </div>
-                  )}
+                      >
+                        {observation.severity} severity
+                      </span>
+                    )}
+                    {overdue && (
+                      <span className={cn('inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap', PILL.red)}>
+                        Overdue
+                      </span>
+                    )}
+                  </span>
+                }
+                footer={
+                  <>
+                    <PrimaryButton
+                      fullWidth
+                      disabled={isExporting && exportingId === observation.id}
+                      onClick={() => exportPDF('observation', observation.id)}
+                    >
+                      {isExporting && exportingId === observation.id ? 'Exporting…' : 'Export PDF'}
+                    </PrimaryButton>
+                    <SecondaryButton onClick={() => setShowShare(true)}>Share</SecondaryButton>
+                  </>
+                }
+              >
+                {/* Status accent line — bleeds to the sheet edges */}
+                <div className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[accentTone])} />
 
-                  {observation.completed_date && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 text-green-400" />
-                      <span className="text-white">
-                        Completed:{' '}
-                        {new Date(observation.completed_date).toLocaleDateString('en-GB')}
+                {/* Full description */}
+                <div>
+                  <Eyebrow className="mb-1.5">Description</Eyebrow>
+                  <p className="text-[13.5px] text-white/90 leading-relaxed">{observation.description}</p>
+                </div>
+
+                {/* Details */}
+                <div>
+                  <Eyebrow className="mb-2">Details</Eyebrow>
+                  <ListCard>
+                    {observation.person_observed && (
+                      <div className="flex items-center justify-between gap-3 px-5 py-3">
+                        <span className="text-[12px] text-white/55">Person observed</span>
+                        <span className="text-[13px] text-white text-right">{observation.person_observed}</span>
+                      </div>
+                    )}
+                    {observation.location && (
+                      <div className="flex items-center justify-between gap-3 px-5 py-3">
+                        <span className="text-[12px] text-white/55">Location</span>
+                        <span className="text-[13px] text-white text-right">{observation.location}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between gap-3 px-5 py-3">
+                      <span className="text-[12px] text-white/55">Recorded</span>
+                      <span className="text-[13px] text-white text-right">
+                        {formattedDate} at {formattedTime}
                       </span>
                     </div>
-                  )}
-
-                  {/* Status action buttons */}
-                  {currentStatus !== 'closed' && (
-                    <div className="flex gap-2 pt-1">
-                      {currentStatus === 'open' && (
-                        <Button
-                          onClick={() => handleStatusChange('in_progress')}
-                          disabled={updateObservation.isPending}
-                          className="flex-1 h-11 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl touch-manipulation"
-                        >
-                          {updateObservation.isPending ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Clock className="h-4 w-4 mr-2" />
-                          )}
-                          Start Action
-                        </Button>
-                      )}
-                      {currentStatus === 'in_progress' && (
-                        <>
-                          <Button
-                            onClick={() => handleStatusChange('closed')}
-                            disabled={updateObservation.isPending}
-                            className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
-                          >
-                            {updateObservation.isPending ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <CheckCircle2 className="h-4 w-4 mr-2" />
-                            )}
-                            Close
-                          </Button>
-                          <Button
-                            onClick={() => handleStatusChange('open')}
-                            disabled={updateObservation.isPending}
-                            variant="outline"
-                            className="h-11 border-white/20 text-white rounded-xl touch-manipulation"
-                          >
-                            Reopen
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  )}
+                  </ListCard>
                 </div>
-              )}
 
-              {/* Corrective Actions */}
-              <CorrectiveActionsPanel sourceType="observation" sourceId={observation.id} />
-
-              {/* Photos */}
-              {observation.photos && observation.photos.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-semibold text-white mb-2">Photos</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {observation.photos.map((url, index) => (
-                      <div
-                        key={index}
-                        className="rounded-xl overflow-hidden border border-white/10"
-                      >
-                        <img
-                          src={url}
-                          alt={`Observation photo ${index + 1}`}
-                          className="w-full h-auto object-cover max-h-[300px]"
-                        />
+                {/* Follow-up — improvement_needed only */}
+                {showFollowUp && (
+                  <div>
+                    <Eyebrow className="mb-2">Follow-up</Eyebrow>
+                    <ListCard>
+                      <div className="flex items-center justify-between gap-3 px-5 py-3">
+                        <span className="text-[12px] text-white/55">Status</span>
+                        <StatusPill status={currentStatus} />
                       </div>
-                    ))}
+                      {observation.follow_up_required && (
+                        <div className="flex items-center justify-between gap-3 px-5 py-3">
+                          <span className="text-[12px] text-white/55">Action</span>
+                          <span className="text-[13px] text-amber-400 text-right">Follow-up required</span>
+                        </div>
+                      )}
+                      {observation.assigned_to && (
+                        <div className="flex items-center justify-between gap-3 px-5 py-3">
+                          <span className="text-[12px] text-white/55">Assigned to</span>
+                          <span className="text-[13px] text-white text-right">{observation.assigned_to}</span>
+                        </div>
+                      )}
+                      {observation.due_date && (
+                        <div className="flex items-center justify-between gap-3 px-5 py-3">
+                          <span className="text-[12px] text-white/55">Due</span>
+                          <span className={cn('text-[13px] text-right', overdue ? 'text-red-400' : 'text-white')}>
+                            {new Date(observation.due_date).toLocaleDateString('en-GB')}
+                          </span>
+                        </div>
+                      )}
+                      {observation.completed_date && (
+                        <div className="flex items-center justify-between gap-3 px-5 py-3">
+                          <span className="text-[12px] text-white/55">Completed</span>
+                          <span className="text-[13px] text-emerald-400 text-right">
+                            {new Date(observation.completed_date).toLocaleDateString('en-GB')}
+                          </span>
+                        </div>
+                      )}
+                    </ListCard>
+
+                    {/* Status actions */}
+                    {currentStatus !== 'closed' && (
+                      <div className="flex gap-2 pt-3">
+                        {currentStatus === 'open' && (
+                          <PrimaryButton
+                            fullWidth
+                            disabled={updateObservation.isPending}
+                            onClick={() => handleStatusChange('in_progress')}
+                          >
+                            {updateObservation.isPending ? 'Saving…' : 'Start action'}
+                          </PrimaryButton>
+                        )}
+                        {currentStatus === 'in_progress' && (
+                          <>
+                            <PrimaryButton
+                              fullWidth
+                              disabled={updateObservation.isPending}
+                              onClick={() => handleStatusChange('closed')}
+                            >
+                              {updateObservation.isPending ? 'Saving…' : 'Close'}
+                            </PrimaryButton>
+                            <SecondaryButton
+                              disabled={updateObservation.isPending}
+                              onClick={() => handleStatusChange('open')}
+                            >
+                              Reopen
+                            </SecondaryButton>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Escalate to Near Miss — improvement_needed only */}
-              {showFollowUp && (
-                <button
-                  onClick={() => {
-                    const escalationData = {
-                      category: observation.category,
-                      description: observation.description,
-                      location: observation.location || '',
-                      severity:
-                        observation.severity === 'high'
-                          ? 'critical'
-                          : observation.severity === 'medium'
-                            ? 'medium'
-                            : 'low',
-                      source_observation_id: observation.id,
-                    };
-                    storageSetJSONSync('escalate-to-near-miss', escalationData);
-                    onClose();
-                    window.dispatchEvent(
-                      new CustomEvent('navigate-safety-tool', { detail: 'near-miss' })
-                    );
-                  }}
-                  className="w-full h-11 px-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  <ArrowUpRight className="h-4 w-4" />
-                  Escalate to Near Miss Report
-                </button>
-              )}
+                {/* Corrective actions */}
+                <CorrectiveActionsPanel sourceType="observation" sourceId={observation.id} />
 
-              {/* Audit Trail */}
-              <AuditTimeline recordType="observation" recordId={observation.id} />
+                {/* Photos */}
+                {observation.photos && observation.photos.length > 0 && (
+                  <div>
+                    <Eyebrow className="mb-2">Photos</Eyebrow>
+                    <div className="grid grid-cols-2 gap-2">
+                      {observation.photos.map((url, index) => (
+                        <div key={index} className="rounded-xl overflow-hidden border border-white/[0.06]">
+                          <img
+                            src={url}
+                            alt={`Observation photo ${index + 1}`}
+                            className="w-full h-auto object-cover max-h-[300px]"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Export & Share */}
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => exportPDF('observation', observation.id)}
-                  disabled={isExporting && exportingId === observation.id}
-                  className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-                >
-                  {isExporting && exportingId === observation.id ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Download className="h-4 w-4" />
-                  )}
-                  Export PDF
-                </button>
-                <button
-                  onClick={() => setShowShare(true)}
-                  className="h-11 px-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  <Share2 className="h-4 w-4" />
-                  Share
-                </button>
-              </div>
+                {/* Escalate to Near Miss — improvement_needed only */}
+                {showFollowUp && (
+                  <SecondaryButton
+                    fullWidth
+                    onClick={() => {
+                      const escalationData = {
+                        category: observation.category,
+                        description: observation.description,
+                        location: observation.location || '',
+                        severity:
+                          observation.severity === 'high'
+                            ? 'critical'
+                            : observation.severity === 'medium'
+                              ? 'medium'
+                              : 'low',
+                        source_observation_id: observation.id,
+                      };
+                      storageSetJSONSync('escalate-to-near-miss', escalationData);
+                      onClose();
+                      window.dispatchEvent(new CustomEvent('navigate-safety-tool', { detail: 'near-miss' }));
+                    }}
+                  >
+                    Escalate to near miss report →
+                  </SecondaryButton>
+                )}
 
-              {/* Bottom spacer */}
-              <div className="h-6" />
-            </motion.div>
-          </div>
-        </div>
+                {/* Audit trail */}
+                <AuditTimeline recordType="observation" recordId={observation.id} />
+
+                <SafetyDocumentShare
+                  open={showShare}
+                  onClose={() => setShowShare(false)}
+                  pdfType="observation"
+                  recordId={observation.id}
+                  documentTitle={`Safety Observation — ${observation.location || 'Site'}`}
+                />
+              </SheetShell>
+            );
+          })()}
       </SheetContent>
-
-      <SafetyDocumentShare
-        open={showShare}
-        onClose={() => setShowShare(false)}
-        pdfType="observation"
-        recordId={observation.id}
-        documentTitle={`Safety Observation — ${observation.location || 'Site'}`}
-      />
     </Sheet>
   );
 }

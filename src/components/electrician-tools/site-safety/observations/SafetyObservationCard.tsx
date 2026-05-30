@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Input } from '@/components/ui/input';
-import { LocationAutoFill } from '../common/LocationAutoFill';
-import { SmartTextarea } from '../common/SmartTextarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ArrowLeft, Eye, ThumbsUp, AlertTriangle, Loader2 } from 'lucide-react';
+/**
+ * SafetyObservationCard — Safety Observations module (gold-standard editorial).
+ *
+ * SafetyModuleShell (masthead + PageHero + StatStrip + FilterBar) over a
+ * day-grouped observation list. Logging happens in a bottom-sheet form with
+ * draft recovery and a pre-save readiness gate. One colour dimension only
+ * (type / severity / status) — monochrome everywhere else.
+ */
+
+import { useMemo, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+import { useHaptic } from '@/hooks/useHaptic';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { useShowMore } from '@/hooks/useShowMore';
 import {
   useSafetyObservations,
   useCreateObservation,
@@ -18,65 +23,136 @@ import {
   type SafetyObservation,
   type ObservationSeverity,
 } from '@/hooks/useSafetyObservations';
-import { ObservationFeed } from './ObservationFeed';
-import { SafetyEmptyState } from '../common/SafetyEmptyState';
-import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
+
+import { SafetyModuleShell } from '../common/SafetyModuleShell';
+import { SignatureField } from '../common/SignatureField';
+import { LocationAutoFill } from '../common/LocationAutoFill';
+import { SmartTextarea } from '../common/SmartTextarea';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
-import { SignaturePad } from '../common/SignaturePad';
-import { useHaptic } from '@/hooks/useHaptic';
+import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
+import { LoadMoreButton } from '../common/LoadMoreButton';
+import { ReadinessGate } from '../common/ReadinessGate';
 import { SaveAsTemplateSheet } from '../common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from '../common/LoadTemplateSheet';
 import { OBSERVATION_STANDARD_TEMPLATES } from '@/data/site-safety/observation-templates';
 
-interface SafetyObservationCardProps {
-  onBack: () => void;
-}
+import { ObservationFeed } from './ObservationFeed';
+import { ObservationDetailSheet } from './ObservationDetailSheet';
 
-type TabKey = 'log' | 'feed';
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Field,
+  FormCard,
+  SheetShell,
+  PrimaryButton,
+  SecondaryButton,
+  TextAction,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/college/primitives';
+
+type TypeFilter = 'all' | 'positive' | 'improvement_needed';
+type ObservationType = 'positive' | 'improvement_needed';
+
+const STATUS_PILL = 'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap bg-emerald-500/10 text-emerald-400 border-emerald-500/25';
+
+interface SafetyObservationCardProps {
+  onBack?: () => void;
+}
 
 export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const haptic = useHaptic();
-  const [activeTab, setActiveTab] = useState<TabKey>('log');
-  const [observationType, setObservationType] = useState<'positive' | 'improvement_needed'>(
-    'positive'
-  );
+  const { data: observations = [], isLoading } = useSafetyObservations();
+  const createObservation = useCreateObservation();
+
+  // ─── List view state ───
+  const [selectedObservation, setSelectedObservation] = useState<SafetyObservation | null>(null);
+  const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // ─── Log (create) sheet state ───
+  const [showLog, setShowLog] = useState(false);
+  const [observationType, setObservationType] = useState<ObservationType>('positive');
   const [category, setCategory] = useState('');
   const [personObserved, setPersonObserved] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [severity, setSeverity] = useState<ObservationSeverity | ''>('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
-
-  // Observer signature state
   const [observerSigName, setObserverSigName] = useState('');
-  const [observerSigDate, setObserverSigDate] = useState('');
   const [observerSigDataUrl, setObserverSigDataUrl] = useState('');
 
-  // Template state
+  // Templates
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
 
-  const getTemplateData = () => ({
-    observationType,
-    category,
-    severity,
-  });
+  const getTemplateData = () => ({ observationType, category, severity });
 
   const handleLoadTemplate = (data: Record<string, unknown>) => {
-    if (data.observationType) setObservationType(data.observationType as 'positive' | 'improvement_needed');
+    if (data.observationType) setObservationType(data.observationType as ObservationType);
     if (data.category) setCategory(data.category as string);
     if (data.severity) setSeverity(data.severity as ObservationSeverity);
     if (data.description) setDescription(data.description as string);
   };
 
-  const { data: observations = [], isLoading } = useSafetyObservations();
-  const createObservation = useCreateObservation();
+  // ─── Draft persistence (log only) ───
+  const draftData = useMemo(
+    () => ({ observationType, category, personObserved, description, location, severity }),
+    [observationType, category, personObserved, description, location, severity]
+  );
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'safety-observation',
+    data: draftData,
+    enabled: showLog && (description.trim().length > 0 || category.length > 0),
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.observationType) setObservationType(recoveredDraft.observationType);
+    if (recoveredDraft.category) setCategory(recoveredDraft.category);
+    if (recoveredDraft.personObserved) setPersonObserved(recoveredDraft.personObserved);
+    if (recoveredDraft.description) setDescription(recoveredDraft.description);
+    if (recoveredDraft.location) setLocation(recoveredDraft.location);
+    if (recoveredDraft.severity) setSeverity(recoveredDraft.severity);
+    dismissDraft();
+  };
+
+  const resetForm = () => {
+    setObservationType('positive');
+    setCategory('');
+    setPersonObserved('');
+    setDescription('');
+    setLocation('');
+    setSeverity('');
+    setPhotoUrls([]);
+    setObserverSigName('');
+    setObserverSigDataUrl('');
+  };
 
   const canSubmit = category.length > 0 && description.trim().length > 0;
 
+  // Pre-save readiness gate (BS 7671-aligned: capture what makes an observation usable).
+  const readiness: { ok: boolean; label: string }[] = [
+    { ok: category.length > 0, label: 'Category selected' },
+    { ok: description.trim().length > 0, label: 'Observation described' },
+    ...(observationType === 'improvement_needed'
+      ? [{ ok: !!severity, label: 'Severity rated' }]
+      : []),
+  ];
+
   const handleSubmit = async () => {
     if (!canSubmit) return;
-
     await createObservation.mutateAsync({
       observation_type: observationType,
       category,
@@ -88,148 +164,190 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       observer_signature: observerSigDataUrl || undefined,
       observer_name: observerSigName || undefined,
     });
-
     haptic.success();
-
-    // Reset form
-    setCategory('');
-    setPersonObserved('');
-    setDescription('');
-    setLocation('');
-    setSeverity('');
-    setObservationType('positive');
-    setPhotoUrls([]);
-    setObserverSigName('');
-    setObserverSigDate('');
-    setObserverSigDataUrl('');
+    clearDraft();
+    resetForm();
+    setShowLog(false);
   };
 
-  const tabs: { key: TabKey; label: string }[] = [
-    { key: 'log', label: 'Log' },
-    { key: 'feed', label: 'Feed' },
+  // ─── Derived list ───
+  const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return observations.filter((obs) => {
+      const matchesType = typeFilter === 'all' || obs.observation_type === typeFilter;
+      const matchesSearch =
+        !q ||
+        obs.description?.toLowerCase().includes(q) ||
+        obs.category?.toLowerCase().includes(q) ||
+        obs.person_observed?.toLowerCase().includes(q) ||
+        obs.location?.toLowerCase().includes(q);
+      return matchesType && matchesSearch;
+    });
+  }, [observations, typeFilter, searchQuery]);
+
+  // Open improvements first, then by recency.
+  const rank = (o: SafetyObservation) =>
+    o.observation_type === 'improvement_needed' && (o.status || 'open') !== 'closed' ? 0 : 1;
+  const sorted = useMemo(
+    () =>
+      [...filtered].sort((a, b) => {
+        if (rank(a) !== rank(b)) return rank(a) - rank(b);
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }),
+    [filtered]
+  );
+
+  const { visible, hasMore, remaining, loadMore } = useShowMore(sorted);
+
+  // ─── Stats ───
+  const positiveCount = observations.filter((o) => o.observation_type === 'positive').length;
+  const improvementCount = observations.filter((o) => o.observation_type === 'improvement_needed').length;
+  const openCount = observations.filter(
+    (o) => o.observation_type === 'improvement_needed' && (o.status || 'open') !== 'closed'
+  ).length;
+
+  const openSheet = () => {
+    resetForm();
+    setShowLog(true);
+  };
+
+  const isLogging = createObservation.isPending;
+
+  const SEVERITY_OPTIONS = [
+    { value: 'low' as const, label: 'Low' },
+    { value: 'medium' as const, label: 'Medium' },
+    { value: 'high' as const, label: 'High' },
   ];
 
   return (
-    <div className="flex flex-col h-full bg-background">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
-        <button
-          onClick={onBack}
-          className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:scale-95 transition-transform"
-        >
-          <ArrowLeft className="w-5 h-5 text-white" />
-        </button>
-        <div className="flex-1">
-          <h1 className="text-lg font-semibold text-white">Safety Observations</h1>
-          <p className="text-sm text-white">Log and review site observations</p>
+    <SafetyModuleShell
+      onBack={onBack ?? (() => {})}
+      moduleName="Safety Observations"
+      trailing={openCount > 0 ? <span className={STATUS_PILL}>{openCount} open</span> : undefined}
+      hero={
+        <PageHero
+          eyebrow="Safety Observations"
+          title="Log and track site observations"
+          description="Capture positive behaviours and areas for improvement — rate severity, assign follow-up and close the loop. Regular observations build a strong safety culture."
+          tone="green"
+          actions={<PrimaryButton onClick={openSheet}>Log observation</PrimaryButton>}
+        />
+      }
+      stats={
+        observations.length > 0 ? (
+          <StatStrip
+            stats={[
+              { value: observations.length, label: 'Total', onClick: () => setTypeFilter('all') },
+              { value: positiveCount, label: 'Positive', tone: 'green', onClick: () => setTypeFilter('positive') },
+              { value: improvementCount, label: 'Improvement', tone: 'amber', onClick: () => setTypeFilter('improvement_needed') },
+              { value: openCount, label: 'Open', accent: true, onClick: () => setTypeFilter('improvement_needed') },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        observations.length > 0 ? (
+          <FilterBar
+            tabs={[
+              { value: 'all', label: 'All', count: observations.length },
+              { value: 'positive', label: 'Positive', count: positiveCount },
+              { value: 'improvement_needed', label: 'Improvement', count: improvementCount },
+            ]}
+            activeTab={typeFilter}
+            onTabChange={(v) => setTypeFilter(v as TypeFilter)}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search observations…"
+          />
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : observations.length === 0 ? (
+        <EmptyState
+          title="No observations yet"
+          description="Log your first safety observation — track both positive behaviours and areas for improvement to build a strong safety culture."
+          action="Log observation"
+          onAction={openSheet}
+        />
+      ) : (
+        <div className="space-y-3">
+          <ObservationFeed observations={visible} onViewDetails={setSelectedObservation} />
+          {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
         </div>
-        <Eye className="w-5 h-5 text-elec-yellow" />
-      </div>
+      )}
 
-      {/* Tab Bar */}
-      <div className="flex px-4 pt-3 gap-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={`h-11 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all ${
-              activeTab === tab.key
-                ? 'bg-elec-yellow text-black'
-                : 'bg-white/5 text-white border border-white/10'
-            }`}
+      {/* ─── Log observation sheet ─── */}
+      <Sheet open={showLog} onOpenChange={setShowLog}>
+        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <SheetShell
+            eyebrow="New observation"
+            title="Log observation"
+            description={<DraftSaveIndicator status={draftStatus} />}
+            footer={
+              <>
+                <SecondaryButton onClick={() => setShowSaveTemplate(true)}>Save template</SecondaryButton>
+                <PrimaryButton fullWidth disabled={!canSubmit || isLogging} onClick={handleSubmit}>
+                  {isLogging ? 'Saving…' : 'Log observation'}
+                </PrimaryButton>
+              </>
+            }
           >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            <AnimatePresence>
+              {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+            </AnimatePresence>
 
-      <div className="flex-1 overflow-y-auto pb-20">
-        <AnimatePresence mode="wait">
-          {activeTab === 'log' ? (
-            <motion.div
-              key="log"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.2 }}
-              className="px-4 pt-4 space-y-4"
-            >
-              {/* Load Template */}
-              <button
-                type="button"
-                onClick={() => setShowLoadTemplate(true)}
-                className="w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-              >
-                Load from Template
-              </button>
+            <TextAction onClick={() => setShowLoadTemplate(true)}>Load from a saved template →</TextAction>
 
-              {/* Observation Type Toggle */}
-              <div>
-                <label className="block text-sm font-medium text-white mb-2">
-                  Observation Type
-                </label>
-                <div className="flex gap-2">
+            <FormCard eyebrow="Observation type">
+              <div className="grid grid-cols-2 gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl">
+                {[
+                  { v: 'positive' as const, label: 'Positive' },
+                  { v: 'improvement_needed' as const, label: 'Improvement' },
+                ].map((opt) => (
                   <button
-                    onClick={() => setObservationType('positive')}
-                    className={`h-11 flex-1 flex items-center justify-center gap-2 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all border ${
-                      observationType === 'positive'
-                        ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                        : 'bg-white/5 border-white/10 text-white'
-                    }`}
+                    key={opt.v}
+                    type="button"
+                    onClick={() => setObservationType(opt.v)}
+                    className={cn(
+                      'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
+                      observationType === opt.v ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                    )}
                   >
-                    <ThumbsUp className="w-4 h-4" />
-                    Positive
+                    {opt.label}
                   </button>
-                  <button
-                    onClick={() => setObservationType('improvement_needed')}
-                    className={`h-11 flex-1 flex items-center justify-center gap-2 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all border ${
-                      observationType === 'improvement_needed'
-                        ? 'bg-amber-500/20 border-amber-500/50 text-amber-400'
-                        : 'bg-white/5 border-white/10 text-white'
-                    }`}
-                  >
-                    <AlertTriangle className="w-4 h-4" />
-                    Improvement
-                  </button>
-                </div>
+                ))}
               </div>
 
-              {/* Severity — improvement_needed only */}
               {observationType === 'improvement_needed' && (
-                <div>
-                  <label className="block text-sm font-medium text-white mb-2">Severity</label>
-                  <div className="flex gap-2">
-                    {(
-                      [
-                        { value: 'low', label: 'Low', bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400' },
-                        { value: 'medium', label: 'Medium', bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400' },
-                        { value: 'high', label: 'High', bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400' },
-                      ] as const
-                    ).map((s) => (
+                <Field label="Severity">
+                  <div className="grid grid-cols-3 gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl">
+                    {SEVERITY_OPTIONS.map((s) => (
                       <button
                         key={s.value}
+                        type="button"
                         onClick={() => setSeverity(severity === s.value ? '' : s.value)}
-                        className={`h-11 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all border ${
-                          severity === s.value
-                            ? `${s.bg} ${s.border} ${s.text}`
-                            : 'bg-white/5 border-white/10 text-white'
-                        }`}
+                        className={cn(
+                          'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
+                          severity === s.value ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                        )}
                       >
                         {s.label}
                       </button>
                     ))}
                   </div>
-                </div>
+                </Field>
               )}
+            </FormCard>
 
-              {/* Category */}
-              <div>
-                <label className="block text-sm font-medium text-white mb-1">Category</label>
+            <FormCard eyebrow="What did you observe?">
+              <Field label="Category" required>
                 <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
+                  <SelectContent className={selectContentClass}>
                     {OBSERVATION_CATEGORIES.map((cat) => (
                       <SelectItem key={cat} value={cat}>
                         {cat}
@@ -237,107 +355,64 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
 
-              {/* Person Observed */}
-              <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Person Observed (optional)
-                </label>
-                <Input
-                  value={personObserved}
-                  onChange={(e) => setPersonObserved(e.target.value)}
-                  placeholder="Name or role"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-sm font-medium text-white mb-1">Description</label>
+              <Field label="Description" required>
                 <SmartTextarea
                   value={description}
                   onChange={setDescription}
-                  placeholder="Describe what you observed..."
-                  className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+                  placeholder="Describe what you observed…"
+                  className="touch-manipulation text-[13px] min-h-[100px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
                 />
-              </div>
+              </Field>
 
-              {/* Location */}
+              <Field label="Person observed">
+                <input
+                  value={personObserved}
+                  onChange={(e) => setPersonObserved(e.target.value)}
+                  placeholder="Name or role (optional)"
+                  className={inputClass}
+                />
+              </Field>
+
               <LocationAutoFill
                 value={location}
                 onChange={setLocation}
-                placeholder="e.g. Ground floor, Distribution board area"
-                label="Location (optional)"
+                placeholder="e.g. Ground floor, distribution board area"
+                label="Location"
               />
+            </FormCard>
 
-              {/* Photos */}
-              <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} />
-
-              {/* Observer Signature */}
-              <SignaturePad
-                label="Observer Signature"
-                name={observerSigName}
-                date={observerSigDate}
-                signatureDataUrl={observerSigDataUrl}
-                onSignatureChange={setObserverSigDataUrl}
-                onNameChange={setObserverSigName}
-                onDateChange={setObserverSigDate}
+            <FormCard eyebrow="Evidence">
+              <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
+              <SignatureField
+                label="Observer signature"
+                value={observerSigDataUrl}
+                onChange={setObserverSigDataUrl}
               />
-
-              {/* Submit + Save Template */}
-              <div className="pb-8 pt-2 space-y-2">
-                <button
-                  onClick={handleSubmit}
-                  disabled={!canSubmit || createObservation.isPending}
-                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-base touch-manipulation active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-2"
-                >
-                  {createObservation.isPending ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      Saving...
-                    </>
-                  ) : (
-                    'Log Observation'
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowSaveTemplate(true)}
-                  className="w-full h-10 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  Save as Template
-                </button>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="feed"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
-              className="px-4 pt-4"
-            >
-              {isLoading ? (
-                <SafetySkeletonLoader variant="card" />
-              ) : observations.length === 0 ? (
-                <SafetyEmptyState
-                  icon={Eye}
-                  heading="No Observations Yet"
-                  description="Log your first safety observation using the Log tab. Track both positive behaviours and areas for improvement."
-                  ctaLabel="Log an Observation"
-                  onCta={() => setActiveTab('log')}
-                  tip="Regular observations build a strong safety culture"
+              <Field label="Observer name">
+                <input
+                  value={observerSigName}
+                  onChange={(e) => setObserverSigName(e.target.value)}
+                  placeholder="Your full name (optional)"
+                  className={inputClass}
                 />
-              ) : (
-                <ObservationFeed observations={observations} />
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+              </Field>
+            </FormCard>
 
+            <ReadinessGate items={readiness} title="Ready to log?" />
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+
+      {/* ─── Detail ─── */}
+      <ObservationDetailSheet
+        observation={selectedObservation}
+        open={selectedObservation !== null}
+        onClose={() => setSelectedObservation(null)}
+      />
+
+      {/* ─── Templates ─── */}
       <SaveAsTemplateSheet
         open={showSaveTemplate}
         onOpenChange={setShowSaveTemplate}
@@ -351,7 +426,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
         onLoad={handleLoadTemplate}
         standardTemplates={OBSERVATION_STANDARD_TEMPLATES}
       />
-    </div>
+    </SafetyModuleShell>
   );
 }
 

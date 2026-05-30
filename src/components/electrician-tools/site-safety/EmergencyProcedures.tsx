@@ -1,101 +1,28 @@
 /**
- * EmergencyProcedures
- *
- * Critical emergency procedures and contacts for electrical work sites.
- * Full-width sections matching app design language — no boxed cards.
+ * EmergencyProcedures — critical contacts + procedures for electrical work sites.
+ * Editorial standard: masthead + PageHero + hairline rows, monochrome with a single
+ * red accent reserved for the 999 line. Tappable tel: links, expandable procedures.
  */
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  AlertTriangle,
-  Phone,
-  MapPin,
-  Shield,
-  FileText,
-  Zap,
-  Flame,
-  Heart,
-  Eye,
-  ChevronDown,
-  ChevronUp,
-  ExternalLink,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SafetyMasthead } from './common/SafetyModuleShell';
+import { PageHero, Eyebrow, ListCard } from '@/components/college/primitives';
 
-const EMERGENCY_CONTACTS = [
-  {
-    service: 'Emergency Services',
-    number: '999',
-    description: 'Fire, Police, Ambulance',
-    icon: Phone,
-    colour: 'text-red-400',
-    bg: 'bg-red-500/10',
-    border: 'border-red-500/20',
-  },
-  {
-    service: 'Power Cut / Emergency',
-    number: '105',
-    description: 'Electricity network emergency',
-    icon: Zap,
-    colour: 'text-amber-400',
-    bg: 'bg-amber-500/10',
-    border: 'border-amber-500/20',
-  },
-  {
-    service: 'Gas Emergency',
-    number: '0800 111 999',
-    description: 'National Gas Emergency Service',
-    icon: Flame,
-    colour: 'text-orange-400',
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-  },
-  {
-    service: 'HSE Incident Contact',
-    number: '0345 300 9923',
-    description: 'RIDDOR reporting line',
-    icon: Shield,
-    colour: 'text-blue-400',
-    bg: 'bg-blue-500/10',
-    border: 'border-blue-500/20',
-  },
-  {
-    service: 'NHS Non-Emergency',
-    number: '111',
-    description: 'Medical advice',
-    icon: Heart,
-    colour: 'text-green-400',
-    bg: 'bg-green-500/10',
-    border: 'border-green-500/20',
-  },
-  {
-    service: 'Poison Information',
-    number: '0344 892 0111',
-    description: 'National Poisons Info (COSHH)',
-    icon: AlertTriangle,
-    colour: 'text-purple-400',
-    bg: 'bg-purple-500/10',
-    border: 'border-purple-500/20',
-  },
+const EMERGENCY_CONTACTS: { service: string; number: string; description: string; critical?: boolean }[] = [
+  { service: 'Emergency Services', number: '999', description: 'Fire, Police, Ambulance', critical: true },
+  { service: 'Power Cut / Emergency', number: '105', description: 'Electricity network emergency' },
+  { service: 'Gas Emergency', number: '0800 111 999', description: 'National Gas Emergency Service' },
+  { service: 'HSE Incident Contact', number: '0345 300 9923', description: 'RIDDOR reporting line' },
+  { service: 'NHS Non-Emergency', number: '111', description: 'Medical advice' },
+  { service: 'Poison Information', number: '0344 892 0111', description: 'National Poisons Info (COSHH)' },
 ];
 
-interface ProcedureSection {
-  id: string;
-  title: string;
-  icon: typeof AlertTriangle;
-  colour: string;
-  accentBg: string;
-  steps: string[];
-}
-
-const PROCEDURES: ProcedureSection[] = [
+const PROCEDURES: { id: string; title: string; steps: string[] }[] = [
   {
     id: 'electric-shock',
     title: 'Electric Shock Response',
-    icon: Zap,
-    colour: 'text-red-400',
-    accentBg: 'bg-red-500/10 border-red-500/20',
     steps: [
       'Do NOT touch the casualty if they are still in contact with the electrical source',
       'Switch off the power at the isolator, consumer unit, or emergency stop',
@@ -112,9 +39,6 @@ const PROCEDURES: ProcedureSection[] = [
   {
     id: 'evacuation',
     title: 'Site Evacuation',
-    icon: MapPin,
-    colour: 'text-amber-400',
-    accentBg: 'bg-amber-500/10 border-amber-500/20',
     steps: [
       'Stop work immediately — make equipment safe if it can be done quickly',
       'Raise the alarm — shout "FIRE" or activate nearest call point',
@@ -131,9 +55,6 @@ const PROCEDURES: ProcedureSection[] = [
   {
     id: 'first-aid',
     title: 'First Aid Response',
-    icon: Heart,
-    colour: 'text-green-400',
-    accentBg: 'bg-green-500/10 border-green-500/20',
     steps: [
       'Assess the scene for ongoing dangers before approaching',
       'Call 999 immediately for serious injuries, unconsciousness, or breathing difficulties',
@@ -150,9 +71,6 @@ const PROCEDURES: ProcedureSection[] = [
   {
     id: 'fire',
     title: 'Fire Response',
-    icon: Flame,
-    colour: 'text-orange-400',
-    accentBg: 'bg-orange-500/10 border-orange-500/20',
     steps: [
       'Raise the alarm immediately — activate nearest call point',
       'Call 999 — do not assume someone else has called',
@@ -168,9 +86,6 @@ const PROCEDURES: ProcedureSection[] = [
   {
     id: 'before-work',
     title: 'Before Starting Work — Site Checklist',
-    icon: Eye,
-    colour: 'text-blue-400',
-    accentBg: 'bg-blue-500/10 border-blue-500/20',
     steps: [
       'Identify the location of nearest emergency exits and routes',
       'Locate fire extinguishers — confirm correct type for electrical work (CO₂ / dry powder)',
@@ -186,181 +101,120 @@ const PROCEDURES: ProcedureSection[] = [
   },
 ];
 
-const EmergencyProcedures = () => {
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(
-    new Set(['electric-shock'])
-  );
+const RESOURCES = [
+  { title: 'INDG231 — Electrical safety at work', url: 'https://www.hse.gov.uk/pubns/indg231.pdf' },
+  { title: 'GS38 — Electrical test equipment', url: 'https://www.hse.gov.uk/pubns/gs38.pdf' },
+  { title: 'First aid at work (INDG214)', url: 'https://www.hse.gov.uk/pubns/indg214.pdf' },
+  { title: 'RIDDOR — Report an incident', url: 'https://notifications.hse.gov.uk/riddorforms' },
+];
 
-  const toggleSection = (id: string) => {
-    setExpandedSections((prev) => {
+const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
+  const [expanded, setExpanded] = useState<Set<string>>(new Set(['electric-shock']));
+
+  const toggle = (id: string) =>
+    setExpanded((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
-  };
 
   return (
-    <div className="space-y-4 pb-20">
-      {/* Hero warning */}
-      <div className="relative overflow-hidden rounded-2xl border border-red-500/25 bg-gradient-to-br from-red-500/[0.08] via-background to-background">
-        <div className="h-1 bg-gradient-to-r from-red-500 via-amber-500 to-red-500" />
-        <div className="p-4 flex items-start gap-3">
-          <div className="p-2.5 rounded-xl bg-red-500/15 border border-red-500/25 flex-shrink-0">
-            <AlertTriangle className="h-6 w-6 text-red-400" />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Emergency Procedures</h2>
-            <p className="text-xs text-white mt-1 leading-relaxed">
-              Critical procedures for electrical work sites. Ensure all team members are familiar
-              with these before commencing work.
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="bg-elec-dark min-h-screen pb-24">
+      <SafetyMasthead onBack={onBack ?? (() => {})} moduleName="Emergency" />
+      <div className="mx-auto max-w-3xl px-4 pb-6 space-y-7">
+        <PageHero
+          eyebrow="Emergency · keep to hand"
+          title="Emergency procedures & contacts"
+          description="Critical procedures for electrical work sites. Make sure every team member knows these before work starts."
+          tone="red"
+        />
 
-      {/* Emergency Contacts — full width, tappable to call */}
-      <div>
-        <h3 className="text-xs font-bold text-white uppercase tracking-wider px-1 mb-2">
-          Emergency Contacts
-        </h3>
-        <div className="space-y-1.5">
-          {EMERGENCY_CONTACTS.map((contact) => {
-            const Icon = contact.icon;
-            return (
+        {/* Contacts */}
+        <div>
+          <Eyebrow className="mb-2">Emergency contacts</Eyebrow>
+          <ListCard>
+            {EMERGENCY_CONTACTS.map((c) => (
               <a
-                key={contact.number}
-                href={`tel:${contact.number.replace(/\s/g, '')}`}
-                className="flex items-center gap-3 p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] active:scale-[0.99] transition-all touch-manipulation"
+                key={c.number}
+                href={`tel:${c.number.replace(/\s/g, '')}`}
+                className="flex items-center gap-4 px-5 py-4 hover:bg-[hsl(0_0%_15%)] active:scale-[0.995] transition-all touch-manipulation"
               >
-                <div className={cn('p-2 rounded-lg', contact.bg, contact.border, 'border')}>
-                  <Icon className={cn('h-4 w-4', contact.colour)} />
-                </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-white">{contact.service}</div>
-                  <div className="text-[11px] text-white">{contact.description}</div>
+                  <div className="text-[14px] font-medium text-white">{c.service}</div>
+                  <div className="text-[11.5px] text-white/55">{c.description}</div>
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className={cn('text-base font-bold', contact.colour)}>
-                    {contact.number}
-                  </span>
-                  <Phone className="h-4 w-4 text-white" />
-                </div>
+                <span className={cn('text-[15px] font-semibold tabular-nums shrink-0', c.critical ? 'text-red-400' : 'text-white')}>
+                  {c.number}
+                </span>
               </a>
-            );
-          })}
+            ))}
+          </ListCard>
         </div>
-      </div>
 
-      {/* Procedures — expandable sections */}
-      <div>
-        <h3 className="text-xs font-bold text-white uppercase tracking-wider px-1 mb-2">
-          Emergency Procedures
-        </h3>
-        <div className="space-y-2">
-          {PROCEDURES.map((proc) => {
-            const Icon = proc.icon;
-            const isExpanded = expandedSections.has(proc.id);
-            return (
-              <div
-                key={proc.id}
-                className="rounded-xl border border-white/[0.08] bg-white/[0.02] overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleSection(proc.id)}
-                  className="w-full flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors"
-                >
-                  <div className={cn('p-2 rounded-lg border', proc.accentBg)}>
-                    <Icon className={cn('h-4 w-4', proc.colour)} />
-                  </div>
-                  <span className="text-sm font-semibold text-white flex-1 text-left">
-                    {proc.title}
-                  </span>
-                  <span className="text-[10px] text-white bg-white/[0.06] px-2 py-0.5 rounded">
-                    {proc.steps.length} steps
-                  </span>
-                  {isExpanded ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
-                  )}
-                </button>
-
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-3.5 pb-3.5 pt-1">
-                        <div className="space-y-0">
+        {/* Procedures */}
+        <div>
+          <Eyebrow className="mb-2">Procedures</Eyebrow>
+          <div className="space-y-2">
+            {PROCEDURES.map((proc) => {
+              const isOpen = expanded.has(proc.id);
+              return (
+                <div key={proc.id} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+                  <button
+                    onClick={() => toggle(proc.id)}
+                    className="w-full flex items-center gap-3 px-5 py-4 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                  >
+                    <span className="text-[14px] font-medium text-white flex-1">{proc.title}</span>
+                    <span className="text-[11px] text-white/45 tabular-nums">{proc.steps.length} steps</span>
+                    <span className={cn('text-white/40 text-[13px] transition-transform duration-200', isOpen && 'rotate-180')} aria-hidden>
+                      ⌄
+                    </span>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-4 pt-1 divide-y divide-white/[0.05]">
                           {proc.steps.map((step, i) => (
-                            <div
-                              key={i}
-                              className="flex items-start gap-3 py-2 border-b border-white/[0.04] last:border-0"
-                            >
-                              <span
-                                className={cn(
-                                  'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5 border',
-                                  proc.accentBg,
-                                  proc.colour
-                                )}
-                              >
-                                {i + 1}
+                            <div key={i} className="flex items-start gap-3 py-2.5">
+                              <span className="w-5 text-[11px] font-medium tabular-nums text-elec-yellow/80 shrink-0 mt-0.5">
+                                {String(i + 1).padStart(2, '0')}
                               </span>
-                              <span className="text-[13px] text-white leading-relaxed">{step}</span>
+                              <span className="text-[13px] text-white/85 leading-relaxed">{step}</span>
                             </div>
                           ))}
                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      {/* Quick links */}
-      <div>
-        <h3 className="text-xs font-bold text-white uppercase tracking-wider px-1 mb-2">
-          HSE Resources
-        </h3>
-        <div className="space-y-1.5">
-          {[
-            {
-              title: 'INDG231 — Electrical safety at work',
-              url: 'https://www.hse.gov.uk/pubns/indg231.pdf',
-            },
-            {
-              title: 'GS38 — Electrical test equipment',
-              url: 'https://www.hse.gov.uk/pubns/gs38.pdf',
-            },
-            {
-              title: 'First aid at work (INDG214)',
-              url: 'https://www.hse.gov.uk/pubns/indg214.pdf',
-            },
-            {
-              title: 'RIDDOR — Report an incident',
-              url: 'https://notifications.hse.gov.uk/riddorforms',
-            },
-          ].map((link) => (
-            <a
-              key={link.url}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation"
-            >
-              <FileText className="h-4 w-4 text-blue-400 flex-shrink-0" />
-              <span className="text-sm text-white flex-1">{link.title}</span>
-              <ExternalLink className="h-3.5 w-3.5 text-white" />
-            </a>
-          ))}
+        {/* HSE resources */}
+        <div>
+          <Eyebrow className="mb-2">HSE resources</Eyebrow>
+          <ListCard>
+            {RESOURCES.map((link) => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-5 py-3.5 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              >
+                <span className="text-[13px] text-white/90 flex-1">{link.title}</span>
+                <span className="text-elec-yellow/70 text-[13px] shrink-0" aria-hidden>↗</span>
+              </a>
+            ))}
+          </ListCard>
         </div>
       </div>
     </div>

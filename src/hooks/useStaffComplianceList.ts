@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStaffComplianceList — one row per staff with rolled-up compliance
@@ -151,7 +152,7 @@ export function useStaffComplianceList() {
 
   useEffect(() => {
     const channel = supabase
-      .channel('staff_compliance_list')
+      .channel(realtimeChannelName('staff_compliance_list'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'staff_compliance_records' },

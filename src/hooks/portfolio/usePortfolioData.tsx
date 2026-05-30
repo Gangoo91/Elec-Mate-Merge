@@ -231,6 +231,14 @@ const getGroupInfo = (theme: string) => {
   );
 };
 
+// Monotonic counter so every subscription gets a unique realtime channel
+// name. A fixed name lets the Supabase client reuse a still-registered,
+// already-subscribed channel across remounts/HMR — or collide when several
+// components mount usePortfolioData at once — and adding `postgres_changes`
+// callbacks after `.subscribe()` throws. A fresh name guarantees `.on()` is
+// always attached before `.subscribe()`.
+let portfolioChannelSeq = 0;
+
 export const usePortfolioData = () => {
   const { toast } = useToast();
   const { user } = useAuth();
@@ -292,7 +300,7 @@ export const usePortfolioData = () => {
     if (!user?.id) return;
 
     const channel = supabase
-      .channel('portfolio_changes')
+      .channel(`portfolio_changes-${user.id}-${++portfolioChannelSeq}`)
       .on(
         'postgres_changes',
         {

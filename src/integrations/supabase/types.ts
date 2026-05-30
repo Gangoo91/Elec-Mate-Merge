@@ -19288,6 +19288,8 @@ export type Database = {
           id: string
           issuer_name: string
           issuer_signature: string | null
+          linked_rams_id: string | null
+          linked_rams_title: string | null
           location: string
           pdf_url: string | null
           photos: Json | null
@@ -19302,6 +19304,7 @@ export type Database = {
           type: string
           updated_at: string
           user_id: string
+          version: number
         }
         Insert: {
           additional_notes?: string | null
@@ -19324,6 +19327,8 @@ export type Database = {
           id?: string
           issuer_name: string
           issuer_signature?: string | null
+          linked_rams_id?: string | null
+          linked_rams_title?: string | null
           location: string
           pdf_url?: string | null
           photos?: Json | null
@@ -19338,6 +19343,7 @@ export type Database = {
           type: string
           updated_at?: string
           user_id: string
+          version?: number
         }
         Update: {
           additional_notes?: string | null
@@ -19360,6 +19366,8 @@ export type Database = {
           id?: string
           issuer_name?: string
           issuer_signature?: string | null
+          linked_rams_id?: string | null
+          linked_rams_title?: string | null
           location?: string
           pdf_url?: string | null
           photos?: Json | null

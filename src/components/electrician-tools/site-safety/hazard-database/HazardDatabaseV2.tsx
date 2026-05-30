@@ -1,28 +1,51 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Search, Bookmark, X } from 'lucide-react';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
-import { CategoryPill, getCategoriesFromHazards } from './CategoryPill';
-import { QuickStatsCard } from './QuickStatsCard';
-import { HazardCardV2 } from './HazardCardV2';
-import { HazardSearchOverlay } from './HazardSearchOverlay';
+/**
+ * Hazard Database — read-only reference library of site hazards, controls and
+ * BS 7671 references. Rebuilt to the Site Safety editorial standard:
+ * SafetyMasthead + PageHero + StatStrip + FilterBar + hairline ListCard rows.
+ *
+ * ONE colour dimension = risk severity (green / amber / orange / red) shown as a
+ * thin ListRow accent bar plus a small uppercase risk pill. No decorative icons.
+ */
+
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { getCategoriesFromHazards } from './CategoryPill';
 import { HazardDetailSheet } from './HazardDetailSheet';
 import { BookmarksSheet } from './BookmarksSheet';
+import { RiskPill, riskTone } from './RiskBar';
 import { enhancedRiskDatabase } from '@/data/enhanced-hazard-database';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  ListCard,
+  ListRow,
+} from '@/components/college/primitives';
+import { SafetyModuleShell } from '../common/SafetyModuleShell';
+import { LoadMoreButton } from '../common/LoadMoreButton';
+
 const BOOKMARKS_KEY = 'hazard-bookmarks';
 
-export const HazardDatabaseV2: React.FC = () => {
+// Count how many control measures a hazard carries across the hierarchy.
+const countControls = (controlMeasures: EnhancedRiskConsequence['controlMeasures']) =>
+  Object.values(controlMeasures).reduce((acc, measures) => acc + (measures?.length || 0), 0);
+
+interface HazardDatabaseV2Props {
+  onBack?: () => void;
+}
+
+export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
   // State
   const [activeCategory, setActiveCategory] = useState('all');
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedHazard, setSelectedHazard] = useState<EnhancedRiskConsequence | null>(null);
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [bookmarks, setBookmarks] = useState<Set<string>>(new Set());
 
-  // Progressive loading state - only render 10 hazards at a time for performance
+  // Progressive loading - only render a window of hazards at a time.
   const [displayCount, setDisplayCount] = useState(10);
 
   // Load bookmarks from localStorage
@@ -59,177 +82,162 @@ export const HazardDatabaseV2: React.FC = () => {
   // Categories derived from hazards
   const categories = useMemo(() => getCategoriesFromHazards(hazards), [hazards]);
 
-  // Filtered hazards based on category
+  // Filtered hazards based on category + free-text search.
   const filteredHazards = useMemo(() => {
-    if (activeCategory === 'all') return hazards;
-    return hazards.filter((h) => h.category === activeCategory);
-  }, [hazards, activeCategory]);
+    const q = searchQuery.trim().toLowerCase();
+    return hazards.filter((h) => {
+      if (activeCategory !== 'all' && h.category !== activeCategory) return false;
+      if (!q) return true;
+      return (
+        h.hazard.toLowerCase().includes(q) ||
+        h.consequence.toLowerCase().includes(q) ||
+        h.category.toLowerCase().includes(q) ||
+        (h.bs7671References ?? []).some((r) => r.toLowerCase().includes(q)) ||
+        Object.values(h.controlMeasures).some((measures) =>
+          (measures ?? []).some((m) => m.toLowerCase().includes(q))
+        )
+      );
+    });
+  }, [hazards, activeCategory, searchQuery]);
+
+  // Highest-risk hazards sort to the top.
+  const sortedHazards = useMemo(
+    () => [...filteredHazards].sort((a, b) => b.riskRating - a.riskRating),
+    [filteredHazards]
+  );
 
   // Bookmarked hazards
-  const bookmarkedHazards = useMemo(() => {
-    return hazards.filter((h) => bookmarks.has(h.id));
-  }, [hazards, bookmarks]);
+  const bookmarkedHazards = useMemo(
+    () => hazards.filter((h) => bookmarks.has(h.id)),
+    [hazards, bookmarks]
+  );
 
   // Progressive loading - slice hazards for display
-  const displayedHazards = useMemo(() => {
-    return filteredHazards.slice(0, displayCount);
-  }, [filteredHazards, displayCount]);
+  const displayedHazards = useMemo(
+    () => sortedHazards.slice(0, displayCount),
+    [sortedHazards, displayCount]
+  );
 
-  const hasMore = displayCount < filteredHazards.length;
+  const hasMore = displayCount < sortedHazards.length;
+  const remaining = sortedHazards.length - displayCount;
 
-  // Reset display count when category changes
+  // Reset display count when category or search changes.
   useEffect(() => {
     setDisplayCount(10);
-  }, [activeCategory]);
+  }, [activeCategory, searchQuery]);
 
   // Show more handler
   const handleShowMore = useCallback(() => {
-    setDisplayCount((prev) => Math.min(prev + 10, filteredHazards.length));
-  }, [filteredHazards.length]);
+    setDisplayCount((prev) => Math.min(prev + 10, sortedHazards.length));
+  }, [sortedHazards.length]);
 
-  // Get category name for display
-  const activeCategoryName = useMemo(() => {
-    const cat = categories.find((c) => c.id === activeCategory);
-    return cat?.name || 'All Hazards';
-  }, [categories, activeCategory]);
+  // ── Headline stats ──
+  const highRiskCount = useMemo(() => hazards.filter((h) => h.riskRating >= 9).length, [hazards]);
+  const categoryCount = categories.length - 1; // exclude the synthetic "All" entry
 
   return (
-    <div className="min-h-full bg-elec-dark">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-md border-b border-white/[0.06]">
-        {/* Title Row */}
-        <div className="flex items-center justify-between px-4 py-3">
-          <h1 className="text-xl font-semibold text-white">Hazard Database</h1>
+    <SafetyModuleShell
+      onBack={onBack ?? (() => {})}
+      moduleName="Hazard Database"
+      trailing={
+        bookmarks.size > 0 ? (
           <button
+            type="button"
             onClick={() => setBookmarksOpen(true)}
-            className={cn('relative p-2 rounded-xl transition-colors', 'hover:bg-white/[0.05]')}
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-[11px] font-medium text-elec-yellow touch-manipulation"
           >
-            <Bookmark
-              className={cn(
-                'h-5 w-5',
-                bookmarks.size > 0 ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
-              )}
-            />
-            {bookmarks.size > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-elec-yellow text-black text-[10px] font-bold flex items-center justify-center">
-                {bookmarks.size > 9 ? '9+' : bookmarks.size}
+            Saved
+            <span className="tabular-nums">{bookmarks.size}</span>
+          </button>
+        ) : undefined
+      }
+      hero={
+        <PageHero
+          eyebrow="Hazard Database"
+          title="Site hazards, controls and BS 7671 references"
+          description="Browse the hazard library by category, review the hierarchy of control measures and pull the right guidance into your risk assessments."
+          tone="amber"
+          actions={
+            bookmarks.size > 0 ? undefined : (
+              <span className="text-[12px] text-white/55 self-end">
+                Tap any hazard for full controls
               </span>
-            )}
-          </button>
-        </div>
-
-        {/* Search Bar - Tappable to open overlay */}
-        <div className="px-4 pb-3">
-          <button
-            onClick={() => setSearchOpen(true)}
-            className={cn(
-              'w-full h-12 bg-white/[0.05] rounded-2xl flex items-center gap-3 px-4',
-              'border border-white/[0.08] hover:border-white/[0.12] transition-colors',
-              'active:scale-[0.99]'
-            )}
-          >
-            <Search className="h-5 w-5 text-white" />
-            <span className="text-white text-sm">Search hazards...</span>
-          </button>
-        </div>
-
-        {/* Category Pills */}
-        <ScrollArea className="w-full">
-          <div className="flex gap-2 px-4 pb-3">
-            {categories.map((cat) => (
-              <CategoryPill
-                key={cat.id}
-                id={cat.id}
-                name={cat.name}
-                count={cat.count}
-                active={activeCategory === cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-              />
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" className="invisible" />
-        </ScrollArea>
-
-        {/* Active Filter Indicator */}
-        {activeCategory !== 'all' && (
-          <div className="px-4 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-white">Filtered by:</span>
-              <button
-                onClick={() => setActiveCategory('all')}
-                className={cn(
-                  'flex items-center gap-1.5 px-3 py-1 rounded-full',
-                  'bg-elec-yellow/10 border border-elec-yellow/20',
-                  'text-sm text-elec-yellow hover:bg-elec-yellow/20 transition-colors'
-                )}
-              >
-                {activeCategoryName}
-                <X className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* Main Content */}
-      <div className="px-4 py-4">
-        {/* Quick Stats */}
-        <QuickStatsCard
-          hazards={filteredHazards}
-          categoryName={activeCategory !== 'all' ? activeCategoryName : undefined}
+            )
+          }
         />
-
-        {/* Hazard List */}
-        <div className="space-y-3 mt-4">
-          {filteredHazards.length === 0 ? (
-            <div className="flex flex-col items-center py-16">
-              <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
-                <Search className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-2">No Hazards Found</h3>
-              <p className="text-sm text-white text-center max-w-xs">
-                No hazards match the selected category
-              </p>
-            </div>
-          ) : (
-            <>
-              {displayedHazards.map((hazard, i) => (
-                <HazardCardV2
+      }
+      stats={
+        <StatStrip
+          stats={[
+            { value: hazards.length, label: 'Hazards', onClick: () => setActiveCategory('all') },
+            { value: highRiskCount, label: 'High risk', sub: 'rating 9+', accent: true },
+            { value: categoryCount, label: 'Categories' },
+            {
+              value: bookmarks.size,
+              label: 'Saved',
+              sub: bookmarks.size > 0 ? 'tap to view' : undefined,
+              onClick: bookmarks.size > 0 ? () => setBookmarksOpen(true) : undefined,
+            },
+          ]}
+        />
+      }
+      filter={
+        <FilterBar
+          tabs={categories.map((c) => ({ value: c.id, label: c.name, count: c.count }))}
+          activeTab={activeCategory}
+          onTabChange={setActiveCategory}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search hazards, controls, regs…"
+        />
+      }
+    >
+      {sortedHazards.length === 0 ? (
+        <EmptyState
+          title="No hazards found"
+          description={
+            searchQuery
+              ? `No hazards match "${searchQuery}". Try different keywords or clear your search.`
+              : 'No hazards match the selected category.'
+          }
+          action={searchQuery || activeCategory !== 'all' ? 'Clear filters' : undefined}
+          onAction={
+            searchQuery || activeCategory !== 'all'
+              ? () => {
+                  setSearchQuery('');
+                  setActiveCategory('all');
+                }
+              : undefined
+          }
+        />
+      ) : (
+        <div className="space-y-3">
+          <ListCard>
+            {displayedHazards.map((hazard) => {
+              const controls = countControls(hazard.controlMeasures);
+              const tone = riskTone(hazard.riskRating);
+              return (
+                <ListRow
                   key={hazard.id}
-                  hazard={hazard}
-                  index={i}
-                  isBookmarked={bookmarks.has(hazard.id)}
-                  onTap={() => setSelectedHazard(hazard)}
-                  onBookmark={() => toggleBookmark(hazard.id)}
+                  onClick={() => setSelectedHazard(hazard)}
+                  accent={tone}
+                  title={hazard.hazard}
+                  subtitle={hazard.consequence}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <RiskPill riskRating={hazard.riskRating} />
+                      <span className="text-[11px] text-white/45 tabular-nums">
+                        {controls} control{controls !== 1 ? 's' : ''}
+                      </span>
+                    </div>
+                  }
                 />
-              ))}
-              {hasMore && (
-                <button
-                  onClick={handleShowMore}
-                  className={cn(
-                    'w-full py-4 mt-2 rounded-2xl',
-                    'bg-elec-yellow/10 border border-elec-yellow/20',
-                    'text-elec-yellow font-medium text-sm',
-                    'hover:bg-elec-yellow/15 active:scale-[0.98] transition-all'
-                  )}
-                >
-                  Show More ({filteredHazards.length - displayCount} remaining)
-                </button>
-              )}
-            </>
-          )}
+              );
+            })}
+          </ListCard>
+          {hasMore && <LoadMoreButton onLoadMore={handleShowMore} remaining={remaining} />}
         </div>
-      </div>
-
-      {/* Search Overlay */}
-      <HazardSearchOverlay
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        hazards={hazards}
-        bookmarks={bookmarks}
-        onSelectHazard={setSelectedHazard}
-        onToggleBookmark={toggleBookmark}
-      />
+      )}
 
       {/* Hazard Detail Sheet */}
       <HazardDetailSheet
@@ -249,7 +257,7 @@ export const HazardDatabaseV2: React.FC = () => {
         onSelectHazard={setSelectedHazard}
         onToggleBookmark={toggleBookmark}
       />
-    </div>
+    </SafetyModuleShell>
   );
 };
 

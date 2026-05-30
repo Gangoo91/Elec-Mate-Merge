@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { addDays, isAfter, isBefore } from 'date-fns';
 
@@ -247,7 +248,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
   // Real-time subscriptions for key tables
   useEffect(() => {
     const channel = supabase
-      .channel('employer-dashboard-changes')
+      .channel(realtimeChannelName('employer-dashboard-changes'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_employees' }, () =>
         fetchStats()
       )

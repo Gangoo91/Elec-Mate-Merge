@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
   getEmployees,
   getEmployeeById,
@@ -20,7 +21,7 @@ export const useEmployees = () => {
   // Set up real-time subscription
   useEffect(() => {
     const channel = supabase
-      .channel('employer-employees-changes')
+      .channel(realtimeChannelName('employer-employees-changes'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_employees' }, () => {
         queryClient.invalidateQueries({ queryKey: EMPLOYEES_KEY });
       })

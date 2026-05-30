@@ -1,16 +1,14 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { Trash2, Copy } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
-import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
-import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SmartTextarea } from './common/SmartTextarea';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useShowMore } from '@/hooks/useShowMore';
+import { toast } from 'sonner';
+
+import { Switch } from '@/components/ui/switch';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -18,64 +16,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  Field,
+  FormCard,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/college/primitives';
+import { SafetyModuleShell, SafetyMasthead } from './common/SafetyModuleShell';
+import { SignatureField } from './common/SignatureField';
+import { ReadinessGate } from './common/ReadinessGate';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { SmartTextarea } from './common/SmartTextarea';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
-import { toast } from 'sonner';
-import {
-  ArrowLeft,
-  Plus,
-  FlaskConical,
-  AlertTriangle,
-  Shield,
-  ChevronRight,
-  CheckCircle2,
-  Search,
-  Eye,
-  Wind,
-  Droplets,
-  Hand,
-  Flame,
-  Skull,
-  Heart,
-  Bug,
-  Trash2,
-  FileText,
-  Download,
-  FileDown,
-  Loader2,
-  Clock,
-  Copy,
-  Ban,
-  ArrowRightLeft,
-  Cog,
-  ClipboardList,
-  ChevronDown,
-  Share2,
-} from 'lucide-react';
+import { SwipeableListItem } from './common/SwipeableListItem';
+import { DeleteConfirmSheet } from './common/DeleteConfirmSheet';
 import { LoadMoreButton } from './common/LoadMoreButton';
-import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
+import { fmtCardDate } from './common/SafetyRecordCard';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
-import { Calendar } from 'lucide-react';
-import { SignaturePad } from './common/SignaturePad';
-import { useShowMore } from '@/hooks/useShowMore';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
 
 // ─── Types ───
 
 interface GHSHazard {
   id: string;
   label: string;
-  icon: React.ElementType;
   description: string;
 }
 
 interface ExposureRoute {
   id: string;
   label: string;
-  icon: React.ElementType;
   selected: boolean;
 }
 
@@ -111,36 +99,21 @@ interface COSHHAssessment {
 // ─── Constants ───
 
 const GHS_HAZARDS: GHSHazard[] = [
-  { id: 'flammable', label: 'Flammable', icon: Flame, description: 'Catches fire easily' },
-  { id: 'toxic', label: 'Toxic', icon: Skull, description: 'Fatal or toxic if inhaled/swallowed' },
-  {
-    id: 'harmful',
-    label: 'Harmful',
-    icon: AlertTriangle,
-    description: 'May cause irritation or harm',
-  },
-  { id: 'corrosive', label: 'Corrosive', icon: Droplets, description: 'Causes severe burns' },
-  {
-    id: 'health-hazard',
-    label: 'Health Hazard',
-    icon: Heart,
-    description: 'Long-term health effects',
-  },
-  {
-    id: 'environmental',
-    label: 'Environmental',
-    icon: Bug,
-    description: 'Harmful to aquatic life',
-  },
-  { id: 'oxidiser', label: 'Oxidiser', icon: Flame, description: 'May cause or intensify fire' },
-  { id: 'compressed-gas', label: 'Compressed Gas', icon: Wind, description: 'Gas under pressure' },
+  { id: 'flammable', label: 'Flammable', description: 'Catches fire easily' },
+  { id: 'toxic', label: 'Toxic', description: 'Fatal or toxic if inhaled/swallowed' },
+  { id: 'harmful', label: 'Harmful', description: 'May cause irritation or harm' },
+  { id: 'corrosive', label: 'Corrosive', description: 'Causes severe burns' },
+  { id: 'health-hazard', label: 'Health Hazard', description: 'Long-term health effects' },
+  { id: 'environmental', label: 'Environmental', description: 'Harmful to aquatic life' },
+  { id: 'oxidiser', label: 'Oxidiser', description: 'May cause or intensify fire' },
+  { id: 'compressed-gas', label: 'Compressed Gas', description: 'Gas under pressure' },
 ];
 
 const EXPOSURE_ROUTES_DEFAULT: ExposureRoute[] = [
-  { id: 'inhalation', label: 'Inhalation', icon: Wind, selected: false },
-  { id: 'skin-contact', label: 'Skin Contact', icon: Hand, selected: false },
-  { id: 'eye-contact', label: 'Eye Contact', icon: Eye, selected: false },
-  { id: 'ingestion', label: 'Ingestion', icon: Droplets, selected: false },
+  { id: 'inhalation', label: 'Inhalation', selected: false },
+  { id: 'skin-contact', label: 'Skin Contact', selected: false },
+  { id: 'eye-contact', label: 'Eye Contact', selected: false },
+  { id: 'ingestion', label: 'Ingestion', selected: false },
 ];
 
 const COMMON_SUBSTANCES = [
@@ -184,7 +157,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['harmful', 'corrosive'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Fume inhalation may cause occupational asthma. WEL: 0.05 mg/m\u00B3 (8-hr TWA) for rosin-based solder fume per EH40/2005. Corrosive to skin and eyes. May cause sensitisation.',
+      'Fume inhalation may cause occupational asthma. WEL: 0.05 mg/m³ (8-hr TWA) for rosin-based solder fume per EH40/2005. Corrosive to skin and eyes. May cause sensitisation.',
     controls: [
       'Local exhaust ventilation at soldering point',
       'Minimise heating time',
@@ -221,7 +194,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['harmful', 'environmental'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Respiratory irritation. Skin sensitisation possible. May contain isocyanates \u2014 WEL: 0.02 mg/m\u00B3 (8-hr TWA) for MDI/HDI per EH40/2005. Health surveillance required under COSHH Reg 11.',
+      'Respiratory irritation. Skin sensitisation possible. May contain isocyanates — WEL: 0.02 mg/m³ (8-hr TWA) for MDI/HDI per EH40/2005. Health surveillance required under COSHH Reg 11.',
     controls: [
       'Adequate ventilation',
       'Avoid spray mist inhalation',
@@ -241,7 +214,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['harmful', 'health-hazard'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Skin sensitisation (epoxy) \u2014 may cause allergic dermatitis. Respiratory sensitisation. Exothermic reaction during curing \u2014 burn risk. Health surveillance recommended per COSHH Reg 11 for regular users.',
+      'Skin sensitisation (epoxy) — may cause allergic dermatitis. Respiratory sensitisation. Exothermic reaction during curing — burn risk. Health surveillance recommended per COSHH Reg 11 for regular users.',
     controls: [
       'Use in ventilated area',
       'Mix components as directed',
@@ -265,7 +238,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['flammable', 'harmful', 'health-hazard'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Contains MDI (methylene diphenyl diisocyanate) \u2014 respiratory sensitiser (H334), skin sensitiser (H317). WEL: 0.02 mg/m\u00B3 (8-hr TWA) per EH40/2005. Once sensitised, even low exposures can trigger asthma. Health surveillance mandatory under COSHH Reg 11.',
+      'Contains MDI (methylene diphenyl diisocyanate) — respiratory sensitiser (H334), skin sensitiser (H317). WEL: 0.02 mg/m³ (8-hr TWA) per EH40/2005. Once sensitised, even low exposures can trigger asthma. Health surveillance mandatory under COSHH Reg 11.',
     controls: [
       'Use in well-ventilated area or with RPE',
       'Minimise spray duration',
@@ -274,7 +247,7 @@ const COMMON_SUBSTANCES = [
     ],
     ppe: ['FFP3 respirator', 'Nitrile gloves', 'Safety glasses/goggles', 'Long sleeves'],
     storage:
-      'Store upright below 50\u00B0C. Pressurised container \u2014 protect from sunlight. Check expiry date.',
+      'Store upright below 50°C. Pressurised container — protect from sunlight. Check expiry date.',
     spill: 'Allow to cure fully then remove mechanically. Do not use solvents. Ventilate area.',
     firstAid:
       'Inhalation: Move to fresh air immediately, seek medical attention if breathing difficulty. Skin: Wash with soap and water (do not use solvents). Eyes: Flush 15 min. Ingestion: Do not induce vomiting, seek medical advice.',
@@ -285,11 +258,11 @@ const COMMON_SUBSTANCES = [
     ghs: ['corrosive'],
     routes: ['inhalation', 'skin-contact', 'eye-contact', 'ingestion'],
     health:
-      'Severe burns to skin and eyes (H314). Inhalation of mist causes respiratory irritation. WEL: 0.05 mg/m\u00B3 (8-hr TWA) thoracic fraction per EH40/2005. Found in UPS systems, emergency lighting batteries, and lead-acid standby systems.',
+      'Severe burns to skin and eyes (H314). Inhalation of mist causes respiratory irritation. WEL: 0.05 mg/m³ (8-hr TWA) thoracic fraction per EH40/2005. Found in UPS systems, emergency lighting batteries, and lead-acid standby systems.',
     controls: [
       'Avoid contact with skin and eyes',
       'Use in ventilated area',
-      'Keep away from metals \u2014 reacts to produce hydrogen gas',
+      'Keep away from metals — reacts to produce hydrogen gas',
       'Neutralising agent (sodium bicarbonate) available nearby',
     ],
     ppe: [
@@ -301,31 +274,31 @@ const COMMON_SUBSTANCES = [
     storage:
       'Store in original acid-resistant container. Upright, in bunded area. Away from metals and combustibles.',
     spill:
-      'Contain with absorbent. Neutralise with sodium bicarbonate. Do NOT use water on concentrated acid \u2014 dilute slowly. Dispose as hazardous waste.',
+      'Contain with absorbent. Neutralise with sodium bicarbonate. Do NOT use water on concentrated acid — dilute slowly. Dispose as hazardous waste.',
     firstAid:
       'Skin: Flush immediately with copious water for 20 min, remove contaminated clothing. Eyes: Flush with clean water 20 min, seek emergency medical attention. Inhalation: Move to fresh air. Ingestion: Do NOT induce vomiting, drink small sips of water, seek emergency medical attention.',
   },
   {
     name: 'Asbestos-Containing Dust',
-    manufacturer: 'N/A \u2014 legacy building material',
+    manufacturer: 'N/A — legacy building material',
     ghs: ['health-hazard'],
     routes: ['inhalation'],
     health:
-      'Causes mesothelioma, asbestosis, lung cancer (H350, H372). WEL: 0.1 fibres/cm\u00B3 (4-hr TWA) per CAR 2012. NO safe exposure level \u2014 any fibre release is hazardous. Latency period 15\u201360 years. Common in pre-2000 buildings: behind DBs, ceiling tiles, AIB, textured coatings, flash guards.',
+      'Causes mesothelioma, asbestosis, lung cancer (H350, H372). WEL: 0.1 fibres/cm³ (4-hr TWA) per CAR 2012. NO safe exposure level — any fibre release is hazardous. Latency period 15–60 years. Common in pre-2000 buildings: behind DBs, ceiling tiles, AIB, textured coatings, flash guards.',
     controls: [
-      'DO NOT disturb \u2014 stop work immediately if ACMs encountered',
+      'DO NOT disturb — stop work immediately if ACMs encountered',
       'Only licensed contractors may remove asbestos',
       'Check asbestos register before any work in pre-2000 buildings per CAR 2012 Reg 4',
       'Asbestos awareness training mandatory for all operatives',
     ],
     ppe: [
-      'RPE (FFP3 minimum) \u2014 face-fit tested',
+      'RPE (FFP3 minimum) — face-fit tested',
       'Disposable coveralls (Type 5/6)',
       'Overshoes',
       'Gloves',
     ],
     storage:
-      'N/A \u2014 do not collect or store. If encapsulated and undamaged, manage in situ per asbestos management plan.',
+      'N/A — do not collect or store. If encapsulated and undamaged, manage in situ per asbestos management plan.',
     spill:
       'DO NOT sweep or vacuum with standard equipment. Evacuate area. Engage licensed asbestos removal contractor. UKAS-accredited air testing required before area re-entry.',
     firstAid:
@@ -333,19 +306,19 @@ const COMMON_SUBSTANCES = [
   },
   {
     name: 'Lead Paint Dust',
-    manufacturer: 'N/A \u2014 legacy building material',
+    manufacturer: 'N/A — legacy building material',
     ghs: ['harmful', 'health-hazard', 'environmental'],
     routes: ['inhalation', 'ingestion', 'skin-contact'],
     health:
-      'Toxic if inhaled or ingested (H332, H302). Cumulative poison \u2014 damages nervous system, kidneys, reproductive system. WEL: 0.15 mg/m\u00B3 (8-hr TWA) per EH40/2005. Common in pre-1970 properties. Disturbed during chasing, drilling, or cable routing through old paintwork.',
+      'Toxic if inhaled or ingested (H332, H302). Cumulative poison — damages nervous system, kidneys, reproductive system. WEL: 0.15 mg/m³ (8-hr TWA) per EH40/2005. Common in pre-1970 properties. Disturbed during chasing, drilling, or cable routing through old paintwork.',
     controls: [
       'Wet methods to suppress dust when drilling/chasing',
-      'HEPA vacuum for debris \u2014 never dry sweep',
+      'HEPA vacuum for debris — never dry sweep',
       'Wash hands before eating, drinking, or smoking',
       'Blood lead level monitoring for regular exposure per CLAW 2002',
     ],
     ppe: ['FFP3 respirator', 'Nitrile gloves', 'Coveralls', 'Safety glasses'],
-    storage: 'N/A \u2014 collect debris in sealed bags for hazardous waste disposal.',
+    storage: 'N/A — collect debris in sealed bags for hazardous waste disposal.',
     spill:
       'Dampen area. Collect with HEPA vacuum or damp cloth. Do NOT dry sweep. Dispose as hazardous waste.',
     firstAid:
@@ -353,12 +326,49 @@ const COMMON_SUBSTANCES = [
   },
 ];
 
-const RISK_COLOURS: Record<string, { bg: string; text: string; border: string }> = {
-  low: { bg: 'bg-green-500/15', text: 'text-green-400', border: 'border-green-500/20' },
-  medium: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/20' },
-  high: { bg: 'bg-orange-500/15', text: 'text-orange-400', border: 'border-orange-500/20' },
-  'very-high': { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/20' },
+// One colour dimension = risk rating.
+const RISK_LABEL: Record<COSHHAssessment['risk_rating'], string> = {
+  low: 'Low',
+  medium: 'Medium',
+  high: 'High',
+  'very-high': 'Very High',
 };
+
+function riskTone(rating: COSHHAssessment['risk_rating']): Tone {
+  return rating === 'very-high'
+    ? 'red'
+    : rating === 'high'
+      ? 'orange'
+      : rating === 'medium'
+        ? 'amber'
+        : 'green';
+}
+
+const RISK_PILL_CLASS: Record<Tone, string> = {
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  green: 'bg-green-500/10 text-green-400 border-green-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+};
+
+function RiskPill({ rating }: { rating: COSHHAssessment['risk_rating'] }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        RISK_PILL_CLASS[riskTone(rating)]
+      )}
+    >
+      {RISK_LABEL[rating]}
+    </span>
+  );
+}
 
 // ─── Hierarchy of Controls ───
 
@@ -375,55 +385,31 @@ const HIERARCHY_LEVELS: {
   key: HierarchyKey;
   label: string;
   description: string;
-  icon: React.ElementType;
-  colour: string;
-  bg: string;
-  border: string;
 }[] = [
   {
     key: 'elimination',
     label: '1. Elimination',
     description: 'Can the substance be removed entirely?',
-    icon: Ban,
-    colour: 'text-green-400',
-    bg: 'bg-green-500/10',
-    border: 'border-green-500/20',
   },
   {
     key: 'substitution',
     label: '2. Substitution',
     description: 'Can a safer alternative be used?',
-    icon: ArrowRightLeft,
-    colour: 'text-blue-400',
-    bg: 'bg-blue-500/10',
-    border: 'border-blue-500/20',
   },
   {
     key: 'engineering',
     label: '3. Engineering Controls',
     description: 'LEV, enclosed systems, physical barriers',
-    icon: Cog,
-    colour: 'text-purple-400',
-    bg: 'bg-purple-500/10',
-    border: 'border-purple-500/20',
   },
   {
     key: 'administrative',
     label: '4. Administrative Controls',
     description: 'Training, procedures, signage, rotation',
-    icon: ClipboardList,
-    colour: 'text-amber-400',
-    bg: 'bg-amber-500/10',
-    border: 'border-amber-500/20',
   },
   {
     key: 'ppe',
     label: '5. PPE (Last Resort)',
     description: 'Personal protective equipment',
-    icon: Shield,
-    colour: 'text-cyan-400',
-    bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/20',
   },
 ];
 
@@ -470,14 +456,21 @@ function parseHierarchy(controls: string[]): HierarchyControls {
   return hierarchy;
 }
 
+function isOverdue(reviewDate: string): boolean {
+  if (!reviewDate) return false;
+  return reviewDate < new Date().toISOString().split('T')[0];
+}
+
 // ─── Main Component ───
 
 export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
-  const { data: dbAssessments, isLoading, error } = useCOSHHAssessments();
+  const { data: dbAssessments, isLoading } = useCOSHHAssessments();
   const createCOSHH = useCreateCOSHH();
   const deleteCOSHH = useDeleteCOSHH();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+
   const [showShare, setShowShare] = useState(false);
+
   const assessments: COSHHAssessment[] = (dbAssessments || []).map((a) => ({
     id: a.id,
     substance_name: a.substance_name,
@@ -507,18 +500,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     created_at: a.created_at,
   }));
 
-  const {
-    visible: visibleAssessments,
-    hasMore: hasMoreAssessments,
-    remaining: remainingAssessments,
-    loadMore: loadMoreAssessments,
-  } = useShowMore(assessments);
-
   const [showWizard, setShowWizard] = useState(false);
   const [showSubstanceSheet, setShowSubstanceSheet] = useState(false);
   const [viewingAssessment, setViewingAssessment] = useState<COSHHAssessment | null>(null);
-  const [wizardStep, setWizardStep] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [substanceSearch, setSubstanceSearch] = useState('');
+  const [riskFilter, setRiskFilter] = useState('all');
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Form state
   const [substanceName, setSubstanceName] = useState('');
@@ -535,7 +524,6 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [healthEffects, setHealthEffects] = useState('');
   const [oelValue, setOelValue] = useState('');
   const [controlMeasures, setControlMeasures] = useState<string[]>([]);
-  const [newControl, setNewControl] = useState('');
   const [hierarchyControls, setHierarchyControls] = useState<HierarchyControls>(
     JSON.parse(JSON.stringify(EMPTY_HIERARCHY))
   );
@@ -561,10 +549,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
   // Signature state
   const [assessorSigName, setAssessorSigName] = useState('');
-  const [assessorSigDate, setAssessorSigDate] = useState('');
   const [assessorSigDataUrl, setAssessorSigDataUrl] = useState('');
   const [reviewerSigName, setReviewerSigName] = useState('');
-  const [reviewerSigDate, setReviewerSigDate] = useState('');
   const [reviewerSigDataUrl, setReviewerSigDataUrl] = useState('');
 
   // ─── Template state ───
@@ -604,7 +590,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     if (data.selectedGHS) setSelectedGHS(data.selectedGHS as string[]);
     if (data.healthEffects) setHealthEffects(data.healthEffects as string);
     if (data.oelValue) setOelValue(data.oelValue as string);
-    if (data.controlMeasures) setControlMeasures(data.controlMeasures as string[]);
+    if (data.controlMeasures) {
+      setControlMeasures(data.controlMeasures as string[]);
+      setHierarchyControls(parseHierarchy(data.controlMeasures as string[]));
+    }
     if (data.ppeRequired) setPpeRequired(data.ppeRequired as string[]);
     if (data.storageRequirements) setStorageRequirements(data.storageRequirements as string);
     if (data.spillProcedure) setSpillProcedure(data.spillProcedure as string);
@@ -642,7 +631,6 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       monitoringDetails,
       riskRating,
       assessedBy,
-      wizardStep,
     }),
     [
       substanceName,
@@ -668,7 +656,6 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       monitoringDetails,
       riskRating,
       assessedBy,
-      wizardStep,
     ]
   );
 
@@ -718,12 +705,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       setMonitoringDetails(recoveredDraft.monitoringDetails);
     if (recoveredDraft.riskRating !== undefined) setRiskRating(recoveredDraft.riskRating);
     if (recoveredDraft.assessedBy !== undefined) setAssessedBy(recoveredDraft.assessedBy);
-    if (recoveredDraft.wizardStep !== undefined) setWizardStep(recoveredDraft.wizardStep);
     dismissDraft();
   };
 
   const resetWizard = () => {
-    setWizardStep(0);
     setSubstanceName('');
     setManufacturer('');
     setProductCode('');
@@ -736,7 +721,6 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setHealthEffects('');
     setOelValue('');
     setControlMeasures([]);
-    setNewControl('');
     setHierarchyControls(JSON.parse(JSON.stringify(EMPTY_HIERARCHY)));
     setHierarchyInputs({
       elimination: '',
@@ -758,11 +742,19 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setAssessedBy('');
     setPhotoUrls([]);
     setAssessorSigName('');
-    setAssessorSigDate('');
     setAssessorSigDataUrl('');
     setReviewerSigName('');
-    setReviewerSigDate('');
     setReviewerSigDataUrl('');
+  };
+
+  const openNew = () => {
+    resetWizard();
+    setShowWizard(true);
+  };
+
+  const closeWizard = () => {
+    resetWizard();
+    setShowWizard(false);
   };
 
   const handleDuplicate = (assessment: COSHHAssessment) => {
@@ -792,9 +784,15 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setMonitoringRequired(assessment.monitoring_required);
     setMonitoringDetails(assessment.monitoring_details);
     setRiskRating(assessment.risk_rating);
-    // Clear assessed_by and dates — fresh draft
+    // Clear assessed_by and signatures — fresh draft
+    setSdsReference('');
+    setPhotoUrls([]);
     setAssessedBy('');
-    setWizardStep(0);
+    setAssessorSigName('');
+    setAssessorSigDataUrl('');
+    setReviewerSigName('');
+    setReviewerSigDataUrl('');
+    setViewingAssessment(null);
     setShowWizard(true);
     toast.success('Assessment duplicated — review and save as new');
   };
@@ -827,7 +825,6 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setSpillProcedure(substance.spill);
     setFirstAid(substance.firstAid);
     setShowSubstanceSheet(false);
-    setWizardStep(1);
   };
 
   const saveAssessment = async () => {
@@ -866,8 +863,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         review_date: reviewDate.toISOString().split('T')[0],
       });
       clearDraft();
-      setShowWizard(false);
-      resetWizard();
+      closeWizard();
     } catch {
       // Error toast handled by hook
     }
@@ -881,13 +877,6 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setExposureRoutes((prev) =>
       prev.map((r) => (r.id === id ? { ...r, selected: !r.selected } : r))
     );
-  };
-
-  const addControl = () => {
-    if (newControl.trim()) {
-      setControlMeasures((prev) => [...prev, newControl.trim()]);
-      setNewControl('');
-    }
   };
 
   const addHierarchyAction = (level: HierarchyKey) => {
@@ -931,280 +920,342 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   };
 
   const filteredSubstances = COMMON_SUBSTANCES.filter((s) =>
-    s.name.toLowerCase().includes(searchQuery.toLowerCase())
+    s.name.toLowerCase().includes(substanceSearch.toLowerCase())
   );
 
-  // ─── Wizard Steps ───
+  // Total controls captured across the hierarchy (used for readiness).
+  const hierarchyActionCount = HIERARCHY_LEVELS.reduce(
+    (n, level) => n + hierarchyControls[level.key].actions.length,
+    0
+  );
 
-  const renderWizardStep = () => {
-    switch (wizardStep) {
-      case 0:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Substance Details</h3>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setShowSubstanceSheet(true)}
-                className="flex-1 h-11 border-elec-yellow/30 text-elec-yellow rounded-xl touch-manipulation"
-              >
-                <FlaskConical className="h-4 w-4 mr-2" />
-                Load Substance
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setShowLoadTemplate(true)}
-                className="flex-1 h-11 border-white/20 text-white rounded-xl touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Load Template
-              </Button>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <Label className="text-white text-sm">Substance Name *</Label>
-                <Input
-                  value={substanceName}
-                  onChange={(e) => setSubstanceName(e.target.value)}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. PVC Solvent Cement"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label className="text-white text-sm">Manufacturer</Label>
-                  <Input
-                    value={manufacturer}
-                    onChange={(e) => setManufacturer(e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  />
-                </div>
-                <div>
-                  <Label className="text-white text-sm">Product Code</Label>
-                  <Input
-                    value={productCode}
-                    onChange={(e) => setProductCode(e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  />
-                </div>
-              </div>
-              <LocationAutoFill
-                value={locationOfUse}
-                onChange={(v) => setLocationOfUse(v)}
-                label="Location of Use"
-                placeholder="e.g. Plant room, riser, site-wide"
-              />
-              <div>
-                <Label className="text-white text-sm">Task / How Used</Label>
-                <SmartTextarea
-                  value={taskDescription}
-                  onChange={setTaskDescription}
-                  className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Describe how the substance is used..."
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label className="text-white text-sm">Quantity Used</Label>
-                  <Input
-                    value={quantityUsed}
-                    onChange={(e) => setQuantityUsed(e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                    placeholder="e.g. 500ml"
-                  />
-                </div>
-                <div>
-                  <Label className="text-white text-sm">Frequency</Label>
-                  <Select value={frequencyOfUse} onValueChange={setFrequencyOfUse}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow mt-1">
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="daily">Daily</SelectItem>
-                      <SelectItem value="weekly">Weekly</SelectItem>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="occasional">Occasional</SelectItem>
-                      <SelectItem value="one-off">One-off</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
+  // ─── Readiness gate ───
+  const readiness = [
+    { ok: substanceName.trim().length > 0, label: 'Substance named' },
+    { ok: selectedGHS.length > 0, label: 'At least one GHS hazard' },
+    { ok: hierarchyActionCount > 0 || ppeRequired.length > 0, label: 'At least one control measure' },
+    { ok: firstAid.trim().length > 0, label: 'First aid measures recorded' },
+    { ok: assessedBy.trim().length > 0 && assessorSigDataUrl.length > 0, label: 'Assessed by + signed' },
+  ];
+  const formReady = readiness.every((r) => r.ok);
 
-            <div>
-              <Label className="text-white text-sm">Safety Data Sheet (SDS) Reference</Label>
-              <Input
-                value={sdsReference}
-                onChange={(e) => setSdsReference(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                placeholder="e.g. SDS-2024-001 or manufacturer reference"
-              />
-              <p className="text-xs text-white mt-1">
-                Reference number or location of the Safety Data Sheet for this substance
-              </p>
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteCOSHH.mutateAsync(id);
+    } catch {
+      // Error toast handled by hook
+    }
+  };
+
+  // ─── List metrics + filters ───
+  const filteredAssessments = useMemo(() => {
+    return assessments.filter((a) => {
+      const matchesSearch =
+        !searchQuery ||
+        a.substance_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        a.manufacturer?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        a.location_of_use?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesRisk = riskFilter === 'all' || a.risk_rating === riskFilter;
+      return matchesSearch && matchesRisk;
+    });
+  }, [assessments, searchQuery, riskFilter]);
+
+  // Overdue reviews sort to the top.
+  const sortedAssessments = useMemo(() => {
+    return [...filteredAssessments].sort((a, b) => {
+      const aOverdue = isOverdue(a.review_date);
+      const bOverdue = isOverdue(b.review_date);
+      if (aOverdue !== bOverdue) return aOverdue ? -1 : 1;
+      return (b.created_at || '').localeCompare(a.created_at || '');
+    });
+  }, [filteredAssessments]);
+
+  const {
+    visible: visibleAssessments,
+    hasMore: hasMoreAssessments,
+    remaining: remainingAssessments,
+    loadMore: loadMoreAssessments,
+  } = useShowMore(sortedAssessments);
+
+  const total = assessments.length;
+  const overdueCount = assessments.filter((a) => isOverdue(a.review_date)).length;
+  const highRiskCount = assessments.filter(
+    (a) => a.risk_rating === 'high' || a.risk_rating === 'very-high'
+  ).length;
+  const monitoringCount = assessments.filter((a) => a.monitoring_required).length;
+
+  const riskFilterTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: assessments.length },
+      { value: 'low', label: 'Low', count: assessments.filter((a) => a.risk_rating === 'low').length },
+      {
+        value: 'medium',
+        label: 'Medium',
+        count: assessments.filter((a) => a.risk_rating === 'medium').length,
+      },
+      {
+        value: 'high',
+        label: 'High',
+        count: assessments.filter((a) => a.risk_rating === 'high').length,
+      },
+      {
+        value: 'very-high',
+        label: 'V. High',
+        count: assessments.filter((a) => a.risk_rating === 'very-high').length,
+      },
+    ],
+    [assessments]
+  );
+
+  // ─── Form ───
+  if (showWizard) {
+    return (
+      <div className="bg-elec-dark min-h-screen pb-28">
+        <SafetyMasthead
+          onBack={closeWizard}
+          backLabel="Assessments"
+          moduleName="New COSHH assessment"
+          trailing={<DraftSaveIndicator status={draftStatus} />}
+        />
+        <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
+          <AnimatePresence>
+            {recoveredDraft && (
+              <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+            )}
+          </AnimatePresence>
+
+          {/* Quick start */}
+          <div>
+            <Eyebrow className="mb-2">Quick start</Eyebrow>
+            <div className="grid grid-cols-2 gap-2">
+              <SecondaryButton fullWidth onClick={() => setShowSubstanceSheet(true)}>
+                Load substance
+              </SecondaryButton>
+              <SecondaryButton fullWidth onClick={() => setShowLoadTemplate(true)}>
+                Load template
+              </SecondaryButton>
             </div>
           </div>
-        );
 
-      case 1:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Hazard Classification</h3>
+          {/* Substance details */}
+          <FormCard eyebrow="Substance details">
+            <Field label="Substance name" required>
+              <input
+                value={substanceName}
+                onChange={(e) => setSubstanceName(e.target.value)}
+                className={inputClass}
+                placeholder="e.g. PVC Solvent Cement"
+              />
+            </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Manufacturer">
+                <input
+                  value={manufacturer}
+                  onChange={(e) => setManufacturer(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Product code">
+                <input
+                  value={productCode}
+                  onChange={(e) => setProductCode(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            </div>
+            <LocationAutoFill
+              value={locationOfUse}
+              onChange={(v) => setLocationOfUse(v)}
+              label="Location of use"
+              placeholder="e.g. Plant room, riser, site-wide"
+            />
+            <Field label="Task / how used">
+              <SmartTextarea
+                value={taskDescription}
+                onChange={setTaskDescription}
+                className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Describe how the substance is used…"
+              />
+            </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Quantity used">
+                <input
+                  value={quantityUsed}
+                  onChange={(e) => setQuantityUsed(e.target.value)}
+                  className={inputClass}
+                  placeholder="e.g. 500ml"
+                />
+              </Field>
+              <Field label="Frequency">
+                <Select value={frequencyOfUse} onValueChange={setFrequencyOfUse}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select…" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                    <SelectItem value="occasional">Occasional</SelectItem>
+                    <SelectItem value="one-off">One-off</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+            </div>
+            <Field
+              label="Safety Data Sheet (SDS) reference"
+              hint="Reference number or location of the Safety Data Sheet for this substance"
+            >
+              <input
+                value={sdsReference}
+                onChange={(e) => setSdsReference(e.target.value)}
+                className={inputClass}
+                placeholder="e.g. SDS-2024-001 or manufacturer reference"
+              />
+            </Field>
+          </FormCard>
 
-            <div>
-              <Label className="text-white text-sm mb-2 block">GHS Hazard Pictograms</Label>
+          {/* Hazard classification */}
+          <FormCard eyebrow="Hazard classification">
+            <Field label="GHS hazard pictograms" required>
               <div className="grid grid-cols-2 gap-2">
                 {GHS_HAZARDS.map((hazard) => {
-                  const Icon = hazard.icon;
                   const isSelected = selectedGHS.includes(hazard.id);
                   return (
                     <button
                       key={hazard.id}
+                      type="button"
                       onClick={() => toggleGHS(hazard.id)}
-                      className={`p-3 rounded-xl border text-left touch-manipulation transition-all active:scale-[0.98] ${
+                      className={cn(
+                        'p-3 rounded-xl border text-left touch-manipulation transition-all active:scale-[0.98]',
                         isSelected
                           ? 'border-red-500/40 bg-red-500/10'
-                          : 'border-white/10 bg-white/[0.03]'
-                      }`}
+                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
+                      )}
                     >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center ${isSelected ? 'bg-red-500/20' : 'bg-white/[0.06]'}`}
-                        >
-                          <Icon
-                            className={`h-4 w-4 ${isSelected ? 'text-red-400' : 'text-white'}`}
-                          />
-                        </div>
-                        <div>
-                          <p
-                            className={`text-xs font-bold ${isSelected ? 'text-red-300' : 'text-white'}`}
-                          >
-                            {hazard.label}
-                          </p>
-                          <p className="text-[10px] text-white">{hazard.description}</p>
-                        </div>
-                      </div>
+                      <span
+                        className={cn(
+                          'text-[13px] font-medium block',
+                          isSelected ? 'text-red-300' : 'text-white'
+                        )}
+                      >
+                        {hazard.label}
+                      </span>
+                      <span className="text-[11px] text-white/55">{hazard.description}</span>
                     </button>
                   );
                 })}
               </div>
-            </div>
+            </Field>
 
-            <div>
-              <Label className="text-white text-sm mb-2 block">Exposure Routes</Label>
+            <Field label="Exposure routes">
               <div className="grid grid-cols-2 gap-2">
-                {exposureRoutes.map((route) => {
-                  const Icon = route.icon;
-                  return (
-                    <button
-                      key={route.id}
-                      onClick={() => toggleExposureRoute(route.id)}
-                      className={`p-3 rounded-xl border text-left touch-manipulation transition-all active:scale-[0.98] ${
-                        route.selected
-                          ? 'border-amber-500/40 bg-amber-500/10'
-                          : 'border-white/10 bg-white/[0.03]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Icon
-                          className={`h-4 w-4 ${route.selected ? 'text-amber-400' : 'text-white'}`}
-                        />
-                        <span
-                          className={`text-sm font-medium ${route.selected ? 'text-amber-300' : 'text-white'}`}
-                        >
-                          {route.label}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
+                {exposureRoutes.map((route) => (
+                  <button
+                    key={route.id}
+                    type="button"
+                    onClick={() => toggleExposureRoute(route.id)}
+                    className={cn(
+                      'h-11 px-3 rounded-xl border text-[13px] font-medium touch-manipulation transition-all active:scale-[0.98]',
+                      route.selected
+                        ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
+                        : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                    )}
+                  >
+                    {route.label}
+                  </button>
+                ))}
               </div>
-            </div>
+            </Field>
 
-            <div>
-              <Label className="text-white text-sm">Health Effects</Label>
+            <Field label="Health effects">
               <SmartTextarea
                 value={healthEffects}
                 onChange={setHealthEffects}
-                className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                placeholder="Describe potential health effects..."
+                className="min-h-[100px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Describe potential health effects…"
               />
-            </div>
+            </Field>
 
-            <div>
-              <Label className="text-white text-sm">Occupational Exposure Limit (OEL)</Label>
-              <Input
+            <Field label="Occupational Exposure Limit (OEL)">
+              <input
                 value={oelValue}
                 onChange={(e) => setOelValue(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                className={inputClass}
                 placeholder="e.g. TWA 50 ppm, STEL 100 ppm"
               />
-            </div>
-          </div>
-        );
+            </Field>
+          </FormCard>
 
-      case 2:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Hierarchy of Controls</h3>
-            <p className="text-xs text-white">
-              Work through each level — eliminate or substitute first, then engineer controls,
-              before relying on administrative measures or PPE.
+          {/* Hierarchy of controls */}
+          <FormCard eyebrow="Hierarchy of controls">
+            <p className="text-[12px] text-white/55">
+              Work through each level — eliminate or substitute first, then engineer controls, before
+              relying on administrative measures or PPE.
             </p>
 
             {HIERARCHY_LEVELS.map((level) => {
-              const LevelIcon = level.icon;
               const h = hierarchyControls[level.key];
               return (
                 <div
                   key={level.key}
-                  className={`rounded-xl border ${h.considered ? level.border : 'border-white/10'} ${h.considered ? level.bg : 'bg-white/[0.02]'} overflow-hidden`}
+                  className={cn(
+                    'rounded-xl border overflow-hidden',
+                    h.considered
+                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                      : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
+                  )}
                 >
                   <button
+                    type="button"
                     onClick={() => toggleHierarchyConsidered(level.key)}
-                    className="w-full flex items-center gap-3 p-3 touch-manipulation active:bg-white/[0.05] transition-all"
+                    className="w-full flex items-center gap-3 p-3 touch-manipulation active:bg-white/[0.05] transition-all text-left"
                   >
-                    <LevelIcon
-                      className={`h-4 w-4 flex-shrink-0 ${h.considered ? level.colour : 'text-white'}`}
-                    />
-                    <div className="flex-1 text-left">
+                    <div className="flex-1">
                       <p
-                        className={`text-sm font-semibold ${h.considered ? level.colour : 'text-white'}`}
+                        className={cn(
+                          'text-[13px] font-semibold',
+                          h.considered ? 'text-elec-yellow' : 'text-white'
+                        )}
                       >
                         {level.label}
                       </p>
-                      <p className="text-[11px] text-white">{level.description}</p>
+                      <p className="text-[11px] text-white/55">{level.description}</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {h.actions.length > 0 && (
-                        <Badge variant="outline" className={`${level.colour} text-[10px]`}>
-                          {h.actions.length}
-                        </Badge>
+                    {h.actions.length > 0 && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border border-elec-yellow/25 text-elec-yellow tabular-nums">
+                        {h.actions.length}
+                      </span>
+                    )}
+                    <span
+                      className={cn(
+                        'text-white/40 text-[13px] transition-transform duration-200',
+                        h.considered && 'rotate-180'
                       )}
-                      <ChevronDown
-                        className={`h-4 w-4 text-white transition-transform ${h.considered ? 'rotate-180' : ''}`}
-                      />
-                    </div>
+                      aria-hidden
+                    >
+                      ⌄
+                    </span>
                   </button>
                   {h.considered && (
                     <div className="px-3 pb-3 space-y-1.5">
                       {h.actions.map((action, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-2 p-2 rounded-lg border border-white/10 bg-white/[0.03]"
+                          className="flex items-center gap-2 p-2 rounded-lg border border-white/[0.08] bg-[hsl(0_0%_9%)]"
                         >
-                          <CheckCircle2 className={`h-3.5 w-3.5 ${level.colour} flex-shrink-0`} />
-                          <span className="text-sm text-white flex-1">{action}</span>
+                          <span className="text-[13px] text-white flex-1">{action}</span>
                           <button
+                            type="button"
                             onClick={() => removeHierarchyAction(level.key, i)}
-                            className="h-11 w-11 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
+                            className="h-9 w-9 rounded-lg bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] shrink-0"
+                            aria-label="Remove control"
                           >
-                            <Trash2 className="h-3.5 w-3.5 text-white" />
+                            <Trash2 className="h-3.5 w-3.5 text-white/60" />
                           </button>
                         </div>
                       ))}
                       <div className="flex gap-2">
-                        <Input
+                        <input
                           value={hierarchyInputs[level.key]}
                           onChange={(e) =>
                             setHierarchyInputs((prev) => ({
@@ -1213,16 +1264,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                             }))
                           }
                           onKeyDown={(e) => e.key === 'Enter' && addHierarchyAction(level.key)}
-                          className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500 flex-1"
-                          placeholder={`Add ${level.key === 'ppe' ? 'PPE' : level.key} control...`}
+                          className={cn(inputClass, 'flex-1')}
+                          placeholder={`Add ${level.key === 'ppe' ? 'PPE' : level.key} control…`}
                         />
-                        <Button
-                          onClick={() => addHierarchyAction(level.key)}
-                          size="sm"
-                          className="h-10 bg-elec-yellow text-black rounded-lg touch-manipulation"
-                        >
-                          <Plus className="h-4 w-4" />
-                        </Button>
+                        <SecondaryButton onClick={() => addHierarchyAction(level.key)}>
+                          Add
+                        </SecondaryButton>
                       </div>
                     </div>
                   )}
@@ -1230,511 +1277,435 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               );
             })}
 
-            <div>
-              <Label className="text-white text-sm mb-2 block">Specific PPE Required</Label>
-              <div className="flex flex-wrap gap-1.5 mb-2">
-                {ppeRequired.map((item, i) => (
-                  <Badge
-                    key={i}
-                    className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs cursor-pointer touch-manipulation active:bg-red-500/15 py-1.5 px-2.5"
-                    onClick={() => setPpeRequired((prev) => prev.filter((_, idx) => idx !== i))}
-                  >
-                    <Shield className="h-3 w-3 mr-1" />
-                    {item}
-                  </Badge>
-                ))}
-              </div>
+            <Field label="Specific PPE required">
+              {ppeRequired.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-2">
+                  {ppeRequired.map((item, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setPpeRequired((prev) => prev.filter((_, idx) => idx !== i))}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border border-cyan-500/25 bg-cyan-500/10 text-cyan-300 touch-manipulation active:bg-red-500/15"
+                    >
+                      {item}
+                      <span aria-hidden className="text-cyan-300/60">
+                        ×
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
               <div className="flex gap-2">
-                <Input
+                <input
                   value={newPPE}
                   onChange={(e) => setNewPPE(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addPPE()}
-                  className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500 flex-1"
-                  placeholder="Add PPE item..."
+                  className={cn(inputClass, 'flex-1')}
+                  placeholder="Add PPE item…"
                 />
-                <Button
-                  onClick={addPPE}
-                  size="sm"
-                  className="h-10 bg-elec-yellow text-black rounded-lg touch-manipulation"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
+                <SecondaryButton onClick={addPPE}>Add</SecondaryButton>
               </div>
-            </div>
+            </Field>
 
-            <div>
-              <Label className="text-white text-sm">Risk Rating (with controls)</Label>
-              <div className="grid grid-cols-4 gap-2 mt-1">
+            <Field label="Risk rating (with controls)">
+              <div className="grid grid-cols-4 gap-2">
                 {(['low', 'medium', 'high', 'very-high'] as const).map((level) => {
-                  const colours = RISK_COLOURS[level];
+                  const selected = riskRating === level;
                   return (
                     <button
                       key={level}
+                      type="button"
                       onClick={() => setRiskRating(level)}
-                      className={`p-2.5 rounded-xl border text-center touch-manipulation transition-all active:scale-[0.98] ${
-                        riskRating === level
-                          ? `${colours.bg} ${colours.border} ring-1 ring-offset-0`
-                          : 'border-white/10 bg-white/[0.03]'
-                      }`}
+                      className={cn(
+                        'h-11 rounded-xl border text-[12px] font-medium text-center touch-manipulation transition-all active:scale-[0.98]',
+                        selected
+                          ? RISK_PILL_CLASS[riskTone(level)]
+                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                      )}
                     >
-                      <span
-                        className={`text-xs font-bold ${riskRating === level ? colours.text : 'text-white'}`}
-                      >
-                        {level === 'very-high'
-                          ? 'V. High'
-                          : level.charAt(0).toUpperCase() + level.slice(1)}
-                      </span>
+                      {RISK_LABEL[level]}
                     </button>
                   );
                 })}
               </div>
-            </div>
+            </Field>
 
-            {/* Substance/Storage Photos */}
-            <div className="mt-4">
-              <SafetyPhotoCapture
-                photos={photoUrls}
-                onPhotosChange={setPhotoUrls}
-                label="Substance/Storage Photos"
-              />
-            </div>
-          </div>
-        );
+            <SafetyPhotoCapture
+              photos={photoUrls}
+              onPhotosChange={setPhotoUrls}
+              label="Substance / storage photos"
+            />
+          </FormCard>
 
-      case 3:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Emergency & Storage</h3>
-
-            <div>
-              <Label className="text-white text-sm">Storage Requirements</Label>
+          {/* Emergency & storage */}
+          <FormCard eyebrow="Emergency & storage">
+            <Field label="Storage requirements">
               <SmartTextarea
                 value={storageRequirements}
                 onChange={setStorageRequirements}
-                className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                placeholder="Storage conditions and requirements..."
+                className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Storage conditions and requirements…"
               />
-            </div>
-
-            <div>
-              <Label className="text-white text-sm">Spill Procedure</Label>
+            </Field>
+            <Field label="Spill procedure">
               <SmartTextarea
                 value={spillProcedure}
                 onChange={setSpillProcedure}
-                className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                placeholder="Steps to take in event of spillage..."
+                className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="Steps to take in event of spillage…"
               />
-            </div>
-
-            <div>
-              <Label className="text-white text-sm">First Aid Measures</Label>
+            </Field>
+            <Field label="First aid measures">
               <SmartTextarea
                 value={firstAid}
                 onChange={setFirstAid}
-                className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                placeholder="First aid measures by exposure route..."
+                className="min-h-[100px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                placeholder="First aid measures by exposure route…"
               />
-            </div>
-
-            <div>
-              <Label className="text-white text-sm">Disposal Method</Label>
-              <Input
+            </Field>
+            <Field label="Disposal method">
+              <input
                 value={disposalMethod}
                 onChange={(e) => setDisposalMethod(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                className={inputClass}
                 placeholder="e.g. Dispose as hazardous waste via licensed contractor"
               />
+            </Field>
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">Exposure monitoring required?</span>
+              <Switch checked={monitoringRequired} onCheckedChange={setMonitoringRequired} />
             </div>
-
-            <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-              <Checkbox
-                checked={monitoringRequired}
-                onCheckedChange={(v) => setMonitoringRequired(!!v)}
-                className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-              />
-              <Label className="text-white text-sm cursor-pointer">
-                Exposure monitoring required
-              </Label>
-            </div>
-
             {monitoringRequired && (
-              <div>
-                <Label className="text-white text-sm">Monitoring Details</Label>
-                <Input
+              <Field label="Monitoring details">
+                <input
                   value={monitoringDetails}
                   onChange={(e) => setMonitoringDetails(e.target.value)}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                  className={inputClass}
                   placeholder="e.g. Personal air sampling quarterly"
                 />
-              </div>
+              </Field>
             )}
+          </FormCard>
 
-            <div>
-              <Label className="text-white text-sm">Assessed By</Label>
-              <Input
+          {/* Review & sign-off */}
+          <FormCard eyebrow="Review & sign-off">
+            <Field label="Assessed by" required>
+              <input
                 value={assessedBy}
                 onChange={(e) => setAssessedBy(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                className={inputClass}
                 placeholder="Your full name"
               />
-            </div>
-
-            {/* Assessor Signature */}
-            <SignaturePad
-              label="Assessor Signature"
-              name={assessorSigName}
-              date={assessorSigDate}
-              signatureDataUrl={assessorSigDataUrl}
-              onSignatureChange={setAssessorSigDataUrl}
-              onNameChange={setAssessorSigName}
-              onDateChange={setAssessorSigDate}
-            />
-
-            {/* Reviewer Signature (optional) */}
-            <SignaturePad
-              label="Reviewer Signature (Optional)"
-              name={reviewerSigName}
-              date={reviewerSigDate}
-              signatureDataUrl={reviewerSigDataUrl}
-              onSignatureChange={setReviewerSigDataUrl}
-              onNameChange={setReviewerSigName}
-              onDateChange={setReviewerSigDate}
-            />
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const canProceed = () => {
-    switch (wizardStep) {
-      case 0:
-        return substanceName.trim().length > 0;
-      case 1:
-        return selectedGHS.length > 0;
-      case 2:
-        return controlMeasures.length > 0 || ppeRequired.length > 0;
-      case 3:
-        return assessedBy.trim().length > 0 && assessorSigDataUrl.length > 0;
-      default:
-        return true;
-    }
-  };
-
-  // ─── Render ───
-
-  return (
-    <div className="bg-background min-h-screen animate-fade-in">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="px-4 py-4 space-y-4">
-        {/* Hero */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-            <FlaskConical className="h-6 w-6 text-green-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">COSHH Assessments</h1>
-            <p className="text-sm text-white">Control of Substances Hazardous to Health</p>
-          </div>
-        </div>
-
-        {/* New Assessment Button */}
-        <Button
-          onClick={() => {
-            resetWizard();
-            setShowWizard(true);
-          }}
-          className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          New COSHH Assessment
-        </Button>
-
-        {/* Info card */}
-        <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5">
-          <div className="flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="text-xs text-amber-300 font-medium">Legal Requirement</p>
-              <p className="text-xs text-white mt-0.5">
-                Under COSHH Regulations 2002, employers must assess risks from hazardous substances
-                and implement appropriate controls. Assessments must be reviewed regularly and when
-                circumstances change.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Assessments List */}
-        {isLoading ? (
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-[72px] rounded-xl bg-white/[0.03] animate-pulse" />
-            ))}
-          </div>
-        ) : assessments.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <FlaskConical className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-base font-bold text-white mb-1">No Assessments Yet</h3>
-            <p className="text-sm text-white">Create your first COSHH assessment</p>
-          </div>
-        ) : (
-          <div className="space-y-2 pb-20">
-            {visibleAssessments.map((assessment, idx) => {
-              const riskLabel =
-                assessment.risk_rating === 'very-high'
-                  ? 'Very High'
-                  : assessment.risk_rating.charAt(0).toUpperCase() +
-                    assessment.risk_rating.slice(1);
-              return (
-                <SafetyRecordCard
-                  key={assessment.id}
-                  id={assessment.id}
-                  title={assessment.substance_name}
-                  subtitle={assessment.manufacturer || undefined}
-                  status={assessment.risk_rating}
-                  statusLabel={`${riskLabel} Risk`}
-                  regulation="COSHH 2002"
-                  icon={FlaskConical}
-                  iconColour="text-green-400"
-                  meta={[
-                    { icon: Calendar, label: `Review: ${fmtCardDate(assessment.review_date)}` },
-                    {
-                      label: `${((assessment.control_measures as string[]) || []).length} controls`,
-                    },
-                    { label: `${((assessment.ppe_required as string[]) || []).length} PPE` },
-                  ]}
-                  actions={[
-                    { label: 'Duplicate', icon: Copy, onClick: () => handleDuplicate(assessment) },
-                  ]}
-                  onTap={() => setViewingAssessment(assessment)}
-                  pdfType="coshh"
-                  index={idx}
-                />
-              );
-            })}
-            {hasMoreAssessments && (
-              <LoadMoreButton onLoadMore={loadMoreAssessments} remaining={remainingAssessments} />
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Wizard Sheet */}
-      <Sheet open={showWizard} onOpenChange={setShowWizard}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <div className="px-4 py-3 border-b border-white/10 flex items-center gap-2">
-              {wizardStep > 0 && (
-                <button
-                  onClick={() => setWizardStep((s) => s - 1)}
-                  className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
-                >
-                  <ArrowLeft className="h-4 w-4 text-white" />
-                </button>
-              )}
-              <h2 className="text-base font-bold text-white">
-                {wizardStep === 0 ? 'Substance Details' : `Step ${wizardStep + 1} of 4`}
-              </h2>
-              <DraftSaveIndicator status={draftStatus} />
-            </div>
-
-            <div className="h-1 bg-white/[0.05]">
-              <motion.div
-                className="h-full bg-green-400"
-                initial={{ width: 0 }}
-                animate={{ width: `${((wizardStep + 1) / 4) * 100}%` }}
-                transition={{ duration: 0.3 }}
+            </Field>
+            <Field label="Assessor name (for signature record)">
+              <input
+                value={assessorSigName}
+                onChange={(e) => setAssessorSigName(e.target.value)}
+                className={inputClass}
+                placeholder="Name on the signature"
               />
-            </div>
+            </Field>
+            <SignatureField
+              label="Assessor signature"
+              value={assessorSigDataUrl}
+              onChange={setAssessorSigDataUrl}
+            />
+            <Field label="Reviewer name (optional)">
+              <input
+                value={reviewerSigName}
+                onChange={(e) => setReviewerSigName(e.target.value)}
+                className={inputClass}
+                placeholder="Reviewer name"
+              />
+            </Field>
+            <SignatureField
+              label="Reviewer signature (optional)"
+              value={reviewerSigDataUrl}
+              onChange={setReviewerSigDataUrl}
+            />
+            <p className="text-[11px] text-white/45">
+              Review date is automatically set to 12 months from today on save.
+            </p>
+          </FormCard>
 
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
-              <AnimatePresence>
-                {recoveredDraft && (
-                  <div className="mb-4">
-                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-                  </div>
-                )}
-              </AnimatePresence>
-              {renderWizardStep()}
-            </div>
+          <ReadinessGate items={readiness} title="Ready to save?" />
+        </div>
 
-            <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-              <Button
-                onClick={() => {
-                  if (wizardStep < 3) {
-                    setWizardStep((s) => s + 1);
-                  } else {
-                    saveAssessment();
-                  }
-                }}
-                disabled={!canProceed()}
-                className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
-              >
-                {wizardStep === 3 ? 'Save Assessment' : 'Continue'}
-              </Button>
-              {wizardStep === 3 && (
-                <button
-                  type="button"
-                  onClick={() => setShowSaveTemplate(true)}
-                  className="w-full h-10 mt-2 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  Save as Template
-                </button>
-              )}
-            </div>
+        {/* Sticky save */}
+        <div
+          className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 space-y-2"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="mx-auto max-w-3xl space-y-2">
+            <PrimaryButton
+              fullWidth
+              size="lg"
+              disabled={!formReady || createCOSHH.isPending}
+              onClick={saveAssessment}
+            >
+              {createCOSHH.isPending ? 'Saving…' : 'Save assessment'}
+            </PrimaryButton>
+            <button
+              type="button"
+              onClick={() => setShowSaveTemplate(true)}
+              className="w-full h-9 text-[12px] font-medium text-white/60 hover:text-white touch-manipulation"
+            >
+              Save as template
+            </button>
           </div>
-        </SheetContent>
-      </Sheet>
+        </div>
 
-      <SaveAsTemplateSheet
-        open={showSaveTemplate}
-        onOpenChange={setShowSaveTemplate}
-        moduleType="coshh"
-        getTemplateData={getTemplateData}
-      />
-      <LoadTemplateSheet
-        open={showLoadTemplate}
-        onOpenChange={setShowLoadTemplate}
-        moduleType="coshh"
-        onLoad={handleLoadTemplate}
-      />
-
-      {/* Common Substances Sheet */}
-      <Sheet open={showSubstanceSheet} onOpenChange={setShowSubstanceSheet}>
-        <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <div className="px-4 py-3 border-b border-white/10">
-              <h2 className="text-base font-bold text-white">Common Electrical Substances</h2>
-              <div className="relative mt-2">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <Input
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
-                  placeholder="Search substances..."
+        {/* Substance picker */}
+        <Sheet open={showSubstanceSheet} onOpenChange={setShowSubstanceSheet}>
+          <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden">
+            <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
+              <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+                <div className="h-1 w-10 rounded-full bg-white/20" />
+              </div>
+              <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+                <Eyebrow>Common substances</Eyebrow>
+                <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
+                  Common electrical substances
+                </div>
+                <input
+                  value={substanceSearch}
+                  onChange={(e) => setSubstanceSearch(e.target.value)}
+                  className={cn(inputClass, 'mt-3')}
+                  placeholder="Search substances…"
                 />
               </div>
+              <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-2">
+                {filteredSubstances.map((substance, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => loadSubstance(substance)}
+                    className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] active:bg-white/[0.06] touch-manipulation"
+                  >
+                    <h4 className="text-[13px] font-medium text-white">{substance.name}</h4>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {substance.ghs.map((g) => {
+                        const ghsInfo = GHS_HAZARDS.find((h) => h.id === g);
+                        return ghsInfo ? (
+                          <span
+                            key={g}
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border border-red-500/20 bg-red-500/10 text-red-300"
+                          >
+                            {ghsInfo.label}
+                          </span>
+                        ) : null;
+                      })}
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-2">
-              {filteredSubstances.map((substance, i) => (
-                <button
-                  key={i}
-                  onClick={() => loadSubstance(substance)}
-                  className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] touch-manipulation"
-                >
-                  <h4 className="text-sm font-bold text-white">{substance.name}</h4>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {substance.ghs.map((g) => {
-                      const ghsInfo = GHS_HAZARDS.find((h) => h.id === g);
-                      return ghsInfo ? (
-                        <Badge
-                          key={g}
-                          className="bg-red-500/10 text-red-300 border-red-500/20 text-[10px]"
-                        >
-                          {ghsInfo.label}
-                        </Badge>
-                      ) : null;
-                    })}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+          </SheetContent>
+        </Sheet>
 
-      {/* Assessment Detail Sheet */}
+        <SaveAsTemplateSheet
+          open={showSaveTemplate}
+          onOpenChange={setShowSaveTemplate}
+          moduleType="coshh"
+          getTemplateData={getTemplateData}
+        />
+        <LoadTemplateSheet
+          open={showLoadTemplate}
+          onOpenChange={setShowLoadTemplate}
+          moduleType="coshh"
+          onLoad={handleLoadTemplate}
+        />
+      </div>
+    );
+  }
+
+  // ─── List ───
+  return (
+    <SafetyModuleShell
+      onBack={onBack}
+      moduleName="COSHH"
+      hero={
+        <PageHero
+          eyebrow="COSHH · Control of Substances Hazardous to Health 2002"
+          title="Assess hazardous substances and control exposure"
+          description="Capture the substance, its GHS hazards and exposure routes, then work the control hierarchy — eliminate, substitute, engineer, administer, PPE — and sign it off."
+          tone="green"
+          actions={<PrimaryButton onClick={openNew}>New assessment</PrimaryButton>}
+        />
+      }
+      stats={
+        total > 0 ? (
+          <StatStrip
+            stats={[
+              { value: total, label: 'Total' },
+              { value: overdueCount, label: 'Review overdue', accent: overdueCount > 0 },
+              { value: highRiskCount, label: 'High risk', sub: 'high / very high' },
+              { value: monitoringCount, label: 'Monitoring' },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        total > 0 ? (
+          <FilterBar
+            tabs={riskFilterTabs}
+            activeTab={riskFilter}
+            onTabChange={setRiskFilter}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search assessments…"
+          />
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : assessments.length === 0 ? (
+        <EmptyState
+          title="No COSHH assessments yet"
+          description="Under COSHH Regulations 2002, employers must assess risks from hazardous substances and implement appropriate controls. Create your first assessment."
+          action="New assessment"
+          onAction={openNew}
+        />
+      ) : sortedAssessments.length === 0 ? (
+        <EmptyState title="No matching assessments" description="Try a different risk tab or clear your search." />
+      ) : (
+        <div className="space-y-2.5">
+          {visibleAssessments.map((assessment) => {
+            const overdue = isOverdue(assessment.review_date);
+            return (
+              <SwipeableListItem
+                key={assessment.id}
+                rightActions={[
+                  {
+                    icon: Copy,
+                    label: 'Duplicate',
+                    color: 'bg-blue-500',
+                    textColor: 'text-white',
+                    onAction: () => handleDuplicate(assessment),
+                  },
+                  {
+                    icon: Trash2,
+                    label: 'Delete',
+                    color: 'bg-red-500',
+                    textColor: 'text-white',
+                    onAction: () => setDeleteTarget(assessment.id),
+                  },
+                ]}
+              >
+                <ListCard>
+                  <ListRow
+                    accent={riskTone(assessment.risk_rating)}
+                    onClick={() => setViewingAssessment(assessment)}
+                    title={assessment.substance_name}
+                    subtitle={`${assessment.manufacturer || 'COSHH 2002'}${
+                      assessment.location_of_use ? ` · ${assessment.location_of_use}` : ''
+                    } · ${assessment.control_measures.length} controls · ${assessment.ppe_required.length} PPE`}
+                    trailing={
+                      <div className="flex flex-col items-end gap-1">
+                        <RiskPill rating={assessment.risk_rating} />
+                        <span
+                          className={cn(
+                            'text-[11px] tabular-nums',
+                            overdue ? 'text-red-400 font-medium' : 'text-white/45'
+                          )}
+                        >
+                          {overdue ? 'Review overdue' : `Review ${fmtCardDate(assessment.review_date)}`}
+                        </span>
+                      </div>
+                    }
+                  />
+                </ListCard>
+              </SwipeableListItem>
+            );
+          })}
+          {hasMoreAssessments && (
+            <LoadMoreButton onLoadMore={loadMoreAssessments} remaining={remainingAssessments} />
+          )}
+        </div>
+      )}
+
+      {/* Assessment detail sheet */}
       <Sheet open={!!viewingAssessment} onOpenChange={() => setViewingAssessment(null)}>
         <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           {viewingAssessment && (
-            <div className="flex flex-col h-full bg-background">
-              <div className="px-4 py-3 border-b border-white/10">
-                <h2 className="text-base font-bold text-white">
+            <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
+              <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+                <div className="h-1 w-10 rounded-full bg-white/20" />
+              </div>
+              <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+                <Eyebrow>COSHH 2002</Eyebrow>
+                <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
                   {viewingAssessment.substance_name}
-                </h2>
-                <div className="flex items-center gap-2 mt-1">
-                  <Badge
-                    className={`${RISK_COLOURS[viewingAssessment.risk_rating].bg} ${RISK_COLOURS[viewingAssessment.risk_rating].text} border-none text-xs`}
-                  >
-                    {viewingAssessment.risk_rating === 'very-high'
-                      ? 'Very High'
-                      : viewingAssessment.risk_rating.charAt(0).toUpperCase() +
-                        viewingAssessment.risk_rating.slice(1)}{' '}
-                    Risk
-                  </Badge>
-                  <span className="text-xs text-white">
+                </div>
+                <div className="flex items-center gap-2 mt-2">
+                  <RiskPill rating={viewingAssessment.risk_rating} />
+                  <span className="text-[11.5px] text-white/55">
                     Assessed: {viewingAssessment.assessment_date}
                   </span>
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
+              <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
                 {/* GHS Hazards */}
                 <div>
-                  <h4 className="text-sm font-bold text-white mb-2">GHS Hazards</h4>
+                  <Eyebrow className="mb-2">GHS hazards</Eyebrow>
                   <div className="flex flex-wrap gap-1.5">
                     {viewingAssessment.ghs_hazards.map((g) => {
                       const ghsInfo = GHS_HAZARDS.find((h) => h.id === g);
-                      const Icon = ghsInfo?.icon || AlertTriangle;
                       return (
-                        <Badge
+                        <span
                           key={g}
-                          className="bg-red-500/10 text-red-300 border-red-500/20 text-xs"
+                          className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border border-red-500/20 bg-red-500/10 text-red-300"
                         >
-                          <Icon className="h-3 w-3 mr-1" />
                           {ghsInfo?.label || g}
-                        </Badge>
+                        </span>
                       );
                     })}
                   </div>
                 </div>
 
                 {/* Exposure Routes */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Exposure Routes</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {viewingAssessment.exposure_routes.map((r) => {
-                      const route = EXPOSURE_ROUTES_DEFAULT.find((er) => er.id === r);
-                      return (
-                        <Badge
-                          key={r}
-                          className="bg-amber-500/10 text-amber-300 border-amber-500/20 text-xs"
-                        >
-                          {route?.label || r}
-                        </Badge>
-                      );
-                    })}
+                {viewingAssessment.exposure_routes.length > 0 && (
+                  <div>
+                    <Eyebrow className="mb-2">Exposure routes</Eyebrow>
+                    <div className="flex flex-wrap gap-1.5">
+                      {viewingAssessment.exposure_routes.map((r) => {
+                        const route = EXPOSURE_ROUTES_DEFAULT.find((er) => er.id === r);
+                        return (
+                          <span
+                            key={r}
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border border-amber-500/20 bg-amber-500/10 text-amber-300"
+                          >
+                            {route?.label || r}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Health Effects */}
                 {viewingAssessment.health_effects && (
                   <div>
-                    <h4 className="text-sm font-bold text-white mb-1">Health Effects</h4>
-                    <p className="text-sm text-white">{viewingAssessment.health_effects}</p>
+                    <Eyebrow className="mb-1">Health effects</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {viewingAssessment.health_effects}
+                    </p>
+                  </div>
+                )}
+
+                {/* OEL */}
+                {viewingAssessment.oel_value && (
+                  <div>
+                    <Eyebrow className="mb-1">Occupational exposure limit</Eyebrow>
+                    <p className="text-[13px] text-white/85">{viewingAssessment.oel_value}</p>
                   </div>
                 )}
 
                 {/* Hierarchy of Controls */}
                 <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Hierarchy of Controls</h4>
+                  <Eyebrow className="mb-2">Hierarchy of controls</Eyebrow>
                   {(() => {
                     const parsed = parseHierarchy(viewingAssessment.control_measures);
                     const activeLevels = HIERARCHY_LEVELS.filter(
@@ -1744,10 +1715,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       return (
                         <div className="space-y-1.5">
                           {viewingAssessment.control_measures.map((c, i) => (
-                            <div key={i} className="flex items-center gap-2">
-                              <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                              <span className="text-sm text-white">{c}</span>
-                            </div>
+                            <p key={i} className="text-[13px] text-white/85">
+                              • {c}
+                            </p>
                           ))}
                         </div>
                       );
@@ -1755,23 +1725,19 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     return (
                       <div className="space-y-2">
                         {activeLevels.map((level) => {
-                          const LevelIcon = level.icon;
                           const h = parsed[level.key];
                           return (
                             <div
                               key={level.key}
-                              className={`p-2.5 rounded-lg border ${level.border} ${level.bg}`}
+                              className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]"
                             >
-                              <div className="flex items-center gap-2 mb-1.5">
-                                <LevelIcon className={`h-3.5 w-3.5 ${level.colour}`} />
-                                <span className={`text-xs font-bold ${level.colour}`}>
-                                  {level.label}
-                                </span>
-                              </div>
-                              <div className="space-y-1 ml-5">
+                              <p className="text-[12px] font-semibold text-elec-yellow mb-1.5">
+                                {level.label}
+                              </p>
+                              <div className="space-y-1">
                                 {h.actions.map((action, i) => (
-                                  <p key={i} className="text-sm text-white">
-                                    {action}
+                                  <p key={i} className="text-[13px] text-white/85">
+                                    • {action}
                                   </p>
                                 ))}
                               </div>
@@ -1784,48 +1750,82 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 </div>
 
                 {/* PPE */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Required PPE</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {viewingAssessment.ppe_required.map((item, i) => (
-                      <Badge
-                        key={i}
-                        className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs"
-                      >
-                        <Shield className="h-3 w-3 mr-1" />
-                        {item}
-                      </Badge>
-                    ))}
+                {viewingAssessment.ppe_required.length > 0 && (
+                  <div>
+                    <Eyebrow className="mb-2">Required PPE</Eyebrow>
+                    <div className="flex flex-wrap gap-1.5">
+                      {viewingAssessment.ppe_required.map((item, i) => (
+                        <span
+                          key={i}
+                          className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border border-cyan-500/25 bg-cyan-500/10 text-cyan-300"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* First Aid */}
                 {viewingAssessment.first_aid && (
                   <div>
-                    <h4 className="text-sm font-bold text-white mb-1">First Aid</h4>
-                    <p className="text-sm text-white">{viewingAssessment.first_aid}</p>
+                    <Eyebrow className="mb-1">First aid</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {viewingAssessment.first_aid}
+                    </p>
                   </div>
                 )}
 
-                {/* Storage & Spill */}
+                {/* Storage */}
                 {viewingAssessment.storage_requirements && (
                   <div>
-                    <h4 className="text-sm font-bold text-white mb-1">Storage</h4>
-                    <p className="text-sm text-white">{viewingAssessment.storage_requirements}</p>
+                    <Eyebrow className="mb-1">Storage</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {viewingAssessment.storage_requirements}
+                    </p>
                   </div>
                 )}
 
+                {/* Spill */}
                 {viewingAssessment.spill_procedure && (
                   <div>
-                    <h4 className="text-sm font-bold text-white mb-1">Spill Procedure</h4>
-                    <p className="text-sm text-white">{viewingAssessment.spill_procedure}</p>
+                    <Eyebrow className="mb-1">Spill procedure</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {viewingAssessment.spill_procedure}
+                    </p>
                   </div>
                 )}
 
-                <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03] mt-4">
-                  <div className="flex justify-between text-xs text-white">
+                {/* Disposal */}
+                {viewingAssessment.disposal_method && (
+                  <div>
+                    <Eyebrow className="mb-1">Disposal method</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {viewingAssessment.disposal_method}
+                    </p>
+                  </div>
+                )}
+
+                {/* Monitoring */}
+                {viewingAssessment.monitoring_required && (
+                  <div>
+                    <Eyebrow className="mb-1">Exposure monitoring</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {viewingAssessment.monitoring_details || 'Required'}
+                    </p>
+                  </div>
+                )}
+
+                <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
+                  <div className="flex justify-between text-[11.5px] text-white/55">
                     <span>Assessed by: {viewingAssessment.assessed_by}</span>
-                    <span>Review by: {viewingAssessment.review_date}</span>
+                    <span
+                      className={cn(
+                        isOverdue(viewingAssessment.review_date) && 'text-red-400 font-medium'
+                      )}
+                    >
+                      Review by: {viewingAssessment.review_date}
+                    </span>
                   </div>
                 </div>
 
@@ -1835,11 +1835,11 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {/* Signatures */}
                 {((viewingAssessment as Record<string, unknown>).assessor_signature ||
                   (viewingAssessment as Record<string, unknown>).reviewer_signature) && (
-                  <div className="space-y-3 mt-4">
-                    <h4 className="text-sm font-bold text-white">Signatures</h4>
+                  <div className="space-y-3">
+                    <Eyebrow>Signatures</Eyebrow>
                     {(viewingAssessment as Record<string, unknown>).assessor_signature && (
-                      <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                        <p className="text-xs text-white mb-2">Assessor</p>
+                      <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
+                        <p className="text-[11.5px] text-white/55 mb-2">Assessor</p>
                         <img
                           src={
                             (viewingAssessment as Record<string, unknown>)
@@ -1851,10 +1851,11 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       </div>
                     )}
                     {(viewingAssessment as Record<string, unknown>).reviewer_signature && (
-                      <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                        <p className="text-xs text-white mb-2">
+                      <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
+                        <p className="text-[11.5px] text-white/55 mb-2">
                           Reviewer:{' '}
-                          {(viewingAssessment as Record<string, unknown>).reviewer_name || 'N/A'}
+                          {((viewingAssessment as Record<string, unknown>).reviewer_name as string) ||
+                            'N/A'}
                         </p>
                         <img
                           src={
@@ -1869,29 +1870,21 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   </div>
                 )}
               </div>
-              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    onClick={() => exportPDF('coshh', viewingAssessment.id)}
-                    disabled={isExporting && exportingId === viewingAssessment.id}
-                    className="h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    {isExporting && exportingId === viewingAssessment.id ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <FileDown className="h-4 w-4 mr-2" />
-                    )}
-                    Export PDF
-                  </Button>
-                  <Button
-                    onClick={() => setShowShare(true)}
-                    variant="outline"
-                    className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                </div>
+
+              <div
+                className="flex-shrink-0 border-t border-white/[0.06] p-4 grid grid-cols-2 gap-2 bg-[hsl(0_0%_8%)]"
+                style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+              >
+                <PrimaryButton
+                  fullWidth
+                  disabled={isExporting && exportingId === viewingAssessment.id}
+                  onClick={() => exportPDF('coshh', viewingAssessment.id)}
+                >
+                  {isExporting && exportingId === viewingAssessment.id ? 'Exporting…' : 'Export PDF'}
+                </PrimaryButton>
+                <SecondaryButton fullWidth onClick={() => setShowShare(true)}>
+                  Share
+                </SecondaryButton>
               </div>
             </div>
           )}
@@ -1907,7 +1900,24 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           documentTitle={`COSHH Assessment — ${viewingAssessment.substance_name}`}
         />
       )}
-    </div>
+
+      <DeleteConfirmSheet
+        open={!!deleteTarget}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          setIsDeleting(true);
+          await handleDelete(deleteTarget);
+          setIsDeleting(false);
+          setDeleteTarget(null);
+        }}
+        title="Delete COSHH assessment?"
+        description="This assessment will be permanently removed"
+        isDeleting={isDeleting}
+      />
+    </SafetyModuleShell>
   );
 }
 

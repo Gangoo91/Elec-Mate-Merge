@@ -18,6 +18,13 @@ import {
 const CONVERSATIONS_KEY = ['conversations'];
 const CONVERSATION_STATS_KEY = ['conversations', 'stats'];
 
+// Monotonic counter so each subscription gets a unique realtime channel name.
+// A fixed name lets the Supabase client reuse a still-registered, already
+// subscribed channel across remounts/HMR — and adding `postgres_changes`
+// callbacks after `.subscribe()` throws. A fresh name guarantees `.on()` is
+// always attached before `.subscribe()`.
+let conversationsChannelSeq = 0;
+
 /**
  * Hook to fetch all conversations with real-time updates
  */
@@ -27,7 +34,7 @@ export const useConversations = () => {
   // Set up real-time subscription
   useEffect(() => {
     const channel = supabase
-      .channel('conversations-changes')
+      .channel(`conversations-changes-${++conversationsChannelSeq}`)
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'employer_conversations' },
@@ -222,7 +229,7 @@ export const useElectricianConversations = (electricianProfileId: string | undef
     if (!electricianProfileId) return;
 
     const channel = supabase
-      .channel(`electrician-conversations-${electricianProfileId}`)
+      .channel(`electrician-conversations-${electricianProfileId}-${++conversationsChannelSeq}`)
       .on(
         'postgres_changes',
         {

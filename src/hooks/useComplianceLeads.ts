@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useComplianceLeads — list of staff who hold any of the safeguarding /
@@ -67,7 +68,7 @@ export function useComplianceLeads() {
   // Realtime so role-flag toggles in the drawer reflect on the home widget
   useEffect(() => {
     const channel = supabase
-      .channel('compliance_leads')
+      .channel(realtimeChannelName('compliance_leads'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'college_staff' }, () =>
         fetch()
       )

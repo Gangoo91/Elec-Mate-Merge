@@ -1,31 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import {
-  FileText,
-  MapPin,
-  Users,
-  Clock,
-  Shield,
-  Wrench,
-  GraduationCap,
-  Download,
-  Send,
-  Eye,
-  AlertTriangle,
-  CheckCircle,
-  Edit,
-} from 'lucide-react';
+import { useState } from 'react';
 import { MethodStatementData } from '@/types/method-statement';
 import {
   downloadMethodStatementPDF,
   generateMethodStatementPDFPreview,
 } from '@/utils/method-statement-pdf';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import {
+  StatStrip,
+  FormCard,
+  Field,
+  Eyebrow,
+  ListCard,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+} from '@/components/college/primitives';
 
 interface ReviewStepProps {
   data: MethodStatementData;
@@ -33,36 +23,40 @@ interface ReviewStepProps {
   onBack: () => void;
 }
 
+const RISK_PILL: Record<string, string> = {
+  low: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  medium: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  high: 'bg-red-500/10 text-red-400 border-red-500/25',
+};
+
+function RiskPill({ level }: { level: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        RISK_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+      )}
+    >
+      {level}
+    </span>
+  );
+}
+
+function accentBar(level: string) {
+  return cn(
+    'w-[3px] self-stretch rounded-full shrink-0',
+    level === 'low' ? 'bg-emerald-400' : level === 'high' ? 'bg-red-400' : 'bg-amber-400'
+  );
+}
+
 const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
   const { toast } = useToast();
   const [isExporting, setIsExporting] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const getRiskColor = (risk: string) => {
-    switch (risk) {
-      case 'low':
-        return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'medium':
-        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
-      case 'high':
-        return 'bg-red-500/20 text-red-300 border-red-500/30';
-      default:
-        return 'bg-gray-500/20 text-white border-gray-500/30';
-    }
-  };
 
-  const getCompletionStats = () => {
-    const totalSteps = data.steps.length;
-    const completedSteps = data.steps.filter((step) => step.isCompleted).length;
-    const highRiskSteps = data.steps.filter((step) => step.riskLevel === 'high').length;
-    const totalSafetyReqs = data.steps.reduce(
-      (acc, step) => acc + step.safetyRequirements.length,
-      0
-    );
-
-    return { totalSteps, completedSteps, highRiskSteps, totalSafetyReqs };
-  };
-
-  const stats = getCompletionStats();
+  const totalSteps = data.steps.length;
+  const highRiskSteps = data.steps.filter((step) => step.riskLevel === 'high').length;
+  const totalSafetyReqs = data.steps.reduce((acc, step) => acc + step.safetyRequirements.length, 0);
 
   const exportToPDF = async () => {
     if (!data.jobTitle.trim()) {
@@ -73,14 +67,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       });
       return;
     }
-
     setIsExporting(true);
     try {
-      downloadMethodStatementPDF(data, {
-        companyName: 'Your Company', // This could come from user settings
-        includeSignatures: true,
-      });
-
+      downloadMethodStatementPDF(data, { companyName: 'Your Company', includeSignatures: true });
       toast({
         title: 'PDF Downloaded',
         description: 'Method statement PDF has been downloaded successfully.',
@@ -107,18 +96,13 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       });
       return;
     }
-
     setIsGenerating(true);
     try {
-      // Generate preview URL
       const previewUrl = generateMethodStatementPDFPreview(data, {
         companyName: 'Your Company',
         includeSignatures: true,
       });
-
-      // Open in new tab for preview/printing
       window.open(previewUrl, '_blank');
-
       toast({
         title: 'Document Generated',
         description: 'Method statement document has been generated and opened in a new tab.',
@@ -136,289 +120,124 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
     }
   };
 
+  const detailRows: { label: string; value: string }[] = [
+    { label: 'Job title', value: data.jobTitle },
+    { label: 'Location', value: data.location },
+    { label: 'Contractor', value: data.contractor },
+    { label: 'Supervisor', value: data.supervisor },
+    { label: 'Work type', value: data.workType },
+  ];
+
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
-      <Card className="border-0 sm:border sm:border-elec-yellow/20 bg-transparent sm:bg-elec-gray rounded-none sm:rounded-lg">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Eye className="h-5 w-5" />
-            Review Method Statement
-          </CardTitle>
-          <p className="text-white">
-            Review your method statement before generating the final document.
+    <div className="space-y-5">
+      {/* Summary */}
+      <StatStrip
+        stats={[
+          { value: totalSteps, label: 'Steps' },
+          { value: highRiskSteps, label: 'High risk', tone: highRiskSteps > 0 ? 'red' : undefined },
+          { value: totalSafetyReqs, label: 'Safety reqs' },
+          { value: data.duration || 'TBD', label: 'Duration' },
+        ]}
+      />
+
+      {/* High-risk notice */}
+      {highRiskSteps > 0 && (
+        <div className="p-3 rounded-xl bg-red-500/[0.08] border border-red-500/20">
+          <p className="text-[12px] text-white/85">
+            This method statement contains {highRiskSteps} high-risk step
+            {highRiskSteps !== 1 ? 's' : ''}. Ensure additional supervision and safety measures are
+            in place.
           </p>
-        </CardHeader>
-      </Card>
-
-      {/* Statistics Overview */}
-      <Card className="border-0 sm:border sm:border-blue-500/20 bg-blue-500/5 rounded-none sm:rounded-lg">
-        <CardHeader className="px-3 sm:px-6">
-          <CardTitle className="text-blue-300">Method Statement Summary</CardTitle>
-        </CardHeader>
-        <CardContent className="px-3 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow">{stats.totalSteps}</div>
-              <div className="text-sm text-white">Total Steps</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-red-300">{stats.highRiskSteps}</div>
-              <div className="text-sm text-white">High Risk Steps</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-300">{stats.totalSafetyReqs}</div>
-              <div className="text-sm text-white">Safety Requirements</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-300">{data.duration || 'TBD'}</div>
-              <div className="text-sm text-white">Estimated Duration</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Job Details Summary */}
-      <Card className="border-0 sm:border sm:border-elec-yellow/20 bg-transparent sm:bg-elec-gray rounded-none sm:rounded-lg">
-        <CardHeader className="px-3 sm:px-6">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow">Job Details</CardTitle>
-            <Button variant="outline" size="sm" onClick={onBack}>
-              <Edit className="h-4 w-4 mr-2" />
-              Edit Details
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4 sm:space-y-6 text-left px-3 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
-                <FileText className="h-4 w-4" />
-                Job Title
-              </div>
-              <div className="text-sm text-left">{data.jobTitle}</div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
-                <MapPin className="h-4 w-4" />
-                Location
-              </div>
-              <div className="text-sm text-left">{data.location}</div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
-                <Users className="h-4 w-4" />
-                Contractor
-              </div>
-              <div className="text-sm text-left">{data.contractor}</div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
-                <Users className="h-4 w-4" />
-                Supervisor
-              </div>
-              <div className="text-sm text-left">{data.supervisor}</div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
-                Work Type
-              </div>
-              <div className="text-sm text-left">{data.workType}</div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
-                Overall Risk Level
-              </div>
-              <Badge className={getRiskColor(data.overallRiskLevel)}>
-                {data.overallRiskLevel} risk
-              </Badge>
-            </div>
-          </div>
-          {data.description && (
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-elec-yellow">Description</div>
-              <div className="text-sm text-white text-left">{data.description}</div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Method Steps Review */}
-      <Card className="border-0 sm:border sm:border-elec-yellow/20 bg-transparent sm:bg-elec-gray rounded-none sm:rounded-lg">
-        <CardHeader className="px-3 sm:px-6">
-          <CardTitle className="text-elec-yellow">Method Steps ({data.steps.length})</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 sm:space-y-4 px-2 sm:px-4">
-          {data.steps.map((step, index) => (
-            <Card
-              key={step.id}
-              className="border-0 sm:border sm:border-elec-yellow/30 rounded-none sm:rounded-lg"
-            >
-              <CardContent className="p-2 sm:p-4">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
-                    {step.stepNumber}
-                  </div>
-                  <div className="flex-1 min-w-0 space-y-2 sm:space-y-3">
-                    {/* Mobile: Stack everything vertically for max width */}
-                    <div className="space-y-2">
-                      {/* Full-width title on its own row */}
-                      <h4 className="font-semibold text-elec-yellow text-base sm:text-lg leading-tight break-words">
-                        {step.title}
-                      </h4>
-
-                      {/* Metadata row below title */}
-                      <div className="flex flex-wrap items-center gap-2">
-                        {step.estimatedDuration && (
-                          <div className="flex items-center gap-1 text-xs text-white bg-elec-dark/50 px-2 py-1 rounded">
-                            <Clock className="h-3 w-3" />
-                            {step.estimatedDuration}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {step.description && (
-                      <p className="text-sm text-white text-left">{step.description}</p>
-                    )}
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 text-xs text-left">
-                      {step.safetyRequirements.length > 0 && (
-                        <div>
-                          <div className="flex items-start gap-1 font-medium text-red-300 mb-1 text-left">
-                            <Shield className="h-3 w-3" />
-                            Safety Requirements ({step.safetyRequirements.length})
-                          </div>
-                          <div className="space-y-1">
-                            {step.safetyRequirements.slice(0, 3).map((req, idx) => (
-                              <div key={idx} className="text-white">
-                                • {req}
-                              </div>
-                            ))}
-                            {step.safetyRequirements.length > 3 && (
-                              <div className="text-white">
-                                +{step.safetyRequirements.length - 3} more
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {step.equipmentNeeded.length > 0 && (
-                        <div>
-                          <div className="flex items-center gap-1 font-medium text-blue-300 mb-1">
-                            <Wrench className="h-3 w-3" />
-                            Equipment ({step.equipmentNeeded.length})
-                          </div>
-                          <div className="space-y-1">
-                            {step.equipmentNeeded.slice(0, 3).map((eq, idx) => (
-                              <div key={idx} className="text-white">
-                                • {eq}
-                              </div>
-                            ))}
-                            {step.equipmentNeeded.length > 3 && (
-                              <div className="text-white">
-                                +{step.equipmentNeeded.length - 3} more
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {step.qualifications.length > 0 && (
-                        <div>
-                          <div className="flex items-center gap-1 font-medium text-green-300 mb-1">
-                            <GraduationCap className="h-3 w-3" />
-                            Qualifications ({step.qualifications.length})
-                          </div>
-                          <div className="space-y-1">
-                            {step.qualifications.slice(0, 3).map((qual, idx) => (
-                              <div key={idx} className="text-white">
-                                • {qual}
-                              </div>
-                            ))}
-                            {step.qualifications.length > 3 && (
-                              <div className="text-white">
-                                +{step.qualifications.length - 3} more
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Approval Section */}
-      <Card className="border-0 sm:border sm:border-green-500/20 bg-green-500/5 rounded-none sm:rounded-lg">
-        <CardHeader className="px-3 sm:px-6">
-          <CardTitle className="text-green-300">Approval & Sign-off</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 px-3 sm:px-6">
-          <div className="gap-4">
-            <Label htmlFor="approvedBy">Approved By</Label>
-            <Input
-              id="approvedBy"
-              value={data.approvedBy || ''}
-              onChange={(e) => onDataChange({ approvedBy: e.target.value })}
-              placeholder="Name of approving authority"
-            />
-          </div>
-
-          <div className="flex items-center gap-2 p-3 bg-green-500/10 rounded-lg">
-            <CheckCircle className="h-5 w-5 text-green-300" />
-            <div>
-              <div className="font-medium text-green-300">Method Statement Complete</div>
-              <div className="text-sm text-white">
-                Ready for approval and distribution to site team.
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* High Risk Warning */}
-      {stats.highRiskSteps > 0 && (
-        <Card className="border-0 sm:border sm:border-red-500/20 bg-red-500/5 rounded-none sm:rounded-lg">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-red-300" />
-              <div>
-                <div className="font-medium text-red-300">High Risk Activities Identified</div>
-                <div className="text-sm text-white">
-                  This method statement contains {stats.highRiskSteps} high-risk step(s). Ensure
-                  additional supervision and safety measures are in place.
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        </div>
       )}
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 px-3 sm:px-0">
-        <Button
-          onClick={exportToPDF}
-          variant="outline"
-          className="flex-1 flex items-center gap-2"
-          disabled={isExporting}
-        >
-          <Download className="h-4 w-4" />
-          {isExporting ? 'Exporting...' : 'Export PDF'}
-        </Button>
-        <Button
-          onClick={generateDocument}
-          className="flex-1 flex items-center gap-2"
-          disabled={isGenerating}
-        >
-          <Send className="h-4 w-4" />
-          {isGenerating ? 'Generating...' : 'Generate Document'}
-        </Button>
+      {/* Job details */}
+      <FormCard eyebrow="Job details">
+        <div className="space-y-2.5">
+          {detailRows.map((row) => (
+            <div key={row.label} className="flex items-baseline justify-between gap-4">
+              <span className="text-[11.5px] uppercase tracking-[0.12em] text-white/45">
+                {row.label}
+              </span>
+              <span className="text-[13px] text-white text-right min-w-0 truncate">
+                {row.value || '—'}
+              </span>
+            </div>
+          ))}
+          <div className="flex items-baseline justify-between gap-4">
+            <span className="text-[11.5px] uppercase tracking-[0.12em] text-white/45">
+              Overall risk
+            </span>
+            <RiskPill level={data.overallRiskLevel} />
+          </div>
+        </div>
+        {data.description && (
+          <div className="pt-1">
+            <Eyebrow className="mb-1.5">Description</Eyebrow>
+            <p className="text-[12.5px] text-white/75 leading-relaxed">{data.description}</p>
+          </div>
+        )}
+        <SecondaryButton size="sm" onClick={onBack}>
+          Edit details
+        </SecondaryButton>
+      </FormCard>
+
+      {/* Method steps */}
+      <div className="space-y-2">
+        <Eyebrow>Method steps ({data.steps.length})</Eyebrow>
+        <ListCard>
+          {data.steps.map((step) => (
+            <div key={step.id} className="flex items-start gap-3 px-4 sm:px-5 py-4">
+              <span className={accentBar(step.riskLevel)} />
+              <div className="h-7 w-7 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-semibold text-[12px] shrink-0">
+                {step.stepNumber}
+              </div>
+              <div className="flex-1 min-w-0 space-y-1.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[14px] font-medium text-white">{step.title}</span>
+                  {step.estimatedDuration && (
+                    <span className="text-[11px] text-white/45 tabular-nums">
+                      {step.estimatedDuration}
+                    </span>
+                  )}
+                </div>
+                {step.description && (
+                  <p className="text-[12.5px] text-white/70 leading-relaxed">{step.description}</p>
+                )}
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white/45">
+                  <span>{step.safetyRequirements.length} safety</span>
+                  <span>{step.equipmentNeeded.length} equipment</span>
+                  <span>{step.qualifications.length} qualifications</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </ListCard>
+      </div>
+
+      {/* Approval */}
+      <FormCard eyebrow="Approval &amp; sign-off">
+        <Field label="Approved by">
+          <input
+            value={data.approvedBy || ''}
+            onChange={(e) => onDataChange({ approvedBy: e.target.value })}
+            className={inputClass}
+            placeholder="Name of approving authority"
+          />
+        </Field>
+        <p className="text-[11.5px] text-white/55">
+          Ready for approval and distribution to the site team.
+        </p>
+      </FormCard>
+
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row gap-2">
+        <SecondaryButton fullWidth onClick={exportToPDF} disabled={isExporting}>
+          {isExporting ? 'Exporting…' : 'Export PDF'}
+        </SecondaryButton>
+        <PrimaryButton fullWidth onClick={generateDocument} disabled={isGenerating}>
+          {isGenerating ? 'Generating…' : 'Generate document'}
+        </PrimaryButton>
       </div>
     </div>
   );

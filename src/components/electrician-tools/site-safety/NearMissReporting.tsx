@@ -1,71 +1,55 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { useLocalDraft } from '@/hooks/useLocalDraft';
-import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
-import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SmartTextarea } from './common/SmartTextarea';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useToast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trash2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { useShowMore } from '@/hooks/useShowMore';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
+
+import { Switch } from '@/components/ui/switch';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+
 import {
-  AlertTriangle,
-  Plus,
-  X,
-  Search,
-  Zap,
-  Flame,
-  Users,
-  HardHat,
-  Clock,
-  MapPin,
-  Shield,
-  CheckCircle2,
-  Loader2,
-  ArrowLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  CloudSun,
-  Wrench,
-  UserCheck,
-  Trash2,
-} from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  Field,
+  FormCard,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/college/primitives';
+import { SafetyModuleShell, SafetyMasthead } from './common/SafetyModuleShell';
+import { SignatureField } from './common/SignatureField';
+import { ReadinessGate } from './common/ReadinessGate';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { SmartTextarea } from './common/SmartTextarea';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { NearMissReportDetail } from './NearMissReportDetail';
 import { SwipeableListItem } from './common/SwipeableListItem';
 import { DeleteConfirmSheet } from './common/DeleteConfirmSheet';
 import { LoadMoreButton } from './common/LoadMoreButton';
-import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
+import { fmtCardDate } from './common/SafetyRecordCard';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
-import { useShowMore } from '@/hooks/useShowMore';
-import { NearMissReport, Witness } from './types';
 import { RiskMatrix } from './common/RiskMatrix';
-import { SignaturePad } from './common/SignaturePad';
-import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templates';
+import { NearMissReport, Witness } from './types';
 
 interface FormData {
   category: string;
@@ -93,42 +77,10 @@ interface FormData {
 }
 
 const QUICK_TEMPLATES = [
-  {
-    id: 'electrical',
-    icon: Zap,
-    label: 'Electrical',
-    category: 'electrical_hazard',
-    severity: 'high',
-    description:
-      'Near miss involving electrical hazard \u2014 exposed live parts, shock risk, or inadequate isolation discovered. Ref: EAWR 1989 Reg 4, GS38.',
-  },
-  {
-    id: 'fire',
-    icon: Flame,
-    label: 'Fire Risk',
-    category: 'fire_risk',
-    severity: 'critical',
-    description:
-      'Near miss involving fire hazard \u2014 overheating connection, arcing, sparking, or potential ignition source. Ref: BS 7671 Chapter 42, RRO 2005.',
-  },
-  {
-    id: 'ppe',
-    icon: HardHat,
-    label: 'PPE Issue',
-    category: 'ppe_failure',
-    severity: 'medium',
-    description:
-      'Near miss due to PPE issue \u2014 missing, damaged, or incorrect PPE identified before work commenced. Ref: PPER 2022.',
-  },
-  {
-    id: 'worksite',
-    icon: Users,
-    label: 'Worksite',
-    category: 'worksite_hazard',
-    severity: 'medium',
-    description:
-      'Near miss involving worksite hazard \u2014 trip hazard, cable strike risk, unstable surface, or access issue. Ref: CDM 2015, HSG47.',
-  },
+  { id: 'electrical', label: 'Electrical', category: 'electrical_hazard', severity: 'high', description: 'Near miss involving electrical hazard — exposed live parts, shock risk, or inadequate isolation discovered. Ref: EAWR 1989 Reg 4, GS38.' },
+  { id: 'fire', label: 'Fire risk', category: 'fire_risk', severity: 'critical', description: 'Near miss involving fire hazard — overheating connection, arcing, sparking, or potential ignition source. Ref: BS 7671 Chapter 42, RRO 2005.' },
+  { id: 'ppe', label: 'PPE issue', category: 'ppe_failure', severity: 'medium', description: 'Near miss due to PPE issue — missing, damaged, or incorrect PPE identified before work commenced. Ref: PPER 2022.' },
+  { id: 'worksite', label: 'Worksite', category: 'worksite_hazard', severity: 'medium', description: 'Near miss involving worksite hazard — trip hazard, cable strike risk, unstable surface, or access issue. Ref: CDM 2015, HSG47.' },
 ];
 
 const CATEGORIES = [
@@ -145,43 +97,13 @@ const CATEGORIES = [
 ];
 
 const SEVERITIES = [
-  {
-    value: 'low',
-    label: 'Low',
-    description: 'Minor incident, no injury likely',
-    colour: 'bg-green-500/20 text-green-400 border-green-500/30',
-    border: 'border-l-green-500',
-  },
-  {
-    value: 'medium',
-    label: 'Medium',
-    description: 'Moderate risk, minor injury possible',
-    colour: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    border: 'border-l-yellow-500',
-  },
-  {
-    value: 'high',
-    label: 'High',
-    description: 'Significant risk, serious injury possible',
-    colour: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    border: 'border-l-orange-500',
-  },
-  {
-    value: 'critical',
-    label: 'Critical',
-    description: 'Life-threatening or major incident',
-    colour: 'bg-red-500/20 text-red-400 border-red-500/30',
-    border: 'border-l-red-500',
-  },
+  { value: 'low', label: 'Low', description: 'Minor incident, no injury likely' },
+  { value: 'medium', label: 'Medium', description: 'Moderate risk, minor injury possible' },
+  { value: 'high', label: 'High', description: 'Significant risk, serious injury possible' },
+  { value: 'critical', label: 'Critical', description: 'Life-threatening or major incident' },
 ];
 
-const SEVERITY_NUMERIC: Record<string, number> = {
-  low: 1,
-  medium: 2,
-  high: 3,
-  critical: 4,
-};
-
+const SEVERITY_NUMERIC: Record<string, number> = { low: 1, medium: 2, high: 3, critical: 4 };
 function severityToNumber(severity: string): number {
   return SEVERITY_NUMERIC[severity] || 1;
 }
@@ -212,7 +134,40 @@ const LIGHTING_CONDITIONS = [
   { value: 'dark', label: 'Very Dark/No Light' },
 ];
 
-export const NearMissReporting: React.FC = () => {
+// One colour dimension = severity.
+function sevTone(severity: string): Tone {
+  return severity === 'critical' ? 'red' : severity === 'high' ? 'orange' : severity === 'medium' ? 'amber' : 'blue';
+}
+const SEV_CLASS: Record<string, string> = {
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+};
+
+function SevPill({ severity }: { severity: string }) {
+  return (
+    <span className={cn('inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap', SEV_CLASS[sevTone(severity)])}>
+      {(severity || '—').toUpperCase()}
+    </span>
+  );
+}
+
+function CollapsibleSection({ title, open, onOpenChange, children }: { title: string; open: boolean; onOpenChange: (o: boolean) => void; children: React.ReactNode }) {
+  return (
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <Collapsible open={open} onOpenChange={onOpenChange}>
+        <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
+          <Eyebrow>{title}</Eyebrow>
+          <span className={cn('text-white/40 text-[13px] transition-transform duration-200', open && 'rotate-180')} aria-hidden>⌄</span>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="px-5 pb-5 pt-1 space-y-4">{children}</CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}
+
+export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [showForm, setShowForm] = useState(false);
@@ -222,7 +177,7 @@ export const NearMissReporting: React.FC = () => {
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
+  const [, setLastSubmittedReport] = useState<NearMissReport | null>(null);
   const [selectedReport, setSelectedReport] = useState<NearMissReport | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -230,24 +185,27 @@ export const NearMissReporting: React.FC = () => {
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Reporter signature state
-  const [reporterSigName, setReporterSigName] = useState('');
-  const [reporterSigDate, setReporterSigDate] = useState('');
-  const [reporterSigDataUrl, setReporterSigDataUrl] = useState('');
-
-  // Template state
+  const [reporterSig, setReporterSig] = useState('');
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+  const [peopleOpen, setPeopleOpen] = useState(false);
+  const [environmentOpen, setEnvironmentOpen] = useState(false);
+  const [investigationOpen, setInvestigationOpen] = useState(false);
+
+  const now = new Date();
+  const [formData, setFormData] = useState<FormData>({
+    category: '', severity: '', description: '', location: '',
+    incident_date: now.toISOString().split('T')[0], incident_time: now.toTimeString().slice(0, 5),
+    reporter_name: '', potential_consequences: '', immediate_actions: '', preventive_measures: '',
+    witnesses: [], third_party_involved: false, third_party_details: '', weather_conditions: '',
+    lighting_conditions: '', equipment_involved: '', equipment_faulty: false, equipment_fault_details: '',
+    supervisor_notified: false, supervisor_name: '', previous_similar_incidents: '', likelihood: 0,
+  });
 
   const getTemplateData = () => ({
-    category: formData.category,
-    severity: formData.severity,
-    potential_consequences: formData.potential_consequences,
-    immediate_actions: formData.immediate_actions,
-    preventive_measures: formData.preventive_measures,
-    weather_conditions: formData.weather_conditions,
-    lighting_conditions: formData.lighting_conditions,
-    likelihood: formData.likelihood,
+    category: formData.category, severity: formData.severity, potential_consequences: formData.potential_consequences,
+    immediate_actions: formData.immediate_actions, preventive_measures: formData.preventive_measures,
+    weather_conditions: formData.weather_conditions, lighting_conditions: formData.lighting_conditions, likelihood: formData.likelihood,
   });
 
   const handleLoadTemplate = (data: Record<string, unknown>) => {
@@ -256,9 +214,7 @@ export const NearMissReporting: React.FC = () => {
       ...(data.category && { category: data.category as string }),
       ...(data.severity && { severity: data.severity as string }),
       ...(data.description && { description: data.description as string }),
-      ...(data.potential_consequences && {
-        potential_consequences: data.potential_consequences as string,
-      }),
+      ...(data.potential_consequences && { potential_consequences: data.potential_consequences as string }),
       ...(data.immediate_actions && { immediate_actions: data.immediate_actions as string }),
       ...(data.preventive_measures && { preventive_measures: data.preventive_measures as string }),
       ...(data.weather_conditions && { weather_conditions: data.weather_conditions as string }),
@@ -267,45 +223,10 @@ export const NearMissReporting: React.FC = () => {
     }));
   };
 
-  // Collapsible section states
-  const [peopleOpen, setPeopleOpen] = useState(false);
-  const [environmentOpen, setEnvironmentOpen] = useState(false);
-  const [investigationOpen, setInvestigationOpen] = useState(false);
-
-  const now = new Date();
-  const [formData, setFormData] = useState<FormData>({
-    category: '',
-    severity: '',
-    description: '',
-    location: '',
-    incident_date: now.toISOString().split('T')[0],
-    incident_time: now.toTimeString().slice(0, 5),
-    reporter_name: '',
-    potential_consequences: '',
-    immediate_actions: '',
-    preventive_measures: '',
-    witnesses: [],
-    third_party_involved: false,
-    third_party_details: '',
-    weather_conditions: '',
-    lighting_conditions: '',
-    equipment_involved: '',
-    equipment_faulty: false,
-    equipment_fault_details: '',
-    supervisor_notified: false,
-    supervisor_name: '',
-    previous_similar_incidents: '',
-    likelihood: 0,
-  });
-
   useEffect(() => {
     const loadProfile = async () => {
       if (!user) return;
-      const { data } = await supabase
-        .from('profiles')
-        .select('full_name')
-        .eq('id', user.id)
-        .single();
+      const { data } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
       if (data?.full_name) setFormData((prev) => ({ ...prev, reporter_name: data.full_name }));
     };
     loadProfile();
@@ -327,7 +248,7 @@ export const NearMissReporting: React.FC = () => {
     loadReports();
   }, [user]);
 
-  // Check for escalation from Safety Observations
+  // Escalation from Safety Observations
   useEffect(() => {
     const escalation = storageGetSync('escalate-to-near-miss');
     if (escalation) {
@@ -337,9 +258,7 @@ export const NearMissReporting: React.FC = () => {
           ...prev,
           category: data.category || prev.category,
           severity: data.severity || prev.severity,
-          description: data.description
-            ? `[Escalated from Observation] ${data.description}`
-            : prev.description,
+          description: data.description ? `[Escalated from Observation] ${data.description}` : prev.description,
           location: data.location || prev.location,
         }));
         setShowForm(true);
@@ -351,30 +270,14 @@ export const NearMissReporting: React.FC = () => {
   }, []);
 
   const resetForm = () => {
-    const now = new Date();
+    const n = new Date();
     setFormData({
-      category: '',
-      severity: '',
-      description: '',
-      location: '',
-      incident_date: now.toISOString().split('T')[0],
-      incident_time: now.toTimeString().slice(0, 5),
-      reporter_name: formData.reporter_name,
-      potential_consequences: '',
-      immediate_actions: '',
-      preventive_measures: '',
-      witnesses: [],
-      third_party_involved: false,
-      third_party_details: '',
-      weather_conditions: '',
-      lighting_conditions: '',
-      equipment_involved: '',
-      equipment_faulty: false,
-      equipment_fault_details: '',
-      supervisor_notified: false,
-      supervisor_name: '',
-      previous_similar_incidents: '',
-      likelihood: 0,
+      category: '', severity: '', description: '', location: '',
+      incident_date: n.toISOString().split('T')[0], incident_time: n.toTimeString().slice(0, 5),
+      reporter_name: formData.reporter_name, potential_consequences: '', immediate_actions: '', preventive_measures: '',
+      witnesses: [], third_party_involved: false, third_party_details: '', weather_conditions: '',
+      lighting_conditions: '', equipment_involved: '', equipment_faulty: false, equipment_fault_details: '',
+      supervisor_notified: false, supervisor_name: '', previous_similar_incidents: '', likelihood: 0,
     });
     setPhotoUrls([]);
     setErrors({});
@@ -382,18 +285,10 @@ export const NearMissReporting: React.FC = () => {
     setPeopleOpen(false);
     setEnvironmentOpen(false);
     setInvestigationOpen(false);
-    setReporterSigName('');
-    setReporterSigDate('');
-    setReporterSigDataUrl('');
+    setReporterSig('');
   };
 
-  // Draft persistence
-  const {
-    status: draftStatus,
-    recoveredData: recoveredDraft,
-    clearDraft,
-    dismissRecovery: dismissDraft,
-  } = useLocalDraft({
+  const { status: draftStatus, recoveredData: recoveredDraft, clearDraft, dismissRecovery: dismissDraft } = useLocalDraft({
     key: 'near-miss-report',
     data: formData,
     enabled: showForm,
@@ -407,29 +302,23 @@ export const NearMissReporting: React.FC = () => {
 
   const applyTemplate = (template: (typeof QUICK_TEMPLATES)[0]) => {
     setSelectedTemplate(template.id);
-    setFormData((prev) => ({
-      ...prev,
-      category: template.category,
-      severity: template.severity,
-      description: template.description,
-    }));
+    setFormData((prev) => ({ ...prev, category: template.category, severity: template.severity, description: template.description }));
     setErrors({});
   };
 
-  const addWitness = () => {
-    setFormData((prev) => ({ ...prev, witnesses: [...prev.witnesses, { name: '', contact: '' }] }));
-  };
+  const addWitness = () => setFormData((prev) => ({ ...prev, witnesses: [...prev.witnesses, { name: '', contact: '' }] }));
+  const updateWitness = (index: number, field: 'name' | 'contact', value: string) =>
+    setFormData((prev) => ({ ...prev, witnesses: prev.witnesses.map((w, i) => (i === index ? { ...w, [field]: value } : w)) }));
+  const removeWitness = (index: number) => setFormData((prev) => ({ ...prev, witnesses: prev.witnesses.filter((_, i) => i !== index) }));
 
-  const updateWitness = (index: number, field: 'name' | 'contact', value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      witnesses: prev.witnesses.map((w, i) => (i === index ? { ...w, [field]: value } : w)),
-    }));
-  };
-
-  const removeWitness = (index: number) => {
-    setFormData((prev) => ({ ...prev, witnesses: prev.witnesses.filter((_, i) => i !== index) }));
-  };
+  const readiness = [
+    { ok: !!formData.incident_date && !!formData.incident_time, label: 'Date and time' },
+    { ok: !!formData.location.trim(), label: 'Location' },
+    { ok: !!formData.category, label: 'Hazard category' },
+    { ok: !!formData.severity, label: 'Severity rated' },
+    { ok: formData.description.trim().length >= 20, label: 'Description (at least 20 characters)' },
+  ];
+  const formReady = readiness.every((r) => r.ok);
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -441,20 +330,12 @@ export const NearMissReporting: React.FC = () => {
     if (!formData.description.trim() || formData.description.trim().length < 20)
       newErrors.description = 'Description required (at least 20 characters)';
     setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) {
-      const el = document.getElementById(`field-${Object.keys(newErrors)[0]}`);
-      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
     return Object.keys(newErrors).length === 0;
   };
 
   const submitReport = async () => {
     if (!validateForm()) {
-      toast({
-        title: 'Missing required fields',
-        description: 'Please fill in all highlighted fields',
-        variant: 'destructive',
-      });
+      toast({ title: 'Missing required fields', description: 'Please complete the highlighted fields', variant: 'destructive' });
       return;
     }
     if (!user) {
@@ -463,9 +344,7 @@ export const NearMissReporting: React.FC = () => {
     }
     setIsSubmitting(true);
     try {
-      // Filter out empty witnesses
       const validWitnesses = formData.witnesses.filter((w) => w.name.trim());
-
       const insertData = {
         user_id: user.id,
         category: formData.category,
@@ -492,18 +371,11 @@ export const NearMissReporting: React.FC = () => {
         supervisor_name: formData.supervisor_name || null,
         previous_similar_incidents: formData.previous_similar_incidents || null,
         photos: photoUrls.length > 0 ? photoUrls : null,
-        reporter_signature: reporterSigDataUrl || null,
+        reporter_signature: reporterSig || null,
         likelihood: formData.likelihood > 0 ? formData.likelihood : null,
-        risk_rating:
-          formData.likelihood > 0 && formData.severity
-            ? formData.likelihood * severityToNumber(formData.severity)
-            : null,
+        risk_rating: formData.likelihood > 0 && formData.severity ? formData.likelihood * severityToNumber(formData.severity) : null,
       };
-      const { data, error } = await supabase
-        .from('near_miss_reports')
-        .insert(insertData as Record<string, unknown>)
-        .select()
-        .single();
+      const { data, error } = await supabase.from('near_miss_reports').insert(insertData as Record<string, unknown>).select().single();
       if (error) throw error;
       setLastSubmittedReport(data as unknown as NearMissReport);
       setReports((prev) => [data as unknown as NearMissReport, ...prev]);
@@ -511,10 +383,7 @@ export const NearMissReporting: React.FC = () => {
       resetForm();
       setShowForm(false);
       setShowSuccessDialog(true);
-      toast({
-        title: 'Report submitted',
-        description: 'Near miss report has been recorded successfully',
-      });
+      toast({ title: 'Report submitted', description: 'Near miss report recorded successfully' });
     } catch (error) {
       console.error('Error:', error);
       toast({ title: 'Error', description: 'Failed to submit report', variant: 'destructive' });
@@ -523,18 +392,7 @@ export const NearMissReporting: React.FC = () => {
     }
   };
 
-  const getSeverityBadge = (severity: string) => {
-    const sev = SEVERITIES.find((s) => s.value === severity);
-    return sev ? (
-      <Badge className={`${sev.colour} border`}>{sev.label}</Badge>
-    ) : (
-      <Badge variant="secondary">{severity}</Badge>
-    );
-  };
-  const getSeverityBorder = (severity: string) =>
-    SEVERITIES.find((s) => s.value === severity)?.border || 'border-l-muted';
-  const getCategoryLabel = (value: string) =>
-    CATEGORIES.find((c) => c.value === value)?.label || value;
+  const getCategoryLabel = (value: string) => CATEGORIES.find((c) => c.value === value)?.label || value;
 
   const filteredReports = useMemo(() => {
     return reports.filter((report) => {
@@ -548,44 +406,32 @@ export const NearMissReporting: React.FC = () => {
     });
   }, [reports, searchQuery, severityFilter]);
 
-  const {
-    visible: visibleReports,
-    hasMore: hasMoreReports,
-    remaining: remainingReports,
-    loadMore: loadMoreReports,
-  } = useShowMore(filteredReports);
+  const { visible: visibleReports, hasMore: hasMoreReports, remaining: remainingReports, loadMore: loadMoreReports } = useShowMore(filteredReports);
 
-  const severityFilterTabs = useMemo(() => {
-    return [
-      { key: 'all', label: 'All', count: reports.length },
-      { key: 'low', label: 'Minor', count: reports.filter((r) => r.severity === 'low').length },
-      {
-        key: 'medium',
-        label: 'Moderate',
-        count: reports.filter((r) => r.severity === 'medium').length,
-      },
-      { key: 'high', label: 'Major', count: reports.filter((r) => r.severity === 'high').length },
-      {
-        key: 'critical',
-        label: 'Critical',
-        count: reports.filter((r) => r.severity === 'critical').length,
-      },
-    ];
-  }, [reports]);
+  const severityFilterTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: reports.length },
+      { value: 'low', label: 'Minor', count: reports.filter((r) => r.severity === 'low').length },
+      { value: 'medium', label: 'Moderate', count: reports.filter((r) => r.severity === 'medium').length },
+      { value: 'high', label: 'Major', count: reports.filter((r) => r.severity === 'high').length },
+      { value: 'critical', label: 'Critical', count: reports.filter((r) => r.severity === 'critical').length },
+    ],
+    [reports]
+  );
 
   const handleDeleteReport = async (reportId: string) => {
     try {
       const { error } = await supabase.from('near_miss_reports').delete().eq('id', reportId);
       if (error) throw error;
       setReports((prev) => prev.filter((r) => r.id !== reportId));
-      toast({ title: 'Report deleted', description: 'Near miss report has been removed' });
+      toast({ title: 'Report deleted', description: 'Near miss report removed' });
     } catch (err) {
       console.error('Delete error:', err);
       toast({ title: 'Error', description: 'Could not delete report', variant: 'destructive' });
     }
   };
 
-  // Show detail view if a report is selected
+  // ─── Detail ───
   if (selectedReport) {
     return (
       <NearMissReportDetail
@@ -599,809 +445,384 @@ export const NearMissReporting: React.FC = () => {
     );
   }
 
-  if (!showForm) {
+  // ─── Form ───
+  if (showForm) {
     return (
-      <div className="space-y-4">
-        <div className="space-y-4">
-          {/* Hero Card */}
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-red-500/[0.08] via-background to-background">
-            <div className="h-0.5 bg-gradient-to-r from-red-500 via-amber-400 to-red-500" />
-            <div className="p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2.5 rounded-xl bg-red-500/15 border border-red-500/25">
-                  <AlertTriangle className="h-5 w-5 text-red-400" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-white">Near Miss Reports</h2>
-                  <p className="text-xs text-white">Record and track safety incidents</p>
-                </div>
-              </div>
-
-              {/* Stats */}
-              {reports.length > 0 && (
-                <div className="grid grid-cols-4 gap-2 mb-3">
-                  {[
-                    {
-                      label: 'Total',
-                      value: reports.length,
-                      bg: 'from-white/[0.06] to-white/[0.02]',
-                      text: 'text-white',
-                      border: 'border-white/10',
-                    },
-                    {
-                      label: 'Critical',
-                      value: reports.filter(
-                        (r) => r.severity === 'critical' || r.severity === 'high'
-                      ).length,
-                      bg: 'from-red-500/20 to-red-500/5',
-                      text: 'text-red-400',
-                      border: 'border-red-500/20',
-                    },
-                    {
-                      label: 'Open',
-                      value: reports.filter(
-                        (r) => !r.status || r.status === 'open' || r.status === 'in_progress'
-                      ).length,
-                      bg: 'from-amber-500/20 to-amber-500/5',
-                      text: 'text-amber-400',
-                      border: 'border-amber-500/20',
-                    },
-                    {
-                      label: 'Closed',
-                      value: reports.filter((r) => r.status === 'closed').length,
-                      bg: 'from-emerald-500/20 to-emerald-500/5',
-                      text: 'text-emerald-400',
-                      border: 'border-emerald-500/20',
-                    },
-                  ].map((s) => (
-                    <div
-                      key={s.label}
-                      className={`p-2 rounded-xl bg-gradient-to-br ${s.bg} border ${s.border} text-center`}
-                    >
-                      <div className={`text-lg font-bold ${s.text}`}>{s.value}</div>
-                      <div className="text-[9px] text-white uppercase tracking-wide">{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <button
-                onClick={() => setShowForm(true)}
-                className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-elec-yellow text-black font-bold text-sm shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98] transition-all"
-              >
-                <Plus className="h-5 w-5" />
-                Report Near Miss
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {reports.length > 0 && (
-          <div className="space-y-3">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <Input
-                placeholder="Search reports..."
-                className="pl-8 pr-8 h-11 bg-white/5 border border-white/10 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-xl"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && (
-                <button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full touch-manipulation"
-                  onClick={() => setSearchQuery('')}
-                >
-                  <X className="h-3.5 w-3.5 text-white" />
-                </button>
-              )}
-            </div>
-            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
-              {severityFilterTabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setSeverityFilter(tab.key)}
-                  className={`h-9 px-3 rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-all ${
-                    severityFilter === tab.key
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-white/5 text-white border border-white/10'
-                  }`}
-                >
-                  {tab.label} ({tab.count})
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {loadingReports ? (
-          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-            <CardContent className="py-16">
-              <div className="flex flex-col items-center justify-center gap-4">
-                <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-                </div>
-                <p className="text-sm text-white">Loading reports...</p>
-              </div>
-            </CardContent>
-          </Card>
-        ) : reports.length === 0 ? (
-          <Card className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl">
-            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 mb-4">
-                <AlertTriangle className="h-10 w-10 text-red-400" />
-              </div>
-              <h3 className="text-lg font-medium text-white mb-2">No reports yet</h3>
-              <p className="text-sm text-white mb-6 max-w-[280px]">
-                Recording near misses helps prevent future accidents and keeps everyone safe.
-              </p>
-              <Button
-                onClick={() => setShowForm(true)}
-                className="h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Submit your first report
-              </Button>
-            </CardContent>
-          </Card>
-        ) : filteredReports.length === 0 ? (
-          <div className="py-12 text-center">
-            <Search className="h-8 w-8 text-white mx-auto mb-3" />
-            <p className="text-sm font-medium text-white">No matching reports</p>
-            <p className="text-xs text-white mt-1">Try adjusting your search or filters</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {visibleReports.map((report, idx) => (
-              <SafetyRecordCard
-                key={report.id}
-                id={report.id}
-                title={report.description?.substring(0, 60) || 'Near Miss'}
-                subtitle={getCategoryLabel(report.category)}
-                status={report.severity}
-                statusLabel={(report.severity || 'Unknown').toUpperCase()}
-                regulation="MHSWR 1999"
-                icon={AlertTriangle}
-                meta={[
-                  { icon: MapPin, label: report.location },
-                  { icon: Clock, label: fmtCardDate(report.incident_date) },
-                  ...(report.status && report.status !== 'open'
-                    ? [{ label: report.status === 'closed' ? 'Closed' : 'In Progress' }]
-                    : []),
-                ]}
-                actions={[
-                  {
-                    label: 'Delete',
-                    icon: Trash2,
-                    onClick: () => setDeleteTarget(report.id),
-                    variant: 'danger' as const,
-                  },
-                ]}
-                onTap={() => setSelectedReport(report)}
-                pdfType="near-miss"
-                index={idx}
-              />
-            ))}
-            {hasMoreReports && (
-              <LoadMoreButton onLoadMore={loadMoreReports} remaining={remainingReports} />
-            )}
-          </div>
-        )}
-
-        <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-          <DialogContent className="sm:max-w-[360px]">
-            <DialogHeader className="text-center pb-2">
-              <div className="mx-auto w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-3">
-                <CheckCircle2 className="h-8 w-8 text-green-500" />
-              </div>
-              <DialogTitle className="text-xl text-foreground">Report Submitted</DialogTitle>
-              <DialogDescription className="text-base">
-                Your near miss has been recorded successfully.
-              </DialogDescription>
-            </DialogHeader>
-            <Button onClick={() => setShowSuccessDialog(false)} className="w-full h-12 mt-2">
-              Done
-            </Button>
-          </DialogContent>
-        </Dialog>
-
-        <DeleteConfirmSheet
-          open={!!deleteTarget}
-          onOpenChange={(open) => {
-            if (!open) setDeleteTarget(null);
-          }}
-          onConfirm={async () => {
-            if (!deleteTarget) return;
-            setIsDeleting(true);
-            await handleDeleteReport(deleteTarget);
-            setIsDeleting(false);
-            setDeleteTarget(null);
-          }}
-          title="Delete Near Miss Report?"
-          description="This report will be permanently removed"
-          isDeleting={isDeleting}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => {
+      <div className="bg-elec-dark min-h-screen pb-28">
+        <SafetyMasthead
+          onBack={() => {
             resetForm();
             setShowForm(false);
           }}
-          className="bg-white/5 hover:bg-white/10 text-white"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <h2 className="text-xl font-semibold text-white">Report Near Miss</h2>
-            <DraftSaveIndicator status={draftStatus} />
-          </div>
-          <p className="text-sm text-white">Fields with * are required</p>
-        </div>
-      </div>
+          backLabel="Reports"
+          moduleName="Report near miss"
+          trailing={<DraftSaveIndicator status={draftStatus} />}
+        />
+        <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
+          <AnimatePresence>
+            {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+          </AnimatePresence>
 
-      <AnimatePresence>
-        {recoveredDraft && (
-          <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-        )}
-      </AnimatePresence>
-
-      {/* Load from Template */}
-      <button
-        type="button"
-        onClick={() => setShowLoadTemplate(true)}
-        className="w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-      >
-        Load from Template
-      </button>
-
-      <div className="space-y-3">
-        <Label className="text-sm text-white">Quick templates</Label>
-        <div className="grid grid-cols-2 gap-2">
-          {QUICK_TEMPLATES.map((t) => (
+          {/* Quick templates */}
+          <div>
+            <Eyebrow className="mb-2">Quick start</Eyebrow>
+            <div className="grid grid-cols-2 gap-2">
+              {QUICK_TEMPLATES.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => applyTemplate(t)}
+                  className={cn(
+                    'p-3 rounded-xl border text-left text-[13px] font-medium touch-manipulation active:scale-[0.98] transition-all',
+                    selectedTemplate === t.id ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow' : 'border-white/[0.08] bg-[hsl(0_0%_12%)] text-white'
+                  )}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
             <button
-              key={t.id}
-              onClick={() => applyTemplate(t)}
-              className={`flex items-center gap-3 p-3 rounded-xl border transition-all text-left active:scale-[0.98] ${
-                selectedTemplate === t.id
-                  ? 'border-elec-yellow bg-elec-yellow/10 ring-1 ring-elec-yellow/30'
-                  : 'border-white/10 bg-[#1a1a1a] hover:border-white/20'
-              }`}
+              type="button"
+              onClick={() => setShowLoadTemplate(true)}
+              className="mt-2 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow touch-manipulation"
             >
-              <t.icon
-                className={`h-5 w-5 ${selectedTemplate === t.id ? 'text-elec-yellow' : 'text-elec-yellow'}`}
-              />
-              <span className="text-sm font-medium text-white">{t.label}</span>
+              Load from a saved template →
             </button>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-        <CardContent className="p-4 space-y-6">
-          {/* When & Where Section */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-              <Clock className="h-4 w-4 text-elec-yellow" />
-              When & Where
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div id="field-incident_date" className="space-y-2">
-                <Label className="text-white">
-                  Date <span className="text-red-400">*</span>
-                </Label>
-                <Input
+          {/* When & where */}
+          <FormCard eyebrow="When & where">
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Date" required>
+                <input
                   type="date"
                   value={formData.incident_date}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, incident_date: e.target.value }))
-                  }
-                  className={`h-11 text-base touch-manipulation bg-elec-dark/50 border-white/30 text-white [color-scheme:dark] ${errors.incident_date ? 'border-red-500' : ''}`}
+                  onChange={(e) => setFormData((p) => ({ ...p, incident_date: e.target.value }))}
+                  className={cn(inputClass, '[color-scheme:dark]', errors.incident_date && 'border-red-500/60')}
                 />
-                {errors.incident_date && (
-                  <p className="text-xs text-red-400">{errors.incident_date}</p>
-                )}
-              </div>
-              <div id="field-incident_time" className="space-y-2">
-                <Label className="text-white">
-                  Time <span className="text-red-400">*</span>
-                </Label>
-                <Input
+              </Field>
+              <Field label="Time" required>
+                <input
                   type="time"
                   value={formData.incident_time}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, incident_time: e.target.value }))
-                  }
-                  className={`h-11 text-base touch-manipulation bg-elec-dark/50 border-white/30 text-white [color-scheme:dark] ${errors.incident_time ? 'border-red-500' : ''}`}
+                  onChange={(e) => setFormData((p) => ({ ...p, incident_time: e.target.value }))}
+                  className={cn(inputClass, '[color-scheme:dark]', errors.incident_time && 'border-red-500/60')}
                 />
-                {errors.incident_time && (
-                  <p className="text-xs text-red-400">{errors.incident_time}</p>
-                )}
-              </div>
+              </Field>
             </div>
-            <div id="field-location" className="space-y-2">
-              <LocationAutoFill
-                value={formData.location}
-                onChange={(v) => setFormData((prev) => ({ ...prev, location: v }))}
-                label="Location"
-                placeholder="Where did it happen?"
-              />
-              {errors.location && <p className="text-xs text-red-400">{errors.location}</p>}
-            </div>
-          </div>
+            <LocationAutoFill
+              value={formData.location}
+              onChange={(v) => setFormData((p) => ({ ...p, location: v }))}
+              label="Location"
+              placeholder="Where did it happen?"
+            />
+          </FormCard>
 
-          {/* What Happened Section */}
-          <div className="space-y-4 pt-4 border-t border-white/10">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              What Happened
-            </h3>
-            <div id="field-category" className="space-y-2">
-              <Label className="text-white">
-                Category <span className="text-red-400">*</span>
-              </Label>
-              <Select
-                value={formData.category}
-                onValueChange={(v) => setFormData((prev) => ({ ...prev, category: v }))}
-              >
-                <SelectTrigger
-                  className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white ${errors.category ? 'border-red-500' : ''}`}
-                >
+          {/* What happened */}
+          <FormCard eyebrow="What happened">
+            <Field label="Category" required>
+              <Select value={formData.category} onValueChange={(v) => setFormData((p) => ({ ...p, category: v }))}>
+                <SelectTrigger className={cn(selectTriggerClass, errors.category && 'border-red-500/60')}>
                   <SelectValue placeholder="Select hazard type" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#1a1a1a] border-white/10">
+                <SelectContent className={selectContentClass}>
                   {CATEGORIES.map((c) => (
-                    <SelectItem key={c.value} value={c.value} className="text-white">
-                      {c.label}
-                    </SelectItem>
+                    <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {errors.category && <p className="text-xs text-red-400">{errors.category}</p>}
-            </div>
-            <div id="field-severity" className="space-y-2">
-              <Label className="text-white">
-                Severity <span className="text-red-400">*</span>
-              </Label>
-              <div className="grid grid-cols-2 gap-2">
-                {SEVERITIES.map((s) => (
-                  <button
-                    key={s.value}
-                    type="button"
-                    onClick={() => setFormData((prev) => ({ ...prev, severity: s.value }))}
-                    className={`p-3 rounded-xl border text-left transition-all active:scale-[0.98] ${formData.severity === s.value ? `${s.colour} border-2` : 'border-white/10 bg-[#1a1a1a] hover:border-white/20'}`}
-                  >
-                    <span className="font-medium text-sm text-white">{s.label}</span>
-                    <p className="text-xs text-white mt-0.5">{s.description}</p>
-                  </button>
-                ))}
-              </div>
-              {errors.severity && <p className="text-xs text-red-400">{errors.severity}</p>}
-            </div>
+            </Field>
 
-            {/* Likelihood */}
-            <div className="space-y-2">
-              <Label className="text-white">Likelihood</Label>
+            <Field label="Severity" required>
+              <div className="grid grid-cols-2 gap-2">
+                {SEVERITIES.map((s) => {
+                  const selected = formData.severity === s.value;
+                  return (
+                    <button
+                      key={s.value}
+                      type="button"
+                      onClick={() => setFormData((p) => ({ ...p, severity: s.value }))}
+                      className={cn(
+                        'p-3 rounded-xl border text-left transition-all active:scale-[0.98]',
+                        selected ? SEV_CLASS[sevTone(s.value)] : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                      )}
+                    >
+                      <span className="text-[13px] font-medium block">{s.label}</span>
+                      <span className="text-[11px] text-white/55">{s.description}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </Field>
+
+            <Field label="Likelihood">
               <div className="flex gap-1.5">
                 {LIKELIHOOD_LEVELS.map((l) => (
                   <button
                     key={l.value}
                     type="button"
-                    onClick={() => setFormData((prev) => ({ ...prev, likelihood: l.value }))}
-                    className={`flex-1 h-11 rounded-xl border text-center touch-manipulation active:scale-[0.97] transition-all ${
-                      formData.likelihood === l.value
-                        ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
-                        : 'bg-[#1a1a1a] text-white border-white/10'
-                    }`}
+                    onClick={() => setFormData((p) => ({ ...p, likelihood: l.value }))}
+                    className={cn(
+                      'flex-1 h-11 rounded-xl border text-[13px] font-medium touch-manipulation active:scale-[0.97] transition-all',
+                      formData.likelihood === l.value ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                    )}
                   >
-                    <span className="text-sm font-medium">{l.value}</span>
+                    {l.value}
                   </button>
                 ))}
               </div>
               {formData.likelihood > 0 && (
-                <p className="text-xs text-white">
-                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.label} —{' '}
-                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.description}
+                <p className="text-[11px] text-white/55 mt-1.5">
+                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.label} — {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.description}
                 </p>
               )}
-            </div>
+            </Field>
 
-            {/* Risk Matrix */}
             {formData.severity && formData.likelihood > 0 && (
-              <RiskMatrix
-                selectedLikelihood={formData.likelihood}
-                selectedSeverity={severityToNumber(formData.severity)}
-              />
+              <RiskMatrix selectedLikelihood={formData.likelihood} selectedSeverity={severityToNumber(formData.severity)} />
             )}
 
-            <div id="field-description" className="space-y-2">
-              <Label className="text-white">
-                Description <span className="text-red-400">*</span>
-              </Label>
+            <Field label="Description" required>
               <SmartTextarea
-                placeholder="Describe what happened..."
+                placeholder="Describe what happened…"
                 value={formData.description}
-                onChange={(val) => setFormData((prev) => ({ ...prev, description: val }))}
-                className={`min-h-[120px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white ${errors.description ? 'border-red-500' : ''}`}
+                onChange={(val) => setFormData((p) => ({ ...p, description: val }))}
+                className={cn('min-h-[120px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl', errors.description && 'border-red-500/60')}
               />
-              <div className="flex justify-between">
-                {errors.description ? (
-                  <p className="text-xs text-red-400">{errors.description}</p>
-                ) : (
-                  <span />
-                )}
-                <span className="text-xs text-white">{formData.description.length} chars</span>
-              </div>
-            </div>
-          </div>
+              <p className="text-[11px] text-white/45 text-right mt-1">{formData.description.length} chars</p>
+            </Field>
+          </FormCard>
 
-          {/* Actions (Optional) Section */}
-          <div className="space-y-4 pt-4 border-t border-white/10">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-              <Shield className="h-4 w-4 text-elec-yellow" />
-              Actions (Optional)
-            </h3>
-            <div className="space-y-2">
-              <Label className="text-white">Potential Consequences</Label>
-              <SmartTextarea
-                placeholder="What could have happened?"
-                value={formData.potential_consequences}
-                onChange={(val) =>
-                  setFormData((prev) => ({ ...prev, potential_consequences: val }))
-                }
-                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-white">Immediate Actions</Label>
-              <SmartTextarea
-                placeholder="What did you do?"
-                value={formData.immediate_actions}
-                onChange={(val) => setFormData((prev) => ({ ...prev, immediate_actions: val }))}
-                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-white">Preventive Measures</Label>
-              <SmartTextarea
-                placeholder="How to prevent this?"
-                value={formData.preventive_measures}
-                onChange={(val) => setFormData((prev) => ({ ...prev, preventive_measures: val }))}
-                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-              />
-            </div>
-          </div>
+          {/* Actions */}
+          <FormCard eyebrow="Actions (optional)">
+            <Field label="Potential consequences">
+              <SmartTextarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(val) => setFormData((p) => ({ ...p, potential_consequences: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+            </Field>
+            <Field label="Immediate actions">
+              <SmartTextarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(val) => setFormData((p) => ({ ...p, immediate_actions: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+            </Field>
+            <Field label="Preventive measures">
+              <SmartTextarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(val) => setFormData((p) => ({ ...p, preventive_measures: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+            </Field>
+          </FormCard>
 
-          {/* People Involved (Optional) - Collapsible */}
-          <Collapsible
-            open={peopleOpen}
-            onOpenChange={setPeopleOpen}
-            className="pt-4 border-t border-white/10"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation active:scale-[0.98]">
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-                <Users className="h-4 w-4 text-elec-yellow" />
-                People Involved (Optional)
-              </h3>
-              {peopleOpen ? (
-                <ChevronUp className="h-5 w-5 text-white" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-white" />
-              )}
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-4 pt-4">
-              {/* Witnesses */}
-              <div className="space-y-3">
-                <Label className="text-white">Witnesses</Label>
+          {/* People */}
+          <CollapsibleSection title="People involved (optional)" open={peopleOpen} onOpenChange={setPeopleOpen}>
+            <Field label="Witnesses">
+              <div className="space-y-2">
                 {formData.witnesses.map((witness, index) => (
                   <div key={index} className="flex gap-2 items-start">
                     <div className="flex-1 space-y-2">
-                      <Input
-                        placeholder="Name"
-                        value={witness.name}
-                        onChange={(e) => updateWitness(index, 'name', e.target.value)}
-                        className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-                      />
-                      <Input
-                        placeholder="Contact (optional)"
-                        value={witness.contact}
-                        onChange={(e) => updateWitness(index, 'contact', e.target.value)}
-                        className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-                      />
+                      <input placeholder="Name" value={witness.name} onChange={(e) => updateWitness(index, 'name', e.target.value)} className={inputClass} />
+                      <input placeholder="Contact (optional)" value={witness.contact} onChange={(e) => updateWitness(index, 'contact', e.target.value)} className={inputClass} />
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removeWitness(index)}
-                      className="h-14 w-14 shrink-0 hover:bg-white/5"
-                    >
-                      <Trash2 className="h-5 w-5 text-white" />
-                    </Button>
+                    <button onClick={() => removeWitness(index)} className="h-11 w-11 shrink-0 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/60 flex items-center justify-center touch-manipulation" aria-label="Remove witness">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </div>
                 ))}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={addWitness}
-                  className="w-full h-12 border-white/10 bg-[#1a1a1a] text-white hover:bg-white/5 hover:border-white/20"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Witness
-                </Button>
+                <SecondaryButton fullWidth onClick={addWitness}>+ Add witness</SecondaryButton>
               </div>
+            </Field>
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">Third party involved?</span>
+              <Switch checked={formData.third_party_involved} onCheckedChange={(c) => setFormData((p) => ({ ...p, third_party_involved: c }))} />
+            </div>
+            {formData.third_party_involved && (
+              <SmartTextarea placeholder="Details about third party…" value={formData.third_party_details} onChange={(val) => setFormData((p) => ({ ...p, third_party_details: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+            )}
+          </CollapsibleSection>
 
-              {/* Third Party */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label className="text-white">Third party involved?</Label>
-                  <Switch
-                    checked={formData.third_party_involved}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({ ...prev, third_party_involved: checked }))
-                    }
-                  />
-                </div>
-                {formData.third_party_involved && (
-                  <SmartTextarea
-                    placeholder="Details about third party..."
-                    value={formData.third_party_details}
-                    onChange={(val) =>
-                      setFormData((prev) => ({ ...prev, third_party_details: val }))
-                    }
-                    className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-                  />
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Environment & Equipment (Optional) - Collapsible */}
-          <Collapsible
-            open={environmentOpen}
-            onOpenChange={setEnvironmentOpen}
-            className="pt-4 border-t border-white/10"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation active:scale-[0.98]">
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-                <CloudSun className="h-4 w-4 text-elec-yellow" />
-                Environment & Equipment (Optional)
-              </h3>
-              {environmentOpen ? (
-                <ChevronUp className="h-5 w-5 text-white" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-white" />
-              )}
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-4 pt-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label className="text-white">Weather Conditions</Label>
-                  <Select
-                    value={formData.weather_conditions}
-                    onValueChange={(v) =>
-                      setFormData((prev) => ({ ...prev, weather_conditions: v }))
-                    }
-                  >
-                    <SelectTrigger className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white">
-                      <SelectValue placeholder="Select weather" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#1a1a1a] border-white/10">
-                      {WEATHER_CONDITIONS.map((w) => (
-                        <SelectItem key={w.value} value={w.value} className="text-white">
-                          {w.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-white">Lighting Conditions</Label>
-                  <Select
-                    value={formData.lighting_conditions}
-                    onValueChange={(v) =>
-                      setFormData((prev) => ({ ...prev, lighting_conditions: v }))
-                    }
-                  >
-                    <SelectTrigger className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white">
-                      <SelectValue placeholder="Select lighting" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#1a1a1a] border-white/10">
-                      {LIGHTING_CONDITIONS.map((l) => (
-                        <SelectItem key={l.value} value={l.value} className="text-white">
-                          {l.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-white">Equipment Involved</Label>
-                <Input
-                  placeholder="e.g. Power drill, scaffold, cable"
-                  value={formData.equipment_involved}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, equipment_involved: e.target.value }))
-                  }
-                  className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-                />
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label className="text-white">Equipment faulty?</Label>
-                  <Switch
-                    checked={formData.equipment_faulty}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({ ...prev, equipment_faulty: checked }))
-                    }
-                  />
-                </div>
-                {formData.equipment_faulty && (
-                  <SmartTextarea
-                    placeholder="Describe the fault..."
-                    value={formData.equipment_fault_details}
-                    onChange={(val) =>
-                      setFormData((prev) => ({ ...prev, equipment_fault_details: val }))
-                    }
-                    className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-                  />
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Investigation (Optional) - Collapsible */}
-          <Collapsible
-            open={investigationOpen}
-            onOpenChange={setInvestigationOpen}
-            className="pt-4 border-t border-white/10"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation active:scale-[0.98]">
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-                <UserCheck className="h-4 w-4 text-elec-yellow" />
-                Investigation (Optional)
-              </h3>
-              {investigationOpen ? (
-                <ChevronUp className="h-5 w-5 text-white" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-white" />
-              )}
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-4 pt-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label className="text-white">Supervisor notified?</Label>
-                  <Switch
-                    checked={formData.supervisor_notified}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({ ...prev, supervisor_notified: checked }))
-                    }
-                  />
-                </div>
-                {formData.supervisor_notified && (
-                  <Input
-                    placeholder="Supervisor name"
-                    value={formData.supervisor_name}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, supervisor_name: e.target.value }))
-                    }
-                    className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-                  />
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-white">Previous similar incidents?</Label>
-                <Select
-                  value={formData.previous_similar_incidents}
-                  onValueChange={(v) =>
-                    setFormData((prev) => ({ ...prev, previous_similar_incidents: v }))
-                  }
-                >
-                  <SelectTrigger className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#1a1a1a] border-white/10">
-                    <SelectItem value="yes" className="text-white">
-                      Yes
-                    </SelectItem>
-                    <SelectItem value="no" className="text-white">
-                      No
-                    </SelectItem>
-                    <SelectItem value="unknown" className="text-white">
-                      Unknown
-                    </SelectItem>
-                  </SelectContent>
+          {/* Environment */}
+          <CollapsibleSection title="Environment & equipment (optional)" open={environmentOpen} onOpenChange={setEnvironmentOpen}>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Weather">
+                <Select value={formData.weather_conditions} onValueChange={(v) => setFormData((p) => ({ ...p, weather_conditions: v }))}>
+                  <SelectTrigger className={selectTriggerClass}><SelectValue placeholder="Weather" /></SelectTrigger>
+                  <SelectContent className={selectContentClass}>{WEATHER_CONDITIONS.map((w) => <SelectItem key={w.value} value={w.value}>{w.label}</SelectItem>)}</SelectContent>
                 </Select>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+              </Field>
+              <Field label="Lighting">
+                <Select value={formData.lighting_conditions} onValueChange={(v) => setFormData((p) => ({ ...p, lighting_conditions: v }))}>
+                  <SelectTrigger className={selectTriggerClass}><SelectValue placeholder="Lighting" /></SelectTrigger>
+                  <SelectContent className={selectContentClass}>{LIGHTING_CONDITIONS.map((l) => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}</SelectContent>
+                </Select>
+              </Field>
+            </div>
+            <Field label="Equipment involved">
+              <input placeholder="e.g. Power drill, scaffold, cable" value={formData.equipment_involved} onChange={(e) => setFormData((p) => ({ ...p, equipment_involved: e.target.value }))} className={inputClass} />
+            </Field>
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">Equipment faulty?</span>
+              <Switch checked={formData.equipment_faulty} onCheckedChange={(c) => setFormData((p) => ({ ...p, equipment_faulty: c }))} />
+            </div>
+            {formData.equipment_faulty && (
+              <SmartTextarea placeholder="Describe the fault…" value={formData.equipment_fault_details} onChange={(val) => setFormData((p) => ({ ...p, equipment_fault_details: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+            )}
+          </CollapsibleSection>
 
-          {/* Photos Section */}
-          <div className="pt-4 border-t border-white/10">
-            <SafetyPhotoCapture
-              photos={photoUrls}
-              onPhotosChange={setPhotoUrls}
-              maxPhotos={5}
-              label="Evidence Photos (Optional)"
-            />
+          {/* Investigation */}
+          <CollapsibleSection title="Investigation (optional)" open={investigationOpen} onOpenChange={setInvestigationOpen}>
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">Supervisor notified?</span>
+              <Switch checked={formData.supervisor_notified} onCheckedChange={(c) => setFormData((p) => ({ ...p, supervisor_notified: c }))} />
+            </div>
+            {formData.supervisor_notified && (
+              <Field label="Supervisor name">
+                <input placeholder="Supervisor name" value={formData.supervisor_name} onChange={(e) => setFormData((p) => ({ ...p, supervisor_name: e.target.value }))} className={inputClass} />
+              </Field>
+            )}
+            <Field label="Previous similar incidents?">
+              <Select value={formData.previous_similar_incidents} onValueChange={(v) => setFormData((p) => ({ ...p, previous_similar_incidents: v }))}>
+                <SelectTrigger className={selectTriggerClass}><SelectValue placeholder="Select" /></SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="yes">Yes</SelectItem>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="unknown">Unknown</SelectItem>
+                </SelectContent>
+              </Select>
+            </Field>
+          </CollapsibleSection>
+
+          {/* Evidence + reporter */}
+          <FormCard eyebrow="Evidence & reporter">
+            <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} maxPhotos={5} label="Evidence photos (optional)" />
+            <Field label="Your name">
+              <input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData((p) => ({ ...p, reporter_name: e.target.value }))} className={inputClass} />
+            </Field>
+            <SignatureField label="Reporter signature" value={reporterSig} onChange={setReporterSig} />
+          </FormCard>
+
+          <ReadinessGate items={readiness} title="Ready to submit?" />
+        </div>
+
+        {/* Sticky submit */}
+        <div className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 space-y-2" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+          <div className="mx-auto max-w-3xl space-y-2">
+            <PrimaryButton fullWidth size="lg" disabled={!formReady || isSubmitting} onClick={submitReport}>
+              {isSubmitting ? 'Submitting…' : 'Submit report'}
+            </PrimaryButton>
+            <button type="button" onClick={() => setShowSaveTemplate(true)} className="w-full h-9 text-[12px] font-medium text-white/60 hover:text-white touch-manipulation">
+              Save as template
+            </button>
           </div>
+        </div>
 
-          {/* Reporter Name */}
-          <div className="space-y-2 pt-4 border-t border-white/10">
-            <Label className="text-white">Your Name</Label>
-            <Input
-              placeholder="Optional"
-              value={formData.reporter_name}
-              onChange={(e) => setFormData((prev) => ({ ...prev, reporter_name: e.target.value }))}
-              className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
-            />
-          </div>
-
-          {/* Reporter Signature */}
-          <div className="pt-4 border-t border-white/10">
-            <SignaturePad
-              label="Reporter Signature"
-              name={reporterSigName}
-              date={reporterSigDate}
-              signatureDataUrl={reporterSigDataUrl}
-              onSignatureChange={setReporterSigDataUrl}
-              onNameChange={setReporterSigName}
-              onDateChange={setReporterSigDate}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="sticky bottom-0 bg-[#121212]/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-white/10 space-y-2">
-        <Button
-          onClick={submitReport}
-          disabled={isSubmitting}
-          className="w-full h-14 text-base font-medium bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-[0.98]"
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-              Submitting...
-            </>
-          ) : (
-            <>
-              <CheckCircle2 className="h-5 w-5 mr-2" />
-              Submit Report
-            </>
-          )}
-        </Button>
-        <button
-          type="button"
-          onClick={() => setShowSaveTemplate(true)}
-          className="w-full h-10 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
-        >
-          Save as Template
-        </button>
+        <SaveAsTemplateSheet open={showSaveTemplate} onOpenChange={setShowSaveTemplate} moduleType="near-miss" getTemplateData={getTemplateData} />
+        <LoadTemplateSheet open={showLoadTemplate} onOpenChange={setShowLoadTemplate} moduleType="near-miss" onLoad={handleLoadTemplate} standardTemplates={NEAR_MISS_STANDARD_TEMPLATES} />
       </div>
+    );
+  }
 
-      <SaveAsTemplateSheet
-        open={showSaveTemplate}
-        onOpenChange={setShowSaveTemplate}
-        moduleType="near-miss"
-        getTemplateData={getTemplateData}
+  // ─── List ───
+  const total = reports.length;
+  const serious = reports.filter((r) => r.severity === 'high' || r.severity === 'critical').length;
+  const openCount = reports.filter((r) => !r.status || r.status === 'open' || r.status === 'in_progress').length;
+  const closedCount = reports.filter((r) => r.status === 'closed').length;
+
+  return (
+    <SafetyModuleShell
+      onBack={onBack ?? (() => {})}
+      moduleName="Near Miss"
+      hero={
+        <PageHero
+          eyebrow="Near Miss · MHSWR 1999"
+          title="Report and learn from near misses"
+          description="Capture what nearly went wrong, rate the risk, and turn it into a toolbox talk — before it becomes an accident."
+          tone="red"
+          actions={<PrimaryButton onClick={() => setShowForm(true)}>Report near miss</PrimaryButton>}
+        />
+      }
+      stats={
+        total > 0 ? (
+          <StatStrip
+            stats={[
+              { value: total, label: 'Total' },
+              { value: serious, label: 'Serious', sub: 'high / critical' },
+              { value: openCount, label: 'Open', accent: true },
+              { value: closedCount, label: 'Closed' },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        total > 0 ? (
+          <FilterBar
+            tabs={severityFilterTabs}
+            activeTab={severityFilter}
+            onTabChange={setSeverityFilter}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search reports…"
+          />
+        ) : undefined
+      }
+    >
+      {loadingReports ? (
+        <LoadingState />
+      ) : reports.length === 0 ? (
+        <EmptyState
+          title="No near misses reported yet"
+          description="Recording near misses helps prevent future accidents and keeps everyone safe. Report your first one."
+          action="Report near miss"
+          onAction={() => setShowForm(true)}
+        />
+      ) : filteredReports.length === 0 ? (
+        <EmptyState title="No matching reports" description="Try a different severity tab or clear your search." />
+      ) : (
+        <div className="space-y-2.5">
+          {visibleReports.map((report) => (
+            <SwipeableListItem
+              key={report.id}
+              rightActions={[{ icon: Trash2, label: 'Delete', color: 'bg-red-500', textColor: 'text-white', onAction: () => setDeleteTarget(report.id) }]}
+            >
+              <ListCard>
+                <ListRow
+                  accent={sevTone(report.severity)}
+                  onClick={() => setSelectedReport(report)}
+                  title={report.description?.substring(0, 60) || 'Near miss'}
+                  subtitle={`${getCategoryLabel(report.category)}${report.location ? ` · ${report.location}` : ''}`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <SevPill severity={report.severity} />
+                      <span className="text-[11px] text-white/45 tabular-nums">{fmtCardDate(report.incident_date)}</span>
+                    </div>
+                  }
+                />
+              </ListCard>
+            </SwipeableListItem>
+          ))}
+          {hasMoreReports && <LoadMoreButton onLoadMore={loadMoreReports} remaining={remainingReports} />}
+        </div>
+      )}
+
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="sm:max-w-[360px]">
+          <DialogHeader className="text-center pb-2">
+            <DialogTitle className="text-xl text-foreground">Report submitted</DialogTitle>
+            <DialogDescription className="text-base">Your near miss has been recorded successfully.</DialogDescription>
+          </DialogHeader>
+          <PrimaryButton fullWidth onClick={() => setShowSuccessDialog(false)}>Done</PrimaryButton>
+        </DialogContent>
+      </Dialog>
+
+      <DeleteConfirmSheet
+        open={!!deleteTarget}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          setIsDeleting(true);
+          await handleDeleteReport(deleteTarget);
+          setIsDeleting(false);
+          setDeleteTarget(null);
+        }}
+        title="Delete near miss report?"
+        description="This report will be permanently removed"
+        isDeleting={isDeleting}
       />
-      <LoadTemplateSheet
-        open={showLoadTemplate}
-        onOpenChange={setShowLoadTemplate}
-        moduleType="near-miss"
-        onLoad={handleLoadTemplate}
-        standardTemplates={NEAR_MISS_STANDARD_TEMPLATES}
-      />
-    </div>
+    </SafetyModuleShell>
   );
 };
+
+export default NearMissReporting;

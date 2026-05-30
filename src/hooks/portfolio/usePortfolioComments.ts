@@ -72,6 +72,11 @@ const getInitials = (name: string): string => {
  * - Action tracking (requires_action, resolved)
  * - Unread indicators
  */
+// Unique channel name per subscription — a fixed name collides when several
+// portfolio components mount this hook at once (or across remount/HMR),
+// throwing "cannot add postgres_changes callbacks after subscribe()".
+let commentsChannelSeq = 0;
+
 export function usePortfolioComments(): UsePortfolioCommentsReturn {
   const { user } = useAuth();
   const [comments, setComments] = useState<PortfolioComment[]>([]);
@@ -95,17 +100,14 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
         .or(`action_owner.eq.${user.id},author_id.eq.${user.id}`)
         .order('created_at', { ascending: true });
 
-      if (fetchError) {
-        // Table might not exist yet - use mock data for demo
-        console.warn('Portfolio comments table not found, using mock data');
-        setComments(getMockCommentsForUser(user.id));
-      } else {
-        setComments((data || []).map(mapDatabaseComment));
-      }
+      if (fetchError) throw fetchError;
+      setComments((data || []).map(mapDatabaseComment));
     } catch (err) {
-      console.error('Error fetching comments:', err);
-      // Fallback to mock data
-      setComments(getMockCommentsForUser(user.id));
+      // Never show fabricated tutor feedback — surface the error and show
+      // an empty thread instead of mock comments.
+      console.error('Error fetching portfolio comments:', err);
+      setError(err instanceof Error ? err : new Error('Failed to load comments'));
+      setComments([]);
     } finally {
       setIsLoading(false);
     }
@@ -119,7 +121,7 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
 
     // Subscribe to real-time changes
     const channel = supabase
-      .channel('portfolio-comments-changes')
+      .channel(`portfolio-comments-changes-${++commentsChannelSeq}`)
       .on(
         'postgres_changes',
         {
@@ -384,77 +386,5 @@ function mapCommentToDatabase(comment: PortfolioComment): any {
   };
 }
 
-// Mock data for demo/development
-function getMockCommentsForUser(userId: string): PortfolioComment[] {
-  return [
-    {
-      id: 'mock-comment-1',
-      contextType: 'evidence',
-      contextId: 'evidence-1',
-      authorId: 'staff-1',
-      authorName: 'Dr. Sarah Johnson',
-      authorRole: 'tutor',
-      authorInitials: 'SJ',
-      content:
-        'Great work on documenting this installation! The photos clearly show your cable management skills. Can you add a brief note about the testing you performed?',
-      mentions: [],
-      requiresAction: true,
-      actionOwner: userId,
-      isResolved: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-    },
-    {
-      id: 'mock-comment-2',
-      contextType: 'evidence',
-      contextId: 'evidence-1',
-      parentId: 'mock-comment-1',
-      authorId: userId,
-      authorName: 'Apprentice',
-      authorRole: 'student',
-      authorInitials: 'AP',
-      content:
-        "Thanks for the feedback! I've updated the description with the test results. The insulation resistance was >200MΩ on all circuits.",
-      mentions: ['staff-1'],
-      requiresAction: true,
-      actionOwner: 'staff-1',
-      isResolved: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-    },
-    {
-      id: 'mock-comment-3',
-      contextType: 'evidence',
-      contextId: 'evidence-2',
-      authorId: 'staff-2',
-      authorName: 'Mark Williams',
-      authorRole: 'assessor',
-      authorInitials: 'MW',
-      content:
-        'This evidence meets criteria PB1 and PB2. Well done! Consider adding a witness statement from your supervisor for extra verification.',
-      mentions: [],
-      requiresAction: false,
-      isResolved: true,
-      resolvedBy: 'staff-2',
-      resolvedByName: 'Mark Williams',
-      resolvedAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
-    },
-    {
-      id: 'mock-comment-4',
-      contextType: 'evidence',
-      contextId: 'evidence-3',
-      authorId: 'staff-1',
-      authorName: 'Dr. Sarah Johnson',
-      authorRole: 'tutor',
-      authorInitials: 'SJ',
-      content:
-        'Please provide more detail on the cable sizing calculations. What formula did you use and what factors did you consider?',
-      mentions: [],
-      requiresAction: true,
-      actionOwner: userId,
-      isResolved: false,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
-    },
-  ];
-}
 
 export default usePortfolioComments;

@@ -13,4 +13,5 @@ export {
 export { TestFrequencySelector, type FrequencyOption } from './TestFrequencySelector';
 export { EquipmentFormWizard } from './EquipmentFormWizard';
 export { EquipmentBarcodeScanner } from './EquipmentBarcodeScanner';
+export { EquipmentDetailView } from './EquipmentDetailView';
 export { EquipmentQRCode, buildQRValue } from './EquipmentQRCode';

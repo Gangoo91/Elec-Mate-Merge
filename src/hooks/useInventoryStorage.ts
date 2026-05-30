@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { toast } from '@/hooks/use-toast';
 import {
   InventoryItem,
@@ -57,7 +58,7 @@ export function useInventoryStorage() {
   // Realtime subscription
   useEffect(() => {
     const channel = supabase
-      .channel('personal-inventory-changes')
+      .channel(realtimeChannelName('personal-inventory-changes'))
       .on('postgres_changes', { event: '*', schema: 'public', table: TABLE }, () => {
         fetchItems();
       })

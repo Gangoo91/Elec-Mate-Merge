@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import { offlineStorage } from '@/utils/offlineStorage';
 
@@ -46,7 +47,7 @@ export const useInspectorProfiles = () => {
 
     // Set up real-time subscription
     const channel = supabase
-      .channel('inspector_profiles_changes')
+      .channel(realtimeChannelName('inspector_profiles_changes'))
       .on(
         'postgres_changes',
         {

@@ -1,27 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import { useFieldValidation } from '@/hooks/useFieldValidation';
-import { ValidatedField } from '../common/ValidatedField';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
-import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
-import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
-import {
-  ArrowLeft,
-  Plus,
-  Zap,
-  Shield,
-  ChevronRight,
-  Clock,
-  CheckCircle2,
-  AlertTriangle,
-  MapPin,
-  Timer,
-} from 'lucide-react';
-import { LoadMoreButton } from '../common/LoadMoreButton';
-import { SafetyRecordCard, fmtCardDate } from '../common/SafetyRecordCard';
-import { Calendar } from 'lucide-react';
 import { useShowMore } from '@/hooks/useShowMore';
 import {
   useSafeIsolationRecords,
@@ -31,111 +12,115 @@ import {
   getIsolationDuration,
 } from '@/hooks/useSafeIsolationRecords';
 import type { SafeIsolationRecord as SafeIsolationRecordType } from '@/hooks/useSafeIsolationRecords';
-import { SafetyEmptyState } from '../common/SafetyEmptyState';
+
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  Field,
+  SheetShell,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  inputClass,
+  type Tone,
+} from '@/components/college/primitives';
+
+import { SafetyModuleShell, SafetyMasthead } from '../common/SafetyModuleShell';
+import { SignatureField } from '../common/SignatureField';
 import { LocationAutoFill } from '../common/LocationAutoFill';
-import { SignaturePad } from '../common/SignaturePad';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
+import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
+import { LoadMoreButton } from '../common/LoadMoreButton';
 import { IsolationStepCard, type StepCompletionData } from './IsolationStepCard';
 import { IsolationSummary } from './IsolationSummary';
 
-// ─── Status Config ───
+type IsoStatus = SafeIsolationRecordType['status'];
 
-const STATUS_CONFIG: Record<
-  SafeIsolationRecordType['status'],
-  { label: string; colour: string; bg: string; icon: React.ElementType }
-> = {
-  in_progress: {
-    label: 'In Progress',
-    colour: 'text-amber-400',
-    bg: 'bg-amber-500/15',
-    icon: Clock,
-  },
-  isolated: {
-    label: 'Isolated',
-    colour: 'text-red-400',
-    bg: 'bg-red-500/15',
-    icon: Shield,
-  },
-  re_energised: {
-    label: 'Re-energised',
-    colour: 'text-green-400',
-    bg: 'bg-green-500/15',
-    icon: CheckCircle2,
-  },
-  cancelled: {
-    label: 'Cancelled',
-    colour: 'text-white',
-    bg: 'bg-white/10',
-    icon: AlertTriangle,
-  },
+const STATUS_LABEL: Record<IsoStatus, string> = {
+  in_progress: 'In progress',
+  isolated: 'Isolated',
+  re_energised: 'Re-energised',
+  cancelled: 'Cancelled',
 };
 
-// ─── Animation Variants ───
+// One colour dimension = status. Isolated = live isolation in place (red/danger),
+// in progress = amber, re-energised = done (blue), cancelled = neutral.
+function statusTone(status: IsoStatus): Tone | undefined {
+  if (status === 'isolated') return 'red';
+  if (status === 'in_progress') return 'amber';
+  if (status === 're_energised') return 'blue';
+  return undefined;
+}
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0 },
-  },
+const STATUS_PILL: Record<'amber' | 'red' | 'blue' | 'neutral', string> = {
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 6 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
-  },
-};
+function StatusPill({ status }: { status: IsoStatus }) {
+  const key = (statusTone(status) as 'amber' | 'red' | 'blue') ?? 'neutral';
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        STATUS_PILL[key]
+      )}
+    >
+      {STATUS_LABEL[status]}
+    </span>
+  );
+}
 
-// ─── New Record Form ───
+const fmtDate = (d?: string | null) =>
+  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+
+// ─── New record form (rendered inside a SheetShell) ───
+
+interface NewRecordPayload {
+  site_address: string;
+  circuit_description: string;
+  distribution_board?: string;
+  voltage_detector_serial?: string;
+  voltage_detector_calibration_date?: string;
+  photos?: string[];
+  isolator_name?: string;
+  isolator_signature?: string;
+  verifier_name?: string;
+  verifier_signature?: string;
+  permit_id?: string;
+}
 
 function NewRecordForm({
   onSubmit,
-  onCancel,
   isSubmitting,
 }: {
-  onSubmit: (data: {
-    site_address: string;
-    circuit_description: string;
-    distribution_board?: string;
-    voltage_detector_serial?: string;
-    voltage_detector_calibration_date?: string;
-    photos?: string[];
-    isolator_name?: string;
-    isolator_signature?: string;
-    verifier_name?: string;
-    verifier_signature?: string;
-    permit_id?: string;
-  }) => void;
-  onCancel: () => void;
+  onSubmit: (data: NewRecordPayload) => void;
   isSubmitting: boolean;
 }) {
-  const [isolatorSigName, setIsolatorSigName] = useState('');
-  const [isolatorSigDate, setIsolatorSigDate] = useState(new Date().toISOString().split('T')[0]);
-  const [isolatorSigData, setIsolatorSigData] = useState('');
-  const [verifierSigName, setVerifierSigName] = useState('');
-  const [verifierSigDate, setVerifierSigDate] = useState(new Date().toISOString().split('T')[0]);
-  const [verifierSigData, setVerifierSigData] = useState('');
-
-  // Evidence photo state
+  const [isolatorName, setIsolatorName] = useState('');
+  const [isolatorSig, setIsolatorSig] = useState('');
+  const [verifierName, setVerifierName] = useState('');
+  const [verifierSig, setVerifierSig] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
 
   const validation = useFieldValidation({
     site_address: { required: true, message: 'Site address is required' },
-    circuit_description: {
-      required: true,
-      message: 'Circuit description is required',
-    },
+    circuit_description: { required: true, message: 'Circuit description is required' },
     distribution_board: {},
     voltage_detector_serial: {},
     voltage_detector_calibration_date: {},
   });
 
-  // Draft persistence
   const {
     status: draftStatus,
     recoveredData: recoveredDraft,
@@ -148,195 +133,149 @@ function NewRecordForm({
       circuit_description: validation.fields.circuit_description?.value ?? '',
       distribution_board: validation.fields.distribution_board?.value ?? '',
       voltage_detector_serial: validation.fields.voltage_detector_serial?.value ?? '',
-      voltage_detector_calibration_date:
-        validation.fields.voltage_detector_calibration_date?.value ?? '',
+      voltage_detector_calibration_date: validation.fields.voltage_detector_calibration_date?.value ?? '',
     },
     enabled: true,
   });
 
   const restoreDraft = () => {
     if (!recoveredDraft) return;
-    if (recoveredDraft.site_address)
-      validation.setValue('site_address', recoveredDraft.site_address);
-    if (recoveredDraft.circuit_description)
-      validation.setValue('circuit_description', recoveredDraft.circuit_description);
-    if (recoveredDraft.distribution_board)
-      validation.setValue('distribution_board', recoveredDraft.distribution_board);
-    if (recoveredDraft.voltage_detector_serial)
-      validation.setValue('voltage_detector_serial', recoveredDraft.voltage_detector_serial);
-    if (recoveredDraft.voltage_detector_calibration_date)
-      validation.setValue(
-        'voltage_detector_calibration_date',
-        recoveredDraft.voltage_detector_calibration_date
-      );
+    (['site_address', 'circuit_description', 'distribution_board', 'voltage_detector_serial', 'voltage_detector_calibration_date'] as const).forEach(
+      (k) => {
+        if (recoveredDraft[k]) validation.setValue(k, recoveredDraft[k]);
+      }
+    );
     dismissDraft();
   };
 
-  const canSubmit = validation.isValid;
+  const f = validation.fields;
+  const submit = () => {
+    if (!validation.validateAll()) return;
+    const payload: NewRecordPayload = {
+      site_address: f.site_address.value.trim(),
+      circuit_description: f.circuit_description.value.trim(),
+      ...(f.distribution_board.value.trim() ? { distribution_board: f.distribution_board.value.trim() } : {}),
+      ...(f.voltage_detector_serial.value.trim() ? { voltage_detector_serial: f.voltage_detector_serial.value.trim() } : {}),
+      ...(f.voltage_detector_calibration_date.value ? { voltage_detector_calibration_date: f.voltage_detector_calibration_date.value } : {}),
+      ...(photoUrls.length > 0 ? { photos: photoUrls } : {}),
+      ...(isolatorName.trim() ? { isolator_name: isolatorName.trim() } : {}),
+      ...(isolatorSig ? { isolator_signature: isolatorSig } : {}),
+      ...(verifierName.trim() ? { verifier_name: verifierName.trim() } : {}),
+      ...(verifierSig ? { verifier_signature: verifierSig } : {}),
+      ...(selectedPermitId ? { permit_id: selectedPermitId } : {}),
+    };
+    clearDraft();
+    onSubmit(payload);
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.25 }}
-      className="space-y-4"
+    <SheetShell
+      eyebrow="GS38 safe isolation"
+      title="New isolation record"
+      description={<DraftSaveIndicator status={draftStatus} />}
+      footer={
+        <PrimaryButton fullWidth disabled={!validation.isValid || isSubmitting} onClick={submit}>
+          {isSubmitting ? 'Creating…' : 'Start GS38 procedure'}
+        </PrimaryButton>
+      }
     >
-      <div className="flex items-center gap-3 mb-2">
-        <button
-          onClick={() => {
-            clearDraft();
-            onCancel();
-          }}
-          className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"
-        >
-          <ArrowLeft className="h-5 w-5 text-white" />
-        </button>
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-bold text-white">New Isolation Record</h2>
-          <DraftSaveIndicator status={draftStatus} />
-        </div>
-      </div>
-
       <AnimatePresence>
-        {recoveredDraft && (
-          <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-        )}
+        {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
       </AnimatePresence>
 
-      {/* Link to Electrical Isolation Permit */}
       <PermitSelector
         permitTypes={['electrical-isolation']}
         selectedPermitId={selectedPermitId}
         onSelect={(id, permit) => {
           setSelectedPermitId(id);
-          if (permit?.location && !validation.fields.site_address?.value) {
-            validation.setValue('site_address', permit.location);
-          }
+          if (permit?.location && !f.site_address?.value) validation.setValue('site_address', permit.location);
         }}
-        label="Link to Isolation Permit (Optional)"
+        label="Link to isolation permit (optional)"
       />
 
-      <div className="space-y-3">
-        <div ref={validation.registerRef('site_address')}>
-          <LocationAutoFill
-            value={validation.fields.site_address?.value ?? ''}
-            onChange={(v) => {
-              validation.setValue('site_address', v);
-              validation.setTouched('site_address');
-            }}
-            label="Site Address *"
-            placeholder="e.g. 42 High Street, Manchester"
-          />
-          {validation.fields.site_address?.touched && validation.fields.site_address?.error && (
-            <p className="text-xs text-red-400 mt-1">{validation.fields.site_address.error}</p>
-          )}
-        </div>
+      <div ref={validation.registerRef('site_address')}>
+        <LocationAutoFill
+          value={f.site_address?.value ?? ''}
+          onChange={(v) => {
+            validation.setValue('site_address', v);
+            validation.setTouched('site_address');
+          }}
+          label="Site address"
+          placeholder="e.g. 42 High Street, Manchester"
+        />
+        {f.site_address?.touched && f.site_address?.error && (
+          <p className="text-[11px] text-red-400 mt-1">{f.site_address.error}</p>
+        )}
+      </div>
 
-        <ValidatedField
-          name="circuit_description"
-          label="Circuit Description"
-          required
-          validation={validation}
+      <Field label="Circuit description" required>
+        <input
+          value={f.circuit_description?.value ?? ''}
+          onChange={(e) => validation.setValue('circuit_description', e.target.value)}
+          onBlur={() => validation.setTouched('circuit_description')}
+          className={inputClass}
           placeholder="e.g. Ring final circuit — kitchen"
         />
+        {f.circuit_description?.touched && f.circuit_description?.error && (
+          <p className="text-[11px] text-red-400 mt-1">{f.circuit_description.error}</p>
+        )}
+      </Field>
 
-        <ValidatedField
-          name="distribution_board"
-          label="Distribution Board"
-          validation={validation}
+      <Field label="Distribution board">
+        <input
+          value={f.distribution_board?.value ?? ''}
+          onChange={(e) => validation.setValue('distribution_board', e.target.value)}
+          className={inputClass}
           placeholder="e.g. DB1 — Main Board"
         />
+      </Field>
 
-        <ValidatedField
-          name="voltage_detector_serial"
-          label="Voltage Detector Serial No."
-          validation={validation}
+      <Field label="Voltage detector serial no." hint="GS38 — proving instrument must be in calibration.">
+        <input
+          value={f.voltage_detector_serial?.value ?? ''}
+          onChange={(e) => validation.setValue('voltage_detector_serial', e.target.value)}
+          className={inputClass}
           placeholder="e.g. FLK-T150 / SN: 12345"
         />
+      </Field>
 
-        <ValidatedField
-          name="voltage_detector_calibration_date"
-          label="Voltage Detector Calibration Date"
+      <Field label="Voltage detector calibration date">
+        <input
           type="date"
-          validation={validation}
+          value={f.voltage_detector_calibration_date?.value ?? ''}
+          onChange={(e) => validation.setValue('voltage_detector_calibration_date', e.target.value)}
+          className={cn(inputClass, '[color-scheme:dark]')}
         />
+      </Field>
+
+      <div>
+        <Eyebrow className="mb-2">Evidence photos</Eyebrow>
+        <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
       </div>
 
-      {/* Evidence Photos */}
-      <SafetyPhotoCapture
-        photos={photoUrls}
-        onPhotosChange={setPhotoUrls}
-        label="Evidence Photos (voltage readings, lock-off)"
-      />
+      <SignatureField label="Isolator signature" value={isolatorSig} onChange={setIsolatorSig} />
+      <Field label="Isolator name">
+        <input value={isolatorName} onChange={(e) => setIsolatorName(e.target.value)} className={inputClass} placeholder="Person carrying out isolation" />
+      </Field>
 
-      {/* Signatures */}
-      <div className="space-y-4">
-        <SignaturePad
-          label="Isolator Signature"
-          name={isolatorSigName}
-          date={isolatorSigDate}
-          signatureDataUrl={isolatorSigData}
-          onSignatureChange={setIsolatorSigData}
-          onNameChange={setIsolatorSigName}
-          onDateChange={setIsolatorSigDate}
-        />
-        <SignaturePad
-          label="Verifier Signature"
-          name={verifierSigName}
-          date={verifierSigDate}
-          signatureDataUrl={verifierSigData}
-          onSignatureChange={setVerifierSigData}
-          onNameChange={setVerifierSigName}
-          onDateChange={setVerifierSigDate}
-        />
-      </div>
-
-      <div className="pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-        <Button
-          onClick={() => {
-            if (!validation.validateAll()) return;
-            const payload: Parameters<typeof onSubmit>[0] = {
-              site_address: validation.fields.site_address.value.trim(),
-              circuit_description: validation.fields.circuit_description.value.trim(),
-              ...(validation.fields.distribution_board.value.trim()
-                ? {
-                    distribution_board: validation.fields.distribution_board.value.trim(),
-                  }
-                : {}),
-              ...(validation.fields.voltage_detector_serial.value.trim()
-                ? {
-                    voltage_detector_serial: validation.fields.voltage_detector_serial.value.trim(),
-                  }
-                : {}),
-              ...(validation.fields.voltage_detector_calibration_date.value
-                ? {
-                    voltage_detector_calibration_date:
-                      validation.fields.voltage_detector_calibration_date.value,
-                  }
-                : {}),
-              ...(photoUrls.length > 0 ? { photos: photoUrls } : {}),
-              ...(isolatorSigName.trim() ? { isolator_name: isolatorSigName.trim() } : {}),
-              ...(isolatorSigData ? { isolator_signature: isolatorSigData } : {}),
-              ...(verifierSigName.trim() ? { verifier_name: verifierSigName.trim() } : {}),
-              ...(verifierSigData ? { verifier_signature: verifierSigData } : {}),
-              ...(selectedPermitId ? { permit_id: selectedPermitId } : {}),
-            };
-            clearDraft();
-            setPhotoUrls([]);
-            onSubmit(payload);
-          }}
-          disabled={!canSubmit || isSubmitting}
-          className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
-        >
-          {isSubmitting ? 'Creating...' : 'Start GS38 Procedure'}
-        </Button>
-      </div>
-    </motion.div>
+      <SignatureField label="Verifier signature" value={verifierSig} onChange={setVerifierSig} />
+      <Field label="Verifier name">
+        <input value={verifierName} onChange={(e) => setVerifierName(e.target.value)} className={inputClass} placeholder="Second competent person (optional)" />
+      </Field>
+    </SheetShell>
   );
 }
 
-// ─── Step Workflow View ───
+// ─── GS38 step workflow ───
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: 'easeOut' as const } },
+};
 
 function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onBack: () => void }) {
   const updateMutation = useUpdateIsolationRecord();
@@ -357,10 +296,7 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
           }
         : s
     );
-
     const allDone = updatedSteps.every((s) => s.completed);
-
-    // Also update top-level fields if step-specific data was provided
     const topLevelUpdates: Record<string, unknown> = {};
     if (data?.lockOffNumber) topLevelUpdates.lock_off_number = data.lockOffNumber;
     if (data?.provingUnitSerial) topLevelUpdates.proving_unit_used = true;
@@ -369,245 +305,201 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
       id: record.id,
       steps: updatedSteps,
       ...topLevelUpdates,
-      ...(allDone
-        ? {
-            status: 'isolated' as const,
-            isolation_completed_at: new Date().toISOString(),
-          }
-        : {}),
+      ...(allDone ? { status: 'isolated' as const, isolation_completed_at: new Date().toISOString() } : {}),
     });
   };
 
-  // Find the first incomplete step
   const activeStepNumber = record.steps.find((s) => !s.completed)?.stepNumber ?? -1;
+  const done = record.steps.filter((s) => s.completed).length;
 
   if (allCompleted || record.status === 'isolated' || record.status === 're_energised') {
     return <IsolationSummary record={record} onBack={onBack} />;
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-3"
-    >
-      <div className="flex items-center gap-3 mb-2">
-        <button
-          onClick={onBack}
-          className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"
-        >
-          <ArrowLeft className="h-5 w-5 text-white" />
-        </button>
-        <div className="flex-1 min-w-0">
-          <h2 className="text-base font-bold text-white truncate">{record.circuit_description}</h2>
-          <p className="text-xs text-white">{record.site_address}</p>
-        </div>
-      </div>
-
-      {/* Progress bar */}
-      <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-        <motion.div
-          className="h-full bg-elec-yellow rounded-full"
-          initial={{ width: 0 }}
-          animate={{
-            width: `${(record.steps.filter((s) => s.completed).length / record.steps.length) * 100}%`,
-          }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-        />
-      </div>
-      <p className="text-xs text-white">
-        Step {record.steps.filter((s) => s.completed).length} of {record.steps.length} completed
-      </p>
-
-      <div className="space-y-2 pb-20">
-        {record.steps.map((step) => (
-          <motion.div key={step.stepNumber} variants={itemVariants}>
-            <IsolationStepCard
-              step={step}
-              stepNumber={step.stepNumber}
-              isActive={step.stepNumber === activeStepNumber}
-              onComplete={(data) => handleCompleteStep(step.stepNumber, data)}
+    <div className="bg-elec-dark min-h-screen pb-24">
+      <SafetyMasthead onBack={onBack} backLabel="Records" moduleName={record.circuit_description} />
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mx-auto max-w-5xl px-4 py-5 space-y-4">
+        <div>
+          <Eyebrow>GS38 procedure · {record.site_address}</Eyebrow>
+          <div className="mt-3 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-elec-yellow rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${(done / record.steps.length) * 100}%` }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             />
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
+          </div>
+          <p className="mt-2 text-[12px] text-white/55 tabular-nums">
+            Step {done} of {record.steps.length} completed
+          </p>
+        </div>
+
+        <div className="space-y-2.5">
+          {record.steps.map((step) => (
+            <motion.div key={step.stepNumber} variants={itemVariants}>
+              <IsolationStepCard
+                step={step}
+                stepNumber={step.stepNumber}
+                isActive={step.stepNumber === activeStepNumber}
+                onComplete={(data) => handleCompleteStep(step.stepNumber, data)}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
-// ─── Main Component ───
+// ─── Main ───
 
-interface SafeIsolationRecordProps {
-  onBack: () => void;
-}
-
-export function SafeIsolationRecord({ onBack }: SafeIsolationRecordProps) {
+export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
   const { data: records, isLoading } = useSafeIsolationRecords();
   const createMutation = useCreateIsolationRecord();
-
-  // GS38 compliance: toast warnings for expiring/expired isolations
   useIsolationExpiryCheck();
-
-  const {
-    visible: visibleRecords,
-    hasMore: hasMoreRecords,
-    remaining: remainingRecords,
-    loadMore: loadMoreRecords,
-  } = useShowMore(records ?? []);
 
   const [showForm, setShowForm] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<SafeIsolationRecordType | null>(null);
+  const [filterStatus, setFilterStatus] = useState<IsoStatus | 'all'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Keep selected record in sync with fresh data
-  const activeRecord = selectedRecord
-    ? (records?.find((r) => r.id === selectedRecord.id) ?? selectedRecord)
-    : null;
+  const all = records ?? [];
+  const activeRecord = selectedRecord ? (all.find((r) => r.id === selectedRecord.id) ?? selectedRecord) : null;
 
-  const handleCreate = async (data: Parameters<typeof createMutation.mutateAsync>[0]) => {
+  const handleCreate = async (data: NewRecordPayload) => {
     const result = await createMutation.mutateAsync(data);
     setShowForm(false);
     setSelectedRecord(result);
   };
 
-  // ─── Viewing a specific record ───
+  const counts: Record<IsoStatus, number> = {
+    in_progress: all.filter((r) => r.status === 'in_progress').length,
+    isolated: all.filter((r) => r.status === 'isolated').length,
+    re_energised: all.filter((r) => r.status === 're_energised').length,
+    cancelled: all.filter((r) => r.status === 'cancelled').length,
+  };
+  const liveCount = counts.in_progress + counts.isolated;
+
+  const filtered = all.filter((r) => {
+    if (filterStatus !== 'all' && r.status !== filterStatus) return false;
+    if (
+      searchQuery &&
+      !r.circuit_description.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !r.site_address.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+      return false;
+    return true;
+  });
+
+  // Live (isolated/in-progress) first.
+  const rank = (r: SafeIsolationRecordType) =>
+    r.status === 'isolated' ? 0 : r.status === 'in_progress' ? 1 : 2;
+  const sorted = [...filtered].sort((a, b) => {
+    if (rank(a) !== rank(b)) return rank(a) - rank(b);
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+
+  const { visible, hasMore, remaining, loadMore } = useShowMore(sorted);
+
+  // Selected record → GS38 step workflow / summary (full view). After all hooks.
   if (activeRecord) {
-    return (
-      <div className="bg-background min-h-screen animate-fade-in">
-        <div className="px-4 py-4">
-          <StepWorkflow record={activeRecord} onBack={() => setSelectedRecord(null)} />
-        </div>
-      </div>
-    );
+    return <StepWorkflow record={activeRecord} onBack={() => setSelectedRecord(null)} />;
   }
-
-  // ─── Creating a new record ───
-  if (showForm) {
-    return (
-      <div className="bg-background min-h-screen animate-fade-in">
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-          <div className="px-4 py-2 flex items-center">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="text-sm font-medium">Site Safety</span>
-            </button>
-          </div>
-        </div>
-        <div className="px-4 py-4">
-          <NewRecordForm
-            onSubmit={handleCreate}
-            onCancel={() => setShowForm(false)}
-            isSubmitting={createMutation.isPending}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  // ─── List View ───
-
-  const activeCount =
-    records?.filter((r) => r.status === 'isolated' || r.status === 'in_progress').length ?? 0;
 
   return (
-    <div className="bg-background min-h-screen animate-fade-in">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-          {activeCount > 0 && (
-            <Badge className="bg-red-500/15 text-red-400 border-red-500/20">
-              {activeCount} Active
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      <div className="px-4 py-4 space-y-4">
-        {/* Hero */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-            <Zap className="h-6 w-6 text-red-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Safe Isolation (GS38)</h1>
-            <p className="text-sm text-white">Record and verify safe isolation procedures</p>
-          </div>
-        </div>
-
-        {/* New Isolation Button */}
-        <Button
-          onClick={() => setShowForm(true)}
-          className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          New Isolation
-        </Button>
-
-        {/* Content */}
-        {isLoading ? (
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 rounded-xl bg-white/[0.05] animate-pulse" />
-            ))}
-          </div>
-        ) : !records || records.length === 0 ? (
-          <SafetyEmptyState
-            icon={Shield}
-            heading="No Isolation Records"
-            description="Start a GS38 safe isolation procedure to record your isolation steps, prove dead readings, and re-energisation."
-            ctaLabel="New Isolation"
-            onCta={() => setShowForm(true)}
-            tip="GS38 compliance is a legal requirement for all electrical work"
+    <SafetyModuleShell
+      onBack={onBack}
+      moduleName="Safe Isolation"
+      trailing={liveCount > 0 ? <StatusPill status="isolated" /> : undefined}
+      hero={
+        <PageHero
+          eyebrow="Safe Isolation · GS38"
+          title="Prove dead, lock off, record it"
+          description="Step-by-step GS38 isolation with voltage readings, lock-off, dual sign-off and re-energisation — a defensible record every time."
+          tone="red"
+          actions={<PrimaryButton onClick={() => setShowForm(true)}>New isolation</PrimaryButton>}
+        />
+      }
+      stats={
+        all.length > 0 ? (
+          <StatStrip
+            stats={[
+              { value: liveCount, label: 'Live', sub: 'isolated / in progress', accent: true, onClick: () => setFilterStatus('isolated') },
+              { value: counts.in_progress, label: 'In progress', onClick: () => setFilterStatus('in_progress') },
+              { value: counts.re_energised, label: 'Re-energised', onClick: () => setFilterStatus('re_energised') },
+              { value: all.length, label: 'Total', onClick: () => setFilterStatus('all') },
+            ]}
           />
-        ) : (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-2 pb-20"
-          >
-            {visibleRecords.map((record, idx) => {
-              const completedSteps = record.steps.filter((s) => s.completed).length;
+        ) : undefined
+      }
+      filter={
+        all.length > 0 ? (
+          <FilterBar
+            tabs={[
+              { value: 'all', label: 'All', count: all.length },
+              { value: 'in_progress', label: 'In progress', count: counts.in_progress },
+              { value: 'isolated', label: 'Isolated', count: counts.isolated },
+              { value: 're_energised', label: 'Re-energised', count: counts.re_energised },
+            ]}
+            activeTab={filterStatus}
+            onTabChange={(v) => setFilterStatus(v as IsoStatus | 'all')}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search isolations…"
+          />
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : all.length === 0 ? (
+        <EmptyState
+          title="No isolation records yet"
+          description="Start a GS38 safe isolation — record your steps, prove-dead readings, lock-off and re-energisation. GS38 is a legal requirement for electrical work."
+          action="New isolation"
+          onAction={() => setShowForm(true)}
+        />
+      ) : filtered.length === 0 ? (
+        <EmptyState title="No isolations match your filter" description="Try a different status tab or clear your search." />
+      ) : (
+        <div className="space-y-3">
+          <ListCard>
+            {visible.map((record) => {
+              const completed = record.steps.filter((s) => s.completed).length;
               const dur = getIsolationDuration(record);
               return (
-                <SafetyRecordCard
+                <ListRow
                   key={record.id}
-                  id={record.id}
+                  onClick={() => setSelectedRecord(record)}
+                  accent={statusTone(record.status)}
                   title={record.circuit_description}
-                  subtitle={record.distribution_board || undefined}
-                  status={record.status}
-                  statusLabel={STATUS_CONFIG[record.status]?.label || record.status}
-                  regulation="BS 7671 / GS38"
-                  icon={Zap}
-                  meta={[
-                    { icon: MapPin, label: record.site_address },
-                    { icon: Calendar, label: fmtCardDate(record.created_at) },
-                    { label: `${completedSteps}/${record.steps.length} steps` },
-                    ...(dur.label ? [{ icon: Timer, label: dur.label }] : []),
-                  ]}
-                  onTap={() => setSelectedRecord(record)}
-                  pdfType="safe-isolation"
-                  index={idx}
+                  subtitle={`${record.distribution_board || record.site_address}${record.distribution_board ? ` · ${record.site_address}` : ''}`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <StatusPill status={record.status} />
+                      <span className="text-[11px] text-white/45 tabular-nums">
+                        {record.status === 'isolated' && dur.label
+                          ? dur.label
+                          : `${completed}/${record.steps.length} steps`}
+                      </span>
+                    </div>
+                  }
                 />
               );
             })}
-            {hasMoreRecords && (
-              <LoadMoreButton onLoadMore={loadMoreRecords} remaining={remainingRecords} />
-            )}
-          </motion.div>
-        )}
-      </div>
-    </div>
+          </ListCard>
+          {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
+        </div>
+      )}
+
+      {/* New record sheet */}
+      <Sheet open={showForm} onOpenChange={setShowForm}>
+        <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <NewRecordForm onSubmit={handleCreate} isSubmitting={createMutation.isPending} />
+        </SheetContent>
+      </Sheet>
+    </SafetyModuleShell>
   );
 }
 

@@ -5,16 +5,19 @@ const SEV_MAP: Record<string, StatusColour> = { critical: 'danger', high: 'dange
 export function nearMissTemplate(record: any, branding: Branding): string {
   const sev = (record.severity || '').toLowerCase();
   const statusColour: StatusColour = SEV_MAP[sev] || 'grey';
+  const catLabel = record.category
+    ? String(record.category).replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+    : 'N/A';
   let body = '';
   body += sectionHeader('Incident Overview');
   body += statBoxes([
     { label: 'Severity', value: (record.severity || 'N/A').toUpperCase(), colour: statusColour },
-    { label: 'Category', value: record.category || 'N/A', colour: 'info' },
+    { label: 'Category', value: catLabel, colour: 'info' },
     { label: 'Status', value: (record.status || 'Open').toUpperCase(), colour: record.status === 'closed' ? 'success' : 'warning' },
   ]);
   body += sectionHeader('Incident Details');
   body += kvGrid([
-    { label: 'Category', value: record.category || 'N/A' },
+    { label: 'Category', value: catLabel },
     { label: 'Location', value: record.location || 'N/A' },
     { label: 'Incident Date', value: fmtDate(record.incident_date) },
     { label: 'Severity', value: (record.severity || 'N/A').toUpperCase() },

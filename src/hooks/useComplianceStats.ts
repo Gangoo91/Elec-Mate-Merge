@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useComplianceStats — aggregate counts from v_single_central_record.
@@ -61,7 +62,7 @@ export function useComplianceStats() {
   // the view is read-only and the SCR query is small.
   useEffect(() => {
     const channel = supabase
-      .channel('compliance_stats')
+      .channel(realtimeChannelName('compliance_stats'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'staff_compliance_records' },

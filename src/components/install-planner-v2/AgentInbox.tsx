@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Inbox, ArrowRight, X, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { AgentType } from '@/types/agent-request';
 import { toast } from 'sonner';
 
@@ -41,7 +42,7 @@ export const AgentInbox = ({ currentAgent, onTaskAccept }: AgentInboxProps) => {
 
     // Subscribe to new tasks
     const channel = supabase
-      .channel('agent-tasks')
+      .channel(realtimeChannelName('agent-tasks'))
       .on(
         'postgres_changes',
         {

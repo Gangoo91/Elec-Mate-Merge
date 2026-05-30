@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStandardisationMeetings — list + create + delete IQA standardisation
@@ -62,7 +63,7 @@ export function useStandardisationMeetings() {
 
   useEffect(() => {
     const channel = supabase
-      .channel('standardisation_meetings')
+      .channel(realtimeChannelName('standardisation_meetings'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'college_standardisation_meetings' },

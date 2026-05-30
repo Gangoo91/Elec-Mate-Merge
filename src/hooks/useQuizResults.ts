@@ -34,9 +34,20 @@ export const useQuizResults = () => {
   const fetchQuizResults = async () => {
     try {
       setIsLoading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        setResults([]);
+        return;
+      }
+
+      // Explicit user_id filter — defence-in-depth alongside RLS so a
+      // misconfigured policy can never leak or miscount other users' results.
       const { data, error } = await supabase
         .from('quiz_results')
         .select('*')
+        .eq('user_id', user.id)
         .order('completed_at', { ascending: false });
 
       if (error) throw error;

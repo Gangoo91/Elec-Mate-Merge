@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import React from 'react';
 import { cn } from '@/lib/utils';
-import { Shield, Search, Plus, AlertTriangle, X } from 'lucide-react';
 import { useHazardDatabase } from '../../hooks/useHazardDatabase';
 import { MethodStatementData } from '@/types/method-statement';
+import {
+  FilterBar,
+  FormCard,
+  Eyebrow,
+  ListCard,
+  ListRow,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface HazardIntegrationStepProps {
   data: MethodStatementData;
@@ -16,9 +20,35 @@ interface HazardIntegrationStepProps {
   onHazardUnlink: (hazardId: string) => void;
 }
 
+// Risk level → single colour dimension.
+const RISK_TONE: Record<string, Tone> = {
+  Low: 'green',
+  Medium: 'amber',
+  High: 'orange',
+  'Very High': 'red',
+};
+
+const RISK_PILL: Record<string, string> = {
+  Low: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  Medium: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  High: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  'Very High': 'bg-red-500/10 text-red-400 border-red-500/25',
+};
+
+function RiskPill({ level }: { level: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        RISK_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+      )}
+    >
+      {level}
+    </span>
+  );
+}
+
 const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
-  data,
-  onDataChange,
   linkedHazards,
   onHazardLink,
   onHazardUnlink,
@@ -31,210 +61,97 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
     selectedCategory,
     setSelectedCategory,
     getHazardById,
-    getRiskColor,
   } = useHazardDatabase();
 
-  const linkedHazardObjects = linkedHazards.map((id) => getHazardById(id)).filter(Boolean);
+  const linkedHazardObjects = linkedHazards
+    .map((id) => getHazardById(id))
+    .filter((h): h is NonNullable<typeof h> => Boolean(h));
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Hazard Assessment
-          </CardTitle>
-          <p className="text-sm text-white">
-            Link relevant hazards from the database to your method statement
-          </p>
-        </CardHeader>
-      </Card>
+    <div className="space-y-5">
+      <FormCard eyebrow="Hazard assessment">
+        <p className="text-[13px] text-white/70 leading-relaxed">
+          Link relevant hazards from the database to your method statement. Each hazard carries its
+          recommended control measures and the regulations it sits under.
+        </p>
+      </FormCard>
 
-      {/* Linked Hazards */}
+      {/* Linked hazards */}
       {linkedHazardObjects.length > 0 && (
-        <Card className="border-green-500/20 bg-elec-gray/60">
-          <CardHeader>
-            <CardTitle className="text-foreground text-lg">
-              Linked Hazards ({linkedHazardObjects.length})
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {linkedHazardObjects.map((hazard) => {
-              const IconComponent = hazard?.icon;
-              return (
-                <Card key={hazard?.id} className="border-elec-yellow/30 bg-elec-dark/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-3 flex-1">
-                        {IconComponent && (
-                          <div className="p-2 rounded-full bg-elec-yellow/20 flex-shrink-0">
-                            <IconComponent className="h-4 w-4 text-elec-yellow" />
-                          </div>
-                        )}
-                        <div className="flex-1">
-                          <h4 className="font-medium text-foreground mb-1">{hazard?.name}</h4>
-                          <p className="text-sm text-white mb-2">{hazard?.description}</p>
-                          <div className="flex flex-wrap gap-2">
-                            <Badge
-                              variant="outline"
-                              className="border-elec-yellow/30 text-white text-xs"
-                            >
-                              {hazard?.category}
-                            </Badge>
-                            <Badge
-                              className={`${getRiskColor(hazard?.riskLevel || '')} text-foreground text-xs`}
-                            >
-                              {hazard?.riskLevel} Risk
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                      <Button
-                        onClick={() => onHazardUnlink(hazard?.id || '')}
-                        size="sm"
-                        variant="outline"
-                        className="border-red-500/30 text-red-400 hover:bg-red-500/10 ml-3"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </CardContent>
-        </Card>
+        <div className="space-y-2">
+          <Eyebrow>Linked hazards ({linkedHazardObjects.length})</Eyebrow>
+          <ListCard>
+            {linkedHazardObjects.map((hazard) => (
+              <ListRow
+                key={hazard.id}
+                accent="green"
+                title={hazard.name}
+                subtitle={`${hazard.category} · ${hazard.description}`}
+                trailing={
+                  <div className="flex flex-col items-end gap-1.5">
+                    <RiskPill level={hazard.riskLevel} />
+                    <button
+                      type="button"
+                      onClick={() => onHazardUnlink(hazard.id)}
+                      className="text-[11px] text-red-400 hover:text-red-300 touch-manipulation"
+                    >
+                      Unlink
+                    </button>
+                  </div>
+                }
+              />
+            ))}
+          </ListCard>
+        </div>
       )}
 
-      {/* Hazard Database Browser */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/60">
-        <CardHeader>
-          <CardTitle className="text-foreground">Hazard Database</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Search and Filter */}
-          <div className="space-y-3">
-            <div className="relative">
-              {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-              )}
-              <Input
-                placeholder="Search hazards..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn(
-                  'bg-elec-dark/50 border-elec-yellow/20 text-foreground',
-                  !searchTerm && 'pl-10'
-                )}
-              />
-            </div>
+      {/* Hazard database */}
+      <FilterBar
+        tabs={categories.map((c) => ({ value: c, label: c }))}
+        activeTab={selectedCategory}
+        onTabChange={setSelectedCategory}
+        search={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder="Search hazards…"
+      />
 
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={
-                    selectedCategory === category
-                      ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
-                      : 'border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow'
-                  }
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Available Hazards */}
-          <div className="space-y-3 max-h-96 overflow-y-auto">
+      {filteredHazards.length === 0 ? (
+        <EmptyState
+          title="No hazards found"
+          description="Try adjusting your search terms or category filter."
+        />
+      ) : (
+        <div className="space-y-2">
+          <Eyebrow>Hazard database</Eyebrow>
+          <ListCard>
             {filteredHazards.map((hazard) => {
-              const IconComponent = hazard.icon;
               const isLinked = linkedHazards.includes(hazard.id);
-
               return (
-                <Card
+                <ListRow
                   key={hazard.id}
-                  className={`border-border/50 hover:bg-muted/20 transition-colors cursor-pointer ${
-                    isLinked ? 'bg-green-500/10 border-green-500/30' : ''
-                  }`}
                   onClick={() => (isLinked ? onHazardUnlink(hazard.id) : onHazardLink(hazard.id))}
-                >
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
-                      {/* Header Section */}
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex items-start gap-4 flex-1">
-                          <div className="p-2 rounded-full bg-primary/20 flex-shrink-0 mt-1">
-                            <IconComponent className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-foreground text-base mb-2">
-                              {hazard.name}
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              <Badge
-                                variant="outline"
-                                className="text-xs border-primary/30 text-white"
-                              >
-                                {hazard.category}
-                              </Badge>
-                              <Badge
-                                className={`${getRiskColor(hazard.riskLevel)} text-foreground text-xs`}
-                              >
-                                {hazard.riskLevel}
-                              </Badge>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0">
-                          <AlertTriangle
-                            className={`h-5 w-5 ${
-                              hazard.riskLevel === 'Very High'
-                                ? 'text-red-500'
-                                : hazard.riskLevel === 'High'
-                                  ? 'text-orange-500'
-                                  : hazard.riskLevel === 'Medium'
-                                    ? 'text-yellow-500'
-                                    : 'text-green-500'
-                            }`}
-                          />
-                          <Button size="sm" variant={isLinked ? 'destructive' : 'default'}>
-                            {isLinked ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-sm text-white leading-relaxed">{hazard.description}</p>
-
-                      {/* Control Measures */}
-                      <div className="pt-2 border-t border-border/20">
-                        <p className="text-xs text-white">
-                          <span className="font-medium text-foreground">Control measures:</span>{' '}
-                          {hazard.commonControls.slice(0, 2).join(', ')}
-                          {hazard.commonControls.length > 2 && '...'}
-                        </p>
-                      </div>
+                  accent={isLinked ? 'green' : RISK_TONE[hazard.riskLevel]}
+                  title={hazard.name}
+                  subtitle={`${hazard.category} · ${hazard.description}`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1.5">
+                      <RiskPill level={hazard.riskLevel} />
+                      <span
+                        className={cn(
+                          'text-[11px] font-medium',
+                          isLinked ? 'text-emerald-400' : 'text-elec-yellow/90'
+                        )}
+                      >
+                        {isLinked ? 'Linked' : 'Link +'}
+                      </span>
                     </div>
-                  </CardContent>
-                </Card>
+                  }
+                />
               );
             })}
-          </div>
-
-          {filteredHazards.length === 0 && (
-            <div className="text-center py-8 text-white">
-              <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No hazards found matching your search criteria.</p>
-              <p className="text-sm">Try adjusting your search terms or category filter.</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+          </ListCard>
+        </div>
+      )}
     </div>
   );
 };

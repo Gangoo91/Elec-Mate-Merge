@@ -89,6 +89,9 @@ export function useDashboardData(): DashboardData {
         .from('reports')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id)
+        // Match the certificates list (reportCloud) — exclude auto-saved drafts
+        // that were never manually saved, so the dashboard total agrees with it.
+        .neq('status', 'auto-draft')
         .is('deleted_at', null);
 
       if (error) {

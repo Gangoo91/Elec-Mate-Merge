@@ -1,33 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft,
-  ClipboardCheck,
-  ArrowUpFromLine,
-  Hammer,
-  Gauge,
-  Construction,
-  Wrench,
-  CheckCircle2,
-  XCircle,
-  Clock,
-  Download,
-  Loader2,
-  Search,
-  X,
-  RotateCcw,
-  Share2,
-  Shield,
-  Cable,
-  ShieldCheck,
-  Zap,
-  Flame,
-  HeartPulse,
-  HardHat,
-  ChevronsUp,
-} from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { useState, useMemo } from 'react';
+import { cn } from '@/lib/utils';
 import {
   usePreUseChecks,
   CHECK_TEMPLATES,
@@ -35,12 +7,22 @@ import {
   type CheckItem,
   type PreUseCheck,
 } from '@/hooks/usePreUseChecks';
-import { ApprovalBadge } from '../common/ApprovalBadge';
-import { SafetyRecordCard, fmtCardDate } from '../common/SafetyRecordCard';
-import { MapPin, Calendar } from 'lucide-react';
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  FormCard,
+  ListCard,
+  ListRow,
+  SecondaryButton,
+  type Tone,
+} from '@/components/college/primitives';
+import { SafetyModuleShell } from '../common/SafetyModuleShell';
+import { fmtCardDate } from '../common/SafetyRecordCard';
 import { ChecklistForm } from './ChecklistForm';
-import { SafetyEmptyState } from '../common/SafetyEmptyState';
-import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
@@ -50,29 +32,52 @@ interface PreUseCheckToolProps {
 }
 
 const CATEGORIES = [
-  { key: 'ladder', label: 'Ladder', icon: ArrowUpFromLine },
-  { key: 'scaffold', label: 'Scaffold', icon: Construction },
-  { key: 'power_tool', label: 'Power Tool', icon: Hammer },
-  { key: 'test_instrument', label: 'Test Instrument', icon: Gauge },
-  { key: 'access_equipment', label: 'Access Equipment', icon: Wrench },
-  { key: 'harness', label: 'Harness & Lanyard', icon: Shield },
-  { key: 'extension_lead', label: 'Extension Lead', icon: Cable },
-  { key: 'portable_rcd', label: 'Portable RCD', icon: ShieldCheck },
-  { key: 'generator', label: 'Generator', icon: Zap },
-  { key: 'fire_extinguisher', label: 'Fire Extinguisher', icon: Flame },
-  { key: 'first_aid_kit', label: 'First Aid Kit', icon: HeartPulse },
-  { key: 'ppe', label: 'PPE (General)', icon: HardHat },
-  { key: 'mewp', label: 'MEWP / Cherry Picker', icon: ChevronsUp },
+  { key: 'ladder', label: 'Ladder' },
+  { key: 'scaffold', label: 'Scaffold' },
+  { key: 'power_tool', label: 'Power Tool' },
+  { key: 'test_instrument', label: 'Test Instrument' },
+  { key: 'access_equipment', label: 'Access Equipment' },
+  { key: 'harness', label: 'Harness & Lanyard' },
+  { key: 'extension_lead', label: 'Extension Lead' },
+  { key: 'portable_rcd', label: 'Portable RCD' },
+  { key: 'generator', label: 'Generator' },
+  { key: 'fire_extinguisher', label: 'Fire Extinguisher' },
+  { key: 'first_aid_kit', label: 'First Aid Kit' },
+  { key: 'ppe', label: 'PPE (General)' },
+  { key: 'mewp', label: 'MEWP / Cherry Picker' },
 ] as const;
 
 type CategoryKey = (typeof CATEGORIES)[number]['key'];
 
-function resultBadge(result: string) {
-  if (result === 'pass')
-    return <Badge className="bg-green-500/20 text-green-400 border-green-500/30">Pass</Badge>;
-  if (result === 'fail')
-    return <Badge className="bg-red-500/20 text-red-400 border-red-500/30">Fail</Badge>;
-  return <Badge className="bg-white/10 text-white border-white/20">N/A</Badge>;
+// One colour dimension = result.
+function resultTone(result: string): Tone {
+  return result === 'pass' ? 'green' : result === 'fail' ? 'red' : 'blue';
+}
+
+const RESULT_PILL: Record<Tone, string> = {
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+};
+
+function ResultPill({ result }: { result: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        RESULT_PILL[resultTone(result)]
+      )}
+    >
+      {result === 'pass' ? 'Pass' : result === 'fail' ? 'Fail' : 'N/A'}
+    </span>
+  );
 }
 
 export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
@@ -98,15 +103,17 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
     });
   }, [checks, searchQuery, resultFilter]);
 
-  const filterTabs = useMemo(() => {
-    const passCount = checks.filter((c) => c.overall_result === 'pass').length;
-    const failCount = checks.filter((c) => c.overall_result === 'fail').length;
-    return [
-      { key: 'all', label: 'All', count: checks.length },
-      { key: 'pass', label: 'Pass', count: passCount },
-      { key: 'fail', label: 'Fail', count: failCount },
-    ];
-  }, [checks]);
+  const passCount = useMemo(() => checks.filter((c) => c.overall_result === 'pass').length, [checks]);
+  const failCount = useMemo(() => checks.filter((c) => c.overall_result === 'fail').length, [checks]);
+
+  const filterTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: checks.length },
+      { value: 'pass', label: 'Pass', count: passCount },
+      { value: 'fail', label: 'Fail', count: failCount },
+    ],
+    [checks.length, passCount, failCount]
+  );
 
   const handleCategorySelect = (key: CategoryKey) => {
     setSelectedCategory(key);
@@ -136,188 +143,155 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
       }))
     : [];
 
+  // ─── Checklist form ───
+  if (showForm && selectedCategory) {
+    return (
+      <ChecklistForm
+        equipmentType={selectedCategory}
+        items={templateItems}
+        onSubmit={handleFormSubmit}
+        onCancel={handleFormCancel}
+      />
+    );
+  }
+
+  // ─── List ───
   return (
-    <div className="flex flex-col h-full bg-background">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
-        <button
-          onClick={onBack}
-          className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:scale-95 transition-transform"
-        >
-          <ArrowLeft className="w-5 h-5 text-white" />
-        </button>
-        <div className="flex-1">
-          <h1 className="text-lg font-semibold text-white">Pre-Use Equipment Checks</h1>
-          <p className="text-sm text-white">Record inspections before use</p>
-        </div>
-        <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
-      </div>
-
-      <div className="flex-1 overflow-y-auto pb-20">
-        <AnimatePresence mode="wait">
-          {showForm && selectedCategory ? (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ChecklistForm
-                equipmentType={selectedCategory}
-                items={templateItems}
-                onSubmit={handleFormSubmit}
-                onCancel={handleFormCancel}
-              />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="main"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.2 }}
-            >
-              {/* Category Selector */}
-              <div className="px-4 pt-4 pb-2">
-                <h2 className="text-sm font-semibold text-white mb-3">Select Equipment Type</h2>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5">
-                  {CATEGORIES.map((cat) => {
-                    const Icon = cat.icon;
-                    const isSelected = selectedCategory === cat.key;
-                    const reg = REGULATION_REFS[cat.key];
-                    const itemCount = CHECK_TEMPLATES[cat.key]?.length || 0;
-                    return (
-                      <button
-                        key={cat.key}
-                        onClick={() => handleCategorySelect(cat.key)}
-                        className={`relative overflow-hidden rounded-xl p-3.5 text-left touch-manipulation active:scale-[0.97] transition-all border ${
-                          isSelected
-                            ? 'bg-elec-yellow/15 border-elec-yellow/40 ring-1 ring-elec-yellow/30'
-                            : 'bg-white/[0.03] border-white/[0.08] hover:border-white/[0.15] active:bg-white/[0.06]'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5 mb-2">
-                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/[0.06]'}`}>
-                            <Icon className={`w-4 h-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`} />
-                          </div>
-                          <span className={`text-sm font-semibold ${isSelected ? 'text-elec-yellow' : 'text-white'}`}>{cat.label}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {reg && (
-                            <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                              {reg.shortName}
-                            </span>
-                          )}
-                          <span className="text-[10px] text-white">{itemCount} checks</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Recent Checks */}
-              <div className="px-4 pt-4">
-                <h2 className="text-sm font-semibold text-white mb-3">Recent Checks</h2>
-
-                {/* Search bar */}
-                <div className="relative mb-3">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                  <Input
-                    placeholder="Search checks..."
-                    className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                  {searchQuery && (
-                    <button
-                      className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full touch-manipulation"
-                      onClick={() => setSearchQuery('')}
-                    >
-                      <X className="h-3.5 w-3.5 text-white" />
-                    </button>
+    <SafetyModuleShell
+      onBack={onBack}
+      moduleName="Pre-Use Checks"
+      hero={
+        <PageHero
+          eyebrow="Pre-Use Checks · PUWER 1998 / LOLER 1998"
+          title="Inspect before you use it"
+          description="Record a pre-use inspection for ladders, scaffolds, power tools, test instruments and access equipment — pass, fail or N/A against the statutory checklist, with photos and a signature."
+          tone="yellow"
+        />
+      }
+      stats={
+        checks.length > 0 ? (
+          <StatStrip
+            stats={[
+              { value: checks.length, label: 'Total', onClick: () => setResultFilter('all') },
+              { value: passCount, label: 'Pass', tone: 'green', onClick: () => setResultFilter('pass') },
+              { value: failCount, label: 'Fail', tone: 'red', onClick: () => setResultFilter('fail') },
+            ]}
+            columns={3}
+          />
+        ) : undefined
+      }
+      filter={
+        checks.length > 0 ? (
+          <FilterBar
+            tabs={filterTabs}
+            activeTab={resultFilter}
+            onTabChange={setResultFilter}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search checks…"
+          />
+        ) : undefined
+      }
+    >
+      {/* Start a new check */}
+      <FormCard eyebrow="Start a new check">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+          {CATEGORIES.map((cat) => {
+            const reg = REGULATION_REFS[cat.key];
+            const itemCount = CHECK_TEMPLATES[cat.key]?.length || 0;
+            return (
+              <button
+                key={cat.key}
+                onClick={() => handleCategorySelect(cat.key)}
+                className="text-left p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-[hsl(0_0%_12%)] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                <span className="block text-[13px] font-medium text-white">{cat.label}</span>
+                <span className="mt-1.5 flex items-center gap-2">
+                  {reg && (
+                    <span className="text-[9.5px] font-medium px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 whitespace-nowrap">
+                      {reg.shortName}
+                    </span>
                   )}
-                </div>
+                  <span className="text-[10.5px] text-white/45">{itemCount} checks</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </FormCard>
 
-                {/* Filter chips */}
-                <div className="flex gap-1.5 overflow-x-auto scrollbar-hide mb-3">
-                  {filterTabs.map((tab) => (
-                    <button
-                      key={tab.key}
-                      onClick={() => setResultFilter(tab.key)}
-                      className={`h-9 px-3 rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-all ${
-                        resultFilter === tab.key
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/5 text-white border border-white/10'
-                      }`}
-                    >
-                      {tab.label} ({tab.count})
-                    </button>
-                  ))}
-                </div>
-
-                {isLoading ? (
-                  <SafetySkeletonLoader variant="list" />
-                ) : checks.length === 0 ? (
-                  <SafetyEmptyState
-                    icon={ClipboardCheck}
-                    heading="No Checks Recorded"
-                    description="Select an equipment type above to start your first pre-use inspection check."
-                    tip="Pre-use checks help keep you safe on site"
+      {/* Recent checks */}
+      <div>
+        <Eyebrow className="mb-2.5">Recent checks</Eyebrow>
+        {isLoading ? (
+          <LoadingState />
+        ) : checks.length === 0 ? (
+          <EmptyState
+            title="No checks recorded yet"
+            description="Select an equipment type above to start your first pre-use inspection check."
+          />
+        ) : filteredChecks.length === 0 ? (
+          <EmptyState
+            title="No matching checks"
+            description="Try a different result tab or clear your search."
+          />
+        ) : (
+          <div className="space-y-2.5">
+            {filteredChecks.map((check: PreUseCheck) => {
+              const reg = REGULATION_REFS[check.equipment_type];
+              const passN = check.items.filter((i) => i.result === 'pass').length;
+              const failN = check.items.filter((i) => i.result === 'fail').length;
+              const exporting = isExporting && exportingId === check.id;
+              return (
+                <ListCard key={check.id}>
+                  <ListRow
+                    accent={resultTone(check.overall_result)}
+                    title={`${(check.equipment_type || '').replace(/_/g, ' ')} check`}
+                    subtitle={[
+                      check.equipment_description || (reg ? reg.shortName : ''),
+                      check.site_address || '',
+                      `${passN}P / ${failN}F / ${check.items.length} items`,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                    trailing={
+                      <div className="flex flex-col items-end gap-1">
+                        <ResultPill result={check.overall_result} />
+                        <span className="text-[11px] text-white/45 tabular-nums">
+                          {fmtCardDate(check.created_at)}
+                        </span>
+                      </div>
+                    }
                   />
-                ) : filteredChecks.length === 0 ? (
-                  <div className="py-8 text-center">
-                    <Search className="w-8 h-8 text-white mx-auto mb-3" />
-                    <p className="text-sm font-medium text-white">No matching checks found</p>
-                    <p className="text-sm text-white mt-1">Try adjusting your search or filters</p>
-                    <button
-                      onClick={() => {
-                        setSearchQuery('');
-                        setResultFilter('all');
-                      }}
-                      className="mt-3 h-9 px-4 rounded-full bg-white/5 border border-white/10 text-sm text-white font-medium touch-manipulation transition-all active:scale-95"
+                  <div className="flex gap-1.5 px-5 sm:px-6 pb-4">
+                    <SecondaryButton
+                      size="sm"
+                      onClick={() => handleRecheck(check.equipment_type as CategoryKey)}
                     >
-                      Clear filters
-                    </button>
+                      Re-check
+                    </SecondaryButton>
+                    <SecondaryButton
+                      size="sm"
+                      disabled={exporting}
+                      onClick={() => exportPDF('pre-use-check', check.id)}
+                    >
+                      {exporting ? 'Exporting…' : 'Export PDF'}
+                    </SecondaryButton>
+                    <SecondaryButton
+                      size="sm"
+                      onClick={() => {
+                        setShareRecordTitle((check.equipment_type || '').replace(/_/g, ' '));
+                        setShareRecordId(check.id);
+                      }}
+                    >
+                      Share
+                    </SecondaryButton>
                   </div>
-                ) : (
-                  <div className="space-y-3">
-                    {filteredChecks.map((check: PreUseCheck, idx: number) => {
-                      const cat = CATEGORIES.find((c) => c.key === check.equipment_type);
-                      const CatIcon = cat?.icon || ClipboardCheck;
-                      const reg = REGULATION_REFS[check.equipment_type];
-                      const passCount = check.items.filter((i) => i.result === 'pass').length;
-                      const failCount = check.items.filter((i) => i.result === 'fail').length;
-                      return (
-                        <SafetyRecordCard
-                          key={check.id}
-                          id={check.id}
-                          title={`${(check.equipment_type || '').replace(/_/g, ' ')} Check`}
-                          subtitle={check.equipment_description || undefined}
-                          status={check.overall_result}
-                          statusLabel={check.overall_result.toUpperCase()}
-                          regulation={reg?.shortName}
-                          icon={CatIcon}
-                          meta={[
-                            { icon: Calendar, label: fmtCardDate(check.created_at) },
-                            ...(check.site_address ? [{ icon: MapPin, label: check.site_address }] : []),
-                            { label: `${passCount}P / ${failCount}F / ${check.items.length} items` },
-                          ]}
-                          actions={[
-                            { label: 'Re-check', icon: RotateCcw, onClick: () => handleRecheck(check.equipment_type as CategoryKey) },
-                          ]}
-                          pdfType="pre-use-check"
-                          index={idx}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                </ListCard>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {shareRecordId && (
@@ -329,7 +303,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
           documentTitle={`Pre-Use Check — ${shareRecordTitle}`}
         />
       )}
-    </div>
+    </SafetyModuleShell>
   );
 }
 

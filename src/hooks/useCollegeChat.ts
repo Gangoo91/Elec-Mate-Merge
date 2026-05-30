@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
   collegeConversationService,
   collegeMessageService,
@@ -28,7 +29,7 @@ export function useCollegeConversations(enabled: boolean = true) {
     if (!enabled) return;
 
     const channel = supabase
-      .channel('college-conversations-changes')
+      .channel(realtimeChannelName('college-conversations-changes'))
       .on(
         'postgres_changes',
         {

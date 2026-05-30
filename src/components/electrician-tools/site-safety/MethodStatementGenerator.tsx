@@ -1,7 +1,11 @@
 import MethodStatementWizard from './method-statement/MethodStatementWizard';
 
-const MethodStatementGenerator = () => {
-  return <MethodStatementWizard />;
+interface MethodStatementGeneratorProps {
+  onBack?: () => void;
+}
+
+const MethodStatementGenerator = ({ onBack }: MethodStatementGeneratorProps) => {
+  return <MethodStatementWizard onBack={onBack} />;
 };
 
 export default MethodStatementGenerator;

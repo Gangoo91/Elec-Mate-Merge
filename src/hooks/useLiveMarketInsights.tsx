@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 
 interface MarketInsightsData {
@@ -131,7 +132,7 @@ export const useLiveMarketInsights = (keywords = 'electrician', location = 'UK')
   // Set up real-time subscription
   useEffect(() => {
     const channel = supabase
-      .channel('market-insights-changes')
+      .channel(realtimeChannelName('market-insights-changes'))
       .on(
         'postgres_changes',
         {

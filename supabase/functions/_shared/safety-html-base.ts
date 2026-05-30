@@ -221,8 +221,10 @@ export function renderPage(opts: {
   const secondary = branding.secondary_color || '#0f172a';
   const badge = STATUS_BADGE[statusColour];
   const now = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
+  const issuedDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
   const logoSrc = branding.logo_url || branding.logo_data_url;
+  const coverLogoHtml = logoSrc ? `<img src="${logoSrc}" alt="" class="cover-logo" />` : '';
   const logoHtml = logoSrc
     ? `<img src="${logoSrc}" alt="" class="header-logo" />`
     : '';
@@ -270,6 +272,48 @@ export function renderPage(opts: {
   @page { size: A4; margin: 0; }
 
   .page { padding: 0 28px 20px; max-width: 210mm; margin: 0 auto; }
+
+  /* ── Cover sheet (page 1) ──────────────────────────── */
+  .cover {
+    height: 250mm; display: flex; flex-direction: column;
+    page-break-after: always; background: #fff;
+  }
+  .cover-top {
+    background: ${secondary}; color: #fff; padding: 30px 40px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .cover-top-left { display: flex; align-items: center; gap: 16px; }
+  .cover-logo {
+    width: 60px; height: 60px; object-fit: contain; border-radius: 8px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  }
+  .cover-company { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.15; }
+  .cover-company-sub { font-size: 8.5px; opacity: 0.6; margin-top: 4px; letter-spacing: 0.3px; }
+  .cover-scheme { max-width: 72px; max-height: 48px; object-fit: contain; }
+  .cover-mid { flex: 1; padding: 0 40px; display: flex; flex-direction: column; justify-content: center; }
+  .cover-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: ${primary};
+  }
+  .cover-title {
+    font-size: 38px; font-weight: 800; color: ${secondary};
+    line-height: 1.08; letter-spacing: -1px; margin-top: 12px; max-width: 90%;
+  }
+  .cover-rule { width: 60px; height: 4px; background: ${primary}; border-radius: 2px; margin: 26px 0; }
+  .cover-facts { display: flex; gap: 44px; }
+  .cover-fact-label {
+    font-size: 8px; text-transform: uppercase; letter-spacing: 1px;
+    color: #94a3b8; font-weight: 700;
+  }
+  .cover-fact-value { font-size: 13px; color: ${secondary}; font-weight: 700; margin-top: 4px; }
+  .cover-fact-ref { font-family: 'Courier New', monospace; letter-spacing: 0.5px; }
+  .cover-bottom {
+    padding: 22px 40px 30px; border-top: 1px solid #e5e7eb;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .cover-reg { font-size: 8px; color: #64748b; line-height: 1.6; letter-spacing: 0.2px; }
+  .cover-prepared { font-size: 8.5px; color: #94a3b8; text-align: right; }
+  .cover-prepared strong { color: ${primary}; font-weight: 700; }
 
   /* ── Header — Company bar ──────────────────────────── */
   .header-brand {
@@ -497,6 +541,44 @@ export function renderPage(opts: {
 </style>
 </head>
 <body>
+
+<!-- Cover Sheet (page 1) -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-top-left">
+      ${coverLogoHtml}
+      <div>
+        <div class="cover-company">${esc(companyName)}</div>
+        ${addressLine ? `<div class="cover-company-sub">${addressLine}</div>` : ''}
+        ${contactParts.length > 0 ? `<div class="cover-company-sub">${contactParts.join(' &nbsp;&#183;&nbsp; ')}</div>` : ''}
+      </div>
+    </div>
+    ${branding.scheme_logo_data_url ? `<img src="${branding.scheme_logo_data_url}" alt="${esc(branding.registration_scheme || '')}" class="cover-scheme" />` : ''}
+  </div>
+  <div class="cover-mid">
+    <div class="cover-eyebrow">Health &amp; Safety Document</div>
+    <div class="cover-title">${esc(title)}</div>
+    <div class="cover-rule"></div>
+    <div class="cover-facts">
+      <div>
+        <div class="cover-fact-label">Reference</div>
+        <div class="cover-fact-value cover-fact-ref">${esc(refId.substring(0, 8).toUpperCase())}</div>
+      </div>
+      <div>
+        <div class="cover-fact-label">Issued</div>
+        <div class="cover-fact-value">${esc(issuedDate)}</div>
+      </div>
+      <div>
+        <div class="cover-fact-label">Status</div>
+        <div class="cover-fact-value"><span class="status-badge">${esc(statusLabel)}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-reg">${regParts.length > 0 ? regParts.join('<br />') : ''}</div>
+    <div class="cover-prepared">Prepared with <strong>Elec-Mate</strong><br />elec-mate.com</div>
+  </div>
+</div>
 
 <!-- Header — Company Bar -->
 <div class="header-brand">

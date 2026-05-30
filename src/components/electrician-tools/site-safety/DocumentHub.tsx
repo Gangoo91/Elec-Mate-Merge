@@ -1,173 +1,191 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  Search,
-  FileText,
-  Download,
-  Loader2,
-  Check,
-  X,
-  AlertTriangle,
-  Users,
-  FolderOpen,
-  CheckCircle,
-  FileCheck,
-  Upload,
-  Sparkles,
-  FileUp,
-  Edit3,
-} from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
 import {
   useAllSafetyDocuments,
   type DocumentType,
   type SafetyDocument,
 } from '@/hooks/useAllSafetyDocuments';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { useShowMore } from '@/hooks/useShowMore';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
+
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  SheetShell,
+  type Tone,
+} from '@/components/college/primitives';
+
+import { SafetyModuleShell } from './common/SafetyModuleShell';
+import { LoadMoreButton } from './common/LoadMoreButton';
 import { RAMSAmendDialog } from './ai-rams/RAMSAmendDialog';
 import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
 import { UserRAMSUpload } from './UserRAMSUpload';
-import { cn } from '@/lib/utils';
 
 interface DocumentHubProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
-const TYPE_CONFIG: Record<
-  DocumentType,
-  { colour: string; bg: string; border: string; icon: typeof FileText }
-> = {
-  Permit: {
-    colour: 'text-amber-400',
-    bg: 'bg-amber-500/10',
-    border: 'border-amber-500/20',
-    icon: FileText,
-  },
-  COSHH: {
-    colour: 'text-green-400',
-    bg: 'bg-green-500/10',
-    border: 'border-green-500/20',
-    icon: FileText,
-  },
-  Inspection: {
-    colour: 'text-indigo-400',
-    bg: 'bg-indigo-500/10',
-    border: 'border-indigo-500/20',
-    icon: FileText,
-  },
-  Accident: {
-    colour: 'text-red-400',
-    bg: 'bg-red-500/10',
-    border: 'border-red-500/20',
-    icon: FileText,
-  },
-  'Near Miss': {
-    colour: 'text-rose-400',
-    bg: 'bg-rose-500/10',
-    border: 'border-rose-500/20',
-    icon: AlertTriangle,
-  },
-  Observation: {
-    colour: 'text-lime-400',
-    bg: 'bg-lime-500/10',
-    border: 'border-lime-500/20',
-    icon: FileText,
-  },
-  'Site Diary': {
-    colour: 'text-violet-400',
-    bg: 'bg-violet-500/10',
-    border: 'border-violet-500/20',
-    icon: FileText,
-  },
-  Isolation: {
-    colour: 'text-orange-400',
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-    icon: FileText,
-  },
-  'Fire Watch': {
-    colour: 'text-orange-300',
-    bg: 'bg-orange-400/10',
-    border: 'border-orange-400/20',
-    icon: FileText,
-  },
-  Equipment: {
-    colour: 'text-cyan-400',
-    bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/20',
-    icon: FileText,
-  },
-  RAMS: {
-    colour: 'text-amber-300',
-    bg: 'bg-amber-400/10',
-    border: 'border-amber-400/20',
-    icon: FileText,
-  },
-  Briefing: {
-    colour: 'text-purple-400',
-    bg: 'bg-purple-500/10',
-    border: 'border-purple-500/20',
-    icon: Users,
-  },
+/* ────────────────────────────────────────────────────────
+   Families — collapse the 12-colour per-type palette into
+   three meaningful groups. Colour never rides on family; it
+   rides on status only (see statusTone below).
+   ──────────────────────────────────────────────────────── */
+
+type Family = 'generate' | 'record' | 'reference';
+
+const FAMILY_OF: Record<DocumentType, Family> = {
+  // Things you produce / author
+  RAMS: 'generate',
+  COSHH: 'generate',
+  // Things you log as they happen
+  'Near Miss': 'record',
+  Accident: 'record',
+  Observation: 'record',
+  'Site Diary': 'record',
+  Inspection: 'record',
+  Isolation: 'record',
+  'Fire Watch': 'record',
+  Permit: 'record',
+  Equipment: 'record',
+  // Things you brief from / refer to
+  Briefing: 'reference',
 };
 
-// Status badge styles
-const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  draft: { bg: 'bg-amber-500/15', text: 'text-amber-400', label: 'Draft' },
-  open: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'Open' },
-  active: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Active' },
-  in_progress: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'In Progress' },
-  submitted: { bg: 'bg-indigo-500/15', text: 'text-indigo-400', label: 'Submitted' },
-  approved: { bg: 'bg-green-500/15', text: 'text-green-400', label: 'Approved' },
-  reviewed: { bg: 'bg-green-500/15', text: 'text-green-400', label: 'Reviewed' },
-  completed: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Completed' },
-  closed: { bg: 'bg-white/10', text: 'text-white', label: 'Closed' },
-  cancelled: { bg: 'bg-red-500/15', text: 'text-red-400', label: 'Cancelled' },
-  expired: { bg: 'bg-red-500/15', text: 'text-red-400', label: 'Expired' },
-  recorded: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'Recorded' },
-  scheduled: { bg: 'bg-purple-500/15', text: 'text-purple-400', label: 'Scheduled' },
-  isolated: { bg: 'bg-orange-500/15', text: 'text-orange-400', label: 'Isolated' },
-  re_energised: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Re-energised' },
+const FAMILY_LABEL: Record<Family, string> = {
+  generate: 'Generate',
+  record: 'Record',
+  reference: 'Reference',
 };
 
-// Table mapping for status updates — only tables that exist
+/* ────────────────────────────────────────────────────────
+   Status — the single colour dimension
+   ──────────────────────────────────────────────────────── */
+
+// Map every status to a tone + display label.
+const STATUS_TONE: Record<string, Tone | 'neutral'> = {
+  draft: 'amber',
+  open: 'blue',
+  active: 'green',
+  in_progress: 'blue',
+  submitted: 'indigo',
+  approved: 'green',
+  reviewed: 'green',
+  completed: 'green',
+  closed: 'neutral',
+  cancelled: 'red',
+  expired: 'red',
+  recorded: 'blue',
+  scheduled: 'purple',
+  isolated: 'orange',
+  re_energised: 'green',
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  draft: 'Draft',
+  open: 'Open',
+  active: 'Active',
+  in_progress: 'In progress',
+  submitted: 'Submitted',
+  approved: 'Approved',
+  reviewed: 'Reviewed',
+  completed: 'Completed',
+  closed: 'Closed',
+  cancelled: 'Cancelled',
+  expired: 'Expired',
+  recorded: 'Recorded',
+  scheduled: 'Scheduled',
+  isolated: 'Isolated',
+  re_energised: 'Re-energised',
+};
+
+const STATUS_PILL: Record<Tone | 'neutral', string> = {
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+};
+
+function statusTone(status: string): Tone | undefined {
+  const t = STATUS_TONE[status];
+  return t && t !== 'neutral' ? t : undefined;
+}
+
+function StatusPill({ status }: { status: string }) {
+  const key = STATUS_TONE[status] ?? 'neutral';
+  const label = STATUS_LABEL[status] || status;
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        STATUS_PILL[key]
+      )}
+    >
+      {label}
+    </span>
+  );
+}
+
+// An open/active status sorts above settled ones so live work stays on top.
+const URGENT_STATUSES = new Set([
+  'open',
+  'active',
+  'in_progress',
+  'draft',
+  'submitted',
+  'scheduled',
+  'isolated',
+  'expired',
+]);
+
+/* ────────────────────────────────────────────────────────
+   Status update plumbing — preserved verbatim from the
+   previous implementation (tables, transitions, mutation).
+   ──────────────────────────────────────────────────────── */
+
 const TABLE_MAP: Partial<Record<DocumentType, string>> = {
   'Near Miss': 'near_miss_reports',
   RAMS: 'rams_documents',
   Briefing: 'team_briefings',
 };
 
-// Approval transitions per document type
 const STATUS_TRANSITIONS: Partial<
   Record<DocumentType, { from: string; to: string; label: string }[]>
 > = {
   'Near Miss': [
-    { from: 'open', to: 'in_progress', label: 'Mark In Progress' },
+    { from: 'open', to: 'in_progress', label: 'Mark in progress' },
     { from: 'in_progress', to: 'closed', label: 'Close' },
     { from: 'open', to: 'closed', label: 'Close' },
   ],
   RAMS: [{ from: 'draft', to: 'approved', label: 'Approve' }],
 };
 
-// Only types with existing tables
-const ALL_TYPES: (DocumentType | 'All')[] = ['All', 'RAMS', 'Near Miss', 'Briefing'];
-
 type RAMSSourceFilter = 'all' | 'ai-generated' | 'user-uploaded';
 
-function formatRelativeDate(dateStr: string): string {
+function fmtRelative(dateStr: string): string {
   const date = new Date(dateStr);
   const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
+  const diffMins = Math.floor((now.getTime() - date.getTime()) / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
   if (diffMins < 1) return 'Just now';
   if (diffMins < 60) return `${diffMins}m ago`;
   if (diffHours < 24) return `${diffHours}h ago`;
@@ -180,8 +198,9 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
   const { data: documents = [], isLoading } = useAllSafetyDocuments();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const queryClient = useQueryClient();
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeFilter, setActiveFilter] = useState<DocumentType | 'All'>('All');
+  const [activeFamily, setActiveFamily] = useState<Family | 'all'>('all');
   const [approvalDoc, setApprovalDoc] = useState<SafetyDocument | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -192,13 +211,14 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
   const [quickEditDialogOpen, setQuickEditDialogOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
 
-  // Fetch RAMS source data for source tabs
+  // RAMS source map (ai-generated vs user-uploaded)
   const [ramsSourceData, setRamsSourceData] = useState<Record<string, string>>({});
   const [ramsSourceLoaded, setRamsSourceLoaded] = useState(false);
 
-  // Load RAMS source data when RAMS filter is active
+  const isGenerateFamily = activeFamily === 'generate';
+
   useEffect(() => {
-    if (activeFilter !== 'RAMS' || ramsSourceLoaded) return;
+    if (!isGenerateFamily || ramsSourceLoaded) return;
     const load = async () => {
       const {
         data: { user },
@@ -218,22 +238,19 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
       }
     };
     load();
-  }, [activeFilter, ramsSourceLoaded]);
+  }, [isGenerateFamily, ramsSourceLoaded]);
 
   const handleStatusUpdate = useCallback(
     async (doc: SafetyDocument, newStatus: string) => {
       const table = TABLE_MAP[doc.type];
       if (!table) return;
-
       setIsUpdating(true);
       try {
         const { error } = await supabase
           .from(table)
           .update({ status: newStatus })
           .eq('id', doc.sourceId);
-
         if (error) throw error;
-
         queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
         toast({ title: 'Status updated', description: `Document marked as ${newStatus}` });
         setApprovalDoc(null);
@@ -256,14 +273,19 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     return transitions.filter((t) => t.from === doc.status);
   }, []);
 
-  // RAMS source counts
+  // ─── Family counts ───
+  const familyCounts = useMemo(() => {
+    const c: Record<Family, number> = { generate: 0, record: 0, reference: 0 };
+    for (const d of documents) c[FAMILY_OF[d.type]] += 1;
+    return c;
+  }, [documents]);
+
+  // ─── RAMS source counts (within Generate) ───
   const ramsDocuments = useMemo(() => documents.filter((d) => d.type === 'RAMS'), [documents]);
   const aiGeneratedCount = useMemo(
     () =>
-      ramsDocuments.filter((d) => {
-        const source = ramsSourceData[d.id] || 'ai-generated';
-        return source === 'ai-generated';
-      }).length,
+      ramsDocuments.filter((d) => (ramsSourceData[d.id] || 'ai-generated') === 'ai-generated')
+        .length,
     [ramsDocuments, ramsSourceData]
   );
   const uploadedCount = useMemo(
@@ -271,16 +293,18 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     [ramsDocuments, ramsSourceData]
   );
 
+  // ─── Filter + sort ───
   const filtered = useMemo(() => {
     let result = documents;
 
-    if (activeFilter !== 'All') {
-      result = result.filter((d) => d.type === activeFilter);
+    if (activeFamily !== 'all') {
+      result = result.filter((d) => FAMILY_OF[d.type] === activeFamily);
     }
 
-    // RAMS source filter
-    if (activeFilter === 'RAMS' && ramsSourceFilter !== 'all') {
+    // RAMS source filter (only meaningful within Generate)
+    if (isGenerateFamily && ramsSourceFilter !== 'all') {
       result = result.filter((d) => {
+        if (d.type !== 'RAMS') return false;
         const source = ramsSourceData[d.id] || 'ai-generated';
         return source === ramsSourceFilter;
       });
@@ -296,8 +320,16 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
       );
     }
 
-    return result;
-  }, [documents, activeFilter, searchTerm, ramsSourceFilter, ramsSourceData]);
+    // Urgent / live first, then by recency.
+    return [...result].sort((a, b) => {
+      const ua = URGENT_STATUSES.has(a.status) ? 0 : 1;
+      const ub = URGENT_STATUSES.has(b.status) ? 0 : 1;
+      if (ua !== ub) return ua - ub;
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+    });
+  }, [documents, activeFamily, isGenerateFamily, ramsSourceFilter, ramsSourceData, searchTerm]);
+
+  const { visible, hasMore, remaining, loadMore } = useShowMore(filtered);
 
   const handleExport = (doc: SafetyDocument) => {
     if (doc.hasPDF && doc.pdfType) {
@@ -305,244 +337,188 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     }
   };
 
-  const isRamsFilterActive = activeFilter === 'RAMS';
+  const openAmend = (sourceId: string) => {
+    setSelectedDocumentId(sourceId);
+    setAmendDialogOpen(true);
+  };
 
+  // ─── Render ───
   return (
-    <div className="flex flex-col h-full bg-background">
-      {/* Sticky header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-        </div>
-
-        {/* Editorial hero — eyebrow + headline + count + optional upload */}
-        <div className="px-4 pb-3 space-y-4">
-          <div className="flex items-baseline justify-between gap-3 pt-3">
-            <div className="space-y-1">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-                Site safety
-              </div>
-              <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.05] text-white">
-                Documents.
-              </h1>
-              <p className="text-[12.5px] text-white/55 tabular-nums">
-                {documents.length} document{documents.length !== 1 ? 's' : ''} across all modules
-              </p>
-            </div>
-            {isRamsFilterActive && (
-              <button
-                type="button"
-                onClick={() => setUploadSheetOpen(true)}
-                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation shrink-0"
-              >
-                <Upload className="h-3.5 w-3.5" />
-                Upload
-              </button>
-            )}
-          </div>
-
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-            <Input
-              placeholder="Search documents..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 h-11 text-base touch-manipulation bg-white/[0.05] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow"
+    <SafetyModuleShell
+      onBack={onBack ?? (() => undefined)}
+      moduleName="Document Hub"
+      trailing={
+        documents.length > 0 ? (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-white/55 border-white/10 tabular-nums">
+            {documents.length}
+          </span>
+        ) : undefined
+      }
+      hero={
+        <PageHero
+          eyebrow="Document Hub"
+          title="Every safety document in one place"
+          description="Records you log, documents you generate and references you brief from — grouped, searchable and ready to export or hand over."
+          tone="amber"
+          actions={
+            isGenerateFamily ? (
+              <PrimaryButton onClick={() => setUploadSheetOpen(true)}>Upload RAMS</PrimaryButton>
+            ) : undefined
+          }
+        />
+      }
+      stats={
+        documents.length > 0 ? (
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                value: familyCounts.generate,
+                label: 'Generate',
+                onClick: () => {
+                  setActiveFamily('generate');
+                  setRamsSourceFilter('all');
+                },
+              },
+              {
+                value: familyCounts.record,
+                label: 'Record',
+                accent: true,
+                onClick: () => setActiveFamily('record'),
+              },
+              {
+                value: familyCounts.reference,
+                label: 'Reference',
+                onClick: () => setActiveFamily('reference'),
+              },
+              { value: documents.length, label: 'Total', onClick: () => setActiveFamily('all') },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        documents.length > 0 ? (
+          <div className="space-y-3">
+            <FilterBar
+              tabs={[
+                { value: 'all', label: 'All', count: documents.length },
+                { value: 'generate', label: 'Generate', count: familyCounts.generate },
+                { value: 'record', label: 'Record', count: familyCounts.record },
+                { value: 'reference', label: 'Reference', count: familyCounts.reference },
+              ]}
+              activeTab={activeFamily}
+              onTabChange={(v) => {
+                setActiveFamily(v as Family | 'all');
+                if (v !== 'generate') setRamsSourceFilter('all');
+              }}
+              search={searchTerm}
+              onSearchChange={setSearchTerm}
+              searchPlaceholder="Search documents…"
             />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 h-6 w-6 flex items-center justify-center rounded-full bg-white/10 touch-manipulation"
-              >
-                <X className="h-3 w-3 text-white" />
-              </button>
+
+            {/* RAMS source sub-filter — only within Generate */}
+            {isGenerateFamily && ramsDocuments.length > 0 && (
+              <FilterBar
+                tabs={[
+                  { value: 'all', label: 'All sources', count: ramsDocuments.length },
+                  { value: 'ai-generated', label: 'Generated', count: aiGeneratedCount },
+                  { value: 'user-uploaded', label: 'Uploaded', count: uploadedCount },
+                ]}
+                activeTab={ramsSourceFilter}
+                onTabChange={(v) => setRamsSourceFilter(v as RAMSSourceFilter)}
+              />
             )}
           </div>
-        </div>
-
-        {/* Filter chips */}
-        <div className="px-4 pb-3 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-2">
-            {ALL_TYPES.map((type) => {
-              const isActive = activeFilter === type;
-              return (
-                <button
-                  key={type}
-                  onClick={() => {
-                    setActiveFilter(type);
-                    if (type !== 'RAMS') setRamsSourceFilter('all');
-                  }}
-                  className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97] ${
-                    isActive
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.06] text-white border border-white/10'
-                  }`}
-                >
-                  {type}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* RAMS source tabs — only when RAMS filter active */}
-        {isRamsFilterActive && (
-          <div className="px-4 pb-3 overflow-x-auto scrollbar-hide">
-            <div className="flex gap-2">
-              <button
-                onClick={() => setRamsSourceFilter('all')}
-                className={cn(
-                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97]',
-                  ramsSourceFilter === 'all'
-                    ? 'bg-white/20 text-white'
-                    : 'bg-white/[0.06] text-white border border-white/10'
-                )}
-              >
-                All ({ramsDocuments.length})
-              </button>
-              <button
-                onClick={() => setRamsSourceFilter('ai-generated')}
-                className={cn(
-                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97] flex items-center gap-1',
-                  ramsSourceFilter === 'ai-generated'
-                    ? 'bg-white/20 text-white'
-                    : 'bg-white/[0.06] text-white border border-white/10'
-                )}
-              >
-                <Sparkles className="h-3 w-3" />
-                AI ({aiGeneratedCount})
-              </button>
-              <button
-                onClick={() => setRamsSourceFilter('user-uploaded')}
-                className={cn(
-                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97] flex items-center gap-1',
-                  ramsSourceFilter === 'user-uploaded'
-                    ? 'bg-white/20 text-white'
-                    : 'bg-white/[0.06] text-white border border-white/10'
-                )}
-              >
-                <FileUp className="h-3 w-3" />
-                Uploaded ({uploadedCount})
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 pb-24">
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-            <p className="text-sm text-white">Loading documents...</p>
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-              <FileText className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-base font-semibold text-white mb-1">
-              {searchTerm ? 'No Results' : 'No Documents'}
-            </h3>
-            <p className="text-sm text-white text-center max-w-xs">
-              {searchTerm
-                ? `No documents match "${searchTerm}"`
-                : activeFilter !== 'All'
-                  ? `No ${activeFilter} documents found. Create one from the tools above.`
-                  : 'Your safety documents will appear here as you create them.'}
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-2.5">
-            {filtered.map((doc, index) => {
-              const config = TYPE_CONFIG[doc.type];
-              const Icon = config.icon;
-              const isThisExporting = isExporting && exportingId === doc.sourceId;
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : documents.length === 0 ? (
+        <EmptyState
+          title="No documents yet"
+          description="Your safety records, RAMS and briefings will appear here as you create them across the Site Safety tools."
+        />
+      ) : filtered.length === 0 ? (
+        <EmptyState
+          title={searchTerm ? 'No documents match your search' : 'Nothing in this group yet'}
+          description={
+            searchTerm
+              ? `No documents match “${searchTerm}”.`
+              : activeFamily !== 'all'
+                ? `No ${FAMILY_LABEL[activeFamily as Family]} documents found. Create one from the Site Safety tools.`
+                : 'Try a different group or clear your search.'
+          }
+        />
+      ) : (
+        <div className="space-y-3">
+          <ListCard>
+            {visible.map((doc) => {
+              const family = FAMILY_OF[doc.type];
+              const transitions = getAvailableTransitions(doc);
               const isRAMS = doc.type === 'RAMS';
-
+              const isThisExporting = isExporting && exportingId === doc.sourceId;
               return (
-                <motion.div
+                <ListRow
                   key={`${doc.type}-${doc.id}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: Math.min(index * 0.02, 0.3),
-                    duration: 0.15,
-                  }}
-                  className="bg-[hsl(0_0%_10%)] border border-white/[0.08] sm:rounded-2xl active:bg-white/[0.04] hover:border-white/15 transition-colors touch-manipulation overflow-hidden"
-                >
-                  <div className="p-4 sm:p-5 space-y-3">
-                    {/* Type pill + status pills */}
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] ${config.bg} ${config.colour}`}>
-                        {doc.type}
+                  accent={statusTone(doc.status)}
+                  title={doc.title}
+                  subtitle={
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="uppercase tracking-[0.1em] text-[10.5px] text-white/45">
+                        {FAMILY_LABEL[family]}
                       </span>
-                      {(() => {
-                        const statusStyle = STATUS_STYLES[doc.status] || {
-                          bg: 'bg-white/10',
-                          text: 'text-white',
-                          label: doc.status,
-                        };
-                        return (
-                          <span className={`inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] ${statusStyle.bg} ${statusStyle.text}`}>
-                            {statusStyle.label}
+                      <span className="text-white/25" aria-hidden>
+                        ·
+                      </span>
+                      <span>{doc.type}</span>
+                      {doc.siteAddress && (
+                        <>
+                          <span className="text-white/25" aria-hidden>
+                            ·
                           </span>
-                        );
-                      })()}
-                      {doc.hasSignature && (
-                        <span className="inline-flex items-center gap-1 h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] bg-emerald-500/15 text-emerald-400">
-                          Signed
-                        </span>
+                          <span className="truncate">{doc.siteAddress}</span>
+                        </>
                       )}
-                    </div>
-
-                    {/* Title — editorial, no icon */}
-                    <h3 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white leading-snug line-clamp-2">
-                      {doc.title}
-                    </h3>
-
-                    {/* Bottom row: metadata + actions, editorial chrome */}
-                    <div className="flex items-baseline justify-between gap-3 pt-2 border-t border-white/[0.06]">
-                      <div className="flex items-baseline gap-2 min-w-0 text-[11.5px] text-white/55 tabular-nums">
-                        <span className="shrink-0">{formatRelativeDate(doc.updatedAt)}</span>
-                        {doc.siteAddress && (
-                          <>
-                            <span className="text-white/30 shrink-0">·</span>
-                            <span className="truncate">{doc.siteAddress}</span>
-                          </>
+                      <span className="text-white/25" aria-hidden>
+                        ·
+                      </span>
+                      <span className="tabular-nums text-white/45">{fmtRelative(doc.updatedAt)}</span>
+                    </span>
+                  }
+                  trailing={
+                    <div className="flex flex-col items-end gap-1.5">
+                      <div className="flex items-center gap-1.5">
+                        {doc.hasSignature && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-emerald-500/10 text-emerald-400 border-emerald-500/25">
+                            Signed
+                          </span>
                         )}
+                        <StatusPill status={doc.status} />
                       </div>
-
-                      <div className="flex items-center gap-4 shrink-0">
+                      <div className="flex items-center gap-3">
                         {isRAMS && (
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedDocumentId(doc.sourceId);
-                              setAmendDialogOpen(true);
+                              openAmend(doc.sourceId);
                             }}
-                            className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
+                            className="text-[11.5px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
                           >
                             Amend
                           </button>
                         )}
-                        {getAvailableTransitions(doc).length > 0 && (
+                        {transitions.length > 0 && (
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               setApprovalDoc(doc);
                             }}
-                            className="text-[12px] font-medium text-emerald-400/80 hover:text-emerald-400 transition-colors touch-manipulation"
+                            className="text-[11.5px] font-medium text-emerald-400/85 hover:text-emerald-400 transition-colors touch-manipulation"
                           >
-                            Approve
+                            {transitions[0].label}
                           </button>
                         )}
                         {doc.hasPDF && (
@@ -553,67 +529,58 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                               handleExport(doc);
                             }}
                             disabled={isThisExporting}
-                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation disabled:opacity-50"
+                            className="text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation disabled:opacity-50"
                           >
-                            {isThisExporting ? (
-                              <>
-                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                                Exporting
-                              </>
-                            ) : (
-                              <>
-                                <Download className="h-3.5 w-3.5" />
-                                PDF
-                              </>
-                            )}
+                            {isThisExporting ? 'Exporting…' : 'PDF'}
                           </button>
                         )}
                       </div>
                     </div>
-                  </div>
-                </motion.div>
+                  }
+                />
               );
             })}
-          </div>
-        )}
-      </div>
+          </ListCard>
+          {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
+        </div>
+      )}
 
-      {/* Approval bottom sheet */}
-      <Sheet open={!!approvalDoc} onOpenChange={() => setApprovalDoc(null)}>
-        <SheetContent side="bottom" className="rounded-t-2xl bg-background border-white/10">
-          <SheetHeader className="pb-4">
-            <SheetTitle className="text-white text-left">Update Status</SheetTitle>
-          </SheetHeader>
+      {/* ─── Status update sheet ─── */}
+      <Sheet open={!!approvalDoc} onOpenChange={(o) => !o && setApprovalDoc(null)}>
+        <SheetContent side="bottom" className="h-auto max-h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
           {approvalDoc && (
-            <div className="space-y-3 pb-6">
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <p className="text-sm font-semibold text-white">{approvalDoc.title}</p>
-                <p className="text-xs text-white mt-1">
-                  {approvalDoc.type} — Currently:{' '}
-                  {STATUS_STYLES[approvalDoc.status]?.label || approvalDoc.status}
-                </p>
+            <SheetShell
+              eyebrow={`${FAMILY_LABEL[FAMILY_OF[approvalDoc.type]]} · ${approvalDoc.type}`}
+              title="Update status"
+              description={
+                <span className="inline-flex items-center gap-2">
+                  <span>Currently</span>
+                  <StatusPill status={approvalDoc.status} />
+                </span>
+              }
+            >
+              <div className="text-[13px] text-white/85">{approvalDoc.title}</div>
+              <div className="space-y-2 pt-1">
+                {getAvailableTransitions(approvalDoc).map((transition) => (
+                  <PrimaryButton
+                    key={transition.to}
+                    fullWidth
+                    disabled={isUpdating}
+                    onClick={() => handleStatusUpdate(approvalDoc, transition.to)}
+                  >
+                    {isUpdating ? 'Saving…' : transition.label}
+                  </PrimaryButton>
+                ))}
+                <SecondaryButton fullWidth onClick={() => setApprovalDoc(null)}>
+                  Cancel
+                </SecondaryButton>
               </div>
-              {getAvailableTransitions(approvalDoc).map((transition) => (
-                <Button
-                  key={transition.to}
-                  onClick={() => handleStatusUpdate(approvalDoc, transition.to)}
-                  disabled={isUpdating}
-                  className="w-full h-12 text-base touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
-                >
-                  {isUpdating ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                  )}
-                  {transition.label}
-                </Button>
-              ))}
-            </div>
+            </SheetShell>
           )}
         </SheetContent>
       </Sheet>
 
-      {/* RAMS Upload Sheet */}
+      {/* ─── RAMS upload ─── */}
       <UserRAMSUpload
         open={uploadSheetOpen}
         onOpenChange={setUploadSheetOpen}
@@ -623,7 +590,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
         }}
       />
 
-      {/* RAMS Amend Dialogs */}
+      {/* ─── RAMS amend / quick-edit ─── */}
       {selectedDocumentId && (
         <>
           <RAMSAmendDialog
@@ -638,7 +605,6 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
               setQuickEditDialogOpen(true);
             }}
           />
-
           <RAMSQuickEditDialog
             documentId={selectedDocumentId}
             isOpen={quickEditDialogOpen}
@@ -650,7 +616,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
           />
         </>
       )}
-    </div>
+    </SafetyModuleShell>
   );
 }
 

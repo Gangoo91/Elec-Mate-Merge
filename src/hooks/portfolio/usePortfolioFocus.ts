@@ -23,6 +23,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import type { PortfolioEntry } from '@/types/portfolio';
 import type { QualificationACTree } from '@/hooks/qualification/useQualificationACs';
+import type { ACSignoffRecord } from '@/hooks/portfolio/useACSignoffs';
 
 export interface FocusAC {
   acRef: string;
@@ -34,8 +35,7 @@ export interface FocusAC {
   /** 0..1 score for ranking */
   score: number;
   reason: string;
-  /** 'quick-win' | 'recent-match' | 'foundational' | 'next-up' */
-  reasonKind: 'quick-win' | 'recent-match' | 'foundational' | 'next-up';
+  reasonKind: 'referred' | 'quick-win' | 'recent-match' | 'foundational' | 'next-up';
 }
 
 interface RecentActivity {
@@ -86,7 +86,13 @@ function overlapScore(a: Set<string>, b: Set<string>): number {
 export function usePortfolioFocus(
   tree: QualificationACTree | null,
   portfolioEntries: PortfolioEntry[] | undefined,
-  acEvidenceMap: Map<string, PortfolioEntry[]>
+  acEvidenceMap: Map<string, PortfolioEntry[]>,
+  /**
+   * Assessor / IQA sign-off records from useACSignoffs, keyed by
+   * `${unitCode}:${acCode}` and bare `acCode`. Makes the ranking aware of
+   * what's already passed and what an assessor has sent back.
+   */
+  signoffRecords?: Map<string, ACSignoffRecord>
 ) {
   const { user } = useAuth();
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
@@ -179,12 +185,43 @@ export function usePortfolioFocus(
 
     const candidates: FocusAC[] = [];
 
+    // Sign-off lookup — tries unit-keyed then bare AC ref, both ref forms.
+    const getSig = (
+      unitCode: string,
+      acRef: string,
+      acFullRef: string
+    ): ACSignoffRecord | undefined => {
+      if (!signoffRecords) return undefined;
+      return (
+        signoffRecords.get(`${unitCode}:${acRef}`) ||
+        signoffRecords.get(`${unitCode}:${acFullRef}`) ||
+        signoffRecords.get(acRef) ||
+        signoffRecords.get(acFullRef)
+      );
+    };
+
     for (const unit of tree.units) {
       const unitImportant = HIGH_PRIORITY_UNITS.some((u) => unit.unitCode.includes(u));
       for (const lo of unit.learningOutcomes) {
         for (const ac of lo.assessmentCriteria) {
-          // Already evidenced — skip
-          if (acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)) continue;
+          const sig = getSig(unit.unitCode, ac.acRef, ac.acFullRef);
+          const isReferred = sig?.status === 'referred';
+
+          // A referred AC is always actionable (assessor sent it back), even
+          // though it already has evidence — so never skip it. Everything
+          // else that's evidenced / awaiting an assessor / already passed is
+          // not where the apprentice should spend effort next.
+          if (!isReferred) {
+            if (acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)) continue;
+            if (
+              sig &&
+              (sig.status === 'evidenced' ||
+                sig.status === 'signed_off' ||
+                sig.status === 'iqa_confirmed')
+            ) {
+              continue;
+            }
+          }
 
           const acTok = tokens(ac.acText);
           let bestOverlap = 0;
@@ -210,7 +247,13 @@ export function usePortfolioFocus(
           let reason = '';
           let reasonKind: FocusAC['reasonKind'] = 'next-up';
 
-          if (isClaimedOnly) {
+          if (isReferred) {
+            score = 1;
+            reason = sig?.assessorNarrative
+              ? `Your assessor sent this back: "${sig.assessorNarrative.slice(0, 90)}${sig.assessorNarrative.length > 90 ? '…' : ''}" — address it and resubmit.`
+              : 'Your assessor sent this back for more work — open their feedback and resubmit.';
+            reasonKind = 'referred';
+          } else if (isClaimedOnly) {
             score = 0.95;
             reason = 'Claimed already — just attach a piece of evidence to lock it in.';
             reasonKind = 'quick-win';
@@ -259,7 +302,7 @@ export function usePortfolioFocus(
       if (picked.length >= 3) break;
     }
     return picked;
-  }, [tree, portfolioEntries, acEvidenceMap, recentActivity]);
+  }, [tree, portfolioEntries, acEvidenceMap, recentActivity, signoffRecords]);
 
   return { focus, recentActivityCount: recentActivity.length };
 }

@@ -1,29 +1,18 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ArrowLeft,
-  Flame,
-  Play,
-  Pause,
-  CheckCircle2,
-  Clock,
-  AlertTriangle,
-  Shield,
-  X,
-  MapPin,
-  FileText,
-} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { Input } from '@/components/ui/input';
-import { SafetyEmptyState } from '../common/SafetyEmptyState';
-import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
-import { SignaturePad } from '../common/SignaturePad';
-import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useFireWatchRecords } from '@/hooks/useFireWatchRecords';
+
+import { SafetyMasthead } from '../common/SafetyModuleShell';
+import { SignatureField } from '../common/SignatureField';
+import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
+import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { FireWatchHistory } from './FireWatchHistory';
+import { PageHero, FilterBar, Field, Eyebrow, PrimaryButton, SecondaryButton, inputClass } from '@/components/college/primitives';
 
 interface FireWatchTimerProps {
   onBack: () => void;
@@ -36,36 +25,16 @@ interface ChecklistItem {
 }
 
 const DEFAULT_CHECKLIST: ChecklistItem[] = [
-  {
-    id: 'fw1',
-    label: 'Area clear of combustible materials',
-    checked: false,
-  },
-  {
-    id: 'fw2',
-    label: 'Fire extinguisher present and accessible',
-    checked: false,
-  },
-  {
-    id: 'fw3',
-    label: 'Combustible materials removed or protected',
-    checked: false,
-  },
-  {
-    id: 'fw4',
-    label: 'Smoke detector not isolated',
-    checked: false,
-  },
-  {
-    id: 'fw5',
-    label: 'Fire exit routes clear and unobstructed',
-    checked: false,
-  },
+  { id: 'fw1', label: 'Area clear of combustible materials', checked: false },
+  { id: 'fw2', label: 'Fire extinguisher present and accessible', checked: false },
+  { id: 'fw3', label: 'Combustible materials removed or protected', checked: false },
+  { id: 'fw4', label: 'Smoke detector not isolated', checked: false },
+  { id: 'fw5', label: 'Fire exit routes clear and unobstructed', checked: false },
 ];
 
 type TabKey = 'timer' | 'history';
-
 const DURATION_OPTIONS = [30, 45, 60, 90, 120] as const;
+const CHECK_IN_INTERVAL = 30; // minutes
 
 function formatTime(totalSeconds: number): string {
   const mins = Math.floor(totalSeconds / 60);
@@ -75,12 +44,10 @@ function formatTime(totalSeconds: number): string {
 
 export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const haptic = useHaptic();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<TabKey>('timer');
-  const {
-    data: historyRecords = [],
-    isLoading: historyLoading,
-    refetch: refetchHistory,
-  } = useFireWatchRecords();
+  const { data: historyRecords = [], isLoading: historyLoading, refetch: refetchHistory } = useFireWatchRecords();
+
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [durationMins, setDurationMins] = useState(60);
@@ -91,21 +58,12 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
-  const [location, setLocation] = useState('');
-
-  const [completerSigName, setCompleterSigName] = useState('');
-  const [completerSigDate, setCompleterSigDate] = useState(new Date().toISOString().split('T')[0]);
-  const [completerSigData, setCompleterSigData] = useState('');
-
-  // Check-in tracking
-  const CHECK_IN_INTERVAL = 30; // minutes
-  const [checkIns, setCheckIns] = useState<
-    { timestamp: string; notes: string; allClear: boolean }[]
-  >([]);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const { toast } = useToast();
-
   const [selectedPermitTitle, setSelectedPermitTitle] = useState('');
+  const [location, setLocation] = useState('');
+  const [completerName, setCompleterName] = useState('');
+  const [completerSig, setCompleterSig] = useState('');
+  const [checkIns, setCheckIns] = useState<{ timestamp: string; notes: string; allClear: boolean }[]>([]);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const durationSecs = durationMins * 60;
   const remainingSeconds = Math.max(durationSecs - elapsedSeconds, 0);
@@ -114,7 +72,6 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const timerComplete = elapsedSeconds >= durationSecs;
   const canComplete = allChecked && timerComplete;
 
-  // Check-in derived values
   const nextCheckInAt =
     checkIns.length > 0
       ? new Date(checkIns[checkIns.length - 1].timestamp).getTime() + CHECK_IN_INTERVAL * 60 * 1000
@@ -123,12 +80,9 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         : 0;
   const checkInDue = isActive && !isPaused && Date.now() >= nextCheckInAt && !timerComplete;
 
-  // Timer tick
   useEffect(() => {
     if (isActive && !isPaused && !timerComplete) {
-      intervalRef.current = setInterval(() => {
-        setElapsedSeconds((prev) => prev + 1);
-      }, 1000);
+      intervalRef.current = setInterval(() => setElapsedSeconds((p) => p + 1), 1000);
     }
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -146,7 +100,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
 
   const handleTogglePause = () => {
     haptic.light();
-    setIsPaused((prev) => !prev);
+    setIsPaused((p) => !p);
   };
 
   const handleCancel = () => {
@@ -160,25 +114,21 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
     setSelectedPermitId(null);
     setSelectedPermitTitle('');
     setLocation('');
+    setCheckIns([]);
     setShowCancelConfirm(false);
   };
 
-  const toggleChecklistItem = (id: string) => {
-    setChecklist((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item))
-    );
-  };
+  const toggleChecklistItem = (id: string) =>
+    setChecklist((prev) => prev.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item)));
 
   const handleComplete = useCallback(async () => {
     if (!canComplete || !startedAt) return;
     setIsSaving(true);
-
     try {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
-
       const { error } = await supabase.from('fire_watch_records').insert({
         user_id: user.id,
         start_time: startedAt.toISOString(),
@@ -186,141 +136,72 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         duration_minutes: durationMins,
         permit_id: selectedPermitId || null,
         location: location.trim() || null,
-        checklist: checklist.map((c) => ({
-          id: c.id,
-          label: c.label,
-          checked: c.checked,
-        })),
+        checklist: checklist.map((c) => ({ id: c.id, label: c.label, checked: c.checked })),
         status: 'completed',
         photos: photoUrls,
-        completed_by: completerSigName.trim() || null,
-        completed_signature: completerSigData || null,
+        completed_by: completerName.trim() || null,
+        completed_signature: completerSig || null,
         check_ins: checkIns,
       });
-
       if (error) throw error;
-
       haptic.success();
-      toast({
-        title: 'Fire Watch Complete',
-        description: 'Fire watch record has been saved successfully.',
-      });
-
+      toast({ title: 'Fire watch complete', description: 'Record saved.' });
       refetchHistory();
-      setIsActive(false);
-      setIsPaused(false);
-      setElapsedSeconds(0);
-      setStartedAt(null);
-      setChecklist(DEFAULT_CHECKLIST);
-      setPhotoUrls([]);
-      setSelectedPermitId(null);
-      setSelectedPermitTitle('');
-      setLocation('');
+      handleCancel();
     } catch {
       haptic.error();
-      toast({
-        title: 'Error',
-        description: 'Could not save fire watch record.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Error', description: 'Could not save fire watch record.', variant: 'destructive' });
     } finally {
       setIsSaving(false);
     }
-  }, [
-    canComplete,
-    startedAt,
-    checklist,
-    photoUrls,
-    durationMins,
-    selectedPermitId,
-    location,
-    completerSigName,
-    completerSigData,
-    toast,
-    haptic,
-    refetchHistory,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canComplete, startedAt, checklist, photoUrls, durationMins, selectedPermitId, location, completerName, completerSig, checkIns, toast, haptic, refetchHistory]);
 
-  // Circular progress calculations
   const circumference = 2 * Math.PI * 90;
   const strokeDashoffset = circumference * (1 - progress);
 
   return (
-    <div className="flex flex-col h-full bg-background">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
-        <button
-          onClick={onBack}
-          className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:scale-95 transition-transform"
-        >
-          <ArrowLeft className="w-5 h-5 text-white" />
-        </button>
-        <div className="flex-1">
-          <h1 className="text-lg font-semibold text-white">Fire Watch</h1>
-          <p className="text-sm text-white">Post hot-works fire watch timer</p>
-        </div>
-        <Flame className="w-5 h-5 text-orange-400" />
-      </div>
+    <div className="bg-elec-dark min-h-screen pb-24">
+      <SafetyMasthead
+        onBack={onBack}
+        moduleName="Fire Watch"
+        trailing={
+          isActive ? (
+            <span
+              className={cn(
+                'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border',
+                timerComplete ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25' : 'bg-amber-500/10 text-amber-400 border-amber-500/25'
+              )}
+            >
+              {timerComplete ? 'Complete' : 'Running'}
+            </span>
+          ) : undefined
+        }
+      />
 
-      {/* Tab Bar */}
-      <div className="flex px-4 pt-3 gap-2">
-        {[
-          { key: 'timer' as TabKey, label: 'Timer' },
-          { key: 'history' as TabKey, label: 'History' },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={`h-11 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all ${
-              activeTab === tab.key
-                ? 'bg-elec-yellow text-black'
-                : 'bg-white/5 text-white border border-white/10'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      <div className="mx-auto max-w-xl px-4 pt-4 space-y-5">
+        <FilterBar
+          tabs={[
+            { value: 'timer', label: 'Timer' },
+            { value: 'history', label: 'History', count: historyRecords.length },
+          ]}
+          activeTab={activeTab}
+          onTabChange={(v) => setActiveTab(v as TabKey)}
+        />
 
-      <div className="flex-1 overflow-y-auto pb-20">
         <AnimatePresence mode="wait">
           {activeTab === 'timer' ? (
-            <motion.div
-              key="timer-tab"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div key="timer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               <AnimatePresence mode="wait">
                 {!isActive ? (
-                  <motion.div
-                    key="inactive"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.2 }}
-                    className="px-4 pt-6"
-                  >
-                    {/* Info Card */}
-                    <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30 mb-6">
-                      <div className="flex items-start gap-3">
-                        <AlertTriangle className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <h3 className="text-sm font-semibold text-white mb-1">
-                            When is a fire watch required?
-                          </h3>
-                          <p className="text-sm text-white leading-relaxed">
-                            A fire watch must be maintained for a minimum of 60 minutes after
-                            completion of hot works such as soldering, brazing, welding, grinding,
-                            or using blow torches. The watch person must remain in the area and
-                            check for signs of smouldering or fire.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                  <motion.div key="setup" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.2 }} className="space-y-5">
+                    <PageHero
+                      eyebrow="Fire Watch · HSG168"
+                      title="Watch the area after hot works"
+                      description="A fire watch must run for at least 60 minutes after welding, brazing, grinding or torch work — stay in the area and check for smouldering."
+                      tone="orange"
+                    />
 
-                    {/* Link to Hot-Work Permit */}
                     <PermitSelector
                       permitTypes={['hot-work']}
                       selectedPermitId={selectedPermitId}
@@ -329,103 +210,62 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                         setSelectedPermitTitle(permit?.title ?? '');
                         setLocation(permit?.location ?? '');
                       }}
+                      label="Link to hot-work permit (optional)"
                     />
 
-                    {/* Location / Area */}
-                    <div className="mb-6">
-                      <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-elec-yellow" />
-                        Location / Area
-                      </h3>
-                      <Input
-                        placeholder="e.g. Plant Room 2, 3rd Floor"
-                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                      />
-                    </div>
+                    <Field label="Location / area">
+                      <input value={location} onChange={(e) => setLocation(e.target.value)} className={inputClass} placeholder="e.g. Plant Room 2, 3rd Floor" />
+                    </Field>
 
-                    {/* Duration Selector */}
-                    <div className="mb-6">
-                      <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-elec-yellow" />
-                        Watch Duration
-                      </h3>
+                    <Field label="Watch duration">
                       <div className="flex gap-2">
                         {DURATION_OPTIONS.map((mins) => (
                           <button
                             key={mins}
                             onClick={() => setDurationMins(mins)}
-                            className={`flex-1 h-11 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all ${
-                              durationMins === mins
-                                ? 'bg-elec-yellow text-black'
-                                : 'bg-white/5 text-white border border-white/10'
-                            }`}
+                            className={cn(
+                              'flex-1 h-11 rounded-xl text-[13px] font-medium touch-manipulation active:scale-[0.97] transition-all border',
+                              durationMins === mins ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                            )}
                           >
                             {mins}m
                           </button>
                         ))}
                       </div>
-                    </div>
+                    </Field>
 
-                    <SafetyEmptyState
-                      icon={Flame}
-                      heading="No Active Fire Watch"
-                      description={`Start a fire watch after completing hot works. The timer will run for ${durationMins} minutes whilst you monitor the area.`}
-                      ctaLabel="Start Fire Watch"
-                      onCta={handleStart}
-                      tip="Required by most site safety policies"
-                    />
+                    <PrimaryButton fullWidth size="lg" onClick={handleStart}>
+                      Start {durationMins}-minute fire watch
+                    </PrimaryButton>
                   </motion.div>
                 ) : (
-                  <motion.div
-                    key="active"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3 }}
-                    className="px-4 pt-6"
-                  >
-                    {/* Linked Permit + Location Banner */}
+                  <motion.div key="active" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.25 }} className="space-y-5">
                     {(selectedPermitId || location) && (
-                      <div className="p-3 rounded-xl bg-white/5 border border-white/10 mb-4 space-y-1">
-                        {selectedPermitId && (
-                          <div className="flex items-center gap-2 text-sm text-white">
-                            <FileText className="w-4 h-4 text-elec-yellow flex-shrink-0" />
-                            <span className="font-medium">
-                              {selectedPermitTitle || 'Linked Permit'}
-                            </span>
-                          </div>
-                        )}
-                        {location && (
-                          <div className="flex items-center gap-2 text-sm text-white">
-                            <MapPin className="w-4 h-4 text-elec-yellow flex-shrink-0" />
-                            <span>{location}</span>
-                          </div>
-                        )}
+                      <div className="p-3 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] space-y-1 text-[13px]">
+                        {selectedPermitId && <div className="text-white font-medium">{selectedPermitTitle || 'Linked permit'}</div>}
+                        {location && <div className="text-white/60">{location}</div>}
                       </div>
                     )}
 
-                    {/* Circular Timer */}
-                    <div className="flex justify-center mb-6">
-                      <div className="relative w-52 h-52">
-                        <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
-                          {/* Background circle */}
+                    {/* Circular timer */}
+                    <div className="flex justify-center">
+                      <div
+                        className="relative w-52 h-52"
+                        role="timer"
+                        aria-label={
+                          timerComplete
+                            ? 'Fire watch time complete'
+                            : `${Math.floor(remainingSeconds / 60)} minutes ${remainingSeconds % 60} seconds remaining of the fire watch`
+                        }
+                      >
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200" aria-hidden="true">
+                          <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="8" />
                           <circle
                             cx="100"
                             cy="100"
                             r="90"
                             fill="none"
-                            stroke="rgba(255,255,255,0.08)"
-                            strokeWidth="8"
-                          />
-                          {/* Progress circle */}
-                          <circle
-                            cx="100"
-                            cy="100"
-                            r="90"
-                            fill="none"
-                            stroke={timerComplete ? '#22c55e' : '#f59e0b'}
+                            stroke={timerComplete ? '#34d399' : '#f59e0b'}
                             strokeWidth="8"
                             strokeLinecap="round"
                             strokeDasharray={circumference}
@@ -435,140 +275,62 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
                           {timerComplete ? (
-                            <>
-                              <CheckCircle2 className="w-8 h-8 text-green-400 mb-1" />
-                              <span className="text-sm font-semibold text-green-400">
-                                Time Complete
-                              </span>
-                            </>
+                            <span className="text-[15px] font-semibold text-emerald-400">Time complete</span>
                           ) : (
                             <>
-                              <span className="text-3xl font-bold text-white font-mono">
-                                {formatTime(remainingSeconds)}
-                              </span>
-                              <span className="text-sm text-white mt-1">remaining</span>
+                              <span className="text-[34px] font-semibold text-white tabular-nums">{formatTime(remainingSeconds)}</span>
+                              <span className="text-[12px] text-white/55 mt-1">remaining</span>
                             </>
                           )}
                         </div>
                       </div>
                     </div>
 
-                    {/* Paused indicator */}
-                    {isPaused && (
-                      <div className="text-center mb-3">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-sm font-semibold text-amber-400">
-                          <Pause className="w-3.5 h-3.5" /> Paused
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Time Info */}
-                    <div className="flex justify-center gap-6 mb-4">
-                      <div className="flex items-center gap-2 text-sm text-white">
-                        <Clock className="w-4 h-4 text-elec-yellow" />
-                        Elapsed: {formatTime(elapsedSeconds)}
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-white">
-                        <Shield className="w-4 h-4 text-elec-yellow" />
-                        {durationMins} min watch
-                      </div>
+                    <div className="flex justify-center gap-6 text-[12px] text-white/55 tabular-nums">
+                      <span>Elapsed {formatTime(elapsedSeconds)}</span>
+                      <span>{durationMins} min watch</span>
+                      {isPaused && <span className="text-amber-400 font-medium">Paused</span>}
                     </div>
 
-                    {/* Pause/Resume + Cancel */}
                     {!timerComplete && (
-                      <div className="flex gap-2 mb-6">
-                        <button
-                          onClick={handleTogglePause}
-                          className={`flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all ${
-                            isPaused
-                              ? 'bg-elec-yellow text-black'
-                              : 'bg-white/5 border border-white/10 text-white'
-                          }`}
-                        >
-                          {isPaused ? (
-                            <>
-                              <Play className="w-4 h-4" /> Resume
-                            </>
-                          ) : (
-                            <>
-                              <Pause className="w-4 h-4" /> Pause
-                            </>
-                          )}
-                        </button>
-                        <button
-                          onClick={() => setShowCancelConfirm(true)}
-                          className="h-11 px-4 rounded-xl bg-red-500/10 border border-red-500/20 text-sm font-semibold text-red-400 flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
-                        >
-                          <X className="w-4 h-4" /> Cancel
-                        </button>
+                      <div className="flex gap-2">
+                        <PrimaryButton fullWidth onClick={handleTogglePause} className={isPaused ? '' : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1]'}>
+                          {isPaused ? 'Resume' : 'Pause'}
+                        </PrimaryButton>
+                        <SecondaryButton onClick={() => setShowCancelConfirm(true)}>Cancel</SecondaryButton>
                       </div>
                     )}
 
                     {/* Check-in prompt */}
                     {checkInDue && (
-                      <div className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-4 space-y-3">
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-amber-400" />
-                          <h4 className="text-sm font-bold text-amber-400">
-                            Check-In #{checkIns.length + 1} Due
-                          </h4>
-                        </div>
-                        <p className="text-xs text-white">
-                          Inspect the area for fire, smouldering, or heat.
-                        </p>
+                      <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-4 space-y-3">
+                        <Eyebrow className="text-amber-300/90">Check-in #{checkIns.length + 1} due</Eyebrow>
+                        <p className="text-[12px] text-white/70">Inspect the area for fire, smouldering or heat.</p>
                         <div className="flex gap-2">
                           <button
-                            onClick={() =>
-                              setCheckIns([
-                                ...checkIns,
-                                { timestamp: new Date().toISOString(), notes: '', allClear: true },
-                              ])
-                            }
-                            className="flex-1 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 text-sm font-bold touch-manipulation active:scale-[0.97] flex items-center justify-center gap-2"
+                            onClick={() => setCheckIns([...checkIns, { timestamp: new Date().toISOString(), notes: '', allClear: true }])}
+                            className="flex-1 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 text-[13px] font-semibold touch-manipulation active:scale-[0.97]"
                           >
-                            <CheckCircle2 className="h-4 w-4" /> All Clear
+                            All clear
                           </button>
                           <button
-                            onClick={() =>
-                              setCheckIns([
-                                ...checkIns,
-                                {
-                                  timestamp: new Date().toISOString(),
-                                  notes: 'Issue found',
-                                  allClear: false,
-                                },
-                              ])
-                            }
-                            className="flex-1 h-11 rounded-xl bg-red-500/15 border border-red-500/25 text-red-400 text-sm font-bold touch-manipulation active:scale-[0.97] flex items-center justify-center gap-2"
+                            onClick={() => setCheckIns([...checkIns, { timestamp: new Date().toISOString(), notes: 'Issue found', allClear: false }])}
+                            className="flex-1 h-11 rounded-xl bg-red-500/15 border border-red-500/25 text-red-400 text-[13px] font-semibold touch-manipulation active:scale-[0.97]"
                           >
-                            <AlertTriangle className="h-4 w-4" /> Issue Found
+                            Issue found
                           </button>
                         </div>
                       </div>
                     )}
 
-                    {/* Check-in history */}
                     {checkIns.length > 0 && (
-                      <div className="mb-4 space-y-1">
-                        <span className="text-[10px] text-white uppercase tracking-wide font-semibold">
-                          {checkIns.length} Check-in{checkIns.length !== 1 ? 's' : ''}
-                        </span>
+                      <div className="space-y-1">
+                        <Eyebrow>{checkIns.length} check-in{checkIns.length !== 1 ? 's' : ''}</Eyebrow>
                         {checkIns.map((ci, i) => (
-                          <div
-                            key={i}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs ${ci.allClear ? 'bg-emerald-500/[0.06] text-emerald-400' : 'bg-red-500/[0.06] text-red-400'}`}
-                          >
-                            {ci.allClear ? (
-                              <CheckCircle2 className="h-3 w-3" />
-                            ) : (
-                              <AlertTriangle className="h-3 w-3" />
-                            )}
+                          <div key={i} className={cn('flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px]', ci.allClear ? 'bg-emerald-500/[0.06] text-emerald-400' : 'bg-red-500/[0.06] text-red-400')}>
                             <span>{ci.allClear ? 'All clear' : 'Issue'}</span>
-                            <span className="ml-auto text-white">
-                              {new Date(ci.timestamp).toLocaleTimeString('en-GB', {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              })}
+                            <span className="ml-auto text-white/50 tabular-nums">
+                              {new Date(ci.timestamp).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </div>
                         ))}
@@ -576,104 +338,49 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                     )}
 
                     {/* Checklist */}
-                    <div className="space-y-2 mb-6">
-                      <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-                        Fire Watch Checklist
-                      </h3>
+                    <div className="space-y-2">
+                      <Eyebrow>Fire watch checklist</Eyebrow>
                       {checklist.map((item) => (
                         <button
                           key={item.id}
                           onClick={() => toggleChecklistItem(item.id)}
-                          className={`w-full flex items-center gap-3 p-4 rounded-xl border touch-manipulation active:scale-[0.99] transition-all ${
-                            item.checked
-                              ? 'bg-green-500/10 border-green-500/30'
-                              : 'bg-white/5 border-white/10'
-                          }`}
+                          className={cn(
+                            'w-full flex items-center gap-3 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.99] transition-all',
+                            item.checked ? 'bg-emerald-500/[0.06] border-emerald-500/25' : 'bg-[hsl(0_0%_10%)] border-white/[0.08]'
+                          )}
                         >
-                          <div
-                            className={`w-6 h-6 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-                              item.checked
-                                ? 'bg-green-500 border-green-500'
-                                : 'border-white/30 bg-transparent'
-                            }`}
-                          >
-                            {item.checked && (
-                              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                                <CheckCircle2 className="w-4 h-4 text-white" />
-                              </motion.div>
-                            )}
-                          </div>
-                          <span className="text-sm text-white text-left flex-1">{item.label}</span>
+                          <span className={cn('h-5 w-5 rounded-full border flex items-center justify-center shrink-0 text-[11px] leading-none', item.checked ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-white/25 text-transparent')}>
+                            ✓
+                          </span>
+                          <span className="text-[13px] text-white/90">{item.label}</span>
                         </button>
                       ))}
                     </div>
 
-                    {/* Area Condition Photos */}
-                    <div className="mb-6">
-                      <SafetyPhotoCapture
-                        photos={photoUrls}
-                        onPhotosChange={setPhotoUrls}
-                        label="Area Condition Photos"
-                      />
+                    <div>
+                      <Eyebrow className="mb-2">Area condition photos</Eyebrow>
+                      <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
                     </div>
 
-                    {/* Completer Signature */}
-                    <div className="mb-6">
-                      <SignaturePad
-                        label="Completer Signature"
-                        name={completerSigName}
-                        date={completerSigDate}
-                        signatureDataUrl={completerSigData}
-                        onSignatureChange={setCompleterSigData}
-                        onNameChange={setCompleterSigName}
-                        onDateChange={setCompleterSigDate}
-                      />
-                    </div>
+                    <SignatureField label="Completer signature" value={completerSig} onChange={setCompleterSig} />
+                    <Field label="Completer name">
+                      <input value={completerName} onChange={(e) => setCompleterName(e.target.value)} className={inputClass} placeholder="Watch person's name" />
+                    </Field>
 
-                    {/* Complete Button */}
-                    <div className="pb-8">
-                      <button
-                        onClick={handleComplete}
-                        disabled={!canComplete || isSaving}
-                        className="w-full h-12 rounded-xl bg-green-500 text-white font-semibold text-base touch-manipulation active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-2"
-                      >
-                        {isSaving ? (
-                          <>
-                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            Saving...
-                          </>
-                        ) : !timerComplete ? (
-                          <>
-                            <Clock className="w-5 h-5" />
-                            Waiting for Timer...
-                          </>
-                        ) : !allChecked ? (
-                          <>
-                            <AlertTriangle className="w-5 h-5" />
-                            Complete All Checks
-                          </>
-                        ) : (
-                          <>
-                            <CheckCircle2 className="w-5 h-5" />
-                            Complete Fire Watch
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <PrimaryButton
+                      fullWidth
+                      size="lg"
+                      disabled={!canComplete || isSaving}
+                      onClick={handleComplete}
+                    >
+                      {isSaving ? 'Saving…' : !timerComplete ? 'Waiting for timer…' : !allChecked ? 'Complete all checks' : 'Complete fire watch'}
+                    </PrimaryButton>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.div>
           ) : (
-            <motion.div
-              key="history-tab"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
-              className="px-4 pt-4"
-            >
+            <motion.div key="history" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               <FireWatchHistory
                 records={historyRecords}
                 isLoading={historyLoading}
@@ -691,7 +398,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         open={showCancelConfirm}
         onOpenChange={setShowCancelConfirm}
         onConfirm={handleCancel}
-        title="Cancel Fire Watch?"
+        title="Cancel fire watch?"
         description="All progress will be lost and the timer will reset"
       />
     </div>

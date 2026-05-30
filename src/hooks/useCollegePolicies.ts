@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useCollegePolicies — list of college_policies with current ack counts.
@@ -134,7 +135,7 @@ export function useCollegePolicies(): PoliciesData {
   // Realtime — any policy or acknowledgement change refetches
   useEffect(() => {
     const channel = supabase
-      .channel('college_policies_list')
+      .channel(realtimeChannelName('college_policies_list'))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'college_policies' }, () =>
         fetch()
       )

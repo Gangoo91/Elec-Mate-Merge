@@ -1,8 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -10,11 +5,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { format } from 'date-fns';
-import { CalendarIcon, FileText, MapPin, Users, Clock, Lightbulb } from 'lucide-react';
 import { MethodStatementData } from '@/types/method-statement';
+import {
+  FormCard,
+  Field,
+  FormGrid,
+  PrimaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from '@/components/college/primitives';
 
 interface DetailsStepProps {
   data: MethodStatementData;
@@ -23,386 +24,192 @@ interface DetailsStepProps {
   onBack: () => void;
 }
 
-const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) => {
-  const workTypes = [
-    'Installation Work',
-    'Maintenance',
-    'Testing & Inspection',
-    'Repair Work',
-    'Emergency Response',
-    'Upgrade/Modification',
-    'Fault Finding',
-    'Commissioning',
-  ];
+const WORK_TYPES = [
+  'Installation Work',
+  'Maintenance',
+  'Testing & Inspection',
+  'Repair Work',
+  'Emergency Response',
+  'Upgrade/Modification',
+  'Fault Finding',
+  'Commissioning',
+];
 
-  const riskLevels = [
-    { value: 'low', label: 'Low Risk', color: 'text-green-300' },
-    { value: 'medium', label: 'Medium Risk', color: 'text-yellow-300' },
-    { value: 'high', label: 'High Risk', color: 'text-red-300' },
-  ];
+const RISK_LEVELS: { value: 'low' | 'medium' | 'high'; label: string }[] = [
+  { value: 'low', label: 'Low Risk' },
+  { value: 'medium', label: 'Medium Risk' },
+  { value: 'high', label: 'High Risk' },
+];
 
-  const isFormValid = () => {
-    return data.jobTitle && data.location && data.contractor && data.supervisor && data.workType;
-  };
+const DetailsStep = ({ data, onDataChange, onNext }: DetailsStepProps) => {
+  const isFormValid = () =>
+    !!(data.jobTitle && data.location && data.contractor && data.supervisor && data.workType);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            Method Statement Details
-          </CardTitle>
-          <p className="text-white">Provide the basic information for your method statement.</p>
-        </CardHeader>
-      </Card>
-
-      {/* Job Information */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-elec-yellow text-lg font-semibold">Job Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 p-6">
-          {/* Primary Job Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label
-                htmlFor="jobTitle"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Job Title *
-              </Label>
-              <Input
-                id="jobTitle"
-                value={data.jobTitle}
-                onChange={(e) => onDataChange({ jobTitle: e.target.value })}
-                placeholder="e.g., Consumer Unit Replacement"
-                className="h-11"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="location"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <MapPin className="h-4 w-4 text-elec-yellow" />
-                Site Location *
-              </Label>
-              <Input
-                id="location"
-                value={data.location}
-                onChange={(e) => onDataChange({ location: e.target.value })}
-                placeholder="Full site address"
-                className="h-11"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Company and Personnel Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label
-                htmlFor="contractor"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Contractor Company *
-              </Label>
-              <Input
-                id="contractor"
-                value={data.contractor}
-                onChange={(e) => onDataChange({ contractor: e.target.value })}
-                placeholder="Company name"
-                className="h-11"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="supervisor"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <Users className="h-4 w-4 text-elec-yellow" />
-                Site Supervisor *
-              </Label>
-              <Input
-                id="supervisor"
-                value={data.supervisor}
-                onChange={(e) => onDataChange({ supervisor: e.target.value })}
-                placeholder="Supervisor name"
-                className="h-11"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Work Type and Duration */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label
-                htmlFor="workType"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Type of Work *
-              </Label>
-              <Input
-                id="workType"
-                list="workType-suggestions"
-                value={data.workType || ''}
-                onChange={(e) => onDataChange({ workType: e.target.value })}
-                placeholder="Type or select work type"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-              />
-              <datalist id="workType-suggestions">
-                {workTypes.map((type) => (
-                  <option key={type} value={type} />
-                ))}
-              </datalist>
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="duration"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <Clock className="h-4 w-4 text-elec-yellow" />
-                Estimated Duration
-              </Label>
-              <Input
-                id="duration"
-                value={data.duration}
-                onChange={(e) => onDataChange({ duration: e.target.value })}
-                placeholder="e.g., 2 days"
-                className="h-11"
-              />
-            </div>
-          </div>
-
-          {/* Team and Risk Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label
-                htmlFor="teamSize"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <Users className="h-4 w-4 text-elec-yellow" />
-                Team Size
-              </Label>
-              <Input
-                id="teamSize"
-                value={data.teamSize}
-                onChange={(e) => onDataChange({ teamSize: e.target.value })}
-                placeholder="Number of personnel"
-                className="h-11"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="overallRiskLevel"
-                className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-              >
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Overall Risk Level
-              </Label>
-              <Select
-                value={data.overallRiskLevel}
-                onValueChange={(value: 'low' | 'medium' | 'high') =>
-                  onDataChange({ overallRiskLevel: value })
-                }
-              >
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select risk level" />
-                </SelectTrigger>
-                <SelectContent>
-                  {riskLevels.map((level) => (
-                    <SelectItem key={level.value} value={level.value}>
-                      <span className={level.color}>{level.label}</span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Job Description - Full Width */}
-          <div className="space-y-2">
-            <Label
-              htmlFor="description"
-              className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
-            >
-              <FileText className="h-4 w-4 text-elec-yellow" />
-              Job Description
-            </Label>
-            <Textarea
-              id="description"
-              value={data.description}
-              onChange={(e) => onDataChange({ description: e.target.value })}
-              placeholder="Provide a detailed description of the work to be carried out"
-              rows={4}
-              className="resize-none"
+    <div className="space-y-5">
+      <FormCard eyebrow="Job information">
+        <FormGrid cols={2}>
+          <Field label="Job title" required>
+            <input
+              value={data.jobTitle}
+              onChange={(e) => onDataChange({ jobTitle: e.target.value })}
+              className={inputClass}
+              placeholder="e.g. Consumer Unit Replacement"
             />
-          </div>
-
-          {/* Review Date */}
-          <div className="space-y-2">
-            <Label
-              htmlFor="reviewDate"
-              className="flex items-center gap-2 text-sm font-medium text-foreground mb-2"
+          </Field>
+          <Field label="Site location" required>
+            <input
+              value={data.location}
+              onChange={(e) => onDataChange({ location: e.target.value })}
+              className={inputClass}
+              placeholder="Full site address"
+            />
+          </Field>
+          <Field label="Contractor company" required>
+            <input
+              value={data.contractor}
+              onChange={(e) => onDataChange({ contractor: e.target.value })}
+              className={inputClass}
+              placeholder="Company name"
+            />
+          </Field>
+          <Field label="Site supervisor" required>
+            <input
+              value={data.supervisor}
+              onChange={(e) => onDataChange({ supervisor: e.target.value })}
+              className={inputClass}
+              placeholder="Supervisor name"
+            />
+          </Field>
+          <Field label="Type of work" required>
+            <input
+              list="workType-suggestions"
+              value={data.workType || ''}
+              onChange={(e) => onDataChange({ workType: e.target.value })}
+              className={inputClass}
+              placeholder="Type or select work type"
+            />
+            <datalist id="workType-suggestions">
+              {WORK_TYPES.map((type) => (
+                <option key={type} value={type} />
+              ))}
+            </datalist>
+          </Field>
+          <Field label="Estimated duration">
+            <input
+              value={data.duration}
+              onChange={(e) => onDataChange({ duration: e.target.value })}
+              className={inputClass}
+              placeholder="e.g. 2 days"
+            />
+          </Field>
+          <Field label="Team size">
+            <input
+              value={data.teamSize}
+              onChange={(e) => onDataChange({ teamSize: e.target.value })}
+              className={inputClass}
+              placeholder="Number of personnel"
+            />
+          </Field>
+          <Field label="Overall risk level">
+            <Select
+              value={data.overallRiskLevel}
+              onValueChange={(value: 'low' | 'medium' | 'high') =>
+                onDataChange({ overallRiskLevel: value })
+              }
             >
-              <CalendarIcon className="h-4 w-4 text-elec-yellow" />
-              Review Date
-            </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="w-full lg:w-80 h-11 justify-start text-left font-normal"
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {data.reviewDate ? format(new Date(data.reviewDate), 'PPP') : 'Select date'}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={data.reviewDate ? new Date(data.reviewDate) : undefined}
-                  onSelect={(date) => onDataChange({ reviewDate: date?.toISOString() || '' })}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-        </CardContent>
-      </Card>
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue placeholder="Select risk level" />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                {RISK_LEVELS.map((level) => (
+                  <SelectItem key={level.value} value={level.value}>
+                    {level.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+        </FormGrid>
 
-      {/* Enhanced Smart Suggestions */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5" />
-            Smart Suggestions & Safety Integration
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <p className="text-sm text-white">
-              Based on your work type, consider these recommendations:
-            </p>
+        <Field label="Job description">
+          <textarea
+            value={data.description}
+            onChange={(e) => onDataChange({ description: e.target.value })}
+            className={textareaClass}
+            rows={4}
+            placeholder="Provide a detailed description of the work to be carried out"
+          />
+        </Field>
 
-            {data.workType === 'Installation Work' && (
-              <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
-                <h4 className="font-medium text-blue-300">Installation Work Recommendations:</h4>
-                <ul className="text-sm space-y-2 text-left">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
-                    <span>Ensure Part P notification requirements are met</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
-                    <span>Consider 18th Edition compliance requirements</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
-                    <span>Plan for installation testing and certification</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
-                    <span>Verify supply disconnection procedures</span>
-                  </li>
-                </ul>
-                <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
-                  <p className="text-sm text-orange-300 font-medium mb-2">
-                    Common Hazards for Installation Work:
-                  </p>
-                  <p className="text-xs text-white">
-                    Electric shock, arc flash, manual handling, falls from height will be suggested
-                    in the hazards step.
-                  </p>
-                </div>
-              </div>
-            )}
+        <Field label="Review date">
+          <input
+            type="date"
+            value={data.reviewDate ? data.reviewDate.slice(0, 10) : ''}
+            onChange={(e) =>
+              onDataChange({
+                reviewDate: e.target.value ? new Date(e.target.value).toISOString() : '',
+              })
+            }
+            className={inputClass}
+          />
+        </Field>
+      </FormCard>
 
-            {data.workType === 'Testing & Inspection' && (
-              <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
-                <h4 className="font-medium text-blue-300">Testing & Inspection Recommendations:</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Ensure testing equipment is calibrated</li>
-                  <li>• Plan for safe isolation procedures</li>
-                  <li>• Consider EICR reporting requirements</li>
-                  <li>• Verify prove dead procedures</li>
-                </ul>
-                <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
-                  <p className="text-sm text-orange-300 font-medium mb-2">
-                    Common Hazards for Testing Work:
-                  </p>
-                  <p className="text-xs text-white">
-                    Electric shock, faulty equipment, confined spaces will be suggested in the
-                    hazards step.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {data.workType === 'Maintenance' && (
-              <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
-                <h4 className="font-medium text-blue-300">Maintenance Work Recommendations:</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Schedule appropriate downtime</li>
-                  <li>• Coordinate with facility management</li>
-                  <li>• Plan for equipment replacement parts</li>
-                  <li>• Consider environmental conditions</li>
-                </ul>
-                <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
-                  <p className="text-sm text-orange-300 font-medium mb-2">
-                    Common Hazards for Maintenance:
-                  </p>
-                  <p className="text-xs text-white">
-                    Equipment failure, chemical exposure, manual handling will be suggested in the
-                    hazards step.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-              <p className="text-sm text-green-300 font-medium">💡 Next Steps</p>
-              <p className="text-xs text-white mt-1">
-                After completing job details, you'll be able to create detailed method steps and
-                link relevant hazards from our comprehensive database.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Validation */}
-      {!isFormValid() && (
-        <Card className="border-yellow-500/20 bg-yellow-500/5">
-          <CardContent className="p-4">
-            <div className="text-yellow-300 text-sm font-medium">
-              Please complete all required fields (*) before proceeding.
-            </div>
-          </CardContent>
-        </Card>
+      {/* Work-type guidance */}
+      {data.workType === 'Installation Work' && (
+        <FormCard eyebrow="Installation work — guidance">
+          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+            <li>• Ensure Part P notification requirements are met</li>
+            <li>• Consider 18th Edition compliance requirements</li>
+            <li>• Plan for installation testing and certification</li>
+            <li>• Verify supply disconnection procedures</li>
+          </ul>
+          <p className="text-[11.5px] text-orange-400/90">
+            Common hazards: electric shock, arc flash, manual handling and falls from height will be
+            suggested in the hazards step.
+          </p>
+        </FormCard>
+      )}
+      {data.workType === 'Testing & Inspection' && (
+        <FormCard eyebrow="Testing &amp; inspection — guidance">
+          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+            <li>• Ensure testing equipment is calibrated</li>
+            <li>• Plan for safe isolation procedures</li>
+            <li>• Consider EICR reporting requirements</li>
+            <li>• Verify prove dead procedures</li>
+          </ul>
+          <p className="text-[11.5px] text-orange-400/90">
+            Common hazards: electric shock, faulty equipment and confined spaces will be suggested in
+            the hazards step.
+          </p>
+        </FormCard>
+      )}
+      {data.workType === 'Maintenance' && (
+        <FormCard eyebrow="Maintenance — guidance">
+          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+            <li>• Schedule appropriate downtime</li>
+            <li>• Coordinate with facility management</li>
+            <li>• Plan for equipment replacement parts</li>
+            <li>• Consider environmental conditions</li>
+          </ul>
+          <p className="text-[11.5px] text-orange-400/90">
+            Common hazards: equipment failure, chemical exposure and manual handling will be
+            suggested in the hazards step.
+          </p>
+        </FormCard>
       )}
 
-      {/* Continue Button */}
-      <div className="flex flex-col sm:flex-row sm:justify-end gap-3 pt-4">
-        <Button
-          onClick={onNext}
-          disabled={!isFormValid()}
-          className="flex items-center justify-center gap-2 h-11 w-full sm:w-auto sm:min-w-[160px]"
-        >
-          Continue to Steps
-        </Button>
+      {!isFormValid() && (
+        <p className="text-[11.5px] text-amber-400/90">
+          Complete all required fields before continuing.
+        </p>
+      )}
+
+      <div className="flex justify-end pt-1">
+        <PrimaryButton onClick={onNext} disabled={!isFormValid()}>
+          Continue to steps
+        </PrimaryButton>
       </div>
     </div>
   );

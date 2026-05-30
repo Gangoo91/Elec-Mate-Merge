@@ -638,6 +638,12 @@ function groupedActionsForRole(
   const flagGroup = ['praise', 'flag', 'concern', 'safeguarding'];
   const utilGroup = ['inclusion', 'evidence', 'print', 'gdpr'];
 
+  // EQA is a READ-ONLY external role — expose only view/export actions, never
+  // record / communicate / flag (those also can't write at the DB layer).
+  if (staffRole.isEqa) {
+    return [{ label: 'Review', items: ['evidence', 'print', 'gdpr'].map((k) => items[k]) }];
+  }
+
   // For DSL: safeguarding pulls into its own first-position single-pill group
   if (staffRole.isDsl) {
     return [

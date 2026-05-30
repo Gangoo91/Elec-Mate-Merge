@@ -8,6 +8,7 @@ import { JobFilterSheet, JobFilters } from '@/components/employer/sheets/JobFilt
 import { useJobs } from '@/hooks/useJobs';
 import { Job, JobStatus } from '@/services/jobService';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   PageFrame,
@@ -139,7 +140,7 @@ export function JobsSection() {
 
   useEffect(() => {
     const channel = supabase
-      .channel('jobs-realtime-updates')
+      .channel(realtimeChannelName('jobs-realtime-updates'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'employer_job_assignments' },

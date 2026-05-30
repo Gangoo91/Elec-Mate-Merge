@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Drawer } from 'vaul';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { toast } from '@/hooks/use-toast';
 import DocumentCamera from './DocumentCamera';
 import { OCRPreview, type ExtractedField } from './OCRPreview';
@@ -193,7 +194,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
     if (!profile?.id) return;
 
     const channel = supabase
-      .channel('elec-id-docs-changes')
+      .channel(realtimeChannelName('elec-id-docs-changes'))
       .on(
         'postgres_changes',
         {

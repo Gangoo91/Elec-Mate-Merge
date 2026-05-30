@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import type {
   CalendarEvent,
@@ -26,7 +27,7 @@ export function useCalendarRealtimeInvalidation() {
       if (!user) return;
 
       channel = supabase
-        .channel('calendar-events-realtime')
+        .channel(realtimeChannelName('calendar-events-realtime'))
         .on(
           'postgres_changes',
           {

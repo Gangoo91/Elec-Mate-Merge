@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useTopExpiring — top n compliance items the college needs to action,
@@ -83,7 +84,7 @@ export function useTopExpiring(limit = 5) {
 
   useEffect(() => {
     const channel = supabase
-      .channel('top_expiring')
+      .channel(realtimeChannelName('top_expiring'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'staff_compliance_records' },

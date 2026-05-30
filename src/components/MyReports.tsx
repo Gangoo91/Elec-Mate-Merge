@@ -22,6 +22,7 @@ import { BulkActionsBar } from './reports/BulkActionsBar';
 import { reportCloud, CloudReport, ReportsResponse } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { EmptyState } from '@/components/ui/empty-state';
 import { cn } from '@/lib/utils';
@@ -78,6 +79,54 @@ interface MyReportsProps {
 
 type StatusFilter = 'all' | 'draft' | 'in-progress' | 'completed';
 type TypeFilter = 'all' | string;
+
+// Cert types grouped by category for the filter row. Core types always show;
+// the rest only appear once the user has at least one of that type (keeps the
+// row short and relevant instead of a wall of 17 chips).
+const CORE_TYPES = ['eicr', 'eic', 'minor-works'];
+const TYPE_GROUPS: { label: string; types: { value: string; label: string }[] }[] = [
+  {
+    label: 'Core',
+    types: [
+      { value: 'eicr', label: 'EICR' },
+      { value: 'eic', label: 'EIC' },
+      { value: 'minor-works', label: 'MW' },
+    ],
+  },
+  {
+    label: 'Fire',
+    types: [
+      { value: 'fire-alarm', label: 'FA G1' },
+      { value: 'fire-alarm-commissioning', label: 'FA G2' },
+      { value: 'fire-alarm-inspection', label: 'FA G7' },
+      { value: 'fire-alarm-modification', label: 'FA G4' },
+    ],
+  },
+  {
+    label: 'Renewables',
+    types: [
+      { value: 'ev-charging', label: 'EV' },
+      { value: 'solar-pv', label: 'Solar PV' },
+      { value: 'bess', label: 'BESS' },
+    ],
+  },
+  {
+    label: 'Other',
+    types: [
+      { value: 'emergency-lighting', label: 'EM LTG' },
+      { value: 'pat-testing', label: 'PAT' },
+      { value: 'smoke-co-alarm', label: 'Smoke/CO' },
+    ],
+  },
+  {
+    label: 'Notices',
+    types: [
+      { value: 'danger-notice', label: 'Danger' },
+      { value: 'isolation-cert', label: 'Isolation' },
+      { value: 'permit-to-work', label: 'Permit' },
+    ],
+  },
+];
 
 const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport }) => {
   const { toast } = useToast();
@@ -191,16 +240,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
   // ELE-NEW — when filter changes, reset to page 1 so the new server query
   // starts from the beginning of the filtered set.
+  // NOTE: do NOT clear allReports here. The page-1 data effect above already
+  // replaces it when the new results arrive. Clearing caused a stuck empty
+  // state when switching to a cached filter (e.g. "All" after it had loaded):
+  // the cached data resolves synchronously, so both effects ran in the same
+  // commit and this clear ran last, wiping the just-set list.
   useEffect(() => {
     setCurrentPage(1);
-    setAllReports([]);
   }, [typeFilter, statusFilter]);
 
   // Realtime subscription — show toast + refetch when agent creates/updates certs
   useEffect(() => {
     if (!user) return;
     const channel = supabase
-      .channel('reports-realtime')
+      .channel(realtimeChannelName('reports-realtime'))
       .on(
         'postgres_changes',
         {
@@ -1007,64 +1060,70 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             ))}
           </div>
 
-          {/* Type filter row */}
-          <div className="flex gap-1.5 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
-            {[
-              { value: 'all', label: 'All' },
-              { value: 'eicr', label: 'EICR' },
-              { value: 'eic', label: 'EIC' },
-              { value: 'minor-works', label: 'MW' },
-              { value: 'fire-alarm', label: 'FA G1' },
-              { value: 'fire-alarm-commissioning', label: 'FA G2' },
-              { value: 'fire-alarm-inspection', label: 'FA G7' },
-              { value: 'fire-alarm-modification', label: 'FA G4' },
-              { value: 'ev-charging', label: 'EV' },
-              { value: 'emergency-lighting', label: 'EM LTG' },
-              { value: 'solar-pv', label: 'Solar PV' },
-              { value: 'pat-testing', label: 'PAT' },
-              { value: 'smoke-co-alarm', label: 'Smoke/CO' },
-              { value: 'bess', label: 'BESS' },
-              { value: 'danger-notice', label: 'Danger' },
-              { value: 'isolation-cert', label: 'Isolation' },
-              { value: 'permit-to-work', label: 'Permit' },
-            ].map(({ value, label }) => {
-              // ELE-NEW — show full-library count next to each chip so the user
-              // can see at a glance how many of each type they have, regardless
-              // of which page is currently loaded.
-              const count =
-                value === 'all'
-                  ? countsData?.total ?? 0
-                  : countsData?.byType[value] ?? 0;
-              return (
-                <button
-                  key={value}
-                  onClick={() => {
-                    navigator.vibrate?.(10);
-                    setTypeFilter(value);
-                  }}
-                  className={cn(
-                    'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-1.5',
-                    typeFilter === value
-                      ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                      : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
-                  )}
-                >
-                  <span>{label}</span>
-                  {count > 0 && (
-                    <span
-                      className={cn(
-                        'text-[9px] px-1 py-0.5 rounded-sm tabular-nums leading-none',
-                        typeFilter === value
-                          ? 'bg-elec-yellow/20 text-elec-yellow'
-                          : 'bg-white/[0.06] text-white/60'
-                      )}
-                    >
-                      {count}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+          {/* Type filter row — grouped by category; non-core types appear only
+              once the user has at least one, so the row stays short and relevant. */}
+          <div className="flex items-center gap-1.5 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
+            {(() => {
+              type ChipItem =
+                | { kind: 'chip'; value: string; label: string }
+                | { kind: 'divider'; key: string };
+              const items: ChipItem[] = [{ kind: 'chip', value: 'all', label: 'All' }];
+              for (const group of TYPE_GROUPS) {
+                const visible = group.types.filter(
+                  (t) =>
+                    CORE_TYPES.includes(t.value) ||
+                    (countsData?.byType[t.value] ?? 0) > 0 ||
+                    typeFilter === t.value
+                );
+                if (visible.length === 0) continue;
+                items.push({ kind: 'divider', key: `div-${group.label}` });
+                for (const t of visible)
+                  items.push({ kind: 'chip', value: t.value, label: t.label });
+              }
+              return items.map((item) => {
+                if (item.kind === 'divider') {
+                  return (
+                    <div
+                      key={item.key}
+                      className="w-px h-4 bg-white/10 shrink-0 self-center"
+                      aria-hidden
+                    />
+                  );
+                }
+                const { value, label } = item;
+                const count =
+                  value === 'all' ? countsData?.total ?? 0 : countsData?.byType[value] ?? 0;
+                return (
+                  <button
+                    key={value}
+                    onClick={() => {
+                      navigator.vibrate?.(10);
+                      setTypeFilter(value);
+                    }}
+                    className={cn(
+                      'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-1.5',
+                      typeFilter === value
+                        ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                        : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
+                    )}
+                  >
+                    <span>{label}</span>
+                    {count > 0 && (
+                      <span
+                        className={cn(
+                          'text-[9px] px-1 py-0.5 rounded-sm tabular-nums leading-none',
+                          typeFilter === value
+                            ? 'bg-elec-yellow/20 text-elec-yellow'
+                            : 'bg-white/[0.06] text-white/60'
+                        )}
+                      >
+                        {count}
+                      </span>
+                    )}
+                  </button>
+                );
+              });
+            })()}
           </div>
 
           <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
@@ -1115,7 +1174,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               )
             ) : (
               <div className="space-y-3">
-                {sortedReports.map((report) => (
+                <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden">
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+                  <div className="divide-y divide-white/[0.14]">
+                  {sortedReports.map((report) => (
                   <CertificateCard
                     key={report.report_id}
                     certificate={toCertificateData(report)}
@@ -1135,6 +1197,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     onSelectToggle={() => handleSelectToggle(report.report_id)}
                   />
                 ))}
+                  </div>
+                </div>
 
                 {/* ELE-NEW — Load More with X-of-Y context. totalCount comes
                     from the server for the current filtered set, so the user
@@ -1169,15 +1233,16 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       {/* New Certificate Bottom Sheet */}
       <Sheet open={showNewCertSheet} onOpenChange={setShowNewCertSheet}>
         <SheetContent side="bottom" className="h-auto rounded-t-2xl bg-background border-white/[0.06]">
-          <SheetHeader className="pb-4">
-            <SheetTitle className="text-white">New Certificate</SheetTitle>
+          <SheetHeader className="pb-4 text-left">
+            <SheetTitle className="text-white text-[18px]">New Certificate</SheetTitle>
+            <p className="text-[12px] text-white/50">Choose a certificate type to begin.</p>
           </SheetHeader>
           <div className="space-y-2 pb-6">
             {[
-              { type: 'eicr', label: 'EICR', desc: 'Electrical Installation Condition Report', accent: 'from-blue-500 via-blue-400 to-cyan-400' },
-              { type: 'eic', label: 'EIC', desc: 'Electrical Installation Certificate', accent: 'from-emerald-500 via-emerald-400 to-green-400' },
-              { type: 'minor-works', label: 'Minor Works', desc: 'Minor Electrical Installation Works', accent: 'from-orange-500 via-amber-400 to-yellow-400' },
-            ].map(({ type, label, desc, accent }) => (
+              { type: 'eicr', label: 'EICR', code: 'EICR', desc: 'Electrical Installation Condition Report', tile: 'bg-blue-500/15 text-blue-300 border-blue-500/30' },
+              { type: 'eic', label: 'EIC', code: 'EIC', desc: 'Electrical Installation Certificate', tile: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' },
+              { type: 'minor-works', label: 'Minor Works', code: 'MW', desc: 'Minor Electrical Installation Works', tile: 'bg-orange-500/15 text-orange-300 border-orange-500/30' },
+            ].map(({ type, label, code, desc, tile }) => (
               <button
                 key={type}
                 onClick={() => {
@@ -1185,17 +1250,25 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   setShowNewCertSheet(false);
                   onNavigate(type);
                 }}
-                className="group w-full relative overflow-hidden rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] active:scale-[0.98] transition-all touch-manipulation text-left"
+                className="group w-full rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] hover:border-elec-yellow/30 active:scale-[0.98] transition-all touch-manipulation text-left"
               >
-                <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-100 transition-opacity', accent)} />
-                <div className="flex items-center gap-4 p-4">
-                  <div className="flex-1">
-                    <p className="font-semibold text-white group-hover:text-elec-yellow transition-colors">{label}</p>
-                    <p className="text-xs text-white/50 mt-0.5">{desc}</p>
+                <div className="flex items-center gap-3.5 p-3.5">
+                  {/* Type icon tile — matches the certificate cards */}
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border',
+                      tile
+                    )}
+                  >
+                    <span className="text-[12px] font-bold tracking-wide">{code}</span>
                   </div>
-                  <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                    <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-white text-[15px] leading-snug group-hover:text-elec-yellow transition-colors">
+                      {label}
+                    </p>
+                    <p className="text-[11.5px] text-white/50 mt-0.5 truncate">{desc}</p>
                   </div>
+                  <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0" />
                 </div>
               </button>
             ))}

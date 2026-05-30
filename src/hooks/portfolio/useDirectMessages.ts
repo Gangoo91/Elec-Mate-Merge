@@ -42,6 +42,10 @@ export interface ConversationWithMessages {
   unreadCount: number;
 }
 
+// Unique channel name per subscription (see usePortfolioData) — avoids the
+// "add postgres_changes after subscribe()" crash on remount/multi-mount.
+let mentorMessagesChannelSeq = 0;
+
 export function useDirectMessages() {
   const { user } = useAuth();
   const [connections, setConnections] = useState<MentorConnection[]>([]);
@@ -140,10 +144,11 @@ export function useDirectMessages() {
 
       const connectionIds = connectionData.map((c) => c.id);
 
-      // Count unread messages sent by mentors (not by the apprentice)
+      // Count unread messages sent by mentors (not by the apprentice).
+      // head:true + count returns no rows; select 'id' so no columns ship.
       const { count, error } = await supabase
         .from('mentor_messages')
-        .select('*', { count: 'exact', head: true })
+        .select('id', { count: 'exact', head: true })
         .in('connection_id', connectionIds)
         .eq('sender_type', 'mentor')
         .eq('is_read', false);
@@ -274,7 +279,7 @@ export function useDirectMessages() {
       const connectionIds = connectionData.map((c) => c.id);
 
       channel = supabase
-        .channel('mentor-messages')
+        .channel(`mentor-messages-${++mentorMessagesChannelSeq}`)
         .on(
           'postgres_changes',
           {

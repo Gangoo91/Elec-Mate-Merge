@@ -11,6 +11,7 @@ import { Eyebrow, SectionHeader } from './PortfolioPrimitives';
 import type { FocusAC } from '@/hooks/portfolio/usePortfolioFocus';
 
 const KIND_LABEL: Record<FocusAC['reasonKind'], string> = {
+  referred: 'Action needed',
   'quick-win': 'Quick win',
   'recent-match': 'Recent activity',
   foundational: 'Foundational',
@@ -18,6 +19,7 @@ const KIND_LABEL: Record<FocusAC['reasonKind'], string> = {
 };
 
 const KIND_TONE: Record<FocusAC['reasonKind'], string> = {
+  referred: 'border-red-400/30 text-red-300 bg-red-500/[0.08]',
   'quick-win': 'border-elec-yellow/30 text-elec-yellow bg-elec-yellow/[0.05]',
   'recent-match': 'border-elec-yellow/20 text-elec-yellow/85 bg-elec-yellow/[0.03]',
   foundational: 'border-white/[0.10] text-white/85 bg-white/[0.04]',

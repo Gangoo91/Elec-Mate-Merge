@@ -26,7 +26,7 @@ export async function htmlToPdf(html: string): Promise<Uint8Array> {
           headerTemplate: '<span></span>',
           footerTemplate: `
             <div style="width: 100%; font-family: 'Inter', Arial, sans-serif; font-size: 7px; color: #94a3b8; display: flex; justify-content: space-between; align-items: center; padding: 0 32px;">
-              <span>Powered by <strong style="color: #f59e0b; font-weight: 700;">Elec-Mate</strong></span>
+              <span>Powered by <strong style="color: #f59e0b; font-weight: 700;">Elec-Mate</strong> &nbsp;&#183;&nbsp; elec-mate.com</span>
               <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
             </div>
           `,

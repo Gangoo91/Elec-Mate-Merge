@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { GripVertical } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   Select,
   SelectContent,
@@ -11,25 +9,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import {
-  Plus,
-  Trash2,
-  GripVertical,
-  AlertTriangle,
-  Clock,
-  Shield,
-  Wrench,
-  GraduationCap,
-  Copy,
-  Lightbulb,
-  Edit3,
-} from 'lucide-react';
 import { MethodStep } from '@/types/method-statement';
 import { stepTemplates } from '@/data/method-statement-templates';
 import { useHazardDatabase } from '../../hooks/useHazardDatabase';
 import HazardSelector from '../../components/HazardSelector';
+import {
+  FormCard,
+  Field,
+  Eyebrow,
+  EmptyState,
+  ListCard,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface StepsManagementStepProps {
   steps: MethodStep[];
@@ -40,11 +38,41 @@ interface StepsManagementStepProps {
   onHazardLink?: (hazardId: string) => void;
 }
 
+const RISK_PILL: Record<string, string> = {
+  low: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  medium: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  high: 'bg-red-500/10 text-red-400 border-red-500/25',
+};
+
+function RiskPill({ level }: { level: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        RISK_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+      )}
+    >
+      {level}
+    </span>
+  );
+}
+
+// One meaningful colour bar per risk level on the left edge of each step row.
+function accentBar(level: string) {
+  return cn(
+    'w-[3px] self-stretch rounded-full shrink-0',
+    level === 'low'
+      ? 'bg-emerald-400'
+      : level === 'high'
+        ? 'bg-red-400'
+        : 'bg-amber-400'
+  );
+}
+
 const StepsManagementStep = ({
   steps,
   onStepsChange,
   onNext,
-  onBack,
   linkedHazards = [],
   onHazardLink,
 }: StepsManagementStepProps) => {
@@ -52,7 +80,7 @@ const StepsManagementStep = ({
   const [showTemplates, setShowTemplates] = useState(false);
   const [showHazardSelector, setShowHazardSelector] = useState(false);
   const [selectedStep, setSelectedStep] = useState<string | null>(null);
-  const { getHazardById, getRiskColor: getHazardRiskColor } = useHazardDatabase();
+  const { getHazardById } = useHazardDatabase();
 
   const addNewStep = () => {
     const newStep: MethodStep = {
@@ -72,7 +100,7 @@ const StepsManagementStep = ({
     setExpandedStep(newStep.id);
   };
 
-  const addStepFromTemplate = (template: any) => {
+  const addStepFromTemplate = (template: (typeof stepTemplates)[number]) => {
     const newStep: MethodStep = {
       id: `step-${Date.now()}`,
       stepNumber: steps.length + 1,
@@ -112,20 +140,12 @@ const StepsManagementStep = ({
     onStepsChange([...steps, newStep]);
   };
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: { source: { index: number }; destination?: { index: number } | null }) => {
     if (!result.destination) return;
-
-    const reorderedSteps = Array.from(steps);
-    const [removed] = reorderedSteps.splice(result.source.index, 1);
-    reorderedSteps.splice(result.destination.index, 0, removed);
-
-    // Renumber steps
-    const numberedSteps = reorderedSteps.map((step, index) => ({
-      ...step,
-      stepNumber: index + 1,
-    }));
-
-    onStepsChange(numberedSteps);
+    const reordered = Array.from(steps);
+    const [removed] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, removed);
+    onStepsChange(reordered.map((step, index) => ({ ...step, stepNumber: index + 1 })));
   };
 
   const addArrayItem = (
@@ -136,9 +156,7 @@ const StepsManagementStep = ({
     if (!value.trim()) return;
     const step = steps.find((s) => s.id === stepId);
     if (step) {
-      updateStep(stepId, {
-        [field]: [...step[field], value.trim()],
-      });
+      updateStep(stepId, { [field]: [...step[field], value.trim()] });
     }
   };
 
@@ -155,294 +173,261 @@ const StepsManagementStep = ({
     }
   };
 
-  const getRiskColor = (risk: string) => {
-    switch (risk) {
-      case 'low':
-        return 'bg-green-500/20 text-green-300';
-      case 'medium':
-        return 'bg-yellow-500/20 text-yellow-300';
-      case 'high':
-        return 'bg-red-500/20 text-red-300';
-      default:
-        return 'bg-gray-500/20 text-white';
-    }
-  };
-
   const linkHazardToStep = (stepId: string, hazardId: string) => {
     const step = steps.find((s) => s.id === stepId);
     if (step) {
-      const linkedHazards = step.linkedHazards || [];
-      if (!linkedHazards.includes(hazardId)) {
-        updateStep(stepId, {
-          linkedHazards: [...linkedHazards, hazardId],
-        });
+      const existing = step.linkedHazards || [];
+      if (!existing.includes(hazardId)) {
+        updateStep(stepId, { linkedHazards: [...existing, hazardId] });
       }
     }
-    if (onHazardLink) {
-      onHazardLink(hazardId);
-    }
+    onHazardLink?.(hazardId);
   };
 
   const unlinkHazardFromStep = (stepId: string, hazardId: string) => {
     const step = steps.find((s) => s.id === stepId);
     if (step) {
-      const linkedHazards = step.linkedHazards || [];
-      updateStep(stepId, {
-        linkedHazards: linkedHazards.filter((h) => h !== hazardId),
-      });
+      const existing = step.linkedHazards || [];
+      updateStep(stepId, { linkedHazards: existing.filter((h) => h !== hazardId) });
     }
   };
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex flex-col gap-4">
-            <CardTitle className="text-elec-yellow text-lg sm:text-xl">
-              Method Steps ({steps.length})
-            </CardTitle>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                onClick={() => setShowHazardSelector(true)}
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-2"
+  const ChipList = ({
+    stepId,
+    field,
+    items,
+    placeholder,
+    tone,
+  }: {
+    stepId: string;
+    field: 'safetyRequirements' | 'equipmentNeeded' | 'qualifications';
+    items: string[];
+    placeholder: string;
+    tone: Tone;
+  }) => (
+    <div className="space-y-2">
+      <div className="flex gap-2">
+        <input
+          placeholder={placeholder}
+          className={inputClass}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              addArrayItem(stepId, field, e.currentTarget.value);
+              e.currentTarget.value = '';
+            }
+          }}
+        />
+        <SecondaryButton
+          size="sm"
+          onClick={(e) => {
+            const input = (e.currentTarget as HTMLButtonElement)
+              .previousElementSibling as HTMLInputElement;
+            addArrayItem(stepId, field, input.value);
+            input.value = '';
+          }}
+        >
+          Add
+        </SecondaryButton>
+      </div>
+      {items.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {items.map((item, index) => (
+            <span
+              key={index}
+              className={cn(
+                'inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11.5px] border',
+                tone === 'red'
+                  ? 'bg-red-500/10 text-red-300 border-red-500/25'
+                  : tone === 'blue'
+                    ? 'bg-blue-500/10 text-blue-300 border-blue-500/25'
+                    : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25'
+              )}
+            >
+              {item}
+              <button
+                type="button"
+                onClick={() => removeArrayItem(stepId, field, index)}
+                className="text-white/50 hover:text-white touch-manipulation"
+                aria-label="Remove"
               >
-                <Shield className="h-4 w-4" />
-                Link Hazards
-              </Button>
-              <Button
-                onClick={() => setShowTemplates(!showTemplates)}
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-2"
-              >
-                <Lightbulb className="h-4 w-4" />
-                Step Templates
-              </Button>
-              <Button onClick={addNewStep} size="sm" className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Add Step
-              </Button>
-            </div>
-          </div>
-          {showTemplates && (
-            <div className="mt-4 p-4 border border-blue-500/20 rounded-lg bg-blue-500/5">
-              <h4 className="text-blue-300 mb-3">Quick Step Templates</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {stepTemplates.map((template) => (
-                  <Button
-                    key={template.id}
-                    onClick={() => addStepFromTemplate(template)}
-                    variant="outline"
-                    size="sm"
-                    className="h-auto p-3 flex flex-col items-start"
-                  >
-                    <div className="font-medium text-sm">{template.title}</div>
-                    <div className="text-xs text-white">{template.category}</div>
-                    <Badge className={`mt-1 ${getRiskColor(template.riskLevel)}`} variant="outline">
-                      {template.riskLevel} risk
-                    </Badge>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          )}
-        </CardHeader>
-      </Card>
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
-      {/* Steps List */}
+  return (
+    <div className="space-y-5">
+      {/* Toolbar */}
+      <FormCard eyebrow={`Method steps (${steps.length})`}>
+        <div className="flex flex-wrap gap-2">
+          <SecondaryButton size="sm" onClick={() => setShowHazardSelector(true)}>
+            Link hazards
+          </SecondaryButton>
+          <SecondaryButton size="sm" onClick={() => setShowTemplates((v) => !v)}>
+            {showTemplates ? 'Hide templates' : 'Step templates'}
+          </SecondaryButton>
+          <PrimaryButton size="sm" onClick={addNewStep}>
+            Add step
+          </PrimaryButton>
+        </div>
+
+        {showTemplates && (
+          <div className="space-y-2 pt-1">
+            <Eyebrow>Quick step templates</Eyebrow>
+            <ListCard>
+              {stepTemplates.map((template) => (
+                <button
+                  key={template.id}
+                  type="button"
+                  onClick={() => addStepFromTemplate(template)}
+                  className="w-full flex items-center gap-3 px-5 py-3.5 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                >
+                  <span className={accentBar(template.riskLevel)} />
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-[13.5px] font-medium text-white truncate">
+                      {template.title}
+                    </span>
+                    <span className="block text-[11.5px] text-white/55 truncate">
+                      {template.category}
+                    </span>
+                  </span>
+                  <RiskPill level={template.riskLevel} />
+                </button>
+              ))}
+            </ListCard>
+          </div>
+        )}
+      </FormCard>
+
+      {/* Steps list */}
       {steps.length === 0 ? (
-        <Card className="border-yellow-500/20 bg-yellow-500/5">
-          <CardContent className="p-8 text-center">
-            <div className="text-yellow-300 mb-2">No method steps added yet</div>
-            <p className="text-white mb-4">
-              Click "Add Step" to start building your method statement, or use our step templates
-              for common procedures.
-            </p>
-            <div className="flex justify-center gap-2">
-              <Button onClick={addNewStep} variant="outline">
-                Add Your First Step
-              </Button>
-              <Button onClick={() => setShowTemplates(true)} variant="outline">
-                Browse Templates
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <EmptyState
+          title="No method steps added yet"
+          description="Add a step to start building your method statement, or use a step template for common procedures."
+          action="Add your first step"
+          onAction={addNewStep}
+        />
       ) : (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="steps">
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
+              <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-3">
                 {steps.map((step, index) => (
                   <Draggable key={step.id} draggableId={step.id} index={index}>
-                    {(provided, snapshot) => (
-                      <Card
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        className={`border-elec-yellow/20 bg-elec-gray transition-all ${
-                          snapshot.isDragging ? 'scale-105 shadow-lg' : ''
-                        } ${expandedStep === step.id ? 'border-elec-yellow' : ''}`}
-                      >
-                        {expandedStep === step.id ? (
-                          // Expanded Edit View
-                          <>
-                            <CardHeader className="pb-2">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                  <div
-                                    {...provided.dragHandleProps}
-                                    className="text-white hover:text-elec-yellow cursor-grab"
-                                  >
-                                    <GripVertical className="h-5 w-5" />
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold">
-                                      {step.stepNumber}
-                                    </div>
-                                    <div>
-                                      <h4 className="font-semibold text-elec-yellow">
-                                        {step.title || `Step ${step.stepNumber}`}
-                                      </h4>
-                                      <div className="flex gap-2 mt-1">
-                                        <Badge
-                                          className={getRiskColor(step.riskLevel)}
-                                          variant="outline"
-                                        >
-                                          {step.riskLevel} risk
-                                        </Badge>
-                                        {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                          <Badge
-                                            variant="outline"
-                                            className="border-orange-500/30 text-orange-400"
-                                          >
-                                            {step.linkedHazards.length} hazard
-                                            {step.linkedHazards.length !== 1 ? 's' : ''}
-                                          </Badge>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    onClick={() => {
-                                      setSelectedStep(step.id);
-                                      setShowHazardSelector(true);
-                                    }}
-                                    size="sm"
-                                    variant="outline"
-                                    className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
-                                  >
-                                    <Shield className="h-4 w-4" />
-                                  </Button>
-                                  <Button
-                                    onClick={() => duplicateStep(step)}
-                                    size="sm"
-                                    variant="outline"
-                                  >
-                                    <Copy className="h-4 w-4" />
-                                  </Button>
-                                  <Button
-                                    onClick={() => setExpandedStep(null)}
-                                    size="sm"
-                                    variant="outline"
-                                  >
-                                    Done
-                                  </Button>
-                                  <Button
-                                    onClick={() => removeStep(step.id)}
-                                    size="sm"
-                                    variant="outline"
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </div>
+                    {(dragProvided, snapshot) => {
+                      const isExpanded = expandedStep === step.id;
+                      return (
+                        <div
+                          ref={dragProvided.innerRef}
+                          {...dragProvided.draggableProps}
+                          className={cn(
+                            'bg-[hsl(0_0%_12%)] border rounded-2xl overflow-hidden',
+                            snapshot.isDragging ? 'border-elec-yellow/60 shadow-lg' : 'border-white/[0.06]',
+                            isExpanded && 'border-elec-yellow/40'
+                          )}
+                        >
+                          {/* Header */}
+                          <div className="flex items-center gap-3 px-4 sm:px-5 py-4">
+                            <span className={accentBar(step.riskLevel)} />
+                            <div
+                              {...dragProvided.dragHandleProps}
+                              className="text-white/40 hover:text-elec-yellow cursor-grab touch-manipulation shrink-0"
+                              aria-label="Drag to reorder"
+                            >
+                              <GripVertical className="h-4 w-4" />
+                            </div>
+                            <div className="h-7 w-7 rounded-full bg-elec-yellow text-black flex items-center justify-center font-semibold text-[12px] shrink-0">
+                              {step.stepNumber}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-[14px] font-medium text-white truncate">
+                                {step.title || `Step ${step.stepNumber}`}
                               </div>
-                            </CardHeader>
+                              <div className="flex items-center gap-2 mt-1">
+                                <RiskPill level={step.riskLevel} />
+                                {step.linkedHazards && step.linkedHazards.length > 0 && (
+                                  <span className="text-[10.5px] uppercase tracking-[0.12em] text-orange-400">
+                                    {step.linkedHazards.length} hazard
+                                    {step.linkedHazards.length !== 1 ? 's' : ''}
+                                  </span>
+                                )}
+                                {step.estimatedDuration && (
+                                  <span className="text-[11px] text-white/45 tabular-nums">
+                                    {step.estimatedDuration}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <SecondaryButton
+                              size="sm"
+                              onClick={() => setExpandedStep(isExpanded ? null : step.id)}
+                            >
+                              {isExpanded ? 'Done' : 'Edit'}
+                            </SecondaryButton>
+                          </div>
 
-                            <CardContent className="space-y-6 border-t border-elec-yellow/20 pt-6">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <Label htmlFor={`title-${step.id}`} className="text-foreground">
-                                    Step Title
-                                  </Label>
-                                  <Input
-                                    id={`title-${step.id}`}
+                          {/* Expanded editor */}
+                          {isExpanded ? (
+                            <div className="border-t border-white/[0.06] p-4 sm:p-5 space-y-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <Field label="Step title">
+                                  <input
                                     value={step.title}
                                     onChange={(e) => updateStep(step.id, { title: e.target.value })}
+                                    className={inputClass}
                                     placeholder="Enter step title"
-                                    className="mt-1"
                                   />
-                                </div>
-                                <div>
-                                  <Label
-                                    htmlFor={`duration-${step.id}`}
-                                    className="text-foreground"
-                                  >
-                                    Estimated Duration
-                                  </Label>
-                                  <Input
-                                    id={`duration-${step.id}`}
+                                </Field>
+                                <Field label="Estimated duration">
+                                  <input
                                     value={step.estimatedDuration}
                                     onChange={(e) =>
                                       updateStep(step.id, { estimatedDuration: e.target.value })
                                     }
-                                    placeholder="e.g., 30 minutes"
-                                    className="mt-1"
+                                    className={inputClass}
+                                    placeholder="e.g. 30 minutes"
                                   />
-                                </div>
+                                </Field>
                               </div>
 
-                              <div>
-                                <Label
-                                  htmlFor={`description-${step.id}`}
-                                  className="text-foreground"
-                                >
-                                  Step Description
-                                </Label>
-                                <Textarea
-                                  id={`description-${step.id}`}
+                              <Field label="Step description">
+                                <textarea
                                   value={step.description}
                                   onChange={(e) =>
                                     updateStep(step.id, { description: e.target.value })
                                   }
-                                  placeholder="Describe what needs to be done in this step"
+                                  className={textareaClass}
                                   rows={3}
-                                  className="mt-1"
+                                  placeholder="Describe what needs to be done in this step"
                                 />
-                              </div>
+                              </Field>
 
-                              <div>
-                                <Label htmlFor={`risk-${step.id}`} className="text-foreground">
-                                  Risk Level
-                                </Label>
+                              <Field label="Risk level">
                                 <Select
                                   value={step.riskLevel}
                                   onValueChange={(value: 'low' | 'medium' | 'high') =>
                                     updateStep(step.id, { riskLevel: value })
                                   }
                                 >
-                                  <SelectTrigger className="mt-1">
+                                  <SelectTrigger className={selectTriggerClass}>
                                     <SelectValue />
                                   </SelectTrigger>
-                                  <SelectContent>
+                                  <SelectContent className={selectContentClass}>
                                     <SelectItem value="low">Low Risk</SelectItem>
                                     <SelectItem value="medium">Medium Risk</SelectItem>
                                     <SelectItem value="high">High Risk</SelectItem>
                                   </SelectContent>
                                 </Select>
-                              </div>
+                              </Field>
 
-                              {/* Linked Hazards */}
+                              {/* Linked hazards */}
                               {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                <div>
-                                  <Label className="flex items-center gap-2 text-foreground mb-2">
-                                    <Shield className="h-4 w-4" />
-                                    Linked Hazards ({step.linkedHazards.length})
-                                  </Label>
+                                <Field label={`Linked hazards (${step.linkedHazards.length})`}>
                                   <div className="space-y-2">
                                     {step.linkedHazards.map((hazardId) => {
                                       const hazard = getHazardById(hazardId);
@@ -450,390 +435,96 @@ const StepsManagementStep = ({
                                       return (
                                         <div
                                           key={hazardId}
-                                          className="flex items-center justify-between p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg"
+                                          className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl bg-orange-500/[0.08] border border-orange-500/20"
                                         >
-                                          <div className="flex items-center gap-3">
-                                            <div className="p-1 rounded bg-orange-500/20">
-                                              <hazard.icon className="h-4 w-4 text-orange-400" />
+                                          <div className="min-w-0">
+                                            <div className="text-[13px] font-medium text-white truncate">
+                                              {hazard.name}
                                             </div>
-                                            <div>
-                                              <div className="font-medium text-foreground">
-                                                {hazard.name}
-                                              </div>
-                                              <div className="text-xs text-white">
-                                                {hazard.category}
-                                              </div>
+                                            <div className="text-[11px] text-white/55 truncate">
+                                              {hazard.category}
                                             </div>
                                           </div>
-                                          <Button
-                                            size="sm"
-                                            variant="ghost"
+                                          <button
+                                            type="button"
                                             onClick={() => unlinkHazardFromStep(step.id, hazardId)}
-                                            className="text-red-400 hover:bg-red-500/10"
+                                            className="text-red-400 hover:text-red-300 touch-manipulation shrink-0"
+                                            aria-label="Unlink hazard"
                                           >
                                             ×
-                                          </Button>
+                                          </button>
                                         </div>
                                       );
                                     })}
                                   </div>
-                                </div>
+                                </Field>
                               )}
 
-                              {/* Safety Requirements */}
-                              <div>
-                                <Label className="flex items-center gap-2 text-foreground mb-2">
-                                  <Shield className="h-4 w-4" />
-                                  Safety Requirements
-                                </Label>
-                                <div className="space-y-2">
-                                  <div className="flex gap-2">
-                                    <Input
-                                      placeholder="Add safety requirement"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          addArrayItem(
-                                            step.id,
-                                            'safetyRequirements',
-                                            e.currentTarget.value
-                                          );
-                                          e.currentTarget.value = '';
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      type="button"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        const input = e.currentTarget
-                                          .previousElementSibling as HTMLInputElement;
-                                        addArrayItem(step.id, 'safetyRequirements', input.value);
-                                        input.value = '';
-                                      }}
-                                    >
-                                      Add
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {step.safetyRequirements.map((req, index) => (
-                                      <Badge
-                                        key={index}
-                                        variant="outline"
-                                        className="bg-red-500/10 border-red-500/30 text-red-300"
-                                      >
-                                        <Shield className="h-3 w-3 mr-1" />
-                                        {req}
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className="h-auto p-0 ml-2"
-                                          onClick={() =>
-                                            removeArrayItem(step.id, 'safetyRequirements', index)
-                                          }
-                                        >
-                                          ×
-                                        </Button>
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
+                              <Field label="Safety requirements">
+                                <ChipList
+                                  stepId={step.id}
+                                  field="safetyRequirements"
+                                  items={step.safetyRequirements}
+                                  placeholder="Add safety requirement"
+                                  tone="red"
+                                />
+                              </Field>
+                              <Field label="Equipment needed">
+                                <ChipList
+                                  stepId={step.id}
+                                  field="equipmentNeeded"
+                                  items={step.equipmentNeeded}
+                                  placeholder="Add equipment"
+                                  tone="blue"
+                                />
+                              </Field>
+                              <Field label="Required qualifications">
+                                <ChipList
+                                  stepId={step.id}
+                                  field="qualifications"
+                                  items={step.qualifications}
+                                  placeholder="Add qualification"
+                                  tone="green"
+                                />
+                              </Field>
 
-                              {/* Equipment Needed */}
-                              <div>
-                                <Label className="flex items-center gap-2 text-foreground mb-2">
-                                  <Wrench className="h-4 w-4" />
-                                  Equipment Needed
-                                </Label>
-                                <div className="space-y-2">
-                                  <div className="flex gap-2">
-                                    <Input
-                                      placeholder="Add equipment"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          addArrayItem(
-                                            step.id,
-                                            'equipmentNeeded',
-                                            e.currentTarget.value
-                                          );
-                                          e.currentTarget.value = '';
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      type="button"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        const input = e.currentTarget
-                                          .previousElementSibling as HTMLInputElement;
-                                        addArrayItem(step.id, 'equipmentNeeded', input.value);
-                                        input.value = '';
-                                      }}
-                                    >
-                                      Add
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {step.equipmentNeeded.map((equipment, index) => (
-                                      <Badge
-                                        key={index}
-                                        variant="outline"
-                                        className="bg-blue-500/10 border-blue-500/30 text-blue-300"
-                                      >
-                                        <Wrench className="h-3 w-3 mr-1" />
-                                        {equipment}
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className="h-auto p-0 ml-2"
-                                          onClick={() =>
-                                            removeArrayItem(step.id, 'equipmentNeeded', index)
-                                          }
-                                        >
-                                          ×
-                                        </Button>
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Qualifications */}
-                              <div>
-                                <Label className="flex items-center gap-2 text-foreground mb-2">
-                                  <GraduationCap className="h-4 w-4" />
-                                  Required Qualifications
-                                </Label>
-                                <div className="space-y-2">
-                                  <div className="flex gap-2">
-                                    <Input
-                                      placeholder="Add qualification"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          addArrayItem(
-                                            step.id,
-                                            'qualifications',
-                                            e.currentTarget.value
-                                          );
-                                          e.currentTarget.value = '';
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      type="button"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        const input = e.currentTarget
-                                          .previousElementSibling as HTMLInputElement;
-                                        addArrayItem(step.id, 'qualifications', input.value);
-                                        input.value = '';
-                                      }}
-                                    >
-                                      Add
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {step.qualifications.map((qual, index) => (
-                                      <Badge
-                                        key={index}
-                                        variant="outline"
-                                        className="bg-green-500/10 border-green-500/30 text-green-300"
-                                      >
-                                        <GraduationCap className="h-3 w-3 mr-1" />
-                                        {qual}
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className="h-auto p-0 ml-2"
-                                          onClick={() =>
-                                            removeArrayItem(step.id, 'qualifications', index)
-                                          }
-                                        >
-                                          ×
-                                        </Button>
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            </CardContent>
-                          </>
-                        ) : (
-                          // Collapsed Card View - Clean Responsive Layout
-                          <CardContent className="p-4 sm:p-6">
-                            {/* 
-                              HEADER SECTION - Responsive Flexbox Layout
-                              Mobile (< 640px): Vertical stack with full-width elements
-                              Tablet (640px-1024px): Horizontal layout with flex-wrap for overflow
-                              Desktop (>= 1024px): Horizontal layout with optimal spacing
-                            */}
-                            {/* 
-                              CLEAN HEADER DESIGN - Better spacing and visual hierarchy
-                              Improved layout to reduce clutter and improve readability
-                            */}
-                            <div className="space-y-4">
-                              {/* Top Row: Step number and drag handle */}
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                  <div
-                                    {...provided.dragHandleProps}
-                                    className="text-white hover:text-elec-yellow cursor-grab transition-colors p-1 rounded"
-                                  >
-                                    <GripVertical className="h-4 w-4" />
-                                  </div>
-
-                                  <div className="w-8 h-8 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-sm">
-                                    {step.stepNumber}
-                                  </div>
-
-                                  <div className="flex items-center gap-2">
-                                    <Badge
-                                      className={getRiskColor(step.riskLevel)}
-                                      variant="outline"
-                                    >
-                                      {step.riskLevel}
-                                    </Badge>
-                                    {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                      <Badge
-                                        variant="outline"
-                                        className="border-orange-500/30 text-orange-400 text-xs"
-                                      >
-                                        {step.linkedHazards.length} hazard
-                                        {step.linkedHazards.length !== 1 ? 's' : ''}
-                                      </Badge>
-                                    )}
-                                  </div>
-                                </div>
-
-                                <Button
-                                  onClick={() => setExpandedStep(step.id)}
+                              <div className="flex flex-wrap gap-2 pt-1">
+                                <SecondaryButton
                                   size="sm"
-                                  variant="outline"
-                                  className="text-xs"
+                                  onClick={() => {
+                                    setSelectedStep(step.id);
+                                    setShowHazardSelector(true);
+                                  }}
                                 >
-                                  <Edit3 className="h-3 w-3 mr-1" />
-                                  Edit
-                                </Button>
+                                  Link hazard
+                                </SecondaryButton>
+                                <SecondaryButton size="sm" onClick={() => duplicateStep(step)}>
+                                  Duplicate
+                                </SecondaryButton>
+                                <DestructiveButton size="sm" onClick={() => removeStep(step.id)}>
+                                  Remove
+                                </DestructiveButton>
                               </div>
-
-                              {/* Content Row: Title and description with better spacing */}
-                              <div className="pl-11">
-                                <h3 className="font-semibold text-foreground text-lg mb-2">
-                                  {step.title || `Step ${step.stepNumber}`}
-                                </h3>
-                                <p className="text-sm text-white mb-3 leading-relaxed">
-                                  {step.description || 'No description provided'}
-                                </p>
-
-                                {/* Duration badge - cleaner placement */}
-                                {step.estimatedDuration && (
-                                  <div className="inline-flex items-center gap-1 text-xs text-white bg-muted/30 px-2 py-1 rounded-full">
-                                    <Clock className="h-3 w-3" />
-                                    <span>{step.estimatedDuration}</span>
-                                  </div>
+                            </div>
+                          ) : (
+                            (step.description || step.safetyRequirements.length > 0) && (
+                              <div className="border-t border-white/[0.06] px-4 sm:px-5 py-3.5 space-y-2">
+                                {step.description && (
+                                  <p className="text-[12.5px] text-white/70 leading-relaxed">
+                                    {step.description}
+                                  </p>
                                 )}
-                              </div>
-                            </div>
-
-                            {/* Three Column Layout matching the original screenshot design */}
-                            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-                              {/* Safety Requirements Card - Dark styling to match screenshot */}
-                              <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground">
-                                    Safety Requirements ({step.safetyRequirements.length})
-                                  </h4>
+                                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white/45">
+                                  <span>{step.safetyRequirements.length} safety</span>
+                                  <span>{step.equipmentNeeded.length} equipment</span>
+                                  <span>{step.qualifications.length} qualifications</span>
                                 </div>
-                                <ul className="space-y-2">
-                                  {step.safetyRequirements.slice(0, 3).map((req, index) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-white flex items-start gap-2"
-                                    >
-                                      <span className="text-red-400 flex-shrink-0 w-2">•</span>
-                                      <span className="break-words text-left">{req}</span>
-                                    </li>
-                                  ))}
-                                  {step.safetyRequirements.length > 3 && (
-                                    <li className="text-sm text-white font-medium">
-                                      +{step.safetyRequirements.length - 3} more
-                                    </li>
-                                  )}
-                                  {step.safetyRequirements.length === 0 && (
-                                    <li className="text-sm text-white italic">
-                                      No safety requirements added
-                                    </li>
-                                  )}
-                                </ul>
                               </div>
-
-                              {/* Equipment Card - Lighter background and improved bullet alignment */}
-                              <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground">
-                                    Equipment ({step.equipmentNeeded.length})
-                                  </h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-white flex items-start gap-2"
-                                    >
-                                      <span className="text-blue-400 flex-shrink-0 w-2">•</span>
-                                      <span className="break-words">{equipment}</span>
-                                    </li>
-                                  ))}
-                                  {step.equipmentNeeded.length > 3 && (
-                                    <li className="text-sm text-white font-medium">
-                                      +{step.equipmentNeeded.length - 3} more
-                                    </li>
-                                  )}
-                                  {step.equipmentNeeded.length === 0 && (
-                                    <li className="text-sm text-white italic">
-                                      No equipment specified
-                                    </li>
-                                  )}
-                                </ul>
-                              </div>
-
-                              {/* Qualifications Card - Spans full width on tablet, dark styling */}
-                              <div className="rounded-xl space-y-3 sm:col-span-2 lg:col-span-1">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground">
-                                    Qualifications ({step.qualifications.length})
-                                  </h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {step.qualifications.slice(0, 3).map((qual, index) => (
-                                    <li
-                                      key={index}
-                                      className="text-sm text-white flex items-start gap-2"
-                                    >
-                                      <span className="text-green-400 w-2 flex-shrink-0">•</span>
-                                      <span className="break-words text-left">{qual}</span>
-                                    </li>
-                                  ))}
-                                  {step.qualifications.length > 3 && (
-                                    <li className="text-sm text-white font-medium">
-                                      +{step.qualifications.length - 3} more
-                                    </li>
-                                  )}
-                                  {step.qualifications.length === 0 && (
-                                    <li className="text-sm text-white italic">
-                                      No qualifications required
-                                    </li>
-                                  )}
-                                </ul>
-                              </div>
-                            </div>
-                          </CardContent>
-                        )}
-                      </Card>
-                    )}
+                            )
+                          )}
+                        </div>
+                      );
+                    }}
                   </Draggable>
                 ))}
                 {provided.placeholder}
@@ -843,14 +534,18 @@ const StepsManagementStep = ({
         </DragDropContext>
       )}
 
-      {/* Hazard Selector Modal */}
+      {steps.length > 0 && (
+        <div className="flex justify-end pt-1">
+          <PrimaryButton onClick={onNext}>Continue to hazards</PrimaryButton>
+        </div>
+      )}
+
+      {/* Hazard selector modal */}
       <HazardSelector
         open={showHazardSelector}
         onOpenChange={setShowHazardSelector}
         onHazardSelect={(hazard) => {
-          if (selectedStep) {
-            linkHazardToStep(selectedStep, hazard.id);
-          }
+          if (selectedStep) linkHazardToStep(selectedStep, hazard.id);
           setSelectedStep(null);
         }}
         selectedTaskId={selectedStep}

@@ -827,19 +827,19 @@ const SiteSafety = () => {
       case 'rams':
         return <RAMSGenerator />;
       case 'method-statement':
-        return <MethodStatementGenerator />;
+        return <MethodStatementGenerator onBack={() => setActiveView(null)} />;
       case 'hazard-database':
-        return <EnhancedHazardDatabase />;
+        return <EnhancedHazardDatabase onBack={() => setActiveView(null)} />;
       case 'photo-docs':
         return <PhotoDocumentation onBack={() => setActiveView(null)} />;
       case 'team-briefing':
         return <TeamBriefingTemplates />;
       case 'near-miss':
-        return <NearMissReporting />;
+        return <NearMissReporting onBack={() => setActiveView(null)} />;
       case 'equipment':
-        return <SafetyEquipmentTracker />;
+        return <SafetyEquipmentTracker onBack={() => setActiveView(null)} />;
       case 'emergency':
-        return <EmergencyProcedures />;
+        return <EmergencyProcedures onBack={() => setActiveView(null)} />;
       case 'permit-to-work':
         return <PermitToWork onBack={() => setActiveView(null)} />;
       case 'coshh':

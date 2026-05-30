@@ -7,7 +7,8 @@ import { supabase } from '@/integrations/supabase/client';
    Combines apprentice-side rows (learning_activity_log.counted_as_ojt,
    study_sessions, user_video_watches) with college-side rows
    (college_otj_entries) into a single normalised timeline plus rolled-up
-   totals per source. Designed for ESFA-defensible reporting (20% rule).
+   totals per source. Designed for defensible OTJ-hours reporting (fixed total
+   per apprenticeship standard — see src/data/otjStandards.ts).
 
    The studentId argument is the auth.users.id (== profiles.id). Callers
    working from college_students rows must resolve user_id first.

@@ -10,6 +10,7 @@ import { InvoiceDecisionDialog } from './InvoiceDecisionDialog';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 export const QuoteInvoiceDashboard = () => {
@@ -101,7 +102,7 @@ export const QuoteInvoiceDashboard = () => {
     console.log('📡 Setting up real-time quote subscription...');
 
     const channel = supabase
-      .channel('quotes-realtime-updates')
+      .channel(realtimeChannelName('quotes-realtime-updates'))
       .on(
         'postgres_changes',
         {

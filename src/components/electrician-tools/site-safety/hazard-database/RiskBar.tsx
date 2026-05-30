@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import type { Tone } from '@/components/college/primitives';
 
 interface RiskBarProps {
   riskRating: number; // 1-25 scale
@@ -12,6 +13,43 @@ const getRiskLevel = (rating: number): { level: number; label: string; color: st
   if (rating >= 4) return { level: 2, label: 'Medium', color: 'bg-yellow-500' };
   return { level: 1, label: 'Low', color: 'bg-green-500' };
 };
+
+// The single colour dimension for the editorial views: risk severity → tone.
+export function riskTone(riskRating: number): Tone {
+  if (riskRating >= 15) return 'red';
+  if (riskRating >= 9) return 'orange';
+  if (riskRating >= 4) return 'amber';
+  return 'green';
+}
+
+const RISK_PILL: Record<Tone, string> = {
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+};
+
+// Small uppercase risk pill — matches the Site Safety status-pill pattern.
+export function RiskPill({ riskRating }: { riskRating: number }) {
+  const { label } = getRiskLevel(riskRating);
+  const tone = riskTone(riskRating);
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        RISK_PILL[tone]
+      )}
+    >
+      {label}
+    </span>
+  );
+}
 
 export const RiskBar = ({ riskRating, size = 'md' }: RiskBarProps) => {
   const { level, label, color } = getRiskLevel(riskRating);

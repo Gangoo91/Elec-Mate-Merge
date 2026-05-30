@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { Employee } from './employeeService';
 import type { Job } from './jobService';
 
@@ -158,7 +159,7 @@ export const subscribeToLocationUpdates = (
   callback: (payload: { new: WorkerLocation; old: WorkerLocation | null }) => void
 ) => {
   const channel = supabase
-    .channel('employer-worker-locations')
+    .channel(realtimeChannelName('employer-worker-locations'))
     .on(
       'postgres_changes',
       {

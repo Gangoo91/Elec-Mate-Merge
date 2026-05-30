@@ -7,6 +7,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import type { SupervisorVerification } from '@/hooks/portfolio/useSupervisorVerification';
@@ -157,7 +158,7 @@ export function useTimeEntryVerification() {
     if (!user) return;
 
     const channel = supabase
-      .channel('time_entry_verifications_changes')
+      .channel(realtimeChannelName('time_entry_verifications_changes'))
       .on(
         'postgres_changes',
         {

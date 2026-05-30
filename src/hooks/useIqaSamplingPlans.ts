@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useIqaSamplingPlans — list + create + delete IQA sampling plans for the
@@ -65,7 +66,7 @@ export function useIqaSamplingPlans() {
 
   useEffect(() => {
     const channel = supabase
-      .channel('iqa_sampling_plans')
+      .channel(realtimeChannelName('iqa_sampling_plans'))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'college_iqa_sampling' },

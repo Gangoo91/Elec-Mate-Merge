@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 // Types
 export type TrainingLevel = 'peer' | 'trained' | 'mhfa_certified';
@@ -793,7 +794,7 @@ export const peerPresenceService = {
     onUpdate: (supporter: PeerSupporter, eventType: 'INSERT' | 'UPDATE' | 'DELETE') => void
   ) {
     const channel = supabase
-      .channel('peer-supporters-availability')
+      .channel(realtimeChannelName('peer-supporters-availability'))
       .on(
         'postgres_changes',
         {

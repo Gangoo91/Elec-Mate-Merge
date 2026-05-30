@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 
 export interface SnagAnalysis {
@@ -266,7 +267,7 @@ export const useSnags = () => {
       if (!user) return;
 
       channel = supabase
-        .channel('snags-realtime')
+        .channel(realtimeChannelName('snags-realtime'))
         .on(
           'postgres_changes',
           {

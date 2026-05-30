@@ -67,6 +67,10 @@ async function hashSnapshot(snapshot: Record<string, unknown>): Promise<string> 
     .join('');
 }
 
+// Unique channel name per subscription (see usePortfolioData) — avoids the
+// "add postgres_changes after subscribe()" crash on remount/multi-mount.
+let supervisorVerifChannelSeq = 0;
+
 export function useSupervisorVerification() {
   const { user } = useAuth();
   const [verifications, setVerifications] = useState<SupervisorVerification[]>([]);
@@ -196,7 +200,7 @@ export function useSupervisorVerification() {
     if (!user) return;
 
     const channel = supabase
-      .channel('supervisor_verifications_changes')
+      .channel(`supervisor_verifications_changes-${++supervisorVerifChannelSeq}`)
       .on(
         'postgres_changes',
         {

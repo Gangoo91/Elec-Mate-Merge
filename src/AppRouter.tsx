@@ -39,6 +39,8 @@ const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
 const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
 const BriefingSignOff = lazy(() => import('@/pages/BriefingSignOff'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
+const PublicPermitSign = lazy(() => import('@/pages/PublicPermitSign'));
+const PublicSafetySign = lazy(() => import('@/pages/PublicSafetySign'));
 const ClientPortalView = lazy(() => import('@/pages/public/ClientPortalView'));
 const ParentDigestPage = lazy(() => import('@/pages/public/ParentDigestPage'));
 const PublicBooking = lazy(() => import('@/pages/public/PublicBooking'));
@@ -496,6 +498,22 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <PublicBriefingSign />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/permit-sign/:token"
+          element={
+            <LazyRoute>
+              <PublicPermitSign />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/safety-sign/:token"
+          element={
+            <LazyRoute>
+              <PublicSafetySign />
             </LazyRoute>
           }
         />

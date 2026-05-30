@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ChevronRight, ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -132,87 +132,77 @@ interface DocCardProps {
   onClick?: () => void;
 }
 
+// Editorial tiled card — sits inside a HubSection grid with hairline seams.
 const DocCard = ({ doc, onClick }: DocCardProps) => {
   const navigate = useNavigate();
+  const disabled = !!doc.comingSoon && !doc.href;
+  // Derive a solid accent dot from the gradient's "from-" token.
+  const dot = doc.accentColor.split(' ')[0].replace('from-', 'bg-');
 
   const handleClick = () => {
-    if (doc.href) {
-      navigate(doc.href);
-    } else if (onClick) {
-      onClick();
-    }
+    if (doc.href) navigate(doc.href);
+    else if (onClick) onClick();
   };
 
   return (
-    <motion.div variants={itemVariants} className="h-full">
-      <button
-        type="button"
-        onClick={handleClick}
-        disabled={doc.comingSoon && !doc.href}
-        className={cn(
-          'block w-full h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation',
-          doc.comingSoon && !doc.href && 'opacity-60'
+    <button
+      type="button"
+      onClick={handleClick}
+      disabled={disabled}
+      className={cn(
+        'group relative flex flex-col text-left min-h-[112px] p-4 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation',
+        'focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50',
+        disabled ? 'opacity-50' : 'hover:bg-elec-yellow/[0.05] active:bg-white/[0.05]'
+      )}
+    >
+      {/* accent dot + standard badge */}
+      <div className="flex items-start justify-between gap-2">
+        <span className={cn('mt-1 w-2 h-2 rounded-full shrink-0', dot)} aria-hidden />
+        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
+          {doc.badge}
+        </span>
+      </div>
+
+      <h3 className="mt-3 text-[16.5px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+        {doc.title}
+      </h3>
+      <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 line-clamp-2">
+        {doc.description}
+      </p>
+
+      <div className="flex-grow min-h-[10px]" />
+
+      <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow">
+        {disabled ? 'Coming soon' : 'Open'}
+        {!disabled && (
+          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
         )}
-      >
-        <div
-          className={cn(
-            'group relative overflow-hidden h-full',
-            'card-surface-interactive',
-            'active:scale-[0.98] transition-all duration-200'
-          )}
-        >
-          {/* Top accent line */}
-          <div
-            className={cn(
-              'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200',
-              doc.accentColor
-            )}
-          />
-
-          {/* Coming Soon pill */}
-          {doc.comingSoon && !doc.href && (
-            <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-elec-yellow text-black rounded-full z-20">
-              Soon
-            </span>
-          )}
-
-          <div className="relative z-10 flex flex-col h-full p-4">
-            {/* Badge */}
-            <div className="flex items-center justify-end mb-3">
-              <span className="text-[10px] font-bold text-white bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded">
-                {doc.badge}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
-              {doc.title}
-            </h3>
-
-            {/* Description */}
-            <p className="mt-1 text-[12px] text-white leading-tight line-clamp-2">
-              {doc.description}
-            </p>
-
-            <div className="flex-grow min-h-[12px]" />
-
-            {/* Bottom action */}
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-medium text-elec-yellow">
-                {doc.comingSoon && !doc.href ? 'Coming Soon' : 'Open'}
-              </span>
-              {(!doc.comingSoon || doc.href) && (
-                <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                  <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </button>
-    </motion.div>
+      </span>
+    </button>
   );
 };
+
+// Editorial section: micro-label header + tiled card grid (hairline seams,
+// gold top hairline) — mirrors EditorialHubGrid.
+const HubSection = ({ title, docs }: { title: string; docs: DocDef[] }) => (
+  <motion.section variants={itemVariants} className="space-y-2.5">
+    <div className="flex items-end justify-between gap-3 px-0.5">
+      <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">{title}</h2>
+      <span className="text-[10.5px] text-white/30 tabular-nums">{docs.length}</span>
+    </div>
+    <div
+      className={cn(
+        'relative grid gap-[1.5px] bg-white/[0.14] border border-white/[0.14] rounded-2xl overflow-hidden',
+        docs.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+      {docs.map((doc) => (
+        <DocCard key={doc.id} doc={doc} />
+      ))}
+    </div>
+  </motion.section>
+);
 
 interface LabelsWarningsSectionProps {
   onBack: () => void;
@@ -311,117 +301,79 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
         animate="visible"
         className="px-4 py-4 space-y-5"
       >
-        {/* Client Documents — first */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="border-b border-white/[0.06] pb-1">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Client Documents</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {clientHandouts.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
+        <HubSection title="Client Documents" docs={clientHandouts} />
+        <HubSection title="Notices & Permits" docs={noticesAndPermits} />
+        <HubSection title="Site Records" docs={siteRecords} />
+        <HubSection title="Printables" docs={printables} />
 
-        {/* Notices & Permits */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="border-b border-white/[0.06] pb-1">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-red-500/40 to-red-500/10 mb-2" />
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Notices & Permits</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {noticesAndPermits.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Site Records */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="border-b border-white/[0.06] pb-1">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Site Records</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {siteRecords.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Printables */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="border-b border-white/[0.06] pb-1">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-amber-500/40 to-amber-500/10 mb-2" />
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Printables</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {printables.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Recent Documents — at the bottom */}
+        {/* Recent Documents — editorial list, hairline-separated to match the grids above */}
         {savedDocs && savedDocs.length > 0 && (
-          <motion.section variants={itemVariants} className="space-y-3">
-            <div className="border-b border-white/[0.06] pb-1">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider">Recent Documents</h2>
+          <motion.section variants={itemVariants} className="space-y-2.5">
+            <div className="flex items-end justify-between gap-3 px-0.5">
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                Recent Documents
+              </h2>
+              <span className="text-[10.5px] text-white/30 tabular-nums">{savedDocs.length}</span>
             </div>
-            <div className="space-y-3">
-              <AnimatePresence mode="popLayout">
-                {savedDocs.map((doc, index) => {
-                  const typeInfo = DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC', color: 'bg-white/[0.06] text-white' };
-                  const route = DOC_TYPE_ROUTES[doc.report_type];
+            <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden divide-y divide-white/[0.14]">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+              {savedDocs.map((doc) => {
+                const typeInfo =
+                  DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC', color: 'bg-white/[0.06] text-white' };
+                const route = DOC_TYPE_ROUTES[doc.report_type];
+                const title = doc.client_name || doc.installation_address || 'Untitled';
 
-                  return (
-                    <motion.div
-                      key={doc.report_id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: index * 0.03 }}
+                return (
+                  <button
+                    key={doc.report_id}
+                    onClick={() =>
+                      route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)
+                    }
+                    className="group w-full flex items-center gap-3 p-3.5 bg-[hsl(0_0%_11%)] hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] transition-colors text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+                  >
+                    {/* type tile */}
+                    <div
+                      className={cn(
+                        'w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border border-white/[0.08]',
+                        typeInfo.color
+                      )}
                     >
-                      <button
-                        onClick={() => route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)}
-                        className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+                      <span className="text-[9px] font-bold leading-none">{typeInfo.label}</span>
+                    </div>
+
+                    {/* title + address */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-white text-[15px] leading-tight truncate group-hover:text-elec-yellow transition-colors">
+                        {title}
+                      </h3>
+                      <div
+                        className={cn(
+                          'mt-1 flex items-center gap-1 text-[11.5px] leading-snug min-w-0',
+                          doc.installation_address ? 'text-white/45' : 'text-white/30'
+                        )}
                       >
-                        <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
-                          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
-                          <div className="relative z-10 p-4">
-                            <div className="flex items-center gap-1.5 mb-2">
-                              <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', typeInfo.color)}>
-                                {typeInfo.label}
-                              </span>
-                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
-                                Issued
-                              </span>
-                              <span className="text-[11px] text-white ml-auto flex-shrink-0">
-                                {formatTimeAgo(doc.updated_at)}
-                              </span>
-                            </div>
-                            <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
-                              {doc.client_name || doc.installation_address || 'Untitled'}
-                            </h3>
-                            {doc.installation_address && doc.client_name && (
-                              <p className="mt-0.5 text-[12px] text-white leading-tight truncate">
-                                {doc.installation_address}
-                              </p>
-                            )}
-                            <div className="flex items-center justify-between mt-3">
-                              <span className="text-[11px] font-medium text-elec-yellow">View</span>
-                              <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                                <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
+                        <MapPin className="h-3 w-3 shrink-0" aria-hidden />
+                        <span className={cn('truncate', !doc.installation_address && 'italic')}>
+                          {doc.installation_address || 'No address'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* status + date + chevron */}
+                    <div className="flex items-center gap-2.5 shrink-0">
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.1em] rounded-md px-1.5 py-0.5 bg-emerald-500/15 text-emerald-400">
+                          Issued
+                        </span>
+                        <span className="text-[10.5px] text-white/40 tabular-nums">
+                          {formatTimeAgo(doc.updated_at)}
+                        </span>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-white/25 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0" />
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </motion.section>
         )}

@@ -136,7 +136,13 @@ interface AppStat {
   onClick: () => void;
 }
 
-const ApprenticeHeadlineStats = ({ stats }: { stats: AppStat[] }) => (
+const ApprenticeHeadlineStats = ({
+  stats,
+  loading = false,
+}: {
+  stats: AppStat[];
+  loading?: boolean;
+}) => (
   <motion.section
     variants={containerVariants}
     initial="hidden"
@@ -153,7 +159,31 @@ const ApprenticeHeadlineStats = ({ stats }: { stats: AppStat[] }) => (
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
 
-      {stats.map((stat) => {
+      {loading
+        ? stats.map((stat) => (
+            <div
+              key={stat.label}
+              className={cn(
+                'relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col',
+                stat.accent &&
+                  'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent'
+              )}
+            >
+              <div
+                className={cn(
+                  'text-[10px] font-medium uppercase tracking-[0.18em]',
+                  stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
+                )}
+              >
+                {stat.label}
+              </div>
+              {/* Skeleton value — avoids flashing 0-day streak / 0% before
+                  the real figures load for a returning apprentice. */}
+              <div className="mt-3 sm:mt-4 h-10 sm:h-12 lg:h-14 w-20 rounded-md bg-white/[0.06] animate-pulse" />
+              <div className="mt-3 h-3 w-24 rounded bg-white/[0.05] animate-pulse" />
+            </div>
+          ))
+        : stats.map((stat) => {
         const valueStr = String(stat.value);
         const isNumericish =
           typeof stat.value === 'number' || /^[\d.,+\-/%hkm£\s]+$/i.test(valueStr);
@@ -215,9 +245,12 @@ interface ToolCard {
   title: string;
   description: string;
   to?: string;
+  href?: string;
   onClick?: () => void;
   meta?: string;
   alert?: boolean;
+  /** Optional brand logo shown in the card header (e.g. a partner app). */
+  logo?: string;
 }
 
 const EditorialToolGrid = ({
@@ -275,24 +308,38 @@ const EditorialToolGrid = ({
             type="button"
             onClick={() => {
               if (card.onClick) card.onClick();
+              else if (card.href) window.open(card.href, '_blank', 'noopener,noreferrer');
               else if (card.to) navigate(card.to);
             }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px]"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[200px] sm:min-h-[300px] lg:min-h-[320px]"
           >
-            <div className="flex items-baseline justify-between gap-2 flex-wrap">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              {card.logo ? (
+                <img
+                  src={card.logo}
+                  alt={card.title}
+                  className="h-7 w-auto object-contain"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    · {card.eyebrow}
+                  </span>
+                </div>
+              )}
+              {card.href ? (
+                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/15 px-1.5 py-0.5 rounded">
+                  External
                 </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  · {card.eyebrow}
-                </span>
-              </div>
-              {card.alert && (
+              ) : card.alert ? (
                 <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
                   Action
                 </span>
-              )}
+              ) : null}
             </div>
 
             <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
@@ -353,11 +400,20 @@ export default function ApprenticeHub() {
   });
 
   const navigate = useNavigate();
-  const { stats } = useApprenticeData();
-  const { ilp, rollUp, hasCollegeLink } = useMyIlp();
-  const { quizzes } = useMyAssignedQuizzes();
+  const { stats, isLoading: appLoading } = useApprenticeData();
+  const { ilp, rollUp, hasCollegeLink, loading: ilpLoading } = useMyIlp();
+  const { quizzes, loading: quizzesLoading } = useMyAssignedQuizzes();
   const { watchedCount, totalVideos } = useVideoInsights();
-  const { entries } = useSiteDiaryEntries();
+  const { entries, isLoading: diaryLoading } = useSiteDiaryEntries();
+
+  // First-load gate — show skeletons rather than flashing 0-day streak / 0%
+  // / "Pick a card below to get started" to a returning apprentice while the
+  // real figures are still in flight.
+  const statsLoading = appLoading || diaryLoading;
+  const heroLoading = appLoading || diaryLoading || quizzesLoading || ilpLoading;
+
+  // Computed once per mount — avoids `new Date()` on every render.
+  const todayEyebrow = useMemo(() => dateEyebrow(), []);
 
   const [streakOpen, setStreakOpen] = useState(false);
   const [progressOpen, setProgressOpen] = useState(false);
@@ -567,12 +623,14 @@ export default function ApprenticeHub() {
       meta: 'Browse',
     },
     {
-      id: 'settings',
-      eyebrow: 'Account',
-      title: 'Settings',
-      description: 'Subscription, notifications and accessibility.',
-      to: '/settings',
-      meta: 'Manage',
+      id: 'tradefox',
+      eyebrow: 'Partner app',
+      title: 'TradeFox',
+      description:
+        'Build skills with risk-free trade simulations and courses — practise wiring, GS38 and more.',
+      href: 'https://tradefoxapp.com/',
+      logo: '/logos/tradefox.png',
+      meta: 'Opens TradeFox',
     },
   ];
 
@@ -589,31 +647,51 @@ export default function ApprenticeHub() {
           className="relative pt-2 sm:pt-4"
         >
           <motion.div variants={itemVariants}>
-            <Eyebrow>{dateEyebrow()}</Eyebrow>
+            <Eyebrow>{todayEyebrow}</Eyebrow>
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
             className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
           >
-            <span className="text-elec-yellow">{headline.yellow}</span>{' '}
-            <span className="text-white">{headline.white}</span>
+            {heroLoading ? (
+              <>
+                <span className="text-elec-yellow">Your</span>{' '}
+                <span className="text-white">apprenticeship.</span>
+              </>
+            ) : (
+              <>
+                <span className="text-elec-yellow">{headline.yellow}</span>{' '}
+                <span className="text-white">{headline.white}</span>
+              </>
+            )}
           </motion.h1>
 
-          <motion.p
-            variants={itemVariants}
-            className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-          >
-            {verdict}
-          </motion.p>
+          {heroLoading ? (
+            <motion.div
+              variants={itemVariants}
+              className="mt-3 sm:mt-4 space-y-2 max-w-2xl"
+              aria-hidden
+            >
+              <div className="h-4 w-3/4 rounded bg-white/[0.06] animate-pulse" />
+              <div className="h-4 w-1/2 rounded bg-white/[0.05] animate-pulse" />
+            </motion.div>
+          ) : (
+            <motion.p
+              variants={itemVariants}
+              className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+            >
+              {verdict}
+            </motion.p>
+          )}
 
-          {cta && (
+          {!heroLoading && cta && (
             <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
               <button
                 type="button"
                 onClick={cta.onClick}
                 className={cn(
-                  'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
+                  'group inline-flex items-center gap-2 h-11 px-4 rounded-full',
                   'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
                   'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
                 )}
@@ -625,7 +703,7 @@ export default function ApprenticeHub() {
           )}
         </motion.section>
 
-        <ApprenticeHeadlineStats stats={statCells} />
+        <ApprenticeHeadlineStats stats={statCells} loading={statsLoading} />
 
         {/* 02 · FROM YOUR COLLEGE — single hairline cell */}
         <motion.section

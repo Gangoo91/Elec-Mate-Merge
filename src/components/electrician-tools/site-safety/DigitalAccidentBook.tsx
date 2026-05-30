@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
-import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
-import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { useShowMore } from '@/hooks/useShowMore';
 import {
   useAccidentRecords,
   useCreateAccidentRecord,
@@ -13,52 +13,41 @@ import {
   getRIDDORDeadlineStatus,
   calculateRIDDORDeadline,
 } from '@/hooks/useAccidentRecords';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SmartTextarea } from './common/SmartTextarea';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
+import { Switch } from '@/components/ui/switch';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { LocationAutoFill } from './common/LocationAutoFill';
-import { SignaturePad } from './common/SignaturePad';
-import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
-import { toast } from 'sonner';
+
 import {
-  ArrowLeft,
-  Plus,
-  BookOpen,
-  AlertTriangle,
-  ChevronRight,
-  Clock,
-  MapPin,
-  User,
-  Calendar,
-  Search,
-  Shield,
-  Phone,
-  FileText,
-  Heart,
-  Activity,
-  CheckCircle2,
-  XCircle,
-  Info,
-  FileDown,
-  Loader2,
-  ExternalLink,
-  Check,
-  Share2,
-} from 'lucide-react';
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  Eyebrow,
+  Field,
+  FormCard,
+  ListCard,
+  ListRow,
+  SheetShell,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/college/primitives';
+import { SafetyModuleShell, SafetyMasthead } from './common/SafetyModuleShell';
+import { SignatureField } from './common/SignatureField';
+import { ReadinessGate } from './common/ReadinessGate';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { SmartTextarea } from './common/SmartTextarea';
+import { LocationAutoFill } from './common/LocationAutoFill';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { LoadMoreButton } from './common/LoadMoreButton';
-import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
-import { useShowMore } from '@/hooks/useShowMore';
+import { fmtCardDate } from './common/SafetyRecordCard';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
@@ -189,12 +178,62 @@ const BODY_PARTS: { id: BodyPart; label: string }[] = [
   { id: 'multiple', label: 'Multiple Areas' },
 ];
 
-const SEVERITY_CONFIG: Record<Severity, { label: string; colour: string; bg: string }> = {
-  minor: { label: 'Minor', colour: 'text-green-400', bg: 'bg-green-500/15' },
-  moderate: { label: 'Moderate', colour: 'text-amber-400', bg: 'bg-amber-500/15' },
-  major: { label: 'Major', colour: 'text-orange-400', bg: 'bg-orange-500/15' },
-  fatal: { label: 'Fatal', colour: 'text-red-400', bg: 'bg-red-500/15' },
+// One colour dimension = severity. Fatal/major (RIDDOR immediate) = red,
+// moderate = amber, minor = green.
+const SEVERITIES: { id: Severity; label: string; description: string }[] = [
+  { id: 'minor', label: 'Minor', description: 'First-aid only' },
+  { id: 'moderate', label: 'Moderate', description: 'Treatment needed' },
+  { id: 'major', label: 'Major', description: 'Specified injury' },
+  { id: 'fatal', label: 'Fatal', description: 'Report immediately' },
+];
+
+function sevTone(severity: Severity): Tone {
+  return severity === 'fatal' || severity === 'major' ? 'red' : severity === 'moderate' ? 'amber' : 'green';
+}
+
+const SEV_CLASS: Record<Tone, string> = {
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  green: 'bg-green-500/10 text-green-400 border-green-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
 };
+
+const SEV_LABEL: Record<Severity, string> = {
+  minor: 'Minor',
+  moderate: 'Moderate',
+  major: 'Major',
+  fatal: 'Fatal',
+};
+
+function SevPill({ severity }: { severity: Severity }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        SEV_CLASS[sevTone(severity)]
+      )}
+    >
+      {SEV_LABEL[severity].toUpperCase()}
+    </span>
+  );
+}
+
+// RIDDOR deadline status → tone for the small pill in the list/detail.
+function riddorTone(status: ReturnType<typeof getRIDDORDeadlineStatus>['status']): Tone {
+  return status === 'reported'
+    ? 'green'
+    : status === 'overdue' || status === 'immediate'
+      ? 'red'
+      : status === 'due_soon'
+        ? 'amber'
+        : 'orange';
+}
 
 const RIDDOR_SPECIFIED_INJURIES = [
   'Fracture (other than fingers/thumbs/toes)',
@@ -214,6 +253,16 @@ const RIDDOR_DANGEROUS_OCCURRENCES = [
   'Accidental release of biological agent',
   'Collapse or partial collapse of scaffold over 5m',
   'Unintended collapse of any building under construction',
+];
+
+const F2508_CHECKLIST = [
+  'Name, address & telephone of the person reporting',
+  'Date, time & location of the incident',
+  'Name, address & occupation of the injured person',
+  'Nature of injury or condition',
+  'Brief description of the circumstances',
+  "Name & address of the injured person's employer",
+  'Details of the dangerous occurrence (if applicable)',
 ];
 
 // ─── RIDDOR Check ───
@@ -269,6 +318,86 @@ function checkRIDDOR(record: Partial<AccidentRecord>): {
   };
 }
 
+const emptyForm = (): Partial<AccidentRecord> => ({
+  injured_name: '',
+  injured_role: '',
+  injured_employer: '',
+  injured_address: '',
+  incident_date: new Date().toISOString().split('T')[0],
+  incident_time: '',
+  location: '',
+  location_detail: '',
+  injury_type: undefined,
+  body_part: undefined,
+  severity: undefined,
+  injury_description: '',
+  incident_description: '',
+  activity_at_time: '',
+  cause: '',
+  witnesses: '',
+  first_aid_given: false,
+  first_aid_details: '',
+  first_aider_name: '',
+  hospital_visit: false,
+  hospital_name: '',
+  time_off_work: false,
+  days_off: 0,
+  return_date: '',
+  reported_to: '',
+  reported_date: new Date().toISOString().split('T')[0],
+  is_riddor_reportable: false,
+  riddor_category: '',
+  riddor_reference: '',
+  riddor_reported: false,
+  riddor_deadline: null,
+  riddor_reported_date: null,
+  recorded_by: '',
+  additional_notes: '',
+  corrective_actions: '',
+});
+
+const softTextareaClass =
+  'min-h-[100px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl';
+
+function CollapsibleSection({
+  title,
+  open,
+  onOpenChange,
+  children,
+}: {
+  title: string;
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <Collapsible open={open} onOpenChange={onOpenChange}>
+        <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
+          <Eyebrow>{title}</Eyebrow>
+          <span
+            className={cn('text-white/40 text-[13px] transition-transform duration-200', open && 'rotate-180')}
+            aria-hidden
+          >
+            ⌄
+          </span>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="px-5 pb-5 pt-1 space-y-4">{children}</CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}
+
+function DetailField({ label, value }: { label: string; value?: React.ReactNode }) {
+  if (value === undefined || value === null || value === '') return null;
+  return (
+    <div className="flex flex-col gap-0.5">
+      <span className="text-[11px] text-white/55">{label}</span>
+      <span className="text-[13px] text-white">{value}</span>
+    </div>
+  );
+}
+
 // ─── Main Component ───
 
 export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
@@ -281,6 +410,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   useRIDDORDeadlineCheck();
   // Auto-archive records older than 3 years (server-side)
   useArchiveOldRecords();
+
   const records: AccidentRecord[] = (dbRecords || []).map((r) => ({
     id: r.id,
     injured_name: r.injured_name,
@@ -323,46 +453,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     created_at: r.created_at,
   }));
 
-  // These three must be declared before useLocalDraft which references them
   const [showForm, setShowForm] = useState(false);
-  const [formStep, setFormStep] = useState(0);
-  const [form, setForm] = useState<Partial<AccidentRecord>>({
-    injured_name: '',
-    injured_role: '',
-    injured_employer: '',
-    injured_address: '',
-    incident_date: new Date().toISOString().split('T')[0],
-    incident_time: '',
-    location: '',
-    location_detail: '',
-    injury_type: undefined,
-    body_part: undefined,
-    severity: undefined,
-    injury_description: '',
-    incident_description: '',
-    activity_at_time: '',
-    cause: '',
-    witnesses: '',
-    first_aid_given: false,
-    first_aid_details: '',
-    first_aider_name: '',
-    hospital_visit: false,
-    hospital_name: '',
-    time_off_work: false,
-    days_off: 0,
-    return_date: '',
-    reported_to: '',
-    reported_date: new Date().toISOString().split('T')[0],
-    is_riddor_reportable: false,
-    riddor_category: '',
-    riddor_reference: '',
-    riddor_reported: false,
-    riddor_deadline: null,
-    riddor_reported_date: null,
-    recorded_by: '',
-    additional_notes: '',
-    corrective_actions: '',
-  });
+  const [form, setForm] = useState<Partial<AccidentRecord>>(emptyForm);
 
   // ─── Draft persistence ───
   const {
@@ -372,32 +464,32 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     dismissRecovery: dismissDraft,
   } = useLocalDraft({
     key: 'accident-book',
-    data: { form, formStep },
+    data: { form },
     enabled: showForm,
   });
 
   const restoreDraft = () => {
     if (!recoveredDraft) return;
     if (recoveredDraft.form) setForm((prev) => ({ ...prev, ...recoveredDraft.form }));
-    if (recoveredDraft.formStep !== undefined) setFormStep(recoveredDraft.formStep);
     dismissDraft();
   };
 
   const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [showArchived, setShowArchived] = useState(false);
   const [showRIDDORGuide, setShowRIDDORGuide] = useState(false);
-  const [reporterSigName, setReporterSigName] = useState('');
-  const [reporterSigDate, setReporterSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [reporterSigData, setReporterSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+
+  // Collapsible (optional) form sections
+  const [treatmentOpen, setTreatmentOpen] = useState(false);
+  const [reportingOpen, setReportingOpen] = useState(false);
 
   // RIDDOR reporting state
   const [showMarkReported, setShowMarkReported] = useState(false);
   const [riddorRef, setRiddorRef] = useState('');
-  const [riddorReportedDate, setRiddorReportedDate] = useState(
-    new Date().toISOString().split('T')[0]
-  );
+  const [riddorReportedDate, setRiddorReportedDate] = useState(new Date().toISOString().split('T')[0]);
   const markReported = useMarkRIDDORReported();
 
   const handleMarkReported = async () => {
@@ -412,61 +504,30 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     setViewingRecord(null);
   };
 
-  const F2508_CHECKLIST = [
-    'Name, address & telephone of the person reporting',
-    'Date, time & location of the incident',
-    'Name, address & occupation of the injured person',
-    'Nature of injury or condition',
-    'Brief description of the circumstances',
-    "Name & address of the injured person's employer",
-    'Details of the dangerous occurrence (if applicable)',
-  ];
-
   const updateForm = (updates: Partial<AccidentRecord>) => {
     setForm((prev) => ({ ...prev, ...updates }));
   };
 
   const resetForm = () => {
-    setFormStep(0);
     setPhotoUrls([]);
-    setForm({
-      injured_name: '',
-      injured_role: '',
-      injured_employer: '',
-      injured_address: '',
-      incident_date: new Date().toISOString().split('T')[0],
-      incident_time: '',
-      location: '',
-      location_detail: '',
-      injury_type: undefined,
-      body_part: undefined,
-      severity: undefined,
-      injury_description: '',
-      incident_description: '',
-      activity_at_time: '',
-      cause: '',
-      witnesses: '',
-      first_aid_given: false,
-      first_aid_details: '',
-      first_aider_name: '',
-      hospital_visit: false,
-      hospital_name: '',
-      time_off_work: false,
-      days_off: 0,
-      return_date: '',
-      reported_to: '',
-      reported_date: new Date().toISOString().split('T')[0],
-      is_riddor_reportable: false,
-      riddor_category: '',
-      riddor_reference: '',
-      riddor_reported: false,
-      recorded_by: '',
-      additional_notes: '',
-      corrective_actions: '',
-    });
+    setReporterSigData('');
+    setTreatmentOpen(false);
+    setReportingOpen(false);
+    setForm(emptyForm());
   };
 
   const riddorCheck = useMemo(() => checkRIDDOR(form), [form]);
+
+  // ─── Readiness gate ───
+  const readiness = [
+    { ok: !!(form.injured_name || '').trim(), label: 'Injured person named' },
+    { ok: !!(form.incident_date || '').trim(), label: 'Incident date' },
+    { ok: !!(form.location || '').trim(), label: 'Location' },
+    { ok: (form.incident_description || '').trim().length > 0, label: 'How it happened' },
+    { ok: !!form.injury_type && !!form.body_part && !!form.severity, label: 'Injury, body part & severity' },
+    { ok: !!(form.recorded_by || '').trim(), label: 'Recorded by' },
+  ];
+  const formReady = readiness.every((r) => r.ok);
 
   const saveRecord = async () => {
     try {
@@ -524,6 +585,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const filteredRecords = records.filter((r) => {
     // Archive filter
     if (!showArchived && isArchived(r)) return false;
+    // Status tab
+    if (statusFilter === 'riddor' && !r.is_riddor_reportable) return false;
+    if (statusFilter === 'riddor') {
+      const st = getRIDDORDeadlineStatus(r as never).status;
+      if (st === 'reported') return false;
+    }
+    if (statusFilter === 'fatal_major' && r.severity !== 'fatal' && r.severity !== 'major') return false;
     // Search filter
     const q = searchQuery.toLowerCase();
     return (
@@ -533,1071 +601,872 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     );
   });
 
+  // RIDDOR-pending / urgent records sort to the top.
+  const sortedRecords = useMemo(() => {
+    const rank = (r: AccidentRecord): number => {
+      if (!r.is_riddor_reportable) return 2;
+      const st = getRIDDORDeadlineStatus(r as never).status;
+      if (st === 'reported') return 1;
+      return 0; // pending RIDDOR → top
+    };
+    return [...filteredRecords].sort((a, b) => rank(a) - rank(b));
+  }, [filteredRecords]);
+
   const {
     visible: visibleRecords,
     hasMore: hasMoreRecords,
     remaining: remainingRecords,
     loadMore: loadMoreRecords,
-  } = useShowMore(filteredRecords);
+  } = useShowMore(sortedRecords);
 
-  const riddorCount = records.filter((r) => r.is_riddor_reportable).length;
+  const total = records.filter((r) => !isArchived(r)).length;
+  const riddorPending = records.filter(
+    (r) => r.is_riddor_reportable && getRIDDORDeadlineStatus(r as never).status !== 'reported'
+  ).length;
+  const fatalMajor = records.filter((r) => r.severity === 'fatal' || r.severity === 'major').length;
 
-  // ─── Form Steps ───
+  const filterTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: total },
+      { value: 'riddor', label: 'RIDDOR pending', count: riddorPending },
+      { value: 'fatal_major', label: 'Fatal / major', count: fatalMajor },
+    ],
+    [total, riddorPending, fatalMajor]
+  );
 
-  const renderFormStep = () => {
-    switch (formStep) {
-      case 0:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Injured Person</h3>
-            <div className="space-y-3">
-              <div>
-                <Label className="text-white text-sm">Full Name *</Label>
-                <Input
-                  value={form.injured_name}
-                  onChange={(e) => updateForm({ injured_name: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="Name of injured person"
+  const injuryLabelOf = (t: InjuryType) => INJURY_TYPES.find((x) => x.id === t)?.label || t;
+  const bodyPartLabelOf = (b: BodyPart) => BODY_PARTS.find((x) => x.id === b)?.label || b;
+
+  // ─── Form ───
+  if (showForm) {
+    return (
+      <div className="bg-elec-dark min-h-screen pb-28">
+        <SafetyMasthead
+          onBack={() => {
+            resetForm();
+            setShowForm(false);
+          }}
+          backLabel="Records"
+          moduleName="Record accident"
+          trailing={<DraftSaveIndicator status={draftStatus} />}
+        />
+        <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
+          <AnimatePresence>
+            {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+          </AnimatePresence>
+
+          {/* Injured person */}
+          <FormCard eyebrow="Injured person">
+            <Field label="Full name" required>
+              <input
+                value={form.injured_name}
+                onChange={(e) => updateForm({ injured_name: e.target.value })}
+                placeholder="Name of injured person"
+                className={inputClass}
+              />
+            </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Role / job title">
+                <input
+                  value={form.injured_role}
+                  onChange={(e) => updateForm({ injured_role: e.target.value })}
+                  placeholder="e.g. Electrician"
+                  className={inputClass}
                 />
+              </Field>
+              <Field label="Employer">
+                <input
+                  value={form.injured_employer}
+                  onChange={(e) => updateForm({ injured_employer: e.target.value })}
+                  placeholder="Company name"
+                  className={inputClass}
+                />
+              </Field>
+            </div>
+            <Field label="Address" hint="Required for RIDDOR records">
+              <input
+                value={form.injured_address}
+                onChange={(e) => updateForm({ injured_address: e.target.value })}
+                placeholder="Home address"
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
+
+          {/* When & where */}
+          <FormCard eyebrow="When & where">
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Date of incident" required>
+                <input
+                  type="date"
+                  value={form.incident_date}
+                  onChange={(e) => updateForm({ incident_date: e.target.value })}
+                  className={cn(inputClass, '[color-scheme:dark]')}
+                />
+              </Field>
+              <Field label="Time">
+                <input
+                  type="time"
+                  value={form.incident_time}
+                  onChange={(e) => updateForm({ incident_time: e.target.value })}
+                  className={cn(inputClass, '[color-scheme:dark]')}
+                />
+              </Field>
+            </div>
+            <LocationAutoFill
+              value={form.location || ''}
+              onChange={(v) => updateForm({ location: v })}
+              label="Location"
+              placeholder="Site name / address"
+            />
+            <Field label="Specific location">
+              <input
+                value={form.location_detail}
+                onChange={(e) => updateForm({ location_detail: e.target.value })}
+                placeholder="e.g. Plant room, Level 2, Riser 3"
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
+
+          {/* What happened */}
+          <FormCard eyebrow="What happened">
+            <Field label="Activity at time of incident">
+              <input
+                value={form.activity_at_time}
+                onChange={(e) => updateForm({ activity_at_time: e.target.value })}
+                placeholder="e.g. Installing containment at height"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="How did the incident happen?" required>
+              <SmartTextarea
+                value={form.incident_description || ''}
+                onChange={(val) => updateForm({ incident_description: val })}
+                placeholder="Describe exactly what happened, including what the person was doing…"
+                className={softTextareaClass}
+              />
+            </Field>
+            <Field label="Cause / contributing factors">
+              <input
+                value={form.cause}
+                onChange={(e) => updateForm({ cause: e.target.value })}
+                placeholder="e.g. Wet floor, faulty equipment, inadequate PPE"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Witnesses">
+              <input
+                value={form.witnesses}
+                onChange={(e) => updateForm({ witnesses: e.target.value })}
+                placeholder="Names and contact details of witnesses"
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
+
+          {/* Injury */}
+          <FormCard eyebrow="Injury">
+            <Field label="Type of injury" required>
+              <Select
+                value={form.injury_type}
+                onValueChange={(v) => updateForm({ injury_type: v as InjuryType })}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select injury type…" />
+                </SelectTrigger>
+                <SelectContent className={cn(selectContentClass, 'max-h-[300px]')}>
+                  {INJURY_TYPES.map((type) => (
+                    <SelectItem key={type.id} value={type.id}>
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+
+            <Field label="Body part injured" required>
+              <Select value={form.body_part} onValueChange={(v) => updateForm({ body_part: v as BodyPart })}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select body part…" />
+                </SelectTrigger>
+                <SelectContent className={cn(selectContentClass, 'max-h-[300px]')}>
+                  {BODY_PARTS.map((part) => (
+                    <SelectItem key={part.id} value={part.id}>
+                      {part.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+
+            <Field label="Severity" required>
+              <div className="grid grid-cols-2 gap-2">
+                {SEVERITIES.map((s) => {
+                  const selected = form.severity === s.id;
+                  return (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => updateForm({ severity: s.id })}
+                      className={cn(
+                        'p-3 rounded-xl border text-left transition-all active:scale-[0.98] touch-manipulation',
+                        selected ? SEV_CLASS[sevTone(s.id)] : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                      )}
+                    >
+                      <span className="text-[13px] font-medium block">{s.label}</span>
+                      <span className="text-[11px] text-white/55">{s.description}</span>
+                    </button>
+                  );
+                })}
               </div>
+            </Field>
+
+            <Field label="Injury description">
+              <SmartTextarea
+                value={form.injury_description || ''}
+                onChange={(val) => updateForm({ injury_description: val })}
+                placeholder="Describe the injury in detail…"
+                className={cn(softTextareaClass, 'min-h-[80px]')}
+              />
+            </Field>
+
+            <SafetyPhotoCapture
+              photos={photoUrls}
+              onPhotosChange={setPhotoUrls}
+              label="Incident scene photos"
+            />
+          </FormCard>
+
+          {/* Treatment & aftermath (optional) */}
+          <CollapsibleSection title="Treatment & aftermath (optional)" open={treatmentOpen} onOpenChange={setTreatmentOpen}>
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">First aid given?</span>
+              <Switch
+                checked={form.first_aid_given}
+                onCheckedChange={(c) => updateForm({ first_aid_given: c })}
+              />
+            </div>
+            {form.first_aid_given && (
+              <>
+                <Field label="First aid details">
+                  <SmartTextarea
+                    value={form.first_aid_details || ''}
+                    onChange={(val) => updateForm({ first_aid_details: val })}
+                    placeholder="Treatment administered…"
+                    className={cn(softTextareaClass, 'min-h-[60px]')}
+                  />
+                </Field>
+                <Field label="First aider name">
+                  <input
+                    value={form.first_aider_name}
+                    onChange={(e) => updateForm({ first_aider_name: e.target.value })}
+                    className={inputClass}
+                  />
+                </Field>
+              </>
+            )}
+
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">Hospital visit required?</span>
+              <Switch
+                checked={form.hospital_visit}
+                onCheckedChange={(c) => updateForm({ hospital_visit: c })}
+              />
+            </div>
+            {form.hospital_visit && (
+              <Field label="Hospital name">
+                <input
+                  value={form.hospital_name}
+                  onChange={(e) => updateForm({ hospital_name: e.target.value })}
+                  className={inputClass}
+                />
+              </Field>
+            )}
+
+            <div className="flex items-center justify-between">
+              <span className="text-[12.5px] text-white/80">Time off work required?</span>
+              <Switch
+                checked={form.time_off_work}
+                onCheckedChange={(c) => updateForm({ time_off_work: c })}
+              />
+            </div>
+            {form.time_off_work && (
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label className="text-white text-sm">Role / Job Title</Label>
-                  <Input
-                    value={form.injured_role}
-                    onChange={(e) => updateForm({ injured_role: e.target.value })}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                    placeholder="e.g. Electrician"
+                <Field label="Days off">
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    value={form.days_off}
+                    onChange={(e) => updateForm({ days_off: parseInt(e.target.value) || 0 })}
+                    className={inputClass}
                   />
-                </div>
-                <div>
-                  <Label className="text-white text-sm">Employer</Label>
-                  <Input
-                    value={form.injured_employer}
-                    onChange={(e) => updateForm({ injured_employer: e.target.value })}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                    placeholder="Company name"
-                  />
-                </div>
-              </div>
-              <div>
-                <Label className="text-white text-sm">Address (for RIDDOR records)</Label>
-                <Input
-                  value={form.injured_address}
-                  onChange={(e) => updateForm({ injured_address: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="Home address"
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case 1:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Incident Details</h3>
-            <div className="space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <Label className="text-white text-sm">Date of Incident *</Label>
-                  <Input
+                </Field>
+                <Field label="Expected return">
+                  <input
                     type="date"
-                    value={form.incident_date}
-                    onChange={(e) => updateForm({ incident_date: e.target.value })}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                    value={form.return_date}
+                    onChange={(e) => updateForm({ return_date: e.target.value })}
+                    className={cn(inputClass, '[color-scheme:dark]')}
                   />
-                </div>
-                <div>
-                  <Label className="text-white text-sm">Time</Label>
-                  <Input
-                    type="time"
-                    value={form.incident_time}
-                    onChange={(e) => updateForm({ incident_time: e.target.value })}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  />
-                </div>
+                </Field>
               </div>
-              <LocationAutoFill
-                value={form.location || ''}
-                onChange={(v) => updateForm({ location: v })}
-                label="Location"
-                placeholder="Site name / address"
-              />
-              <div>
-                <Label className="text-white text-sm">Specific Location</Label>
-                <Input
-                  value={form.location_detail}
-                  onChange={(e) => updateForm({ location_detail: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. Plant room, Level 2, Riser 3"
-                />
-              </div>
-              <div>
-                <Label className="text-white text-sm">Activity at Time of Incident</Label>
-                <Input
-                  value={form.activity_at_time}
-                  onChange={(e) => updateForm({ activity_at_time: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. Installing containment at height"
-                />
-              </div>
-              <div>
-                <Label className="text-white text-sm">How Did the Incident Happen? *</Label>
-                <SmartTextarea
-                  value={form.incident_description}
-                  onChange={(val) => updateForm({ incident_description: val })}
-                  className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Describe exactly what happened, including what the person was doing..."
-                />
-              </div>
-              <div>
-                <Label className="text-white text-sm">Cause / Contributing Factors</Label>
-                <Input
-                  value={form.cause}
-                  onChange={(e) => updateForm({ cause: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. Wet floor, faulty equipment, inadequate PPE"
-                />
-              </div>
-              <div>
-                <Label className="text-white text-sm">Witnesses</Label>
-                <Input
-                  value={form.witnesses}
-                  onChange={(e) => updateForm({ witnesses: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="Names and contact details of witnesses"
-                />
-              </div>
-            </div>
-          </div>
-        );
+            )}
+          </CollapsibleSection>
 
-      case 2:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Injury Details</h3>
-            <div className="space-y-3">
-              <div>
-                <Label className="text-white text-sm">Type of Injury *</Label>
-                <Select
-                  value={form.injury_type}
-                  onValueChange={(v) => updateForm({ injury_type: v as InjuryType })}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow mt-1">
-                    <SelectValue placeholder="Select injury type..." />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground max-h-[300px]">
-                    {INJURY_TYPES.map((type) => (
-                      <SelectItem key={type.id} value={type.id}>
-                        {type.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Body Part Injured *</Label>
-                <Select
-                  value={form.body_part}
-                  onValueChange={(v) => updateForm({ body_part: v as BodyPart })}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow mt-1">
-                    <SelectValue placeholder="Select body part..." />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground max-h-[300px]">
-                    {BODY_PARTS.map((part) => (
-                      <SelectItem key={part.id} value={part.id}>
-                        {part.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Severity *</Label>
-                <div className="grid grid-cols-4 gap-2 mt-1">
-                  {(['minor', 'moderate', 'major', 'fatal'] as Severity[]).map((level) => {
-                    const config = SEVERITY_CONFIG[level];
-                    return (
-                      <button
-                        key={level}
-                        onClick={() => updateForm({ severity: level })}
-                        className={`p-2.5 min-h-[44px] rounded-xl border text-center touch-manipulation transition-all active:scale-[0.98] ${
-                          form.severity === level
-                            ? `${config.bg} border-current ring-1 ring-offset-0 ${config.colour}`
-                            : 'border-white/10 bg-white/[0.03] text-white'
-                        }`}
-                      >
-                        <span className="text-xs font-bold">{config.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Injury Description</Label>
-                <SmartTextarea
-                  value={form.injury_description}
-                  onChange={(val) => updateForm({ injury_description: val })}
-                  className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Describe the injury in detail..."
-                />
-              </div>
-
-              {/* Incident Scene Photos */}
-              <SafetyPhotoCapture
-                photos={photoUrls}
-                onPhotosChange={setPhotoUrls}
-                label="Incident Scene Photos"
-              />
-            </div>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Treatment & Aftermath</h3>
-            <div className="space-y-3">
-              {/* First Aid */}
-              <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                <Checkbox
-                  checked={form.first_aid_given}
-                  onCheckedChange={(v) => updateForm({ first_aid_given: !!v })}
-                  className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label className="text-white text-sm">First aid given</Label>
-              </div>
-
-              {form.first_aid_given && (
-                <>
-                  <div>
-                    <Label className="text-white text-sm">First Aid Details</Label>
-                    <SmartTextarea
-                      value={form.first_aid_details}
-                      onChange={(val) => updateForm({ first_aid_details: val })}
-                      className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                      placeholder="Treatment administered..."
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-white text-sm">First Aider Name</Label>
-                    <Input
-                      value={form.first_aider_name}
-                      onChange={(e) => updateForm({ first_aider_name: e.target.value })}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* Hospital */}
-              <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                <Checkbox
-                  checked={form.hospital_visit}
-                  onCheckedChange={(v) => updateForm({ hospital_visit: !!v })}
-                  className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label className="text-white text-sm">Hospital visit required</Label>
-              </div>
-
-              {form.hospital_visit && (
-                <div>
-                  <Label className="text-white text-sm">Hospital Name</Label>
-                  <Input
-                    value={form.hospital_name}
-                    onChange={(e) => updateForm({ hospital_name: e.target.value })}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  />
-                </div>
-              )}
-
-              {/* Time off work */}
-              <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                <Checkbox
-                  checked={form.time_off_work}
-                  onCheckedChange={(v) => updateForm({ time_off_work: !!v })}
-                  className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label className="text-white text-sm">Time off work required</Label>
-              </div>
-
-              {form.time_off_work && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <Label className="text-white text-sm">Days Off</Label>
-                    <Input
-                      type="number"
-                      inputMode="numeric"
-                      value={form.days_off}
-                      onChange={(e) => updateForm({ days_off: parseInt(e.target.value) || 0 })}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-white text-sm">Expected Return</Label>
-                    <Input
-                      type="date"
-                      value={form.return_date}
-                      onChange={(e) => updateForm({ return_date: e.target.value })}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* RIDDOR Alert */}
-              {riddorCheck.reportable && (
-                <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10">
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-bold text-red-300">RIDDOR Reportable</p>
-                      <p className="text-xs text-red-200 mt-1">
-                        This incident may need to be reported to the HSE under RIDDOR:
-                      </p>
-                      <ul className="mt-1.5 space-y-1">
-                        {riddorCheck.reasons.map((reason, i) => (
-                          <li key={i} className="text-xs text-red-200 flex items-start gap-1.5">
-                            <span className="text-red-400 mt-0.5">•</span>
-                            {reason}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-2 p-2 rounded-lg bg-red-500/10 border border-red-500/20">
-                        <p className="text-xs text-red-200">
-                          <strong>Report online:</strong> www.hse.gov.uk/riddor
-                        </p>
-                        <p className="text-xs text-red-200">
-                          <strong>Fatal/major:</strong> Call 0345 300 9923 immediately
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <Label className="text-white text-sm">Reported To</Label>
-                <Input
-                  value={form.reported_to}
-                  onChange={(e) => updateForm({ reported_to: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="Supervisor / manager name"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Corrective Actions Taken</Label>
-                <SmartTextarea
-                  value={form.corrective_actions}
-                  onChange={(val) => updateForm({ corrective_actions: val })}
-                  className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Actions taken to prevent recurrence..."
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Recorded By *</Label>
-                <Input
-                  value={form.recorded_by}
-                  onChange={(e) => updateForm({ recorded_by: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="Your full name"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Additional Notes</Label>
-                <SmartTextarea
-                  value={form.additional_notes}
-                  onChange={(val) => updateForm({ additional_notes: val })}
-                  className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
-                  placeholder="Any additional notes..."
-                />
-              </div>
-
-              {/* Reporter Signature */}
-              <SignaturePad
-                label="Reporter Signature"
-                name={reporterSigName}
-                date={reporterSigDate}
-                signatureDataUrl={reporterSigData}
-                onSignatureChange={setReporterSigData}
-                onNameChange={setReporterSigName}
-                onDateChange={setReporterSigDate}
-              />
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const canProceed = () => {
-    switch (formStep) {
-      case 0:
-        return (form.injured_name || '').trim().length > 0;
-      case 1:
-        return (
-          (form.location || '').trim().length > 0 &&
-          (form.incident_description || '').trim().length > 0
-        );
-      case 2:
-        return form.injury_type && form.body_part && form.severity;
-      case 3:
-        return (form.recorded_by || '').trim().length > 0;
-      default:
-        return true;
-    }
-  };
-
-  // ─── Render ───
-
-  return (
-    <div className="bg-background min-h-screen animate-fade-in">
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-          {riddorCount > 0 && (
-            <Badge className="bg-red-500/15 text-red-400 border-red-500/20">
-              {riddorCount} RIDDOR
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      <div className="px-4 py-4 space-y-4">
-        {/* Hero */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-            <BookOpen className="h-6 w-6 text-red-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Accident Book</h1>
-            <p className="text-sm text-white">RIDDOR-compliant incident records</p>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex gap-2">
-          <Button
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-            className="flex-1 h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            Record Accident
-          </Button>
-          <Button
-            onClick={() => setShowRIDDORGuide(true)}
-            variant="outline"
-            className="h-12 border-red-500/30 text-red-400 rounded-xl touch-manipulation px-4"
-          >
-            <Info className="h-5 w-5" />
-          </Button>
-        </div>
-
-        {/* Legal notice */}
-        <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5">
-          <div className="flex items-start gap-2">
-            <Shield className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="text-xs text-amber-300 font-medium">Legal Requirement</p>
-              <p className="text-xs text-white mt-0.5">
-                Under the Social Security (Claims and Payments) Regulations 1979 and RIDDOR 2013,
-                employers must keep records of workplace accidents. Records must be kept for at
-                least 3 years.
+          {/* RIDDOR alert (live) */}
+          {riddorCheck.reportable && (
+            <div className="p-4 rounded-2xl border border-red-500/30 bg-red-500/10 space-y-2">
+              <Eyebrow className="text-red-400">RIDDOR reportable</Eyebrow>
+              <p className="text-[12px] text-red-200">
+                This incident may need to be reported to the HSE under RIDDOR:
               </p>
+              <ul className="space-y-1">
+                {riddorCheck.reasons.map((reason, i) => (
+                  <li key={i} className="text-[12px] text-red-200 flex items-start gap-1.5">
+                    <span className="text-red-400 mt-0.5">•</span>
+                    {reason}
+                  </li>
+                ))}
+              </ul>
+              <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 space-y-0.5">
+                <p className="text-[12px] text-red-200">
+                  <strong>Report online:</strong> www.hse.gov.uk/riddor
+                </p>
+                <p className="text-[12px] text-red-200">
+                  <strong>Fatal/major:</strong> Call 0345 300 9923 immediately
+                </p>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Reporting & sign-off (optional) */}
+          <CollapsibleSection title="Reporting & corrective actions (optional)" open={reportingOpen} onOpenChange={setReportingOpen}>
+            <Field label="Reported to">
+              <input
+                value={form.reported_to}
+                onChange={(e) => updateForm({ reported_to: e.target.value })}
+                placeholder="Supervisor / manager name"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Corrective actions taken">
+              <SmartTextarea
+                value={form.corrective_actions || ''}
+                onChange={(val) => updateForm({ corrective_actions: val })}
+                placeholder="Actions taken to prevent recurrence…"
+                className={cn(softTextareaClass, 'min-h-[80px]')}
+              />
+            </Field>
+            <Field label="Additional notes">
+              <SmartTextarea
+                value={form.additional_notes || ''}
+                onChange={(val) => updateForm({ additional_notes: val })}
+                placeholder="Any additional notes…"
+                className={cn(softTextareaClass, 'min-h-[60px]')}
+              />
+            </Field>
+          </CollapsibleSection>
+
+          {/* Recorder & signature */}
+          <FormCard eyebrow="Recorder & sign-off">
+            <Field label="Recorded by" required>
+              <input
+                value={form.recorded_by}
+                onChange={(e) => updateForm({ recorded_by: e.target.value })}
+                placeholder="Your full name"
+                className={inputClass}
+              />
+            </Field>
+            <SignatureField label="Reporter signature" value={reporterSigData} onChange={setReporterSigData} />
+          </FormCard>
+
+          <ReadinessGate items={readiness} title="Ready to save?" />
         </div>
 
-        {/* Search + Archive toggle */}
-        {records.length > 0 && (
-          <div className="space-y-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <Input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
-                placeholder="Search records..."
-              />
-            </div>
-            {archivedCount > 0 && (
-              <button
-                onClick={() => setShowArchived(!showArchived)}
-                className={`h-9 px-3 rounded-lg text-xs font-medium flex items-center gap-1.5 touch-manipulation active:scale-[0.97] transition-all ${
-                  showArchived
-                    ? 'bg-amber-500/15 border border-amber-500/30 text-amber-400'
-                    : 'bg-white/5 border border-white/10 text-white'
-                }`}
-              >
-                <BookOpen className="h-3 w-3" />
-                {showArchived ? 'Hide' : 'Show'} Archived ({archivedCount})
-              </button>
-            )}
+        {/* Sticky save */}
+        <div
+          className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="mx-auto max-w-3xl">
+            <PrimaryButton
+              fullWidth
+              size="lg"
+              disabled={!formReady || createRecord.isPending}
+              onClick={saveRecord}
+            >
+              {createRecord.isPending ? 'Saving…' : 'Save record'}
+            </PrimaryButton>
           </div>
-        )}
-
-        {/* Records List */}
-        {isLoading ? (
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-[88px] rounded-xl bg-white/[0.03] animate-pulse" />
-            ))}
-          </div>
-        ) : filteredRecords.length === 0 && records.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="h-8 w-8 text-white" />
-            </div>
-            <h3 className="text-base font-bold text-white mb-1">No Records</h3>
-            <p className="text-sm text-white">No accidents recorded — good safety record!</p>
-          </div>
-        ) : (
-          <div className="space-y-2 pb-20">
-            {visibleRecords.map((record, idx) => {
-              const sevConfig = SEVERITY_CONFIG[record.severity];
-              const injuryLabel =
-                INJURY_TYPES.find((t) => t.id === record.injury_type)?.label || record.injury_type;
-              return (
-                <SafetyRecordCard
-                  key={record.id}
-                  id={record.id}
-                  title={record.injured_name}
-                  subtitle={injuryLabel}
-                  status={record.severity}
-                  statusLabel={sevConfig?.label || record.severity}
-                  regulation={record.is_riddor_reportable ? 'RIDDOR 2013' : undefined}
-                  icon={Activity}
-                  meta={[
-                    { icon: Calendar, label: fmtCardDate(record.incident_date) },
-                    { icon: MapPin, label: record.location },
-                    ...(record.is_riddor_reportable ? [{ label: 'RIDDOR Reportable' }] : []),
-                  ]}
-                  onTap={() => setViewingRecord(record)}
-                  pdfType="accident"
-                  index={idx}
-                />
-              );
-            })}
-            {hasMoreRecords && (
-              <LoadMoreButton onLoadMore={loadMoreRecords} remaining={remainingRecords} />
-            )}
-          </div>
-        )}
+        </div>
       </div>
+    );
+  }
 
-      {/* Form Sheet */}
-      <Sheet open={showForm} onOpenChange={setShowForm}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <div className="px-4 py-3 border-b border-white/10 flex items-center gap-2">
-              {formStep > 0 && (
-                <button
-                  onClick={() => setFormStep((s) => s - 1)}
-                  className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
-                >
-                  <ArrowLeft className="h-4 w-4 text-white" />
-                </button>
-              )}
-              <h2 className="text-base font-bold text-white">
-                Record Accident — Step {formStep + 1} of 4
-              </h2>
-              <DraftSaveIndicator status={draftStatus} />
-            </div>
-
-            <div className="h-1 bg-white/[0.05]">
-              <motion.div
-                className="h-full bg-red-400"
-                initial={{ width: 0 }}
-                animate={{ width: `${((formStep + 1) / 4) * 100}%` }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
-              <AnimatePresence>
-                {recoveredDraft && (
-                  <div className="mb-4">
-                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-                  </div>
-                )}
-              </AnimatePresence>
-              {renderFormStep()}
-            </div>
-
-            <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-              <Button
+  // ─── List ───
+  return (
+    <SafetyModuleShell
+      onBack={onBack}
+      moduleName="Accident Book"
+      trailing={
+        riddorPending > 0 ? (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-red-500/10 text-red-400 border-red-500/25 whitespace-nowrap">
+            {riddorPending} RIDDOR
+          </span>
+        ) : undefined
+      }
+      hero={
+        <PageHero
+          eyebrow="Accident Book · RIDDOR 2013"
+          title="Record accidents, meet your RIDDOR deadlines"
+          description="Log workplace injuries, auto-classify RIDDOR-reportable incidents, and track the 15-day reporting clock. Records retained for the statutory 3 years."
+          tone="red"
+          actions={
+            <>
+              <SecondaryButton onClick={() => setShowRIDDORGuide(true)}>RIDDOR guide</SecondaryButton>
+              <PrimaryButton
                 onClick={() => {
-                  if (formStep < 3) {
-                    setFormStep((s) => s + 1);
-                  } else {
-                    saveRecord();
-                  }
+                  resetForm();
+                  setShowForm(true);
                 }}
-                disabled={!canProceed()}
-                className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
               >
-                {formStep === 3 ? 'Save Record' : 'Continue'}
-              </Button>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+                Record accident
+              </PrimaryButton>
+            </>
+          }
+        />
+      }
+      stats={
+        total > 0 || archivedCount > 0 ? (
+          <StatStrip
+            stats={[
+              { value: total, label: 'Total' },
+              { value: riddorPending, label: 'RIDDOR pending', sub: 'awaiting HSE report', tone: riddorPending > 0 ? 'red' : undefined },
+              { value: fatalMajor, label: 'Fatal / major' },
+              { value: archivedCount, label: 'Archived', sub: '3-year statutory' },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        total > 0 ? (
+          <FilterBar
+            tabs={filterTabs}
+            activeTab={statusFilter}
+            onTabChange={setStatusFilter}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search records…"
+            actions={
+              archivedCount > 0 ? (
+                <button
+                  onClick={() => setShowArchived((v) => !v)}
+                  className={cn(
+                    'h-10 px-4 rounded-full text-[12.5px] font-medium whitespace-nowrap border touch-manipulation transition-colors',
+                    showArchived
+                      ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
+                      : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white'
+                  )}
+                >
+                  {showArchived ? 'Hide' : 'Show'} archived ({archivedCount})
+                </button>
+              ) : undefined
+            }
+          />
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : records.length === 0 ? (
+        <EmptyState
+          title="No accidents recorded"
+          description="No accidents recorded — a good safety record. When an incident happens, record it here to stay RIDDOR-compliant."
+          action="Record accident"
+          onAction={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        />
+      ) : sortedRecords.length === 0 ? (
+        <EmptyState title="No matching records" description="Try a different tab or clear your search." />
+      ) : (
+        <div className="space-y-2.5">
+          {visibleRecords.map((record) => {
+            const riddorStatus = record.is_riddor_reportable
+              ? getRIDDORDeadlineStatus(record as never)
+              : null;
+            return (
+              <ListCard key={record.id}>
+                <ListRow
+                  accent={sevTone(record.severity)}
+                  onClick={() => setViewingRecord(record)}
+                  title={record.injured_name}
+                  subtitle={`${injuryLabelOf(record.injury_type)}${record.location ? ` · ${record.location}` : ''}${
+                    isArchived(record) ? ' · Archived' : ''
+                  }`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <SevPill severity={record.severity} />
+                      {riddorStatus && (
+                        <span
+                          className={cn(
+                            'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.1em] border whitespace-nowrap',
+                            SEV_CLASS[riddorTone(riddorStatus.status)]
+                          )}
+                        >
+                          {riddorStatus.label}
+                        </span>
+                      )}
+                      <span className="text-[11px] text-white/45 tabular-nums">
+                        {fmtCardDate(record.incident_date)}
+                      </span>
+                    </div>
+                  }
+                />
+              </ListCard>
+            );
+          })}
+          {hasMoreRecords && <LoadMoreButton onLoadMore={loadMoreRecords} remaining={remainingRecords} />}
+        </div>
+      )}
 
-      {/* Record Detail Sheet */}
+      {/* Record detail sheet */}
       <Sheet open={!!viewingRecord} onOpenChange={() => setViewingRecord(null)}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[88vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]">
           {viewingRecord && (
-            <div className="flex flex-col h-full bg-background">
-              <div className="px-4 py-3 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                  <h2 className="text-base font-bold text-white">{viewingRecord.injured_name}</h2>
-                  {viewingRecord.incident_number && (
-                    <Badge className="bg-white/10 text-white border-white/20 text-xs font-mono">
-                      {viewingRecord.incident_number}
-                    </Badge>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 mt-1">
-                  <Badge
-                    className={`${SEVERITY_CONFIG[viewingRecord.severity].bg} ${SEVERITY_CONFIG[viewingRecord.severity].colour} border-none text-xs`}
-                  >
-                    {SEVERITY_CONFIG[viewingRecord.severity].label}
-                  </Badge>
+            <SheetShell
+              eyebrow={`Accident · ${SEV_LABEL[viewingRecord.severity]}${
+                viewingRecord.incident_number ? ` · ${viewingRecord.incident_number}` : ''
+              }`}
+              title={viewingRecord.injured_name}
+              description={`${viewingRecord.incident_date}${
+                viewingRecord.incident_time ? ` ${viewingRecord.incident_time}` : ''
+              } · ${viewingRecord.location}`}
+              footer={
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="grid grid-cols-2 gap-2">
+                    <PrimaryButton
+                      fullWidth
+                      disabled={isExporting && exportingId === viewingRecord.id}
+                      onClick={() => exportPDF('accident', viewingRecord.id)}
+                    >
+                      {isExporting && exportingId === viewingRecord.id ? 'Exporting…' : 'Export PDF'}
+                    </PrimaryButton>
+                    <SecondaryButton fullWidth onClick={() => setShowShare(true)}>
+                      Share
+                    </SecondaryButton>
+                  </div>
                   {viewingRecord.is_riddor_reportable && (
-                    <Badge className="bg-red-500/15 text-red-400 border-none text-xs">
-                      RIDDOR Reportable
-                    </Badge>
+                    <button
+                      onClick={() => exportPDF('riddor-report', viewingRecord.id)}
+                      disabled={isExporting && exportingId === viewingRecord.id}
+                      className="w-full h-11 rounded-full border border-red-500/30 bg-red-500/10 text-red-300 text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-40"
+                    >
+                      {isExporting && exportingId === viewingRecord.id ? 'Exporting…' : 'Export RIDDOR report'}
+                    </button>
                   )}
-                  <span className="text-xs text-white">{viewingRecord.incident_date}</span>
                 </div>
+              }
+            >
+              <div className="flex items-center gap-2">
+                <SevPill severity={viewingRecord.severity} />
+                {viewingRecord.is_riddor_reportable && (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-red-500/10 text-red-400 border-red-500/25">
+                    RIDDOR Reportable
+                  </span>
+                )}
               </div>
 
-              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
-                {/* Person Details */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Injured Person</h4>
-                  <div className="space-y-1 text-sm text-white">
-                    <p>
-                      <span className="text-white">Name:</span> {viewingRecord.injured_name}
-                    </p>
-                    {viewingRecord.injured_role && (
-                      <p>
-                        <span className="text-white">Role:</span> {viewingRecord.injured_role}
-                      </p>
-                    )}
-                    {viewingRecord.injured_employer && (
-                      <p>
-                        <span className="text-white">Employer:</span>{' '}
-                        {viewingRecord.injured_employer}
-                      </p>
-                    )}
-                  </div>
-                </div>
+              {/* RIDDOR Countdown — 15-day deadline tracker */}
+              {viewingRecord.is_riddor_reportable && (
+                <RIDDORCountdown
+                  category={viewingRecord.riddor_category}
+                  incidentDate={viewingRecord.incident_date}
+                  isReported={!!viewingRecord.riddor_reported_date}
+                  hseReference={viewingRecord.riddor_reference}
+                />
+              )}
 
-                {/* Incident */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Incident</h4>
-                  <div className="space-y-1 text-sm text-white">
-                    <p>
-                      <span className="text-white">Location:</span> {viewingRecord.location}{' '}
-                      {viewingRecord.location_detail && `— ${viewingRecord.location_detail}`}
-                    </p>
-                    <p>
-                      <span className="text-white">Date/Time:</span> {viewingRecord.incident_date}{' '}
-                      {viewingRecord.incident_time}
-                    </p>
-                    {viewingRecord.activity_at_time && (
-                      <p>
-                        <span className="text-white">Activity:</span>{' '}
-                        {viewingRecord.activity_at_time}
-                      </p>
-                    )}
-                    <p className="mt-2">{viewingRecord.incident_description}</p>
-                    {viewingRecord.cause && (
-                      <p>
-                        <span className="text-white">Cause:</span> {viewingRecord.cause}
-                      </p>
-                    )}
-                  </div>
-                </div>
+              {/* RIDDOR status + report actions */}
+              {viewingRecord.is_riddor_reportable &&
+                (() => {
+                  const deadlineStatus = getRIDDORDeadlineStatus(viewingRecord as never);
+                  return (
+                    <FormCard eyebrow="RIDDOR status" className="border-red-500/20">
+                      <div className="flex items-center justify-between">
+                        <span
+                          className={cn(
+                            'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border',
+                            SEV_CLASS[riddorTone(deadlineStatus.status)],
+                            (deadlineStatus.status === 'overdue' || deadlineStatus.status === 'immediate') &&
+                              'animate-pulse'
+                          )}
+                        >
+                          {deadlineStatus.label}
+                        </span>
+                      </div>
+                      <p className="text-[12px] text-white/70">{viewingRecord.riddor_category}</p>
+                      {viewingRecord.riddor_deadline && (
+                        <DetailField
+                          label="Deadline"
+                          value={new Date(viewingRecord.riddor_deadline).toLocaleDateString('en-GB')}
+                        />
+                      )}
+                      {viewingRecord.riddor_reference && (
+                        <DetailField label="HSE reference" value={viewingRecord.riddor_reference} />
+                      )}
+                      {viewingRecord.riddor_reported_date && (
+                        <DetailField
+                          label="Reported"
+                          value={
+                            <span className="text-green-400">
+                              {new Date(viewingRecord.riddor_reported_date).toLocaleDateString('en-GB')}
+                            </span>
+                          }
+                        />
+                      )}
 
-                {/* Injury */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Injury</h4>
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    <Badge className="bg-white/5 text-white border-none text-xs">
-                      {INJURY_TYPES.find((t) => t.id === viewingRecord.injury_type)?.label}
-                    </Badge>
-                    <Badge className="bg-white/5 text-white border-none text-xs">
-                      {BODY_PARTS.find((p) => p.id === viewingRecord.body_part)?.label}
-                    </Badge>
-                  </div>
-                  {viewingRecord.injury_description && (
-                    <p className="text-sm text-white">{viewingRecord.injury_description}</p>
-                  )}
-                </div>
-
-                {/* Treatment */}
-                {(viewingRecord.first_aid_given || viewingRecord.hospital_visit) && (
-                  <div>
-                    <h4 className="text-sm font-bold text-white mb-2">Treatment</h4>
-                    <div className="space-y-1 text-sm text-white">
-                      {viewingRecord.first_aid_given && (
+                      {deadlineStatus.status !== 'reported' && (
                         <>
-                          <p>
-                            <CheckCircle2 className="h-3.5 w-3.5 text-green-400 inline mr-1" />
-                            First aid given
-                          </p>
-                          {viewingRecord.first_aid_details && (
-                            <p className="ml-5">{viewingRecord.first_aid_details}</p>
-                          )}
-                          {viewingRecord.first_aider_name && (
-                            <p className="ml-5 text-white">By: {viewingRecord.first_aider_name}</p>
-                          )}
+                          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+                            <Eyebrow className="mb-1.5">Information needed for F2508</Eyebrow>
+                            {F2508_CHECKLIST.map((item, i) => (
+                              <div key={i} className="flex items-start gap-1.5 mb-1">
+                                <span className="text-green-400 mt-0.5 text-[11px]" aria-hidden>
+                                  ✓
+                                </span>
+                                <span className="text-[11px] text-white/80">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="flex gap-2">
+                            <a
+                              href="https://notifications.hse.gov.uk/riddorforms/Injury"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 h-11 flex items-center justify-center rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                            >
+                              Report online
+                            </a>
+                            <a
+                              href="tel:03453009923"
+                              className="h-11 px-4 flex items-center justify-center rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                            >
+                              Call HSE
+                            </a>
+                          </div>
+
+                          <button
+                            onClick={() => setShowMarkReported(true)}
+                            className="w-full h-11 rounded-full bg-green-500/15 border border-green-500/30 text-green-400 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                          >
+                            Mark as reported
+                          </button>
                         </>
                       )}
-                      {viewingRecord.hospital_visit && (
-                        <p>
-                          <Activity className="h-3.5 w-3.5 text-amber-400 inline mr-1" />
-                          Hospital: {viewingRecord.hospital_name || 'Yes'}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
+                    </FormCard>
+                  );
+                })()}
 
-                {/* Time off */}
-                {viewingRecord.time_off_work && (
-                  <div>
-                    <h4 className="text-sm font-bold text-white mb-1">Time Off Work</h4>
-                    <p className="text-sm text-white">
-                      {viewingRecord.days_off} days
-                      {viewingRecord.return_date ? ` — Return: ${viewingRecord.return_date}` : ''}
-                    </p>
-                  </div>
-                )}
+              {/* Injured person */}
+              <FormCard eyebrow="Injured person">
+                <DetailField label="Name" value={viewingRecord.injured_name} />
+                <DetailField label="Role" value={viewingRecord.injured_role} />
+                <DetailField label="Employer" value={viewingRecord.injured_employer} />
+                <DetailField label="Address" value={viewingRecord.injured_address} />
+              </FormCard>
 
-                {/* RIDDOR Countdown */}
-                {viewingRecord.is_riddor_reportable && (
-                  <RIDDORCountdown
-                    category={viewingRecord.riddor_category}
-                    incidentDate={viewingRecord.incident_date}
-                    isReported={!!viewingRecord.riddor_reported_date}
-                    hseReference={viewingRecord.riddor_reference}
-                  />
-                )}
-
-                {/* RIDDOR Details */}
-                {viewingRecord.is_riddor_reportable &&
-                  (() => {
-                    const deadlineStatus = getRIDDORDeadlineStatus(viewingRecord);
-                    return (
-                      <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-sm font-bold text-red-300">RIDDOR Status</h4>
-                          <Badge
-                            className={`text-[10px] ${
-                              deadlineStatus.status === 'reported'
-                                ? 'bg-green-500/15 text-green-400'
-                                : deadlineStatus.status === 'overdue' ||
-                                    deadlineStatus.status === 'immediate'
-                                  ? 'bg-red-500/20 text-red-300 animate-pulse'
-                                  : deadlineStatus.status === 'due_soon'
-                                    ? 'bg-amber-500/15 text-amber-400'
-                                    : 'bg-white/10 text-white'
-                            }`}
-                          >
-                            {deadlineStatus.label}
-                          </Badge>
-                        </div>
-                        <p className="text-xs text-white">{viewingRecord.riddor_category}</p>
-                        {viewingRecord.riddor_deadline && (
-                          <p className="text-xs text-white">
-                            Deadline:{' '}
-                            {new Date(viewingRecord.riddor_deadline).toLocaleDateString('en-GB')}
-                          </p>
-                        )}
-                        {viewingRecord.riddor_reference && (
-                          <p className="text-xs text-white">
-                            Reference: {viewingRecord.riddor_reference}
-                          </p>
-                        )}
-                        {viewingRecord.riddor_reported_date && (
-                          <p className="text-xs text-green-400">
-                            Reported:{' '}
-                            {new Date(viewingRecord.riddor_reported_date).toLocaleDateString(
-                              'en-GB'
-                            )}
-                          </p>
-                        )}
-                        {deadlineStatus.status !== 'reported' && (
-                          <>
-                            {/* F2508 Checklist */}
-                            <div className="mt-2 p-2 rounded-lg bg-white/[0.03] border border-white/10">
-                              <p className="text-[11px] font-semibold text-white mb-1.5">
-                                Information needed for F2508:
-                              </p>
-                              {F2508_CHECKLIST.map((item, i) => (
-                                <div key={i} className="flex items-start gap-1.5 mb-1">
-                                  <Check className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                                  <span className="text-[11px] text-white">{item}</span>
-                                </div>
-                              ))}
-                            </div>
-
-                            <div className="flex gap-2 pt-1">
-                              <a
-                                href="https://notifications.hse.gov.uk/riddorforms/Injury"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                              >
-                                <ExternalLink className="h-3.5 w-3.5" />
-                                Report Online
-                              </a>
-                              <a
-                                href="tel:03453009923"
-                                className="h-11 px-4 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                              >
-                                <Phone className="h-3.5 w-3.5" />
-                                Call HSE
-                              </a>
-                            </div>
-
-                            <button
-                              onClick={() => setShowMarkReported(true)}
-                              className="w-full h-11 mt-1 flex items-center justify-center gap-2 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                            >
-                              <CheckCircle2 className="h-3.5 w-3.5" />
-                              Mark as Reported
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    );
-                  })()}
-
-                {/* Mark as Reported Bottom Sheet */}
-                <Sheet open={showMarkReported} onOpenChange={setShowMarkReported}>
-                  <SheetContent side="bottom" className="rounded-t-2xl p-0">
-                    <div className="p-4 space-y-4">
-                      <h3 className="text-base font-bold text-white">Mark RIDDOR as Reported</h3>
-                      <div>
-                        <Label className="text-sm text-white">HSE Reference Number</Label>
-                        <Input
-                          value={riddorRef}
-                          onChange={(e) => setRiddorRef(e.target.value)}
-                          placeholder="e.g. 2024/12345"
-                          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-sm text-white">Date Reported</Label>
-                        <Input
-                          type="date"
-                          value={riddorReportedDate}
-                          onChange={(e) => setRiddorReportedDate(e.target.value)}
-                          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                        />
-                      </div>
-                      <Button
-                        onClick={handleMarkReported}
-                        disabled={!riddorRef.trim() || markReported.isPending}
-                        className="w-full h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                      >
-                        {markReported.isPending ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <CheckCircle2 className="h-4 w-4 mr-2" />
-                        )}
-                        Confirm Reported
-                      </Button>
-                    </div>
-                  </SheetContent>
-                </Sheet>
-
-                {/* Corrective Actions */}
-                {viewingRecord.corrective_actions && (
-                  <div>
-                    <h4 className="text-sm font-bold text-white mb-1">Corrective Actions</h4>
-                    <p className="text-sm text-white">{viewingRecord.corrective_actions}</p>
-                  </div>
-                )}
-
-                {/* Root Cause Analysis */}
-                <FiveWhysAnalysis
-                  table="accident_records"
-                  recordId={viewingRecord.id}
-                  existingWhys={((viewingRecord as Record<string, unknown>).five_whys as []) || []}
-                  existingCategory={
-                    ((viewingRecord as Record<string, unknown>).root_cause_category as string) || ''
-                  }
-                  existingSummary={
-                    ((viewingRecord as Record<string, unknown>).root_cause as string) || ''
-                  }
+              {/* Incident */}
+              <FormCard eyebrow="Incident">
+                <DetailField
+                  label="Location"
+                  value={`${viewingRecord.location}${
+                    viewingRecord.location_detail ? ` — ${viewingRecord.location_detail}` : ''
+                  }`}
                 />
+                <DetailField
+                  label="Date / time"
+                  value={`${viewingRecord.incident_date} ${viewingRecord.incident_time}`.trim()}
+                />
+                <DetailField label="Activity" value={viewingRecord.activity_at_time} />
+                <DetailField label="What happened" value={viewingRecord.incident_description} />
+                <DetailField label="Cause" value={viewingRecord.cause} />
+                <DetailField label="Witnesses" value={viewingRecord.witnesses} />
+              </FormCard>
 
-                {/* Corrective Actions Tracker */}
-                <CorrectiveActionsPanel sourceType="accident" sourceId={viewingRecord.id} />
+              {/* Injury */}
+              <FormCard eyebrow="Injury">
+                <DetailField label="Type" value={injuryLabelOf(viewingRecord.injury_type)} />
+                <DetailField label="Body part" value={bodyPartLabelOf(viewingRecord.body_part)} />
+                <DetailField label="Description" value={viewingRecord.injury_description} />
+              </FormCard>
 
-                <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03] mt-4">
-                  <div className="flex justify-between text-xs text-white">
-                    <span>Recorded by: {viewingRecord.recorded_by}</span>
-                    <span>Reported to: {viewingRecord.reported_to}</span>
-                  </div>
-                  {isArchived(viewingRecord) && (
-                    <p className="text-[10px] text-amber-400 mt-2 text-center">
-                      Retained for statutory period (3 years). Do not delete.
-                    </p>
+              {/* Treatment & aftermath */}
+              {(viewingRecord.first_aid_given ||
+                viewingRecord.hospital_visit ||
+                viewingRecord.time_off_work) && (
+                <FormCard eyebrow="Treatment & aftermath">
+                  {viewingRecord.first_aid_given && (
+                    <>
+                      <DetailField label="First aid" value="Given" />
+                      <DetailField label="Details" value={viewingRecord.first_aid_details} />
+                      <DetailField label="First aider" value={viewingRecord.first_aider_name} />
+                    </>
                   )}
+                  {viewingRecord.hospital_visit && (
+                    <DetailField label="Hospital" value={viewingRecord.hospital_name || 'Yes'} />
+                  )}
+                  {viewingRecord.time_off_work && (
+                    <DetailField
+                      label="Time off work"
+                      value={`${viewingRecord.days_off} days${
+                        viewingRecord.return_date ? ` — return ${viewingRecord.return_date}` : ''
+                      }`}
+                    />
+                  )}
+                </FormCard>
+              )}
+
+              {/* Corrective actions (free text) */}
+              {viewingRecord.corrective_actions && (
+                <FormCard eyebrow="Corrective actions">
+                  <p className="text-[13px] text-white">{viewingRecord.corrective_actions}</p>
+                </FormCard>
+              )}
+
+              {/* Root cause analysis (5 Whys) */}
+              <FiveWhysAnalysis
+                table="accident_records"
+                recordId={viewingRecord.id}
+                existingWhys={((viewingRecord as Record<string, unknown>).five_whys as []) || []}
+                existingCategory={
+                  ((viewingRecord as Record<string, unknown>).root_cause_category as string) || ''
+                }
+                existingSummary={((viewingRecord as Record<string, unknown>).root_cause as string) || ''}
+              />
+
+              {/* Corrective actions tracker */}
+              <CorrectiveActionsPanel sourceType="accident" sourceId={viewingRecord.id} />
+
+              {/* Meta */}
+              <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                <div className="flex justify-between text-[11px] text-white/55">
+                  <span>Recorded by: {viewingRecord.recorded_by}</span>
+                  {viewingRecord.reported_to && <span>Reported to: {viewingRecord.reported_to}</span>}
                 </div>
-              </div>
-              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))] space-y-2">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    onClick={() => exportPDF('accident', viewingRecord.id)}
-                    disabled={isExporting && exportingId === viewingRecord.id}
-                    className="h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    {isExporting && exportingId === viewingRecord.id ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <FileDown className="h-4 w-4 mr-2" />
-                    )}
-                    Export PDF
-                  </Button>
-                  <Button
-                    onClick={() => setShowShare(true)}
-                    variant="outline"
-                    className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                </div>
-                {viewingRecord.is_riddor_reportable && (
-                  <Button
-                    onClick={() => exportPDF('riddor-report', viewingRecord.id)}
-                    disabled={isExporting && exportingId === viewingRecord.id}
-                    variant="outline"
-                    className="w-full h-11 border-red-500/30 text-red-300 font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                  >
-                    {isExporting && exportingId === viewingRecord.id ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <FileDown className="h-4 w-4 mr-2" />
-                    )}
-                    Export RIDDOR Report
-                  </Button>
+                {isArchived(viewingRecord) && (
+                  <p className="text-[10px] text-amber-400 mt-2 text-center">
+                    Retained for statutory period (3 years). Do not delete.
+                  </p>
                 )}
               </div>
-            </div>
+            </SheetShell>
           )}
         </SheetContent>
       </Sheet>
 
-      {/* RIDDOR Guide Sheet */}
+      {/* Mark as reported bottom sheet */}
+      <Sheet open={showMarkReported} onOpenChange={setShowMarkReported}>
+        <SheetContent side="bottom" className="rounded-t-2xl p-0 border-white/[0.06]">
+          <SheetShell
+            eyebrow="RIDDOR"
+            title="Mark RIDDOR as reported"
+            description="Record the HSE reference once you have submitted F2508."
+            footer={
+              <PrimaryButton
+                fullWidth
+                disabled={!riddorRef.trim() || markReported.isPending}
+                onClick={handleMarkReported}
+              >
+                {markReported.isPending ? 'Saving…' : 'Confirm reported'}
+              </PrimaryButton>
+            }
+          >
+            <Field label="HSE reference number">
+              <input
+                value={riddorRef}
+                onChange={(e) => setRiddorRef(e.target.value)}
+                placeholder="e.g. 2024/12345"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Date reported">
+              <input
+                type="date"
+                value={riddorReportedDate}
+                onChange={(e) => setRiddorReportedDate(e.target.value)}
+                className={cn(inputClass, '[color-scheme:dark]')}
+              />
+            </Field>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+
+      {/* RIDDOR guide sheet */}
       <Sheet open={showRIDDORGuide} onOpenChange={setShowRIDDORGuide}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <div className="px-4 py-3 border-b border-white/10">
-              <h2 className="text-base font-bold text-white">RIDDOR Reporting Guide</h2>
-              <p className="text-xs text-white mt-0.5">
-                Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]">
+          <SheetShell
+            eyebrow="RIDDOR 2013"
+            title="RIDDOR reporting guide"
+            description="Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013"
+          >
+            <FormCard eyebrow="When must you report?">
+              <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
+                <Eyebrow className="text-red-400">Immediately (by phone)</Eyebrow>
+                <p className="text-[12px] text-white/80 mt-1">Deaths and specified injuries — call 0345 300 9923</p>
+              </div>
+              <div className="p-3 rounded-xl border border-orange-500/20 bg-orange-500/5">
+                <Eyebrow className="text-orange-400">Within 15 days</Eyebrow>
+                <p className="text-[12px] text-white/80 mt-1">Over-7-day incapacitation injuries</p>
+              </div>
+              <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5">
+                <Eyebrow className="text-amber-400">Within 10 days</Eyebrow>
+                <p className="text-[12px] text-white/80 mt-1">Dangerous occurrences and occupational diseases</p>
+              </div>
+            </FormCard>
+
+            <FormCard eyebrow="Specified injuries">
+              {RIDDOR_SPECIFIED_INJURIES.map((injury, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-red-400 mt-0.5 text-[11px]" aria-hidden>
+                    •
+                  </span>
+                  <span className="text-[12px] text-white/80">{injury}</span>
+                </div>
+              ))}
+            </FormCard>
+
+            <FormCard eyebrow="Dangerous occurrences (electrical)">
+              {RIDDOR_DANGEROUS_OCCURRENCES.map((occurrence, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-amber-400 mt-0.5 text-[11px]" aria-hidden>
+                    •
+                  </span>
+                  <span className="text-[12px] text-white/80">{occurrence}</span>
+                </div>
+              ))}
+            </FormCard>
+
+            <div className="p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 space-y-1">
+              <Eyebrow className="text-blue-400">How to report</Eyebrow>
+              <p className="text-[12px] text-white/80">
+                <strong>Online:</strong> www.hse.gov.uk/riddor
+              </p>
+              <p className="text-[12px] text-white/80">
+                <strong>Phone (fatal/specified):</strong> 0345 300 9923
+              </p>
+              <p className="text-[12px] text-white/80">
+                <strong>Record keeping:</strong> Keep records for minimum 3 years
+              </p>
+              <p className="text-[12px] text-white/80">
+                <strong>Who reports:</strong> The responsible person (employer, self-employed person, or person
+                in control of premises)
               </p>
             </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
-              {/* When to report */}
-              <div>
-                <h4 className="text-sm font-bold text-red-300 mb-2">When Must You Report?</h4>
-                <div className="space-y-2">
-                  <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/5">
-                    <p className="text-xs font-bold text-red-300">IMMEDIATELY (by phone)</p>
-                    <p className="text-xs text-white mt-1">
-                      Deaths and specified injuries — call 0345 300 9923
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-lg border border-orange-500/20 bg-orange-500/5">
-                    <p className="text-xs font-bold text-orange-300">Within 15 days</p>
-                    <p className="text-xs text-white mt-1">Over-7-day incapacitation injuries</p>
-                  </div>
-                  <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5">
-                    <p className="text-xs font-bold text-amber-300">Within 10 days</p>
-                    <p className="text-xs text-white mt-1">
-                      Dangerous occurrences and occupational diseases
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Specified Injuries */}
-              <div>
-                <h4 className="text-sm font-bold text-white mb-2">Specified Injuries</h4>
-                <div className="space-y-1.5">
-                  {RIDDOR_SPECIFIED_INJURIES.map((injury, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-white">{injury}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Dangerous Occurrences */}
-              <div>
-                <h4 className="text-sm font-bold text-white mb-2">
-                  Dangerous Occurrences (Electrical)
-                </h4>
-                <div className="space-y-1.5">
-                  {RIDDOR_DANGEROUS_OCCURRENCES.map((occurrence, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <AlertTriangle className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-white">{occurrence}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* How to report */}
-              <div className="p-3 rounded-xl border border-blue-500/20 bg-blue-500/5">
-                <h4 className="text-sm font-bold text-blue-300 mb-2">How to Report</h4>
-                <div className="space-y-1 text-xs text-white">
-                  <p>
-                    <strong>Online:</strong> www.hse.gov.uk/riddor
-                  </p>
-                  <p>
-                    <strong>Phone (fatal/specified):</strong> 0345 300 9923
-                  </p>
-                  <p>
-                    <strong>Record keeping:</strong> Keep records for minimum 3 years
-                  </p>
-                  <p>
-                    <strong>Who reports:</strong> The responsible person (employer, self-employed
-                    person, or person in control of premises)
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
@@ -1610,7 +1479,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           documentTitle={`Accident Record — ${viewingRecord.injured_name || 'Unknown'}`}
         />
       )}
-    </div>
+    </SafetyModuleShell>
   );
 }
 

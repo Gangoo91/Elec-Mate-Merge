@@ -65,7 +65,15 @@ export function permitTemplate(record: any, branding: Branding): string {
     { label: 'Valid Until', value: fmtDateTime(record.end_time) },
     { label: 'Date Issued', value: fmtDate(record.created_at) },
     { label: 'Status', value: (record.status || 'N/A').toUpperCase() },
+    { label: 'Version', value: `v${record.version || 1}` },
   ], 4);
+
+  // Controlling risk assessment / RAMS
+  if (record.linked_rams_title) {
+    body += sectionHeader('Controlling Risk Assessment');
+    body += paragraph('This permit is issued under, and must be read alongside, the following controlling risk assessment / method statement:');
+    body += textBox(record.linked_rams_title);
+  }
 
   // Description of work
   if (record.description) {

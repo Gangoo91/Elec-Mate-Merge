@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -284,7 +285,7 @@ export default function AdminDocumentReview() {
 
   useEffect(() => {
     const channel = supabase
-      .channel('admin-doc-review-changes')
+      .channel(realtimeChannelName('admin-doc-review-changes'))
       .on(
         'postgres_changes',
         {

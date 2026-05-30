@@ -356,4 +356,14 @@ verify_jwt = false
 [functions.employer-portal-view]
 verify_jwt = false
 
+# OAuth callbacks — reached via a browser redirect from the provider
+# (Stripe / Intuit / Xero) which carries ?code & ?state but NO Supabase JWT.
+# Must be public or the gateway rejects with UNAUTHORIZED_NO_AUTH_HEADER
+# before the function runs. Auth is done in-function via the signed state. (ELE-1009)
+[functions.stripe-connect-oauth-callback]
+verify_jwt = false
+
+[functions.accounting-oauth-callback]
+verify_jwt = false
+
 

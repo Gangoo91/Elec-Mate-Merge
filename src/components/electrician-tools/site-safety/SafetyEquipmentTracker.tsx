@@ -1,30 +1,93 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Package, Loader2, Search, X, ScanBarcode } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useSafetyEquipment, SafetyEquipment } from '@/hooks/useSafetyEquipment';
 import {
-  EquipmentHeroCard,
-  PremiumEquipmentCard,
-  EquipmentFilterTabs,
   EquipmentFormWizard,
   EquipmentBarcodeScanner,
+  EquipmentDetailView,
   type EquipmentFilterId,
 } from './equipment';
-import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import {
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingState,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  type Tone,
+} from '@/components/college/primitives';
+import { SafetyModuleShell } from './common/SafetyModuleShell';
+import { SwipeableListItem } from './common/SwipeableListItem';
 import { DeleteConfirmSheet } from './common/DeleteConfirmSheet';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { fmtCardDate } from './common/SafetyRecordCard';
 import { useShowMore } from '@/hooks/useShowMore';
-import { toast } from 'sonner';
+import { equipmentCategories } from './equipment/EquipmentCategoryPicker';
+import { cn } from '@/lib/utils';
 
-export const SafetyEquipmentTracker: React.FC = () => {
+// One colour dimension = status.
+function statusTone(status: SafetyEquipment['status']): Tone {
+  return status === 'good'
+    ? 'green'
+    : status === 'needs_attention'
+      ? 'amber'
+      : status === 'overdue'
+        ? 'red'
+        : 'blue';
+}
+
+const STATUS_PILL: Record<Tone, string> = {
+  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+};
+
+const STATUS_LABEL: Record<SafetyEquipment['status'], string> = {
+  good: 'Good',
+  needs_attention: 'Attention',
+  overdue: 'Overdue',
+  out_of_service: 'Out of service',
+};
+
+function StatusPill({ status }: { status: SafetyEquipment['status'] }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        STATUS_PILL[statusTone(status)]
+      )}
+    >
+      {STATUS_LABEL[status]}
+    </span>
+  );
+}
+
+function categoryLabel(category: string): string {
+  return equipmentCategories.find((c) => c.id === category)?.label || category;
+}
+
+interface SafetyEquipmentTrackerProps {
+  onBack?: () => void;
+}
+
+export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const {
     equipment,
     isLoading,
     stats,
-    refetch,
     addEquipment,
     updateEquipment,
     deleteEquipment,
@@ -38,16 +101,18 @@ export const SafetyEquipmentTracker: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<EquipmentFilterId>('all');
   const [showForm, setShowForm] = useState(false);
   const [editingEquipment, setEditingEquipment] = useState<SafetyEquipment | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [showScanner, setShowScanner] = useState(false);
   const [scanSerialForNew, setScanSerialForNew] = useState<string | null>(null);
 
+  const handleBack = onBack ?? (() => navigate('/electrician-tools/site-safety'));
+
   // Filter equipment based on active tab and search query
   const filteredEquipment = useMemo(() => {
     let result = equipment;
 
-    // Filter by status tab
     switch (activeFilter) {
       case 'good':
         result = result.filter((e) => e.status === 'good');
@@ -78,7 +143,6 @@ export const SafetyEquipmentTracker: React.FC = () => {
       }
     }
 
-    // Apply search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       result = result.filter(
@@ -89,7 +153,14 @@ export const SafetyEquipmentTracker: React.FC = () => {
       );
     }
 
-    return result;
+    // Surface urgent (overdue, then attention) to the top.
+    const rank: Record<SafetyEquipment['status'], number> = {
+      overdue: 0,
+      needs_attention: 1,
+      out_of_service: 2,
+      good: 3,
+    };
+    return [...result].sort((a, b) => rank[a.status] - rank[b.status]);
   }, [equipment, activeFilter, searchQuery]);
 
   const {
@@ -99,24 +170,17 @@ export const SafetyEquipmentTracker: React.FC = () => {
     loadMore: loadMoreEquipment,
   } = useShowMore(filteredEquipment);
 
-  // Tab configuration with counts
-  const tabs = [
-    { id: 'all' as const, label: 'All', count: stats.total, color: 'default' as const },
-    { id: 'good' as const, label: 'Good', count: stats.good, color: 'green' as const },
-    {
-      id: 'attention' as const,
-      label: 'Attention',
-      count: stats.needsAttention,
-      color: 'amber' as const,
-    },
-    { id: 'overdue' as const, label: 'Overdue', count: stats.overdue, color: 'red' as const },
-    {
-      id: 'warranty' as const,
-      label: 'Warranty',
-      count: stats.warrantyAlert,
-      color: 'amber' as const,
-    },
-  ];
+  // Filter tabs with counts
+  const filterTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: stats.total },
+      { value: 'good', label: 'Good', count: stats.good },
+      { value: 'attention', label: 'Attention', count: stats.needsAttention },
+      { value: 'overdue', label: 'Overdue', count: stats.overdue },
+      { value: 'warranty', label: 'Warranty', count: stats.warrantyAlert },
+    ],
+    [stats]
+  );
 
   const handleAddEquipment = async (data: Record<string, unknown>) => {
     // Calculate next_inspection based on last_inspection and interval
@@ -145,6 +209,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
     });
     setShowForm(false);
     setEditingEquipment(null);
+    setScanSerialForNew(null);
   };
 
   const handleUpdateEquipment = async (data: Record<string, unknown>) => {
@@ -184,10 +249,6 @@ export const SafetyEquipmentTracker: React.FC = () => {
     setShowForm(true);
   };
 
-  const handleDelete = (id: string) => {
-    setDeleteTarget(id);
-  };
-
   const handleMarkInspected = (id: string) => {
     markInspected.mutate(id);
   };
@@ -203,10 +264,6 @@ export const SafetyEquipmentTracker: React.FC = () => {
     [saveQrCode]
   );
 
-  const handleRefresh = useCallback(async () => {
-    await refetch();
-  }, [refetch]);
-
   const handleCloseForm = () => {
     setShowForm(false);
     setEditingEquipment(null);
@@ -217,7 +274,6 @@ export const SafetyEquipmentTracker: React.FC = () => {
     (result: { text: string; format: string }) => {
       setShowScanner(false);
 
-      // Guard empty scans
       if (!result.text || !result.text.trim()) return;
 
       // Try matching as QR code first (https://elecmate.app/e/<id>)
@@ -256,7 +312,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
     [findByQrCode, findBySerialNumber, markInspected]
   );
 
-  // Show form wizard
+  // ─── Form wizard ───
   if (showForm) {
     const formInitialData = editingEquipment
       ? editingEquipment
@@ -274,135 +330,142 @@ export const SafetyEquipmentTracker: React.FC = () => {
     );
   }
 
+  // ─── Detail ───
+  const selected = selectedId ? equipment.find((e) => e.id === selectedId) : null;
+  if (selected) {
+    return (
+      <EquipmentDetailView
+        equipment={selected}
+        onBack={() => setSelectedId(null)}
+        onEdit={() => {
+          setSelectedId(null);
+          handleEdit(selected);
+        }}
+        onDelete={() => setDeleteTarget(selected.id)}
+        onMarkInspected={() => handleMarkInspected(selected.id)}
+        onMarkCalibrated={
+          selected.requires_calibration ? () => handleMarkCalibrated(selected.id) : undefined
+        }
+        onSaveQrCode={handleSaveQrCode}
+      />
+    );
+  }
+
+  // ─── List ───
+  const emptyTitle =
+    activeFilter === 'all'
+      ? 'No equipment yet'
+      : activeFilter === 'warranty'
+        ? 'No warranty alerts'
+        : `No ${filterTabs.find((t) => t.value === activeFilter)?.label.toLowerCase()} equipment`;
+  const emptyDescription =
+    activeFilter === 'all'
+      ? 'Add your first piece of safety equipment to start tracking inspections, calibration and warranties.'
+      : activeFilter === 'warranty'
+        ? 'No warranties have expired or are expiring within 30 days.'
+        : 'Try a different status tab or clear your search.';
+
   return (
-    <div className="min-h-screen bg-black pb-24">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-white/[0.08]">
-        <div className="px-2 py-2">
-          <button
-            onClick={() => navigate('/electrician-tools/site-safety')}
-            className="flex items-center gap-2 text-white hover:text-white transition-colors min-h-[44px] touch-manipulation"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-        </div>
-      </div>
-
-      <PullToRefresh onRefresh={handleRefresh}>
-        <div className="px-3 py-3 space-y-3">
-          {/* Hero Card with Stats */}
-          <EquipmentHeroCard
-            totalEquipment={stats.total}
-            goodCount={stats.good}
-            attentionCount={stats.needsAttention}
-            overdueCount={stats.overdue}
-            warrantyAlertCount={stats.warrantyAlert}
-            onAddEquipment={() => setShowForm(true)}
-            onWarrantyAlertTap={() => setActiveFilter('warranty')}
+    <SafetyModuleShell
+      onBack={handleBack}
+      moduleName="Equipment"
+      trailing={
+        <SecondaryButton size="sm" onClick={() => setShowScanner(true)}>
+          Scan
+        </SecondaryButton>
+      }
+      hero={
+        <PageHero
+          eyebrow="Equipment · PUWER 1998 / LOLER 1998"
+          title="Track every tool, test and warranty"
+          description="Keep PPE and test equipment in date — inspection and calibration due dates, warranty expiry, QR labels and pre-use check history in one register."
+          tone="yellow"
+          actions={<PrimaryButton onClick={() => setShowForm(true)}>Add equipment</PrimaryButton>}
+        />
+      }
+      stats={
+        stats.total > 0 ? (
+          <StatStrip
+            stats={[
+              { value: stats.total, label: 'Total', onClick: () => setActiveFilter('all') },
+              { value: stats.good, label: 'Good', tone: 'green', onClick: () => setActiveFilter('good') },
+              {
+                value: stats.needsAttention,
+                label: 'Attention',
+                tone: 'amber',
+                onClick: () => setActiveFilter('attention'),
+              },
+              { value: stats.overdue, label: 'Overdue', tone: 'red', onClick: () => setActiveFilter('overdue') },
+            ]}
           />
-
-          {/* Search + Scan Row */}
-          <div className="flex items-center gap-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <Input
-                placeholder="Search equipment..."
-                className="pl-8 pr-12 h-11 bg-white/5 border border-white/10 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && (
-                <button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-white/10 rounded-full touch-manipulation"
-                  onClick={() => setSearchQuery('')}
-                >
-                  <X className="h-4 w-4 text-white" />
-                </button>
-              )}
-            </div>
-            <button
-              onClick={() => setShowScanner(true)}
-              className="flex items-center justify-center h-11 w-11 rounded-xl bg-elec-yellow text-black shadow-lg shadow-elec-yellow/25 touch-manipulation active:scale-[0.95] transition-all flex-shrink-0"
-              title="Scan Equipment"
+        ) : undefined
+      }
+      filter={
+        stats.total > 0 ? (
+          <FilterBar
+            tabs={filterTabs}
+            activeTab={activeFilter}
+            onTabChange={(v) => setActiveFilter(v as EquipmentFilterId)}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search equipment…"
+          />
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <LoadingState />
+      ) : equipment.length === 0 ? (
+        <EmptyState
+          title="No equipment yet"
+          description="Add your first piece of safety equipment to start tracking inspections, calibration and warranties."
+          action="Add equipment"
+          onAction={() => setShowForm(true)}
+        />
+      ) : filteredEquipment.length === 0 ? (
+        <EmptyState
+          title={emptyTitle}
+          description={emptyDescription}
+          {...(activeFilter === 'all' ? { action: 'Add equipment', onAction: () => setShowForm(true) } : {})}
+        />
+      ) : (
+        <div className="space-y-2.5">
+          {visibleEquipment.map((item) => (
+            <SwipeableListItem
+              key={item.id}
+              rightActions={[
+                {
+                  icon: Trash2,
+                  label: 'Delete',
+                  color: 'bg-red-500',
+                  textColor: 'text-white',
+                  onAction: () => setDeleteTarget(item.id),
+                },
+              ]}
             >
-              <ScanBarcode className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Filter Tabs */}
-          <EquipmentFilterTabs tabs={tabs} activeTab={activeFilter} onChange={setActiveFilter} />
-
-          {/* Equipment List */}
-          <div className="space-y-2">
-            {isLoading ? (
-              <Card className="bg-card/80 backdrop-blur-sm border border-white/10 rounded-2xl">
-                <CardContent className="py-12">
-                  <div className="flex flex-col items-center justify-center gap-3">
-                    <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                      <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
+              <ListCard>
+                <ListRow
+                  accent={statusTone(item.status)}
+                  onClick={() => setSelectedId(item.id)}
+                  title={item.name}
+                  subtitle={`${categoryLabel(item.category)}${item.location ? ` · ${item.location}` : ''}`}
+                  trailing={
+                    <div className="flex flex-col items-end gap-1">
+                      <StatusPill status={item.status} />
+                      <span className="text-[11px] text-white/45 tabular-nums">
+                        {item.next_inspection ? `Due ${fmtCardDate(item.next_inspection)}` : 'No date'}
+                      </span>
                     </div>
-                    <div className="text-center">
-                      <p className="text-sm font-medium text-white">Loading Equipment</p>
-                      <p className="text-xs text-white mt-0.5">Fetching your safety equipment...</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : filteredEquipment.length === 0 ? (
-              <Card className="relative overflow-hidden bg-card/80 backdrop-blur-sm border border-white/10 border-dashed rounded-2xl">
-                {/* Subtle glow orb */}
-                <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-elec-yellow/5 blur-3xl pointer-events-none" />
-                <CardContent className="relative z-10 py-8 text-center">
-                  <div className="p-3 mx-auto w-fit rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-                    <Package className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                  <h3 className="text-base font-semibold text-white mb-1">
-                    {activeFilter === 'all'
-                      ? 'No Equipment'
-                      : activeFilter === 'warranty'
-                        ? 'No Warranty Alerts'
-                        : `No ${tabs.find((t) => t.id === activeFilter)?.label} Equipment`}
-                  </h3>
-                  <p className="text-xs text-white mb-4 max-w-[200px] mx-auto">
-                    {activeFilter === 'all'
-                      ? 'Add your first piece of equipment to start tracking'
-                      : activeFilter === 'warranty'
-                        ? 'No warranties expiring or expired'
-                        : `No equipment in ${activeFilter} status`}
-                  </p>
-                  {activeFilter === 'all' && (
-                    <button
-                      onClick={() => setShowForm(true)}
-                      className="h-11 px-5 flex items-center justify-center gap-2 mx-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all"
-                    >
-                      Add Equipment
-                    </button>
-                  )}
-                </CardContent>
-              </Card>
-            ) : (
-              visibleEquipment.map((item, index) => (
-                <PremiumEquipmentCard
-                  key={item.id}
-                  equipment={item}
-                  onEdit={() => handleEdit(item)}
-                  onDelete={() => handleDelete(item.id)}
-                  onMarkInspected={() => handleMarkInspected(item.id)}
-                  onMarkCalibrated={
-                    item.requires_calibration ? () => handleMarkCalibrated(item.id) : undefined
                   }
-                  onSaveQrCode={handleSaveQrCode}
-                  index={index}
                 />
-              ))
-            )}
-            {hasMoreEquipment && (
-              <LoadMoreButton onLoadMore={loadMoreEquipment} remaining={remainingEquipment} />
-            )}
-          </div>
+              </ListCard>
+            </SwipeableListItem>
+          ))}
+          {hasMoreEquipment && (
+            <LoadMoreButton onLoadMore={loadMoreEquipment} remaining={remainingEquipment} />
+          )}
         </div>
-      </PullToRefresh>
+      )}
 
       <DeleteConfirmSheet
         open={!!deleteTarget}
@@ -410,10 +473,13 @@ export const SafetyEquipmentTracker: React.FC = () => {
           if (!open) setDeleteTarget(null);
         }}
         onConfirm={() => {
-          if (deleteTarget) deleteEquipment.mutate(deleteTarget);
+          if (deleteTarget) {
+            deleteEquipment.mutate(deleteTarget);
+            if (selectedId === deleteTarget) setSelectedId(null);
+          }
           setDeleteTarget(null);
         }}
-        title="Delete Equipment?"
+        title="Delete equipment?"
         description="This equipment record will be permanently removed"
         isDeleting={deleteEquipment.isPending}
       />
@@ -425,7 +491,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
         title="Scan Equipment"
         description="Point at a barcode or QR code on your equipment"
       />
-    </div>
+    </SafetyModuleShell>
   );
 };
 

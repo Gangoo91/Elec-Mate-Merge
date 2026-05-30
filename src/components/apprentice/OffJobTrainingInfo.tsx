@@ -12,7 +12,7 @@ const OffJobTrainingInfo = () => {
         Electrical apprenticeships require a minimum of 20% off-the-job training, equating to at
         least 278 hours over a 12-month period. All courses in the Study Centre count toward this
         requirement. Your time spent learning on this app is automatically tracked in the{' '}
-        <Link to="/apprentice/ojt" className="text-elec-yellow hover:underline">
+        <Link to="/apprentice/ojt-hub" className="text-elec-yellow hover:underline">
           Off-the-Job Time Keeping
         </Link>{' '}
         section.

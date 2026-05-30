@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 
 export type ProjectStatus = 'open' | 'active' | 'completed' | 'cancelled';
@@ -167,7 +168,7 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
       if (!user) return;
 
       channel = supabase
-        .channel('spark-projects-realtime')
+        .channel(realtimeChannelName('spark-projects-realtime'))
         .on(
           'postgres_changes',
           {

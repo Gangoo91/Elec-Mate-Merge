@@ -25,72 +25,42 @@
  *   6. Recent entries timeline — every entry shows source + verification chip
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  Plus,
-  Loader2,
-  Send,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  RefreshCw,
-  Mic,
-  MicOff,
-  X,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Sparkles, Link2, Share2 } from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { ArrowLeft, Plus, Loader2, Clock, RefreshCw, Share2, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
+import { useOtjProgramme } from '@/hooks/useOtjProgramme';
 import {
   useStudentOtjVerification,
   type OtjEntryRow,
   type SourceKind,
   type VerificationStatus,
 } from '@/hooks/useStudentOtjVerification';
-import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { cn } from '@/lib/utils';
 import {
   Eyebrow,
   SectionHeader,
 } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
+import { OTJ_STANDARDS } from '@/data/otjStandards';
+import {
+  exportOtjEvidencePack,
+  exportOtjCsv,
+  type OtjExportData,
+  type OtjExportEntry,
+  type OtjVerification,
+} from '@/services/otjEvidenceExport';
+import { OjtGoalsSection } from './OjtGoalsSection';
+import { OjtAssessmentsSection } from './OjtAssessmentsSection';
+import { ProgrammeSetupSheet } from './ProgrammeSetupSheet';
 
-const ACTIVITY_TYPES = [
-  { value: 'workshop', label: 'Workshop training' },
-  { value: 'college', label: 'College session' },
-  { value: 'online', label: 'Online learning' },
-  { value: 'practical', label: 'Practical assessment' },
-  { value: 'study', label: 'Self study' },
-  { value: 'site-visit', label: 'Site visit / tour' },
-  { value: 'mentoring', label: 'Mentoring session' },
-  { value: 'safety', label: 'Safety training' },
-];
-
-const WEEKLY_TARGET_HOURS = 7.5;
-const YEAR_TARGET_HOURS = 400;
-// Programme weeks remaining estimator — apprenticeship duration roughly 50 weeks/yr
-const PROGRAMME_WEEKS_REMAINING = 30;
+// Weekly target, gateway target and weeks-remaining are no longer hardcoded —
+// they come from useOtjProgramme (college dates → self-set → estimate). See
+// the `programme` object inside the component.
 
 const SOURCE_LABEL: Record<SourceKind, string> = {
   in_app: 'In-app',
@@ -142,11 +112,16 @@ export default function OJTHub() {
   const { user, profile } = useAuth();
   const { toast } = useToast();
 
+  // Real programme envelope — drives weekly/gateway targets + weeks remaining.
+  const programme = useOtjProgramme();
+  const weeklyTargetHours = programme.weeklyTargetHours;
+  const yearTargetHours = programme.totalTargetHours;
+  const weeksRemaining = programme.weeksRemaining;
+  const [showProgrammeSetup, setShowProgrammeSetup] = useState(false);
+
   // Data sources
-  const { breakdown, loading: otjLoading, refresh: refreshOtj } = useApprenticeOtj(
-    user?.id ?? null,
-    WEEKLY_TARGET_HOURS * 60
-  );
+  const { breakdown, entries: otjEntries, loading: otjLoading, refresh: refreshOtj } =
+    useApprenticeOtj(user?.id ?? null, weeklyTargetHours * 60);
   const {
     rows: verificationRows,
     pending_apprentice,
@@ -156,35 +131,9 @@ export default function OJTHub() {
     refresh: refreshVerify,
   } = useStudentOtjVerification(user?.id ?? null);
 
-  // Quick Log sheet state
-  const [showQuickLog, setShowQuickLog] = useState(false);
-  const [quickLogData, setQuickLogData] = useState({
-    activity_type: 'practical',
-    title: '',
-    description: '',
-    duration: '',
-    date: new Date().toISOString().split('T')[0],
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [aiStructuring, setAiStructuring] = useState(false);
-
-  // Speech-to-text for the description
-  const {
-    isSupported: speechSupported,
-    isListening,
-    transcript: speechTranscript,
-    startListening,
-    stopListening,
-    resetTranscript,
-  } = useSpeechToText({ continuous: true });
-
-  useEffect(() => {
-    if (!speechTranscript) return;
-    setQuickLogData((prev) => {
-      if (!speechTranscript || speechTranscript === prev.description) return prev;
-      return { ...prev, description: speechTranscript };
-    });
-  }, [speechTranscript]);
+  // Log sheet — unified work-activity capture (photos + AI), shared with the
+  // portfolio hub. Replaces the old inline Quick Log so there's one log path.
+  const [showLogSheet, setShowLogSheet] = useState(false);
 
   // Recent entries — merge college_otj_entries (source-of-truth for verification)
   // with the unified breakdown's entries from learning_activity_log etc. The
@@ -217,7 +166,10 @@ export default function OJTHub() {
     }
 
     // In-app auto-tracked (learning_activity_log + study_sessions): treated as
-    // system-verified hours that don't appear in college_otj_entries
+    // system-verified hours. These are the canonical source for in-app hours;
+    // college_otj_entries.source_kind='in_app' rows (byKind.in_app) are NOT
+    // added to the defensible total — doing so would double-count the same
+    // activity, since there is no dedup key tying the two representations.
     const autoTrackedMin = inAppMinutes;
 
     return { byKind, autoTrackedMin };
@@ -225,7 +177,6 @@ export default function OJTHub() {
 
   const totalDefensibleMin =
     sourceBreakdown.autoTrackedMin +
-    sourceBreakdown.byKind.in_app.verifiedMin +
     sourceBreakdown.byKind.apprentice_submitted.verifiedMin +
     sourceBreakdown.byKind.tutor_recorded.verifiedMin +
     sourceBreakdown.byKind.employer_attested.verifiedMin;
@@ -239,22 +190,65 @@ export default function OJTHub() {
   const verificationRate =
     totalAllMin > 0 ? Math.round((totalDefensibleMin / totalAllMin) * 100) : 100;
 
-  const yearHours = breakdown.total_hours;
-  const yearPct = Math.round((yearHours / YEAR_TARGET_HOURS) * 100);
-  const weekHours = breakdown.this_week_minutes / 60;
-  const weekPct = Math.min(
-    Math.round((breakdown.this_week_minutes / breakdown.weekly_target_minutes) * 100),
-    150
-  );
-  const onPace = weekHours >= WEEKLY_TARGET_HOURS;
+  // Gateway total must reflect ONLY ESFA-defensible hours — auto-tracked
+  // in-app activity plus tutor/employer-verified entries. breakdown.total_hours
+  // also includes pending AND rejected college_otj_entries, which must never
+  // inflate the gateway figure or the forecast: a tutor-rejected entry is not
+  // a banked hour. Pending hours are surfaced separately so the apprentice can
+  // see what's still in the pipeline without it counting prematurely.
+  const yearHours = totalDefensibleMin / 60;
+  const yearPendingHours = totalPendingMin / 60;
+  const yearPct = Math.round((yearHours / yearTargetHours) * 100);
+  // OTJ is a total to complete (not a perpetual weekly quota): once banked,
+  // the apprentice can stop logging.
+  const otjComplete = yearTargetHours > 0 && yearHours >= yearTargetHours;
 
-  // Forecast: at current weekly rate, where will we be at gateway?
-  const last30Avg =
-    breakdown.last_30_days_minutes > 0 ? breakdown.last_30_days_minutes / 60 / 4.3 : weekHours;
-  const projectedHours = yearHours + last30Avg * PROGRAMME_WEEKS_REMAINING;
-  const projectedShortfall = Math.max(0, YEAR_TARGET_HOURS - projectedHours);
+  // Weekly + run-rate must use the SAME defensible basis as the gateway total —
+  // auto-tracked in-app activity plus tutor/employer-verified college hours.
+  // breakdown.this_week_minutes / last_30_days_minutes include pending AND
+  // rejected college entries, which would let unverified hours inflate "this
+  // week", on-pace status and the forecast projection.
+  const { weekHours, last30Avg } = useMemo(() => {
+    const now = new Date();
+    const diffToMonday = (now.getUTCDay() + 6) % 7;
+    const sinceWeek = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - diffToMonday)
+    ).toISOString();
+    const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
+    let weekMin = 0;
+    let last30Min = 0;
+    // In-app auto-tracked (defensible, system-attested)
+    for (const e of otjEntries) {
+      if (e.source !== 'learning_activity' && e.source !== 'study_session') continue;
+      if (e.occurred_at >= sinceWeek) weekMin += e.duration_minutes;
+      if (e.occurred_at >= since30) last30Min += e.duration_minutes;
+    }
+    // Verified college hours only (pending/rejected excluded)
+    for (const r of verificationRows) {
+      if (
+        r.verification_status !== 'verified' &&
+        r.verification_status !== 'verified_by_employer'
+      )
+        continue;
+      const at = r.activity_date ? `${r.activity_date}T12:00:00Z` : null;
+      if (!at) continue;
+      if (at >= sinceWeek) weekMin += r.duration_minutes;
+      if (at >= since30) last30Min += r.duration_minutes;
+    }
+    return { weekHours: weekMin / 60, last30Avg: last30Min / 60 / 4.3 };
+  }, [otjEntries, verificationRows]);
+
+  const weekPct =
+    weeklyTargetHours > 0
+      ? Math.min(Math.round((weekHours / weeklyTargetHours) * 100), 150)
+      : 0;
+  const onPace = weekHours >= weeklyTargetHours;
+
+  // Forecast: at current verified weekly rate, where will we be at gateway?
+  const projectedHours = yearHours + last30Avg * weeksRemaining;
+  const projectedShortfall = Math.max(0, yearTargetHours - projectedHours);
   const requiredWeekly =
-    projectedShortfall > 0 ? projectedShortfall / PROGRAMME_WEEKS_REMAINING + last30Avg : last30Avg;
+    projectedShortfall > 0 ? projectedShortfall / weeksRemaining + last30Avg : last30Avg;
 
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
@@ -266,143 +260,6 @@ export default function OJTHub() {
   const firstName =
     fullName.split(' ')[0].charAt(0).toUpperCase() +
     fullName.split(' ')[0].slice(1).toLowerCase();
-
-  /* ─── AI structure voice transcript ────────────────────────────── */
-  const handleAiStructure = async () => {
-    const text = quickLogData.description.trim();
-    if (text.length < 5) {
-      toast({
-        title: 'Speak or type a description first',
-        description: 'AI needs a few words to structure the entry.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    setAiStructuring(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('ojt-parse-voice', {
-        body: {
-          transcript: text,
-          default_date: quickLogData.date,
-        },
-      });
-      if (error) throw error;
-      const parsed = data as {
-        success?: boolean;
-        title?: string;
-        description?: string;
-        activity_type?: string;
-        duration_minutes?: number;
-        unit_codes?: string[];
-        error?: string;
-      };
-      if (!parsed.success) throw new Error(parsed.error || 'AI structuring failed');
-      setQuickLogData((prev) => ({
-        ...prev,
-        title: parsed.title || prev.title,
-        description: parsed.description || prev.description,
-        activity_type: parsed.activity_type || prev.activity_type,
-        duration:
-          parsed.duration_minutes && parsed.duration_minutes > 0
-            ? (parsed.duration_minutes / 60).toString()
-            : prev.duration,
-      }));
-      toast({
-        title: 'Structured by AI',
-        description:
-          parsed.unit_codes && parsed.unit_codes.length
-            ? `Picked up unit codes: ${parsed.unit_codes.join(', ')}`
-            : 'Title, type and duration filled — review and submit.',
-      });
-    } catch (err) {
-      toast({
-        title: 'AI structuring failed',
-        description: (err as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setAiStructuring(false);
-    }
-  };
-
-  /* ─── Quick Log submit ─────────────────────────────────────────── */
-  const resetQuickLog = () => {
-    setQuickLogData({
-      activity_type: 'practical',
-      title: '',
-      description: '',
-      duration: '',
-      date: new Date().toISOString().split('T')[0],
-    });
-    resetTranscript();
-    stopListening();
-  };
-
-  const handleSubmitQuickLog = async () => {
-    if (!user?.id) return;
-    if (!quickLogData.title.trim() && !quickLogData.description.trim()) {
-      toast({
-        title: 'Add some detail',
-        description: 'Set a title or describe what you did.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    const minutes = Math.round(parseFloat(quickLogData.duration || '0') * 60);
-    if (!minutes || minutes <= 0) {
-      toast({
-        title: 'Add a duration',
-        description: 'Tell us roughly how long you spent.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setSubmitting(true);
-    try {
-      // college_students.id is the FK target
-      const { data: cs } = await supabase
-        .from('college_students')
-        .select('id, college_id')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      const row: Record<string, unknown> = {
-        student_id: user.id,
-        activity_date: quickLogData.date,
-        activity_type: quickLogData.activity_type,
-        title: quickLogData.title.trim() || quickLogData.description.trim().slice(0, 80),
-        description: quickLogData.description.trim() || null,
-        duration_minutes: minutes,
-        source_kind: 'apprentice_submitted' as SourceKind,
-        verification_status: 'pending' as VerificationStatus,
-      };
-      const csRow = cs as { id: string; college_id: string } | null;
-      if (csRow) {
-        row.college_student_id = csRow.id;
-        row.college_id = csRow.college_id;
-      }
-
-      const { error } = await supabase.from('college_otj_entries').insert(row);
-      if (error) throw error;
-
-      toast({
-        title: 'Submitted to your tutor',
-        description: 'Hours land in your tutor inbox for sign-off.',
-      });
-      resetQuickLog();
-      setShowQuickLog(false);
-      await Promise.all([refreshOtj(), refreshVerify()]);
-    } catch (err) {
-      toast({
-        title: 'Could not submit',
-        description: (err as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   /* ─── Employer attestation link ─────────────────────────────────── */
   const handleEmployerLink = async (row: OtjEntryRow) => {
@@ -459,6 +316,172 @@ export default function OJTHub() {
     }
   };
 
+  /* ─── Export evidence pack ──────────────────────────────────────── */
+  const buildExportData = useCallback(async (): Promise<OtjExportData> => {
+    const prettify = (t: string) =>
+      t.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+    // In-app auto-tracked (system-attested, verified)
+    const inAppEntries: OtjExportEntry[] = otjEntries
+      .filter((e) => e.source === 'learning_activity' || e.source === 'study_session')
+      .map((e) => ({
+        date: e.occurred_at.slice(0, 10),
+        title: e.title,
+        activityType: prettify(e.category ?? 'In-app'),
+        source: 'In-app',
+        status: 'Verified',
+        durationMinutes: e.duration_minutes,
+        verifier: 'System',
+        evidenceCount: 0,
+      }));
+
+    // College / submitted / attested entries
+    const collegeEntries: OtjExportEntry[] = verificationRows.map((r) => ({
+      date: r.activity_date,
+      title: r.title,
+      activityType: prettify(r.activity_type),
+      source: SOURCE_LABEL[r.source_kind] ?? r.source_kind,
+      status: STATUS_LABEL[r.verification_status] ?? r.verification_status,
+      durationMinutes: r.duration_minutes,
+      verifier: r.attested_by_name ?? r.recorded_by_name_snapshot ?? null,
+      evidenceCount: r.evidence_urls?.length ?? (r.evidence_url ? 1 : 0),
+    }));
+
+    const entries = [...collegeEntries, ...inAppEntries].sort((a, b) =>
+      a.date < b.date ? 1 : -1
+    );
+
+    // Human sign-offs (tutor verified / employer attested) — the "signatures".
+    const verifications: OtjVerification[] = verificationRows
+      .filter(
+        (r) =>
+          (r.verification_status === 'verified' ||
+            r.verification_status === 'verified_by_employer') &&
+          r.source_kind !== 'in_app'
+      )
+      .map((r) => {
+        const isEmployer =
+          r.source_kind === 'employer_attested' ||
+          r.verification_status === 'verified_by_employer';
+        return {
+          date: r.activity_date,
+          title: r.title,
+          durationMinutes: r.duration_minutes,
+          verifierName:
+            (isEmployer ? r.attested_by_name : r.recorded_by_name_snapshot) ??
+            (isEmployer ? 'Employer' : 'Tutor / Assessor'),
+          verifierRole: isEmployer ? 'Employer' : 'Tutor / Assessor',
+          verifierContact: isEmployer ? r.attestation_email : null,
+          statement:
+            (isEmployer ? r.attestation_comment : null) ??
+            (isEmployer
+              ? 'Confirmed the apprentice completed this work.'
+              : 'Verified for off-the-job training.'),
+          verifiedAt: r.verified_at,
+        };
+      });
+
+    const standard = OTJ_STANDARDS.find((s) => s.otjHours === yearTargetHours);
+
+    // Learner identity — best-effort, resilient to RLS / missing rows.
+    let uln: string | null = null;
+    let provider: string | null = null;
+    let employer: string | null = null;
+    let level: string | null = standard ? `Level ${standard.level}` : null;
+    try {
+      if (user?.id) {
+        const [{ data: prof }, { data: cs }] = await Promise.all([
+          supabase
+            .from('profiles')
+            .select('apprentice_level, apprentice_college')
+            .eq('id', user.id)
+            .maybeSingle(),
+          supabase
+            .from('college_students')
+            .select('uln, employer_id')
+            .eq('user_id', user.id)
+            .maybeSingle(),
+        ]);
+        if (prof?.apprentice_level) level = `Level ${prof.apprentice_level}`;
+        provider = (prof?.apprentice_college as string | null) ?? null;
+        uln = (cs?.uln as string | null) ?? null;
+        if (cs?.employer_id) {
+          const { data: emp } = await supabase
+            .from('employers')
+            .select('name')
+            .eq('id', cs.employer_id)
+            .maybeSingle();
+          employer = (emp?.name as string | null) ?? null;
+        }
+      }
+    } catch {
+      /* fall back to nulls — export still works without identity extras */
+    }
+
+    return {
+      learner: {
+        name: fullName,
+        uln,
+        standard: standard?.name ?? null,
+        level,
+        provider,
+        employer,
+        startDate: programme.startDate,
+        endDate: programme.endDate,
+      },
+      totalTargetHours: yearTargetHours,
+      summary: {
+        defensibleHours: yearHours,
+        pendingHours: yearPendingHours,
+        verificationRatePct: verificationRate,
+        totalEntries: entries.length,
+      },
+      entries,
+      verifications,
+    };
+  }, [
+    otjEntries,
+    verificationRows,
+    fullName,
+    yearTargetHours,
+    programme.startDate,
+    programme.endDate,
+    yearHours,
+    yearPendingHours,
+    verificationRate,
+    user?.id,
+  ]);
+
+  const handleExportPdf = useCallback(() => {
+    void (async () => {
+      try {
+        await exportOtjEvidencePack(await buildExportData());
+      } catch (e) {
+        toast({
+          title: 'Could not export',
+          description: (e as Error).message,
+          variant: 'destructive',
+        });
+      }
+    })();
+  }, [buildExportData, toast]);
+
+  const handleExportCsv = useCallback(() => {
+    void (async () => {
+      try {
+        exportOtjCsv(await buildExportData());
+      } catch (e) {
+        toast({
+          title: 'Could not export',
+          description: (e as Error).message,
+          variant: 'destructive',
+        });
+      }
+    })();
+  }, [buildExportData, toast]);
+
+  const canExport = verificationRows.length > 0 || yearHours > 0;
+
   /* ─── Render ──────────────────────────────────────────────────── */
   return (
     <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
@@ -476,12 +499,12 @@ export default function OJTHub() {
           <div className="hidden md:block h-5 w-px bg-white/10 flex-shrink-0" />
           <div className="flex-1 min-w-0">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate inline-block max-w-full">
-              <span className="hidden sm:inline">Off-the-job training · 20% rule</span>
-              <span className="sm:hidden">OJT · 20% rule</span>
+              <span className="hidden sm:inline">Off-the-job training</span>
+              <span className="sm:hidden">Off-the-job training</span>
             </span>
           </div>
           <button
-            onClick={() => setShowQuickLog(true)}
+            onClick={() => setShowLogSheet(true)}
             className="inline-flex items-center justify-center gap-1.5 h-10 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
           >
             <Plus className="h-4 w-4" strokeWidth={2.5} />
@@ -500,11 +523,11 @@ export default function OJTHub() {
         >
           <Eyebrow>{greeting}</Eyebrow>
           <h1 className="text-[24px] sm:text-[28px] lg:text-[32px] font-semibold tracking-tight text-white leading-[1.05]">
-            {firstName}'s 20% off-the-job hours
+            {firstName}'s off-the-job hours
           </h1>
           <p className="text-[13.5px] sm:text-[14px] text-white/70 leading-relaxed max-w-2xl">
-            Every hour with a clear source &amp; verifier — the chain ESFA + Ofsted
-            check at gateway. Hours flow straight to your tutor for sign-off.
+            Every hour with a clear source &amp; verifier — the proof chain checked at
+            gateway. Log it here and your tutor or supervisor signs it off.
           </p>
         </motion.div>
 
@@ -513,14 +536,20 @@ export default function OJTHub() {
           <KpiCell
             label="This week"
             value={`${fmtHours(weekHours)}h`}
-            sub={`${weekPct}% of ${WEEKLY_TARGET_HOURS}h target`}
+            sub={`${weekPct}% of ${fmtHours(weeklyTargetHours)}h/wk suggested pace`}
             highlight={onPace}
             bar={Math.min(weekPct, 100)}
           />
           <KpiCell
-            label="Year total"
+            label="Counts to gateway"
             value={`${fmtHours(yearHours)}h`}
-            sub={`${yearPct}% of ${YEAR_TARGET_HOURS}h gateway target`}
+            sub={
+              otjComplete
+                ? `Complete · all ${yearTargetHours}h banked`
+                : yearPendingHours > 0
+                  ? `${yearPct}% of ${yearTargetHours}h · ${fmtHours(yearPendingHours)}h pending`
+                  : `${yearPct}% of ${yearTargetHours}h total`
+            }
             highlight={yearPct >= 50}
             bar={Math.min(yearPct, 100)}
           />
@@ -558,15 +587,22 @@ export default function OJTHub() {
           totalAllMin={totalAllMin + sourceBreakdown.autoTrackedMin}
         />
 
-        {/* Compliance forecast */}
-        <ComplianceForecast
-          yearHours={yearHours}
-          projectedHours={projectedHours}
-          projectedShortfall={projectedShortfall}
-          requiredWeekly={requiredWeekly}
-          weeksRemaining={PROGRAMME_WEEKS_REMAINING}
-          last30Avg={last30Avg}
-        />
+        {/* Compliance forecast — held back until the real programme resolves
+            so a college-linked apprentice never sees the estimate flash first. */}
+        {!programme.loading && (
+          <ComplianceForecast
+            yearHours={yearHours}
+            yearTarget={yearTargetHours}
+            projectedHours={projectedHours}
+            projectedShortfall={projectedShortfall}
+            requiredWeekly={requiredWeekly}
+            weeksRemaining={weeksRemaining}
+            last30Avg={last30Avg}
+            programmeSource={programme.source}
+            isComplete={otjComplete}
+            onPersonalise={() => setShowProgrammeSetup(true)}
+          />
+        )}
 
         {/* Verification panel */}
         {(pending_apprentice.length > 0 || rejected_apprentice.length > 0) && (
@@ -584,210 +620,43 @@ export default function OJTHub() {
           loading={verifyLoading || otjLoading}
           inAppMinutes={inAppMinutes}
           collegeMinutes={collegeMinutes}
+          canExport={canExport}
+          onExportPdf={handleExportPdf}
+          onExportCsv={handleExportCsv}
         />
+
+        {/* Goals — personal OTJ targets (migrated from legacy /apprentice/ojt) */}
+        <OjtGoalsSection />
+
+        {/* Assessments — deadline tracking (migrated from legacy /apprentice/ojt) */}
+        <OjtAssessmentsSection />
       </main>
 
-      {/* Quick Log Sheet */}
-      <Sheet
-        open={showQuickLog}
-        onOpenChange={(v) => {
-          setShowQuickLog(v);
-          if (!v) resetQuickLog();
+      {/* Unified log sheet — photos + AI proposal, writes college_otj_entries.
+          Same component the portfolio hub uses, so there's one log path. */}
+      <SubmitWorkOtjSheet
+        open={showLogSheet}
+        onOpenChange={setShowLogSheet}
+        onSubmitted={() => {
+          void Promise.all([refreshOtj(), refreshVerify()]);
         }}
-      >
-        <SheetContent
-          side="bottom"
-          className="h-[90vh] sm:h-[80vh] rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.06] p-0"
-        >
-          <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-2" />
-          <div className="flex flex-col h-full">
-            <SheetHeader className="px-4 sm:px-6 pb-4">
-              <SheetTitle className="text-left">
-                <Eyebrow>Log time · OJT</Eyebrow>
-                <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white mt-1">
-                  Submit hours for tutor sign-off
-                </h2>
-              </SheetTitle>
-              <SheetDescription className="text-left text-[13px] text-white/70 leading-snug">
-                Goes to your tutor as <code className="font-mono text-elec-yellow/85">apprentice_submitted</code>.
-                They verify in their college dashboard; you'll see a toast the
-                moment it's signed off.
-              </SheetDescription>
-            </SheetHeader>
+      />
 
-            <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-32 space-y-4">
-              <div className="space-y-2">
-                <Eyebrow>Activity type</Eyebrow>
-                <Select
-                  value={quickLogData.activity_type}
-                  onValueChange={(v) =>
-                    setQuickLogData((p) => ({ ...p, activity_type: v }))
-                  }
-                >
-                  <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08]">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ACTIVITY_TYPES.map((t) => (
-                      <SelectItem key={t.value} value={t.value}>
-                        {t.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Eyebrow>Title</Eyebrow>
-                <Input
-                  placeholder="e.g. Safe isolation refresher"
-                  value={quickLogData.title}
-                  onChange={(e) =>
-                    setQuickLogData((p) => ({ ...p, title: e.target.value }))
-                  }
-                  className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-baseline justify-between gap-2">
-                  <Eyebrow>Description</Eyebrow>
-                  <div className="flex items-center gap-1.5">
-                    {speechSupported && (
-                      <button
-                        type="button"
-                        onClick={isListening ? stopListening : startListening}
-                        disabled={submitting}
-                        className={cn(
-                          'inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] font-medium border transition-colors touch-manipulation',
-                          isListening
-                            ? 'border-red-500/40 bg-red-500/[0.06] text-red-300'
-                            : 'border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04]'
-                        )}
-                      >
-                        {isListening ? (
-                          <>
-                            <MicOff className="h-3 w-3" />
-                            Stop
-                          </>
-                        ) : (
-                          <>
-                            <Mic className="h-3 w-3" />
-                            Voice
-                          </>
-                        )}
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={handleAiStructure}
-                      disabled={aiStructuring || submitting}
-                      className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] font-medium border border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation disabled:opacity-50"
-                    >
-                      {aiStructuring ? (
-                        <>
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                          Structuring…
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="h-3 w-3" />
-                          AI structure
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-                <div className="relative">
-                  <Textarea
-                    value={quickLogData.description}
-                    onChange={(e) =>
-                      setQuickLogData((p) => ({ ...p, description: e.target.value }))
-                    }
-                    placeholder="What did you do? Be specific — testing, safe isolation, units covered. Or tap Voice and just speak."
-                    rows={4}
-                    className={cn(
-                      'touch-manipulation bg-[hsl(0_0%_10%)] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 transition-colors',
-                      isListening
-                        ? 'border-red-400/60 ring-1 ring-red-400/30'
-                        : 'border-white/[0.08]'
-                    )}
-                  />
-                  {isListening && (
-                    <div className="absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-500/[0.12] border border-red-500/30">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-red-400/60 animate-ping" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-400" />
-                      </span>
-                      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-red-300">
-                        Listening
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                <div className="space-y-2">
-                  <Eyebrow>Duration (hours)</Eyebrow>
-                  <Input
-                    type="number"
-                    step="0.5"
-                    min="0.5"
-                    inputMode="decimal"
-                    placeholder="e.g. 2.5"
-                    value={quickLogData.duration}
-                    onChange={(e) =>
-                      setQuickLogData((p) => ({ ...p, duration: e.target.value }))
-                    }
-                    className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Eyebrow>Date</Eyebrow>
-                  <Input
-                    type="date"
-                    value={quickLogData.date}
-                    onChange={(e) =>
-                      setQuickLogData((p) => ({ ...p, date: e.target.value }))
-                    }
-                    className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_8%)] pb-20 sm:pb-3">
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowQuickLog(false)}
-                  className="h-12 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] text-white text-[13px] font-semibold hover:bg-white/[0.04]"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleSubmitQuickLog}
-                  disabled={submitting}
-                  className="h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 disabled:opacity-50 inline-flex items-center justify-center gap-2"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Submitting…
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4" />
-                      Send for sign-off
-                    </>
-                  )}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+      {/* Programme setup — self-set dates for apprentices with no college link */}
+      <ProgrammeSetupSheet
+        open={showProgrammeSetup}
+        onOpenChange={setShowProgrammeSetup}
+        initial={
+          programme.source === 'self' && programme.startDate && programme.endDate
+            ? {
+                start_date: programme.startDate,
+                end_date: programme.endDate,
+                total_hours: programme.totalTargetHours,
+              }
+            : null
+        }
+        onSave={programme.setSelfProgramme}
+      />
     </div>
   );
 }
@@ -814,7 +683,7 @@ function KpiCell({
       <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
       <div
         className={cn(
-          'text-[22px] sm:text-[26px] lg:text-[28px] font-mono font-semibold tabular-nums leading-none',
+          'text-[22px] sm:text-[26px] lg:text-[28px] font-semibold tracking-tight tabular-nums leading-none',
           highlight ? 'text-elec-yellow' : warn ? 'text-red-300' : 'text-white'
         )}
       >
@@ -853,7 +722,7 @@ function SourceMixBar({
   const segments: Array<{ label: string; minutes: number; tone: string }> = [
     {
       label: 'In-app auto-tracked',
-      minutes: autoTrackedMin + byKind.in_app.verifiedMin,
+      minutes: autoTrackedMin,
       tone: 'bg-elec-yellow/85',
     },
     {
@@ -888,7 +757,7 @@ function SourceMixBar({
       <SectionHeader
         eyebrow="Source mix"
         title="Where your hours come from"
-        meta="Defensibility at a glance — yellow = ESFA-defensible, grey = pending"
+        meta="Defensibility at a glance — yellow = verified & counts, grey = pending"
       />
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
         {total === 0 ? (
@@ -920,7 +789,7 @@ function SourceMixBar({
                   >
                     <span className={cn('h-2 w-2 rounded-sm flex-shrink-0', s.tone)} />
                     <span className="flex-1 truncate">{s.label}</span>
-                    <span className="font-mono text-white/85 tabular-nums">
+                    <span className="text-white/85 tabular-nums">
                       {(s.minutes / 60).toFixed(1)}h
                     </span>
                   </li>
@@ -935,30 +804,91 @@ function SourceMixBar({
 
 function ComplianceForecast({
   yearHours,
+  yearTarget,
   projectedHours,
   projectedShortfall,
   requiredWeekly,
   weeksRemaining,
   last30Avg,
+  programmeSource,
+  isComplete,
+  onPersonalise,
 }: {
   yearHours: number;
+  yearTarget: number;
   projectedHours: number;
   projectedShortfall: number;
   requiredWeekly: number;
   weeksRemaining: number;
   last30Avg: number;
+  programmeSource: 'college' | 'self' | 'estimated';
+  isComplete: boolean;
+  onPersonalise: () => void;
 }) {
   const onTrack = projectedShortfall === 0;
+  const isEstimate = programmeSource === 'estimated';
+
+  // Off-the-job hours are a total to complete, not a perpetual weekly quota —
+  // apprentices can front-load and, once the total is banked, stop logging.
+  if (isComplete) {
+    return (
+      <section className="space-y-3">
+        <SectionHeader
+          eyebrow="Off-the-job training"
+          title="Hours complete"
+          meta={`All ${yearTarget}h banked — you can stop logging off-the-job hours`}
+        />
+        <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-4 sm:p-5 space-y-3">
+          <div className="flex items-baseline gap-1.5 flex-wrap">
+            <span className="text-[26px] sm:text-[30px] lg:text-[32px] font-semibold text-elec-yellow tracking-tight tabular-nums leading-none">
+              {fmtHours(yearHours)}h
+            </span>
+            <span className="text-[12px] sm:text-[13px] text-white/40">
+              / {yearTarget}h ✓
+            </span>
+          </div>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            You've banked your full off-the-job requirement. You don't need to keep logging
+            hours — front-loading like this is fine. Your apprenticeship still runs to gateway
+            and end-point assessment; keep the evidence safe for your records.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="space-y-3">
       <SectionHeader
-        eyebrow="Compliance forecast"
+        eyebrow="Off-the-job forecast"
         title={
           onTrack
-            ? "On pace to clear gateway"
+            ? "On pace to finish your hours"
             : `Projecting ${fmtHours(projectedShortfall)}h short`
         }
-        meta={`Based on the last 30 days · ${weeksRemaining} weeks to go · ${YEAR_TARGET_HOURS}h target`}
+        meta={
+          isEstimate
+            ? `Estimate · ${weeksRemaining} weeks to go · ${yearTarget}h total — set your dates for an accurate forecast`
+            : `Suggested pace from the last 30 days · ${weeksRemaining} weeks to go · ${yearTarget}h total`
+        }
+        action={
+          // College-linked dates are provider-authoritative — only self /
+          // estimated programmes are apprentice-editable.
+          programmeSource === 'college' ? undefined : (
+            <button
+              type="button"
+              onClick={onPersonalise}
+              className={cn(
+                'inline-flex items-center gap-1.5 h-9 px-3 rounded-md text-[12px] font-semibold transition-colors touch-manipulation',
+                isEstimate
+                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                  : 'border border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04]'
+              )}
+            >
+              {isEstimate ? 'Set your dates' : 'Edit dates'}
+            </button>
+          )
+        }
       />
       <div
         className={cn(
@@ -974,20 +904,20 @@ function ComplianceForecast({
             <div className="flex items-baseline gap-1.5 flex-wrap">
               <span
                 className={cn(
-                  'text-[26px] sm:text-[30px] lg:text-[32px] font-mono font-semibold tabular-nums leading-none',
+                  'text-[26px] sm:text-[30px] lg:text-[32px] font-semibold tracking-tight tabular-nums leading-none',
                   onTrack ? 'text-elec-yellow' : 'text-red-300'
                 )}
               >
                 {fmtHours(projectedHours)}h
               </span>
-              <span className="text-[12px] sm:text-[13px] text-white/40 font-mono">
-                / {YEAR_TARGET_HOURS}h
+              <span className="text-[12px] sm:text-[13px] text-white/40">
+                / {yearTarget}h
               </span>
             </div>
           </div>
           <div className="text-right space-y-1 flex-shrink-0">
             <Eyebrow>Pace</Eyebrow>
-            <span className="text-[14px] sm:text-[16px] font-mono text-white tabular-nums whitespace-nowrap block">
+            <span className="text-[14px] sm:text-[16px] text-white tabular-nums whitespace-nowrap block">
               {last30Avg.toFixed(1)}h/wk
             </span>
           </div>
@@ -995,21 +925,22 @@ function ComplianceForecast({
         <p className="text-[13px] text-white/85 leading-relaxed">
           {onTrack ? (
             <>
-              Maintain your current rate and you'll have{' '}
-              <span className="font-mono text-elec-yellow whitespace-nowrap">
-                {fmtHours(projectedHours - YEAR_TARGET_HOURS)}h
+              Keep your current rate and you'll have{' '}
+              <span className="text-elec-yellow whitespace-nowrap">
+                {fmtHours(projectedHours - yearTarget)}h
               </span>{' '}
-              of headroom by gateway. Keep the cadence — auditors love consistent weekly logs.
+              of headroom. Log as you go or front-load — the hours just need banking by gateway.
             </>
           ) : (
             <>
-              You're sitting at{' '}
-              <span className="font-mono text-white whitespace-nowrap">{fmtHours(yearHours)}h</span>.
-              To clear the {YEAR_TARGET_HOURS}h gateway, lift to{' '}
-              <span className="font-mono text-elec-yellow whitespace-nowrap">
+              You're at{' '}
+              <span className="text-white whitespace-nowrap">{fmtHours(yearHours)}h</span>.
+              To bank your {yearTarget}h, aim for around{' '}
+              <span className="text-elec-yellow whitespace-nowrap">
                 ~{requiredWeekly.toFixed(1)}h/week
               </span>{' '}
-              for the remaining {weeksRemaining} weeks. Submit hours weekly and chase tutor sign-off.
+              over the remaining {weeksRemaining} weeks — or front-load and finish sooner. Chase
+              tutor sign-off so they count.
             </>
           )}
         </p>
@@ -1051,10 +982,10 @@ function VerificationPanel({
                 <div className="min-w-0 space-y-1">
                   <div className="flex items-baseline gap-2 flex-wrap">
                     <Eyebrow className="text-red-300">Refer back</Eyebrow>
-                    <span className="text-[11px] font-mono text-white/55">
+                    <span className="text-[11px] text-white/55">
                       {fmtDate(row.activity_date)}
                     </span>
-                    <span className="text-[11px] font-mono text-white/55">
+                    <span className="text-[11px] text-white/55">
                       · {(row.duration_minutes / 60).toFixed(1)}h
                     </span>
                   </div>
@@ -1081,7 +1012,7 @@ function VerificationPanel({
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <div className="flex items-baseline justify-between gap-3">
             <Eyebrow>Pending</Eyebrow>
-            <span className="text-[11px] font-mono text-white/55 tabular-nums whitespace-nowrap">
+            <span className="text-[11px] text-white/55 tabular-nums whitespace-nowrap">
               {(pending.reduce((s, r) => s + r.duration_minutes, 0) / 60).toFixed(1)}h waiting
             </span>
           </div>
@@ -1092,7 +1023,7 @@ function VerificationPanel({
                   <div className="min-w-0 flex-1 flex items-start gap-2">
                     <Clock className="h-3.5 w-3.5 text-white/40 flex-shrink-0 mt-0.5" />
                     <div className="min-w-0 flex-1 space-y-0.5">
-                      <span className="text-[10.5px] font-mono text-white/55 block">
+                      <span className="text-[10.5px] text-white/55 block">
                         {fmtDate(row.activity_date)}
                       </span>
                       <span className="text-[13px] text-white block leading-snug break-words">
@@ -1100,7 +1031,7 @@ function VerificationPanel({
                       </span>
                     </div>
                   </div>
-                  <span className="text-[12px] font-mono text-white/85 tabular-nums flex-shrink-0 whitespace-nowrap pt-0.5">
+                  <span className="text-[12px] text-white/85 tabular-nums flex-shrink-0 whitespace-nowrap pt-0.5">
                     {(row.duration_minutes / 60).toFixed(1)}h
                   </span>
                 </div>
@@ -1120,7 +1051,7 @@ function VerificationPanel({
             ))}
           </ul>
           {pending.length > 5 && (
-            <p className="text-[11px] text-white/40 font-mono">
+            <p className="text-[11px] text-white/40">
               + {pending.length - 5} more
             </p>
           )}
@@ -1135,11 +1066,17 @@ function RecentEntries({
   loading,
   inAppMinutes,
   collegeMinutes,
+  canExport,
+  onExportPdf,
+  onExportCsv,
 }: {
   rows: OtjEntryRow[];
   loading: boolean;
   inAppMinutes: number;
   collegeMinutes: number;
+  canExport: boolean;
+  onExportPdf: () => void;
+  onExportCsv: () => void;
 }) {
   void collegeMinutes;
   const recent = rows.slice(0, 12);
@@ -1152,6 +1089,27 @@ function RecentEntries({
           inAppMinutes > 0
             ? `Plus ${(inAppMinutes / 60).toFixed(1)}h auto-tracked from in-app activity`
             : 'Submit your first hours via "Log time"'
+        }
+        action={
+          canExport ? (
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={onExportPdf}
+                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation"
+              >
+                <Download className="h-3.5 w-3.5" strokeWidth={2.5} />
+                Evidence pack
+              </button>
+              <button
+                type="button"
+                onClick={onExportCsv}
+                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 text-[12px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation"
+              >
+                CSV
+              </button>
+            </div>
+          ) : undefined
         }
       />
       {loading ? (
@@ -1189,11 +1147,11 @@ function RecentEntries({
                     <span className="text-[9.5px] uppercase tracking-[0.14em] text-white/55 whitespace-nowrap">
                       {SOURCE_LABEL[row.source_kind]}
                     </span>
-                    <span className="text-[10px] font-mono text-white/40 whitespace-nowrap">
+                    <span className="text-[10px] text-white/40 whitespace-nowrap">
                       {fmtDate(row.activity_date)}
                     </span>
                     {row.recorded_by_name_snapshot && (
-                      <span className="text-[10px] text-white/40 font-mono truncate max-w-[110px] sm:max-w-none">
+                      <span className="text-[10px] text-white/40 truncate max-w-[110px] sm:max-w-none">
                         · {row.recorded_by_name_snapshot}
                       </span>
                     )}
@@ -1209,10 +1167,10 @@ function RecentEntries({
                     )}
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <span className="text-[15px] sm:text-[16px] font-mono font-semibold text-white tabular-nums leading-none">
+                  <span className="text-[15px] sm:text-[16px] font-semibold text-white tabular-nums leading-none">
                     {(row.duration_minutes / 60).toFixed(1)}
                   </span>
-                  <span className="text-[10px] text-white/40 font-mono ml-0.5">h</span>
+                  <span className="text-[10px] text-white/40 ml-0.5">h</span>
                 </div>
               </div>
             </li>
@@ -1223,9 +1181,6 @@ function RecentEntries({
   );
 }
 
-// Ensure unused-but-imported icons don't trip the linter
-void AlertTriangle;
-void CheckCircle2;
-void X;
-void Link2;
+// SOURCE_TONE is retained for parity with the source-kind palette though not
+// currently rendered.
 void SOURCE_TONE;

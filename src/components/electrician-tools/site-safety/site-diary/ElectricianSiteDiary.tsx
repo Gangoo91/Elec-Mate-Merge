@@ -1,40 +1,7 @@
-import React, { useState, useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Input } from '@/components/ui/input';
-import { SmartTextarea } from '../common/SmartTextarea';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  ArrowLeft,
-  BookOpen,
-  Plus,
-  Sun,
-  Cloud,
-  CloudRain,
-  CloudSnow,
-  Wind,
-  Clock,
-  MapPin,
-  Users,
-  Loader2,
-  Search,
-  X,
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  Trash2,
-  Copy,
-  FileText,
-  Shield,
-  CheckCircle2,
-  Share2,
-} from 'lucide-react';
+import { Copy, Trash2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useElectricianSiteDiary,
   useCreateDiaryEntry,
@@ -43,22 +10,32 @@ import {
 } from '@/hooks/useElectricianSiteDiary';
 import { useActivePermits } from '@/hooks/usePermitsToWork';
 import { useRAMSDocumentsByStatus } from '@/hooks/useRAMSDocuments';
-import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
-import { SafetyEmptyState } from '../common/SafetyEmptyState';
-import { SafetyRecordCard } from '../common/SafetyRecordCard';
-import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
-import { SwipeableListItem } from '../common/SwipeableListItem';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useFieldValidation } from '@/hooks/useFieldValidation';
-import { ValidatedField } from '../common/ValidatedField';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
+
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import {
+  Eyebrow,
+  Field,
+  FormCard,
+  ListCard,
+  ListRow,
+  EmptyState,
+  LoadingState,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+} from '@/components/college/primitives';
+import { SafetyMasthead } from '../common/SafetyModuleShell';
+import { SignatureField } from '../common/SignatureField';
+import { SmartTextarea } from '../common/SmartTextarea';
+import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
+import { LocationAutoFill } from '../common/LocationAutoFill';
+import { SwipeableListItem } from '../common/SwipeableListItem';
+import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
-import { LocationAutoFill } from '../common/LocationAutoFill';
-import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
-import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
-import { SignaturePad } from '../common/SignaturePad';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 
 interface ElectricianSiteDiaryProps {
@@ -66,11 +43,11 @@ interface ElectricianSiteDiaryProps {
 }
 
 const WEATHER_OPTIONS = [
-  { value: 'sunny', label: 'Sunny', icon: Sun },
-  { value: 'cloudy', label: 'Cloudy', icon: Cloud },
-  { value: 'rain', label: 'Rain', icon: CloudRain },
-  { value: 'snow', label: 'Snow', icon: CloudSnow },
-  { value: 'windy', label: 'Windy', icon: Wind },
+  { value: 'sunny', label: 'Sunny' },
+  { value: 'cloudy', label: 'Cloudy' },
+  { value: 'rain', label: 'Rain' },
+  { value: 'snow', label: 'Snow' },
+  { value: 'windy', label: 'Windy' },
 ];
 
 function generateCalendarDays(baseDate: Date): Date[] {
@@ -86,11 +63,7 @@ function generateCalendarDays(baseDate: Date): Date[] {
 }
 
 function isSameDay(a: Date, b: Date): boolean {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
 
 function formatDateKey(d: Date): string {
@@ -99,7 +72,6 @@ function formatDateKey(d: Date): string {
 
 export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const haptic = useHaptic();
-  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [shareRecordId, setShareRecordId] = useState<string | null>(null);
   const [shareRecordTitle, setShareRecordTitle] = useState('');
   const today = useMemo(() => new Date(), []);
@@ -109,12 +81,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  // Validation for required fields
-  const validation = useFieldValidation({
-    siteName: { required: true, message: 'Site name is required' },
-  });
+  const validation = useFieldValidation({ siteName: { required: true, message: 'Site name is required' } });
 
-  // Form state
+  // Form field state
   const [siteAddress, setSiteAddress] = useState('');
   const [weather, setWeather] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -127,37 +96,16 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [diaryPhotos, setDiaryPhotos] = useState<string[]>([]);
   const [selectedRamsIds, setSelectedRamsIds] = useState<string[]>([]);
   const [selectedPermitIds, setSelectedPermitIds] = useState<string[]>([]);
+  const [recorderSig, setRecorderSig] = useState('');
 
-  // Recorder signature state
-  const [recorderSigName, setRecorderSigName] = useState('');
-  const [recorderSigDate, setRecorderSigDate] = useState('');
-  const [recorderSigDataUrl, setRecorderSigDataUrl] = useState('');
-
-  // Linked data sources
   const { data: activePermits = [] } = useActivePermits();
   const { data: approvedRams = [] } = useRAMSDocumentsByStatus('approved');
 
-  // Draft persistence
-  const {
-    status: draftStatus,
-    recoveredData: recoveredDraft,
-    clearDraft,
-    dismissRecovery: dismissDraft,
-  } = useLocalDraft({
+  const { status: draftStatus, recoveredData: recoveredDraft, clearDraft, dismissRecovery: dismissDraft } = useLocalDraft({
     key: 'site-diary',
     data: {
       siteName: validation.fields.siteName?.value ?? '',
-      siteAddress,
-      weather,
-      startTime,
-      endTime,
-      personnelCount,
-      workCompleted,
-      issues,
-      materialsUsed,
-      notes,
-      selectedRamsIds,
-      selectedPermitIds,
+      siteAddress, weather, startTime, endTime, personnelCount, workCompleted, issues, materialsUsed, notes, selectedRamsIds, selectedPermitIds,
     },
     enabled: showForm,
   });
@@ -175,8 +123,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     if (recoveredDraft.materialsUsed) setMaterialsUsed(recoveredDraft.materialsUsed);
     if (recoveredDraft.notes) setNotes(recoveredDraft.notes);
     if (recoveredDraft.selectedRamsIds?.length) setSelectedRamsIds(recoveredDraft.selectedRamsIds);
-    if (recoveredDraft.selectedPermitIds?.length)
-      setSelectedPermitIds(recoveredDraft.selectedPermitIds);
+    if (recoveredDraft.selectedPermitIds?.length) setSelectedPermitIds(recoveredDraft.selectedPermitIds);
     dismissDraft();
   };
 
@@ -185,7 +132,6 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const deleteEntry = useDeleteDiaryEntry();
 
   const calendarDays = useMemo(() => generateCalendarDays(today), [today]);
-
   const selectedDateKey = formatDateKey(selectedDate);
   const entriesForDate = entries.filter((e: SiteDiaryEntry) => e.entry_date === selectedDateKey);
 
@@ -204,41 +150,20 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
 
   const resetForm = () => {
     validation.reset();
-    setSiteAddress('');
-    setWeather('');
-    setStartTime('');
-    setEndTime('');
-    setPersonnelCount('');
-    setWorkCompleted('');
-    setIssues('');
-    setMaterialsUsed('');
-    setNotes('');
-    setDiaryPhotos([]);
-    setSelectedRamsIds([]);
-    setSelectedPermitIds([]);
-    setRecorderSigName('');
-    setRecorderSigDate('');
-    setRecorderSigDataUrl('');
+    setSiteAddress(''); setWeather(''); setStartTime(''); setEndTime(''); setPersonnelCount('');
+    setWorkCompleted(''); setIssues(''); setMaterialsUsed(''); setNotes(''); setDiaryPhotos([]);
+    setSelectedRamsIds([]); setSelectedPermitIds([]); setRecorderSig('');
     clearDraft();
   };
 
   const handleDuplicate = (entry: SiteDiaryEntry) => {
-    // Copy site details, clear date-specific fields
     if (entry.site_name) validation.setValue('siteName', entry.site_name);
     setSiteAddress(entry.site_address || '');
     setWeather(entry.weather || '');
     setPersonnelCount(entry.personnel_count != null ? String(entry.personnel_count) : '');
-    // Carry forward linked RAMS/permits
     setSelectedRamsIds(entry.rams_ids ?? []);
     setSelectedPermitIds(entry.permit_ids ?? []);
-    // Clear date-specific fields
-    setStartTime('');
-    setEndTime('');
-    setWorkCompleted('');
-    setIssues('');
-    setMaterialsUsed('');
-    setNotes('');
-    setDiaryPhotos([]);
+    setStartTime(''); setEndTime(''); setWorkCompleted(''); setIssues(''); setMaterialsUsed(''); setNotes(''); setDiaryPhotos([]);
     setShowForm(true);
     haptic.success();
   };
@@ -249,7 +174,6 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const handleSubmit = async () => {
     if (!validation.validateAll()) return;
     if (startTime && endTime && endTime <= startTime) return;
-
     await createEntry.mutateAsync({
       entry_date: selectedDateKey,
       site_name: validation.fields.siteName.value.trim(),
@@ -266,10 +190,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       rams_ids: selectedRamsIds,
       permit_ids: selectedPermitIds,
       notes: notes.trim() || null,
-      recorder_signature: recorderSigDataUrl || null,
-      recorder_name: recorderSigName || null,
+      recorder_signature: recorderSig || null,
+      recorder_name: null,
     });
-
     haptic.success();
     resetForm();
     setShowForm(false);
@@ -280,501 +203,247 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   }, [refetch]);
 
   const scrollCalendar = (direction: 'left' | 'right') => {
-    if (calendarRef.current) {
-      const amount = direction === 'left' ? -200 : 200;
-      calendarRef.current.scrollBy({ left: amount, behavior: 'smooth' });
-    }
+    if (calendarRef.current) calendarRef.current.scrollBy({ left: direction === 'left' ? -200 : 200, behavior: 'smooth' });
   };
 
   return (
-    <div className="flex flex-col h-full bg-background">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
-        <button
-          onClick={onBack}
-          className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:scale-95 transition-transform"
-        >
-          <ArrowLeft className="w-5 h-5 text-white" />
-        </button>
-        <div className="flex-1">
-          <h1 className="text-lg font-semibold text-white">Site Diary</h1>
-          <p className="text-sm text-white">Record daily site activity</p>
-        </div>
-        <BookOpen className="w-5 h-5 text-elec-yellow" />
-      </div>
+    <div className="bg-elec-dark min-h-screen pb-28">
+      <SafetyMasthead
+        onBack={onBack}
+        moduleName="Site Diary"
+        trailing={showForm ? <DraftSaveIndicator status={draftStatus} /> : undefined}
+      />
 
-      {/* Calendar Strip */}
-      <div className="border-b border-white/10 px-2 py-3">
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => scrollCalendar('left')}
-            className="h-11 w-8 flex items-center justify-center touch-manipulation active:scale-90 transition-transform flex-shrink-0"
-          >
-            <ChevronLeft className="w-4 h-4 text-white" />
+      {/* Calendar strip */}
+      <div className="border-b border-white/[0.06]">
+        <div className="mx-auto max-w-3xl px-2 py-3 flex items-center gap-1">
+          <button onClick={() => scrollCalendar('left')} className="h-11 w-8 flex items-center justify-center text-white/50 touch-manipulation" aria-label="Earlier">
+            ‹
           </button>
-          <div
-            ref={calendarRef}
-            className="flex gap-2 overflow-x-auto scrollbar-hide flex-1"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
+          <div ref={calendarRef} className="flex gap-2 overflow-x-auto hide-scrollbar flex-1" style={{ scrollbarWidth: 'none' }}>
             {calendarDays.map((day) => {
               const isSelected = isSameDay(day, selectedDate);
               const isToday = isSameDay(day, today);
-              const hasEntries = entries.some(
-                (e: SiteDiaryEntry) => e.entry_date === formatDateKey(day)
-              );
-
+              const hasEntries = entries.some((e: SiteDiaryEntry) => e.entry_date === formatDateKey(day));
               const isFuture = day > today && !isToday;
-
               return (
                 <button
                   key={day.toISOString()}
                   onClick={() => !isFuture && setSelectedDate(day)}
                   disabled={isFuture}
-                  className={`flex-shrink-0 w-12 h-16 flex flex-col items-center justify-center rounded-xl text-center touch-manipulation active:scale-95 transition-all ${
+                  className={cn(
+                    'flex-shrink-0 w-12 h-16 flex flex-col items-center justify-center rounded-xl text-center touch-manipulation active:scale-95 transition-all',
                     isFuture
-                      ? 'bg-white/[0.02] text-white pointer-events-none'
+                      ? 'bg-white/[0.02] text-white/30 pointer-events-none'
                       : isSelected
                         ? 'bg-elec-yellow text-black'
                         : isToday
-                          ? 'bg-white/10 text-white border border-elec-yellow/50'
-                          : 'bg-white/5 text-white'
-                  }`}
-                >
-                  <span className="text-[10px] font-medium uppercase">
-                    {day.toLocaleDateString('en-GB', { weekday: 'short' })}
-                  </span>
-                  <span className="text-lg font-bold">{day.getDate()}</span>
-                  {hasEntries && (
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
-                        isSelected ? 'bg-black' : 'bg-elec-yellow'
-                      }`}
-                    />
+                          ? 'bg-white/[0.06] text-white border border-elec-yellow/40'
+                          : 'bg-white/[0.04] text-white'
                   )}
+                >
+                  <span className="text-[10px] font-medium uppercase tracking-[0.08em]">{day.toLocaleDateString('en-GB', { weekday: 'short' })}</span>
+                  <span className="text-[17px] font-semibold tabular-nums">{day.getDate()}</span>
+                  {hasEntries && <span className={cn('w-1.5 h-1.5 rounded-full mt-0.5', isSelected ? 'bg-black' : 'bg-elec-yellow')} />}
                 </button>
               );
             })}
           </div>
-          <button
-            onClick={() => scrollCalendar('right')}
-            className="h-11 w-8 flex items-center justify-center touch-manipulation active:scale-90 transition-transform flex-shrink-0"
-          >
-            <ChevronRight className="w-4 h-4 text-white" />
+          <button onClick={() => scrollCalendar('right')} className="h-11 w-8 flex items-center justify-center text-white/50 touch-manipulation" aria-label="Later">
+            ›
           </button>
         </div>
       </div>
 
       <PullToRefresh onRefresh={handleRefresh}>
-        <div className="flex-1 overflow-y-auto pb-24">
+        <div className="mx-auto max-w-3xl px-4 py-4">
           <AnimatePresence mode="wait">
             {showForm ? (
-              <motion.div
-                key="form"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.2 }}
-                className="px-4 pt-4 space-y-4"
-              >
-                {/* Form Header */}
+              <motion.div key="form" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.2 }} className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-base font-semibold text-white">
-                      New Entry -{' '}
-                      {selectedDate.toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'short',
-                      })}
+                  <div>
+                    <Eyebrow>New entry</Eyebrow>
+                    <h2 className="mt-1 text-[18px] font-semibold text-white">
+                      {selectedDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
                     </h2>
-                    <DraftSaveIndicator status={draftStatus} />
                   </div>
-                  <button
-                    onClick={() => {
-                      resetForm();
-                      setShowForm(false);
-                    }}
-                    className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:scale-95 transition-transform"
-                  >
-                    <X className="w-5 h-5 text-white" />
-                  </button>
+                  <SecondaryButton onClick={() => { resetForm(); setShowForm(false); }}>Cancel</SecondaryButton>
                 </div>
 
                 <AnimatePresence>
-                  {recoveredDraft && (
-                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
-                  )}
+                  {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
                 </AnimatePresence>
 
-                {/* Site Name */}
-                <ValidatedField
-                  name="siteName"
-                  label="Site Name"
-                  required
-                  validation={validation}
-                  placeholder="e.g. 14 King Street Refurb"
-                />
-
-                {/* Site Address */}
-                <LocationAutoFill
-                  value={siteAddress}
-                  onChange={setSiteAddress}
-                  label="Site Address (optional)"
-                  placeholder="Full address"
-                />
-
-                {/* Weather */}
-                <div>
-                  <label className="block text-sm font-medium text-white mb-2">Weather</label>
-                  <div className="flex gap-2 flex-wrap">
-                    {WEATHER_OPTIONS.map((opt) => {
-                      const Icon = opt.icon;
-                      const isSelected = weather === opt.value;
-                      return (
+                <FormCard eyebrow="Site">
+                  <Field label="Site name" required>
+                    <input
+                      value={validation.fields.siteName?.value ?? ''}
+                      onChange={(e) => validation.setValue('siteName', e.target.value)}
+                      onBlur={() => validation.setTouched('siteName')}
+                      className={inputClass}
+                      placeholder="e.g. 14 King Street Refurb"
+                    />
+                    {validation.fields.siteName?.touched && validation.fields.siteName?.error && (
+                      <p className="text-[11px] text-red-400 mt-1">{validation.fields.siteName.error}</p>
+                    )}
+                  </Field>
+                  <LocationAutoFill value={siteAddress} onChange={setSiteAddress} label="Site address (optional)" placeholder="Full address" />
+                  <Field label="Weather">
+                    <div className="flex gap-2 flex-wrap">
+                      {WEATHER_OPTIONS.map((opt) => (
                         <button
                           key={opt.value}
-                          onClick={() => setWeather(opt.value)}
-                          className={`h-11 px-4 rounded-xl flex items-center gap-2 text-sm font-medium touch-manipulation active:scale-95 transition-all border ${
-                            isSelected
-                              ? 'bg-elec-yellow text-black border-elec-yellow'
-                              : 'bg-white/5 text-white border-white/10'
-                          }`}
+                          onClick={() => setWeather(weather === opt.value ? '' : opt.value)}
+                          className={cn(
+                            'h-10 px-4 rounded-xl text-[13px] font-medium touch-manipulation active:scale-95 transition-all border',
+                            weather === opt.value ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                          )}
                         >
-                          <Icon className="w-4 h-4" />
                           {opt.label}
                         </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Times */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-1">Start Time</label>
-                    <Input
-                      type="time"
-                      value={startTime}
-                      onChange={(e) => setStartTime(e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-1">End Time</label>
-                    <Input
-                      type="time"
-                      value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
-                      className={`h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 ${startTime && endTime && endTime <= startTime ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
-                    />
-                  </div>
-                </div>
-                {startTime && endTime && endTime <= startTime && (
-                  <p className="text-xs text-red-400 -mt-1 flex items-center gap-1">
-                    <span className="w-1 h-1 bg-red-400 rounded-full" />
-                    End time must be after start time
-                  </p>
-                )}
-
-                {/* Personnel Count */}
-                <div>
-                  <label className="block text-sm font-medium text-white mb-1">
-                    Personnel on Site
-                  </label>
-                  <Input
-                    type="number"
-                    inputMode="numeric"
-                    value={personnelCount}
-                    onChange={(e) => setPersonnelCount(e.target.value)}
-                    placeholder="Number of people"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  />
-                </div>
-
-                {/* Work Completed */}
-                <div>
-                  <label className="block text-sm font-medium text-white mb-1">
-                    Work Completed
-                  </label>
-                  <SmartTextarea
-                    value={workCompleted}
-                    onChange={setWorkCompleted}
-                    placeholder="Describe work carried out today..."
-                    className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                  />
-                </div>
-
-                {/* Issues */}
-                <div>
-                  <label className="block text-sm font-medium text-white mb-1">
-                    Issues (optional)
-                  </label>
-                  <SmartTextarea
-                    value={issues}
-                    onChange={setIssues}
-                    placeholder="Any issues or problems encountered..."
-                    className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                  />
-                </div>
-
-                {/* Materials Used */}
-                <div>
-                  <label className="block text-sm font-medium text-white mb-1">
-                    Materials Used (optional)
-                  </label>
-                  <SmartTextarea
-                    value={materialsUsed}
-                    onChange={setMaterialsUsed}
-                    placeholder="List materials used on site..."
-                    className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                  />
-                </div>
-
-                {/* Notes */}
-                <div>
-                  <label className="block text-sm font-medium text-white mb-1">
-                    Additional Notes (optional)
-                  </label>
-                  <SmartTextarea
-                    value={notes}
-                    onChange={setNotes}
-                    placeholder="Anything else to record..."
-                    className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                  />
-                </div>
-
-                {/* Linked RAMS */}
-                {approvedRams.length > 0 && (
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-2 flex items-center gap-2">
-                      <Shield className="w-4 h-4 text-elec-yellow" />
-                      Link RAMS (Optional)
-                    </label>
-                    {selectedRamsIds.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mb-2">
-                        {selectedRamsIds.map((id) => {
-                          const doc = approvedRams.find((r) => r.id === id);
-                          return (
-                            <Badge
-                              key={id}
-                              className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs pl-2 pr-1 py-1 flex items-center gap-1"
-                            >
-                              {doc?.project_name ?? 'RAMS'}
-                              <button
-                                onClick={() =>
-                                  setSelectedRamsIds((prev) => prev.filter((x) => x !== id))
-                                }
-                                className="ml-0.5 p-0.5 rounded-full hover:bg-white/10 touch-manipulation"
-                              >
-                                <X className="h-3 w-3" />
-                              </button>
-                            </Badge>
-                          );
-                        })}
-                      </div>
-                    )}
-                    <div className="space-y-1.5 max-h-40 overflow-y-auto">
-                      {approvedRams
-                        .filter((r) => !selectedRamsIds.includes(r.id))
-                        .map((r) => (
-                          <button
-                            key={r.id}
-                            onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])}
-                            className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.03] text-left touch-manipulation active:scale-[0.99] transition-all"
-                          >
-                            <Shield className="h-4 w-4 text-cyan-400 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white truncate">
-                                {r.project_name}
-                              </p>
-                              <p className="text-xs text-white truncate">{r.location}</p>
-                            </div>
-                            <CheckCircle2 className="h-4 w-4 text-white flex-shrink-0" />
-                          </button>
-                        ))}
+                      ))}
                     </div>
-                  </div>
-                )}
+                  </Field>
+                </FormCard>
 
-                {/* Linked Permits */}
-                {activePermits.length > 0 && (
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-2 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-elec-yellow" />
-                      Link Permits (Optional)
-                    </label>
-                    {selectedPermitIds.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mb-2">
-                        {selectedPermitIds.map((id) => {
-                          const permit = activePermits.find((p) => p.id === id);
-                          return (
-                            <Badge
-                              key={id}
-                              className="bg-amber-500/15 text-amber-300 border-amber-500/20 text-xs pl-2 pr-1 py-1 flex items-center gap-1"
-                            >
-                              {permit?.title ?? 'Permit'}
-                              <button
-                                onClick={() =>
-                                  setSelectedPermitIds((prev) => prev.filter((x) => x !== id))
-                                }
-                                className="ml-0.5 p-0.5 rounded-full hover:bg-white/10 touch-manipulation"
-                              >
-                                <X className="h-3 w-3" />
-                              </button>
-                            </Badge>
-                          );
-                        })}
-                      </div>
+                <FormCard eyebrow="The day">
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="Start time">
+                      <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className={cn(inputClass, '[color-scheme:dark]')} />
+                    </Field>
+                    <Field label="End time">
+                      <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className={cn(inputClass, '[color-scheme:dark]', !timeValid && 'border-red-500/60')} />
+                    </Field>
+                  </div>
+                  {!timeValid && <p className="text-[11px] text-red-400">End time must be after start time.</p>}
+                  <Field label="Personnel on site">
+                    <input type="number" inputMode="numeric" value={personnelCount} onChange={(e) => setPersonnelCount(e.target.value)} placeholder="Number of people" className={inputClass} />
+                  </Field>
+                  <Field label="Work completed">
+                    <SmartTextarea value={workCompleted} onChange={setWorkCompleted} placeholder="Describe work carried out today…" className="min-h-[110px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                  </Field>
+                  <Field label="Issues (optional)">
+                    <SmartTextarea value={issues} onChange={setIssues} placeholder="Any issues or problems encountered…" className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                  </Field>
+                  <Field label="Materials used (optional)">
+                    <SmartTextarea value={materialsUsed} onChange={setMaterialsUsed} placeholder="List materials used on site…" className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                  </Field>
+                  <Field label="Additional notes (optional)">
+                    <SmartTextarea value={notes} onChange={setNotes} placeholder="Anything else to record…" className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                  </Field>
+                </FormCard>
+
+                {(approvedRams.length > 0 || activePermits.length > 0) && (
+                  <FormCard eyebrow="Linked documents">
+                    {approvedRams.length > 0 && (
+                      <Field label="RAMS (optional)">
+                        {selectedRamsIds.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-2">
+                            {selectedRamsIds.map((id) => {
+                              const doc = approvedRams.find((r) => r.id === id);
+                              return (
+                                <span key={id} className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white/80 bg-white/[0.05] border border-white/10">
+                                  {doc?.project_name ?? 'RAMS'}
+                                  <button onClick={() => setSelectedRamsIds((prev) => prev.filter((x) => x !== id))} className="text-white/50 hover:text-white" aria-label="Remove">×</button>
+                                </span>
+                              );
+                            })}
+                          </div>
+                        )}
+                        <ListCard>
+                          {approvedRams.filter((r) => !selectedRamsIds.includes(r.id)).map((r) => (
+                            <ListRow key={r.id} onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])} title={r.project_name} subtitle={r.location} trailing={<span className="text-elec-yellow/70 text-[13px]">+</span>} />
+                          ))}
+                        </ListCard>
+                      </Field>
                     )}
-                    <div className="space-y-1.5 max-h-40 overflow-y-auto">
-                      {activePermits
-                        .filter((p) => !selectedPermitIds.includes(p.id))
-                        .map((p) => (
-                          <button
-                            key={p.id}
-                            onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])}
-                            className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.03] text-left touch-manipulation active:scale-[0.99] transition-all"
-                          >
-                            <FileText className="h-4 w-4 text-amber-400 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white truncate">{p.title}</p>
-                              <p className="text-xs text-white truncate">
-                                {p.location} &middot;{' '}
-                                {new Date(p.end_time).toLocaleDateString('en-GB')}
-                              </p>
-                            </div>
-                            <CheckCircle2 className="h-4 w-4 text-white flex-shrink-0" />
-                          </button>
-                        ))}
-                    </div>
-                  </div>
+                    {activePermits.length > 0 && (
+                      <Field label="Permits (optional)">
+                        {selectedPermitIds.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-2">
+                            {selectedPermitIds.map((id) => {
+                              const permit = activePermits.find((p) => p.id === id);
+                              return (
+                                <span key={id} className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white/80 bg-white/[0.05] border border-white/10">
+                                  {permit?.title ?? 'Permit'}
+                                  <button onClick={() => setSelectedPermitIds((prev) => prev.filter((x) => x !== id))} className="text-white/50 hover:text-white" aria-label="Remove">×</button>
+                                </span>
+                              );
+                            })}
+                          </div>
+                        )}
+                        <ListCard>
+                          {activePermits.filter((p) => !selectedPermitIds.includes(p.id)).map((p) => (
+                            <ListRow key={p.id} onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])} title={p.title} subtitle={`${p.location} · ${new Date(p.end_time).toLocaleDateString('en-GB')}`} trailing={<span className="text-elec-yellow/70 text-[13px]">+</span>} />
+                          ))}
+                        </ListCard>
+                      </Field>
+                    )}
+                  </FormCard>
                 )}
 
-                {/* Site Photos */}
-                <SafetyPhotoCapture
-                  photos={diaryPhotos}
-                  onPhotosChange={setDiaryPhotos}
-                  maxPhotos={5}
-                  label="Site Photos"
-                />
-
-                {/* Recorder Signature */}
-                <SignaturePad
-                  label="Recorder Signature"
-                  name={recorderSigName}
-                  date={recorderSigDate}
-                  signatureDataUrl={recorderSigDataUrl}
-                  onSignatureChange={setRecorderSigDataUrl}
-                  onNameChange={setRecorderSigName}
-                  onDateChange={setRecorderSigDate}
-                />
-
-                {/* Spacer for fixed footer */}
-                <div className="pb-24" />
+                <FormCard eyebrow="Evidence & sign-off">
+                  <SafetyPhotoCapture photos={diaryPhotos} onPhotosChange={setDiaryPhotos} maxPhotos={5} label="Site photos" />
+                  <SignatureField label="Recorder signature" value={recorderSig} onChange={setRecorderSig} />
+                </FormCard>
               </motion.div>
             ) : (
-              <motion.div
-                key="list"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="px-4 pt-4"
-              >
-                <h2 className="text-sm font-semibold text-white mb-3">
-                  {selectedDate.toLocaleDateString('en-GB', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </h2>
-
-                {/* Search bar — only show when entries exist for this date */}
-                {entriesForDate.length > 0 && (
-                  <div className="relative mb-3">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                    <Input
-                      placeholder="Search entries..."
-                      className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    {searchQuery && (
-                      <button
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full touch-manipulation"
-                        onClick={() => setSearchQuery('')}
-                      >
-                        <X className="h-3.5 w-3.5 text-white" />
-                      </button>
-                    )}
+              <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="space-y-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <Eyebrow>{isSameDay(selectedDate, today) ? 'Today' : 'Selected day'}</Eyebrow>
+                    <h2 className="mt-1 text-[18px] font-semibold text-white">
+                      {selectedDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
+                    </h2>
                   </div>
+                  <PrimaryButton onClick={() => setShowForm(true)}>New entry</PrimaryButton>
+                </div>
+
+                {entriesForDate.length > 0 && (
+                  <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search entries…" className={cn(inputClass, 'rounded-full')} />
                 )}
 
                 {isLoading ? (
-                  <SafetySkeletonLoader variant="list" />
+                  <LoadingState />
                 ) : entriesForDate.length === 0 ? (
-                  <SafetyEmptyState
-                    icon={BookOpen}
-                    heading="No Entries for This Date"
-                    description="Tap the button below to log your site activity for this day."
-                    ctaLabel="New Entry"
-                    onCta={() => setShowForm(true)}
-                    tip="Keep a daily record for compliance and evidence"
+                  <EmptyState
+                    title="No entries for this day"
+                    description="Log your site activity for this day — a daily record for compliance and evidence."
+                    action="New entry"
+                    onAction={() => setShowForm(true)}
                   />
                 ) : filteredEntriesForDate.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <Search className="h-8 w-8 text-white mb-3" />
-                    <p className="text-sm font-medium text-white">No matching entries</p>
-                    <p className="text-xs text-white mt-1">Try a different search term</p>
-                    <button
-                      onClick={() => setSearchQuery('')}
-                      className="mt-3 h-9 px-4 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white touch-manipulation"
-                    >
-                      Clear search
-                    </button>
-                  </div>
+                  <EmptyState title="No matching entries" description="Try a different search term." />
                 ) : (
-                  <div className="space-y-3">
-                    {filteredEntriesForDate.map((entry: SiteDiaryEntry, idx: number) => (
-                      <SafetyRecordCard
-                        key={entry.id}
-                        id={entry.id}
-                        title={entry.site_name}
-                        subtitle={entry.work_completed?.substring(0, 60) || undefined}
-                        status="recorded"
-                        statusLabel="Recorded"
-                        icon={BookOpen}
-                        meta={[
-                          ...(entry.site_address
-                            ? [{ icon: MapPin, label: entry.site_address }]
-                            : []),
-                          ...(entry.weather ? [{ label: entry.weather }] : []),
-                          ...(entry.start_time || entry.end_time
-                            ? [
-                                {
-                                  icon: Clock,
-                                  label: `${entry.start_time ?? '?'} - ${entry.end_time ?? '?'}`,
-                                },
-                              ]
-                            : []),
-                          ...(entry.personnel_count != null
-                            ? [{ icon: Users, label: `${entry.personnel_count} on site` }]
-                            : []),
-                        ]}
-                        actions={[
-                          { label: 'Duplicate', icon: Copy, onClick: () => handleDuplicate(entry) },
-                          {
-                            label: 'Delete',
-                            icon: Trash2,
-                            onClick: () => setDeleteTarget(entry.id),
-                            variant: 'danger' as const,
-                          },
-                        ]}
-                        pdfType="site-diary"
-                        index={idx}
-                      />
-                    ))}
+                  <div className="space-y-2.5">
+                    {filteredEntriesForDate.map((entry: SiteDiaryEntry) => {
+                      const meta: string[] = [];
+                      if (entry.weather) meta.push(entry.weather);
+                      if (entry.start_time || entry.end_time) meta.push(`${entry.start_time ?? '?'}–${entry.end_time ?? '?'}`);
+                      if (entry.personnel_count != null) meta.push(`${entry.personnel_count} on site`);
+                      return (
+                        <SwipeableListItem
+                          key={entry.id}
+                          leftActions={[{ icon: Copy, label: 'Duplicate', color: 'bg-blue-500', textColor: 'text-white', onAction: () => handleDuplicate(entry) }]}
+                          rightActions={[{ icon: Trash2, label: 'Delete', color: 'bg-red-500', textColor: 'text-white', onAction: () => setDeleteTarget(entry.id) }]}
+                        >
+                          <ListCard>
+                            <ListRow
+                              accent="blue"
+                              onClick={() => { setShareRecordId(entry.id); setShareRecordTitle(entry.site_name); }}
+                              title={entry.site_name}
+                              subtitle={entry.work_completed?.substring(0, 70) || (entry.site_address ?? '')}
+                              trailing={
+                                <div className="flex flex-col items-end gap-1">
+                                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-blue-500/10 text-blue-400 border-blue-500/25">Recorded</span>
+                                  {meta.length > 0 && <span className="text-[11px] text-white/45">{meta.join(' · ')}</span>}
+                                </div>
+                              }
+                            />
+                          </ListCard>
+                        </SwipeableListItem>
+                      );
+                    })}
                   </div>
                 )}
               </motion.div>
@@ -783,48 +452,25 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
         </div>
       </PullToRefresh>
 
-      {/* Sticky submit bar - only in form mode */}
+      {/* Sticky submit (form mode) */}
       {showForm && (
-        <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t border-white/10 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] z-40">
-          <button
-            onClick={handleSubmit}
-            disabled={!canSubmit || createEntry.isPending}
-            className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-base touch-manipulation active:scale-[0.98] transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-2"
-          >
-            {createEntry.isPending ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              'Save Entry'
-            )}
-          </button>
+        <div className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 z-40" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+          <div className="mx-auto max-w-3xl">
+            <PrimaryButton fullWidth size="lg" disabled={!canSubmit || createEntry.isPending} onClick={handleSubmit}>
+              {createEntry.isPending ? 'Saving…' : 'Save entry'}
+            </PrimaryButton>
+          </div>
         </div>
-      )}
-
-      {/* FAB */}
-      {!showForm && (
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-2xl bg-elec-yellow text-black flex items-center justify-center shadow-lg shadow-black/30 touch-manipulation active:scale-90 transition-transform z-50"
-          onClick={() => setShowForm(true)}
-        >
-          <Plus className="w-6 h-6" />
-        </motion.button>
       )}
 
       <DeleteConfirmSheet
         open={!!deleteTarget}
-        onOpenChange={(open) => {
-          if (!open) setDeleteTarget(null);
-        }}
+        onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
         onConfirm={() => {
           if (deleteTarget) deleteEntry.mutate(deleteTarget);
           setDeleteTarget(null);
         }}
-        title="Delete Diary Entry?"
+        title="Delete diary entry?"
         description="This entry will be permanently removed"
         isDeleting={deleteEntry.isPending}
       />

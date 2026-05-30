@@ -1,20 +1,39 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { AlertTriangle, Plus, Save, Eye, X, Edit3, Shield } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  Eyebrow,
+  TextAction,
+  Field,
+  FormCard,
+  SheetShell,
+  ListCard,
+  ListRow,
+  PrimaryButton,
+  SecondaryButton,
+  selectTriggerClass,
+  selectContentClass,
+  inputClass,
+  type Tone,
+} from '@/components/college/primitives';
+
+import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { HazardSelect } from './common/HazardSelect';
+import { RiskSelect } from './common/RiskSelect';
+import { ReadinessGate } from './common/ReadinessGate';
 import { hazardCategories } from '@/data/hazards';
+
+// ─── Types ───
+
+type RiskBand = 'Low' | 'Medium' | 'High' | 'Very High';
 
 interface RiskFactor {
   id: string;
@@ -22,14 +41,117 @@ interface RiskFactor {
   description: string;
   likelihood: number;
   severity: number;
-  riskLevel: string;
+  riskLevel: RiskBand;
   controlMeasures: string[];
 }
 
-const RiskAssessmentBuilder = () => {
+// ─── Risk scoring (preserved 5×5 methodology) ───
+
+const calculateRiskLevel = (likelihood: number, severity: number): RiskBand => {
+  const score = likelihood * severity;
+  if (score <= 4) return 'Low';
+  if (score <= 9) return 'Medium';
+  if (score <= 16) return 'High';
+  return 'Very High';
+};
+
+// One colour dimension = risk severity band.
+const bandTone: Record<RiskBand, Tone> = {
+  Low: 'green',
+  Medium: 'amber',
+  High: 'orange',
+  'Very High': 'red',
+};
+
+const BAND_PILL: Record<RiskBand, string> = {
+  Low: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  Medium: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  High: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  'Very High': 'bg-red-500/10 text-red-400 border-red-500/25',
+};
+
+function BandPill({ band }: { band: RiskBand }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        BAND_PILL[band]
+      )}
+    >
+      {band}
+    </span>
+  );
+}
+
+// Suggested defaults per category (preserved realistic ratings).
+const DEFAULT_LIKELIHOOD: Record<string, number> = {
+  'Electrical Hazards': 3,
+  'Working at Height': 3,
+  'Asbestos & Hazardous Materials': 2,
+  'Manual Handling': 4,
+  'Fire & Explosion': 2,
+  Environmental: 3,
+  'Tools & Equipment': 3,
+};
+const DEFAULT_SEVERITY: Record<string, number> = {
+  'Electrical Hazards': 4,
+  'Working at Height': 5,
+  'Asbestos & Hazardous Materials': 5,
+  'Manual Handling': 3,
+  'Fire & Explosion': 5,
+  Environmental: 3,
+  'Tools & Equipment': 3,
+};
+
+const hazardTemplates = hazardCategories.map((cat) => ({
+  category: cat.name,
+  defaultLikelihood: DEFAULT_LIKELIHOOD[cat.name] ?? 3,
+  defaultSeverity: DEFAULT_SEVERITY[cat.name] ?? 3,
+}));
+
+const riskCategories = hazardCategories.map((cat) => cat.name);
+
+const LIKELIHOOD_OPTIONS = [
+  { v: 1, label: '1 — Very Unlikely' },
+  { v: 2, label: '2 — Unlikely' },
+  { v: 3, label: '3 — Possible' },
+  { v: 4, label: '4 — Likely' },
+  { v: 5, label: '5 — Very Likely' },
+];
+const SEVERITY_OPTIONS = [
+  { v: 1, label: '1 — Negligible' },
+  { v: 2, label: '2 — Minor' },
+  { v: 3, label: '3 — Moderate' },
+  { v: 4, label: '4 — Major' },
+  { v: 5, label: '5 — Catastrophic' },
+];
+
+const FILTER_TABS: { value: RiskBand | 'all'; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'Very High', label: 'Very High' },
+  { value: 'High', label: 'High' },
+  { value: 'Medium', label: 'Medium' },
+  { value: 'Low', label: 'Low' },
+];
+
+// Severity ordering for sort (most severe first).
+const bandRank: Record<RiskBand, number> = { 'Very High': 0, High: 1, Medium: 2, Low: 3 };
+
+// ─── Component ───
+
+const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
   const [riskFactors, setRiskFactors] = useState<RiskFactor[]>([]);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [currentRisk, setCurrentRisk] = useState<Partial<RiskFactor>>({
+  const [showAddSheet, setShowAddSheet] = useState(false);
+  const [filterBand, setFilterBand] = useState<RiskBand | 'all'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const [currentRisk, setCurrentRisk] = useState<{
+    category: string;
+    description: string;
+    likelihood: number;
+    severity: number;
+    controlMeasures: string[];
+  }>({
     category: '',
     description: '',
     likelihood: 1,
@@ -37,224 +159,253 @@ const RiskAssessmentBuilder = () => {
     controlMeasures: [],
   });
 
-  const riskCategories = hazardCategories.map((cat) => cat.name);
+  const resetDraft = () =>
+    setCurrentRisk({ category: '', description: '', likelihood: 1, severity: 1, controlMeasures: [] });
 
-  // Use realistic risk ratings from enhanced database
-  const hazardTemplates = hazardCategories.map((cat) => ({
-    category: cat.name,
-    defaultLikelihood:
-      cat.name === 'Electrical Hazards'
-        ? 3
-        : cat.name === 'Working at Height'
-          ? 3
-          : cat.name === 'Asbestos & Hazardous Materials'
-            ? 2
-            : cat.name === 'Manual Handling'
-              ? 4
-              : cat.name === 'Fire & Explosion'
-                ? 2
-                : cat.name === 'Environmental'
-                  ? 3
-                  : cat.name === 'Tools & Equipment'
-                    ? 3
-                    : 3,
-    defaultSeverity:
-      cat.name === 'Electrical Hazards'
-        ? 4
-        : cat.name === 'Working at Height'
-          ? 5
-          : cat.name === 'Asbestos & Hazardous Materials'
-            ? 5
-            : cat.name === 'Manual Handling'
-              ? 3
-              : cat.name === 'Fire & Explosion'
-                ? 5
-                : cat.name === 'Environmental'
-                  ? 3
-                  : cat.name === 'Tools & Equipment'
-                    ? 3
-                    : 3,
-  }));
-
-  const calculateRiskLevel = (likelihood: number, severity: number) => {
-    const score = likelihood * severity;
-    if (score <= 4) return { level: 'Low', color: 'bg-green-500' };
-    if (score <= 9) return { level: 'Medium', color: 'bg-yellow-500' };
-    if (score <= 16) return { level: 'High', color: 'bg-orange-500' };
-    return { level: 'Very High', color: 'bg-red-500' };
+  const closeSheet = () => {
+    setShowAddSheet(false);
+    resetDraft();
   };
 
+  // ─── Readiness (every hazard has a control before save/export) ───
+  const draftBand = calculateRiskLevel(currentRisk.likelihood, currentRisk.severity);
+  const draftReadiness = [
+    { ok: !!currentRisk.category, label: 'Hazard category selected' },
+    { ok: !!currentRisk.description.trim(), label: 'Specific hazard identified' },
+    { ok: currentRisk.controlMeasures.length > 0, label: 'At least one control measure recorded' },
+  ];
+  const draftReady = draftReadiness.every((r) => r.ok);
+
   const addRiskFactor = () => {
-    if (!currentRisk.category || !currentRisk.description) return;
-
-    const riskLevel = calculateRiskLevel(currentRisk.likelihood || 1, currentRisk.severity || 1);
-
+    if (!draftReady) return;
     const newRisk: RiskFactor = {
       id: Date.now().toString(),
       category: currentRisk.category,
-      description: currentRisk.description,
-      likelihood: currentRisk.likelihood || 1,
-      severity: currentRisk.severity || 1,
-      riskLevel: riskLevel.level,
-      controlMeasures: currentRisk.controlMeasures || [],
+      description: currentRisk.description.trim(),
+      likelihood: currentRisk.likelihood,
+      severity: currentRisk.severity,
+      riskLevel: draftBand,
+      controlMeasures: currentRisk.controlMeasures,
     };
-
     setRiskFactors((prev) => [...prev, newRisk]);
-    setCurrentRisk({
-      category: '',
-      description: '',
-      likelihood: 1,
-      severity: 1,
-      controlMeasures: [],
-    });
-    setShowAddForm(false); // Hide form after adding
+    closeSheet();
+    toast.success('Risk factor added');
   };
 
   const removeRiskFactor = (id: string) => {
-    setRiskFactors((prev) => prev.filter((risk) => risk.id !== id));
+    setRiskFactors((prev) => prev.filter((r) => r.id !== id));
   };
 
-  const getRiskStats = () => {
-    const total = riskFactors.length;
-    const high = riskFactors.filter(
-      (r) => r.riskLevel === 'High' || r.riskLevel === 'Very High'
-    ).length;
-    const medium = riskFactors.filter((r) => r.riskLevel === 'Medium').length;
-    const low = riskFactors.filter((r) => r.riskLevel === 'Low').length;
-
-    return { total, high, medium, low };
+  // ─── Stats ───
+  const stats = {
+    total: riskFactors.length,
+    high: riskFactors.filter((r) => r.riskLevel === 'High' || r.riskLevel === 'Very High').length,
+    medium: riskFactors.filter((r) => r.riskLevel === 'Medium').length,
+    low: riskFactors.filter((r) => r.riskLevel === 'Low').length,
   };
 
-  const stats = getRiskStats();
+  const bandCounts: Record<RiskBand, number> = {
+    'Very High': riskFactors.filter((r) => r.riskLevel === 'Very High').length,
+    High: riskFactors.filter((r) => r.riskLevel === 'High').length,
+    Medium: riskFactors.filter((r) => r.riskLevel === 'Medium').length,
+    Low: riskFactors.filter((r) => r.riskLevel === 'Low').length,
+  };
+
+  // ─── Derived list ───
+  const filtered = riskFactors.filter((r) => {
+    if (filterBand !== 'all' && r.riskLevel !== filterBand) return false;
+    if (
+      searchQuery &&
+      !r.description.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !r.category.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+      return false;
+    return true;
+  });
+
+  // Most severe to the top, then by score.
+  const sorted = [...filtered].sort((a, b) => {
+    if (bandRank[a.riskLevel] !== bandRank[b.riskLevel]) return bandRank[a.riskLevel] - bandRank[b.riskLevel];
+    return b.likelihood * b.severity - a.likelihood * a.severity;
+  });
+
+  // Whole-assessment readiness — every recorded hazard has at least one control.
+  const assessmentReadiness = [
+    { ok: riskFactors.length > 0, label: 'At least one hazard identified' },
+    {
+      ok: riskFactors.length > 0 && riskFactors.every((r) => r.controlMeasures.length > 0),
+      label: 'Every hazard has a control measure',
+    },
+  ];
+  const assessmentReady = assessmentReadiness.every((r) => r.ok);
+
+  const handleSave = () => {
+    if (!assessmentReady) {
+      toast.error('Resolve the readiness checklist before saving');
+      return;
+    }
+    toast.success('Risk assessment ready to save');
+  };
+
+  const handleExport = () => {
+    if (!assessmentReady) {
+      toast.error('Every hazard needs a control measure before export');
+      return;
+    }
+    toast.success('Risk assessment ready to export');
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header with Description */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Risk Assessment Builder
-          </CardTitle>
-          <p className="text-sm text-white">
-            Build comprehensive risk assessments for electrical work using the 5x5 risk matrix
-            methodology
-          </p>
-        </CardHeader>
-      </Card>
-
-      {/* Risk Statistics - Mobile Optimized */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <Card className="border-blue-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-blue-400">{stats.total}</div>
-            <div className="text-xs sm:text-sm text-white">Total Risks</div>
-          </CardContent>
-        </Card>
-        <Card className="border-red-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-red-400">{stats.high}</div>
-            <div className="text-xs sm:text-sm text-white">High Risk</div>
-          </CardContent>
-        </Card>
-        <Card className="border-yellow-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-yellow-400">{stats.medium}</div>
-            <div className="text-xs sm:text-sm text-white">Medium Risk</div>
-          </CardContent>
-        </Card>
-        <Card className="border-green-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-green-400">{stats.low}</div>
-            <div className="text-xs sm:text-sm text-white">Low Risk</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Add Risk Button */}
-      {!showAddForm && (
-        <Card className="border-elec-yellow/20 bg-elec-gray/60">
-          <CardContent className="p-6">
-            <Button
-              onClick={() => setShowAddForm(true)}
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12"
+    <SafetyModuleShell
+      onBack={onBack ?? (() => {})}
+      moduleName="Risk Assessment"
+      hero={
+        <PageHero
+          eyebrow="Risk Assessment"
+          title="Build a 5×5 risk assessment"
+          description="Identify hazards, score likelihood and severity, and record the controls that bring each risk down — CDM 2015 and BS 7671 aligned."
+          tone="amber"
+          actions={
+            <PrimaryButton
+              onClick={() => {
+                resetDraft();
+                setShowAddSheet(true);
+              }}
             >
-              <Plus className="h-5 w-5 mr-2" />
-              Add New Risk Factor
-            </Button>
-          </CardContent>
-        </Card>
+              Add risk factor
+            </PrimaryButton>
+          }
+        />
+      }
+      stats={
+        riskFactors.length > 0 ? (
+          <StatStrip
+            stats={[
+              { value: stats.total, label: 'Total', accent: true, onClick: () => setFilterBand('all') },
+              { value: stats.high, label: 'High risk', tone: 'red', onClick: () => setFilterBand('High') },
+              { value: stats.medium, label: 'Medium', tone: 'amber', onClick: () => setFilterBand('Medium') },
+              { value: stats.low, label: 'Low', tone: 'green', onClick: () => setFilterBand('Low') },
+            ]}
+          />
+        ) : undefined
+      }
+      filter={
+        riskFactors.length > 0 ? (
+          <FilterBar
+            tabs={FILTER_TABS.map((t) => ({
+              value: t.value,
+              label: t.label,
+              count: t.value === 'all' ? riskFactors.length : bandCounts[t.value],
+            }))}
+            activeTab={filterBand}
+            onTabChange={(v) => setFilterBand(v as RiskBand | 'all')}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search hazards…"
+          />
+        ) : undefined
+      }
+    >
+      {riskFactors.length === 0 ? (
+        <EmptyState
+          title="No risk factors identified yet"
+          description="Add your first hazard — pick a category for suggested likelihood and severity, then record the controls that mitigate it."
+          action="Add risk factor"
+          onAction={() => {
+            resetDraft();
+            setShowAddSheet(true);
+          }}
+        />
+      ) : filtered.length === 0 ? (
+        <EmptyState title="No hazards match your filter" description="Try a different risk band or clear your search." />
+      ) : (
+        <div className="space-y-6">
+          <ListCard>
+            {sorted.map((risk) => {
+              const score = risk.likelihood * risk.severity;
+              const missingControls = risk.controlMeasures.length === 0;
+              return (
+                <ListRow
+                  key={risk.id}
+                  accent={missingControls ? 'red' : bandTone[risk.riskLevel]}
+                  title={risk.description}
+                  subtitle={
+                    <span>
+                      {risk.category} · L{risk.likelihood} × S{risk.severity} = {score}
+                      {missingControls ? ' · No control recorded' : ` · ${risk.controlMeasures.length} control${risk.controlMeasures.length === 1 ? '' : 's'}`}
+                    </span>
+                  }
+                  trailing={
+                    <div className="flex items-center gap-2">
+                      <BandPill band={risk.riskLevel} />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeRiskFactor(risk.id);
+                        }}
+                        aria-label="Remove risk factor"
+                        className="text-[11px] font-medium text-white/45 hover:text-red-400 transition-colors touch-manipulation h-11 px-1 -mr-1"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  }
+                />
+              );
+            })}
+          </ListCard>
+
+          {/* Pre-save / pre-export readiness gate */}
+          <ReadinessGate items={assessmentReadiness} title="Ready to save?" />
+
+          <div className="flex flex-col sm:flex-row gap-2">
+            <PrimaryButton fullWidth disabled={!assessmentReady} onClick={handleSave}>
+              Save assessment
+            </PrimaryButton>
+            <SecondaryButton fullWidth disabled={!assessmentReady} onClick={handleExport}>
+              Export report
+            </SecondaryButton>
+          </div>
+        </div>
       )}
 
-      {/* Add New Risk Form - Progressive Disclosure */}
-      {showAddForm && (
-        <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <Edit3 className="h-5 w-5" />
-                Add Risk Factor
-              </CardTitle>
-              <Button
-                onClick={() => setShowAddForm(false)}
-                size="sm"
-                variant="outline"
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+      {/* ─── Add risk factor sheet ─── */}
+      <Sheet open={showAddSheet} onOpenChange={(o) => (o ? setShowAddSheet(true) : closeSheet())}>
+        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <SheetShell
+            eyebrow="New risk factor"
+            title="Identify a hazard"
+            footer={
+              <>
+                <SecondaryButton onClick={closeSheet}>Cancel</SecondaryButton>
+                <PrimaryButton fullWidth disabled={!draftReady} onClick={addRiskFactor}>
+                  Add risk factor
+                </PrimaryButton>
+              </>
+            }
+          >
+            <FormCard eyebrow="Hazard">
+              <Field
+                label="Category template"
+                hint="Pick a category for suggested likelihood and severity defaults."
               >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Form Fields - Stacked on Mobile */}
-            <div className="space-y-4">
-              {/* Hazard Template Selection */}
-              <div>
-                <Label className="text-foreground text-sm font-medium">
-                  Hazard Template (Optional)
-                </Label>
                 <Select
+                  value={currentRisk.category || undefined}
                   onValueChange={(value) => {
-                    const template = hazardTemplates.find((t) => t.category === value);
-                    if (template) {
-                      setCurrentRisk((prev) => ({
-                        ...prev,
-                        category: template.category,
-                        likelihood: template.defaultLikelihood,
-                        severity: template.defaultSeverity,
-                      }));
-                    }
+                    const t = hazardTemplates.find((h) => h.category === value);
+                    setCurrentRisk((prev) => ({
+                      ...prev,
+                      category: value,
+                      likelihood: t?.defaultLikelihood ?? prev.likelihood,
+                      severity: t?.defaultSeverity ?? prev.severity,
+                    }));
                   }}
                 >
-                  <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
-                    <SelectValue placeholder="Choose a hazard template for suggested defaults" />
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select a hazard category" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
-                    {hazardTemplates.map((template) => (
-                      <SelectItem key={template.category} value={template.category}>
-                        {template.category} (L:{template.defaultLikelihood} S:
-                        {template.defaultSeverity})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Risk Category */}
-              <div>
-                <Label htmlFor="category" className="text-foreground text-sm font-medium">
-                  Risk Category
-                </Label>
-                <Select
-                  value={currentRisk.category}
-                  onValueChange={(value) =>
-                    setCurrentRisk((prev) => ({ ...prev, category: value }))
-                  }
-                >
-                  <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
-                    <SelectValue placeholder="Select risk category" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+                  <SelectContent className={selectContentClass}>
                     {riskCategories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}
@@ -262,277 +413,157 @@ const RiskAssessmentBuilder = () => {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
 
-              {/* Hazard Selection */}
-              <div>
-                <Label className="text-foreground text-sm font-medium">Specific Hazard</Label>
+              <Field label="Specific hazard" required>
                 <HazardSelect
-                  value={currentRisk.description || ''}
-                  onValueChange={(value) =>
-                    setCurrentRisk((prev) => ({ ...prev, description: value }))
-                  }
-                  placeholder="Select or search for specific hazards..."
-                  className="mt-2"
+                  value={currentRisk.description}
+                  onValueChange={(value) => setCurrentRisk((prev) => ({ ...prev, description: value }))}
+                  placeholder="Select or search for a specific hazard…"
                   showQuickPicks={false}
                 />
-              </div>
+              </Field>
+            </FormCard>
 
-              {/* Likelihood and Severity - Side by Side on Larger Screens */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="likelihood" className="text-foreground text-sm font-medium">
-                    Likelihood (1-5)
-                  </Label>
+            <FormCard eyebrow="Risk rating">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Field label="Likelihood (1–5)">
                   <Select
-                    value={currentRisk.likelihood?.toString()}
-                    onValueChange={(value) =>
-                      setCurrentRisk((prev) => ({ ...prev, likelihood: parseInt(value) }))
-                    }
+                    value={String(currentRisk.likelihood)}
+                    onValueChange={(v) => setCurrentRisk((prev) => ({ ...prev, likelihood: Number(v) }))}
                   >
-                    <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select likelihood" />
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
-                      <SelectItem value="1">1 - Very Unlikely</SelectItem>
-                      <SelectItem value="2">2 - Unlikely</SelectItem>
-                      <SelectItem value="3">3 - Possible</SelectItem>
-                      <SelectItem value="4">4 - Likely</SelectItem>
-                      <SelectItem value="5">5 - Very Likely</SelectItem>
+                    <SelectContent className={selectContentClass}>
+                      {LIKELIHOOD_OPTIONS.map((o) => (
+                        <SelectItem key={o.v} value={String(o.v)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
-                </div>
-                <div>
-                  <Label htmlFor="severity" className="text-foreground text-sm font-medium">
-                    Severity (1-5)
-                  </Label>
+                </Field>
+                <Field label="Severity (1–5)">
                   <Select
-                    value={currentRisk.severity?.toString()}
-                    onValueChange={(value) =>
-                      setCurrentRisk((prev) => ({ ...prev, severity: parseInt(value) }))
-                    }
+                    value={String(currentRisk.severity)}
+                    onValueChange={(v) => setCurrentRisk((prev) => ({ ...prev, severity: Number(v) }))}
                   >
-                    <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select severity" />
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
-                      <SelectItem value="1">1 - Negligible</SelectItem>
-                      <SelectItem value="2">2 - Minor</SelectItem>
-                      <SelectItem value="3">3 - Moderate</SelectItem>
-                      <SelectItem value="4">4 - Major</SelectItem>
-                      <SelectItem value="5">5 - Catastrophic</SelectItem>
+                    <SelectContent className={selectContentClass}>
+                      {SEVERITY_OPTIONS.map((o) => (
+                        <SelectItem key={o.v} value={String(o.v)}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
-                </div>
+                </Field>
               </div>
 
-              {/* Risk Level Preview */}
-              {currentRisk.likelihood && currentRisk.severity && (
-                <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <span className="text-sm text-white">Risk Level:</span>
-                    <Badge
-                      className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-foreground`}
-                    >
-                      {calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).level}
-                    </Badge>
-                    <span className="text-sm text-white">
-                      (Score: {currentRisk.likelihood * currentRisk.severity}/25)
-                    </span>
-                  </div>
-                </div>
+              <div className="flex items-center justify-between gap-3 px-3 h-11 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]">
+                <span className="text-[12.5px] text-white/70">
+                  Score {currentRisk.likelihood * currentRisk.severity}/25
+                </span>
+                <BandPill band={draftBand} />
+              </div>
+            </FormCard>
+
+            <FormCard eyebrow="Control measures">
+              <Field
+                label="Add a control"
+                hint="Pick a recommended consequence to pull in suggested controls, or type your own below."
+              >
+                <RiskSelect
+                  selectedHazard={currentRisk.description}
+                  onValueChange={() => {}}
+                  onControlMeasuresChange={(measures) =>
+                    setCurrentRisk((prev) => ({
+                      ...prev,
+                      controlMeasures: Array.from(new Set([...prev.controlMeasures, ...measures])),
+                    }))
+                  }
+                  placeholder="Select a potential consequence…"
+                />
+              </Field>
+
+              <AddControlInput
+                onAdd={(text) =>
+                  setCurrentRisk((prev) => ({
+                    ...prev,
+                    controlMeasures: Array.from(new Set([...prev.controlMeasures, text])),
+                  }))
+                }
+              />
+
+              {currentRisk.controlMeasures.length > 0 ? (
+                <ListCard>
+                  {currentRisk.controlMeasures.map((c, i) => (
+                    <div key={`${c}-${i}`} className="flex items-center gap-3 px-4 py-3">
+                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0" />
+                      <span className="flex-1 min-w-0 text-[12.5px] text-white/90 leading-relaxed">{c}</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setCurrentRisk((prev) => ({
+                            ...prev,
+                            controlMeasures: prev.controlMeasures.filter((_, idx) => idx !== i),
+                          }))
+                        }
+                        aria-label="Remove control measure"
+                        className="text-[11px] font-medium text-white/45 hover:text-red-400 transition-colors touch-manipulation shrink-0"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </ListCard>
+              ) : (
+                <p className="text-[11px] text-amber-400/90">
+                  Record at least one control measure before adding this hazard.
+                </p>
               )}
-            </div>
+            </FormCard>
 
-            {/* Action Buttons */}
-            <div className="flex gap-3">
-              <Button
-                onClick={addRiskFactor}
-                className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                disabled={!currentRisk.category || !currentRisk.description}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Risk Factor
-              </Button>
-              <Button
-                onClick={() => setShowAddForm(false)}
-                variant="outline"
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-              >
-                Cancel
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Risk Factors List */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Identified Risk Factors ({riskFactors.length})
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {riskFactors.length === 0 ? (
-            <div className="text-center py-12">
-              <AlertTriangle className="h-12 w-12 text-white mx-auto mb-4" />
-              <p className="text-white mb-2">No risk factors identified yet</p>
-              <p className="text-sm text-white">
-                Add your first risk factor to begin the assessment
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {riskFactors.map((risk) => {
-                const riskLevel = calculateRiskLevel(risk.likelihood, risk.severity);
-                return (
-                  <Card
-                    key={risk.id}
-                    className="border-elec-yellow/30 bg-elec-gray/40 hover:bg-elec-gray/60 transition-colors"
-                  >
-                    <CardContent className="p-4">
-                      {/* Mobile-Optimized Layout */}
-                      <div className="space-y-3">
-                        {/* Header Row */}
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex-1 space-y-2">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <Badge
-                                variant="outline"
-                                className="border-elec-yellow/30 text-white text-xs"
-                              >
-                                {risk.category}
-                              </Badge>
-                              <Badge className={`${riskLevel.color} text-foreground text-xs`}>
-                                {risk.riskLevel}
-                              </Badge>
-                            </div>
-                            <p className="text-sm sm:text-base font-medium text-foreground leading-relaxed">
-                              {risk.description}
-                            </p>
-                          </div>
-                          <Button
-                            onClick={() => removeRiskFactor(risk.id)}
-                            size="sm"
-                            variant="outline"
-                            className="border-red-500/30 text-red-400 hover:bg-red-500/10 flex-shrink-0"
-                          >
-                            <X className="h-4 w-4 sm:mr-1" />
-                            <span className="hidden sm:inline">Remove</span>
-                          </Button>
-                        </div>
-
-                        {/* Risk Metrics */}
-                        <div className="grid grid-cols-3 gap-4 p-3 bg-elec-dark/30 rounded-lg">
-                          <div className="text-center">
-                            <div className="text-sm font-medium text-white">Likelihood</div>
-                            <div className="text-lg font-bold text-foreground">
-                              {risk.likelihood}/5
-                            </div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-sm font-medium text-white">Severity</div>
-                            <div className="text-lg font-bold text-foreground">
-                              {risk.severity}/5
-                            </div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-sm font-medium text-white">Score</div>
-                            <div className="text-lg font-bold text-elec-yellow">
-                              {risk.likelihood * risk.severity}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Action Buttons - Only show when risks exist */}
-      {riskFactors.length > 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray/60">
-          <CardContent className="p-4">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12">
-                <Save className="h-4 w-4 mr-2" />
-                Save Assessment
-              </Button>
-              <Button
-                variant="outline"
-                className="flex-1 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12"
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                Preview Report
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Safety Best Practices - Bottom Section */}
-      <Card className="border-green-500/30 bg-green-500/5">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2 text-lg">
-            <Shield className="h-5 w-5" />
-            Safety Best Practices
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
-            <div>
-              <h4 className="font-medium text-green-300 mb-3">Risk Assessment Process:</h4>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Identify all potential hazards on site
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Assess likelihood and severity objectively
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Prioritise high-risk items first
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Review assessments regularly
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-green-300 mb-3">UK Compliance:</h4>
-              <ul className="space-y-2 text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Follow CDM Regulations 2015
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Comply with BS 7671 requirements
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Document all risk assessments
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  Share with all team members
-                </li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+            <ReadinessGate items={draftReadiness} title="Ready to add?" />
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+    </SafetyModuleShell>
   );
 };
+
+// ─── Free-text control input ───
+
+function AddControlInput({ onAdd }: { onAdd: (text: string) => void }) {
+  const [value, setValue] = useState('');
+  const submit = () => {
+    const t = value.trim();
+    if (!t) return;
+    onAdd(t);
+    setValue('');
+  };
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            submit();
+          }
+        }}
+        className={inputClass}
+        placeholder="Type a control measure…"
+      />
+      <SecondaryButton onClick={submit} disabled={!value.trim()}>
+        Add
+      </SecondaryButton>
+    </div>
+  );
+}
 
 export default RiskAssessmentBuilder;

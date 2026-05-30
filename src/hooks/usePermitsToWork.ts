@@ -42,8 +42,30 @@ export interface PermitToWork {
   approved_at: string | null;
   approval_comments: string | null;
   approval_signature: string | null;
+  /** Hot-work permits flag a follow-on fire watch (schema-backed). */
+  auto_fire_watch: boolean | null;
+  fire_watch_id: string | null;
+  /** Version control — bumped on each amendment. */
+  version: number;
+  /** Controlling Risk Assessment / RAMS this permit sits on top of. */
+  linked_rams_id: string | null;
+  linked_rams_title: string | null;
+  /** 'accepted' (signed in person) | 'awaiting_receiver' (remote sign pending). */
+  acceptance_status: string;
+  receiver_signed_at: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface PermitRevision {
+  id: string;
+  permit_id: string;
+  user_id: string;
+  version: number;
+  snapshot: Json;
+  change_reason: string | null;
+  changed_by: string | null;
+  created_at: string;
 }
 
 export type CreatePermitInput = Omit<
@@ -62,9 +84,43 @@ export type CreatePermitInput = Omit<
   | 'approved_at'
   | 'approval_comments'
   | 'approval_signature'
+  | 'auto_fire_watch'
+  | 'fire_watch_id'
+  | 'version'
+  | 'linked_rams_id'
+  | 'linked_rams_title'
+  | 'acceptance_status'
+  | 'receiver_signed_at'
 > & {
   photos?: Json;
+  auto_fire_watch?: boolean;
+  fire_watch_id?: string | null;
+  linked_rams_id?: string | null;
+  linked_rams_title?: string | null;
+  acceptance_status?: string;
 };
+
+/** Fields a user may change when amending a live permit. */
+export type AmendPermitFields = Partial<
+  Pick<
+    PermitToWork,
+    | 'title'
+    | 'location'
+    | 'description'
+    | 'duration_hours'
+    | 'emergency_procedures'
+    | 'additional_notes'
+    | 'issuer_name'
+    | 'issuer_signature'
+    | 'receiver_name'
+    | 'receiver_signature'
+    | 'precautions'
+    | 'ppe_required'
+    | 'auto_fire_watch'
+    | 'linked_rams_id'
+    | 'linked_rams_title'
+  >
+> & { hazards?: Json };
 
 export function usePermits() {
   return useQuery({
@@ -276,6 +332,112 @@ export function useExtendPermit() {
       toast({
         title: 'Permit extended',
         description: `Permit extended by ${variables.additionalHours} hour(s).`,
+      });
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
+  });
+}
+
+// Fetch the version history (revisions) for a permit
+export function usePermitRevisions(permitId: string | null) {
+  return useQuery({
+    queryKey: ['permit-revisions', permitId],
+    enabled: !!permitId,
+    queryFn: async (): Promise<PermitRevision[]> => {
+      if (!permitId) return [];
+      const { data, error } = await supabase
+        .from('permit_revisions')
+        .select('*')
+        .eq('permit_id', permitId)
+        .order('version', { ascending: false });
+      if (error) throw error;
+      return data as PermitRevision[];
+    },
+  });
+}
+
+// Amend a live permit → snapshots the current version, bumps the version,
+// voids both signatures and (if approval was required) resets approval to
+// pending. The amended permit must be re-signed and re-approved before use.
+export function useAmendPermit() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      fields,
+      changeReason,
+    }: {
+      id: string;
+      fields: AmendPermitFields;
+      changeReason: string;
+    }): Promise<PermitToWork> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      // Fetch current permit to snapshot before changing it.
+      const { data: current, error: fetchError } = await supabase
+        .from('permits_to_work')
+        .select('*')
+        .eq('id', id)
+        .single();
+      if (fetchError || !current) throw new Error('Could not find permit');
+
+      // 1. Snapshot the outgoing version into immutable history.
+      const { error: snapError } = await supabase.from('permit_revisions').insert({
+        permit_id: id,
+        user_id: user.id,
+        version: current.version ?? 1,
+        snapshot: current as unknown as Json,
+        change_reason: changeReason,
+        changed_by: current.issuer_name,
+      });
+      if (snapError) throw snapError;
+
+      // 2. Apply changes → bump version, void signatures, reset approval.
+      const { data, error } = await supabase
+        .from('permits_to_work')
+        .update({
+          ...fields,
+          version: (current.version ?? 1) + 1,
+          status: 'active' as const,
+          issuer_signature: fields.issuer_signature ?? null,
+          receiver_signature: fields.receiver_signature ?? null,
+          approval_status: current.requires_approval ? ('pending' as const) : ('not_required' as const),
+          approved_by: null,
+          approved_at: null,
+          approval_comments: null,
+          approval_signature: null,
+        })
+        .eq('id', id)
+        .select('*')
+        .single();
+      if (error) throw error;
+
+      // 3. Audit trail entry.
+      await supabase.from('safety_audit_trail').insert({
+        record_type: 'permit',
+        record_id: id,
+        action: 'amended',
+        user_id: user.id,
+        old_values: { version: current.version ?? 1 },
+        new_values: { version: (current.version ?? 1) + 1, reason: changeReason },
+      });
+
+      return data as PermitToWork;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['permits-to-work'] });
+      queryClient.invalidateQueries({ queryKey: ['permit-revisions', data.id] });
+      queryClient.invalidateQueries({ queryKey: ['safety-audit-trail'] });
+      toast({
+        title: `Permit amended — version ${data.version}`,
+        description: 'Re-signed and awaiting any required approval.',
       });
     },
     onError: (error) => {

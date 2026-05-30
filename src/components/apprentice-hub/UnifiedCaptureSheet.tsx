@@ -132,6 +132,10 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   /* ─── AC selection ────────────────────────────────────────────────── */
   const [selectedACs, setSelectedACs] = useState<string[]>([]);
 
+  /* ─── Save state — pessimistic so we never claim "saved" before the
+        write confirms (apprentices capture on flaky site signal). ──────── */
+  const [isSaving, setIsSaving] = useState(false);
+
   /* ─── Refs ────────────────────────────────────────────────────────── */
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -324,6 +328,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
 
   /* ─── Save ──────────────────────────────────────────────────────── */
   const handleSave = async () => {
+    if (isSaving) return;
     if (!title.trim()) {
       haptic.warning();
       toast({
@@ -333,8 +338,6 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
       });
       return;
     }
-
-    haptic.success();
 
     const snap = {
       title,
@@ -357,10 +360,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           ? 'Logged as training time'
           : 'Added to portfolio';
 
-    toast({ title: 'Evidence saved', description: toastMsg });
-    resetForm();
-    onComplete();
-
+    setIsSaving(true);
     try {
       const evidenceFiles = snap.files.length ? snap.files : [];
 
@@ -399,14 +399,24 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           notes: snap.description,
         });
       }
+
+      // Only now is it actually saved.
+      haptic.success();
+      toast({ title: 'Evidence saved', description: toastMsg });
+      resetForm();
+      onComplete();
     } catch (error) {
       console.error('Save error:', error);
       haptic.error();
+      // Keep the sheet open with the form intact so nothing is lost and the
+      // apprentice can retry — never tell them it saved when it didn't.
       toast({
-        title: 'Error saving evidence',
-        description: 'Something went wrong — please try again.',
+        title: 'Could not save — nothing lost',
+        description: "We couldn't save that just now. Check your signal and tap Save again.",
         variant: 'destructive',
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -546,6 +556,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                           )}
                           <button
                             onClick={() => removeFile(f.id)}
+                            aria-label={`Remove ${f.file.name}`}
                             className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 text-white touch-manipulation"
                           >
                             <X className="h-3 w-3" />

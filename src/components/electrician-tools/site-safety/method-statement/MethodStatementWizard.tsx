@@ -1,16 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, ArrowRight, ClipboardCheck, Download } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { MethodStatementData, WizardStep } from '@/types/method-statement';
+import { PageHero, StatStrip } from '@/components/college/primitives';
+import { SafetyModuleShell } from '../common/SafetyModuleShell';
 import TemplateSelectionStep from './steps/TemplateSelectionStep';
 import DetailsStep from './steps/DetailsStep';
 import StepsManagementStep from './steps/StepsManagementStep';
 import ReviewStep from './steps/ReviewStep';
 import HazardIntegrationStep from './components/HazardIntegrationStep';
 
-const MethodStatementWizard = () => {
+interface MethodStatementWizardProps {
+  onBack?: () => void;
+}
+
+const STEPS: { id: WizardStep; title: string; description: string }[] = [
+  { id: 'template', title: 'Template', description: 'Choose a template' },
+  { id: 'details', title: 'Job Details', description: 'Basic information' },
+  { id: 'steps', title: 'Method Steps', description: 'Build your process' },
+  { id: 'hazards', title: 'Hazards', description: 'Link hazards from database' },
+  { id: 'review', title: 'Review', description: 'Generate document' },
+];
+
+const MethodStatementWizard = ({ onBack }: MethodStatementWizardProps) => {
   const [currentStep, setCurrentStep] = useState<WizardStep>('template');
   const [linkedHazards, setLinkedHazards] = useState<string[]>([]);
   const [methodStatementData, setMethodStatementData] = useState<MethodStatementData>({
@@ -27,44 +38,24 @@ const MethodStatementWizard = () => {
     steps: [],
   });
 
-  const steps = [
-    { id: 'template', title: 'Template', description: 'Choose a template' },
-    { id: 'details', title: 'Job Details', description: 'Basic information' },
-    { id: 'steps', title: 'Method Steps', description: 'Build your process' },
-    { id: 'hazards', title: 'Hazards', description: 'Link hazards from database' },
-    { id: 'review', title: 'Review', description: 'Generate document' },
-  ];
+  const currentStepIndex = STEPS.findIndex((step) => step.id === currentStep);
 
-  const currentStepIndex = steps.findIndex((step) => step.id === currentStep);
-  const progress = ((currentStepIndex + 1) / steps.length) * 100;
-
-  // Scroll to top when step changes - improved implementation
+  // Scroll to top when the step changes.
   useEffect(() => {
-    // Scroll to top immediately
-    window.scrollTo(0, 0);
-
-    // Also smooth scroll as fallback
-    setTimeout(() => {
-      const container = document.querySelector('.method-statement-container') || window;
-      if (container instanceof Window) {
-        container.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        container.scrollTop = 0;
-      }
-    }, 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentStep]);
 
   const handleNext = () => {
     const nextIndex = currentStepIndex + 1;
-    if (nextIndex < steps.length) {
-      setCurrentStep(steps[nextIndex].id as WizardStep);
+    if (nextIndex < STEPS.length) {
+      setCurrentStep(STEPS[nextIndex].id);
     }
   };
 
   const handlePrevious = () => {
     const prevIndex = currentStepIndex - 1;
     if (prevIndex >= 0) {
-      setCurrentStep(steps[prevIndex].id as WizardStep);
+      setCurrentStep(STEPS[prevIndex].id);
     }
   };
 
@@ -152,42 +143,59 @@ const MethodStatementWizard = () => {
     }
   };
 
-  const isFirstStep = currentStepIndex === 0;
-  const isLastStep = currentStepIndex === steps.length - 1;
+  const current = STEPS[currentStepIndex];
+  const stepCount = STEPS.length;
 
   return (
-    <div className="space-y-4 md:space-y-6 method-statement-container">
-      {/* Step Content */}
-      <div className="min-h-[500px]">{renderStepContent()}</div>
+    <SafetyModuleShell
+      onBack={onBack ?? (() => {})}
+      moduleName="Method Statement"
+      hero={
+        <PageHero
+          eyebrow="Method Statement"
+          title="Build a safe system of work"
+          description="Start from a proven template or from scratch, set out the job, sequence the method steps, link the hazards and controls, then generate a BS 7671-compliant document."
+          tone="amber"
+        />
+      }
+      stats={
+        <StatStrip
+          stats={STEPS.map((step, i) => ({
+            value: `0${i + 1}`,
+            label: step.title,
+            sub: step.description,
+            accent: step.id === currentStep,
+          }))}
+          columns={5}
+        />
+      }
+    >
+      {/* Step progress bar */}
+      <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-elec-yellow"
+          initial={{ width: 0 }}
+          animate={{ width: `${((currentStepIndex + 1) / stepCount) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+      <div className="flex items-baseline justify-between">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Step {currentStepIndex + 1} of {stepCount}
+        </span>
+        <span className="text-[11.5px] text-white/55">{current?.description}</span>
+      </div>
 
-      {/* Navigation */}
-      {!isFirstStep && currentStep !== 'template' && (
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <Button onClick={handlePrevious} variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Previous
-          </Button>
-
-          {!isLastStep ? (
-            <Button onClick={handleNext} className="flex items-center gap-2">
-              Next
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          ) : (
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Button variant="outline" className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                Export PDF
-              </Button>
-              <Button className="flex items-center gap-2">
-                <ClipboardCheck className="h-4 w-4" />
-                Generate Document
-              </Button>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+      {/* Step content */}
+      <motion.div
+        key={currentStep}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25 }}
+      >
+        {renderStepContent()}
+      </motion.div>
+    </SafetyModuleShell>
   );
 };
 

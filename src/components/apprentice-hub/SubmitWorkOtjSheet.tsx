@@ -91,8 +91,33 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   const [photos, setPhotos] = useState<File[]>([]);
   const [saving, setSaving] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
+  // null = unknown/loading. Drives whether we frame this as "send to tutor"
+  // (college-linked) or "get your supervisor to attest" (no college yet).
+  const [hasCollege, setHasCollege] = useState<boolean | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  // Resolve college link when the sheet opens so the copy + CTA match reality.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData.user?.id;
+      if (!uid) return;
+      const { data } = await supabase
+        .from('college_students')
+        .select('college_id')
+        .eq('user_id', uid)
+        .maybeSingle();
+      if (!cancelled) setHasCollege(!!(data?.college_id));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
+
+  const noCollege = hasCollege === false;
 
   // Single open-time effect: when the sheet opens, either hydrate from the
   // AI-drafted prefill or start from an empty form. Apprentice keeps full
@@ -214,8 +239,10 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
 
       setSavedTick(true);
       toast({
-        title: 'Sent to your tutor',
-        description: `${minutes}m · ${form.title.trim()} — awaiting verification.`,
+        title: noCollege ? 'Activity saved' : 'Sent to your tutor',
+        description: noCollege
+          ? `${minutes}m · ${form.title.trim()} — send your supervisor an attestation link to confirm it.`
+          : `${minutes}m · ${form.title.trim()} — awaiting verification.`,
       });
       onSubmitted?.((inserted as { id?: string } | null)?.id ?? null);
       setTimeout(() => {
@@ -243,14 +270,23 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         <div className="flex h-full flex-col">
           <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06]">
             <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
-              Submit to tutor
+              {noCollege ? 'Log activity' : 'Submit to tutor'}
             </div>
             <h2 className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
               Off-the-job work activity
             </h2>
             <p className="mt-1 text-[12.5px] text-white/85 leading-snug">
-              Counts toward your ESFA-verified hours once your tutor signs it off. Be specific about
-              what you did and what you learned — the AI checks the evidence too.
+              {noCollege ? (
+                <>
+                  No college linked yet — log it here, then get your supervisor to confirm the
+                  hours. After saving, tap the entry to send an attestation link.
+                </>
+              ) : (
+                <>
+                  Counts toward your verified hours once your tutor signs it off. Be specific about
+                  what you did and what you learned — the AI checks the evidence too.
+                </>
+              )}
             </p>
           </header>
 
@@ -421,7 +457,13 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                   : 'bg-white/[0.05] text-white/40'
               )}
             >
-              {savedTick ? 'Sent ✓' : saving ? 'Sending…' : 'Send to tutor'}
+              {savedTick
+                ? 'Saved ✓'
+                : saving
+                  ? 'Saving…'
+                  : noCollege
+                    ? 'Save activity'
+                    : 'Send to tutor'}
             </button>
           </footer>
         </div>

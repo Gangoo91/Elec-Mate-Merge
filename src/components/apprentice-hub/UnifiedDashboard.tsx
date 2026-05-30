@@ -99,7 +99,14 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const {
     getByAC: getSignoff,
     records: signoffRecords,
+    totals: signoffTotals,
   } = useACSignoffs(courseCode);
+
+  // Assessor-confirmed progress — the honest EPA-gateway number, distinct from
+  // "I attached a file". signed_off + iqa_confirmed are the ACs an assessor
+  // has actually passed.
+  const signedOffCount = signoffTotals.signedOff + signoffTotals.iqaConfirmed;
+  const referredCount = signoffTotals.referred;
 
   const [showCourseSelector, setShowCourseSelector] = useState(false);
   const [selectedAC, setSelectedAC] = useState<{
@@ -159,7 +166,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const { focus, recentActivityCount } = usePortfolioFocus(
     tree,
     portfolioEntries,
-    acEvidenceMap
+    acEvidenceMap,
+    signoffRecords
   );
 
   /* ─── Greeting / identity ─────────────────────────────────────────── */
@@ -212,10 +220,16 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const KpiStrip = (
     <div className="grid grid-cols-2 lg:grid-cols-2 gap-2">
       <KpiCell
-        label="ACs evidenced"
-        value={tree.totalACs > 0 ? `${evidencedCount}/${tree.totalACs}` : '—'}
-        sub={tree.totalACs > 0 ? `${overallPercent}% of qualification` : 'No course data'}
-        highlight={overallPercent >= 70}
+        label="ACs signed off"
+        value={tree.totalACs > 0 ? `${signedOffCount}/${tree.totalACs}` : '—'}
+        sub={
+          tree.totalACs > 0
+            ? referredCount > 0
+              ? `${referredCount} sent back · ${evidencedCount} evidenced`
+              : `${evidencedCount} evidenced · ${overallPercent}% of course`
+            : 'No course data'
+        }
+        highlight={tree.totalACs > 0 && signedOffCount >= tree.totalACs * 0.7}
         onClick={() => onNavigate('work')}
       />
       <KpiCell

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
 
@@ -472,7 +473,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
   // Set up real-time subscription
   useEffect(() => {
     const channel = supabase
-      .channel('talent-pool-changes')
+      .channel(realtimeChannelName('talent-pool-changes'))
       .on(
         'postgres_changes',
         {

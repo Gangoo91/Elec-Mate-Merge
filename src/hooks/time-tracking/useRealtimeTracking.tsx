@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/components/ui/use-toast';
 
 export interface TrackingSession {
@@ -69,7 +70,7 @@ export const useRealtimeTracking = () => {
 
     // Set up realtime subscription
     const channel = supabase
-      .channel('time-tracking-sessions')
+      .channel(realtimeChannelName('time-tracking-sessions'))
       .on(
         'postgres_changes',
         {

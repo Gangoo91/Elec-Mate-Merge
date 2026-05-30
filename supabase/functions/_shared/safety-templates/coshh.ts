@@ -16,7 +16,7 @@ const RISK_MAP: Record<string, StatusColour> = {
 
 // deno-lint-ignore no-explicit-any
 export function coshhTemplate(record: any, branding: Branding): string {
-  const riskRating = (record.risk_rating || '').toLowerCase();
+  const riskRating = String(record.risk_rating || '').toLowerCase();
   const statusColour: StatusColour = RISK_MAP[riskRating] || 'warning';
   const ghsHazards: string[] = record.ghs_hazards || [];
   const exposureRoutes: string[] = record.exposure_routes || [];
@@ -33,7 +33,7 @@ export function coshhTemplate(record: any, branding: Branding): string {
   // Risk overview
   body += sectionHeader('Assessment Overview');
   body += statBoxes([
-    { label: 'Risk Rating', value: (record.risk_rating || 'N/A').toUpperCase(), colour: statusColour },
+    { label: 'Risk Rating', value: String(record.risk_rating || 'N/A').toUpperCase(), colour: statusColour },
     { label: 'GHS Hazards', value: ghsHazards.length, colour: ghsHazards.length > 0 ? 'danger' : 'grey' },
     { label: 'Controls', value: controlMeasures.length, colour: controlMeasures.length > 0 ? 'success' : 'warning' },
     { label: 'PPE Items', value: ppeRequired.length, colour: ppeRequired.length > 0 ? 'info' : 'grey' },
