@@ -19,6 +19,9 @@ export interface MaterialsListItem {
   price_updated_at?: string;
   supplier?: string;
   product_url?: string;
+  /** Optional link to a `personal_inventory` stock item, so the price-book item
+   *  can show live stock and decrement on invoice. Set when the user links them. */
+  personal_inventory_id?: string;
   matched: boolean;
   added_at: string;
   image_url?: string;

@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Invoice } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
+import { useStockMovements } from '@/hooks/useStockMovements';
 import {
   captureApiError,
   captureEdgeFunctionError,
@@ -16,6 +18,7 @@ export const useInvoiceStorage = () => {
   const [invoices, setInvoices] = useState<Quote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const { applyInvoiceDecrement, reverseInvoiceDecrement } = useStockMovements();
 
   const parseNumber = (value: unknown): number => {
     if (typeof value === 'number') {
@@ -141,7 +144,7 @@ export const useInvoiceStorage = () => {
       if (!user) return null;
 
       const channel = supabase
-        .channel('invoice-realtime')
+        .channel(realtimeChannelName('invoice-realtime'))
         .on(
           'postgres_changes',
           {
@@ -386,6 +389,10 @@ export const useInvoiceStorage = () => {
         updatedQuote = updated;
       }
 
+      // Decrement stock for any stock-linked line items (idempotent per invoice,
+      // best-effort — never blocks the save). ELE-1014.
+      await applyInvoiceDecrement(updatedQuote?.id, mergedItems as any);
+
       // 2. Force regenerate PDF with LATEST data on every save (silent background process)
       try {
         const { data: companyData } = await supabase
@@ -606,6 +613,9 @@ export const useInvoiceStorage = () => {
         .eq('user_id', user.id);
 
       if (error) throw error;
+
+      // Restore any stock this invoice had decremented (idempotent). ELE-1014.
+      await reverseInvoiceDecrement(invoiceId);
 
       toast({
         title: 'Invoice deleted',

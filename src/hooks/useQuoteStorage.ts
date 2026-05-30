@@ -3,10 +3,12 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { toast } from '@/hooks/use-toast';
 import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
+import { useStockMovements } from '@/hooks/useStockMovements';
 
 // Database storage for quotes (no longer using localStorage).
 //
@@ -21,6 +23,7 @@ import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 // without a roundtrip.
 export const useQuoteStorage = () => {
   const queryClient = useQueryClient();
+  const { applyInvoiceDecrement } = useStockMovements();
 
   // Auth user id — fetched once. We only need this to scope the cache key
   // and run the queryFn; Supabase RLS handles the actual filtering anyway.
@@ -274,7 +277,7 @@ export const useQuoteStorage = () => {
       if (!user) return null;
 
       const channel = supabase
-        .channel('quote-changes')
+        .channel(realtimeChannelName('quote-changes'))
         .on(
           'postgres_changes',
           {
@@ -554,6 +557,10 @@ export const useQuoteStorage = () => {
     acceptanceStatus?: Quote['acceptance_status']
   ): Promise<boolean> => {
     try {
+      // Set when the work_done branch raises an invoice, so we decrement stock
+      // after the DB write succeeds. ELE-1014.
+      let raiseToDecrement: { id: string; items: any[] } | null = null;
+
       const updateData: any = {
         status,
         updated_at: new Date().toISOString(),
@@ -579,6 +586,10 @@ export const useQuoteStorage = () => {
             updateData.invoice_date = invoiceDate.toISOString();
             updateData.invoice_due_date = invoiceDueDate.toISOString();
             updateData.invoice_status = 'draft';
+
+            // This path raises an invoice without going through useInvoiceStorage,
+            // so decrement stock here too (idempotent). ELE-1014.
+            raiseToDecrement = { id: quoteId, items: quote.items };
           }
         }
       }
@@ -597,6 +608,11 @@ export const useQuoteStorage = () => {
 
       if (error) {
         return false;
+      }
+
+      // Stock decrement for the work_done auto-invoice path (idempotent, best-effort).
+      if (raiseToDecrement) {
+        await applyInvoiceDecrement(raiseToDecrement.id, raiseToDecrement.items as any);
       }
 
       // Update local state

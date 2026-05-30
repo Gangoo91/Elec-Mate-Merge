@@ -22,6 +22,7 @@ import {
   Upload,
   ClipboardPaste,
   Loader2,
+  Boxes,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -37,6 +38,7 @@ import {
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { usePriceBookSettings } from '@/hooks/usePriceBookSettings';
 import { usePriceBookBundles, BundleLineItem } from '@/hooks/usePriceBookBundles';
+import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -87,8 +89,20 @@ export default function PriceBook() {
   const { lists, updateItemDetails, addItem, createList } = useMaterialsLists();
   const { settings, updateMarkup, calcSellPrice } = usePriceBookSettings();
   const { bundles, createBundle, deleteBundle, bundleTotal } = usePriceBookBundles();
+  const { items: stockItems } = useInventoryStorage();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Live stock lookup for price-book items linked to a `personal_inventory` row.
+  const stockById = useMemo(
+    () => new Map(stockItems.map((s) => [s.id, s])),
+    [stockItems],
+  );
+  const stockForItem = useCallback(
+    (item: MaterialsListItem) =>
+      item.personal_inventory_id ? stockById.get(item.personal_inventory_id) ?? null : null,
+    [stockById],
+  );
 
   const [tab, setTab] = useState<Tab>('Items');
   const [search, setSearch] = useState('');
@@ -103,6 +117,7 @@ export default function PriceBook() {
   const [editUnit, setEditUnit] = useState('');
   const [editSupplier, setEditSupplier] = useState('');
   const [editMode, setEditMode] = useState<'cost' | 'sell'>('cost');
+  const [editStockId, setEditStockId] = useState<string | undefined>(undefined);
 
   // Add item sheet
   const [addSheetOpen, setAddSheetOpen] = useState(false);
@@ -166,6 +181,7 @@ export default function PriceBook() {
     setEditName(item.name);
     setEditUnit(item.unit || 'each');
     setEditSupplier(item.supplier || '');
+    setEditStockId(item.personal_inventory_id);
     if ((item.cost_price ?? 0) > 0) {
       setEditMode('cost');
       setEditCostPrice(item.cost_price!.toFixed(2));
@@ -197,7 +213,7 @@ export default function PriceBook() {
 
   const handleSaveEdit = async () => {
     if (!editSheet) return;
-    const updates: Partial<MaterialsListItem> = { name: editName.trim() || editSheet.item.name, unit: editUnit.trim() || 'each', supplier: editSupplier.trim() || undefined };
+    const updates: Partial<MaterialsListItem> = { name: editName.trim() || editSheet.item.name, unit: editUnit.trim() || 'each', supplier: editSupplier.trim() || undefined, personal_inventory_id: editStockId };
     if (editMode === 'cost') {
       const cost = parseFloat(editCostPrice);
       if (isNaN(cost) || cost <= 0) { toast({ title: 'Invalid cost price', variant: 'destructive' }); return; }
@@ -594,6 +610,16 @@ export default function PriceBook() {
                                     <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">{p.item.supplier}</span>
                                   )}
                                   <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">{p.listName}</span>
+                                  {(() => {
+                                    const stock = stockForItem(p.item);
+                                    if (!stock) return null;
+                                    const low = stock.low_stock_threshold != null && stock.quantity <= stock.low_stock_threshold;
+                                    return (
+                                      <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-medium border flex items-center gap-0.5', low ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')}>
+                                        <Boxes className="h-2.5 w-2.5" />{stock.quantity} in stock
+                                      </span>
+                                    );
+                                  })()}
                                   {stale && (
                                     <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-0.5">
                                       <Clock className="h-2.5 w-2.5" />{days}d old
@@ -733,6 +759,27 @@ export default function PriceBook() {
             <div className="grid grid-cols-2 gap-3">
               <div><label className="text-xs text-white mb-1 block">Unit</label><Input value={editUnit} onChange={(e) => setEditUnit(e.target.value)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation" /></div>
               <div><label className="text-xs text-white mb-1 block">Supplier</label><Input value={editSupplier} onChange={(e) => setEditSupplier(e.target.value)} placeholder="Optional" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
+            </div>
+            {/* Stock link — connect this price-book item to a stock item so quotes
+                show availability and stock decrements when the invoice is raised. */}
+            <div>
+              <label className="text-xs text-white mb-1 flex items-center gap-1.5"><Boxes className="h-3.5 w-3.5 text-blue-400" />Stock item</label>
+              {stockItems.length === 0 ? (
+                <p className="text-[11px] text-white/70">No stock items yet — add some in Inventory to link them here.</p>
+              ) : (
+                <Select value={editStockId ?? '__none__'} onValueChange={(v) => setEditStockId(v === '__none__' ? undefined : v)}>
+                  <SelectTrigger className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation"><SelectValue placeholder="Not linked" /></SelectTrigger>
+                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectItem value="__none__">Not linked</SelectItem>
+                    {[...stockItems].sort((a, b) => a.name.localeCompare(b.name)).map((s) => (
+                      <SelectItem key={s.id} value={s.id}>{s.name} · {s.quantity} {s.unit} in stock</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+              {editStockId && stockById.get(editStockId) && (
+                <p className="text-[11px] text-white/70 mt-1">Quotes will show availability; stock drops when you raise the invoice.</p>
+              )}
             </div>
             <Button onClick={handleSaveEdit} className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">Save Changes</Button>
           </div>

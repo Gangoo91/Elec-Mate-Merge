@@ -12,6 +12,10 @@ export interface QuoteItem {
   hourlyRate?: number;
   materialCode?: string;
   equipmentCode?: string;
+  /** Link to a `personal_inventory` stock item. Stamped when the line is added
+   *  from a stock-linked picker; used to decrement stock when the invoice is
+   *  raised. Free-typed lines stay unlinked and never move stock. (ELE-1014) */
+  inventoryItemId?: string;
   notes?: string;
   // ELE-888 — per-item adjustment. Signed percent: +10 = 10% markup, -20 = 20% off.
   itemAdjustmentPercent?: number;

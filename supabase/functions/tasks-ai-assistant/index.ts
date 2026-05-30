@@ -505,6 +505,7 @@ const TOOLS: any[] = [
                 description: { type: 'string' },
                 quantity: { type: 'number' },
                 unitPrice: { type: 'number' },
+                inventory_item_id: { type: 'string', description: 'Optional stock item id (the stock_item_id from list_price_book, or an id from check_stock). On an invoice line this makes stock decrement when the invoice is created. Only set it if you actually looked it up — never guess.' },
               },
               required: ['description', 'quantity', 'unitPrice'],
             },
@@ -548,6 +549,7 @@ const TOOLS: any[] = [
                 description: { type: 'string' },
                 quantity: { type: 'number' },
                 unitPrice: { type: 'number' },
+                inventory_item_id: { type: 'string', description: 'Optional stock item id (the stock_item_id from list_price_book, or an id from check_stock). On an invoice line this makes stock decrement when the invoice is created. Only set it if you actually looked it up — never guess.' },
               },
               required: ['description', 'quantity', 'unitPrice'],
             },
@@ -866,6 +868,126 @@ const TOOLS: any[] = [
       },
     },
   },
+  // ─── Stock Inventory + Price Book (ELE-1013/1017) ───────────────────
+  {
+    type: 'function',
+    function: {
+      name: 'check_stock',
+      description:
+        "Read the electrician's stock inventory. Use to answer 'what do I have in stock', 'how many X left', or to check availability for a job. Returns each item's id, quantity, unit, location and low-stock flag.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Optional name/supplier search, e.g. "downlight" or "2.5mm cable". Omit to list everything.' },
+          lowOnly: { type: 'boolean', description: 'Only return items at or below their low-stock threshold.' },
+          limit: { type: 'number', description: 'Max items (default 25).' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'upsert_stock_item',
+      description:
+        'Add a new stock item, or amend an existing one. To AMEND pass its id (from check_stock) plus only the fields to change. To ADD omit id and pass at least name. Confirm with the user before amending an existing item.',
+      parameters: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'Stock item id — present = amend, absent = add new.' },
+          name: { type: 'string' },
+          quantity: { type: 'number', description: 'Absolute quantity on hand. For relative "used 5"/"got 10", use adjust_stock instead.' },
+          unit: { type: 'string', description: 'e.g. each, metres, boxes, rolls.' },
+          location: { type: 'string', enum: ['van', 'garage', 'site', 'wholesaler', 'other'] },
+          unit_cost: { type: 'number', description: 'Cost per unit in £.' },
+          supplier: { type: 'string' },
+          low_stock_threshold: { type: 'number' },
+          category: { type: 'string', enum: ['cable', 'accessories', 'fixings', 'consumer_units', 'mcbs_rcds', 'tools', 'ppe', 'other'] },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'adjust_stock',
+      description:
+        "Change a stock item's quantity by a relative amount — e.g. 'used 5 cable reels' → delta -5, 'took a delivery of 10' → delta +10. Identify the item by id (preferred) or name.",
+      parameters: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'Stock item id (preferred).' },
+          name: { type: 'string', description: 'Item name if id unknown; must match exactly one item.' },
+          delta: { type: 'number', description: 'Signed change. Negative = used/removed, positive = restocked.' },
+        },
+        required: ['delta'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'delete_stock_item',
+      description: 'Permanently delete a stock item by id. Always confirm with the user first.',
+      parameters: {
+        type: 'object',
+        properties: { id: { type: 'string' } },
+        required: ['id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_price_book',
+      description:
+        "Read the electrician's price book (saved materials with sell/cost prices). Use for 'what's my price for X'. Returns each item's name, sell price, cost, markup, unit, supplier, whether it's stock-linked, plus item_id and list_id.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Optional item-name search. Omit to list items.' },
+          limit: { type: 'number', description: 'Max items (default 30).' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'upsert_price_book_item',
+      description:
+        'Add a new price-book item, or amend one. To AMEND pass item_id + list_id (from list_price_book) and only changed fields. To ADD omit them and pass name plus a price. Give either sell_price, or cost_price (with optional markup_percent) and the sell price is computed. Confirm before amending.',
+      parameters: {
+        type: 'object',
+        properties: {
+          item_id: { type: 'string', description: 'Present (with list_id) = amend.' },
+          list_id: { type: 'string', description: 'Which list the item is in / should go to. Defaults to the "Price Book" list.' },
+          name: { type: 'string' },
+          sell_price: { type: 'number', description: 'Final price charged on quotes (£).' },
+          cost_price: { type: 'number', description: 'Trade/cost price (£).' },
+          markup_percent: { type: 'number', description: 'Markup % applied to cost when sell_price is not given.' },
+          unit: { type: 'string' },
+          supplier: { type: 'string' },
+          stock_item_id: { type: 'string', description: 'Optionally link to a stock item id (from check_stock) so quotes show availability and stock decrements on invoice. Pass "" to unlink.' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'delete_price_book_item',
+      description: 'Delete a price-book item by item_id + list_id (from list_price_book). Always confirm first.',
+      parameters: {
+        type: 'object',
+        properties: {
+          item_id: { type: 'string' },
+          list_id: { type: 'string' },
+        },
+        required: ['item_id', 'list_id'],
+      },
+    },
+  },
 ];
 
 interface Citation {
@@ -1045,6 +1167,13 @@ ${snapshotBlock}`;
       'summarise_customer',
       'plan_my_day',
       'find_similar_jobs',
+      'check_stock',
+      'upsert_stock_item',
+      'adjust_stock',
+      'delete_stock_item',
+      'list_price_book',
+      'upsert_price_book_item',
+      'delete_price_book_item',
     ]);
 
     // ─── Streaming pipeline ───────────────────────────────────────────
@@ -1083,7 +1212,7 @@ ${snapshotBlock}`;
           const collectedActions: any[] = [];
           let collectedClarification: any = null;
 
-          for (let round = 0; round < 8; round++) {
+          for (let round = 0; round < 5; round++) {
             const result = await callOpenAIStreaming({
               conversation,
               tools: TOOLS,
@@ -1209,6 +1338,20 @@ ${snapshotBlock}`;
                   args.jobType || '',
                   args.limit || 3
                 );
+              } else if (call.name === 'check_stock') {
+                toolOutput = await checkStock(supabase, userId, args);
+              } else if (call.name === 'upsert_stock_item') {
+                toolOutput = await upsertStockItem(supabase, userId, args);
+              } else if (call.name === 'adjust_stock') {
+                toolOutput = await adjustStock(supabase, userId, args);
+              } else if (call.name === 'delete_stock_item') {
+                toolOutput = await deleteStockItem(supabase, userId, args);
+              } else if (call.name === 'list_price_book') {
+                toolOutput = await listPriceBook(supabase, userId, args);
+              } else if (call.name === 'upsert_price_book_item') {
+                toolOutput = await upsertPriceBookItem(supabase, userId, args);
+              } else if (call.name === 'delete_price_book_item') {
+                toolOutput = await deletePriceBookItem(supabase, userId, args);
               }
               conversation.push({
                 role: 'tool',
@@ -1308,11 +1451,13 @@ async function callOpenAIStreaming({
   // around it). Migrating to Responses API is tracked as a separate piece
   // of work — it would unlock reasoning_effort: 'high'.
   const body = {
-    model: 'gpt-5.5',
+    model: 'gpt-5.4-mini-2026-03-17',
     messages: conversation,
     tools,
     stream: true,
-    max_completion_tokens: 24000,
+    // Trimmed from 24000 — chat replies don't need a huge generation budget,
+    // and the smaller cap cuts per-round latency that was timing out quotes. (ELE-1014)
+    max_completion_tokens: 8000,
   };
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -1558,11 +1703,11 @@ async function runToolLoopBuffered({
   authHeader: string | null;
 }): Promise<{ content: string; toolCalls: any[] }> {
   let aiResp = await callOpenAI(
-    { messages: conversation, tools: TOOLS, model: 'gpt-5.5' },
+    { messages: conversation, tools: TOOLS, model: 'gpt-5.4-mini-2026-03-17' },
     openAiKey,
     60000
   );
-  for (let round = 0; round < 8; round++) {
+  for (let round = 0; round < 5; round++) {
     if (!aiResp.toolCalls?.length) break;
     const lookupCalls = aiResp.toolCalls.filter((c: any) =>
       LOOKUP_TOOLS.has(c.function.name)
@@ -1644,6 +1789,20 @@ async function runToolLoopBuffered({
           args.jobType || '',
           args.limit || 3
         );
+      } else if (toolName === 'check_stock') {
+        toolOutput = await checkStock(supabase, userId, args);
+      } else if (toolName === 'upsert_stock_item') {
+        toolOutput = await upsertStockItem(supabase, userId, args);
+      } else if (toolName === 'adjust_stock') {
+        toolOutput = await adjustStock(supabase, userId, args);
+      } else if (toolName === 'delete_stock_item') {
+        toolOutput = await deleteStockItem(supabase, userId, args);
+      } else if (toolName === 'list_price_book') {
+        toolOutput = await listPriceBook(supabase, userId, args);
+      } else if (toolName === 'upsert_price_book_item') {
+        toolOutput = await upsertPriceBookItem(supabase, userId, args);
+      } else if (toolName === 'delete_price_book_item') {
+        toolOutput = await deletePriceBookItem(supabase, userId, args);
       }
       conversation.push({
         role: 'tool',
@@ -1652,7 +1811,7 @@ async function runToolLoopBuffered({
       });
     }
     aiResp = await callOpenAI(
-      { messages: conversation, tools: TOOLS, model: 'gpt-5.5' },
+      { messages: conversation, tools: TOOLS, model: 'gpt-5.4-mini-2026-03-17' },
       openAiKey,
       60000
     );
@@ -1726,6 +1885,274 @@ async function searchCustomers(
         `${i + 1}. id=${c.id} · ${c.name}${c.phone ? ` · ${c.phone}` : ''}${c.email ? ` · ${c.email}` : ''}${c.address ? ` · ${c.address}` : ''}`
     )
     .join('\n');
+}
+
+// ─── Stock Inventory + Price Book handlers (ELE-1013/1017) ──────────────────
+
+async function checkStock(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId) return '[no userId]';
+  let q = supabase
+    .from('personal_inventory')
+    .select('id, name, quantity, unit, location, low_stock_threshold, unit_cost, supplier')
+    .eq('user_id', userId)
+    .order('name', { ascending: true })
+    .limit(Number(args?.limit) || 25);
+  if (args?.query?.trim()) q = q.or(`name.ilike.%${args.query}%,supplier.ilike.%${args.query}%`);
+  const { data, error } = await q;
+  if (error) {
+    console.error('[check_stock]', error);
+    return '[lookup failed]';
+  }
+  let rows = data || [];
+  if (args?.lowOnly) {
+    rows = rows.filter(
+      (r: any) => r.low_stock_threshold != null && Number(r.quantity) <= Number(r.low_stock_threshold)
+    );
+  }
+  if (!rows.length) return args?.query ? `[no stock items matching "${args.query}"]` : '[no stock items]';
+  return rows
+    .map((r: any, i: number) => {
+      const low = r.low_stock_threshold != null && Number(r.quantity) <= Number(r.low_stock_threshold);
+      return `${i + 1}. id=${r.id} · ${r.name} · ${r.quantity} ${r.unit} in ${r.location}${low ? ' · LOW STOCK' : ''}${r.unit_cost != null ? ` · £${r.unit_cost}/unit` : ''}${r.supplier ? ` · ${r.supplier}` : ''}`;
+    })
+    .join('\n');
+}
+
+async function upsertStockItem(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId) return '[no userId]';
+  const fields: any = {};
+  if (args?.name != null) fields.name = String(args.name).trim();
+  if (args?.quantity != null) fields.quantity = Number(args.quantity);
+  if (args?.unit != null) fields.unit = String(args.unit);
+  if (args?.location != null) fields.location = String(args.location);
+  if (args?.unit_cost != null) fields.unit_cost = Number(args.unit_cost);
+  if (args?.supplier != null) fields.supplier = String(args.supplier);
+  if (args?.low_stock_threshold != null) fields.low_stock_threshold = Number(args.low_stock_threshold);
+  if (args?.category != null) fields.category = String(args.category);
+
+  if (args?.id) {
+    if (Object.keys(fields).length === 0) return '[nothing to update]';
+    const { data, error } = await supabase
+      .from('personal_inventory')
+      .update(fields)
+      .eq('id', args.id)
+      .eq('user_id', userId)
+      .select('id, name, quantity, unit')
+      .maybeSingle();
+    if (error) {
+      console.error('[upsert_stock_item:update]', error);
+      return '[update failed]';
+    }
+    if (!data) return `[no stock item with id ${args.id}]`;
+    return `Updated stock: ${data.name} → ${data.quantity} ${data.unit}`;
+  }
+
+  if (!fields.name) return '[name required to add a new stock item]';
+  const { data, error } = await supabase
+    .from('personal_inventory')
+    .insert({ user_id: userId, ...fields })
+    .select('id, name, quantity, unit')
+    .single();
+  if (error) {
+    console.error('[upsert_stock_item:insert]', error);
+    return '[add failed]';
+  }
+  return `Added to stock: ${data.name} · ${data.quantity} ${data.unit} (id=${data.id})`;
+}
+
+async function adjustStock(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId) return '[no userId]';
+  const d = Number(args?.delta);
+  if (!Number.isFinite(d) || d === 0) return '[delta must be a non-zero number]';
+
+  let item: any = null;
+  if (args?.id) {
+    const { data } = await supabase
+      .from('personal_inventory')
+      .select('id, name, quantity, unit')
+      .eq('id', args.id)
+      .eq('user_id', userId)
+      .maybeSingle();
+    item = data;
+  } else if (args?.name?.trim()) {
+    const { data } = await supabase
+      .from('personal_inventory')
+      .select('id, name, quantity, unit')
+      .eq('user_id', userId)
+      .ilike('name', `%${args.name}%`)
+      .limit(3);
+    if (data && data.length > 1) {
+      return `[multiple stock items match "${args.name}" — specify id: ${data.map((x: any) => `${x.name}(${x.id})`).join(', ')}]`;
+    }
+    item = data?.[0] || null;
+  }
+  if (!item) return '[stock item not found]';
+
+  const newQty = Math.max(0, Number(item.quantity) + d);
+  const update: any = { quantity: newQty };
+  if (d < 0) update.last_used_date = new Date().toISOString().slice(0, 10);
+  const { error } = await supabase
+    .from('personal_inventory')
+    .update(update)
+    .eq('id', item.id)
+    .eq('user_id', userId);
+  if (error) {
+    console.error('[adjust_stock]', error);
+    return '[adjust failed]';
+  }
+  return `${item.name}: ${item.quantity} → ${newQty} ${item.unit} (${d > 0 ? '+' : ''}${d})`;
+}
+
+async function deleteStockItem(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId || !args?.id) return '[id required]';
+  const { data, error } = await supabase
+    .from('personal_inventory')
+    .delete()
+    .eq('id', args.id)
+    .eq('user_id', userId)
+    .select('name')
+    .maybeSingle();
+  if (error) {
+    console.error('[delete_stock_item]', error);
+    return '[delete failed]';
+  }
+  if (!data) return `[no stock item with id ${args.id}]`;
+  return `Deleted from stock: ${data.name}`;
+}
+
+async function listPriceBook(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId) return '[no userId]';
+  const { data, error } = await supabase
+    .from('materials_lists')
+    .select('id, name, items')
+    .eq('user_id', userId);
+  if (error) {
+    console.error('[list_price_book]', error);
+    return '[lookup failed]';
+  }
+  const query = (args?.query || '').toLowerCase().trim();
+  const limit = Number(args?.limit) || 30;
+  const out: string[] = [];
+  for (const list of data || []) {
+    for (const it of list.items || []) {
+      if (query && !String(it.name || '').toLowerCase().includes(query)) continue;
+      out.push(
+        `${it.name} · sell £${it.estimated_price ?? '?'}${it.cost_price != null ? ` · cost £${it.cost_price}` : ''}${it.markup_percent != null ? ` · ${it.markup_percent}%` : ''} · ${it.unit || 'each'}${it.supplier ? ` · ${it.supplier}` : ''}${it.personal_inventory_id ? ` · stock_item_id=${it.personal_inventory_id}` : ''} · list="${list.name}" · item_id=${it.id} · list_id=${list.id}`
+      );
+      if (out.length >= limit) break;
+    }
+    if (out.length >= limit) break;
+  }
+  if (!out.length) return query ? `[no price-book items matching "${args.query}"]` : '[price book is empty]';
+  return out.map((l, i) => `${i + 1}. ${l}`).join('\n');
+}
+
+async function upsertPriceBookItem(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId) return '[no userId]';
+  const name = args?.name != null ? String(args.name).trim() : undefined;
+  const cost = args?.cost_price != null ? Number(args.cost_price) : undefined;
+  const markup = args?.markup_percent != null ? Number(args.markup_percent) : undefined;
+  let sell = args?.sell_price != null ? Number(args.sell_price) : undefined;
+  if (sell == null && cost != null) sell = Math.round(cost * (1 + (markup ?? 0) / 100) * 100) / 100;
+
+  // AMEND existing item
+  if (args?.item_id && args?.list_id) {
+    const { data: list } = await supabase
+      .from('materials_lists')
+      .select('id, items')
+      .eq('id', args.list_id)
+      .eq('user_id', userId)
+      .maybeSingle();
+    if (!list) return `[no list with id ${args.list_id}]`;
+    const items = list.items || [];
+    const idx = items.findIndex((x: any) => x.id === args.item_id);
+    if (idx < 0) return `[no item ${args.item_id} in that list]`;
+    items[idx] = {
+      ...items[idx],
+      ...(name != null ? { name } : {}),
+      ...(args.unit != null ? { unit: String(args.unit) } : {}),
+      ...(args.supplier != null ? { supplier: String(args.supplier) } : {}),
+      ...(cost != null ? { cost_price: cost } : {}),
+      ...(markup != null ? { markup_percent: markup } : {}),
+      ...(sell != null ? { estimated_price: sell } : {}),
+      ...(args.stock_item_id !== undefined
+        ? { personal_inventory_id: args.stock_item_id ? String(args.stock_item_id) : undefined }
+        : {}),
+      price_updated_at: new Date().toISOString(),
+    };
+    const { error } = await supabase.from('materials_lists').update({ items }).eq('id', list.id).eq('user_id', userId);
+    if (error) {
+      console.error('[upsert_price_book_item:amend]', error);
+      return '[update failed]';
+    }
+    return `Updated price-book item: ${items[idx].name} → sell £${items[idx].estimated_price ?? '?'}`;
+  }
+
+  // ADD new item
+  if (!name) return '[name required to add a price-book item]';
+  if (sell == null) return '[provide sell_price, or cost_price (with optional markup_percent)]';
+  const { data: lists } = await supabase
+    .from('materials_lists')
+    .select('id, name, items')
+    .eq('user_id', userId);
+  let target =
+    (lists || []).find((l: any) => l.id === args?.list_id) ||
+    (lists || []).find((l: any) => String(l.name).toLowerCase() === 'price book') ||
+    (lists || [])[0];
+  if (!target) {
+    const { data: created, error: ce } = await supabase
+      .from('materials_lists')
+      .insert({ user_id: userId, name: 'Price Book', items: [] })
+      .select('id, name, items')
+      .single();
+    if (ce) {
+      console.error('[upsert_price_book_item:createlist]', ce);
+      return '[could not create a price-book list]';
+    }
+    target = created;
+  }
+  const newItem: any = {
+    id: crypto.randomUUID(),
+    name,
+    quantity: 1,
+    unit: args?.unit ? String(args.unit) : 'each',
+    estimated_price: sell,
+    ...(cost != null ? { cost_price: cost } : {}),
+    ...(markup != null ? { markup_percent: markup } : {}),
+    ...(args?.supplier != null ? { supplier: String(args.supplier) } : {}),
+    ...(args?.stock_item_id ? { personal_inventory_id: String(args.stock_item_id) } : {}),
+    matched: false,
+    added_at: new Date().toISOString(),
+    price_updated_at: new Date().toISOString(),
+  };
+  const items = [...(target.items || []), newItem];
+  const { error } = await supabase.from('materials_lists').update({ items }).eq('id', target.id).eq('user_id', userId);
+  if (error) {
+    console.error('[upsert_price_book_item:add]', error);
+    return '[add failed]';
+  }
+  return `Added to price book ("${target.name}"): ${name} · sell £${sell} (item_id=${newItem.id}, list_id=${target.id})`;
+}
+
+async function deletePriceBookItem(supabase: any, userId: string | null, args: any): Promise<string> {
+  if (!userId || !args?.item_id || !args?.list_id) return '[item_id and list_id required]';
+  const { data: list } = await supabase
+    .from('materials_lists')
+    .select('id, items')
+    .eq('id', args.list_id)
+    .eq('user_id', userId)
+    .maybeSingle();
+  if (!list) return `[no list with id ${args.list_id}]`;
+  const items = list.items || [];
+  const item = items.find((x: any) => x.id === args.item_id);
+  if (!item) return `[no item ${args.item_id} in that list]`;
+  const next = items.filter((x: any) => x.id !== args.item_id);
+  const { error } = await supabase.from('materials_lists').update({ items: next }).eq('id', list.id).eq('user_id', userId);
+  if (error) {
+    console.error('[delete_price_book_item]', error);
+    return '[delete failed]';
+  }
+  return `Deleted price-book item: ${item.name}`;
 }
 
 async function queryOutstandingInvoices(

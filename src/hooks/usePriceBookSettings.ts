@@ -8,7 +8,10 @@ export interface PriceBookSettings {
 }
 
 const DEFAULT_SETTINGS: PriceBookSettings = {
-  globalMarkupPercent: 20,
+  // ELE-1010 — default to 0 so a price-book item quotes at the price the user
+  // entered. A silent 20% default uplift surprised users who'd set their margin
+  // to 0% elsewhere. Markup is now opt-in via the Price Book markup control.
+  globalMarkupPercent: 0,
 };
 
 function getStorageKey(userId: string) {

@@ -492,16 +492,25 @@ const DiagramBuilderPage = () => {
     if (!projectId) return;
     let cancelled = false;
     (async () => {
-      const { data: proj } = await supabase
-        .from('spark_projects')
-        .select('name, location, customers(name)')
-        .eq('id', projectId)
-        .maybeSingle();
-      if (cancelled) return;
-      if (proj?.name) setProjectName(proj.name);
-      if (proj?.location) setProjectLocation(proj.location);
-      const customer = (proj as { customers?: { name?: string } | null } | null)?.customers;
-      if (customer?.name) setProjectClientName(customer.name);
+      // spark_projects stores the project name in `title` (not `name`). Selecting
+      // a non-existent column made PostgREST throw, the rejection was unhandled,
+      // and the planner rendered a black screen — but only when opened from a
+      // project (?projectId=…). Guard the whole fetch so a query error can never
+      // blank the page again. (ELE-1005)
+      try {
+        const { data: proj, error } = await supabase
+          .from('spark_projects')
+          .select('title, location, customers(name)')
+          .eq('id', projectId)
+          .maybeSingle();
+        if (cancelled || error || !proj) return;
+        if (proj.title) setProjectName(proj.title);
+        if (proj.location) setProjectLocation(proj.location);
+        const customer = (proj as { customers?: { name?: string } | null } | null)?.customers;
+        if (customer?.name) setProjectClientName(customer.name);
+      } catch {
+        // Non-fatal — the planner still works without the linked-project pill.
+      }
     })();
     return () => {
       cancelled = true;

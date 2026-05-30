@@ -51,8 +51,8 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
+import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
-import { usePriceBookSettings } from '@/hooks/usePriceBookSettings';
 import { usePriceList } from '@/hooks/usePriceList';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
@@ -82,6 +82,9 @@ export const EnhancedQuoteItemsStep = ({
 
   // Price Book data
   const { lists: materialsLists } = useMaterialsLists();
+  const { items: stockItems } = useInventoryStorage();
+  // Live stock for price-book items linked to a `personal_inventory` row (ELE-1014).
+  const stockById = useMemo(() => new Map(stockItems.map((s) => [s.id, s])), [stockItems]);
   const [priceBookSearch, setPriceBookSearch] = useState('');
   const [showPriceBook, setShowPriceBook] = useState(false);
 
@@ -95,9 +98,6 @@ export const EnhancedQuoteItemsStep = ({
   const [editingDescription, setEditingDescription] = useState('');
   // ELE-888 — per-item adjustment editor toggle
   const [adjustingItemId, setAdjustingItemId] = useState<string | null>(null);
-
-  // Global markup from Price Book settings
-  const { calcSellPrice } = usePriceBookSettings();
 
   // Rate card
   const { items: rateCardItems } = usePriceList();
@@ -1203,13 +1203,20 @@ export const EnhancedQuoteItemsStep = ({
                     key={`pb-${p.item.id}`}
                     type="button"
                     onClick={() => {
-                      const costPrice = p.item.estimated_price || 0;
+                      // estimated_price is ALREADY the sell price (PriceBook saves
+                      // it as calcSellPrice(cost, markup) and shows it as the price
+                      // here). Running calcSellPrice on it again applied markup a
+                      // second time — the price-book item quoted higher than shown.
+                      // Use it directly. (ELE-1010)
+                      const sellPrice = p.item.estimated_price || 0;
                       onAdd({
                         description: p.item.name,
                         quantity: p.item.quantity || 1,
                         unit: p.item.unit || 'each',
-                        unitPrice: Math.round(calcSellPrice(costPrice) * 100) / 100,
+                        unitPrice: Math.round(sellPrice * 100) / 100,
                         category: 'materials',
+                        // Stamp the stock link so raising the invoice decrements it. (ELE-1014)
+                        inventoryItemId: p.item.personal_inventory_id,
                         notes: p.item.supplier ? `Supplier: ${p.item.supplier}` : undefined,
                       });
                       toast({
@@ -1234,6 +1241,16 @@ export const EnhancedQuoteItemsStep = ({
                       {p.item.supplier && (
                         <span className="text-[12px] text-white">{p.item.supplier}</span>
                       )}
+                      {(() => {
+                        const stock = p.item.personal_inventory_id ? stockById.get(p.item.personal_inventory_id) : null;
+                        if (!stock) return null;
+                        const low = stock.low_stock_threshold != null && stock.quantity <= stock.low_stock_threshold;
+                        return (
+                          <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-medium border', low ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')}>
+                            {stock.quantity} in stock
+                          </span>
+                        );
+                      })()}
                       <span className="text-[10px] text-white ml-auto">{p.listName}</span>
                     </div>
                   </button>
@@ -1289,14 +1306,14 @@ export const EnhancedQuoteItemsStep = ({
                       key={item.id}
                       type="button"
                       onClick={() => {
-                        const isMaterial = item.category === 'materials';
+                        // Rate-card prices are the user's charge-out rates — exactly
+                        // what the picker shows (£{item.unit_price}). Don't re-apply
+                        // global markup on add or materials quote higher than shown. (ELE-1010)
                         onAdd({
                           description: item.name,
                           quantity: 1,
                           unit: item.unit,
-                          unitPrice: isMaterial
-                            ? Math.round(calcSellPrice(item.unit_price) * 100) / 100
-                            : item.unit_price,
+                          unitPrice: item.unit_price,
                           category: item.category === 'labour' || item.category === 'call-out'
                             ? 'labour'
                             : item.category === 'materials'
@@ -1399,14 +1416,15 @@ export const EnhancedQuoteItemsStep = ({
                           onClick={() => {
                             let addedCount = 0;
                             bundle.items.forEach((item) => {
-                              const isBundleMaterial = item.category !== 'labour' && item.category !== 'equipment';
+                              // Bundle unitPrice is already the sell price — it's what
+                              // the bundle total and expanded rows display. Re-applying
+                              // markup quoted bundle materials above the shown total.
+                              // Use it directly. (ELE-1010)
                               onAdd({
                                 description: item.name,
                                 quantity: item.quantity,
                                 unit: item.unit,
-                                unitPrice: isBundleMaterial
-                                  ? Math.round(calcSellPrice(item.unitPrice) * 100) / 100
-                                  : item.unitPrice,
+                                unitPrice: item.unitPrice,
                                 category: item.category === 'labour' ? 'labour' : item.category === 'equipment' ? 'equipment' : 'materials',
                               });
                               addedCount++;

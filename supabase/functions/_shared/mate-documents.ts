@@ -253,6 +253,9 @@ export interface MateLineItem {
   description: string;
   quantity: number;
   unitPrice: number;
+  /** Optional link to a personal_inventory stock item. When present on an
+   *  invoice line, stock decrements when the invoice is created. (ELE-1014) */
+  inventory_item_id?: string;
 }
 
 export interface CreateQuoteArgs {
@@ -296,6 +299,7 @@ function normaliseLines(lines: MateLineItem[]): {
     quantity: number;
     unitPrice: number;
     totalPrice: number;
+    inventoryItemId?: string;
   }>;
   subtotal: number;
 } {
@@ -316,6 +320,8 @@ function normaliseLines(lines: MateLineItem[]): {
         quantity,
         unitPrice,
         totalPrice,
+        // Carry the stock link forward so the decrement engine can see it.
+        ...(l.inventory_item_id ? { inventoryItemId: l.inventory_item_id } : {}),
       };
     });
   return { items, subtotal: Math.round(subtotal * 100) / 100 };
@@ -453,6 +459,24 @@ export async function createInvoice(
   if (error) {
     console.error('[mate-documents] createInvoice insert error', error);
     return `Invoice create failed: ${error.message || 'unknown'}`;
+  }
+
+  // Decrement stock for any stock-linked lines (best-effort, idempotent). The
+  // edge function runs as service_role, so pass user_id explicitly. (ELE-1014)
+  try {
+    const stockLines = items
+      .filter((i) => i.inventoryItemId)
+      .map((i) => ({ inventory_item_id: i.inventoryItemId, quantity: i.quantity, note: i.description }));
+    if (stockLines.length) {
+      const { error: decErr } = await supabase.rpc('apply_invoice_stock_decrement', {
+        p_quote_id: data.id,
+        p_lines: stockLines,
+        p_user_id: userId,
+      });
+      if (decErr) console.error('[mate-documents] stock decrement error', decErr);
+    }
+  } catch (decErr) {
+    console.error('[mate-documents] stock decrement threw', decErr);
   }
 
   // Best-effort: generate a Stripe payment link so the email includes a
