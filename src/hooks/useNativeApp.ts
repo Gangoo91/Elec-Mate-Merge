@@ -519,8 +519,26 @@ export function useNativePushNotifications() {
         // Notification tapped — deep link
         PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
           console.log('Push tap:', action);
-          if (action.notification.data) {
-            navigateFromNotification(action.notification.data);
+          const data = action.notification.data;
+          // Tap tracking (best-effort) — campaign tap-through + per-recipient stamp.
+          if (data?.announcementId) {
+            supabase.auth
+              .getUser()
+              .then(({ data: u }) =>
+                supabase.functions
+                  .invoke('track-push-event', {
+                    body: {
+                      announcementId: data.announcementId,
+                      recipientUserId: u?.user?.id,
+                      event: 'tapped',
+                    },
+                  })
+                  .catch(() => {})
+              )
+              .catch(() => {});
+          }
+          if (data) {
+            navigateFromNotification(data);
           }
         });
       } catch (error) {

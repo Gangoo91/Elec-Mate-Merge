@@ -107,6 +107,7 @@ Deno.serve(async (req) => {
             ends_at: announcement.ends_at || null,
             channel: announcement.channel || 'in_app',
             link_url: announcement.link_url || null,
+            image_url: announcement.image_url || null,
             created_by: user.id,
           })
           .select()
@@ -133,6 +134,7 @@ Deno.serve(async (req) => {
         if (announcement.ends_at !== undefined) updateData.ends_at = announcement.ends_at;
         if (announcement.link_url !== undefined) updateData.link_url = announcement.link_url;
         if (announcement.channel !== undefined) updateData.channel = announcement.channel;
+        if (announcement.image_url !== undefined) updateData.image_url = announcement.image_url;
 
         const { data, error } = await supabaseAdmin
           .from('admin_announcements')

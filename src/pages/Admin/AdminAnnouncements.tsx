@@ -65,6 +65,8 @@ interface Announcement {
   push_sent_at?: string | null;
   push_recipient_count?: number;
   push_delivered_count?: number;
+  push_tapped_count?: number;
+  image_url?: string | null;
 }
 
 type StatusKey = 'all' | 'live' | 'scheduled' | 'draft' | 'expired';
@@ -81,6 +83,7 @@ const defaultAnnouncement = {
   ends_at: '',
   channel: 'in_app' as Channel,
   link_url: '',
+  image_url: '',
 };
 
 // One-tap destinations for push — named screens, no raw URLs to mistype.
@@ -347,9 +350,9 @@ export default function AdminAnnouncements() {
     });
     return {
       campaigns: pushes.length,
-      sent: pushes.filter((a) => a.push_sent_at).length,
       recipients: pushes.reduce((s, a) => s + (a.push_recipient_count || 0), 0),
       delivered: pushes.reduce((s, a) => s + (a.push_delivered_count || 0), 0),
+      taps: pushes.reduce((s, a) => s + (a.push_tapped_count || 0), 0),
     };
   }, [announcements]);
 
@@ -454,9 +457,9 @@ export default function AdminAnnouncements() {
                 columns={4}
                 stats={[
                   { label: 'Campaigns', value: pushStats.campaigns },
-                  { label: 'Sent', value: pushStats.sent, tone: 'blue' },
-                  { label: 'Recipients', value: pushStats.recipients },
-                  { label: 'Delivered', value: pushStats.delivered, tone: 'emerald', accent: true },
+                  { label: 'Recipients', value: pushStats.recipients, tone: 'blue' },
+                  { label: 'Delivered', value: pushStats.delivered, tone: 'emerald' },
+                  { label: 'Taps', value: pushStats.taps, accent: true },
                 ]}
               />
             ) : (
@@ -619,6 +622,7 @@ export default function AdminAnnouncements() {
                     (editAnnouncement?.message ?? formData.message) ||
                     'Your message preview appears here.';
                   const pvType = editAnnouncement?.type ?? formData.type;
+                  const pvImage = (editAnnouncement?.image_url ?? formData.image_url) || '';
                   const showPush = composingChannel === 'push' || composingChannel === 'both';
                   return (
                     <div className="space-y-2">
@@ -643,6 +647,13 @@ export default function AdminAnnouncements() {
                               </p>
                             </div>
                           </div>
+                          {pvImage && (
+                            <img
+                              src={pvImage}
+                              alt=""
+                              className="mt-2 w-full h-32 object-cover rounded-xl border border-white/[0.08]"
+                            />
+                          )}
                           <p className="text-[10px] text-white/30 text-center mt-2">
                             Lock screen preview
                           </p>
@@ -910,6 +921,25 @@ export default function AdminAnnouncements() {
                       })}
                     </div>
 
+                    <div className="space-y-1.5">
+                      <Input
+                        value={
+                          editAnnouncement ? editAnnouncement.image_url || '' : formData.image_url
+                        }
+                        onChange={(e) =>
+                          editAnnouncement
+                            ? setEditAnnouncement({ ...editAnnouncement, image_url: e.target.value })
+                            : setFormData({ ...formData, image_url: e.target.value })
+                        }
+                        placeholder="Image URL (optional) — rich notification"
+                        className="h-11 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-xl text-base text-white placeholder:text-white/40 focus:border-elec-yellow"
+                      />
+                      <p className="text-[11px] text-white/50">
+                        Rich image shows on web and Android now; iOS needs a Notification Service
+                        Extension (app build).
+                      </p>
+                    </div>
+
                     <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white/80 flex items-center justify-between">
                       <span>Estimated reach</span>
                       <span className="font-semibold text-white tabular-nums">
@@ -923,7 +953,8 @@ export default function AdminAnnouncements() {
                       <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white/80">
                         Last sent {relativeTime(new Date(editAnnouncement.push_sent_at))} ·{' '}
                         {editAnnouncement.push_delivered_count ?? 0}/
-                        {editAnnouncement.push_recipient_count ?? 0} delivered
+                        {editAnnouncement.push_recipient_count ?? 0} delivered ·{' '}
+                        {editAnnouncement.push_tapped_count ?? 0} tapped
                       </div>
                     )}
 

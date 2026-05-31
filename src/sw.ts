@@ -331,6 +331,22 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
     return;
   }
 
+  // Tap tracking (best-effort beacon) — powers campaign tap-through rate.
+  if (data.announcementId) {
+    event.waitUntil(
+      fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/track-push-event', {
+        method: 'POST',
+        keepalive: true,
+        headers: {
+          'Content-Type': 'application/json',
+          apikey:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8',
+        },
+        body: JSON.stringify({ announcementId: data.announcementId, event: 'tapped' }),
+      }).catch(() => {})
+    );
+  }
+
   let url = '/';
   const role = data.role || '';
 

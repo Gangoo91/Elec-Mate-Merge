@@ -31,6 +31,7 @@ interface PushPayload {
     | 'default';
   data?: Record<string, unknown>;
   skipQuietHours?: boolean; // bypass quiet hours (e.g. for morning digest itself)
+  image?: string; // optional rich-notification image URL (web + Android; iOS needs an NSE)
 }
 
 // ===== Base64 URL Helpers =====
@@ -350,7 +351,8 @@ async function sendApnsPush(
   title: string,
   body: string,
   type: string,
-  data?: Record<string, unknown>
+  data?: Record<string, unknown>,
+  image?: string
 ): Promise<void> {
   const bundleId = Deno.env.get('APNS_BUNDLE_ID') || 'com.elecmate.app';
   const jwt = await createApnsJwt();
@@ -363,6 +365,7 @@ async function sendApnsPush(
       'mutable-content': 1,
     },
     type,
+    ...(image ? { image_url: image } : {}),
     ...Object.fromEntries(Object.entries(data || {}).map(([k, v]) => [k, String(v)])),
   };
 
@@ -486,7 +489,8 @@ async function sendFcmPush(
   title: string,
   body: string,
   type: string,
-  data?: Record<string, unknown>
+  data?: Record<string, unknown>,
+  image?: string
 ): Promise<void> {
   const { projectId, accessToken } = await getFcmAccessToken();
 
@@ -501,10 +505,14 @@ async function sendFcmPush(
       body: JSON.stringify({
         message: {
           token,
-          notification: { title, body },
+          notification: { title, body, ...(image ? { image } : {}) },
           android: {
             priority: 'HIGH',
-            notification: { sound: 'default', channel_id: 'default' },
+            notification: {
+              sound: 'default',
+              channel_id: 'default',
+              ...(image ? { image } : {}),
+            },
           },
           data: {
             type,
@@ -590,7 +598,7 @@ serve(async (req: Request) => {
     );
 
     const payload: PushPayload = await req.json();
-    const { userId, title, body, type, data, skipQuietHours } = payload;
+    const { userId, title, body, type, data, skipQuietHours, image } = payload;
 
     console.log('[Push v24] Received request for userId:', userId);
 
@@ -673,6 +681,7 @@ serve(async (req: Request) => {
       badge: '/pwa-192x192.png',
       tag: `${type}-${Date.now()}`,
       type,
+      ...(image ? { image } : {}),
       data: { type, ...data },
     });
 
@@ -691,10 +700,10 @@ serve(async (req: Request) => {
 
           if (isIos) {
             console.log('[Push v25] Sending APNs to:', subscription.id);
-            await sendApnsPush(token, title, body, type, data);
+            await sendApnsPush(token, title, body, type, data, image);
           } else {
             console.log('[Push v25] Sending FCM to:', subscription.id, subscription.device_type);
-            await sendFcmPush(token, title, body, type, data);
+            await sendFcmPush(token, title, body, type, data, image);
           }
         } else {
           // Web Push — existing VAPID flow

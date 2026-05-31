@@ -38,7 +38,8 @@ async function pushTo(
   title: string,
   body: string,
   announcementId: string,
-  linkUrl: string | null
+  linkUrl: string | null,
+  imageUrl: string | null
 ): Promise<{ ok: boolean; delivered: boolean; error?: string }> {
   try {
     const res = await fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
@@ -49,6 +50,7 @@ async function pushTo(
         title,
         body,
         type: 'announcement',
+        ...(imageUrl ? { image: imageUrl } : {}),
         data: {
           announcementId,
           // One-tap destination — handlers route 'announcement' to this, else home.
@@ -116,7 +118,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { data: ann, error: annErr } = await admin
       .from('admin_announcements')
-      .select('id, title, message, target_roles, link_url')
+      .select('id, title, message, target_roles, link_url, image_url')
       .eq('id', announcementId)
       .maybeSingle();
     if (annErr || !ann) return json({ error: 'Announcement not found' }, 404);
@@ -124,10 +126,11 @@ const handler = async (req: Request): Promise<Response> => {
     const title = (ann.title || 'Elec-Mate').toString();
     const body = (ann.message || '').toString();
     const linkUrl = (ann.link_url as string) || null;
+    const imageUrl = (ann.image_url as string) || null;
 
     // ── Test: just the calling admin ──
     if (mode === 'test') {
-      const r = await pushTo(user.id, title, body, ann.id, linkUrl);
+      const r = await pushTo(user.id, title, body, ann.id, linkUrl, imageUrl);
       await admin.from('announcement_push_recipients').insert({
         announcement_id: ann.id,
         user_id: user.id,
@@ -161,7 +164,7 @@ const handler = async (req: Request): Promise<Response> => {
     for (let i = 0; i < recipientIds.length; i += BATCH_SIZE) {
       const batch = recipientIds.slice(i, i + BATCH_SIZE);
       const results = await Promise.all(
-        batch.map((uid) => pushTo(uid, title, body, ann.id, linkUrl))
+        batch.map((uid) => pushTo(uid, title, body, ann.id, linkUrl, imageUrl))
       );
       const rows = batch.map((uid, idx) => ({
         announcement_id: ann.id,
