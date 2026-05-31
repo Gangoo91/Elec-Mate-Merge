@@ -1,142 +1,127 @@
 import { useRef, useCallback, useEffect, useState } from 'react';
 
 interface UseSmoothedStreamingOptions {
-  /** How often to flush buffered tokens to React state in ms (default: 40ms ≈ 25fps) */
+  /** Roughly how long (ms) the display takes to drain its current backlog.
+   *  Lower = snappier catch-up. Default 180ms. */
+  drainMs?: number;
+  /** Floor reveal speed (characters/second) when nearly caught up — keeps a
+   *  gentle typewriter flow rather than stalling. Default 140. */
+  minCps?: number;
+  /** @deprecated kept for call-site compatibility; no longer used. */
   flushInterval?: number;
 }
 
 interface UseSmoothedStreamingReturn {
-  /** Current displayed text (updates in batches for smooth rendering) */
   displayedText: string;
-  /** Add tokens to the buffer — they'll appear on next flush */
   addTokens: (tokens: string) => void;
-  /** Flush all remaining tokens immediately and return final text */
   flush: () => string;
-  /** Reset the streaming state */
   reset: () => void;
-  /** Stop streaming */
   stop: () => void;
-  /** Check if currently has content to display */
   isActive: () => boolean;
 }
 
 /**
- * useSmoothedStreaming - Batched token streaming with smooth React updates
+ * useSmoothedStreaming — buttery token streaming, decoupled from the network.
  *
- * Instead of dripping characters one-by-one (which looks stuttery), this
- * batches incoming tokens and flushes them to React state on a timer.
- * Since OpenAI tokens are typically whole words or word fragments, this
- * produces natural word-by-word streaming that looks smooth.
- *
- * The key insight: OpenAI already sends tokens at a natural pace (~20-50ms
- * apart). We just need to batch them slightly to avoid excessive React
- * re-renders while keeping the visual flow natural.
+ * The network delivers tokens in bursts (several at once, then a gap). Dumping
+ * each burst straight to the DOM looks jumpy. Instead we keep a `target` string
+ * of everything received and reveal it on a requestAnimationFrame loop at a
+ * smooth, frame-rate-independent rate: the display always trails generation by
+ * at most ~`drainMs`, draining big bursts quickly but spread across frames so
+ * the text flows out evenly at 60fps. No stutter, no chunky jumps.
  */
 export function useSmoothedStreaming(
   options: UseSmoothedStreamingOptions = {}
 ): UseSmoothedStreamingReturn {
-  const { flushInterval = 40 } = options;
+  const { drainMs = 180, minCps = 140 } = options;
 
   const [displayedText, setDisplayedText] = useState('');
 
-  // Refs for state that shouldn't trigger re-renders
-  const currentTextRef = useRef('');
-  const pendingTokensRef = useRef('');
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const isStreamingRef = useRef(false);
+  const targetRef = useRef('');
+  const shownRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastTsRef = useRef(0);
+  const streamingRef = useRef(false);
 
-  // Start the flush timer
-  const startTimer = useCallback(() => {
-    if (timerRef.current !== null) return;
+  const stopLoop = () => {
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  };
 
-    timerRef.current = setInterval(() => {
-      if (pendingTokensRef.current.length > 0) {
-        // Move pending tokens to current text
-        currentTextRef.current += pendingTokensRef.current;
-        pendingTokensRef.current = '';
-        setDisplayedText(currentTextRef.current);
-      } else if (!isStreamingRef.current) {
-        // No more tokens and streaming stopped — clean up timer
-        if (timerRef.current !== null) {
-          clearInterval(timerRef.current);
-          timerRef.current = null;
-        }
+  const tick = useCallback(
+    (ts: number) => {
+      // Clamp dt so a backgrounded tab doesn't dump the whole backlog at once.
+      const dt = Math.min(64, lastTsRef.current ? ts - lastTsRef.current : 0);
+      lastTsRef.current = ts;
+
+      const remaining = targetRef.current.length - shownRef.current;
+      if (remaining <= 0) {
+        // Caught up — let the loop sleep; addTokens() will wake it.
+        stopLoop();
+        return;
       }
-    }, flushInterval);
-  }, [flushInterval]);
+
+      // Speed scales with the backlog (drain it over ~drainMs) but never drops
+      // below the floor, so it both keeps pace with fast generation and keeps a
+      // smooth flow when nearly caught up.
+      const cps = Math.max(minCps, (remaining / drainMs) * 1000);
+      const add = Math.max(1, Math.min(remaining, Math.round((cps * dt) / 1000)));
+      shownRef.current += add;
+      setDisplayedText(targetRef.current.slice(0, shownRef.current));
+      rafRef.current = requestAnimationFrame(tick);
+    },
+    [drainMs, minCps]
+  );
+
+  const ensureLoop = useCallback(() => {
+    if (rafRef.current === null) {
+      lastTsRef.current = 0;
+      rafRef.current = requestAnimationFrame(tick);
+    }
+  }, [tick]);
 
   const addTokens = useCallback(
     (tokens: string) => {
-      pendingTokensRef.current += tokens;
-      isStreamingRef.current = true;
-      startTimer();
+      if (!tokens) return;
+      targetRef.current += tokens;
+      streamingRef.current = true;
+      ensureLoop();
     },
-    [startTimer]
+    [ensureLoop]
   );
 
   const flush = useCallback(() => {
-    // Stop timer
-    if (timerRef.current !== null) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-
-    // Flush any remaining pending tokens
-    if (pendingTokensRef.current.length > 0) {
-      currentTextRef.current += pendingTokensRef.current;
-      pendingTokensRef.current = '';
-    }
-
-    setDisplayedText(currentTextRef.current);
-    isStreamingRef.current = false;
-
-    return currentTextRef.current;
+    streamingRef.current = false;
+    stopLoop();
+    shownRef.current = targetRef.current.length;
+    setDisplayedText(targetRef.current);
+    return targetRef.current;
   }, []);
 
   const reset = useCallback(() => {
-    if (timerRef.current !== null) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    pendingTokensRef.current = '';
-    currentTextRef.current = '';
-    isStreamingRef.current = false;
+    streamingRef.current = false;
+    stopLoop();
+    targetRef.current = '';
+    shownRef.current = 0;
+    lastTsRef.current = 0;
     setDisplayedText('');
   }, []);
 
   const stop = useCallback(() => {
-    if (timerRef.current !== null) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    isStreamingRef.current = false;
+    streamingRef.current = false;
+    stopLoop();
   }, []);
 
-  const isActive = useCallback(() => {
-    return (
-      isStreamingRef.current ||
-      pendingTokensRef.current.length > 0 ||
-      currentTextRef.current.length > 0
-    );
-  }, []);
+  const isActive = useCallback(
+    () => streamingRef.current || shownRef.current < targetRef.current.length,
+    []
+  );
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (timerRef.current !== null) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
+  useEffect(() => () => stopLoop(), []);
 
-  return {
-    displayedText,
-    addTokens,
-    flush,
-    reset,
-    stop,
-    isActive,
-  };
+  return { displayedText, addTokens, flush, reset, stop, isActive };
 }
 
 export default useSmoothedStreaming;

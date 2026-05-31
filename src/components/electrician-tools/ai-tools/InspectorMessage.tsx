@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -29,6 +30,8 @@ interface InspectorMessageProps {
   onRegenerate?: () => void;
   /** Tap handler for inline regulation pills — opens the regulation detail sheet. */
   onRegClick?: (regNumber: string) => void;
+  /** 'dave' adds a small avatar to assistant messages (apprentice tutor). */
+  variant?: 'default' | 'dave';
 }
 
 /**
@@ -47,6 +50,7 @@ export const InspectorMessage = memo(
     onOpenSources,
     onRegenerate,
     onRegClick,
+    variant = 'default',
   }: InspectorMessageProps) {
     const [copied, setCopied] = useState(false);
     const isUser = message.role === 'user';
@@ -113,13 +117,20 @@ export const InspectorMessage = memo(
           className="w-full max-w-4xl space-y-3 min-w-0"
           style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
         >
-          {/* Eyebrow — no avatar tile, editorial */}
-          <div className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em]">
-            <span className="text-elec-yellow">{message.agentName || 'Elec-AI'}</span>
-            <span className="text-white">BS 7671 A4:2026</span>
-            {isStreaming && (
-              <span className="text-white normal-case tracking-normal">composing…</span>
+          {/* Eyebrow — editorial; Dave variant adds a small avatar for identity */}
+          <div className="flex items-center gap-2.5">
+            {variant === 'dave' && (
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-elec-yellow to-elec-yellow/80 shadow-sm">
+                <Zap className="h-3.5 w-3.5 text-black" strokeWidth={2.5} />
+              </span>
             )}
+            <div className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em]">
+              <span className="text-elec-yellow">{message.agentName || 'Elec-AI'}</span>
+              <span className="text-white">BS 7671 A4:2026</span>
+              {isStreaming && (
+                <span className="text-white normal-case tracking-normal">composing…</span>
+              )}
+            </div>
           </div>
 
           {/* Prose block — no bubble chrome */}

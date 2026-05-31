@@ -93,6 +93,18 @@ export function useStudentSnapshot(): StudentSnapshot {
     (async () => {
       const since14 = new Date(Date.now() - 14 * 86_400_000).toISOString();
       const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
+
+      // student_ac_coverage, college_ilp_goals and college_attendance key on
+      // college_students.id — NOT the auth uid (college_otj_entries does use the
+      // uid). Resolve it once; if the user isn't enrolled as a college student
+      // those datasets stay empty rather than 400-ing or silently mismatching.
+      const { data: csRow } = await db
+        .from('college_students')
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      const csId = (csRow?.id as string | undefined) ?? null;
+
       const [
         profileRes,
         scoresRes,
@@ -105,7 +117,7 @@ export function useStudentSnapshot(): StudentSnapshot {
       ] = await Promise.all([
         db
           .from('profiles')
-          .select('first_name, apprentice_level, apprentice_year')
+          .select('full_name, apprentice_level, apprentice_year')
           .eq('id', user.id)
           .maybeSingle(),
         db.from('am2_scores').select('component_key, score').eq('user_id', user.id),
@@ -129,22 +141,24 @@ export function useStudentSnapshot(): StudentSnapshot {
           .eq('student_id', user.id)
           .gte('activity_date', since30.slice(0, 10))
           .limit(60),
-        db
-          .from('college_ilp_goals')
-          .select('id, status')
-          .eq('student_id', user.id)
-          .neq('status', 'completed'),
-        db
-          .from('college_attendance')
-          .select('status, date')
-          .eq('student_id', user.id)
-          .gte('date', since30.slice(0, 10))
-          .limit(40),
-        db
-          .from('student_ac_coverage')
-          .select('total_acs, covered_acs')
-          .eq('student_id', user.id)
-          .maybeSingle(),
+        csId
+          ? db
+              .from('college_ilp_goals')
+              .select('id, status')
+              .eq('student_id', csId)
+              .neq('status', 'completed')
+          : Promise.resolve({ data: [] as Array<{ id: string; status: string }> }),
+        csId
+          ? db
+              .from('college_attendance')
+              .select('status, date')
+              .eq('student_id', csId)
+              .gte('date', since30.slice(0, 10))
+              .limit(40)
+          : Promise.resolve({ data: [] as Array<{ status: string; date: string }> }),
+        csId
+          ? db.from('student_ac_coverage').select('status').eq('student_id', csId)
+          : Promise.resolve({ data: [] as Array<{ status: string }> }),
       ]);
 
       if (cancelled) return;
@@ -212,13 +226,23 @@ export function useStudentSnapshot(): StudentSnapshot {
           )
         : null;
 
-      const ac = acRes.data as { total_acs?: number; covered_acs?: number } | null;
-      const acCoveragePct = ac && ac.total_acs && ac.total_acs > 0
-        ? Math.round(((ac.covered_acs ?? 0) / ac.total_acs) * 100)
+      // student_ac_coverage is one row per AC; coverage = evidenced/assessed/
+      // confirmed over the total tracked (mirrors MyAcCoverageCard).
+      const acRows = (acRes.data ?? []) as Array<{ status: string }>;
+      const acCovered = acRows.filter(
+        (r) => r.status === 'evidenced' || r.status === 'assessed' || r.status === 'confirmed'
+      ).length;
+      const acCoveragePct = acRows.length > 0 ? Math.round((acCovered / acRows.length) * 100) : null;
+
+      // full_name is often stored ALL-CAPS — title-case the first token so the
+      // greeting reads "Alright Andrew." not "Alright ANDREW."
+      const rawFirst = (profileRes.data?.full_name ?? '').trim().split(/\s+/)[0] ?? '';
+      const firstName = rawFirst
+        ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase()
         : null;
 
       setSnap({
-        firstName: profileRes.data?.first_name ?? null,
+        firstName,
         apprenticeLevel: profileRes.data?.apprentice_level ?? null,
         apprenticeYear: profileRes.data?.apprentice_year ?? null,
         weakAreas,

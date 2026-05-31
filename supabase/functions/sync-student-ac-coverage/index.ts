@@ -70,7 +70,7 @@ Deno.serve(async (req) => {
     // Students to process
     let sq = sb
       .from('college_students')
-      .select('id, course_id')
+      .select('id, course_id, user_id')
       .neq('status', 'withdrawn')
       .neq('status', 'completed')
       .not('course_id', 'is', null);
@@ -99,8 +99,32 @@ Deno.serve(async (req) => {
       if (c.code) courseCodeById.set(c.id, c.code);
     }
 
-    // Cache qualification_code → ACs
-    const qualCodes = [...new Set(Array.from(courseCodeById.values()))];
+    // Prefer the learner's ACTIVE app-side qualification selection — the same
+    // source the capture flow, AC picker and progress UI all read from — over
+    // the college course code, so the coverage tracker can't drift from what
+    // the student is actually studying. Falls back to the course code when no
+    // active selection exists (typical college-managed enrolment).
+    const userIds = [...new Set(students.map((s) => s.user_id as string).filter(Boolean))];
+    const selCodeByUser = new Map<string, string>();
+    if (userIds.length) {
+      const { data: sels } = await sb
+        .from('user_qualification_selections')
+        .select('user_id, qualification:qualifications(code)')
+        .in('user_id', userIds)
+        .eq('is_active', true);
+      for (const r of sels ?? []) {
+        const code = (r.qualification as { code?: string } | null)?.code;
+        if (code) selCodeByUser.set(r.user_id as string, code);
+      }
+    }
+    const qualForStudent = (s: { user_id?: string | null; course_id?: string | null }) =>
+      (s.user_id ? selCodeByUser.get(s.user_id) : undefined) ??
+      (s.course_id ? courseCodeById.get(s.course_id) : undefined);
+
+    // Cache qualification_code → ACs (both course- and selection-derived).
+    const qualCodes = [
+      ...new Set([...courseCodeById.values(), ...selCodeByUser.values()]),
+    ];
     const { data: acs } = await sb
       .from('qualification_requirements')
       .select('qualification_code, unit_code, ac_code')
@@ -119,7 +143,7 @@ Deno.serve(async (req) => {
     const perStudent: { student_id: string; seeded: number; total_acs: number }[] = [];
 
     for (const student of students) {
-      const qualCode = courseCodeById.get(student.course_id as string);
+      const qualCode = qualForStudent(student);
       if (!qualCode) continue;
       const acList = acsByQual.get(qualCode) ?? [];
       if (acList.length === 0) continue;

@@ -2,7 +2,6 @@ import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
-import { generateLargeEmbedding } from '../_shared/ai-providers.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -185,17 +184,12 @@ const searchPractical = async (
 ): Promise<any[]> => {
   if (!query && keywords.length === 0) return [];
 
-  // Try hybrid RAG first
+  // Try hybrid RAG first.
   try {
-    let embedding: number[] | null = null;
-    const openAiKey = Deno.env.get('OPENAI_API_KEY');
-    if (openAiKey) {
-      try {
-        embedding = await generateLargeEmbedding(query, openAiKey);
-      } catch (err) {
-        console.warn('[chat-assistant] PWI embedding failed, hybrid will be BM25-only:', err);
-      }
-    }
+    // BM25-only for the chat: generating a query embedding here adds an OpenAI
+    // round-trip on the path to the first token. Keyword retrieval is enough
+    // for conversational guidance; the hybrid RPC handles a null embedding.
+    const embedding: number[] | null = null;
     const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
       query_text: query,
       query_embedding: embedding,
@@ -708,7 +702,12 @@ serve(async (req) => {
         qualificationCode
           ? searchQualificationRequirements(supabase, qualificationCode, keywords)
           : Promise.resolve([]),
-        searchFacets(supabase, { query: message, matchCount: 6 }).catch(() => []),
+        // BM25-only (skipEmbedding) — the conversational tutor prioritises a
+        // fast first token over the marginal recall gain from a vector pass,
+        // which would add an extra embedding round-trip on the critical path.
+        searchFacets(supabase, { query: message, matchCount: 6, skipEmbedding: true }).catch(
+          () => []
+        ),
         loadStudentContext(supabase, resolvedUserId),
       ]);
 
