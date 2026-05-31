@@ -17,6 +17,7 @@ import {
   Pullquote,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
+import { HeatPumpControls } from '@/components/study-centre/diagrams/renewableGapKit';
 
 const inlineChecks = [
   {
@@ -300,6 +301,8 @@ export default function RenewableEnergyModule8Section7() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <HeatPumpControls caption="The power side and volt-free control interface the electrician owns — and where it meets the heat engineer." />
 
           <ConceptBlock
             title="Weather compensation logic"

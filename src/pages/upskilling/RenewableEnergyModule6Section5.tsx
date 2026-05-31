@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { EvMountingZones } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -287,6 +288,8 @@ export default function RenewableEnergyModule6Section5() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <EvMountingZones caption="Mounting height and location rules for an outdoor chargepoint." />
 
           <ConceptBlock
             title="IK code per BS EN 62262:2002 +A1:2021"

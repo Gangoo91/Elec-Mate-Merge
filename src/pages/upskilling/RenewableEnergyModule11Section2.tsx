@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { Chapter81Verification } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -301,6 +302,8 @@ export default function RenewableEnergyModule11Section2() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <Chapter81Verification caption="Chapter 81 is a signpost to energy-efficiency measures you document — not pass/fail tests." />
 
           <ConceptBlock
             title="Worked case — 32 A heat pump dedicated circuit"

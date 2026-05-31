@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { Pcar2023Requirements } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -274,6 +275,8 @@ export default function RenewableEnergyModule7Section7() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <Pcar2023Requirements caption="The Public Charge Point Regulations 2023 consumer duties for public chargepoints." />
 
           <RegsCallout
             source="UK Statutory Instrument 2023 · Public Charge Point Regulations 2023"

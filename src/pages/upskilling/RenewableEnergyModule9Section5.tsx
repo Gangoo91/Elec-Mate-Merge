@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { MicroChpFlow } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -290,6 +291,8 @@ export default function RenewableEnergyModule9Section5() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <MicroChpFlow caption="Micro-CHP makes electricity and useful heat from one fuel input — a grid-parallel generating set." />
 
           <ConceptBlock
             title="Three micro-CHP technology variants"

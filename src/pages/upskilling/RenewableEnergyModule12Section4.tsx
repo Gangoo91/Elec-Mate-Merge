@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { OpenPenOutdoorLct } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -628,9 +628,8 @@ export default function RenewableEnergyModule12Section4() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <OpenPenOutdoorLct
             caption="Open-PEN risk + outdoor LCT protective architectures diagram. Top: TN-C-S (PME) supply normal operation — PEN combines neutral + protective conductor from transformer to customer MET; bonded metalwork at MET potential. Middle: PEN-open scenario — broken connection; customer-side earth reference lost; exposed-conductive-parts rise toward line voltage; outdoor LCT (EV, outdoor PV, ASHP, outdoor BESS) exposed to wider extraneous-conductive-parts → shock risk. Bottom-left: OPDD architecture — detects voltage anomaly + disconnects; integrated in modern EV chargers + available as separate devices. Bottom-right: TT alternative architecture — local earth electrode dedicated to outdoor LCT circuits; PME serves rest of install; RCD architecture per Section 722.531 + Reg 415.1. Section 722 EV explicit; Section 712 PV + ASHP + outdoor BESS implicit good practice; coordinated TT for multi-source outdoor LCT."
-            filename="renewable/m12s4-open-pen-outdoor-lct.png"
           />
 
           <SectionRule />

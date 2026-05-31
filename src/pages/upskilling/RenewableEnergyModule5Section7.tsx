@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { BessVentilationClearances } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -283,6 +284,8 @@ export default function RenewableEnergyModule5Section7() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <BessVentilationClearances caption="Mounting clearances, ventilation and fire separation for a battery unit." />
 
           <ConceptBlock
             title="Non-dwelling siting follows the premises’ fire strategy"

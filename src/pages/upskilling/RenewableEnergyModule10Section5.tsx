@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { V2gFlow } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -311,6 +312,8 @@ export default function RenewableEnergyModule10Section5() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <V2gFlow caption="Vehicle-to-Grid: the EV charges off-peak and feeds back at peak through a bidirectional charger." />
 
           <ConceptBlock
             title="UK 2025-26 V2G hardware landscape"

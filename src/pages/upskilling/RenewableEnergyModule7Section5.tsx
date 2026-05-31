@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { DlmArchitecture } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -270,6 +271,8 @@ export default function RenewableEnergyModule7Section5() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <DlmArchitecture caption="Dynamic load management shares the supply capacity across chargers so the total never exceeds it." />
 
           <ConceptBlock
             title="Dynamic DLM — real-time CT clamp + adaptive allocation"

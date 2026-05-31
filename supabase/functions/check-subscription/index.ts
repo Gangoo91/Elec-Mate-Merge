@@ -70,7 +70,9 @@ serve(async (req) => {
     // First check if user has admin-granted free access
     const { data: profileData } = await supabaseClient
       .from('profiles')
-      .select('free_access_granted, free_access_expires_at, subscription_tier, subscribed')
+      .select(
+        'free_access_granted, free_access_expires_at, subscription_tier, subscribed, stripe_customer_id'
+      )
       .eq('id', user.id)
       .single();
 
@@ -172,18 +174,37 @@ serve(async (req) => {
       'employer_yearly',
     ]);
 
-    // Fetch Stripe customers with retry and timeout
-    const customers = await withRetry(
-      () =>
-        withTimeout(
-          stripe.customers.list({ email: user.email, limit: 1 }),
-          Timeouts.STANDARD,
-          'Stripe customer lookup'
-        ),
-      RetryPresets.STANDARD
-    );
+    // Resolve candidate Stripe customers in priority order:
+    //  1. The stripe_customer_id stored on the profile — authoritative, and
+    //     immune to the account-email ≠ Stripe-email mismatch that used to make
+    //     the email lookup below silently miss a paying customer.
+    //  2. Every customer that shares the account email — catches duplicate
+    //     customer records the stored id doesn't point at.
+    // We then union subscriptions across ALL of them (never limit:1).
+    const candidateCustomerIds: string[] = [];
+    if (profileData?.stripe_customer_id) {
+      candidateCustomerIds.push(profileData.stripe_customer_id);
+    }
+    try {
+      const emailCustomers = await withRetry(
+        () =>
+          withTimeout(
+            stripe.customers.list({ email: user.email, limit: 10 }),
+            Timeouts.STANDARD,
+            'Stripe customer lookup'
+          ),
+        RetryPresets.STANDARD
+      );
+      for (const c of emailCustomers.data) {
+        if (!candidateCustomerIds.includes(c.id)) candidateCustomerIds.push(c.id);
+      }
+    } catch (listErr) {
+      logger.warn('Customer email lookup failed (continuing with stored id if present)', {
+        error: (listErr as Error)?.message,
+      });
+    }
 
-    if (customers.data.length === 0) {
+    if (candidateCustomerIds.length === 0) {
       // ELE-432: If the user has no Stripe customer but their profile shows an
       // active subscription (set by RevenueCat webhook for native IAP), do NOT
       // overwrite it. Return the existing profile state instead.
@@ -314,27 +335,45 @@ serve(async (req) => {
       });
     }
 
-    const customerId = customers.data[0].id;
-    logger.info('Found Stripe customer', { customerId });
+    // Gather subscriptions across EVERY candidate customer and take the first
+    // active/trialing one. A stored customer id that was deleted in Stripe
+    // throws on lookup — we skip it rather than fail the whole check.
+    let activeSub: Stripe.Subscription | null = null;
+    let customerId = candidateCustomerIds[0];
+    for (const candidateId of candidateCustomerIds) {
+      let subs;
+      try {
+        subs = await withRetry(
+          () =>
+            withTimeout(
+              stripe.subscriptions.list({ customer: candidateId, limit: 10 }),
+              Timeouts.STANDARD,
+              'Stripe subscription lookup'
+            ),
+          RetryPresets.STANDARD
+        );
+      } catch (subErr) {
+        logger.warn('Subscription lookup failed for candidate customer (skipping)', {
+          customerId: candidateId,
+          error: (subErr as Error)?.message,
+        });
+        continue;
+      }
+      const found = subs.data.find((sub: Stripe.Subscription) =>
+        ['active', 'trialing'].includes(sub.status)
+      );
+      if (found) {
+        activeSub = found;
+        customerId = candidateId;
+        break;
+      }
+    }
+    logger.info('Resolved subscription across candidate customers', {
+      candidateCount: candidateCustomerIds.length,
+      customerId,
+      hasActiveSub: !!activeSub,
+    });
 
-    // Fetch Stripe subscriptions — no status filter so we get active AND trialing
-    const subscriptions = await withRetry(
-      () =>
-        withTimeout(
-          stripe.subscriptions.list({
-            customer: customerId,
-            limit: 10,
-          }),
-          Timeouts.STANDARD,
-          'Stripe subscription lookup'
-        ),
-      RetryPresets.STANDARD
-    );
-
-    // Find first active or trialing subscription
-    const activeSub = subscriptions.data.find((sub: Stripe.Subscription) =>
-      ['active', 'trialing'].includes(sub.status)
-    );
     const hasActiveSub = !!activeSub;
     let subscriptionTier = null;
 

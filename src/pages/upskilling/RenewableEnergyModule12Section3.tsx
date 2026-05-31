@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { BessLifecycleMonitoring } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -613,9 +613,8 @@ export default function RenewableEnergyModule12Section3() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <BessLifecycleMonitoring
             caption="BESS lifecycle monitoring + condition reporting diagram. Top: BMS continuous monitoring scope — per-cell voltage + temperature, pack SoC + SoH, DC bus, cycle count, fault states, comms, firmware. Middle: lifecycle stages — commissioning baseline (SoH 100%, cycle 0, balanced, no faults) → daily operation (BMS continuous, portal access) → annual touchpoint (customer self-check, installer summary) → EICR-equivalent every 5-10 yr (full data review + DC bus IR + thermal imaging + functional + warranty + AC EICR) → warranty / replacement / end-of-life. Bottom: cert evidence bundle integration — commissioning + periodic snapshots + alarm events + warranty correspondence + photographic + thermographic images per Reg 653.2 NOTE."
-            filename="renewable/m12s3-bess-lifecycle-monitoring.png"
           />
 
           <SectionRule />

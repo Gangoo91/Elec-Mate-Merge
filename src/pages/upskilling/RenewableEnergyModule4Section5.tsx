@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { Chapter82Framework } from '@/components/study-centre/diagrams/renewableM10';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -371,6 +372,8 @@ export default function RenewableEnergyModule4Section5() {
               <li><strong className="text-white">Pure consumer (no generation, no storage)</strong> — most existing UK homes. NOT a PEI</li>
             </ul>
           </ConceptBlock>
+
+          <Chapter82Framework caption="Chapter 82 is the A4:2026 framework for a prosumer's installation — any site that both consumes and produces." />
 
           <InlineCheck {...inlineChecks[0]} />
 

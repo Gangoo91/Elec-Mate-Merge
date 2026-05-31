@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { RenewableElectricianSynthesis } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -631,9 +631,8 @@ export default function RenewableEnergyModule12Section8() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <RenewableElectricianSynthesis
             caption="The Renewable Electrician — M1-M12 synthesis + lifecycle + career diagram. Top: M1-M12 integrated model — M1 Foundations / M2-M4 PV / M5 BESS / M6-M7 EV / M8 heat pumps / M9 other LCT / M10 hybrid + EMS / M11 Chapter 81 + lightning + fault / M12 verification + EICR + handover. Middle: competency stack — BS 7671 + A4:2026 + LCT-specific + manufacturer-certified-installer + multi-trade coordination + systems thinking + customer-facing + cert evidence bundle discipline. Lower middle: UK 2025-30 trajectory — install demand growing across PV / BESS / heat pumps / EV / commercial-industrial; competent installer shortage; integration standard; emerging tech (hydrogen, V2G, grid-forming); UK 2030 + 2050 net-zero targets. Bottom: lifelong build — mock exam validation + ongoing CPD + manufacturer training cycles + industry engagement + hands-on practice + cert evidence bundle review + peer + mentoring + the Renewable Electrician identity matures over years."
-            filename="renewable/m12s8-renewable-electrician-synthesis.png"
           />
 
           <SectionRule />

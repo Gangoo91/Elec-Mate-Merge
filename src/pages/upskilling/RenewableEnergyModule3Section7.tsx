@@ -15,8 +15,9 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { SoTRStructure } from '@/components/study-centre/diagrams/renewableM3';
+import { IvCommissioningCurves } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -446,9 +447,8 @@ export default function RenewableEnergyModule3Section7() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <IvCommissioningCurves
             caption="I-V curve commissioning examples — four panels. Panel 1 (good install): smooth curve, V_oc and I_sc at modelled values. Panel 2 (partial shading): &lsquo;step&rsquo; partway down indicating bypass-diode activation. Panel 3 (low MPP): smooth shape but lower peak power than modelled. Panel 4 (loose connection): low fill factor, distorted curve shape near V_oc."
-            filename="renewable/m3s7-iv-curves.png"
           />
 
           <InlineCheck {...inlineChecks[3]} />
@@ -552,9 +552,8 @@ export default function RenewableEnergyModule3Section7() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <SoTRStructure
             caption="SoTR document structure — table-format layout with header (install / engineer / instruments), system overview, continuity test rows, polarity test rows, V_oc / I_sc per string rows, IR test row, functional test rows, findings & rectifications section, sign-off block. Annotated with BS EN 62446-1 reference and the baseline-for-future-EICR purpose."
-            filename="renewable/m3s7-sotr-structure.png"
           />
 
           <InlineCheck {...inlineChecks[6]} />

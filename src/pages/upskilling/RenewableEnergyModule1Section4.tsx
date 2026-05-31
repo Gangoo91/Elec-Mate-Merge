@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { McsCompetenceMap } from '@/components/study-centre/diagrams/renewableM1';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -372,6 +373,8 @@ export default function RenewableEnergyModule1Section4() {
               are the price of admission to the less competitive segment.
             </p>
           </ConceptBlock>
+
+          <McsCompetenceMap caption="MCS and the MIS technology standards sit alongside BS 7671 and Part P — and unlock SEG and BUS funding." />
 
           <Pullquote>The exclusion is the feature, not the bug.</Pullquote>
 

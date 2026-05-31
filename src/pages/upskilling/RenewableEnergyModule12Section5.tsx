@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { EicrPerTechnology } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -628,9 +628,8 @@ export default function RenewableEnergyModule12Section5() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <EicrPerTechnology
             caption="EICR cycle + per-technology EICR-equivalent across LCT. Top: Chapter 65 framework — Reg 651 purpose + Reg 652 frequency factors + Reg 653 reporting + Reg 651.5 skilled person. Middle: classification codes — C1 / C2 / C3 / FI applied per finding. Per-technology extension grid: PV (DC IR + IMD + isolators + module + mounting + anti-islanding + yield + warning notices + thermal); BESS (BMS data + DC bus IR + thermal + functional + warranty + AC EICR — see §12.3); EV (OPDD + RDC-DD + earthing + functional + cable + firmware + thermal); heat pump (outdoor unit + VSD + manufacturer service + control + earthing); wind (structural + electrical + DC bus + anti-islanding + EREC + LPS); CHP (engine + Section 551 + anti-islanding + heat-network); hydro (civils + turbine + DC + anti-islanding). Bottom: coordinated multi-source LCT EICR — single visit, pre-visit data extract, AC baseline + per-source + multi-source extensions, single customer touchpoint, cert evidence bundle integration."
-            filename="renewable/m12s5-eicr-per-technology.png"
           />
 
           <SectionRule />

@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { PvDiverterFlow } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -378,6 +379,8 @@ export default function RenewableEnergyModule4Section1() {
               (large daytime load, EV charging during day, existing heat pump).
             </p>
           </ConceptBlock>
+
+          <PvDiverterFlow caption="A solar diverter sends surplus PV to the immersion heater instead of exporting it cheaply." />
 
           <InlineCheck {...inlineChecks[0]} />
 

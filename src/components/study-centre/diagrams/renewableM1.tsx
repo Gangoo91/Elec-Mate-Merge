@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { DecisionCascade, TagMap } from './diagramKit';
+import { DecisionCascade, TagMap, ComparisonGrid, LayeredFramework } from './diagramKit';
 
 /* Module 1 diagrams. */
 
@@ -53,6 +53,80 @@ export function DnoDecisionTree({ caption }: { caption?: ReactNode }) {
           branches: [{ cond: 'Yes', to: 'EREC G100 — export-limitation scheme caps export to the agreed limit', tone: 'info' }],
         },
       ]}
+    />
+  );
+}
+
+/* M1 S4 — MCS / MIS standards / competent-person umbrella. */
+export function McsCompetenceMap({ caption }: { caption?: ReactNode }) {
+  return (
+    <LayeredFramework
+      eyebrow="MCS + the competent-person umbrella"
+      caption={caption}
+      bands={[
+        { title: 'MCS umbrella scheme', tone: 'info', items: ['Product certification', 'Installer certification', 'Consumer protection (RECC / HIES)'] },
+        { title: 'MIS standards — per technology', tone: 'info', items: ['MIS 3001 solar thermal', 'MIS 3002 PV', 'MIS 3003 wind', 'MIS 3004 biomass', 'MIS 3005 heat pumps', 'MIS 3012 storage'] },
+        { title: 'What MCS certification unlocks', tone: 'go', items: ['SEG export payments', 'BUS £7,500 grant', 'Customer confidence'] },
+      ]}
+      note={
+        <>
+          MCS sits <strong className="text-white">alongside</strong> BS 7671 and Part P competent-person registration — not instead of them. The BS 7671 work still has to be certified the normal way; MCS is the layer that <span className="font-semibold text-elec-yellow">unlocks the financial incentives</span>.
+        </>
+      }
+    />
+  );
+}
+
+/* M1 S7 — Part L vs Part P vs Building Control for LCT. */
+export function BuildingRegsComparison({ caption }: { caption?: ReactNode }) {
+  return (
+    <ComparisonGrid
+      eyebrow="Building Regs for LCT"
+      caption={caption}
+      columns={[
+        { name: 'Part L', rows: [
+          { label: 'Covers', value: 'Energy efficiency' },
+          { label: 'Triggers', value: 'New build, extensions, retrofit' },
+          { label: 'For LCT', value: 'PV + heat pump aid compliance' },
+        ] },
+        { name: 'Part P', rows: [
+          { label: 'Covers', value: 'Electrical safety (dwellings)' },
+          { label: 'Triggers', value: 'Most fixed electrical work' },
+          { label: 'For LCT', value: 'EV / PV / BESS / HP circuits' },
+        ] },
+        { name: 'Building Control', rows: [
+          { label: 'Covers', value: 'Notification + sign-off' },
+          { label: 'Triggers', value: 'Notifiable work' },
+          { label: 'For LCT', value: 'MCS / scheme self-certifies' },
+        ] },
+      ]}
+      note={
+        <>
+          The trap is treating these as one thing. Part L is about <span className="font-semibold text-elec-yellow">efficiency</span>, Part P about <span className="font-semibold text-elec-yellow">safety</span>; Building Control is the <strong className="text-white">route</strong> — and a competent-person scheme (MCS / NICEIC) lets you self-certify the Part P side instead of a separate LABC notice.
+        </>
+      }
+    />
+  );
+}
+
+/* M1 S8 — which certificate / notification for which job. */
+export function CertPaperworkMap({ caption }: { caption?: ReactNode }) {
+  return (
+    <TagMap
+      eyebrow="Job → paperwork trail"
+      caption={caption}
+      items={[
+        { label: 'New PV install', sub: 'new circuit(s)', tags: ['EIC', 'MCS cert', 'G98 / G99', 'BC via MCS'] },
+        { label: 'Battery storage', sub: 'DC + AC side', tags: ['EIC', 'MCS cert', 'G98 / G99'] },
+        { label: 'EV charger', sub: 'dedicated final circuit', tags: ['EIC', 'Part P notify', 'DNO notify'] },
+        { label: 'Heat pump', sub: 'dedicated circuit', tags: ['EIC', 'MCS cert', 'DNO notify', 'Part L'] },
+        { label: 'Alter an existing circuit', sub: 'no new circuit', tags: ['MEIWC'] },
+      ]}
+      note={
+        <>
+          <strong className="text-white">EIC</strong> for any new circuit; <strong className="text-white">MEIWC</strong> for an addition/alteration to an existing one. The <span className="font-semibold text-elec-yellow">MCS certificate</span> is what unlocks SEG / BUS, and the DNO notice follows the G98 / G99 route — every job carries its own combination.
+        </>
+      }
     />
   );
 }

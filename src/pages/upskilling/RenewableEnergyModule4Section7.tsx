@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { ErecDecisionTree } from '@/components/study-centre/diagrams/renewableM3';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -382,6 +383,8 @@ export default function RenewableEnergyModule4Section7() {
               <li><strong className="text-white">SEG tariff</strong> — exported kWh paid per SEG agreement regardless of source (PV or BESS or V2G)</li>
             </ul>
           </ConceptBlock>
+
+          <ErecDecisionTree caption="The EREC G98 / G99 / G100 route for a hybrid generation + storage system." />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 551.7.2.1 — Stationary batteries as generating sets (UPDATED A4:2026)"

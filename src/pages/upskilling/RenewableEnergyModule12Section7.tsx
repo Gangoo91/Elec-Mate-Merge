@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { CustomerEducationHandover } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -625,9 +625,8 @@ export default function RenewableEnergyModule12Section7() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <CustomerEducationHandover
             caption="Customer education + handover delivery framework diagram. Top: handover meeting structure — walk-through + system demo + portal walkthrough + maintenance + warranty + fault response + MCS pack + Q&A + sign-off (60-90 min). Middle-upper: operating guide content — system overview + modes + portal access + maintenance + warranty + fault response + emergency stops + do-not-open + future considerations + FAQ + contacts. Middle-lower: layered monitoring approach — continuous BMS + monthly customer self-check + annual touchpoint + 5-10 yr EICR-equivalent + warranty events. Bottom-left: silent failure prevention — portal alerts + customer habit + abnormal-visibility + annual + manufacturer monitoring + installer fleet view. Bottom-right: property sale handover — MCS pack travels + warranty transfer + BUS grant inheritance + SEG re-registration + portal reassignment + cert evidence bundle audit continuity."
-            filename="renewable/m12s7-customer-education-handover.png"
           />
 
           <SectionRule />

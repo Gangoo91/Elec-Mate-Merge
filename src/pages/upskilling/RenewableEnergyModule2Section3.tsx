@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { StringArrayConfig } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -392,6 +393,8 @@ export default function RenewableEnergyModule2Section3() {
               inverters with 400–600 V MPPT ranges.
             </p>
           </ConceptBlock>
+
+          <StringArrayConfig caption="Series strings add voltage; parallel strings add current — and a cold morning pushes V_oc up." />
 
           <InlineCheck {...inlineChecks[0]} />
 

@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { EquipotentialBonding, LightningLoop } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -369,9 +369,8 @@ export default function RenewableEnergyModule3Section5() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <EquipotentialBonding
             caption="PV equipotential bonding system diagram — top-down view of array with mounting rails. Each module frame clamped to rail; rail-to-rail joints with anti-corrosion gel; single bonding conductor from rail to inverter location; bonding conductor routed alongside DC conductors (loop minimisation per Reg 712.521.102); termination at building MET. Annotated with conductor sizes and BS 7671 Table 54.8 reference."
-            filename="renewable/m3s5-equipotential-bonding.png"
           />
 
           <InlineCheck {...inlineChecks[4]} />
@@ -468,9 +467,8 @@ export default function RenewableEnergyModule3Section5() {
             meaning="Reg 712.521.102 mandates side-by-side routing of DC and bonding conductors. The minimised loop area reduces the EMP energy captured during nearby lightning strikes, reducing induced voltage damage. Where side-by-side routing isn\'t practical, additional SPDs / higher-spec SPDs compensate. The cert evidence bundle records the routing decision; install photos evidence the side-by-side arrangement."
           />
 
-          <DiagramPlaceholder
+          <LightningLoop
             caption="Lightning-loop minimisation diagram — two side-by-side panels. Panel 1 (incorrect): DC cable routed up one side of roof, bonding conductor up the other side, large enclosed loop area (several square metres) — captures EMP. Panel 2 (correct): DC and bonding side-by-side in same conduit, loop area minimised to a few mm². Annotated with Faraday\'s law and Reg 712.521.102."
-            filename="renewable/m3s5-lightning-loop.png"
           />
 
           <InlineCheck {...inlineChecks[3]} />

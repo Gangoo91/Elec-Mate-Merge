@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { Lightning62305Framework } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -309,6 +310,8 @@ export default function RenewableEnergyModule11Section3() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <Lightning62305Framework caption="The four parts of BS EN 62305 — risk-first, then the LPS and surge protection." />
 
           <ConceptBlock
             title="Lightning Protection Zones (LPZ) — the zone concept"

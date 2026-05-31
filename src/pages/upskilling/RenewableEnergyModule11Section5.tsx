@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { SpdCoordination } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -301,6 +302,8 @@ export default function RenewableEnergyModule11Section5() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <SpdCoordination caption="Coordinated Type 1 / 2 / 3 SPDs clamp the surge progressively lower along the installation." />
 
           <ConceptBlock
             title="Reg 443.4.2 — switching overvoltage protection"

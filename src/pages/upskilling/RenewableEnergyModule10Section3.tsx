@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { SegFramework } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -306,6 +307,8 @@ export default function RenewableEnergyModule10Section3() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <SegFramework caption="The Smart Export Guarantee pays for exported units — what replaced the Feed-in Tariff." />
 
           <ConceptBlock
             title="Eligibility: MCS + smart meter + capacity limits"

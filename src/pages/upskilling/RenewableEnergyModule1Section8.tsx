@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { CertPaperworkMap } from '@/components/study-centre/diagrams/renewableM1';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -392,6 +393,8 @@ export default function RenewableEnergyModule1Section8() {
               correct.
             </p>
           </ConceptBlock>
+
+          <CertPaperworkMap caption="Which certificate and notification each LCT job actually generates." />
 
           <RegsCallout
             source="GN3 (BS 7671 Guidance Note 3) — Part 6 alignment with HD 60364-6"

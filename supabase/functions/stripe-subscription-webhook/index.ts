@@ -134,6 +134,33 @@ const TIER_FEATURES: Record<
   ],
 };
 
+// Getting Started guide — same hosted asset the signup welcome attaches.
+const GETTING_STARTED_PDF_URL =
+  'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/Elec-Mate-Getting-Started.pdf';
+const GETTING_STARTED_PDF_FILENAME = 'Elec-Mate-Getting-Started.pdf';
+
+// Fetch the Getting Started PDF as base64 for attachment. Never throws — a failed
+// fetch must not block the welcome email (the download button still works).
+async function fetchGettingStartedPdfBase64(): Promise<string | null> {
+  try {
+    const res = await fetch(GETTING_STARTED_PDF_URL);
+    if (!res.ok) {
+      console.error(`Getting Started PDF fetch failed: ${res.status}`);
+      return null;
+    }
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    let bin = '';
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      bin += String.fromCharCode(...bytes.subarray(i, i + chunk));
+    }
+    return btoa(bin);
+  } catch (err) {
+    console.error('Getting Started PDF fetch error:', err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
 /**
  * Send welcome email to new subscriber
  */
@@ -142,7 +169,8 @@ async function sendWelcomeEmail(
   name: string,
   tierName: string,
   isYearly: boolean,
-  tier: string
+  tier: string,
+  isReturning: boolean = false
 ): Promise<void> {
   const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
@@ -153,118 +181,113 @@ async function sendWelcomeEmail(
 
   const resend = new Resend(resendApiKey);
 
-  const billingPeriod = isYearly ? 'year' : 'month';
+  const billingLabel = isYearly ? 'Billed yearly' : 'Billed monthly';
   const tierBase = tier.replace(/_yearly$/, '');
   const features = TIER_FEATURES[tierBase] || TIER_FEATURES['electrician'];
-  const logoUrl = 'https://elec-mate.com/logo.jpg';
+  const logoUrl =
+    'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png';
   const year = new Date().getFullYear();
 
-  const featureCardsHtml = features
+  // Returning win-back customers get a "welcome back" framing rather than being
+  // greeted like a brand-new signup.
+  const eyebrow = isReturning ? 'Welcome back' : 'Subscription active';
+  const heading = isReturning ? 'Good to have you back' : 'You&rsquo;re all set';
+  const intro = isReturning
+    ? `Your <strong style="color: #B5840A;">${tierName}</strong> subscription is active again — welcome back. Your data, certificates and quotes are exactly where you left them.`
+    : `Your <strong style="color: #B5840A;">${tierName}</strong> subscription is active. Here&rsquo;s everything it unlocks.`;
+
+  // Getting Started guide card — same for everyone. Returners don't need a
+  // "what's new" spiel; they're back in and will pick it up themselves.
+  const guideEyebrow = 'Getting Started guide';
+  const guideTitle = 'Set it up once. It follows you everywhere.';
+  const guideLine =
+    'A quick walkthrough to get the most out of Elec-Mate. It&rsquo;s attached, or download it below.';
+
+  // Light editorial feature rows — matches the signup welcome email.
+  const featureRowsHtml = features
     .map(
       (f) => `
-                <!-- Feature card -->
-                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 10px;">
-                  <tr>
-                    <td style="padding: 14px 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
-                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                        <tr>
-                          <td width="48" valign="middle">
-                            <div style="width: 40px; height: 40px; background-color: rgba(${f.iconColor === '#22c55e' ? '34,197,94' : f.iconColor === '#3b82f6' ? '59,130,246' : f.iconColor === '#fbbf24' ? '251,191,36' : '168,85,247'}, 0.15); border-radius: 10px; text-align: center; line-height: 40px;">
-                              <span style="color: ${f.iconColor}; font-size: 18px;">${f.icon}</span>
-                            </div>
-                          </td>
-                          <td style="padding-left: 14px;" valign="middle">
-                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">${f.title}</p>
-                            <p style="margin: 4px 0 0; font-size: 13px; color: #ffffff;">${f.subtitle}</p>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>`
+                <tr>
+                  <td valign="top" style="padding: 0 0 14px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td width="20" valign="top" style="padding-top: 5px;">
+                          <div style="width: 7px; height: 7px; border-radius: 2px; background-color: #F3B70A;"></div>
+                        </td>
+                        <td valign="top">
+                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #0C1B2A; line-height: 1.4;">${f.title}</p>
+                          <p style="margin: 2px 0 0; font-size: 13px; color: #51606F; line-height: 1.5;">${f.subtitle}</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>`
     )
-    .join('\n');
+    .join('');
 
-  const emailHtml = `
-<!DOCTYPE html>
+  const emailHtml = `<!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="color-scheme" content="dark">
-  <meta name="supported-color-schemes" content="dark">
-  <title>Welcome to Elec-Mate</title>
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Your Elec-Mate subscription is active</title>
   <!--[if mso]>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings>
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
-  <style>
-    table {border-collapse: collapse;}
-    td, th, div, p, a, h1, h2, h3, h4, h5, h6 {font-family: Arial, sans-serif;}
-  </style>
+  <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+  <style>table {border-collapse: collapse;} td,th,div,p,a,h1,h2,h3 {font-family: Arial, sans-serif;}</style>
   <![endif]-->
   <style>
-    :root { color-scheme: dark; supported-color-schemes: dark; }
-    body { margin: 0; padding: 0; width: 100%; background-color: #0a0a0a; }
+    body { margin: 0; padding: 0; width: 100%; background-color: #F4F6F9; }
+    a { text-decoration: none; }
     @media screen and (max-width: 480px) {
-      .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
+      .pad { padding-left: 24px !important; padding-right: 24px !important; }
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a;">
+<body style="margin: 0; padding: 0; background-color: #F4F6F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #F4F6F9;">
     <tr>
       <td align="center" style="padding: 40px 16px;">
 
-        <!-- Email container -->
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; background-color: #111111; border-radius: 20px; overflow: hidden; border: 1px solid #262626;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 520px; background-color: #FFFFFF; border-radius: 18px; overflow: hidden; border: 1px solid #E6E9EE;">
 
-          <!-- Logo & Header -->
+          <!-- Header -->
           <tr>
-            <td align="center" style="padding: 40px 32px 24px;" class="mobile-padding">
-              <img src="${logoUrl}" alt="Elec-Mate" width="72" height="72" style="display: block; border-radius: 14px; margin-bottom: 20px;">
-              <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff; line-height: 1.3;">
-                Welcome to Elec-Mate
-              </h1>
+            <td align="left" style="padding: 36px 36px 8px;" class="pad">
+              <img src="${logoUrl}" alt="Elec-Mate" width="56" height="56" style="display: block; border-radius: 13px; border: 1px solid #E6E9EE;">
             </td>
           </tr>
 
-          <!-- Greeting -->
+          <!-- Title -->
           <tr>
-            <td style="padding: 0 32px 24px;" class="mobile-padding">
-              <p style="margin: 0 0 12px; font-size: 16px; color: #ffffff; line-height: 1.5;">
-                Hi ${name},
-              </p>
-              <p style="margin: 0; font-size: 15px; color: #ffffff; line-height: 1.6;">
-                Your <strong style="color: #fbbf24;">${tierName}</strong> subscription is now active.
-              </p>
+            <td align="left" style="padding: 18px 36px 0;" class="pad">
+              <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #B5840A;">${eyebrow}</p>
+              <h1 style="margin: 0 0 18px; font-size: 27px; font-weight: 800; color: #0C1B2A; line-height: 1.12; letter-spacing: -0.5px;">${heading}</h1>
+              <p style="margin: 0 0 14px; font-size: 15px; color: #0C1B2A; line-height: 1.5;">Hi ${name},</p>
+              <p style="margin: 0 0 24px; font-size: 15px; color: #51606F; line-height: 1.62;">${intro}</p>
             </td>
           </tr>
 
-          <!-- Subscription card -->
+          <!-- Subscription confirmation card -->
           <tr>
-            <td style="padding: 0 32px 24px;" class="mobile-padding">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #1a1a1a; border-radius: 14px; border: 1px solid #262626;">
+            <td style="padding: 0 36px 26px;" class="pad">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #FFFAEC; border: 1px solid #EFD489; border-radius: 14px;">
                 <tr>
-                  <td style="padding: 20px;">
+                  <td style="padding: 18px 22px;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
-                        <td style="padding: 6px 0; font-size: 14px; color: #ffffff;">Subscription</td>
-                        <td style="text-align: right; font-size: 15px; color: #fbbf24; font-weight: 700;">${tierName}</td>
+                        <td style="padding: 4px 0; font-size: 13px; color: #51606F;">Plan</td>
+                        <td style="text-align: right; padding: 4px 0; font-size: 14px; color: #0C1B2A; font-weight: 700;">${tierName}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 6px 0; font-size: 14px; color: #ffffff;">Billing</td>
-                        <td style="text-align: right; font-size: 14px; color: #ffffff; font-weight: 600;">Every ${billingPeriod}</td>
+                        <td style="padding: 4px 0; font-size: 13px; color: #51606F;">Billing</td>
+                        <td style="text-align: right; padding: 4px 0; font-size: 14px; color: #0C1B2A; font-weight: 600;">${billingLabel}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 6px 0; font-size: 14px; color: #ffffff;">Status</td>
-                        <td style="text-align: right; font-size: 14px; color: #22c55e; font-weight: 700;">&#10003; Active</td>
+                        <td style="padding: 4px 0; font-size: 13px; color: #51606F;">Status</td>
+                        <td style="text-align: right; padding: 4px 0; font-size: 14px; color: #1E874B; font-weight: 700;">&#10003; Active</td>
                       </tr>
                     </table>
                   </td>
@@ -273,38 +296,32 @@ async function sendWelcomeEmail(
             </td>
           </tr>
 
-          <!-- Feature section header -->
+          <!-- What you've unlocked -->
           <tr>
-            <td style="padding: 0 32px 16px;" class="mobile-padding">
-              <p style="margin: 0; font-size: 12px; font-weight: 600; color: #ffffff; text-transform: uppercase; letter-spacing: 1px;">
-                Here's what you've unlocked
-              </p>
-            </td>
-          </tr>
-
-          <!-- Feature cards -->
-          <tr>
-            <td style="padding: 0 32px 24px;" class="mobile-padding">
-              ${featureCardsHtml}
-            </td>
-          </tr>
-
-          <!-- CTA Button -->
-          <tr>
-            <td style="padding: 0 32px 32px;" class="mobile-padding">
+            <td style="padding: 0 36px 4px;" class="pad">
+              <p style="margin: 0 0 14px; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #0C1B2A;">What you&rsquo;ve unlocked</p>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                ${featureRowsHtml}
+              </table>
+            </td>
+          </tr>
+
+          <!-- Getting Started guide card -->
+          <tr>
+            <td style="padding: 18px 36px 4px;" class="pad">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #FFFAEC; border: 1px solid #EFD489; border-radius: 14px;">
                 <tr>
-                  <td align="center">
+                  <td style="padding: 20px 22px;">
+                    <p style="margin: 0 0 4px; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #B5840A;">${guideEyebrow}</p>
+                    <p style="margin: 0 0 6px; font-size: 17px; font-weight: 700; color: #0C1B2A; line-height: 1.3;">${guideTitle}</p>
+                    <p style="margin: 0 0 18px; font-size: 13px; color: #51606F; line-height: 1.55;">${guideLine}</p>
                     <!--[if mso]>
-                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.elec-mate.com" style="height:56px;v-text-anchor:middle;width:100%;" arcsize="21%" fillcolor="#fbbf24">
-                      <w:anchorlock/>
-                      <center style="color:#0a0a0a;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Open Elec-Mate</center>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${GETTING_STARTED_PDF_URL}" style="height:46px;v-text-anchor:middle;width:230px;" arcsize="24%" fillcolor="#0C1B2A">
+                      <w:anchorlock/><center style="color:#FFFFFF;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;">Download the guide (PDF)</center>
                     </v:roundrect>
                     <![endif]-->
                     <!--[if !mso]><!-->
-                    <a href="https://www.elec-mate.com" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
-                      Open Elec-Mate
-                    </a>
+                    <a href="${GETTING_STARTED_PDF_URL}" style="display: inline-block; padding: 13px 24px; background-color: #0C1B2A; color: #FFFFFF; font-size: 14px; font-weight: 700; border-radius: 10px;">Download the guide (PDF)</a>
                     <!--<![endif]-->
                   </td>
                 </tr>
@@ -312,21 +329,30 @@ async function sendWelcomeEmail(
             </td>
           </tr>
 
-          <!-- Footer -->
+          <!-- Primary CTA -->
           <tr>
-            <td style="padding: 24px 32px; background-color: #0a0a0a; border-top: 1px solid #1a1a1a;" class="mobile-padding">
-              <p style="margin: 0 0 4px; font-size: 13px; color: #ffffff;">
-                Questions? Reply to this email — we're here to help.
-              </p>
+            <td align="left" style="padding: 12px 36px 32px;" class="pad">
+              <!--[if mso]>
+              <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.elec-mate.com" style="height:52px;v-text-anchor:middle;width:200px;" arcsize="22%" fillcolor="#F3B70A">
+                <w:anchorlock/><center style="color:#0C1B2A;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">Open Elec-Mate</center>
+              </v:roundrect>
+              <![endif]-->
+              <!--[if !mso]><!-->
+              <a href="https://www.elec-mate.com" style="display: inline-block; padding: 15px 32px; background-color: #F3B70A; color: #0C1B2A; font-size: 15px; font-weight: 700; border-radius: 11px;">Open Elec-Mate</a>
+              <!--<![endif]-->
             </td>
           </tr>
 
-          <!-- Copyright -->
+          <!-- Footer -->
           <tr>
-            <td align="center" style="padding: 16px 32px 24px; background-color: #0a0a0a;">
-              <p style="margin: 0; font-size: 12px; color: #ffffff;">
-                &copy; ${year} Elec-Mate &middot; Made in the UK
-              </p>
+            <td style="padding: 22px 36px; background-color: #F8FAFC; border-top: 1px solid #E6E9EE;" class="pad">
+              <p style="margin: 0; font-size: 13px; color: #51606F; line-height: 1.55;">Questions, or not sure where something is? Just reply to this email — it comes straight to Andrew, the founder, and he reads every one.</p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 18px 36px 26px; background-color: #F8FAFC;">
+              <p style="margin: 0 0 3px; font-size: 12px; font-weight: 600; color: #0C1B2A;">Your trade. Your app.</p>
+              <p style="margin: 0; font-size: 11px; color: #8B95A3;">&copy; ${year} Elec-Mate &middot; Made in the UK</p>
             </td>
           </tr>
 
@@ -335,17 +361,23 @@ async function sendWelcomeEmail(
       </td>
     </tr>
   </table>
-
 </body>
-</html>
-  `;
+</html>`;
+
+  const pdfBase64 = await fetchGettingStartedPdfBase64();
+  const attachments = pdfBase64
+    ? [{ filename: GETTING_STARTED_PDF_FILENAME, content: pdfBase64 }]
+    : undefined;
 
   try {
     const { data, error } = await resend.emails.send({
       from: 'Elec-Mate <founder@elec-mate.com>',
       replyTo: 'founder@elec-mate.com',
       to: [email],
-      subject: `Welcome to Elec-Mate — Your ${tierName} subscription is active`,
+      attachments,
+      subject: isReturning
+        ? `Welcome back to Elec-Mate — your ${tierName} subscription is active`
+        : `Welcome to Elec-Mate — your ${tierName} subscription is active`,
       html: emailHtml,
     });
 
@@ -1100,27 +1132,50 @@ serve(async (req) => {
         // Cancel any previous subscriptions for this customer (upgrade scenario)
         // e.g. user upgrading from Electrician (£9.99) to Business AI (£29.99)
         if (isNewSubscription && isActive) {
-          try {
-            const existingSubs = await stripe.subscriptions.list({
-              customer: customerId,
-              limit: 10,
-            });
+          // When upgrading, retire the customer's *other* active subscriptions —
+          // but with two safeguards learned from a real incident where a paid sub
+          // was wiped seconds after a trial started:
+          //   • If the NEW sub is only trialing, leave existing subs untouched —
+          //     never trade paid service for an unpaid trial.
+          //   • Otherwise cancel at period end (not immediately) so the customer
+          //     keeps the time they already paid for.
+          const newSubIsTrialing =
+            subscription.status === 'trialing' ||
+            (subscription.trial_end && subscription.trial_end * 1000 > Date.now());
 
-            for (const oldSub of existingSubs.data) {
-              if (oldSub.id !== subscription.id && ['active', 'trialing'].includes(oldSub.status)) {
-                await stripe.subscriptions.cancel(oldSub.id);
-                logger.info('Cancelled previous subscription (upgrade)', {
-                  cancelledSubId: oldSub.id,
-                  newSubId: subscription.id,
-                  oldPriceId: oldSub.items.data[0]?.price?.id,
-                  newPriceId: priceId,
-                });
-              }
-            }
-          } catch (cancelErr: unknown) {
-            logger.warn('Failed to cancel previous subscriptions (non-fatal)', {
-              error: (cancelErr as Error)?.message,
+          if (newSubIsTrialing) {
+            logger.info('New subscription is trialing — leaving existing subscriptions untouched', {
+              newSubId: subscription.id,
             });
+          } else {
+            try {
+              const existingSubs = await stripe.subscriptions.list({
+                customer: customerId,
+                limit: 10,
+              });
+
+              for (const oldSub of existingSubs.data) {
+                if (
+                  oldSub.id !== subscription.id &&
+                  ['active', 'trialing'].includes(oldSub.status) &&
+                  !oldSub.cancel_at_period_end
+                ) {
+                  await stripe.subscriptions.update(oldSub.id, {
+                    cancel_at_period_end: true,
+                  });
+                  logger.info('Scheduled previous subscription to cancel at period end (upgrade)', {
+                    cancelledSubId: oldSub.id,
+                    newSubId: subscription.id,
+                    oldPriceId: oldSub.items.data[0]?.price?.id,
+                    newPriceId: priceId,
+                  });
+                }
+              }
+            } catch (cancelErr: unknown) {
+              logger.warn('Failed to schedule previous subscriptions for cancellation (non-fatal)', {
+                error: (cancelErr as Error)?.message,
+              });
+            }
           }
         }
 
@@ -1324,12 +1379,46 @@ serve(async (req) => {
             if (!customer.deleted && 'email' in customer && customer.email) {
               const tierName = TIER_NAMES[tier] || tier;
               const isYearly = tier.includes('yearly');
-              const userName = customer.name || customer.email.split('@')[0];
+
+              // Prefer the ACCOUNT email + name (what they signed up with) over
+              // the Stripe billing email — pay links often carry a personal/card
+              // email that differs from the Elec-Mate account.
+              let recipientEmail = customer.email;
+              let userName = customer.name || customer.email.split('@')[0];
+              try {
+                const { data: acct } = await supabase.auth.admin.getUserById(userId);
+                if (acct?.user?.email) recipientEmail = acct.user.email;
+                const metaName = (acct?.user?.user_metadata?.full_name as string) || '';
+                if (metaName) userName = metaName;
+              } catch (acctErr) {
+                logger.warn('Account email lookup failed — using Stripe billing email', {
+                  error: (acctErr as Error)?.message,
+                });
+              }
+
+              // Returning customer? Any earlier subscription on this Stripe customer.
+              let isReturning = false;
+              try {
+                const priorSubs = await stripe.subscriptions.list({
+                  customer: customerId,
+                  status: 'all',
+                  limit: 3,
+                });
+                isReturning = priorSubs.data.some((s) => s.id !== subscription.id);
+              } catch {
+                /* non-fatal — default to the new-customer welcome */
+              }
 
               // Fire-and-forget — don't block webhook response for email
-              sendWelcomeEmail(customer.email, userName, tierName, isYearly, tier).catch(
-                (err: Error) =>
-                  logger.warn('Welcome email failed (non-fatal)', { error: err.message })
+              sendWelcomeEmail(
+                recipientEmail,
+                userName,
+                tierName,
+                isYearly,
+                tier,
+                isReturning
+              ).catch((err: Error) =>
+                logger.warn('Welcome email failed (non-fatal)', { error: err.message })
               );
 
               // Founder signup notification — pings founder@elec-mate.com on every

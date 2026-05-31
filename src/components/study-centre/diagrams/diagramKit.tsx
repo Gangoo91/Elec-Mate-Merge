@@ -129,6 +129,72 @@ export function ComparisonGrid({
   );
 }
 
+/* ── Layered framework — stacked horizontal bands, each a labelled set of
+   chips. Fits the M12 "Top: … / Middle: … / Bottom: …" composite frameworks
+   and any layered model where bands read top-to-bottom.                    */
+export interface FrameworkBand {
+  title: string;
+  sub?: string;
+  tone?: Tone;
+  items: string[];
+}
+
+const bandAccent: Record<Tone, string> = {
+  go: 'border-l-emerald-400/60',
+  stop: 'border-l-red-400/60',
+  warn: 'border-l-elec-yellow/60',
+  info: 'border-l-sky-400/60',
+};
+const chipCls: Record<Tone, string> = {
+  go: 'border-emerald-400/25 bg-emerald-500/10 text-emerald-200',
+  stop: 'border-red-400/25 bg-red-500/10 text-red-200',
+  warn: 'border-elec-yellow/25 bg-elec-yellow/10 text-elec-yellow',
+  info: 'border-sky-400/25 bg-sky-500/10 text-sky-200',
+};
+
+export function LayeredFramework({
+  bands,
+  note,
+  caption,
+  eyebrow = 'Framework',
+}: {
+  bands: FrameworkBand[];
+  note?: ReactNode;
+  caption?: ReactNode;
+  eyebrow?: string;
+}) {
+  return (
+    <DiagramFigure eyebrow={eyebrow} caption={caption}>
+      <div className="space-y-1.5">
+        {bands.map((b, i) => {
+          const tone = b.tone ?? 'info';
+          return (
+            <div key={b.title}>
+              <div className={cn('rounded-lg border border-white/[0.10] border-l-2 bg-white/[0.03] px-3 py-2.5', bandAccent[tone])}>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[12.5px] font-semibold text-white leading-tight">{b.title}</span>
+                  {b.sub ? <span className="text-[10.5px] text-white/55">{b.sub}</span> : null}
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {b.items.map((t) => (
+                    <span key={t} className={cn('rounded-md border px-2 py-0.5 text-[10.5px] font-medium leading-tight', chipCls[tone])}>{t}</span>
+                  ))}
+                </div>
+              </div>
+              {i < bands.length - 1 && (
+                <div className="py-0.5 text-center text-[9px] text-white/25">↓</div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {note ? (
+        <div className="mt-3 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.06] p-3 text-[11.5px] text-white/85 leading-relaxed">{note}</div>
+      ) : null}
+    </DiagramFigure>
+  );
+}
+
 /* ── Tag map — items each mapped to a set of tags (e.g. tech → chapters) ─ */
 export interface TagMapItem {
   label: string;

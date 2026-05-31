@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { HybridCommissioningSequence } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -383,6 +384,8 @@ export default function RenewableEnergyModule4Section8() {
               <li><strong className="text-white">8. SoTR + cert evidence bundle</strong> — Schedule of Test Results assembled; cert evidence bundle finalised with all per-domain packs + commissioning records + manufacturer datasheets</li>
             </ul>
           </ConceptBlock>
+
+          <HybridCommissioningSequence caption="A hybrid system is verified in stages — checks, grid sync, functional, then handover." />
 
           <InlineCheck {...inlineChecks[0]} />
 

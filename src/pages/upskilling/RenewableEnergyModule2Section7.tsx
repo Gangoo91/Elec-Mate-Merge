@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { CouplingComparison } from '@/components/study-centre/diagrams/renewableM4';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -392,6 +393,8 @@ export default function RenewableEnergyModule2Section7() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <CouplingComparison caption="DC-coupled, AC-coupled and hybrid — how PV and the battery share inverters." />
 
           <ConceptBlock
             title="AC-coupled hybrid — two products, AC interconnection"

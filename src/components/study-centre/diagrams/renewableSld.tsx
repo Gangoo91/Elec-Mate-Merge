@@ -172,3 +172,93 @@ export function EpsSld({ caption }: { caption?: ReactNode }) {
     />
   );
 }
+
+/* ── M4 S2 — off-grid PV single-line ──────────────────────────────────── */
+export function OffGridArchitecture({ caption }: { caption?: ReactNode }) {
+  return (
+    <SingleLine
+      eyebrow="Off-grid PV — single-line"
+      caption={caption}
+      spine={[
+        { label: 'PV array', sub: 'DC' },
+        { label: 'Charge controller', sub: 'MPPT' },
+        { label: 'Battery bank', sub: 'DC bus — the buffer', tone: 'go' },
+        { label: 'Off-grid inverter', sub: 'grid-forming, sets 230 V', tone: 'warn' },
+        { label: 'AC loads', sub: 'no grid behind them' },
+      ]}
+      note={
+        <>
+          With no grid, the inverter <span className="font-semibold text-elec-yellow">forms its own 230 V reference</span> and the battery is the only buffer. Generation + storage must be sized for the worst-case winter day plus a margin of autonomy days — there's no grid to fall back on.
+        </>
+      }
+    />
+  );
+}
+
+/* ── M6 S4 — single-phase EV dedicated final circuit ──────────────────── */
+export function EvDedicatedCircuitSld({ caption }: { caption?: ReactNode }) {
+  return (
+    <SingleLine
+      eyebrow="EV dedicated circuit — single-line"
+      caption={caption}
+      spine={[
+        { label: 'Consumer unit' },
+        { label: 'Type A RCBO 32 A', sub: '+ RDC-DD (6 mA DC)', tone: 'warn' },
+        { label: '6 mm² T+E / SWA' },
+        { label: 'Local isolator', sub: 'optional' },
+        { label: 'EV charge point', sub: '7.4 kW Mode 3 · OPDD', tone: 'go' },
+      ]}
+      note={
+        <>
+          A chargepoint gets its <span className="font-semibold text-elec-yellow">own dedicated final circuit</span> (Section 722). Type A RCD plus 6 mA DC detection (RDC-DD), and open-PEN protection on the PME supply via an integrated OPDD or a TT arrangement.
+        </>
+      }
+    />
+  );
+}
+
+/* ── M7 S3 — Mode 4 DC fast charging single-line ──────────────────────── */
+export function Mode4DcArchitecture({ caption }: { caption?: ReactNode }) {
+  return (
+    <SingleLine
+      eyebrow="Mode 4 DC fast charge — single-line"
+      caption={caption}
+      spine={[
+        { label: '3-phase AC supply' },
+        { label: 'Off-board rectifier / charger', sub: 'AC→DC inside the unit', tone: 'warn' },
+        { label: 'DC output', sub: 'CCS / CHAdeMO', tone: 'go' },
+        { label: 'EV battery', sub: 'charged directly as DC' },
+      ]}
+      note={
+        <>
+          In Mode 4 the <span className="font-semibold text-elec-yellow">AC→DC conversion happens in the charger</span> (off-board), not the car — so the unit handles the high power, isolation and DC contactors. The electrician's scope is the 3-phase AC supply and protection <strong className="text-white">up to</strong> the unit.
+        </>
+      }
+    />
+  );
+}
+
+/* ── M9 S5 — micro-CHP generating set ─────────────────────────────────── */
+export function MicroChpFlow({ caption }: { caption?: ReactNode }) {
+  return (
+    <SingleLine
+      eyebrow="Micro-CHP — single-line"
+      caption={caption}
+      spine={[
+        { label: 'Fuel in', sub: 'mains gas (typical)' },
+        { label: 'Prime mover', sub: 'engine / Stirling / fuel cell' },
+        { label: 'Generator', sub: 'grid-parallel', tone: 'go' },
+      ]}
+      branchLabel="two useful outputs"
+      branches={[
+        { label: 'Electricity', sub: 'home use + export', tone: 'go' },
+        { label: 'Heat', sub: 'DHW + space heating', tone: 'info' },
+      ]}
+      note={
+        <>
+          Micro-CHP makes <span className="font-semibold text-elec-yellow">electricity and useful heat</span> from one fuel input. It's a Section 551 generating set running in parallel with the grid (G98 / G99), so anti-islanding protection applies just as it does to PV.
+        </>
+      }
+    />
+  );
+}

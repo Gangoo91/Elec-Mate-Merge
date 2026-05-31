@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { G100ExportLimit } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -306,6 +307,8 @@ export default function RenewableEnergyModule10Section4() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <G100ExportLimit caption="G100 measures export at the connection point and curtails generation to stay within the agreed limit." />
 
           <ConceptBlock
             title="G100 in the EREC framework: G98 vs G99 vs G100"

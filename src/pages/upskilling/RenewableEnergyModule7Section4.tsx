@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { OcppArchitecture } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -278,6 +279,8 @@ export default function RenewableEnergyModule7Section4() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <OcppArchitecture caption="OCPP lets any compliant chargepoint talk to any management system — the layer DLM and billing ride on." />
 
           <RegsCallout
             source="Open Charge Alliance · OCPP 1.6 + 2.0.1 — industry standard (not BS 7671)"

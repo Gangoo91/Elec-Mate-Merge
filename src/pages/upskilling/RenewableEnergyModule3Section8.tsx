@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { Reg712WorkflowMap, CertBundleStructure } from '@/components/study-centre/diagrams/renewableM3';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -598,9 +598,8 @@ export default function RenewableEnergyModule3Section8() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <Reg712WorkflowMap
             caption="Section 712 reg-to-workflow map — table layout. Columns: Reg, Workflow stage (Design / Install / Commissioning), Operational source (which course section), Evidence in cert bundle. Rows for each Section 712 reg covered in Module 3 Sections 1-7, plus A4:2026 NEW regs (551.7.1(d), 531.3.3, Chapter 82)."
-            filename="renewable/m3s8-712-workflow-map.png"
           />
 
           <InlineCheck {...inlineChecks[0]} />
@@ -776,9 +775,8 @@ export default function RenewableEnergyModule3Section8() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <CertBundleStructure
             caption="Cert evidence bundle structure diagram — folder layout with 7 sections labelled. Each section labelled with content summary and the workflow stage that produces it. Annotated with the use cases over the install life (MCS audit, EICR, customer service, ownership transfer, insurance, end-of-life)."
-            filename="renewable/m3s8-cert-bundle-structure.png"
           />
 
           <InlineCheck {...inlineChecks[6]} />

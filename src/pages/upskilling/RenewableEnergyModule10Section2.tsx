@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { EmsArchitecture } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -302,6 +303,8 @@ export default function RenewableEnergyModule10Section2() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <EmsArchitecture caption="An EMS coordinates PV, battery, EV, heat pump, grid and loads — deciding where every kWh goes." />
 
           <ConceptBlock
             title="UK 2025-26 vendor EMS landscape"

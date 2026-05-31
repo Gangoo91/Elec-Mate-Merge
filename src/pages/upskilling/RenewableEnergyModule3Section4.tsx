@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { PvDcCableCrossSection } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -441,9 +441,8 @@ export default function RenewableEnergyModule3Section4() {
             meaning="Reg 712.521.1041 sets the two permitted DC cable installation options. The critical operational constraint: cables shall NOT be placed directly on the roof surface — must be in conduit/trunking, or in a containment system attached to the roof, or otherwise protected. The reg explicitly cites BS EN 50618 (H1Z2Z2-K) as the example single-core PV DC cable. Reg 712.523.101 separately requires the cable design ambient temperature ≥ 70°C for cables subject to direct heating from the underside of PV modules."
           />
 
-          <DiagramPlaceholder
+          <PvDcCableCrossSection
             caption="PV DC cable cross-section — single-core construction. Tinned-copper conductor in centre; cross-linked polyolefin inner insulation; outer UV-stable double-insulation layer. Annotated with BS EN 50618 / BS EN 62930 spec parameters: 1.5 kV DC voltage rating, 90°C continuous, UV-rated, halogen-free, typical conductor sizes 4 / 6 / 10 mm²."
-            filename="renewable/m3s4-cable-cross-section.png"
           />
 
           <InlineCheck {...inlineChecks[1]} />

@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { OffGridArchitecture } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -375,6 +376,8 @@ export default function RenewableEnergyModule4Section2() {
               <li><strong className="text-white">Reg 551.5</strong> — overcurrent protection located as near as practicable to the generator terminals</li>
             </ul>
           </ConceptBlock>
+
+          <OffGridArchitecture caption="Off-grid PV: the inverter forms its own 230 V reference and the battery is the only buffer." />
 
           <ConceptBlock
             title="Section 414 (SELV/PELV) — for small off-grid installs"

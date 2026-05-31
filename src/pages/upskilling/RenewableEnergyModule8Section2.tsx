@@ -17,6 +17,7 @@ import {
   Pullquote,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
+import { HeatPumpSupplyAssessment } from '@/components/study-centre/diagrams/renewableGapKit';
 
 const inlineChecks = [
   {
@@ -298,6 +299,8 @@ export default function RenewableEnergyModule8Section2() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <HeatPumpSupplyAssessment caption="Assess maximum demand and the DNO route before assuming the supply and CU can take a heat pump." />
 
           <ConceptBlock
             title="Existing supply capacity assessment"

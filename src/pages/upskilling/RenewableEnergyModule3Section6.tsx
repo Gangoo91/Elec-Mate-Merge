@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { ErecDecisionTree } from '@/components/study-centre/diagrams/renewableM3';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -502,9 +502,8 @@ export default function RenewableEnergyModule3Section6() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <ErecDecisionTree
             caption="EREC G98 / G99 / G100 decision tree — flowchart starting from the install\'s inverter AC rated current. Branch &le;16 A single-phase → EREC G98 fit-and-notify (28 days). Branch &gt;16 A → EREC G99 apply-and-wait (4-8 weeks assessment). G99 outcome branch → approved / approved with G100 limitation / rejected. G100 used to keep an install under G98 or to comply with G99 condition."
-            filename="renewable/m3s6-erec-decision-tree.png"
           />
 
           <InlineCheck {...inlineChecks[4]} />

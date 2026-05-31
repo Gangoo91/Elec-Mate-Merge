@@ -35,12 +35,16 @@ export interface WinbackContext {
   firstName: string;
   tier: string; // 'apprentice' | 'electrician' | 'employer' | 'business_ai'
   wasTrial: boolean;
+  userId: string; // stamped onto the pay link as client_reference_id (see withIdentity)
+  accountEmail?: string; // pre-fills Stripe Checkout with the account email
 }
 
-// Stripe Payment Links (created 2026-05-23). Direct to Stripe Checkout
-// with the win-back promotion code auto-applied via prefilled_promo_code.
-// No edge function involved. No login needed. User pays, Stripe webhook
-// reactivates their account by email match — that's it.
+// Stripe Payment Links (created 2026-05-23). Direct to Stripe Checkout with the
+// win-back promotion code auto-applied via prefilled_promo_code. No edge
+// function, no login. We stamp each link per-recipient with client_reference_id
+// (via withIdentity) so the webhook reactivates the RIGHT account regardless of
+// which email they pay with — matching by email alone silently failed for
+// customers whose checkout/personal email differed from their account email.
 const PAYMENT_LINK_APPRENTICE =
   'https://buy.stripe.com/fZu28kcZ40MQ2DT1kWbjW08?prefilled_promo_code=MATEWINBACK4';
 const PAYMENT_LINK_ELECTRICIAN =
@@ -81,6 +85,24 @@ function tierOffer(tier: string): {
     oldPrice: '',
     ctaUrl: 'https://www.elec-mate.com/subscriptions',
   };
+}
+
+// Stamp a Stripe Payment Link with the buyer's identity. The webhook reads
+// client_reference_id first (stripe-subscription-webhook → checkout.session.completed),
+// so this links the payment to the correct account even if they pay with a
+// different/personal email at checkout. Without it, Stripe creates a customer
+// from whatever email they type and the account never reactivates — the exact
+// bug that left paying win-back customers stuck behind the paywall. prefilled_email
+// nudges them onto their account email and helps avoid duplicate customers.
+// Non-Stripe URLs (e.g. /subscriptions) are returned unchanged.
+function withIdentity(url: string, ctx: WinbackContext): string {
+  if (!ctx.userId || !url.includes('buy.stripe.com')) return url;
+  const sep = url.includes('?') ? '&' : '?';
+  let stamped = `${url}${sep}client_reference_id=${encodeURIComponent(ctx.userId)}`;
+  if (ctx.accountEmail) {
+    stamped += `&prefilled_email=${encodeURIComponent(ctx.accountEmail)}`;
+  }
+  return stamped;
 }
 
 // ─── Shared HTML chrome ──────────────────────────────────────────────────
@@ -272,7 +294,7 @@ export function winbackTouch2(ctx: WinbackContext): WinbackEmail {
 
   // Prefer the pre-signed one-click reactivation URL when we have one —
   // takes the user straight to Stripe Checkout, no login, no extra page.
-  const primaryCtaUrl = offer.ctaUrl;
+  const primaryCtaUrl = withIdentity(offer.ctaUrl, ctx);
 
   // Tier with no automated offer → founder-note variant
   if (!offer.hasOffer) {
@@ -394,7 +416,7 @@ ${sig()}`;
 export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
   const name = ctx.firstName || 'mate';
   const offer = tierOffer(ctx.tier);
-  const primaryCtaUrl = offer.ctaUrl;
+  const primaryCtaUrl = withIdentity(offer.ctaUrl, ctx);
 
   const subject = offer.hasOffer
     ? `Last one, ${name} — ${offer.newPrice}/mo still good for 7 days`

@@ -15,8 +15,9 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { WahHierarchy } from '@/components/study-centre/diagrams/renewableM3';
+import { StandoffCrossSection, FixingByRoofType, FlashingOrientation } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -372,9 +373,8 @@ export default function RenewableEnergyModule3Section3() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <WahHierarchy
             caption="WAH Regulations hierarchy diagram for PV roof work — vertical flowchart from AVOID at top to MINIMISE at bottom. AVOID branches to ground-mount / BIPV. PREVENT branches to scaffolding / MEWP / tower. MINIMISE branches to safety nets / harness fall-arrest. Annotated with WAH Regs 2005 and RAMS requirement."
-            filename="renewable/m3s3-wah-hierarchy.png"
           />
 
           <InlineCheck {...inlineChecks[0]} />
@@ -444,9 +444,8 @@ export default function RenewableEnergyModule3Section3() {
             meaning="The 70-100 mm standoff above the roof surface combined with the manufacturer mounting spec (rail spacing, module gap, ventilation) is the standard mitigation. The cert evidence bundle records the standoff dimension, the manufacturer spec, and the site irradiance assessment. Roof-integrated PV (BIPV) requires additional thermal analysis."
           />
 
-          <DiagramPlaceholder
+          <StandoffCrossSection
             caption="Roof standoff cross-section — side view of module sitting on rail bracket. Standoff dimension labelled 70-100 mm between module backsheet and tile / slate surface. Airflow arrows showing convection. Annotated: cell temperature 10-15°C above ambient with standoff vs 25-35°C without."
-            filename="renewable/m3s3-standoff-cross-section.png"
           />
 
           <InlineCheck {...inlineChecks[2]} />
@@ -520,9 +519,8 @@ export default function RenewableEnergyModule3Section3() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <FixingByRoofType
             caption="Fixing methods by roof type — four-panel diagram. Panel 1 (tile): flashing-tile cross-section with raised collar downslope, bolt into rafter, EPDM gasket. Panel 2 (slate): slate-hook over batten, no penetration of slate. Panel 3 (metal-sheet): clamp-on-rib vs rivet-through with EPDM butyl pad. Panel 4 (flat): ballasted tilted frame with slip pads on membrane."
-            filename="renewable/m3s3-fixing-by-roof-type.png"
           />
 
           <InlineCheck {...inlineChecks[3]} />
@@ -575,9 +573,8 @@ export default function RenewableEnergyModule3Section3() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <FlashingOrientation
             caption="Flashing-tile correct vs incorrect orientation — side-by-side. Correct: raised collar downslope, water flows over the collar and around it. Incorrect: raised collar upslope, water pools above the penetration and enters through the bolt thread / gasket. Annotated with water-flow arrows and failure mode."
-            filename="renewable/m3s3-flashing-orientation.png"
           />
 
           <InlineCheck {...inlineChecks[5]} />

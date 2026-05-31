@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { Chapter57Protection } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -372,6 +373,8 @@ export default function RenewableEnergyModule5Section3() {
               <li><strong className="text-white">Restricted access</strong> — the enclosure ensures casual touch cannot reach live cells; only competent persons access the cells; achieved via product design (sealed, tool-required access)</li>
             </ul>
           </ConceptBlock>
+
+          <Chapter57Protection caption="BESS protection is bidirectional — devices must handle fault current from the battery and the grid side." />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 570.6.1.1.1, .1.1.2, .1.1.3 — Foundational safety"

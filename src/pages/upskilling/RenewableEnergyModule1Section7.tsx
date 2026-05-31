@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { BuildingRegsComparison } from '@/components/study-centre/diagrams/renewableM1';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -390,6 +391,8 @@ export default function RenewableEnergyModule1Section7() {
               regulatory frameworks entirely.
             </p>
           </ConceptBlock>
+
+          <BuildingRegsComparison caption="Part L (efficiency), Part P (electrical safety) and Building Control are three different things on an LCT job." />
 
           <InlineCheck {...inlineChecks[0]} />
 

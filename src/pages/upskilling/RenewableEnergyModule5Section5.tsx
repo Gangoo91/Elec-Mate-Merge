@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { BessTopologies } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -278,6 +279,8 @@ export default function RenewableEnergyModule5Section5() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <BessTopologies caption="Modular LV, all-in-one HV and rack / commercial battery architectures." />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 570.5.1 — Battery selection factors (the topology hook)"

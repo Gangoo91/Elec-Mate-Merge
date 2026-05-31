@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { BmsArchitecture } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -372,6 +373,8 @@ export default function RenewableEnergyModule5Section2() {
               <li><strong className="text-white">Fault logging</strong> — every fault timestamped + categorised; readable via customer app + manufacturer remote diagnostics</li>
             </ul>
           </ConceptBlock>
+
+          <BmsArchitecture caption="The BMS monitors every cell and opens the main contactor on over-voltage, over-temperature or over-current." />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 570.6.1.1.1 — BS EN IEC 62485 conformance"

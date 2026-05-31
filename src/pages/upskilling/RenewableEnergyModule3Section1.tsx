@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { UkYieldHeatmap, AzimuthTiltPolar, ShadingTopology, PrWaterfall } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -385,9 +385,8 @@ export default function RenewableEnergyModule3Section1() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <UkYieldHeatmap
             caption="UK PV yield heat map — colour-coded annual yield in kWh/kWp/year across England, Scotland, Wales and Northern Ireland. Highest values in south-east England (1,050–1,100); lowest in northern Scotland (850–900). Annotated with the PVGIS source data and the typical performance ratio assumption."
-            filename="renewable/m3s1-uk-yield-heatmap.png"
           />
 
           <InlineCheck {...inlineChecks[0]} />
@@ -457,9 +456,8 @@ export default function RenewableEnergyModule3Section1() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <AzimuthTiltPolar
             caption="Azimuth and tilt yield polar diagram — circular plot showing annual yield as a percentage of optimum across all azimuth and tilt combinations. South-facing 30–40° at the centre at 100%. East / west at ~80–85%. North-facing at ~45–55%. Practical UK roof pitch range (30–45°) highlighted as the &lsquo;sweet spot&rsquo; band."
-            filename="renewable/m3s1-azimuth-tilt-polar.png"
           />
 
           <InlineCheck {...inlineChecks[1]} />
@@ -563,9 +561,8 @@ export default function RenewableEnergyModule3Section1() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <ShadingTopology
             caption="Shading topology example — fish-eye sky view from a proposed array location showing horizon obstructions (trees, neighbouring building, chimney) overlaid with the annual sun path. The shaded portion of the sun path (where obstructions cross the path) represents the lost annual irradiance. Shading factor calculated as 1 minus the shaded portion."
-            filename="renewable/m3s1-shading-topology.png"
           />
 
           <InlineCheck {...inlineChecks[3]} />
@@ -624,9 +621,8 @@ export default function RenewableEnergyModule3Section1() {
             </p>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <PrWaterfall
             caption="Performance ratio waterfall diagram — starting from 100% STC nameplate, subtracting each loss component (temperature, soiling, mismatch, inverter, DC cable, AC cable, downtime) to arrive at the realistic PR of ~0.80 for a well-designed UK install. Each loss component labelled with the typical percentage."
-            filename="renewable/m3s1-pr-waterfall.png"
           />
 
           <InlineCheck {...inlineChecks[4]} />

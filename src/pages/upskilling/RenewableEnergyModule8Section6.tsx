@@ -17,6 +17,7 @@ import {
   Pullquote,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
+import { DhwCylinderIntegration } from '@/components/study-centre/diagrams/renewableGapSvg';
 
 const inlineChecks = [
   {
@@ -293,6 +294,8 @@ export default function RenewableEnergyModule8Section6() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <DhwCylinderIntegration caption="The heat pump heats via the lower coil; the immersion is electric backup plus the Legionella cycle." />
 
           <ConceptBlock
             title="Section 554 + Reg 554.2.1 thermal cut-out"

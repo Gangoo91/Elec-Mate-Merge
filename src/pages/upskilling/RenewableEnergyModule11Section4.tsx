@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { LpsForPv } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -302,6 +303,8 @@ export default function RenewableEnergyModule11Section4() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <LpsForPv caption="An LPS on a PV roof keeps a separation distance from the array — or bonds to it (BS EN 62305-3)." />
 
           <ConceptBlock
             title="Down conductor system — carrying current to earth"

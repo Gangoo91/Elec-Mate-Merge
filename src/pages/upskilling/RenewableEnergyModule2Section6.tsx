@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { PvArchitectures } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -377,6 +378,8 @@ export default function RenewableEnergyModule2Section6() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <PvArchitectures caption="On-roof, in-roof and ground-mount — how the mounting choice trades off cooling, cost and yield." />
 
           <ConceptBlock
             title="In-roof — integrated aesthetic, new-build natural"

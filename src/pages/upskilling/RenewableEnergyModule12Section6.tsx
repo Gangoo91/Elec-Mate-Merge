@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { McsHandoverPack } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -607,9 +607,8 @@ export default function RenewableEnergyModule12Section6() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <McsHandoverPack
             caption="MCS handover pack + cert evidence bundle integration diagram. Top: MCS handover pack structure — sizing + product DoCs + commissioning record + BS 7671 EIC + Schedule of Inspections + Schedule of Test Results + DNO submission + grant paperwork + warranty + customer guide. Middle: MIS standards mapping — MIS 3001 thermal / 3002 PV / 3003 wind / 3004 biomass / 3005 heat pumps / 3007 CHP / 3008 hydro — each contributes technology-specific detail to common pack structure. Lower middle: UK 2025-26 grant landscape — BUS (heat pumps + Wales biomass), SEG (export tariff), regional schemes; integration via MCS handover pack. Bottom: cert evidence bundle as installer\'s lifecycle record — MCS handover pack as foundation + ongoing additions over install life (periodic EICR + alarms + warranty + firmware + customer touchpoints + thermal images + modifications). Customer-facing handover vs installer-side lifecycle record."
-            filename="renewable/m12s6-mcs-handover-pack-structure.png"
           />
 
           <SectionRule />

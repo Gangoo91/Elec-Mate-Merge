@@ -143,6 +143,10 @@ serve(async (req) => {
         firstName: (row.full_name || '').split(' ')[0] || 'mate',
         tier: row.tier || 'unknown',
         wasTrial: !!row.was_trial,
+        // Stamp the pay link so Stripe's webhook can match the payment back to
+        // this exact account via client_reference_id (not the email they type).
+        userId: row.user_id,
+        accountEmail: row.email,
       };
 
       const email =

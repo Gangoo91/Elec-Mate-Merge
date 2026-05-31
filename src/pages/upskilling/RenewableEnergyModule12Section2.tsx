@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { DcIvAcrossLct } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -622,9 +622,8 @@ export default function RenewableEnergyModule12Section2() {
 
           <InlineCheck {...inlineChecks[3]} />
 
-          <DiagramPlaceholder
+          <DcIvAcrossLct
             caption="DC IR + IV across LCT — comparison diagram. Columns: PV string (Voc 600-1000 V → 1000 V test, IMD per Reg 712.421.101, weather-dependent); BESS DC bus (48 V or 400-800 V, BMS prerequisite, capacitor discharge wait, Reg 643.3.3 re-test at 250 V); EV DC fast (200-1000 V, manufacturer engineer DC, electrician AC + Section 722 PME); micro-hydro DC interim (24-300 V, bespoke manufacturer DoC, wet-environment cable). Common framework rows: Reg 642 inspection precedes Reg 643 testing; Table 64 test voltage per nominal band; BS EN 61557-2 instrument; Reg 643.3.3 250 V re-test after equipment connected; weather + state recording; cert evidence bundle integration."
-            filename="renewable/m12s2-dc-iv-across-lct.png"
           />
 
           <SectionRule />

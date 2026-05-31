@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { Mode4DcArchitecture } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -284,6 +285,8 @@ export default function RenewableEnergyModule7Section3() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <Mode4DcArchitecture caption="In Mode 4 the AC→DC conversion happens in the charger, not the car." />
 
           <RegsCallout
             source="BS EN 61851-23 — DC Electric Vehicle Charging Station product standard"

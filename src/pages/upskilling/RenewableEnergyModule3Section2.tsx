@@ -15,8 +15,9 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { KwpSizingTree, InverterArchitectures, Mis3002DesignPack } from '@/components/study-centre/diagrams/renewableM3';
+import { MpptEnvelope } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -370,9 +371,8 @@ export default function RenewableEnergyModule3Section2() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <KwpSizingTree
             caption="kWp sizing decision tree — three-branch flowchart from customer site survey output. Branch 1 (roof area): m² available → max module count → max kWp. Branch 2 (budget): customer budget → max kWp at price-per-kWp. Branch 3 (regulatory): EREC G98 threshold → max kWp before G99 application. Final node: chosen kWp = minimum of the three."
-            filename="renewable/m3s2-kwp-sizing-tree.png"
           />
 
           <InlineCheck {...inlineChecks[0]} />
@@ -463,9 +463,8 @@ export default function RenewableEnergyModule3Section2() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <MpptEnvelope
             caption="Inverter MPPT string sizing diagram — string V plotted against cell temperature for a 13-module string. At coldest -15°C, V_oc_max = 599.3 V (just under inverter 600 V absolute max — Rule 1). At STC 25°C, V_mp = 442 V (within MPPT range 200-550 V). At hottest 70°C, V_mp = 362 V (above MPPT minimum 200 V — Rule 2). The three voltage rules visualised as the string operating envelope inside the inverter MPPT range."
-            filename="renewable/m3s2-mppt-envelope.png"
           />
 
           <InlineCheck {...inlineChecks[2]} />
@@ -542,9 +541,8 @@ export default function RenewableEnergyModule3Section2() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <InverterArchitectures
             caption="Inverter MPPT architecture diagram — three side-by-side configurations: (1) single-MPPT with one string of 14 modules; (2) dual-MPPT with one string of 8 modules on MPPT-A (south roof) and 6 modules on MPPT-B (west roof); (3) microinverter system with one microinverter per module, AC trunking back to consumer unit. Annotated with MPPT count, per-input current rating, typical use case."
-            filename="renewable/m3s2-inverter-architectures.png"
           />
 
           <InlineCheck {...inlineChecks[5]} />
@@ -574,9 +572,8 @@ export default function RenewableEnergyModule3Section2() {
             </ul>
           </ConceptBlock>
 
-          <DiagramPlaceholder
+          <Mis3002DesignPack
             caption="MCS MIS 3002 design pack content map — three columns. Column 1 (Design): site survey, yield modelling, schematic, schedule, calculations. Column 2 (Install): commissioning records, BS EN 62446-1 test results, photographs, schedule of test results. Column 3 (Customer): customer information pack, MCS cert, warranty pack, EPC update. Audit trail running through all three."
-            filename="renewable/m3s2-mis3002-design-pack.png"
           />
 
           <InlineCheck {...inlineChecks[6]} />

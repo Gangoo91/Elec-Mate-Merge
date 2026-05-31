@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { EvDedicatedCircuitSld } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -286,6 +287,8 @@ export default function RenewableEnergyModule6Section4() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <EvDedicatedCircuitSld caption="A single-phase 7 kW chargepoint on its own dedicated final circuit with Type A + RDC-DD protection." />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 722.55 — Dedicated final circuit for EV charging"

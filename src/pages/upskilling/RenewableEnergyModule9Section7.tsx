@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { MicroHydroScheme } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -295,6 +296,8 @@ export default function RenewableEnergyModule9Section7() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <MicroHydroScheme caption="A micro-hydro scheme: intake, penstock, turbine and generator — power scales with head × flow." />
 
           <ConceptBlock
             title="Environment Agency abstraction licence + ecological framework"

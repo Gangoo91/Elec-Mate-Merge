@@ -17,6 +17,7 @@ import {
   Pullquote,
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
+import { HeatPumpSiting } from '@/components/study-centre/diagrams/renewableGapSvg';
 
 const inlineChecks = [
   {
@@ -295,6 +296,8 @@ export default function RenewableEnergyModule8Section3() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <HeatPumpSiting caption="Outdoor-unit clearances, condensate drain and protected cable entry." />
 
           <ConceptBlock
             title="Reg 422.3.2 enclosure temperature limits"

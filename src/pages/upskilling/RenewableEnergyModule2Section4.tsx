@@ -17,6 +17,7 @@ import {
   Pullquote,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { MpptTrackingCurve } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -404,6 +405,8 @@ export default function RenewableEnergyModule2Section4() {
               measures the resulting power, and adjusts to find or maintain V_mp.
             </p>
           </ConceptBlock>
+
+          <MpptTrackingCurve caption="The MPPT continuously hunts the voltage that yields peak power as sun and temperature change." />
 
           <VideoCard url="https://www.youtube.com/watch?v=BJpCWKgW8Ac" title="How an MPPT Solar Charge Controller Works" channel="The Engineering Mindset" topic="Maximum power point tracking — how the controller keeps the panel at its MPP across changing irradiance and temperature." />
 

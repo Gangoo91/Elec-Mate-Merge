@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { WindTurbineComparison } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -302,6 +303,8 @@ export default function RenewableEnergyModule9Section2() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <WindTurbineComparison caption="Horizontal-axis vs vertical-axis turbines — both Section 551 generating sets." />
 
           <ConceptBlock
             title="MCS MIS 3003 small wind installer framework"

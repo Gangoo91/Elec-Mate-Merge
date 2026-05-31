@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { MultiSourceFaultContribution } from '@/components/study-centre/diagrams/renewableGapSvg';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -304,6 +305,8 @@ export default function RenewableEnergyModule11Section6() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <MultiSourceFaultContribution caption="Grid fault current is high and stiff; inverter contributions are current-limited but still add." />
 
           <ConceptBlock
             title="Synchronous generators — high fault current contribution"

@@ -15,8 +15,8 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
-  DiagramPlaceholder,
 } from '@/components/study-centre/learning';
+import { IvFrameworkLct } from '@/components/study-centre/diagrams/renewableM12';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -614,9 +614,8 @@ export default function RenewableEnergyModule12Section1() {
 
           <InlineCheck {...inlineChecks[1]} />
 
-          <DiagramPlaceholder
+          <IvFrameworkLct
             caption="Part 6 Initial Verification framework applied to LCT — flow diagram. Top: Reg 641.1 mandate (during erection + on completion before service). Middle row: Reg 642 inspection sequence (a-r items, disconnected from supply) → Reg 643 testing sequence (continuity → IR → polarity → ADS → RCD → PFC → functional → voltage drop). Side stream: BS EN 61557 instrument compliance (parts 2, 3, 4, 6, 8, 10). Multi-source extensions: per-source IV (Section 712 PV / Chapter 57 BESS / Section 722 EV / Part 4-7 heat pump) + cross-source Reg 551.4.2 RCD effectiveness + Reg 551.7.5 anti-islanding per source. Bottom: documentation flow — EIC (Reg 644.5 skilled-person signed) + Schedule of Inspections + Schedule of Test Results + cert evidence bundle integrating MCS handover packs."
-            filename="renewable/m12s1-iv-framework-applied-to-lct.png"
           />
 
           <SectionRule />

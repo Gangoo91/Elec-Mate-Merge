@@ -16,6 +16,7 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
+import { ScprRequirements } from '@/components/study-centre/diagrams/renewableGapKit';
 import useSEO from '@/hooks/useSEO';
 
 const inlineChecks = [
@@ -287,6 +288,8 @@ export default function RenewableEnergyModule6Section7() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <ScprRequirements caption="The Smart Charge Point Regulations 2021 duties for private chargepoints." />
 
           <RegsCallout
             source="UK Statutory Instrument 2021/1467 — Electric Vehicles (Smart Charge Points) Regulations 2021"
