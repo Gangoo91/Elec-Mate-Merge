@@ -36,6 +36,15 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets, type BS7671Facet } from '../_shared/bs7671-facets-rag.ts';
+import {
+  buildAcWhitelist,
+  groundMatchedCriteria,
+  groundRegCites,
+  groundSuggestedAcRefs,
+  GROUNDING_RULES,
+  type AcWhitelist,
+  type ModelMatch,
+} from '../_shared/portfolio-ac-grounding.ts';
 
 const MODEL = 'gpt-5.4-mini-2026-03-17';
 
@@ -76,6 +85,11 @@ const fileAnalysisTool = {
               acText: { type: 'string' },
               confidence: { type: 'number', description: '0-100' },
               reason: { type: 'string' },
+              toComplete: {
+                type: 'string',
+                description:
+                  'If this AC is not yet fully met, the single concrete photo or sentence the apprentice should add to complete the claim. Omit if already sufficient.',
+              },
             },
             required: ['unitCode', 'acCode', 'acText', 'confidence', 'reason'],
           },
@@ -110,6 +124,36 @@ const fileAnalysisTool = {
             workType: { type: 'string' },
           },
           required: ['description', 'electricalElements', 'workType'],
+        },
+        imageQuality: {
+          type: 'string',
+          enum: ['clear', 'partial', 'unusable'],
+          description:
+            'How usable the photo is as evidence. If unusable, set evidenceStrength to weak and do not invent AC matches.',
+        },
+        missingFromPhoto: {
+          type: 'array',
+          items: { type: 'string' },
+          description:
+            'Specific things an assessor would expect to SEE in this photo but cannot (e.g. "the Zs reading on the MFT screen", "labelled ways at the board", "torque marks on terminals"). Empty if nothing is missing.',
+        },
+        authenticityFlags: {
+          type: 'array',
+          items: { type: 'string' },
+          description:
+            "Mismatches between the apprentice's description and what is actually visible (e.g. description says three-phase board but the photo shows a single-phase consumer unit). Empty if consistent.",
+        },
+        vacsr: {
+          type: 'object',
+          description:
+            'Which VACSR dimension (Valid, Authentic, Current, Sufficient, Reliable) most holds this evidence back, and the single fix.',
+          properties: {
+            weakest: {
+              type: 'string',
+              enum: ['valid', 'authentic', 'current', 'sufficient', 'reliable', 'none'],
+            },
+            fix: { type: 'string' },
+          },
         },
       },
       required: [
@@ -177,12 +221,12 @@ function buildAcContext(acData: Array<Record<string, unknown>>): string {
 function buildRagContext(facets: BS7671Facet[]): string {
   if (!facets?.length) return '';
   return facets
-    .slice(0, 4)
+    .slice(0, 6)
     .map((f, i) => {
       const ref = f.regNumber ? `Reg ${f.regNumber}` : `Source ${i + 1}`;
       const topic = f.primaryTopic ? ` — ${f.primaryTopic}` : '';
       const page = f.pageNumber ? ` · p.${f.pageNumber}` : '';
-      const body = (f.content || '').replace(/\s+/g, ' ').slice(0, 320);
+      const body = (f.content || '').replace(/\s+/g, ' ').slice(0, 520);
       return `[${ref}${topic}${page}] ${body}`;
     })
     .join('\n\n');
@@ -197,6 +241,8 @@ async function analyseFile(
     ragContext: string;
     transcript?: string;
     extraContext?: string;
+    whitelist: AcWhitelist;
+    facets: BS7671Facet[];
   },
   signal: AbortSignal
 ): Promise<Record<string, unknown> | { error: string }> {
@@ -215,11 +261,16 @@ ${ctx.transcript ? `## Apprentice voice description of the job\n"${ctx.transcrip
 ${ctx.extraContext ? `## Extra context the apprentice typed\n${ctx.extraContext}\n` : ''}
 
 ## Your job
-1. Identify which ACs this evidence credibly demonstrates. Be honest about confidence — overclaiming hurts the apprentice at gateway.
+1. Identify which ACs this evidence credibly demonstrates. Be honest about confidence — overclaiming hurts the apprentice at gateway. For each AC not yet fully met, set toComplete to the one concrete addition that would finish the claim.
 2. Grade the evidence quality A-D (A = ready, B = minor gaps, C = significant gaps, D = insufficient).
 3. Give 2-3 specific, actionable tips to strengthen it (not vague advice — concrete things to add, e.g. "include the Zs reading you measured" not "add more detail").
 4. Cite the BS 7671 regulation numbers from the context above where they directly apply.
-5. Suggest a concise portfolio title.
+5. List in missingFromPhoto anything an assessor would expect to SEE in this photo but can't.
+6. Flag in authenticityFlags any mismatch between the description and what is actually visible.
+7. Set imageQuality (clear/partial/unusable) and the weakest VACSR dimension with a one-line fix.
+8. Suggest a concise portfolio title.
+
+${GROUNDING_RULES}
 
 Be sharp and honest — this is for a real EPA gateway portfolio.`;
 
@@ -261,11 +312,25 @@ Be sharp and honest — this is for a real EPA gateway portfolio.`;
   const data = await response.json();
   const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
   if (!toolCall?.function?.arguments) return { error: 'No structured analysis from AI' };
+  let parsed: Record<string, unknown>;
   try {
-    return JSON.parse(toolCall.function.arguments);
+    parsed = JSON.parse(toolCall.function.arguments);
   } catch (err) {
     return { error: `Parse failed: ${(err as Error).message}` };
   }
+
+  // Keep the AI honest: drop any AC it invented (keep only real framework ACs,
+  // with authoritative wording), and keep only reg numbers we actually
+  // retrieved from BS 7671.
+  const ground = groundMatchedCriteria(parsed.matchedCriteria as ModelMatch[], ctx.whitelist);
+  if (ground.droppedCount > 0) {
+    console.log(
+      `[capture] file ${file.id}: dropped ${ground.droppedCount} ungrounded AC(s): ${ground.droppedRefs.join(', ')}`
+    );
+  }
+  parsed.matchedCriteria = ground.kept;
+  parsed.regulationRefs = groundRegCites(parsed.regulationRefs, ctx.facets);
+  return parsed;
 }
 
 async function draftReflection(
@@ -275,6 +340,7 @@ async function draftReflection(
     acContext: string;
     ragContext: string;
     transcript: string;
+    whitelist: AcWhitelist;
   },
   signal: AbortSignal
 ): Promise<Record<string, unknown> | { error: string }> {
@@ -292,7 +358,9 @@ ${ctx.ragContext ? `## BS 7671 regulation context\n${ctx.ragContext}\n` : ''}
 - Result: measurements taken, sign-offs, what the customer/supervisor said
 - Learning: honest reflection — what they'd do differently, what they understand better
 
-Use first person ("I"). UK English. Specific, not generic. Cite BS 7671 reg numbers verbatim where the context above applies. Keep each section to 2-4 sentences.`;
+Use first person ("I"). UK English. Specific, not generic. Cite BS 7671 reg numbers verbatim where the context above applies. Keep each section to 2-4 sentences.
+
+${GROUNDING_RULES}`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -324,11 +392,16 @@ Use first person ("I"). UK English. Specific, not generic. Cite BS 7671 reg numb
   const data = await response.json();
   const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
   if (!toolCall?.function?.arguments) return { error: 'No reflection from AI' };
+  let parsed: Record<string, unknown>;
   try {
-    return JSON.parse(toolCall.function.arguments);
+    parsed = JSON.parse(toolCall.function.arguments);
   } catch (err) {
     return { error: `Parse failed: ${(err as Error).message}` };
   }
+  // Ground the reflection's AC suggestions to real, verified criteria in the
+  // canonical "<unit> AC <ac>" format so they never auto-claim an invented AC.
+  parsed.suggestedACs = groundSuggestedAcRefs(parsed.suggestedACs, ctx.whitelist);
+  return parsed;
 }
 
 function sse(event: string, data: unknown): Uint8Array {
@@ -402,10 +475,10 @@ serve(async (req: Request) => {
 
     const [acResult, facets] = await Promise.all([
       supabase.rpc('get_qualification_acs', { p_qualification_code: qualification_code }),
+      // Hybrid vector + BM25 retrieval for accurate regulation grounding.
       searchFacets(supabase, {
         query: ragQuery,
-        matchCount: 5,
-        skipEmbedding: true,
+        matchCount: 8,
         documentTypes: ['bs7671'],
       }).catch(() => [] as BS7671Facet[]),
     ]);
@@ -413,6 +486,7 @@ serve(async (req: Request) => {
     const acData = (acResult.data || []) as Array<Record<string, unknown>>;
     const acContext = buildAcContext(acData);
     const ragContext = buildRagContext(facets);
+    const whitelist = buildAcWhitelist(acData);
 
     // ── Stream parallel analyses ──────────────────────────────────────
     const abortController = new AbortController();
@@ -445,6 +519,8 @@ serve(async (req: Request) => {
                 ragContext,
                 transcript,
                 extraContext,
+                whitelist,
+                facets,
               },
               abortController.signal
             )
@@ -465,6 +541,7 @@ serve(async (req: Request) => {
                   acContext,
                   ragContext,
                   transcript,
+                  whitelist,
                 },
                 abortController.signal
               )

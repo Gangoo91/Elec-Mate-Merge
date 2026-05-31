@@ -46,6 +46,10 @@ export interface PortfolioPackItem {
   verified: boolean;
   supervisorFeedback: string | null;
   timeSpentMins: number;
+  /** What the apprentice personally did (individual contribution). */
+  role: string | null;
+  /** Workplace witness / supervisor who saw the work carried out. */
+  witness: { name?: string; role?: string; date?: string } | null;
 }
 
 export type AcState =
@@ -137,6 +141,16 @@ function deriveEvidenceType(category: string, hasPhotos: boolean, hasWriteUp: bo
   if (hasPhotos) return 'Work product';
   if (hasWriteUp) return 'Reflective account';
   return 'Evidence';
+}
+
+// Map a captured evidence-type code to its display label.
+const EVIDENCE_TYPE_LABEL_PDF: Record<string, string> = {
+  observation: 'Observation',
+  'work-product': 'Work product',
+  'witness-testimony': 'Witness testimony',
+  'professional-discussion': 'Professional discussion',
+  photo: 'Photo',
+  'reflective-account': 'Reflective account',
 }
 
 type CovRow = { status: string; evidence_count: number };
@@ -273,12 +287,20 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
     file_type: string | null;
     date_completed: string | null;
     created_at: string;
+    metadata: {
+      workDate?: string;
+      siteRef?: string;
+      role?: string;
+      evidenceType?: string;
+      witness?: { name?: string; role?: string; date?: string };
+      authenticityConfirmed?: boolean;
+    } | null;
   };
 
   const { data: rows } = await supabase
     .from('portfolio_items')
     .select(
-      'title, description, category, skills_demonstrated, learning_outcomes_met, assessment_criteria_met, reflection_notes, supervisor_feedback, is_supervisor_verified, grade, status, time_spent, storage_urls, file_url, file_type, date_completed, created_at'
+      'title, description, category, skills_demonstrated, learning_outcomes_met, assessment_criteria_met, reflection_notes, supervisor_feedback, is_supervisor_verified, grade, status, time_spent, storage_urls, file_url, file_type, date_completed, created_at, metadata'
     )
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
@@ -334,11 +356,19 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
     // skills_demonstrated is sometimes (mis)used to store AC codes — keep only
     // real skill words so we don't duplicate the criteria list.
     const skills = (row.skills_demonstrated ?? []).filter((s) => s && !looksLikeAc(s) && s.length <= 48);
+    const meta = row.metadata ?? {};
+    const evidenceType = meta.evidenceType
+      ? EVIDENCE_TYPE_LABEL_PDF[meta.evidenceType] ??
+        deriveEvidenceType(row.category ?? '', photos.length > 0, !!row.description?.trim())
+      : deriveEvidenceType(row.category ?? '', photos.length > 0, !!row.description?.trim());
+    const w = meta.witness;
+    const witness = w && (w.name || w.role || w.date) ? w : null;
     return {
       title: row.title ?? 'Untitled evidence',
-      date: row.date_completed ?? row.created_at,
+      // Prefer the captured date of work (currency) over the record's timestamps.
+      date: meta.workDate ?? row.date_completed ?? row.created_at,
       category: row.category ?? '',
-      evidenceType: deriveEvidenceType(row.category ?? '', photos.length > 0, !!row.description?.trim()),
+      evidenceType,
       status: row.status ?? 'draft',
       grade: row.grade,
       writeUp: row.description?.trim() || null,
@@ -350,6 +380,8 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
       verified: !!row.is_supervisor_verified,
       supervisorFeedback: row.supervisor_feedback?.trim() || null,
       timeSpentMins: row.time_spent ?? 0,
+      role: meta.role?.trim() || null,
+      witness,
     };
   });
 

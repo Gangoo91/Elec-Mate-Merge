@@ -8,6 +8,12 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
+import {
+  buildAcWhitelist,
+  findUnknownClaimedAcs,
+  GROUNDING_RULES,
+} from '../_shared/portfolio-ac-grounding.ts';
 
 // ---------- Tool schema for structured output ----------
 const validationTool = {
@@ -289,29 +295,62 @@ serve(async (req: Request) => {
 
     // ---------- RAG: fetch exact AC text for claimed ACs ----------
     let acContext = '';
+    let unknownClaimed: string[] = [];
     try {
       const { data: acData } = await supabase.rpc('get_qualification_acs', {
         p_qualification_code: qualification_code,
       });
 
       if (acData?.length) {
+        const whitelist = buildAcWhitelist(acData);
+        unknownClaimed = findUnknownClaimedAcs(claimed_acs, whitelist);
         acContext += '\n\n--- Exact Assessment Criteria Being Claimed ---\n';
         for (const ac of acData) {
-          // Include all ACs but highlight claimed ones
-          const isClaimed = claimed_acs.some(
-            (c: string) =>
-              c === ac.ac_ref ||
-              c === `${ac.unit_code}.${ac.ac_ref}` ||
-              ac.ac_text?.includes(c) ||
-              c.includes(ac.ac_ref)
-          );
+          // Exact token match on the real ac_code column (the old ac_ref column
+          // does not exist) — avoids substrings like "11.1" matching "1.1".
+          const isClaimed = claimed_acs.some((c: string) => {
+            const toks = String(c)
+              .split(/[\s·,;|]+/)
+              .map((t) => t.trim())
+              .filter(Boolean);
+            return (
+              toks.includes(String(ac.ac_code)) && toks.includes(String(ac.unit_code))
+            );
+          });
           if (isClaimed) {
-            acContext += `[CLAIMED] Unit ${ac.unit_code}: ${ac.ac_ref} — ${ac.ac_text}\n`;
+            acContext += `[CLAIMED] Unit ${ac.unit_code}: ${ac.ac_code} — ${ac.ac_text}\n`;
           }
+        }
+        if (unknownClaimed.length) {
+          acContext += `\n[WARNING] These claimed references are NOT in the qualification framework — tell the apprentice to check them, do not validate them as if real: ${unknownClaimed.join(', ')}\n`;
         }
       }
     } catch (err) {
       console.warn('[validate-evidence-quality] AC fetch failed:', err);
+    }
+
+    // ---------- BS 7671 regulation grounding ----------
+    let bs7671Context = '';
+    try {
+      const facets = await searchFacets(supabase, {
+        query: evidence_text.slice(0, 400) || 'electrical installation BS 7671',
+        matchCount: 6,
+        documentTypes: ['bs7671'],
+      }).catch(() => []);
+      if (facets.length) {
+        bs7671Context =
+          '\n\n--- BS 7671 regulation context (cite ONLY these reg numbers) ---\n' +
+          facets
+            .slice(0, 6)
+            .map((f) => {
+              const ref = f.regNumber ? `Reg ${f.regNumber}` : 'Source';
+              const body = (f.content || '').replace(/\s+/g, ' ').slice(0, 500);
+              return `[${ref}] ${body}`;
+            })
+            .join('\n');
+      }
+    } catch (err) {
+      console.warn('[validate-evidence-quality] BS 7671 grounding failed:', err);
     }
 
     // RAG: practical work context
@@ -355,7 +394,9 @@ Grade the overall evidence:
 - D (0-39): Insufficient — does not adequately demonstrate the claimed competencies
 
 Be encouraging but rigorous. Use UK English.
-${acContext}${practicalContext}`;
+
+${GROUNDING_RULES}
+${acContext}${bs7671Context}${practicalContext}`;
 
     // Build content with optional images
     const userContentParts: Array<

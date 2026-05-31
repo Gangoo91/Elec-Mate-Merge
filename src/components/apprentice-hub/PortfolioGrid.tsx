@@ -23,6 +23,7 @@ import {
   Link2,
   NotebookPen,
   ShieldCheck,
+  CheckCircle2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { getEvidenceReadiness } from '@/lib/portfolioReadiness';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
@@ -50,6 +52,8 @@ interface PortfolioGridProps {
 type ViewMode = 'grid' | 'list';
 type StatusFilter = 'all' | 'draft' | 'in-progress' | 'completed' | 'reviewed';
 type SortOption = 'newest' | 'oldest' | 'name';
+
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
   { value: 'all', label: 'All Status' },
@@ -65,26 +69,35 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   const { qualificationCode } = useStudentQualification();
   const { tree } = useQualificationACs(qualificationCode);
 
-  // Build dynamic categories from qualification units
-  const dynamicCategories = useMemo(() => {
+  // Build filter chips. With a qualification, chips are units and filter by the
+  // unit code referenced in each entry's assessment criteria (entries are saved
+  // under a generic category, so the AC codes are the real unit link). Without
+  // one, chips fall back to category names.
+  const dynamicCategories = useMemo<{ key: string; label: string }[]>(() => {
     if (tree.units.length === 0) {
       return [
-        'All',
-        'Practical Skills',
-        'Health & Safety',
-        'Testing & Inspection',
-        'Technical Knowledge',
-        'Workplace Practice',
+        { key: 'all', label: 'All' },
+        { key: 'cat:Practical Skills', label: 'Practical Skills' },
+        { key: 'cat:Health & Safety', label: 'Health & Safety' },
+        { key: 'cat:Testing & Inspection', label: 'Testing & Inspection' },
+        { key: 'cat:Technical Knowledge', label: 'Technical Knowledge' },
+        { key: 'cat:Workplace Practice', label: 'Workplace Practice' },
       ];
     }
-    return ['All', ...tree.units.map((u) => `Unit ${u.unitCode}: ${u.unitTitle}`)];
+    return [
+      { key: 'all', label: 'All' },
+      ...tree.units.map((u) => ({
+        key: `unit:${u.unitCode}`,
+        label: `Unit ${u.unitCode}: ${u.unitTitle}`,
+      })),
+    ];
   }, [tree.units]);
 
   // View and filter state
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
   // Detail sheet state
@@ -114,9 +127,22 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
       filtered = filtered.filter((e) => e.status === statusFilter);
     }
 
-    // Category filter
-    if (categoryFilter !== 'All') {
-      filtered = filtered.filter((e) => e.category === categoryFilter);
+    // Category filter — unit chips match the unit code in an entry's ACs;
+    // fallback category chips match the entry's category name.
+    if (categoryFilter !== 'all') {
+      if (categoryFilter.startsWith('unit:')) {
+        const code = categoryFilter.slice(5);
+        const re = new RegExp(`(^|[^0-9A-Za-z])${escapeRegExp(code)}([^0-9A-Za-z]|$)`);
+        filtered = filtered.filter((e) =>
+          (e.assessmentCriteria || []).some((ac: string) => re.test(ac))
+        );
+      } else if (categoryFilter.startsWith('cat:')) {
+        const name = categoryFilter.slice(4);
+        filtered = filtered.filter((e) => {
+          const cn = typeof e.category === 'object' ? e.category?.name : e.category;
+          return cn === name;
+        });
+      }
     }
 
     // Sort
@@ -136,6 +162,19 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
     return filtered;
   }, [entries, searchQuery, statusFilter, categoryFilter, sortBy]);
 
+  // Portfolio-at-a-glance counts for the summary strip (unfiltered totals).
+  const stats = useMemo(() => {
+    const all = entries || [];
+    const acSet = new Set<string>();
+    all.forEach((e) => (e.assessmentCriteria || []).forEach((c) => acSet.add(c)));
+    return {
+      total: all.length,
+      verified: all.filter((e) => e.isVerified).length,
+      drafts: all.filter((e) => (e.status || 'draft') === 'draft').length,
+      acs: acSet.size,
+    };
+  }, [entries]);
+
   const handleEntryClick = (entry: any) => {
     setSelectedEntry(entry);
     setShowDetail(true);
@@ -144,10 +183,10 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   const clearFilters = () => {
     setSearchQuery('');
     setStatusFilter('all');
-    setCategoryFilter('All');
+    setCategoryFilter('all');
   };
 
-  const hasActiveFilters = searchQuery || statusFilter !== 'all' || categoryFilter !== 'All';
+  const hasActiveFilters = searchQuery || statusFilter !== 'all' || categoryFilter !== 'all';
 
   if (isLoading) {
     return (
@@ -163,24 +202,34 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   }
 
   return (
-    <div className="px-4 py-6 space-y-4 lg:px-6 lg:max-w-4xl lg:mx-auto">
+    <div className="px-4 py-6 space-y-5 lg:px-6">
+      {/* Summary strip — portfolio at a glance (assessor-relevant context) */}
+      {stats.total > 0 && (
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[12px]">
+          <SummaryStat n={stats.total} label={stats.total === 1 ? 'item' : 'items'} />
+          <span className="h-3 w-px bg-white/10" aria-hidden />
+          <SummaryStat n={stats.verified} label="verified" accent />
+          <SummaryStat n={stats.drafts} label="drafts" />
+          {stats.acs > 0 && <SummaryStat n={stats.acs} label="criteria covered" />}
+        </div>
+      )}
+
       {/* Search and Controls */}
       <div className="space-y-3">
-        {/* Search Bar */}
+        {/* Search Bar — icon stays clear of the text at every breakpoint
+            (md:pl-10 beats the Input base's md:px-3). */}
         <div className="relative">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50 pointer-events-none z-10" />
           <Input
             placeholder="Search evidence..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('bg-card border-border', !searchQuery && 'pl-10')}
+            className="bg-card border-border pl-10 md:pl-10 pr-10 md:pr-10"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 touch-manipulation"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 touch-manipulation z-10"
             >
               <X className="h-4 w-4 text-white" />
             </button>
@@ -233,18 +282,19 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Category Chips */}
+          {/* Category Chips — long unit titles truncate instead of overflowing */}
           {dynamicCategories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setCategoryFilter(cat)}
-              className={cn('px-4 h-10 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation active:scale-95',
-                categoryFilter === cat
+              key={cat.key}
+              onClick={() => setCategoryFilter(cat.key)}
+              title={cat.label}
+              className={cn('px-4 h-10 rounded-full text-xs font-medium truncate max-w-[220px] transition-colors shrink-0 touch-manipulation active:scale-95',
+                categoryFilter === cat.key
                   ? 'bg-elec-yellow text-black'
                   : 'bg-muted text-white hover:bg-muted/80'
               )}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -294,7 +344,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
           )}
         </div>
       ) : viewMode === 'grid' ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
           {filteredEntries.map((entry) => (
             <GridCard
               key={entry.id}
@@ -344,7 +394,41 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   );
 }
 
-// Grid card component
+// Summary strip stat — mono number + muted label
+function SummaryStat({ n, label, accent }: { n: number; label: string; accent?: boolean }) {
+  return (
+    <span className="inline-flex items-baseline gap-1.5">
+      <span
+        className={cn(
+          'font-mono font-semibold tabular-nums',
+          accent ? 'text-elec-yellow' : 'text-white'
+        )}
+      >
+        {n}
+      </span>
+      <span className="text-white/45">{label}</span>
+    </span>
+  );
+}
+
+const STATUS_META: Record<string, { label: string; cls: string; dot: string }> = {
+  draft: { label: 'Draft', cls: 'text-white/55', dot: 'bg-white/30' },
+  'in-progress': { label: 'In progress', cls: 'text-blue-300', dot: 'bg-blue-400' },
+  completed: { label: 'Completed', cls: 'text-emerald-300', dot: 'bg-emerald-400' },
+  reviewed: { label: 'Verified', cls: 'text-elec-yellow', dot: 'bg-elec-yellow' },
+};
+
+function StatusPill({ status }: { status: string }) {
+  const meta = STATUS_META[status] || STATUS_META.draft;
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[11px] font-medium">
+      <span className={cn('h-1.5 w-1.5 rounded-full shrink-0', meta.dot)} />
+      <span className={meta.cls}>{meta.label}</span>
+    </span>
+  );
+}
+
+// Grid card — media on top, readable content strip below (no text over the photo)
 function GridCard({
   entry,
   onClick,
@@ -364,76 +448,98 @@ function GridCard({
     if (entry.evidenceFiles?.some((f: any) => f.url?.startsWith('http'))) return Link2;
     return FileText;
   };
-
   const FileIcon = getFileIcon();
 
-  const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-white',
-    'in-progress': 'bg-white/[0.02] text-white/85',
-    completed: 'bg-white/[0.02] text-white/85',
-    reviewed: 'bg-elec-yellow/10 text-elec-yellow',
-  };
+  const isDiary =
+    entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence';
+  const status = entry.status || 'draft';
+  const acCount = entry.assessmentCriteria?.length || 0;
+  const photoCount = entry.evidenceFiles?.length || 0;
+  const assessorReady = getEvidenceReadiness(entry).ready;
+  const dateLabel = entry.dateCreated
+    ? new Date(entry.dateCreated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+    : '';
 
   return (
     <button
       onClick={onClick}
-      className="group relative aspect-square rounded-xl bg-card border border-border overflow-hidden text-left active:scale-[0.98] transition-transform touch-manipulation"
+      className="group flex flex-col rounded-xl bg-card border border-border overflow-hidden text-left active:scale-[0.98] transition-transform touch-manipulation"
     >
-      {/* Thumbnail or Icon */}
-      <div className="absolute inset-0 bg-muted flex items-center justify-center">
+      {/* Media */}
+      <div className="relative aspect-[4/3] bg-muted overflow-hidden">
         {hasImage && entry.evidenceFiles?.[0]?.url ? (
           <img
             src={entry.evidenceFiles[0].url}
             alt={entry.title}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         ) : (
-          <FileIcon className="h-10 w-10 text-white" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <FileIcon className="h-9 w-9 text-white/40" />
+          </div>
+        )}
+
+        {/* Diary source — top-left */}
+        {isDiary && (
+          <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-black/55 backdrop-blur-sm text-white text-[10px] font-medium">
+            <NotebookPen className="h-3 w-3" />
+            Diary
+          </span>
+        )}
+
+        {/* Verified — top-right */}
+        {entry.isVerified && (
+          <span className="absolute top-2 right-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-elec-yellow text-black text-[10px] font-semibold">
+            <ShieldCheck className="h-3 w-3" />
+            Verified
+          </span>
         )}
       </div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-white/[0.02]" />
+      {/* Content strip */}
+      <div className="flex flex-col gap-2 p-3">
+        <h3 className="text-[13px] font-medium text-white leading-snug line-clamp-2 min-h-[34px]">
+          {entry.title}
+        </h3>
 
-      {/* Content */}
-      <div className="absolute inset-x-0 bottom-0 p-3 space-y-1.5">
-        <h3 className="text-sm font-medium text-white line-clamp-2">{entry.title}</h3>
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <Badge className={cn('text-[10px]', statusColors[entry.status] || statusColors.draft)}>
-            {entry.status || 'draft'}
-          </Badge>
-          {entry.skills?.slice(0, 2).map((skill: string, i: number) => (
-            <Badge key={i} variant="outline" className="text-[10px] border-white/30 text-white">
-              {skill.substring(0, 3)}
-            </Badge>
-          ))}
+        <div className="flex items-center justify-between gap-2">
+          <StatusPill status={status} />
+          {dateLabel && (
+            <span className="text-[11px] text-white/45 font-mono tabular-nums shrink-0">
+              {dateLabel}
+            </span>
+          )}
         </div>
+
+        {(acCount > 0 || photoCount > 0 || commentCount > 0 || assessorReady) && (
+          <div className="flex items-center gap-3 text-[10.5px] text-white/45 font-mono">
+            {assessorReady && (
+              <span className="inline-flex items-center gap-1 text-elec-yellow" title="Assessor-ready (VACSR complete)">
+                <CheckCircle2 className="h-3 w-3" />
+                Ready
+              </span>
+            )}
+            {acCount > 0 && (
+              <span className="inline-flex items-center gap-1">
+                <FileCheck className="h-3 w-3" />
+                {acCount} AC
+              </span>
+            )}
+            {photoCount > 0 && (
+              <span className="inline-flex items-center gap-1">
+                <ImageIcon className="h-3 w-3" />
+                {photoCount}
+              </span>
+            )}
+            {commentCount > 0 && (
+              <span className="inline-flex items-center gap-1">
+                <MessageSquare className="h-3 w-3" />
+                {commentCount}
+              </span>
+            )}
+          </div>
+        )}
       </div>
-
-      {/* Comment indicator */}
-      {commentCount > 0 && (
-        <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/50 text-white text-[10px]">
-          <MessageSquare className="h-3 w-3" />
-          {commentCount}
-        </div>
-      )}
-
-      {/* Diary source badge */}
-      {(entry.category?.id === 'site-diary-evidence' ||
-        entry.category === 'site-diary-evidence') && (
-        <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/[0.02] text-white text-[10px] font-medium">
-          <NotebookPen className="h-3 w-3" />
-          Diary
-        </div>
-      )}
-
-      {/* Verified badge */}
-      {entry.isVerified && (
-        <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/[0.02] text-white text-[10px] font-medium">
-          <ShieldCheck className="h-3 w-3" />
-          Verified
-        </div>
-      )}
     </button>
   );
 }

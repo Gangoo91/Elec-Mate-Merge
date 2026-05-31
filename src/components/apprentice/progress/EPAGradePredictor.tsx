@@ -137,77 +137,81 @@ export function EPAGradePredictor({
           : 'You\'re on track for the top band — keep cementing depth across topics.';
 
   return (
-    <section className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6 space-y-4">
-      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-        <div className="space-y-1">
-          <Eyebrow>Predicted EPA grade</Eyebrow>
-          <div className="flex items-baseline gap-3">
-            <span
-              className={cn(
-                'text-[40px] sm:text-[48px] font-semibold tracking-tight leading-none',
-                headlineTone
-              )}
-            >
-              {haveAnyData ? BAND_LABEL[band] : '—'}
-            </span>
-            {haveAnyData && (
-              <span className="text-[14px] text-white/55 font-mono">{blended}/100 blended</span>
+    <section className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6">
+      <div className="grid gap-5 lg:grid-cols-2 lg:gap-10 lg:items-center">
+        {/* Left — grade headline + actionable nudge */}
+        <div className="space-y-3">
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <div className="space-y-1">
+              <Eyebrow>Predicted EPA grade</Eyebrow>
+              <div className="flex items-baseline gap-3">
+                <span
+                  className={cn(
+                    'text-[40px] sm:text-[52px] font-semibold tracking-tight leading-none',
+                    headlineTone
+                  )}
+                >
+                  {haveAnyData ? BAND_LABEL[band] : '—'}
+                </span>
+                {haveAnyData && (
+                  <span className="text-[14px] text-white/55 font-mono">{blended}/100 blended</span>
+                )}
+              </div>
+            </div>
+            {trendCopy && (
+              <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 max-w-[180px] text-right">
+                {trendCopy}
+              </span>
             )}
           </div>
+          <p className="text-[13px] text-white/85 leading-relaxed">{actionCopy}</p>
         </div>
-        {trendCopy && (
-          <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 max-w-[180px] text-right">
-            {trendCopy}
-          </span>
-        )}
-      </div>
 
-      {/* Probability strip */}
-      <div className="space-y-2">
-        <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-white/[0.04]">
-          {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => {
-            const pct = probs[b];
-            if (pct < 1) return null;
-            const tone =
-              b === 'distinction'
-                ? 'bg-elec-yellow'
-                : b === 'merit'
-                  ? 'bg-elec-yellow/55'
-                  : b === 'pass'
-                    ? 'bg-white/40'
-                    : 'bg-red-400/70';
-            return (
-              <div
-                key={b}
-                className={cn('h-full transition-all duration-700', tone)}
-                style={{ width: `${pct}%` }}
-                title={`${BAND_LABEL[b]} · ${pct}%`}
-              />
-            );
-          })}
-        </div>
-        <div className="grid grid-cols-4 gap-2 text-[10px] uppercase tracking-[0.14em]">
-          {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => (
-            <div key={b} className="text-center space-y-0.5">
-              <div
-                className={cn(
-                  'font-mono text-[12px] tabular-nums',
-                  b === band
-                    ? b === 'fail'
-                      ? 'text-red-300'
-                      : 'text-elec-yellow'
-                    : 'text-white/55'
-                )}
-              >
-                {probs[b]}%
+        {/* Right — probability strip across the bands */}
+        <div className="space-y-2">
+          <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-white/[0.04]">
+            {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => {
+              const pct = probs[b];
+              if (pct < 1) return null;
+              const tone =
+                b === 'distinction'
+                  ? 'bg-elec-yellow'
+                  : b === 'merit'
+                    ? 'bg-elec-yellow/55'
+                    : b === 'pass'
+                      ? 'bg-white/40'
+                      : 'bg-red-400/70';
+              return (
+                <div
+                  key={b}
+                  className={cn('h-full transition-all duration-700', tone)}
+                  style={{ width: `${pct}%` }}
+                  title={`${BAND_LABEL[b]} · ${pct}%`}
+                />
+              );
+            })}
+          </div>
+          <div className="grid grid-cols-4 gap-2 text-[10px] uppercase tracking-[0.14em]">
+            {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => (
+              <div key={b} className="text-center space-y-0.5">
+                <div
+                  className={cn(
+                    'font-mono text-[12px] tabular-nums',
+                    b === band
+                      ? b === 'fail'
+                        ? 'text-red-300'
+                        : 'text-elec-yellow'
+                      : 'text-white/55'
+                  )}
+                >
+                  {probs[b]}%
+                </div>
+                <div className="text-white/45">{BAND_LABEL[b]}</div>
               </div>
-              <div className="text-white/45">{BAND_LABEL[b]}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-
-      <p className="text-[13px] text-white/85 leading-relaxed">{actionCopy}</p>
     </section>
   );
 }

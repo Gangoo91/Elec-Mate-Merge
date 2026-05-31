@@ -36,8 +36,10 @@ import {
   CheckSquare,
   Square,
   FileCheck,
+  ShieldCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
@@ -47,7 +49,7 @@ import {
   type ReflectionDraft,
   type CaptureMeta,
 } from '@/hooks/portfolio/usePortfolioCaptureStream';
-import type { PortfolioCategory } from '@/types/portfolio';
+import type { PortfolioCategory, EvidenceType } from '@/types/portfolio';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { useToast } from '@/hooks/use-toast';
@@ -85,6 +87,41 @@ const GRADE_TONE: Record<'A' | 'B' | 'C' | 'D', string> = {
   D: 'border-red-500/30 text-red-300 bg-red-500/[0.05]',
 };
 
+// Evidence types recognised by UK awarding bodies / EPAOs.
+const EVIDENCE_TYPES: { v: EvidenceType; label: string }[] = [
+  { v: 'observation', label: 'Observation' },
+  { v: 'work-product', label: 'Work product' },
+  { v: 'witness-testimony', label: 'Witness testimony' },
+  { v: 'professional-discussion', label: 'Prof. discussion' },
+  { v: 'photo', label: 'Photo' },
+  { v: 'reflective-account', label: 'Reflective account' },
+];
+
+const todayISO = () => new Date().toISOString().slice(0, 10);
+
+// Turn the AI STAR draft into editable prose the apprentice owns and can reword.
+function formatReflection(r: ReflectionDraft): string {
+  return [
+    `Situation: ${r.situation}`,
+    `Task: ${r.task}`,
+    `Action: ${r.action}`,
+    `Result: ${r.result}`,
+    `Learning: ${r.learning}`,
+  ].join('\n\n');
+}
+
+// VACSR readiness chips, in order.
+const READINESS_META: { k: 'valid' | 'authentic' | 'current' | 'sufficient' | 'reliable'; label: string }[] = [
+  { k: 'valid', label: 'Valid' },
+  { k: 'authentic', label: 'Authentic' },
+  { k: 'current', label: 'Current' },
+  { k: 'sufficient', label: 'Sufficient' },
+  { k: 'reliable', label: 'Reliable' },
+];
+
+const FIELD_CLS =
+  'h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20';
+
 export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
   const { user } = useAuth();
@@ -100,6 +137,18 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   const [description, setDescription] = useState('');
   const [linkTo, setLinkTo] = useState<LinkTo>('portfolio');
   const [ojtDuration, setOjtDuration] = useState('');
+
+  /* ─── Assessor-ready capture fields (all optional) ───────────────── */
+  const [workDate, setWorkDate] = useState(todayISO);
+  const [siteRef, setSiteRef] = useState('');
+  const [role, setRole] = useState('');
+  const [evidenceType, setEvidenceType] = useState<EvidenceType | ''>('');
+  const [witnessName, setWitnessName] = useState('');
+  const [witnessRole, setWitnessRole] = useState('');
+  const [witnessDate, setWitnessDate] = useState('');
+  const [authenticityConfirmed, setAuthenticityConfirmed] = useState(false);
+  // Editable STAR reflection — seeded from the AI draft, owned by the apprentice.
+  const [reflectionText, setReflectionText] = useState('');
 
   /* ─── Voice transcript ────────────────────────────────────────────── */
   const {
@@ -151,6 +200,8 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
         confidence: number;
         reasons: string[];
         fromFiles: string[];
+        grounded: boolean;
+        toComplete?: string;
       }
     >();
     for (const f of files) {
@@ -162,6 +213,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           existing.confidence = Math.max(existing.confidence, m.confidence);
           existing.reasons.push(m.reason);
           existing.fromFiles.push(f.id);
+          if (m.toComplete && !existing.toComplete) existing.toComplete = m.toComplete;
         } else {
           map.set(key, {
             unitCode: m.unitCode,
@@ -170,12 +222,73 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
             confidence: m.confidence,
             reasons: [m.reason],
             fromFiles: [f.id],
+            grounded: m.grounded !== false,
+            toComplete: m.toComplete,
           });
         }
       }
     }
     return Array.from(map.values()).sort((a, b) => b.confidence - a.confidence);
   }, [files]);
+
+  // Aggregate the new vision-grounded insights across all files.
+  const aiInsights = useMemo(() => {
+    const missing = new Set<string>();
+    const authenticity = new Set<string>();
+    const vacsrFixes = new Set<string>();
+    const rank: Record<string, number> = { clear: 0, partial: 1, unusable: 2 };
+    let worstQuality: 'clear' | 'partial' | 'unusable' | null = null;
+    for (const f of files) {
+      const a = f.analysis;
+      if (!a) continue;
+      (a.missingFromPhoto || []).forEach((x) => x && missing.add(x));
+      (a.authenticityFlags || []).forEach((x) => x && authenticity.add(x));
+      if (a.vacsr?.fix && a.vacsr.weakest !== 'none') vacsrFixes.add(a.vacsr.fix);
+      if (a.imageQuality && (worstQuality === null || rank[a.imageQuality] > rank[worstQuality])) {
+        worstQuality = a.imageQuality;
+      }
+    }
+    return {
+      missing: Array.from(missing).slice(0, 5),
+      authenticity: Array.from(authenticity).slice(0, 4),
+      vacsrFixes: Array.from(vacsrFixes).slice(0, 3),
+      worstQuality,
+    };
+  }, [files]);
+
+  // Seed the editable reflection from the AI draft once, preserving any edits.
+  const reflectionSeededRef = useRef(false);
+  useEffect(() => {
+    if (reflection && !reflectionSeededRef.current) {
+      reflectionSeededRef.current = true;
+      setReflectionText((prev) => (prev.trim() ? prev : formatReflection(reflection)));
+    }
+  }, [reflection]);
+
+  // Live VACSR readiness — lights up as the apprentice strengthens the entry.
+  const readiness = useMemo(() => {
+    const checks = {
+      valid: selectedACs.length > 0,
+      authentic: authenticityConfirmed || witnessName.trim().length > 0,
+      current: workDate.trim().length > 0,
+      sufficient:
+        role.trim().length > 0 &&
+        (description.trim().length > 0 || reflectionText.trim().length > 0),
+      reliable: files.length > 0 && evidenceType !== '',
+    };
+    const score = Object.values(checks).filter(Boolean).length;
+    return { checks, score, total: 5, ready: score === 5 };
+  }, [
+    selectedACs,
+    authenticityConfirmed,
+    witnessName,
+    workDate,
+    role,
+    description,
+    reflectionText,
+    files,
+    evidenceType,
+  ]);
 
   /* ─── Reset ───────────────────────────────────────────────────────── */
   const resetForm = () => {
@@ -191,6 +304,16 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
     setMeta(null);
     setReflection(null);
     setSelectedACs([]);
+    setWorkDate(todayISO());
+    setSiteRef('');
+    setRole('');
+    setEvidenceType('');
+    setWitnessName('');
+    setWitnessRole('');
+    setWitnessDate('');
+    setAuthenticityConfirmed(false);
+    setReflectionText('');
+    reflectionSeededRef.current = false;
   };
 
   /* ─── Upload helper ──────────────────────────────────────────────── */
@@ -290,9 +413,10 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           setFiles((prev) =>
             prev.map((f) => (f.id === fileId ? { ...f, analysis } : f))
           );
-          // Auto-select high-confidence ACs
+          // Auto-select high-confidence ACs — only ones verified against the
+          // real qualification, so we never auto-claim a hallucinated AC.
           const auto = analysis.matchedCriteria
-            .filter((c) => c.confidence >= 80)
+            .filter((c) => c.confidence >= 80 && c.grounded !== false)
             .map((c) => `${c.unitCode} AC ${c.acCode}`);
           setSelectedACs((prev) => {
             const next = new Set(prev);
@@ -307,14 +431,12 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           setTitle((t) => t || r.suggestedTitle?.slice(0, 100) || '');
           // Pull description from the action+result if empty
           setDescription((d) => d || `${r.action}\n\n${r.result}`.slice(0, 500));
-          if (r.suggestedACs?.length) {
-            setSelectedACs((prev) => {
-              const next = new Set(prev);
-              for (const ac of r.suggestedACs!) next.add(ac);
-              return Array.from(next);
-            });
-          }
+          // Note: we deliberately do NOT auto-claim the reflection's suggested
+          // ACs. AC claims come only from the per-photo matches shown in the
+          // suggested-AC list, so an apprentice can always see and untoggle
+          // every criterion they're claiming.
         },
+
         onError: (msg, fileId) => {
           if (fileId) {
             setFiles((prev) =>
@@ -350,7 +472,15 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
         type: f.file.type,
         url: f.storageUrl || f.previewUrl,
       })),
-      reflection,
+      reflectionText,
+      workDate,
+      siteRef,
+      role,
+      evidenceType,
+      witnessName,
+      witnessRole,
+      witnessDate,
+      authenticityConfirmed,
     };
 
     const toastMsg =
@@ -375,19 +505,33 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           completedEntries: 0,
         };
 
-        const reflectionBlock = snap.reflection
-          ? `\n\n---\nSituation: ${snap.reflection.situation}\nTask: ${snap.reflection.task}\nAction: ${snap.reflection.action}\nResult: ${snap.reflection.result}\nLearning: ${snap.reflection.learning}`
-          : '';
+        const witness =
+          snap.witnessName.trim() || snap.witnessRole.trim() || snap.witnessDate
+            ? {
+                name: snap.witnessName.trim() || undefined,
+                role: snap.witnessRole.trim() || undefined,
+                date: snap.witnessDate || undefined,
+              }
+            : undefined;
 
         await addEntry({
           title: snap.title,
-          description: (snap.description + reflectionBlock).trim(),
+          description: snap.description.trim(),
           category: categoryObj,
           skills: snap.selectedACs,
+          reflection: snap.reflectionText.trim(),
           evidenceFiles,
           assessmentCriteria: snap.selectedACs,
           status: 'draft',
           dateCreated: new Date().toISOString(),
+          metadata: {
+            workDate: snap.workDate || undefined,
+            siteRef: snap.siteRef.trim() || undefined,
+            role: snap.role.trim() || undefined,
+            evidenceType: snap.evidenceType || undefined,
+            witness,
+            authenticityConfirmed: snap.authenticityConfirmed || undefined,
+          },
         });
       }
 
@@ -705,19 +849,19 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                   </div>
                 )}
 
-                {/* STAR reflection */}
-                {reflection && (
-                  <div className="space-y-3">
+                {/* STAR reflection — editable, in the apprentice's own words */}
+                {(reflection || reflectionText) && (
+                  <div className="space-y-2">
                     <Eyebrow>STAR reflection · drafted from your voice</Eyebrow>
-                    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3">
-                      <ReflectionRow label="Situation" text={reflection.situation} />
-                      <ReflectionRow label="Task" text={reflection.task} />
-                      <ReflectionRow label="Action" text={reflection.action} />
-                      <ReflectionRow label="Result" text={reflection.result} />
-                      <ReflectionRow label="Learning" text={reflection.learning} highlight />
-                    </div>
+                    <Textarea
+                      value={reflectionText}
+                      onChange={(e) => setReflectionText(e.target.value)}
+                      rows={7}
+                      className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white leading-relaxed placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
+                    />
                     <p className="text-[11px] text-white/55 italic">
-                      Reflection saves with the entry — edit any section by tweaking the description below.
+                      Reword this into your own voice — assessors look for an authentic, first-hand
+                      reflection.
                     </p>
                   </div>
                 )}
@@ -771,6 +915,11 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                 <p className="text-[11px] text-white/55 leading-snug italic">
                                   {m.reasons[0]}
                                 </p>
+                                {m.toComplete && (
+                                  <p className="text-[11px] text-elec-yellow/85 leading-snug">
+                                    To complete: {m.toComplete}
+                                  </p>
+                                )}
                               </div>
                             </button>
                           </li>
@@ -802,6 +951,71 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                   </div>
                 )}
 
+                {/* Vision-grounded insights — image quality, what's missing,
+                    the single grade-lifting fix, and authenticity flags. */}
+                {aiInsights.worstQuality && aiInsights.worstQuality !== 'clear' && (
+                  <div
+                    className={cn(
+                      'flex items-start gap-2 rounded-lg border p-3 text-[12.5px] leading-relaxed',
+                      aiInsights.worstQuality === 'unusable'
+                        ? 'border-red-500/30 bg-red-500/[0.05] text-red-200'
+                        : 'border-orange-400/30 bg-orange-400/[0.05] text-orange-200'
+                    )}
+                  >
+                    <Camera className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span>
+                      {aiInsights.worstQuality === 'unusable'
+                        ? 'This photo is hard to read as evidence — retake it clearer and closer before relying on it.'
+                        : 'Part of this evidence is unclear — a sharper or closer photo would strengthen it.'}
+                    </span>
+                  </div>
+                )}
+
+                {aiInsights.missing.length > 0 && (
+                  <div className="space-y-2">
+                    <Eyebrow>What an assessor will look for</Eyebrow>
+                    <ul className="space-y-1.5">
+                      {aiInsights.missing.map((x, i) => (
+                        <li
+                          key={`missing-${i}`}
+                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <span>{x}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {aiInsights.vacsrFixes.length > 0 && (
+                  <div className="space-y-1.5">
+                    <Eyebrow>One change that lifts the grade</Eyebrow>
+                    {aiInsights.vacsrFixes.map((x, i) => (
+                      <p
+                        key={`vacsr-${i}`}
+                        className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                      >
+                        <Sparkles className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                        <span>{x}</span>
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                {aiInsights.authenticity.length > 0 && (
+                  <div className="rounded-lg border border-orange-400/30 bg-orange-400/[0.05] p-3 space-y-1">
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-orange-200/80">
+                      An assessor may query
+                    </div>
+                    {aiInsights.authenticity.map((x, i) => (
+                      <p key={`auth-${i}`} className="text-[12.5px] text-orange-100/90 leading-relaxed">
+                        {x}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
                 {/* Title */}
                 <div className="space-y-2">
                   <Eyebrow>Title</Eyebrow>
@@ -823,6 +1037,146 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                     rows={3}
                     className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
                   />
+                </div>
+
+                {/* Make this assessor-ready — optional fields that pass VACSR */}
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4 space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <Eyebrow>Make this assessor-ready</Eyebrow>
+                      {readiness.ready ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
+                          <ShieldCheck className="h-3.5 w-3.5" /> Assessor-ready
+                        </span>
+                      ) : (
+                        <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                          {readiness.score}/5
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {READINESS_META.map(({ k, label }) => {
+                        const on = readiness.checks[k];
+                        return (
+                          <span
+                            key={k}
+                            className={cn(
+                              'inline-flex items-center gap-1 px-2 h-6 rounded-full text-[10px] font-medium border',
+                              on
+                                ? 'border-elec-yellow/40 bg-elec-yellow/[0.08] text-elec-yellow'
+                                : 'border-white/[0.08] text-white/40'
+                            )}
+                          >
+                            {on ? (
+                              <Check className="h-3 w-3" />
+                            ) : (
+                              <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                            )}
+                            {label}
+                          </span>
+                        );
+                      })}
+                    </div>
+                    <p className="text-[11px] text-white/45 leading-relaxed">
+                      Optional — but each one helps your portfolio pass first time.
+                    </p>
+                  </div>
+
+                  {/* Date of work + site reference */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Eyebrow>Date of work</Eyebrow>
+                      <Input
+                        type="date"
+                        value={workDate}
+                        onChange={(e) => setWorkDate(e.target.value)}
+                        className={FIELD_CLS}
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Eyebrow>Site / job reference</Eyebrow>
+                      <Input
+                        placeholder="e.g. 14 Mill Lane rewire"
+                        value={siteRef}
+                        onChange={(e) => setSiteRef(e.target.value)}
+                        className={FIELD_CLS}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Your role */}
+                  <div className="space-y-1.5">
+                    <Eyebrow>What you personally did</Eyebrow>
+                    <Textarea
+                      placeholder="Your own role on this job — what you carried out, not the team's…"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      rows={2}
+                      className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
+                    />
+                  </div>
+
+                  {/* Evidence type */}
+                  <div className="space-y-1.5">
+                    <Eyebrow>Type of evidence</Eyebrow>
+                    <div className="flex flex-wrap gap-1.5">
+                      {EVIDENCE_TYPES.map((opt) => {
+                        const active = evidenceType === opt.v;
+                        return (
+                          <button
+                            key={opt.v}
+                            type="button"
+                            onClick={() => setEvidenceType(active ? '' : opt.v)}
+                            className={cn(
+                              'px-3 h-9 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
+                              active
+                                ? 'border-elec-yellow/50 bg-elec-yellow/[0.08] text-elec-yellow'
+                                : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white/70 hover:bg-white/[0.04]'
+                            )}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Witness / supervisor */}
+                  <div className="space-y-1.5">
+                    <Eyebrow>Witness / supervisor (who saw the work)</Eyebrow>
+                    <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2">
+                      <Input
+                        placeholder="Name"
+                        value={witnessName}
+                        onChange={(e) => setWitnessName(e.target.value)}
+                        className={FIELD_CLS}
+                      />
+                      <Input
+                        placeholder="Role (e.g. supervisor)"
+                        value={witnessRole}
+                        onChange={(e) => setWitnessRole(e.target.value)}
+                        className={FIELD_CLS}
+                      />
+                      <Input
+                        type="date"
+                        value={witnessDate}
+                        onChange={(e) => setWitnessDate(e.target.value)}
+                        className={cn(FIELD_CLS, 'sm:w-[150px]')}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Authenticity declaration */}
+                  <label className="flex items-start gap-2.5 cursor-pointer touch-manipulation">
+                    <Checkbox
+                      checked={authenticityConfirmed}
+                      onCheckedChange={(v) => setAuthenticityConfirmed(v === true)}
+                      className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    />
+                    <span className="text-[12px] text-white/85 leading-relaxed">
+                      I confirm this is my own work and an accurate record of what I did.
+                    </span>
+                  </label>
                 </div>
 
                 {/* Link to */}
@@ -909,30 +1263,6 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
         </div>
       </SheetContent>
     </Sheet>
-  );
-}
-
-function ReflectionRow({
-  label,
-  text,
-  highlight,
-}: {
-  label: string;
-  text: string;
-  highlight?: boolean;
-}) {
-  return (
-    <div className="space-y-1">
-      <span
-        className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.18em]',
-          highlight ? 'text-elec-yellow' : 'text-white/55'
-        )}
-      >
-        {label}
-      </span>
-      <p className="text-[13px] text-white/85 leading-relaxed">{text}</p>
-    </div>
   );
 }
 

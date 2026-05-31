@@ -20030,6 +20030,7 @@ export type Database = {
           id: string
           is_supervisor_verified: boolean | null
           learning_outcomes_met: string[] | null
+          metadata: Json | null
           qualification_category_id: string | null
           reflection_notes: string | null
           self_assessment: number | null
@@ -20057,6 +20058,7 @@ export type Database = {
           id?: string
           is_supervisor_verified?: boolean | null
           learning_outcomes_met?: string[] | null
+          metadata?: Json | null
           qualification_category_id?: string | null
           reflection_notes?: string | null
           self_assessment?: number | null
@@ -20084,6 +20086,7 @@ export type Database = {
           id?: string
           is_supervisor_verified?: boolean | null
           learning_outcomes_met?: string[] | null
+          metadata?: Json | null
           qualification_category_id?: string | null
           reflection_notes?: string | null
           self_assessment?: number | null

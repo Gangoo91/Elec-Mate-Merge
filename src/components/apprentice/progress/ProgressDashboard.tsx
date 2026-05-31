@@ -137,31 +137,28 @@ export function ProgressDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
-      {/* Top fold — 2-column on lg: XP + KPIs left, EPA predictor right */}
-      <div className="lg:grid lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-8 space-y-5 lg:space-y-0">
-        <div className="space-y-5">
-          <XPHeroCard />
-          <KpiStrip
-            quizCount={quizStats.totalQuizzes}
-            quizAvg={quizStats.averageScore}
-            mastered={totalMasteredCards}
-            totalCards={totalFlashcards}
-            streakDays={streak.currentStreak}
-            achievementsUnlocked={getUnlockedCount()}
-            achievementsTotal={getTotalCount()}
-          />
-        </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-6 lg:space-y-8">
+      {/* Predicted EPA grade — full-width hero: the headline "will I pass?" signal */}
+      <EPAGradePredictor
+        quizAverage={quizStats.averageScore}
+        flashcardMasteryPct={flashcardMasteryPct}
+        recentQuizScore={recentQuizScore}
+        trend={trend}
+        weakestTopic={weakestTopic}
+      />
 
-        <div className="mt-5 lg:mt-0">
-          <EPAGradePredictor
-            quizAverage={quizStats.averageScore}
-            flashcardMasteryPct={flashcardMasteryPct}
-            recentQuizScore={recentQuizScore}
-            trend={trend}
-            weakestTopic={weakestTopic}
-          />
-        </div>
+      {/* XP hero + KPI strip — one row on desktop */}
+      <div className="grid gap-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-8 lg:items-start">
+        <XPHeroCard />
+        <KpiStrip
+          quizCount={quizStats.totalQuizzes}
+          quizAvg={quizStats.averageScore}
+          mastered={totalMasteredCards}
+          totalCards={totalFlashcards}
+          streakDays={streak.currentStreak}
+          achievementsUnlocked={getUnlockedCount()}
+          achievementsTotal={getTotalCount()}
+        />
       </div>
 
       {/* Topic mastery — full width */}
@@ -203,7 +200,7 @@ function KpiStrip({
   achievementsTotal: number;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 lg:gap-3">
       <Cell
         label="Quizzes"
         value={quizCount}

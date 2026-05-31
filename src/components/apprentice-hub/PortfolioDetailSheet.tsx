@@ -63,6 +63,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getEvidenceReadiness, READINESS_LABELS } from '@/lib/portfolioReadiness';
 import { copyToClipboard } from '@/utils/clipboard';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
@@ -134,6 +135,9 @@ export function PortfolioDetailSheet({
   }, [aiAnalysis]);
 
   if (!entry) return null;
+
+  const meta = entry.metadata || {};
+  const readiness = getEvidenceReadiness(entry);
 
   const existingVerification = getVerificationForPortfolioItem(entry.id);
   const isVerified = entry.isVerified || !!existingVerification?.verified_at;
@@ -460,6 +464,48 @@ export function PortfolioDetailSheet({
           <div className="flex-1 overflow-y-auto overscroll-contain">
             {activeTab === 'details' ? (
               <div className="p-4 space-y-6">
+                {/* Assessor readiness (VACSR) */}
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-elec-yellow" />
+                      Assessor readiness
+                    </h3>
+                    {readiness.ready ? (
+                      <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
+                        Ready
+                      </span>
+                    ) : (
+                      <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                        {readiness.score}/5
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {READINESS_LABELS.map(({ k, label }) => {
+                      const on = readiness.checks[k];
+                      return (
+                        <span
+                          key={k}
+                          className={cn(
+                            'inline-flex items-center gap-1 px-2 h-6 rounded-full text-[10px] font-medium border',
+                            on
+                              ? 'border-elec-yellow/40 bg-elec-yellow/[0.08] text-elec-yellow'
+                              : 'border-white/[0.08] text-white/40'
+                          )}
+                        >
+                          {on ? (
+                            <CheckCircle2 className="h-3 w-3" />
+                          ) : (
+                            <Circle className="h-3 w-3" />
+                          )}
+                          {label}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 {/* Description */}
                 {entry.description && (
                   <div className="space-y-2">
@@ -472,7 +518,83 @@ export function PortfolioDetailSheet({
                 {entry.reflection && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white">Reflection</h3>
-                    <p className="text-sm text-foreground">{entry.reflection}</p>
+                    <p className="text-sm text-foreground whitespace-pre-line">{entry.reflection}</p>
+                  </div>
+                )}
+
+                {/* Work details (assessor metadata) */}
+                {(meta.workDate ||
+                  meta.siteRef ||
+                  meta.role ||
+                  meta.evidenceType ||
+                  meta.witness?.name ||
+                  meta.authenticityConfirmed) && (
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium text-white">Work details</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      {meta.workDate && (
+                        <div className="space-y-1">
+                          <span className="text-xs text-white flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            Date of work
+                          </span>
+                          <p className="text-sm text-foreground">
+                            {new Date(meta.workDate).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric',
+                            })}
+                          </p>
+                        </div>
+                      )}
+                      {meta.siteRef && (
+                        <div className="space-y-1">
+                          <span className="text-xs text-white">Site / job</span>
+                          <p className="text-sm text-foreground">{meta.siteRef}</p>
+                        </div>
+                      )}
+                      {meta.evidenceType && (
+                        <div className="space-y-1">
+                          <span className="text-xs text-white">Evidence type</span>
+                          <p className="text-sm text-foreground">
+                            {EVIDENCE_TYPE_LABEL[meta.evidenceType] || meta.evidenceType}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    {meta.role && (
+                      <div className="space-y-1">
+                        <span className="text-xs text-white">What they personally did</span>
+                        <p className="text-sm text-foreground">{meta.role}</p>
+                      </div>
+                    )}
+                    {meta.witness?.name && (
+                      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-0.5">
+                        <div className="flex items-center gap-1.5 text-xs text-white">
+                          <User className="h-3 w-3" />
+                          Witnessed by
+                        </div>
+                        <p className="text-sm text-foreground">
+                          {meta.witness.name}
+                          {meta.witness.role ? ` · ${meta.witness.role}` : ''}
+                        </p>
+                        {meta.witness.date && (
+                          <p className="text-xs text-white">
+                            {new Date(meta.witness.date).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric',
+                            })}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    {meta.authenticityConfirmed && (
+                      <div className="flex items-center gap-1.5 text-xs text-white/85">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow" />
+                        Apprentice confirmed this is their own work
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -1088,6 +1210,15 @@ export function PortfolioDetailSheet({
     </Sheet>
   );
 }
+
+const EVIDENCE_TYPE_LABEL: Record<string, string> = {
+  observation: 'Observation',
+  'work-product': 'Work product',
+  'witness-testimony': 'Witness testimony',
+  'professional-discussion': 'Professional discussion',
+  photo: 'Photo',
+  'reflective-account': 'Reflective account',
+};
 
 // File icon helper
 function FileIcon({ type }: { type?: string }) {

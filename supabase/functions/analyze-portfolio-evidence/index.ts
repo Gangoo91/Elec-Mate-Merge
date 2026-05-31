@@ -8,6 +8,13 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
+import {
+  buildAcWhitelist,
+  groundMatchedCriteria,
+  GROUNDING_RULES,
+  type ModelMatch,
+} from '../_shared/portfolio-ac-grounding.ts';
 
 // ---------- Stop words for keyword filtering ----------
 const STOP_WORDS = new Set([
@@ -335,6 +342,47 @@ serve(async (req: Request) => {
       }
     }
 
+    // ---------- BS 7671 grounding + AC whitelist ----------
+    // Reg references must come from retrieved facets, not model memory; ACs are
+    // verified against the real qualification list before they reach the UI.
+    let bs7671Context = '';
+    let facets: Awaited<ReturnType<typeof searchFacets>> = [];
+    let whitelist = buildAcWhitelist([]);
+    try {
+      const ragQuery =
+        [title, description].filter(Boolean).join(' ') || 'electrical installation BS 7671';
+      const [facetRes, acRes] = await Promise.all([
+        searchFacets(supabase, {
+          query: ragQuery,
+          matchCount: 6,
+          documentTypes: ['bs7671'],
+        }).catch(() => []),
+        qualificationCode
+          ? Promise.resolve(
+              supabase.rpc('get_qualification_acs', { p_qualification_code: qualificationCode })
+            )
+              .then((r: { data: unknown }) => (r.data as unknown[]) || [])
+              .catch(() => [] as unknown[])
+          : Promise.resolve([] as unknown[]),
+      ]);
+      facets = facetRes;
+      whitelist = buildAcWhitelist(acRes as Parameters<typeof buildAcWhitelist>[0]);
+      if (facets.length) {
+        bs7671Context =
+          '\n\n--- BS 7671 regulation context (cite ONLY these reg numbers) ---\n' +
+          facets
+            .slice(0, 6)
+            .map((f) => {
+              const ref = f.regNumber ? `Reg ${f.regNumber}` : 'Source';
+              const body = (f.content || '').replace(/\s+/g, ' ').slice(0, 500);
+              return `[${ref}] ${body}`;
+            })
+            .join('\n');
+      }
+    } catch (err) {
+      console.warn('[analyze-portfolio-evidence] BS 7671 grounding failed:', err);
+    }
+
     // ---------- Build OpenAI messages ----------
     const systemPrompt = `You are an experienced UK electrical training assessor analysing portfolio evidence (photos, documents) submitted by an apprentice.
 
@@ -347,7 +395,9 @@ You have access to qualification assessment criteria from the RAG context below.
 6. Suggest a concise portfolio item title
 
 Use UK English. Be encouraging but honest about evidence quality. If no RAG context is available, provide general electrical apprenticeship assessment guidance.
-${ragContext}`;
+${ragContext}${bs7671Context}
+
+${GROUNDING_RULES}`;
 
     // Build user content parts (text + optional image)
     const userContentParts: Array<
@@ -490,6 +540,15 @@ ${ragContext}`;
       );
       throw new Error('No usable response from AI');
     }
+
+    // Drop any AC the model invented; keep only verified ones with framework wording.
+    const ground = groundMatchedCriteria(analysis.matchedCriteria as ModelMatch[], whitelist);
+    if (ground.droppedCount > 0) {
+      console.log(
+        `[analyze-portfolio-evidence] dropped ${ground.droppedCount} ungrounded AC(s): ${ground.droppedRefs.join(', ')}`
+      );
+    }
+    analysis.matchedCriteria = ground.kept;
 
     console.log('[analyze-portfolio-evidence] Analysis complete in', duration, 'ms');
 

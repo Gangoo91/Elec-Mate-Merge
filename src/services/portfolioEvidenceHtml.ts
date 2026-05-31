@@ -114,6 +114,8 @@ html,body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',R
 /* evidence items */
 .item{border:1px solid #e6eaef;border-radius:14px;padding:16px 18px;margin-top:14px;background:#fff}
 .item:first-of-type{margin-top:18px}
+.it-cont{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin-bottom:9px}
+.it-cont span{color:#cbd5e1}
 .it-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
 .it-title{font-size:15.5px;font-weight:800;color:#111827;line-height:1.25}
 .it-meta{font-size:11px;color:#94a3b8;margin-top:4px}
@@ -275,20 +277,59 @@ function detailsPage(
   </div></div>`;
 }
 
-function critList(items: PortfolioCriterion[], label: string): string {
-  if (!items.length) return '';
+/* ── evidence items: atom-level layout ────────────────────────────────────
+   Each item is decomposed into atoms (head, list sub-heads, individual AC/LO
+   rows, then atomic skill/photo/sign-off blocks). packEvidence packs atoms into
+   .item cards page by page so a long criteria list flows onto a "· continued"
+   card on the next page instead of being clipped by the fixed-height page. */
+const SUBHEAD_H = 22;
+const LINE_CRIT = 16; // .crit line @ 11px / 1.45
+const CARD_CHROME = 46; // .item margin + padding + border
+const CONT_H = 24; // "· continued" header on a follow-on card
+
+type Atom = {
+  role: 'head' | 'subhead' | 'row' | 'block';
+  h: number;
+  html: string;
+  glue?: boolean;
+  listLabel?: string;
+};
+
+function writeUpHeight(text: string): number {
+  let lines = 0;
+  for (const ln of text.split('\n')) lines += Math.max(1, Math.ceil(ln.length / 90));
+  return lines * 19 + 10; // 12px / 1.55 + margin-top
+}
+
+function pushList(atoms: Atom[], items: PortfolioCriterion[], label: string): void {
+  if (!items.length) return;
   const shown = items.slice(0, MAX_CRITERIA_WITH_TEXT);
   const extra = items.length - shown.length;
-  const rows = shown
-    .map((c) => {
-      const code = c.code ? `<b>${esc(c.code)}</b>` : '';
-      const text = c.text ? esc(c.text) : '';
-      return `<div class="crit">${code}${text}</div>`;
-    })
-    .join('');
-  const more =
-    extra > 0 ? `<div class="crit-more">+ ${extra} more — see the justification summary</div>` : '';
-  return `<div class="subh">${esc(label)}</div>${rows}${more}`;
+  atoms.push({
+    role: 'subhead',
+    glue: true,
+    h: SUBHEAD_H,
+    html: `<div class="subh">${esc(label)}</div>`,
+    listLabel: label,
+  });
+  for (const c of shown) {
+    const len = (c.code?.length || 0) + (c.text?.length || 0);
+    const code = c.code ? `<b>${esc(c.code)}</b>` : '';
+    const text = c.text ? esc(c.text) : '';
+    atoms.push({
+      role: 'row',
+      h: 13 + Math.max(1, Math.ceil(len / 80)) * LINE_CRIT,
+      html: `<div class="crit">${code}${text}</div>`,
+      listLabel: label,
+    });
+  }
+  if (extra > 0)
+    atoms.push({
+      role: 'row',
+      h: 16,
+      html: `<div class="crit-more">+ ${extra} more — see the justification summary</div>`,
+      listLabel: label,
+    });
 }
 
 function isStale(iso: string | null): boolean {
@@ -298,7 +339,7 @@ function isStale(iso: string | null): boolean {
   return (Date.now() - t) / (30.44 * 86_400_000) > 18; // older than ~18 months
 }
 
-function itemBlock(it: PortfolioPackItem): string {
+function itemAtoms(it: PortfolioPackItem): Atom[] {
   const verifiedBadge = it.verified
     ? `<span class="badge ok">SUPERVISOR VERIFIED</span>`
     : `<span class="badge pend">${esc((it.status || 'draft').replace(/_/g, ' ').toUpperCase())}</span>`;
@@ -314,79 +355,138 @@ function itemBlock(it: PortfolioPackItem): string {
     .filter(Boolean)
     .join('  ·  ');
   const writeUp = it.writeUp ? `<div class="writeup">${esc(it.writeUp)}</div>` : '';
-  const criteria = critList(it.criteria, 'Assessment criteria evidenced');
-  const outcomes = critList(it.outcomes, 'Learning outcomes');
-  const skills = it.skills.length
-    ? `<div class="skills">${it.skills
+  const titleLines = Math.max(1, Math.ceil((it.title?.length || 0) / 40));
+  const atoms: Atom[] = [
+    {
+      role: 'head',
+      h: titleLines * 22 + 18 + (it.writeUp ? writeUpHeight(it.writeUp) : 0),
+      html: `<div class="it-top"><div><div class="it-title">${esc(it.title)}</div><div class="it-meta">${esc(meta)}</div></div>${badge}</div>${writeUp}`,
+    },
+  ];
+
+  if (it.role) {
+    const lines = Math.max(1, Math.ceil(it.role.length / 90));
+    atoms.push({
+      role: 'block',
+      h: SUBHEAD_H + lines * 18 + 6,
+      html: `<div class="subh">My role on this job</div><div class="writeup" style="margin-top:2px">${esc(it.role)}</div>`,
+    });
+  }
+
+  pushList(atoms, it.criteria, 'Assessment criteria evidenced');
+  pushList(atoms, it.outcomes, 'Learning outcomes');
+
+  if (it.skills.length) {
+    const rows = Math.ceil(Math.min(it.skills.length, 10) / 6);
+    atoms.push({
+      role: 'block',
+      h: rows * 27 + 10,
+      html: `<div class="skills">${it.skills
         .slice(0, 10)
         .map((s) => `<span class="skill">${esc(s)}</span>`)
-        .join('')}</div>`
-    : '';
-  const shown = it.photos.slice(0, MAX_PHOTOS);
-  const extra = it.photos.length - shown.length;
-  const photos = shown.length
-    ? `<div class="subh">Photo evidence</div><div class="photos">${shown.map((p) => `<img src="${esc(p.url)}" alt="${esc(p.name)}"/>`).join('')}${extra > 0 ? `<div class="more">+${extra}</div>` : ''}</div>`
-    : '';
-  const signoff =
-    it.verified && it.supervisorFeedback
-      ? `<div class="signoff"><b>Supervisor sign-off.</b> ${esc(it.supervisorFeedback)}</div>`
-      : '';
-  return `<div class="item">
-    <div class="it-top"><div><div class="it-title">${esc(it.title)}</div><div class="it-meta">${esc(meta)}</div></div>${badge}</div>
-    ${writeUp}${criteria}${outcomes}${skills}${photos}${signoff}
-  </div>`;
-}
-
-// Estimate the rendered height of one criterion row, accounting for the now
-// full-length AC/LO wording wrapping over several lines (~80 chars/line @ 11px).
-function critHeight(items: PortfolioCriterion[]): number {
-  const shown = items.slice(0, MAX_CRITERIA_WITH_TEXT);
-  let h = 22; // sub-heading
-  for (const c of shown) {
-    const len = (c.code?.length || 0) + (c.text?.length || 0);
-    h += 10 + Math.max(1, Math.ceil(len / 80)) * 16;
+        .join('')}</div>`,
+    });
   }
-  if (items.length > MAX_CRITERIA_WITH_TEXT) h += 16;
-  return h;
+
+  const shownPhotos = it.photos.slice(0, MAX_PHOTOS);
+  const extraPhotos = it.photos.length - shownPhotos.length;
+  if (shownPhotos.length) {
+    const prows = Math.ceil(shownPhotos.length / 4);
+    atoms.push({
+      role: 'block',
+      h: 22 + prows * 118 + (prows - 1) * 8 + 8,
+      html: `<div class="subh">Photo evidence</div><div class="photos">${shownPhotos.map((p) => `<img src="${esc(p.url)}" alt="${esc(p.name)}"/>`).join('')}${extraPhotos > 0 ? `<div class="more">+${extraPhotos}</div>` : ''}</div>`,
+    });
+  }
+
+  if (it.verified && it.supervisorFeedback) {
+    const lines = Math.max(1, Math.ceil(it.supervisorFeedback.length / 80));
+    atoms.push({
+      role: 'block',
+      h: 20 + lines * 17 + 12,
+      html: `<div class="signoff"><b>Supervisor sign-off.</b> ${esc(it.supervisorFeedback)}</div>`,
+    });
+  }
+
+  if (it.witness && (it.witness.name || it.witness.role || it.witness.date)) {
+    const who = [it.witness.name, it.witness.role].filter(Boolean).join(' · ');
+    const when = it.witness.date ? ` · ${fmtDate(it.witness.date)}` : '';
+    atoms.push({
+      role: 'block',
+      h: 44,
+      html: `<div class="signoff"><b>Witnessed by.</b> ${esc(who)}${esc(when)}</div>`,
+    });
+  }
+
+  return atoms;
 }
 
-function estimateHeight(it: PortfolioPackItem): number {
-  let h = 64;
-  if (it.writeUp) h += Math.ceil(it.writeUp.length / 90) * 17 + 8;
-  if (it.criteria.length) h += critHeight(it.criteria);
-  if (it.outcomes.length) h += critHeight(it.outcomes);
-  if (it.skills.length) h += Math.ceil(it.skills.length / 6) * 22 + 4;
-  if (it.photos.length) h += 146;
-  if (it.verified && it.supervisorFeedback) h += 54;
-  return h + 30;
-}
-
-function packByHeight(
-  items: PortfolioPackItem[],
-  first: number,
-  rest: number
-): PortfolioPackItem[][] {
-  const pages: PortfolioPackItem[][] = [];
-  let cur: PortfolioPackItem[] = [];
+// Pack item atoms into .item cards, page by page. When the atoms left in an
+// item won't fit in the space remaining, the card is closed and the rest of the
+// item — typically the tail of a long AC/LO list — continues in a "· continued"
+// card on the next page rather than being clipped by the fixed-height page.
+function packEvidence(items: PortfolioPackItem[], first: number, rest: number): string[][] {
+  const pages: string[][] = [];
+  let cur: string[] = [];
   let used = 0;
   let budget = first;
+  const flushPage = () => {
+    pages.push(cur);
+    cur = [];
+    used = 0;
+    budget = rest;
+  };
+
   for (const it of items) {
-    const h = estimateHeight(it);
-    if (cur.length && used + h > budget) {
-      pages.push(cur);
-      cur = [];
-      used = 0;
-      budget = rest;
+    const atoms = itemAtoms(it);
+    let i = 0;
+    let firstCard = true;
+    while (i < atoms.length) {
+      const lead = CARD_CHROME + (firstCard ? 0 : CONT_H);
+      // Drop to a fresh page if the card header + its first atom can't fit here.
+      if (used > 0 && used + lead + atoms[i].h > budget) flushPage();
+
+      const parts: string[] = [];
+      let cardH = lead;
+      if (!firstCard) {
+        parts.push(`<div class="it-cont">${esc(it.title)}<span> · continued</span></div>`);
+        if (atoms[i].role === 'row' && atoms[i].listLabel) {
+          parts.push(`<div class="subh">${esc(atoms[i].listLabel)} (cont.)</div>`);
+          cardH += SUBHEAD_H;
+        }
+      }
+      const startLen = parts.length;
+      while (i < atoms.length && cardH + atoms[i].h <= budget - used) {
+        // Never strand a sub-heading at the foot of a card without its first row.
+        if (
+          atoms[i].glue &&
+          i + 1 < atoms.length &&
+          cardH + atoms[i].h + atoms[i + 1].h > budget - used
+        )
+          break;
+        parts.push(atoms[i].html);
+        cardH += atoms[i].h;
+        i += 1;
+      }
+      // Guarantee progress: an atom taller than a whole page is still placed once
+      // (it may run long, but the loop can never stall).
+      if (parts.length === startLen) {
+        parts.push(atoms[i].html);
+        cardH += atoms[i].h;
+        i += 1;
+      }
+      cur.push(`<div class="item">${parts.join('')}</div>`);
+      used += cardH;
+      firstCard = false;
+      if (i < atoms.length) flushPage();
     }
-    cur.push(it);
-    used += h;
   }
   if (cur.length) pages.push(cur);
   return pages.length ? pages : [[]];
 }
 
 function evidencePage(
-  items: PortfolioPackItem[],
+  blocks: string[],
   logo: string,
   page: number,
   total: number,
@@ -396,8 +496,8 @@ function evidencePage(
   const head = first
     ? sectionHead('Portfolio evidence', 'Your evidence, item by item')
     : `<div class="chip-dark">PORTFOLIO EVIDENCE${partLabel}</div>`;
-  const body = items.length
-    ? items.map(itemBlock).join('')
+  const body = blocks.length
+    ? blocks.join('')
     : `<div class="note" style="margin-top:24px">No portfolio evidence has been added yet.</div>`;
   return `<div class="page"><div class="content">${chead(logo)}${head}<div>${body}</div>${cfoot(page, total)}</div></div>`;
 }
@@ -615,7 +715,7 @@ export function buildPortfolioHtml(
 ): string {
   const covChunks =
     data.coverage && data.coverage.units.length ? packUnits(data.coverage.units) : [];
-  const itemPages = packByHeight(data.items, 875, 945);
+  const itemPages = packEvidence(data.items, 865, 930);
   const justPages = data.items.length ? packJustification(data.items) : [];
   const contentTotal = 3 + covChunks.length + itemPages.length + justPages.length;
 

@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check, BookOpen } from 'lucide-react';
-import { PortfolioEntry, PortfolioCategory, PortfolioFile } from '@/types/portfolio';
+import { PortfolioEntry, PortfolioCategory, PortfolioFile, EvidenceType } from '@/types/portfolio';
+import { cn } from '@/lib/utils';
 import { EvidenceUploader } from '@/components/apprentice/shared/EvidenceUploader';
 import { EvidenceRequirementsGuide } from '@/components/apprentice/portfolio/EvidenceRequirementsGuide';
 import { useMediaQuery } from '@/hooks/use-media-query';
@@ -72,6 +73,18 @@ const AWARDING_BODY_STANDARDS_OPTIONS = [
   { value: 'napit-requirements', label: 'NAPIT Requirements' },
 ];
 
+const EVIDENCE_TYPE_OPTIONS: { value: EvidenceType; label: string }[] = [
+  { value: 'observation', label: 'Observation' },
+  { value: 'work-product', label: 'Work product' },
+  { value: 'witness-testimony', label: 'Witness testimony' },
+  { value: 'professional-discussion', label: 'Professional discussion' },
+  { value: 'photo', label: 'Photo' },
+  { value: 'reflective-account', label: 'Reflective account' },
+];
+
+const INPUT_CLS =
+  'w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4';
+
 // Wizard steps configuration
 const WIZARD_STEPS = [
   { id: 'basics', title: 'Basics', shortTitle: 'Basics' },
@@ -105,6 +118,15 @@ const PortfolioEntryForm = ({
     timeSpent: initialData?.timeSpent || 0,
     awardingBodyStandards: initialData?.awardingBodyStandards || [],
     evidenceFiles: initialData?.evidenceFiles || ([] as PortfolioFile[]),
+    // Assessor-ready metadata
+    workDate: initialData?.metadata?.workDate || '',
+    siteRef: initialData?.metadata?.siteRef || '',
+    role: initialData?.metadata?.role || '',
+    evidenceType: (initialData?.metadata?.evidenceType || '') as EvidenceType | '',
+    witnessName: initialData?.metadata?.witness?.name || '',
+    witnessRole: initialData?.metadata?.witness?.role || '',
+    witnessDate: initialData?.metadata?.witness?.date || '',
+    authenticityConfirmed: initialData?.metadata?.authenticityConfirmed || false,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -113,11 +135,41 @@ const PortfolioEntryForm = ({
     const selectedCategory = categories.find((cat) => cat.id === formData.categoryId);
     if (!selectedCategory) return;
 
+    const {
+      workDate,
+      siteRef,
+      role,
+      evidenceType,
+      witnessName,
+      witnessRole,
+      witnessDate,
+      authenticityConfirmed,
+      ...rest
+    } = formData;
+
+    const witness =
+      witnessName.trim() || witnessRole.trim() || witnessDate
+        ? {
+            name: witnessName.trim() || undefined,
+            role: witnessRole.trim() || undefined,
+            date: witnessDate || undefined,
+          }
+        : undefined;
+
     const submitData: Partial<PortfolioEntry> = {
-      ...formData,
+      ...rest,
       category: selectedCategory,
       dateCreated: initialData?.dateCreated || new Date().toISOString(),
-      evidenceFiles: formData.evidenceFiles,
+      evidenceFiles: rest.evidenceFiles,
+      metadata: {
+        ...(initialData?.metadata || {}),
+        workDate: workDate || undefined,
+        siteRef: siteRef.trim() || undefined,
+        role: role.trim() || undefined,
+        evidenceType: (evidenceType || undefined) as EvidenceType | undefined,
+        witness,
+        authenticityConfirmed: authenticityConfirmed || undefined,
+      },
       ...(formData.status === 'completed' &&
         !initialData?.dateCompleted && {
           dateCompleted: new Date().toISOString(),
@@ -504,19 +556,137 @@ const PortfolioEntryForm = ({
           style={{ minHeight: isMobile ? '100px' : '80px' }}
         />
       </div>
+
+      {/* Work details — assessor-ready metadata (all optional) */}
+      <div className="space-y-4 pt-4 border-t border-elec-gray/20">
+        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+          Work details
+          <span className="text-xs text-elec-light/50 font-normal">(helps it pass)</span>
+        </label>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-xs text-elec-light/70">Date of work</label>
+            <input
+              type="date"
+              value={formData.workDate}
+              onChange={(e) => setFormData((prev) => ({ ...prev, workDate: e.target.value }))}
+              className={INPUT_CLS}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs text-elec-light/70">Site / job reference</label>
+            <input
+              type="text"
+              value={formData.siteRef}
+              onChange={(e) => setFormData((prev) => ({ ...prev, siteRef: e.target.value }))}
+              placeholder="e.g. 14 Mill Lane rewire"
+              className={INPUT_CLS}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-xs text-elec-light/70">What you personally did</label>
+          <textarea
+            value={formData.role}
+            onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
+            placeholder="Your own role on this job — what you carried out, not the team's…"
+            rows={2}
+            className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+          />
+        </div>
+
+        <ScrollbarFreeSelect
+          value={formData.evidenceType}
+          onValueChange={(value) =>
+            setFormData((prev) => ({ ...prev, evidenceType: value as EvidenceType }))
+          }
+        >
+          <ScrollbarFreeSelectTrigger label="Type of evidence">
+            <ScrollbarFreeSelectValue placeholder="Select type" />
+          </ScrollbarFreeSelectTrigger>
+          <ScrollbarFreeSelectContent>
+            {EVIDENCE_TYPE_OPTIONS.map((option) => (
+              <ScrollbarFreeSelectItem key={option.value} value={option.value}>
+                {option.label}
+              </ScrollbarFreeSelectItem>
+            ))}
+          </ScrollbarFreeSelectContent>
+        </ScrollbarFreeSelect>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-xs text-elec-light/70">Witness name</label>
+            <input
+              type="text"
+              value={formData.witnessName}
+              onChange={(e) => setFormData((prev) => ({ ...prev, witnessName: e.target.value }))}
+              placeholder="Name"
+              className={INPUT_CLS}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs text-elec-light/70">Witness role</label>
+            <input
+              type="text"
+              value={formData.witnessRole}
+              onChange={(e) => setFormData((prev) => ({ ...prev, witnessRole: e.target.value }))}
+              placeholder="e.g. supervisor"
+              className={INPUT_CLS}
+            />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <label className="text-xs text-elec-light/70">Date witnessed</label>
+          <input
+            type="date"
+            value={formData.witnessDate}
+            onChange={(e) => setFormData((prev) => ({ ...prev, witnessDate: e.target.value }))}
+            className={INPUT_CLS}
+          />
+        </div>
+
+        <button
+          type="button"
+          onClick={() =>
+            setFormData((prev) => ({ ...prev, authenticityConfirmed: !prev.authenticityConfirmed }))
+          }
+          className="flex items-start gap-2.5 text-left touch-manipulation"
+        >
+          <span
+            className={cn(
+              'mt-0.5 w-5 h-5 rounded border flex items-center justify-center shrink-0',
+              formData.authenticityConfirmed
+                ? 'bg-elec-yellow border-elec-yellow text-black'
+                : 'border-elec-gray/50'
+            )}
+          >
+            {formData.authenticityConfirmed && <Check className="h-3.5 w-3.5" />}
+          </span>
+          <span className="text-sm text-elec-light/80 leading-relaxed">
+            I confirm this is my own work and an accurate record of what I did.
+          </span>
+        </button>
+      </div>
     </div>
   );
 
+  // Invoke as plain functions (not <BasicsStep />) so the JSX is inlined into
+  // this component's tree. Rendering them as elements creates a fresh component
+  // identity every keystroke, which remounts the step and blurs the focused
+  // input mid-typing.
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <BasicsStep />;
+        return BasicsStep();
       case 1:
-        return <SkillsStep />;
+        return SkillsStep();
       case 2:
-        return <EvidenceStep />;
+        return EvidenceStep();
       case 3:
-        return <ReflectionStep />;
+        return ReflectionStep();
       default:
         return null;
     }

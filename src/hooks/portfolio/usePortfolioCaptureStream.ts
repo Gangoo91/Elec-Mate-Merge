@@ -35,6 +35,16 @@ export interface MatchedCriterion {
   acText: string;
   confidence: number;
   reason: string;
+  /** True only when the AC was verified against the real qualification list. */
+  grounded?: boolean;
+  /** If not yet sufficient, the one concrete thing to add to complete the claim. */
+  toComplete?: string;
+}
+
+/** A BS 7671 reg cite kept only because it was present in the retrieved facets. */
+export interface GroundedReg {
+  reg: string;
+  facetId?: string;
 }
 
 export interface FileAnalysis {
@@ -45,12 +55,20 @@ export interface FileAnalysis {
   qualityScore: number;
   qualityTips: string[];
   suggestedTitle: string;
-  regulationRefs: string[];
+  regulationRefs: Array<string | GroundedReg>;
   detectedContent: {
     description: string;
     electricalElements: string[];
     workType: string;
   };
+  /** How usable the photo is. 'unusable' → ask for a clearer photo. */
+  imageQuality?: 'clear' | 'partial' | 'unusable';
+  /** What an assessor would expect to see in this photo but can't. */
+  missingFromPhoto?: string[];
+  /** Mismatches between the description and what's visible. */
+  authenticityFlags?: string[];
+  /** Weakest VACSR dimension + the single fix. */
+  vacsr?: { weakest: 'valid' | 'authentic' | 'current' | 'sufficient' | 'reliable' | 'none'; fix: string };
 }
 
 export interface ReflectionDraft {

@@ -157,6 +157,10 @@ const mapDbToEntry = (row: any, evidenceFileRows?: any[]): PortfolioEntry => {
     timeSpent: row.time_spent || 0,
     awardingBodyStandards: row.awarding_body_standards || [],
     isVerified: row.is_supervisor_verified || false,
+    metadata:
+      row.metadata && typeof row.metadata === 'object' && !Array.isArray(row.metadata)
+        ? row.metadata
+        : {},
   };
 };
 
@@ -188,6 +192,7 @@ const mapEntryToDb = (entry: Omit<PortfolioEntry, 'id' | 'dateCreated'>, userId:
     status: entry.status,
     time_spent: entry.timeSpent,
     awarding_body_standards: entry.awardingBodyStandards,
+    metadata: entry.metadata ?? {},
     storage_urls: storageUrls,
     evidence_count: storageUrls.length,
     date_completed: entry.status === 'completed' ? new Date().toISOString() : null,
@@ -505,6 +510,7 @@ export const usePortfolioData = () => {
       if (updates.timeSpent !== undefined) updateData.time_spent = updates.timeSpent;
       if (updates.awardingBodyStandards !== undefined)
         updateData.awarding_body_standards = updates.awardingBodyStandards;
+      if (updates.metadata !== undefined) updateData.metadata = updates.metadata;
       if (updates.evidenceFiles !== undefined) {
         updateData.storage_urls = updates.evidenceFiles.map((file) => ({
           id: file.id,

@@ -36,8 +36,12 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
         autoCapitalize="off"
         style={{ fontSize: '16px', ...props.style }}
         className={cn(
-          // Base layout & sizing
-          'flex w-full h-12 md:h-11 px-4 py-3 md:px-3 md:py-2',
+          // Base layout & sizing. Horizontal padding stays constant (px-4) at
+          // every breakpoint: a responsive md:px-3 here would beat any
+          // non-responsive pl-*/pr-* a caller adds to clear an inline icon
+          // (tailwind-merge can't reconcile across the breakpoint), which made
+          // search-icon placeholders overlap the icon on desktop.
+          'flex w-full h-12 md:h-11 px-4 py-3 md:py-2',
           'text-base md:text-sm text-white',
           // Background & border — solid dark, no semi-transparent
           'bg-input border border-border/50 rounded-lg',

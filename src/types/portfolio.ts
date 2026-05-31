@@ -1,3 +1,33 @@
+/** Evidence type recognised by UK awarding bodies / EPAOs. */
+export type EvidenceType =
+  | 'observation'
+  | 'work-product'
+  | 'witness-testimony'
+  | 'professional-discussion'
+  | 'photo'
+  | 'reflective-account';
+
+/** A workplace witness / supervisor who saw the work carried out. */
+export interface PortfolioWitness {
+  name?: string;
+  role?: string;
+  date?: string; // ISO date the work was witnessed
+}
+
+/**
+ * Assessor-ready capture metadata — the fields that turn a quick photo into
+ * evidence that passes VACSR (Valid, Authentic, Current, Sufficient, Reliable)
+ * first time. All optional; stored in portfolio_items.metadata (jsonb).
+ */
+export interface PortfolioEntryMeta {
+  workDate?: string; // ISO date the work was actually carried out (currency)
+  siteRef?: string; // site / job reference (context)
+  role?: string; // what the apprentice personally did (individual contribution)
+  evidenceType?: EvidenceType;
+  witness?: PortfolioWitness;
+  authenticityConfirmed?: boolean; // apprentice declares it's their own work
+}
+
 export interface PortfolioEntry {
   id: string;
   title: string;
@@ -18,6 +48,7 @@ export interface PortfolioEntry {
   awardingBodyStandards: string[];
   isVerified?: boolean;
   lastValidationGrade?: string;
+  metadata?: PortfolioEntryMeta;
 }
 
 export interface PortfolioFile {

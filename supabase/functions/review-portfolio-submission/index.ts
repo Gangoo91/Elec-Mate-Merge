@@ -8,6 +8,8 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
+import { GROUNDING_RULES } from '../_shared/portfolio-ac-grounding.ts';
 
 // ---------- Tool schema for structured review output ----------
 const reviewTool = {
@@ -241,6 +243,37 @@ serve(async (req: Request) => {
       console.warn('[review-portfolio-submission] RAG query failed:', err);
     }
 
+    // ---------- BS 7671 regulation grounding ----------
+    let bs7671Context = '';
+    try {
+      const ragQuery =
+        (portfolio_items || [])
+          .map((it: { title?: string; description?: string }) =>
+            [it.title, it.description].filter(Boolean).join(' ')
+          )
+          .join(' ')
+          .slice(0, 400) || 'electrical installation inspection testing BS 7671';
+      const facets = await searchFacets(supabase, {
+        query: ragQuery,
+        matchCount: 8,
+        documentTypes: ['bs7671'],
+      }).catch(() => []);
+      if (facets.length) {
+        bs7671Context =
+          '\n\n--- BS 7671 regulation context (cite ONLY these reg numbers) ---\n' +
+          facets
+            .slice(0, 8)
+            .map((f) => {
+              const ref = f.regNumber ? `Reg ${f.regNumber}` : 'Source';
+              const body = (f.content || '').replace(/\s+/g, ' ').slice(0, 480);
+              return `[${ref}] ${body}`;
+            })
+            .join('\n');
+      }
+    } catch (err) {
+      console.warn('[review-portfolio-submission] BS 7671 grounding failed:', err);
+    }
+
     console.log(
       '[review-portfolio-submission] RAG context length:',
       ragContext.length,
@@ -293,7 +326,9 @@ IMPORTANT RULES:
 - The draft feedback should be professional, encouraging, and constructive
 - Grade according to typical BTEC/NVQ grading boundaries
 
-${ragContext}
+${GROUNDING_RULES}
+
+${ragContext}${bs7671Context}
 ${portfolioSummary}`;
 
     // ---------- Call OpenAI ----------

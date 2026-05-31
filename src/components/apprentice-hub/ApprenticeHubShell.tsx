@@ -7,6 +7,7 @@
  */
 
 import { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 import { ApprenticeHubNav, ApprenticeHubTab } from './ApprenticeHubNav';
 
 interface ApprenticeHubShellProps {
@@ -22,6 +23,10 @@ export function ApprenticeHubShell({
   onTabChange,
   onCapture,
 }: ApprenticeHubShellProps) {
+  // The media grid (My work) and the dashboard (Progress) breathe better on a
+  // wider canvas — match the nav's max-w-7xl. Reading-width tabs stay narrower.
+  const wide = activeTab === 'work' || activeTab === 'progress';
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation - Sticky */}
@@ -29,7 +34,9 @@ export function ApprenticeHubShell({
 
       {/* Main Content Area - Full screen below nav */}
       <main className="flex-1">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">{children}</div>
+        <div className={cn('mx-auto px-4 sm:px-6 lg:px-8', wide ? 'max-w-7xl' : 'max-w-6xl')}>
+          {children}
+        </div>
       </main>
     </div>
   );
