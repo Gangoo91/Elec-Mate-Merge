@@ -25,13 +25,18 @@ const esc = (s: unknown) =>
 const fmtDate = (iso: string | null) => {
   if (!iso) return '—';
   try {
-    return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(iso).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   } catch {
     return iso;
   }
 };
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-const prettyCat = (c: string) => (c ? c.replace(/[_-]/g, ' ').replace(/\b\w/g, (x) => x.toUpperCase()) : 'Evidence');
+const prettyCat = (c: string) =>
+  c ? c.replace(/[_-]/g, ' ').replace(/\b\w/g, (x) => x.toUpperCase()) : 'Evidence';
 // Trim to a length but always break on a word boundary — never chop mid-word.
 const truncate = (s: string, n: number) => {
   if (s.length <= n) return s;
@@ -203,7 +208,10 @@ function coverPage(d: PortfolioPackData, logo: string): string {
       ? `${d.learner.standard} (${d.learner.level})`
       : d.learner.standard
     : 'Apprenticeship portfolio of evidence';
-  const verifiedPct = d.summary.totalItems > 0 ? Math.round((d.summary.verifiedItems / d.summary.totalItems) * 100) : 0;
+  const verifiedPct =
+    d.summary.totalItems > 0
+      ? Math.round((d.summary.verifiedItems / d.summary.totalItems) * 100)
+      : 0;
   return `
   <div class="page"><div class="cover">
     <div class="cover-top"><img class="logo" src="${logo}" alt="Elec-Mate"/>${CIRCUIT}</div>
@@ -228,9 +236,20 @@ function coverPage(d: PortfolioPackData, logo: string): string {
   </div></div>`;
 }
 
-function detailsPage(d: PortfolioPackData, logo: string, page: number, total: number, generated: string): string {
-  const std = d.learner.standard ? (d.learner.level ? `${d.learner.standard} (${d.learner.level})` : d.learner.standard) : '—';
-  const row = (k: string, v: string) => `<div class="row"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`;
+function detailsPage(
+  d: PortfolioPackData,
+  logo: string,
+  page: number,
+  total: number,
+  generated: string
+): string {
+  const std = d.learner.standard
+    ? d.learner.level
+      ? `${d.learner.standard} (${d.learner.level})`
+      : d.learner.standard
+    : '—';
+  const row = (k: string, v: string) =>
+    `<div class="row"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`;
   return `
   <div class="page"><div class="content">
     ${chead(logo)}
@@ -267,7 +286,8 @@ function critList(items: PortfolioCriterion[], label: string): string {
       return `<div class="crit">${code}${text}</div>`;
     })
     .join('');
-  const more = extra > 0 ? `<div class="crit-more">+ ${extra} more — see the justification summary</div>` : '';
+  const more =
+    extra > 0 ? `<div class="crit-more">+ ${extra} more — see the justification summary</div>` : '';
   return `<div class="subh">${esc(label)}</div>${rows}${more}`;
 }
 
@@ -284,14 +304,23 @@ function itemBlock(it: PortfolioPackItem): string {
     : `<span class="badge pend">${esc((it.status || 'draft').replace(/_/g, ' ').toUpperCase())}</span>`;
   const reviewBadge = isStale(it.date) ? `<span class="badge review">REVIEW · OLDER</span>` : '';
   const badge = `<div class="it-badges">${reviewBadge}${verifiedBadge}</div>`;
-  const meta = [it.evidenceType, fmtDate(it.date), prettyCat(it.category), it.timeSpentMins > 0 ? `${(it.timeSpentMins / 60).toFixed(1)}h` : null, it.grade ? `Grade: ${it.grade}` : null]
+  const meta = [
+    it.evidenceType,
+    fmtDate(it.date),
+    prettyCat(it.category),
+    it.timeSpentMins > 0 ? `${(it.timeSpentMins / 60).toFixed(1)}h` : null,
+    it.grade ? `Grade: ${it.grade}` : null,
+  ]
     .filter(Boolean)
     .join('  ·  ');
   const writeUp = it.writeUp ? `<div class="writeup">${esc(it.writeUp)}</div>` : '';
   const criteria = critList(it.criteria, 'Assessment criteria evidenced');
   const outcomes = critList(it.outcomes, 'Learning outcomes');
   const skills = it.skills.length
-    ? `<div class="skills">${it.skills.slice(0, 10).map((s) => `<span class="skill">${esc(s)}</span>`).join('')}</div>`
+    ? `<div class="skills">${it.skills
+        .slice(0, 10)
+        .map((s) => `<span class="skill">${esc(s)}</span>`)
+        .join('')}</div>`
     : '';
   const shown = it.photos.slice(0, MAX_PHOTOS);
   const extra = it.photos.length - shown.length;
@@ -332,7 +361,11 @@ function estimateHeight(it: PortfolioPackItem): number {
   return h + 30;
 }
 
-function packByHeight(items: PortfolioPackItem[], first: number, rest: number): PortfolioPackItem[][] {
+function packByHeight(
+  items: PortfolioPackItem[],
+  first: number,
+  rest: number
+): PortfolioPackItem[][] {
   const pages: PortfolioPackItem[][] = [];
   let cur: PortfolioPackItem[] = [];
   let used = 0;
@@ -352,7 +385,14 @@ function packByHeight(items: PortfolioPackItem[], first: number, rest: number): 
   return pages.length ? pages : [[]];
 }
 
-function evidencePage(items: PortfolioPackItem[], logo: string, page: number, total: number, first: boolean, partLabel: string): string {
+function evidencePage(
+  items: PortfolioPackItem[],
+  logo: string,
+  page: number,
+  total: number,
+  first: boolean,
+  partLabel: string
+): string {
   const head = first
     ? sectionHead('Portfolio evidence', 'Your evidence, item by item')
     : `<div class="chip-dark">PORTFOLIO EVIDENCE${partLabel}</div>`;
@@ -385,8 +425,8 @@ function jEstimate(it: PortfolioPackItem): number {
   return h + 14;
 }
 function packJustification(items: PortfolioPackItem[]): PortfolioPackItem[][] {
-  const FIRST = 880;
-  const REST = 980;
+  const FIRST = 855;
+  const REST = 945;
   const pages: PortfolioPackItem[][] = [];
   let cur: PortfolioPackItem[] = [];
   let used = 0;
@@ -405,7 +445,14 @@ function packJustification(items: PortfolioPackItem[]): PortfolioPackItem[][] {
   if (cur.length) pages.push(cur);
   return pages.length ? pages : [];
 }
-function justificationPage(items: PortfolioPackItem[], logo: string, page: number, total: number, first: boolean, partLabel: string): string {
+function justificationPage(
+  items: PortfolioPackItem[],
+  logo: string,
+  page: number,
+  total: number,
+  first: boolean,
+  partLabel: string
+): string {
   const head = first
     ? sectionHead('Evidence summary', 'Justification for each entry')
     : `<div class="chip-dark">EVIDENCE SUMMARY${partLabel}</div>`;
@@ -450,16 +497,21 @@ const TILE: Record<AcState, string> = {
   not_started: '',
 };
 function unitBlock(u: CoverageUnit): string {
-  const tiles = u.acs.map((a) => `<span class="t ${TILE[a.state]}" title="AC ${esc(a.code)}"></span>`).join('');
+  const tiles = u.acs
+    .map((a) => `<span class="t ${TILE[a.state]}" title="AC ${esc(a.code)}"></span>`)
+    .join('');
   return `<div class="covu"><div class="covu-h"><div class="u"><b>${esc(u.unitCode)}</b>${esc(u.unitTitle || '')}</div><div class="n">${u.done}/${u.total}</div></div><div class="tiles">${tiles}</div></div>`;
 }
 function uEstimate(u: CoverageUnit): number {
-  const rows = Math.max(1, Math.ceil(u.acs.length / 39));
-  return 24 + rows * 18 + 12;
+  // Title wraps (~64 chars/line @12px) now that it's shown in full; tiles wrap at 39/row.
+  const titleChars = u.unitCode.length + 3 + (u.unitTitle?.length || 0);
+  const titleLines = Math.max(1, Math.ceil(titleChars / 64));
+  const tileRows = Math.max(1, Math.ceil(u.acs.length / 39));
+  return 15 + titleLines * 17 + 6 + tileRows * 18 + 8;
 }
 function packUnits(units: CoverageUnit[]): CoverageUnit[][] {
-  const FIRST = 760;
-  const REST = 990;
+  const FIRST = 690;
+  const REST = 935;
   const pages: CoverageUnit[][] = [];
   let cur: CoverageUnit[] = [];
   let used = 0;
@@ -514,15 +566,26 @@ function coveragePage(
 
 function contentsPage(
   d: PortfolioPackData,
-  refs: { details: number; decl: number; coverage: number | null; evidence: number | null; justification: number | null },
+  refs: {
+    details: number;
+    decl: number;
+    coverage: number | null;
+    evidence: number | null;
+    justification: number | null;
+  },
   logo: string,
   page: number,
   total: number
 ): string {
   const tocRow = (label: string, pg: number | null) =>
-    pg ? `<div class="toc"><span class="toc-l">${esc(label)}</span><span class="toc-d"></span><span class="toc-p">Page ${pg}</span></div>` : '';
+    pg
+      ? `<div class="toc"><span class="toc-l">${esc(label)}</span><span class="toc-d"></span><span class="toc-p">Page ${pg}</span></div>`
+      : '';
   const cov = d.coverage;
-  const units = cov ? cov.units.slice(0, 28) : [];
+  // Cap so the list never overflows the contents page; the full per-unit
+  // breakdown lives on the coverage map. Conservative for 2-line titles.
+  const MAX_CONTENTS_UNITS = 9;
+  const units = cov ? cov.units.slice(0, MAX_CONTENTS_UNITS) : [];
   const moreUnits = cov ? cov.units.length - units.length : 0;
   const unitRows = units
     .map((u) => {
@@ -540,14 +603,19 @@ function contentsPage(
       ${tocRow('Portfolio evidence', refs.evidence)}
       ${tocRow('Justification summary', refs.justification)}
     </div>
-    ${cov ? `<div class="subh" style="margin-top:24px">Units &amp; coverage</div><div class="units">${unitRows}${moreUnits > 0 ? `<div class="crit-more" style="padding-left:0;margin-top:6px">+ ${moreUnits} more units</div>` : ''}</div>` : ''}
+    ${cov ? `<div class="subh" style="margin-top:24px">Units &amp; coverage</div><div class="units">${unitRows}${moreUnits > 0 ? `<div class="crit-more" style="padding-left:0;margin-top:6px">+ ${moreUnits} more — see the coverage map</div>` : ''}</div>` : ''}
     ${cfoot(page, total)}
   </div></div>`;
 }
 
-export function buildPortfolioHtml(data: PortfolioPackData, logoDataUrl: string, generatedLabel: string): string {
-  const covChunks = data.coverage && data.coverage.units.length ? packUnits(data.coverage.units) : [];
-  const itemPages = packByHeight(data.items, 905, 985);
+export function buildPortfolioHtml(
+  data: PortfolioPackData,
+  logoDataUrl: string,
+  generatedLabel: string
+): string {
+  const covChunks =
+    data.coverage && data.coverage.units.length ? packUnits(data.coverage.units) : [];
+  const itemPages = packByHeight(data.items, 875, 945);
   const justPages = data.items.length ? packJustification(data.items) : [];
   const contentTotal = 3 + covChunks.length + itemPages.length + justPages.length;
 
@@ -573,7 +641,9 @@ export function buildPortfolioHtml(data: PortfolioPackData, logoDataUrl: string,
   if (data.coverage) {
     covChunks.forEach((units, i) => {
       const part = covChunks.length > 1 ? ` · ${i + 1}/${covChunks.length}` : '';
-      pages.push(coveragePage(data.coverage!, units, logoDataUrl, pCovStart + i, contentTotal, i === 0, part));
+      pages.push(
+        coveragePage(data.coverage!, units, logoDataUrl, pCovStart + i, contentTotal, i === 0, part)
+      );
     });
   }
   itemPages.forEach((chunk, i) => {

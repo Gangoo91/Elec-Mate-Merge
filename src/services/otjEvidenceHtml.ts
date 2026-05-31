@@ -111,6 +111,19 @@ td.c,th.c{text-align:center}
 
 .empty{margin-top:22px;border:1px solid #e6eaef;background:#f8f9fb;border-radius:12px;padding:18px 20px;color:#475569;font-size:13.5px}
 
+/* declarations */
+.declintro{margin-top:20px;font-size:13px;color:#475569;line-height:1.6}
+.declintro b{color:#111827}
+.decl{margin-top:15px;border:1px solid #e6eaef;border-radius:12px;padding:15px 18px}
+.decl .role{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#caa406}
+.decl .stmt{font-size:11.5px;color:#374151;line-height:1.55;margin-top:7px}
+.sigrow{display:flex;gap:18px;margin-top:14px}
+.sig{flex:1}
+.sig.dt{flex:0 0 130px}
+.sig .lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8}
+.sig .line{margin-top:14px;border-bottom:1px solid #cbd5e1;min-height:18px;font-size:12px;font-weight:600;color:#111827;padding-bottom:2px}
+.declnote{margin-top:18px;font-size:10.5px;color:#94a3b8;line-height:1.5}
+
 .cfoot{margin-top:auto;padding-top:14px;border-top:1px solid #eef1f5;display:flex;justify-content:space-between;font-size:10.5px;color:#94a3b8}
 .cfoot b{color:#111827}
 `;
@@ -251,6 +264,30 @@ function logPage(
   </div></div>`;
 }
 
+function declarationPage(d: OtjExportData, logo: string, page: number, total: number): string {
+  const decl = (role: string, stmt: string, name: string) => `
+    <div class="decl">
+      <div class="role">${esc(role)}</div>
+      <div class="stmt">${esc(stmt)}</div>
+      <div class="sigrow">
+        <div class="sig"><div class="lbl">Name</div><div class="line">${esc(name)}</div></div>
+        <div class="sig"><div class="lbl">Signature</div><div class="line"></div></div>
+        <div class="sig dt"><div class="lbl">Date</div><div class="line"></div></div>
+      </div>
+    </div>`;
+  return `
+  <div class="page"><div class="content">
+    ${chead(logo)}
+    ${sectionHead('Declaration', 'Authenticity of this record', 'Off-the-job training is learning undertaken within paid working hours but outside normal day-to-day working duties.')}
+    <div class="declintro">The declarations below confirm that the off-the-job training hours in this record are a <b>true, accurate and genuine</b> account, delivered within the apprentice's paid working hours.</div>
+    ${decl('Apprentice / learner', 'I confirm that this is a true and accurate record of the off-the-job training I have undertaken. The activities recorded took place within my paid working hours and are additional to my normal day-to-day working duties.', titleCase(d.learner.name || ''))}
+    ${decl('Employer', "I confirm that the off-the-job training recorded was delivered within the apprentice's normal paid working hours and is a genuine record of learning that is distinct from their day-to-day productive work.", d.learner.employer || '')}
+    ${decl('Training provider', 'I confirm that this record has been reviewed and that the off-the-job training hours align with the planned learning for this apprenticeship.', d.learner.provider || '')}
+    <div class="declnote">This record supports, but does not replace, your training provider's official off-the-job training evidence. Physical signatures may be added where your provider or the ESFA funding rules require them.</div>
+    ${cfoot(page, total)}
+  </div></div>`;
+}
+
 function signoffPage(
   rows: OtjVerification[],
   logo: string,
@@ -298,8 +335,8 @@ export function buildOtjHtml(
     ? chunk(data.verifications, SIGNOFF_ROWS_PER_PAGE)
     : [[]];
 
-  // total content pages = details(1) + log pages + signoff pages
-  const contentTotal = 1 + logChunks.length + signoffChunks.length;
+  // total content pages = details(1) + log pages + declaration(1) + signoff pages
+  const contentTotal = 1 + logChunks.length + 1 + signoffChunks.length;
 
   const pages: string[] = [coverPage(data, logoDataUrl)];
   let p = 1;
@@ -308,6 +345,7 @@ export function buildOtjHtml(
     const partLabel = logChunks.length > 1 ? ` (page ${i + 1} of ${logChunks.length})` : '';
     pages.push(logPage(c, data, logoDataUrl, p++, contentTotal, partLabel));
   });
+  pages.push(declarationPage(data, logoDataUrl, p++, contentTotal));
   signoffChunks.forEach((c) => {
     pages.push(signoffPage(c, logoDataUrl, p++, contentTotal, data.verifications.length === 0));
   });

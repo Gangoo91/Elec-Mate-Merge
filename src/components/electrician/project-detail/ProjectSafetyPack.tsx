@@ -13,15 +13,41 @@ import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useProjectSafetyDocs } from '@/hooks/useProjectSafetyDocs';
 
 const fmtDate = (d: string | null) =>
-  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+  d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '';
 
 function statusTone(s: string | null): string {
   const v = (s || '').toLowerCase();
-  if (['fatal', 'major', 'high', 'very-high', 'critical', 'expired', 'isolated', 'fail', 'failed'].includes(v))
+  if (
+    [
+      'fatal',
+      'major',
+      'high',
+      'very-high',
+      'critical',
+      'expired',
+      'isolated',
+      'fail',
+      'failed',
+    ].includes(v)
+  )
     return 'bg-red-500/15 text-red-300';
   if (['moderate', 'medium', 'active', 'pending', 'in_progress', 'open'].includes(v))
     return 'bg-amber-500/15 text-amber-300';
-  if (['low', 'minor', 'pass', 'passed', 'completed', 'closed', 're_energised', 'accepted', 'good'].includes(v))
+  if (
+    [
+      'low',
+      'minor',
+      'pass',
+      'passed',
+      'completed',
+      'closed',
+      're_energised',
+      'accepted',
+      'good',
+    ].includes(v)
+  )
     return 'bg-emerald-500/15 text-emerald-300';
   return 'bg-white/10 text-white/70';
 }
@@ -60,8 +86,8 @@ export function ProjectSafetyPack({ projectId }: { projectId: string }) {
           <div className="flex flex-col items-center py-6 text-center px-4">
             <p className="text-sm text-white mb-1">No safety documents linked yet</p>
             <p className="text-[11.5px] text-white/55 leading-snug max-w-[260px]">
-              Link permits, safe isolations, RAMS, COSHH and more to this project from the Site Safety tools —
-              they gather here as one pack.
+              Link permits, safe isolations, RAMS, COSHH and more to this project from the Site
+              Safety tools — they gather here as one pack.
             </p>
           </div>
         ) : (
@@ -72,7 +98,9 @@ export function ProjectSafetyPack({ projectId }: { projectId: string }) {
                 key={`${d.pdfType}-${d.id}`}
                 type="button"
                 disabled={busy}
-                onClick={() => exportPDF(d.pdfType as Parameters<typeof exportPDF>[0], d.id)}
+                onClick={() =>
+                  exportPDF(d.pdfType as Parameters<typeof exportPDF>[0], d.id, undefined, d.title)
+                }
                 className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors disabled:opacity-60"
               >
                 <div className="min-w-0 text-left flex items-center gap-3">
@@ -90,7 +118,12 @@ export function ProjectSafetyPack({ projectId }: { projectId: string }) {
                     <span className="text-[11px] font-medium text-elec-yellow">Exporting…</span>
                   ) : (
                     d.status && (
-                      <span className={cn('text-[11px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap', statusTone(d.status))}>
+                      <span
+                        className={cn(
+                          'text-[11px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap',
+                          statusTone(d.status)
+                        )}
+                      >
                         {d.status.replace(/_/g, ' ')}
                       </span>
                     )
