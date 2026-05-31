@@ -61,7 +61,7 @@ const HelpBotTab = () => {
   const snapshot = useStudentSnapshot();
   const smartPrompts = buildSmartPrompts(snapshot);
   const [searchParams, setSearchParams] = useSearchParams();
-  const chatHistory = useAIChatHistory();
+  const chatHistory = useAIChatHistory('dave');
   const [historyOpen, setHistoryOpen] = useState(false);
   // Initial thread comes from useAIChatHistory's localStorage fallback so
   // apprentices pick up where they left off even on slow Supabase reads.

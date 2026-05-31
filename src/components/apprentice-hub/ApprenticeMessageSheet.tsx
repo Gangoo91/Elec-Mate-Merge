@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -140,7 +141,7 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
   useEffect(() => {
     if (!open || !activeThreadId) return;
     const chan = supabase
-      .channel(`apprentice_messages:${activeThreadId}`)
+      .channel(realtimeChannelName(`apprentice_messages:${activeThreadId}`))
       .on(
         'postgres_changes',
         {
@@ -163,7 +164,7 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
   useEffect(() => {
     if (!open || !collegeStudentId) return;
     const chan = supabase
-      .channel(`apprentice_threads:${collegeStudentId}`)
+      .channel(realtimeChannelName(`apprentice_threads:${collegeStudentId}`))
       .on(
         'postgres_changes',
         {

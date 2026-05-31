@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import { SubmitWorkOtjSheet } from './SubmitWorkOtjSheet';
 
@@ -180,7 +181,7 @@ export function MyOtjSubmitCard() {
       const uid = u.user?.id;
       if (!uid) return;
       chan = supabase
-        .channel(`my_otj:${uid}`)
+        .channel(realtimeChannelName(`my_otj:${uid}`))
         .on(
           'postgres_changes',
           {

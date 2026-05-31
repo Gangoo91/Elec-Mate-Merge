@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useMyAssignedQuizzes — for the apprentice. Reads tutor_quizzes where this
@@ -248,7 +249,7 @@ export function useMyAssignedQuizzes() {
   useEffect(() => {
     if (!user) return;
     const ch = supabase
-      .channel(`my_quizzes:${user.id}`)
+      .channel(realtimeChannelName(`my_quizzes:${user.id}`))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'tutor_quizzes' },

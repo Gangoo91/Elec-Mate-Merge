@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 
@@ -104,7 +105,7 @@ export function MyAcCoverageCard() {
       const csId = (cs?.id as string | undefined) ?? null;
       if (!csId) return;
       chan = supabase
-        .channel(`my_ac_coverage:${csId}`)
+        .channel(realtimeChannelName(`my_ac_coverage:${csId}`))
         .on(
           'postgres_changes',
           {

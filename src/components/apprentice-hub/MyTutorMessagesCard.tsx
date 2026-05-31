@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import { ApprenticeMessageSheet } from './ApprenticeMessageSheet';
 
@@ -112,7 +113,7 @@ export function MyTutorMessagesCard() {
       const csId = (cs?.id as string | undefined) ?? null;
       if (!csId) return;
       chan = supabase
-        .channel(`my_tutor_threads:${csId}`)
+        .channel(realtimeChannelName(`my_tutor_threads:${csId}`))
         .on(
           'postgres_changes',
           {

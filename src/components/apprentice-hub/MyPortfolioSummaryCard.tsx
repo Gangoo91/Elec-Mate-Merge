@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 const PORTFOLIO_AI_PROMPT =
   "Help me write up a piece of work for my portfolio. I'll describe the job and you draft the entry against the right ACs.";
@@ -94,7 +95,7 @@ export function MyPortfolioSummaryCard() {
       const uid = u.user?.id;
       if (!uid) return;
       chan = supabase
-        .channel(`my_portfolio_summary:${uid}`)
+        .channel(realtimeChannelName(`my_portfolio_summary:${uid}`))
         .on(
           'postgres_changes',
           {

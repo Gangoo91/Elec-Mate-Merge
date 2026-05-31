@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    MyComplianceCard — ESFA off-the-job compliance traffic light. Computes
@@ -130,7 +131,7 @@ export function MyComplianceCard() {
       const uid = u.user?.id;
       if (!uid) return;
       chan = supabase
-        .channel(`my_compliance:${uid}`)
+        .channel(realtimeChannelName(`my_compliance:${uid}`))
         .on(
           'postgres_changes',
           {

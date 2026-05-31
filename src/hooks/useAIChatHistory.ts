@@ -27,11 +27,14 @@ const STORAGE_KEY = 'elec-ai-conversation';
 const STORAGE_EXPIRY_HOURS = 24;
 const SAVE_DEBOUNCE_MS = 2000;
 
-export function useAIChatHistory() {
+export function useAIChatHistory(scope: string = 'assistant') {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [sessions, setSessions] = useState<AIChatSession[]>([]);
   const [isLoadingSessions, setIsLoadingSessions] = useState(false);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Per-surface storage key so e.g. the apprentice tutor (scope 'dave') and the
+  // electrician assistant (scope 'assistant') never share a conversation.
+  const storageKey = `${STORAGE_KEY}:${scope}`;
 
   // Fetch recent sessions on mount
   const fetchSessions = useCallback(async () => {
@@ -46,6 +49,7 @@ export function useAIChatHistory() {
         .from('ai_chat_history' as any)
         .select('id, title, message_count, last_message_preview, created_at, updated_at')
         .eq('user_id', user.id)
+        .eq('agent', scope)
         .is('archived_at', null)
         .order('updated_at', { ascending: false })
         .limit(20);
@@ -61,38 +65,41 @@ export function useAIChatHistory() {
     } finally {
       setIsLoadingSessions(false);
     }
-  }, []);
+  }, [scope]);
 
   useEffect(() => {
     fetchSessions();
   }, [fetchSessions]);
 
   // Save to localStorage as fallback
-  const saveToLocalStorage = useCallback((messages: Message[]) => {
-    try {
-      if (messages.length === 0) {
-        storageRemoveSync(STORAGE_KEY);
-        return;
+  const saveToLocalStorage = useCallback(
+    (messages: Message[]) => {
+      try {
+        if (messages.length === 0) {
+          storageRemoveSync(storageKey);
+          return;
+        }
+        storageSetSync(
+          storageKey,
+          JSON.stringify({ messages, timestamp: new Date().toISOString() })
+        );
+      } catch (e) {
+        console.warn('Failed to save to localStorage:', e);
       }
-      storageSetSync(
-        STORAGE_KEY,
-        JSON.stringify({ messages, timestamp: new Date().toISOString() })
-      );
-    } catch (e) {
-      console.warn('Failed to save to localStorage:', e);
-    }
-  }, []);
+    },
+    [storageKey]
+  );
 
   // Load from localStorage (fallback for offline/unauthenticated)
   const loadFromLocalStorage = useCallback((): Message[] => {
     try {
-      const stored = storageGetSync(STORAGE_KEY);
+      const stored = storageGetSync(storageKey);
       if (!stored) return [];
 
       const { messages, timestamp } = JSON.parse(stored);
       const hoursSinceStored = (Date.now() - new Date(timestamp).getTime()) / (1000 * 60 * 60);
       if (hoursSinceStored > STORAGE_EXPIRY_HOURS) {
-        storageRemoveSync(STORAGE_KEY);
+        storageRemoveSync(storageKey);
         return [];
       }
 
@@ -103,7 +110,7 @@ export function useAIChatHistory() {
     } catch {
       return [];
     }
-  }, []);
+  }, [storageKey]);
 
   // Auto-title from first user message
   const generateTitle = useCallback((messages: Message[]): string => {
@@ -176,6 +183,7 @@ export function useAIChatHistory() {
             .from('ai_chat_history' as any)
             .insert({
               user_id: user.id,
+              agent: scope,
               title,
               messages: serialisedMessages as any,
               message_count: messages.length,
@@ -213,7 +221,7 @@ export function useAIChatHistory() {
         return currentSessionId || '';
       }
     },
-    [currentSessionId, saveToLocalStorage, generateTitle]
+    [currentSessionId, saveToLocalStorage, generateTitle, scope]
   );
 
   // Debounced save — called by the parent after streaming completes
@@ -287,8 +295,8 @@ export function useAIChatHistory() {
   // Start a fresh session
   const startNewSession = useCallback(() => {
     setCurrentSessionId(null);
-    storageRemoveSync(STORAGE_KEY);
-  }, []);
+    storageRemoveSync(storageKey);
+  }, [storageKey]);
 
   // Clean up timer on unmount
   useEffect(() => {

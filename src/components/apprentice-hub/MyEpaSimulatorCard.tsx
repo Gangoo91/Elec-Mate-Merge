@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    MyEpaSimulatorCard — apprentice-side. Lists the apprentice's recent EPA
@@ -90,7 +91,7 @@ export function MyEpaSimulatorCard() {
       const uid = u.user?.id;
       if (!uid) return;
       chan = supabase
-        .channel(`my_epa_mock:${uid}`)
+        .channel(realtimeChannelName(`my_epa_mock:${uid}`))
         .on(
           'postgres_changes',
           {
