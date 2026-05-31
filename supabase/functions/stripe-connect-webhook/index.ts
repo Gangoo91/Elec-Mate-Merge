@@ -41,7 +41,7 @@ async function sendClientThankYouEmail(
   const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
   if (!resendApiKey) {
-    console.warn('⚠️ RESEND_API_KEY not configured - skipping thank-you email');
+    console.warn('RESEND_API_KEY not configured - skipping thank-you email');
     return;
   }
 
@@ -64,7 +64,7 @@ async function sendClientThankYouEmail(
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #22c55e; font-size: 26px; font-weight: 700;">✓ Payment Received</h1>
+              <h1 style="margin: 0; color: #22c55e; font-size: 26px; font-weight: 700;">Payment Received</h1>
             </td>
           </tr>
 
@@ -93,7 +93,7 @@ async function sendClientThankYouEmail(
                       </tr>
                       <tr>
                         <td style="padding: 8px 0; font-size: 14px; color: #166534;">Status:</td>
-                        <td style="text-align: right; font-size: 14px; color: #166534; font-weight: 700;">✓ Paid</td>
+                        <td style="text-align: right; font-size: 14px; color: #166534; font-weight: 700;">Paid</td>
                       </tr>
                     </table>
                   </td>
@@ -104,15 +104,15 @@ async function sendClientThankYouEmail(
                 If you have any questions about this payment, please contact:
               </p>
               <p style="margin: 16px 0 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
-              ${companyPhone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">📞 ${companyPhone}</p>` : ''}
-              ${companyEmail ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">✉️ ${companyEmail}</p>` : ''}
+              ${companyPhone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">${companyPhone}</p>` : ''}
+              ${companyEmail ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">${companyEmail}</p>` : ''}
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
             <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
+              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">Powered by ElecMate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
             </td>
           </tr>
@@ -137,12 +137,12 @@ async function sendClientThankYouEmail(
     });
 
     if (error) {
-      console.error('❌ Failed to send thank-you email:', error);
+      console.error('Failed to send thank-you email:', error);
     } else {
-      console.log(`✅ Thank-you email sent to ${clientEmail}:`, data?.id);
+      console.log(`Thank-you email sent to ${clientEmail}:`, data?.id);
     }
   } catch (err) {
-    console.error('❌ Error sending thank-you email:', err);
+    console.error('Error sending thank-you email:', err);
   }
 }
 
@@ -171,23 +171,23 @@ serve(async (req) => {
     if (webhookSecret && signature) {
       try {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-        console.log('✅ Webhook signature verified');
+        console.log('Webhook signature verified');
       } catch (err: any) {
         // Signature verification failed - log but still process
         // This handles case where secret is misconfigured
-        console.error('⚠️ Webhook signature verification failed:', err.message);
+        console.error('Webhook signature verification failed:', err.message);
         console.log(
-          '⚠️ Processing webhook anyway (signature mismatch - check STRIPE_CONNECT_WEBHOOK_SECRET)'
+          'Processing webhook anyway (signature mismatch - check STRIPE_CONNECT_WEBHOOK_SECRET)'
         );
         event = JSON.parse(body);
       }
     } else {
       // Parse without verification (no secret configured)
       event = JSON.parse(body);
-      console.log('⚠️ Processing webhook without signature verification (no secret configured)');
+      console.log('Processing webhook without signature verification (no secret configured)');
     }
 
-    console.log(`📥 Webhook event received: ${event.type}`);
+    console.log(`Webhook event received: ${event.type}`);
 
     // Initialize Supabase with service role key for admin access
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -200,8 +200,8 @@ serve(async (req) => {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
 
-        console.log(`💳 Checkout session completed: ${session.id}`);
-        console.log(`📋 Metadata:`, session.metadata);
+        console.log(`Checkout session completed: ${session.id}`);
+        console.log(`Metadata:`, session.metadata);
 
         const invoiceId = session.metadata?.invoice_id;
         const invoiceNumber = session.metadata?.invoice_number;
@@ -241,7 +241,7 @@ serve(async (req) => {
 
           if (depositInvoice.deposit_for_quote && depositInvoice.parent_quote_id) {
             console.log(
-              `💰 Deposit paid for quote ${depositInvoice.parent_quote_id} — confirming booking`
+              `Deposit paid for quote ${depositInvoice.parent_quote_id} — confirming booking`
             );
             await supabase
               .from('quotes')
@@ -257,7 +257,7 @@ serve(async (req) => {
             // silently 404'ing.
             if (electricianUserId) {
               const depAmt = formatCurrency(depositInvoice.total || 0);
-              const depTitle = `🎉 Deposit received · ${depAmt}`;
+              const depTitle = `Deposit received · ${depAmt}`;
               const depBody = `Deposit landed for quote — booking confirmed.`;
 
               await supabase
@@ -321,7 +321,7 @@ serve(async (req) => {
           throw updateError;
         }
 
-        console.log(`✅ Invoice ${invoiceNumber} marked as paid`);
+        console.log(`Invoice ${invoiceNumber} marked as paid`);
 
         // Create notification for electrician — bell-icon log +
         // device push. Old public.notifications insert was 404'ing
@@ -329,7 +329,7 @@ serve(async (req) => {
         // push call didn't forward auth. Both fixed.
         if (electricianUserId) {
           const paymentAmount = session.amount_total ? session.amount_total / 100 : 0;
-          const payTitle = `💰 Payment received · ${formatCurrency(paymentAmount)}`;
+          const payTitle = `Payment received · ${formatCurrency(paymentAmount)}`;
           const payBody = `Invoice ${invoiceNumber} paid by card.`;
 
           await supabase
@@ -382,7 +382,7 @@ serve(async (req) => {
               .limit(1);
 
             if (tokens && tokens.length > 0) {
-              console.log(`📊 Syncing invoice ${invoiceNumber} to ${tokens[0].provider}...`);
+              console.log(`Syncing invoice ${invoiceNumber} to ${tokens[0].provider}...`);
 
               // Call accounting sync function with internal userId
               await supabase.functions.invoke('accounting-sync-invoice', {
@@ -392,7 +392,7 @@ serve(async (req) => {
                   userId: electricianUserId,
                 },
               });
-              console.log(`✅ Invoice ${invoiceNumber} synced to ${tokens[0].provider}`);
+              console.log(`Invoice ${invoiceNumber} synced to ${tokens[0].provider}`);
             }
           } catch (syncError) {
             // Don't fail the webhook if sync fails - it's not critical
@@ -403,7 +403,7 @@ serve(async (req) => {
         // Send thank-you email to client
         try {
           // Fetch invoice details for client info
-          console.log(`📋 Fetching invoice ${invoiceId} for email lookup...`);
+          console.log(`Fetching invoice ${invoiceId} for email lookup...`);
 
           const { data: invoice, error: invoiceFetchError } = await supabase
             .from('quotes')
@@ -412,10 +412,10 @@ serve(async (req) => {
             .single();
 
           if (invoiceFetchError) {
-            console.error(`❌ Error fetching invoice for email:`, invoiceFetchError);
+            console.error(`Error fetching invoice for email:`, invoiceFetchError);
           }
 
-          console.log(`📋 Invoice client_data:`, JSON.stringify(invoice?.client_data || 'NULL'));
+          console.log(`Invoice client_data:`, JSON.stringify(invoice?.client_data || 'NULL'));
 
           if (invoice?.client_data) {
             const clientData =
@@ -427,7 +427,7 @@ serve(async (req) => {
             const clientName = clientData?.name || 'Valued Customer';
 
             console.log(
-              `📧 Client email extracted: "${clientEmail || 'EMPTY'}", Client name: "${clientName}"`
+              `Client email extracted: "${clientEmail || 'EMPTY'}", Client name: "${clientName}"`
             );
 
             if (clientEmail) {
@@ -462,12 +462,12 @@ serve(async (req) => {
                 companyPhone
               );
             } else {
-              console.log('⚠️ No client email found - skipping thank-you email');
+              console.log('No client email found - skipping thank-you email');
             }
           }
         } catch (emailError) {
           // Don't fail the webhook if email fails
-          console.error('⚠️ Failed to send client thank-you email (non-fatal):', emailError);
+          console.error('Failed to send client thank-you email (non-fatal):', emailError);
         }
 
         break;
@@ -487,7 +487,7 @@ serve(async (req) => {
             })
             .eq('id', invoiceId);
 
-          console.log(`🕐 Expired checkout session cleared for invoice ${invoiceId}`);
+          console.log(`Expired checkout session cleared for invoice ${invoiceId}`);
         }
         break;
       }
@@ -497,7 +497,7 @@ serve(async (req) => {
         const invoiceId = paymentIntent.metadata?.invoice_id;
 
         if (invoiceId) {
-          console.log(`❌ Payment failed for invoice ${invoiceId}`);
+          console.log(`Payment failed for invoice ${invoiceId}`);
 
           // Optionally notify electrician of failed payment
           const electricianUserId = paymentIntent.metadata?.electrician_user_id;
@@ -523,7 +523,7 @@ serve(async (req) => {
         // Handle connected account status changes
         const account = event.data.object as Stripe.Account;
 
-        console.log(`🏦 Account updated: ${account.id}`);
+        console.log(`Account updated: ${account.id}`);
 
         let status = 'pending';
         if (account.charges_enabled && account.payouts_enabled) {
@@ -541,20 +541,20 @@ serve(async (req) => {
         if (profileError) {
           console.error('Error updating profile:', profileError);
         } else {
-          console.log(`✅ Updated account ${account.id} status to ${status}`);
+          console.log(`Updated account ${account.id} status to ${status}`);
         }
         break;
       }
 
       default:
-        console.log(`ℹ️ Unhandled event type: ${event.type}`);
+        console.log(`ℹUnhandled event type: ${event.type}`);
     }
 
     return new Response(JSON.stringify({ received: true, type: event.type }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
-    console.error('❌ Webhook error:', error);
+    console.error('Webhook error:', error);
     await captureException(error, {
       functionName: 'stripe-connect-webhook',
       requestUrl: req.url,

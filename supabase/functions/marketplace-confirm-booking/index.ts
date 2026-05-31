@@ -203,7 +203,7 @@ serve(async (req) => {
       await supabase.functions.invoke('send-push-notification', {
         body: {
           userId: hold.user_id,
-          title: '📅 New booking confirmed',
+          title: 'New booking confirmed',
           body: `${clientName} booked ${new Date(hold.slot_start).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}`,
           type: 'booking',
           data: {

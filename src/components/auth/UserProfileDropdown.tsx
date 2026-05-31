@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LogOut, MessageSquare, Bell, ChevronRight, Sparkles } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { useCombinedUnreadWithNotifications } from '@/hooks/useCombinedUnread';
@@ -22,6 +22,23 @@ const UserProfileDropdown = () => {
   const [messagesOpen, setMessagesOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deep-link from a "new message" push (?open=messages) — open the messages
+  // sheet, then strip the param so a refresh/back doesn't reopen it.
+  useEffect(() => {
+    if (searchParams.get('open') === 'messages') {
+      setMessagesOpen(true);
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete('open');
+          return next;
+        },
+        { replace: true }
+      );
+    }
+  }, [searchParams, setSearchParams]);
 
   const { unreadCount: notificationUnread } = useNotifications();
   const { messageUnread } = useCombinedUnreadWithNotifications(notificationUnread);

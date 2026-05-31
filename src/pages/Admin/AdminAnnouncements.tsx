@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -60,9 +60,16 @@ interface Announcement {
   created_at: string;
   created_by: string;
   dismissal_count?: number;
+  link_url?: string | null;
+  channel?: Channel;
+  push_sent_at?: string | null;
+  push_recipient_count?: number;
+  push_delivered_count?: number;
 }
 
 type StatusKey = 'all' | 'live' | 'scheduled' | 'draft' | 'expired';
+
+type Channel = 'in_app' | 'push' | 'both';
 
 const defaultAnnouncement = {
   title: '',
@@ -72,7 +79,19 @@ const defaultAnnouncement = {
   is_dismissible: true,
   starts_at: '',
   ends_at: '',
+  channel: 'in_app' as Channel,
+  link_url: '',
 };
+
+// One-tap destinations for push — named screens, no raw URLs to mistype.
+const PUSH_DESTINATIONS: { label: string; path: string }[] = [
+  { label: 'Home screen', path: '' },
+  { label: 'Inspection & Testing', path: '/electrician/inspection-testing' },
+  { label: 'Quotes & Invoices', path: '/electrician/quote-invoice-dashboard' },
+  { label: 'Study Centre', path: '/electrician/study-centre' },
+  { label: 'Tasks', path: '/electrician/tasks' },
+  { label: 'Mental Health', path: '/electrician/mental-health' },
+];
 
 function relativeTime(date: Date): string {
   const diff = Date.now() - date.getTime();
@@ -108,9 +127,41 @@ export default function AdminAnnouncements() {
   const [createOpen, setCreateOpen] = useState(false);
   const [editAnnouncement, setEditAnnouncement] = useState<Announcement | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [pushConfirm, setPushConfirm] = useState<Announcement | null>(null);
   const [formData, setFormData] = useState(defaultAnnouncement);
   const [activeTab, setActiveTab] = useState<StatusKey>('all');
   const [search, setSearch] = useState('');
+  const [channelView, setChannelView] = useState<'in_app' | 'push'>('in_app');
+  const [reachCount, setReachCount] = useState<number | null>(null);
+
+  // The roles on whatever's being composed/edited (for the live reach estimate).
+  const composingRoles: string[] = editAnnouncement?.target_roles || formData.target_roles;
+  const composingChannel: Channel = (editAnnouncement?.channel as Channel) || formData.channel;
+  const isComposing = createOpen || !!editAnnouncement;
+
+  // Live "≈ N people" reach estimate for push composes — debounced.
+  useEffect(() => {
+    if (!isComposing || composingChannel === 'in_app') {
+      setReachCount(null);
+      return;
+    }
+    const roles = composingRoles.filter((r) => r && r !== 'visitor');
+    if (roles.length === 0) {
+      setReachCount(0);
+      return;
+    }
+    let cancelled = false;
+    const t = setTimeout(async () => {
+      const { data } = await supabase.functions.invoke('announcement-push', {
+        body: { mode: 'estimate', roles },
+      });
+      if (!cancelled) setReachCount(typeof data?.recipients === 'number' ? data.recipients : null);
+    }, 350);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [isComposing, composingChannel, composingRoles.join(',')]);
 
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
@@ -215,6 +266,37 @@ export default function AdminAnnouncements() {
     },
   });
 
+  const pushMutation = useMutation({
+    mutationFn: async ({ id, mode }: { id: string; mode: 'test' | 'audience' }) => {
+      const { data, error } = await supabase.functions.invoke('announcement-push', {
+        body: { announcementId: id, mode },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data as { mode: string; delivered?: boolean; recipients?: number };
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      queryClient.invalidateQueries({ queryKey: ['admin-announcements'] });
+      setPushConfirm(null);
+      toast({
+        title: data.mode === 'test' ? 'Test push sent to you' : 'Push sent',
+        description:
+          data.mode === 'test'
+            ? data.delivered
+              ? 'Check your device.'
+              : 'No active device found for your account.'
+            : `Delivered to ${data.recipients ?? 0} ${
+                (data.recipients ?? 0) === 1 ? 'person' : 'people'
+              }.`,
+      });
+    },
+    onError: (error: Error) => {
+      haptic.error();
+      toast({ title: 'Push failed', description: error.message, variant: 'destructive' });
+    },
+  });
+
   const classify = (a: Announcement): StatusKey => {
     if (a.starts_at && new Date(a.starts_at) > new Date()) return 'scheduled';
     if (a.ends_at && new Date(a.ends_at) < new Date()) return 'expired';
@@ -258,9 +340,25 @@ export default function AdminAnnouncements() {
     return Math.min(100, Math.round(avg));
   }, [announcements]);
 
+  const pushStats = useMemo(() => {
+    const pushes = (announcements || []).filter((a) => {
+      const ch = (a.channel as Channel) || 'in_app';
+      return ch === 'push' || ch === 'both';
+    });
+    return {
+      campaigns: pushes.length,
+      sent: pushes.filter((a) => a.push_sent_at).length,
+      recipients: pushes.reduce((s, a) => s + (a.push_recipient_count || 0), 0),
+      delivered: pushes.reduce((s, a) => s + (a.push_delivered_count || 0), 0),
+    };
+  }, [announcements]);
+
   const filtered = useMemo(() => {
     const list = announcements || [];
     return list.filter((a) => {
+      const ch = (a.channel as Channel) || 'in_app';
+      if (channelView === 'in_app' && ch === 'push') return false;
+      if (channelView === 'push' && ch === 'in_app') return false;
       if (activeTab !== 'all' && classify(a) !== activeTab) return false;
       if (search.trim()) {
         const q = search.toLowerCase();
@@ -273,7 +371,7 @@ export default function AdminAnnouncements() {
       }
       return true;
     });
-  }, [announcements, activeTab, search]);
+  }, [announcements, activeTab, search, channelView]);
 
   const tabs = [
     { value: 'all', label: 'All', count: counts.total },
@@ -284,7 +382,10 @@ export default function AdminAnnouncements() {
   ];
 
   const openCreate = () => {
-    setFormData(defaultAnnouncement);
+    setFormData({
+      ...defaultAnnouncement,
+      channel: channelView === 'push' ? 'push' : 'in_app',
+    });
     setCreateOpen(true);
   };
 
@@ -298,7 +399,11 @@ export default function AdminAnnouncements() {
         <PageHero
           eyebrow="Tools"
           title="Announcements"
-          description="In-app broadcasts and scheduled messages."
+          description={
+            channelView === 'push'
+              ? 'Push notifications sent to users’ devices.'
+              : 'In-app banners shown inside the app.'
+          }
           tone="yellow"
           actions={
             <>
@@ -307,7 +412,7 @@ export default function AdminAnnouncements() {
                 className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation inline-flex items-center gap-1.5"
               >
                 <Plus className="h-4 w-4" />
-                New Announcement
+                {channelView === 'push' ? 'New push' : 'New banner'}
               </button>
               <IconButton onClick={() => refetch()} aria-label="Refresh">
                 <RefreshCw className="h-4 w-4" />
@@ -316,19 +421,55 @@ export default function AdminAnnouncements() {
           }
         />
 
+        {/* Channel split — clear separation of the two delivery surfaces */}
+        <div className="flex items-center gap-1 p-1 rounded-full bg-[hsl(0_0%_10%)] border border-white/[0.08] w-full max-w-md mb-4">
+          {(
+            [
+              { key: 'in_app' as const, label: 'In-app banners' },
+              { key: 'push' as const, label: 'Push notifications' },
+            ]
+          ).map((c) => (
+            <button
+              key={c.key}
+              type="button"
+              onClick={() => setChannelView(c.key)}
+              className={cn(
+                'flex-1 h-10 rounded-full text-[13px] font-semibold touch-manipulation transition-colors',
+                channelView === c.key
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white/70 hover:text-white'
+              )}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+
         {isLoading ? (
           <LoadingBlocks />
         ) : (
           <>
-            <StatStrip
-              columns={4}
-              stats={[
-                { label: 'Live', value: counts.live, tone: 'emerald' },
-                { label: 'Scheduled', value: counts.scheduled, tone: 'blue' },
-                { label: 'Total Reach', value: totalReach },
-                { label: 'Click Rate', value: `${clickRate}%`, accent: true },
-              ]}
-            />
+            {channelView === 'push' ? (
+              <StatStrip
+                columns={4}
+                stats={[
+                  { label: 'Campaigns', value: pushStats.campaigns },
+                  { label: 'Sent', value: pushStats.sent, tone: 'blue' },
+                  { label: 'Recipients', value: pushStats.recipients },
+                  { label: 'Delivered', value: pushStats.delivered, tone: 'emerald', accent: true },
+                ]}
+              />
+            ) : (
+              <StatStrip
+                columns={4}
+                stats={[
+                  { label: 'Live', value: counts.live, tone: 'emerald' },
+                  { label: 'Scheduled', value: counts.scheduled, tone: 'blue' },
+                  { label: 'Total Reach', value: totalReach },
+                  { label: 'Click Rate', value: `${clickRate}%`, accent: true },
+                ]}
+              />
+            )}
 
             <FilterBar
               tabs={tabs}
@@ -471,6 +612,65 @@ export default function AdminAnnouncements() {
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                {(() => {
+                  const pvTitle =
+                    (editAnnouncement?.title ?? formData.title) || 'Notification title';
+                  const pvBody =
+                    (editAnnouncement?.message ?? formData.message) ||
+                    'Your message preview appears here.';
+                  const pvType = editAnnouncement?.type ?? formData.type;
+                  const showPush = composingChannel === 'push' || composingChannel === 'both';
+                  return (
+                    <div className="space-y-2">
+                      <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                        Preview
+                      </Label>
+                      {showPush ? (
+                        <div className="rounded-2xl bg-gradient-to-b from-[hsl(0_0%_16%)] to-[hsl(0_0%_9%)] border border-white/[0.08] p-3">
+                          <div className="flex items-start gap-3 rounded-xl bg-black/40 px-3 py-2.5">
+                            <div className="h-9 w-9 rounded-lg bg-elec-yellow shrink-0 flex items-center justify-center text-black font-bold text-sm">
+                              E
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-2">
+                                <p className="text-[13px] font-semibold text-white truncate">
+                                  {pvTitle}
+                                </p>
+                                <span className="text-[10px] text-white/40 shrink-0">now</span>
+                              </div>
+                              <p className="text-[12px] text-white/70 line-clamp-3 mt-0.5">
+                                {pvBody}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-[10px] text-white/30 text-center mt-2">
+                            Lock screen preview
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="rounded-xl border px-4 py-3 flex items-start gap-3 bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                          <div
+                            className={cn(
+                              'h-2 w-2 rounded-full mt-1.5 shrink-0',
+                              pvType === 'warning'
+                                ? 'bg-amber-400'
+                                : pvType === 'success'
+                                  ? 'bg-emerald-400'
+                                  : pvType === 'error'
+                                    ? 'bg-red-400'
+                                    : 'bg-blue-400'
+                            )}
+                          />
+                          <div className="min-w-0">
+                            <p className="text-[13px] font-semibold text-white">{pvTitle}</p>
+                            <p className="text-[12px] text-white/70 mt-0.5">{pvBody}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+
                 <div className="space-y-2">
                   <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
                     Title
@@ -677,6 +877,90 @@ export default function AdminAnnouncements() {
                     )}
                   </div>
                 </div>
+                {(composingChannel === 'push' || composingChannel === 'both') && (
+                  <div className="space-y-3">
+                    <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                      Tap destination
+                    </Label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {PUSH_DESTINATIONS.map((d) => {
+                        const cur = editAnnouncement
+                          ? editAnnouncement.link_url || ''
+                          : formData.link_url;
+                        const selected = cur === d.path;
+                        return (
+                          <button
+                            key={d.path || 'home'}
+                            type="button"
+                            onClick={() =>
+                              editAnnouncement
+                                ? setEditAnnouncement({ ...editAnnouncement, link_url: d.path })
+                                : setFormData({ ...formData, link_url: d.path })
+                            }
+                            className={cn(
+                              'h-11 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors',
+                              selected
+                                ? 'bg-elec-yellow text-black'
+                                : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04]'
+                            )}
+                          >
+                            {d.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white/80 flex items-center justify-between">
+                      <span>Estimated reach</span>
+                      <span className="font-semibold text-white tabular-nums">
+                        {reachCount === null
+                          ? '—'
+                          : `≈ ${reachCount} ${reachCount === 1 ? 'person' : 'people'}`}
+                      </span>
+                    </div>
+
+                    {editAnnouncement?.push_sent_at && (
+                      <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white/80">
+                        Last sent {relativeTime(new Date(editAnnouncement.push_sent_at))} ·{' '}
+                        {editAnnouncement.push_delivered_count ?? 0}/
+                        {editAnnouncement.push_recipient_count ?? 0} delivered
+                      </div>
+                    )}
+
+                    {editAnnouncement ? (
+                      <>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              pushMutation.mutate({ id: editAnnouncement.id, mode: 'test' })
+                            }
+                            disabled={pushMutation.isPending}
+                            className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04] disabled:opacity-50"
+                          >
+                            Send test to me
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setPushConfirm(editAnnouncement)}
+                            disabled={pushMutation.isPending}
+                            className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                          >
+                            Send to audience
+                          </button>
+                        </div>
+                        <p className="text-[11px] text-white/50">
+                          Test it on your own device first. &ldquo;Send to audience&rdquo; pushes to
+                          everyone in the selected roles who has notifications on.
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-[11px] text-white/50">
+                        Save this push first, then send a test to yourself and out to the audience.
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
               <SheetFooter className="p-5 border-t border-white/[0.06]">
                 <Button
@@ -708,6 +992,35 @@ export default function AdminAnnouncements() {
             </div>
           </SheetContent>
         </Sheet>
+
+        <AlertDialog open={!!pushConfirm} onOpenChange={() => setPushConfirm(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Send this push to everyone?</AlertDialogTitle>
+              <AlertDialogDescription>
+                &ldquo;{pushConfirm?.title}&rdquo; will be pushed to all users in the selected roles
+                who have notifications enabled. This can&rsquo;t be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                className="h-11 touch-manipulation rounded-full"
+                disabled={pushMutation.isPending}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 rounded-full"
+                onClick={() =>
+                  pushConfirm && pushMutation.mutate({ id: pushConfirm.id, mode: 'audience' })
+                }
+                disabled={pushMutation.isPending}
+              >
+                {pushMutation.isPending ? 'Sending…' : 'Send to everyone'}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
           <AlertDialogContent>

@@ -95,21 +95,8 @@ export function useAdminMessages() {
 
       if (error) throw error;
 
-      // Fire-and-forget push notification to admin
-      if (adminId) {
-        supabase.functions
-          .invoke('send-push-notification', {
-            body: {
-              userId: adminId,
-              title: 'New support message',
-              body: message.length > 100 ? message.substring(0, 97) + '...' : message,
-              type: 'job',
-              data: { senderId: user.id, isAdminMessage: true },
-            },
-          })
-          .catch(() => {}); // fire-and-forget, never block the UI
-      }
-
+      // Notification to the admin (push + fallback) is handled server-side by the
+      // `notify-message` edge function via a trigger on admin_messages INSERT.
       return data;
     },
     onSuccess: () => {

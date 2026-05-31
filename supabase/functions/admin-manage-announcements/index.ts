@@ -105,6 +105,8 @@ Deno.serve(async (req) => {
             ],
             is_dismissible: announcement.is_dismissible ?? true,
             ends_at: announcement.ends_at || null,
+            channel: announcement.channel || 'in_app',
+            link_url: announcement.link_url || null,
             created_by: user.id,
           })
           .select()
@@ -129,6 +131,8 @@ Deno.serve(async (req) => {
           updateData.is_dismissible = announcement.is_dismissible;
         if (announcement.is_active !== undefined) updateData.is_active = announcement.is_active;
         if (announcement.ends_at !== undefined) updateData.ends_at = announcement.ends_at;
+        if (announcement.link_url !== undefined) updateData.link_url = announcement.link_url;
+        if (announcement.channel !== undefined) updateData.channel = announcement.channel;
 
         const { data, error } = await supabaseAdmin
           .from('admin_announcements')

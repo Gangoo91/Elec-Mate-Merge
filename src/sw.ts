@@ -397,6 +397,16 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
     case 'briefing':
       url = '/dashboard';
       break;
+    case 'announcement':
+      // Admin announcement push — go to the destination set on the announcement,
+      // else home (where the in-app banner shows).
+      url = data.deep_link || '/dashboard';
+      break;
+    case 'admin_message':
+      // Message from Elec-Mate support/admin — land on home and open the
+      // messages sheet (read by UserProfileDropdown via ?open=messages).
+      url = role === 'employer' ? '/employer?open=messages' : '/dashboard?open=messages';
+      break;
     default:
       url = '/';
   }

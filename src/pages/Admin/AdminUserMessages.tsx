@@ -251,17 +251,9 @@ export default function AdminUserMessages() {
 
       if (error) throw error;
 
-      supabase.functions
-        .invoke('send-push-notification', {
-          body: {
-            userId: recipientId,
-            title: 'New message from Elec-Mate',
-            body: message.length > 100 ? message.substring(0, 97) + '...' : message,
-            type: 'job',
-            data: { senderId: user?.id, isAdminMessage: true },
-          },
-        })
-        .catch(() => {});
+      // Notification (push + email fallback) is handled server-side by the
+      // `notify-message` edge function via a trigger on admin_messages INSERT —
+      // reliable regardless of this client, no double-send here.
     },
     onSuccess: () => {
       haptic.success();

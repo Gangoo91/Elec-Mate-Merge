@@ -68,7 +68,7 @@ serve(async (req) => {
         };
         const clientName = signer?.name || (quote.client_data as any)?.name || 'Your client';
         const amount = quote.total ? ` for £${Number(quote.total).toFixed(2)}` : '';
-        pushTitle = '✅ Quote accepted';
+        pushTitle = 'Quote accepted';
         pushBody = `${clientName} signed your quote${amount}`;
         shouldSendPush = true;
         console.log(`Quote ${quote.id} accepted via DocuSign`);
@@ -85,7 +85,7 @@ serve(async (req) => {
         };
         const clientName = signer?.name || (quote.client_data as any)?.name || 'Your client';
         const amount = quote.total ? ` for £${Number(quote.total).toFixed(2)}` : '';
-        pushTitle = '❌ Quote declined';
+        pushTitle = 'Quote declined';
         pushBody = `${clientName} declined your quote${amount}`;
         shouldSendPush = true;
         console.log(`Quote ${quote.id} rejected/voided via DocuSign`);

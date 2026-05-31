@@ -126,8 +126,8 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'overdue_invoices',
       referenceId: `batch-${new Date().toDateString()}`,
-      title: `⚠️ ${overdueInvoices.length} overdue invoice${overdueInvoices.length > 1 ? 's' : ''}`,
-      body: `${formatted} outstanding — chase these today`,
+      title: `${overdueInvoices.length} overdue invoice${overdueInvoices.length > 1 ? 's' : ''}`,
+      body: `${formatted} outstanding. Tap to chase.`,
       pushType: 'invoice',
       data: { role, invoiceId: overdueInvoices[0].id },
     });
@@ -151,8 +151,8 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'expiring_quote',
       referenceId: quote.id,
-      title: `⏰ Quote expiring soon`,
-      body: `Quote for ${clientName} expires within 3 days — follow up now`,
+      title: `Quote expiring soon`,
+      body: `${clientName}'s quote expires within 3 days. Tap to follow up.`,
       pushType: 'quote',
       data: { role, quoteId: quote.id },
     });
@@ -175,7 +175,7 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'overdue_tasks',
       referenceId: `batch-${new Date().toDateString()}`,
-      title: `📋 ${overdueTasks.length} overdue task${overdueTasks.length > 1 ? 's' : ''}`,
+      title: `${overdueTasks.length} overdue task${overdueTasks.length > 1 ? 's' : ''}`,
       body:
         urgentCount > 0
           ? `${urgentCount} high priority — open the app to action them`
@@ -207,7 +207,7 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'jobs_today',
       referenceId: `batch-${new Date().toDateString()}`,
-      title: `🔧 ${todayJobs.length} job${todayJobs.length > 1 ? 's' : ''} today`,
+      title: `${todayJobs.length} job${todayJobs.length > 1 ? 's' : ''} today`,
       body: `First job at ${timeStr}${firstJob.location ? ` — ${firstJob.location}` : ''}`,
       pushType: 'job',
       data: { role },
@@ -230,7 +230,7 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'ecs_card_expiry',
       referenceId: elecIdProfile.id,
-      title: `⚠️ ECS Card ${daysLeft < 0 ? 'expired' : 'expiring soon'}`,
+      title: `ECS card ${daysLeft < 0 ? 'expired' : 'expiring soon'}`,
       body:
         daysLeft < 0
           ? 'Your ECS card has expired — renew now'
@@ -256,7 +256,7 @@ async function buildAlertsForUser(
       alerts.push({
         type: 'equipment_calibration',
         referenceId: eq.id,
-        title: `🔧 Calibration due: ${eq.name}`,
+        title: `Calibration due: ${eq.name}`,
         body:
           daysLeft < 0
             ? `Calibration overdue — equipment may be non-compliant`
@@ -282,7 +282,7 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'eicr_reinspection',
       referenceId: cert.id,
-      title: `📋 EICR re-inspection due`,
+      title: `EICR re-inspection due`,
       body: `${cert.client_name || cert.installation_address} — ${daysLeft < 0 ? 'overdue' : `due in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`}`,
       pushType: 'certificate',
       data: { role, certificateId: cert.id },
@@ -308,7 +308,7 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'flashcards_due',
       referenceId: `batch-${new Date().toDateString()}`,
-      title: `📚 ${cardCount} flashcard${cardCount !== 1 ? 's' : ''} ready for review`,
+      title: `${cardCount} flashcard${cardCount !== 1 ? 's' : ''} ready for review`,
       body:
         cardCount <= 5
           ? 'Quick 2-minute session — keep your streak alive'
@@ -351,7 +351,7 @@ async function buildAlertsForUser(
       alerts.push({
         type: 'streak_broken',
         referenceId: `streak-${new Date().toDateString()}`,
-        title: `🔥 Your learning streak needs you`,
+        title: `Keep your learning streak going`,
         body:
           studiedYesterday && studiedYesterday.length > 0
             ? "You haven't studied today — don't lose your streak!"
@@ -376,8 +376,8 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'mood_checkin',
       referenceId: `mood-${new Date().toDateString()}`,
-      title: `💙 How are you feeling today?`,
-      body: 'Take a moment to check in with yourself',
+      title: `How are you feeling today?`,
+      body: 'Take a moment to check in.',
       pushType: 'mental_health',
       data: { role },
     });
@@ -401,8 +401,8 @@ async function buildAlertsForUser(
     alerts.push({
       type: 'unread_peer_messages',
       referenceId: `peer-${new Date().toDateString()}`,
-      title: `💬 ${unreadCount ?? 0} unread message${(unreadCount ?? 0) !== 1 ? 's' : ''}`,
-      body: 'A mate has reached out — have a read',
+      title: `${unreadCount ?? 0} unread message${(unreadCount ?? 0) !== 1 ? 's' : ''}`,
+      body: 'Someone has been in touch. Tap to read.',
       pushType: 'peer',
       data: { role },
     });
@@ -430,7 +430,7 @@ async function buildAlertsForUser(
       alerts.push({
         type: 'assessment_due',
         referenceId: nearest.id,
-        title: `📝 ${dueAssessments.length} assessment${dueAssessments.length > 1 ? 's' : ''} due soon`,
+        title: `${dueAssessments.length} assessment${dueAssessments.length > 1 ? 's' : ''} due soon`,
         body:
           daysLeft <= 0
             ? `"${nearest.title}" is overdue — complete it now`
@@ -458,7 +458,7 @@ async function buildAlertsForUser(
         alerts.push({
           type: 'ojt_hours_behind',
           referenceId: item.id,
-          title: `⚠️ OJT hours behind schedule`,
+          title: `OJT hours behind schedule`,
           body: `${item.requirement_name}: ${Math.round(pct)}% complete, ${daysLeft} day${daysLeft !== 1 ? 's' : ''} remaining`,
           pushType: 'assessment',
           data: { role },
@@ -728,7 +728,7 @@ serve(async (req: Request): Promise<Response> => {
 
           // Tasks
           const taskAlerts = alerts.filter((a) => a.type === 'overdue_tasks');
-          if (taskAlerts.length > 0) parts.push(taskAlerts[0].title.replace(/^📋 /, ''));
+          if (taskAlerts.length > 0) parts.push(taskAlerts[0].title.replace(/^/, ''));
 
           // Invoices
           const invoiceAlerts = alerts.filter((a) => a.type === 'overdue_invoices');
@@ -757,10 +757,19 @@ serve(async (req: Request): Promise<Response> => {
 
           const briefingSummary = parts.join('\n');
 
+          // Personalised greeting — pulls the user's first name so the brief
+          // never reads like a generic broadcast.
+          const { data: nameRow } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', userId)
+            .maybeSingle();
+          const firstName = (nameRow?.full_name || '').trim().split(' ')[0];
+
           alerts.unshift({
             type: 'morning_briefing',
             referenceId: `briefing-${new Date().toDateString()}`,
-            title: `Good morning! Here's your day`,
+            title: firstName ? `Good morning, ${firstName}` : 'Good morning',
             body: briefingSummary,
             pushType: 'briefing',
             data: { role, tag: 'briefing-morning' },

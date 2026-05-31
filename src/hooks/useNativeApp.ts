@@ -41,6 +41,8 @@ function resolvePushDestinationUrl(
   if (!data) return null;
   const r = role || data?.role || '';
 
+  if (data.type === 'admin_message')
+    return r === 'employer' ? '/employer?open=messages' : '/dashboard?open=messages';
   if (data.action === 'open_tasks' || data.type === 'task') return '/electrician/tasks';
   if (data.type === 'study') return '/electrician/study-centre';
   if (data.type === 'mental_health') return '/electrician/mental-health';
