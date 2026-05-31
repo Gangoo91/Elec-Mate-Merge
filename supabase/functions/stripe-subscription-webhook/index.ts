@@ -813,10 +813,49 @@ serve(async (req) => {
       customerId: string,
       metadataUserId?: string | null
     ): Promise<string | null> {
-      // Priority 1: Use userId from subscription/event metadata (most reliable)
+      // The ACTUAL payer is whoever owns the Stripe customer's email — that is
+      // the card that was charged. `metadata.user_id` can be stale or carried
+      // over from a *different* / abandoned checkout (e.g. a half-finished
+      // sign-up minutes earlier), so it must NEVER be trusted over the paying
+      // customer. Trusting it blindly caused paid sign-ups + win-backs to land
+      // on the wrong account.
+      let emailUserId: string | null = null;
+      let customerEmail: string | null = null;
+      try {
+        const customer = await stripe.customers.retrieve(customerId);
+        if (!customer.deleted && 'email' in customer && customer.email) {
+          customerEmail = customer.email;
+          const { data: usersData } = await supabase.auth.admin.listUsers({
+            page: 1,
+            perPage: 1,
+            filter: `email.eq.${customer.email}`,
+          });
+          emailUserId = usersData?.users?.[0]?.id ?? null;
+        }
+      } catch (err) {
+        console.error('Error retrieving Stripe customer for payer verification:', err);
+      }
+
+      // Priority 1: metadata.user_id — but ONLY when it does not contradict the payer.
       if (metadataUserId) {
-        logger.info('Found userId in metadata', { metadataUserId });
-        // Backfill stripe_customer_id if missing
+        if (emailUserId && emailUserId !== metadataUserId) {
+          // CONFLICT: the paying customer's email belongs to a different user
+          // than the metadata claims. Trust the payer, never the metadata.
+          logger.warn('metadata.userId conflicts with paying customer — using the payer', {
+            metadataUserId,
+            payerUserId: emailUserId,
+            customerId,
+            customerEmail,
+          });
+          await supabase
+            .from('profiles')
+            .update({ stripe_customer_id: customerId })
+            .eq('id', emailUserId);
+          return emailUserId;
+        }
+        // No conflict (metadata agrees with the payer, or the payer's email is
+        // not a registered user — e.g. paid under a different email).
+        logger.info('Using userId from metadata (matches payer)', { metadataUserId });
         await supabase
           .from('profiles')
           .update({ stripe_customer_id: customerId })
@@ -825,7 +864,7 @@ serve(async (req) => {
         return metadataUserId;
       }
 
-      // Priority 2: Check if we have the stripe_customer_id stored in profiles
+      // Priority 2: stripe_customer_id already stored against a profile (unique id).
       const { data: profile } = await supabase
         .from('profiles')
         .select('id')
@@ -836,39 +875,17 @@ serve(async (req) => {
         return profile.id;
       }
 
-      // Priority 3: Look up customer email in Stripe, then find auth user
-      try {
-        const customer = await stripe.customers.retrieve(customerId);
-        if (customer.deleted || !('email' in customer) || !customer.email) {
-          return null;
-        }
-
-        // Look up user by email via auth admin API (single user, not full scan)
-        const { data: usersData } = await supabase.auth.admin.listUsers({
-          page: 1,
-          perPage: 1,
-          filter: `email.eq.${customer.email}`,
-        });
-        const authUser = usersData?.users?.[0];
-
-        if (authUser?.id) {
-          // Backfill stripe_customer_id for future lookups
-          await supabase
-            .from('profiles')
-            .update({ stripe_customer_id: customerId })
-            .eq('id', authUser.id);
-          logger.info('Backfilled stripe_customer_id via email lookup', {
-            userId: authUser.id,
-            customerId,
-          });
-          return authUser.id;
-        }
-
-        return null;
-      } catch (err) {
-        console.error('Error finding user by customer:', err);
-        return null;
+      // Priority 3: the payer resolved from the Stripe customer's email.
+      if (emailUserId) {
+        await supabase
+          .from('profiles')
+          .update({ stripe_customer_id: customerId })
+          .eq('id', emailUserId);
+        logger.info('Resolved user via customer email', { userId: emailUserId, customerId });
+        return emailUserId;
       }
+
+      return null;
     }
 
     // Helper: Update user subscription status
@@ -1172,9 +1189,12 @@ serve(async (req) => {
                 }
               }
             } catch (cancelErr: unknown) {
-              logger.warn('Failed to schedule previous subscriptions for cancellation (non-fatal)', {
-                error: (cancelErr as Error)?.message,
-              });
+              logger.warn(
+                'Failed to schedule previous subscriptions for cancellation (non-fatal)',
+                {
+                  error: (cancelErr as Error)?.message,
+                }
+              );
             }
           }
         }
@@ -1669,9 +1689,7 @@ serve(async (req) => {
                 status: 'pending',
               }));
 
-              const { error: enqueueError } = await supabase
-                .from('winback_queue')
-                .insert(rows);
+              const { error: enqueueError } = await supabase.from('winback_queue').insert(rows);
 
               if (enqueueError) {
                 logger.warn('Win-back enqueue failed (non-fatal)', {
@@ -2047,15 +2065,44 @@ serve(async (req) => {
           break;
         }
 
-        // Try to find the user by: client_reference_id > customer_email > customer_details.email
+        // The PAYER is whoever entered their email at checkout — that is the card
+        // that was charged. `client_reference_id` can belong to a DIFFERENT user
+        // (e.g. a checkout opened on a shared device / stale session and then paid
+        // by someone else). It must never override the payer, or the paid sub
+        // lands on the wrong account (this is what mis-credited win-back payments).
         let linkedUserId: string | null = null;
 
-        // Priority 1: client_reference_id (if pay link was generated with userId)
-        if (session.client_reference_id) {
+        // Resolve the payer from the checkout email first.
+        const checkoutEmail =
+          (session.customer_email || session.customer_details?.email || null)?.toLowerCase() ||
+          null;
+        let payerUserId: string | null = null;
+        if (checkoutEmail) {
+          const { data: usersData } = await supabase.auth.admin.listUsers({
+            page: 1,
+            perPage: 1,
+            filter: `email.eq.${checkoutEmail}`,
+          });
+          payerUserId = usersData?.users?.[0]?.id ?? null;
+        }
+
+        const refId = session.client_reference_id || null;
+        if (refId && payerUserId && refId !== payerUserId) {
+          // CONFLICT: the checkout was tagged with one user but paid by another.
+          // Trust the payer, never the tag.
+          logger.warn('client_reference_id conflicts with the paying email — using the payer', {
+            clientReferenceId: refId,
+            payerUserId,
+            checkoutEmail,
+            customerId: sessionCustomerId,
+          });
+          linkedUserId = payerUserId;
+        } else if (refId) {
+          // No conflict — matches the payer, or the payer's email isn't a known user.
           const { data: refProfile } = await supabase
             .from('profiles')
             .select('id')
-            .eq('id', session.client_reference_id)
+            .eq('id', refId)
             .maybeSingle();
           if (refProfile) {
             linkedUserId = refProfile.id;
@@ -2063,30 +2110,10 @@ serve(async (req) => {
           }
         }
 
-        // Priority 2: customer_email or customer_details.email (case-insensitive)
-        if (!linkedUserId) {
-          const checkoutEmail = (
-            session.customer_email ||
-            session.customer_details?.email ||
-            null
-          )?.toLowerCase();
-
-          if (checkoutEmail) {
-            const { data: usersData } = await supabase.auth.admin.listUsers({
-              page: 1,
-              perPage: 1,
-              filter: `email.eq.${checkoutEmail}`,
-            });
-            const authUser = usersData?.users?.[0];
-
-            if (authUser) {
-              linkedUserId = authUser.id;
-              logger.info('Linked via checkout email', {
-                userId: linkedUserId,
-                email: checkoutEmail,
-              });
-            }
-          }
+        // Fall back to the payer resolved from the checkout email.
+        if (!linkedUserId && payerUserId) {
+          linkedUserId = payerUserId;
+          logger.info('Linked via checkout email', { userId: linkedUserId, email: checkoutEmail });
         }
 
         if (linkedUserId) {
