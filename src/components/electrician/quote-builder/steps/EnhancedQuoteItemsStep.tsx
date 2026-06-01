@@ -175,6 +175,21 @@ export const EnhancedQuoteItemsStep = ({
     notes: '',
   });
 
+  // ELE-1021 — labour pricing mode (hourly vs day rate), remembered per session.
+  const [labourRateMode, setLabourRateMode] = useState<'hour' | 'day'>(() => {
+    try {
+      return (sessionStorage.getItem('elecmate_labour_rate_mode') as 'hour' | 'day') || 'hour';
+    } catch {
+      return 'hour';
+    }
+  });
+  const isDayMode = labourRateMode === 'day';
+  const baseHourlyRate = companyProfile?.hourly_rate || 45;
+  const baseDayRate = companyProfile?.day_rate ?? baseHourlyRate * 8;
+  // Per-worker day rate keeps the same ratio to the electrician as the hourly rate does.
+  const workerRateForMode = (defaultHourlyRate: number) =>
+    isDayMode ? Math.round(baseDayRate * (defaultHourlyRate / baseHourlyRate)) : defaultHourlyRate;
+
   const [customCategory, setCustomCategory] = useState<
     'manual' | 'materials' | 'labour' | 'equipment'
   >('manual');
@@ -253,21 +268,59 @@ export const EnhancedQuoteItemsStep = ({
       materialCode: '',
       equipmentCode: '',
       unitPrice: 0,
-      unit: category === 'labour' ? 'hour' : category === 'manual' ? 'item' : 'each',
+      unit:
+        category === 'labour'
+          ? isDayMode
+            ? 'day'
+            : 'hour'
+          : category === 'manual'
+            ? 'item'
+            : 'each',
     }));
   };
 
   const handleWorkerTypeChange = (workerTypeId: string) => {
     const worker = workerTypes.find((w) => w.id === workerTypeId);
     if (worker) {
+      const rate = workerRateForMode(worker.defaultHourlyRate);
       setNewItem((prev) => ({
         ...prev,
         workerType: workerTypeId,
-        hourlyRate: worker.defaultHourlyRate,
-        unitPrice: worker.defaultHourlyRate,
+        hourlyRate: rate,
+        unitPrice: rate,
+        unit: isDayMode ? 'day' : 'hour',
         description: prev.description || `${worker.name} - ${worker.description}`,
       }));
     }
+  };
+
+  // ELE-1021 — flip labour pricing between hourly and day rate; remember the
+  // choice for the session and re-price the in-progress line to the new mode.
+  const handleLabourRateModeChange = (mode: 'hour' | 'day') => {
+    setLabourRateMode(mode);
+    try {
+      sessionStorage.setItem('elecmate_labour_rate_mode', mode);
+    } catch {
+      /* sessionStorage unavailable — non-fatal */
+    }
+    setNewItem((prev) => {
+      if (prev.category !== 'labour') return prev;
+      const worker = workerTypes.find((w) => w.id === prev.workerType);
+      const dayNow = mode === 'day';
+      const rate = worker
+        ? dayNow
+          ? Math.round(baseDayRate * (worker.defaultHourlyRate / baseHourlyRate))
+          : worker.defaultHourlyRate
+        : prev.hourlyRate;
+      return {
+        ...prev,
+        hours: 0,
+        quantity: 0,
+        hourlyRate: rate,
+        unitPrice: rate,
+        unit: dayNow ? 'day' : 'hour',
+      };
+    });
   };
 
   const handleMaterialSelect = (materialId: string) => {
@@ -304,6 +357,7 @@ export const EnhancedQuoteItemsStep = ({
       hours,
       quantity: hours,
       unitPrice: prev.hourlyRate,
+      unit: isDayMode ? (hours === 1 ? 'day' : 'days') : 'hour',
     }));
   };
 
@@ -325,6 +379,7 @@ export const EnhancedQuoteItemsStep = ({
         category: newItem.category === 'manual' ? customCategory : newItem.category,
         quantity:
           newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity,
+        unit: newItem.unit,
       };
       onAdd(itemToAdd);
 
@@ -333,7 +388,14 @@ export const EnhancedQuoteItemsStep = ({
       setNewItem((prev) => ({
         description: '',
         quantity: 1,
-        unit: prev.category === 'labour' ? 'hour' : prev.category === 'manual' ? 'item' : 'each',
+        unit:
+          prev.category === 'labour'
+            ? isDayMode
+              ? 'day'
+              : 'hour'
+            : prev.category === 'manual'
+              ? 'item'
+              : 'each',
         unitPrice: 0,
         category: prev.category,
         subcategory: '',
@@ -457,6 +519,17 @@ export const EnhancedQuoteItemsStep = ({
     { value: '40', label: '5 days' },
   ];
 
+  // ELE-1021 — day-rate quick picks (used when labour is in day mode).
+  const dayOptions = [
+    { value: '0.5', label: '½ day' },
+    { value: '1', label: '1 day' },
+    { value: '1.5', label: '1.5 days' },
+    { value: '2', label: '2 days' },
+    { value: '3', label: '3 days' },
+    { value: '5', label: '5 days' },
+    { value: '10', label: '10 days' },
+  ];
+
   const markupOptions = [
     { value: '0', label: 'No markup (0%)' },
     { value: '10', label: '10% markup' },
@@ -543,6 +616,28 @@ export const EnhancedQuoteItemsStep = ({
         {/* Labour Fields */}
         {newItem.category === 'labour' && (
           <div className="p-4 space-y-4">
+            {/* ELE-1021 — Hourly / Day rate mode toggle */}
+            <div className="grid grid-cols-2 gap-1.5">
+              {(['hour', 'day'] as const).map((mode) => {
+                const active = labourRateMode === mode;
+                return (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => handleLabourRateModeChange(mode)}
+                    className={cn(
+                      'h-10 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
+                      active
+                        ? 'bg-elec-yellow text-black font-semibold'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {mode === 'hour' ? 'Hourly rate' : 'Day rate'}
+                  </button>
+                );
+              })}
+            </div>
+
             {/* Worker Type - Visual Pills */}
             <div>
               <label className="text-xs font-medium text-white mb-2 block">Worker Type</label>
@@ -562,7 +657,7 @@ export const EnhancedQuoteItemsStep = ({
                       )}
                     >
                       <span className={cn('text-[13px] font-medium', isSelected ? 'text-black' : 'text-white')}>{w.name}</span>
-                      <span className={cn('text-[12px] font-semibold', isSelected ? 'text-black/70' : 'text-white')}>£{w.defaultHourlyRate}/hr</span>
+                      <span className={cn('text-[12px] font-semibold', isSelected ? 'text-black/70' : 'text-white')}>£{workerRateForMode(w.defaultHourlyRate)}{isDayMode ? '/day' : '/hr'}</span>
                     </button>
                   );
                 })}
@@ -571,15 +666,15 @@ export const EnhancedQuoteItemsStep = ({
 
             {/* Hours */}
             <div className="space-y-3">
-              <label className="text-xs font-medium text-white block">Hours (decimals allowed, e.g. 3.5)</label>
+              <label className="text-xs font-medium text-white block">{isDayMode ? 'Days (decimals allowed, e.g. 0.5)' : 'Hours (decimals allowed, e.g. 3.5)'}</label>
               <div className="flex items-center gap-2">
                 <DecimalInput
-                  placeholder="3.5"
+                  placeholder={isDayMode ? '0.5' : '3.5'}
                   value={newItem.hours}
                   onChange={handleHoursChange}
                   className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                 />
-                <span className="text-[13px] font-medium text-white">hours</span>
+                <span className="text-[13px] font-medium text-white">{isDayMode ? 'days' : 'hours'}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-white/[0.12]" />
@@ -587,7 +682,7 @@ export const EnhancedQuoteItemsStep = ({
                 <div className="flex-1 h-px bg-white/[0.12]" />
               </div>
               <div className="grid grid-cols-4 gap-1.5">
-                {hourOptions.map((opt) => {
+                {(isDayMode ? dayOptions : hourOptions).map((opt) => {
                   const isSelected = newItem.hours === parseFloat(opt.value);
                   return (
                     <button

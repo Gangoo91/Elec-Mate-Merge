@@ -47,6 +47,9 @@ export interface CompanyProfile {
   payment_terms: string;
   bank_details?: any;
   hourly_rate?: number;
+  /** ELE-1021 — optional day rate (£) for quote-builder day-rate mode.
+   *  Null/undefined falls back to hourly_rate × 8. */
+  day_rate?: number | null;
   overhead_percentage?: number;
   profit_margin?: number;
   created_at: Date;

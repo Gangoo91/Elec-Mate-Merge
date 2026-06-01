@@ -39,6 +39,7 @@ interface PricingSheetProps {
 const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [hourlyRate, setHourlyRate] = useState(45);
+  const [dayRate, setDayRate] = useState<number | ''>('');
   const [paymentTerms, setPaymentTerms] = useState('30 days');
   const [overheadPercentage, setOverheadPercentage] = useState(15);
   const [profitMargin, setProfitMargin] = useState(20);
@@ -54,6 +55,7 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
     if (hydratedForOpenRef.current) return;
     if (!profile) return;
     setHourlyRate(profile.hourly_rate || 45);
+    setDayRate(profile.day_rate ?? '');
     setPaymentTerms(profile.payment_terms || '30 days');
     setOverheadPercentage(profile.overhead_percentage ?? 15);
     setProfitMargin(profile.profit_margin ?? 20);
@@ -66,6 +68,7 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
     try {
       const success = await onSave({
         hourly_rate: hourlyRate,
+        day_rate: dayRate === '' ? null : dayRate,
         payment_terms: paymentTerms,
         overhead_percentage: overheadPercentage,
         profit_margin: profitMargin,
@@ -113,6 +116,20 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                   placeholder="45"
                   className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-white font-medium text-[13px]">Day rate (£)</Label>
+                <Input
+                  type="number"
+                  step="1"
+                  value={dayRate}
+                  onChange={(e) =>
+                    setDayRate(e.target.value === '' ? '' : parseFloat(e.target.value) || 0)
+                  }
+                  placeholder={`${(hourlyRate || 45) * 8}`}
+                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                />
+                <p className="text-[11.5px] text-white">Leave blank to use hourly rate × 8</p>
               </div>
               <div className="space-y-1.5">
                 <Label className="text-white font-medium text-[13px]">Payment terms</Label>
