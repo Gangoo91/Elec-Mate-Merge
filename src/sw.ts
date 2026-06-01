@@ -370,21 +370,23 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       url =
         role === 'employer'
           ? `/employer?section=quotes`
-          : `/electrician/quotes/view/${data.quoteId || ''}`;
+          : data.quoteId
+            ? `/electrician/quotes/view/${data.quoteId}`
+            : '/electrician/quote-invoice-dashboard';
       break;
     case 'invoice':
       url =
         role === 'employer'
           ? `/employer?section=quotes`
-          : `/electrician/invoices/${data.invoiceId || ''}/view`;
+          : data.invoiceId
+            ? `/electrician/invoices/${data.invoiceId}/view`
+            : '/electrician/quote-invoice-dashboard';
       break;
     case 'invoices_overdue':
       // Aggregated multi-invoice digest push — open the dashboard so the
       // user sees all unpaid in one list.
       url =
-        role === 'employer'
-          ? `/employer?section=quotes`
-          : `/electrician/quote-invoice-dashboard`;
+        role === 'employer' ? `/employer?section=quotes` : `/electrician/quote-invoice-dashboard`;
       break;
     case 'application':
       url =
@@ -424,7 +426,7 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       url = role === 'employer' ? '/employer?open=messages' : '/dashboard?open=messages';
       break;
     default:
-      url = '/';
+      url = '/dashboard';
   }
 
   event.waitUntil(

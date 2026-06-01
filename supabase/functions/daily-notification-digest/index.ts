@@ -815,14 +815,13 @@ serve(async (req: Request): Promise<Response> => {
             totalSkipped += filteredAlerts.length;
           } else {
             // Build body — keep it shorter if user also gets WhatsApp morning brief
-            let consolidatedBody: string;
-            if (hasWhatsAppAgent) {
-              // User gets detailed WhatsApp brief — push is just a summary
-              consolidatedBody = briefing.body + '\nCheck WhatsApp for full details';
-            } else {
-              const detailLines = detailAlerts.map((a) => `${a.title}: ${a.body}`);
-              consolidatedBody = detailLines.length > 0 ? detailLines.join('\n') : briefing.body;
-            }
+            // The push is a self-contained brief — never cross-references another
+            // channel (no "check WhatsApp"). WhatsApp users get their richer brief
+            // separately in WhatsApp; this push stands on its own.
+            const detailLines = detailAlerts.map((a) => `${a.title}: ${a.body}`);
+            const consolidatedBody =
+              detailLines.length > 0 ? detailLines.join('\n') : briefing.body;
+            void hasWhatsAppAgent;
 
             await sendPush(
               supabaseUrl,

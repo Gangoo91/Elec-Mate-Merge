@@ -50,9 +50,7 @@ function resolvePushDestinationUrl(
   if (data.type === 'briefing') return '/dashboard';
   if (data.type === 'certificate') return '/electrician/inspection-testing';
   if (data.type === 'invoices_overdue')
-    return r === 'employer'
-      ? '/employer?section=quotes'
-      : '/electrician/quote-invoice-dashboard';
+    return r === 'employer' ? '/employer?section=quotes' : '/electrician/quote-invoice-dashboard';
   if (data.type === 'peer' && data.conversationId)
     return `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
   if (data.conversationId) return `/electrician/messages?conversation=${data.conversationId}`;
@@ -65,6 +63,9 @@ function resolvePushDestinationUrl(
       ? '/employer?section=quotes'
       : `/electrician/invoices/${data.invoiceId}/view`;
   if (data.deep_link) return data.deep_link;
+  // Type-only fallbacks (no specific id) — land on the right list, never blank.
+  if (data.type === 'invoice' || data.type === 'quote')
+    return r === 'employer' ? '/employer?section=quotes' : '/electrician/quote-invoice-dashboard';
   return null;
 }
 
@@ -365,18 +366,16 @@ export function useNativePushNotifications() {
     // consumePendingIntent effect below replays the deep link so the user
     // lands on the intended screen (cert / invoice / quote / etc.) instead
     // of being dumped on /dashboard.
-    const url = resolvePushDestinationUrl(data, role);
-    if (!url) return;
+    // Always resolve to *something* — a tap must never leave the app on a blank
+    // screen (e.g. a cold launch from a push with no specific target).
+    const url = resolvePushDestinationUrl(data, role) || '/dashboard';
 
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user?.id) {
         nav(url);
       } else {
         try {
-          localStorage.setItem(
-            PENDING_DEEP_LINK_KEY,
-            JSON.stringify({ url, ts: Date.now() })
-          );
+          localStorage.setItem(PENDING_DEEP_LINK_KEY, JSON.stringify({ url, ts: Date.now() }));
         } catch {
           /* ignore — fallback to plain signin nav */
         }

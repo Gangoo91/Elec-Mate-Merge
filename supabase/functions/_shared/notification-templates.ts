@@ -132,18 +132,6 @@ export const transactionalTemplates = {
     },
   }),
 
-  cert_c1_detected: (propertyAddress: string, reportId: string): PushTemplate => ({
-    title: 'C1 hazard — immediate action required',
-    body: `Danger present at ${propertyAddress}. Tap to review.`,
-    type: 'certificate',
-    data: {
-      reportId,
-      category: 'cert_c1_detected',
-      severity: 'critical',
-    },
-    skipQuietHours: true,
-  }),
-
   peer_message: (senderName: string, preview: string, conversationId: string): PushTemplate => ({
     title: senderName,
     body: preview,

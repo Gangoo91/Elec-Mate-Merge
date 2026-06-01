@@ -95,19 +95,6 @@ const HUBS: HubDef[] = [
     meta: () => 'Mood check available',
   },
   {
-    id: 'mate',
-    eyebrow: 'WHATSAPP',
-    title: 'Mate by Elec-Mate',
-    description: 'Quotes, invoices, regs lookups and brief writing — straight from WhatsApp.',
-    // Routes to the BusinessAISalesView / waitlist page (we deliberately do
-    // NOT expose live Mate from the dashboard yet — the sales page captures
-    // interest until launch).
-    path: '/electrician/business-ai',
-    roles: ['electrician', 'employer', 'admin'],
-    meta: () => 'Join the waiting list',
-    comingSoon: true,
-  },
-  {
     id: 'refer-a-mate',
     eyebrow: 'REFER',
     title: 'Bring a Mate',

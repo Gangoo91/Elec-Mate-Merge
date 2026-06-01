@@ -8,12 +8,11 @@
  * Supported events:
  *   - quote_signed      — client accepted a quote (quotes.accepted_at set)
  *   - invoice_paid      — invoice marked paid (invoices.paid_at set)
- *   - cert_c1_detected  — EICR report contains a C1 severity code (critical)
  *
  * Input:
  *   {
  *     user_id: string,
- *     event_type: 'quote_signed' | 'invoice_paid' | 'cert_c1_detected',
+ *     event_type: 'quote_signed' | 'invoice_paid',
  *     context?: {
  *       client_name?: string,
  *       amount_gbp?: string,
@@ -30,7 +29,7 @@ import { sendSmartPush } from '../_shared/notification-engine.ts';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-type EventType = 'quote_signed' | 'invoice_paid' | 'cert_c1_detected';
+type EventType = 'quote_signed' | 'invoice_paid';
 
 interface Payload {
   user_id: string;
@@ -74,12 +73,6 @@ Deno.serve(async (req: Request) => {
         template = transactionalTemplates.invoice_paid(
           context.client_name || 'Your client',
           context.amount_gbp || '',
-          context.ref_id || ''
-        );
-        break;
-      case 'cert_c1_detected':
-        template = transactionalTemplates.cert_c1_detected(
-          context.property_address || 'site',
           context.ref_id || ''
         );
         break;
