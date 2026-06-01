@@ -49,6 +49,8 @@ function resolvePushDestinationUrl(
   if (data.type === 'assessment') return '/electrician/study-centre/apprentice';
   if (data.type === 'briefing') return '/dashboard';
   if (data.type === 'certificate') return '/electrician/inspection-testing';
+  if (data.type === 'college')
+    return `/college/messages${data.conversationId ? `?conversation=${data.conversationId}` : ''}`;
   if (data.type === 'invoices_overdue')
     return r === 'employer' ? '/employer?section=quotes' : '/electrician/quote-invoice-dashboard';
   if (data.type === 'peer' && data.conversationId)

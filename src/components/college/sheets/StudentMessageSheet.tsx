@@ -3,6 +3,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import {
   Eyebrow,
@@ -167,7 +168,7 @@ export function StudentMessageSheet({
   useEffect(() => {
     if (!open) return;
     const channel = supabase
-      .channel(`student_message_threads:${studentId}`)
+      .channel(realtimeChannelName(`student_message_threads:${studentId}`))
       .on(
         'postgres_changes',
         {
@@ -198,7 +199,7 @@ export function StudentMessageSheet({
   useEffect(() => {
     if (!open || !activeThreadId) return;
     const channel = supabase
-      .channel(`student_messages:${activeThreadId}`)
+      .channel(realtimeChannelName(`student_messages:${activeThreadId}`))
       .on(
         'postgres_changes',
         {

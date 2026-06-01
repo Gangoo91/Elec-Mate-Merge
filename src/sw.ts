@@ -364,7 +364,9 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       url = `/employer/team?channel=${data.channelId || ''}&dm=${data.dmId || ''}`;
       break;
     case 'college':
-      url = `/college/messages?conversation=${data.conversationId || ''}`;
+      // Honour an explicit deep link (tutor↔apprentice pushes set one per
+      // recipient — apprentice → /apprentice/college/plan, tutor → the student).
+      url = data.deep_link || `/college/messages?conversation=${data.conversationId || ''}`;
       break;
     case 'quote':
       url =

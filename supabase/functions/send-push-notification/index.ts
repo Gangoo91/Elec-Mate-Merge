@@ -295,7 +295,12 @@ async function sendWebPush(
     const error = new Error(`Push failed: ${response.status} ${text}`) as Error & {
       statusCode: number;
     };
-    error.statusCode = response.status;
+    // A 400 VapidPkHashMismatch means this subscription was created with a
+    // different VAPID key (keys were rotated) — it can never be delivered to.
+    // Treat it as dead (410) so the caller prunes it and the browser re-subscribes
+    // with the current key on next visit. Without this, stale subs silently fail forever.
+    error.statusCode =
+      response.status === 400 && text.includes('VapidPkHashMismatch') ? 410 : response.status;
     throw error;
   }
 }
