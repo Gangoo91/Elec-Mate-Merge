@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { wireGaugeContent } from './content/wire-gauge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { formatNumber } from '@/lib/format';
 
@@ -798,6 +800,7 @@ const WireGaugeCalculator = () => {
           { symbol: '2L', description: 'Total cable length (go and return)' },
         ]}
       />
+      <CalculatorEditorial content={wireGaugeContent} category={CAT} />
     </CalculatorCard>
   );
 };

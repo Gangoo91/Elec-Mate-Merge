@@ -17,8 +17,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { motorStartingCurrentContent } from './content/motor-starting-current';
 import {
   calculateMotorStarting,
   MotorStartingInputs,
@@ -738,6 +740,7 @@ const MotorStartingCurrentCalculator = () => {
           { symbol: 'I²t', description: 'Thermal stress (A²s)' },
         ]}
       />
+      <CalculatorEditorial content={motorStartingCurrentContent} category={CAT} />
     </CalculatorCard>
   );
 };

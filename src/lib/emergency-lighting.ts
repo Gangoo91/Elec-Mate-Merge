@@ -245,9 +245,12 @@ export function calculateEmergencyLighting(
   const totalLuminaires = escapeRouteLights + openAreaLights + antiPanicLights + highRiskAreaLights;
   const totalPower = totalLuminaires * fixture.watts;
 
-  // Battery Capacity with chemistry-specific derating
+  // Battery Capacity with chemistry-specific derating.
+  // Central-battery systems feed the luminaires through an inverter (~0.85 efficiency),
+  // so the DC battery must supply more than the luminaire power.
   const safetyMargin = occupancyType === 'hospital' ? 1.5 : 1.2;
-  const rawCapacity = (totalPower * emergencyDuration) / 12; // at 12V
+  const inverterEfficiency = 0.85;
+  const rawCapacity = (totalPower * emergencyDuration) / (12 * inverterEfficiency); // at 12V, through inverter
   const batteryCapacity = Math.ceil((rawCapacity / battery.deratingFactor) * safetyMargin);
   const batteryWeight = Math.round(((batteryCapacity * 12) / battery.ahPerKg) * 10) / 10;
   const batteryDerating = battery.deratingFactor;

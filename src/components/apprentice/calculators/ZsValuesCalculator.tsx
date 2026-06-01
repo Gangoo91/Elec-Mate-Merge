@@ -17,9 +17,11 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { zsValuesContent } from './content/zs-values';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/lib/calc-utils';
 import { useToast } from '@/hooks/use-toast';
@@ -99,7 +101,6 @@ const ZsValuesCalculator = () => {
   // UI state
   const [showWorkings, setShowWorkings] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   // Get available ratings for current fuse type
   const fuseRatingOptions = useMemo(() => {
@@ -606,67 +607,8 @@ const ZsValuesCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 Reference */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Reference
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Reg 411.4.5:</strong> Earth fault loop impedance (Zs) at every point of
-                    utilisation shall not exceed the values in Tables 41.2, 41.3 and 41.4
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Table 41.2:</strong> Maximum Zs for fuses (BS 88-2, BS 88-3, BS 3036, BS
-                    1362) at 0.4s
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Table 41.3:</strong> Maximum Zs for MCBs and RCBOs (BS EN 60898 / BS EN
-                    61009) at 0.4s and 5s
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Table 41.4:</strong> Maximum Zs for fuses at 5s disconnection
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Table 41.5:</strong> Maximum Zs for RCDs — based on RA × IΔn ≤ 50V
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>GN3 (9th Ed):</strong> IET Guidance Note 3 — test procedures for earth
-                    fault loop impedance measurement
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>TT systems (Reg 411.5.3):</strong> For TT earthing, the condition RA ×
-                    IΔn ≤ 50V must be satisfied. RCD protection is mandatory.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={zsValuesContent} category="testing" />
         </>
       )}
 

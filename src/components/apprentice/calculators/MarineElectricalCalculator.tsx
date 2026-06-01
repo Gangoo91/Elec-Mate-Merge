@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { marineElectricalContent } from './content/marine-electrical';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   calculateMarine,
@@ -821,6 +823,7 @@ const MarineElectricalCalculator = () => {
           { symbol: 'DoD', description: 'Maximum depth of discharge (0.5-0.9)' },
         ]}
       />
+      <CalculatorEditorial content={marineElectricalContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -11,8 +11,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { basicAcCircuitContent } from './content/basic-ac-circuit';
 
 interface ACCircuitResult {
   impedance?: number;
@@ -707,6 +709,7 @@ const BasicACCircuitCalculator = () => {
           </div>
         </>
       )}
+      <CalculatorEditorial content={basicAcCircuitContent} category="power" />
     </CalculatorCard>
   );
 };

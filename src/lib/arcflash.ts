@@ -1,5 +1,6 @@
-// IEEE 1584-2018 compliant Arc Flash calculations
-// Based on IEEE Standard 1584-2018 "Guide for Performing Arc-Flash Hazard Calculations"
+// Arc Flash calculations per IEEE 1584-2002 "Guide for Performing Arc-Flash Hazard Calculations".
+// Validated against the canonical 20 kA / 480 V LV switchgear example (≈4.8 cal/cm² at 610 mm, 0.2 s).
+// NOTE: results are indicative for design awareness; a formal arc-flash study should confirm PPE.
 
 export interface ArcFlashInputs {
   voltage: number; // System voltage (V)
@@ -80,12 +81,50 @@ const BS7671_DISCONNECTION_TIMES: Record<string, { time: number; description: st
   distribution: { time: 5.0, description: 'Distribution circuit: 5s max' },
 };
 
-// Conductor gap defaults based on voltage and equipment type
-function getDefaultConductorGap(voltage: number, _equipmentType: EquipmentType): number {
-  if (voltage <= 480) return 25; // 25mm for LV
-  if (voltage <= 1000) return 32; // 32mm for higher LV
-  if (voltage <= 5000) return 50; // 50mm for MV
-  return 76; // 76mm for higher voltages
+// Typical conductor gaps (mm) per IEEE 1584-2002 Table 2, by equipment & voltage.
+function getDefaultConductorGap(voltage: number, equipmentType: EquipmentType): number {
+  if (voltage > 5000) return 153; // 5–15 kV switchgear
+  if (voltage > 1000) return 102; // 1–5 kV switchgear
+  if (equipmentType === 'panelboard') return 25; // MCC / panelboard, LV
+  if (equipmentType === 'open_air') return 32;
+  return 32; // LV switchgear / switchboard
+}
+
+// IEEE 1584-2002 coefficients. Open vs box (enclosed) governs the constants.
+// K2 = −0.113 assumes a solidly/impedance-grounded system (UK TN, the common case);
+// an ungrounded/HRG system would use 0 and read ~30% higher.
+function arc2002Coeffs(inputs: ArcFlashInputs): { isOpen: boolean; kArc: number; k1: number; k2: number } {
+  const isOpen =
+    inputs.enclosureType === 'open' ||
+    inputs.electrodeConfig === 'VOA' ||
+    inputs.electrodeConfig === 'HOA';
+  return {
+    isOpen,
+    kArc: isOpen ? -0.153 : -0.097, // arcing-current constant
+    k1: isOpen ? -0.792 : -0.555, // incident-energy constant
+    k2: -0.113, // grounded system
+  };
+}
+
+// Distance exponent x, IEEE 1584-2002 Table 4.
+function getDistanceExponent(equipmentType: EquipmentType, voltage: number): number {
+  if (equipmentType === 'open_air') return 2.0;
+  if (voltage > 1000) return 0.973; // MV switchgear
+  if (equipmentType === 'panelboard') return 1.641; // MCC / panelboard
+  return 1.473; // LV switchgear / switchboard
+}
+
+// Calculation factor Cf: 1.5 for ≤1 kV, 1.0 above.
+function getCalcFactor(voltage: number): number {
+  return voltage <= 1000 ? 1.5 : 1.0;
+}
+
+// Normalized incident energy En (J/cm² at 610 mm, 0.2 s) — IEEE 1584-2002.
+function normalizedEnergy(inputs: ArcFlashInputs, arcingCurrentKA: number): number {
+  const gap = inputs.conductorGap || getDefaultConductorGap(inputs.voltage, inputs.equipmentType);
+  const { k1, k2 } = arc2002Coeffs(inputs);
+  const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrentKA) + 0.0011 * gap;
+  return Math.pow(10, logEn);
 }
 
 // Validate inputs against IEEE 1584-2018 bounds
@@ -120,180 +159,71 @@ function validateInputs(inputs: ArcFlashInputs): { isValid: boolean; warnings: s
   return { isValid, warnings };
 }
 
-// Calculate arcing current using IEEE 1584-2018 equations
+// Arcing current (kA) — IEEE 1584-2002. Ibf and Ia in kA, V in kV, gap in mm.
 function calculateArcingCurrent(inputs: ArcFlashInputs): number {
-  const { voltage, boltedFaultCurrent, electrodeConfig, conductorGap } = inputs;
+  const { voltage, boltedFaultCurrent, conductorGap } = inputs;
   const gap = conductorGap || getDefaultConductorGap(voltage, inputs.equipmentType);
 
-  // IEEE 1584-2018 intermediate arcing current model
-  let k1: number, k2: number, k3: number;
+  const ibfKA = boltedFaultCurrent / 1000; // input is A → kA
+  const vKV = voltage / 1000;
+  const lgIbf = Math.log10(ibfKA);
 
-  // Configuration-specific coefficients
-  switch (electrodeConfig) {
-    case 'VCB': // Vertical conductors in box
-      k1 = -0.04287;
-      k2 = 1.73;
-      k3 = -0.73;
-      break;
-    case 'VCBB': // Vertical conductors in box with barrier
-      k1 = 0.0141;
-      k2 = 1.81;
-      k3 = -0.664;
-      break;
-    case 'HCB': // Horizontal conductors in box
-      k1 = -0.04287;
-      k2 = 1.73;
-      k3 = -0.73;
-      break;
-    case 'VOA': // Vertical conductors in open air
-    case 'HOA': // Horizontal conductors in open air
-      k1 = -0.0093;
-      k2 = 2.04;
-      k3 = -0.1;
-      break;
-    default:
-      k1 = -0.04287;
-      k2 = 1.73;
-      k3 = -0.73;
+  let logIa: number;
+  if (voltage <= 1000) {
+    // Equation 1: systems ≤ 1 kV
+    const { kArc } = arc2002Coeffs(inputs);
+    logIa =
+      kArc +
+      0.662 * lgIbf +
+      0.0966 * vKV +
+      0.000526 * gap +
+      0.5588 * vKV * lgIbf -
+      0.00304 * gap * lgIbf;
+  } else {
+    // Equation 2: systems > 1 kV
+    logIa = 0.00402 + 0.983 * lgIbf;
   }
 
-  // IEEE 1584-2018 equation for intermediate arcing current (in log form)
-  const logIarc = k1 + k2 * Math.log10(boltedFaultCurrent) + k3 * Math.log10(gap);
-
-  // Convert to actual current (kA)
-  const arcingCurrent = Math.pow(10, logIarc);
-
-  // Bounds checking - prevent unrealistic values
-  const maxArcCurrent = boltedFaultCurrent * 0.85; // Arc current typically 50-85% of bolted fault
-  const minArcCurrent = boltedFaultCurrent * 0.1;
-
-  return Math.max(minArcCurrent, Math.min(maxArcCurrent, arcingCurrent * 1000)) / 1000; // Return in kA
+  return Math.pow(10, logIa); // kA
 }
 
-// Calculate incident energy using IEEE 1584-2018 (corrected formula)
+// Incident energy (cal/cm²) — IEEE 1584-2002.
+// E(cal/cm²) = Cf · En · (t/0.2) · (610/D)^x, where En is in J/cm² (the 4.184 J↔cal
+// factor cancels between the normalised-energy and final-energy equations).
 function calculateIncidentEnergy(
   inputs: ArcFlashInputs,
   arcingCurrent: number
 ): { energy: number; distanceExponent: number } {
-  const { voltage, workingDistance, clearingTime, electrodeConfig } = inputs;
-
-  // IEEE 1584-2018 incident energy coefficients (corrected)
-  let k1: number, k2: number, cf: number;
-
-  // Configuration and enclosure specific coefficients
-  switch (electrodeConfig) {
-    case 'VCB':
-    case 'HCB':
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 1.0;
-      break;
-    case 'VCBB':
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 0.93; // Barrier correction factor
-      break;
-    case 'VOA':
-    case 'HOA':
-      k1 = -0.555;
-      k2 = 0.0;
-      cf = 1.0;
-      break;
-    default:
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 1.0;
-  }
-
-  // Calculate normalized incident energy (at 610mm, 0.2s) - corrected formula
-  const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrent) + 0.0011 * voltage;
-  const En = Math.pow(10, logEn); // J/cm² at 610mm, 0.2s
-
-  // Distance exponent (simplified for IEEE 1584-2018)
-  const x = 2.0;
-
-  // Scale for actual distance and time (corrected scaling)
+  const { voltage, workingDistance, clearingTime, equipmentType } = inputs;
+  const En = normalizedEnergy(inputs, arcingCurrent);
+  const cf = getCalcFactor(voltage);
+  const x = getDistanceExponent(equipmentType, voltage);
   const incidentEnergy = cf * En * (clearingTime / 0.2) * Math.pow(610 / workingDistance, x);
-
   return { energy: incidentEnergy, distanceExponent: x };
 }
 
-// Calculate arc flash boundary at 1.2 cal/cm² threshold (BS 7671 18th Edition)
+// Arc flash boundary (mm): distance at which incident energy falls to 1.2 cal/cm².
 function calculateArcFlashBoundary(inputs: ArcFlashInputs, arcingCurrent: number): number {
-  const { voltage, clearingTime, electrodeConfig } = inputs;
-
-  // Use incident energy calculation at 1.2 cal/cm² threshold (IEEE 1584-2018)
-  let k1: number, k2: number, cf: number;
-
-  switch (electrodeConfig) {
-    case 'VCB':
-    case 'HCB':
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 1.0;
-      break;
-    case 'VCBB':
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 0.93;
-      break;
-    case 'VOA':
-    case 'HOA':
-      k1 = -0.555;
-      k2 = 0.0;
-      cf = 1.0;
-      break;
-    default:
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 1.0;
-  }
-
-  const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrent) + 0.0011 * voltage;
-  const En = Math.pow(10, logEn);
-
-  // Distance for 1.2 cal/cm² (UK arc flash boundary threshold)
-  const boundary = 610 * Math.sqrt((cf * 4.184 * En * (clearingTime / 0.2)) / 1.2);
-
+  const { voltage, clearingTime, equipmentType } = inputs;
+  const En = normalizedEnergy(inputs, arcingCurrent);
+  const cf = getCalcFactor(voltage);
+  const x = getDistanceExponent(equipmentType, voltage);
+  const energyAt610 = cf * En * (clearingTime / 0.2); // cal/cm² at 610 mm
+  const boundary = 610 * Math.pow(energyAt610 / 1.2, 1 / x);
   return Math.max(200, boundary); // Minimum 200mm boundary
 }
 
 // Calculate energy at multiple distances (boundary table)
 function calculateBoundaryTable(inputs: ArcFlashInputs, arcingCurrent: number): BoundaryDistance[] {
   const distances = [300, 450, 600, 900, 1200];
-  const { voltage, clearingTime, electrodeConfig } = inputs;
-
-  let k1: number, k2: number, cf: number;
-  switch (electrodeConfig) {
-    case 'VCB':
-    case 'HCB':
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 1.0;
-      break;
-    case 'VCBB':
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 0.93;
-      break;
-    case 'VOA':
-    case 'HOA':
-      k1 = -0.555;
-      k2 = 0.0;
-      cf = 1.0;
-      break;
-    default:
-      k1 = -0.555;
-      k2 = 0.113;
-      cf = 1.0;
-  }
-
-  const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrent) + 0.0011 * voltage;
-  const En = Math.pow(10, logEn);
+  const { voltage, clearingTime, equipmentType } = inputs;
+  const En = normalizedEnergy(inputs, arcingCurrent);
+  const cf = getCalcFactor(voltage);
+  const x = getDistanceExponent(equipmentType, voltage);
 
   return distances.map((d) => ({
     distance: d,
-    energy: Math.round(cf * En * (clearingTime / 0.2) * Math.pow(610 / d, 2) * 100) / 100,
+    energy: Math.round(cf * En * (clearingTime / 0.2) * Math.pow(610 / d, x) * 100) / 100,
   }));
 }
 
@@ -445,7 +375,7 @@ export function calculateArcFlash(inputs: ArcFlashInputs): ArcFlashResult {
   }
 
   // Determine calculation method
-  const calculationMethod = validation.isValid ? 'IEEE 1584-2018' : 'IEEE 1584-2018 (extrapolated)';
+  const calculationMethod = validation.isValid ? 'IEEE 1584-2002' : 'IEEE 1584-2002 (extrapolated)';
 
   return {
     arcingCurrent,

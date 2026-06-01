@@ -14,10 +14,12 @@ import {
   ResultBadge,
   CalculatorFormula,
   CalculatorDivider,
+  CalculatorEditorial,
   FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { adiabaticContent } from './content/adiabatic';
 
 const CAT = 'protection' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -92,8 +94,6 @@ const AdiabaticCalculator = () => {
 
   // Collapsible states
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   // Derived display values (not results)
   const effectiveK = useMemo(() => {
@@ -519,150 +519,8 @@ const AdiabaticCalculator = () => {
             ]}
           />
 
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-4"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Why This Matters</p>
-                  <p className="text-sm text-white">
-                    During a fault, thousands of amps flow through the protective conductor for a
-                    fraction of a second. The "adiabatic" calculation works out whether the cable
-                    can handle that energy without its insulation melting or catching fire — it
-                    assumes all the heat stays in the conductor (no time to dissipate).
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">When You Need This</p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Sizing earthing conductors and main bonding conductors
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Verifying protective conductors in existing installations
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Checking CPCs are adequate where reduced sizes are used (e.g., 1mm² CPC in a
-                      2.5mm² T&E)
-                    </li>
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Common k Factors (Table 54.3)</p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Copper/PVC (70°C): k = 115 — most domestic cables
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Copper/XLPE (90°C): k = 143 — SWA and thermosetting cables
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Aluminium/PVC (70°C): k = 76 — older/commercial installations
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Steel conduit (60°C): k = 46 — when used as CPC
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 543.1.3',
-                      desc: 'Earthing conductor sizing using adiabatic equation',
-                    },
-                    {
-                      reg: 'Table 54.3',
-                      desc: 'k factors for protective conductors — copper, aluminium, steel at various temperatures',
-                    },
-                    {
-                      reg: 'Regulation 434.5.2',
-                      desc: 'Protection against fault current — breaking capacity requirements',
-                    },
-                    {
-                      reg: 'Regulation 411.3.2',
-                      desc: 'Maximum disconnection times for automatic disconnection of supply',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* ── Grounded guidance + standards ── */}
+          <CalculatorEditorial content={adiabaticContent} category={CAT} />
         </div>
       )}
 

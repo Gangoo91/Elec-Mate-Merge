@@ -16,8 +16,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { batteryBackupContent } from './content/battery-backup';
 import {
   calculateBatteryBackup,
   BATTERY_CHEMISTRIES,
@@ -635,6 +637,7 @@ const BatteryBackupCalculator = () => {
           },
         ]}
       />
+      <CalculatorEditorial content={batteryBackupContent} category={CAT} />
     </CalculatorCard>
   );
 };

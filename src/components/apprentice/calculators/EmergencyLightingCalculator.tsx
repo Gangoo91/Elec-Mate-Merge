@@ -16,8 +16,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { emergencyLightingContent } from './content/emergency-lighting';
 import {
   calculateEmergencyLighting,
   occupancyProfiles,
@@ -677,6 +679,7 @@ const EmergencyLightingCalculator = () => {
           { symbol: 'S', description: 'SHR-based spacing (m)' },
         ]}
       />
+      <CalculatorEditorial content={emergencyLightingContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -19,8 +19,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { cableDeratingContent } from './content/cable-derating';
 
 const CableDeratingCalculator = () => {
   const config = CALCULATOR_CONFIG['cable'];
@@ -734,6 +736,7 @@ const CableDeratingCalculator = () => {
           </p>
         </div>
       </div>
+      <CalculatorEditorial content={cableDeratingContent} category="cable" />
     </CalculatorCard>
   );
 };

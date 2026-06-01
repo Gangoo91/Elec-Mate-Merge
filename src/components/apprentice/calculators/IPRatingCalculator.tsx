@@ -12,8 +12,10 @@ import {
   ResultBadge,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { ipRatingContent } from './content/ip-rating';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'utilities' as const;
@@ -648,6 +650,7 @@ const IPRatingCalculator = () => {
           { symbol: 'Letter', description: 'Optional: H, M, S, or W' },
         ]}
       />
+      <CalculatorEditorial content={ipRatingContent} category={CAT} />
     </CalculatorCard>
   );
 };

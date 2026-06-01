@@ -17,8 +17,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { r1r2Content } from './content/r1r2';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/lib/calc-utils';
@@ -130,7 +132,6 @@ const R1R2Calculator = () => {
   const [measuredValue, setMeasuredValue] = useState('');
   const [showWorkings, setShowWorkings] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   const csaOptions = conductorMaterial === 'aluminium' ? ALUMINIUM_CSA_OPTIONS : COPPER_CSA_OPTIONS;
 
@@ -604,63 +605,8 @@ const R1R2Calculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 Reference */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Reference
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Reg 612.2:</strong> Continuity of protective conductors including main
-                    and supplementary bonding
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Reg 411.4.5:</strong> Maximum earth fault loop impedance (Zs)
-                    requirements
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Table 54.7:</strong> Minimum CPC cross-sectional areas and resistance
-                    values at 20°C
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>GN3 (9th Ed):</strong> IET Guidance Note 3 — Inspection and Testing
-                    procedures for R1+R2 measurements
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>BS EN 60228:</strong> Conductor resistance values used in this
-                    calculation
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>CPC sizing (Table 54.7):</strong> Line ≤ 16mm² → CPC = same size. Line
-                    &gt; 16mm² → CPC = Line / 2 (minimum 16mm²)
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={r1r2Content} category="testing" />
         </>
       )}
 

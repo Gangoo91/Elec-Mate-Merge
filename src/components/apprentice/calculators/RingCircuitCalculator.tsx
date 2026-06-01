@@ -16,8 +16,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { ringCircuitContent } from './content/ring-circuit';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 // Cable resistance values at 20°C (mΩ/m) per BS EN 60228
@@ -120,7 +122,6 @@ const RingCircuitCalculator = () => {
 
   // Collapsible states
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   const allReadingsFilled = [
     endToEndLive,
@@ -705,63 +706,8 @@ const RingCircuitCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 612.2.2',
-                      desc: 'Continuity of ring final circuit conductors',
-                    },
-                    {
-                      reg: 'Regulation 433.1.204',
-                      desc: 'Ring final circuit: max 32A, max 100m² floor area',
-                    },
-                    {
-                      reg: 'Table 41.3',
-                      desc: 'Maximum Zs values for MCBs (use R1+R2 to calculate Zs)',
-                    },
-                    {
-                      reg: 'Regulation 543.1.1',
-                      desc: 'Minimum CPC size: 1.5mm² for 2.5mm² live conductors',
-                    },
-                    {
-                      reg: 'Section 411.3.3',
-                      desc: 'RCD protection required for socket outlets up to 32A',
-                    },
-                    {
-                      reg: 'GN3 Appendix B',
-                      desc: 'Ring final circuit test procedure — step-by-step method',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0" />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={ringCircuitContent} category={CAT} />
         </div>
       )}
 

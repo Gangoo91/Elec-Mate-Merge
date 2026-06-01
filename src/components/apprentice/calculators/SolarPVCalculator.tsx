@@ -15,10 +15,12 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   CalculatorSection,
+  CalculatorEditorial,
   FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { solarPvContent } from './content/solar-pv';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -141,12 +143,13 @@ const SolarPVCalculator = () => {
   const [electricityRate, setElectricityRate] = useState('0.25');
   const [selfConsumptionRate, setSelfConsumptionRate] = useState('35');
   const [exportRate, setExportRate] = useState('0.10');
+  // Domestic installs of solar PV in GB are zero-rated (0%) until 31 Mar 2027, then 5%.
+  const [vatRate, setVatRate] = useState('0');
 
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
   const [result, setResult] = useState<SolarPVResult | null>(null);
 
-  const calculateCostEstimate = (size: number, pr: number) => {
+  const calculateCostEstimate = (size: number, pr: number, vatRatePct: number) => {
     let baseCostPerKw = 0;
     let category = '';
 
@@ -172,7 +175,7 @@ const SolarPVCalculator = () => {
     const mcsAndDno = size <= 3.68 ? 400 : 800;
 
     const subtotal = panels + inverter + installation + electrical + scaffolding + mcsAndDno;
-    const vat = subtotal * 0.05;
+    const vat = subtotal * (vatRatePct / 100);
     const totalCost = subtotal + vat;
 
     return {
@@ -234,7 +237,7 @@ const SolarPVCalculator = () => {
     const annualGeneration = size * irradiance * orientationFactor * tiltFactor * systemPR;
     const dailyGeneration = annualGeneration / 365;
 
-    const costEstimate = calculateCostEstimate(size, pr);
+    const costEstimate = calculateCostEstimate(size, pr, parseFloat(vatRate));
 
     const selfConsumption = parseFloat(selfConsumptionRate) / 100;
     const segExportRate = parseFloat(exportRate);
@@ -307,6 +310,7 @@ const SolarPVCalculator = () => {
     electricityRate,
     selfConsumptionRate,
     exportRate,
+    vatRate,
   ]);
 
   const handleReset = useCallback(() => {
@@ -416,6 +420,16 @@ const SolarPVCalculator = () => {
             onChange={setExportRate}
             placeholder="0.10"
             hint="Typical: £0.04-0.15"
+          />
+          <CalculatorSelect
+            label="VAT Rate"
+            value={vatRate}
+            onChange={setVatRate}
+            options={[
+              { value: '0', label: '0% — domestic (GB, to Mar 2027)' },
+              { value: '5', label: '5% — reduced rate' },
+              { value: '20', label: '20% — standard / commercial' },
+            ]}
           />
         </CalculatorInputGrid>
       </CalculatorSection>
@@ -534,7 +548,7 @@ const SolarPVCalculator = () => {
                 </div>
               ))}
               <div className="flex justify-between pt-2 border-t border-white/10">
-                <span className="text-white font-medium">VAT (5%)</span>
+                <span className="text-white font-medium">VAT ({vatRate}%)</span>
                 <span className="text-white font-semibold">
                   £{result.costEstimate.breakdown.vat.toLocaleString()}
                 </span>
@@ -689,69 +703,8 @@ const SolarPVCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 Reference */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Section 712',
-                      desc: 'Solar PV power supply systems',
-                    },
-                    {
-                      reg: 'Reg 712.512.2',
-                      desc: 'DC isolation within 3m of PV array',
-                    },
-                    {
-                      reg: result.dnoConnectionType === 'G98' ? 'G98' : 'G99',
-                      desc:
-                        result.dnoConnectionType === 'G98'
-                          ? 'Simplified notification for systems ≤3.68kW'
-                          : 'Full application required for systems >3.68kW',
-                    },
-                    {
-                      reg: 'MCS 012',
-                      desc: 'MCS certification required for SEG payments',
-                    },
-                    {
-                      reg: 'Section 534',
-                      desc: 'Type 2 SPDs at DC and AC sides',
-                    },
-                    {
-                      reg: 'Fire safety',
-                      desc: '1m setback from roof edges, AC isolator accessible to firefighters',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded guidance + standards */}
+          <CalculatorEditorial content={solarPvContent} category={CAT} />
         </div>
       )}
 

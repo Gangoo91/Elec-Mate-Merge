@@ -9,8 +9,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { powerFactorContent } from './content/power-factor';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -380,6 +382,7 @@ const PowerFactorCalculator = () => {
           </div>
         </>
       )}
+      <CalculatorEditorial content={powerFactorContent} category="power" />
     </CalculatorCard>
   );
 };

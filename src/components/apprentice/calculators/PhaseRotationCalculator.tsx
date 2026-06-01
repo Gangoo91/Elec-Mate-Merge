@@ -25,8 +25,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { phaseRotationContent } from './content/phase-rotation';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'testing' as const;
@@ -64,7 +66,6 @@ const PhaseRotationCalculator = () => {
 
   // Collapsibles
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
   const [showColours, setShowColours] = useState(false);
 
   const canCalculate = (() => {
@@ -678,62 +679,8 @@ const PhaseRotationCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 612.6',
-                      desc: 'Phase sequence verification required for three-phase installations',
-                    },
-                    {
-                      reg: 'Regulation 314.1',
-                      desc: 'Conductors must be identified by approved colour coding',
-                    },
-                    {
-                      reg: 'Section 514',
-                      desc: 'Correct identification and connection of conductors',
-                    },
-                    {
-                      reg: 'Table 51.1',
-                      desc: 'Conductor identification: Brown (L1), Black (L2), Grey (L3)',
-                    },
-                    {
-                      reg: 'GN3 Chapter 12',
-                      desc: 'Phase sequence testing — methods and instruments',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={phaseRotationContent} category={CAT} />
         </div>
       )}
 

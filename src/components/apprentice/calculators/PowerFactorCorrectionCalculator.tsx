@@ -18,8 +18,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { powerFactorCorrectionContent } from './content/power-factor-correction';
 
 interface CorrectionResult {
   currentPF: number;
@@ -958,6 +960,7 @@ const PowerFactorCorrectionCalculator = () => {
           </div>
         </CollapsibleContent>
       </Collapsible>
+      <CalculatorEditorial content={powerFactorCorrectionContent} category="power" />
     </CalculatorCard>
   );
 };

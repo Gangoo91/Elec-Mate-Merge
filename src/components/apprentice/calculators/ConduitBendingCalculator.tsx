@@ -10,8 +10,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { conduitBendingContent } from './content/conduit-bending';
 import { cn } from '@/lib/utils';
 
 // Bend multipliers for different angles
@@ -724,6 +726,7 @@ const ConduitBendingCalculator = () => {
           </Collapsible>
         </>
       )}
+      <CalculatorEditorial content={conduitBendingContent} category="cable" />
     </CalculatorCard>
   );
 };

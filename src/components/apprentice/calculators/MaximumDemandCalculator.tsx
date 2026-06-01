@@ -17,8 +17,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { maximumDemandContent } from './content/maximum-demand';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -702,6 +704,7 @@ const MaximumDemandCalculator = () => {
           </p>
         </div>
       </div>
+      <CalculatorEditorial content={maximumDemandContent} category="power" />
     </CalculatorCard>
   );
 };

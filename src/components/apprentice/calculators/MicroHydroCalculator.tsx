@@ -16,8 +16,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { microHydroContent } from './content/micro-hydro';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'renewable' as const;
@@ -716,6 +718,7 @@ const MicroHydroCalculator = () => {
           { symbol: 'η', description: 'Overall efficiency (turbine × generator)' },
         ]}
       />
+      <CalculatorEditorial content={microHydroContent} category={CAT} />
     </CalculatorCard>
   );
 };

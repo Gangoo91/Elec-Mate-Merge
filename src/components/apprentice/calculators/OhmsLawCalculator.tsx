@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Info, AlertTriangle, BookOpen, ChevronDown } from 'lucide-react';
+import { ohmsLawContent } from './content/ohms-law';
 import {
   CalculatorCard,
+  CalculatorEditorial,
   CalculatorDivider,
   CalculatorInputGrid,
   CalculatorInput,
@@ -596,6 +598,7 @@ const OhmsLawCalculator = () => {
           </div>
         </>
       )}
+      <CalculatorEditorial content={ohmsLawContent} category="power" />
     </CalculatorCard>
   );
 };

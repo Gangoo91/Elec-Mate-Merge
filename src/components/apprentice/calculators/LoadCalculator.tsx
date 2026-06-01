@@ -9,8 +9,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { loadContent } from './content/load';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 
@@ -161,7 +163,8 @@ export const LoadCalculator = () => {
     };
 
     const resistance = cableResistance[recommendedCable.size] || 1.83;
-    const voltageDrop = (current * resistance * 20) / 1000;
+    // resistance is mΩ/m per single conductor; ×2 for the line + return loop. Assumes a 20 m run.
+    const voltageDrop = (current * resistance * 2 * 20) / 1000;
     const voltageDropPercent = (voltageDrop / voltageNum) * 100;
 
     return {
@@ -561,6 +564,7 @@ export const LoadCalculator = () => {
           </p>
         </div>
       </div>
+      <CalculatorEditorial content={loadContent} category="power" />
     </CalculatorCard>
   );
 };

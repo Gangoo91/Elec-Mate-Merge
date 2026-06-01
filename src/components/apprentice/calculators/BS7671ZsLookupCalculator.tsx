@@ -22,8 +22,10 @@ import {
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { bs7671ZsLookupContent } from './content/bs7671-zs-lookup';
 
 const BS7671ZsLookupCalculator = () => {
   const config = CALCULATOR_CONFIG['testing'];
@@ -375,6 +377,7 @@ const BS7671ZsLookupCalculator = () => {
           ))}
         </Tabs>
       )}
+      <CalculatorEditorial content={bs7671ZsLookupContent} category="testing" />
     </div>
   );
 };

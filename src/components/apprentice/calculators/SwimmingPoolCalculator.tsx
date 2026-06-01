@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { swimmingPoolContent } from './content/swimming-pool';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useSwimmingPoolCalculator } from '@/hooks/useSwimmingPoolCalculator';
 
@@ -574,6 +576,7 @@ const SwimmingPoolCalculator = () => {
           { symbol: 'Bonding', description: '4mm² min conductor to all metalwork within 2m' },
         ]}
       />
+      <CalculatorEditorial content={swimmingPoolContent} category={CAT} />
     </CalculatorCard>
   );
 };

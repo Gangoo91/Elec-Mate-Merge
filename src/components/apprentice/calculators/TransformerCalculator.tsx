@@ -16,8 +16,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { transformerContent } from './content/transformer-calculator';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -736,6 +738,7 @@ const TransformerCalculator = () => {
           { symbol: 'Isc', description: 'Prospective fault current (A)' },
         ]}
       />
+      <CalculatorEditorial content={transformerContent} category={CAT} />
     </CalculatorCard>
   );
 };

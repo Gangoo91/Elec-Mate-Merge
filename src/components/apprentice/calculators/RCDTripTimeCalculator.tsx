@@ -13,10 +13,12 @@ import {
   ResultBadge,
   CalculatorFormula,
   CalculatorDivider,
+  CalculatorEditorial,
   FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { rcdTripTimeContent } from './content/rcd-trip-time';
 
 const CAT = 'protection' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -86,7 +88,6 @@ const RCDTripTimeCalculator = () => {
 
   // Collapsibles
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   const handleCalculate = useCallback(() => {
     if (!rcdRating || !testCurrent) return;
@@ -539,62 +540,8 @@ const RCDTripTimeCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 531.2',
-                      desc: 'Selection of RCDs — type and rating requirements',
-                    },
-                    {
-                      reg: 'Regulation 411.3.3',
-                      desc: 'Additional protection by RCDs — 30mA for socket outlets',
-                    },
-                    {
-                      reg: 'Table 3A',
-                      desc: 'Maximum operating times — 1×IΔn (300ms), 5×IΔn (40ms for 30/100mA, 150ms for 300mA)',
-                    },
-                    {
-                      reg: 'Regulation 612.13.1',
-                      desc: 'RCD verification during initial verification and periodic inspection',
-                    },
-                    {
-                      reg: 'GN3 Chapter 13',
-                      desc: 'RCD testing — procedures, instruments, and recording',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={rcdTripTimeContent} category={CAT} />
         </div>
       )}
 

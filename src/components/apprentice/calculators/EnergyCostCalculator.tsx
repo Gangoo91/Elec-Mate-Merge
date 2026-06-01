@@ -24,8 +24,10 @@ import {
   ResultsGrid,
   ResultBadge,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { energyCostContent } from './content/energy-cost';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { formatCurrency } from '@/lib/format';
 import {
@@ -903,6 +905,7 @@ const EnergyCostCalculator = () => {
           { symbol: 'VAT', description: 'Value Added Tax (usually 5% domestic)' },
         ]}
       />
+      <CalculatorEditorial content={energyCostContent} category={CAT} />
     </CalculatorCard>
   );
 };

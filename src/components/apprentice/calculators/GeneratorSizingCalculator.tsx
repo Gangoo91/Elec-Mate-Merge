@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { generatorSizingContent } from './content/generator-sizing';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'power' as const;
@@ -754,6 +756,7 @@ const GeneratorSizingCalculator = () => {
           { symbol: 'Margin', description: '1.2 (20% safety margin)' },
         ]}
       />
+      <CalculatorEditorial content={generatorSizingContent} category={CAT} />
     </CalculatorCard>
   );
 };

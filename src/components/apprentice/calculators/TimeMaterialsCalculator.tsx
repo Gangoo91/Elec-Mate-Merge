@@ -10,8 +10,10 @@ import {
   CalculatorDivider,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { timeMaterialsContent } from './content/time-materials';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'business' as const;
@@ -467,6 +469,7 @@ const TimeMaterialsCalculator = () => {
         category={CAT}
         formula="Total = (Labour + Materials + Markup) × (1 + VAT%)"
       />
+      <CalculatorEditorial content={timeMaterialsContent} category={CAT} />
     </CalculatorCard>
   );
 };

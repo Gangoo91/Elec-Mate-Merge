@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { dataCentreContent } from './content/data-centre';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   calculateDataCentre,
@@ -628,6 +630,7 @@ const DataCentreCalculator = () => {
           },
         ]}
       />
+      <CalculatorEditorial content={dataCentreContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { instrumentationContent } from './content/instrumentation';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'testing' as const;
@@ -600,6 +602,7 @@ const InstrumentationCalculator = () => {
           { symbol: 'Span', description: 'URV − LRV (full scale range)' },
         ]}
       />
+      <CalculatorEditorial content={instrumentationContent} category={CAT} />
     </CalculatorCard>
   );
 };

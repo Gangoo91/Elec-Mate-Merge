@@ -17,8 +17,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { solarArrayContent } from './content/solar-array';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'renewable' as const;
@@ -125,7 +127,6 @@ const SolarArrayCalculator = () => {
 
   // Collapsible states
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   const [result, setResult] = useState<PVResult | null>(null);
 
@@ -238,8 +239,11 @@ const SolarArrayCalculator = () => {
     const dcPower = dcVoltage * dcCurrent;
     const acCurrent = dcPower / (sysVoltage * Math.sqrt(3) * 0.9);
 
-    const dcVoltDropPercentage = ((dcCurrent * dcLength * 0.0044) / dcVoltage) * 100;
-    const acVoltDropPercentage = ((acCurrent * acLength * 0.0029) / sysVoltage) * 100;
+    // Voltage drop assumes ~4 mm² Cu (≈0.0044 Ω/m per conductor at operating temp).
+    // DC: 2-wire loop → ×2. AC: three-phase → ×√3.
+    const dcVoltDropPercentage = ((dcCurrent * dcLength * (0.0044 * 2)) / dcVoltage) * 100;
+    const acVoltDropPercentage =
+      ((acCurrent * acLength * (0.0044 * Math.sqrt(3))) / sysVoltage) * 100;
 
     const usedArea = totalPanels * panelL * panelWd;
     const totalArea = availL * availW;
@@ -812,47 +816,8 @@ const SolarArrayCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 Reference */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    { reg: 'Section 712', desc: 'Solar PV power supply systems' },
-                    { reg: 'Section 534', desc: 'Type 2 SPDs at DC and AC sides' },
-                    { reg: 'DC isolation', desc: 'Min 6mm air gap, 4mm creepage' },
-                    { reg: 'Fire safety', desc: '1m setback from roof edges' },
-                    { reg: 'MCS sizing', desc: 'Professional design to MCS standards required' },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={solarArrayContent} category={CAT} />
         </div>
       )}
 

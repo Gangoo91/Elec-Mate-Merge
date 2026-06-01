@@ -27,8 +27,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { windPowerContent } from './content/wind-power';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -1007,6 +1009,7 @@ export function WindPowerCalculator() {
           { symbol: 'ρ/ρ₀', description: 'Air density ratio (altitude correction)' },
         ]}
       />
+      <CalculatorEditorial content={windPowerContent} category={CAT} />
     </CalculatorCard>
   );
 }

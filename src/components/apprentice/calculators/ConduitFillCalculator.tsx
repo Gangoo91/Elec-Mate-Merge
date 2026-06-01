@@ -11,8 +11,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { conduitFillContent } from './content/conduit-fill';
 
 const ConduitFillCalculator = () => {
   const config = CALCULATOR_CONFIG['cable'];
@@ -526,6 +528,7 @@ const ConduitFillCalculator = () => {
           </p>
         </div>
       </div>
+      <CalculatorEditorial content={conduitFillContent} category="cable" />
     </CalculatorCard>
   );
 };

@@ -27,8 +27,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { arcFlashContent } from './content/arc-flash';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'protection' as const;
@@ -195,7 +197,7 @@ const ArcFlashCalculator = () => {
     <CalculatorCard
       category={CAT}
       title="Arc Flash Energy Calculator"
-      description="Calculate arc flash incident energy and PPE requirements per IEEE 1584-2018"
+      description="Calculate arc flash incident energy and PPE requirements per IEEE 1584-2002"
     >
       {/* System Configuration */}
       <CalculatorSection title="System Configuration">
@@ -546,20 +548,20 @@ const ArcFlashCalculator = () => {
             steps={[
               {
                 label: 'Arcing current from bolted fault',
-                formula: `log(I_arc) = k1 + k2 × log(${faultCurrent}) + k3 × log(gap)`,
-                value: `${result.arcingCurrent.toFixed(1)} kA`,
+                formula: `log₁₀(Iₐ) = K + 0.662·log(I_bf) + 0.0966·V + 0.000526·G + 0.5588·V·log(I_bf) − 0.00304·G·log(I_bf)  [I in kA, V in kV, G in mm]`,
+                value: `${result.arcingCurrent.toFixed(2)} kA`,
                 description:
-                  'An arc has lower current than a bolted fault because the arc itself has impedance. The arcing current depends on voltage, bolted fault current, conductor gap, and electrode configuration.',
+                  'IEEE 1584-2002: an arc carries less current than a bolted fault because the arc itself has impedance. K depends on whether the equipment is enclosed (box) or open. Above 1 kV a simpler equation is used.',
               },
               {
                 label: 'Normalised energy at 610mm, 0.2s',
-                formula: `log(En) = k1 + k2 + 1.081 × log(${result.arcingCurrent.toFixed(1)}) + 0.0011 × ${voltage}`,
+                formula: `log₁₀(Eₙ) = K1 + K2 + 1.081·log(${result.arcingCurrent.toFixed(2)}) + 0.0011·G`,
                 description:
-                  'IEEE 1584-2018 first calculates the energy at a standard reference distance (610mm) and time (0.2s), then scales from there. The coefficients k1 and k2 depend on equipment type.',
+                  'Energy at the reference distance (610 mm) and time (0.2 s). K1 depends on open vs enclosed; K2 on system grounding; G is the conductor gap (mm).',
               },
               {
                 label: 'Scale for distance and time',
-                formula: `E = Cf × En × (${clearingTime}/0.2) × (610/${workingDistance})²`,
+                formula: `E = Cf × Eₙ × (${clearingTime}/0.2) × (610/${workingDistance})^${result.distanceExponent.toFixed(2)}`,
                 value: `${result.incidentEnergy.toFixed(2)} cal/cm²`,
                 description:
                   'Energy scales linearly with clearing time — halving the clearing time halves the energy. It falls off with the square of distance, so stepping back significantly reduces exposure.',
@@ -694,7 +696,7 @@ const ArcFlashCalculator = () => {
       {/* Formula reference */}
       <FormulaReference
         category={CAT}
-        name="IEEE 1584-2018 Incident Energy"
+        name="IEEE 1584-2002 Incident Energy"
         formula="E = Cf × En × (t/0.2) × (610/D)^x"
         variables={[
           { symbol: 'E', description: 'Incident energy (cal/cm²)' },
@@ -705,6 +707,7 @@ const ArcFlashCalculator = () => {
           { symbol: 'x', description: 'Distance exponent (typically 2.0)' },
         ]}
       />
+      <CalculatorEditorial content={arcFlashContent} category={CAT} />
     </CalculatorCard>
   );
 };

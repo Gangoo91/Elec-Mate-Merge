@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Info, BookOpen } from 'lucide-react';
+import { starDeltaContent } from './content/star-delta';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorEditorial,
   CalculatorDivider,
   CalculatorInput,
   CalculatorSelect,
@@ -655,6 +657,7 @@ const StarDeltaCalculator = () => {
           </Collapsible>
         </>
       )}
+      <CalculatorEditorial content={starDeltaContent} category="power" />
     </CalculatorCard>
   );
 };

@@ -20,8 +20,10 @@ import {
   CalculatorSelect,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { diversityFactorContent } from './content/diversity-factor';
 import { useMultiLoadDiversityCalculator } from './diversity-factor/useMultiLoadDiversityCalculator';
 import { LoadEntry } from './diversity-factor/LoadEntry';
 
@@ -675,6 +677,7 @@ const DiversityFactorCalculator = () => {
           </div>
         </CollapsibleContent>
       </Collapsible>
+      <CalculatorEditorial content={diversityFactorContent} category="power" />
     </CalculatorCard>
   );
 };

@@ -16,8 +16,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { ledDriverContent } from './content/led-driver';
 
 const CAT = 'lighting' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -511,6 +513,7 @@ const LEDDriverCalculator = () => {
           { symbol: 'η', description: 'Driver efficiency (0.80-0.95)' },
         ]}
       />
+      <CalculatorEditorial content={ledDriverContent} category={CAT} />
     </CalculatorCard>
   );
 };

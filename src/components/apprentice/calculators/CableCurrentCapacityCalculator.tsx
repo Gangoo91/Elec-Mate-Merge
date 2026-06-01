@@ -22,8 +22,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { cableCurrentCapacityContent } from './content/cable-current-capacity';
 import {
   getTemperatureFactor,
   getGroupingFactor,
@@ -44,7 +46,6 @@ const CableCurrentCapacityCalculator = () => {
   const [deviceRating, setDeviceRating] = useState<string>('32');
 
   const [showWhyMatters, setShowWhyMatters] = useState(false);
-  const [showReferences, setShowReferences] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
 
   const [result, setResult] = useState<{
@@ -767,41 +768,8 @@ const CableCurrentCapacityCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 References */}
-          <Collapsible open={showReferences} onOpenChange={setShowReferences}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Quick References
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showReferences && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-2">
-              <div className="space-y-2">
-                {[
-                  'Section 433 - Overload protection and the fundamental Ib ≤ In ≤ Iz principle',
-                  'Section 523 - Current-carrying capacities for various cable types and methods',
-                  'Appendix 4 - Correction factors for temperature, grouping, and soil conditions',
-                  'Note: Exact tables depend on cable construction and installation method',
-                ].map((ref, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
-                    {ref}
-                  </div>
-                ))}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={cableCurrentCapacityContent} category="cable" />
 
           {/* Practical Guidance */}
           {result.actionableGuidance && (

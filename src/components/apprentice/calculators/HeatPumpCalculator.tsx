@@ -16,9 +16,11 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   CalculatorSection,
+  CalculatorEditorial,
   FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { heatPumpContent } from './content/heat-pump';
 import {
   INSULATION_LEVELS,
   AIR_TIGHTNESS_LEVELS,
@@ -95,7 +97,6 @@ const HeatPumpCalculator = () => {
 
   const [result, setResult] = useState<HeatPumpResults | null>(null);
   const [showPerformance, setShowPerformance] = useState(false);
-  const [showGuidance, setShowGuidance] = useState(false);
 
   const handleArchetypeChange = useCallback((value: string) => {
     setArchetype(value);
@@ -626,7 +627,7 @@ const HeatPumpCalculator = () => {
             steps={[
               {
                 label: 'Base heat loss',
-                formula: `Q = (A × U × ΔT) / 1000 = (${floorArea} × ${INSULATION_LEVELS[insulationLevel as keyof typeof INSULATION_LEVELS]?.factor} × ${(parseFloat(indoorTemp) - parseFloat(designTemp)).toFixed(0)}) / 1000`,
+                formula: `Q = A × HLP × (ΔT / 21) / 1000 = ${floorArea} × ${INSULATION_LEVELS[insulationLevel as keyof typeof INSULATION_LEVELS]?.factor} W/m² × (${(parseFloat(indoorTemp) - parseFloat(designTemp)).toFixed(0)} / 21) / 1000`,
                 value: `${result.spaceHeatingLoad.toFixed(1)} kW (after air tightness factor)`,
                 description: `Insulation: ${INSULATION_LEVELS[insulationLevel as keyof typeof INSULATION_LEVELS]?.label}, Air tightness: ×${AIR_TIGHTNESS_LEVELS[airTightness as keyof typeof AIR_TIGHTNESS_LEVELS]?.multiplier}`,
               },
@@ -713,45 +714,8 @@ const HeatPumpCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* Installation Notes */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>Installation Notes</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-2 text-sm text-white"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <p>
-                  <strong>Electrical:</strong> Single phase suitable up to 12 kW input. Three-phase
-                  required for larger systems. Dedicated circuit with appropriate protective devices
-                  required.
-                </p>
-                <p>
-                  <strong>Design:</strong> Weather compensation controls improve efficiency. Buffer
-                  tanks may be needed to prevent short cycling.
-                </p>
-                <p>
-                  <strong>MCS:</strong> Installation by MCS certified installer required for RHI
-                  eligibility. Annual maintenance required to maintain warranty.
-                </p>
-                <p>
-                  <strong>Noise:</strong> ASHP installations must meet 42 dB(A) daytime and 35 dB(A)
-                  night-time limits at nearest neighbour boundary.
-                </p>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded guidance + standards */}
+          <CalculatorEditorial content={heatPumpContent} category={CAT} />
         </div>
       )}
 
@@ -770,12 +734,12 @@ const HeatPumpCalculator = () => {
       <FormulaReference
         category={CAT}
         name="Heat Load Formula"
-        formula="Q = (A × U × ΔT) / 1000"
+        formula="Q = A × HLP × (ΔT / 21) / 1000"
         variables={[
           { symbol: 'Q', description: 'Heat load (kW)' },
           { symbol: 'A', description: 'Floor area (m²)' },
-          { symbol: 'U', description: 'Insulation factor (W/m²·K)' },
-          { symbol: 'ΔT', description: 'Temperature difference (°C)' },
+          { symbol: 'HLP', description: 'Heat loss per floor area (W/m²), calibrated to 21 K ΔT' },
+          { symbol: 'ΔT', description: 'Design temperature difference (°C)' },
         ]}
       />
     </CalculatorCard>

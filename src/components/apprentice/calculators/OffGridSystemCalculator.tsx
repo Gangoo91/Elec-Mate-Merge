@@ -27,8 +27,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { offGridSystemContent } from './content/off-grid-system';
 import { OFFGRID_PRESETS, getPresetByName } from '@/lib/offgrid-presets';
 import { calculateOffGridSystem, OffGridResult } from '@/lib/offgrid-calculations';
 
@@ -689,6 +691,7 @@ export function OffGridSystemCalculator() {
           { symbol: 'C_batt', description: '(E × days × 1000) / (V × DoD)' },
         ]}
       />
+      <CalculatorEditorial content={offGridSystemContent} category={CAT} />
     </CalculatorCard>
   );
 }

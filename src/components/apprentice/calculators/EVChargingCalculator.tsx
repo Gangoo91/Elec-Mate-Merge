@@ -17,8 +17,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { evChargingContent } from './content/ev-charging';
 import { calculateEVCharging, type EVCalculationInputs } from '@/lib/ev-calculations';
 import {
   CHARGER_TYPES,
@@ -572,6 +574,7 @@ const EVChargingCalculator = () => {
           { symbol: 'ΔV', description: '2 × I × L × z / 1000 — voltage drop (V)' },
         ]}
       />
+      <CalculatorEditorial content={evChargingContent} category={CAT} />
     </CalculatorCard>
   );
 };

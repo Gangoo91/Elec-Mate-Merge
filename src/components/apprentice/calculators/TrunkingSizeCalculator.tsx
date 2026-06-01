@@ -13,8 +13,10 @@ import {
   ResultsGrid,
   ResultBadge,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { trunkingSizeContent } from './content/trunking-size';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   containmentTypeOptions,
@@ -441,6 +443,7 @@ const TrunkingSizeCalculator = () => {
         category={CAT}
         formula="Fill % = (Total Cable Area ÷ Trunking Area) × 100"
       />
+      <CalculatorEditorial content={trunkingSizeContent} category={CAT} />
     </CalculatorCard>
   );
 };

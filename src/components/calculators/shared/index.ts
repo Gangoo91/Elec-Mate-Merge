@@ -31,3 +31,6 @@ export { CalculatorActions, CalculateButton, SecondaryButton } from './Calculato
 
 // Calculator Formula
 export { CalculatorFormula, InlineFormula, FormulaReference } from './CalculatorFormula';
+
+// Calculator Editorial (grounded guidance + standards layer)
+export { CalculatorEditorial } from './CalculatorEditorial';

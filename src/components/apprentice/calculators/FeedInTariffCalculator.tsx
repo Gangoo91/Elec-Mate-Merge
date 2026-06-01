@@ -15,8 +15,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { feedInTariffContent } from './content/feed-in-tariff';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'renewable' as const;
@@ -566,6 +568,7 @@ export function FeedInTariffCalculator() {
           { symbol: 'r_elec', description: 'Retail electricity price (£/kWh)' },
         ]}
       />
+      <CalculatorEditorial content={feedInTariffContent} category={CAT} />
     </CalculatorCard>
   );
 }

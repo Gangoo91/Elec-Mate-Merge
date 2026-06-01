@@ -88,8 +88,12 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
   const airTightnessMultiplier = AIR_TIGHTNESS_LEVELS[airTightness].multiplier;
   const tempDifference = indoorTemp - designTemp;
 
-  // Space heating load (kW)
-  const baseHeatLoss = (floorArea * insulationFactor * tempDifference) / 1000;
+  // Space heating load (kW).
+  // insulationFactor is the design heat loss per floor area (W/m²), a rule-of-thumb
+  // calibrated to a ~21 K design temperature difference. Scale by the actual ΔT
+  // relative to that reference so colder regions read proportionally higher.
+  const REFERENCE_DELTA_T = 21;
+  const baseHeatLoss = (floorArea * insulationFactor * (tempDifference / REFERENCE_DELTA_T)) / 1000;
   const spaceHeatingLoad = baseHeatLoss * airTightnessMultiplier;
 
   // DHW load

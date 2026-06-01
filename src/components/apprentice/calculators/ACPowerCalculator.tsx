@@ -12,8 +12,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { acPowerContent } from './content/ac-power';
 
 interface ACPowerResult {
   activePower?: number;
@@ -752,6 +754,7 @@ const ACPowerCalculator = () => {
           </div>
         </>
       )}
+      <CalculatorEditorial content={acPowerContent} category="power" />
     </CalculatorCard>
   );
 };

@@ -17,8 +17,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { faultLevelContent } from './content/fault-level';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   calculateFaultLevel,
@@ -108,7 +110,6 @@ const FaultLevelCalculator = () => {
 
   // Collapsible states
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   // Transformer options
   const transformerOptions = TRANSFORMER_DATA.map((t) => ({
@@ -664,66 +665,8 @@ const FaultLevelCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* -- BS 7671 Reference -- */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 434.2',
-                      desc: 'Prospective fault current shall be determined at every relevant point',
-                    },
-                    {
-                      reg: 'Regulation 434.5.1',
-                      desc: 'Breaking capacity of protective devices shall not be less than the prospective fault current',
-                    },
-                    {
-                      reg: 'Regulation 612.11',
-                      desc: 'Measurement of prospective fault current and verification',
-                    },
-                    {
-                      reg: 'IEC 60909',
-                      desc: 'Short-circuit currents in three-phase AC systems \u2014 standardised calculation method',
-                    },
-                    {
-                      reg: 'BS EN 60898',
-                      desc: 'Standard breaking capacity ratings for MCBs \u2014 1.5, 3, 4.5, 6, 10, 16, 25 kA',
-                    },
-                    {
-                      reg: 'BS EN 61009',
-                      desc: 'Standard breaking capacity ratings for RCBOs',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={faultLevelContent} category={CAT} />
         </div>
       )}
 

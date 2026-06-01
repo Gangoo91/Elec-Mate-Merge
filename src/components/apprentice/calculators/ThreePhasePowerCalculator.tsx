@@ -11,8 +11,10 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { threePhasePowerContent } from './content/three-phase-power';
 
 interface ThreePhaseResult {
   apparentPower: number;
@@ -841,6 +843,7 @@ const ThreePhasePowerCalculator = () => {
           </div>
         </>
       )}
+      <CalculatorEditorial content={threePhasePowerContent} category="power" />
     </CalculatorCard>
   );
 };

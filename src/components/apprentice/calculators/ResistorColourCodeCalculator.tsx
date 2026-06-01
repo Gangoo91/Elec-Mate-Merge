@@ -13,8 +13,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { resistorColourCodeContent } from './content/resistor-colour-code';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'utilities' as const;
@@ -488,6 +490,7 @@ const ResistorColourCodeCalculator = () => {
           { symbol: '±', description: 'Tolerance (Band 4)' },
         ]}
       />
+      <CalculatorEditorial content={resistorColourCodeContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -39,8 +39,9 @@ export interface CostBreakdown {
 // 2025 UK Cost Assumptions (including VAT)
 export const COST_ASSUMPTIONS = {
   solarPanel: 0.65, // £/W - Quality panels with 25yr warranty
-  batteryLithium: 8.5, // £/Ah/V - LiFePO4 batteries
-  batteryAGM: 4.2, // £/Ah/V - AGM deep cycle
+  // £ per Wh (Ah × V = Wh). LiFePO4 ≈ £500/kWh, AGM ≈ £250/kWh at 2025 UK retail.
+  batteryLithium: 0.5, // £/Wh - LiFePO4 batteries (≈ £500/kWh)
+  batteryAGM: 0.25, // £/Wh - AGM deep cycle (≈ £250/kWh)
   inverterPure: 120, // £/kW - Pure sine wave inverter
   chargeController: 55, // £/A - MPPT charge controller
   wiringPercent: 0.08, // 8% of component cost

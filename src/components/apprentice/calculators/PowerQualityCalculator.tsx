@@ -15,8 +15,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { powerQualityContent } from './content/power-quality';
 import {
   calculatePowerQuality,
   HARMONIC_PRESETS,
@@ -687,6 +689,7 @@ const PowerQualityCalculator = () => {
           { symbol: 'I₁', description: 'Fundamental current (A)' },
         ]}
       />
+      <CalculatorEditorial content={powerQualityContent} category={CAT} />
     </CalculatorCard>
   );
 };

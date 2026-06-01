@@ -146,7 +146,9 @@ export function calculateDataCentre(inputs: DataCentreInputs): DataCentreResults
   };
 
   const adjustedCoolingRatio = getCoolingEfficiency(coolingMethod, climateZone);
-  const coolingLoad = totalItLoad * adjustedCoolingRatio * coolingRedundancyMultiplier;
+  // Continuous cooling energy does NOT scale with redundancy — redundant units are
+  // standby, not all running. Redundancy sizes capacity (see coolingCapacity), not PUE.
+  const coolingLoad = totalItLoad * adjustedCoolingRatio;
   const lightsLoad = totalItLoad * (lightsAndMisc / 100);
   const totalFacilityLoad = totalItLoad + coolingLoad + lightsLoad;
 
@@ -155,7 +157,7 @@ export function calculateDataCentre(inputs: DataCentreInputs): DataCentreResults
   const upsCapacity = (totalFacilityLoad / (upsEfficiency / 100)) * marginMultiplier;
   const generatorCapacity = upsCapacity * 1.25; // Starting loads
   const batteryCapacity = totalFacilityLoad * (upsBatteryHours / 60);
-  const coolingCapacity = coolingLoad * marginMultiplier;
+  const coolingCapacity = coolingLoad * marginMultiplier * coolingRedundancyMultiplier;
 
   // Efficiency metrics
   const pue = totalFacilityLoad / totalItLoad;

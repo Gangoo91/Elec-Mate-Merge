@@ -25,8 +25,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { batteryStorageContent } from './content/battery-storage';
 
 const CAT = 'ev-storage' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -902,6 +904,7 @@ const BatteryStorageCalculator = () => {
           { symbol: 'temp', description: 'Temperature derating factor' },
         ]}
       />
+      <CalculatorEditorial content={batteryStorageContent} category={CAT} />
     </CalculatorCard>
   );
 };

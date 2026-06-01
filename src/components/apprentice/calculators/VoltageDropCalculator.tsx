@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import {
-  TrendingDown,
   RotateCcw,
   Calculator,
   CheckCircle,
   XCircle,
   Info,
   AlertTriangle,
-  BookOpen,
-  Lightbulb,
   Cable,
-  Zap,
   ChevronDown,
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -20,10 +16,12 @@ import {
   CalculatorDivider,
   CalculatorInput,
   CalculatorSelect,
+  CalculatorEditorial,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { voltageDropContent } from './content/voltage-drop';
 
 // BS 7671 Appendix 4 mV/A/m values - accurate tabulated data
 const mvamData: Record<string, Record<string, Record<number, number>>> = {
@@ -193,9 +191,6 @@ const VoltageDropCalculator = () => {
   const [current, setCurrent] = useState<string>('');
   const [supplyVoltage, setSupplyVoltage] = useState<string>('230');
   const [showFormula, setShowFormula] = useState(false);
-  const [showReference, setShowReference] = useState(false);
-  const [showGuidance, setShowGuidance] = useState(false);
-  const [showStandards, setShowStandards] = useState(false);
   const [result, setResult] = useState<{
     voltageDrop: number;
     percentage: number;
@@ -584,315 +579,11 @@ const VoltageDropCalculator = () => {
               </div>
             </>
           )}
-
-          <CalculatorDivider category="cable" />
-
-          {/* Why Voltage Drop Matters */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  Why Voltage Drop Matters
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                {[
-                  'Excessive voltage drop causes poor equipment performance - motors struggle to start, lamps dim',
-                  'BS 7671 limits: 3% for lighting circuits, 5% for other circuits (from origin to final point)',
-                  'Higher voltage drop wastes energy as heat in cables, increasing running costs',
-                  'Can cause nuisance tripping of protective devices due to undervoltage',
-                  'Compliance is a legal requirement under Part P Building Regulations',
-                ].map((text, i) => (
-                  <div
-                    key={i}
-                    className="border-l-2 pl-3"
-                    style={{ borderColor: `${config.gradientFrom}40` }}
-                  >
-                    <p className="text-sm text-white">{text}</p>
-                  </div>
-                ))}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
         </>
       )}
 
-      {/* Guidance Collapsible (was a separate tab) */}
-      <CalculatorDivider category="cable" />
-      <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-        <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-          <div className="flex items-center gap-3">
-            <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
-            <span className="text-sm sm:text-base font-medium text-white">
-              Guidance &amp; Reference
-            </span>
-          </div>
-          <ChevronDown
-            className={cn(
-              'h-4 w-4 text-white transition-transform duration-200',
-              showGuidance && 'rotate-180'
-            )}
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="pt-3">
-          <div className="space-y-4">
-            {/* When to Check */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white">When to Check</span>
-              </div>
-              <ul className="space-y-1 text-sm text-white">
-                <li>• Long cable runs (20m+)</li>
-                <li>• High current circuits (32A+)</li>
-                <li>• Sensitive equipment (IT, lighting)</li>
-                <li>• Motor circuits (starting current)</li>
-                <li>• Distant outbuildings/sheds</li>
-              </ul>
-            </div>
-
-            {/* Solutions */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white">Solutions for High Drop</span>
-              </div>
-              <ul className="space-y-1 text-sm text-white">
-                <li>• Increase cable CSA (cross-sectional area)</li>
-                <li>• Reduce cable length if possible</li>
-                <li>• Use copper instead of aluminium</li>
-                <li>• Split load across multiple circuits</li>
-                <li>• Consider local sub-distribution</li>
-              </ul>
-            </div>
-
-            {/* Common Mistakes */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="h-4 w-4 text-amber-400" />
-                <span className="font-medium text-white">Common Mistakes</span>
-              </div>
-              <ul className="space-y-1 text-sm text-white">
-                <li>• Forgetting voltage drop is cumulative from origin to furthest point</li>
-                <li>• Using wrong mV/A/m value for installation method</li>
-                <li>• Not considering startup currents for motors (can be 6-8× running)</li>
-                <li>• Ignoring existing voltage drop from supply to origin</li>
-              </ul>
-            </div>
-
-            {/* Quick Reference Table */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white">Typical mV/A/m Values</span>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="text-left py-2 text-white">Size</th>
-                      <th className="text-center py-2 text-white">T&E</th>
-                      <th className="text-center py-2 text-white">SWA Cu</th>
-                      <th className="text-center py-2 text-white">SWA Al</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white text-xs">
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">1.5mm²</td>
-                      <td className="text-center">29</td>
-                      <td className="text-center">29</td>
-                      <td className="text-center">-</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">2.5mm²</td>
-                      <td className="text-center">18</td>
-                      <td className="text-center">18</td>
-                      <td className="text-center">-</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">4mm²</td>
-                      <td className="text-center">11</td>
-                      <td className="text-center">11</td>
-                      <td className="text-center">-</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">6mm²</td>
-                      <td className="text-center">7.3</td>
-                      <td className="text-center">7.3</td>
-                      <td className="text-center">-</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">10mm²</td>
-                      <td className="text-center">4.4</td>
-                      <td className="text-center">4.4</td>
-                      <td className="text-center">-</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">16mm²</td>
-                      <td className="text-center">2.8</td>
-                      <td className="text-center">2.8</td>
-                      <td className="text-center">4.6</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-1.5">25mm²</td>
-                      <td className="text-center">-</td>
-                      <td className="text-center">1.8</td>
-                      <td className="text-center">2.9</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1.5">35mm²</td>
-                      <td className="text-center">-</td>
-                      <td className="text-center">1.3</td>
-                      <td className="text-center">2.1</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Values in mV/A/m. For full tables see BS 7671 Appendix 4.
-              </p>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-
-      {/* Standards Collapsible (was a separate tab) */}
-      <Collapsible open={showStandards} onOpenChange={setShowStandards}>
-        <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-          <div className="flex items-center gap-3">
-            <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-            <span className="text-sm sm:text-base font-medium text-white">
-              BS 7671 Standards Reference
-            </span>
-          </div>
-          <ChevronDown
-            className={cn(
-              'h-4 w-4 text-white transition-transform duration-200',
-              showStandards && 'rotate-180'
-            )}
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="pt-3">
-          <div className="space-y-4">
-            {/* Regulation 525 */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white">Regulation 525 - Voltage Drop</span>
-              </div>
-              <p className="text-sm text-white mb-3">
-                "The voltage drop between the origin of an installation and any load point shall not
-                exceed the values in Table 52."
-              </p>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/5">
-                <p className="font-medium text-white mb-2 text-sm">
-                  Table 52 - Maximum Voltage Drop
-                </p>
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="text-left py-1 text-white">Circuit Type</th>
-                      <th className="text-right py-1 text-white">Max %</th>
-                      <th className="text-right py-1 text-white">At 230V</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white">
-                    <tr className="border-b border-white/5">
-                      <td className="py-1">Lighting</td>
-                      <td className="text-right">3%</td>
-                      <td className="text-right">6.9V</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1">Other (power, heating)</td>
-                      <td className="text-right">5%</td>
-                      <td className="text-right">11.5V</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Appendix 4 */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white">Appendix 4 - mV/A/m Values</span>
-              </div>
-              <p className="text-sm text-white mb-2">
-                Provides tabulated voltage drop values in millivolts per ampere per metre for
-                various cable types and installation methods.
-              </p>
-              <ul className="space-y-1 text-sm text-white">
-                <li>
-                  • <strong>Table 4D1B:</strong> Single-phase circuits - single cables
-                </li>
-                <li>
-                  • <strong>Table 4D2B:</strong> Single-phase circuits - multicore cables
-                </li>
-                <li>
-                  • <strong>Table 4D3B:</strong> Three-phase circuits - single cables
-                </li>
-                <li>
-                  • <strong>Table 4D4B:</strong> Three-phase circuits - multicore cables
-                </li>
-              </ul>
-            </div>
-
-            {/* Formula */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white">Voltage Drop Formula</span>
-              </div>
-              <div className="space-y-3">
-                <div className="p-3 rounded-lg bg-black/30 font-mono text-sm">
-                  <p className="text-white mb-1">For single-phase AC:</p>
-                  <p className="text-white" style={{ color: config.gradientFrom }}>
-                    Vd = (mV/A/m × Ib × L) ÷ 1000
-                  </p>
-                  <p className="text-white text-xs mt-2">
-                    Where: Vd = voltage drop (V), Ib = design current (A), L = route length (m)
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-black/30 font-mono text-sm">
-                  <p className="text-white mb-1">For three-phase AC:</p>
-                  <p className="text-white" style={{ color: config.gradientFrom }}>
-                    Vd = (mV/A/m × Ib × L) ÷ 1000
-                  </p>
-                  <p className="text-white text-xs mt-2">
-                    (Use three-phase mV/A/m values from Tables 4D3B/4D4B)
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Important Notes */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="h-4 w-4 text-amber-400" />
-                <span className="font-medium text-white">Important Notes</span>
-              </div>
-              <ul className="space-y-1 text-sm text-white">
-                <li>• Tabulated values assume conductor operating at maximum temperature</li>
-                <li>• Supply voltage tolerance: +10% to -6% of nominal (216.2V to 253V)</li>
-                <li>• mV/A/m values include both line and neutral conductors</li>
-                <li>• Higher values apply when cables are enclosed in thermal insulation</li>
-                <li>• Consider total drop from origin (cutout) not just from consumer unit</li>
-              </ul>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+      {/* Grounded guidance + standards */}
+      <CalculatorEditorial content={voltageDropContent} category="cable" />
     </CalculatorCard>
   );
 };

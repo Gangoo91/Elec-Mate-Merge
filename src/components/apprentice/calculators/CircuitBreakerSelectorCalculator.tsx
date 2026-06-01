@@ -13,8 +13,10 @@ import {
   ResultsGrid,
   ResultBadge,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { circuitBreakerSelectorContent } from './content/circuit-breaker-selector';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   getSuitableDevices,
@@ -468,6 +470,7 @@ const CircuitBreakerSelectorCalculator = () => {
       )}
 
       <FormulaReference category={CAT} formula="Ib ≤ In ≤ Iz" />
+      <CalculatorEditorial content={circuitBreakerSelectorContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -16,8 +16,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { gridTieInverterContent } from './content/grid-tie-inverter';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'renewable' as const;
@@ -639,6 +641,7 @@ export function GridTieInverterCalculator() {
           { symbol: 'η_inv', description: 'Inverter efficiency' },
         ]}
       />
+      <CalculatorEditorial content={gridTieInverterContent} category={CAT} />
     </CalculatorCard>
   );
 }

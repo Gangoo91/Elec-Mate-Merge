@@ -150,7 +150,7 @@ export const ELECTRICAL_CONSTANTS = {
   peakRate: 0.45,
   offPeakRate: 0.15,
   gasCO2Factor: 0.185, // kg CO2/kWh
-  electricCO2Factor: 0.233, // kg CO2/kWh
+  electricCO2Factor: 0.207, // kg CO2/kWh — grid average (DESNZ/BEIS); matches FUEL_COMPARISON.electric
   heatingHoursPerDay: 12,
   heatingDaysPerYear: 200,
 } as const;
@@ -199,11 +199,13 @@ export const DEFROST_PENALTY: Record<string, number> = {
   'air-to-air': 0.04,
 };
 
-// BUS (Boiler Upgrade Scheme) grant amounts — England & Wales only
+// BUS (Boiler Upgrade Scheme) grant amounts — England & Wales only.
+// Eligible: air-source & ground/water-source heat pumps (£7,500), biomass (£5,000, rural/off-gas).
+// Air-to-air heat pumps are NOT eligible for BUS.
 export const BUS_GRANT = {
   'air-source': 7500,
   'ground-source': 7500,
-  'air-to-air': 2500,
+  'air-to-air': 0, // not BUS-eligible
   maxCapacity: 45, // kWth
 } as const;
 

@@ -15,8 +15,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { lightningProtectionContent } from './content/lightning-protection';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -555,6 +557,7 @@ const LightningProtectionCalculator = () => {
           },
         ]}
       />
+      <CalculatorEditorial content={lightningProtectionContent} category={CAT} />
     </CalculatorCard>
   );
 };

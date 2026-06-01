@@ -26,8 +26,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { rcdDiscriminationContent } from './content/rcd-discrimination';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'protection' as const;
@@ -170,7 +172,7 @@ const RCDDiscriminationCalculator = () => {
         recommendation =
           'Excellent discrimination achieved. S-type upstream provides reliable selective operation per BS 7671 requirements.';
         regulatoryReference =
-          'BS 7671:2018 Regulation 531.2.9 — Coordination of protective devices';
+          'BS 7671 Regulation 536.4.1.4 — Selectivity between RCDs';
       } else if (timeDifference >= 150 && currentRatio >= 2) {
         complianceStatus = 'marginal';
         riskLevel = 'medium';
@@ -787,7 +789,7 @@ const RCDDiscriminationCalculator = () => {
                 <ul className="space-y-2">
                   {[
                     {
-                      reg: 'Regulation 531.2.9',
+                      reg: 'Regulation 536.4.1.4',
                       desc: 'Coordination between RCDs — discrimination requirements',
                     },
                     {
@@ -831,6 +833,7 @@ const RCDDiscriminationCalculator = () => {
           { symbol: 'S-type', description: 'Time-delayed RCD for selectivity' },
         ]}
       />
+      <CalculatorEditorial content={rcdDiscriminationContent} category={CAT} />
     </CalculatorCard>
   );
 };

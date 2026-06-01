@@ -15,8 +15,10 @@ import {
   CalculatorFormula,
   CalculatorDivider,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { earthElectrodeContent } from './content/earth-electrode';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'protection' as const;
@@ -73,7 +75,6 @@ const EarthElectrodeCalculator = () => {
 
   // Collapsibles
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showReference, setShowReference] = useState(false);
 
   const soilTypeOptions = Object.entries(soilTypes).map(([key, soil]) => ({
     value: key,
@@ -575,58 +576,8 @@ const EarthElectrodeCalculator = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 542.2',
-                      desc: 'Earth electrode requirements — shall maintain resistance under varying conditions',
-                    },
-                    {
-                      reg: 'Regulation 411.5.3',
-                      desc: 'TT systems — Ra × Ia ≤ 50V where Ra is the sum of earth electrode and protective conductor resistance',
-                    },
-                    {
-                      reg: 'Regulation 612.7',
-                      desc: 'Earth electrode resistance measurement requirements',
-                    },
-                    {
-                      reg: 'GN3 Chapter 9',
-                      desc: 'Earth electrode testing — methods and instruments',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Grounded standards + worked example */}
+          <CalculatorEditorial content={earthElectrodeContent} category={CAT} />
         </div>
       )}
 

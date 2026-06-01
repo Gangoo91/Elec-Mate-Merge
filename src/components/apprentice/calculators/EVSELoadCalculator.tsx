@@ -27,8 +27,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { evseLoadContent } from './content/evse-load';
 import {
   calculateEVSELoad,
   type ChargingPoint,
@@ -699,6 +701,7 @@ const EVSELoadCalculator = () => {
           { symbol: 'PF', description: 'Power factor' },
         ]}
       />
+      <CalculatorEditorial content={evseLoadContent} category={CAT} />
     </CalculatorCard>
   );
 };

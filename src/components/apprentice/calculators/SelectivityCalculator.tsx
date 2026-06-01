@@ -14,8 +14,10 @@ import {
   CalculatorFormula,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { selectivityContent } from './content/selectivity';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { calculateSelectivity, SelectivityResult } from '@/lib/selectivity';
 
@@ -575,6 +577,7 @@ const SelectivityCalculator = () => {
           />
         </>
       )}
+      <CalculatorEditorial content={selectivityContent} category={CAT} />
     </CalculatorCard>
   );
 };

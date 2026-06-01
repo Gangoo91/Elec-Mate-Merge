@@ -12,8 +12,10 @@ import {
   ResultValue,
   ResultsGrid,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { unitConverterContent } from './content/unit-converter';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const CAT = 'utilities' as const;
@@ -436,6 +438,7 @@ const UnitConverterCalculator = () => {
           { symbol: 'To Factor', description: 'Base unit multiplier for the target unit' },
         ]}
       />
+      <CalculatorEditorial content={unitConverterContent} category={CAT} />
     </CalculatorCard>
   );
 };

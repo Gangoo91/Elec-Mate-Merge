@@ -16,8 +16,10 @@ import {
   ResultBadge,
   CalculatorFormula,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { lumenContent } from './content/lumen';
 
 const ROOM_PRESETS = {
   office: { name: 'Office/Workspace', lux: 500, description: 'General office work' },
@@ -901,6 +903,7 @@ const LumenCalculator = () => {
           { symbol: 'MF', description: 'Maintenance factor' },
         ]}
       />
+      <CalculatorEditorial content={lumenContent} category={CAT} />
     </CalculatorCard>
   );
 };

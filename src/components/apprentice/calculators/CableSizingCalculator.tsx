@@ -15,8 +15,10 @@ import {
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { cableSizeContent } from './content/cable-size';
 
 const voltageOptions = [
   { value: '230', label: '230V Single Phase' },
@@ -351,6 +353,7 @@ const CableSizingCalculator = () => {
       {/* Info Section */}
       <CalculatorDivider category="cable" />
       <CableSizingInfo />
+      <CalculatorEditorial content={cableSizeContent} category="cable" />
     </CalculatorCard>
   );
 };

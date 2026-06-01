@@ -16,8 +16,10 @@ import {
   CalculatorDivider,
   CalculatorSection,
   FormulaReference,
+  CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { touchStepVoltageContent } from './content/touch-step-voltage';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   calculateTouchStepVoltage,
@@ -740,6 +742,7 @@ const TouchStepVoltageCalculator = () => {
           </div>
         </div>
       )}
+      <CalculatorEditorial content={touchStepVoltageContent} category={CAT} />
     </CalculatorCard>
   );
 };
