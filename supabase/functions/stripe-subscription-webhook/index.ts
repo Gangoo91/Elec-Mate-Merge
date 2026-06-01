@@ -825,12 +825,13 @@ serve(async (req) => {
         const customer = await stripe.customers.retrieve(customerId);
         if (!customer.deleted && 'email' in customer && customer.email) {
           customerEmail = customer.email;
-          const { data: usersData } = await supabase.auth.admin.listUsers({
-            page: 1,
-            perPage: 1,
-            filter: `email.eq.${customer.email}`,
+          // Reliable email -> auth user id. supabase-js admin.listUsers() has NO
+          // email filter, so the old call returned null and the payer check fell
+          // through to trusting the checkout tag (cross-account mis-attribution).
+          const { data: rpcId } = await supabase.rpc('user_id_for_email', {
+            p_email: customer.email,
           });
-          emailUserId = usersData?.users?.[0]?.id ?? null;
+          emailUserId = (rpcId as string | null) ?? null;
         }
       } catch (err) {
         console.error('Error retrieving Stripe customer for payer verification:', err);
@@ -2078,12 +2079,11 @@ serve(async (req) => {
           null;
         let payerUserId: string | null = null;
         if (checkoutEmail) {
-          const { data: usersData } = await supabase.auth.admin.listUsers({
-            page: 1,
-            perPage: 1,
-            filter: `email.eq.${checkoutEmail}`,
+          // Reliable email -> auth user id (see note in findUserByCustomer).
+          const { data: rpcId } = await supabase.rpc('user_id_for_email', {
+            p_email: checkoutEmail,
           });
-          payerUserId = usersData?.users?.[0]?.id ?? null;
+          payerUserId = (rpcId as string | null) ?? null;
         }
 
         const refId = session.client_reference_id || null;
