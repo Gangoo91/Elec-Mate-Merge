@@ -458,9 +458,9 @@ export const peerMessageService = {
 
     if (error) throw error;
 
-    // Send push notification to recipient (fire and forget)
-    this.sendPushNotification(conversationId, user.id, content).catch(console.error);
-
+    // Push notification is handled server-side by the notify-peer-message edge
+    // function via a trigger on mental_health_peer_messages — reliable, no
+    // double-send, survives the sender's browser closing.
     return data as unknown as PeerMessage;
   },
 
