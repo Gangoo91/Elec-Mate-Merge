@@ -43,6 +43,7 @@ import { useCollegeConversations } from '@/hooks/useCollegeChat';
 
 // Admin messages
 import { useAdminMessages } from '@/hooks/useAdminMessages';
+import { useApprenticeTutorMessages } from '@/hooks/useApprenticeTutorMessages';
 
 // Employer components
 import { ConversationList } from '@/components/employer/vacancies/ConversationList';
@@ -548,7 +549,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const [isSending, setIsSending] = useState(false);
 
   const isMobile = useIsMobile();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
 
   // Get notifications context for clearing localStorage notifications
   let clearAllNotifications: (() => void) | null = null;
@@ -590,6 +591,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const { data: collegeConversations = [], totalUnread: collegeUnread } =
     useCollegeConversations(isCollegeContext);
 
+  // Apprentice's tutor messages — the real tutor↔apprentice channel
+  // (student_message_threads), surfaced in the top-right inbox.
+  const isApprenticeContext = profile?.role === 'apprentice';
+  const { threads: tutorThreads, unread: tutorUnread } =
+    useApprenticeTutorMessages(isApprenticeContext);
+
   // Admin messages
   const {
     messages: adminMessages,
@@ -610,7 +617,8 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const jobUnread = isEmployerContext ? employerUnread : electricianUnread;
   const userType = isEmployerContext ? 'employer' : 'electrician';
   const peerUnread = peerConversations?.reduce((sum, c) => sum + (c.unread_count || 0), 0) || 0;
-  const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread + adminUnread;
+  const totalUnread =
+    jobUnread + teamChatUnread + collegeUnread + peerUnread + adminUnread + tutorUnread;
 
   // Messages for selected job conversation
   const { data: messages = [], isLoading: messagesLoading } = useMessages(
@@ -851,6 +859,21 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   </TabsTrigger>
                 )}
 
+                {isApprenticeContext && (
+                  <TabsTrigger
+                    value="tutor"
+                    className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                  >
+                    <GraduationCap className="h-4 w-4" />
+                    <span className="text-xs font-medium">Tutor</span>
+                    {tutorUnread > 0 && (
+                      <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-green-500 text-white text-[10px] font-bold flex items-center justify-center">
+                        {tutorUnread}
+                      </span>
+                    )}
+                  </TabsTrigger>
+                )}
+
                 {/* Admin Tab - Always show */}
                 <TabsTrigger
                   value="admin"
@@ -909,6 +932,45 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   {!isCollegeContext && (
                     <TabsContent value="peer" className="m-0">
                       <PeerConversationList onSelect={setSelectedPeerConversation} />
+                    </TabsContent>
+                  )}
+
+                  {isApprenticeContext && (
+                    <TabsContent value="tutor" className="m-0 p-4">
+                      {tutorThreads.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-12 text-center">
+                          <GraduationCap className="h-8 w-8 text-white/30 mb-2" />
+                          <p className="text-sm text-white">No tutor messages yet</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {tutorThreads.map((t) => (
+                            <button
+                              key={t.id}
+                              type="button"
+                              onClick={() => {
+                                onOpenChange(false);
+                                navigate('/apprentice/college/plan');
+                              }}
+                              className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 hover:bg-white/[0.06] transition-colors touch-manipulation"
+                            >
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="font-medium text-white truncate">
+                                  {t.subject || 'Your tutor'}
+                                </span>
+                                {(t.unread_count_student || 0) > 0 && (
+                                  <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-green-500 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                                    {t.unread_count_student}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-white/50 mt-0.5">
+                                Tap to open in My College
+                              </p>
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </TabsContent>
                   )}
 
