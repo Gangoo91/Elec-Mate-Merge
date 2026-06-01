@@ -90,6 +90,8 @@ export interface PortfolioPackData {
     employer: string | null;
     startDate: string | null;
     endDate: string | null;
+    /** Apprentice's holistic "breadth of my work" statement (cover narrative). */
+    statement: string | null;
   };
   summary: {
     totalItems: number;
@@ -394,11 +396,14 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
   let employer: string | null = null;
   let startDate: string | null = null;
   let endDate: string | null = null;
+  let statement: string | null = null;
   try {
     const [{ data: prof }, { data: cs }] = await Promise.all([
       supabase
         .from('profiles')
-        .select('full_name, apprentice_course, apprentice_level, apprentice_college')
+        .select(
+          'full_name, apprentice_course, apprentice_level, apprentice_college, portfolio_statement'
+        )
         .eq('id', userId)
         .maybeSingle(),
       supabase
@@ -411,6 +416,7 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
     standard = (prof?.apprentice_course as string | null) ?? null;
     level = prof?.apprentice_level ? `Level ${prof.apprentice_level}` : null;
     provider = (prof?.apprentice_college as string | null) ?? null;
+    statement = (prof?.portfolio_statement as string | null) ?? null;
     uln = (cs?.uln as string | null) ?? null;
     startDate = (cs?.start_date as string | null) ?? null;
     endDate = (cs?.expected_end_date as string | null) ?? null;
@@ -441,7 +447,7 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
   const coverage = await buildCoverage(userId, coveredKeys);
 
   return {
-    learner: { name, standard, level, uln, provider, employer, startDate, endDate },
+    learner: { name, standard, level, uln, provider, employer, startDate, endDate, statement },
     summary: {
       totalItems: items.length,
       verifiedItems: items.filter((i) => i.verified).length,

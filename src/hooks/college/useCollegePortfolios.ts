@@ -180,6 +180,9 @@ export function useCollegePortfolios() {
       // Get students assigned to this staff member (as tutor, assessor, or IQA)
       const { data: assignments, error: assignError } = await supabase
         .from('college_student_assignments')
+        // NOTE: profiles + qualifications are fetched separately below.
+        // Embedding them here (profiles!...fkey(...)) trips a PostgREST
+        // relationship-resolution 400 on this table, so we avoid the join.
         .select(`
           id,
           student_id,
@@ -191,17 +194,7 @@ export function useCollegePortfolios() {
           tutor_id,
           assessor_id,
           iqa_id,
-          current_progress_percentage,
-          profiles!college_student_assignments_student_id_fkey (
-            id,
-            full_name,
-            email
-          ),
-          qualifications (
-            id,
-            title,
-            code
-          )
+          current_progress_percentage
         `)
         .or(`tutor_id.eq.${user.id},assessor_id.eq.${user.id},iqa_id.eq.${user.id}`)
         .eq('status', 'active');
@@ -243,10 +236,19 @@ export function useCollegePortfolios() {
         .select('qualification_id')
         .in('qualification_id', qualificationIds);
 
+      // Fetch student profiles + qualifications separately (embedding them in
+      // the assignments query trips a PostgREST relationship-resolution 400).
+      const [{ data: profileRows }, { data: qualificationRows }] = await Promise.all([
+        supabase.from('profiles').select('id, full_name').in('id', studentIds),
+        supabase.from('qualifications').select('id, title, code').in('id', qualificationIds),
+      ]);
+      const profileById = new Map((profileRows ?? []).map((p: any) => [p.id, p]));
+      const qualificationById = new Map((qualificationRows ?? []).map((q: any) => [q.id, q]));
+
       // Build the portfolio summary for each student
       const portfolios: StudentPortfolio[] = assignments.map(assignment => {
-        const profile = assignment.profiles as any;
-        const qualification = assignment.qualifications as any;
+        const profile = profileById.get(assignment.student_id) as any;
+        const qualification = qualificationById.get(assignment.qualification_id) as any;
 
         // Calculate portfolio stats
         const studentPortfolioItems = portfolioStats?.filter(p => p.user_id === assignment.student_id) || [];
@@ -471,7 +473,7 @@ export function useStudentPortfolioDetail(studentId: string, qualificationId: st
         // Student profile
         supabase
           .from('profiles')
-          .select('id, full_name, email')
+          .select('id, full_name')
           .eq('id', studentId)
           .single(),
 

@@ -24,6 +24,7 @@ import {
   NotebookPen,
   ShieldCheck,
   CheckCircle2,
+  BookOpen,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -190,7 +191,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
 
   if (isLoading) {
     return (
-      <div className="px-4 py-6 space-y-4 lg:px-6">
+      <div className="py-6 space-y-4">
         <div className="h-10 bg-muted rounded animate-pulse" />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[...Array(8)].map((_, i) => (
@@ -202,7 +203,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   }
 
   return (
-    <div className="px-4 py-6 space-y-5 lg:px-6">
+    <div className="py-6 space-y-5">
       {/* Summary strip — portfolio at a glance (assessor-relevant context) */}
       {stats.total > 0 && (
         <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[12px]">
@@ -236,22 +237,25 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
           )}
         </div>
 
-        {/* Filter Controls */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        {/* Filter Controls — clean row: view toggle + two dropdowns (no
+            horizontal chip scroll) */}
+        <div className="flex items-center gap-2">
           {/* View Toggle */}
           <div className="flex items-center border border-border rounded-lg p-1 bg-card shrink-0">
             <button
               onClick={() => setViewMode('grid')}
+              aria-label="Grid view"
               className={cn('h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
-                viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white'
+                viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/70'
               )}
             >
               <Grid3X3 className="h-4 w-4" />
             </button>
             <button
               onClick={() => setViewMode('list')}
+              aria-label="List view"
               className={cn('h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
-                viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white'
+                viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/70'
               )}
             >
               <List className="h-4 w-4" />
@@ -261,7 +265,14 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
           {/* Status Filter */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="shrink-0 h-11 touch-manipulation">
+              <Button
+                variant="outline"
+                size="sm"
+                className={cn(
+                  'shrink-0 h-11 touch-manipulation',
+                  statusFilter !== 'all' && 'border-elec-yellow/40 text-elec-yellow'
+                )}
+              >
                 <Filter className="h-3.5 w-3.5 mr-1.5" />
                 {STATUS_OPTIONS.find((s) => s.value === statusFilter)?.label}
                 <ChevronDown className="h-3.5 w-3.5 ml-1.5" />
@@ -282,21 +293,42 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Category Chips — long unit titles truncate instead of overflowing */}
-          {dynamicCategories.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setCategoryFilter(cat.key)}
-              title={cat.label}
-              className={cn('px-4 h-10 rounded-full text-xs font-medium truncate max-w-[220px] transition-colors shrink-0 touch-manipulation active:scale-95',
-                categoryFilter === cat.key
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-muted text-white hover:bg-muted/80'
-              )}
-            >
-              {cat.label}
-            </button>
-          ))}
+          {/* Unit Filter — replaces the old horizontally-scrolling chip strip */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className={cn(
+                  'h-11 touch-manipulation min-w-0 flex-1 sm:flex-none sm:max-w-[240px] justify-start',
+                  categoryFilter !== 'all' && 'border-elec-yellow/40 text-elec-yellow'
+                )}
+              >
+                <BookOpen className="h-3.5 w-3.5 mr-1.5 shrink-0" />
+                <span className="truncate">
+                  {categoryFilter === 'all'
+                    ? 'All units'
+                    : (dynamicCategories.find((c) => c.key === categoryFilter)?.label ?? 'Unit')}
+                </span>
+                <ChevronDown className="h-3.5 w-3.5 ml-auto pl-1.5 shrink-0" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="max-h-[60vh] overflow-y-auto">
+              <DropdownMenuLabel>Filter by unit</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {dynamicCategories.map((cat) => (
+                <DropdownMenuItem
+                  key={cat.key}
+                  onClick={() => setCategoryFilter(cat.key)}
+                  className={cn('max-w-[280px]', categoryFilter === cat.key && 'bg-accent')}
+                >
+                  <span className="truncate">
+                    {cat.key === 'all' ? 'All units' : cat.label}
+                  </span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Active Filters Bar */}
@@ -463,7 +495,7 @@ function GridCard({
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col rounded-xl bg-card border border-border overflow-hidden text-left active:scale-[0.98] transition-transform touch-manipulation"
+      className="group flex flex-col rounded-xl bg-card border border-border overflow-hidden text-left hover:border-white/20 active:scale-[0.98] transition-all touch-manipulation"
     >
       {/* Media */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
@@ -512,7 +544,7 @@ function GridCard({
         </div>
 
         {(acCount > 0 || photoCount > 0 || commentCount > 0 || assessorReady) && (
-          <div className="flex items-center gap-3 text-[10.5px] text-white/45 font-mono">
+          <div className="flex items-center gap-3 text-[10.5px] text-white/55 font-mono">
             {assessorReady && (
               <span className="inline-flex items-center gap-1 text-elec-yellow" title="Assessor-ready (VACSR complete)">
                 <CheckCircle2 className="h-3 w-3" />

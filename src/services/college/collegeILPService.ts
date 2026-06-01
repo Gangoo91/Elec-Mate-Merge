@@ -19,9 +19,12 @@ export interface CollegeILP {
 }
 
 export const getCollegeILPs = async (): Promise<CollegeILP[]> => {
+  // Only current versions — archived prior versions are history, not the
+  // live management list. Unified with Student 360 (college_ilps.is_current).
   const { data, error } = await supabase
     .from('college_ilps')
     .select('*')
+    .eq('is_current', true)
     .order('review_date');
 
   if (error) {
@@ -37,7 +40,8 @@ export const getILPByStudent = async (studentId: string): Promise<CollegeILP | n
     .from('college_ilps')
     .select('*')
     .eq('student_id', studentId)
-    .eq('status', 'Active')
+    .eq('is_current', true)
+    .eq('status', 'active')
     .single();
 
   if (error && error.code !== 'PGRST116') {
@@ -54,7 +58,8 @@ export const getOverdueILPReviews = async (): Promise<CollegeILP[]> => {
   const { data, error } = await supabase
     .from('college_ilps')
     .select('*')
-    .eq('status', 'Active')
+    .eq('is_current', true)
+    .eq('status', 'active')
     .lt('review_date', today)
     .order('review_date');
 

@@ -35,7 +35,7 @@ export default function MyCollegePlanPage() {
 
   return (
     <div className="min-h-screen bg-[hsl(0_0%_8%)]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-10 pb-24 space-y-5 sm:space-y-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-10 pb-24 space-y-5 sm:space-y-6">
         <HubHero
           studentName={overview.studentName}
           courseName={overview.courseName}

@@ -158,8 +158,10 @@ export function useVideoBookmarks() {
   );
 
   const trackVideoWatched = useCallback(
-    async (videoId: string) => {
-      if (watchedIds.includes(videoId)) return;
+    async (videoId: string): Promise<boolean> => {
+      // Returns true only on the FIRST watch of this video, so callers can
+      // award XP / credit exactly once.
+      if (watchedIds.includes(videoId)) return false;
 
       // Optimistic local update
       const updated = [...watchedIds, videoId];
@@ -181,6 +183,8 @@ export function useVideoBookmarks() {
           console.error('Error syncing video watch:', err);
         }
       }
+
+      return true;
     },
     [watchedIds, keys.watchedKey, user]
   );

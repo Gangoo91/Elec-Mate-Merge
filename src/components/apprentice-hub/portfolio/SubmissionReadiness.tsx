@@ -17,7 +17,6 @@
  */
 
 import { useEffect, useMemo, useState } from 'react';
-import { CheckCircle2, AlertTriangle, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -235,55 +234,102 @@ export function SubmissionReadiness({
 
   const greens = gates.filter((g) => g.verdict === 'green').length;
   const allGreen = greens === gates.length;
+  const headPct = Math.round((greens / gates.length) * 100);
 
   return (
     <div className="space-y-3">
       <SectionHeader
         eyebrow="Submission readiness"
-        title={
-          allGreen
-            ? 'Gateway-ready'
-            : `${greens}/${gates.length} gates passed`
-        }
+        title={allGreen ? 'Gateway-ready' : `${greens}/${gates.length} gates passed`}
         meta={
           allGreen
             ? 'All compliance gates green — talk to your tutor about EPA booking.'
             : 'These are the gates EPAOs check — close them in order.'
         }
       />
-      <ul className="space-y-2">
-        {gates.map((g) => (
-          <li
-            key={g.key}
-            className={cn(
-              'rounded-xl border p-4 sm:p-5 space-y-2',
-              g.verdict === 'green'
-                ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
-                : g.verdict === 'amber'
-                  ? 'border-orange-400/25 bg-orange-400/[0.04]'
-                  : 'border-red-500/30 bg-red-500/[0.04]'
-            )}
-          >
-            <div className="flex items-baseline justify-between gap-3">
-              <div className="flex items-baseline gap-2">
-                {g.verdict === 'green' ? (
-                  <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 self-center" />
-                ) : g.verdict === 'amber' ? (
-                  <Clock className="h-4 w-4 text-orange-300 flex-shrink-0 self-center" />
-                ) : (
-                  <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0 self-center" />
-                )}
-                <span className="text-[14px] font-medium text-white">{g.label}</span>
+
+      {/* Overall progress — bright, immediate read on where they stand */}
+      <div
+        className={cn(
+          'rounded-xl border p-4 sm:p-5 flex items-center gap-4',
+          allGreen
+            ? 'border-elec-yellow/50 bg-elec-yellow/[0.10]'
+            : 'border-white/[0.10] bg-[hsl(0_0%_10%)]'
+        )}
+      >
+        <div className="flex-1 min-w-0 space-y-2">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[13px] font-semibold text-white">
+              {allGreen ? 'All gates green' : `${greens} of ${gates.length} gates green`}
+            </span>
+            <span
+              className={cn(
+                'text-[13px] font-mono font-semibold tabular-nums',
+                allGreen ? 'text-elec-yellow' : 'text-white/90'
+              )}
+            >
+              {headPct}%
+            </span>
+          </div>
+          <div className="h-2.5 w-full rounded-full bg-white/[0.07] overflow-hidden">
+            <div
+              className={cn(
+                'h-full rounded-full transition-all duration-500',
+                allGreen ? 'bg-elec-yellow' : 'bg-elec-yellow/80'
+              )}
+              style={{ width: `${headPct}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <ul className="space-y-2.5">
+        {gates.map((g) => {
+          const tone =
+            g.verdict === 'green'
+              ? {
+                  card: 'border-elec-yellow/40 bg-elec-yellow/[0.07] border-l-elec-yellow',
+                  pill: 'text-black bg-elec-yellow',
+                  label: 'Pass',
+                }
+              : g.verdict === 'amber'
+                ? {
+                    card: 'border-orange-400/45 bg-orange-400/[0.10] border-l-orange-400',
+                    pill: 'text-orange-200 bg-orange-400/[0.18] border border-orange-400/40',
+                    label: 'Soon',
+                  }
+                : {
+                    card: 'border-red-500/50 bg-red-500/[0.12] border-l-red-500',
+                    pill: 'text-red-200 bg-red-500/[0.20] border border-red-400/50',
+                    label: 'Action',
+                  };
+          return (
+            <li
+              key={g.key}
+              className={cn('rounded-xl border border-l-[3px] p-4 sm:p-5 space-y-1.5', tone.card)}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[14.5px] font-semibold text-white leading-tight">
+                  {g.label}
+                </span>
+                <span
+                  className={cn(
+                    'text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full shrink-0',
+                    tone.pill
+                  )}
+                >
+                  {tone.label}
+                </span>
               </div>
+              <p className="text-[12.5px] text-white/80 leading-relaxed">{g.detail}</p>
               {g.metric && (
-                <span className="text-[11px] font-mono text-white/85 tabular-nums flex-shrink-0">
+                <span className="inline-block text-[11px] font-mono text-white/90 tabular-nums bg-white/[0.05] border border-white/[0.08] rounded-md px-2 py-0.5 mt-0.5">
                   {g.metric}
                 </span>
               )}
-            </div>
-            <p className="text-[12px] text-white/70 leading-relaxed pl-6">{g.detail}</p>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
       <Eyebrow className="block text-center pt-1">
         EPAOs use these gates to decide gateway readiness. Same data your tutor sees.

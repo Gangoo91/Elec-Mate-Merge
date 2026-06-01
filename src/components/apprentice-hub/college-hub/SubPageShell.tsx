@@ -22,7 +22,7 @@ export function SubPageShell({
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[hsl(0_0%_8%)]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-10 pb-24 space-y-5 sm:space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-10 pb-24 space-y-5 sm:space-y-6">
         <button
           type="button"
           onClick={() => navigate('/apprentice/college-plan')}
@@ -41,7 +41,11 @@ export function SubPageShell({
             <p className="text-[13px] text-white/70 leading-relaxed max-w-prose">{description}</p>
           )}
         </header>
-        <div className="space-y-4 sm:space-y-5">{children}</div>
+        {/* Responsive 2-col fill on desktop; a lone card spans full width so
+            wide single-card sections never look sparse. Single column on mobile. */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 items-start [&>*:only-child]:lg:col-span-2">
+          {children}
+        </div>
       </div>
     </div>
   );

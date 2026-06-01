@@ -196,10 +196,10 @@ const CollegePortfolioHub: React.FC = () => {
           columns={5}
           stats={[
             { value: stats.totalStudents, label: 'Total Students' },
-            { value: stats.activeStudents, label: 'Active', tone: 'green' },
-            { value: stats.awaitingReview, label: 'Awaiting Review', tone: 'amber' },
-            { value: stats.atRiskStudents, label: 'At Risk', tone: 'red' },
-            { value: stats.completedStudents, label: 'Completed', accent: true },
+            { value: stats.activeStudents, label: 'Active' },
+            { value: stats.awaitingReview, label: 'Awaiting Review' },
+            { value: stats.atRiskStudents, label: 'At Risk' },
+            { value: stats.completedStudents, label: 'Completed' },
           ]}
         />
       </motion.div>

@@ -44,6 +44,8 @@ export type EvidenceTypeCode =
 
 export interface JobAcCoverage {
   ac_code: string;
+  /** Unit this AC belongs to — used to pre-select ACs in the capture flow. */
+  unit_code: string;
   strength: JobAcStrength;
   rationale: string;
 }

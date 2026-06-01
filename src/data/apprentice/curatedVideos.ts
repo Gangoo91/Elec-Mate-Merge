@@ -210,6 +210,17 @@ export const curatedVideos: CuratedVideo[] = [
       'What power factor is, why it matters, and the relationship between real, reactive and apparent power.',
   },
   {
+    id: 'NIrKOVZrqnU',
+    title: 'Power Factor — Reactive Power & Your Electricity Bill',
+    channel: 'The Engineering Mindset',
+    duration: '16:18',
+    category: 'electrical-theory',
+    tags: ['power factor', 'reactive power', 'electricity bill', 'kVA', 'AC'],
+    level: 'intermediate',
+    description:
+      'How a poor power factor and reactive power quietly inflate commercial electricity bills — and what drives the charges.',
+  },
+  {
     id: 'W0_1xRqT8uU',
     title: 'Single Phase Electricity Explained',
     channel: 'The Engineering Mindset',
@@ -241,6 +252,17 @@ export const curatedVideos: CuratedVideo[] = [
     level: 'intermediate',
     description:
       'Three phase calculations including line vs phase voltage, star and delta configurations.',
+  },
+  {
+    id: 'c9gm_NL7KyE',
+    title: 'How Three Phase Power Works — Why 3 Phases?',
+    channel: 'The Engineering Mindset',
+    duration: '14:41',
+    category: 'electrical-theory',
+    tags: ['three phase', '3 phase', 'why three phases', 'power distribution', 'AC'],
+    level: 'intermediate',
+    description:
+      'Why power is delivered in three phases — how the phases combine and the advantages over single phase for distribution and motors.',
   },
   {
     id: 'jcY4QN7awEc',
@@ -392,6 +414,17 @@ export const curatedVideos: CuratedVideo[] = [
     description:
       'A comprehensive guide to using multimeters and clamp meters for electrical measurement and testing.',
   },
+  {
+    id: 'LaY47Qrfs0c',
+    title: 'How to Use an Oscilloscope — Beginner-Friendly Guide',
+    channel: 'The Engineering Mindset',
+    duration: '35:07',
+    category: 'tools-equipment',
+    tags: ['oscilloscope', 'waveforms', 'measurement', 'testing', 'tools'],
+    level: 'intermediate',
+    description:
+      'What the controls on an oscilloscope do and how to read waveforms — a practical guide for measurement and fault-finding.',
+  },
 
   // ── Components & Fundamentals (Engineering Mindset) ─────────────────
   {
@@ -461,17 +494,6 @@ export const curatedVideos: CuratedVideo[] = [
       'The electrochemical working principle of lead acid batteries — used in backup power and automotive systems.',
   },
   {
-    id: 'qRiMFmHILd8k',
-    title: 'Transformer Calculations — The Basics',
-    channel: 'The Engineering Mindset',
-    duration: '13:27',
-    category: 'electrical-theory',
-    tags: ['transformer', 'turns ratio', 'voltage', 'current', 'calculations'],
-    level: 'intermediate',
-    description:
-      'How to calculate transformer turns ratio, output voltage, and current using the basic transformer equations.',
-  },
-  {
     id: 'XTuYJ1Nd_vk',
     title: 'Why Transformers Are Rated in kVA Not kW',
     channel: 'The Engineering Mindset',
@@ -527,17 +549,17 @@ export const curatedVideos: CuratedVideo[] = [
       'How PLCs work — inputs, outputs, ladder logic, and their role in commercial and industrial electrical systems.',
   },
 
-  // ── Career (Engineering Mindset) ────────────────────────────────────
+  // ── History & Theory (Engineering Mindset) ──────────────────────────
   {
     id: 'DGKTzl9CTXo',
-    title: 'The Invention Edison Missed — Now Worth Billions',
+    title: 'The Strange Discovery That Made Computers Possible',
     channel: 'The Engineering Mindset',
-    duration: '17:35',
-    category: 'career',
-    tags: ['Edison', 'Tesla', 'AC vs DC', 'history', 'electrical engineering'],
+    duration: '17:34',
+    category: 'electrical-theory',
+    tags: ['Edison effect', 'thermionic emission', 'vacuum tube', 'diode', 'transistor', 'electronics'],
     level: 'beginner',
     description:
-      'The fascinating history of AC vs DC power — how Tesla and Westinghouse changed the world of electricity.',
+      "How Edison's overlooked discovery led to the vacuum diode, the triode and ultimately the transistor — the foundation of modern electronics.",
   },
 
   // ═══════════════════════════════════════════════════════════════════

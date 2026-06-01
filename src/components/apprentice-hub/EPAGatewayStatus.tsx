@@ -1,12 +1,14 @@
 /**
  * EPAGatewayStatus
  *
- * End-Point Assessment gateway readiness tracker for apprentices.
- * Shows checklist of requirements and overall readiness status.
- * Mobile-first bottom sheet design.
+ * End-Point Assessment gateway readiness — bottom sheet.
+ *
+ * Single source of truth: `useEPAReadiness` (the same engine the home-tab
+ * EPAGatewayPulse uses), so the apprentice never sees two different "ready?"
+ * numbers. Shows the overall score, the four weighted components, and the
+ * prioritised gaps to close next.
  */
 
-import { useMemo } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -15,293 +17,56 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Award,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  AlertTriangle,
-  BookOpen,
-  FileCheck,
-  Calendar,
-  Heart,
-  TrendingUp,
-  Loader2,
-  GraduationCap,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useKSBTracking } from '@/hooks/qualification/useKSBTracking';
-import { useQualifications } from '@/hooks/qualification/useQualifications';
-import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
-import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
-import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import {
+  useEPAReadiness,
+  type ReadinessStatus,
+  type ReadinessComponent,
+} from '@/hooks/epa/useEPAReadiness';
 
 interface EPAGatewayStatusProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-interface GatewayRequirement {
-  id: string;
-  category: 'knowledge' | 'behaviours' | 'portfolio' | 'offjob';
-  title: string;
-  description: string;
-  status: 'complete' | 'in_progress' | 'not_started' | 'at_risk';
-  progress: number;
-  target?: string;
-  current?: string;
-}
+const STATUS_META: Record<ReadinessStatus, { label: string; cls: string }> = {
+  ready: { label: 'Gateway ready', cls: 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]' },
+  nearly_ready: {
+    label: 'Nearly ready',
+    cls: 'text-elec-yellow/85 border-elec-yellow/30 bg-elec-yellow/[0.05]',
+  },
+  needs_work: {
+    label: 'Needs work',
+    cls: 'text-orange-200 border-orange-400/40 bg-orange-400/[0.08]',
+  },
+  not_ready: { label: 'Not ready yet', cls: 'text-red-200 border-red-400/40 bg-red-500/[0.08]' },
+};
+
+const PRIORITY_CLS: Record<'high' | 'medium' | 'low', string> = {
+  high: 'border-l-red-500',
+  medium: 'border-l-orange-400',
+  low: 'border-l-white/30',
+};
 
 export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) {
-  const { userSelection } = useQualifications();
-  const qualificationId = userSelection?.qualification_id;
+  const { qualificationCode, qualificationId } = useStudentQualification();
+  // Only calculate while the sheet is open (avoids redundant snapshot writes).
+  const { data, isLoading } = useEPAReadiness(
+    open ? (qualificationCode ?? undefined) : undefined,
+    qualificationId
+  );
 
-  const {
-    ksbs,
-    progress: ksbProgress,
-    isLoading: ksbLoading,
-    getKSBProgress,
-    knowledge,
-    behaviours,
-  } = useKSBTracking({ qualificationId });
-
-  const { entries: portfolioEntries, isLoading: portfolioLoading } = usePortfolioData();
-  const { totalTime, isLoading: timeLoading } = useTimeEntries();
-  const { otjGoal } = useComplianceTracking();
-
-  const isLoading = ksbLoading || portfolioLoading || timeLoading;
-
-  // Calculate gateway requirements
-  const { requirements, overallReadiness, gatewayStatus, gaps, recommendations } = useMemo(() => {
-    const reqs: GatewayRequirement[] = [];
-    const currentGaps: string[] = [];
-    const recs: string[] = [];
-
-    // 1. Knowledge KSBs
-    const knowledgeTotal = knowledge.length;
-    const knowledgeCompleted = knowledge.filter((k) => {
-      const p = getKSBProgress(k.id);
-      return p?.status === 'completed' || p?.status === 'verified';
-    }).length;
-    const knowledgeProgress =
-      knowledgeTotal > 0 ? Math.round((knowledgeCompleted / knowledgeTotal) * 100) : 0;
-
-    reqs.push({
-      id: 'knowledge',
-      category: 'knowledge',
-      title: 'Knowledge Criteria',
-      description: 'Theory knowledge demonstrated and evidenced',
-      status:
-        knowledgeProgress >= 100
-          ? 'complete'
-          : knowledgeProgress >= 70
-            ? 'in_progress'
-            : knowledgeProgress > 0
-              ? 'at_risk'
-              : 'not_started',
-      progress: knowledgeProgress,
-      current: `${knowledgeCompleted}/${knowledgeTotal}`,
-      target: `${knowledgeTotal} KSBs`,
-    });
-    if (knowledgeProgress < 100 && knowledgeTotal > 0) {
-      currentGaps.push(`${knowledgeTotal - knowledgeCompleted} knowledge criteria remaining`);
-    }
-
-    // 2. Behaviours KSBs
-    const behavioursTotal = behaviours.length;
-    const behavioursCompleted = behaviours.filter((k) => {
-      const p = getKSBProgress(k.id);
-      return p?.status === 'completed' || p?.status === 'verified';
-    }).length;
-    const behavioursProgress =
-      behavioursTotal > 0 ? Math.round((behavioursCompleted / behavioursTotal) * 100) : 0;
-
-    reqs.push({
-      id: 'behaviours',
-      category: 'behaviours',
-      title: 'Professional Behaviours',
-      description: 'Workplace behaviours evidenced',
-      status:
-        behavioursProgress >= 100
-          ? 'complete'
-          : behavioursProgress >= 70
-            ? 'in_progress'
-            : behavioursProgress > 0
-              ? 'at_risk'
-              : 'not_started',
-      progress: behavioursProgress,
-      current: `${behavioursCompleted}/${behavioursTotal}`,
-      target: `${behavioursTotal} KSBs`,
-    });
-    if (behavioursProgress < 100 && behavioursTotal > 0) {
-      currentGaps.push(`${behavioursTotal - behavioursCompleted} behaviours criteria remaining`);
-    }
-
-    // 4. Portfolio Evidence
-    const portfolioCount = portfolioEntries.length;
-    const approvedCount = portfolioEntries.filter((e) => e.status === 'approved').length;
-    const minPortfolioRequired = 20; // Typical apprenticeship requirement
-    const portfolioProgress = Math.min(
-      Math.round((approvedCount / minPortfolioRequired) * 100),
-      100
-    );
-
-    reqs.push({
-      id: 'portfolio',
-      category: 'portfolio',
-      title: 'Portfolio Evidence',
-      description: 'Quality evidence mapped to criteria',
-      status:
-        portfolioProgress >= 100
-          ? 'complete'
-          : portfolioProgress >= 50
-            ? 'in_progress'
-            : portfolioProgress > 0
-              ? 'at_risk'
-              : 'not_started',
-      progress: portfolioProgress,
-      current: `${approvedCount} approved`,
-      target: `${minPortfolioRequired}+ items`,
-    });
-    if (approvedCount < minPortfolioRequired) {
-      currentGaps.push(
-        `${minPortfolioRequired - approvedCount} more approved evidence items needed`
-      );
-      recs.push('Upload evidence and request tutor review');
-    }
-
-    // 5. Off-the-Job Training Hours
-    const totalHours = totalTime.hours + totalTime.minutes / 60;
-    const requiredHours = otjGoal?.target_hours || 400;
-    const offJobProgress = Math.min(Math.round((totalHours / requiredHours) * 100), 100);
-
-    reqs.push({
-      id: 'offjob',
-      category: 'offjob',
-      title: '20% Off-the-Job Training',
-      description: 'Minimum training hours completed',
-      status:
-        offJobProgress >= 100
-          ? 'complete'
-          : offJobProgress >= 80
-            ? 'in_progress'
-            : offJobProgress > 0
-              ? 'at_risk'
-              : 'not_started',
-      progress: offJobProgress,
-      current: `${Math.round(totalHours)}h`,
-      target: `${requiredHours}h`,
-    });
-    if (totalHours < requiredHours) {
-      const hoursNeeded = Math.round(requiredHours - totalHours);
-      currentGaps.push(`${hoursNeeded} more off-job hours needed`);
-      if (offJobProgress < 50) {
-        recs.push('Prioritise logging your training activities');
-      }
-    }
-
-    // Calculate overall readiness
-    const overallProgress =
-      reqs.length > 0 ? Math.round(reqs.reduce((sum, r) => sum + r.progress, 0) / reqs.length) : 0;
-
-    // Determine gateway status
-    const criticalGaps = reqs.filter(
-      (r) => r.status === 'at_risk' || r.status === 'not_started'
-    ).length;
-    let status: 'ready' | 'almost' | 'needs_work' | 'at_risk';
-
-    if (overallProgress >= 95 && criticalGaps === 0) {
-      status = 'ready';
-    } else if (overallProgress >= 75 && criticalGaps <= 1) {
-      status = 'almost';
-    } else if (overallProgress >= 50) {
-      status = 'needs_work';
-    } else {
-      status = 'at_risk';
-    }
-
-    // Add recommendations based on status
-    if (status === 'ready') {
-      recs.push("You're on track! Keep your portfolio up to date.");
-    } else if (status === 'almost') {
-      recs.push('Nearly there! Focus on your remaining gaps.');
-    } else if (criticalGaps > 2) {
-      recs.push('Schedule a review with your tutor to plan catch-up.');
-    }
-
-    return {
-      requirements: reqs,
-      overallReadiness: overallProgress,
-      gatewayStatus: status,
-      gaps: currentGaps,
-      recommendations: recs,
-    };
-  }, [knowledge, behaviours, portfolioEntries, totalTime, getKSBProgress, otjGoal]);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'ready':
-      case 'complete':
-        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
-      case 'almost':
-      case 'in_progress':
-        return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
-      case 'needs_work':
-      case 'not_started':
-        return 'bg-white/[0.02] text-white/85 border-white/[0.06]';
-      case 'at_risk':
-        return 'bg-red-500/10 text-red-500 border-red-500/20';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'ready':
-        return 'Gateway Ready';
-      case 'almost':
-        return 'Almost Ready';
-      case 'needs_work':
-        return 'Needs Work';
-      case 'at_risk':
-        return 'At Risk';
-      default:
-        return status;
-    }
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'knowledge':
-        return BookOpen;
-      case 'behaviours':
-        return Heart;
-      case 'portfolio':
-        return FileCheck;
-      case 'offjob':
-        return Calendar;
-      default:
-        return AlertCircle;
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'knowledge':
-        return 'text-white/85';
-      case 'behaviours':
-        return 'text-white/85';
-      case 'portfolio':
-        return 'text-white/85';
-      case 'offjob':
-        return 'text-white/85';
-      default:
-        return 'text-white';
-    }
-  };
+  const components: ReadinessComponent[] = data
+    ? [
+        data.components.portfolio,
+        data.components.evidenceQuality,
+        data.components.mockDiscussion,
+        data.components.mockKnowledge,
+      ]
+    : [];
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -309,132 +74,109 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
         <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
 
         <SheetHeader className="px-4 pb-4">
-          <SheetTitle className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-white/85" />
-            EPA Gateway Status
-          </SheetTitle>
-          <SheetDescription>Track your End-Point Assessment readiness</SheetDescription>
+          <SheetTitle className="text-white">EPA gateway readiness</SheetTitle>
+          <SheetDescription>
+            Your live End-Point Assessment readiness — the same engine as your dashboard.
+          </SheetDescription>
         </SheetHeader>
 
-        {isLoading ? (
+        {isLoading || !data ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-white" />
-            <p className="text-sm text-white mt-2">Checking readiness...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-white/70" />
+            <p className="text-sm text-white/70 mt-2">Checking readiness…</p>
           </div>
         ) : (
           <ScrollArea className="h-[calc(85vh-8rem)] px-4 pb-8">
-            {/* Overall Readiness Header */}
+            {/* Overall */}
             <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] mb-4">
               <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-white/[0.02]">
-                    <Award className="h-6 w-6 text-white/85" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground">Gateway Readiness</p>
-                    <Badge className={cn('mt-1', getStatusColor(gatewayStatus))}>
-                      {getStatusLabel(gatewayStatus)}
-                    </Badge>
-                  </div>
+                <div>
+                  <p className="font-semibold text-white">Gateway readiness</p>
+                  <span
+                    className={cn(
+                      'inline-block mt-1.5 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full border',
+                      STATUS_META[data.overallStatus].cls
+                    )}
+                  >
+                    {STATUS_META[data.overallStatus].label}
+                  </span>
                 </div>
                 <div className="text-right">
-                  <p className="text-3xl font-bold text-foreground">{overallReadiness}%</p>
-                  <p className="text-xs text-white">complete</p>
-                </div>
-              </div>
-              <Progress value={overallReadiness} className="h-2" />
-            </div>
-
-            {/* Requirements Checklist */}
-            <div className="space-y-3 mb-6">
-              <h3 className="text-sm font-medium text-white flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4" />
-                Gateway Requirements
-              </h3>
-
-              {requirements.map((req) => {
-                const Icon = getCategoryIcon(req.category);
-                const iconColor = getCategoryColor(req.category);
-
-                return (
-                  <div key={req.id} className="p-3 rounded-xl bg-muted/30 border border-border">
-                    <div className="flex items-start gap-3">
-                      <div className={cn('p-2 rounded-lg', getStatusColor(req.status))}>
-                        <Icon className={cn('h-4 w-4', iconColor)} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <p className="text-sm font-medium text-foreground">{req.title}</p>
-                          <span className="text-sm font-bold">{req.progress}%</span>
-                        </div>
-                        <p className="text-xs text-white mb-2">{req.description}</p>
-                        <Progress value={req.progress} className="h-1.5 mb-2" />
-                        <div className="flex items-center justify-between text-xs text-white">
-                          <span>Current: {req.current}</span>
-                          <span>Target: {req.target}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Gaps to Address */}
-            {gaps.length > 0 && (
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-white flex items-center gap-2 mb-3">
-                  <AlertTriangle className="h-4 w-4 text-white/85" />
-                  Gaps to Address
-                </h3>
-                <div className="space-y-2">
-                  {gaps.map((gap, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 text-sm p-2.5 rounded-lg bg-white/[0.02] text-white/85 dark:text-amber-400"
-                    >
-                      <AlertCircle className="h-4 w-4 shrink-0" />
-                      {gap}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Recommendations */}
-            {recommendations.length > 0 && (
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-white flex items-center gap-2 mb-3">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                  Next Steps
-                </h3>
-                <div className="space-y-2">
-                  {recommendations.map((rec, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-sm p-2.5 rounded-lg bg-elec-yellow/10"
-                    >
-                      <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                      <span className="text-foreground">{rec}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Info Note */}
-            <div className="p-4 rounded-xl bg-muted/30 border border-border">
-              <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-white shrink-0 mt-0.5" />
-                <div className="text-xs text-white">
-                  <p className="font-medium text-foreground mb-1">About the Gateway</p>
-                  <p>
-                    The gateway is a formal check before your End-Point Assessment (EPA). Your
-                    employer and training provider must confirm you've met all requirements before
-                    you can proceed to the EPA.
+                  <p className="text-3xl font-bold text-white tabular-nums leading-none">
+                    {data.overallScore}%
                   </p>
+                  <p className="text-xs text-white/55 mt-1">overall</p>
                 </div>
               </div>
+              <Progress value={data.overallScore} className="h-2" />
+              <p className="mt-2 text-[11px] text-white/45 leading-snug">
+                70%+ across the weighted components is the typical gateway bar.
+              </p>
+            </div>
+
+            {/* Components */}
+            <div className="space-y-2.5 mb-6">
+              <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55">
+                Components
+              </h3>
+              {components.map((c) => (
+                <div
+                  key={c.label}
+                  className="p-3.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06]"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[13.5px] font-medium text-white">{c.label}</span>
+                    <span className="text-[12px] font-mono tabular-nums text-white/90">
+                      {c.score}%<span className="text-white/40"> · {Math.round(c.weight * 100)}%</span>
+                    </span>
+                  </div>
+                  <div className="mt-2 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-elec-yellow transition-all duration-500"
+                      style={{ width: `${c.score}%` }}
+                    />
+                  </div>
+                  {c.detail && (
+                    <p className="mt-1.5 text-[11.5px] text-white/55 leading-snug">{c.detail}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Gaps */}
+            {data.gaps.length > 0 && (
+              <div className="space-y-2.5 mb-6">
+                <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  Close these next
+                </h3>
+                {data.gaps.map((g, i) => (
+                  <div
+                    key={`${g.area}-${i}`}
+                    className={cn(
+                      'rounded-xl border border-l-[3px] border-white/[0.06] bg-white/[0.02] p-3.5 space-y-1',
+                      PRIORITY_CLS[g.priority]
+                    )}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[13px] font-semibold text-white">{g.area}</span>
+                      <span className="text-[10px] uppercase tracking-[0.12em] text-white/50">
+                        {g.priority}
+                      </span>
+                    </div>
+                    <p className="text-[12px] text-white/70 leading-relaxed">{g.description}</p>
+                    <p className="text-[12px] text-elec-yellow/90 leading-relaxed">{g.action}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Info note */}
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+              <p className="text-[12px] font-medium text-white mb-1">About the gateway</p>
+              <p className="text-[11.5px] text-white/55 leading-relaxed">
+                The gateway is the formal check before your End-Point Assessment. Your employer and
+                training provider confirm you've met the requirements before you proceed to the EPA.
+              </p>
             </div>
           </ScrollArea>
         )}

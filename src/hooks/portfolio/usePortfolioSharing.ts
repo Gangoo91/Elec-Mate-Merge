@@ -43,11 +43,15 @@ interface CreateShareOptions {
 }
 
 // Generate a random token
-function generateToken(length = 12): string {
+function generateToken(length = 20): string {
+  // Crypto-strong — this token is the only thing guarding shared portfolio PII,
+  // so it must not be predictable (Math.random is not).
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const bytes = new Uint8Array(length);
+  crypto.getRandomValues(bytes);
   let token = '';
   for (let i = 0; i < length; i++) {
-    token += chars.charAt(Math.floor(Math.random() * chars.length));
+    token += chars.charAt(bytes[i] % chars.length);
   }
   return token;
 }

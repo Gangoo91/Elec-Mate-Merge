@@ -49,7 +49,8 @@ Hard rules:
 4. Each job idea must cover AT LEAST 2 ACs to justify a tutor's time recommending it.
 5. Evidence checklist items must use these type codes: photo, document, certificate, test_result, witness, reflection, work_log, video, drawing, calculation.
 6. UK English. No emojis.
-7. Real UK tools/brands where it adds specificity: Megger MFT1741, Fluke 1664, Hager / BG / MK / Schneider consumer units, Wago lever connectors, T+E twin-and-earth, etc.`;
+7. Real UK tools/brands where it adds specificity: Megger MFT1741, Fluke 1664, Hager / BG / MK / Schneider consumer units, Wago lever connectors, T+E twin-and-earth, etc.
+8. Every ac_coverage item MUST include unit_code — copy it exactly from the GAPS block (the code shown before the · for that AC).`;
 
 const SCHEMA = {
   type: 'object',
@@ -90,9 +91,14 @@ const SCHEMA = {
             items: {
               type: 'object',
               additionalProperties: false,
-              required: ['ac_code', 'strength', 'rationale'],
+              required: ['ac_code', 'unit_code', 'strength', 'rationale'],
               properties: {
                 ac_code: { type: 'string' },
+                unit_code: {
+                  type: 'string',
+                  description:
+                    'The unit code this AC belongs to — exactly the value shown before the · in the GAPS block.',
+                },
                 strength: {
                   type: 'string',
                   enum: ['primary', 'partial'],
@@ -372,9 +378,36 @@ Generate ${count} job ideas. Each idea must cover at least 2 ACs from the GAPS b
       });
     }
 
+    // Guarantee unit_code on every ac_coverage item so the apprentice capture
+    // flow can pre-select the exact ACs. The AI is asked to echo it, but we
+    // backstop from the gap set (keyed by ac_code) and drop anything we can't
+    // resolve to a real gap.
+    const unitByAc = new Map<string, string>();
+    for (const g of topGaps) {
+      if (!unitByAc.has(g.ac_code)) unitByAc.set(g.ac_code, g.unit_code);
+    }
+    const validUnitAc = new Set(topGaps.map((g) => `${g.unit_code}:${g.ac_code}`));
+
+    const ideas = (parsed.ideas ?? []).map((rawIdea) => {
+      const idea = rawIdea as Record<string, unknown>;
+      const cov = Array.isArray(idea.ac_coverage) ? idea.ac_coverage : [];
+      const fixedCov = cov
+        .map((rawC) => {
+          const c = rawC as Record<string, unknown>;
+          const ac = String(c.ac_code ?? '').trim();
+          let unit = String(c.unit_code ?? '').trim();
+          if (!unit || !validUnitAc.has(`${unit}:${ac}`)) {
+            unit = unitByAc.get(ac) ?? unit;
+          }
+          return { ...c, ac_code: ac, unit_code: unit };
+        })
+        .filter((c) => c.ac_code && c.unit_code);
+      return { ...idea, ac_coverage: fixedCov };
+    });
+
     return new Response(
       JSON.stringify({
-        ideas: parsed.ideas ?? [],
+        ideas,
         meta: {
           qualification_code: qualCode,
           gaps_total: gaps.length,

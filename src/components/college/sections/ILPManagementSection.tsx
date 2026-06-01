@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCollegeILPs, useOverdueILPReviews } from '@/hooks/college/useCollegeILP';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
@@ -11,13 +12,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ILPDetailSheet } from '@/components/college/sheets/ILPDetailSheet';
-import { ILPReviewSheet } from '@/components/college/sheets/ILPReviewSheet';
-import { ILPTargetsSheet } from '@/components/college/sheets/ILPTargetsSheet';
-import { CreateILPSheet } from '@/components/college/sheets/CreateILPSheet';
+import { HubIlpSheet } from '@/components/college/sheets/HubIlpSheet';
 import { ILPCardSkeletonList } from '@/components/college/ui/ILPCardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
 import {
   PageFrame,
   PeopleListRow,
@@ -40,49 +38,84 @@ export function ILPManagementSection() {
   const { data: staff = [] } = useCollegeStaff();
   const { data: cohorts = [] } = useCollegeCohorts();
 
+  // Goals are unified with Student 360 in college_ilp_goals — pull them for the
+  // listed ILPs and key by ilp_id so the Hub list shows the same goals 360 does.
+  const ilpIds = useMemo(() => ilps.map((i) => i.id), [ilps]);
+  const { data: allGoals = [] } = useQuery({
+    queryKey: ['college-ilp-goals', ilpIds],
+    queryFn: async () => {
+      if (!ilpIds.length) return [] as Array<{ ilp_id: string; title: string; status: string }>;
+      const { data } = await supabase
+        .from('college_ilp_goals')
+        .select('ilp_id, title, status')
+        .in('ilp_id', ilpIds);
+      return (data ?? []) as Array<{ ilp_id: string; title: string; status: string }>;
+    },
+    enabled: ilpIds.length > 0,
+  });
+  const goalsByIlp = useMemo(() => {
+    const m = new Map<string, Array<{ title: string; status: string }>>();
+    for (const g of allGoals) {
+      const arr = m.get(g.ilp_id) ?? [];
+      arr.push({ title: g.title, status: g.status });
+      m.set(g.ilp_id, arr);
+    }
+    return m;
+  }, [allGoals]);
+  const goalDone = (status: string) => status === 'completed' || status === 'verified';
+
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
-  const [selectedIlpId, setSelectedIlpId] = useState<string | null>(null);
-  const [detailSheetOpen, setDetailSheetOpen] = useState(false);
-  const [detailInitialTab, setDetailInitialTab] = useState<'targets' | 'support' | 'history'>(
-    'targets'
-  );
-  const [reviewSheetOpen, setReviewSheetOpen] = useState(false);
-  const [targetsSheetOpen, setTargetsSheetOpen] = useState(false);
-  const [createSheetOpen, setCreateSheetOpen] = useState(false);
+  // The unified ILP editor (shared with Student 360). `viewStudent` opens an
+  // existing learner's plan; `createOpen` shows the learner picker first.
+  const [viewStudent, setViewStudent] = useState<{ id: string; name: string } | null>(null);
+  const [createOpen, setCreateOpen] = useState(false);
 
   const queryClient = useQueryClient();
+  const refreshIlps = () => {
+    void queryClient.invalidateQueries({ queryKey: ['college-ilps'] });
+    void queryClient.invalidateQueries({ queryKey: ['college-ilp-goals'] });
+  };
   const handleRefresh = async () => {
     await queryClient.invalidateQueries({ queryKey: ['college-ilps'] });
+    await queryClient.invalidateQueries({ queryKey: ['college-ilp-goals'] });
+  };
+
+  const openIlp = (studentId: string | null) => {
+    if (!studentId) return;
+    const student = students.find((s) => s.id === studentId);
+    setViewStudent({ id: studentId, name: student?.name || 'Learner' });
   };
 
   const filteredILPs = ilps.filter((ilp) => {
     const student = students.find((s) => s.id === ilp.student_id);
-    const targets = ilp.targets ?? [];
+    const goals = goalsByIlp.get(ilp.id) ?? [];
     const matchesSearch =
       student?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      targets.some((t) => t.description.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesStatus = filterStatus === 'all' || ilp.status === filterStatus;
+      goals.some((g) => (g.title ?? '').toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesStatus =
+      filterStatus === 'all' || (ilp.status ?? '').toLowerCase() === filterStatus;
     const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
     return matchesSearch && matchesStatus && matchesCohort;
   });
 
-  const statusTone = (status: string | null): Tone =>
-    status === 'Active'
-      ? 'green'
-      : status === 'Draft'
-        ? 'amber'
-        : status === 'Completed'
-          ? 'blue'
-          : 'yellow';
+  // Status is unified-lowercase (active / draft / archived) to match Student 360.
+  const statusTone = (status: string | null): Tone => {
+    const s = (status ?? '').toLowerCase();
+    return s === 'active' ? 'green' : s === 'draft' ? 'amber' : s === 'archived' ? 'blue' : 'yellow';
+  };
+  const statusLabel = (status: string | null): string => {
+    const s = (status ?? '').toLowerCase();
+    return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Unknown';
+  };
 
   const targetTone = (status: string): Tone =>
-    status === 'Achieved'
+    status === 'completed' || status === 'verified'
       ? 'green'
-      : status === 'In Progress'
+      : status === 'evidence_submitted'
         ? 'blue'
-        : status === 'Overdue'
+        : status === 'in_progress'
           ? 'amber'
           : 'yellow';
 
@@ -108,11 +141,10 @@ export function ILPManagementSection() {
   const getTutorName = (reviewedBy: string | null) =>
     !reviewedBy ? 'Unassigned' : staff.find((s) => s.id === reviewedBy)?.name || 'Unknown';
 
-  const getTargetProgress = (targets: (typeof ilps)[0]['targets']) => {
-    const safe = targets ?? [];
-    if (safe.length === 0) return 0;
-    const achieved = safe.filter((t) => t.status === 'Achieved').length;
-    return Math.round((achieved / safe.length) * 100);
+  const getTargetProgress = (goals: Array<{ status: string }>) => {
+    if (goals.length === 0) return 0;
+    const done = goals.filter((g) => goalDone(g.status)).length;
+    return Math.round((done / goals.length) * 100);
   };
 
   const isReviewOverdue = (reviewDate: string | null) =>
@@ -126,8 +158,11 @@ export function ILPManagementSection() {
     return date >= now && date <= weekFromNow;
   };
 
-  const activeCount = ilps.filter((i) => i.status === 'Active').length;
-  const completedCount = ilps.filter((i) => i.status === 'Completed').length;
+  const statusIs = (i: { status: string | null }, s: string) =>
+    (i.status ?? '').toLowerCase() === s;
+  const activeCount = ilps.filter((i) => statusIs(i, 'active')).length;
+  const draftCount = ilps.filter((i) => statusIs(i, 'draft')).length;
+  const archivedCount = ilps.filter((i) => statusIs(i, 'archived')).length;
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
@@ -140,7 +175,7 @@ export function ILPManagementSection() {
             tone="orange"
             actions={
               <button
-                onClick={() => setCreateSheetOpen(true)}
+                onClick={() => setCreateOpen(true)}
                 className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
               >
                 Create ILP →
@@ -161,7 +196,7 @@ export function ILPManagementSection() {
                 tone: 'red',
                 accent: overdueReviews.length > 0,
               },
-              { value: completedCount, label: 'Completed', sub: 'Plan fulfilled', tone: 'blue' },
+              { value: archivedCount, label: 'Archived', sub: 'Prior versions', tone: 'blue' },
             ]}
           />
         </motion.div>
@@ -211,9 +246,9 @@ export function ILPManagementSection() {
           <FilterBar
             tabs={[
               { value: 'all', label: 'All', count: ilps.length },
-              { value: 'Active', label: 'Active', count: activeCount },
-              { value: 'Draft', label: 'Draft', count: ilps.filter((i) => i.status === 'Draft').length },
-              { value: 'Completed', label: 'Completed', count: completedCount },
+              { value: 'active', label: 'Active', count: activeCount },
+              { value: 'draft', label: 'Draft', count: draftCount },
+              { value: 'archived', label: 'Archived', count: archivedCount },
             ]}
             activeTab={filterStatus}
             onTabChange={setFilterStatus}
@@ -248,8 +283,8 @@ export function ILPManagementSection() {
             <ListCard>
               {filteredILPs.map((ilp) => {
                 const studentInfo = getStudentInfo(ilp.student_id);
-                const targets = ilp.targets ?? [];
-                const progress = getTargetProgress(ilp.targets);
+                const targets = goalsByIlp.get(ilp.id) ?? [];
+                const progress = getTargetProgress(targets);
                 const overdue = isReviewOverdue(ilp.review_date);
                 const dueSoon = isReviewDueSoon(ilp.review_date);
 
@@ -273,7 +308,7 @@ export function ILPManagementSection() {
                       </>
                     }
                     status={{
-                      label: ilp.status || 'Unknown',
+                      label: statusLabel(ilp.status),
                       tone: statusTone(ilp.status),
                     }}
                     meta={
@@ -285,7 +320,7 @@ export function ILPManagementSection() {
                                 Targets
                               </span>
                               <span className="font-medium text-white tabular-nums">
-                                {targets.filter((t) => t.status === 'Achieved').length}/
+                                {targets.filter((t) => goalDone(t.status)).length}/
                                 {targets.length} · {progress}%
                               </span>
                             </div>
@@ -299,13 +334,14 @@ export function ILPManagementSection() {
                         )}
                         {targets.length > 0 && (
                           <div className="flex flex-wrap gap-1">
-                            {targets.slice(0, 3).map((target, i) => (
-                              <Pill key={i} tone={targetTone(target.status)}>
-                                {target.description.length > 28
-                                  ? target.description.substring(0, 28) + '…'
-                                  : target.description}
-                              </Pill>
-                            ))}
+                            {targets.slice(0, 3).map((target, i) => {
+                              const label = target.title ?? '';
+                              return (
+                                <Pill key={i} tone={targetTone(target.status)}>
+                                  {label.length > 28 ? label.substring(0, 28) + '…' : label}
+                                </Pill>
+                              );
+                            })}
                             {targets.length > 3 && (
                               <span className="text-[11px] text-white px-1.5 py-0.5">
                                 +{targets.length - 3}
@@ -341,34 +377,11 @@ export function ILPManagementSection() {
                         </div>
                       </div>
                     }
-                    onOpen={() => {
-                      setSelectedIlpId(ilp.id);
-                      setDetailInitialTab('targets');
-                      setDetailSheetOpen(true);
-                    }}
+                    onOpen={() => openIlp(ilp.student_id)}
                     actions={[
                       {
-                        label: 'View ILP',
-                        onClick: () => {
-                          setSelectedIlpId(ilp.id);
-                          setDetailInitialTab('targets');
-                          setDetailSheetOpen(true);
-                        },
-                      },
-                      {
-                        label: 'Conduct review',
-                        onClick: () => {
-                          setSelectedIlpId(ilp.id);
-                          setReviewSheetOpen(true);
-                        },
-                        divider: true,
-                      },
-                      {
-                        label: 'Edit targets',
-                        onClick: () => {
-                          setSelectedIlpId(ilp.id);
-                          setTargetsSheetOpen(true);
-                        },
+                        label: 'Open ILP',
+                        onClick: () => openIlp(ilp.student_id),
                       },
                     ]}
                   />
@@ -378,27 +391,30 @@ export function ILPManagementSection() {
           </motion.div>
         )}
 
-        <ILPDetailSheet
-          ilpId={selectedIlpId}
-          open={detailSheetOpen}
-          onOpenChange={setDetailSheetOpen}
-          initialTab={detailInitialTab}
-          onConductReview={() => {
-            setDetailSheetOpen(false);
-            setTimeout(() => setReviewSheetOpen(true), 300);
+        {/* Unified ILP editor — same data + UI as Student 360 (writes
+            college_ilps + college_ilp_goals, never the legacy JSONB targets). */}
+        <HubIlpSheet
+          mode="view"
+          open={viewStudent !== null}
+          onOpenChange={(o) => {
+            if (!o) setViewStudent(null);
           }}
-          onEditTargets={() => {
-            setDetailSheetOpen(false);
-            setTimeout(() => setTargetsSheetOpen(true), 300);
-          }}
+          student={viewStudent}
+          onClosed={refreshIlps}
         />
-        <ILPReviewSheet ilpId={selectedIlpId} open={reviewSheetOpen} onOpenChange={setReviewSheetOpen} />
-        <ILPTargetsSheet
-          ilpId={selectedIlpId}
-          open={targetsSheetOpen}
-          onOpenChange={setTargetsSheetOpen}
+        <HubIlpSheet
+          mode="create"
+          open={createOpen}
+          onOpenChange={setCreateOpen}
+          students={students.map((s) => ({
+            id: s.id,
+            name: s.name,
+            photo_url: s.photo_url,
+            cohort_id: s.cohort_id,
+          }))}
+          getCohortName={getCohortName}
+          onClosed={refreshIlps}
         />
-        <CreateILPSheet open={createSheetOpen} onOpenChange={setCreateSheetOpen} />
       </PageFrame>
     </PullToRefresh>
   );

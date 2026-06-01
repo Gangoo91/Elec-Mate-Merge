@@ -110,7 +110,14 @@ export function TutorTodayBody({
     <>
       {mode === 'page' && (
         <motion.div variants={itemVariants}>
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+          <button
+            type="button"
+            onClick={() => navigate('/college')}
+            className="text-[11px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            ← Back to College Hub
+          </button>
+          <div className="mt-4 text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
             Today · {todayLong}
           </div>
           <h1 className="mt-2 text-[28px] sm:text-[36px] font-semibold text-white tracking-tight leading-[1.1]">
@@ -128,7 +135,7 @@ export function TutorTodayBody({
         <motion.div variants={itemVariants}>
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
                 Today · {todayLong}
               </div>
               <h2 className="mt-1.5 text-[22px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
@@ -139,7 +146,7 @@ export function TutorTodayBody({
             <button
               type="button"
               onClick={() => navigate('/college/today')}
-              className="text-[12px] font-medium text-purple-300/90 hover:text-purple-200 transition-colors touch-manipulation whitespace-nowrap"
+              className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
             >
               Open full Today's view →
             </button>
@@ -210,14 +217,14 @@ export function TutorTodayBody({
               <button
                 type="button"
                 onClick={() => navigate('/college/inbox')}
-                className="group text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-blue-500/25 hover:border-blue-500/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
+                className="group text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-white/[0.08] hover:border-elec-yellow/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
               >
                 <div className="flex items-center gap-4">
-                  <div className="shrink-0 h-11 w-11 rounded-full bg-blue-500/[0.12] border border-blue-500/30 flex items-center justify-center text-blue-300 font-semibold text-[15px] tabular-nums">
+                  <div className="shrink-0 h-11 w-11 rounded-full bg-white/[0.06] border border-white/[0.12] flex items-center justify-center text-white font-semibold text-[15px] tabular-nums">
                     {inboxStats.total}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-blue-300">
+                    <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
                       Inbox
                     </div>
                     <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-tight">
@@ -243,14 +250,14 @@ export function TutorTodayBody({
               <button
                 type="button"
                 onClick={() => navigate('/college/marking')}
-                className="group text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-amber-500/25 hover:border-amber-500/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
+                className="group text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-white/[0.08] hover:border-elec-yellow/40 rounded-2xl px-4 sm:px-5 py-4 transition-colors touch-manipulation"
               >
                 <div className="flex items-center gap-4">
-                  <div className="shrink-0 h-11 w-11 rounded-full bg-amber-500/[0.12] border border-amber-500/30 flex items-center justify-center text-amber-300 font-semibold text-[15px] tabular-nums">
+                  <div className="shrink-0 h-11 w-11 rounded-full bg-white/[0.06] border border-white/[0.12] flex items-center justify-center text-white font-semibold text-[15px] tabular-nums">
                     {markingStats.total_pending}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-amber-300">
+                    <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
                       Marking copilot
                     </div>
                     <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-tight">
@@ -439,32 +446,17 @@ function scrollTo(id: string) {
 
 type KpiTone = 'blue' | 'emerald' | 'amber' | 'purple' | 'red';
 
-const KPI_TONE: Record<KpiTone, string> = {
-  blue: 'border-blue-300/30 bg-blue-500/[0.06]',
-  emerald: 'border-emerald-300/30 bg-emerald-500/[0.06]',
-  amber: 'border-amber-300/30 bg-amber-500/[0.06]',
-  purple: 'border-purple-300/30 bg-purple-500/[0.06]',
-  red: 'border-rose-300/30 bg-rose-500/[0.06]',
-};
-
-const KPI_VALUE_TONE: Record<KpiTone, string> = {
-  blue: 'text-blue-200',
-  emerald: 'text-emerald-200',
-  amber: 'text-amber-200',
-  purple: 'text-purple-200',
-  red: 'text-rose-200',
-};
-
 function KpiCard({
   label,
   value,
-  tone,
   onClick,
   className,
 }: {
   label: string;
   value: number | string;
-  tone: KpiTone;
+  /** Retained for call-site compatibility — all KPI cards render mono/grey
+      to match the College Hub main-dash stat strip (no rainbow). */
+  tone?: KpiTone;
   onClick?: () => void;
   className?: string;
 }) {
@@ -474,19 +466,15 @@ function KpiCard({
       onClick={onClick}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        'rounded-2xl border p-3 sm:p-4 text-left touch-manipulation transition-colors',
-        KPI_TONE[tone],
+        'rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-3 sm:p-4 text-left touch-manipulation transition-colors',
         'hover:bg-white/[0.04]',
         className
       )}
     >
-      <div className="text-[9.5px] font-medium uppercase tracking-[0.22em] text-white">{label}</div>
-      <div
-        className={cn(
-          'mt-1 text-[28px] sm:text-[32px] font-bold tabular-nums leading-none',
-          KPI_VALUE_TONE[tone]
-        )}
-      >
+      <div className="text-[9.5px] font-medium uppercase tracking-[0.22em] text-white/65">
+        {label}
+      </div>
+      <div className="mt-1 text-[28px] sm:text-[32px] font-bold tabular-nums leading-none text-white">
         {value}
       </div>
     </motion.button>
@@ -517,7 +505,7 @@ function GroupedSection({
       className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
     >
       <div className="px-4 sm:px-5 py-3 border-b border-white/[0.06]">
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
           {eyebrow}
         </div>
         <h2 className="mt-1 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
@@ -571,7 +559,7 @@ function Section({
       className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
     >
       <div className="px-4 sm:px-5 py-3 border-b border-white/[0.06]">
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
+        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
           {eyebrow}
         </div>
         <h2 className="mt-1 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
@@ -601,7 +589,7 @@ function LessonRow({ lesson, onOpen }: { lesson: TodayLesson; onOpen: () => void
         onClick={onOpen}
         className="w-full flex items-center gap-3 px-4 sm:px-5 py-3 hover:bg-white/[0.02] transition-colors touch-manipulation text-left"
       >
-        <div className="shrink-0 w-12 sm:w-14 text-[14px] sm:text-[15px] font-semibold tabular-nums text-blue-200">
+        <div className="shrink-0 w-12 sm:w-14 text-[14px] sm:text-[15px] font-semibold tabular-nums text-white">
           {start}
         </div>
         <div className="min-w-0 flex-1">
@@ -723,7 +711,7 @@ function AtRiskRow({
             <button
               type="button"
               onClick={onOpenLearner}
-              className="text-[14px] font-semibold text-white hover:text-purple-300 transition-colors touch-manipulation"
+              className="text-[14px] font-semibold text-white hover:text-elec-yellow transition-colors touch-manipulation"
             >
               {row.student_name}
             </button>
@@ -759,7 +747,7 @@ function AtRiskRow({
           <button
             type="button"
             onClick={onOpenEvidence}
-            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-purple-200 bg-purple-500/[0.10] border border-purple-300/30 hover:bg-purple-500/[0.18] transition-colors touch-manipulation"
+            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-white bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] transition-colors touch-manipulation"
           >
             Evidence →
           </button>

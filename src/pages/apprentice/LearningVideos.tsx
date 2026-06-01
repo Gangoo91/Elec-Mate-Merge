@@ -7,13 +7,15 @@
  * No bottom sheet -- instant, immersive playback.
  */
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowLeft,
   Search,
   X,
   Bookmark,
+  Play,
+  Check,
   Video,
   Clock,
   ExternalLink,
@@ -28,10 +30,23 @@ import {
 } from '@/data/apprentice/curatedVideos';
 import type { CuratedVideo, VideoCategory } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
+import { useVideoProgress } from '@/hooks/learning-videos/useVideoProgress';
+import { useLearningXP } from '@/hooks/useLearningXP';
 import { YouTubePlayer } from '@/components/apprentice/learning-videos/YouTubePlayer';
 import { openExternalUrl } from '@/utils/open-external-url';
 
-export default function LearningVideos() {
+// Editor's pick shown as the spotlight at the top of the default (All) view
+const FEATURED_ID = 'J3kKNNizARc'; // How to Use a Multimeter Like a Pro
+
+/** Parse a "mm:ss" / "h:mm:ss" duration string to whole minutes (min 1). */
+function durationToMinutes(d: string): number {
+  const parts = d.split(':').map((n) => parseInt(n, 10));
+  if (parts.some((n) => Number.isNaN(n))) return 1;
+  const secs = parts.reduce((acc, p) => acc * 60 + p, 0);
+  return Math.max(1, Math.round(secs / 60));
+}
+
+export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: string } = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,8 +54,28 @@ export default function LearningVideos() {
   const [selectedVideo, setSelectedVideo] = useState<CuratedVideo | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  const { bookmarks, isBookmarked, toggleBookmark, trackVideoWatched } = useVideoBookmarks();
+  const { bookmarks, isBookmarked, toggleBookmark, trackVideoWatched, getWatchedIds } =
+    useVideoBookmarks();
+  const { logActivity } = useLearningXP();
+  const { saveProgress, markCompleted, getProgress, inProgressIds } = useVideoProgress();
   const categories = getAvailableCategories();
+
+  // First watch of a video → credit it to the Study Centre (XP + streak + minutes)
+  const awardWatch = useCallback(
+    async (video: CuratedVideo) => {
+      const isNew = await trackVideoWatched(video.id);
+      if (isNew) {
+        logActivity({
+          activityType: 'video_watched',
+          sourceId: video.id,
+          sourceTitle: video.title,
+          actualMinutes: durationToMinutes(video.duration),
+          metadata: { channel: video.channel, category: video.category },
+        });
+      }
+    },
+    [trackVideoWatched, logActivity]
+  );
 
   // Handle ?play=VIDEO_ID from hub navigation
   useEffect(() => {
@@ -49,13 +84,13 @@ export default function LearningVideos() {
       const video = curatedVideos.find((v) => v.id === playId);
       if (video) {
         setSelectedVideo(video);
-        trackVideoWatched(video.id);
+        void awardWatch(video);
       }
       // Clean the URL param
       searchParams.delete('play');
       setSearchParams(searchParams, { replace: true });
     }
-  }, [searchParams, setSearchParams, selectedVideo, trackVideoWatched]);
+  }, [searchParams, setSearchParams, selectedVideo, awardWatch]);
 
   // Filter videos
   const filteredVideos = useMemo(() => {
@@ -87,9 +122,39 @@ export default function LearningVideos() {
       .slice(0, 8);
   }, [selectedVideo]);
 
+  // Default landing state: no search, no category filter → show spotlight + grouped sections
+  const isDefaultView = activeCategory === 'all' && !searchQuery.trim();
+
+  const featuredVideo = useMemo(
+    () => curatedVideos.find((v) => v.id === FEATURED_ID) ?? null,
+    []
+  );
+
+  // Group the (filtered) videos by category, in data order, dropping empty groups
+  const groupedVideos = useMemo(() => {
+    const order = getAvailableCategories();
+    return order
+      .map((cat) => ({ cat, items: filteredVideos.filter((v) => v.category === cat) }))
+      .filter((g) => g.items.length > 0);
+  }, [filteredVideos]);
+
+  const watchedIds = getWatchedIds();
+  const watchedSet = useMemo(() => new Set(watchedIds), [watchedIds]);
+  const isWatched = useCallback((id: string) => watchedSet.has(id), [watchedSet]);
+
+  // Partially-watched videos, most recent first → "Continue watching" rail
+  const continueVideos = useMemo(
+    () =>
+      inProgressIds
+        .map((id) => curatedVideos.find((v) => v.id === id))
+        .filter((v): v is CuratedVideo => Boolean(v))
+        .slice(0, 8),
+    [inProgressIds]
+  );
+
   const handleVideoTap = (video: CuratedVideo) => {
     setSelectedVideo(video);
-    trackVideoWatched(video.id);
+    void awardWatch(video);
   };
 
   const handleClosePlayer = () => {
@@ -103,138 +168,177 @@ export default function LearningVideos() {
   const savedCount = bookmarks.length;
   const isPlayerMode = !!selectedVideo;
 
+  const renderTile = (video: CuratedVideo) => (
+    <VideoTile
+      key={video.id}
+      video={video}
+      isBookmarked={isBookmarked(video.id)}
+      isWatched={isWatched(video.id)}
+      progressPct={getProgress(video.id)?.pct}
+      onTap={() => handleVideoTap(video)}
+      onBookmarkToggle={() => handleBookmarkToggle(video)}
+    />
+  );
+
   return (
     <div className="h-[100dvh] flex flex-col bg-[hsl(240,5.9%,10%)] overflow-hidden">
-      {/* ═══ FIXED TOP BAR ═══ */}
-      <div className="flex-shrink-0 bg-[hsl(240,5.9%,10%)]/95 backdrop-blur-xl border-b border-white/[0.06] z-20">
-        {/* Title row */}
-        <div className="flex items-center gap-3 px-4 h-14">
-          <button
-            onClick={isPlayerMode ? handleClosePlayer : () => navigate('/apprentice')}
-            className="h-11 w-11 flex items-center justify-center rounded-xl active:bg-white/10 touch-manipulation -ml-1"
-          >
-            <ArrowLeft className="h-5 w-5 text-white" />
-          </button>
+      {/* ═══ STICKY HEADER ═══ */}
+      <header className="flex-shrink-0 bg-[hsl(240,5.9%,10%)]/95 backdrop-blur-xl border-b border-white/[0.06] z-20">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-6">
+          {/* Title row */}
+          <div className="flex items-center gap-2 sm:gap-3 h-14">
+            <button
+              onClick={isPlayerMode ? handleClosePlayer : () => navigate(backTo)}
+              className="h-11 w-11 -ml-1 flex items-center justify-center rounded-xl text-white hover:bg-white/[0.06] active:bg-white/10 touch-manipulation transition-colors"
+              aria-label="Back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
 
-          <div className="flex-1 min-w-0">
-            <h1 className="text-lg font-bold text-white truncate">
-              {isPlayerMode ? selectedVideo.title : 'Learning Videos'}
-            </h1>
+            <div className="flex-1 min-w-0">
+              {isPlayerMode ? (
+                <h1 className="text-[15px] sm:text-base font-semibold text-white truncate">
+                  {selectedVideo.title}
+                </h1>
+              ) : (
+                <div className="flex items-baseline gap-2.5">
+                  <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    Learning
+                  </span>
+                  <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+                  <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-white truncate">
+                    Video Library
+                  </h1>
+                </div>
+              )}
+            </div>
+
+            {/* Action buttons -- only show in grid mode */}
+            {!isPlayerMode && (
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setSearchOpen(!searchOpen)}
+                  aria-label="Search videos"
+                  className={`h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation transition-colors ${
+                    searchOpen
+                      ? 'bg-elec-yellow/15 text-elec-yellow'
+                      : 'text-white hover:bg-white/[0.06] active:bg-white/10'
+                  }`}
+                >
+                  <Search className="h-5 w-5" />
+                </button>
+                {savedCount > 0 && (
+                  <button
+                    onClick={() => {
+                      setActiveCategory('all');
+                      setSearchQuery('');
+                    }}
+                    className="h-11 flex items-center gap-1.5 px-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 hover:bg-elec-yellow/15 touch-manipulation transition-colors"
+                  >
+                    <Bookmark className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
+                    <span className="text-sm text-elec-yellow font-medium tabular-nums">
+                      {savedCount}
+                    </span>
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Action buttons -- only show in grid mode */}
+          {/* Search bar - slides down when open (grid mode only) */}
+          {!isPlayerMode && searchOpen && (
+            <div className="pb-3">
+              <div className="relative max-w-xl">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by title, channel or topic…"
+                  autoFocus
+                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    aria-label="Clear search"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full text-white/70 active:bg-white/10 touch-manipulation"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Category chips (grid mode only) — scroll on mobile, wrap on desktop */}
           {!isPlayerMode && (
-            <div className="flex items-center gap-1">
+            <div className="flex flex-nowrap lg:flex-wrap gap-1.5 overflow-x-auto lg:overflow-visible pb-3 scrollbar-hide">
               <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className={`h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation transition-colors ${
-                  searchOpen
-                    ? 'bg-elec-yellow/15 text-elec-yellow'
-                    : 'active:bg-white/10 text-white'
+                onClick={() => setActiveCategory('all')}
+                className={`flex-shrink-0 px-4 h-9 text-[13px] rounded-full font-medium touch-manipulation transition-all ${
+                  activeCategory === 'all'
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.06] text-white/80 hover:bg-white/[0.1] active:bg-white/10'
                 }`}
               >
-                <Search className="h-5 w-5" />
+                All
               </button>
-              {savedCount > 0 && (
+              {categories.map((cat) => (
                 <button
-                  onClick={() => {
-                    setActiveCategory('all');
-                    setSearchQuery('');
-                  }}
-                  className="h-11 flex items-center gap-1.5 px-3 rounded-xl active:bg-white/10 touch-manipulation"
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`flex-shrink-0 px-4 h-9 text-[13px] rounded-full font-medium touch-manipulation transition-all whitespace-nowrap ${
+                    activeCategory === cat
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.06] text-white/80 hover:bg-white/[0.1] active:bg-white/10'
+                  }`}
                 >
-                  <Bookmark className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
-                  <span className="text-sm text-elec-yellow font-medium">{savedCount}</span>
+                  {categoryLabels[cat]}
                 </button>
-              )}
+              ))}
             </div>
           )}
         </div>
-
-        {/* Search bar - slides down when open (grid mode only) */}
-        {!isPlayerMode && searchOpen && (
-          <div className="px-4 pb-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search videos..."
-                autoFocus
-                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation"
-                >
-                  <X className="h-4 w-4 text-white" />
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Category tabs (grid mode only) */}
-        {!isPlayerMode && (
-          <div className="flex gap-1.5 overflow-x-auto px-4 pb-3 scrollbar-hide">
-            <button
-              onClick={() => setActiveCategory('all')}
-              className={`flex-shrink-0 px-4 h-9 text-[13px] rounded-full font-medium touch-manipulation transition-all ${
-                activeCategory === 'all'
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-white/[0.06] text-white active:bg-white/10'
-              }`}
-            >
-              All
-            </button>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`flex-shrink-0 px-4 h-9 text-[13px] rounded-full font-medium touch-manipulation transition-all whitespace-nowrap ${
-                  activeCategory === cat
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white active:bg-white/10'
-                }`}
-              >
-                {categoryLabels[cat]}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+      </header>
 
       {/* ═══ CONTENT AREA ═══ */}
       {isPlayerMode ? (
         /* ─── INLINE PLAYER VIEW ─── */
         <div className="flex-1 overflow-y-auto overscroll-contain">
-          <div>
+          <div className="mx-auto max-w-5xl lg:px-6 lg:pt-6">
             {/* YouTube player — iframe on web, native browser on iOS/Android */}
-            <YouTubePlayer videoId={selectedVideo.id} title={selectedVideo.title} />
+            <div className="lg:rounded-2xl lg:overflow-hidden lg:border lg:border-white/[0.08]">
+              <YouTubePlayer
+                videoId={selectedVideo.id}
+                title={selectedVideo.title}
+                startSeconds={getProgress(selectedVideo.id)?.positionSeconds}
+                onProgress={(pos, dur) => saveProgress(selectedVideo.id, pos, dur)}
+                onEnded={() => markCompleted(selectedVideo.id)}
+              />
+            </div>
 
             {/* Video info */}
-            <div className="px-4 pt-4 pb-6 space-y-4 max-w-4xl mx-auto">
+            <div className="px-4 pt-5 pb-6 max-w-4xl mx-auto">
               {/* Title */}
-              <h2 className="text-[15px] sm:text-base font-semibold text-white leading-snug">
+              <h2 className="text-[18px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.2] text-white">
                 {selectedVideo.title}
               </h2>
 
-              {/* Metadata chips */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[13px] text-white">{selectedVideo.channel}</span>
-                <span className="text-white">|</span>
-                <span className="flex items-center gap-1 text-[13px] text-white">
+              {/* Meta row */}
+              <div className="mt-3 flex items-center flex-wrap gap-x-2.5 gap-y-2 text-[13px]">
+                <span className="font-medium text-white/90">{selectedVideo.channel}</span>
+                <span className="h-1 w-1 rounded-full bg-white/25" aria-hidden />
+                <span className="flex items-center gap-1 text-white/55">
                   <Clock className="h-3.5 w-3.5" />
                   {selectedVideo.duration}
                 </span>
                 <span
                   className={`px-2 py-0.5 rounded-md border text-[11px] font-medium ${
                     selectedVideo.level === 'beginner'
-                      ? 'text-green-400 bg-green-400/10 border-green-400/20'
+                      ? 'text-green-400/90 bg-green-400/10 border-green-400/20'
                       : selectedVideo.level === 'intermediate'
-                        ? 'text-amber-400 bg-amber-400/10 border-amber-400/20'
-                        : 'text-red-400 bg-red-400/10 border-red-400/20'
+                        ? 'text-amber-400/90 bg-amber-400/10 border-amber-400/20'
+                        : 'text-red-400/90 bg-red-400/10 border-red-400/20'
                   }`}
                 >
                   {selectedVideo.level.charAt(0).toUpperCase() + selectedVideo.level.slice(1)}
@@ -242,50 +346,61 @@ export default function LearningVideos() {
                 <span className="px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-[11px] font-medium">
                   {categoryLabels[selectedVideo.category]}
                 </span>
+                {(() => {
+                  const p = getProgress(selectedVideo.id);
+                  if (p?.completed)
+                    return (
+                      <span className="flex items-center gap-1 text-[12px] font-medium text-elec-yellow">
+                        <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                        Completed
+                      </span>
+                    );
+                  if (p && p.pct > 0)
+                    return <span className="text-[12px] text-white/45">{p.pct}% watched</span>;
+                  return null;
+                })()}
               </div>
 
-              {/* Action row */}
-              <div className="flex gap-2">
+              {/* Actions — compact pills */}
+              <div className="mt-4 flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => handleBookmarkToggle(selectedVideo)}
-                  className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
+                  className={`inline-flex items-center gap-2 h-10 px-4 rounded-full text-[13px] font-semibold touch-manipulation transition-all active:scale-[0.98] ${
                     isBookmarked(selectedVideo.id)
-                      ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
-                      : 'bg-white/[0.05] border-white/[0.08] text-white'
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1]'
                   }`}
                 >
                   <Bookmark
-                    className={`h-4 w-4 ${isBookmarked(selectedVideo.id) ? 'fill-elec-yellow' : ''}`}
+                    className={`h-4 w-4 ${isBookmarked(selectedVideo.id) ? 'fill-black' : ''}`}
                   />
-                  <span className="text-sm font-medium">
-                    {isBookmarked(selectedVideo.id) ? 'Saved' : 'Save'}
-                  </span>
+                  {isBookmarked(selectedVideo.id) ? 'Saved' : 'Save'}
                 </button>
                 <button
                   onClick={() =>
                     openExternalUrl(`https://www.youtube.com/watch?v=${selectedVideo.id}`)
                   }
-                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
+                  className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[13px] font-medium hover:bg-white/[0.1] touch-manipulation transition-all active:scale-[0.98]"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  <span className="text-sm font-medium">Open in YouTube</span>
+                  Open in YouTube
                 </button>
               </div>
 
               {/* Description */}
               {selectedVideo.description && (
-                <p className="text-[13px] text-white leading-relaxed">
+                <p className="mt-4 text-[13.5px] leading-relaxed text-white/70 max-w-[68ch]">
                   {selectedVideo.description}
                 </p>
               )}
 
               {/* Tags */}
               {selectedVideo.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
+                <div className="mt-3 flex flex-wrap gap-1.5">
                   {selectedVideo.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[11px] text-white"
+                      className="px-2 py-0.5 rounded-md bg-white/[0.05] border border-white/[0.08] text-[11px] text-white/70"
                     >
                       {tag}
                     </span>
@@ -294,16 +409,20 @@ export default function LearningVideos() {
               )}
 
               {/* Creator promotion */}
-              {selectedVideo.channel === 'Craig Wiltshire' && <CreatorPromoCard />}
-              {selectedVideo.channel === 'The Engineering Mindset' && (
-                <EngineeringMindsetPromoCard />
-              )}
+              <div className="mt-6">
+                {selectedVideo.channel === 'Craig Wiltshire' && <CreatorPromoCard />}
+                {selectedVideo.channel === 'The Engineering Mindset' && (
+                  <EngineeringMindsetPromoCard />
+                )}
+              </div>
 
               {/* Related videos */}
               {relatedVideos.length > 0 && (
-                <div className="pt-4 border-t border-white/[0.06]">
-                  <h4 className="text-sm font-semibold text-white mb-3">More like this</h4>
-                  <div className="space-y-2">
+                <div className="mt-6 pt-6 border-t border-white/[0.06]">
+                  <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 mb-4">
+                    More like this
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2">
                     {relatedVideos.map((rv) => (
                       <RelatedVideoRow
                         key={rv.id}
@@ -333,25 +452,73 @@ export default function LearningVideos() {
               </p>
             </div>
           ) : (
-            <div className="px-3 py-3 sm:px-4">
-              {(searchQuery.trim() || activeCategory !== 'all') && (
-                <p className="text-xs text-white mb-3 px-1">
-                  {filteredVideos.length} video{filteredVideos.length !== 1 ? 's' : ''}
-                  {searchQuery.trim() && <> matching &quot;{searchQuery}&quot;</>}
-                </p>
+            <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 lg:px-6">
+              {isDefaultView && continueVideos.length > 0 && (
+                <section className="space-y-3 sm:space-y-4 mb-9 sm:mb-12">
+                  <div className="flex items-baseline justify-between gap-4 px-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                      Continue watching
+                    </span>
+                    <span className="text-[11px] text-white/45 tabular-nums">
+                      {continueVideos.length}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6">
+                    {continueVideos.map(renderTile)}
+                  </div>
+                </section>
               )}
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
-                {filteredVideos.map((video) => (
-                  <VideoTile
-                    key={video.id}
-                    video={video}
-                    isBookmarked={isBookmarked(video.id)}
-                    onTap={() => handleVideoTap(video)}
-                    onBookmarkToggle={() => handleBookmarkToggle(video)}
+              {isDefaultView && featuredVideo && (
+                <div className="mb-9 sm:mb-12">
+                  <FeaturedSpotlight
+                    video={featuredVideo}
+                    onTap={() => handleVideoTap(featuredVideo)}
                   />
-                ))}
-              </div>
+                </div>
+              )}
+
+              {isDefaultView ? (
+                /* Grouped, scannable sections by category */
+                <div className="space-y-9 sm:space-y-12">
+                  {groupedVideos.map(({ cat, items }) => (
+                    <section key={cat} className="space-y-3 sm:space-y-4">
+                      <div className="flex items-baseline justify-between gap-4 px-1">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                          {categoryLabels[cat]}
+                        </span>
+                        <span className="text-[11px] text-white/45 tabular-nums">
+                          {(() => {
+                            const w = items.filter((v) => watchedSet.has(v.id)).length;
+                            return w > 0
+                              ? `${w}/${items.length} watched`
+                              : `${items.length} ${items.length === 1 ? 'video' : 'videos'}`;
+                          })()}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6">
+                        {items.map(renderTile)}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              ) : (
+                /* Filtered / search → single flat grid */
+                <>
+                  <div className="flex items-baseline justify-between gap-4 mb-4 px-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                      {activeCategory === 'all' ? 'Results' : categoryLabels[activeCategory]}
+                    </span>
+                    <span className="text-[11px] text-white/50 tabular-nums">
+                      {filteredVideos.length} {filteredVideos.length === 1 ? 'video' : 'videos'}
+                      {searchQuery.trim() ? ` · “${searchQuery}”` : ''}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6">
+                    {filteredVideos.map(renderTile)}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -365,70 +532,175 @@ export default function LearningVideos() {
 function VideoTile({
   video,
   isBookmarked,
+  isWatched,
+  progressPct,
   onTap,
   onBookmarkToggle,
 }: {
   video: CuratedVideo;
   isBookmarked: boolean;
+  isWatched: boolean;
+  progressPct?: number;
   onTap: () => void;
   onBookmarkToggle: () => void;
 }) {
-  const levelDot =
+  const levelChip =
     video.level === 'beginner'
-      ? 'bg-green-400'
+      ? 'text-green-400/90 bg-green-400/10 border-green-400/20'
       : video.level === 'intermediate'
-        ? 'bg-amber-400'
-        : 'bg-red-400';
+        ? 'text-amber-400/90 bg-amber-400/10 border-amber-400/20'
+        : 'text-red-400/90 bg-red-400/10 border-red-400/20';
+
+  const inProgress = progressPct != null && progressPct > 0 && progressPct < 100;
 
   return (
-    <div className="group relative rounded-xl overflow-hidden bg-white/[0.03] active:bg-white/[0.06] transition-colors">
-      <button
-        onClick={onTap}
-        className="relative w-full aspect-video touch-manipulation overflow-hidden"
-      >
-        <img
-          src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
-          alt={video.title}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center opacity-90">
-          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-            <div className="w-0 h-0 border-l-[10px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1" />
-          </div>
-        </div>
-        <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] text-white font-medium backdrop-blur-sm">
-          {video.duration}
-        </span>
-      </button>
+    <div className="group flex flex-col">
+      {/* Thumbnail */}
+      <div className="relative">
+        <button
+          onClick={onTap}
+          className="relative block w-full aspect-video rounded-xl overflow-hidden bg-white/[0.04] ring-1 ring-white/[0.06] group-hover:ring-elec-yellow/30 transition-all touch-manipulation"
+        >
+          <img
+            src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
+            alt={video.title}
+            className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.04] ${
+              isWatched ? 'opacity-60' : ''
+            }`}
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+          {/* Play affordance — appears on hover (desktop), subtle on touch */}
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-black/55 backdrop-blur-sm border border-white/25 flex items-center justify-center opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200">
+              <Play className="h-4 w-4 text-white fill-white ml-0.5" />
+            </span>
+          </span>
+          {isWatched && !inProgress && (
+            <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded bg-elec-yellow/90 text-black text-[9px] font-semibold backdrop-blur-sm">
+              <Check className="h-2.5 w-2.5" strokeWidth={3} />
+              Watched
+            </span>
+          )}
+          <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/75 text-[10px] text-white font-medium backdrop-blur-sm tabular-nums">
+            {video.duration}
+          </span>
+          {/* Resume progress bar */}
+          {inProgress && (
+            <span className="absolute inset-x-0 bottom-0 h-[3px] bg-black/40">
+              <span
+                className="block h-full bg-elec-yellow"
+                style={{ width: `${progressPct}%` }}
+              />
+            </span>
+          )}
+        </button>
 
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onBookmarkToggle();
-        }}
-        className="absolute top-1.5 right-1.5 h-8 w-8 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm touch-manipulation active:bg-black/60 z-10"
-      >
-        <Bookmark
-          className={`h-3.5 w-3.5 ${
-            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
-          }`}
-        />
-      </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onBookmarkToggle();
+          }}
+          aria-label={isBookmarked ? 'Remove bookmark' : 'Save video'}
+          className="absolute top-1.5 right-1.5 h-8 w-8 flex items-center justify-center rounded-full bg-black/45 backdrop-blur-sm touch-manipulation hover:bg-black/65 active:bg-black/70 transition-colors z-10"
+        >
+          <Bookmark
+            className={`h-3.5 w-3.5 ${
+              isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
+            }`}
+          />
+        </button>
+      </div>
 
-      <button onClick={onTap} className="text-left touch-manipulation w-full px-2.5 py-2 pb-2.5">
-        <h4 className="text-[12px] sm:text-[13px] font-medium text-white leading-tight line-clamp-2">
+      {/* Meta */}
+      <button onClick={onTap} className="text-left touch-manipulation w-full pt-2.5">
+        <h4 className="text-[12.5px] sm:text-[13px] font-medium text-white leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
           {video.title}
         </h4>
-        <div className="flex items-center gap-1.5 mt-1">
-          <span className={`h-1.5 w-1.5 rounded-full ${levelDot} flex-shrink-0`} />
-          <span className="text-[10px] text-white truncate">
-            {video.level.charAt(0).toUpperCase() + video.level.slice(1)}
+        <div className="mt-1.5 flex items-center gap-2">
+          <span className="flex-1 min-w-0 text-[11px] text-white/50 truncate">
+            {video.channel}
+          </span>
+          <span
+            className={`shrink-0 px-1.5 py-0.5 rounded border text-[9px] font-medium uppercase tracking-wide ${levelChip}`}
+          >
+            {video.level}
           </span>
         </div>
       </button>
     </div>
+  );
+}
+
+/* ─── Featured Spotlight ─── */
+
+function FeaturedSpotlight({ video, onTap }: { video: CuratedVideo; onTap: () => void }) {
+  const levelChip =
+    video.level === 'beginner'
+      ? 'text-green-400/90 bg-green-400/10 border-green-400/20'
+      : video.level === 'intermediate'
+        ? 'text-amber-400/90 bg-amber-400/10 border-amber-400/20'
+        : 'text-red-400/90 bg-red-400/10 border-red-400/20';
+
+  return (
+    <button
+      onClick={onTap}
+      className="group relative w-full text-left rounded-2xl overflow-hidden border border-white/[0.08] bg-[hsl(240,5.9%,12%)] touch-manipulation"
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+      <div className="flex flex-col lg:flex-row">
+        {/* Thumbnail */}
+        <div className="relative lg:w-[56%] aspect-video overflow-hidden">
+          <img
+            src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+            alt={video.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent lg:bg-gradient-to-r lg:from-black/30 lg:via-transparent" />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-black/55 backdrop-blur-sm border border-white/25 flex items-center justify-center transition-transform group-hover:scale-105">
+              <Play className="h-6 w-6 text-white fill-white ml-0.5" />
+            </span>
+          </span>
+          <span className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/75 text-[11px] text-white font-medium backdrop-blur-sm tabular-nums">
+            {video.duration}
+          </span>
+        </div>
+
+        {/* Text */}
+        <div className="flex-1 p-5 sm:p-7 lg:p-8 flex flex-col justify-center">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            Featured
+          </span>
+          <h2 className="mt-2 text-[20px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.12] text-white group-hover:text-elec-yellow transition-colors">
+            {video.title}
+          </h2>
+          {video.description && (
+            <p className="mt-2.5 text-[13px] sm:text-sm leading-relaxed text-white/60 line-clamp-2 sm:line-clamp-3 max-w-[52ch]">
+              {video.description}
+            </p>
+          )}
+          <div className="mt-4 flex items-center flex-wrap gap-x-3 gap-y-2">
+            <span className="text-[12px] text-white/70">{video.channel}</span>
+            <span className="h-1 w-1 rounded-full bg-white/25" />
+            <span className="flex items-center gap-1 text-[12px] text-white/55">
+              <Clock className="h-3.5 w-3.5" />
+              {video.duration}
+            </span>
+            <span
+              className={`px-1.5 py-0.5 rounded border text-[9px] font-medium uppercase tracking-wide ${levelChip}`}
+            >
+              {video.level}
+            </span>
+          </div>
+          <span className="mt-5 inline-flex items-center gap-2 h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold w-fit">
+            <Play className="h-3.5 w-3.5 fill-black" />
+            Watch now
+          </span>
+        </div>
+      </div>
+    </button>
   );
 }
 
@@ -575,10 +847,10 @@ function RelatedVideoRow({
   onBookmarkToggle: () => void;
 }) {
   return (
-    <div className="flex gap-3 items-start active:bg-white/[0.04] rounded-lg -mx-1 px-1 py-1 transition-colors">
+    <div className="group flex gap-3 items-start rounded-lg -mx-1.5 px-1.5 py-1.5 hover:bg-white/[0.04] active:bg-white/[0.04] transition-colors">
       <button
         onClick={onTap}
-        className="relative flex-shrink-0 w-[120px] aspect-video rounded-lg overflow-hidden bg-black/30 touch-manipulation"
+        className="relative flex-shrink-0 w-[132px] aspect-video rounded-lg overflow-hidden bg-black/30 ring-1 ring-white/[0.06] group-hover:ring-elec-yellow/30 transition-all touch-manipulation"
       >
         <img
           src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
@@ -586,16 +858,16 @@ function RelatedVideoRow({
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-[9px] text-white font-medium">
+        <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/75 text-[9px] text-white font-medium tabular-nums">
           {video.duration}
         </span>
       </button>
 
       <button onClick={onTap} className="flex-1 text-left touch-manipulation min-w-0 pt-0.5">
-        <h5 className="text-[12px] font-medium text-white leading-tight line-clamp-2">
+        <h5 className="text-[12.5px] font-medium text-white leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
           {video.title}
         </h5>
-        <p className="text-[10px] text-white mt-1">{video.channel}</p>
+        <p className="text-[11px] text-white/50 mt-1">{video.channel}</p>
       </button>
 
       <button

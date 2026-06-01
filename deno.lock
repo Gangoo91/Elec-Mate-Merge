@@ -64,6 +64,7 @@
     "https://deno.land/x/xhr@0.1.0/mod.ts": "5200325d879e571961f0927e8e32e66fd33f4ba0d29a219560cf9e0fe9bc6cdf",
     "https://esm.sh/@supabase/supabase-js@2.103.3": "f6efbe62d34ae9d50f3cf7eb51496246ec9378f422c38ff2b637a38157d4fc6b",
     "https://esm.sh/@supabase/supabase-js@2.49.4": "d52c4d06946766d328fdd0ac2e007f52bb6d2ef7ce6103ad9f0f57d92b73e978",
+    "https://esm.sh/@supabase/supabase-js@2.57.4": "05a369085eb4a4c99d85ccece97f0cf1e05357122e0e74373da1f0e91b014902",
     "https://esm.sh/zod@3.23.8": "15e60c792ac21d4818f181671c7c74bf33bf7526d487dc524911e42785d8b5c2",
     "https://esm.sh/zod@3.23.8/denonext/zod.mjs": "6ee0474ec5a765b112eca12525d7e30c8e77eedbe2f2ac5e19f2af468b759517"
   },

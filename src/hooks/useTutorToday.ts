@@ -181,6 +181,13 @@ export function useTutorToday() {
       const studentByAuthUid = new Map(
         students.filter((s) => s.user_id).map((s) => [s.user_id as string, s])
       );
+      // Auth uids of this college's learners — used to scope the comment +
+      // OTJ queues to OUR college BEFORE the row limit. Filtering after a
+      // global limit(30) silently drops our items past the window on a busy
+      // multi-college instance, so the `.in(...)` has to run server-side.
+      const studentAuthUids = students
+        .map((s) => s.user_id)
+        .filter((u): u is string => Boolean(u));
 
       // IQA plans for this college (for scoping pending samples)
       const { data: planRows } = await supabase
@@ -228,21 +235,27 @@ export function useTutorToday() {
               .limit(8)
           : Promise.resolve({ data: [] }),
         // Action-required portfolio comments not yet resolved, scoped to
-        // this college's students. Most recent first.
-        supabase
-          .from('portfolio_comments')
-          .select('id, user_id, content, author_role, created_at')
-          .eq('requires_action', true)
-          .eq('is_resolved', false)
-          .order('created_at', { ascending: false })
-          .limit(30),
+        // this college's students server-side. Most recent first.
+        studentAuthUids.length > 0
+          ? supabase
+              .from('portfolio_comments')
+              .select('id, user_id, content, author_role, created_at')
+              .in('user_id', studentAuthUids)
+              .eq('requires_action', true)
+              .eq('is_resolved', false)
+              .order('created_at', { ascending: false })
+              .limit(30)
+          : Promise.resolve({ data: [] }),
         // Pending OTJ verifications across the college's students
-        supabase
-          .from('college_otj_entries')
-          .select('id, student_id, title, activity_date, duration_minutes, created_at')
-          .eq('verification_status', 'pending')
-          .order('activity_date', { ascending: false })
-          .limit(30),
+        studentAuthUids.length > 0
+          ? supabase
+              .from('college_otj_entries')
+              .select('id, student_id, title, activity_date, duration_minutes, created_at')
+              .in('student_id', studentAuthUids)
+              .eq('verification_status', 'pending')
+              .order('activity_date', { ascending: false })
+              .limit(30)
+          : Promise.resolve({ data: [] }),
         // Pending IQA samples (verdict='pending') under our college's plans
         planIds.length > 0
           ? supabase

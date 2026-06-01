@@ -36,6 +36,9 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
   const [progress, setProgress] = useState<UserKSBProgress[]>([]);
   const [summary, setSummary] = useState<KSBSummary[]>([]);
   const [unitMappings, setUnitMappings] = useState<KSBUnitMapping[]>([]);
+  // Unit codes the apprentice has portfolio evidence for — drives auto-deriving
+  // KSB coverage from AC evidence (no manual linking needed).
+  const [evidencedUnits, setEvidencedUnits] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -149,13 +152,34 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
         const mappings = await fetchUnitMappings(ksbData.map((k) => k.id));
         setUnitMappings(mappings);
       }
+
+      // Derive which units the apprentice has portfolio evidence for, so KSBs
+      // mapped to those units count as auto-evidenced without manual linking.
+      if (user) {
+        const { data: items } = await supabase
+          .from('portfolio_items')
+          .select('assessment_criteria_met')
+          .eq('user_id', user.id);
+        const units = new Set<string>();
+        for (const it of items ?? []) {
+          const acs = (it as { assessment_criteria_met?: string[] | null })
+            .assessment_criteria_met;
+          for (const ac of acs ?? []) {
+            const m =
+              ac.match(/^\s*([A-Za-z0-9/._-]+)\s+AC\b/) ??
+              ac.match(/Unit\s*([A-Za-z0-9/._-]+)/i);
+            if (m?.[1]) units.add(m[1]);
+          }
+        }
+        setEvidencedUnits(units);
+      }
     } catch (err) {
       setError('Failed to load KSB data');
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [fetchKSBs, fetchProgress, fetchSummary, fetchUnitMappings]);
+  }, [user, fetchKSBs, fetchProgress, fetchSummary, fetchUnitMappings]);
 
   // Update KSB progress
   const updateKSBProgress = useCallback(
@@ -320,6 +344,45 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     return Math.round((completedCount / ksbs.length) * 100);
   }, [ksbs, progress]);
 
+  // True when a KSB is auto-evidenced: a unit it maps to has portfolio
+  // evidence, even if the apprentice hasn't manually linked an item.
+  const isAutoEvidenced = useCallback(
+    (ksbId: string): boolean =>
+      unitMappings.some((m) => m.ksb_id === ksbId && evidencedUnits.has(m.unit_code)),
+    [unitMappings, evidencedUnits]
+  );
+
+  // Effective status = the higher of the manual status and the auto-derived
+  // one (a mapped unit with evidence lifts a KSB to at least evidence_submitted).
+  const STATUS_RANK: Record<KSBProgressStatus, number> = {
+    not_started: 0,
+    in_progress: 1,
+    evidence_submitted: 2,
+    verified: 3,
+    completed: 4,
+  };
+  const getDerivedStatus = useCallback(
+    (ksbId: string): KSBProgressStatus => {
+      const manual = progress.find((p) => p.ksb_id === ksbId)?.status ?? 'not_started';
+      if (isAutoEvidenced(ksbId) && STATUS_RANK[manual] < STATUS_RANK.evidence_submitted) {
+        return 'evidence_submitted';
+      }
+      return manual;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [progress, isAutoEvidenced]
+  );
+
+  // % of KSBs with at least derived evidence (manual or auto).
+  const getDerivedCompletion = useCallback((): number => {
+    if (ksbs.length === 0) return 0;
+    const covered = ksbs.filter(
+      (k) => STATUS_RANK[getDerivedStatus(k.id)] >= STATUS_RANK.evidence_submitted
+    ).length;
+    return Math.round((covered / ksbs.length) * 100);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ksbs, getDerivedStatus]);
+
   // Filter KSBs by route (core + selected route)
   const filteredKSBs = ksbs.filter((k) => {
     if (!route) return true;
@@ -353,6 +416,12 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     getKSBProgress,
     getUnitMappings,
     getOverallCompletion,
+
+    // Auto-derived coverage from AC evidence
+    evidencedUnits,
+    isAutoEvidenced,
+    getDerivedStatus,
+    getDerivedCompletion,
 
     // Grouped KSBs (filtered by route)
     knowledge: filteredKSBs.filter((k) => k.ksb_type === 'knowledge'),

@@ -11,7 +11,7 @@
 import { useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Flame, Trophy } from 'lucide-react';
+import { ArrowRight, Flame, Trophy, Play } from 'lucide-react';
 
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuizResults } from '@/hooks/useQuizResults';
@@ -22,6 +22,10 @@ import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
 
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { curatedVideos } from '@/data/apprentice/curatedVideos';
+
+// A few strong titles to preview in the video card thumbnail strip
+const VIDEO_PREVIEW_IDS = ['c9gm_NL7KyE', 'jcY4QN7awEc', '59HBoIXzX_c', 'J3kKNNizARc'];
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
@@ -555,6 +559,68 @@ export default function StudyCentreIndex() {
                 </button>
               );
             })}
+          </motion.div>
+        </motion.section>
+
+        {/* WATCH & LEARN — surfaces the curated video library */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants}>
+            <Eyebrow>WATCH &amp; LEARN</Eyebrow>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
+          >
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+            <Link
+              to="/study-centre/videos"
+              className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
+                {/* Thumbnail strip */}
+                <div className="flex -space-x-3 shrink-0">
+                  {VIDEO_PREVIEW_IDS.map((vid, i) => (
+                    <div
+                      key={vid}
+                      className="relative w-[68px] sm:w-[84px] aspect-video rounded-lg overflow-hidden border-2 border-[hsl(0_0%_10%)] bg-black/40"
+                      style={{ zIndex: VIDEO_PREVIEW_IDS.length - i }}
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${vid}/mqdefault.jpg`}
+                        alt=""
+                        aria-hidden
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                    Video library
+                  </span>
+                  <h3 className="mt-1.5 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+                    {curatedVideos.length} hand-picked training videos
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-white/60 max-w-[52ch]">
+                    Electrical theory, three-phase, transformers, motors, testing and tools —
+                    short, watchable lessons to sharpen the fundamentals on a break.
+                  </p>
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow">
+                    <Play className="h-3.5 w-3.5 fill-elec-yellow" />
+                    Browse videos
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                </div>
+              </div>
+            </Link>
           </motion.div>
         </motion.section>
 

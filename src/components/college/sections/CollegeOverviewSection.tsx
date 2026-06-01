@@ -584,6 +584,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
           <div className="grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-2 sm:grid-cols-3">
             {(
               [
+                { eyebrow: 'Profiles', title: 'Student 360', section: 'students' },
                 { eyebrow: 'OTJ', title: 'Off-the-job tracker', section: 'otjtraining' },
                 { eyebrow: 'Quality', title: 'Quality dashboard', section: 'qualitydashboard' },
                 { eyebrow: 'AI', title: 'AI ILP generator', section: 'aiilpgenerator' },

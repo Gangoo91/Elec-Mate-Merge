@@ -222,7 +222,14 @@ function coverPage(d: PortfolioPackData, logo: string): string {
       <div class="rule"></div>
       <div class="h1">${esc(titleCase(d.learner.name || 'Apprentice'))}</div>
       <div class="std">${esc(std)}</div>
-      <div class="lede">A complete record of portfolio evidence — each piece with the apprentice's write-up, the assessment criteria it meets, photo evidence and supervisor sign-off.</div>
+      <div class="lede">${(() => {
+        const s = d.learner.statement?.trim();
+        if (!s)
+          return "A complete record of portfolio evidence — each piece with the apprentice's write-up, the assessment criteria it meets, photo evidence and supervisor sign-off.";
+        if (s.length <= 520) return esc(s);
+        const cut = s.slice(0, 520);
+        return esc(cut.slice(0, cut.lastIndexOf(' '))) + '…';
+      })()}</div>
       <div class="chips">
         <span class="chip">${d.summary.totalItems} EVIDENCE ITEMS</span>
         <span class="chip">${verifiedPct}% VERIFIED</span>
@@ -266,6 +273,14 @@ function detailsPage(
       ${row('Planned end (gateway)', fmtDate(d.learner.endDate))}
       ${row('Record generated', generated)}
     </div>
+    ${
+      d.learner.statement?.trim()
+        ? `<div style="margin:18px 0 4px;padding:16px 18px;border:1px solid #e6eaef;border-left:3px solid #f5c518;border-radius:8px;background:#fbfcfd">
+             <div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7c889b;margin-bottom:6px">Personal statement</div>
+             <div style="font-size:13px;line-height:1.65;color:#243248;white-space:pre-wrap">${esc(d.learner.statement.trim())}</div>
+           </div>`
+        : ''
+    }
     <div class="cards">
       <div class="card accent"><div class="k">Evidence items</div><div class="v">${d.summary.totalItems}</div></div>
       <div class="card"><div class="k">Supervisor verified</div><div class="v">${d.summary.verifiedItems}</div></div>

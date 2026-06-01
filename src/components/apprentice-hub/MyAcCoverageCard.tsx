@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
+import { UnifiedCaptureSheet, type CaptureSeed } from './UnifiedCaptureSheet';
 
 /* ==========================================================================
    MyAcCoverageCard — apprentice-side qualification progress. Buckets
@@ -59,6 +60,8 @@ export function MyAcCoverageCard() {
   const [loading, setLoading] = useState(true);
   const [studentId, setStudentId] = useState<string | null>(null);
   const [ideasOpen, setIdeasOpen] = useState(false);
+  const [captureOpen, setCaptureOpen] = useState(false);
+  const [captureSeed, setCaptureSeed] = useState<CaptureSeed | null>(null);
 
   const fetchAll = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -330,9 +333,43 @@ export function MyAcCoverageCard() {
           <DialogTitle className="text-[16px] font-semibold tracking-tight text-white">
             Job ideas for your gaps
           </DialogTitle>
-          {studentId && <JobIdeasPanel studentId={studentId} variant="card" />}
+          {studentId && (
+            <JobIdeasPanel
+              studentId={studentId}
+              variant="card"
+              onUseIdea={(idea) => {
+                const acRefs = idea.ac_coverage
+                  .filter((a) => a.unit_code && a.ac_code)
+                  .map((a) => `${a.unit_code} AC ${a.ac_code}`);
+                setCaptureSeed({
+                  title: idea.title,
+                  acRefs,
+                  brief: idea.evidence_checklist.map((c) => ({
+                    label: c.label,
+                    type: c.type,
+                    required: c.required,
+                  })),
+                  context: idea.scenario,
+                });
+                setIdeasOpen(false);
+                setCaptureOpen(true);
+              }}
+            />
+          )}
         </DialogContent>
       </Dialog>
+
+      {/* Capture pre-loaded from a chosen job idea — closes the loop */}
+      <UnifiedCaptureSheet
+        open={captureOpen}
+        onOpenChange={setCaptureOpen}
+        seed={captureSeed}
+        onComplete={() => {
+          setCaptureOpen(false);
+          setCaptureSeed(null);
+          fetchAll();
+        }}
+      />
     </section>
   );
 }

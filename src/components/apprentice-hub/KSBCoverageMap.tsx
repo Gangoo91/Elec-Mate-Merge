@@ -49,8 +49,17 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
   const { userSelection } = useQualifications();
   const qualificationId = userSelection?.qualification_id;
 
-  const { ksbs, progress, isLoading, getKSBProgress, getUnitMappings, knowledge, behaviours } =
-    useKSBTracking({ qualificationId });
+  const {
+    ksbs,
+    progress,
+    isLoading,
+    getKSBProgress,
+    getUnitMappings,
+    getDerivedStatus,
+    isAutoEvidenced,
+    knowledge,
+    behaviours,
+  } = useKSBTracking({ qualificationId });
 
   const [activeTab, setActiveTab] = useState<TabType>('knowledge');
   const [expandedKSB, setExpandedKSB] = useState<string | null>(null);
@@ -58,18 +67,17 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
   // Calculate stats
   const stats = useMemo(() => {
     const getTypeStats = (items: ApprenticeshipKSB[]) => {
+      // Effective status folds in auto-evidence derived from AC coverage.
       const completed = items.filter((ksb) => {
-        const p = getKSBProgress(ksb.id);
-        return p?.status === 'completed' || p?.status === 'verified';
+        const s = getDerivedStatus(ksb.id);
+        return s === 'completed' || s === 'verified';
       }).length;
-      const evidenceSubmitted = items.filter((ksb) => {
-        const p = getKSBProgress(ksb.id);
-        return p?.status === 'evidence_submitted';
-      }).length;
-      const inProgress = items.filter((ksb) => {
-        const p = getKSBProgress(ksb.id);
-        return p?.status === 'in_progress';
-      }).length;
+      const evidenceSubmitted = items.filter(
+        (ksb) => getDerivedStatus(ksb.id) === 'evidence_submitted'
+      ).length;
+      const inProgress = items.filter(
+        (ksb) => getDerivedStatus(ksb.id) === 'in_progress'
+      ).length;
       return {
         total: items.length,
         completed,
@@ -86,12 +94,12 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
       overall: {
         total: ksbs.length,
         completed: ksbs.filter((k) => {
-          const p = getKSBProgress(k.id);
-          return p?.status === 'completed' || p?.status === 'verified';
+          const s = getDerivedStatus(k.id);
+          return s === 'completed' || s === 'verified';
         }).length,
       },
     };
-  }, [ksbs, knowledge, behaviours, getKSBProgress]);
+  }, [ksbs, knowledge, behaviours, getDerivedStatus]);
 
   const getStatusIcon = (status?: string) => {
     switch (status) {
@@ -181,6 +189,13 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
 
   const KSBItem = ({ ksb }: { ksb: ApprenticeshipKSB }) => {
     const ksbProgress = getKSBProgress(ksb.id);
+    const effectiveStatus = getDerivedStatus(ksb.id);
+    // Auto-evidenced = coverage came from mapped-unit AC evidence, not a manual link.
+    const autoEvidenced =
+      isAutoEvidenced(ksb.id) &&
+      ksbProgress?.status !== 'evidence_submitted' &&
+      ksbProgress?.status !== 'completed' &&
+      ksbProgress?.status !== 'verified';
     const mappings = getUnitMappings(ksb.id);
     const primaryUnits = mappings.filter((m) => m.mapping_type === 'primary');
     const supportingUnits = mappings.filter((m) => m.mapping_type === 'supporting');
@@ -192,13 +207,18 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
         className="w-full text-left p-3 rounded-xl bg-muted/30 border border-border hover:bg-muted/50 transition-colors touch-manipulation"
       >
         <div className="flex items-start gap-3">
-          <div className="shrink-0 mt-0.5">{getStatusIcon(ksbProgress?.status)}</div>
+          <div className="shrink-0 mt-0.5">{getStatusIcon(effectiveStatus)}</div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="outline" className="shrink-0 text-xs font-mono">
                 {ksb.code}
               </Badge>
-              {getStatusBadge(ksbProgress?.status)}
+              {getStatusBadge(effectiveStatus)}
+              {autoEvidenced && (
+                <Badge className="bg-elec-yellow/[0.08] text-elec-yellow border-elec-yellow/30 text-xs">
+                  Auto from portfolio
+                </Badge>
+              )}
               {getRouteBadge(ksb.route)}
             </div>
             <p className="text-sm font-medium mt-1 text-foreground">{ksb.title}</p>

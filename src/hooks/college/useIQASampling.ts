@@ -152,9 +152,6 @@ export function useIQASampling() {
             qualification_categories (
               name
             )
-          ),
-          profiles!iqa_sampling_records_sampled_by_fkey (
-            full_name
           )
         `)
         .eq('sampled_by', user.id)
@@ -162,12 +159,20 @@ export function useIQASampling() {
 
       if (error) throw error;
 
-      // Get student profiles
-      const studentIds = [...new Set((data || []).map(r => r.user_id))];
+      // Resolve names for both the learner and the sampler separately — there is
+      // no iqa_sampling_records_sampled_by_fkey, so that embed 400s.
+      const profileIds = [
+        ...new Set(
+          [
+            ...(data || []).map((r) => r.user_id),
+            ...(data || []).map((r) => r.sampled_by),
+          ].filter(Boolean)
+        ),
+      ];
       const { data: studentProfiles } = await supabase
         .from('profiles')
         .select('id, full_name')
-        .in('id', studentIds);
+        .in('id', profileIds);
 
       return (data || []).map(record => ({
         id: record.id,
@@ -179,7 +184,7 @@ export function useIQASampling() {
         submissionId: record.submission_id,
         sampledAt: record.sampled_at,
         sampledBy: record.sampled_by,
-        samplerName: (record.profiles as any)?.full_name || 'Unknown',
+        samplerName: studentProfiles?.find((p) => p.id === record.sampled_by)?.full_name || 'Unknown',
         verificationStatus: record.verification_status,
         verifiedAt: record.verified_at,
         iqaNotes: record.iqa_notes,

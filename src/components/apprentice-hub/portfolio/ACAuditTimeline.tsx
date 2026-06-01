@@ -5,12 +5,12 @@
  * Rendered inside the AC details bottom sheet so the apprentice (and
  * tutor & EPAO during a review) see the full provenance at a glance.
  *
- * The chain is the differentiator: most apprentice portfolios show
- * "evidenced or not". A best-in-class UK portfolio shows the audit
- * trail every party signed.
+ * Icon-free by design: each stage is a node on a vertical rail —
+ * filled = done, red = action needed, hollow = pending. Status reads
+ * through colour + a dot + text, matching the portfolio's editorial
+ * language (no glyphs).
  */
 
-import { CheckCircle2, AlertTriangle, FileCheck, ShieldCheck, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Eyebrow } from './PortfolioPrimitives';
 import type { ACSignoffRecord } from '@/hooks/portfolio/useACSignoffs';
@@ -37,9 +37,12 @@ const fmt = (iso: string | null | undefined) => {
 
 interface Step {
   key: string;
-  icon: React.ComponentType<{ className?: string }>;
   label: string;
-  meta?: string | null;
+  /** Short date — right-aligned, mono. */
+  when?: string | null;
+  /** Plain-language sub-line (instruction / context). */
+  note?: string | null;
+  /** Assessor/IQA narrative — italic. */
   detail?: string | null;
   state: 'done' | 'warn' | 'pending';
 }
@@ -51,20 +54,18 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
   if (evidenceCount > 0) {
     steps.push({
       key: 'evidence',
-      icon: FileCheck,
       label:
         evidenceCount === 1
           ? '1 piece of evidence captured'
           : `${evidenceCount} pieces of evidence captured`,
-      meta: fmt(lastEvidenceAt) ? `Last added ${fmt(lastEvidenceAt)}` : null,
+      when: fmt(lastEvidenceAt),
       state: 'done',
     });
   } else {
     steps.push({
       key: 'evidence',
-      icon: Clock,
       label: 'No evidence yet',
-      meta: 'Tap "Capture for this AC" to add a piece of work.',
+      note: 'Tap “Capture for this AC” to add a piece of work.',
       state: 'pending',
     });
   }
@@ -73,42 +74,38 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
   if (signoff?.assessorVerdict === 'passed') {
     steps.push({
       key: 'assessor',
-      icon: CheckCircle2,
       label: signoff.assessorName
         ? `Signed off by ${signoff.assessorName}`
         : 'Assessor signed off',
-      meta: fmt(signoff.assessorSignedAt),
+      when: fmt(signoff.assessorSignedAt),
       detail: signoff.assessorNarrative,
       state: 'done',
     });
   } else if (signoff?.assessorVerdict === 'referred') {
     steps.push({
       key: 'assessor',
-      icon: AlertTriangle,
       label: signoff.assessorName
         ? `Referred back by ${signoff.assessorName}`
         : 'Referred back by assessor',
-      meta: fmt(signoff.assessorSignedAt),
+      when: fmt(signoff.assessorSignedAt),
       detail: signoff.assessorNarrative || 'See assessor note.',
       state: 'warn',
     });
   } else if (signoff?.assessorVerdict === 'not_yet') {
     steps.push({
       key: 'assessor',
-      icon: Clock,
       label: signoff.assessorName
-        ? `Marked "not yet" by ${signoff.assessorName}`
-        : 'Marked "not yet" by assessor',
-      meta: fmt(signoff.assessorSignedAt),
+        ? `Marked “not yet” by ${signoff.assessorName}`
+        : 'Marked “not yet” by assessor',
+      when: fmt(signoff.assessorSignedAt),
       detail: signoff.assessorNarrative,
       state: 'warn',
     });
   } else {
     steps.push({
       key: 'assessor',
-      icon: Clock,
       label: 'Awaiting assessor sign-off',
-      meta:
+      note:
         evidenceCount > 0
           ? 'Your evidence is queued for your assessor to review.'
           : 'Add evidence first; your assessor reviews after.',
@@ -120,20 +117,16 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
   if (signoff?.iqaVerdict === 'confirmed') {
     steps.push({
       key: 'iqa',
-      icon: ShieldCheck,
       label: signoff.iqaName ? `IQA confirmed by ${signoff.iqaName}` : 'IQA confirmed',
-      meta: fmt(signoff.iqaSampledAt),
+      when: fmt(signoff.iqaSampledAt),
       detail: signoff.iqaFeedback,
       state: 'done',
     });
   } else if (signoff?.iqaVerdict === 'returned') {
     steps.push({
       key: 'iqa',
-      icon: AlertTriangle,
-      label: signoff.iqaName
-        ? `IQA returned by ${signoff.iqaName}`
-        : 'IQA returned',
-      meta: fmt(signoff.iqaSampledAt),
+      label: signoff.iqaName ? `IQA returned by ${signoff.iqaName}` : 'IQA returned',
+      when: fmt(signoff.iqaSampledAt),
       detail: signoff.iqaFeedback,
       state: 'warn',
     });
@@ -141,61 +134,57 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
     // Sign-off complete but IQA not yet sampled
     steps.push({
       key: 'iqa',
-      icon: Clock,
       label: 'Awaiting IQA sample',
-      meta: 'Internal Quality Assurance samples a subset of signed-off ACs.',
+      note: 'Internal Quality Assurance samples a subset of signed-off ACs.',
       state: 'pending',
     });
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2.5">
       <Eyebrow>Audit chain</Eyebrow>
-      <ol className="relative space-y-3 pl-1">
+      <ol>
         {steps.map((step, i) => {
-          const Icon = step.icon;
-          const tone =
+          const last = i === steps.length - 1;
+          const node =
+            step.state === 'done'
+              ? 'bg-elec-yellow border-elec-yellow'
+              : step.state === 'warn'
+                ? 'bg-red-400 border-red-400'
+                : 'bg-transparent border-white/35';
+          const card =
             step.state === 'done'
               ? 'border-elec-yellow/30 bg-elec-yellow/[0.06]'
               : step.state === 'warn'
-                ? 'border-red-500/30 bg-red-500/[0.04]'
-                : 'border-white/[0.06] bg-white/[0.02]';
-          const iconTone =
-            step.state === 'done'
-              ? 'text-elec-yellow'
-              : step.state === 'warn'
-                ? 'text-red-300'
-                : 'text-white/40';
+                ? 'border-red-500/40 bg-red-500/[0.07]'
+                : 'border-white/[0.08] bg-white/[0.02]';
 
           return (
-            <li key={step.key} className="relative">
-              {i < steps.length - 1 && (
-                <span
-                  aria-hidden
-                  className="absolute left-[14px] top-[28px] bottom-[-12px] w-px bg-white/[0.06]"
-                />
-              )}
-              <div className={cn('rounded-xl border p-3 sm:p-4', tone)}>
-                <div className="flex items-start gap-3">
-                  <Icon className={cn('h-5 w-5 mt-0.5 flex-shrink-0', iconTone)} />
-                  <div className="min-w-0 flex-1 space-y-1">
-                    <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                      <p className="text-[13px] font-medium text-white leading-snug">
-                        {step.label}
-                      </p>
-                      {step.meta && (
-                        <span className="text-[11px] text-white/55 font-mono flex-shrink-0">
-                          {step.meta}
-                        </span>
-                      )}
-                    </div>
-                    {step.detail && (
-                      <p className="text-[12px] text-white/70 leading-relaxed italic">
-                        {step.detail}
-                      </p>
-                    )}
-                  </div>
+            <li key={step.key} className="flex gap-3">
+              {/* Rail — dot node + connector */}
+              <div className="flex flex-col items-center self-stretch">
+                <span className={cn('w-3 h-3 rounded-full border-2 shrink-0 mt-[18px]', node)} />
+                {!last && <span className="w-[2px] flex-1 bg-white/[0.10] my-1" />}
+              </div>
+
+              {/* Card */}
+              <div className={cn('flex-1 min-w-0 rounded-xl border p-3.5 mb-2.5', card)}>
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="text-[13.5px] font-medium text-white leading-snug">{step.label}</p>
+                  {step.when && (
+                    <span className="text-[11px] text-white/55 font-mono tabular-nums shrink-0">
+                      {step.when}
+                    </span>
+                  )}
                 </div>
+                {step.note && (
+                  <p className="text-[12px] text-white/60 leading-snug mt-1">{step.note}</p>
+                )}
+                {step.detail && (
+                  <p className="text-[12px] text-white/75 leading-relaxed italic mt-1.5 pl-2.5 border-l-2 border-white/10">
+                    {step.detail}
+                  </p>
+                )}
               </div>
             </li>
           );

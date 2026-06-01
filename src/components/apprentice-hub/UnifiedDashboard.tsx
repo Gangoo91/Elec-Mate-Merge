@@ -17,7 +17,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, FileCheck, FileText, ChevronRight, Share2 } from 'lucide-react';
+import { Plus, FileCheck, ChevronRight, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -33,11 +33,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { usePortfolioFocus } from '@/hooks/portfolio/usePortfolioFocus';
 import { useACSignoffs } from '@/hooks/portfolio/useACSignoffs';
 import { SubmissionReadiness } from './portfolio/SubmissionReadiness';
 import { FromCollegeCallout } from './portfolio/FromCollegeCallout';
+import { PortfolioAttentionPanel } from './portfolio/PortfolioAttentionPanel';
+import { PortfolioStatementCard } from './portfolio/PortfolioStatementCard';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
 import { SharePortfolioSheet } from './SharePortfolioSheet';
@@ -95,6 +98,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const { userSelection, loading: qualLoading } = useQualifications();
   const courseCode = userSelection?.qualification?.code ?? null;
   const courseId = userSelection?.qualification_id ?? null;
+  // Divergence detector: warns when the active selection ≠ the college's course.
+  const { divergesFromCollege, collegeCourseCode } = useStudentQualification();
   const { tree, isLoading: acLoading } = useQualificationACs(courseCode);
   const {
     getByAC: getSignoff,
@@ -184,7 +189,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   /* ─── No-course state ─────────────────────────────────────────────── */
   if (!userSelection && !qualLoading) {
     return (
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 space-y-5">
+      <div className="py-6 space-y-5">
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 space-y-2">
           <Eyebrow>{greeting}</Eyebrow>
           <h2 className="text-[24px] font-semibold tracking-tight text-white">{firstName}</h2>
@@ -199,19 +204,47 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
   /* ─── Header / Hero (used in both layouts) ────────────────────────── */
   const Hero = (
-    <div className="space-y-2">
-      <Eyebrow>Apprentice · Portfolio · {greeting}</Eyebrow>
-      <h2 className="text-[28px] sm:text-[32px] font-semibold tracking-tight text-white leading-none">
-        {firstName}
-      </h2>
-      {userSelection && (
-        <button
-          onClick={() => setShowCourseSelector(true)}
-          className="inline-flex items-center gap-1 text-[12px] text-elec-yellow font-medium touch-manipulation hover:text-elec-yellow/85 active:opacity-70"
-        >
-          {userSelection.qualification?.title}
-          <ChevronRight className="h-3 w-3" />
-        </button>
+    <div className="space-y-3">
+      <div className="space-y-2">
+        <Eyebrow>Apprentice · Portfolio · {greeting}</Eyebrow>
+        <h2 className="text-[28px] sm:text-[32px] font-semibold tracking-tight text-white leading-none">
+          {firstName}
+        </h2>
+        {userSelection && (
+          <button
+            onClick={() => setShowCourseSelector(true)}
+            className="inline-flex items-center gap-1 text-[12px] text-elec-yellow font-medium touch-manipulation hover:text-elec-yellow/85 active:opacity-70"
+          >
+            {userSelection.qualification?.title}
+            <ChevronRight className="h-3 w-3" />
+          </button>
+        )}
+      </div>
+
+      {/* Course progress — the one "where am I" signal, up top */}
+      {tree.totalACs > 0 && (
+        <div className="space-y-1.5">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              Course progress
+            </span>
+            <span className="text-[12px] font-mono font-semibold text-white tabular-nums">
+              {evidencedCount}/{tree.totalACs}
+              <span className="text-elec-yellow ml-1.5">{overallPercent}%</span>
+            </span>
+          </div>
+          <div className="h-2 rounded-full bg-white/[0.07] overflow-hidden">
+            <div
+              className="h-full rounded-full bg-elec-yellow transition-all duration-700"
+              style={{ width: `${overallPercent}%` }}
+            />
+          </div>
+          {referredCount > 0 && (
+            <p className="text-[11px] text-red-300 leading-snug">
+              {referredCount} criterion{referredCount === 1 ? '' : 'a'} sent back — fix and resubmit
+            </p>
+          )}
+        </div>
       )}
     </div>
   );
@@ -362,7 +395,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
   /* ─── Render ─────────────────────────────────────────────────────── */
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
+    <div className="py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
       {/* No-data guard */}
       {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5">
@@ -386,6 +419,27 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </div>
       )}
 
+      {/* Qualification mismatch — coverage may track the wrong course */}
+      {divergesFromCollege && (
+        <div className="rounded-xl border border-orange-400/40 bg-orange-400/[0.08] p-4 space-y-1.5">
+          <p className="text-[13px] font-semibold text-orange-200">
+            Your qualification doesn't match your college
+          </p>
+          <p className="text-[12px] text-orange-100/80 leading-relaxed">
+            You're evidencing against{' '}
+            <span className="font-mono text-orange-100">{courseCode}</span>, but your college has
+            you on <span className="font-mono text-orange-100">{collegeCourseCode}</span>. Your AC
+            coverage may track the wrong course.
+          </p>
+          <button
+            onClick={() => setShowCourseSelector(true)}
+            className="text-[12px] font-semibold text-orange-200 underline underline-offset-2 touch-manipulation"
+          >
+            Switch qualification →
+          </button>
+        </div>
+      )}
+
       {/* Top fold — 2-column on lg: hero/KPIs/EPA pulse on the left,
           activity panels on the right. Stays narrow for readability. */}
       <div className="lg:grid lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-8 space-y-5 lg:space-y-0">
@@ -402,6 +456,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </div>
 
         <div className="space-y-6 lg:space-y-7 mt-5 lg:mt-0">
+          <PortfolioAttentionPanel entries={portfolioEntries || []} onNavigate={onNavigate} />
           {tree.totalACs > 0 && (
             <FromCollegeCallout
               signoffRecords={signoffRecords}
@@ -451,6 +506,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           onACClick={handleACClick}
         />
       )}
+
+      <PortfolioStatementCard />
 
       {RecentEvidence}
 
@@ -513,11 +570,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
                           {/* Evidence list */}
                           {entries.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center py-6 space-y-3">
-                              <div className="p-3 rounded-full bg-white/[0.06]">
-                                <FileText className="h-5 w-5 text-white/55" />
-                              </div>
-                              <p className="text-[13px] text-white/85 text-center">
+                            <div className="rounded-xl border border-dashed border-white/[0.12] bg-white/[0.02] px-5 py-8 flex flex-col items-center justify-center text-center space-y-3">
+                              <p className="text-[13px] text-white/85 leading-relaxed max-w-[260px]">
                                 Nothing linked yet — start with a quick capture on site.
                               </p>
                               <Button

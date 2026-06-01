@@ -261,7 +261,7 @@ export function ProfileSection() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
+    <div className="py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
       {/* ─── Editorial profile hero ─── */}
       <header className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6">
         <div className="flex items-start gap-4 sm:gap-5">

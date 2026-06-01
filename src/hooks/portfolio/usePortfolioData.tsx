@@ -264,24 +264,15 @@ export const usePortfolioData = () => {
     try {
       setIsLoading(true);
 
-      // Query portfolio items (portfolio_evidence_files junction table not yet deployed)
-      let rows: any[] | null = null;
-      {
-        const fallback = await supabase
-          .from('portfolio_items')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false });
-        if (fallback.error) throw fallback.error;
-        rows = fallback.data;
-      }
+      // Evidence file URLs live on portfolio_items.storage_urls (no junction table).
+      const { data: rows, error: rowsError } = await supabase
+        .from('portfolio_items')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+      if (rowsError) throw rowsError;
 
-      const mappedEntries = (rows || []).map((row: any) => {
-        const junctionFiles = Array.isArray(row.portfolio_evidence_files)
-          ? row.portfolio_evidence_files
-          : undefined;
-        return mapDbToEntry(row, junctionFiles);
-      });
+      const mappedEntries = (rows || []).map((row: any) => mapDbToEntry(row, undefined));
       setEntries(mappedEntries);
     } catch (error) {
       console.error('Error loading portfolio data:', error);
@@ -435,19 +426,8 @@ export const usePortfolioData = () => {
 
       if (error) throw error;
 
-      // Write evidence files to junction table
-      if (entryData.evidenceFiles?.length) {
-        const fileRows = entryData.evidenceFiles.map((file) => ({
-          portfolio_item_id: data.id,
-          user_id: user.id,
-          file_name: file.name,
-          file_type: file.type,
-          file_size: file.size,
-          public_url: file.url,
-          metadata: { legacy_id: file.id, upload_date: file.uploadDate },
-        }));
-        await supabase.from('portfolio_evidence_files').insert(fileRows);
-      }
+      // Evidence file URLs persist on portfolio_items.storage_urls (see
+      // mapEntryToDb) — no separate junction table.
 
       toast({
         title: 'Portfolio entry added',
@@ -533,28 +513,8 @@ export const usePortfolioData = () => {
 
       if (error) throw error;
 
-      // Sync junction table when evidence files change
-      if (updates.evidenceFiles !== undefined) {
-        // Delete existing junction rows and re-insert
-        await supabase
-          .from('portfolio_evidence_files')
-          .delete()
-          .eq('portfolio_item_id', entryId)
-          .eq('user_id', user.id);
-
-        if (updates.evidenceFiles.length > 0) {
-          const fileRows = updates.evidenceFiles.map((file) => ({
-            portfolio_item_id: entryId,
-            user_id: user.id,
-            file_name: file.name,
-            file_type: file.type,
-            file_size: file.size,
-            public_url: file.url,
-            metadata: { legacy_id: file.id, upload_date: file.uploadDate },
-          }));
-          await supabase.from('portfolio_evidence_files').insert(fileRows);
-        }
-      }
+      // Evidence file URLs persist on portfolio_items.storage_urls — nothing
+      // else to sync.
 
       toast({
         title: 'Portfolio entry updated',

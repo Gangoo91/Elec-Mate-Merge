@@ -23,6 +23,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from '@/components/ui/alert-dialog';
+import {
   Camera,
   Upload,
   X,
@@ -31,18 +41,12 @@ import {
   Check,
   Mic,
   MicOff,
-  Briefcase,
-  Clock,
-  CheckSquare,
-  Square,
   FileCheck,
-  ShieldCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
-import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import {
   usePortfolioCaptureStream,
   type FileAnalysis,
@@ -61,13 +65,25 @@ import {
   SecondaryAction,
 } from './portfolio/PortfolioPrimitives';
 
+export interface CaptureSeed {
+  /** Pre-filled evidence title. */
+  title?: string;
+  /** ACs to pre-select, in `${unitCode} AC ${acCode}` format. */
+  acRefs?: string[];
+  /** Evidence checklist shown as an on-site capture brief. */
+  brief?: { label: string; type?: string; required?: boolean }[];
+  /** Optional scenario text seeded into the description field. */
+  context?: string;
+}
+
 interface UnifiedCaptureSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onComplete: () => void;
+  /** Optional pre-seed from a job idea — pre-fills title + ACs + brief. */
+  seed?: CaptureSeed | null;
 }
 
-type LinkTo = 'portfolio' | 'ojt' | 'both';
 type CaptureStep = 'capture' | 'details';
 
 interface UploadedFile {
@@ -119,15 +135,28 @@ const READINESS_META: { k: 'valid' | 'authentic' | 'current' | 'sufficient' | 'r
   { k: 'reliable', label: 'Reliable' },
 ];
 
+// Plain-language fix for each unmet VACSR check — shown in the save nudge.
+const READINESS_FIX: Record<string, string> = {
+  valid: 'Tag at least one assessment criterion',
+  authentic: 'Confirm it’s your own work (or add a witness)',
+  current: 'Add the date you did the work',
+  sufficient: 'Add your role and a short description',
+  reliable: 'Attach a file and pick an evidence type',
+};
+
 const FIELD_CLS =
   'h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20';
 
-export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedCaptureSheetProps) {
+export function UnifiedCaptureSheet({
+  open,
+  onOpenChange,
+  onComplete,
+  seed,
+}: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
   const { user } = useAuth();
   const haptic = useHaptic();
   const { addEntry } = usePortfolioData();
-  const { addTimeEntry } = useTimeEntries();
   const { qualificationCode } = useStudentQualification();
 
   /* ─── Form state ─────────────────────────────────────────────────── */
@@ -135,8 +164,6 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [linkTo, setLinkTo] = useState<LinkTo>('portfolio');
-  const [ojtDuration, setOjtDuration] = useState('');
 
   /* ─── Assessor-ready capture fields (all optional) ───────────────── */
   const [workDate, setWorkDate] = useState(todayISO);
@@ -181,9 +208,34 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   /* ─── AC selection ────────────────────────────────────────────────── */
   const [selectedACs, setSelectedACs] = useState<string[]>([]);
 
+  /* ─── Job-idea seed (capture brief) ───────────────────────────────── */
+  const [briefItems, setBriefItems] = useState<
+    { label: string; type?: string; required?: boolean }[]
+  >([]);
+  const [briefACs, setBriefACs] = useState<string[]>([]);
+  const seededRef = useRef(false);
+  useEffect(() => {
+    if (open && seed && !seededRef.current) {
+      seededRef.current = true;
+      setStep('details');
+      if (seed.title) setTitle((t) => t || seed.title!);
+      if (seed.acRefs?.length) {
+        setSelectedACs((prev) => Array.from(new Set([...prev, ...seed.acRefs!])));
+        setBriefACs(seed.acRefs);
+      }
+      if (seed.brief?.length) setBriefItems(seed.brief);
+      if (seed.context) setVoiceText((v) => v || seed.context!);
+    }
+    if (!open) seededRef.current = false;
+  }, [open, seed]);
+
   /* ─── Save state — pessimistic so we never claim "saved" before the
         write confirms (apprentices capture on flaky site signal). ──────── */
   const [isSaving, setIsSaving] = useState(false);
+
+  /* ─── Assessor-ready save nudge (soft — never blocks) ─────────────── */
+  const [showReadinessNudge, setShowReadinessNudge] = useState(false);
+  const readinessAck = useRef(false);
 
   /* ─── Refs ────────────────────────────────────────────────────────── */
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -296,8 +348,6 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
     setFiles([]);
     setTitle('');
     setDescription('');
-    setLinkTo('portfolio');
-    setOjtDuration('');
     setVoiceText('');
     resetTranscript();
     prevTranscriptRef.current = '';
@@ -314,6 +364,10 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
     setAuthenticityConfirmed(false);
     setReflectionText('');
     reflectionSeededRef.current = false;
+    setBriefItems([]);
+    setBriefACs([]);
+    readinessAck.current = false;
+    setShowReadinessNudge(false);
   };
 
   /* ─── Upload helper ──────────────────────────────────────────────── */
@@ -461,11 +515,17 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
       return;
     }
 
+    // Soft assessor-ready nudge — shown once. Never blocks; "Save anyway"
+    // sets the ack and re-enters this function.
+    if (!readiness.ready && !readinessAck.current) {
+      haptic.light();
+      setShowReadinessNudge(true);
+      return;
+    }
+
     const snap = {
       title,
       description,
-      linkTo,
-      ojtDuration,
       selectedACs: [...selectedACs],
       files: files.map((f) => ({
         name: f.file.name,
@@ -483,66 +543,50 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
       authenticityConfirmed,
     };
 
-    const toastMsg =
-      snap.linkTo === 'both'
-        ? 'Added to portfolio and logged as training time'
-        : snap.linkTo === 'ojt'
-          ? 'Logged as training time'
-          : 'Added to portfolio';
+    const toastMsg = 'Added to portfolio';
 
     setIsSaving(true);
     try {
       const evidenceFiles = snap.files.length ? snap.files : [];
 
-      if (snap.linkTo === 'portfolio' || snap.linkTo === 'both') {
-        const categoryObj: PortfolioCategory = {
-          id: 'practical-skills',
-          name: 'Practical Skills',
-          description: '',
-          icon: 'folder',
-          color: 'gray',
-          requiredEntries: 0,
-          completedEntries: 0,
-        };
+      const categoryObj: PortfolioCategory = {
+        id: 'practical-skills',
+        name: 'Practical Skills',
+        description: '',
+        icon: 'folder',
+        color: 'gray',
+        requiredEntries: 0,
+        completedEntries: 0,
+      };
 
-        const witness =
-          snap.witnessName.trim() || snap.witnessRole.trim() || snap.witnessDate
-            ? {
-                name: snap.witnessName.trim() || undefined,
-                role: snap.witnessRole.trim() || undefined,
-                date: snap.witnessDate || undefined,
-              }
-            : undefined;
+      const witness =
+        snap.witnessName.trim() || snap.witnessRole.trim() || snap.witnessDate
+          ? {
+              name: snap.witnessName.trim() || undefined,
+              role: snap.witnessRole.trim() || undefined,
+              date: snap.witnessDate || undefined,
+            }
+          : undefined;
 
-        await addEntry({
-          title: snap.title,
-          description: snap.description.trim(),
-          category: categoryObj,
-          skills: snap.selectedACs,
-          reflection: snap.reflectionText.trim(),
-          evidenceFiles,
-          assessmentCriteria: snap.selectedACs,
-          status: 'draft',
-          dateCreated: new Date().toISOString(),
-          metadata: {
-            workDate: snap.workDate || undefined,
-            siteRef: snap.siteRef.trim() || undefined,
-            role: snap.role.trim() || undefined,
-            evidenceType: snap.evidenceType || undefined,
-            witness,
-            authenticityConfirmed: snap.authenticityConfirmed || undefined,
-          },
-        });
-      }
-
-      if ((snap.linkTo === 'ojt' || snap.linkTo === 'both') && snap.ojtDuration) {
-        await addTimeEntry({
-          date: new Date().toISOString().split('T')[0],
-          duration: parseFloat(snap.ojtDuration) * 60,
-          activity: snap.title,
-          notes: snap.description,
-        });
-      }
+      await addEntry({
+        title: snap.title,
+        description: snap.description.trim(),
+        category: categoryObj,
+        skills: snap.selectedACs,
+        reflection: snap.reflectionText.trim(),
+        evidenceFiles,
+        assessmentCriteria: snap.selectedACs,
+        status: 'draft',
+        dateCreated: new Date().toISOString(),
+        metadata: {
+          workDate: snap.workDate || undefined,
+          siteRef: snap.siteRef.trim() || undefined,
+          role: snap.role.trim() || undefined,
+          evidenceType: snap.evidenceType || undefined,
+          witness,
+          authenticityConfirmed: snap.authenticityConfirmed || undefined,
+        },
+      });
 
       // Only now is it actually saved.
       haptic.success();
@@ -588,6 +632,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
 
   /* ─── Render ─────────────────────────────────────────────────────── */
   return (
+    <>
     <Sheet
       open={open}
       onOpenChange={(v) => {
@@ -675,6 +720,59 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
             {/* Step 2: Details */}
             {step === 'details' && (
               <div className="space-y-6 py-2">
+                {/* Capture brief — seeded from a job idea */}
+                {(briefItems.length > 0 || briefACs.length > 0) && (
+                  <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] p-4 space-y-3">
+                    <Eyebrow>Capture brief · from your job idea</Eyebrow>
+                    {briefACs.length > 0 && (
+                      <div className="space-y-1.5">
+                        <p className="text-[11px] text-white/55">
+                          Criteria this covers — tap to remove any
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {briefACs.map((ref) => {
+                            const on = selectedACs.includes(ref);
+                            return (
+                              <button
+                                key={ref}
+                                type="button"
+                                onClick={() => toggleAC(ref)}
+                                className={cn(
+                                  'inline-flex items-center px-2 h-7 rounded-full text-[11px] font-mono font-medium border transition-colors touch-manipulation',
+                                  on
+                                    ? 'border-elec-yellow/50 bg-elec-yellow/[0.10] text-elec-yellow'
+                                    : 'border-white/[0.10] bg-white/[0.02] text-white/40 line-through'
+                                )}
+                              >
+                                {ref.replace(' AC ', ' ')}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                    {briefItems.length > 0 && (
+                      <div className="space-y-1.5">
+                        <p className="text-[11px] text-white/55">Evidence to get on site</p>
+                        <ul className="space-y-1.5">
+                          {briefItems.map((c, i) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-snug"
+                            >
+                              <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
+                              <span>
+                                {c.label}
+                                {c.required && <span className="text-rose-300"> · required</span>}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* File grid */}
                 {files.length > 0 && (
                   <div className="space-y-2">
@@ -892,11 +990,14 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                   : 'border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04]'
                               )}
                             >
-                              {selected ? (
-                                <CheckSquare className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                              ) : (
-                                <Square className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
-                              )}
+                              <span
+                                className={cn(
+                                  'h-3.5 w-3.5 rounded-full border-2 flex-shrink-0 mt-0.5',
+                                  selected
+                                    ? 'bg-elec-yellow border-elec-yellow'
+                                    : 'bg-transparent border-white/40'
+                                )}
+                              />
                               <div className="flex-1 min-w-0 space-y-0.5">
                                 <div className="flex items-baseline gap-2 flex-wrap">
                                   <span className="text-[11px] font-mono text-elec-yellow">
@@ -1040,13 +1141,16 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                 </div>
 
                 {/* Make this assessor-ready — optional fields that pass VACSR */}
-                <div className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4 space-y-4">
+                <div
+                  id="capture-assessor-ready"
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4 space-y-4 scroll-mt-4"
+                >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
                       <Eyebrow>Make this assessor-ready</Eyebrow>
                       {readiness.ready ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
-                          <ShieldCheck className="h-3.5 w-3.5" /> Assessor-ready
+                        <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
+                          Assessor-ready
                         </span>
                       ) : (
                         <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
@@ -1067,11 +1171,12 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                 : 'border-white/[0.08] text-white/40'
                             )}
                           >
-                            {on ? (
-                              <Check className="h-3 w-3" />
-                            ) : (
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-                            )}
+                            <span
+                              className={cn(
+                                'h-1.5 w-1.5 rounded-full',
+                                on ? 'bg-elec-yellow' : 'bg-white/20'
+                              )}
+                            />
                             {label}
                           </span>
                         );
@@ -1180,59 +1285,6 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                 </div>
 
                 {/* Link to */}
-                <div className="space-y-2">
-                  <Eyebrow>Link to</Eyebrow>
-                  <div className="grid grid-cols-3 gap-1.5">
-                    {([
-                      { v: 'portfolio', label: 'Portfolio', icon: Briefcase },
-                      { v: 'ojt', label: 'OJT hours', icon: Clock },
-                      { v: 'both', label: 'Both', icon: Check },
-                    ] as const).map((opt) => {
-                      const active = linkTo === opt.v;
-                      const Icon = opt.icon;
-                      return (
-                        <button
-                          key={opt.v}
-                          onClick={() => setLinkTo(opt.v)}
-                          className={cn(
-                            'flex flex-col items-center gap-1 p-3 rounded-lg border transition-colors touch-manipulation min-h-[60px]',
-                            active
-                              ? 'border-elec-yellow bg-elec-yellow/[0.06]'
-                              : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04]'
-                          )}
-                        >
-                          <Icon
-                            className={cn('h-4 w-4', active ? 'text-elec-yellow' : 'text-white/55')}
-                          />
-                          <span
-                            className={cn(
-                              'text-[11.5px] font-medium',
-                              active ? 'text-elec-yellow' : 'text-white/85'
-                            )}
-                          >
-                            {opt.label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* OJT duration */}
-                {(linkTo === 'ojt' || linkTo === 'both') && (
-                  <div className="space-y-2">
-                    <Eyebrow>Time spent (hours)</Eyebrow>
-                    <Input
-                      type="number"
-                      step="0.5"
-                      min="0.5"
-                      placeholder="e.g. 2.5"
-                      value={ojtDuration}
-                      onChange={(e) => setOjtDuration(e.target.value)}
-                      className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                    />
-                  </div>
-                )}
               </div>
             )}
           </div>
@@ -1263,6 +1315,51 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
         </div>
       </SheetContent>
     </Sheet>
+
+    {/* Soft assessor-ready nudge — encourages, never blocks */}
+    <AlertDialog open={showReadinessNudge} onOpenChange={setShowReadinessNudge}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Make it assessor-ready?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This is {readiness.score}/5 on assessor checks. Adding these takes about 10 seconds
+            and stops it being referred back:
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <ul className="space-y-1.5 py-1">
+          {READINESS_META.filter(({ k }) => !readiness.checks[k]).map(({ k, label }) => (
+            <li key={k} className="flex items-start gap-2 text-[13px] text-white/85 leading-snug">
+              <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
+              <span>{READINESS_FIX[k] ?? label}</span>
+            </li>
+          ))}
+        </ul>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => {
+              readinessAck.current = true;
+              setShowReadinessNudge(false);
+              void handleSave();
+            }}
+          >
+            Save anyway
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => {
+              setShowReadinessNudge(false);
+              requestAnimationFrame(() =>
+                document
+                  .getElementById('capture-assessor-ready')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              );
+            }}
+          >
+            Add details
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }
 

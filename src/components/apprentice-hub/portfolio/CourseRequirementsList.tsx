@@ -7,7 +7,7 @@
  */
 
 import { useState, useMemo } from 'react';
-import { Search, ChevronDown, ChevronRight, BookOpen, CheckCircle2 } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Eyebrow, SectionHeader } from './PortfolioPrimitives';
@@ -215,56 +215,71 @@ export function CourseRequirementsList({
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="ml-4 mr-1 mt-2 mb-1 space-y-4">
+                <div className="mt-2 mb-1 space-y-3">
                   {visibleLOs.map((lo) => (
-                    <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-2">
-                      <div className="flex items-baseline gap-2">
-                        <BookOpen className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
-                        <p className="text-[12px] font-medium text-white/85 leading-snug">
-                          LO{lo.loNumber}: {lo.loText}
+                    <div
+                      key={`${unit.unitCode}-${lo.loNumber}`}
+                      className="rounded-xl border border-white/[0.06] bg-white/[0.015] overflow-hidden"
+                    >
+                      {/* LO band */}
+                      <div className="flex items-start gap-2.5 px-3.5 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.10em] text-elec-yellow bg-elec-yellow/[0.10] border border-elec-yellow/25 rounded-md px-2 py-0.5 shrink-0">
+                          LO{lo.loNumber}
+                        </span>
+                        <p className="text-[12.5px] font-medium text-white/90 leading-snug">
+                          {lo.loText}
                         </p>
                       </div>
-                      <div className="space-y-1 ml-5">
-                        {lo.filteredACs.map(({ ac, isDone, isClaimed }) => (
-                          <button
-                            key={ac.acFullRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onACClick?.(
-                                ac.acRef,
-                                ac.acText.replace(`${ac.acRef} `, ''),
-                                unit.unitCode
-                              );
-                            }}
-                            className="w-full flex items-start gap-2 text-[12px] text-left rounded-lg py-2 px-2 -mx-2 transition-colors hover:bg-white/[0.04] touch-manipulation"
-                          >
-                            {isDone ? (
-                              <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-px" />
-                            ) : isClaimed ? (
-                              <span className="w-4 h-4 rounded-full border border-elec-yellow/60 bg-elec-yellow/[0.10] flex-shrink-0 mt-px" />
-                            ) : (
-                              <span className="w-4 h-4 rounded-full border border-white/15 flex-shrink-0 mt-px" />
-                            )}
-                            <span className="flex-1 text-left">
+
+                      {/* AC rows */}
+                      <div className="p-1.5 space-y-0.5">
+                        {lo.filteredACs.map(({ ac, isDone, isClaimed }) => {
+                          const evidenceCount = (
+                            acEvidenceMap.get(ac.acRef) || acEvidenceMap.get(ac.acFullRef) || []
+                          ).length;
+                          return (
+                            <button
+                              key={ac.acFullRef}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onACClick?.(
+                                  ac.acRef,
+                                  ac.acText.replace(`${ac.acRef} `, ''),
+                                  unit.unitCode
+                                );
+                              }}
+                              className="w-full flex items-start gap-2.5 text-left rounded-lg py-2 px-2.5 transition-colors hover:bg-white/[0.05] active:bg-white/[0.06] touch-manipulation"
+                            >
+                              {isDone ? (
+                                <span className="w-4 h-4 rounded-full bg-elec-yellow flex-shrink-0 mt-0.5" />
+                              ) : isClaimed ? (
+                                <span className="w-4 h-4 rounded-full border-2 border-elec-yellow/70 bg-elec-yellow/[0.12] flex-shrink-0 mt-0.5" />
+                              ) : (
+                                <span className="w-4 h-4 rounded-full border-2 border-white/25 flex-shrink-0 mt-0.5" />
+                              )}
                               <span
                                 className={cn(
-                                  'font-mono mr-1',
-                                  isDone ? 'text-elec-yellow' : 'text-white/85'
+                                  'font-mono text-[10.5px] font-semibold px-1.5 py-0.5 rounded shrink-0 mt-px',
+                                  isDone
+                                    ? 'text-black bg-elec-yellow'
+                                    : isClaimed
+                                      ? 'text-elec-yellow bg-elec-yellow/[0.10] border border-elec-yellow/30'
+                                      : 'text-white/70 bg-white/[0.05] border border-white/[0.08]'
                                 )}
                               >
                                 {ac.acRef}
                               </span>
-                              <span className="text-white/85">
+                              <span className="flex-1 text-[12.5px] text-white/85 leading-snug">
                                 {ac.acText.replace(`${ac.acRef} `, '')}
                               </span>
-                            </span>
-                            {isDone && (
-                              <span className="text-[10px] text-white/85 px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] shrink-0">
-                                {(acEvidenceMap.get(ac.acRef) || acEvidenceMap.get(ac.acFullRef) || []).length}
-                              </span>
-                            )}
-                          </button>
-                        ))}
+                              {evidenceCount > 0 && (
+                                <span className="text-[10px] font-mono text-elec-yellow px-1.5 py-0.5 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.08] shrink-0 mt-px">
+                                  {evidenceCount}
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   ))}

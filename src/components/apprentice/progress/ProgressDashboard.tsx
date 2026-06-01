@@ -125,7 +125,7 @@ export function ProgressDashboard() {
   /* ─── Loading state ──────────────────────────────────────────────── */
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
+      <div className="py-5 space-y-4">
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
@@ -137,7 +137,7 @@ export function ProgressDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-6 lg:space-y-8">
+    <div className="py-5 sm:py-6 lg:py-8 space-y-6 lg:space-y-8">
       {/* Predicted EPA grade — full-width hero: the headline "will I pass?" signal */}
       <EPAGradePredictor
         quizAverage={quizStats.averageScore}

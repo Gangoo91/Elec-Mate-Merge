@@ -55,9 +55,6 @@ import {
   Loader2,
   NotebookPen,
   CheckCircle2,
-  Circle,
-  BookOpen,
-  Tag,
   ShieldCheck,
   Hash,
   Sparkles,
@@ -467,10 +464,7 @@ export function PortfolioDetailSheet({
                 {/* Assessor readiness (VACSR) */}
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-elec-yellow" />
-                      Assessor readiness
-                    </h3>
+                    <h3 className="text-sm font-medium text-white">Assessor readiness</h3>
                     {readiness.ready ? (
                       <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
                         Ready
@@ -494,11 +488,12 @@ export function PortfolioDetailSheet({
                               : 'border-white/[0.08] text-white/40'
                           )}
                         >
-                          {on ? (
-                            <CheckCircle2 className="h-3 w-3" />
-                          ) : (
-                            <Circle className="h-3 w-3" />
-                          )}
+                          <span
+                            className={cn(
+                              'h-1.5 w-1.5 rounded-full',
+                              on ? 'bg-elec-yellow' : 'bg-white/30'
+                            )}
+                          />
                           {label}
                         </span>
                       );
@@ -641,8 +636,7 @@ export function PortfolioDetailSheet({
                 {/* Assessment Criteria */}
                 {entry.assessmentCriteria?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-white/85" />
+                    <h3 className="text-sm font-medium text-white">
                       Assessment Criteria ({entry.assessmentCriteria.length})
                     </h3>
                     <div className="space-y-1.5">
@@ -658,8 +652,8 @@ export function PortfolioDetailSheet({
                             onClick={() => setExpandedAC(isExpanded ? null : ac)}
                             className="w-full text-left p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] touch-manipulation active:bg-white/[0.02] transition-colors"
                           >
-                            <div className="flex items-start gap-2">
-                              <CheckCircle2 className="h-4 w-4 text-white/85 shrink-0 mt-0.5" />
+                            <div className="flex items-start gap-2.5">
+                              <span className="h-2 w-2 rounded-full bg-elec-yellow shrink-0 mt-1.5" />
                               <span className="text-sm text-white">{ac}</span>
                             </div>
                             {isExpanded && matchedDetail && (
@@ -697,10 +691,7 @@ export function PortfolioDetailSheet({
                 {/* AI Analysis Results */}
                 {aiAnalysis && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
-                      AI Analysis
-                    </h3>
+                    <h3 className="text-sm font-medium text-white">AI Analysis</h3>
                     <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/15 space-y-3">
                       <div className="flex items-center gap-2">
                         <Badge
@@ -779,13 +770,16 @@ export function PortfolioDetailSheet({
                                         )}
                                       >
                                         <div className="flex items-start gap-2">
-                                          {alreadyClaimed ? (
-                                            <CheckCircle2 className="h-4 w-4 text-white/85 shrink-0 mt-0.5" />
-                                          ) : isSelected ? (
-                                            <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                                          ) : (
-                                            <Circle className="h-4 w-4 text-white shrink-0 mt-0.5" />
-                                          )}
+                                          <span
+                                            className={cn(
+                                              'h-3 w-3 rounded-full shrink-0 mt-1 border-2',
+                                              alreadyClaimed
+                                                ? 'bg-white/40 border-white/40'
+                                                : isSelected
+                                                  ? 'bg-elec-yellow border-elec-yellow'
+                                                  : 'bg-transparent border-white/30'
+                                            )}
+                                          />
                                           <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2">
                                               <Badge
@@ -855,17 +849,16 @@ export function PortfolioDetailSheet({
                 {/* Learning Outcomes */}
                 {entry.learningOutcomes?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <BookOpen className="h-3.5 w-3.5 text-white/85" />
+                    <h3 className="text-sm font-medium text-white">
                       Learning Outcomes ({entry.learningOutcomes.length})
                     </h3>
                     <div className="space-y-1.5">
                       {entry.learningOutcomes.map((lo: string, i: number) => (
                         <div
                           key={i}
-                          className="flex items-start gap-2 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]"
+                          className="flex items-start gap-2.5 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]"
                         >
-                          <BookOpen className="h-4 w-4 text-white/85 shrink-0 mt-0.5" />
+                          <span className="h-2 w-2 rounded-full bg-white/40 shrink-0 mt-1.5" />
                           <span className="text-sm text-foreground">{lo}</span>
                         </div>
                       ))}
@@ -876,10 +869,7 @@ export function PortfolioDetailSheet({
                 {/* Tags */}
                 {entry.tags?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <Tag className="h-3.5 w-3.5" />
-                      Tags
-                    </h3>
+                    <h3 className="text-sm font-medium text-white">Tags</h3>
                     <div className="flex flex-wrap gap-2">
                       {entry.tags.map((tag: string, i: number) => (
                         <Badge key={i} variant="outline" className="text-xs">
@@ -946,14 +936,11 @@ export function PortfolioDetailSheet({
                 {/* Supervisor Verification Status */}
                 {(isVerified || existingVerification) && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-white/85" />
-                      Supervisor Verification
-                    </h3>
+                    <h3 className="text-sm font-medium text-white">Supervisor Verification</h3>
                     {isVerified && existingVerification?.verified_at ? (
                       <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-2">
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-white/85" />
+                          <span className="h-2 w-2 rounded-full bg-elec-yellow shrink-0" />
                           <span className="text-sm font-medium text-white/85">
                             Verified by {existingVerification.supervisor_name}
                           </span>

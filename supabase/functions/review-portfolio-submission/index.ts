@@ -9,7 +9,11 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
-import { GROUNDING_RULES } from '../_shared/portfolio-ac-grounding.ts';
+import {
+  GROUNDING_RULES,
+  buildAcWhitelist,
+  findUnknownClaimedAcs,
+} from '../_shared/portfolio-ac-grounding.ts';
 
 // ---------- Tool schema for structured review output ----------
 const reviewTool = {
@@ -193,6 +197,18 @@ serve(async (req: Request) => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         }
       );
+    }
+
+    // ---------- AC whitelist (for grounding the model's output) ----------
+    // qualification_id holds the qualification CODE in this fn (see RPC call).
+    let acWhitelist = buildAcWhitelist(null);
+    try {
+      const { data: acData } = await supabase.rpc('get_qualification_acs', {
+        p_qualification_code: qualification_id,
+      });
+      acWhitelist = buildAcWhitelist(acData as Parameters<typeof buildAcWhitelist>[0]);
+    } catch (err) {
+      console.warn('[review-portfolio-submission] AC whitelist build failed:', err);
     }
 
     // ---------- RAG: Get qualification requirements ----------
@@ -435,6 +451,31 @@ ${portfolioSummary}`;
         JSON.stringify(data.choices?.[0])
       );
       throw new Error('No usable response from AI');
+    }
+
+    // ---------- Ground the model's AC references ----------
+    // Drop any criterion/gap that cites an AC not in the real qualification —
+    // the same post-grounding the other portfolio AI functions apply.
+    if (acWhitelist.size > 0) {
+      const isKnown = (ref: unknown) =>
+        findUnknownClaimedAcs([String(ref ?? '')], acWhitelist).length === 0;
+      if (Array.isArray(review.criteria_analysis)) {
+        const before = review.criteria_analysis.length;
+        review.criteria_analysis = (
+          review.criteria_analysis as Array<{ ac_ref?: unknown }>
+        ).filter((c) => isKnown(c?.ac_ref));
+        const dropped = before - (review.criteria_analysis as unknown[]).length;
+        if (dropped > 0) {
+          console.warn(
+            `[review-portfolio-submission] dropped ${dropped} ungrounded criteria_analysis ref(s)`
+          );
+        }
+      }
+      if (Array.isArray(review.gaps)) {
+        review.gaps = (review.gaps as Array<{ ac_ref?: unknown }>).filter((g) =>
+          isKnown(g?.ac_ref)
+        );
+      }
     }
 
     console.log('[review-portfolio-submission] Review complete in', duration, 'ms');
