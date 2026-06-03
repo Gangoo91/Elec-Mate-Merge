@@ -27,8 +27,10 @@ android {
         // from the GitHub Actions run number) and falls back to the baseline below
         // for local builds. Play Store requires a strictly increasing versionCode
         // on every upload — CI bumps this automatically so no manual edits needed.
-        versionCode System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE').toInteger() : 33
-        versionName System.getenv('ANDROID_VERSION_NAME') ?: '1.0.7'
+        // Fallback baseline kept ABOVE the highest code ever sent to Play so a
+        // local build can never regress/collide (build 36 was used; 37 built).
+        versionCode System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE').toInteger() : 38
+        versionName System.getenv('ANDROID_VERSION_NAME') ?: '1.0.8'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

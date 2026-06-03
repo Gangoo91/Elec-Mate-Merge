@@ -73,9 +73,12 @@
     <!-- Camera — photo capture for certificates, site safety, inspections -->
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!-- Photo/file access — Android 13+ uses granular media permissions -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- Older Android (<=12) uses storage permissions -->
+    <!--
+      Photo selection uses the Android Photo Picker (@capacitor/camera v8),
+      which needs NO media permission on Android 13+. READ_MEDIA_IMAGES /
+      READ_MEDIA_VIDEO are intentionally NOT declared — Google Play's Photo &
+      Video Permissions policy disallows them for one-time/infrequent access.
+      Legacy storage read for Android <=12 only: -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
 
