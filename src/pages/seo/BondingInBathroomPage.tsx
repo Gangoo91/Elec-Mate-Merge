@@ -4,15 +4,10 @@ import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   Droplet,
-  ShieldCheck,
-  AlertTriangle,
   FileCheck2,
   Cable,
   GraduationCap,
   ClipboardCheck,
-  Calculator,
-  Gauge,
-  CheckCircle,
   Zap,
   Search,
 } from 'lucide-react';
@@ -236,7 +231,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on bathroom circuits:</strong> If any circuit serving the
                 bathroom (lighting, socket, shower, underfloor heating) is not protected by a 30mA
@@ -244,7 +238,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Disconnection time cannot be verified:</strong> If you cannot confirm that
                 all circuits serving the bathroom comply with Regulation 411.3.2, supplementary
@@ -255,7 +248,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main bonding is absent or inadequate:</strong> If main protective bonding to
                 the incoming gas, water, and oil pipes is not in place or is undersized,
@@ -300,7 +292,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition (d) — Automatic disconnection (Reg 411.3.2):</strong> All final
                 circuits of the location comply with the automatic disconnection requirements. Table
@@ -314,7 +305,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition (e) — Additional RCD protection (Reg 415.1.1):</strong> All final
                 circuits of the location have additional protection by a 30mA RCD in accordance with
@@ -326,7 +316,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Condition (f) — All extraneous-conductive-parts connected (Reg 411.3.1.2):
@@ -367,7 +356,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>4mm2 copper:</strong> The minimum cross-sectional area for a supplementary
                 bonding conductor that is not mechanically protected. This is single-core
@@ -377,7 +365,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2.5mm2 copper:</strong> Permitted where the conductor is mechanically
                 protected — enclosed in conduit, trunking, or a recognised protective enclosure. In
@@ -386,7 +373,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Clamp connections:</strong> Bonding connections to pipes must use
                 purpose-made earth clamps that conform to BS EN 60998. Each clamp must be labelled
@@ -396,7 +382,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Accessibility:</strong> Bonding connections should be accessible for
                 inspection and testing. Connections hidden behind permanently sealed panels or
@@ -422,14 +407,12 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Metal water pipes:</strong> Hot and cold supply pipes entering the bathroom.
                 Bond at the point of entry to the room or as close as practicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Metal central heating pipes and air conditioning systems:</strong> Radiator
                 flow and return pipes, and any metallic air conditioning pipework or fan-coil units
@@ -438,7 +421,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Metal waste pipes:</strong> If the bath, basin, or shower waste pipe is
                 metal (typically chrome or brass), bond it. Plastic waste pipes do not require
@@ -446,7 +428,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Metal baths:</strong> A steel or cast iron bath connected to metal pipework
                 is an extraneous-conductive-part and should be bonded. Acrylic and fibreglass baths
@@ -454,7 +435,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Metal towel rails:</strong> If the towel rail is plumbed into the central
                 heating system with metal pipe connections, it is an extraneous-conductive-part.
@@ -463,7 +443,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Structural metalwork:</strong> Any accessible structural steelwork, metal
                 window frames (if conductive and earthed), or metal door frames within the bathroom.
@@ -493,7 +472,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity test:</strong> Using a low-resistance ohmmeter, measure the
                 resistance between each bonded item and the nearest exposed-conductive-part earth
@@ -503,7 +481,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection:</strong> Check that all bonding clamps are tight,
                 correctly labelled, and making good contact with the metalwork. Check the conductor
@@ -512,7 +489,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recording results:</strong> Record the bonding test results on the EICR
                 schedule of test results or in the general condition section. Note which items are
@@ -531,8 +507,8 @@ const sections = [
           incoming metal service to confirm continuity.
         </p>
         <SEOAppBridge
-          title="Record bonding observations on the EICR instantly"
-          description="Found missing or inadequate bonding? Elec-Mate's AI assigns the correct observation code (C1, C2, or C3) with the BS 7671 regulation reference."
+          title="Bathroom Bonding Regulations: Do You Need It? (BS 7671)"
+          description="Supplementary bonding in bathrooms explained: when it is required and when it can be omitted under BS 7671 Section 701, with the exact conditions."
           icon={ClipboardCheck}
         />
       </>
@@ -552,7 +528,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Observation Coding</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -568,7 +543,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Remedial Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -581,7 +555,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">

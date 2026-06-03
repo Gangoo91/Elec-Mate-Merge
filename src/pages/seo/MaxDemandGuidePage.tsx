@@ -2,20 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Calculator,
-  Zap,
-  Activity,
-  BookOpen,
-  FileText,
-  Gauge,
-  Lightbulb,
-  Home,
-  Building2,
-  Flame,
-  BarChart3,
-  GraduationCap,
-} from 'lucide-react';
+import { Calculator, Zap, Activity, BookOpen, FileText, BarChart3 } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -184,7 +171,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Underestimate max demand</strong> and you risk undersizing the incoming
                 cable and protective devices. This can lead to overloaded cables, overheating,
@@ -193,7 +179,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overestimate max demand</strong> and you specify larger cables, bigger
                 distribution boards, and a higher-rated incoming supply than necessary. This
@@ -202,7 +187,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>DNO supply applications</strong> depend on your max demand figure. If you
                 need to request a supply upgrade (for example, from 60 A to 100 A single-phase, or a
@@ -248,57 +232,38 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/5">
               <tr>
-                <td className="py-3 pr-4 flex items-center gap-2">
-                  <Lightbulb className="w-4 h-4 text-yellow-400 shrink-0" />
-                  Lighting
-                </td>
+                <td className="py-3 pr-4 flex items-center gap-2">Lighting</td>
                 <td className="py-3 pr-4">66% of total connected load</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 flex items-center gap-2">
-                  <Home className="w-4 h-4 text-yellow-400 shrink-0" />
-                  Socket outlets (general use)
-                </td>
+                <td className="py-3 pr-4 flex items-center gap-2">Socket outlets (general use)</td>
                 <td className="py-3 pr-4">100% of largest circuit + 40% of remaining</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 flex items-center gap-2">
-                  <Flame className="w-4 h-4 text-yellow-400 shrink-0" />
-                  Cooking appliances
-                </td>
+                <td className="py-3 pr-4 flex items-center gap-2">Cooking appliances</td>
                 <td className="py-3 pr-4">
                   10 A + 30% of remainder + 5 A for socket in cooker control
                 </td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-yellow-400 shrink-0" />
                   Instantaneous water heaters (showers)
                 </td>
                 <td className="py-3 pr-4">100% of largest + 100% of second largest (if any)</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 flex items-center gap-2">
-                  <Gauge className="w-4 h-4 text-yellow-400 shrink-0" />
-                  Immersion heater
-                </td>
+                <td className="py-3 pr-4 flex items-center gap-2">Immersion heater</td>
                 <td className="py-3 pr-4">100% of full load (no diversity)</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 flex items-center gap-2">
-                  <Flame className="w-4 h-4 text-yellow-400 shrink-0" />
-                  Space heating (fixed)
-                </td>
+                <td className="py-3 pr-4 flex items-center gap-2">Space heating (fixed)</td>
                 <td className="py-3 pr-4">
                   100% of total demand up to 10 A + 50% of any demand in excess of 10 A (individual
                   household — OSG Table A2)
                 </td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-yellow-400 shrink-0" />
-                  EV charger
-                </td>
+                <td className="py-3 pr-4 flex items-center gap-2">EV charger</td>
                 <td className="py-3 pr-4">
                   100% (dedicated circuit); where a load-curtailment or smart-charging system
                   automatically reduces or disconnects the charger, that reduction may be taken into
@@ -373,8 +338,8 @@ const sections = [
           </p>
         </div>
         <SEOAppBridge
-          title="After Diversity Maximum Demand Calculator"
-          description="Calculate ADMD in seconds for BS 7671:2018+A4:2026. Input circuit ratings, get max demand in amps and kW instantly. Free for electricians."
+          title="Maximum Demand Calculator & Diversity (BS 7671)"
+          description="Work out maximum demand with diversity per the IET On-Site Guide. Free calculator plus worked examples for domestic and commercial installations."
           icon={Calculator}
         />
       </>
@@ -500,7 +465,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Forgetting to apply diversity.</strong> Adding up every circuit rating
                 without diversity produces a total connected load, not max demand. This leads to
@@ -509,7 +473,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Applying diversity to individual circuits instead of circuit types.</strong>{' '}
                 Diversity factors apply to groups of circuits of the same type. You do not apply the
@@ -518,7 +481,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ignoring future load growth.</strong> If the client is likely to add an EV
                 charger, heat pump, or extension in the near future, it makes sense to factor this
@@ -527,7 +489,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Using domestic diversity factors for commercial installations.</strong> The
                 OSG Table A2 factors are designed for domestic premises. Commercial and industrial
@@ -536,7 +497,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Confusing diversity with load curtailment.</strong> Diversity factors reduce
                 the design demand figure for cable and device sizing; they cannot be used as a
@@ -547,7 +507,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not documenting the calculation.</strong> BS 7671 requires design records.
                 Your max demand calculation should be documented and retained with the Electrical
@@ -577,7 +536,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automatic Diversity Factors</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -591,7 +549,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <div className="flex items-start gap-4">
-              <BarChart3 className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Clear Breakdown</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -605,7 +562,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Activity className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">

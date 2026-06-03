@@ -2,20 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Cable,
-  Zap,
-  Calculator,
-  ShieldCheck,
-  AlertTriangle,
-  CircuitBoard,
-  Wrench,
-  FileCheck2,
-  Home,
-  Droplets,
-  Gauge,
-  GraduationCap,
-} from 'lucide-react';
+import { Cable, Calculator, Wrench, FileCheck2, Home, Droplets, Gauge } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -190,7 +177,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>7.5kW</strong> — approximately 32.6A. Budget models, suitable for small
                 bathrooms and low water flow. Cable: 6mm{'\u00B2'} on 32A MCB (tight) or 10mm
@@ -198,21 +184,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>8.5kW</strong> — approximately 37A. Mid-range, most popular replacement
                 model. Cable: 10mm{'\u00B2'} on 40A MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>9.5kW</strong> — approximately 41.3A. High performance, good flow rate even
                 in winter. Cable: 10mm{'\u00B2'} on 45A MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>10.5kW</strong> — approximately 45.7A. Premium models, best flow rate.
                 Cable: 10mm{'\u00B2'} on 45A MCB (check correction factors) or 16mm{'\u00B2'} on 50A
@@ -220,7 +203,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>10.8kW to 12kW</strong> — approximately 47A to 52A. High-end models. Cable:
                 16mm{'\u00B2'} on 50A MCB. These require larger cable and may need a supply capacity
@@ -291,8 +273,8 @@ const sections = [
           drop of approximately 6.1V — within the 11.5V limit, but check your specific run length.
         </p>
         <SEOAppBridge
-          title="Size shower cables in seconds"
-          description="Enter the shower kW rating, cable length, and installation method. Elec-Mate's cable sizing calculator applies all BS 7671 correction factors and checks…"
+          title="Electric Shower Installation: Cable Size & Wiring (BS 7671)"
+          description="Electric shower wiring guide: cable and MCB size by kW rating, RCD and bathroom zone requirements, and isolator placement to BS 7671."
           icon={Calculator}
         />
       </>
@@ -310,7 +292,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCB rating selection</strong> — the MCB rated current (In) must be greater
                 than or equal to the design current (Ib = shower current) and less than or equal to
@@ -319,7 +300,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type B MCB</strong> — suitable for electric showers because the heating
                 element is a resistive load with no significant inrush current. Type B trips at 3 to
@@ -327,7 +307,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Disconnection time</strong> — the shower circuit supplies fixed equipment
                 (not socket outlets), so the maximum disconnection time is 5 seconds. However, if
@@ -402,7 +381,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 701.411.3.3</strong> — all circuits in locations containing a
                 bath or shower (Section 701) must be protected by a 30mA RCD, regardless of whether
@@ -410,7 +388,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional protection</strong> — the 30mA RCD provides additional protection
                 against direct contact faults. This is particularly important in bathrooms where the
@@ -419,7 +396,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding</strong> — under BS 7671:2018+A4:2026 Reg 701.415.2,
                 supplementary bonding in bathrooms can be omitted where the building has main
@@ -470,7 +446,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme route</strong> — if you are registered with NICEIC,
                 NAPIT, ELECSA, or another competent person scheme, you can self-certify the work.
@@ -479,7 +454,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building Control notification route</strong> — if you are not registered
                 with a competent person scheme, you must notify Building Control before starting the
@@ -487,7 +461,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — an Electrical Installation Certificate (EIC) must
                 be issued for the new circuit. The EIC covers the design, construction, inspection,
@@ -520,7 +493,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 0</strong> — inside the bath or shower tray itself. Only SELV (12V)
                 equipment rated IPX7 can be installed here. No electric shower components are placed
@@ -528,7 +500,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 1</strong> — directly above the bath or shower tray to a height of
                 2.25m from the floor. Electric shower units are typically installed in Zone 1.
@@ -538,7 +509,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 2</strong> — extends 0.6m horizontally from the edge of Zone 1, up to
                 2.25m from the floor. Switches and accessories rated at least IPX4 are permitted.
@@ -583,7 +553,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable undersized for the shower rating.</strong> Using 6mm{'\u00B2'} cable
                 for a 9.5kW shower. This is a C1 (Danger Present) defect — the cable will overheat
@@ -591,7 +560,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No local isolation switch.</strong> Connecting the shower directly to the
                 supply cable without a double-pole isolator. BS 7671 requires a local means of
@@ -599,7 +567,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Single-pole switch instead of double-pole.</strong> A single-pole switch
                 only disconnects the line conductor, leaving the neutral connected. The isolator
@@ -607,7 +574,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection.</strong> All circuits in bathrooms require 30mA RCD
                 protection. This is a mandatory requirement under Section 701 of BS 7671 and its
@@ -615,7 +581,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not notifying Building Control.</strong> A new shower circuit in a bathroom
                 is notifiable under Part P. Failure to notify can result in enforcement action and

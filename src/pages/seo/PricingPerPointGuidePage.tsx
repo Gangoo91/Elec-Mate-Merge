@@ -2,20 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Calculator,
-  PoundSterling,
-  ClipboardCheck,
-  FileCheck2,
-  MapPin,
-  Briefcase,
-  Target,
-  BarChart3,
-  Wrench,
-  Home,
-  Building2,
-  Lightbulb,
-} from 'lucide-react';
+import { Calculator, PoundSterling, FileCheck2, Briefcase, Target, Building2 } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -180,7 +167,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Target className="w-4 h-4 text-yellow-400" /> Standard Points (One Point Each)
+            Standard Points (One Point Each)
           </h4>
           <div className="grid gap-2 sm:grid-cols-2 text-white text-sm">
             <ul className="space-y-2">
@@ -336,7 +323,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Wrench className="w-5 h-5 text-green-400" /> Supply and Fix
+              Supply and Fix
             </h3>
             <p className="text-white text-sm leading-relaxed">
               You provide all materials and labour. The per-point rate includes standard cable
@@ -350,7 +337,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Wrench className="w-5 h-5 text-blue-400" /> Labour Only
+              Labour Only
             </h3>
             <p className="text-white text-sm leading-relaxed">
               The main contractor or customer provides all materials. You provide labour, tools, and
@@ -365,8 +352,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
           <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-            <ClipboardCheck className="w-4 h-4 text-orange-400" /> BS 7671:2018+A4:2026 — Lighting
-            Circuit Compliance
+            BS 7671:2018+A4:2026 — Lighting Circuit Compliance
           </h4>
           <p className="text-white text-sm leading-relaxed">
             Reg 411.3.4 makes it a mandatory requirement that all AC final circuits supplying
@@ -395,7 +381,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full domestic rewires</strong> — count the points, multiply by your rate,
                 add the consumer unit and extras. Fast, accurate, easy for the customer to
@@ -403,21 +388,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Extensions and loft conversions</strong> — typically 8 to 20 points.
                 Per-point pricing gives a quick, competitive quote.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New-build domestic plots</strong> — the specification is defined by the
                 architect. Count the points on the drawing, apply your rate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional sockets and lights</strong> — quick add-on work. "One new double
                 socket is £120" is clear and instant.
@@ -436,7 +418,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial fit-outs with containment</strong> — the labour for running cable
                 tray, trunking, and conduit varies enormously and is not captured in a per-point
@@ -444,14 +425,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial installations</strong> — three-phase, motor control, large
                 distribution. Price from a detailed schedule of quantities.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Very long cable runs</strong> — if a single point requires a 30m cable run
                 (for example, an outbuilding supply), a standard per-point rate will massively
@@ -459,7 +438,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm and emergency lighting</strong> — specialist systems with
                 specific design requirements. Price separately using manufacturer data and
@@ -507,7 +485,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-blue-400" /> AFDD — Arc Fault Detection (Reg 421.1.7)
+            AFDD — Arc Fault Detection (Reg 421.1.7)
           </h4>
           <p className="text-white text-sm leading-relaxed">
             BS 7671:2018+A4:2026 Reg 421.1.7 makes AFDDs <strong>mandatory</strong> on AC
@@ -534,8 +512,8 @@ const sections = [
           adjust your rate accordingly.
         </p>
         <SEOAppBridge
-          title="Price per point electrical installation UK"
-          description="Set your rate per point, quote faster, and win more jobs in 2026. Elec-Mate's per-point pricing cuts quoting time by 70%. Start free today."
+          title="Electrician Price Per Point UK: Pricing Guide 2026"
+          description="How much to charge per point for electrical work in the UK (2026): typical rates for sockets, lights and rewires, plus how to price a full job."
           icon={Target}
         />
       </>

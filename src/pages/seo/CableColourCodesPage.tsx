@@ -2,9 +2,6 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
-  Zap,
-  CheckCircle2,
-  AlertTriangle,
   FileCheck2,
   Cable,
   BookOpen,
@@ -13,7 +10,6 @@ import {
   Camera,
   Palette,
   ShieldCheck,
-  Eye,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -203,7 +199,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Critical Confusion Point</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -309,7 +304,6 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Common Flex Cable Types</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">2-core flex (no earth):</strong> Brown and Blue
                 only. Used for double-insulated (Class II) equipment such as some power tools, phone
@@ -318,7 +312,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">3-core flex (with earth):</strong> Brown, Blue,
                 and Green/Yellow. Used for Class I equipment that requires an earth connection —
@@ -326,7 +319,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">Heat-resistant flex:</strong> Same colours but
                 manufactured with heat-resistant insulation (typically silicone or butyl rubber).
@@ -354,7 +346,6 @@ const sections = [
         <p>Key identification requirements include:</p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-yellow-400">Protective conductors</strong> — must be
               identified by the bi-colour combination green-and-yellow, which shall be used
@@ -365,7 +356,6 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-yellow-400">Line conductors used as switch wires</strong> —
               where a blue (or black in old wiring) conductor is used as a switched line, it must be
@@ -374,7 +364,6 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-yellow-400">Neutral conductors</strong> — the neutral
               conductor must be identified by the colour blue (or black in old wiring) and must not
@@ -383,7 +372,6 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-yellow-400">Three-phase identification</strong> — in
               three-phase circuits, each phase must be clearly identified at every termination
@@ -415,7 +403,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">A4:2026 Change — Reg 514.14 Deleted</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -457,8 +444,8 @@ const sections = [
           observation.
         </p>
         <SEOAppBridge
-          title="Board Scanner Identifies Cable Colours"
-          description="Elec-Mate's AI board scanner photographs the inside of a consumer unit and identifies cable colours, conductor identification…"
+          title="UK Wiring Colour Codes: Old vs New (BS 7671)"
+          description="UK cable colour codes explained: the new harmonised colours vs the old red and black, for single, twin & earth and three-phase, with a comparison."
           icon={Camera}
         />
       </>
@@ -476,7 +463,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">
                   Reg 514.15.1 — Alternative and Additional Sources of Supply
@@ -495,7 +481,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">
                   Reg 514.16.1 — Presence of Surge Protective Devices (SPDs)
@@ -533,7 +518,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">Earth Conductor Sleeving</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -552,7 +536,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">Switch Wire Sleeving</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -588,7 +571,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">Missing Earth Sleeving</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -602,7 +584,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">Missing Switch Wire Sleeving</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -616,7 +597,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">Missing Mixed-Colour Warning Notice</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -634,7 +614,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-2">Incorrect Phase Identification</h4>
                 <p className="text-white text-sm leading-relaxed">

@@ -1,20 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
-import {
-  Target,
-  BookOpen,
-  GraduationCap,
-  ShieldCheck,
-  ClipboardCheck,
-  AlertTriangle,
-  Wrench,
-  Timer,
-  Brain,
-  ListOrdered,
-  Award,
-  Zap,
-} from 'lucide-react';
+import { Target, BookOpen, GraduationCap, ShieldCheck, ListOrdered, Award } from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -330,7 +317,6 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-6">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-center gap-3 mb-3">
-              <AlertTriangle className="w-5 h-5 text-red-400" />
               <h3 className="font-bold text-white">Time Management</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -342,7 +328,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-center gap-3 mb-3">
-              <AlertTriangle className="w-5 h-5 text-red-400" />
               <h3 className="font-bold text-white">Safe Isolation Errors</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -354,7 +339,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-center gap-3 mb-3">
-              <AlertTriangle className="w-5 h-5 text-red-400" />
               <h3 className="font-bold text-white">Loose Terminations</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -365,7 +349,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-center gap-3 mb-3">
-              <AlertTriangle className="w-5 h-5 text-red-400" />
               <h3 className="font-bold text-white">Two-Way Switching Errors</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -458,8 +441,8 @@ const sections = [
           detailed feedback.
         </p>
         <SEOAppBridge
-          title="Free AM2 online knowledge test mock — start now"
-          description="Sit a free AM2 Section E (online knowledge test) mock right now: 25 random questions, 60-minute timer, 70% pass mark. Covers H&S, BS 7671, safe isolation, inspection & testing, fault diagnosis. No sign-up."
+          title="AM2 Exam Tips: How to Pass First Time (2026)"
+          description="AM2 assessment explained: what is in each section, the most common fails, and tips to pass first time, plus free AM2 mock practice."
           icon={Target}
           ctaText="Start the AM2 online mock →"
           ctaHref="/mock-exams/am2-online-knowledge-test"

@@ -2,20 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Clock,
-  BookOpen,
-  Landmark,
-  ShieldCheck,
-  Zap,
-  FileCheck2,
-  GraduationCap,
-  Scale,
-  AlertTriangle,
-  ClipboardCheck,
-  Award,
-  Brain,
-} from 'lucide-react';
+import { Clock, BookOpen, ShieldCheck, Zap, GraduationCap, Scale } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -175,7 +162,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1882 — 1st Edition.</strong> "Rules and Regulations for the Prevention of
                 Fire Risks Arising from Electric Lighting." Published by the Society of Telegraph
@@ -186,7 +172,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1888 — 2nd Edition.</strong> Expanded to cover the growing use of
                 electricity beyond lighting. The UK's first public electricity supply had been
@@ -194,7 +179,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1897 — 5th Edition.</strong> By the late 1890s, electricity was becoming
                 mainstream in wealthier homes and commercial buildings. The regulations were
@@ -202,7 +186,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1924 — 10th Edition.</strong> A significant milestone. Published after World
                 War I, during a period of rapid electrification of British homes. The Electricity
@@ -211,7 +194,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1950 — 13th Edition.</strong> Post-war Britain was rebuilding. The
                 nationalisation of the electricity industry in 1947 (creating the British
@@ -239,7 +221,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1955 — 14th Edition.</strong> Reflected the massive expansion of domestic
                 electrification in the 1950s. More homes than ever had electricity, and the range of
@@ -248,7 +229,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1966 — 14th Edition (Metric).</strong> The regulations were metricated,
                 reflecting the UK's gradual transition to metric units. Cable sizes changed from
@@ -256,7 +236,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1976 — 15th Edition.</strong> A major update that introduced many concepts
                 still recognisable today. The 15th Edition restructured the regulations and began
@@ -283,7 +262,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1981 — 15th Edition (Revised).</strong> Further harmonisation with
                 international standards. The colour coding of cables remained the older system (red
@@ -291,7 +269,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1991 — 16th Edition.</strong> First published as BS 7671 (replacing the
                 previous IEE Regulations numbering). A landmark edition that introduced the formal
@@ -301,7 +278,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2001 — 16th Edition, Amendment 2.</strong> Introduced RCD protection
                 requirements for socket outlets in domestic premises. This was a significant safety
@@ -310,7 +286,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2004 — New cable colours.</strong> Harmonised cable colours were introduced:
                 brown for live (replacing red), blue for neutral (replacing black). Green/yellow for
@@ -318,7 +293,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2005 — Part P introduced.</strong> Part P of the Building Regulations
                 (Electrical Safety — Dwellings) came into force on 1 January 2005 in England and
@@ -348,7 +322,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2008 — 17th Edition published.</strong> BS 7671:2008. A major revision with
                 extensive restructuring to align with CENELEC HD 60364. Significant changes included
@@ -357,7 +330,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2011 — Amendment 1.</strong> Introduced the requirement for metal consumer
                 units in domestic premises (Regulation 421.1.201) following concerns about fire
@@ -366,7 +338,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2013 — Part P revised.</strong> The scope of notifiable work under Part P
                 was simplified. The list of notifiable work was streamlined, making it easier for
@@ -374,7 +345,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2015 — Amendment 3.</strong> Further updates including revisions to surge
                 protection requirements and clarifications on cable support in escape routes.
@@ -399,7 +369,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>July 2018 — 18th Edition published.</strong> BS 7671:2018. Effective from 1
                 January 2019. Key changes included: expanded surge protection requirements (Section
@@ -408,14 +377,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>February 2020 — Amendment 1.</strong> Corrections and clarifications to the
                 original 2018 text. Minor but important technical updates.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>March 2022 — Amendment 2.</strong> More substantial changes including
                 updates to energy efficiency requirements, electric vehicle charging provisions, and
@@ -424,7 +391,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>31 July 2024 — Amendment 3.</strong> Adds Section 530 requirements covering
                 bidirectional and unidirectional switching and protective devices. Directly relevant
@@ -433,7 +399,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2026 — Amendment 4 (A4:2026).</strong> Significant update bringing the
                 current edition to BS 7671:2018+A4:2026. See the{' '}
@@ -454,8 +419,8 @@ const sections = [
           and export energy.
         </p>
         <SEOAppBridge
-          title="AI regulation lookup — always current"
-          description="Elec-Mate's built-in regulation assistant references BS 7671:2018+A4:2026 directly. Ask any question about wiring regulations and get the specific…"
+          title="UK Wiring Regulations Timeline: BS 7671 Editions"
+          description="A timeline of UK wiring regulations: every edition and amendment of BS 7671 (the IET Wiring Regs) and what changed, up to A4:2026."
           icon={BookOpen}
         />
       </>
@@ -473,7 +438,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-4">
-            <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">
                 A3:2024 — Section 530 Bidirectional Device Requirements
@@ -519,7 +483,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 421.1.7 — AFDD recommendation introduced.</strong> A new Regulation
                 421.1.7 recommends the installation of{' '}
@@ -534,7 +497,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 411.3.4 — 30 mA RCD mandatory on domestic lighting circuits.</strong>{' '}
                 This is one of the most compliance-critical changes in A4:2026. Within domestic
@@ -546,7 +508,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New Chapter 57 — Stationary Secondary Battery Installations.</strong> A new
                 Chapter 57 has been introduced to cover installations where the designed purpose of
@@ -557,7 +518,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Reg 133.1.3 — Equipment usage must be recorded on Part 6 certification.
@@ -571,7 +531,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Section 722 — Significant changes to EV charging requirements.</strong>{' '}
                 Section 722 (electric vehicle charging installations) contains significant
@@ -600,7 +559,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IET (Institution of Engineering and Technology).</strong> Publishes BS 7671
                 and the associated Guidance Notes. Successor to the IEE. The technical authority
@@ -608,7 +566,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BSI (British Standards Institution).</strong> Co-publishes BS 7671 with the
                 IET. BSI manages the formal British Standard number and ensures the standard meets
@@ -616,7 +573,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC, NAPIT, ELECSA.</strong> Government-authorised{' '}
                 <SEOInternalLink href="/guides/how-to-find-electrician-uk">
@@ -627,7 +583,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Safety First.</strong> An independent charity dedicated to
                 reducing deaths, injuries, and fires caused by electricity. Publishes safety
@@ -636,7 +591,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HSE (Health and Safety Executive).</strong> Enforces the Electricity at Work
                 Regulations 1989 and the Health and Safety at Work Act 1974. Primarily focused on
@@ -645,7 +599,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CENELEC.</strong> The European Committee for Electrotechnical
                 Standardisation. Produces harmonisation documents (HD 60364 series) that BS 7671
@@ -672,7 +625,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Regulation Lookup</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -689,7 +641,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">18th Edition Study Centre</h4>
                 <p className="text-white text-sm leading-relaxed">

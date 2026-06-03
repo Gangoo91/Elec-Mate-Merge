@@ -1,19 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
-import {
-  BookOpen,
-  Cable,
-  Calculator,
-  ShieldCheck,
-  Layers,
-  Zap,
-  ClipboardCheck,
-  Thermometer,
-  AlertTriangle,
-  Search,
-  Table2,
-} from 'lucide-react';
+import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -126,8 +114,8 @@ const sections = [
           ambient temperature and Tables 4C1 to 4C5 for grouping.
         </p>
         <SEOAppBridge
-          title="BS 7671 Appendix 4 Tables | A4:2026"
-          description="BS 7671 Appendix 4 current-carrying capacity tables for 16 cable types and all reference methods. Updated A4:2026. Find your rating in seconds."
+          title="BS 7671 Appendix 4 Tables: Cable Current Ratings & Volt Drop"
+          description="BS 7671 Appendix 4 explained: current-carrying capacity, volt drop (mV/A/m) and correction factors (Ca, Cg, Ci) for every cable type and method."
           icon={BookOpen}
         />
       </>
@@ -232,7 +220,6 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Most commonly used PVC tables</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">Table 4D1A</strong> — PVC/copper twin and earth
                 (70&deg;C) cable clipped direct (Method C). Values: 1.0mm&sup2;=13A,
@@ -240,7 +227,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">Table 4D2A</strong> — Single-core PVC/copper
                 cables, clipped direct or on cable tray. Used for large singles on cable tray
@@ -248,7 +234,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">Table 4D5A</strong> — XLPE/copper twin and earth
                 (90&deg;C) cable clipped direct (Method C). Higher capacity than 4D1A for the same
@@ -268,7 +253,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">
                 T+E in thermal insulation (stud walls, ceiling voids)
@@ -384,7 +368,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">Amendment 4 change: Appendix 12</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -435,7 +418,6 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Twin and Earth (T&amp;E)</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -452,7 +434,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Singles in Conduit</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -469,7 +450,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">SWA (Steel Wire Armoured)</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -485,7 +465,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Flexible Cables</h3>
                 <p className="text-white text-sm leading-relaxed">

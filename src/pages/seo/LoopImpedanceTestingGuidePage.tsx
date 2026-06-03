@@ -5,10 +5,8 @@ import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   FileCheck2,
   Zap,
-  AlertTriangle,
   ClipboardCheck,
   ShieldCheck,
-  Info,
   CheckCircle2,
   CircleDot,
 } from 'lucide-react';
@@ -155,7 +153,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>The fault loop path</strong>: Supply transformer secondary winding → line
               conductor of the distribution network → line terminal at the installation origin →
@@ -183,7 +180,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Method — main switch open</strong>: With the main switch open (to disconnect
                 the installation's internal wiring), connect the loop impedance tester between the
@@ -193,7 +189,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TN-C-S (PME) earthing</strong>: Typical Ze ≤ 0.35Ω. The neutral and
                 protective conductors are combined in the distribution network. The supply earth is
@@ -202,7 +197,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TN-S earthing</strong>: Typical Ze ≤ 0.8Ω. Separate earth conductor in the
                 supply cable sheath. The Ze is higher because the earth path impedance is greater.
@@ -210,7 +204,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing</strong>: No Ze in the traditional sense — the installation has
                 its own earth electrode with resistance Ra. Ra plus the electrode resistance of the
@@ -241,7 +234,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Live Zs test</strong>: With the circuit energised, connect the loop
                 impedance tester between line and earth at the furthest accessible point of the
@@ -251,7 +243,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calculated Zs (dead method)</strong>: Zs is calculated as Ze plus the r1+r2
                 value obtained from the continuity tests: Zs = Ze + (r1 + r2). This is used for
@@ -261,7 +252,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature correction</strong>: Conductor resistance (and therefore
                 impedance) increases with temperature. Tables 41.2 and 41.3 give Zs limits at the
@@ -291,7 +281,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PEFC (prospective earth fault current)</strong>: PEFC = Uo ÷ Ze, where Uo =
                 230V and Ze is the measured external loop impedance. If Ze = 0.30Ω, PEFC = 230 ÷
@@ -301,7 +290,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PSCC (prospective short-circuit current)</strong>: PSCC = Uo ÷ Zline, where
                 Zline is the impedance of the line-to-neutral loop (line conductor and neutral
@@ -312,7 +300,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Record both values</strong>: BS 7671 requires both PEFC and PSCC to be
                 recorded on the schedule of test results. The higher of the two determines the
@@ -340,7 +327,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type B MCBs (BS EN 60898)</strong>: Operate at 3–5× rated current (Ia = 5 ×
                 In). Maximum Zs at 230V using Reg 411.4.4 formula (Cmin × Uo / Ia, where Cmin =
@@ -349,7 +335,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type C MCBs (BS EN 60898)</strong>: Operate at 5–10× rated current (Ia = 10
                 × In). Maximum Zs values are half those of Type B for the same rating: 6A = 3.64Ω /
@@ -358,7 +343,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type D MCBs (BS EN 60898)</strong>: Magnetic trip at 20 × In (Ia = 20 × In,
                 Reg 411.4.204(c) Table 41.3(c)). Maximum Zs: 6 A = 1.82 Ω / 16 A = 0.68 Ω / 32 A =
@@ -368,7 +352,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 88-2 (gG/gM) and BS 88-3 fuses — Table 41.2 (Reg 411.4.201)</strong>: BS
                 88-2 gG maximum Zs at 0.4 s disconnection: 16 A = 2.43 Ω / 32 A = 0.99 Ω / 63 A =
@@ -382,7 +365,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>On-site pass criterion (GN3)</strong>: The measured Zs (at ambient
               temperature) should not exceed 0.80 × the tabulated Table 41.3 or Table 41.2 limit.
@@ -396,7 +378,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <div className="text-white">
               <strong>TT systems — Reg 411.5.3 Table 41.5</strong>
               <p className="mt-2">
@@ -434,7 +415,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Live testing (preferred where RCDs permit)</strong>: Measures the actual Zs
                 of the complete circuit including all connections and joints. Detects deteriorated
@@ -443,7 +423,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Live testing limitations</strong>: Cannot be used on RCD-protected circuits
                 without a special RCD-compatible instrument mode. Requires the supply to be
@@ -452,7 +431,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calculated method (Zs = Ze + r1 + r2)</strong>: Safe for use on all
                 circuits. Requires accurate Ze measurement and precise r1+r2 values from continuity
@@ -461,7 +439,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calculated method limitations</strong>: Does not detect high-resistance
                 joints unless r2 is abnormally high. If a connection deteriorates between test day
@@ -486,7 +463,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standard vs RCD-compatible mode</strong>: Select RCD-compatible (low-current
                 or "no-trip") mode when testing circuits with 30mA RCDs. This mode uses a very brief
@@ -495,7 +471,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2-wire vs 4-wire measurement</strong>: For Ze measurement at the origin, use
                 the standard 2-wire (L-PE) connection. For accurate Zs measurement at distant
@@ -504,7 +479,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage sensing</strong>: Confirm the instrument is detecting the correct
                 supply voltage before initiating the test. An instrument set to the wrong voltage
@@ -532,14 +506,12 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ze</strong>: Record the measured Ze value and the earthing system type
                 (TN-C-S, TN-S, or TT) at the installation origin.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zs per circuit</strong>: Record the measured or calculated Zs value at the
                 furthest point of each circuit. Indicate whether the result is measured (M) or
@@ -547,14 +519,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PFC</strong>: Record the prospective fault current (both PEFC and PSCC) at
                 the origin of the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Instrument details</strong>: Record the make, model, serial number, and
                 calibration date of the loop impedance tester on the certificate.
@@ -563,8 +533,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Loop Impedance Test Results | BS 7671:2026"
-          description="Record loop impedance test results on site instantly. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules."
+          title="Ze and Zs Explained: Earth Loop Impedance Testing Guide"
+          description="Ze vs Zs made simple: what each means, how to test earth fault loop impedance, and the maximum Zs values to compare against, to BS 7671."
           icon={FileCheck2}
         />
       </>
@@ -583,7 +553,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Auto-Check Zs Against Device Limits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -600,7 +569,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Temperature Correction Built In</h4>
                 <p className="text-white text-sm leading-relaxed">

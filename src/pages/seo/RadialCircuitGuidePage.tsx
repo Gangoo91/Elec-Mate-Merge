@@ -2,20 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Cable,
-  Zap,
-  Calculator,
-  ShieldCheck,
-  AlertTriangle,
-  CircuitBoard,
-  Wrench,
-  FileCheck2,
-  GraduationCap,
-  Home,
-  ArrowLeftRight,
-  BarChart3,
-} from 'lucide-react';
+import { Cable, Zap, Calculator, CircuitBoard, Home } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -189,7 +176,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Single path for current</strong> — all current flows through the same
                 conductors from the distribution board to the load. The conductor nearest the board
@@ -197,7 +183,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Progressive voltage drop</strong> — voltage drop increases with distance
                 from the board. The furthest outlet sees the highest voltage drop, which must be
@@ -209,7 +194,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sized for full load</strong> — the cable must be rated to carry the
                 full design current of the circuit because there is only one current path, unlike a
@@ -239,7 +223,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated appliance circuits</strong> — cookers, electric showers, immersion
                 heaters, electric vehicle chargers, and any other high-current fixed appliance
@@ -248,7 +231,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits</strong> — all lighting circuits in the UK are radial
                 circuits. A typical domestic lighting circuit uses 1.0mm{'\u00B2'} or 1.5mm
@@ -256,7 +238,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Small floor areas</strong> — for rooms or areas up to 50m{'\u00B2'}, a 20A
                 radial on 2.5mm{'\u00B2'} cable is simpler and more cost-effective than a ring
@@ -265,7 +246,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Extensions and additions</strong> — when adding circuits to an existing
                 installation, a radial circuit is often the simplest option because it only requires
@@ -273,7 +253,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial and industrial installations</strong> — radial circuits are the
                 standard configuration for commercial socket outlets, typically using 20A or 32A
@@ -283,8 +262,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Size radial circuit cables in seconds"
-          description="Elec-Mate's cable sizing calculator applies all BS 7671 correction factors for your radial circuit automatically."
+          title="Radial Circuits Explained: Cable & MCB Sizes (BS 7671)"
+          description="Radial circuit design made simple: cable sizes, MCB ratings and the rules for socket and lighting radials to BS 7671."
           icon={Calculator}
         />
       </>
@@ -364,42 +343,36 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Standard Radial Circuit Cable Sizes</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>6A lighting circuit</strong> — 1.0mm{'\u00B2'} twin and earth (6242Y).
                 Suitable for most domestic lighting circuits with LED loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>16A immersion heater</strong> — 2.5mm{'\u00B2'} twin and earth. Dedicated
                 radial to a 3kW immersion heater via a double-pole switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>20A radial sockets</strong> — 2.5mm{'\u00B2'} twin and earth.
                 General-purpose socket outlets serving up to 50m{'\u00B2'} floor area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>32A radial sockets</strong> — 4mm{'\u00B2'} twin and earth. General-purpose
                 socket outlets serving up to 75m{'\u00B2'} floor area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>32A cooker circuit</strong> — 6mm{'\u00B2'} twin and earth. Dedicated radial
                 to a cooker control unit with diversity applied.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>40A or 45A shower circuit</strong> — 10mm{'\u00B2'} twin and earth for
                 showers above 9.5kW. Cable size depends on the kW rating of the shower.
@@ -448,7 +421,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overload protection (Regulation 433)</strong> — the rated current of the
                 protective device (In) must be greater than or equal to the design current (Ib) and
@@ -457,7 +429,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fault current protection (Regulation 434)</strong> — the protective device
                 must disconnect the circuit within 5 seconds for a circuit supplying fixed
@@ -467,7 +438,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 411.3.3)</strong> — socket outlet circuits rated
                 up to 32A in domestic premises require 30mA RCD protection. This is achieved using
@@ -475,7 +445,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/spd-surge-protection">
@@ -507,7 +476,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Lighting Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -521,7 +489,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   <SEOInternalLink href="/guides/cooker-circuit-guide">
@@ -538,7 +505,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   <SEOInternalLink href="/guides/electric-shower-installation">
@@ -555,7 +521,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Immersion Heater Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -644,7 +609,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized cable for the installation method.</strong> A cable clipped
                 direct to a joist has a different current-carrying capacity to the same cable
@@ -656,7 +620,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ignoring voltage drop on long runs.</strong> A 32A radial on 4mm{'\u00B2'}
                 cable over 30 metres may exceed the 5% voltage drop limit under full load. Always
@@ -664,7 +627,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overloading a 20A radial.</strong> A 20A radial on 2.5mm{'\u00B2'} cable is
                 not suitable for heavy loads. If the area has multiple high-power appliances
@@ -672,7 +634,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing RCD protection on socket circuits.</strong> All socket outlet
                 circuits rated up to 32A in domestic premises must have 30mA RCD protection. This
@@ -680,7 +641,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not checking Zs at the furthest point.</strong> The earth fault loop
                 impedance at the last outlet on a long radial can be significantly higher than at

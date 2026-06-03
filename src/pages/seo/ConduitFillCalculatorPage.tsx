@@ -7,20 +7,7 @@ import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
-import {
-  Calculator,
-  Zap,
-  CheckCircle2,
-  BookOpen,
-  BarChart3,
-  HelpCircle,
-  ChevronDown,
-  ChevronRight,
-  ArrowDown,
-  Ruler,
-  Layers,
-  Thermometer,
-} from 'lucide-react';
+import { Calculator, BookOpen, BarChart3, Ruler, Layers, Thermometer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const faqs = [
@@ -185,7 +172,6 @@ export default function ConduitFillCalculatorPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
@@ -203,14 +189,12 @@ export default function ConduitFillCalculatorPage() {
               className="h-11 px-8 inline-flex items-center justify-center rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation transition-colors"
             >
               Try the Calculator Free
-              <ChevronRight className="w-4 h-4 ml-1" />
             </Link>
             <a
               href="#how-it-works"
               className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
             >
               See How It Works
-              <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
         </div>
@@ -227,9 +211,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Layers className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Conduit Fill and Why Does It Matter?
             </h2>
@@ -292,9 +274,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Calculator className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Cable Factor Method Explained
             </h2>
@@ -335,9 +315,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Cable Factor Tables</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -393,9 +371,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Ruler className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Conduit Factor Tables</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -452,9 +428,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
@@ -591,9 +565,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Ruler className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Bends, Long Runs, and Difficulty Factors
             </h2>
@@ -644,9 +616,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Layers className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Trunking Fill — The 45% Rule
             </h2>
@@ -698,9 +668,7 @@ export default function ConduitFillCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Conduit Fill — Step by Step
             </h2>
@@ -742,8 +710,8 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-8 px-5">
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
-            title="Conduit Fill Calculator — Always in Your Pocket"
-            description="Use Elec-Mate's built-in calculators on any job site — conduit fill, cable sizing, voltage drop and more."
+            title="Conduit Fill Calculator UK: Cable Capacity (BS 7671)"
+            description="Free conduit fill calculator: check how many cables fit your conduit using the space-factor method. Sizes for PVC and steel conduit to BS 7671."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -754,9 +722,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
             </h2>
@@ -769,7 +735,6 @@ export default function ConduitFillCalculatorPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>

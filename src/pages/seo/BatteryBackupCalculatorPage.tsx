@@ -7,7 +7,6 @@ import {
   Calculator,
   Zap,
   Shield,
-  BookOpen,
   BarChart3,
   Clock,
   Server,
@@ -21,8 +20,8 @@ import {
 export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
-      title="Battery Backup Calculator UK | UPS Sizing + Ah Runtime Tool"
-      description="Free UK battery backup calculator: size UPS capacity, calculate runtime in minutes, determine Ah requirements for any load. Built for UK electricians."
+      title="Battery Backup Calculator: UPS Runtime & Ah Sizing"
+      description="Free UPS / battery backup calculator: size the battery bank and estimate runtime from your load, voltage, depth of discharge and inverter efficiency."
       datePublished="2026-01-25"
       dateModified="2026-05-29"
       breadcrumbs={[

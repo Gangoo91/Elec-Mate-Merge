@@ -2,16 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  FileCheck2,
-  Zap,
-  AlertTriangle,
-  ClipboardCheck,
-  ShieldCheck,
-  Info,
-  CheckCircle2,
-  XCircle,
-} from 'lucide-react';
+import { FileCheck2, Zap, ClipboardCheck, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -78,7 +69,7 @@ const faqs = [
   {
     question: 'Does polarity testing apply to three-phase installations?',
     answer:
-      'Yes. For three-phase installations, polarity testing (Reg 643.6) verifies that each phase conductor (L1, L2, L3) connects to the correct MCB or fuse, and that phase, neutral, and earth are correctly connected at all three-phase accessories, distribution boards, and motor connections. Phase rotation — the sequential order of L1, L2, L3 — is a separately performed and recorded test. BS 7671 Reg 442.1.2 and GN3 Reg 2.30 require phase rotation to be tested at the point closest to each three-phase load before energisation (to prevent incorrect motor direction of rotation), and the result shall be recorded as a distinct item on the Generic Schedule of Test Results (Appendix 6). Phase rotation is not the same as polarity: polarity confirms correct conductor identity at every point, whilst phase rotation confirms the cyclic sequence of the three phases. For the full three-phase testing context including loop impedance and Zs, see the loop impedance testing guide.',
+      'Yes. For three-phase installations, polarity testing (Reg 643.6) verifies that each phase conductor (L1, L2, L3) connects to the correct MCB or fuse, and that phase, neutral, and earth are correctly connected at all three-phase accessories, distribution boards, and motor connections. Phase rotation — the sequential order of L1, L2, L3 — is a separately performed and recorded test. BS 7671 Reg 643.11 and GN3 Reg 2.30 require phase rotation to be tested at the point closest to each three-phase load before energisation (to prevent incorrect motor direction of rotation), and the result shall be recorded as a distinct item on the Generic Schedule of Test Results (Appendix 6). Phase rotation is not the same as polarity: polarity confirms correct conductor identity at every point, whilst phase rotation confirms the cyclic sequence of the three phases. For the full three-phase testing context including loop impedance and Zs, see the loop impedance testing guide.',
   },
 ];
 
@@ -149,7 +140,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switch in the neutral — live when off</strong>: A single-pole switch wired
                 in the neutral conductor rather than the line conductor will switch the circuit off
@@ -160,7 +150,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reversed socket outlet</strong>: If line and neutral are transposed at a
                 socket outlet, the line conductor is connected to the larger neutral slot. A
@@ -171,7 +160,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ES lamp holders</strong>: BS 7671 Reg 559.5.1.206 requires that the outer
                 (screwed) contact of every Edison screw lampholder shall be connected to the neutral
@@ -199,7 +187,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit / distribution board</strong>: Confirm that line conductors
                 from the supply connect to the line bus (feeding the MCBs or fuses). Confirm that
@@ -208,7 +195,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets</strong>: Verify that the line conductor connects to the line
                 terminal (right-hand terminal on a BS 1363 socket when facing the socket), neutral
@@ -216,7 +202,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting switches</strong>: Verify that the single-pole switch interrupts
                 the line conductor only. The switch wire (typically brown, or an appropriately
@@ -224,7 +209,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire connections</strong>: At every fixed luminaire connection, confirm
                 line to line terminal and neutral to neutral terminal. For ES lamp holders, confirm
@@ -234,7 +218,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed appliance connections</strong>: Cookers, water heaters, showers, and
                 other fixed appliances must have line at the correct terminal. Check the appliance
@@ -253,7 +236,6 @@ const sections = [
       <>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Test sequence context (BS 7671:2018+A4:2026):</strong> Polarity is the sixth
               and final pre-energisation test in the initial verification sequence. BS 7671 Reg
@@ -301,7 +283,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Why low voltage?</strong> The bell and battery method uses a voltage far lower
               than mains supply — safe to use on a de-energised circuit without risk of shock. The
@@ -326,7 +307,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Null the lead resistance</strong>: Short the instrument leads together and
                 null or record the lead resistance before testing. This is particularly important on
@@ -335,7 +315,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wander lead technique</strong>: Run a long wander lead from the consumer
                 unit to each accessory being tested. One instrument terminal stays at the consumer
@@ -345,7 +324,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Polarity at each accessory</strong>: At each socket outlet, test between the
                 line terminal and the conductor connected to the consumer unit line busbar (via the
@@ -371,7 +349,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check the switched conductor is live</strong>: With the switch in the on
                 position, measure between the switch terminal connecting to the luminaire (the
@@ -382,7 +359,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ES lamp holder live verification</strong>: With the lamp removed and the
                 switch in the off position, measure between the centre contact of the ES holder and
@@ -392,7 +368,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlet live check</strong>: Use a socket tester (a plug-in device
                 with indicator lights) or a voltage indicator at the socket. Confirm line is at the
@@ -419,7 +394,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Transposed at a socket outlet</strong>: Brown (line) connected to neutral
                 terminal, blue (neutral) connected to line terminal. The socket functions normally
@@ -428,7 +402,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switch in the neutral</strong>: Particularly common in older loop-in ceiling
                 rose wiring where brown and blue conductors are close together and easy to
@@ -437,7 +410,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Transposed at the consumer unit</strong>: Line conductors connected to the
                 neutral bar and neutral conductors connected to MCBs. This is a whole-board reversal
@@ -446,7 +418,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Strapping conductors reversed in two-way switching</strong>: The two
                 strapping conductors between two-way switches can be reversed, causing the switching
@@ -457,7 +428,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Extension lead or spur added with reversed polarity</strong>: A DIY-added
                 socket or extension connected via a junction box, with line and neutral transposed
@@ -531,14 +501,12 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pass/Fail per circuit</strong>: Record a tick (pass) or cross (fail) in the
                 polarity column of the schedule for each circuit tested.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations</strong>: Note any circuits or accessories where polarity could
                 not be fully verified — for example, a permanently wired appliance where access was
@@ -546,7 +514,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Observations</strong>: Any polarity fault found and not immediately remedied
                 during the inspection must be recorded as an observation (C1, C2, or C3) with a
@@ -557,8 +524,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Polarity Test Electrical: BS 7671 Guide"
-          description="Polarity test electrical circuits correctly under BS 7671:2018+A4:2026. Step-by-step method, record results, generate EICR reports. Free for electricians."
+          title="Polarity Test Explained: How & Why (BS 7671)"
+          description="Polarity testing made simple: what it proves, how to carry it out, and the dead and live tests required by BS 7671 Part 6."
           icon={FileCheck2}
         />
       </>
@@ -577,7 +544,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Log Polarity Results Per Circuit</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -594,7 +560,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cross-Check with a Socket Tester</h4>
                 <p className="text-white text-sm leading-relaxed">

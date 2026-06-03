@@ -2,16 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  FileCheck2,
-  Zap,
-  AlertTriangle,
-  ClipboardCheck,
-  ShieldCheck,
-  CheckCircle2,
-  Info,
-  CircleDot,
-} from 'lucide-react';
+import { FileCheck2, Zap, AlertTriangle, ShieldCheck, CheckCircle2, CircleDot } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -146,7 +137,6 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ring final circuit continuity</strong>: Verifying that socket outlet
                 circuits wired as a ring form a complete loop with no spurious spurs or incorrectly
@@ -154,7 +144,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CPC continuity</strong>: Confirming that every circuit has an unbroken
                 protective conductor connecting all exposed-conductive-parts to the main earthing
@@ -162,7 +151,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Equipotential bonding conductor continuity</strong>: Verifying that main
                 equipotential bonding conductors and supplementary bonding conductors are intact and
@@ -227,7 +215,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Expected values</strong>: For a 2.5mm² line and neutral conductor (typical for
               a 32A ring final circuit in flat twin-and-earth cable), expect approximately 7.41Ω per
@@ -284,7 +271,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Figure-of-eight fault</strong>: GN3 identifies this as a specific diagnostic
               outcome of the three-step ring test. A figure-of-eight occurs when conductors are
@@ -313,7 +299,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>r1</strong>: Resistance of the line conductor from the consumer unit to the
                 furthest point on the circuit. For a ring, derived from the cross-connected test (r1
@@ -322,7 +307,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>rn</strong>: Resistance of the neutral conductor from the consumer unit to
                 the furthest point. Derived from the cross-connected test. For standard flat
@@ -330,7 +314,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>r2</strong>: Resistance of the CPC from the consumer unit to the furthest
                 point. This is the most critical value. Combined with Ze, it gives Zs without
@@ -345,7 +328,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Note on CPC size</strong>: In flat twin-and-earth cable, the CPC is typically
               smaller than the line and neutral conductors (1.0mm² CPC in 1.5mm² T&E, 1.5mm² CPC in
@@ -371,7 +353,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Radial circuit method</strong>: Disconnect the CPC at the consumer unit
                 earth bar. Use a long wander lead to connect from the disconnected CPC end at the
@@ -381,7 +362,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Alternative method using instrument leads</strong>: Where a long wander lead
                 is not available, the instrument can be "zeroed" with the leads joined, then the
@@ -391,7 +371,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What constitutes a CPC?</strong>: On modern installations, the CPC is
                 usually the bare or green-and-yellow conductor in the cable sheath. On older
@@ -418,7 +397,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Disconnect at one end before testing</strong>: This is essential. If both
                 ends of the bonding conductor remain connected, the test current flows through the
@@ -429,7 +407,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Expected resistance values</strong>: Main equipotential bonding conductors
                 are short and of large cross-sectional area. Under BS 7671 Reg 544.11 / Table 54.8,
@@ -440,7 +417,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reconnect and verify</strong>: After testing, reconnect the bonding
                 conductor and test again with both ends connected to confirm continuity is restored.
@@ -466,7 +442,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Null the lead resistance</strong>: Before any continuity test, short the
                 instrument leads together and record or null the lead resistance. On modern
@@ -476,7 +451,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use a wander lead for distant tests</strong>: A wander lead (a long
                 single-conductor test lead, typically 10m to 25m) allows one instrument terminal to
@@ -485,7 +459,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Instrument calibration</strong>: The continuity test instrument must be
                 calibrated to a traceable standard and within its calibration period. Record the
@@ -514,7 +487,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>r1+rn (Ω)</strong>: The measured r1+rn resistance at the furthest point of
                 the circuit, in ohms. For ring final circuits, this is the value at the furthest
@@ -522,14 +494,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>r1+r2 (Ω)</strong>: The measured r1+r2 resistance at the furthest point of
                 the circuit. This is used to calculate Zs without live testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ring final continuity</strong>: For ring final circuits, record the
                 end-to-end values (R1, Rn, R2) from Test 1, and the r1+rn and r1+r2 values from the
@@ -537,7 +507,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding conductor continuity</strong>: Record the measured resistance of
                 each bonding conductor tested. Note where the bonding conductor was disconnected for
@@ -547,8 +516,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Acceptable Continuity Test Results BS 7671"
-          description="Acceptable continuity test results for ring finals and protective conductors under BS 7671:2018+A4:2026."
+          title="Continuity Testing (R1+R2): Acceptable Results (BS 7671)"
+          description="How to test CPC continuity (R1+R2) and what results are acceptable. Step-by-step method, expected values and pass or fail criteria to BS 7671."
           icon={FileCheck2}
         />
       </>
@@ -567,7 +536,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Test Schedules On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -583,7 +551,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Derive Zs Without Live Testing</h4>
                 <p className="text-white text-sm leading-relaxed">

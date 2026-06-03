@@ -117,7 +117,6 @@ const sections = [
           Part P framework.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-4 my-6 flex items-start gap-3">
-          <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
           <p className="text-white/60 text-xs leading-relaxed">
             <span className="text-white/80 font-medium">
               Written by the Elec-Mate editorial team
@@ -182,21 +181,18 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Qualifications Required</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition:</strong> City & Guilds 2382 (or equivalent) — the current
                 edition of the IET Wiring Regulations, BS 7671:2018+A4:2026
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection & Testing:</strong> City & Guilds 2391 (or equivalent, such as
                 the older 2394/2395) — required for initial verification and periodic inspection
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NVQ Level 3:</strong> NVQ Level 3 in Electrical Installation or equivalent
                 vocational qualification (C&G 2357, 2365 with AM2, or equivalent)
@@ -208,28 +204,24 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Other Requirements</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance:</strong> Minimum 2 million pounds cover (higher
                 cover may be required for some contract types)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test instruments:</strong> Calibrated multifunction tester, GS38-compliant
                 voltage indicator, and (if not integrated) RCD tester. All within calibration date.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Business premises:</strong> A fixed address for correspondence and records.
                 Home address is acceptable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recent work samples:</strong> You must be able to provide samples of recent
                 electrical installation certificates for the assessor to review.
@@ -279,8 +271,8 @@ const sections = [
           just one or two notifiable domestic jobs per year.
         </p>
         <SEOAppBridge
-          title="Digital workflow saves time and money"
-          description="Elec-Mate's digital certificate workflow is significantly faster than paper forms. Enter test results on your phone, capture signatures digitally…"
+          title="NAPIT Certificate Guide: Types & How to Issue"
+          description="NAPIT electrical certificates explained: which certificate to issue, what each one covers, and how to complete and notify them correctly."
           icon={FileCheck2}
         />
       </>
@@ -336,7 +328,6 @@ const sections = [
           </h3>
           <ul className="space-y-2 text-white/80 text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended inspection interval (Reg 644.4):</strong> Every EIC must record
                 the recommended interval between initial verification and the first periodic
@@ -345,7 +336,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SPD and AFDD fields (Appendix 6, A4:2026):</strong> The A4:2026 amendment
                 updated the Appendix 6 model forms to include dedicated fields for recording surge
@@ -454,7 +444,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Part P self-certification:</strong> Certify notifiable domestic work without
                 building control involvement. Save 250 to 400 pounds per job in building control
@@ -462,7 +451,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-trade coverage:</strong> Register for electrical, gas, plumbing,
                 heating, and building fabric under one membership. Simplifies compliance for
@@ -470,7 +458,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Find a Tradesperson directory:</strong> Your business appears on the NAPIT
                 website directory, helping homeowners find you when searching for a registered
@@ -478,14 +465,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Technical support helpline:</strong> Access to NAPIT's technical team for
                 guidance on regulation interpretation, complex installations, and BS 7671 queries.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance-backed warranty:</strong> NAPIT provides an insurance-backed
                 warranty on domestic work, giving homeowners protection if the contractor ceases
@@ -493,7 +478,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competitive pricing:</strong> Lower annual fees than NICEIC with the same
                 self-certification ability and legal standing.

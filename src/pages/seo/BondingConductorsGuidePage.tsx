@@ -2,16 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Zap,
-  ShieldCheck,
-  AlertTriangle,
-  FileCheck2,
-  Settings,
-  Info,
-  ClipboardCheck,
-  Home,
-} from 'lucide-react';
+import { Zap, ShieldCheck, FileCheck2, ClipboardCheck, Home } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -142,7 +133,6 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Equipotential zone</strong> — bonding creates an equipotential zone within
                 the building, where all metallic parts accessible to occupants are at the same
@@ -152,7 +142,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Two types of bonding</strong> — BS 7671 18th Edition distinguishes between
                 main protective bonding (connecting services entering the building to the main
@@ -162,7 +151,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory, not optional</strong> — bonding requirements in BS 7671 18th
                 Edition are prescriptive requirements, not recommendations. Missing bonding is
@@ -189,7 +177,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Gas service</strong> — bond to the gas installation pipework as close as
                 practicable to the gas meter, on the consumer's side of the meter. The bonding must
@@ -201,7 +188,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Water service</strong> — bond to the incoming water main as close as
                 practicable to the water meter or the point of entry into the building. Where the
@@ -212,7 +198,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Oil service</strong> — bond to the oil supply pipework entering the
                 building, as close as practicable to the entry point or the oil storage tank supply
@@ -220,7 +205,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Route to MET</strong> — main bonding conductors run directly from each
                 service connection to the main earthing terminal at the consumer unit. They should
@@ -233,7 +217,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
                 A4:2026 change — insulating section exemption
@@ -288,7 +271,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Typical domestic PME supply (PEN ≤35mm²)</strong> — a standard 100A
                 single-phase domestic TN-C-S supply uses a PEN conductor of 16mm² or 25mm². Table
@@ -298,7 +280,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Larger PME supplies (PEN &gt;35mm² up to 50mm²)</strong> — where the network
                 PEN conductor exceeds 35mm² (common for larger commercial premises or upgraded
@@ -308,7 +289,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-PME supplies (TN-S, TT) and the 6mm² minimum</strong> — on non-PME
                 supplies the bonding conductor is sized at half the csa of the earthing conductor,
@@ -319,7 +299,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Older installations with 6mm²</strong> — many older properties have 6mm²
                 main bonding conductors installed to a previous edition's minimum. On a standard PME
@@ -347,7 +326,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What must be bonded</strong> — in a bathroom, supplementary bonding
                 connects: metal baths and shower trays, exposed metallic taps and pipework, metal
@@ -357,7 +335,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conductor sizing</strong> — supplementary bonding conductors must be a
                 minimum of 2.5mm² if mechanically protected (e.g. in conduit or under plaster) or
@@ -366,7 +343,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zones</strong> — BS 7671 18th Edition defines zones within bathrooms (Zone
                 0, 1, 2, and outside zones) based on proximity to the water source. The zone
@@ -376,7 +352,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Door architraves and window frames — not extraneous-conductive-parts
@@ -408,7 +383,6 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition (d) — automatic disconnection (Reg 411.3.2)</strong> — all final
                 circuits of the location shall comply with the requirements for automatic
@@ -417,7 +391,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition (e) — 30mA RCD additional protection (Reg 415.1.1)</strong> — all
                 final circuits of the location shall have additional protection by a residual
@@ -427,7 +400,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition (f) — main equipotential bonding (Reg 411.3.1.2)</strong> — all
                 extraneous-conductive-parts of the location shall be effectively connected to the
@@ -436,7 +408,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>All three conditions must be met simultaneously</strong> — failure on any
                 one condition means supplementary bonding is still required. In a new installation
@@ -446,7 +417,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main bonding still required</strong> — the omission of supplementary bonding
                 does not affect the requirement for main protective bonding of incoming services
@@ -471,7 +441,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding after the meter</strong> — connecting the gas or water bond
                 downstream of the meter means the meter body itself is not bonded. The bond must be
@@ -480,7 +449,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding to the wrong point</strong> — bonding the gas pipe to an earthing
                 conductor in a socket circuit rather than to the main earthing terminal directly is
@@ -489,7 +457,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Broken continuity due to plastic inserts</strong> — plastic isolating
                 sections in gas or water pipework (installed to prevent galvanic corrosion) break
@@ -498,7 +465,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing safety labels</strong> — BS 7671 Reg 514.13.1 requires a warning
                 notice "Safety Electrical Connection | ~ Do Not Remove" to be securely fixed at each
@@ -508,7 +474,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Poor bonding clamp contact</strong> — bonding clamps that are incorrectly
                 sized for the pipe diameter, poorly tightened, or applied over paint or corrosion
@@ -534,7 +499,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Approved clamp types</strong> — bonding clamps for gas and water pipes must
                 be approved BS 951 pattern clamps. They must be sized to suit the pipe diameter and
@@ -543,7 +507,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Surface preparation</strong> — paint, lacquer, or corrosion on the pipe
                 surface at the clamp contact point must be removed before fitting the clamp. A poor
@@ -552,7 +515,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Gas safety</strong> — when fitting a bonding clamp to a gas pipe, ensure the
                 work is carried out by a Gas Safe registered engineer or by an electrician working
@@ -561,7 +523,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safety labelling</strong> — fit a "Safety Electrical Connection | ~ Do Not
                 Remove" notice to the bonding clamp and conductor at each connection point (Reg
@@ -590,7 +551,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Missing main bonding</strong> — absent gas or water bonding conductors
                 are typically C2 (potentially dangerous) as they leave metallic services at an
@@ -599,7 +559,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Undersized bonding conductors</strong> — bonding conductors below the
                 minimum csa required by BS 7671 for the supply size are typically C2. The undersized
@@ -608,7 +567,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Missing safety labels</strong> — absent bonding conductor labels are
                 typically C3 (improvement recommended) as the lack of labels does not immediately
@@ -617,7 +575,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>FI — High continuity resistance</strong> — where the bonding conductor and
                 clamp appear to be present but the continuity resistance measurement is high (above
@@ -643,7 +600,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Bonding Results on Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -660,7 +616,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Settings className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">New Installation Bonding</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -674,8 +629,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Bonding Conductor Size Guide BS 7671:2018+A4:2026"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with bonding test recording, AI board scanning, and instant PDF export."
+          title="Main Bonding Conductor Size Guide (BS 7671)"
+          description="Main and supplementary bonding conductor sizes to BS 7671: minimum cross-sectional area by earthing arrangement and supply, with a sizing table."
           icon={FileCheck2}
         />
       </>

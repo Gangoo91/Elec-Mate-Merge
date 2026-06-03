@@ -7,20 +7,7 @@ import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
-import {
-  Calculator,
-  Zap,
-  CheckCircle2,
-  BookOpen,
-  BarChart3,
-  HelpCircle,
-  ChevronDown,
-  ChevronRight,
-  ArrowDown,
-  Gauge,
-  TrendingUp,
-  PoundSterling,
-} from 'lucide-react';
+import { Calculator, BookOpen, BarChart3, Gauge, TrendingUp, PoundSterling } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const faqs = [
@@ -185,7 +172,6 @@ export default function PowerFactorCalculatorPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
@@ -203,14 +189,12 @@ export default function PowerFactorCalculatorPage() {
               className="h-11 px-8 inline-flex items-center justify-center rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation transition-colors"
             >
               Try the Calculator Free
-              <ChevronRight className="w-4 h-4 ml-1" />
             </Link>
             <a
               href="#how-it-works"
               className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
             >
               See How It Works
-              <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
         </div>
@@ -239,9 +223,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Gauge className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Power Factor?</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -292,9 +274,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Calculator className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               True Power, Apparent Power, and Reactive Power
             </h2>
@@ -345,9 +325,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <PoundSterling className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Low Power Factor Costs Money
             </h2>
@@ -408,9 +386,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <TrendingUp className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Power Factor Correction with Capacitors
             </h2>
@@ -484,9 +460,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Industrial Tariff Penalties and Savings
             </h2>
@@ -528,9 +502,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
@@ -639,9 +611,7 @@ export default function PowerFactorCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Power Factor and Size Capacitors — Step by Step
             </h2>
@@ -694,8 +664,8 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-8 px-5">
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
-            title="Elec-Mate Includes All the Electrical Calculators You Need"
-            description="Elec-Mate includes all the electrical calculators you need — use them on any job, on any device."
+            title="Power Factor Calculator: kW, kVAr & kVA (3-Phase)"
+            description="Free power factor calculator: convert kW to kVA and kVAr, size the correction capacitor, and fix a poor power factor. Single and three-phase."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -706,9 +676,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
             </h2>
@@ -721,7 +689,6 @@ export default function PowerFactorCalculatorPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>

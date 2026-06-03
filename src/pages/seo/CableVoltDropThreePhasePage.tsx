@@ -2,22 +2,7 @@ import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Calculator,
-  Zap,
-  Cable,
-  BarChart3,
-  Shield,
-  BookOpen,
-  Activity,
-  CheckCircle2,
-  AlertTriangle,
-  Settings,
-  Ruler,
-  FileCheck2,
-  GraduationCap,
-  ClipboardCheck,
-} from 'lucide-react';
+import { Calculator, Cable, BarChart3, Shield, BookOpen, Activity, Ruler } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -263,7 +248,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Common Mistake</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -336,7 +320,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Frequency Limitation (Reg 125.8)</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -350,8 +333,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Three Phase Calculation Tool | BS 7671:2026"
-          description="Three phase voltage drop calculator built for BS 7671:2026. Get mV/A/m results instantly—no tables, no guesswork. Compliance check in seconds."
+          title="Three-Phase Volt Drop Calculator (BS 7671)"
+          description="Free three-phase voltage drop calculator to BS 7671: enter cable size, current and length to check volt drop against the 3% and 5% limits."
           icon={Calculator}
         />
       </>
@@ -379,19 +362,15 @@ const sections = [
             <h4 className="font-bold text-white text-lg mb-3">Balanced Load</h4>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                 <span>Equal current on L1, L2, L3</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                 <span>Zero neutral current</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                 <span>Use three-phase mV/A/m values</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                 <span>Compare against 5% of 400 V</span>
               </li>
             </ul>
@@ -400,19 +379,15 @@ const sections = [
             <h4 className="font-bold text-white text-lg mb-3">Unbalanced Load</h4>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-orange-400 mt-0.5 shrink-0" />
                 <span>Different current on each phase</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-orange-400 mt-0.5 shrink-0" />
                 <span>Neutral carries imbalance current</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-orange-400 mt-0.5 shrink-0" />
                 <span>Check each phase individually</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-orange-400 mt-0.5 shrink-0" />
                 <span>Compare against 5% of 230 V per phase</span>
               </li>
             </ul>
@@ -427,7 +402,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-orange-500/5 border border-orange-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Third Harmonic and Neutral Current (Reg 125.8)
@@ -464,7 +438,6 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
               <h4 className="font-bold text-white text-lg">Power Circuits</h4>
             </div>
             <p className="text-3xl font-bold text-yellow-400 mb-1">5%</p>
@@ -472,7 +445,6 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
             <div className="flex items-center gap-2 mb-2">
-              <Activity className="w-5 h-5 text-yellow-400" />
               <h4 className="font-bold text-white text-lg">Lighting Circuits</h4>
             </div>
             <p className="text-3xl font-bold text-yellow-400 mb-1">3%</p>
@@ -642,7 +614,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-orange-500/5 border border-orange-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Single-Core Armoured Cable Caveat</h4>
               <p className="text-white text-sm leading-relaxed">

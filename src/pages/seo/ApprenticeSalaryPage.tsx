@@ -5,15 +5,11 @@ import {
   PoundSterling,
   GraduationCap,
   TrendingUp,
-  BookOpen,
   ClipboardCheck,
-  Brain,
   Award,
   Briefcase,
-  MapPin,
   Calendar,
   Target,
-  FolderOpen,
 } from 'lucide-react';
 
 const breadcrumbs = [
@@ -276,8 +272,8 @@ const sections = [
           and money — both the resit fee and the delayed pay increase.
         </p>
         <SEOAppBridge
-          title="Pass First Time — Earn More Faster"
-          description="Elec-Mate's flashcards with spaced repetition, 2,000+ practice questions, and mock exams help you pass every qualification first time."
+          title="Apprentice Electrician Salary UK 2026 (Hourly & Yearly)"
+          description="How much does an apprentice electrician earn in the UK? 2026 pay by year and region, what affects it, and what you can earn once qualified."
           icon={TrendingUp}
         />
       </>

@@ -2,16 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Scale,
-  ShieldCheck,
-  AlertTriangle,
-  PoundSterling,
-  Building2,
-  Zap,
-  FileCheck2,
-  BookOpen,
-} from 'lucide-react';
+import { Scale, ShieldCheck, PoundSterling, Building2, Zap, FileCheck2 } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -138,7 +129,6 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Scope</strong> — applies to charge points at homes, workplaces, and private
                 destinations (e.g., hotel car parks, supermarkets) that are not publicly accessible
@@ -147,7 +137,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory smart functionality</strong> — all qualifying charge points must
                 support: scheduled charging, randomised startup delay (up to 10 minutes),
@@ -156,7 +145,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Default off-peak setting</strong> — charge points must be pre-configured to
                 charge during off-peak hours (midnight to 8am Monday to Friday, midnight to 11am
@@ -165,7 +153,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Enforcement</strong> — OZEV can issue financial penalties to manufacturers
                 and importers of non-compliant charge points. Electricians who install non-compliant
@@ -197,7 +184,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New residential dwellings with parking</strong> — each dwelling must have an
                 EV charge point (minimum 7kW) or, where a charge point is not possible due to the
@@ -206,7 +192,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New non-residential buildings (more than 10 spaces)</strong> — at least one
                 active charge point per 5 parking spaces (rounded down), plus cable routes for all
@@ -215,7 +200,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Major renovation of non-residential buildings</strong> — where the
                 renovation includes the car park or the car park has more than 10 spaces and the
@@ -225,7 +209,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Document S</strong> — the technical guidance for Part S compliance
                 is set out in Approved Document S (2021 edition). It covers the minimum charge point
@@ -259,7 +242,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.411.4 — Earthing (TN-C-S/PME)</strong> — a PME earthing
                 facility shall not be used directly for the protective conductor contact(s) of an
@@ -276,7 +258,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.531 — Protective devices</strong> — EV charging circuits must
                 be protected by an RCD with rated residual operating current not exceeding 30mA.
@@ -287,7 +268,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.533 — Overcurrent protection</strong> — the circuit
                 protective device must be rated for the maximum continuous operating current. For a
@@ -296,7 +276,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Section 537 (applied via Section 722) — Isolation</strong> — a means of
                 isolation must be provided for the EV charging installation, capable of isolating
@@ -305,7 +284,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.311.201 — Load curtailment (A4:2026)</strong> — load
                 curtailment, including automatic or manual load reduction or disconnection, may be
@@ -316,7 +294,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Section 722 certification</strong> — EV charging installations must be
                 inspected, tested, and certificated in accordance with Part 6 of BS 7671. Use the{' '}
@@ -346,7 +323,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Status</strong> — not statutory law, but recognised by OZEV, NICEIC, NAPIT,
                 and the EV installer certification bodies as the authoritative guidance. Following
@@ -355,7 +331,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>5th Edition coverage</strong> — the 2023 edition covers Mode 2 and Mode 3 AC
                 charging, DC charging, smart charging requirements under the 2021 Regulations, load
@@ -364,7 +339,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV installer assessment</strong> — the OZEV-approved installer
                 qualification (required for grant-funded installations) tests knowledge of the Code
@@ -373,7 +347,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>GN3 inspection requirement</strong> — when inspecting EV charging
                 installations, GN3 (IET Guidance Note 3: Inspection and Testing, 9th Edition)
@@ -384,7 +357,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Chapter 82 — Prosumer's Electrical Installations (A4:2026)</strong> — EV
                 installations that incorporate solar PV generation, battery storage, or
@@ -397,7 +369,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Purchasing the Code of Practice</strong> — the 5th Edition is available from
                 the IET Shop (theiet.org) in print and digital formats. The digital edition includes
@@ -424,7 +395,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Contactless payment</strong> — publicly accessible charge points above 8kW
                 must accept contactless payment (debit and credit card) without requiring a
@@ -433,7 +403,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Transparent pricing</strong> — prices must be displayed clearly per kWh
                 before the session starts. Session fees, connection fees, and time-based fees must
@@ -441,7 +410,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Availability</strong> — operators of rapid chargers (50kW+) must maintain
                 99% annual availability and publish availability data. Failure to maintain
@@ -449,7 +417,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Data reporting</strong> — operators must submit data to the National Charge
                 Point Registry (NCPR), including charge point location, power rating, connector
@@ -475,7 +442,6 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV — Smart Charge Points Regulations</strong> — OZEV can issue civil
                 penalties to manufacturers and importers of non-compliant charge points. Maximum
@@ -484,7 +450,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building control — Part S</strong> — failure to comply with Part S during
                 new construction or renovation can result in building control refusing to issue a
@@ -493,7 +458,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CMA — Public Charge Point Regulations</strong> — the Competition and Markets
                 Authority enforces the Public Charge Point Regulations 2023. The CMA has powers to
@@ -502,7 +466,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Local authorities — planning</strong> — installing an EV charger without
                 required planning permission can result in enforcement notices requiring removal.
@@ -529,7 +492,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Certificate Every Installation Correctly
@@ -550,7 +512,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Apply WCS Grants for Your Clients</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -565,8 +526,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Building Code Electric Vehicle Charging 2026"
-          description="Building code EV charging requirements updated for 2026. Part S compliance, certification…"
+          title="EV Charger Installation Regulations UK (BS 7671 Section 722)"
+          description="EV charge point rules explained: BS 7671 Section 722, PEN-fault protection, RCD type and DNO notification. What every installer must get right."
           icon={FileCheck2}
         />
       </>

@@ -7,11 +7,9 @@ import {
   GraduationCap,
   BrainCircuit,
   ClipboardCheck,
-  Clock,
   Target,
   Lightbulb,
   BarChart3,
-  FileCheck2,
   ListChecks,
 } from 'lucide-react';
 
@@ -114,8 +112,8 @@ const sections = [
           , make mock exams the cornerstone of your revision.
         </p>
         <SEOAppBridge
-          title="Take free mock exams now — no sign-up needed"
-          description="25 free working mock exams: 18th Edition (300 Qs), 2391 (300 Qs), AM2 online (177 Qs), Level 2 + 3 by unit, plus 10 trade certs (CSCS, IPAF, PASMA, first aid, asbestos, working at height + more). Random selection each attempt, instant marking with worked answers."
+          title="Free Electrician Mock Exams: 18th Edition & 2391"
+          description="Free electrician mock exams: 18th Edition (BS 7671), 2391 inspection and testing, and AM2 practice. No sign-up, instant marking and feedback."
           icon={BrainCircuit}
           ctaText="Browse all 25 free mock exams →"
           ctaHref="/mock-exams"
@@ -135,7 +133,6 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ClipboardCheck className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Multiple Choice (C&G 2382)</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -146,7 +143,6 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <FileCheck2 className="w-8 h-8 text-blue-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Written + Practical (C&G 2391)</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -158,7 +154,6 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ListChecks className="w-8 h-8 text-green-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Practical Assessment (AM2)</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -301,12 +296,10 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-yellow-400" />
             The Two-Pass Strategy
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>First pass (45 minutes):</strong> Go through every question and answer the
                 ones you know immediately without looking anything up. Mark questions you are unsure
@@ -315,7 +308,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Second pass (60 minutes):</strong> Go back to the marked questions and use
                 your book to find the answers. Prioritise questions where you think you know roughly
@@ -323,7 +315,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Final check (15 minutes):</strong> Review any remaining blank questions.
                 Make your best guess — there is no negative marking, so a guess is always better
@@ -397,7 +388,6 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Lightbulb className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Running out of time</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -408,7 +398,6 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Lightbulb className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
                 Not reading the question properly
@@ -421,7 +410,6 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Lightbulb className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Leaving questions blank</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -432,7 +420,6 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Lightbulb className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Not tabbing the book</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -444,7 +431,6 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Lightbulb className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
                 Relying on the book for everything

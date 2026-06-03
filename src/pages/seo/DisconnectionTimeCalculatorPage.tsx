@@ -7,7 +7,6 @@ import {
   Zap,
   Activity,
   BookOpen,
-  AlertTriangle,
   Timer,
   Network,
   Cable,
@@ -18,8 +17,8 @@ import {
 export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
-      title="Max Disconnection Time Calculator: BS 7671 0.4s/5s/0.2s"
-      description="Max disconnection time to BS 7671: 0.4s for TN socket-outlet circuits up to 63A and fixed-load circuits up to 32A, 0.2s for TT, 5s for distribution circuits. Free UK tool."
+      title="Disconnection Time Calculator: BS 7671 0.4s & 5s"
+      description="Check maximum disconnection times to BS 7671 Table 41.1: 0.4 s for final circuits, 5 s for distribution. Free calculator with maximum Zs lookup."
       datePublished="2026-01-20"
       dateModified="2026-05-24"
       breadcrumbs={[
@@ -116,7 +115,6 @@ export default function DisconnectionTimeCalculatorPage() {
               <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">TN Systems — 0.4 seconds</p>
                       <p className="text-white text-sm">
@@ -127,7 +125,6 @@ export default function DisconnectionTimeCalculatorPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">TN Systems — 5 seconds</p>
                       <p className="text-white text-sm">
@@ -138,7 +135,6 @@ export default function DisconnectionTimeCalculatorPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">TT Systems — 0.2 seconds</p>
                       <p className="text-white text-sm">
@@ -273,34 +269,29 @@ export default function DisconnectionTimeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
                       <strong className="text-yellow-400">Type B MCB 6A:</strong> Zs max = 7.28 ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
                       <strong className="text-yellow-400">Type B MCB 16A:</strong> Zs max = 2.73
                       ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
                       <strong className="text-yellow-400">Type B MCB 32A:</strong> Zs max = 1.37
                       ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
                       <strong className="text-yellow-400">Type C MCB 32A:</strong> Zs max = 0.68
                       ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
                     <span>
                       <strong className="text-yellow-400">BS 88-2 gG fuse 32A:</strong> Zs max =
                       0.99 ohms (BS 88-3 system C 32A: 0.91 ohms)
@@ -310,7 +301,6 @@ export default function DisconnectionTimeCalculatorPage() {
               </div>
               <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <div>
                     <p className="font-semibold text-white">
                       GN3 Site Factor — apply 0.8 to your measured Zs

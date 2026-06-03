@@ -11,15 +11,12 @@ import {
   Cable,
   Calculator,
   Thermometer,
-  Ruler,
   ShieldCheck,
   Zap,
-  BookOpen,
   Layers,
   ArrowDownUp,
   RefreshCw,
   Database,
-  CheckCircle2,
 } from 'lucide-react';
 
 const PAGE_TITLE = 'Cable Sizing Calculator UK 2026 | BS 7671 Free Tool';
@@ -217,7 +214,6 @@ export default function CableSizingCalculatorPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
-            <Cable className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
               BS 7671:2018+A4:2026 Compliant
             </span>
@@ -429,7 +425,6 @@ export default function CableSizingCalculatorPage() {
           <div className="grid gap-4 sm:grid-cols-2 mt-6">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-center gap-3 mb-3">
-                <Thermometer className="w-5 h-5 text-yellow-400" />
                 <h3 className="font-bold text-white text-lg">Ca — Ambient Temperature</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -442,7 +437,6 @@ export default function CableSizingCalculatorPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-center gap-3 mb-3">
-                <Layers className="w-5 h-5 text-yellow-400" />
                 <h3 className="font-bold text-white text-lg">Cg — Grouping</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -455,7 +449,6 @@ export default function CableSizingCalculatorPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-center gap-3 mb-3">
-                <BookOpen className="w-5 h-5 text-yellow-400" />
                 <h3 className="font-bold text-white text-lg">Ci — Thermal Insulation</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -469,7 +462,6 @@ export default function CableSizingCalculatorPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-center gap-3 mb-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400" />
                 <h3 className="font-bold text-white text-lg">Cf — Semi-Enclosed Fuse Factor</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -506,7 +498,6 @@ export default function CableSizingCalculatorPage() {
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
-                  <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Method A:</strong> Enclosed in conduit in a thermally insulated wall.
                     The most restrictive common method, giving the lowest current carrying
@@ -514,14 +505,12 @@ export default function CableSizingCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Method B:</strong> Enclosed in conduit on a wall, or in trunking on a
                     wall. Slightly better than Method A as heat can escape more easily.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Method C:</strong> Clipped direct to a surface (e.g., flat twin and
                     earth cable clipped to joists). A common domestic method with good heat
@@ -529,7 +518,6 @@ export default function CableSizingCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Method D:</strong> Cables in ducts in the ground. Used for underground
                     supply cables, with different ambient temperature assumptions (20 degrees C
@@ -537,7 +525,6 @@ export default function CableSizingCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Methods E/F/G:</strong> Free air methods — cable tray (touching), cable
                     tray (spaced), and cable ladder. These give the highest current carrying
@@ -545,7 +532,6 @@ export default function CableSizingCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Reference Method 100:</strong> Enclosed in a building void where thermal
                     insulation is in contact with one side. Increasingly common with modern
@@ -653,8 +639,8 @@ export default function CableSizingCalculatorPage() {
       <section className="py-8 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
-            title="Cable Sizing in Your Pocket — On Any Job Site"
-            description="Use Elec-Mate's built-in cable sizing calculator on site — voltage drop, correction factors, ring circuit checks and more."
+            title="Cable Sizing Calculator (BS 7671) - Free Online Tool"
+            description="Free BS 7671 cable sizing calculator: enter load, length and installation method to get the cable size, volt drop and current rating. Works on any phone."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />

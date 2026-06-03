@@ -7,20 +7,7 @@ import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
-import {
-  Calculator,
-  Zap,
-  Shield,
-  CheckCircle2,
-  BookOpen,
-  BarChart3,
-  Thermometer,
-  HelpCircle,
-  ChevronDown,
-  ChevronRight,
-  ArrowDown,
-  CircuitBoard,
-} from 'lucide-react';
+import { Calculator, Shield, BookOpen, BarChart3, Thermometer, CircuitBoard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const faqs = [
@@ -180,7 +167,6 @@ export default function EarthLoopImpedanceCalculatorPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
@@ -198,14 +184,12 @@ export default function EarthLoopImpedanceCalculatorPage() {
               className="h-11 px-8 inline-flex items-center justify-center rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation transition-colors"
             >
               Try the Calculator Free
-              <ChevronRight className="w-4 h-4 ml-1" />
             </Link>
             <a
               href="#how-it-works"
               className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
             >
               See How It Works
-              <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
         </div>
@@ -242,9 +226,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <CircuitBoard className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Earth Fault Loop Impedance?
             </h2>
@@ -301,9 +283,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Zap className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">The Earth Fault Loop Path</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -388,9 +368,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Calculator className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Zs Formula and Worked Examples
             </h2>
@@ -521,9 +499,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Thermometer className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Temperature Correction for Zs Measurements
             </h2>
@@ -581,9 +557,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Maximum Zs Values from BS 7671
             </h2>
@@ -716,9 +690,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Shield className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               RCD-Protected Circuits and the 1667 Ohm Limit
             </h2>
@@ -809,9 +781,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <Zap className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Prospective Fault Current (Ipf) and the Schedule of Test Results
             </h2>
@@ -909,9 +879,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Measure Ze and R1+R2
             </h2>
@@ -957,9 +925,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Zs — Step by Step
             </h2>
@@ -1001,8 +967,8 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-8 px-5">
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
-            title="Verify Zs on Site — Instantly"
-            description="Use Elec-Mate's built-in Zs calculator on every job. Enter your measured earth fault loop impedance and the app checks it against BS 7671 tables for your…"
+            title="Earth Fault Loop Impedance Calculator (Zs) - BS 7671"
+            description="Free Zs calculator: Zs = Ze + (R1+R2). Check earth fault loop impedance against the maximum for your device and disconnection time, to BS 7671."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -1013,9 +979,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
-            </div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
             </h2>
@@ -1028,7 +992,6 @@ export default function EarthLoopImpedanceCalculatorPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>

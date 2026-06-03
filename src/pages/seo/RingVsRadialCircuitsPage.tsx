@@ -7,9 +7,7 @@ import {
   Calculator,
   FileCheck2,
   ShieldCheck,
-  AlertTriangle,
   ClipboardCheck,
-  Wrench,
   GraduationCap,
 } from 'lucide-react';
 
@@ -170,21 +168,18 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable:</strong> 2.5mm² twin and earth (6242Y), both line and earth
                 conductors forming the ring. CPC is 1.5mm² in standard 6242Y.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Protection:</strong> 32A BS EN 60898 Type B MCB (or 30A BS 1361 fuse in
                 older installations). RCBO protection is recommended for new installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Outlets:</strong> 13A switched socket outlets with BS 1363 shuttered
                 sockets. Fused connection units for fixed appliances. Non-fused spurs permitted
@@ -245,7 +240,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 433.1.204</strong> — ring final circuits supplying BS 1363
                 accessories shall be protected by a 30A or 32A device (to BS 88, BS 3036, BS EN
@@ -254,7 +248,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Appendix 15, Table A15.1</strong> — guidance on floor areas: 32A ring
                 (2.5mm²) — no prescribed floor area limit; 20A radial (2.5mm²) — 50m²; 32A radial
@@ -262,7 +255,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 543.2.9</strong> — the CPC of every ring final circuit shall be
                 run in the form of a ring, with both ends connected to the earthing terminal at the
@@ -273,7 +265,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Appendix 4, Tables 4D1A–4D5A</strong> — current-carrying capacity tables.
                 Installation method affects current rating: 2.5mm² PVC 6242Y is rated 24A (Method C,
@@ -283,8 +274,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Check your circuit design with AI"
-          description="Elec-Mate's AI circuit designer can verify ring and radial circuit designs against BS 7671 requirements, calculate load diversity…"
+          title="Ring vs Radial Circuits Explained (BS 7671)"
+          description="Ring final vs radial circuits: how each works, cable and MCB sizes, and when to use which. A clear guide to BS 7671 final circuit design."
           icon={Zap}
         />
       </>
@@ -341,7 +332,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">Common Failure: The Figure-of-Eight Spur</p>
               <p className="text-white text-sm">
@@ -371,7 +361,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic socket outlets:</strong> For the first outlet, allow the full rated
                 current. For each additional outlet, allow 40% of the rated current. This reflects
@@ -379,7 +368,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen circuits:</strong> Fixed appliances (dishwasher, washing machine,
                 fridge-freezer) should be on dedicated radial circuits rather than forming part of a
@@ -387,7 +375,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargers and heat pumps:</strong> High-power loads must always be on
                 dedicated circuits — never connected to a ring final circuit serving general socket

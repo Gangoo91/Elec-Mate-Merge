@@ -13,17 +13,11 @@ import {
   Smartphone,
   ShieldCheck,
   Clock,
-  AlertTriangle,
-  CheckCircle2,
   BookOpen,
-  Zap,
-  Users,
   CircuitBoard,
   Gauge,
   Cable,
   Thermometer,
-  FileCheck2,
-  Ruler,
 } from 'lucide-react';
 
 const PAGE_TITLE = 'Adiabatic Equation Calculator | CPC Sizing BS 7671 | Elec-Mate';
@@ -228,7 +222,6 @@ export default function AdiabaticEquationCalculatorPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
-            <Ruler className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
               BS 7671:2018+A4:2026 Regulation 543.1
             </span>
@@ -262,7 +255,6 @@ export default function AdiabaticEquationCalculatorPage() {
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
           <div className="mb-4 flex items-center gap-2 text-sm text-white/70">
-            <CheckCircle2 className="w-4 h-4 text-green-400" />
             <span>Free to use. No sign-up. BS 7671:2018+A4:2026 compliant.</span>
           </div>
           <AdiabaticCalculator />
@@ -584,8 +576,8 @@ export default function AdiabaticEquationCalculatorPage() {
             </p>
           </div>
           <SEOAppBridge
-            title="Adiabatic Calculations + Certification in One App"
-            description="Calculate minimum CPC sizes using the adiabatic equation, then record your verified results directly onto your EIC or EICR certificate — all within…"
+            title="Adiabatic Equation Calculator (BS 7671) - Free"
+            description="Free adiabatic equation calculator: S = root(I squared t) / k. Check minimum CPC and conductor size for fault current to BS 7671. k-values built in."
             icon={Calculator}
           />
           <SEOFeatureGrid features={features} columns={3} />
@@ -675,7 +667,6 @@ export default function AdiabaticEquationCalculatorPage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <Users className="w-6 h-6 text-yellow-400" />
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Built for Working Electricians
             </h2>

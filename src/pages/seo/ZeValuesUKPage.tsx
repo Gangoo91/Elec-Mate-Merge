@@ -7,14 +7,10 @@ import {
   Shield,
   Activity,
   Gauge,
-  AlertTriangle,
   Calculator,
   FileCheck2,
   GraduationCap,
   Mic,
-  ShieldCheck,
-  Phone,
-  HelpCircle,
   CircuitBoard,
 } from 'lucide-react';
 
@@ -47,7 +43,7 @@ const keyTakeaways = [
   'Ze directly affects every Zs reading on the installation — a high Ze pushes up Zs on every circuit, potentially causing widespread compliance failures.',
   'If measured Ze significantly exceeds the distributor-quoted typical maximum for the earthing arrangement, the DNO (Distribution Network Operator) should be queried because the supply earth may be defective.',
   'Elec-Mate records Ze at the origin on the EICR, validates it against expected values for the declared earthing arrangement, and uses it to cross-check every Zs reading in the schedule of test results.',
-  'BS 7671:2018+A4:2026 (Reg 722.826.3.201) amended the Appendix 6 model forms to include new fields for recording SPD and AFDD details alongside Ze — ensure you are using the updated A4:2026 model forms when completing EICRs and EICs.',
+  'BS 7671:2018+A4:2026 amended the Appendix 6 model forms to include new fields for recording SPD and AFDD details alongside Ze — ensure you are using the updated A4:2026 model forms when completing EICRs and EICs.',
 ];
 
 const faqs = [
@@ -79,7 +75,7 @@ const faqs = [
   {
     question: 'Is the Ze value recorded on the EICR?',
     answer:
-      'Yes. Ze is a mandatory recording on the EICR (Electrical Installation Condition Report). It is recorded in the "Supply Characteristics and Earthing Arrangements" section, along with the earthing arrangement (TN-S, TN-C-S, or TT), the supply voltage, the prospective fault current, and the type of supply (single-phase or three-phase). The measured Ze value is used as a reference point for verifying the Zs readings throughout the installation — each Zs should approximately equal Ze plus the R1+R2 measured during continuity testing on that circuit. A significant discrepancy between the measured Zs and the calculated Zs (Ze + R1+R2) indicates a problem such as a parallel earth path or a high-resistance connection. Note: the BS 7671:2018+A4:2026 update (Reg 722.826.3.201) amended the Appendix 6 model forms to add fields for SPD and AFDD details alongside Ze — use the current A4:2026 model forms to ensure compliance with the updated recording requirements.',
+      'Yes. Ze is a mandatory recording on the EICR (Electrical Installation Condition Report). It is recorded in the "Supply Characteristics and Earthing Arrangements" section, along with the earthing arrangement (TN-S, TN-C-S, or TT), the supply voltage, the prospective fault current, and the type of supply (single-phase or three-phase). The measured Ze value is used as a reference point for verifying the Zs readings throughout the installation — each Zs should approximately equal Ze plus the R1+R2 measured during continuity testing on that circuit. A significant discrepancy between the measured Zs and the calculated Zs (Ze + R1+R2) indicates a problem such as a parallel earth path or a high-resistance connection. Note: the BS 7671:2018+A4:2026 update amended the Appendix 6 model forms to add fields for SPD and AFDD details alongside Ze — use the current A4:2026 model forms to ensure compliance with the updated recording requirements.',
   },
 ];
 
@@ -186,7 +182,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-3">
-            <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">TN-S Ze Characteristics</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
@@ -240,7 +235,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">TN-C-S (PME) Ze Characteristics</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
@@ -293,7 +287,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <CircuitBoard className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">TT Ze Characteristics</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
@@ -332,8 +325,8 @@ const sections = [
           aim for below 200 ohms as a practical target.
         </p>
         <SEOAppBridge
-          title="Ze Value Calculator | BS 7671:2018+A4:2026"
-          description="Ze value calculator for TN-S, TN-C-S, TT systems. Check earth loop impedance against 2026 limits in seconds. EICR testing tool."
+          title="Maximum Ze Values UK: TN-S, TN-C-S & TT (BS 7671)"
+          description="Typical maximum Ze: TN-S 0.80 ohms, TN-C-S (PME) 0.35 ohms, TT 21 ohms. How to measure external earth fault loop impedance and when to query the DNO."
           icon={Calculator}
         />
       </>
@@ -390,7 +383,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Safety Warning</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -425,7 +417,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Distance from the supply transformer.</strong> The further the property is
                 from the nearest substation, the longer the supply cable, and the higher the line
@@ -434,7 +425,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Supply cable cross-sectional area.</strong> Larger cables have lower
                 resistance per metre. Properties served by older, smaller-gauge supply cables will
@@ -442,7 +432,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition of the cable sheath (TN-S).</strong> Corroded or damaged joints in
                 the cable sheath increase the earth return path impedance. Old lead-sheathed cables
@@ -450,7 +439,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Quality of PEN conductor connections (TN-C-S).</strong> Loose or corroded
                 connections at joints in the PEN conductor can increase Ze. However, because the PEN
@@ -459,7 +447,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Soil conditions (TT).</strong> For TT systems, Ze is dominated by the earth
                 electrode resistance, which depends on soil type, moisture content, temperature, and
@@ -493,7 +480,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify the measurement.</strong> Retest to confirm the reading. Check that
                 the test leads are in good condition and the connections are clean and tight. Null
@@ -501,7 +487,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check the earthing arrangement.</strong> Confirm the earthing type. It is
                 possible that the installation has been incorrectly recorded as TN-C-S when it is
@@ -510,7 +495,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check the earthing conductor connections.</strong> A loose or corroded
                 connection between the earthing terminal and the MET will add resistance to the Ze
@@ -518,7 +502,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Record the finding on the EICR.</strong> If Ze remains above the expected
                 maximum after verification, record it as an observation. The code depends on the
@@ -553,7 +536,6 @@ const sections = [
           <h4 className="font-bold text-white mb-4">When to Contact the DNO</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ze exceeds the distributor-quoted typical maximum value</strong> — for the
                 declared earthing arrangement (above 0.35 ohms for TN-C-S, above 0.80 ohms for
@@ -561,14 +543,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Visible damage to the supply earth terminal</strong> — corroded earthing
                 clamp, damaged cable sheath at the cutout, or signs of overheating.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No earth terminal at the cutout</strong> — the property may need the DNO to
                 provide a PME earth connection, or the installation may need a TT arrangement with
@@ -576,7 +556,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Suspected loss of PEN conductor</strong> — on a PME supply, symptoms include
                 voltage fluctuations between line and neutral, high voltage on the earthing
@@ -622,7 +601,6 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">New Supply: Ze Workflow</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">

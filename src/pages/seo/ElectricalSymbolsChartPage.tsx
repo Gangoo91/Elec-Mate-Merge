@@ -6,17 +6,12 @@ import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   PenTool,
   ShieldCheck,
-  Home,
   FileCheck2,
-  ClipboardCheck,
   Search,
   GraduationCap,
   Cable,
   Zap,
-  Lightbulb,
-  ToggleRight,
   BookOpen,
-  CircuitBoard,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -186,13 +181,11 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Reading and interpreting installation drawings from architects and designers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Completing distribution board schedules on{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
@@ -202,11 +195,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>Drawing circuit charts for new installations.</span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Passing Level 2, Level 3, and C&G 2391 examinations, all of which include diagram
                 interpretation.
@@ -229,14 +220,12 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>One-way switch:</strong> A single moving contact with one fixed contact.
                 Used where a light is controlled from one position only.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Two-way switch:</strong> A single moving contact with two fixed contacts
                 (fork shape). Used for controlling a light from two positions (staircase lighting,
@@ -244,7 +233,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Intermediate switch:</strong> A more complex symbol showing a double-pole,
                 double-throw action. Used between two two-way switches when three or more switch
@@ -252,14 +240,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dimmer switch:</strong> The basic switch symbol with an additional arrow or
                 diagonal line indicating variable control.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pull-cord switch:</strong> The switch symbol with a small circle or dot
                 indicating the pull-cord mechanism. Used in bathrooms and other locations where a
@@ -267,7 +253,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Double-pole switch:</strong> Two switch symbols drawn in parallel,
                 indicating that both live and neutral are switched simultaneously. Used for
@@ -292,21 +277,18 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Single socket outlet:</strong> One semicircle. May include a horizontal line
                 through it to indicate a switched socket.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Double socket outlet:</strong> Two semicircles side by side. Again, a line
                 through indicates switched.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fused connection unit (FCU):</strong> A rectangular symbol with a fuse
                 element indicated inside. Used for fixed appliances such as boilers, towel
@@ -314,14 +296,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switched fused connection unit:</strong> The FCU symbol with a switch
                 element added, indicating it can be locally isolated.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shaver supply unit:</strong> A specific symbol indicating a BS EN 61558-2-5
                 compliant transformer unit, used in{' '}
@@ -332,7 +312,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker control unit:</strong> A symbol combining a switch with a socket
                 outlet, representing the 45A switch and 13A socket typically found next to a cooker.
@@ -351,35 +330,30 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling light:</strong> A circle with a cross inside (or lines radiating
                 outward). The most common symbol on domestic installation drawings.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wall light:</strong> A semicircle against a wall line, with radiating lines
                 indicating the light output direction.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Downlight (recessed):</strong> A filled circle or a circle with a dot
                 inside, indicating a recessed luminaire.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fluorescent luminaire:</strong> A rectangular symbol representing the linear
                 fitting, sometimes with a length dimension.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency luminaire:</strong> The light symbol with an additional
                 designation (often "EM" or an arrow) indicating it is an{' '}
@@ -390,7 +364,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Exterior light:</strong> A light symbol with a weatherproof enclosure
                 indication, used on site layout drawings.
@@ -414,14 +387,12 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fuse:</strong> A rectangular element in the circuit path, sometimes with a
                 line through it. The oldest and simplest form of overcurrent protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCB (Miniature Circuit Breaker):</strong> A switch symbol with an additional
                 element showing the automatic trip mechanism (a small rectangle or arc indicating
@@ -430,7 +401,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD (Residual Current Device):</strong> A switch symbol with a sensing coil
                 element (often shown as a toroid or sinusoidal wave). The RCD detects imbalance
@@ -438,14 +408,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO (RCD + MCB combined):</strong> Combines the MCB and RCD symbols in a
                 single device, showing both overcurrent and residual current protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>AFDD (Arc Fault Detection Device):</strong> A symbol introduced by Amendment
                 A4:2026 to BS 7671:2018. Shows the arc detection element alongside the overcurrent
@@ -455,7 +423,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SPD (Surge Protective Device):</strong> A symbol indicating a device that
                 limits transient overvoltages by diverting surge current to earth. SPDs are
@@ -465,7 +432,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch / isolator:</strong> A simple switch symbol (open/closed
                 contacts) without an automatic trip element. Used for the main switch in a consumer
@@ -476,7 +442,6 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <div>
               <p className="text-white text-sm leading-relaxed">
                 <strong className="text-blue-300">A4:2026 — Domestic lighting circuits:</strong>{' '}
@@ -501,14 +466,12 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conductor / wire:</strong> A single straight line. The most basic element on
                 any circuit diagram.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Junction / connection:</strong> A filled dot where two or more conductors
                 connect. Two crossing lines without a dot means the conductors cross but are not
@@ -516,7 +479,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth connection:</strong> Three horizontal lines of decreasing length (like
                 a triangle), or a single line ending in three short horizontal lines. Represents the
@@ -524,35 +486,30 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable / multicore:</strong> Multiple parallel lines or a single line with a
                 number indicating the core count (e.g., "3C" for 3-core cable).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit:</strong> A line with small perpendicular marks indicating
                 mechanical protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Junction box:</strong> A filled or open square indicating a point where
                 cables are terminated and connected.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Motor:</strong> A circle with an "M" inside, indicating an electric motor.
                 Common on commercial and industrial diagrams.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer:</strong> Two coils (shown as parallel curved lines) with a core
                 (shown as parallel straight lines between the coils).
@@ -576,21 +533,18 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit:</strong> A rectangular outline representing the enclosure,
                 with the main switch at one end and individual protective devices shown as branches.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Split-load board:</strong> The consumer unit symbol divided into sections,
                 each protected by a separate RCD, with MCBs branching from each section.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO board:</strong> Each way shown with an individual RCBO symbol,
                 indicating that every circuit has independent overcurrent and residual current
@@ -598,7 +552,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Busbar:</strong> A thick line representing the main busbar from which all
                 circuits are fed.
@@ -671,7 +624,6 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
-              <PenTool className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Built-In Symbol Library</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -684,7 +636,6 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Correct Symbols on Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -697,8 +648,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="IEC 60617 Symbols Chart – 150+ Electrical"
-          description="IEC 60617 symbols explained for UK electricians. 150+ standard symbols, 2026-compliant, downloadable chart, and quick reference guide."
+          title="Electrical Symbols Chart: 150+ Wiring Symbols (IEC 60617)"
+          description="Complete electrical symbols chart: 150+ wiring, circuit and installation symbols to IEC 60617 with meanings. Free reference for UK electricians."
           icon={PenTool}
         />
       </>

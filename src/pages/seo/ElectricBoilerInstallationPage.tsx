@@ -2,16 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Zap,
-  Thermometer,
-  PoundSterling,
-  AlertTriangle,
-  CheckCircle2,
-  FileCheck2,
-  ClipboardCheck,
-  ShieldCheck,
-} from 'lucide-react';
+import { Zap, Thermometer, FileCheck2, ClipboardCheck, ShieldCheck } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -137,7 +128,6 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Flow Boilers (Electric Combi)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Heat water as it flows through the boiler on demand — no stored hot water cylinder
                 required. Available in outputs from 4kW to 14.4kW. Suitable for smaller properties
@@ -145,7 +135,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Direct replacement for a gas combi boiler. No cold water storage tank required.
                 Requires a dedicated high-current circuit from the consumer unit.
@@ -159,7 +148,6 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Heat water in a separate hot water cylinder via a primary circuit. Suitable for
                 larger properties with high hot water demand or multiple bathrooms. Output typically
@@ -167,7 +155,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Works well where a hot water cylinder already exists (replacing gas system boiler).
                 Requires both a boiler circuit and a separate cylinder immersion circuit.
@@ -179,7 +166,6 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Heat Battery Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Store thermal energy in a high-density ceramic core during off-peak periods (Economy
                 7 or Octopus Go tariffs). Release stored heat for both space heating and domestic
@@ -187,7 +173,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Can significantly reduce running costs versus a standard flow boiler by using
                 cheap-rate electricity. Require Economy 7 or time-of-use tariff to maximise savings.
@@ -213,31 +198,26 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Quick Reference Sizing Guide</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1-bedroom flat (50m\u00b2):</strong> 4kW to 6kW boiler
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2-bedroom house (70m\u00b2):</strong> 6kW to 9kW boiler
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3-bedroom semi-detached (90m\u00b2):</strong> 9kW to 12kW boiler
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>4-bedroom detached (120m\u00b2):</strong> 12kW to 14.4kW boiler
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Older/poorly insulated property:</strong> add 30 to 50% to above figures
               </span>
@@ -274,26 +254,22 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>4kW to 6kW (17A to 26A):</strong> 6mm\u00b2 T&amp;E, 32A DP MCB
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>6kW to 9.6kW (26A to 42A):</strong> 10mm\u00b2 T&amp;E, 45A DP MCB
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>9.6kW to 12kW (42A to 52A):</strong> 10mm\u00b2 T&amp;E on 63A MCB (check
                 volt drop) or 16mm\u00b2 T&amp;E on 63A MCB
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>12kW to 15kW (52A to 65A):</strong> 16mm\u00b2 T&amp;E, 63A DP MCB
               </span>
@@ -308,7 +284,6 @@ const sections = [
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Double-pole isolation</strong> — Regulation 537.2.1 requires a means of
                 isolation for each item of fixed equipment. For electric boilers, a lockable
@@ -317,7 +292,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — The boiler circuit must satisfy the automatic
                 disconnection times in Table 41.1 (Regulation 411.3.1.2). Note that Regulation
@@ -330,7 +304,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Volt drop check</strong> — for long cable runs from consumer unit to boiler
                 (over 15m at high current), verify that volt drop is within acceptable limits for
@@ -341,7 +314,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth bonding</strong> — confirm main protective bonding is in place for
                 water and gas services per Regulation 544.1.2. The bonding connection shall be made
@@ -369,7 +341,6 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Registered competent person:</strong> NICEIC, NAPIT, ELECSA, or other
                 approved scheme members can self-certify and notify building control automatically.
@@ -377,7 +348,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-registered electrician:</strong> must notify the local authority
                 building control (LABC) before starting work and pay the applicable inspection fee.
@@ -386,7 +356,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate:</strong> an EIC must be issued for any
                 new circuit. Use the{' '}
@@ -417,41 +386,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electric flow boiler (6kW to 9kW), supply and fit:</strong> \u00a31,500 to
                 \u00a32,800
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electric flow boiler (12kW to 15kW), supply and fit:</strong> \u00a32,200 to
                 \u00a34,000
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Heat battery system (e.g. Tepeo ZEB):</strong> \u00a33,500 to \u00a35,500
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade (if required):</strong> \u00a3500 to \u00a31,200
                 additional
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New 10mm\u00b2 or 16mm\u00b2 radial circuit (up to 15m):</strong> \u00a3250
                 to \u00a3600 additional
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Gas pipe capping by Gas Safe engineer:</strong> \u00a380 to \u00a3200
                 (separate contractor, required when removing a gas boiler)
@@ -475,27 +438,21 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Advantages of Electric Boilers</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>100% efficient — all electrical energy converted to heat, no flue losses</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>No annual Gas Safe service required — lower ongoing maintenance cost</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>No combustion products — zero carbon monoxide risk</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>No flue required — more flexible positioning within the property</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>Lower installation cost versus gas for off-gas properties</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>Grid electricity is increasingly low-carbon as renewable generation grows</span>
             </li>
           </ul>
@@ -504,21 +461,18 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Disadvantages</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 Higher fuel cost — electricity is 3 to 4x more expensive per kWh than gas at current
                 prices
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 Limited maximum output — most electric boilers top out at 14.4kW versus gas boilers
                 at 35kW+
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 May require significant electrical supply upgrades (consumer unit, meter capacity,
                 DNO consent)
@@ -543,21 +497,18 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — generate compliant EICs for new boiler circuits with BS 7671 test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — inspect
                 and report on the existing installation before adding the boiler circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOInternalLink
                   href="/guides/eicr-observation-codes-explained"
@@ -571,20 +522,18 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Testing and Certification</h3>
           <p className="text-white mb-3">
-            Under BS 7671:2018+A4:2026 (Regulation 653.4) and GN3, an Electrical Installation
+            Under BS 7671:2018+A4:2026 (Regulation 644.3) and GN3, an Electrical Installation
             Certificate must be accompanied by Schedules of Circuit Details and Schedules of Test
             Results. For a new boiler circuit the following tests are mandatory:
           </p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of CPC</strong> — verify the circuit protective conductor is
                 continuous from the consumer unit to the boiler isolator earth terminal.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> — test between live conductors and between
                 live conductors and earth at 500V DC with the boiler disconnected. Record all
@@ -592,7 +541,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Polarity</strong> — confirm that the line conductor is connected to the line
                 terminal of the isolator and that the MCB at the consumer unit operates on the line
@@ -600,7 +548,6 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance (Z&#x2093;)</strong> — measure Z&#x2093; at the
                 boiler isolator and verify it is low enough to achieve the required disconnection
@@ -625,8 +572,8 @@ const sections = [
 export default function ElectricBoilerInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Boiler Installation Guide UK — BS 7671 Wiring Requirements"
-      description="Electric boiler installation in UK homes: circuit sizing, BS 7671:2018+A4:2026 wiring rules, Part P notification, and costs. From 6kW to 15kW boilers."
+      title="Electric Boiler Installation: Cable Size & Wiring (BS 7671)"
+      description="Electric boiler wiring guide: cable and breaker size by kW, supply and RCD requirements, and load and diversity to BS 7671."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
