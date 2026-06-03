@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { IqaSamplingPlan } from '@/hooks/useIqaSamplingPlans';
 
 /* ==========================================================================
@@ -254,7 +255,7 @@ export function useIqaSamplingPlan(planId: string | null) {
   useEffect(() => {
     if (!planId) return;
     const channel = supabase
-      .channel(`iqa_plan:${planId}`)
+      .channel(realtimeChannelName(`iqa_plan:${planId}`))
       .on(
         'postgres_changes',
         {

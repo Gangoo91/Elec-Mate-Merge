@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 
 export interface UserNotification {
@@ -124,7 +125,7 @@ export const useUserNotifications = () => {
     if (!user) return () => {};
 
     const channel = supabase
-      .channel(`user-notifications-${user.id}`)
+      .channel(realtimeChannelName(`user-notifications-${user.id}`))
       .on(
         'postgres_changes',
         {

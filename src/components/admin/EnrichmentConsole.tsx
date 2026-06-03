@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Card } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
@@ -455,7 +456,7 @@ export default function EnrichmentConsole() {
     console.log(`🔴 Setting up realtime subscription for ${facetType} facets`);
 
     const channel = supabase
-      .channel(`practical-work-${facetType}-live`)
+      .channel(realtimeChannelName(`practical-work-${facetType}-live`))
       .on(
         'postgres_changes',
         {

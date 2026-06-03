@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { MaintenanceMethodData } from '@/types/maintenance-method';
 
 interface MaintenanceMethodJob {
@@ -110,7 +111,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     console.log('📡 Setting up realtime subscription for job:', jobId);
 
     const channel = supabase
-      .channel(`maintenance-job-${jobId}`)
+      .channel(realtimeChannelName(`maintenance-job-${jobId}`))
       .on(
         'postgres_changes',
         {

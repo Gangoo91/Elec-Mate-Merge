@@ -22,6 +22,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
@@ -319,7 +320,7 @@ export function useIqaWorkflow(collegeId?: string | null): UseIqaWorkflowResult 
   useEffect(() => {
     if (!resolvedCollegeId) return;
     const channel = supabase
-      .channel(`iqa-workflow:${resolvedCollegeId}`)
+      .channel(realtimeChannelName(`iqa-workflow:${resolvedCollegeId}`))
       .on(
         'postgres_changes',
         {

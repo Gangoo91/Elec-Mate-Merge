@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 
 /* ==========================================================================
@@ -233,7 +234,7 @@ export function useTutorQuizzes() {
   useEffect(() => {
     if (!user) return;
     const ch = supabase
-      .channel(`tutor_quizzes:${user.id}`)
+      .channel(realtimeChannelName(`tutor_quizzes:${user.id}`))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'tutor_quizzes' },

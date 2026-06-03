@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
@@ -182,7 +183,7 @@ export function useStudentOtjVerification(
   useEffect(() => {
     if (!studentUserId) return;
     const chan = supabase
-      .channel(`student_otj_verify:${studentUserId}`)
+      .channel(realtimeChannelName(`student_otj_verify:${studentUserId}`))
       .on(
         'postgres_changes',
         {

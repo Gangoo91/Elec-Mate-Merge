@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 
 /* ==========================================================================
@@ -148,7 +149,7 @@ export function useMyTutorResources() {
       const collegeId = (cs?.college_id as string | null) ?? null;
       if (!collegeId) return;
       chan = supabase
-        .channel(`my_tutor_resources:${collegeId}`)
+        .channel(realtimeChannelName(`my_tutor_resources:${collegeId}`))
         .on(
           'postgres_changes',
           {

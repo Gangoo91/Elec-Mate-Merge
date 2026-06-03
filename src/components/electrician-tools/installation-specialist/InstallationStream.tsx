@@ -18,6 +18,7 @@ import { motion } from 'framer-motion';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
   InstallationMethodInputs,
   INSTALLATION_TYPE_OPTIONS,
@@ -135,7 +136,7 @@ export const InstallationStream = ({
     })();
 
     const channel = supabase
-      .channel(`imp-${jobId}`)
+      .channel(realtimeChannelName(`imp-${jobId}`))
       .on(
         'postgres_changes',
         {

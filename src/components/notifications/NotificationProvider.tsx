@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { storageRemoveSync } from '@/utils/storage';
 import type { User } from '@supabase/supabase-js';
 
@@ -125,7 +126,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     // Realtime: listen for new rows on push_notification_log for this user
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const channel = (supabase as any)
-      .channel(`push_notif_${user.id}`)
+      .channel(realtimeChannelName(`push_notif_${user.id}`))
       .on(
         'postgres_changes',
         {

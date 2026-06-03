@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useCollegeObservations — list + create + delete observation records for
@@ -109,7 +110,7 @@ export function useCollegeObservations(studentId: string | null) {
   useEffect(() => {
     if (!studentId) return;
     const channel = supabase
-      .channel(`college_observations:${studentId}`)
+      .channel(realtimeChannelName(`college_observations:${studentId}`))
       .on(
         'postgres_changes',
         {

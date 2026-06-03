@@ -13,6 +13,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { CircuitInput } from '@/types/installation-design';
@@ -76,7 +77,7 @@ export const CircuitDesignStream = ({
     })();
 
     const channel = supabase
-      .channel(`partials-${jobId}`)
+      .channel(realtimeChannelName(`partials-${jobId}`))
       .on(
         'postgres_changes',
         {

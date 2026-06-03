@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
@@ -315,7 +316,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
   useEffect(() => {
     if (!staffCollegeId) return;
     const chan = supabase
-      .channel(`tutor_otj_inbox:${staffCollegeId}`)
+      .channel(realtimeChannelName(`tutor_otj_inbox:${staffCollegeId}`))
       .on(
         'postgres_changes',
         {

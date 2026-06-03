@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -193,7 +194,7 @@ export default function TakeQuizPage() {
   useEffect(() => {
     if (phase !== 'submitted' || !attempt?.id) return;
     const channel = supabase
-      .channel(`quiz-attempt-${attempt.id}`)
+      .channel(realtimeChannelName(`quiz-attempt-${attempt.id}`))
       .on(
         'postgres_changes',
         {

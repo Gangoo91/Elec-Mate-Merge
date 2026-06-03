@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 
 export type SignedVia = 'manual' | 'qr_code' | 'app' | 'link';
@@ -56,7 +57,7 @@ export function useBriefingAttendees(briefingId: string | undefined) {
     if (!briefingId) return;
 
     const channel = supabase
-      .channel(`briefing-attendees-${briefingId}`)
+      .channel(realtimeChannelName(`briefing-attendees-${briefingId}`))
       .on(
         'postgres_changes',
         {

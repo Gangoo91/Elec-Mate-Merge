@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStudentPortfolio — apprentice-side portfolio for a single learner.
@@ -250,7 +251,7 @@ export function useStudentPortfolio(userId: string | null): StudentPortfolio {
   useEffect(() => {
     if (!userId) return;
     const channel = supabase
-      .channel(`student_portfolio:${userId}`)
+      .channel(realtimeChannelName(`student_portfolio:${userId}`))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'portfolio_submissions', filter: `user_id=eq.${userId}` },

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { EpaJudgement } from '@/hooks/useEpaReadiness';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import { epaJudgementPosition, DEFAULT_EPA_VERDICT_BANDS } from '@/lib/epaBands';
@@ -154,7 +155,7 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
   useEffect(() => {
     if (!collegeId) return;
     const ch = supabase
-      .channel(`cohort_epa:${collegeId}`)
+      .channel(realtimeChannelName(`cohort_epa:${collegeId}`))
       .on(
         'postgres_changes',
         {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    usePolicyAckLog — every staff member's sign-off status against a policy.
@@ -107,7 +108,7 @@ export function usePolicyAckLog(policyId: string | null, currentVersion: number 
   useEffect(() => {
     if (!policyId) return;
     const channel = supabase
-      .channel(`policy_ack_log:${policyId}`)
+      .channel(realtimeChannelName(`policy_ack_log:${policyId}`))
       .on(
         'postgres_changes',
         {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStudentProgress — cross-hub course/unit/KSB progress for one learner.
@@ -242,7 +243,7 @@ export function useStudentProgress(userId: string | null): StudentProgress {
   useEffect(() => {
     if (!userId) return;
     const channel = supabase
-      .channel(`student_progress:${userId}`)
+      .channel(realtimeChannelName(`student_progress:${userId}`))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'unit_coverage_matrix', filter: `user_id=eq.${userId}` },

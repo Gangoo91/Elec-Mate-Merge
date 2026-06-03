@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type {
   Ilp,
   IlpGoal,
@@ -154,7 +155,7 @@ export function useMyIlp(): MyIlpHook {
   useEffect(() => {
     if (!collegeStudentId) return;
     const channel = supabase
-      .channel(`my_ilp:${collegeStudentId}`)
+      .channel(realtimeChannelName(`my_ilp:${collegeStudentId}`))
       .on(
         'postgres_changes',
         {

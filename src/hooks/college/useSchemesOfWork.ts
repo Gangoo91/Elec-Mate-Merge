@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 
 /* ==========================================================================
@@ -43,7 +44,7 @@ export function useSchemesOfWork() {
   useEffect(() => {
     if (!collegeId) return;
     const channel = supabase
-      .channel(`schemes-of-work:${collegeId}`)
+      .channel(realtimeChannelName(`schemes-of-work:${collegeId}`))
       .on(
         'postgres_changes',
         {

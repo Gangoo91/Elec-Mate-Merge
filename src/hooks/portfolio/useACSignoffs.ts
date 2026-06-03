@@ -24,6 +24,7 @@
 
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 
 export type ACComplianceState =
@@ -167,7 +168,7 @@ export function useACSignoffs(qualificationCode: string | null) {
   useEffect(() => {
     if (!studentId) return;
     const ch = supabase
-      .channel(`ac-signoffs-self-${studentId}`)
+      .channel(realtimeChannelName(`ac-signoffs-self-${studentId}`))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'ac_signoffs', filter: `student_id=eq.${studentId}` },

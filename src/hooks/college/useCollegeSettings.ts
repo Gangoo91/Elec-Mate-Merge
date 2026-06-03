@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useCollegeSettings — operational thresholds previously hardcoded in
@@ -57,7 +58,7 @@ export function useCollegeSettings() {
   useEffect(() => {
     if (!collegeId) return;
     const channel = supabase
-      .channel(`college-settings:${collegeId}`)
+      .channel(realtimeChannelName(`college-settings:${collegeId}`))
       .on(
         'postgres_changes',
         {

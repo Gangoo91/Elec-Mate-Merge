@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { RefreshCw } from 'lucide-react';
@@ -98,7 +99,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
       }
 
       const channel = supabase
-        .channel(`design-job-${job.id}`)
+        .channel(realtimeChannelName(`design-job-${job.id}`))
         .on(
           'postgres_changes',
           {

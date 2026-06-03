@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect } from 'react';
 
@@ -64,7 +65,7 @@ export function useWorkQueueState() {
   useEffect(() => {
     if (!collegeId) return;
     const channel = supabase
-      .channel(`college-work-queue-state:${collegeId}`)
+      .channel(realtimeChannelName(`college-work-queue-state:${collegeId}`))
       .on(
         'postgres_changes',
         {

@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
   HealthSafetyInputs,
   HEALTH_SAFETY_WORK_OPTIONS,
@@ -122,7 +123,7 @@ export const HealthSafetyStream = ({
     })();
 
     const channel = supabase
-      .channel(`hsp-${jobId}`)
+      .channel(realtimeChannelName(`hsp-${jobId}`))
       .on(
         'postgres_changes',
         {

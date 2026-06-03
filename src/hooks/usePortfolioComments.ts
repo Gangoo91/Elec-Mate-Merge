@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    usePortfolioComments — live thread of comments for one learner's
@@ -123,7 +124,7 @@ export function usePortfolioComments({
   useEffect(() => {
     if (!studentUserId) return;
     const channel = supabase
-      .channel(`portfolio_comments:${studentUserId}:${submissionId ?? evidenceId ?? 'all'}`)
+      .channel(realtimeChannelName(`portfolio_comments:${studentUserId}:${submissionId ?? evidenceId ?? 'all'}`))
       .on(
         'postgres_changes',
         {

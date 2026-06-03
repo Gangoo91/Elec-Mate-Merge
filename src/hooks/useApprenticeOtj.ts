@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useApprenticeOtj — unified Off-the-Job Training view across both hubs.
@@ -277,7 +278,7 @@ export function useApprenticeOtj(
   useEffect(() => {
     if (!userId) return;
     const channel = supabase
-      .channel(`apprentice_otj:${userId}`)
+      .channel(realtimeChannelName(`apprentice_otj:${userId}`))
       .on(
         'postgres_changes',
         {

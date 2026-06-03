@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { CostEstimateInputs, REGION_OPTIONS } from '@/types/cost-estimate-inputs';
 
 interface CostEstimateStreamProps {
@@ -179,7 +180,7 @@ export const CostEstimateStream = ({
     })();
 
     const channel = supabase
-      .channel(`cost-partials-${jobId}`)
+      .channel(realtimeChannelName(`cost-partials-${jobId}`))
       .on(
         'postgres_changes',
         {

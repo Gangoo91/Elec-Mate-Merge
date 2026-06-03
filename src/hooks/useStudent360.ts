@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStudent360 — single fetch, single hook, one student's full profile.
@@ -339,7 +340,7 @@ export function useStudent360(studentId: string | null): Student360 {
   useEffect(() => {
     if (!studentId) return;
     const channel = supabase
-      .channel(`pastoral_notes:${studentId}`)
+      .channel(realtimeChannelName(`pastoral_notes:${studentId}`))
       .on(
         'postgres_changes',
         {

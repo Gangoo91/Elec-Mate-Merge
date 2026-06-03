@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStaffCpdEntries — list, create, delete CPD entries for one staff member.
@@ -66,7 +67,7 @@ export function useStaffCpdEntries(staffId: string | null) {
   useEffect(() => {
     if (!staffId) return;
     const channel = supabase
-      .channel(`cpd_entries:${staffId}`)
+      .channel(realtimeChannelName(`cpd_entries:${staffId}`))
       .on(
         'postgres_changes',
         {

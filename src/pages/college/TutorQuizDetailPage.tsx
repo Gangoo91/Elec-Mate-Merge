@@ -16,6 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 import { PageFrame, LoadingState } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
 import { useToast } from '@/hooks/use-toast';
 import { rowsToCsv, downloadCsv } from '@/lib/csv';
@@ -193,7 +194,7 @@ export default function TutorQuizDetailPage() {
   useEffect(() => {
     if (!id) return;
     const ch = supabase
-      .channel(`tutor_quiz_detail:${id}`)
+      .channel(realtimeChannelName(`tutor_quiz_detail:${id}`))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'tutor_quiz_attempts', filter: `quiz_id=eq.${id}` }, () => void load())
       .on('postgres_changes', { event: '*', schema: 'public', table: 'tutor_quiz_answer_grades' }, () => void load())
       .subscribe();

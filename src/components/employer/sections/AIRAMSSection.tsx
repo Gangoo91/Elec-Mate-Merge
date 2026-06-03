@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { RefreshCw, Sparkles, Download } from 'lucide-react';
@@ -65,7 +66,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
     if (!generationJobId || !isGenerating) return;
 
     const channel = supabase
-      .channel(`rams-job-${generationJobId}`)
+      .channel(realtimeChannelName(`rams-job-${generationJobId}`))
       .on(
         'postgres_changes',
         {

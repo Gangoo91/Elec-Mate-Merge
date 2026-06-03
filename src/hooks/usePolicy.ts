@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    usePolicy — single policy + version history + ack count for the current
@@ -129,7 +130,7 @@ export function usePolicy(policyId: string | null) {
   useEffect(() => {
     if (!policyId) return;
     const channel = supabase
-      .channel(`policy:${policyId}`)
+      .channel(realtimeChannelName(`policy:${policyId}`))
       .on(
         'postgres_changes',
         {

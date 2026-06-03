@@ -197,13 +197,26 @@ export default function AdminAnnouncements() {
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
+      return data?.announcement as Announcement | undefined;
     },
-    onSuccess: () => {
+    onSuccess: (created) => {
       haptic.success();
       queryClient.invalidateQueries({ queryKey: ['admin-announcements'] });
       const isScheduled = formData.starts_at && new Date(formData.starts_at) > new Date();
+      const ch = (created?.channel as Channel) ?? formData.channel;
+      const isPush = ch === 'push' || ch === 'both';
       setCreateOpen(false);
       setFormData(defaultAnnouncement);
+      // For a push, drop straight into the saved item so the Send-test /
+      // Send-to-everyone buttons are right there — no reopen guesswork.
+      if (isPush && created) {
+        setEditAnnouncement(created);
+        toast({
+          title: 'Push saved',
+          description: 'Send a test to yourself first, then send it to everyone.',
+        });
+        return;
+      }
       toast({
         title: isScheduled ? 'Announcement scheduled' : 'Announcement created',
         description: isScheduled
@@ -287,8 +300,8 @@ export default function AdminAnnouncements() {
         description:
           data.mode === 'test'
             ? data.delivered
-              ? 'Check your device.'
-              : 'No active device found for your account.'
+              ? 'Check your device — it should arrive in a few seconds.'
+              : 'No device registered for your account yet. Open Elec-Mate on your phone, allow notifications, then try the test again.'
             : `Delivered to ${data.recipients ?? 0} ${
                 (data.recipients ?? 0) === 1 ? 'person' : 'people'
               }.`,
@@ -632,9 +645,11 @@ export default function AdminAnnouncements() {
                       {showPush ? (
                         <div className="rounded-2xl bg-gradient-to-b from-[hsl(0_0%_16%)] to-[hsl(0_0%_9%)] border border-white/[0.08] p-3">
                           <div className="flex items-start gap-3 rounded-xl bg-black/40 px-3 py-2.5">
-                            <div className="h-9 w-9 rounded-lg bg-elec-yellow shrink-0 flex items-center justify-center text-black font-bold text-sm">
-                              E
-                            </div>
+                            <img
+                              src="/pwa-192x192.png"
+                              alt="Elec-Mate"
+                              className="h-9 w-9 rounded-lg object-cover shrink-0 bg-elec-yellow"
+                            />
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between gap-2">
                                 <p className="text-[13px] font-semibold text-white truncate">
@@ -750,6 +765,34 @@ export default function AdminAnnouncements() {
                   <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
                     Audience
                   </Label>
+                  {(() => {
+                    // "Everyone with the app" = every real account role. (Visitors
+                    // have no account/device, so they're never push recipients.)
+                    const APP_ROLES = ['apprentice', 'electrician', 'employer'];
+                    const current = editAnnouncement?.target_roles || formData.target_roles;
+                    const allSelected = APP_ROLES.every((r) => current.includes(r));
+                    return (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = allSelected ? [] : APP_ROLES;
+                          if (editAnnouncement) {
+                            setEditAnnouncement({ ...editAnnouncement, target_roles: next });
+                          } else {
+                            setFormData({ ...formData, target_roles: next });
+                          }
+                        }}
+                        className={cn(
+                          'w-full h-11 rounded-full text-[12.5px] font-semibold touch-manipulation transition-colors',
+                          allSelected
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04]'
+                        )}
+                      >
+                        Everyone with the app
+                      </button>
+                    );
+                  })()}
                   <div className="grid grid-cols-2 gap-2">
                     {(['visitor', 'apprentice', 'electrician', 'employer'] as const).map(
                       (role) => {
@@ -987,7 +1030,9 @@ export default function AdminAnnouncements() {
                       </>
                     ) : (
                       <p className="text-[11px] text-white/50">
-                        Save this push first, then send a test to yourself and out to the audience.
+                        Tap <span className="text-white/80">Create Announcement</span> below — it
+                        saves and the <span className="text-white/80">Send test to me</span> /
+                        <span className="text-white/80"> Send to everyone</span> buttons appear next.
                       </p>
                     )}
                   </div>

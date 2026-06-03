@@ -16,6 +16,7 @@ import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 interface AgentStep {
   name: string;
@@ -139,7 +140,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
     })();
 
     const channel = supabase
-      .channel(`rams-partials-${jobId}`)
+      .channel(realtimeChannelName(`rams-partials-${jobId}`))
       .on(
         'postgres_changes',
         {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStudentQuizzes — assessment + quiz history for one learner.
@@ -383,7 +384,7 @@ export function useStudentQuizzes(userId: string | null): StudentQuizzes {
   useEffect(() => {
     if (!userId) return;
     const channel = supabase
-      .channel(`student_quizzes:${userId}`)
+      .channel(realtimeChannelName(`student_quizzes:${userId}`))
       .on(
         'postgres_changes',
         {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useMyComplianceSummary — resolve current user → their college_staff row,
@@ -123,7 +124,7 @@ export function useMyComplianceSummary() {
   useEffect(() => {
     if (!summary?.staffId) return;
     const channel = supabase
-      .channel(`my_compliance:${summary.staffId}`)
+      .channel(realtimeChannelName(`my_compliance:${summary.staffId}`))
       .on(
         'postgres_changes',
         {

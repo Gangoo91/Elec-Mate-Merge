@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 interface CircuitDesignJob {
   id: string;
@@ -90,7 +91,7 @@ export const useCircuitDesignGeneration = (
     }, 3000);
 
     const channel = supabase
-      .channel(`circuit-design-job-${jobId}`)
+      .channel(realtimeChannelName(`circuit-design-job-${jobId}`))
       .on(
         'postgres_changes',
         {

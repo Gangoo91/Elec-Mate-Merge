@@ -20,6 +20,7 @@ import { SignatureCapture } from '@/components/ui/signature-capture';
 import { CompletionShareButton } from './CompletionShareButton';
 import { downloadCompletionCertificatePDF } from '@/utils/completion-certificate-pdf';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { SiteVisit, SiteVisitPhoto } from '@/types/siteVisit';
 import { Eyebrow, Dot } from '@/components/college/primitives';
 
@@ -60,7 +61,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
     if (!visit.id || !isCompletionSent) return;
 
     const channel = supabase
-      .channel(`completion-${visit.id}`)
+      .channel(realtimeChannelName(`completion-${visit.id}`))
       .on(
         'postgres_changes',
         {

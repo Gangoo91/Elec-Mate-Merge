@@ -18,6 +18,7 @@ import { motion } from 'framer-motion';
 import { Textarea } from '@/components/ui/textarea';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
@@ -138,7 +139,7 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
   useEffect(() => {
     if (!cohortId) return;
     const channel = supabase
-      .channel(`live-lesson-attendance:${cohortId}:${today}`)
+      .channel(realtimeChannelName(`live-lesson-attendance:${cohortId}:${today}`))
       .on(
         'postgres_changes',
         {

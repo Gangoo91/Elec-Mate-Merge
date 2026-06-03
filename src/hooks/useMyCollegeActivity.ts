@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useMyCollegeActivity — apprentice-side activity feed surfacing what their
@@ -304,7 +305,7 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
   useEffect(() => {
     if (!authUid) return;
     const channel = supabase
-      .channel(`my_college_activity:${authUid}`)
+      .channel(realtimeChannelName(`my_college_activity:${authUid}`))
       .on(
         'postgres_changes',
         {
@@ -335,7 +336,7 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
   useEffect(() => {
     if (!collegeStudentId) return;
     const channel = supabase
-      .channel(`my_college_activity_goals:${collegeStudentId}`)
+      .channel(realtimeChannelName(`my_college_activity_goals:${collegeStudentId}`))
       .on(
         'postgres_changes',
         {
@@ -358,7 +359,7 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
   useEffect(() => {
     if (!collegeStudentId) return;
     const channel = supabase
-      .channel(`my_college_activity_observations:${collegeStudentId}`)
+      .channel(realtimeChannelName(`my_college_activity_observations:${collegeStudentId}`))
       .on(
         'postgres_changes',
         {

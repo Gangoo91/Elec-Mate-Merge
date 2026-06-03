@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStaffComplianceVault — everything for one staff member's drawer:
@@ -196,7 +197,7 @@ export function useStaffComplianceVault(staffId: string | null): VaultData {
   useEffect(() => {
     if (!staffId) return;
     const channel = supabase
-      .channel(`staff_vault:${staffId}`)
+      .channel(realtimeChannelName(`staff_vault:${staffId}`))
       .on(
         'postgres_changes',
         {

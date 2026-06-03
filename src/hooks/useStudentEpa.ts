@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useStudentEpa — End-Point Assessment readiness for one learner.
@@ -210,7 +211,7 @@ export function useStudentEpa(
   useEffect(() => {
     if (!userId) return;
     const channel = supabase
-      .channel(`student_epa:${userId}`)
+      .channel(realtimeChannelName(`student_epa:${userId}`))
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'epa_gateway_checklist', filter: `user_id=eq.${userId}` },

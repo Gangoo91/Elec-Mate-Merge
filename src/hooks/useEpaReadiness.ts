@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
    useEpaReadiness — single source of truth for the tri-perspective EPA panel.
@@ -144,7 +145,7 @@ export function useEpaReadiness(args: {
   useEffect(() => {
     if (!collegeStudentId) return;
     const ch = supabase
-      .channel(`epa_judgements:${collegeStudentId}`)
+      .channel(realtimeChannelName(`epa_judgements:${collegeStudentId}`))
       .on(
         'postgres_changes',
         {
