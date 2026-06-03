@@ -37,16 +37,16 @@
 
   /* ---------- WORKFLOW LOOP ---------- */
   .flow{ position:relative; }
-  .step{ display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:start; padding:10px 0; border-bottom:1px solid var(--line); }
+  .step{ display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:start; padding:6px 0; border-bottom:1px solid var(--line); }
   .step:last-child{ border-bottom:none; }
   .badge{ width:34px; height:34px; border-radius:50%; background:var(--navy); color:#fff; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; }
   .step .eb{ font-size:11px; letter-spacing:2.5px; font-weight:700; color:var(--amber); text-transform:uppercase; }
-  .step .ti{ font-size:17px; font-weight:700; color:var(--navy); margin-top:3px; }
-  .step .de{ font-size:12.5px; color:var(--muted); margin-top:3px; line-height:1.45; }
+  .step .ti{ font-size:16px; font-weight:700; color:var(--navy); margin-top:2px; }
+  .step .de{ font-size:12px; color:var(--muted); margin-top:2px; line-height:1.4; }
   .replaces{ align-self:center; text-align:right; min-width:120px; }
   .replaces .rk{ font-size:9px; letter-spacing:1.5px; color:#9aa7b6; text-transform:uppercase; }
   .replaces .rv{ font-size:12px; font-weight:600; color:var(--ink); margin-top:3px; }
-  .loopnote{ margin-top:16px; background:var(--navy); color:#fff; border-radius:12px; padding:14px 18px; font-size:12.5px; line-height:1.5; }
+  .loopnote{ margin-top:11px; background:var(--navy); color:#fff; border-radius:12px; padding:12px 16px; font-size:12px; line-height:1.45; }
   .loopnote b{ color:var(--gold); }
 
   /* ---------- JOURNEY (apprentice / college) ---------- */
@@ -102,6 +102,22 @@
   .back-cta .lead{ font-size:10.5px; letter-spacing:2.5px; text-transform:uppercase; color:#7d90aa; }
   .back-cta .url{ font-size:24px; font-weight:800; margin-top:5px; color:#fff; letter-spacing:.3px; }
   .back-cta .email{ font-size:12.5px; color:#aebfd4; margin-top:7px; }
+
+  /* ---------- feature tiles (v3) ---------- */
+  .tilegrid{ display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-top:2px; }
+  .tilegrid.three{ grid-template-columns:1fr 1fr 1fr; }
+  .ftile{ border:1px solid var(--line); border-radius:12px; padding:13px 15px; background:#fff; }
+  .ftile .cat{ font-size:9px; letter-spacing:1.4px; text-transform:uppercase; color:var(--amber); font-weight:700; }
+  .ftile h5{ font-size:13.5px; color:var(--navy); margin:5px 0 4px; line-height:1.18; font-weight:800; }
+  .ftile p{ font-size:11px; color:var(--muted); line-height:1.45; }
+  /* numbers band */
+  .numband{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; background:linear-gradient(135deg,var(--navy),var(--deep)); border-radius:12px; padding:18px 20px; margin-top:16px; }
+  .numband .n{ font-size:25px; font-weight:800; color:var(--gold); line-height:1; }
+  .numband .t{ font-size:10px; color:#aebfd4; margin-top:5px; line-height:1.3; }
+  /* gold CTA band */
+  .ctaband{ margin-top:18px; background:linear-gradient(120deg,var(--gold),#ffd24d); border-radius:12px; padding:15px 20px; color:#3a2c00; display:flex; justify-content:space-between; align-items:center; }
+  .ctaband .ct{ font-size:15.5px; font-weight:800; }
+  .ctaband .cs{ font-size:11.5px; font-weight:700; opacity:.75; margin-top:3px; }
 </style></head><body>
 
 <!-- ============ COVER ============ -->
@@ -110,7 +126,8 @@
   <div class="kicker">YOUR TRADE. YOUR APP.</div>
   <div class="rule"></div>
   <h1>Quote. Certify.<br>Get paid. Learn.</h1>
-  <div class="sub">The whole job in one app — design, RAMS, calculators, certificates, invoicing and training. The tools an apprentice, electrician, employer and college all actually use, built for the van, not the desk.</div>
+  <div class="sub">The whole job in one app — quote, design, certify, get paid and learn. Every tool a working electrician and an apprentice actually needs, built for the van, not the desk.</div>
+  <div style="margin-top:22px; display:inline-block; background:rgba(244,180,0,.14); border:1px solid #f4b400; color:#f4b400; font-size:13px; font-weight:700; letter-spacing:.3px; padding:9px 16px; border-radius:24px;">7 days free &middot; no charge today &middot; cancel anytime</div>
 
   <div class="replaces-strip">
     <div class="lbl">Replaces a stack of separate tools</div>
@@ -131,72 +148,95 @@
   <div class="foot"><span>Product feature overview</span><span>elec-mate.com</span></div>
 </section>
 
-<!-- ============ ELECTRICIAN WORKFLOW ============ -->
+<!-- ============ ELECTRICIAN — THE LOOP ============ -->
 <section class="page">
   <div class="sec-head">
     <div class="sec-eyebrow">For the electrician</div>
     <div class="sec-title">Your whole day, in one loop.</div>
-    <div class="sec-lede">Every job runs the same path — quote it, design it, do it, certify it, get paid for it. Elec-Mate is the one app that carries the job from the first photo to the cleared payment, then helps you keep learning. Each step replaces a tool you're paying for today.</div>
+    <div class="sec-lede">Every job runs the same path — quote it, design it, do it, certify it, get paid. Elec-Mate carries the job from the first photo to the cleared payment. Each step replaces a separate tool you pay for today.</div>
   </div>
-
   <div class="flow">
-    <div class="step"><div class="badge">1</div><div><div class="eb">Quote</div><div class="ti">AI Cost Engineer</div><div class="de">Photo-to-quote with live material pricing, sent by WhatsApp.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">Tradify · Excel</div></div></div>
-    <div class="step"><div class="badge">2</div><div><div class="eb">Design</div><div class="ti">Circuit Designer</div><div class="de">Cable sizing, breakers, earthing and voltage drop — worked out by AI.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">Amtech</div></div></div>
-    <div class="step"><div class="badge">3</div><div><div class="eb">Stay compliant</div><div class="ti">RAMS in 2 minutes</div><div class="de">Risk assessments, H&amp;S templates, CPD log and a full audit trail.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">Word + spreadsheets</div></div></div>
-    <div class="step"><div class="badge">4</div><div><div class="eb">Do the work</div><div class="ti">70+ calculators</div><div class="de">Loop impedance, voltage drop, IR recorder and an AI board scanner.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">6 separate apps</div></div></div>
-    <div class="step"><div class="badge">5</div><div><div class="eb">Certify</div><div class="ti">Every BS 7671 cert</div><div class="de">18 cert types — EICR, EIC, Minor Works, solar, EV, fire alarm — plus danger notices, isolation certs, permits, labels and board schedules. A4:2026 ready, signed in minutes, works offline.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">iCertifi</div></div></div>
-    <div class="step"><div class="badge">6</div><div><div class="eb">Invoice</div><div class="ti">One tap from quote</div><div class="de">Auto-chase, CIS deductions and Stripe payment links.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">Xero + manual chase</div></div></div>
-    <div class="step"><div class="badge">7</div><div><div class="eb">Get paid</div><div class="ti">Stripe Connect built in</div><div class="de">Card, Apple Pay, Google Pay or bank transfer — same day.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">Sumup (1.69%)</div></div></div>
-    <div class="step"><div class="badge">8</div><div><div class="eb">Keep learning</div><div class="ti">L2/L3 · AM2 · EPA</div><div class="de">85+ courses and 700+ modules, the AM2 simulator and a digital portfolio — stay current as the regs move.</div></div><div class="replaces"><div class="rk">replaces</div><div class="rv">Logic4Training</div></div></div>
+    <div class="step"><div class="badge">1</div><div><div class="eb">Quote</div><div class="ti">AI Cost Engineer</div><div class="de">Snap a photo — AI itemises the materials at live trade prices and sends a branded quote by WhatsApp in seconds.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">Tradify &middot; Excel</div></div></div>
+    <div class="step"><div class="badge">2</div><div><div class="eb">Design</div><div class="ti">Circuit Designer</div><div class="de">Cable sizing, protective device, earthing and voltage drop — checked against BS 7671 with auto-fix suggestions.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">Amtech</div></div></div>
+    <div class="step"><div class="badge">3</div><div><div class="eb">Stay compliant</div><div class="ti">RAMS in 2 minutes</div><div class="de">Site-specific risk assessments, method statements, safe-isolation records and permits — ready for the principal contractor.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">Word + templates</div></div></div>
+    <div class="step"><div class="badge">4</div><div><div class="eb">Do the work</div><div class="ti">70+ site calculators</div><div class="de">Loop impedance, Zs, voltage drop, adiabatic, max demand, RCD trip times — plus an IR recorder and an AI board scanner.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">6 single-use apps</div></div></div>
+    <div class="step"><div class="badge">5</div><div><div class="eb">Certify</div><div class="ti">Every BS 7671 cert</div><div class="de">18 cert types — EICR, EIC, Minor Works, solar, EV, fire alarm, PAT. A4:2026-ready, signed in minutes, works offline.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">iCertifi</div></div></div>
+    <div class="step"><div class="badge">6</div><div><div class="eb">Invoice</div><div class="ti">One tap from quote</div><div class="de">Quote to invoice in a tap, auto-chase overdue, CIS deductions, hourly or day-rate pricing.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">Xero + manual chase</div></div></div>
+    <div class="step"><div class="badge">7</div><div><div class="eb">Get paid</div><div class="ti">Stripe Connect built in</div><div class="de">Card, Apple Pay, Google Pay or bank transfer — money in the same day, no third-party app.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">SumUp (1.69%)</div></div></div>
+    <div class="step"><div class="badge">8</div><div><div class="eb">Keep learning</div><div class="ti">CPD &amp; upskilling</div><div class="de">18th Edition, EV, solar, fire alarm and more — log your CPD and stay current as the regs move.</div></div><div class="replaces"><div class="rk">Replaces</div><div class="rv">Logic4Training</div></div></div>
   </div>
-
-  <div class="loopnote">And running through all of it: <b>Elec-AI</b> in the sidebar — ask anything and every answer cites BS 7671 — plus <b>Business Mate</b>, which creates projects, snags, quotes and emails on command. The same Mate is on WhatsApp when you're away from the app.</div>
-  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">Quote · Design · Certify · Get paid · Learn</span><span class="pg">02</span></div>
+  <div class="loopnote">Running through all of it: <b>Elec-AI</b> in the sidebar — ask anything, and every answer is grounded in BS 7671 — plus <b>Business Mate</b>, which builds projects, snags, quotes and emails on command.</div>
+  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">Quote &middot; Design &middot; Certify &middot; Get paid</span><span class="pg">02</span></div>
 </section>
 
-<!-- ============ APPRENTICE JOURNEY ============ -->
+<!-- ============ ELECTRICIAN — THE TOOLKIT ============ -->
+<section class="page">
+  <div class="sec-head">
+    <div class="sec-eyebrow">For the electrician</div>
+    <div class="sec-title">The full toolkit on site.</div>
+    <div class="sec-lede">Everything you reach for in a working day — testing, design, materials and safety — in one place, all on the same standards.</div>
+  </div>
+  <div class="tilegrid three">
+    <div class="ftile"><div class="cat">Inspection &amp; testing</div><h5>The certification engine</h5><p>18 cert types with test results, photos and signatures, plus an AI board scanner that reads a consumer unit. Board schedules, danger &amp; isolation notices. A4:2026, fully offline.</p></div>
+    <div class="ftile"><div class="cat">Calculators</div><h5>70+ in your pocket</h5><p>Cable sizing, voltage drop, Zs, R1+R2, ring final, RCD trip times, adiabatic, PFC, three-phase, conduit fill, EV &amp; solar.</p></div>
+    <div class="ftile"><div class="cat">Design</div><h5>Install Planner</h5><p>Plan circuits and boards, size everything to BS 7671, and turn the design straight into a quote or cert.</p></div>
+    <div class="ftile"><div class="cat">AI tools</div><h5>Cost Engineer &amp; Designer</h5><p>The AI Cost Engineer prices a job from a photo, and the Circuit Designer checks your design against BS 7671 with auto-fix.</p></div>
+    <div class="ftile"><div class="cat">Materials</div><h5>Marketplace &amp; price compare</h5><p>Search products across suppliers, compare prices, build job baskets and reusable materials lists — buy at the best price.</p></div>
+    <div class="ftile"><div class="cat">Live pricing</div><h5>Metals &amp; scrap, live</h5><p>Live copper and metal prices and scrap values, so your quotes and reclaim are always priced on today's market.</p></div>
+    <div class="ftile"><div class="cat">Field work</div><h5>Projects, visits &amp; snags</h5><p>Run a project from pre-site to sign-off — site visits, snagging, time tracking and photo documentation, all logged.</p></div>
+    <div class="ftile"><div class="cat">Site safety</div><h5>RAMS &amp; permits</h5><p>AI RAMS tailored to the actual site, permits to work, COSHH, toolbox talks and near-miss logging.</p></div>
+    <div class="ftile"><div class="cat">Compliance</div><h5>Regulation Search</h5><p>Search BS 7671, GN3 and the OSG in plain English and get the regulation that actually answers the question.</p></div>
+  </div>
+  <div class="numband">
+    <div><div class="n">18</div><div class="t">certificate &amp; notice types</div></div>
+    <div><div class="n">70+</div><div class="t">trade calculators</div></div>
+    <div><div class="n">A4:2026</div><div class="t">BS 7671 ready</div></div>
+    <div><div class="n">Offline</div><div class="t">certs &amp; testing that sync</div></div>
+  </div>
+  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">For the electrician &mdash; the toolkit</span><span class="pg">03</span></div>
+</section>
+
+<!-- ============ ELECTRICIAN — MONEY & CAREER ============ -->
+<section class="page">
+  <div class="sec-head">
+    <div class="sec-eyebrow">For the electrician</div>
+    <div class="sec-title">Run the business. Build the career.</div>
+    <div class="sec-lede">The money side and the career side, connected to the work — so nothing's entered twice and nothing's left on the table.</div>
+  </div>
+  <div class="tilegrid three">
+    <div class="ftile"><div class="cat">Quoting</div><h5>Quotes that win</h5><p>Branded quotes with deposits, online acceptance and booking, hourly or day-rate pricing, and a markup that's yours to set.</p></div>
+    <div class="ftile"><div class="cat">Invoicing</div><h5>Get paid faster</h5><p>One-tap invoicing from a quote, automatic overdue chasing, CIS deductions and payment links.</p></div>
+    <div class="ftile"><div class="cat">Money</div><h5>Stripe Connect</h5><p>Take card, Apple Pay, Google Pay or bank transfer — same-day money, no separate terminal app.</p></div>
+    <div class="ftile"><div class="cat">Stock</div><h5>Price book &amp; inventory</h5><p>A reusable price book and live stock that feed straight into quotes and invoices.</p></div>
+    <div class="ftile"><div class="cat">Expenses</div><h5>Costs &amp; customers</h5><p>Log expenses and receipts, track customers and job value, see what each job actually made.</p></div>
+    <div class="ftile"><div class="cat">Grow</div><h5>Business guides &amp; calcs</h5><p>Practical guides for going out on your own, plus financial calculators — pricing, tax, margins.</p></div>
+    <div class="ftile"><div class="cat">Identity</div><h5>Elec-ID</h5><p>Your verified digital professional identity — qualifications, ECS card and scheme membership, shareable in a tap.</p></div>
+    <div class="ftile"><div class="cat">Profile</div><h5>CV builder</h5><p>Build a proper electrician's CV from your Elec-ID and work history, export-ready.</p></div>
+    <div class="ftile"><div class="cat">Work</div><h5>Job vacancies</h5><p>Find electrical work and roles near you — the career board built into the app.</p></div>
+  </div>
+  <div class="ctaband"><div><div class="ct">Try every tool free for 7 days.</div><div class="cs">No charge today &middot; cancel anytime</div></div><div style="font-size:13px;font-weight:800;">elec-mate.com</div></div>
+  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">For the electrician &mdash; money &amp; career</span><span class="pg">04</span></div>
+</section>
+
+<!-- ============ APPRENTICE ============ -->
 <section class="page">
   <div class="sec-head">
     <div class="sec-eyebrow">For the apprentice</div>
     <div class="sec-title">From Level 2 to qualified — built around the AM2.</div>
-    <div class="sec-lede">An apprenticeship is a four-year journey, not a single tool. Elec-Mate walks it end to end: learn the theory, practise the practical, build the evidence, stay in step with college — with an AI mentor and a daily streak keeping the momentum going.</div>
+    <div class="sec-lede">Learn the theory, practise the practical, build the evidence and walk into end-point assessment ready — with an AI mentor and a daily streak keeping the momentum going.</div>
   </div>
-
-  <div class="journey">
-    <div class="jcard"><div class="jn">01 · Learn</div><h4>Courses &amp; daily streaks</h4><p>46 courses, 106 lessons and 1,750+ exam questions across L2, L3 and AM2, plus a learning-video library. A daily streak and progress tracking turn revision into a habit.</p></div>
-    <div class="jcard"><div class="jn">02 · Practise</div><h4>The AM2 simulator</h4><p>A realistic Megger MFT dial and EIC schedule sign-off, an 8-step safe-isolation drill, a fault-finding simulator and an EPA mock — rehearse the exam before you book it.</p></div>
-    <div class="jcard"><div class="jn">03 · Evidence</div><h4>Portfolio &amp; OJT hours</h4><p>A digital portfolio mapped to your assessment criteria, with photo/voice capture graded for quality, and off-the-job hours tracked against the 20% rule with a gateway forecast.</p></div>
-    <div class="jcard"><div class="jn">04 · College</div><h4>Your tutor, live</h4><p>Goals and quizzes your tutor sets appear straight on your phone, with a comment thread back to them and tutor sign-off on evidence — college and app are one loop.</p></div>
-    <div class="jcard" style="grid-column:1 / -1;"><div class="jn">Throughout · Guidance</div><h4>"Ask Dave", your AI mentor</h4><p>A master-sparky AI that knows BS 7671 and exactly where you are in your course — explains your mistakes, tells you what to focus on this week, and drafts reflections. Plus 22+ on-job calculators and flashcards in your pocket.</p></div>
-    <div class="outcome"><div class="ol">The outcome</div><div class="ot">Pass AM2 first time.</div></div>
+  <div class="tilegrid three">
+    <div class="ftile"><div class="cat">Learn</div><h5>Study Centre</h5><p>46 courses and 106 lessons across L2, L3 and the 18th Edition, plus a learning-video library and 1,750+ exam questions.</p></div>
+    <div class="ftile"><div class="cat">Practise</div><h5>The AM2 simulator</h5><p>A realistic Megger MFT dial, EIC schedule sign-off, an 8-step safe-isolation drill, a fault-finding sim and an EPA mock.</p></div>
+    <div class="ftile"><div class="cat">Evidence</div><h5>Portfolio &amp; OJT hours</h5><p>A portfolio mapped to your assessment criteria with photo/voice capture, and off-the-job hours tracked with a gateway forecast.</p></div>
+    <div class="ftile"><div class="cat">Revise</div><h5>Mock-exam engine</h5><p>Timed mock exams, flashcards, gamified progress and a daily streak that turns revision into a habit.</p></div>
+    <div class="ftile"><div class="cat">Mentor</div><h5>"Ask Dave"</h5><p>A master-sparky AI that knows BS 7671 and where you are in your course — explains mistakes and sets your focus for the week.</p></div>
+    <div class="ftile"><div class="cat">On site</div><h5>Site diary &amp; calculators</h5><p>The same calculators and installation guides the qualified lads use, plus a site diary to capture the day.</p></div>
+    <div class="ftile"><div class="cat">Identity</div><h5>Elec-ID &amp; CV</h5><p>Build your professional identity and CV from day one, ready for that first qualified role.</p></div>
+    <div class="ftile"><div class="cat">Wellbeing</div><h5>Mental Health Hub</h5><p>Check-ins, coping tools, peer support and UK crisis resources — the trade looks after its own.</p></div>
+    <div class="ftile" style="background:linear-gradient(120deg,var(--gold),#ffd24d);border:none;"><div class="cat" style="color:#7a5c00;">The outcome</div><h5 style="color:#3a2c00;font-size:16px;">Pass AM2 first time.</h5><p style="color:#5a4500;">Everything pulling in one direction — from Level 2 to qualified.</p></div>
   </div>
-  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">For the apprentice — Level 2 to qualified</span><span class="pg">03</span></div>
-</section>
-
-<!-- ============ COLLEGE WORKFLOW ============ -->
-<section class="page">
-  <div class="sec-head">
-    <div class="sec-eyebrow">For colleges &amp; training providers</div>
-    <div class="sec-title">Deliver, assess, assure — and prove it.</div>
-    <div class="sec-lede">A complete further-education platform that runs a provider's whole quality cycle and plugs into the systems you already use — then connects, live, to every learner's own app.</div>
-  </div>
-
-  <div class="journey">
-    <div class="jcard"><div class="jn">01 · Plan &amp; deliver</div><h4>Lessons, on autopilot</h4><p>AI-generated lesson plans and slide decks, live and recorded delivery, with outcomes, activities and differentiation built in.</p></div>
-    <div class="jcard"><div class="jn">02 · Mark</div><h4>Marking copilot</h4><p>A cross-quiz queue with AI-assisted grading and per-attempt sign-off, so feedback turns around fast.</p></div>
-    <div class="jcard"><div class="jn">03 · Assure</div><h4>Built-in IQA</h4><p>Sampling plans, standardisation, assessor-drift detection and a coverage matrix — quality assurance without the spreadsheets.</p></div>
-    <div class="jcard"><div class="jn">04 · Prove</div><h4>Ofsted-ready</h4><p>An EIF lens, SAR drafting, a QIP tracker and an AI mock-inspector to rehearse the real visit — evidence on demand.</p></div>
-    <div class="jcard" style="grid-column:1 / -1;"><div class="jn">The bridge · Connect</div><h4>One live link to every learner</h4><p>Set a plan, goal or quiz and it lands on the apprentice's phone instantly; they act and reply straight back. Off-the-job hours flow in for verification, and the whole thing plugs into your existing LMS via LTI.</p></div>
-    <div class="band">
-      <div class="bt">The only platform where the college's delivery and every learner's own app run on one live system.</div>
-      <div class="bstats">
-        <div class="bstat"><div class="n">ESFA</div><div class="t">OTJ funding-ready</div></div>
-        <div class="bstat"><div class="n">Ofsted</div><div class="t">EIF · SAR · QIP</div></div>
-        <div class="bstat"><div class="n">LTI</div><div class="t">plugs into your LMS</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">For colleges &amp; training providers</span><span class="pg">04</span></div>
+  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">For the apprentice &mdash; Level 2 to qualified</span><span class="pg">05</span></div>
 </section>
 
 <!-- ============ WHY ONE PLATFORM + PROOF ============ -->
@@ -204,26 +244,20 @@
   <div class="sec-head">
     <div class="sec-eyebrow">Why one platform wins</div>
     <div class="sec-title">Not a bundle of tools. One connected system.</div>
-    <div class="sec-lede">The reason it works is the connection: apprentice, electrician, employer and college all run on the same live data, all on the same standards, all on the same phone.</div>
+    <div class="sec-lede">The quote becomes the invoice, the design feeds the cert, the apprentice becomes the qualified electrician — all on the same live data, on the same standards, on the same phone.</div>
   </div>
-
   <div class="why">
-    <div class="whycard"><h4>One connected lifecycle</h4><p>Evidence an apprentice captures, hours a supervisor signs and a plan a tutor sets all flow through one system — no re-keying, no gaps.</p></div>
-    <div class="whycard"><h4>Compliance you can trust</h4><p>Every certificate, calculator and AI answer is built around BS 7671:2018 + A4:2026 — AFDDs, TN-C-S (PNB), the new schedules and model forms — referenced, not invented.</p></div>
-    <div class="whycard"><h4>Built for the van</h4><p>Mobile-first with big touch targets, no jargon, and offline certificates and testing that sync the moment you're back in signal.</p></div>
-    <div class="whycard"><h4>AI that knows the trade</h4><p>Elec-AI answers anything BS 7671; Business Mate does the admin in plain English; the same Mate is on WhatsApp. Your data stays yours — export every cert, quote and invoice as PDF any time.</p></div>
+    <div class="whycard"><h4>One connected job</h4><p>Quote &rarr; invoice, design &rarr; cert, job &rarr; payment — no re-keying, no gaps, nothing lost between apps.</p></div>
+    <div class="whycard"><h4>Compliance you can trust</h4><p>Every cert, calculator and AI answer is built around BS 7671:2018 + A4:2026 — AFDDs, TN-C-S (PNB), the new schedules — grounded, not invented.</p></div>
+    <div class="whycard"><h4>Built for the van</h4><p>Mobile-first, big touch targets, no jargon, and offline certs and testing that sync the moment you're back in signal.</p></div>
+    <div class="whycard"><h4>AI that knows the trade</h4><p>Elec-AI answers anything BS 7671; Business Mate does the admin in plain English. Your data stays yours — export anything as a PDF.</p></div>
   </div>
-
   <div class="quotes">
     <div class="quote"><p>"My go-to app for business and electrical work. Feature rich without feeling cluttered — a true all-in-one for quotes, certs, calculations, RAMS and EICRs. I use it every day without fail."</p><div class="by">— Verified Elec-Mate user</div></div>
     <div class="quote"><p>"One of the best apps I've ever downloaded. Every aspect feels thoughtfully designed — clean, intuitive, powerful. Reliable and efficient, exactly what I need."</p><div class="by">— Verified Elec-Mate user</div></div>
   </div>
-
-  <div class="closer">
-    <div class="big">Six tools. One app. Five minutes to your first job.</div>
-    <div class="sm">Most users are signed up and using their first feature within five minutes — built by a working UK electrician, for the trade.</div>
-  </div>
-  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">One platform for the whole life of a UK electrician</span><span class="pg">05</span></div>
+  <div class="ctaband"><div><div class="ct">Start your 7 days free.</div><div class="cs">No charge today &middot; cancel anytime &middot; built by a working UK electrician</div></div><div style="font-size:13px;font-weight:800;">elec-mate.com</div></div>
+  <div class="pgfoot"><span class="brand">ELEC-MATE</span><span class="mid">One platform for the whole life of a UK electrician</span><span class="pg">06</span></div>
 </section>
 
 <!-- ============ BACK COVER ============ -->
@@ -234,12 +268,12 @@
   </div>
   <div class="back-mid">
     <h2>The whole job. One app.</h2>
-    <div class="bsub">Quote, design, certify, get paid — and learn. Built by a working UK electrician, for the trade.</div>
+    <div class="bsub">Quote, design, certify, get paid — and learn. Try every tool free for 7 days — no charge today, cancel anytime. Then from &pound;6.99/month. Built by a working UK electrician, for the trade.</div>
   </div>
   <div class="back-cta">
     <div class="qr"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQAQMAAAC6caSPAAAABlBMVEX///8LHzpSweuzAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABE0lEQVR4nO3YQRLDIAxDUe5/aTptUGyR0AvoeyYUsB87bTqm1fjV97dO177NQCDBZIxq1VeDY5+BQKLJoTUUtG0GAoE8WtpBIJAT8aBpHAKBiHj7/yMQSDbp1SO1x+uegUBiybOqcRyBQELJvKv2e7A8cBBIMumjytB1p71WCAQisjUOEZvv/1pDIFHkLUzXff2uewgkmnRUoeo760Eg8aRFyHa16oNA0oku6qRzr3UPgUSTHiMPloPVgUCiSbV950wPQSC5ZC+1NNSffAUQSBCZVs8h/353EEgw8XjV2k8WOQgkmlS83vYePwgE0sfGVn0cAoE4uVsL7BQCySZ1qRGtGqtHIJBs0qsFyR6xGQgklXwAgoYYN/uvgAUAAAAASUVORK5CYII=" alt="Scan to visit elec-mate.com"></div>
     <div class="ctatext">
-      <div class="lead">Scan to get started</div>
+      <div class="lead">Scan to start your free trial</div>
       <div class="url">elec-mate.com</div>
       <div class="email">info@elec-mate.com</div>
     </div>
