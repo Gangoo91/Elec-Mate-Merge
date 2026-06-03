@@ -43,7 +43,7 @@ const MODEL = 'gpt-5.4-mini-2026-03-17';
 // to ramble. 20k is enough for 12-16 hazards / 14 steps at the v2 depth
 // while keeping a single agent under ~90s. JSON-repair handles any rare
 // truncation.
-const MAX_COMPLETION_TOKENS = 20000;
+const MAX_COMPLETION_TOKENS = 32000;
 
 /**
  * Best-effort JSON repair for OpenAI responses that hit the token cap
@@ -885,9 +885,9 @@ Schema (rich v2 — every hazard fully detailed):
 }
 
 Hard rules:
-- MINIMUM 12 hazards, MAXIMUM 14 hazards. Distinct mechanism per hazard. Do NOT pad.
+- MINIMUM 14 hazards. Add as many MORE as the specific job, site and environment genuinely present — a specialist or high-hazard site (nuclear, hospital, petrochemical, rail, water treatment, etc.) will typically need 20-30+. Distinct mechanism per hazard; do NOT pad with duplicates or generic filler, but never stop at a round number while real hazards remain unlisted.
 - ALWAYS include separate hazards for: (a) electric shock from live parts, (b) arc flash, (c) failure to safely isolate and prove dead, (d) slips/trips/falls, (e) manual handling, (f) tools failure / dropped objects.
-- ALSO include any of these the brief implies: confined space, hot works, working at height (≥1 m), lone working, asbestos disturbance, dust, noise ≥80 dB(A), HAVS, public access, fire load.
+- ASSESS THE SITE FOR YOURSELF. Beyond the electrical defaults above, you MUST add every hazard the specific site and environment present — use your own expert judgement, do not limit yourself to a checklist. Include where implied: confined space, hot works, working at height (≥1 m), lone working, asbestos disturbance, dust, noise ≥80 dB(A), HAVS, public access, fire load — AND any SITE-SPECIFIC hazard the electrical defaults miss, for example: ionising radiation and radioactive contamination (nuclear / high dose-rate / radiography sites), chemical or biological contamination, explosive or flammable atmospheres (DSEAR/ATEX), oxygen-deficient atmospheres, medical gases and infection control (healthcare), extreme temperature, stored pressure / stored energy. If the brief names a site type or condition (e.g. "nuclear facility", "high dose rate", "local rules"), that site's defining hazards MUST appear as distinct scored risks in the register — not merely a passing mention.
 - Risk score: 1-4 low, 5-9 medium, 10-15 high, 16-25 unacceptable. HSE 5×5 matrix. Sort risks by riskRating DESC.
 - Every hazard MUST have controlsStructured with 3-5 entries — NOT MORE.
 - Each control's detail MUST be 15-25 words. No more. Specific to THIS hazard.
@@ -895,7 +895,7 @@ Hard rules:
 - bs7671_cites MUST appear in the BS 7671 facets block. safety_cites MUST appear in the safety facets block. Do not invent.
 - residual_risk_rating ≤ riskRating for every hazard.
 - For severity ≥3: at least one of (eliminate / substitute / engineer) must appear before PPE.
-- Be CONCISE. Hit the minimum counts, not the maximum. Over-generating wastes the operative's time.`;
+- Be specific to THIS job and site, and comprehensive: never omit a hazard the site genuinely presents. Keep each entry tight (no padding, no duplicates, no filler) — but a specialist or high-hazard site legitimately warrants more hazards, so cover them all rather than stopping at a round number.`;
 
   const userBlock = [
     `# Project info`,

@@ -86,35 +86,30 @@ Example: ❌ "Protects hands"
 Example: ✅ "Arc flash insulated gloves (EN 60903): Protect against electric shock when handling live parts during testing phases where full isolation cannot be guaranteed"
 Example: ✅ "Work gloves (EN 388): Protect against cuts and abrasions when handling cable trunking, drilling, and installing conduit systems"
 
-**CRITICAL:** Focus ONLY on the job described. Don't add generic hazards.
+**CRITICAL:** Assess the SPECIFIC job, site and environment described — and identify EVERY significant hazard a competent person would, not only electrical ones.
 
-🎯 **YOUR TASK - RAG-FIRST APPROACH:**
+🎯 **YOUR TASK — EXPERT-LED, RAG-ASSISTED:**
 
-The knowledge base below contains PRE-ANALYZED hazards with:
-✓ Risk scores already calculated by BS 7671 experts
-✓ Control measures already specified per regulation
-✓ PPE requirements already determined
-✓ Regulations already referenced
+You are the expert. Reason about this exact job and site and produce a complete hazard assessment. The knowledge base below is expert-curated REFERENCE — it grounds and helps you; it does NOT limit you.
 
-**KNOWLEDGE BASE (PRE-STRUCTURED HAZARDS):**
+**KNOWLEDGE BASE (PRE-STRUCTURED HAZARDS — authoritative reference):**
 ${limitedRAGContext}
 
 ${installKnowledge}
 
 **YOU MUST:**
-1. **FORMAT** the pre-identified hazards into the JSON structure (DO NOT create new hazards unless <3 found)
-2. **VERIFY** relevance scores >70% are included; <70% may be excluded if clearly not applicable
-3. **LINK** each hazard to installation step numbers (linkedToStep: 0 for general, 1-N for specific steps)
-4. **VALIDATE** the provided controls are sufficient (only adjust if obviously incomplete)
-5. **USE** the provided risk scores - they're evidence-based from BS 7671 analysis
+1. **INCLUDE** every relevant pre-identified hazard above. Reuse their risk scores, control measures and regulation references as-is (they're evidence-based — don't change scores arbitrarily).
+2. **THEN ADD**, using your own expertise, every other significant hazard for THIS job, site and environment — especially ones the electrical knowledge base will NOT contain:
+   • Site / environment: radiation & contamination (nuclear, medical, industrial), asbestos (pre-2000 buildings), confined spaces, hazardous/explosive atmospheres (ATEX), plant & vehicle movement, public access, extreme temperatures.
+   • Task: working at height, manual handling, noise & vibration, dust/silica, hot works, lone working.
+3. **MATCH THE SITE.** Read the job/site description and reflect its real risk profile. A nuclear site MUST flag radiation and contamination; a hospital MUST flag infection control and medical gases; a roof job MUST flag falls. Never return a generic electrical list for a specialist or high-hazard site.
+4. **LINK** each hazard to installation step numbers (linkedToStep: 0 for general, 1-N for specific steps).
+5. **BE COMPREHENSIVE:** 15-20 hazards (domestic), 20-30+ (commercial/industrial), and more for complex or high-hazard sites — as many as the job genuinely warrants.
 
 ❌ DO NOT:
-- Invent new hazards when RAG provides them (the knowledge base is expert-curated)
-- Change risk scores arbitrarily (they're calculated from real incident data)
-- Add generic PPE not specified per hazard (use only what's required)
-- Duplicate hazards with slightly different wording
-
-⚠️ **ONLY IF** knowledge base has <3 hazards: Generate 15-20 hazards (domestic) or 20-30 hazards (commercial/industrial) using BS 7671 best practices.
+- Omit an obvious site-specific hazard just because it isn't in the electrical knowledge base — your expert judgement is required here.
+- Change the provided RAG risk scores arbitrarily (they're from real incident data).
+- Duplicate hazards with only slightly different wording.
 
 **RISK MATRIX (5x5):**
 Likelihood (1-5) × Severity (1-5) = Risk Score (1-25)

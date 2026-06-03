@@ -634,7 +634,7 @@ serve(async (req) => {
           structuredHazardsText = '\n\n📋 PRE-IDENTIFIED HAZARDS FROM BS 7671 ANALYSIS:\n\n';
           structuredHazardsText += `You have ${structuredHazards.length} pre-identified hazards with controls already determined.\n`;
           structuredHazardsText +=
-            'Your task is to FORMAT these into the JSON structure. DO NOT invent new hazards.\n\n';
+            'These are authoritative REFERENCE hazards: include the relevant ones with their risk scores and controls, THEN add every further hazard your own expertise identifies for this specific job and site — including non-electrical site hazards (e.g. radiation, contamination, asbestos, confined space, work at height) where the job warrants them.\n\n';
 
           structuredHazards.forEach((h, i) => {
             structuredHazardsText += `${i + 1}. HAZARD: ${h.hazard_description}\n`;
@@ -705,8 +705,8 @@ serve(async (req) => {
         contextSection += '\n\n# RELEVANT REGULATIONS (Pre-analyzed for hazards)\n\n';
         contextSection += optimizedRegContext;
         contextSection +=
-          '\n\n⚠️ YOUR TASK: Select which hazards apply to this job and format into JSON.\n';
-        contextSection += 'DO NOT create new hazards - use the pre-analyzed list above.\n\n';
+          '\n\n⚠️ YOUR TASK: Include the applicable hazards above, THEN add any further hazards your expertise identifies for this specific job and site.\n';
+        contextSection += 'Use this pre-analysed list as authoritative reference — not as a limit on what you assess.\n\n';
       }
 
       // NEW: Parse installationSteps directly from body (preferred) or previousAgentOutputs
