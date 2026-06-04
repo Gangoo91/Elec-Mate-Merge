@@ -4,6 +4,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 type PDFType =
   | 'permit'
@@ -96,9 +97,9 @@ async function deliverPDF(
       files: [saved.uri],
     });
   } else {
-    // Web fallback — open PDF in a new tab
+    // Web — use openOrDownloadPdf which handles PWA standalone (no window.open)
     if (!isBase64) {
-      window.open(urlOrBase64, '_blank');
+      await openOrDownloadPdf(urlOrBase64, filename);
     } else {
       const byteChars = atob(urlOrBase64);
       const byteNumbers = new Array(byteChars.length);
@@ -106,7 +107,7 @@ async function deliverPDF(
         byteNumbers[i] = byteChars.charCodeAt(i);
       }
       const blob = new Blob([new Uint8Array(byteNumbers)], { type: 'application/pdf' });
-      window.open(URL.createObjectURL(blob), '_blank');
+      await openOrDownloadPdf(URL.createObjectURL(blob), filename);
     }
   }
 }
@@ -236,18 +237,12 @@ export function useSafetyPDFExport() {
       if (result?.url) {
         await deliverPDF(result.url, false, filename, shareTitle);
         if (!Capacitor.isNativePlatform()) {
-          toast({
-            title: 'PDF Generated',
-            description: 'Your document has been opened in a new tab.',
-          });
+          toast({ title: 'PDF ready', description: 'Your document has been downloaded.' });
         }
       } else if (result?.pdf_base64) {
         await deliverPDF(result.pdf_base64, true, filename, shareTitle);
         if (!Capacitor.isNativePlatform()) {
-          toast({
-            title: 'PDF Generated',
-            description: 'Your document has been opened in a new tab.',
-          });
+          toast({ title: 'PDF ready', description: 'Your document has been downloaded.' });
         }
       } else if (result?.useFallback) {
         toast({
