@@ -22,6 +22,7 @@ type PDFType =
   | 'method-statement'
   | 'briefing'
   | 'safety-document'
+  | 'hs-specialist'
   | 'rams';
 
 const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
@@ -40,6 +41,7 @@ const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
   'method-statement': 'generate-method-statement-pdf',
   briefing: 'generate-pdf-monkey',
   'safety-document': 'generate-safety-document-pdf',
+  'hs-specialist': 'generate-hs-specialist-pdf',
   rams: 'generate-combined-rams-pdf',
 };
 
