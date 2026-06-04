@@ -498,16 +498,25 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                         >
                           Edit
                         </button>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSharingDocument(doc);
-                          }}
-                          className="text-[12px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
-                        >
-                          Share
-                        </button>
+                        {isV2Doc ? (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSharingDocument(doc);
+                            }}
+                            className="text-[12px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
+                          >
+                            Share
+                          </button>
+                        ) : (
+                          <span
+                            className="text-[11px] font-medium text-amber-400/80"
+                            title="Re-adopt this template from the library to enable PDF generation"
+                          >
+                            ⚠️ Re-adopt to unlock PDF
+                          </span>
+                        )}
                       </div>
                     </motion.div>
                   );

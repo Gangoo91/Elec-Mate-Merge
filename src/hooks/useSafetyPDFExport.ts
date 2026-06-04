@@ -205,14 +205,27 @@ export function useSafetyPDFExport() {
 
       console.log('[PDF Export] Response:', { result, error });
       if (error) {
+        // Try to read the edge function's error body for a meaningful message
+        let edgeFnError: string | null = null;
         try {
           const ctx = (error as any).context;
           if (ctx && typeof ctx.json === 'function') {
             const body = await ctx.json();
             console.error('[PDF Export] Edge function error body:', body);
+            edgeFnError = body?.error ?? null;
           }
         } catch (_) {
           /* ignore */
+        }
+        // Surface re-adopt errors with a clear, actionable message
+        if (edgeFnError && edgeFnError.toLowerCase().includes('structured content')) {
+          toast({
+            title: 'Document needs updating',
+            description:
+              'This document was created with an older version of the app. Please re-adopt it from the template library to enable PDF generation.',
+            variant: 'destructive',
+          });
+          return null;
         }
         throw error;
       }
@@ -247,9 +260,14 @@ export function useSafetyPDFExport() {
       return result;
     } catch (err) {
       console.error(`PDF export failed for ${type}:`, err);
+      // Try to extract a message from the thrown error
+      const errMsg = (err as any)?.message ?? '';
+      const isReAdoptError = errMsg.toLowerCase().includes('structured content');
       toast({
-        title: 'Export Failed',
-        description: 'Could not generate PDF. Please try again.',
+        title: isReAdoptError ? 'Document needs updating' : 'Export Failed',
+        description: isReAdoptError
+          ? 'This document was created with an older version of the app. Please re-adopt it from the template library to enable PDF generation.'
+          : 'Could not generate PDF. Please try again.',
         variant: 'destructive',
       });
       return null;
