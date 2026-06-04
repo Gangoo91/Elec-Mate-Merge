@@ -54,7 +54,7 @@ export const useHealthSafetyGeneration = (
 
       setJob(data);
 
-      // Stuck job detection: 360s timeout (6 minutes) - reset on progress OR step change
+      // Stuck job detection: 120s timeout (2 minutes) - reset on progress OR step change
       if (data.status === 'processing') {
         const hasProgressChanged = data.progress !== lastProgress;
         const hasStepChanged = data.current_step !== lastCurrentStep;
@@ -65,14 +65,14 @@ export const useHealthSafetyGeneration = (
           setLastActivityUpdate(Date.now());
         } else {
           const stuckDuration = Date.now() - lastActivityUpdate;
-          if (stuckDuration > 360000) {
-            console.error('❌ STUCK JOB DETECTED: No activity in 360s at', data.progress + '%');
+          if (stuckDuration > 120000) {
+            console.error('❌ STUCK JOB DETECTED: No activity in 120s at', data.progress + '%');
             await supabase
               .from('health_safety_jobs')
               .update({
                 status: 'failed',
                 error_message:
-                  'Generation timed out - no activity detected for 6 minutes. Please try again.',
+                  'Generation timed out — the job was too complex for the current limit. Please try again or simplify the brief.',
               })
               .eq('id', jobId);
             setIsPolling(false);

@@ -22,6 +22,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 
 const MIN_DESCRIPTION = 50;
+const INPUT_DRAFT_KEY = 'rams-input-draft-v1';
 
 export interface AIRAMSAttachment {
   path: string;
@@ -54,11 +55,31 @@ export interface AIRAMSInputProps {
   isProcessing: boolean;
 }
 
+/** Read the saved input draft from localStorage, returns null if none / parse error. */
+function loadInputDraft() {
+  try {
+    const raw = localStorage.getItem(INPUT_DRAFT_KEY);
+    if (!raw) return null;
+    const draft = JSON.parse(raw);
+    // Expire drafts older than 48 hours
+    if (Date.now() - (draft.savedAt ?? 0) > 48 * 60 * 60 * 1000) {
+      localStorage.removeItem(INPUT_DRAFT_KEY);
+      return null;
+    }
+    return draft;
+  } catch {
+    return null;
+  }
+}
+
 export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
   const { user } = useAuth();
 
-  const [jobDescription, setJobDescription] = useState('');
-  const [projectInfo, setProjectInfo] = useState({
+  // Restore from localStorage draft if available
+  const savedDraft = loadInputDraft();
+
+  const [jobDescription, setJobDescription] = useState(savedDraft?.jobDescription ?? '');
+  const [projectInfo, setProjectInfo] = useState(savedDraft?.projectInfo ?? {
     projectName: '',
     location: '',
     assessor: '',
@@ -77,7 +98,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     'commercial'
   );
   const [manualScale, setManualScale] = useState<'domestic' | 'commercial' | 'industrial' | null>(
-    null
+    savedDraft?.manualScale ?? null
   );
   const [scaleConfidence, setScaleConfidence] = useState<number>(0);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
@@ -275,9 +296,24 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     }
   }, [jobDescription, projectInfo.location]);
 
+  // Autosave input form to localStorage on every change — so a freeze/cancel never loses work
+  useEffect(() => {
+    if (!jobDescription && !projectInfo.projectName) return; // nothing worth saving yet
+    try {
+      localStorage.setItem(
+        INPUT_DRAFT_KEY,
+        JSON.stringify({ jobDescription, projectInfo, manualScale, savedAt: Date.now() })
+      );
+    } catch {
+      // localStorage full or unavailable — silently ignore
+    }
+  }, [jobDescription, projectInfo, manualScale]);
+
   const handleSubmit = () => {
     if (jobDescription && projectInfo.projectName) {
       const finalScale = manualScale || detectedScale;
+      // Clear the input draft once generation starts — the result draft takes over
+      try { localStorage.removeItem(INPUT_DRAFT_KEY); } catch { /* ignore */ }
       onGenerate(jobDescription, projectInfo, finalScale, attachments);
     }
   };

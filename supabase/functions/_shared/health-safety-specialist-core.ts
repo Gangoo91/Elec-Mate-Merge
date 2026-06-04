@@ -334,7 +334,7 @@ Hard rules:
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: MODEL,
-      max_completion_tokens: 12000,
+      max_completion_tokens: 9000, // Reduced from 12k: 22-24 hazards is sufficient depth; saves ~20s per run
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: systemPrompt },
@@ -365,7 +365,9 @@ interface FillContext {
   workType: 'domestic' | 'commercial' | 'industrial';
 }
 
-const FILL_CONCURRENCY = 6;
+// Increased from 6: more parallel workers = fewer rounds = less total wall time.
+// 30 hazards ÷ 10 workers = 3 rounds instead of 5 — saves ~25s on the pass 2 phase.
+const FILL_CONCURRENCY = 10;
 
 async function fillHazardsInParallel(
   supabase: any,
@@ -499,19 +501,35 @@ Hard rules:
     .filter(Boolean)
     .join('\n\n');
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: MODEL,
-      max_completion_tokens: 3000,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userBlock },
-      ],
-    }),
-  });
+  // 30s per-hazard timeout — prevents one slow/hung OpenAI call from blocking a worker
+  // indefinitely and causing the whole fillHazardsInParallel phase to exceed the waitUntil ceiling.
+  const controller = new AbortController();
+  const hazardTimeout = setTimeout(() => controller.abort(), 30_000);
+
+  let response: Response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL,
+        max_completion_tokens: 2000, // Reduced from 3000: sufficient per-hazard detail, faster response
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userBlock },
+        ],
+      }),
+      signal: controller.signal,
+    });
+  } catch (fetchErr: any) {
+    if (fetchErr?.name === 'AbortError') {
+      throw new Error(`Hazard ${hazardNumber} timed out after 30s — skipping`);
+    }
+    throw fetchErr;
+  } finally {
+    clearTimeout(hazardTimeout);
+  }
 
   if (!response.ok) {
     const errText = await response.text();

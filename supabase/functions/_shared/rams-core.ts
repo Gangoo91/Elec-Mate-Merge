@@ -43,7 +43,11 @@ const MODEL = 'gpt-5.4-mini-2026-03-17';
 // to ramble. 20k is enough for 12-16 hazards / 14 steps at the v2 depth
 // while keeping a single agent under ~90s. JSON-repair handles any rare
 // truncation.
-const MAX_COMPLETION_TOKENS = 32000;
+// 24k is enough for 14-20 hazards at full v2 depth while keeping both parallel
+// agents well under the Supabase waitUntil ceiling (~150s). The 32k value
+// introduced in ELE-1026 caused industrial jobs to exceed the limit and freeze
+// permanently at 95%. JSON-repair handles any rare edge-case truncation.
+const MAX_COMPLETION_TOKENS = 24000;
 
 /**
  * Best-effort JSON repair for OpenAI responses that hit the token cap
