@@ -1,24 +1,8 @@
-import { useState } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Download,
-  MessageCircle,
-  Mail,
-  Copy,
-  Check,
-  Loader2,
-  X,
-  ExternalLink,
-  Share2,
-  FileText,
-} from 'lucide-react';
+import { Download, Loader2, Share2, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { openExternalUrl } from '@/utils/open-external-url';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
-import { copyToClipboard } from '@/utils/clipboard';
 
 type PDFType =
   | 'permit'
@@ -38,19 +22,15 @@ type PDFType =
   | 'safety-document';
 
 interface SafetyDocumentShareProps {
-  /** Which PDF type to generate */
   pdfType: PDFType;
-  /** Record ID for the document */
   recordId: string;
-  /** Human-readable document title */
   documentTitle: string;
-  /** Optional extra data to pass to the edge function */
   extraData?: Record<string, unknown>;
-  /** Called when user closes the sheet */
   onClose: () => void;
-  /** Whether sheet is open */
   open: boolean;
 }
+
+const isNative = Capacitor.isNativePlatform();
 
 export function SafetyDocumentShare({
   pdfType,
@@ -60,150 +40,123 @@ export function SafetyDocumentShare({
   onClose,
   open,
 }: SafetyDocumentShareProps) {
-  const { toast } = useToast();
   const { exportPDF, isExporting } = useSafetyPDFExport();
-  const [copied, setCopied] = useState(false);
 
-  const handleDownloadPDF = async () => {
-    await exportPDF(pdfType as any, recordId, extraData, documentTitle);
-  };
-
-  const handleWhatsApp = async () => {
-    if (Capacitor.isNativePlatform()) {
-      // On native: generate PDF then open the iOS/Android share sheet —
-      // user can tap WhatsApp (or any other app) from there.
-      await exportPDF(pdfType as any, recordId, extraData, documentTitle);
-    } else {
-      // Web fallback: wa.me pre-filled text (can't attach files via web)
-      const message = encodeURIComponent(
-        `Safety Document: "${documentTitle}" — generated via Elec-Mate`
-      );
-      await openExternalUrl(`https://wa.me/?text=${message}`);
-    }
-  };
-
-  const handleEmail = async () => {
-    if (Capacitor.isNativePlatform()) {
-      // On native: generate PDF then open the share sheet — user taps Mail.
-      await exportPDF(pdfType as any, recordId, extraData, documentTitle);
-    } else {
-      // Web fallback: mailto with attachment instructions
-      const subject = encodeURIComponent(`Safety Document: ${documentTitle}`);
-      const body = encodeURIComponent(
-        `Hi,\n\nPlease find the attached safety document: "${documentTitle}"\n\nGenerated via Elec-Mate.`
-      );
-      openExternalUrl(`mailto:?subject=${subject}&body=${body}`);
-    }
-  };
-
-  const handleNativeShare = async () => {
-    if (Capacitor.isNativePlatform()) {
-      // On native: generate PDF then open the share sheet.
-      await exportPDF(pdfType as any, recordId, extraData, documentTitle);
-    } else if (navigator.share) {
-      try {
-        await navigator.share({
-          title: documentTitle,
-          text: `Safety Document: ${documentTitle}`,
-        });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      handleCopyTitle();
-    }
-  };
-
-  const handleCopyTitle = async () => {
-    try {
-      await copyToClipboard(documentTitle);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      toast({ title: 'Copied', description: 'Document title copied to clipboard' });
-    } catch {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+  const handlePDF = async () => {
+    await exportPDF(pdfType as Parameters<typeof exportPDF>[0], recordId, extraData, documentTitle);
+    // On native the iOS/Android share sheet opens — don't auto-close.
+    // On web the download triggers — close the sheet after.
+    if (!isNative) onClose();
   };
 
   if (!open) return null;
 
   return (
     <AnimatePresence>
+      {/* Backdrop */}
       <motion.div
+        key="backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
         onClick={onClose}
+      />
+
+      {/* Sheet */}
+      <motion.div
+        key="sheet"
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100%' }}
+        transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+        onClick={(e) => e.stopPropagation()}
+        className="fixed bottom-0 left-0 right-0 z-[101] bg-[hsl(0_0%_8%)] rounded-t-3xl safe-area-pb"
       >
-        <motion.div
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          onClick={(e) => e.stopPropagation()}
-          className="absolute bottom-0 left-0 right-0 max-h-[70vh] bg-[#111827] rounded-t-2xl overflow-hidden safe-area-pb"
-        >
-          {/* Handle */}
-          <div className="flex justify-center pt-3 pb-1">
-            <div className="w-10 h-1 rounded-full bg-white/20" />
-          </div>
+        {/* Pull handle */}
+        <div className="flex justify-center pt-3 pb-2">
+          <div className="w-9 h-1 rounded-full bg-white/20" />
+        </div>
 
-          <div className="overflow-y-auto max-h-[60vh]">
-            {/* Header */}
-            <div className="px-5 pt-3 pb-4 border-b border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                  <Share2 className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-white">Export & Share</h3>
-                  <p className="text-sm text-white truncate max-w-[200px]">{documentTitle}</p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={onClose}
-                className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center touch-manipulation"
-              >
-                <X className="h-4 w-4 text-white" />
-              </button>
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 pt-1 pb-4 border-b border-white/[0.08]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center shrink-0">
+              {isNative ? (
+                <Share2 className="h-5 w-5 text-elec-yellow" />
+              ) : (
+                <Download className="h-5 w-5 text-elec-yellow" />
+              )}
             </div>
-
-            <div className="p-5 space-y-3">
-              {/* Export PDF — single primary action (on native, opens share sheet) */}
-              <Button
-                type="button"
-                onClick={handleDownloadPDF}
-                disabled={isExporting}
-                className="w-full h-14 rounded-xl font-semibold text-base touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
-                {isExporting ? (
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                  <FileText className="h-5 w-5 mr-2" />
-                )}
-                {isExporting ? 'Generating PDF...' : 'Export PDF'}
-              </Button>
-              <p className="text-[11px] text-white text-center">
-                {Capacitor.isNativePlatform()
-                  ? 'Opens share sheet — send via WhatsApp, email, AirDrop, or save to Files'
-                  : 'Opens PDF in a new tab for download or printing'}
+            <div className="min-w-0">
+              <p className="text-[13px] font-semibold text-white leading-tight">
+                {isNative ? 'Share document' : 'Download PDF'}
               </p>
-
-              {/* Close */}
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={onClose}
-                className="w-full h-12 text-white hover:text-white touch-manipulation"
-              >
-                Close
-              </Button>
+              <p className="text-[12px] text-white/50 truncate max-w-[220px] leading-tight mt-0.5">
+                {documentTitle}
+              </p>
             </div>
           </div>
-        </motion.div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-white/[0.08] flex items-center justify-center shrink-0 touch-manipulation"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4 text-white/70" />
+          </button>
+        </div>
+
+        {/* Actions */}
+        <div className="px-5 pt-4 pb-5 space-y-3">
+          {/* Primary action */}
+          <button
+            type="button"
+            onClick={handlePDF}
+            disabled={isExporting}
+            className={cn(
+              'w-full h-14 rounded-2xl font-semibold text-[15px] flex items-center justify-center gap-2.5 touch-manipulation transition-opacity',
+              'bg-elec-yellow text-black',
+              isExporting && 'opacity-60 cursor-not-allowed'
+            )}
+          >
+            {isExporting ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Generating PDF…</span>
+              </>
+            ) : isNative ? (
+              <>
+                <Share2 className="h-5 w-5" />
+                <span>Share PDF</span>
+              </>
+            ) : (
+              <>
+                <Download className="h-5 w-5" />
+                <span>Download PDF</span>
+              </>
+            )}
+          </button>
+
+          {/* Context hint */}
+          <p className="text-[11.5px] text-white/40 text-center leading-snug px-2">
+            {isNative
+              ? 'Saves to your device — share via WhatsApp, AirDrop, email, or save to Files'
+              : 'Downloads a PDF to your device for printing or sharing'}
+          </p>
+
+          {/* Divider */}
+          <div className="border-t border-white/[0.06] my-1" />
+
+          {/* Close */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full h-11 rounded-xl text-[14px] font-medium text-white/60 hover:text-white touch-manipulation transition-colors"
+          >
+            Close
+          </button>
+        </div>
       </motion.div>
     </AnimatePresence>
   );
