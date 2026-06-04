@@ -23,10 +23,17 @@ import {
   Shield,
   BookOpen,
   ChevronDown,
+  Download,
+  Share2,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Capacitor } from '@capacitor/core';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { buildMaintenancePdfPayload } from '@/utils/maintenance-pdf-payload-builder';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import {
   MaintenanceMethodInputs,
   MAINTENANCE_INSTALLATION_OPTIONS,
@@ -86,6 +93,46 @@ export const EditorialMaintenanceResults = ({
   onEditAndRegenerate,
 }: EditorialMaintenanceResultsProps) => {
   const [activeStepIdx, setActiveStepIdx] = useState<number | null>(null);
+  const [isExportingPdf, setIsExportingPdf] = useState(false);
+  const { toast } = useToast();
+
+  const handleExportPdf = async () => {
+    setIsExportingPdf(true);
+    try {
+      const equipmentDetails = {
+        equipmentType: inputs.equipmentType || 'Equipment',
+        location: inputs.location || 'Not specified',
+        installationType: inputs.installationType,
+        additionalNotes: inputs.additionalNotes,
+        ageYears: inputs.ageYears ? parseInt(inputs.ageYears, 10) || undefined : undefined,
+      };
+      const payload = buildMaintenancePdfPayload(methodData, equipmentDetails);
+      const { data, error } = await supabase.functions.invoke('generate-maintenance-method-pdf', {
+        body: payload,
+      });
+      if (error) throw error;
+      if (data?.downloadUrl) {
+        await openOrDownloadPdf(
+          data.downloadUrl,
+          data.filename || `Maintenance_${inputs.equipmentType || 'Instructions'}.pdf`
+        );
+        if (!Capacitor.isNativePlatform()) {
+          toast({ title: 'PDF Downloaded', description: 'Your maintenance method PDF is ready.' });
+        }
+      } else {
+        throw new Error('No download URL returned');
+      }
+    } catch (err: any) {
+      console.error('[Maintenance PDF] Export failed:', err);
+      toast({
+        title: 'Export Failed',
+        description: err?.message || 'Could not generate PDF. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsExportingPdf(false);
+    }
+  };
 
   const steps: any[] = useMemo(
     () => (Array.isArray(methodData?.steps) ? methodData.steps : []),
@@ -273,6 +320,22 @@ export const EditorialMaintenanceResults = ({
                 <span>Edit &amp; regenerate</span>
               </motion.button>
             )}
+            <motion.button
+              type="button"
+              onClick={handleExportPdf}
+              disabled={isExportingPdf}
+              whileTap={{ scale: 0.98 }}
+              className="h-11 px-4 rounded-xl text-[13px] font-semibold inline-flex items-center justify-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.10] touch-manipulation disabled:opacity-50"
+            >
+              {isExportingPdf ? (
+                <span className="h-3.5 w-3.5 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+              ) : Capacitor.isNativePlatform() ? (
+                <Share2 className="h-3.5 w-3.5" />
+              ) : (
+                <Download className="h-3.5 w-3.5" />
+              )}
+              <span>{isExportingPdf ? 'Generating…' : Capacitor.isNativePlatform() ? 'Share PDF' : 'Download PDF'}</span>
+            </motion.button>
             <motion.button
               type="button"
               onClick={onNewMethod}
