@@ -17,7 +17,11 @@ import {
   Shield,
   AlertTriangle,
   ChevronDown,
+  Download,
+  Share2,
+  Loader2,
 } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
 import { motion } from 'framer-motion';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
@@ -25,6 +29,7 @@ import {
   HealthSafetyInputs,
   HEALTH_SAFETY_WORK_OPTIONS,
 } from '@/types/health-safety-inputs';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 
 interface EditorialHealthSafetyResultsProps {
   inputs: HealthSafetyInputs;
@@ -67,11 +72,41 @@ function splitIntoParagraphs(text: string, sentencesPerPara = 2): string[] {
   return out;
 }
 
+const isNative = Capacitor.isNativePlatform();
+
+/** Inline download/share button for the H&S PDF */
+function DownloadButton({ jobId }: { jobId: string }) {
+  const { exportPDF, isExporting } = useSafetyPDFExport();
+  return (
+    <motion.button
+      type="button"
+      onClick={() => exportPDF('hs-specialist', jobId, undefined, 'H&S Risk Assessment')}
+      disabled={isExporting}
+      whileTap={{ scale: 0.98 }}
+      className={cn(
+        'h-11 px-4 rounded-xl text-[13px] font-semibold inline-flex items-center justify-center gap-2 touch-manipulation transition-opacity',
+        'bg-white/[0.08] hover:bg-white/[0.12] text-white border border-white/[0.12]',
+        isExporting && 'opacity-60 cursor-not-allowed'
+      )}
+    >
+      {isExporting ? (
+        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+      ) : isNative ? (
+        <Share2 className="h-3.5 w-3.5" />
+      ) : (
+        <Download className="h-3.5 w-3.5" />
+      )}
+      <span>{isNative ? 'Share PDF' : 'Download PDF'}</span>
+    </motion.button>
+  );
+}
+
 export const EditorialHealthSafetyResults = ({
   inputs,
   outputData,
   onNewMethod,
   onEditAndRegenerate,
+  jobId,
 }: EditorialHealthSafetyResultsProps) => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
@@ -241,6 +276,10 @@ export const EditorialHealthSafetyResults = ({
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            {/* Download / Share PDF */}
+            {jobId && (
+              <DownloadButton jobId={jobId} />
+            )}
             {onEditAndRegenerate && (
               <motion.button
                 type="button"
