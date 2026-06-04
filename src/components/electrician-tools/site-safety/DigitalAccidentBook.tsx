@@ -57,6 +57,41 @@ import { RIDDORCountdown } from './common/RIDDORCountdown';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 
+// ─── Date helpers ───
+
+/**
+ * Sanitise a date string to ISO YYYY-MM-DD.
+ * Handles:
+ *   - Already ISO: "2026-06-04" → "2026-06-04"
+ *   - UK format: "04/06/2026" → "2026-06-04"
+ *   - D/M/YYYY: "4/6/2026" → "2026-06-04"
+ * Returns the original string unchanged if it cannot be parsed,
+ * so the DB write fails with a clear Postgres error rather than silently corrupting data.
+ */
+function sanitiseDateToISO(raw: string): string {
+  if (!raw) return raw;
+  // Already ISO YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+  // UK DD/MM/YYYY or D/M/YYYY
+  const ukMatch = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if (ukMatch) {
+    const [, d, m, y] = ukMatch;
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  }
+  return raw;
+}
+
+/**
+ * Returns true if the value is a valid ISO date string or empty.
+ * Used for inline validation before saving.
+ */
+function isValidISODate(val: string): boolean {
+  if (!val) return true; // empty is allowed (optional fields)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return false;
+  const d = new Date(val);
+  return !isNaN(d.getTime());
+}
+
 // ─── Types ───
 
 type InjuryType =
@@ -574,13 +609,27 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const formReady = readiness.every((r) => r.ok);
 
   const saveRecord = async () => {
+    // Sanitise date fields before saving — converts UK DD/MM/YYYY to ISO YYYY-MM-DD
+    // and catches invalid formats before they hit the Postgres date column
+    const incidentDate = sanitiseDateToISO(form.incident_date || '');
+    const returnDate = sanitiseDateToISO(form.return_date || '');
+    const reportedDate = sanitiseDateToISO(form.reported_date || '');
+
+    if (!isValidISODate(incidentDate)) {
+      // Surface a clear error rather than letting Postgres reject with a cryptic message
+      alert(
+        'The date of incident is not valid. Please use the date picker or enter the date as DD/MM/YYYY.'
+      );
+      return;
+    }
+
     try {
       await createRecord.mutateAsync({
         injured_name: form.injured_name || '',
         injured_role: form.injured_role || '',
         injured_employer: form.injured_employer || '',
         injured_address: form.injured_address || '',
-        incident_date: form.incident_date || '',
+        incident_date: incidentDate,
         incident_time: form.incident_time || '',
         location: form.location || '',
         location_detail: form.location_detail || '',
@@ -599,9 +648,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         hospital_name: form.hospital_name || '',
         time_off_work: form.time_off_work || false,
         days_off: form.days_off || 0,
-        return_date: form.return_date || '',
+        return_date: returnDate || '',
         reported_to: form.reported_to || '',
-        reported_date: form.reported_date || '',
+        reported_date: reportedDate || '',
         is_riddor_reportable: riddorCheck.reportable,
         riddor_category: riddorCheck.reasons.join('; '),
         riddor_reference: form.riddor_reference || '',
@@ -745,9 +794,17 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <input
                   type="date"
                   value={form.incident_date}
-                  onChange={(e) => updateForm({ incident_date: e.target.value })}
+                  onChange={(e) =>
+                    updateForm({ incident_date: sanitiseDateToISO(e.target.value) })
+                  }
+                  placeholder="DD/MM/YYYY"
                   className={cn(inputClass, '[color-scheme:dark]')}
                 />
+                {form.incident_date && !isValidISODate(form.incident_date) && (
+                  <p className="text-[11px] text-red-400 mt-1">
+                    Use DD/MM/YYYY or tap the calendar icon
+                  </p>
+                )}
               </Field>
               <Field label="Time">
                 <input
