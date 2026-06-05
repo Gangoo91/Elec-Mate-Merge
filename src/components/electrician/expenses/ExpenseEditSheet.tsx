@@ -40,6 +40,7 @@ import {
 } from '@/services/expenseReceiptService';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
+import { sanitizeMoneyInput, parseMoney, moneyToText } from '@/utils/money-input';
 import {
   Fuel,
   Wrench,
@@ -168,6 +169,10 @@ export function ExpenseEditSheet({
     mileage_from: expense.mileage_from,
     mileage_to: expense.mileage_to,
   });
+  // Raw text mirrors for the money fields so partial decimals (e.g. "19.")
+  // survive editing — the bound numeric value alone can't hold them.
+  const [amountText, setAmountText] = useState(moneyToText(expense.amount));
+  const [vatText, setVatText] = useState(moneyToText(expense.vat_amount));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploadingReceipt, setIsUploadingReceipt] = useState(false);
   const [receiptImageError, setReceiptImageError] = useState(false);
@@ -392,18 +397,15 @@ export function ExpenseEditSheet({
                       <span className="text-2xl font-semibold text-white">£</span>
                       <Input
                         id="amount"
-                        type="number"
+                        type="text"
                         inputMode="decimal"
-                        step="0.01"
-                        min="0"
                         placeholder="0.00"
-                        value={formData.amount || ''}
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            amount: parseFloat(e.target.value) || 0,
-                          }))
-                        }
+                        value={amountText}
+                        onChange={(e) => {
+                          const s = sanitizeMoneyInput(e.target.value);
+                          setAmountText(s);
+                          setFormData((prev) => ({ ...prev, amount: parseMoney(s) }));
+                        }}
                         className="h-14 text-2xl font-semibold touch-manipulation flex-1"
                       />
                     </div>
@@ -549,18 +551,15 @@ export function ExpenseEditSheet({
                       <span className="text-lg font-medium text-white">£</span>
                       <Input
                         id="vat"
-                        type="number"
+                        type="text"
                         inputMode="decimal"
-                        step="0.01"
-                        min="0"
                         placeholder="0.00"
-                        value={formData.vat_amount || ''}
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            vat_amount: parseFloat(e.target.value) || undefined,
-                          }))
-                        }
+                        value={vatText}
+                        onChange={(e) => {
+                          const s = sanitizeMoneyInput(e.target.value);
+                          setVatText(s);
+                          setFormData((prev) => ({ ...prev, vat_amount: parseMoney(s) }));
+                        }}
                         className="h-11 touch-manipulation flex-1"
                       />
                     </div>

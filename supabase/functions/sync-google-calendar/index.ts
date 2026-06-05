@@ -169,8 +169,14 @@ serve(async (req: Request) => {
         user_id: user.id,
         title: gEvent.summary || 'Untitled',
         description: gEvent.description || null,
-        start_at: allDay ? new Date(startAt + 'T00:00:00Z').toISOString() : startAt,
-        end_at: allDay ? new Date(endAt + 'T23:59:59Z').toISOString() : endAt,
+        // Google all-day events use floating dates with an EXCLUSIVE end.date
+        // (last day + 1). Store them on local (Europe/London) day boundaries to
+        // match how the app creates events: start = first day 00:00, end = last
+        // day 23:59:59. Without the -1, the stored event gains a phantom day.
+        start_at: allDay ? londonInstantIso(parseYmd(startAt), 0, 0, 0) : startAt,
+        end_at: allDay
+          ? londonInstantIso(addDaysYmd(parseYmd(endAt), -1), 23, 59, 59)
+          : endAt,
         all_day: allDay,
         location: gEvent.location || null,
         event_type: 'general',
@@ -227,10 +233,11 @@ serve(async (req: Request) => {
       };
 
       if (localEvent.all_day) {
-        const startDate = localEvent.start_at.split('T')[0];
-        const endDate = localEvent.end_at.split('T')[0];
-        googleBody.start = { date: startDate };
-        googleBody.end = { date: endDate };
+        // Google all-day end.date is EXCLUSIVE — it must be the day AFTER the
+        // final day, using the local (Europe/London) calendar date. Reading the
+        // raw UTC date (split on 'T') drops the last day and shifts under BST.
+        googleBody.start = { date: ymdToDateStr(londonYmd(localEvent.start_at)) };
+        googleBody.end = { date: ymdToDateStr(addDaysYmd(londonYmd(localEvent.end_at), 1)) };
       } else {
         googleBody.start = { dateTime: localEvent.start_at };
         googleBody.end = { dateTime: localEvent.end_at };
@@ -292,3 +299,61 @@ serve(async (req: Request) => {
     return handleError(error);
   }
 });
+
+// ── All-day date helpers ──────────────────────────────────────────────────
+// All-day events are stored on local (Europe/London) day boundaries:
+// start = first day 00:00 local, end = last day 23:59:59 local. Google all-day
+// events use floating dates with an EXCLUSIVE end.date (last day + 1).
+type Ymd = { y: number; m: number; d: number };
+
+const pad2 = (n: number) => String(n).padStart(2, '0');
+
+// Local (Europe/London) calendar date for an ISO instant.
+function londonYmd(iso: string): Ymd {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/London',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date(iso));
+  const get = (t: string) => Number(parts.find((p) => p.type === t)!.value);
+  return { y: get('year'), m: get('month'), d: get('day') };
+}
+
+// Parse a floating 'YYYY-MM-DD' (Google all-day date) into Y-M-D.
+function parseYmd(dateStr: string): Ymd {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return { y, m, d };
+}
+
+// Add whole days to a Y-M-D (handles month/year rollover via UTC math).
+function addDaysYmd({ y, m, d }: Ymd, days: number): Ymd {
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return { y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
+}
+
+const ymdToDateStr = ({ y, m, d }: Ymd) => `${y}-${pad2(m)}-${pad2(d)}`;
+
+// Europe/London UTC offset (ms) at a given instant.
+function londonOffsetMs(instant: Date): number {
+  const name =
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Europe/London',
+      timeZoneName: 'shortOffset',
+    })
+      .formatToParts(instant)
+      .find((p) => p.type === 'timeZoneName')?.value ?? 'GMT';
+  const m = name.match(/GMT([+-]\d{1,2})(?::(\d{2}))?/);
+  if (!m) return 0;
+  const hours = parseInt(m[1], 10);
+  const mins = m[2] ? parseInt(m[2], 10) : 0;
+  return (hours * 60 + Math.sign(hours) * mins) * 60_000;
+}
+
+// ISO instant for a London-local wall-clock time on a given Y-M-D.
+function londonInstantIso(ymd: Ymd, hh: number, mm: number, ss: number): string {
+  const naive = Date.UTC(ymd.y, ymd.m - 1, ymd.d, hh, mm, ss);
+  const offset = londonOffsetMs(new Date(naive));
+  return new Date(naive - offset).toISOString();
+}

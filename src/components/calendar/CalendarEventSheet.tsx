@@ -11,6 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Calendar } from '@/components/ui/calendar';
+import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
+import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import {
   Loader2,
   MapPin,
@@ -377,16 +379,21 @@ const CalendarEventSheet = ({
               )}
             </div>
 
-            {/* Location */}
-            <div className="flex items-center gap-3 h-12 px-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-              <MapPin className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-              <input
-                placeholder="Add location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="flex-1 h-full bg-transparent text-sm text-white touch-manipulation outline-none placeholder:text-white/50"
-              />
-            </div>
+            {/* Location — address autocomplete so the synced event carries a
+                full, mappable address (tappable in Google/Apple Calendar). */}
+            <GoogleMapsProvider>
+              <div className="flex items-center gap-3 min-h-12 px-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                <MapPin className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                <div className="flex-1">
+                  <PlacesAutocomplete
+                    value={location}
+                    onChange={setLocation}
+                    placeholder="Add location"
+                    className="h-11 bg-transparent border-0 shadow-none px-0 text-sm text-white touch-manipulation focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-white/50"
+                  />
+                </div>
+              </div>
+            </GoogleMapsProvider>
 
             {/* Reminder */}
             <div className="space-y-2">

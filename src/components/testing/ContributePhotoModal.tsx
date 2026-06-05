@@ -250,7 +250,7 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
           ai_curve: correction?.ai_curve || circuit.curve,
           ai_label: correction?.ai_label || circuit.label,
           ai_confidence: circuit.confidence,
-          ai_model_used: 'gemini-2.0-flash',
+          ai_model_used: 'gemini-2.5-flash',
           correct_device_type: correction?.correct_device_type || circuit.device,
           correct_rating: correction?.correct_rating || circuit.rating?.toString() || null,
           correct_curve: correction?.correct_curve || circuit.curve,

@@ -78,8 +78,16 @@ Deno.serve(async (req: Request) => {
     icsLines.push(`SUMMARY:${escapeIcsText(event.title)}`);
 
     if (event.all_day) {
-      icsLines.push(`DTSTART;VALUE=DATE:${formatIcsDateOnly(event.start_at)}`);
-      icsLines.push(`DTEND;VALUE=DATE:${formatIcsDateOnly(event.end_at)}`);
+      // All-day events are stored on local (Europe/London) day boundaries.
+      // iCal DATE values must use the local calendar date — never the UTC date,
+      // which shifts a day under BST — and DTEND is EXCLUSIVE: it has to be the
+      // day AFTER the final day. Without the +1, multi-day blocks drop their
+      // last day and single-day events collapse to nothing (only the first day
+      // shows in the external calendar).
+      const startYmd = londonYmd(event.start_at);
+      const endYmd = addDaysYmd(londonYmd(event.end_at), 1);
+      icsLines.push(`DTSTART;VALUE=DATE:${ymdToIcs(startYmd)}`);
+      icsLines.push(`DTEND;VALUE=DATE:${ymdToIcs(endYmd)}`);
     } else {
       icsLines.push(`DTSTART:${formatIcsDate(event.start_at)}`);
       icsLines.push(`DTEND:${formatIcsDate(event.end_at)}`);
@@ -129,9 +137,31 @@ function formatIcsDate(isoDate: string): string {
     .replace(/\.\d{3}/, '');
 }
 
-// Format ISO date to iCalendar date-only: 20260301
-function formatIcsDateOnly(isoDate: string): string {
-  return isoDate.split('T')[0].replace(/-/g, '');
+type Ymd = { y: number; m: number; d: number };
+
+// Local (Europe/London) calendar date for an ISO timestamp. All-day events are
+// anchored to London local days, so the date must not be read off the UTC value.
+function londonYmd(isoDate: string): Ymd {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/London',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date(isoDate));
+  const get = (t: string) => Number(parts.find((p) => p.type === t)!.value);
+  return { y: get('year'), m: get('month'), d: get('day') };
+}
+
+// Add whole days to a Y-M-D (handles month/year rollover via UTC math).
+function addDaysYmd({ y, m, d }: Ymd, days: number): Ymd {
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return { y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
+}
+
+// Y-M-D → iCalendar DATE value: 20260301
+function ymdToIcs({ y, m, d }: Ymd): string {
+  return `${y}${String(m).padStart(2, '0')}${String(d).padStart(2, '0')}`;
 }
 
 // Escape special characters in iCalendar text

@@ -74,6 +74,19 @@ interface RAMSReviewEditorProps {
   onRetryAgent?: (agent: 'hs' | 'method') => void;
 }
 
+/**
+ * Coerce any stored issued date into the `YYYY-MM-DD` form a native date input
+ * needs, defaulting to today when missing or unparseable. Backdating is a
+ * legitimate use case (retrospective paperwork, assessment records).
+ */
+const toInputDate = (value?: string): string => {
+  const today = new Date().toISOString().split('T')[0];
+  if (!value) return today;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const parsed = new Date(value);
+  return isNaN(parsed.getTime()) ? today : parsed.toISOString().split('T')[0];
+};
+
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   ramsData: initialRamsData,
   methodData: initialMethodData,
@@ -117,6 +130,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const normalizedRamsData: RAMSData | undefined = initialRamsData
     ? {
         ...initialRamsData,
+        // Default the issued date to today, normalised to YYYY-MM-DD so the
+        // day/month/year picker and all PDF generators read a consistent value.
+        date: toInputDate(initialRamsData.date),
         risks: (initialRamsData.risks || []).map((risk) => ({
           ...risk,
           id: risk.id || `risk-${Math.random()}`,
@@ -252,6 +268,17 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Update one part of the issued date (day/month/year), rebuild an ISO string,
+  // and clamp the day to a valid value for the chosen month/year.
+  const setIssuedPart = (part: 'd' | 'm' | 'y', value: string) => {
+    const [y, m, d] = toInputDate(ramsData?.date).split('-');
+    const next = { y, m, d, [part]: value } as { y: string; m: string; d: string };
+    const daysInMonth = new Date(Number(next.y), Number(next.m), 0).getDate();
+    const day = Math.min(Number(next.d), daysInMonth);
+    const iso = `${next.y}-${next.m.padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    setRamsData((prev) => (prev ? { ...prev, date: iso } : prev));
+  };
 
   const updateRisk = (riskId: string, updates: Partial<RAMSRisk>) => {
     if (!ramsData) return;
@@ -950,6 +977,69 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <>
                   {/* Summary Stats Card */}
                   <SummaryStatsCard risks={ramsData.risks || []} />
+
+                  {/* Issued date — day / month / year. Editable so users can
+                      backdate documents for assessments or retrospective records. */}
+                  {(() => {
+                    const [yy, mm, dd] = toInputDate(ramsData.date).split('-');
+                    const thisYear = new Date().getFullYear();
+                    const MONTHS = [
+                      'January', 'February', 'March', 'April', 'May', 'June',
+                      'July', 'August', 'September', 'October', 'November', 'December',
+                    ];
+                    const selectCls =
+                      'h-11 px-3 rounded-xl bg-white/[0.05] border border-white/[0.12] text-[14px] text-white touch-manipulation focus:border-elec-yellow/50 focus:outline-none [color-scheme:dark]';
+                    return (
+                      <section className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-3">
+                        <div className="space-y-0.5">
+                          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60 block">
+                            Issued date
+                          </span>
+                          <p className="text-[12px] text-white/55">
+                            Defaults to today — change to backdate the document.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2.5">
+                          <select
+                            aria-label="Day"
+                            value={String(Number(dd))}
+                            onChange={(e) => setIssuedPart('d', e.target.value)}
+                            className={selectCls}
+                          >
+                            {Array.from({ length: 31 }, (_, i) => i + 1).map((n) => (
+                              <option key={n} value={n}>
+                                {n}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            aria-label="Month"
+                            value={mm}
+                            onChange={(e) => setIssuedPart('m', e.target.value)}
+                            className={selectCls}
+                          >
+                            {MONTHS.map((name, i) => (
+                              <option key={name} value={String(i + 1).padStart(2, '0')}>
+                                {name}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            aria-label="Year"
+                            value={yy}
+                            onChange={(e) => setIssuedPart('y', e.target.value)}
+                            className={selectCls}
+                          >
+                            {Array.from({ length: 8 }, (_, i) => thisYear - 6 + i).map((y) => (
+                              <option key={y} value={y}>
+                                {y}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </section>
+                    );
+                  })()}
 
                   {/* Identified Hazards — editorial section */}
                   <section className="space-y-4">

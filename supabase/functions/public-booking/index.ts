@@ -2,7 +2,7 @@
  * Public Booking Portal — "Calendly for Sparkies"
  *
  * GET  ?electrician_id=<uuid>&days=14 → available slots + electrician info
- * POST { electrician_id, date, start_time, client_name, client_phone, client_email?, job_description? }
+ * POST { electrician_id, date, start_time, client_name, client_phone, client_email?, job_description?, client_address? }
  *      → creates calendar event + upserts customer + creates task + logs action
  *
  * No auth required — this is a public endpoint for clients to book appointments.
@@ -268,6 +268,9 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     client_phone,
     client_email,
     job_description,
+    // Optional site address — populates the event location so it syncs as a
+    // tappable map pin (ELE-1042) and is saved against the customer record.
+    client_address,
     // ELE-955 — optional. When the booking is for an accepted quote
     // (post-acceptance / post-deposit handoff), the quote_id is passed
     // through so we can link the calendar event back to the quote and
@@ -344,6 +347,7 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
       .update({
         name: client_name,
         ...(client_email ? { email: client_email } : {}),
+        ...(client_address ? { address: client_address } : {}),
       })
       .eq('id', customerId);
   } else {
@@ -354,6 +358,7 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
         name: client_name,
         phone: client_phone,
         email: client_email || null,
+        address: client_address || null,
       })
       .select('id')
       .single();
@@ -374,6 +379,7 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
       all_day: false,
       event_type: 'site_visit',
       colour: '#F59E0B',
+      location: client_address || null,
       client_id: customerId,
       notes: job_description
         ? `Booked via portal\n\n${job_description}`

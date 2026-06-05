@@ -25,6 +25,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from '../_shared/deps.ts';
 import { decryptToken, encryptToken } from '../_shared/encryption.ts';
+import { applyPaymentStatus } from '../_shared/xero-invoice-status.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -98,7 +99,7 @@ Deno.serve(async (req: Request) => {
     const { data: quote, error: quoteErr } = await supabase
       .from('quotes')
       .select(
-        'id, invoice_number, invoice_status, invoice_paid_at, total, external_invoice_id, external_invoice_provider'
+        'id, invoice_number, invoice_status, invoice_paid_at, total, total_paid, external_invoice_id, external_invoice_provider'
       )
       .eq('id', invoiceId)
       .eq('user_id', user.id)
@@ -218,37 +219,20 @@ Deno.serve(async (req: Request) => {
       return errorResponse(`Failed to read from ${provider}`, msg, 502);
     }
 
-    // ─── 7. Write back to Elec-Mate (if the status actually changed) ──
+    // ─── 7. Write back to Elec-Mate — partial (deposit) OR full payment ──
+    // Records total_paid for deposits (so outstanding drops) and only flips
+    // invoice_status to 'paid' once Xero reports the invoice fully settled.
     const wasAlreadyPaidInElecMate = quote.invoice_status === 'paid';
-    let updated = false;
-
-    if (pulled.isPaid && !wasAlreadyPaidInElecMate) {
-      const paidAtIso = pulled.paidAt ?? new Date().toISOString();
-      const updatePatch = {
-        invoice_status: 'paid',
-        invoice_paid_at: paidAtIso,
-      };
-
-      // Update the legacy quotes row (source of truth for invoice display).
-      const { error: qUpdErr } = await supabase
-        .from('quotes')
-        .update(updatePatch)
-        .eq('id', invoiceId)
-        .eq('user_id', user.id);
-      if (qUpdErr) console.error('quotes update failed:', qUpdErr);
-
-      // Mirror onto invoices (newer table — quote_id FK back to quotes.id).
-      const { error: iUpdErr } = await supabase
-        .from('invoices')
-        .update(updatePatch)
-        .eq('quote_id', invoiceId);
-      // invoices may not have a row for older quotes — only log if real error
-      if (iUpdErr && iUpdErr.code !== 'PGRST116') {
-        console.error('invoices update failed:', iUpdErr);
-      }
-
-      updated = true;
-    }
+    const applied = await applyPaymentStatus(
+      supabase,
+      invoiceId,
+      {
+        total: Number(quote.total ?? 0),
+        currentStatus: quote.invoice_status,
+        currentTotalPaid: Number(quote.total_paid ?? 0),
+      },
+      pulled
+    );
 
     return jsonResponse({
       success: true,
@@ -258,7 +242,9 @@ Deno.serve(async (req: Request) => {
       externalStatus: pulled.externalStatus,
       amountPaid: pulled.amountPaid,
       amountDue: pulled.amountDue,
-      updated,
+      totalPaid: applied.totalPaid,
+      partiallyPaid: applied.partiallyPaid,
+      updated: applied.updated,
       wasAlreadyPaidInElecMate,
     });
   } catch (err) {

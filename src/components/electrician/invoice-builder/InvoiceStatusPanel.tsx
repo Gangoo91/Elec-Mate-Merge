@@ -117,6 +117,16 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
                 Paid
               </Badge>
             )}
+            {invoice.invoice_status !== 'paid' &&
+              (invoice.total_paid || 0) > 0 &&
+              (invoice.total_paid || 0) < (invoice.total || 0) && (
+                <Badge
+                  variant="outline"
+                  className="text-xs whitespace-nowrap border-amber-500/40 text-amber-300"
+                >
+                  Part-paid
+                </Badge>
+              )}
           </div>
         </div>
 
@@ -126,6 +136,17 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           <div className="text-xl sm:text-2xl md:text-3xl font-bold text-elec-yellow">
             {formatCurrency(invoice.total)}
           </div>
+          {invoice.invoice_status !== 'paid' && (invoice.total_paid || 0) > 0 && (
+            <div className="mt-2 flex items-center justify-center gap-4 text-xs">
+              <span className="text-success font-medium">
+                Paid {formatCurrency(invoice.total_paid || 0)}
+              </span>
+              <span className="text-white/70">
+                Outstanding{' '}
+                {formatCurrency(Math.max(0, (invoice.total || 0) - (invoice.total_paid || 0)))}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Dates Grid - 2 columns */}

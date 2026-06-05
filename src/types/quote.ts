@@ -158,6 +158,9 @@ export interface Quote {
   invoice_paid_at?: Date;
   invoice_payment_method?: string;
   invoice_payment_reference?: string;
+  /** Amount paid so far (e.g. a Xero deposit / partial payment). */
+  total_paid?: number;
+  partial_payments?: Array<{ amount: number; date?: string; method?: string; reference?: string }>;
   work_completion_date?: Date;
   invoice_notes?: string;
   additional_invoice_items?: QuoteItem[];

@@ -5,6 +5,8 @@ import { Check, CalendarDays, Clock, Loader2, AlertCircle, ChevronLeft, Zap } fr
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
+import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, supabase } from '@/integrations/supabase/client';
 
 const SLOT_DURATION_MINUTES = 60;
@@ -52,6 +54,7 @@ const PublicBooking = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [bookingDate, setBookingDate] = useState('');
@@ -202,6 +205,7 @@ const PublicBooking = () => {
               ? `+${phoneDigits}`
               : phone.trim(),
           client_email: email.trim() || undefined,
+          client_address: address.trim() || undefined,
           job_description: jobDescription.trim() || undefined,
           // ELE-955 — link the booking back to the accepted quote so
           // the quote detail view shows "Booked for ..." and the
@@ -264,6 +268,7 @@ const PublicBooking = () => {
     setName('');
     setPhone('');
     setEmail('');
+    setAddress('');
     setJobDescription('');
     setBookingDate('');
     setBookingTime('');
@@ -491,6 +496,16 @@ const PublicBooking = () => {
                 className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 autoComplete="email"
               />
+              {/* Site address — autocompleted to a full address so it syncs to
+                  the electrician's calendar as a tappable map pin (ELE-1042). */}
+              <GoogleMapsProvider>
+                <PlacesAutocomplete
+                  value={address}
+                  onChange={setAddress}
+                  placeholder="Job / site address (optional)"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                />
+              </GoogleMapsProvider>
               <Textarea
                 placeholder="Describe what you need (optional)"
                 value={jobDescription}
