@@ -26,6 +26,11 @@ interface ParseExpenseResponse {
   error?: string;
 }
 
+// Gemini vision models, in preference order. Google retires dated snapshots
+// (e.g. gemini-2.0-flash started returning 404), so we pin a current model and
+// fall back to the maintained "-latest" alias if it ever goes missing.
+const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-flash-latest'];
+
 // Expense categories for sole traders
 const EXPENSE_CATEGORIES = [
   'fuel',
@@ -193,53 +198,66 @@ Rate your confidence (0.0 to 1.0) based on:
 - Be conservative with confidence scores`;
 
     // Call Gemini Vision API
-    const geminiResponse = await logger.time('Gemini Vision API call', async () => {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiKey}`,
+    const requestBody = {
+      contents: [
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `Extract expense details from this receipt. Return JSON only.`,
-                  },
-                  {
-                    inline_data: {
-                      mime_type: image_type,
-                      data: image_base64,
-                    },
-                  },
-                ],
+          parts: [
+            {
+              text: `Extract expense details from this receipt. Return JSON only.`,
+            },
+            {
+              inline_data: {
+                mime_type: image_type,
+                data: image_base64,
               },
-            ],
-            systemInstruction: {
-              parts: [
-                {
-                  text: systemPrompt,
-                },
-              ],
             },
-            generationConfig: {
-              responseMimeType: 'application/json',
-              maxOutputTokens: 2000,
-              temperature: 0.1, // Low temperature for accuracy
-            },
-          }),
-        }
-      );
+          ],
+        },
+      ],
+      systemInstruction: {
+        parts: [
+          {
+            text: systemPrompt,
+          },
+        ],
+      },
+      generationConfig: {
+        responseMimeType: 'application/json',
+        maxOutputTokens: 2000,
+        temperature: 0.1, // Low temperature for accuracy
+      },
+    };
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new ExternalAPIError('Gemini', {
-          status: response.status,
-          error: errorText,
-        });
+    const geminiResponse = await logger.time('Gemini Vision API call', async () => {
+      let lastError = '';
+      for (const model of GEMINI_MODELS) {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+          }
+        );
+
+        if (response.ok) {
+          return response.json();
+        }
+
+        lastError = await response.text();
+        // A retired/unknown model returns 404 — try the next candidate.
+        // Any other error (auth, quota, etc.) is fatal and should surface.
+        if (response.status === 404) {
+          logger.warn('Gemini model unavailable, trying fallback', {
+            model,
+            status: response.status,
+          });
+          continue;
+        }
+        throw new ExternalAPIError('Gemini', { status: response.status, error: lastError });
       }
 
-      return response.json();
+      throw new ExternalAPIError('Gemini', { status: 404, error: lastError });
     });
 
     // Parse Gemini response

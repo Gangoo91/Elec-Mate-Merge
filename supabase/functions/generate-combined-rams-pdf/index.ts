@@ -131,13 +131,19 @@ serve(async (req) => {
       );
     }
 
+    // Issued date — render in UK format (dd/MM/yyyy). Honours a backdated value
+    // (audits / retrospective records) and falls back to today when unset.
+    const parsedIssue = ramsData.date ? new Date(ramsData.date) : new Date();
+    const issuedDateStr = (isNaN(parsedIssue.getTime()) ? new Date() : parsedIssue)
+      .toLocaleDateString('en-GB');
+
     // Build payload in the EXACT nested structure PDF Monkey template expects
     const payload = {
       version: ramsData?.version ?? 2,
       ramsData: {
         projectName: ramsData.projectName,
         location: ramsData.location,
-        date: ramsData.date,
+        date: issuedDateStr,
         assessor: ramsData.assessor,
         contractor: ramsData.contractor,
         supervisor: ramsData.supervisor,
@@ -165,9 +171,14 @@ serve(async (req) => {
             residualRisk: risk.residualRisk,
             furtherAction: risk.furtherAction || 'Monitor and review control measures regularly',
             responsible: risk.responsible || ramsData.assessor || 'Site Supervisor',
-            actionBy:
-              risk.actionBy ||
-              new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            actionBy: (() => {
+              // Render dates in UK format; preserve free-text action owners as-is.
+              if (risk.actionBy) {
+                const d = new Date(risk.actionBy);
+                return isNaN(d.getTime()) ? risk.actionBy : d.toLocaleDateString('en-GB');
+              }
+              return new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB');
+            })(),
             done: risk.done || false,
             // v2 rich fields
             rationale: risk.rationale ?? '',

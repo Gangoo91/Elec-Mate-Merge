@@ -23,6 +23,7 @@ import {
 import { ExpenseReceiptScanner } from './ExpenseReceiptScanner';
 import { ExpenseMileageForm } from './ExpenseMileageForm';
 import { cn } from '@/lib/utils';
+import { sanitizeMoneyInput, parseMoney, moneyToText } from '@/utils/money-input';
 import {
   Fuel,
   Wrench,
@@ -135,6 +136,10 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
     mileage_rate: DEFAULT_MILEAGE_RATE,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Raw text mirrors for the money fields so partial decimals (e.g. "19.")
+  // survive editing — the bound numeric value alone can't hold them.
+  const [amountText, setAmountText] = useState('');
+  const [vatText, setVatText] = useState('');
 
   const handleClose = () => {
     onOpenChange(false);
@@ -142,6 +147,8 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
     setTimeout(() => {
       setStep('choose');
       setSelectedCategory(null);
+      setAmountText('');
+      setVatText('');
       setFormData({
         date: new Date().toISOString().split('T')[0],
         tax_deductible: true,
@@ -157,6 +164,8 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
     if (category === 'mileage') {
       setStep('mileage');
     } else {
+      setAmountText('');
+      setVatText('');
       setStep('form');
     }
   };
@@ -170,6 +179,9 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
     if (extractedData.category) {
       setSelectedCategory(extractedData.category);
     }
+    // Seed the text mirrors from the scanned values so the form shows them.
+    setAmountText(moneyToText(extractedData.amount));
+    setVatText(moneyToText(extractedData.vat_amount));
     setStep('form');
   };
 
@@ -498,18 +510,15 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                       <span className="text-2xl font-semibold text-white">£</span>
                       <Input
                         id="amount"
-                        type="number"
+                        type="text"
                         inputMode="decimal"
-                        step="0.01"
-                        min="0"
                         placeholder="0.00"
-                        value={formData.amount || ''}
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            amount: parseFloat(e.target.value) || 0,
-                          }))
-                        }
+                        value={amountText}
+                        onChange={(e) => {
+                          const s = sanitizeMoneyInput(e.target.value);
+                          setAmountText(s);
+                          setFormData((prev) => ({ ...prev, amount: parseMoney(s) }));
+                        }}
                         className="h-14 text-2xl font-semibold touch-manipulation flex-1"
                         autoFocus
                       />
@@ -566,18 +575,15 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                       <span className="text-lg font-medium text-white">£</span>
                       <Input
                         id="vat"
-                        type="number"
+                        type="text"
                         inputMode="decimal"
-                        step="0.01"
-                        min="0"
                         placeholder="0.00"
-                        value={formData.vat_amount || ''}
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            vat_amount: parseFloat(e.target.value) || undefined,
-                          }))
-                        }
+                        value={vatText}
+                        onChange={(e) => {
+                          const s = sanitizeMoneyInput(e.target.value);
+                          setVatText(s);
+                          setFormData((prev) => ({ ...prev, vat_amount: parseMoney(s) }));
+                        }}
                         className="h-11 touch-manipulation flex-1"
                       />
                     </div>

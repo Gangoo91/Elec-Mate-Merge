@@ -193,10 +193,13 @@ function buildSpecialistPayload(d: any): any {
   });
 
   // Document control fields the template needs.
-  const today = new Date();
-  const reviewDate = new Date(today);
+  // Honour a user-provided issued date (e.g. backdated for an audit / retrospective
+  // records), falling back to today. Review date is always one year on from issue.
+  const parsedIssue = d.date ? new Date(d.date) : new Date();
+  const issuedDate = isNaN(parsedIssue.getTime()) ? new Date() : parsedIssue;
+  const reviewDate = new Date(issuedDate);
   reviewDate.setFullYear(reviewDate.getFullYear() + 1);
-  const todayStr = today.toLocaleDateString('en-GB');
+  const todayStr = issuedDate.toLocaleDateString('en-GB');
   const reviewStr = reviewDate.toLocaleDateString('en-GB');
   const docRef = (d.id ?? d.jobId ?? crypto.randomUUID()).toString().slice(0, 8).toUpperCase();
 

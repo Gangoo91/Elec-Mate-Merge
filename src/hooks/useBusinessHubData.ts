@@ -57,11 +57,16 @@ export function useBusinessHubData(): BusinessHubData {
       )
       .reduce((sum, inv) => sum + (inv.total || 0), 0);
 
-    // Outstanding — sent but not yet paid
+    // Remaining balance on an invoice = total minus anything already paid
+    // (e.g. a Xero deposit recorded in total_paid). Clamp at 0 (ELE-1041).
+    const remaining = (inv: { total?: number | null; total_paid?: number | null }) =>
+      Math.max(0, (inv.total || 0) - (inv.total_paid || 0));
+
+    // Outstanding — sent but not yet paid, net of any deposit already taken
     const outstandingInvoices = invoices.filter(
       (inv) => inv.invoice_status === 'sent' || inv.invoice_status === 'overdue'
     );
-    const outstanding = outstandingInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0);
+    const outstanding = outstandingInvoices.reduce((sum, inv) => sum + remaining(inv), 0);
 
     // Overdue — explicitly overdue OR due date has passed (+24h grace) and not paid
     const overdueInvoices = invoices.filter((inv) => {
@@ -75,7 +80,7 @@ export function useBusinessHubData(): BusinessHubData {
         return true;
       return false;
     });
-    const overdueAmount = overdueInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0);
+    const overdueAmount = overdueInvoices.reduce((sum, inv) => sum + remaining(inv), 0);
     const overdueCount = overdueInvoices.length;
 
     // Total revenue — all paid invoices ever

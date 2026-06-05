@@ -74,6 +74,8 @@ export const useInvoiceStorage = () => {
       invoice_paid_at: row.invoice_paid_at ? new Date(row.invoice_paid_at) : undefined,
       invoice_payment_method: row.invoice_payment_method,
       invoice_payment_reference: row.invoice_payment_reference,
+      total_paid: parseNumber(row.total_paid),
+      partial_payments: row.partial_payments || [],
       work_completion_date: row.work_completion_date
         ? new Date(row.work_completion_date)
         : undefined,

@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { sanitizeMoneyInput, parseMoney } from '@/utils/money-input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { EXPENSE_CATEGORIES, formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
@@ -91,6 +92,8 @@ export function CreateExpenseSheet({
 }: CreateExpenseSheetProps) {
   const isMobile = useIsMobile();
   const [step, setStep] = useState(1);
+  // Raw text mirror so partial decimals (e.g. "19.") survive editing.
+  const [amountText, setAmountText] = useState('');
   const totalSteps = employeeMode ? 3 : 4; // Skip employee step in employee mode
 
   const form = useForm<FormData>({
@@ -117,6 +120,7 @@ export function CreateExpenseSheet({
   const handleClose = () => {
     reset();
     setStep(1);
+    setAmountText('');
     onOpenChange(false);
   };
 
@@ -254,17 +258,20 @@ export function CreateExpenseSheet({
                     £
                   </span>
                   <Input
-                    type="number"
-                    step="0.01"
-                    min="0"
+                    type="text"
+                    inputMode="decimal"
                     placeholder="0.00"
                     className={cn(
                       inputClass,
                       'pl-8 text-lg h-12',
                       errors.amount && 'border-red-500/60'
                     )}
-                    value={values.amount || ''}
-                    onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
+                    value={amountText}
+                    onChange={(e) => {
+                      const s = sanitizeMoneyInput(e.target.value);
+                      setAmountText(s);
+                      setValue('amount', parseMoney(s) ?? 0, { shouldValidate: true });
+                    }}
                   />
                 </div>
               </Field>
