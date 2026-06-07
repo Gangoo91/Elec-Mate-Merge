@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle2, GraduationCap } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { moduleProgress } from '@/lib/courseProgressMatch';
 import { cn } from '@/lib/utils';
 
 interface ModuleCardProps {
@@ -42,24 +43,8 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
         ? to
         : basePath + '/' + to;
 
-    const studyCentrePath = resolvedPath.replace(/.*\/study-centre\//, '');
-    const parts = studyCentrePath.split('/');
-    const courseKey = parts[0] || '';
-    const sectionKey = parts.slice(1).join('/') || parts[0] || '';
-
-    const matchingRows = allProgress.filter(
-      (p) =>
-        (p.course_key === courseKey && p.section_key?.startsWith(sectionKey)) ||
-        p.course_key === studyCentrePath ||
-        p.section_key === studyCentrePath
-    );
-
-    if (matchingRows.length === 0) return { completed: false, pct: 0 };
-
-    const anyComplete = matchingRows.some((r) => r.completed);
-    const maxPct = Math.max(...matchingRows.map((r) => r.progress_pct));
-
-    return { completed: anyComplete, pct: maxPct };
+    // Canonical matcher tolerates every historical key format (ELE-1045).
+    return moduleProgress(allProgress, resolvedPath);
   }, [allProgress, to, location.pathname]);
 
   const isCompleted = isCompletedProp || autoProgress.completed;
