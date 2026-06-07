@@ -119,3 +119,23 @@ export function moduleProgress(
 export function sectionCompleted(rows: CourseProgressLike[], targetPath: string): boolean {
   return rows.some((r) => r.completed && rowMatchesSection(r, targetPath));
 }
+
+/**
+ * Count of DISTINCT completed sections for a course/route key. Used by the hub
+ * index pages whose old `course_key === routeKey || startsWith(routeKey+'/')`
+ * predicate counted 0 for apprentice families (`am2-module1` ≠ `am2`). Dedupes
+ * the many per-check / per-quiz rows down to one per section.
+ */
+export function completedSectionsForCourse(
+  rows: CourseProgressLike[],
+  courseTarget: string
+): number {
+  const seen = new Set<string>();
+  for (const r of rows) {
+    if (!r.completed) continue;
+    if (!rowMatchesModule(r, courseTarget)) continue;
+    const key = stem(rowTokens(r)).join('/');
+    if (key) seen.add(key);
+  }
+  return seen.size;
+}

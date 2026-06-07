@@ -25,6 +25,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
 import { storageGetSync } from '@/utils/storage';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { rowMatchesModule } from '@/lib/courseProgressMatch';
 
 const UnitContent = () => {
   const { unitId } = useParams();
@@ -49,21 +50,21 @@ const UnitContent = () => {
     const code = unitData.code;
 
     // Quiz status from localStorage (user-scoped)
-    const storedQuizStatus = storageGetSync(
-      userKey(user?.id, `unit_${code}_quiz_completed`)
-    );
+    const storedQuizStatus = storageGetSync(userKey(user?.id, `unit_${code}_quiz_completed`));
     if (storedQuizStatus === 'true') {
       setQuizCompleted(true);
     }
 
     // Section completion from course_progress DB
-    const courseKey = isElectricalTheoryUnit ? 'electrical-theory'
-      : isHealthSafetyUnit ? 'health-safety'
-      : code;
+    const courseKey = isElectricalTheoryUnit
+      ? 'electrical-theory'
+      : isHealthSafetyUnit
+        ? 'health-safety'
+        : code;
 
     const completed: Record<string, boolean> = {};
     allProgress
-      .filter((p) => p.course_key === courseKey && p.completed && p.section_key)
+      .filter((p) => rowMatchesModule(p, courseKey) && p.completed && p.section_key)
       .forEach((p) => {
         completed[p.section_key!] = true;
       });
@@ -86,25 +87,14 @@ const UnitContent = () => {
       </div>
 
       {/* Unit content based on type */}
-      {isHealthSafetyUnit && (
-        <HealthSafetyUnit
-          unitCode={unitCode}
-          onResourceClick={() => {}}
-        />
-      )}
+      {isHealthSafetyUnit && <HealthSafetyUnit unitCode={unitCode} onResourceClick={() => {}} />}
 
       {isElectricalTheoryUnit && (
-        <ElectricalTheoryUnit
-          unitCode={unitCode}
-          onResourceClick={() => {}}
-        />
+        <ElectricalTheoryUnit unitCode={unitCode} onResourceClick={() => {}} />
       )}
 
       {isInstallationMethodsUnit && (
-        <InstallationMethodsUnit
-          unitCode={unitCode}
-          onResourceClick={() => {}}
-        />
+        <InstallationMethodsUnit unitCode={unitCode} onResourceClick={() => {}} />
       )}
 
       {/* Fallback content if no specific unit component matches */}
