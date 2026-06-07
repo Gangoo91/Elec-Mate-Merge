@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
 import {
   PageFrame,
@@ -33,16 +34,105 @@ const LEVEL_TONE: Record<Level, Tone> = {
 };
 
 const COURSES: Course[] = [
-  { id: 'leadership-on-site', title: 'Leadership on site', description: 'Delegating, decision-making, earning respect and leading teams — based on ILM Level 2 frameworks.', level: 'Intermediate', duration: '6 hours', link: 'leadership-on-site', routeKey: 'leadership-on-site' },
-  { id: 'mental-health-awareness', title: 'Mental health awareness', description: 'Recognising signs, starting conversations, supporting others — based on MHFA England and Mates in Mind.', level: 'Foundation', duration: '4 hours', link: 'mental-health-awareness', routeKey: 'mental-health-awareness' },
-  { id: 'emotional-intelligence', title: 'Emotional intelligence', description: "Self-awareness, managing reactions, reading people — based on Daniel Goleman's EI framework.", level: 'Foundation', duration: '5 hours', link: 'emotional-intelligence', routeKey: 'emotional-intelligence' },
-  { id: 'communication-confidence', title: 'Communication & confidence', description: 'Toolbox talks, client conversations, professional writing — based on Toastmasters Pathways.', level: 'Foundation', duration: '5 hours', link: 'communication-confidence', routeKey: 'communication-confidence' },
-  { id: 'mentoring-developing-others', title: 'Mentoring & developing others', description: 'How people learn, giving feedback, supporting apprentices — based on ILM coaching and JIB standards.', level: 'Intermediate', duration: '5 hours', link: 'mentoring-developing-others', routeKey: 'mentoring-developing-others' },
-  { id: 'resilience-stress-management', title: 'Resilience & stress management', description: 'Managing pressure, bouncing back, switching off — based on MBSR principles.', level: 'Foundation', duration: '4 hours', link: 'resilience-stress-management', routeKey: 'resilience-stress-management' },
-  { id: 'time-management-organisation', title: 'Time management & organisation', description: 'Planning, managing multiple jobs, admin — based on GTD and Eisenhower frameworks.', level: 'Foundation', duration: '4 hours', link: 'time-management-organisation', routeKey: 'time-management-organisation' },
-  { id: 'conflict-resolution', title: 'Conflict resolution', description: 'Non-paying clients, site disputes, awkward conversations — based on ACAS conflict resolution.', level: 'Intermediate', duration: '4 hours', link: 'conflict-resolution', routeKey: 'conflict-resolution' },
-  { id: 'personal-finance', title: 'Personal finance & wellbeing', description: 'Budgeting, debt, pensions, planning ahead — based on Open University Managing My Money.', level: 'Foundation', duration: '5 hours', link: 'personal-finance', routeKey: 'personal-finance' },
-  { id: 'goal-setting-growth', title: 'Goal setting & continuous growth', description: 'Setting goals, building habits, tracking progress — based on FranklinCovey 7 Habits.', level: 'Foundation', duration: '4 hours', link: 'goal-setting-growth', routeKey: 'goal-setting-growth' },
+  {
+    id: 'leadership-on-site',
+    title: 'Leadership on site',
+    description:
+      'Delegating, decision-making, earning respect and leading teams — based on ILM Level 2 frameworks.',
+    level: 'Intermediate',
+    duration: '6 hours',
+    link: 'leadership-on-site',
+    routeKey: 'leadership-on-site',
+  },
+  {
+    id: 'mental-health-awareness',
+    title: 'Mental health awareness',
+    description:
+      'Recognising signs, starting conversations, supporting others — based on MHFA England and Mates in Mind.',
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'mental-health-awareness',
+    routeKey: 'mental-health-awareness',
+  },
+  {
+    id: 'emotional-intelligence',
+    title: 'Emotional intelligence',
+    description:
+      "Self-awareness, managing reactions, reading people — based on Daniel Goleman's EI framework.",
+    level: 'Foundation',
+    duration: '5 hours',
+    link: 'emotional-intelligence',
+    routeKey: 'emotional-intelligence',
+  },
+  {
+    id: 'communication-confidence',
+    title: 'Communication & confidence',
+    description:
+      'Toolbox talks, client conversations, professional writing — based on Toastmasters Pathways.',
+    level: 'Foundation',
+    duration: '5 hours',
+    link: 'communication-confidence',
+    routeKey: 'communication-confidence',
+  },
+  {
+    id: 'mentoring-developing-others',
+    title: 'Mentoring & developing others',
+    description:
+      'How people learn, giving feedback, supporting apprentices — based on ILM coaching and JIB standards.',
+    level: 'Intermediate',
+    duration: '5 hours',
+    link: 'mentoring-developing-others',
+    routeKey: 'mentoring-developing-others',
+  },
+  {
+    id: 'resilience-stress-management',
+    title: 'Resilience & stress management',
+    description: 'Managing pressure, bouncing back, switching off — based on MBSR principles.',
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'resilience-stress-management',
+    routeKey: 'resilience-stress-management',
+  },
+  {
+    id: 'time-management-organisation',
+    title: 'Time management & organisation',
+    description:
+      'Planning, managing multiple jobs, admin — based on GTD and Eisenhower frameworks.',
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'time-management-organisation',
+    routeKey: 'time-management-organisation',
+  },
+  {
+    id: 'conflict-resolution',
+    title: 'Conflict resolution',
+    description:
+      'Non-paying clients, site disputes, awkward conversations — based on ACAS conflict resolution.',
+    level: 'Intermediate',
+    duration: '4 hours',
+    link: 'conflict-resolution',
+    routeKey: 'conflict-resolution',
+  },
+  {
+    id: 'personal-finance',
+    title: 'Personal finance & wellbeing',
+    description:
+      'Budgeting, debt, pensions, planning ahead — based on Open University Managing My Money.',
+    level: 'Foundation',
+    duration: '5 hours',
+    link: 'personal-finance',
+    routeKey: 'personal-finance',
+  },
+  {
+    id: 'goal-setting-growth',
+    title: 'Goal setting & continuous growth',
+    description:
+      'Setting goals, building habits, tracking progress — based on FranklinCovey 7 Habits.',
+    level: 'Foundation',
+    duration: '4 hours',
+    link: 'goal-setting-growth',
+    routeKey: 'goal-setting-growth',
+  },
 ];
 
 export default function PersonalDevelopmentIndex() {
@@ -57,9 +147,7 @@ export default function PersonalDevelopmentIndex() {
   const completedById = useMemo(() => {
     const map: Record<string, number> = {};
     for (const c of COURSES) {
-      map[c.id] = allProgress.filter(
-        (p) => p.completed && (p.course_key === c.routeKey || p.course_key.startsWith(c.routeKey + '/'))
-      ).length;
+      map[c.id] = completedSectionsForCourse(allProgress, c.routeKey);
     }
     return map;
   }, [allProgress]);

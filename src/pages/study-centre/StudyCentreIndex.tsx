@@ -18,6 +18,7 @@ import { useQuizResults } from '@/hooks/useQuizResults';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
 
@@ -262,11 +263,10 @@ export default function StudyCentreIndex() {
   const completedByCategory = useMemo(() => {
     const map: Record<string, number> = {};
     for (const cat of CATEGORIES) {
-      map[cat.id] = allProgress.filter(
-        (p) =>
-          p.completed &&
-          cat.routeKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))
-      ).length;
+      map[cat.id] = cat.routeKeys.reduce(
+        (sum, k) => sum + completedSectionsForCourse(allProgress, k),
+        0
+      );
     }
     return map;
   }, [allProgress]);
@@ -506,9 +506,7 @@ export default function StudyCentreIndex() {
         >
           <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
             <Eyebrow>{lastLocation ? '03 · YOUR LEARNING' : '02 · YOUR LEARNING'}</Eyebrow>
-            <span className="text-[11px] text-white/50 tabular-nums">
-              {totalCourses} courses
-            </span>
+            <span className="text-[11px] text-white/50 tabular-nums">{totalCourses} courses</span>
           </motion.div>
 
           <motion.div
@@ -610,8 +608,8 @@ export default function StudyCentreIndex() {
                     {curatedVideos.length} hand-picked training videos
                   </h3>
                   <p className="mt-2 text-[13px] leading-relaxed text-white/60 max-w-[52ch]">
-                    Electrical theory, three-phase, transformers, motors, testing and tools —
-                    short, watchable lessons to sharpen the fundamentals on a break.
+                    Electrical theory, three-phase, transformers, motors, testing and tools — short,
+                    watchable lessons to sharpen the fundamentals on a break.
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow">
                     <Play className="h-3.5 w-3.5 fill-elec-yellow" />

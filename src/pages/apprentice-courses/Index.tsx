@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
 import {
   PageFrame,
@@ -38,7 +39,8 @@ const COURSES: Course[] = [
   {
     id: 'level2',
     title: 'Level 2 Electrical Installation',
-    description: 'Foundation electrical installation skills, safety principles and core wiring techniques.',
+    description:
+      'Foundation electrical installation skills, safety principles and core wiring techniques.',
     level: 'Foundation',
     duration: '2 years',
     link: 'level2',
@@ -65,7 +67,8 @@ const COURSES: Course[] = [
   {
     id: 'hnc',
     title: 'HNC Electrical Engineering',
-    description: 'Higher National Certificate in Electrical and Electronic Engineering for Building Services.',
+    description:
+      'Higher National Certificate in Electrical and Electronic Engineering for Building Services.',
     level: 'Advanced',
     duration: '2 years',
     link: 'hnc',
@@ -74,7 +77,8 @@ const COURSES: Course[] = [
   {
     id: 'moet',
     title: 'MOET',
-    description: 'Maintenance Operations Engineering Technician — multi-skilled maintenance training.',
+    description:
+      'Maintenance Operations Engineering Technician — multi-skilled maintenance training.',
     level: 'Intermediate',
     duration: '18 months',
     link: 'moet',
@@ -104,9 +108,7 @@ export default function ApprenticeCoursesIndex() {
   const completedById = useMemo(() => {
     const map: Record<string, number> = {};
     for (const c of COURSES) {
-      map[c.id] = allProgress.filter(
-        (p) => p.completed && (p.course_key === c.routeKey || p.course_key.startsWith(c.routeKey + '/'))
-      ).length;
+      map[c.id] = completedSectionsForCourse(allProgress, c.routeKey);
     }
     return map;
   }, [allProgress]);
@@ -142,7 +144,11 @@ export default function ApprenticeCoursesIndex() {
             stats={[
               { label: 'Courses', value: COURSES.length, sub: 'Available now' },
               { label: 'Completed', value: totalCompleted, sub: 'Sections done' },
-              { label: 'Levels', value: Object.keys(levelCounts).length, sub: 'Foundation → Advanced' },
+              {
+                label: 'Levels',
+                value: Object.keys(levelCounts).length,
+                sub: 'Foundation → Advanced',
+              },
               { label: 'Pathway', value: dominantLevel, sub: 'Most courses at' },
             ]}
           />

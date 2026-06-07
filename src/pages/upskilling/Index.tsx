@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
 import {
   PageFrame,
@@ -15,13 +16,7 @@ import {
   type Tone,
 } from '@/components/college/primitives';
 
-type Level =
-  | 'Essential'
-  | 'Foundation'
-  | 'Intermediate'
-  | 'Advanced'
-  | 'Specialist'
-  | 'Expert';
+type Level = 'Essential' | 'Foundation' | 'Intermediate' | 'Advanced' | 'Specialist' | 'Expert';
 
 interface Course {
   id: string;
@@ -43,20 +38,132 @@ const LEVEL_TONE: Record<Level, Tone> = {
 };
 
 const COURSES: Course[] = [
-  { id: 'bs7671', title: '18th Edition Wiring Regulations', description: 'BS 7671:2018 wiring regulations and electrical safety requirements.', level: 'Essential', duration: '6 weeks', link: 'bs7671-course', routeKey: 'bs7671' },
-  { id: 'inspection-testing', title: 'Inspection & testing', description: 'Electrical inspection, testing and certification procedures.', level: 'Advanced', duration: '8 weeks', link: 'inspection-testing', routeKey: 'inspection-testing' },
-  { id: 'pat', title: 'PAT testing certification', description: 'Portable appliance testing procedures and certification requirements.', level: 'Foundation', duration: '4 weeks', link: 'pat-testing-course', routeKey: 'pat-testing' },
-  { id: 'fire-alarm', title: 'Fire alarm systems', description: 'Fire detection and alarm system design, installation and commissioning.', level: 'Specialist', duration: '8 weeks', link: 'fire-alarm-course', routeKey: 'fire-alarm' },
-  { id: 'emergency-lighting', title: 'Emergency lighting systems', description: 'Emergency lighting design, testing schedules and BS 5266 compliance.', level: 'Intermediate', duration: '6 weeks', link: 'emergency-lighting-course', routeKey: 'emergency-lighting' },
-  { id: 'data-cabling', title: 'Data & communications cabling', description: 'Structured cabling systems, fiber optics and network infrastructure.', level: 'Intermediate', duration: '6 weeks', link: 'data-cabling-course', routeKey: 'data-cabling' },
-  { id: 'renewable-energy', title: 'Renewable energy systems', description: 'Solar, wind and battery storage installation and maintenance procedures.', level: 'Intermediate', duration: '12 weeks', link: 'renewable-energy-course', routeKey: 'renewable-energy' },
-  { id: 'ev-charging', title: 'Electric vehicle charging', description: 'EV charging infrastructure installation, maintenance and safety protocols.', level: 'Specialist', duration: '6 weeks', link: 'ev-charging-course', routeKey: 'ev-charging' },
-  { id: 'smart-home', title: 'Smart home technology', description: 'Home automation, IoT integration and intelligent building systems.', level: 'Intermediate', duration: '8 weeks', link: 'smart-home-course', routeKey: 'smart-home' },
-  { id: 'energy-efficiency', title: 'Energy efficiency & management', description: 'Power quality analysis, energy auditing and optimisation strategies.', level: 'Advanced', duration: '10 weeks', link: 'energy-efficiency-course', routeKey: 'energy-efficiency' },
-  { id: 'bms', title: 'Building management systems', description: 'HVAC control, lighting management and integrated building automation.', level: 'Advanced', duration: '12 weeks', link: 'bms-course', routeKey: 'bms' },
-  { id: 'industrial-electrical', title: 'Industrial electrical systems', description: 'High voltage systems, motor control and industrial automation.', level: 'Expert', duration: '14 weeks', link: 'industrial-electrical-course', routeKey: 'industrial-electrical' },
-  { id: 'instrumentation', title: 'Instrumentation', description: 'Industrial instrumentation systems, control loops and measurement techniques.', level: 'Advanced', duration: '10 weeks', link: 'instrumentation-course', routeKey: 'instrumentation' },
-  { id: 'fiber-optics', title: 'Fiber optics technology', description: 'Optical fiber installation, fusion splicing and OTDR testing procedures.', level: 'Advanced', duration: '8 weeks', link: 'fiber-optics-course', routeKey: 'fiber-optics' },
+  {
+    id: 'bs7671',
+    title: '18th Edition Wiring Regulations',
+    description: 'BS 7671:2018 wiring regulations and electrical safety requirements.',
+    level: 'Essential',
+    duration: '6 weeks',
+    link: 'bs7671-course',
+    routeKey: 'bs7671',
+  },
+  {
+    id: 'inspection-testing',
+    title: 'Inspection & testing',
+    description: 'Electrical inspection, testing and certification procedures.',
+    level: 'Advanced',
+    duration: '8 weeks',
+    link: 'inspection-testing',
+    routeKey: 'inspection-testing',
+  },
+  {
+    id: 'pat',
+    title: 'PAT testing certification',
+    description: 'Portable appliance testing procedures and certification requirements.',
+    level: 'Foundation',
+    duration: '4 weeks',
+    link: 'pat-testing-course',
+    routeKey: 'pat-testing',
+  },
+  {
+    id: 'fire-alarm',
+    title: 'Fire alarm systems',
+    description: 'Fire detection and alarm system design, installation and commissioning.',
+    level: 'Specialist',
+    duration: '8 weeks',
+    link: 'fire-alarm-course',
+    routeKey: 'fire-alarm',
+  },
+  {
+    id: 'emergency-lighting',
+    title: 'Emergency lighting systems',
+    description: 'Emergency lighting design, testing schedules and BS 5266 compliance.',
+    level: 'Intermediate',
+    duration: '6 weeks',
+    link: 'emergency-lighting-course',
+    routeKey: 'emergency-lighting',
+  },
+  {
+    id: 'data-cabling',
+    title: 'Data & communications cabling',
+    description: 'Structured cabling systems, fiber optics and network infrastructure.',
+    level: 'Intermediate',
+    duration: '6 weeks',
+    link: 'data-cabling-course',
+    routeKey: 'data-cabling',
+  },
+  {
+    id: 'renewable-energy',
+    title: 'Renewable energy systems',
+    description: 'Solar, wind and battery storage installation and maintenance procedures.',
+    level: 'Intermediate',
+    duration: '12 weeks',
+    link: 'renewable-energy-course',
+    routeKey: 'renewable-energy',
+  },
+  {
+    id: 'ev-charging',
+    title: 'Electric vehicle charging',
+    description: 'EV charging infrastructure installation, maintenance and safety protocols.',
+    level: 'Specialist',
+    duration: '6 weeks',
+    link: 'ev-charging-course',
+    routeKey: 'ev-charging',
+  },
+  {
+    id: 'smart-home',
+    title: 'Smart home technology',
+    description: 'Home automation, IoT integration and intelligent building systems.',
+    level: 'Intermediate',
+    duration: '8 weeks',
+    link: 'smart-home-course',
+    routeKey: 'smart-home',
+  },
+  {
+    id: 'energy-efficiency',
+    title: 'Energy efficiency & management',
+    description: 'Power quality analysis, energy auditing and optimisation strategies.',
+    level: 'Advanced',
+    duration: '10 weeks',
+    link: 'energy-efficiency-course',
+    routeKey: 'energy-efficiency',
+  },
+  {
+    id: 'bms',
+    title: 'Building management systems',
+    description: 'HVAC control, lighting management and integrated building automation.',
+    level: 'Advanced',
+    duration: '12 weeks',
+    link: 'bms-course',
+    routeKey: 'bms',
+  },
+  {
+    id: 'industrial-electrical',
+    title: 'Industrial electrical systems',
+    description: 'High voltage systems, motor control and industrial automation.',
+    level: 'Expert',
+    duration: '14 weeks',
+    link: 'industrial-electrical-course',
+    routeKey: 'industrial-electrical',
+  },
+  {
+    id: 'instrumentation',
+    title: 'Instrumentation',
+    description: 'Industrial instrumentation systems, control loops and measurement techniques.',
+    level: 'Advanced',
+    duration: '10 weeks',
+    link: 'instrumentation-course',
+    routeKey: 'instrumentation',
+  },
+  {
+    id: 'fiber-optics',
+    title: 'Fiber optics technology',
+    description: 'Optical fiber installation, fusion splicing and OTDR testing procedures.',
+    level: 'Advanced',
+    duration: '8 weeks',
+    link: 'fiber-optics-course',
+    routeKey: 'fiber-optics',
+  },
 ];
 
 export default function UpskillingIndex() {
@@ -72,9 +179,7 @@ export default function UpskillingIndex() {
   const completedById = useMemo(() => {
     const map: Record<string, number> = {};
     for (const c of COURSES) {
-      map[c.id] = allProgress.filter(
-        (p) => p.completed && (p.course_key === c.routeKey || p.course_key.startsWith(c.routeKey + '/'))
-      ).length;
+      map[c.id] = completedSectionsForCourse(allProgress, c.routeKey);
     }
     return map;
   }, [allProgress]);

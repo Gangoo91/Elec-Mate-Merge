@@ -18,6 +18,7 @@
 
 import React from 'react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { moduleProgress } from '@/lib/courseProgressMatch';
 
 export interface ModuleProgressInfo {
   /** Is this specific module fully complete? */
@@ -47,19 +48,12 @@ export function CourseProgressWrapper({ courseKey, children }: CourseProgressWra
     (p) => p.course_key === courseKey || p.course_key.startsWith(`${courseKey}/`)
   );
 
-  const isModuleComplete = (moduleKey: string): boolean => {
-    const row = courseRows.find(
-      (p) => p.course_key === `${courseKey}/${moduleKey}` || p.section_key === moduleKey
-    );
-    return row?.completed || false;
-  };
+  // Canonical matcher tolerates every historical key format (ELE-1045).
+  const isModuleComplete = (moduleKey: string): boolean =>
+    moduleProgress(allProgress, `${courseKey}/${moduleKey}`).completed;
 
-  const getModuleProgress = (moduleKey: string): number => {
-    const row = courseRows.find(
-      (p) => p.course_key === `${courseKey}/${moduleKey}` || p.section_key === moduleKey
-    );
-    return row?.progress_pct || 0;
-  };
+  const getModuleProgress = (moduleKey: string): number =>
+    moduleProgress(allProgress, `${courseKey}/${moduleKey}`).pct;
 
   // Overall course progress
   const mainRow = courseRows.find((p) => p.course_key === courseKey);
@@ -72,7 +66,18 @@ export function CourseProgressWrapper({ courseKey, children }: CourseProgressWra
   );
   const resumePath = sortedByAccess.length > 0 ? sortedByAccess[0].section_key : null;
 
-  return <>{children({ isModuleComplete, getModuleProgress, overallPct, courseComplete, resumePath, loading })}</>;
+  return (
+    <>
+      {children({
+        isModuleComplete,
+        getModuleProgress,
+        overallPct,
+        courseComplete,
+        resumePath,
+        loading,
+      })}
+    </>
+  );
 }
 
 export default CourseProgressWrapper;

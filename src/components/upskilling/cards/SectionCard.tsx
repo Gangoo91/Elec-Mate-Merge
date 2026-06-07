@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { sectionCompleted } from '@/lib/courseProgressMatch';
 import { cn } from '@/lib/utils';
 
 interface SectionCardProps {
@@ -36,15 +37,8 @@ export const SectionCard: React.FC<SectionCardProps> = ({
         ? to
         : basePath + '/' + to;
 
-    const studyCentrePath = resolvedPath.replace(/.*\/study-centre\//, '');
-
-    return allProgress.some(
-      (p) =>
-        p.completed &&
-        (p.section_key === studyCentrePath ||
-          p.course_key + '/' + p.section_key === studyCentrePath ||
-          p.section_key?.includes(studyCentrePath))
-    );
+    // Canonical matcher tolerates every historical key format (ELE-1045).
+    return sectionCompleted(allProgress, resolvedPath);
   }, [allProgress, to, location.pathname]);
 
   const isCompleted = isCompletedProp || autoCompleted;
