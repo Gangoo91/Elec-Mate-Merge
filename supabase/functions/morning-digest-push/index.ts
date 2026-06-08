@@ -19,6 +19,7 @@
 import { createClient, corsHeaders } from '../_shared/deps.ts';
 import { buildMorningDigest, type DigestSection } from '../_shared/notification-templates.ts';
 import { sendSmartPush } from '../_shared/notification-engine.ts';
+import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -120,13 +121,15 @@ Deno.serve(async (req: Request) => {
         });
       }
 
-      // 4. Open tasks due today (priority 4 — workflow)
-      const { data: tasks } = await supabase
+      // 4. Open tasks due today (priority 4 — workflow). Excludes snoozed +
+      //    auto-generated chase/follow-up reminders (ELE-1058).
+      const { data: tasksRaw } = await supabase
         .from('spark_tasks')
-        .select('id')
+        .select('id, tags, snoozed_until')
         .eq('user_id', userId)
         .eq('status', 'open')
         .lte('due_at', endOfToday.toISOString());
+      const tasks = (tasksRaw || []).filter((t) => isActionableOverdueTask(t));
 
       if (tasks && tasks.length > 0) {
         const n = tasks.length;

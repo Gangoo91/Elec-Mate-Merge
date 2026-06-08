@@ -41,16 +41,17 @@ export function useTaskAlerts() {
       const tomorrowEnd = endOfDay(new Date(now.getTime() + 86400000)).toISOString();
 
       const [tasksRes, todayJobsRes, tomorrowJobsRes] = await Promise.all([
-        // Overdue open tasks (not snoozed past now)
+        // Overdue open tasks. Excludes snoozed + auto-generated chase/follow-up
+        // reminders (filtered in JS below) — ELE-1058.
         supabase
           .from('spark_tasks')
-          .select('id, title, priority, due_at')
+          .select('id, title, priority, due_at, tags, snoozed_until')
           .eq('user_id', user.id)
           .eq('status', 'open')
           .not('due_at', 'is', null)
           .lt('due_at', now.toISOString())
           .order('due_at', { ascending: true })
-          .limit(10),
+          .limit(25),
 
         // Calendar events today
         supabase
@@ -71,13 +72,20 @@ export function useTaskAlerts() {
           .order('start_at', { ascending: true }),
       ]);
 
-      const overdueTasks: OverdueTask[] = (tasksRes.data ?? []).map((t) => ({
-        id: t.id,
-        title: t.title,
-        priority: t.priority,
-        dueAt: t.due_at,
-        daysOverdue: Math.abs(differenceInDays(parseISO(t.due_at), now)),
-      }));
+      const isReminderTag = (tags: string[] | null) =>
+        Array.isArray(tags) && tags.some((t) => t === 'chase' || t === 'follow-up');
+      const overdueTasks: OverdueTask[] = (tasksRes.data ?? [])
+        .filter(
+          (t) => !(t.snoozed_until && new Date(t.snoozed_until) > now) && !isReminderTag(t.tags)
+        )
+        .slice(0, 10)
+        .map((t) => ({
+          id: t.id,
+          title: t.title,
+          priority: t.priority,
+          dueAt: t.due_at,
+          daysOverdue: Math.abs(differenceInDays(parseISO(t.due_at), now)),
+        }));
 
       const jobsDueToday: JobDueAlert[] = (todayJobsRes.data ?? []).map((e) => ({
         id: e.id,

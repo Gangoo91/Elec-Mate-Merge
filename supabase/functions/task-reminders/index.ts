@@ -9,6 +9,7 @@
  *  - Logs a 'reminded' event in spark_task_events
  */
 import { createClient } from '../_shared/deps.ts';
+import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
 
 interface SparkTask {
   id: string;
@@ -45,7 +46,7 @@ Deno.serve(async (req: Request) => {
     // Find open/in-progress tasks due within the next hour (or already overdue)
     const { data: tasks, error: tasksError } = await supabase
       .from('spark_tasks')
-      .select('id, user_id, title, due_at, priority, snoozed_until')
+      .select('id, user_id, title, due_at, priority, snoozed_until, tags')
       .in('status', ['open', 'in_progress'])
       .not('due_at', 'is', null)
       .lte('due_at', oneHourFromNow.toISOString());
@@ -58,10 +59,9 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Filter out snoozed tasks
-    const activeTasks = tasks.filter(
-      (t: SparkTask) => !t.snoozed_until || new Date(t.snoozed_until) <= now
-    );
+    // Filter out snoozed tasks, plus auto-generated chase/follow-up reminders
+    // — those belong to the invoice/quote surfaces, not the task nag (ELE-1058).
+    const activeTasks = tasks.filter((t: SparkTask) => isActionableOverdueTask(t, now));
 
     // Skip already-overdue tasks if daily digest already ran today (avoid repeats)
     // Only keep overdue tasks if digest hasn't sent today's overdue_tasks alert

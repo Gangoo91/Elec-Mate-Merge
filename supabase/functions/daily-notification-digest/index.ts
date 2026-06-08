@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
 
 /**
  * daily-notification-digest — "Your Day" morning briefing
@@ -158,15 +159,19 @@ async function buildAlertsForUser(
     });
   }
 
-  // ── Overdue tasks (exclude completed/archived/cancelled) ─────────
-  const { data: overdueTasks } = await supabase
+  // ── Overdue tasks (exclude completed/cancelled, snoozed, and
+  //    auto-generated chase/follow-up reminders — ELE-1058) ─────────
+  const { data: overdueTasksRaw } = await supabase
     .from('spark_tasks')
-    .select('id, title, priority')
+    .select('id, title, priority, tags, snoozed_until')
     .eq('user_id', userId)
     .in('status', ['open', 'in_progress'])
     .not('due_at', 'is', null)
     .lt('due_at', today)
-    .limit(10);
+    .limit(25);
+  const overdueTasks = (overdueTasksRaw || [])
+    .filter((t) => isActionableOverdueTask(t))
+    .slice(0, 10);
 
   if (overdueTasks && overdueTasks.length > 0) {
     const urgentCount = overdueTasks.filter(
