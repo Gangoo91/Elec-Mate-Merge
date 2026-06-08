@@ -29,7 +29,6 @@ import {
 
 import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { LoadMoreButton } from './common/LoadMoreButton';
-import { RAMSAmendDialog } from './ai-rams/RAMSAmendDialog';
 import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
 import { UserRAMSUpload } from './UserRAMSUpload';
 
@@ -207,7 +206,6 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
   // RAMS-specific state
   const [ramsSourceFilter, setRamsSourceFilter] = useState<RAMSSourceFilter>('all');
   const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
-  const [amendDialogOpen, setAmendDialogOpen] = useState(false);
   const [quickEditDialogOpen, setQuickEditDialogOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
 
@@ -337,9 +335,10 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     }
   };
 
+  // Amend goes straight into the editable results view (no intermediate dialog).
   const openAmend = (sourceId: string) => {
     setSelectedDocumentId(sourceId);
-    setAmendDialogOpen(true);
+    setQuickEditDialogOpen(true);
   };
 
   // ─── Render ───
@@ -496,7 +495,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                         )}
                         <StatusPill status={doc.status} />
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center flex-wrap justify-end gap-1">
                         {isRAMS && (
                           <button
                             type="button"
@@ -504,7 +503,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                               e.stopPropagation();
                               openAmend(doc.sourceId);
                             }}
-                            className="text-[11.5px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
+                            className="text-[11.5px] font-medium text-white/60 hover:text-elec-yellow hover:bg-white/[0.05] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation"
                           >
                             Amend
                           </button>
@@ -516,7 +515,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                               e.stopPropagation();
                               setApprovalDoc(doc);
                             }}
-                            className="text-[11.5px] font-medium text-emerald-400/85 hover:text-emerald-400 transition-colors touch-manipulation"
+                            className="text-[11.5px] font-medium text-emerald-400/90 hover:text-emerald-400 hover:bg-emerald-400/[0.08] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation"
                           >
                             {transitions[0].label}
                           </button>
@@ -529,7 +528,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                               handleExport(doc);
                             }}
                             disabled={isThisExporting}
-                            className="text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation disabled:opacity-50"
+                            className="text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/[0.08] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation disabled:opacity-50"
                           >
                             {isThisExporting ? 'Exporting…' : 'PDF'}
                           </button>
@@ -590,31 +589,17 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
         }}
       />
 
-      {/* ─── RAMS amend / quick-edit ─── */}
+      {/* ─── RAMS amend → editable results view ─── */}
       {selectedDocumentId && (
-        <>
-          <RAMSAmendDialog
-            documentId={selectedDocumentId}
-            isOpen={amendDialogOpen}
-            onClose={() => {
-              setAmendDialogOpen(false);
-              setSelectedDocumentId(null);
-            }}
-            onQuickEdit={() => {
-              setAmendDialogOpen(false);
-              setQuickEditDialogOpen(true);
-            }}
-          />
-          <RAMSQuickEditDialog
-            documentId={selectedDocumentId}
-            isOpen={quickEditDialogOpen}
-            onClose={() => {
-              setQuickEditDialogOpen(false);
-              setSelectedDocumentId(null);
-              queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
-            }}
-          />
-        </>
+        <RAMSQuickEditDialog
+          documentId={selectedDocumentId}
+          isOpen={quickEditDialogOpen}
+          onClose={() => {
+            setQuickEditDialogOpen(false);
+            setSelectedDocumentId(null);
+            queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
+          }}
+        />
       )}
     </SafetyModuleShell>
   );

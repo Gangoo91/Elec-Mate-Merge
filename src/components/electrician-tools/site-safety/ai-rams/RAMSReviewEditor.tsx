@@ -329,6 +329,22 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     );
   };
 
+  // Safety / emergency contacts live on ramsData and persist into
+  // ai_generation_metadata.emergencyContacts on save.
+  const updateContact = (
+    field:
+      | 'siteManagerName'
+      | 'siteManagerPhone'
+      | 'firstAiderName'
+      | 'firstAiderPhone'
+      | 'safetyOfficerName'
+      | 'safetyOfficerPhone'
+      | 'assemblyPoint',
+    value: string
+  ) => {
+    setRamsData((prev) => (prev ? { ...prev, [field]: value } : prev));
+  };
+
   const updateStep = (stepId: string, updates: Partial<MethodStep>) => {
     setMethodData((prev) => ({
       ...prev,
@@ -1117,6 +1133,58 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
                   {/* Emergency Procedures */}
                   <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
+
+                  {/* Safety / emergency contacts — editable */}
+                  <section className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-2xl p-4 sm:p-6 space-y-4">
+                    <div>
+                      <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow mb-1">
+                        Safety contacts
+                      </div>
+                      <h3 className="text-[17px] font-semibold text-white">Emergency &amp; site contacts</h3>
+                      <p className="text-[12.5px] leading-relaxed text-white/55 mt-1">
+                        Who to call on site. These appear on the RAMS and the exported PDF.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      {(
+                        [
+                          { label: 'Site manager', nameKey: 'siteManagerName', phoneKey: 'siteManagerPhone' },
+                          { label: 'First aider', nameKey: 'firstAiderName', phoneKey: 'firstAiderPhone' },
+                          { label: 'Safety officer', nameKey: 'safetyOfficerName', phoneKey: 'safetyOfficerPhone' },
+                        ] as const
+                      ).map((c) => (
+                        <div key={c.nameKey} className="space-y-2">
+                          <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white/55">
+                            {c.label}
+                          </label>
+                          <Input
+                            value={(ramsData[c.nameKey] as string) || ''}
+                            onChange={(e) => updateContact(c.nameKey, e.target.value)}
+                            placeholder="Name"
+                            className="h-11 text-base touch-manipulation bg-[hsl(0_0%_8%)] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                          />
+                          <Input
+                            value={(ramsData[c.phoneKey] as string) || ''}
+                            onChange={(e) => updateContact(c.phoneKey, e.target.value)}
+                            placeholder="Phone"
+                            inputMode="tel"
+                            className="h-11 text-base touch-manipulation bg-[hsl(0_0%_8%)] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white/55">
+                        Assembly point
+                      </label>
+                      <Input
+                        value={ramsData.assemblyPoint || ''}
+                        onChange={(e) => updateContact('assemblyPoint', e.target.value)}
+                        placeholder="e.g. Main car park, front gate"
+                        className="h-11 text-base touch-manipulation bg-[hsl(0_0%_8%)] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                      />
+                    </div>
+                  </section>
                 </>
               ) : (
                 <div className="bg-[hsl(0_0%_10%)] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">

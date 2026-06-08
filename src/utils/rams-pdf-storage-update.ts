@@ -19,10 +19,10 @@ export async function updateRAMSDocument(
       return { success: false, error: 'User not authenticated' };
     }
 
-    // Get existing document to increment version
+    // Get existing document to increment version and preserve metadata
     const { data: existingDoc, error: fetchError } = await supabase
       .from('rams_documents')
-      .select('version')
+      .select('version, ai_generation_metadata, status')
       .eq('id', documentId)
       .eq('user_id', user.id)
       .single();
@@ -30,6 +30,13 @@ export async function updateRAMSDocument(
     if (fetchError || !existingDoc) {
       return { success: false, error: 'Document not found' };
     }
+
+    // Preserve any existing AI metadata (don't blow away emergency contacts, source, etc.)
+    const existingMeta = (existingDoc.ai_generation_metadata as Record<string, unknown>) || {};
+
+    // Amending an already-approved document re-opens it as a draft so the
+    // approval reflects the new content and gets signed off again.
+    const nextStatus = existingDoc.status === 'approved' ? 'draft' : existingDoc.status;
 
     // Update database record with full data
     const { error: updateError } = await supabase
@@ -45,8 +52,20 @@ export async function updateRAMSDocument(
         required_ppe: ramsData.requiredPPE || [],
         ppe_details: (ramsData.ppeDetails || null) as any,
         version: (existingDoc.version || 1) + 1,
+        status: nextStatus,
         updated_at: new Date().toISOString(),
         ai_generation_metadata: {
+          ...existingMeta,
+          // Persist the safety / emergency contacts so amends actually stick.
+          emergencyContacts: {
+            siteManagerName: ramsData.siteManagerName || '',
+            siteManagerPhone: ramsData.siteManagerPhone || '',
+            firstAiderName: ramsData.firstAiderName || '',
+            firstAiderPhone: ramsData.firstAiderPhone || '',
+            safetyOfficerName: ramsData.safetyOfficerName || '',
+            safetyOfficerPhone: ramsData.safetyOfficerPhone || '',
+            assemblyPoint: ramsData.assemblyPoint || '',
+          },
           updated_at: new Date().toISOString(),
           method_steps_count: methodData.steps?.length || 0,
           risk_count: ramsData.risks?.length || 0,

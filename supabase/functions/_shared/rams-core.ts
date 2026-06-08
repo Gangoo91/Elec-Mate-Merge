@@ -214,60 +214,126 @@ async function streamOpenAIChat(opts: {
   apiKey: string;
   body: Record<string, unknown>;
   onContent: (delta: string) => void | Promise<void>;
+  /** Hard cap on the whole call (ms). Default 150s. */
+  overallTimeoutMs?: number;
+  /** Abort if no stream bytes arrive within this window (ms). Default 40s. */
+  idleTimeoutMs?: number;
 }): Promise<{ text: string; finishReason: string | null }> {
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${opts.apiKey}`,
-      'Content-Type': 'application/json',
-      Accept: 'text/event-stream',
-    },
-    body: JSON.stringify({ ...opts.body, stream: true }),
-  });
+  const overallTimeoutMs = opts.overallTimeoutMs ?? 150_000;
+  const idleTimeoutMs = opts.idleTimeoutMs ?? 40_000;
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`OpenAI ${response.status}: ${errText.slice(0, 500)}`);
-  }
-  if (!response.body) {
-    throw new Error('OpenAI returned an empty stream');
-  }
+  // Without an AbortController a hung connection (no first byte, or a stalled
+  // mid-stream read) awaits forever and silently kills the background worker —
+  // the job then freezes at 20% until the client's 6-min watchdog gives up.
+  // Overall + idle timeouts convert that hang into a fast, retryable error.
+  const controller = new AbortController();
+  let abortReason = '';
+  let idleTimer: ReturnType<typeof setTimeout> | undefined;
+  const armIdle = () => {
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      abortReason = `idle ${idleTimeoutMs}ms`;
+      controller.abort();
+    }, idleTimeoutMs);
+  };
+  const overallTimer = setTimeout(() => {
+    abortReason = `overall ${overallTimeoutMs}ms`;
+    controller.abort();
+  }, overallTimeoutMs);
 
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder();
-  let leftover = '';
-  let fullText = '';
-  let finishReason: string | null = null;
+  try {
+    armIdle();
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${opts.apiKey}`,
+        'Content-Type': 'application/json',
+        Accept: 'text/event-stream',
+      },
+      body: JSON.stringify({ ...opts.body, stream: true }),
+      signal: controller.signal,
+    });
 
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    const chunk = leftover + decoder.decode(value, { stream: true });
-    const events = chunk.split('\n\n');
-    leftover = events.pop() ?? '';
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`OpenAI ${response.status}: ${errText.slice(0, 500)}`);
+    }
+    if (!response.body) {
+      throw new Error('OpenAI returned an empty stream');
+    }
 
-    for (const evt of events) {
-      // Each event may be multi-line; only `data: ...` lines matter.
-      for (const line of evt.split('\n')) {
-        if (!line.startsWith('data: ')) continue;
-        const payload = line.slice(6).trim();
-        if (payload === '[DONE]') continue;
-        try {
-          const j = JSON.parse(payload);
-          const choice = j?.choices?.[0];
-          const delta: string | undefined = choice?.delta?.content;
-          if (typeof delta === 'string' && delta.length > 0) {
-            fullText += delta;
-            await opts.onContent(delta);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let leftover = '';
+    let fullText = '';
+    let finishReason: string | null = null;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      armIdle(); // bytes arrived — reset the idle watchdog
+      const chunk = leftover + decoder.decode(value, { stream: true });
+      const events = chunk.split('\n\n');
+      leftover = events.pop() ?? '';
+
+      for (const evt of events) {
+        // Each event may be multi-line; only `data: ...` lines matter.
+        for (const line of evt.split('\n')) {
+          if (!line.startsWith('data: ')) continue;
+          const payload = line.slice(6).trim();
+          if (payload === '[DONE]') continue;
+          try {
+            const j = JSON.parse(payload);
+            const choice = j?.choices?.[0];
+            const delta: string | undefined = choice?.delta?.content;
+            if (typeof delta === 'string' && delta.length > 0) {
+              fullText += delta;
+              await opts.onContent(delta);
+            }
+            if (choice?.finish_reason) finishReason = choice.finish_reason;
+          } catch {
+            // ignore individual malformed events; stream typically recovers
           }
-          if (choice?.finish_reason) finishReason = choice.finish_reason;
-        } catch {
-          // ignore individual malformed events; stream typically recovers
         }
       }
     }
+    return { text: fullText, finishReason };
+  } catch (err) {
+    if (controller.signal.aborted) {
+      throw new Error(`OpenAI stream timed out (${abortReason || 'aborted'})`);
+    }
+    throw err;
+  } finally {
+    clearTimeout(overallTimer);
+    if (idleTimer) clearTimeout(idleTimer);
   }
-  return { text: fullText, finishReason };
+}
+
+/**
+ * streamOpenAIChat with a single retry on transient failures (stream timeouts,
+ * dropped connections, network resets). The common stall is a hung first byte
+ * that the idle timeout now turns into a ~40s error — so one retry makes the
+ * vast majority of generations recover on their own instead of freezing.
+ */
+async function streamOpenAIChatWithRetry(
+  opts: Parameters<typeof streamOpenAIChat>[0],
+  retries = 1
+): Promise<{ text: string; finishReason: string | null }> {
+  let lastErr: unknown;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await streamOpenAIChat(opts);
+    } catch (err) {
+      lastErr = err;
+      const msg = String((err as Error)?.message || err);
+      const retryable = /timed out|timeout|abort|network|reset|ECONN|fetch failed|empty stream/i.test(msg);
+      if (!retryable || attempt === retries) throw err;
+      console.warn(
+        `[rams-core] OpenAI stream attempt ${attempt + 1}/${retries + 1} failed: ${msg} — retrying`
+      );
+    }
+  }
+  throw lastErr;
 }
 
 /**
@@ -933,7 +999,7 @@ Hard rules:
   let text = '';
   let finishReason: string | null = null;
   try {
-    const result = await streamOpenAIChat({
+    const result = await streamOpenAIChatWithRetry({
       apiKey,
       body: {
         model: MODEL,
@@ -1206,7 +1272,7 @@ Hard rules:
   let text = '';
   let finishReason: string | null = null;
   try {
-    const result = await streamOpenAIChat({
+    const result = await streamOpenAIChatWithRetry({
       apiKey,
       body: {
         model: MODEL,

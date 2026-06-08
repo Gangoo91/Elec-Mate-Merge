@@ -791,6 +791,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
               </section>
             )}
 
+            {(status === 'pending' || status === 'processing') && (
             <AgentProcessingView
               jobId={currentJobId}
               overallProgress={progress}
@@ -850,6 +851,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
                 },
               ]}
             />
+            )}
 
             {(error || status === 'cancelled') && (
               <div

@@ -123,7 +123,7 @@ Deno.serve(async (req) => {
 
       const { data: existing } = await supabase
         .from('rams_generation_jobs')
-        .select('id, user_id, status')
+        .select('id, user_id, status, updated_at')
         .eq('id', jobId)
         .maybeSingle();
 
@@ -131,7 +131,15 @@ Deno.serve(async (req) => {
         return json({ error: 'Job not found or not yours' }, 404);
       }
       if (existing.status === 'processing') {
-        return json({ error: 'Job is still running' }, 409);
+        // Only block a genuinely live run. A 'processing' job with no activity
+        // past the stall window is dead (killed isolate / lost stream) — let the
+        // retry take it over instead of bouncing the user with a 409 forever.
+        const lastActivityMs = existing.updated_at ? new Date(existing.updated_at).getTime() : 0;
+        const isStale = Date.now() - lastActivityMs > 3 * 60 * 1000;
+        if (!isStale) {
+          return json({ error: 'Job is still running' }, 409);
+        }
+        console.warn(`[rams-generator] reclaiming stale job ${jobId} (no activity > 3m) for retry`);
       }
 
       const work = runSingleAgent(supabase, jobId, agent as 'hs' | 'method').catch((err) => {
