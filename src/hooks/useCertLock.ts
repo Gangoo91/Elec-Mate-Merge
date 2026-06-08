@@ -40,6 +40,7 @@ export function useCertLock({
   const [editVersion, setEditVersion] = useState<number>(1);
   const [dbId, setDbId] = useState<string | null>(databaseId ?? null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [hasVersions, setHasVersions] = useState(false);
   const isLocked = !!lockedAt;
 
   // Resolve the current user once — every cert form gets lock for free without
@@ -71,6 +72,9 @@ export function useCertLock({
       if (cancelled || !meta) return;
       setLockedAt(meta.lockedAt);
       setEditVersion(meta.editVersion);
+      // Part of a version chain if it has a parent (it's v2+) or has been
+      // superseded (it has children).
+      setHasVersions(!!(meta.parentReportId || meta.supersededBy));
       if (meta.id) {
         setDbId((prev) => prev || meta.id);
         onDatabaseId?.(meta.id);
@@ -138,5 +142,20 @@ export function useCertLock({
     }
   }, [dbId, userId, onAmended, toast]);
 
-  return { isLocked, lockedAt, editVersion, lockReport, amendReport };
+  // Navigate to a specific version's report (reuses the cert's own routing).
+  const openReport = useCallback(
+    (targetReportId: string) => onAmended?.(targetReportId),
+    [onAmended]
+  );
+
+  return {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport,
+    amendReport,
+    databaseId: dbId,
+    openReport,
+    hasVersions,
+  };
 }

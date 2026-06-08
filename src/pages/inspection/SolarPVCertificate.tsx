@@ -81,6 +81,9 @@ export default function SolarPVCertificate() {
     editVersion,
     lockReport: lockReportBase,
     amendReport,
+    databaseId,
+    openReport,
+    hasVersions,
   } = useCertLock({
     reportId: savedReportId,
     onAmended: (newId) => navigate(`/electrician/inspection-testing/solar-pv/${newId}`),
@@ -557,6 +560,9 @@ export default function SolarPVCertificate() {
         canIssue={!isLocked && !!savedReportId}
         onLock={lockReport}
         onAmend={amendReport}
+        databaseId={databaseId}
+        hasVersions={hasVersions}
+        onOpenVersion={openReport}
       />
 
       {/* Main Content — full width on mobile */}

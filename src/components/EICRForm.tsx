@@ -39,6 +39,9 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     editVersion,
     lockReport,
     amendReport,
+    databaseId,
+    hasVersions,
+    openReport,
   } = useEICRForm();
 
   // Board scan state
@@ -329,6 +332,9 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         }
         onLock={lockReport}
         onAmend={amendReport}
+        databaseId={databaseId}
+        hasVersions={hasVersions}
+        onOpenVersion={openReport}
       />
 
       {/* ELE-881 — provenance banner */}

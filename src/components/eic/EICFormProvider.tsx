@@ -68,6 +68,9 @@ interface EICFormContextType {
   editVersion: number;
   lockReport: () => Promise<void>;
   amendReport: () => Promise<void>;
+  hasVersions: boolean;
+  openReport: (reportId: string) => void;
+  databaseId: string | null;
   observations: EICObservation[];
   observationsProps: {
     observations: EICObservation[];
@@ -309,6 +312,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     editVersion,
     lockReport: lockReportBase,
     amendReport,
+    openReport,
+    hasVersions,
+    databaseId,
   } = useCertLock({
     reportId: currentReportId,
     onAmended: (newReportId) =>
@@ -1221,6 +1227,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     editVersion,
     lockReport,
     amendReport,
+    hasVersions,
+    openReport,
+    databaseId,
     observations,
     observationsProps,
     showBoardScan,

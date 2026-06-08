@@ -233,7 +233,16 @@ export default function DisconnectionCertificate() {
 
   // Lock + versioning (ELE-1037). Disconnection saves manually (no autosave),
   // so handleSave is guarded below when locked.
-  const { isLocked, lockedAt, editVersion, lockReport, amendReport } = useCertLock({
+  const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport,
+    amendReport,
+    databaseId,
+    openReport,
+    hasVersions,
+  } = useCertLock({
     reportId: existingReportId || editId || null,
     onAmended: (newId) => navigate(`/electrician/inspection-testing/disconnection/${newId}`),
   });
@@ -558,6 +567,9 @@ export default function DisconnectionCertificate() {
           canIssue={!isLocked && !!(existingReportId || editId) && !!data.inspectorSignature}
           onLock={lockReport}
           onAmend={amendReport}
+          databaseId={databaseId}
+          hasVersions={hasVersions}
+          onOpenVersion={openReport}
         />
       </div>
 

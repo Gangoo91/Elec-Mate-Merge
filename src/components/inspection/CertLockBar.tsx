@@ -1,6 +1,7 @@
 import React from 'react';
-import { Lock, ShieldCheck, FilePlus2 } from 'lucide-react';
+import { Lock, ShieldCheck, FilePlus2, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { VersionHistorySheet } from '@/components/ui/VersionHistorySheet';
 
 interface CertLockBarProps {
   isLocked: boolean;
@@ -10,6 +11,12 @@ interface CertLockBarProps {
   canIssue: boolean;
   onLock: () => void;
   onAmend: () => void;
+  /** DB uuid of the report — enables the version history timeline. */
+  databaseId?: string | null;
+  /** True when the cert is part of a version chain (has a parent or children). */
+  hasVersions?: boolean;
+  /** Open a specific version's report (receives its report_id string). */
+  onOpenVersion?: (reportId: string) => void;
 }
 
 const formatLockedDate = (iso: string | null) => {
@@ -40,7 +47,28 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
   canIssue,
   onLock,
   onAmend,
+  databaseId,
+  hasVersions,
+  onOpenVersion,
 }) => {
+  const showHistory = !!databaseId && !!hasVersions;
+  const historySheet = showHistory ? (
+    <VersionHistorySheet
+      reportId={databaseId}
+      onOpenVersion={onOpenVersion}
+      trigger={
+        <Button
+          type="button"
+          variant="ghost"
+          className="h-10 gap-1.5 flex-shrink-0 text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
+        >
+          <History className="h-4 w-4" />
+          History
+        </Button>
+      }
+    />
+  ) : null;
+
   if (isLocked) {
     return (
       <div className="px-4 pt-3">
@@ -59,15 +87,18 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
                 create a new version.
               </p>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onAmend}
-              className="h-10 gap-1.5 flex-shrink-0 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 touch-manipulation"
-            >
-              <FilePlus2 className="h-4 w-4" />
-              Amend
-            </Button>
+            <div className="flex items-center gap-1 flex-shrink-0">
+              {historySheet}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onAmend}
+                className="h-10 gap-1.5 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 touch-manipulation"
+              >
+                <FilePlus2 className="h-4 w-4" />
+                Amend
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -89,15 +120,32 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
                 later change creates a new version.
               </p>
             </div>
-            <Button
-              type="button"
-              onClick={onLock}
-              className="h-10 gap-1.5 flex-shrink-0 bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/20 font-semibold touch-manipulation"
-            >
-              <Lock className="h-4 w-4" />
-              Issue &amp; lock
-            </Button>
+            <div className="flex items-center gap-1 flex-shrink-0">
+              {historySheet}
+              <Button
+                type="button"
+                onClick={onLock}
+                className="h-10 gap-1.5 bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/20 font-semibold touch-manipulation"
+              >
+                <Lock className="h-4 w-4" />
+                Issue &amp; lock
+              </Button>
+            </div>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Unlocked, unsigned, but part of a version chain — still surface the timeline.
+  if (showHistory) {
+    return (
+      <div className="px-4 pt-3">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 flex items-center justify-between gap-3">
+          <p className="text-xs text-white/60">
+            Version {editVersion} of this certificate
+          </p>
+          {historySheet}
         </div>
       </div>
     );

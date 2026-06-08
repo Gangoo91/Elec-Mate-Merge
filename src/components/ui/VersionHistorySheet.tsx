@@ -11,22 +11,26 @@ import { getVersionHistory } from '@/utils/reportVersioning';
 import { cn } from '@/lib/utils';
 
 interface VersionHistorySheetProps {
+  /** DB uuid of any report in the chain. */
   reportId: string | null;
-  onRestore?: (versionId: string) => void;
+  /** Open a specific version — receives that version's report_id string. */
+  onOpenVersion?: (reportId: string) => void;
   trigger?: React.ReactNode;
 }
 
 interface VersionInfo {
   id: string;
+  report_id: string;
   version: number;
   certificate_number: string;
   created_at: string;
+  locked_at: string | null;
   is_latest_version: boolean;
 }
 
 export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
   reportId,
-  onRestore,
+  onOpenVersion,
   trigger,
 }) => {
   const [versions, setVersions] = useState<VersionInfo[]>([]);
@@ -134,21 +138,27 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
                       </div>
                       <p className="text-xs text-white mt-0.5">
                         {version.certificate_number}
+                        {version.locked_at && (
+                          <span className="ml-2 text-emerald-400">· locked</span>
+                        )}
                       </p>
                       <p className="text-xs text-white">
                         {formatDate(version.created_at)}
                       </p>
                     </div>
 
-                    {!version.is_latest_version && onRestore && (
+                    {!version.is_latest_version && onOpenVersion && (
                       <Button
                         variant="ghost"
                         size="sm"
                         className="h-8 gap-1.5 text-xs touch-manipulation"
-                        onClick={() => onRestore(version.id)}
+                        onClick={() => {
+                          onOpenVersion(version.report_id);
+                          setIsOpen(false);
+                        }}
                       >
                         <RotateCcw className="h-3 w-3" />
-                        Restore
+                        Open
                       </Button>
                     )}
                   </div>

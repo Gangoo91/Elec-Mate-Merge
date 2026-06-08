@@ -43,6 +43,9 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
     editVersion,
     lockReport,
     amendReport,
+    databaseId,
+    hasVersions,
+    openReport,
   } = useEICForm();
 
   // Tabs hook — lives in the inner component so tab state is local to the UI
@@ -153,6 +156,9 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         canIssue={!isLocked && !!currentReportId && canGenerateCertificate()}
         onLock={lockReport}
         onAmend={amendReport}
+        databaseId={databaseId}
+        hasVersions={hasVersions}
+        onOpenVersion={openReport}
       />
 
       {/* ELE-881 — provenance banner */}

@@ -64,6 +64,9 @@ const MinorWorksForm = ({
     editVersion,
     lockReport: lockReportBase,
     amendReport,
+    databaseId,
+    openReport,
+    hasVersions,
   } = useCertLock({
     reportId: currentReportId,
     onAmended: (newId) =>
@@ -1249,6 +1252,9 @@ const MinorWorksForm = ({
           canIssue={!isLocked && !!currentReportId && !!formData.signature && !!formData.workDate}
           onLock={lockReport}
           onAmend={amendReport}
+          databaseId={databaseId}
+          hasVersions={hasVersions}
+          onOpenVersion={openReport}
         />
 
         {/* ELE-881 — provenance banner */}

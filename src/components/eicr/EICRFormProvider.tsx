@@ -62,6 +62,8 @@ interface EICRFormContextType {
   editVersion: number;
   lockReport: () => Promise<void>;
   amendReport: () => Promise<void>;
+  hasVersions: boolean;
+  openReport: (reportId: string) => void;
 }
 
 const EICRFormContext = createContext<EICRFormContextType | undefined>(undefined);
@@ -108,6 +110,8 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     editVersion,
     lockReport: lockReportBase,
     amendReport,
+    openReport,
+    hasVersions,
   } = useCertLock({
     reportId: currentReportId,
     databaseId,
@@ -1167,6 +1171,8 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     editVersion,
     lockReport,
     amendReport,
+    hasVersions,
+    openReport,
   };
 
   return (

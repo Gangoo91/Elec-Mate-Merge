@@ -87,6 +87,9 @@ export default function PATTestingCertificate() {
     editVersion,
     lockReport: lockReportBase,
     amendReport,
+    databaseId,
+    openReport,
+    hasVersions,
   } = useCertLock({
     reportId: savedReportId,
     onAmended: (newId) => navigate(`/electrician/inspection-testing/pat-testing/${newId}`),
@@ -548,6 +551,9 @@ const {
         canIssue={!isLocked && !!savedReportId}
         onLock={lockReport}
         onAmend={amendReport}
+        databaseId={databaseId}
+        hasVersions={hasVersions}
+        onOpenVersion={openReport}
       />
 
       <main className="py-4 pb-4 sm:px-4 sm:pb-8">

@@ -76,6 +76,9 @@ export default function FireAlarmDesignCertificate() {
     editVersion,
     lockReport: lockReportBase,
     amendReport,
+    databaseId,
+    openReport,
+    hasVersions,
   } = useCertLock({
     reportId: savedReportId,
     onAmended: (newId) => navigate(`/electrician/inspection-testing/fire-alarm-design/${newId}`),
@@ -351,6 +354,9 @@ const {
         canIssue={!isLocked && !!savedReportId}
         onLock={lockReport}
         onAmend={amendReport}
+        databaseId={databaseId}
+        hasVersions={hasVersions}
+        onOpenVersion={openReport}
       />
 
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
