@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // AnimatePresence removed - using SmartTabs animations
 import StartNewEICRDialog from '@/components/StartNewEICRDialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -17,6 +17,8 @@ import {
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useCloudSync } from '@/hooks/useCloudSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
@@ -49,9 +51,26 @@ const MinorWorksForm = ({
   initialReportId?: string | null;
 }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [userId, setUserId] = useState<string | null>(null);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
+
+  // Lock + versioning (ELE-1037). enabled:!isLocked below gates both autosave
+  // mechanisms; lockReport is wrapped after the sync hooks to flush first.
+  const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: currentReportId,
+    onAmended: (newId) =>
+      navigate(
+        `/electrician/inspection-testing?section=minor-works&reportId=${encodeURIComponent(newId)}`
+      ),
+  });
   const [authChecked, setAuthChecked] = useState(false);
   // True while initial cloud hydration is in-flight. Gates cloud autosave to prevent
   // the blank initial form state overwriting real data. See 2026-04-17 incident.
@@ -279,17 +298,26 @@ const MinorWorksForm = ({
   }, []);
 
   // Cloud sync
-  const { loadFromCloud, isAuthenticated, isOnline, syncToCloud, syncState, syncNow, onTabChange } =
-    useCloudSync({
-      reportId: currentReportId,
-      reportType: 'minor-works',
-      data: formData,
-      enabled: true,
-      customerId: customerIdFromNav,
-      onReportCreated: handleReportCreated,
-      // Gate autosave until cloud load finishes — prevents blank-overwrite race.
-      isHydrating: isLoadingReport,
-    });
+  const {
+    loadFromCloud,
+    isAuthenticated,
+    isOnline,
+    syncToCloud,
+    syncState,
+    syncNow,
+    syncNowImmediate,
+    onTabChange,
+  } = useCloudSync({
+    reportId: currentReportId,
+    reportType: 'minor-works',
+    data: formData,
+    // Locked certificates never autosave — they are immutable records.
+    enabled: !isLocked,
+    customerId: customerIdFromNav,
+    onReportCreated: handleReportCreated,
+    // Gate autosave until cloud load finishes — prevents blank-overwrite race.
+    isHydrating: isLoadingReport,
+  });
 
   // Auto-save hook
   const {
@@ -306,8 +334,18 @@ const MinorWorksForm = ({
     onSave: async (data) => {
       await syncToCloud(false);
     },
-    enabled: true,
+    enabled: !isLocked,
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = React.useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   // Pre-fill customer details if navigating from customer page — parity with EICR + EIC.
   useEffect(() => {
@@ -514,106 +552,113 @@ const MinorWorksForm = ({
       }
 
       // Step 2: Load from cloud
-      loadFromCloud(initialReportId).then((cloudResult) => {
-        // Step 3: Compare timestamps - use whichever is NEWER
-        // cloudResult is now { data, databaseId } format
-        if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data = cloudResult.data as any;
-          // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
-          const cloudTime = new Date(
-            cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0
-          ).getTime();
-          const localTime = localDraft?.lastModified
-            ? new Date(localDraft.lastModified).getTime()
-            : 0;
+      loadFromCloud(initialReportId)
+        .then((cloudResult) => {
+          // Step 3: Compare timestamps - use whichever is NEWER
+          // cloudResult is now { data, databaseId } format
+          if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const data = cloudResult.data as any;
+            // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
+            const cloudTime = new Date(
+              cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0
+            ).getTime();
+            const localTime = localDraft?.lastModified
+              ? new Date(localDraft.lastModified).getTime()
+              : 0;
 
-          console.log('[MinorWorks] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
+            console.log(
+              '[MinorWorks] Comparing timestamps - Cloud:',
+              cloudTime,
+              'Local:',
+              localTime
+            );
 
-          // Validate data integrity before using
-          const integrity = validateLoadedData(data, 'minor-works');
+            // Validate data integrity before using
+            const integrity = validateLoadedData(data, 'minor-works');
 
-          if (!integrity.hasData) {
-            // Data loaded but appears empty - this is suspicious
-            logIntegrityEvent('load_empty', {
-              reportType: 'minor-works',
-              reportId: initialReportId,
-              fieldCount: integrity.fieldCount,
-              error: integrity.warnings.join('; '),
-            });
+            if (!integrity.hasData) {
+              // Data loaded but appears empty - this is suspicious
+              logIntegrityEvent('load_empty', {
+                reportType: 'minor-works',
+                reportId: initialReportId,
+                fieldCount: integrity.fieldCount,
+                error: integrity.warnings.join('; '),
+              });
 
-            // Try localStorage backup if cloud data is empty
-            if (localDraft?.data) {
-              const localIntegrity = validateLoadedData(localDraft.data, 'minor-works');
-              if (localIntegrity.hasData) {
-                console.log('[MinorWorks] Cloud data empty, using local backup');
-                setFormData(localDraft.data);
-                setCurrentReportId(initialReportId);
-                toast({
-                  title: 'Data recovered from local backup',
-                  description: 'Cloud data appeared empty. Your local version was restored.',
-                });
-                return;
+              // Try localStorage backup if cloud data is empty
+              if (localDraft?.data) {
+                const localIntegrity = validateLoadedData(localDraft.data, 'minor-works');
+                if (localIntegrity.hasData) {
+                  console.log('[MinorWorks] Cloud data empty, using local backup');
+                  setFormData(localDraft.data);
+                  setCurrentReportId(initialReportId);
+                  toast({
+                    title: 'Data recovered from local backup',
+                    description: 'Cloud data appeared empty. Your local version was restored.',
+                  });
+                  return;
+                }
               }
             }
-          }
 
-          if (localDraft?.data && localTime > cloudTime) {
-            // Local is newer - use local data
-            console.log('[MinorWorks] Using LOCAL draft (newer than cloud)');
+            if (localDraft?.data && localTime > cloudTime) {
+              // Local is newer - use local data
+              console.log('[MinorWorks] Using LOCAL draft (newer than cloud)');
+              setFormData(localDraft.data);
+              logIntegrityEvent('load_success', {
+                reportType: 'minor-works',
+                reportId: initialReportId,
+                fieldCount: Object.keys(localDraft.data).length,
+                source: 'local',
+              });
+              toast({
+                title: 'Recovered unsaved changes',
+                description: 'Your recent edits have been restored.',
+              });
+            } else {
+              // Cloud is newer or same - use cloud data
+              console.log('[MinorWorks] Using CLOUD data');
+              setFormData(data);
+              logIntegrityEvent('load_success', {
+                reportType: 'minor-works',
+                reportId: initialReportId,
+                fieldCount: integrity.fieldCount,
+                source: 'cloud',
+              });
+            }
+            setCurrentReportId(initialReportId);
+          } else if (localDraft?.data) {
+            // Cloud failed but we have local - use local
+            console.log('[MinorWorks] Cloud load failed, using local draft');
             setFormData(localDraft.data);
-            logIntegrityEvent('load_success', {
+            setCurrentReportId(initialReportId);
+            logIntegrityEvent('recovery_success', {
               reportType: 'minor-works',
               reportId: initialReportId,
-              fieldCount: Object.keys(localDraft.data).length,
               source: 'local',
             });
             toast({
-              title: 'Recovered unsaved changes',
-              description: 'Your recent edits have been restored.',
+              title: 'Loaded from local storage',
+              description: 'Cloud sync will retry automatically.',
             });
           } else {
-            // Cloud is newer or same - use cloud data
-            console.log('[MinorWorks] Using CLOUD data');
-            setFormData(data);
-            logIntegrityEvent('load_success', {
+            logIntegrityEvent('recovery_failed', {
               reportType: 'minor-works',
               reportId: initialReportId,
-              fieldCount: integrity.fieldCount,
-              source: 'cloud',
+              error: 'No data found in cloud or local',
+            });
+            toast({
+              title: 'Report not found',
+              description: 'Could not load the requested report.',
+              variant: 'destructive',
             });
           }
-          setCurrentReportId(initialReportId);
-        } else if (localDraft?.data) {
-          // Cloud failed but we have local - use local
-          console.log('[MinorWorks] Cloud load failed, using local draft');
-          setFormData(localDraft.data);
-          setCurrentReportId(initialReportId);
-          logIntegrityEvent('recovery_success', {
-            reportType: 'minor-works',
-            reportId: initialReportId,
-            source: 'local',
-          });
-          toast({
-            title: 'Loaded from local storage',
-            description: 'Cloud sync will retry automatically.',
-          });
-        } else {
-          logIntegrityEvent('recovery_failed', {
-            reportType: 'minor-works',
-            reportId: initialReportId,
-            error: 'No data found in cloud or local',
-          });
-          toast({
-            title: 'Report not found',
-            description: 'Could not load the requested report.',
-            variant: 'destructive',
-          });
-        }
-      }).finally(() => {
-        // Hydration complete — release the autosave gate.
-        setIsLoadingReport(false);
-      });
+        })
+        .finally(() => {
+          // Hydration complete — release the autosave gate.
+          setIsLoadingReport(false);
+        });
     }
   }, [initialReportId, authChecked, isAuthenticated, isOnline, loadFromCloud]);
 
@@ -912,28 +957,62 @@ const MinorWorksForm = ({
     // Fields to KEEP from the current cert
     const keepFields = [
       // Client details
-      'clientName', 'clientPhone', 'clientEmail', 'personOrderingWork',
-      'propertyAddress', 'postcode',
+      'clientName',
+      'clientPhone',
+      'clientEmail',
+      'personOrderingWork',
+      'propertyAddress',
+      'postcode',
       // Work dates
-      'workDate', 'dateOfCompletion', 'nextInspectionDue',
+      'workDate',
+      'dateOfCompletion',
+      'nextInspectionDue',
       // Supply & earthing — same installation
-      'supplyVoltage', 'supplyPhases', 'frequency',
-      'earthingArrangement', 'zdb', 'earthingConductorPresent',
-      'mainEarthingConductorSize', 'mainEarthingConductorMaterial',
+      'supplyVoltage',
+      'supplyPhases',
+      'frequency',
+      'earthingArrangement',
+      'zdb',
+      'earthingConductorPresent',
+      'mainEarthingConductorSize',
+      'mainEarthingConductorMaterial',
       'mainBondingConductorSize',
-      'bondingWater', 'bondingGas', 'bondingOil', 'bondingStructural', 'bondingOther',
+      'bondingWater',
+      'bondingGas',
+      'bondingOil',
+      'bondingStructural',
+      'bondingOther',
       'bondingOtherSpecify',
       // Declaration — same electrician
-      'electricianName', 'forAndOnBehalfOf', 'position',
-      'qualificationLevel', 'schemeProvider', 'registrationNumber',
-      'contractorAddress', 'electricianPhone', 'electricianEmail',
-      'signature', 'signatureDate',
-      'ietDeclaration', 'partPNotification', 'copyProvided',
+      'electricianName',
+      'forAndOnBehalfOf',
+      'position',
+      'qualificationLevel',
+      'schemeProvider',
+      'registrationNumber',
+      'contractorAddress',
+      'electricianPhone',
+      'electricianEmail',
+      'signature',
+      'signatureDate',
+      'ietDeclaration',
+      'partPNotification',
+      'copyProvided',
       // Test equipment — same instrument
-      'testEquipmentModel', 'testEquipmentSerial', 'testEquipmentCalDate', 'testTemperature',
+      'testEquipmentModel',
+      'testEquipmentSerial',
+      'testEquipmentCalDate',
+      'testTemperature',
       // Branding
-      'companyLogo', 'companyName', 'companyAddress', 'companyPhone', 'companyEmail',
-      'brandingTagline', 'brandingAccentColor', 'brandingWebsite', 'schemeLogo',
+      'companyLogo',
+      'companyName',
+      'companyAddress',
+      'companyPhone',
+      'companyEmail',
+      'brandingTagline',
+      'brandingAccentColor',
+      'brandingWebsite',
+      'schemeLogo',
     ];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1077,11 +1156,7 @@ const MinorWorksForm = ({
       shortLabel: 'Declare',
       content: (
         <>
-          <MWDeclarationTab
-            formData={formData}
-            onUpdate={handleUpdate}
-            isMobile={isMobile}
-          />
+          <MWDeclarationTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
 
           {/* Certificate Actions — matches EIC pattern */}
           <div className="mt-6">
@@ -1128,8 +1203,13 @@ const MinorWorksForm = ({
     (formData.installationAddress as string) ||
     (formData.clientAddress as string) ||
     '';
-  const { suggestion: lastCertSuggestion, dismiss: dismissLastCert, buildPatch } =
-    useCertPrefill(prefillAddress, 'minor-works', { excludeReportId: currentReportId || undefined });
+  const {
+    suggestion: lastCertSuggestion,
+    dismiss: dismissLastCert,
+    buildPatch,
+  } = useCertPrefill(prefillAddress, 'minor-works', {
+    excludeReportId: currentReportId || undefined,
+  });
 
   const handleApplyLastCert = () => {
     const patch = buildPatch();
@@ -1161,6 +1241,16 @@ const MinorWorksForm = ({
           <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
         </div>
 
+        {/* ELE-1037 — lock / version bar */}
+        <CertLockBar
+          isLocked={isLocked}
+          lockedAt={lockedAt}
+          editVersion={editVersion}
+          canIssue={!isLocked && !!currentReportId && !!formData.signature && !!formData.workDate}
+          onLock={lockReport}
+          onAmend={amendReport}
+        />
+
         {/* ELE-881 — provenance banner */}
         {formData.duplicatedFrom && (
           <DuplicatedFromBanner
@@ -1170,7 +1260,7 @@ const MinorWorksForm = ({
         )}
 
         {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
-        {lastCertSuggestion && (
+        {!isLocked && lastCertSuggestion && (
           <div className="px-4 pt-3">
             <LastCertSuggestionCard
               suggestion={lastCertSuggestion}
@@ -1180,8 +1270,14 @@ const MinorWorksForm = ({
           </div>
         )}
 
-        {/* Main Content — full-width mobile */}
-        <div className="py-4 pb-48 sm:px-4 sm:pb-8">
+        {/* Main Content — full-width mobile. Read-only when the cert is locked. */}
+        <div
+          className={cn(
+            'py-4 pb-48 sm:px-4 sm:pb-8',
+            isLocked && 'pointer-events-none select-none opacity-95'
+          )}
+          aria-disabled={isLocked || undefined}
+        >
           {/* Validation panel — always visible, tap a row to jump to that tab */}
           <div className="px-4 mb-3 sm:px-0">
             <MinorWorksValidationPanel
