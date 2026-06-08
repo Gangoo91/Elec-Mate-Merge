@@ -2,7 +2,7 @@ import React from 'react';
 import { Lock, ShieldCheck, FilePlus2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-interface EICRLockBarProps {
+interface CertLockBarProps {
   isLocked: boolean;
   lockedAt: string | null;
   editVersion: number;
@@ -28,12 +28,12 @@ const formatLockedDate = (iso: string | null) => {
 };
 
 /**
- * Lock / version bar shown above the EICR form.
+ * Lock / version bar shown above any certificate form (ELE-1037).
  * - Locked  → read-only banner with issue date + version + "Amend" (new version).
  * - Signed but unlocked → "Issue & lock" prompt.
  * - Otherwise renders nothing.
  */
-const EICRLockBar: React.FC<EICRLockBarProps> = ({
+const CertLockBar: React.FC<CertLockBarProps> = ({
   isLocked,
   lockedAt,
   editVersion,
@@ -106,4 +106,4 @@ const EICRLockBar: React.FC<EICRLockBarProps> = ({
   return null;
 };
 
-export default EICRLockBar;
+export default CertLockBar;

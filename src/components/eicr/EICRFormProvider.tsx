@@ -12,8 +12,7 @@ import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useCloudSync, SyncNowImmediateResult } from '@/hooks/useCloudSync';
 import { useReportId } from '@/hooks/useReportId';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { reportCloud } from '@/utils/reportCloud';
-import { createNewVersion } from '@/utils/reportVersioning';
+import { useCertLock } from '@/hooks/useCertLock';
 import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { joinQualifications } from '@/utils/inspectorQualifications';
@@ -101,10 +100,23 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const lastSaveErrorToastRef = useRef<number>(0);
 
   // Lock + versioning (ELE-1037). A locked certificate is read-only: autosave
-  // is gated off (see `enabled` below) and any change requires a new version.
-  const [lockedAt, setLockedAt] = useState<string | null>(null);
-  const [editVersion, setEditVersion] = useState<number>(1);
-  const isLocked = !!lockedAt;
+  // is gated off (`enabled: !isLocked` below) and any change requires a new
+  // version. lockReport is wrapped after useCloudSync to flush pending edits.
+  const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: currentReportId,
+    databaseId,
+    onDatabaseId: (id) => setDatabaseId((prev) => prev || id),
+    onAmended: (newReportId) =>
+      navigate(
+        `/electrician/inspection-testing?section=eicr&reportId=${encodeURIComponent(newReportId)}`
+      ),
+  });
 
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -356,87 +368,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isHydrating: isLoadingReport,
   });
 
-  // Load lock + version metadata whenever the active report changes. Keyed by
-  // the report_id string (currentReportId), which is what reportCloud expects.
-  useEffect(() => {
-    if (!currentReportId || !userId) {
-      setLockedAt(null);
-      setEditVersion(1);
-      return;
-    }
-    let cancelled = false;
-    reportCloud.getLockMeta(currentReportId, userId).then((meta) => {
-      if (cancelled || !meta) return;
-      setLockedAt(meta.lockedAt);
-      setEditVersion(meta.editVersion);
-      // Backfill the DB uuid for reports created in-session (load path didn't run).
-      if (meta.id) setDatabaseId((prev) => prev || meta.id);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [currentReportId, userId]);
-
-  // Issue & Lock — flush any pending edits, then mark the certificate read-only.
+  // Issue & Lock — flush pending edits first, then lock (useCertLock handles the
+  // rest). Wrapped here because syncNowImmediate comes from useCloudSync above.
   const lockReport = useCallback(async () => {
-    if (!currentReportId || !userId) {
-      toast({
-        title: 'Save the certificate first',
-        description: 'The certificate needs to be saved before it can be issued.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    // Flush pending edits to the cloud BEFORE locking so nothing is lost.
     try {
       await syncNowImmediate?.();
     } catch {
       /* best-effort flush; lock still proceeds */
     }
-    const result = await reportCloud.lockReport(currentReportId, userId);
-    if (result.success) {
-      setLockedAt(result.lockedAt || new Date().toISOString());
-      toast({
-        title: 'Certificate issued & locked',
-        description: 'This certificate is now read-only. To make changes, create a new version.',
-      });
-    } else {
-      toast({
-        title: 'Could not lock certificate',
-        description: 'Please try again.',
-        variant: 'destructive',
-      });
-    }
-  }, [currentReportId, userId, syncNowImmediate, toast]);
-
-  // Amend — create a new editable version that supersedes the locked original,
-  // then navigate to it. The issued certificate is preserved as a record.
-  const amendReport = useCallback(async () => {
-    if (!databaseId || !userId) {
-      toast({
-        title: 'Cannot amend',
-        description: 'The original certificate could not be found.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    const result = await createNewVersion(databaseId, userId);
-    if (result.success && result.newReportIdString) {
-      toast({
-        title: `Version ${result.version} created`,
-        description: 'Now editing a new version. The issued certificate is preserved.',
-      });
-      navigate(
-        `/electrician/inspection-testing?section=eicr&reportId=${encodeURIComponent(result.newReportIdString)}`
-      );
-    } else {
-      toast({
-        title: 'Could not create new version',
-        description: 'Please try again.',
-        variant: 'destructive',
-      });
-    }
-  }, [databaseId, userId, navigate, toast]);
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   // Helper function to check if form is empty (for auto-filling profile)
   const isFormEmpty = (data: any) => {

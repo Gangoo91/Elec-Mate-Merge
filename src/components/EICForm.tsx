@@ -4,12 +4,14 @@ import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { useCertPrefill } from '@/hooks/useCertPrefill';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import EICFormHeader from './eic/EICFormHeader';
+import CertLockBar from './inspection/CertLockBar';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
 import LastCertSuggestionCard from './certificates/LastCertSuggestionCard';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const EICFormInner = ({ onBack }: { onBack: () => void }) => {
   const {
@@ -35,6 +37,12 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
     handleBoardScanComplete,
     isLoadingDesign,
     canGenerateCertificate,
+    currentReportId,
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport,
+    amendReport,
   } = useEICForm();
 
   // Tabs hook — lives in the inner component so tab state is local to the UI
@@ -137,6 +145,16 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar (Issue & lock, read-only, Amend) */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!currentReportId && canGenerateCertificate()}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       {/* ELE-881 — provenance banner */}
       {formData.duplicatedFrom && (
         <DuplicatedFromBanner
@@ -146,7 +164,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
       )}
 
       {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
-      {lastCertSuggestion && (
+      {!isLocked && lastCertSuggestion && (
         <div className="px-4 pt-3">
           <LastCertSuggestionCard
             suggestion={lastCertSuggestion}
@@ -158,6 +176,12 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
 
       {/* Main Content — full-width mobile. Pad bottom to clear the fixed nav bar. */}
       <main className="py-4 pb-32 sm:px-4 sm:pb-28">
+        {/* Locked certificates are read-only — autosave is already gated in the
+            provider; this stops on-screen edits. */}
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
         <EICFormTabs
           currentTab={currentTab}
           onTabChange={handleTabChange}
@@ -173,6 +197,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
           onSyncOnTabChange={onTabChange}
           onJumpToTab={(tab) => setCurrentTab(tab as EICTabValue)}
         />
+        </div>
       </main>
 
       <StartNewEICRDialog

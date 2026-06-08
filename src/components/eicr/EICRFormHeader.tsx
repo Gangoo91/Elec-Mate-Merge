@@ -63,6 +63,7 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
         <button
           onClick={onManualSave}
           disabled={isSaving || syncStatus === 'syncing'}
+          aria-label="Save certificate"
           className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
         >
           {isSaving ? (

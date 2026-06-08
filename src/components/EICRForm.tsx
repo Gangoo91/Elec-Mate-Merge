@@ -4,7 +4,7 @@ import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { draftStorage } from '@/utils/draftStorage';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
-import EICRLockBar from './eicr/EICRLockBar';
+import CertLockBar from './inspection/CertLockBar';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
 import { cn } from '@/lib/utils';
 import LastCertSuggestionCard from './certificates/LastCertSuggestionCard';
@@ -317,7 +317,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       </div>
 
       {/* ELE-1037 — lock / version bar (Issue & lock, read-only, Amend) */}
-      <EICRLockBar
+      <CertLockBar
         isLocked={isLocked}
         lockedAt={lockedAt}
         editVersion={editVersion}

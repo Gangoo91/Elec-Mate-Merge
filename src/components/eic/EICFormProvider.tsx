@@ -10,6 +10,7 @@ import React, {
 import { useEICObservations, EICObservation } from '@/hooks/useEICObservations';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useCloudSync } from '@/hooks/useCloudSync';
+import { useCertLock } from '@/hooks/useCertLock';
 import { useReportId } from '@/hooks/useReportId';
 import { useToast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
@@ -61,6 +62,12 @@ interface EICFormContextType {
   syncNow: (() => void) | undefined;
   onTabChange: (() => void) | undefined;
   getSyncIndicatorState: () => SyncState;
+  // Lock + versioning (ELE-1037)
+  isLocked: boolean;
+  lockedAt: string | null;
+  editVersion: number;
+  lockReport: () => Promise<void>;
+  amendReport: () => Promise<void>;
   observations: EICObservation[];
   observationsProps: {
     observations: EICObservation[];
@@ -292,6 +299,24 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   // State
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
+
+  // Lock + versioning (ELE-1037). Autosave is gated off when locked
+  // (`enabled: !isLocked` below); lockReport is wrapped after useCloudSync to
+  // flush pending edits first.
+  const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: currentReportId,
+    onAmended: (newReportId) =>
+      navigate(
+        `/electrician/inspection-testing?section=eic&reportId=${encodeURIComponent(newReportId)}`
+      ),
+  });
+
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [showBoardScan, setShowBoardScan] = useState(false);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
@@ -400,17 +425,29 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     isAuthenticated,
     authCheckComplete,
     syncNow,
+    syncNowImmediate,
     onTabChange,
   } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eic',
     data: formData,
-    enabled: true,
+    // Locked certificates never autosave — they are immutable records.
+    enabled: !isLocked,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
     // Gate autosave until cloud load finishes — prevents blank-overwrite race.
     isHydrating: isLoadingReport,
   });
+
+  // Issue & Lock — flush pending edits first, then lock (useCertLock handles the rest).
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush; lock still proceeds */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   const loadFromCloudRef = useRef(loadFromCloud);
   loadFromCloudRef.current = loadFromCloud;
@@ -1179,6 +1216,11 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     syncNow,
     onTabChange,
     getSyncIndicatorState,
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport,
+    amendReport,
     observations,
     observationsProps,
     showBoardScan,
