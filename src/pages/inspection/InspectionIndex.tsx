@@ -118,6 +118,9 @@ const InspectionIndex = () => {
     } else if (reportType === 'testing-only') {
       navigate(`/electrician/inspection-testing/testing-only/${reportId}`);
       return;
+    } else if (reportType === 'disconnection') {
+      navigate(`/electrician/inspection-testing/disconnection/${reportId}`);
+      return;
     }
 
     // Legacy certificate types use section-based routing
@@ -144,6 +147,7 @@ const InspectionIndex = () => {
       'pat-testing',
       'solar-pv',
       'testing-only',
+      'disconnection',
     ];
     const effectiveType = reportType || section;
     if (dedicatedRouteTypes.includes(effectiveType) && reportId) {
@@ -151,7 +155,7 @@ const InspectionIndex = () => {
       return;
     }
     // Types that go straight to /new (no hub page)
-    const directToNewTypes = ['testing-only', 'bess', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm'];
+    const directToNewTypes = ['testing-only', 'bess', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm', 'disconnection'];
     if (dedicatedRouteTypes.includes(effectiveType) && !reportId) {
       if (directToNewTypes.includes(effectiveType)) {
         navigate(`/electrician/inspection-testing/${effectiveType}/new`);

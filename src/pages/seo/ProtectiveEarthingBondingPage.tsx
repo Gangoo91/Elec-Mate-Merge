@@ -655,6 +655,11 @@ export default function ProtectiveEarthingBondingPage() {
       }
       heroSubtitle="Earthing and bonding are the foundation of electrical safety. This guide covers the main earthing terminal, bonding conductor sizes (10 mm and 6 mm), extraneous-conductive-part identification, UK earthing arrangements, and every test you need to carry out."
       readingTime={12}
+      answerBox={{
+        question: 'What is the difference between earthing and bonding?',
+        answer:
+          'Earthing connects exposed-conductive-parts (the metal enclosures of the installation) to earth so that fault current can flow and trip the protective device. Bonding connects extraneous-conductive-parts (incoming metal services such as water and gas) together to keep them at the same potential, reducing the shock risk between them. Both are required under BS 7671 Chapter 54 and Section 411.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

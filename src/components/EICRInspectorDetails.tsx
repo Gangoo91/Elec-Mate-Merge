@@ -25,6 +25,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import FormField from '@/components/ui/FormField';
+import SignatureInput from '@/components/signature/SignatureInput';
 import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
 import { joinQualifications, parseQualifications } from '@/utils/inspectorQualifications';
 
@@ -305,7 +306,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   };
 
   const getValidationStatus = () => {
-    const required = ['inspectorName', 'inspectorQualifications'];
+    const required = ['inspectorName', 'inspectorQualifications', 'inspectorSignature'];
     const missing = required.filter((field) => !formData[field]?.trim());
     return { isValid: missing.length === 0, missingFields: missing };
   };
@@ -374,6 +375,19 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
                 value={formData.certificateNumber || ''}
                 readOnly
                 className="h-11 text-base bg-muted/50 cursor-not-allowed font-mono"
+              />
+            </FormField>
+            {/* Inspector signature — the validator flags this and jumps here, so the
+                pad must live on this tab. Draw or type; it appears on the certificate. */}
+            <FormField
+              label="Inspector Signature"
+              required
+              hint="Draw or type — this signs the certificate"
+            >
+              <SignatureInput
+                value={formData.inspectorSignature || ''}
+                onChange={(value) => onUpdate('inspectorSignature', value || '')}
+                placeholder="Type or draw your signature"
               />
             </FormField>
           </div>

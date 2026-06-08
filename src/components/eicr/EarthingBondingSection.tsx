@@ -33,9 +33,6 @@ const EARTHING_SECTION_FIELDS = [
   'bondingCompliance',
   'bondingConductorContinuityVerified',
   'mainBondingLocations',
-  'supplementaryBondingSize',
-  'supplementaryBondingSizeCustom',
-  'equipotentialBonding',
   // ELE-849 — limitation reason notes
   'meansOfEarthingNotes',
   'mainEarthingConductorTypeNotes',
@@ -44,7 +41,6 @@ const EARTHING_SECTION_FIELDS = [
   'mainBondingConductorTypeNotes',
   'mainBondingSizeNotes',
   'bondingConductorContinuityVerifiedNotes',
-  'supplementaryBondingSizeNotes',
   'bondingComplianceNotes',
 ] as const;
 
@@ -104,7 +100,6 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
     formData.earthElectrodeType !== '';
 
   const showCustomMainBonding = formData.mainBondingSize === 'custom';
-  const showCustomSupplementaryBonding = formData.supplementaryBondingSize === 'custom';
 
   // Parse existing main bonding locations into checkboxes
   const parseMainBondingLocations = (value: string = ''): Set<string> => {
@@ -182,7 +177,6 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
 
   // Conductor size options
   const conductorSizes = ['none', '6', '10', '16', '25', '35', 'custom'];
-  const supplementarySizes = ['2.5', '4', '6', '10', 'not-required', 'custom'];
 
   // Bonding services
   const bondingServices = [
@@ -737,103 +731,6 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
             />
           </FormField>
-        </div>
-      </div>
-
-      {/* Supplementary Bonding Section */}
-      <div>
-        <SectionTitle title="Supplementary Bonding" />
-        <div className="space-y-3 py-3">
-          <FormField
-            label="Conductor Size"
-            trailing={
-              <FieldLimitationBadge
-                compact
-                value={formData.supplementaryBondingSize || ''}
-                markers={['LIM']}
-                onChange={(v) => onUpdate('supplementaryBondingSize', v)}
-              />
-            }
-          >
-            {isFieldMarker(formData.supplementaryBondingSize) ? (
-              <Input
-                value={formData.supplementaryBondingSize}
-                disabled
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-              />
-            ) : (
-              <FormSelectSheet
-                value={formData.supplementaryBondingSize || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('supplementaryBondingSize', value);
-                }}
-                placeholder="Select size"
-                label="Supplementary Bonding Size"
-                allowCustom
-                customLabel="Custom size"
-                options={supplementarySizes
-                  .filter((s) => s !== 'custom')
-                  .map((size) => ({
-                    value: size,
-                    label: size === 'not-required' ? 'Not Required' : `${size}mm²`,
-                  }))}
-              />
-            )}
-            <FieldNotesInput
-              parentValue={formData.supplementaryBondingSize || ''}
-              value={formData.supplementaryBondingSizeNotes || ''}
-              onChange={(v) => onUpdate('supplementaryBondingSizeNotes', v)}
-              placeholder="Reason"
-            />
-          </FormField>
-
-          <FormField label="Equipotential Bonding">
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { value: 'present', label: 'Present & OK' },
-                { value: 'present-unsatisfactory', label: 'Unsatisfactory' },
-                { value: 'not-present', label: 'Not Present' },
-                { value: 'not-required', label: 'Not Required' },
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    onUpdate('equipotentialBonding', formData.equipotentialBonding === option.value ? '' : option.value);
-                  }}
-                  className={cn(
-                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                    formData.equipotentialBonding === option.value
-                      ? option.value === 'present'
-                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                        : option.value === 'present-unsatisfactory' || option.value === 'not-present'
-                          ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
-                          : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                  )}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </FormField>
-
-          {showCustomSupplementaryBonding && (
-            <FormField label="Custom Size">
-              <Input
-                value={formData.supplementaryBondingSizeCustom || ''}
-                onChange={(e) => onUpdate('supplementaryBondingSizeCustom', e.target.value)}
-                placeholder="16mm²"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-              />
-            </FormField>
-          )}
-
-          <p className="text-[10px] text-white">
-            Supplementary bonding may be required in special locations (Reg 415.2)
-          </p>
         </div>
       </div>
     </div>

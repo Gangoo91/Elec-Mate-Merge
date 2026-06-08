@@ -668,6 +668,11 @@ export default function LowInsulationResistancePage() {
       }
       heroSubtitle="A low insulation resistance reading means current can leak where it should not — creating a risk of electric shock, fire, and nuisance RCD tripping. This guide covers what counts as low per BS 7671, every common cause (moisture, damage, aged insulation, carbonisation, rodent damage), how to diagnose and locate the fault, and how to fix it."
       readingTime={16}
+      answerBox={{
+        question: 'What is an acceptable insulation resistance reading?',
+        answer:
+          'For a standard 230V or 400V circuit, BS 7671 Table 64 requires a minimum insulation resistance of 1.0 MΩ, tested at 500V DC (SELV and PELV circuits are tested at 250V DC with a 0.5 MΩ minimum). A reading at or near the minimum, or one that falls steadily, indicates moisture, damaged or aged insulation, or a wiring fault that must be traced and corrected.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

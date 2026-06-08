@@ -661,6 +661,11 @@ export default function BondingConductorsGuidePage() {
       }
       heroSubtitle="A complete practical guide to protective bonding conductors in UK electrical installations — main bonding of gas, water and oil services, supplementary bonding in bathrooms, conductor sizing, when bonding can be omitted with RCD protection, and common bonding defects found on EICRs."
       readingTime={12}
+      answerBox={{
+        question: 'What size main bonding conductor do I need?',
+        answer:
+          'Main protective bonding conductors must be at least half the cross-sectional area of the earthing conductor, subject to a minimum of 6mm² (BS 7671 Reg 544.1.1). For a typical domestic TN-C-S (PME) supply a minimum of 10mm² is required. Supplementary bonding conductors are sized separately under Reg 544.2.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

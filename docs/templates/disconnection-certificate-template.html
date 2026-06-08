@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Disconnection Certificate</title>
+  <style>
+    :root { --accent: #f59e0b; --accent-2: #fbbf24; --ink: #0a1628; }
+    @page { size: A4; margin: 6mm 6mm 7mm 6mm; }
+    /* Client-facing cover renders full-bleed (zero page margin) */
+    @page cover { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 9px; line-height: 1.45; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* ── Cover ─────────────────────────────────────────────── */
+    .cover-page { page: cover; width: 210mm; min-height: 297mm; display: flex; flex-direction: column; color: var(--ink); }
+    .cover-hero { position: relative; background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%); color: #fff; padding: 13mm 15mm 11mm; }
+    .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent)); }
+    .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10mm; min-height: 52px; }
+    .cover-logos img { max-height: 54px; max-width: 180px; object-fit: contain; }
+    .cover-band-name { color: var(--accent-2); font-weight: 700; font-size: 18px; }
+    .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-2); font-weight: 700; margin-bottom: 12px; }
+    .cover-title { font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+    .cover-title-rule { width: 80px; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); margin-top: 16px; border-radius: 2px; }
+    .cover-subtitle { margin-top: 16px; font-size: 11px; color: #cbd5e1; }
+    .cover-status { padding: 12px 15mm; display: flex; align-items: center; justify-content: space-between; background: #152238; color: #fff; }
+    .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; opacity: 0.95; }
+    .cover-status-value { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; color: var(--accent-2); text-align: right; }
+    .cover-details { flex: 1; padding: 11mm 15mm; border-left: 4px solid var(--accent-2); }
+    .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
+    .cover-row { display: flex; border-bottom: 1px solid #e2e8f0; }
+    .cover-row:last-child { border-bottom: 0; }
+    .cover-k { width: 185px; flex-shrink: 0; color: var(--ink); font-weight: 700; text-transform: uppercase; font-size: 9.5px; letter-spacing: 0.5px; padding: 11px 0; align-self: center; }
+    .cover-v { flex: 1; color: #0f172a; font-weight: 600; font-size: 12px; padding: 11px 0; align-self: center; }
+    .cover-v .muted { color: #64748b; font-weight: 500; }
+    .cover-footer { background: #0a1628; color: #94a3b8; font-size: 8.5px; font-style: italic; padding: 10px 15mm; }
+    .page-break-before { page-break-before: always; }
+
+    /* ── Document body ─────────────────────────────────────── */
+    .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 10px 12px; margin-bottom: 8px; border-radius: 2px; position: relative; overflow: hidden; }
+    .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .doc-header-content { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .company-brand { display: flex; align-items: center; gap: 10px; }
+    .company-brand img { max-height: 42px; max-width: 120px; object-fit: contain; }
+    .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; }
+    .doc-title { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+    .doc-subtitle { font-size: 7px; font-weight: 400; opacity: 0.85; margin-top: 1px; }
+    .cert-number { font-size: 11px; font-weight: 700; color: var(--accent-2); }
+    .cert-date { font-size: 7px; opacity: 0.8; margin-top: 1px; }
+    .doc-company { font-size: 9px; font-weight: 700; color: #fff; margin-top: 4px; }
+    .doc-company-contact { font-size: 7px; color: #cbd5e1; margin-top: 1px; }
+    .doc-company-contact span:not(:last-child)::after { content: ' \00B7 '; color: #64748b; }
+    .header-scheme { max-height: 30px; max-width: 74px; background: #fff; padding: 2px 4px; border-radius: 2px; margin-bottom: 5px; object-fit: contain; }
+
+    .section { margin-bottom: 8px; page-break-inside: avoid; }
+    .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 5px 8px; margin-bottom: 4px; border-left: 3px solid var(--accent); }
+
+    .two-col { display: flex; gap: 8px; }
+    .two-col > .panel { flex: 1; }
+    .panel { border: 1px solid #e2e8f0; border-radius: 2px; }
+    .form-grid { display: table; width: 100%; border-collapse: collapse; }
+    .form-row { display: table-row; }
+    .form-label { display: table-cell; font-size: 7px; font-weight: 600; color: #475569; padding: 4px 6px; width: 105px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+    .form-value { display: table-cell; font-size: 8.5px; color: #1e293b; padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+    .checks { padding: 2px 0; }
+    .check-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 8px; border-bottom: 1px solid #f1f5f9; }
+    .check-row:last-child { border-bottom: 0; }
+    .check-label { font-size: 8.5px; color: #1e293b; }
+    .check-state { font-size: 7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; padding: 2px 7px; border-radius: 2px; flex-shrink: 0; }
+    .check-state.yes { background: #ecfdf5; color: #047857; border: 1px solid #6ee7b7; }
+    .check-state.no { background: #f8fafc; color: #94a3b8; border: 1px solid #e2e8f0; }
+
+    .declaration { background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid var(--accent); border-radius: 2px; padding: 6px 9px; margin-bottom: 6px; font-size: 8px; color: #92400e; font-style: italic; line-height: 1.5; }
+
+    .signature-grid { display: flex; gap: 8px; }
+    .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+    .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 1px solid var(--accent); }
+    .signature-box-body { padding: 5px 8px; background: #fafbfc; }
+    .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+    .sig-field:last-child { margin-bottom: 0; }
+    .sig-field-label { font-size: 7px; font-weight: 600; color: #64748b; min-width: 48px; flex-shrink: 0; }
+    .sig-field-value { flex: 1; font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 16px; }
+    .sig-pad { min-height: 52px; display: flex; align-items: center; justify-content: center; }
+    .sig-pad img { max-height: 46px; max-width: 100%; }
+    .sig-line { width: 100%; border-bottom: 1px solid #94a3b8; margin: 18px 8px 0; }
+    .sig-declined { font-size: 8px; color: #64748b; font-style: italic; }
+
+    .photo-grid { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px; }
+    .photo-grid img { width: 31.5%; height: 95px; object-fit: cover; border: 1px solid #e2e8f0; border-radius: 2px; }
+
+    .notes-body { padding: 6px 8px; font-size: 8.5px; line-height: 1.5; color: #1e293b; }
+
+    .footer { margin-top: 10px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+    .powered { text-align: center; margin-top: 8px; font-size: 8px; color: #94a3b8; letter-spacing: 0.3px; }
+    .powered strong { color: #64748b; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================ COVER ============================ -->
+  <div class="cover-page">
+    <div class="cover-hero">
+      <div class="cover-logos">
+        {% if companyLogo and companyLogo != '' %}<img src="{{ companyLogo }}" alt="{{ companyName }}" />{% else %}<span class="cover-band-name">{{ companyName }}</span>{% endif %}
+        {% if schemeLogo and schemeLogo != '' %}<img src="{{ schemeLogo }}" alt="Scheme" />{% endif %}
+      </div>
+      <div class="cover-eyebrow">BS 7671 &middot; Safe Isolation</div>
+      <h1 class="cover-title">Electrical<br />Disconnection</h1>
+      <div class="cover-title-rule"></div>
+      <div class="cover-subtitle">Record of Safe Electrical Disconnection{% if companyName and companyName != '' %} &middot; {{ companyName }}{% endif %}</div>
+    </div>
+
+    <div class="cover-status">
+      <span class="cover-status-label">Disconnection</span>
+      <span class="cover-status-value">{% if disconnectionType and disconnectionType != '' %}{{ disconnectionType }}{% else %}Electrical Disconnection{% endif %}</span>
+    </div>
+
+    <div class="cover-details">
+      <div class="cover-details-h">Certificate Details</div>
+      <div class="cover-row"><span class="cover-k">Installation Address</span><span class="cover-v">{{ installationAddress }}</span></div>
+      {% if clientName and clientName != '' %}<div class="cover-row"><span class="cover-k">Client</span><span class="cover-v">{{ clientName }}</span></div>{% endif %}
+      <div class="cover-row"><span class="cover-k">Certificate Reference</span><span class="cover-v">{{ referenceNumber }}</span></div>
+      <div class="cover-row"><span class="cover-k">Date of Work</span><span class="cover-v">{{ workDate }}</span></div>
+      <div class="cover-row"><span class="cover-k">Disconnected By</span><span class="cover-v">{{ contractorName }}{% if contractorCompany and contractorCompany != '' %}&nbsp;<span class="muted">&middot; {{ contractorCompany }}</span>{% endif %}</span></div>
+      {% if registrationScheme and registrationScheme != '' %}<div class="cover-row"><span class="cover-k">Scheme</span><span class="cover-v">{{ registrationScheme }}{% if registrationNumber and registrationNumber != '' %} &middot; {{ registrationNumber }}{% endif %}</span></div>{% endif %}
+    </div>
+
+    <div class="cover-footer">This certificate records the safe disconnection of the circuit or appliance described. No live testing has been carried out — it is not a Minor Works or Installation Certificate. Retain for future reference.</div>
+  </div>
+  <div class="page-break-before"></div>
+
+  <!-- ============================ RECORD ============================ -->
+  <div class="doc-header">
+    <div class="doc-header-content">
+      <div class="company-brand">
+        {% if companyLogo and companyLogo != '' %}<img src="{{ companyLogo }}" alt="" />{% endif %}
+        <div>
+          <div class="doc-title">DISCONNECTION CERTIFICATE</div>
+          <div class="doc-subtitle">Record of Safe Electrical Disconnection &middot; BS 7671</div>
+          {% if companyName and companyName != '' %}<div class="doc-company">{{ companyName }}</div>{% endif %}
+          <div class="doc-company-contact">
+            {% if companyAddress and companyAddress != '' %}<span>{{ companyAddress }}</span>{% endif %}
+            {% if companyPhone and companyPhone != '' %}<span>{{ companyPhone }}</span>{% endif %}
+            {% if companyEmail and companyEmail != '' %}<span>{{ companyEmail }}</span>{% endif %}
+            {% if registrationScheme and registrationScheme != '' %}<span>{{ registrationScheme }} {{ registrationNumber }}</span>{% endif %}
+          </div>
+        </div>
+      </div>
+      <div style="text-align: right;">
+        {% if schemeLogo and schemeLogo != '' %}<img class="header-scheme" src="{{ schemeLogo }}" alt="Scheme" />{% endif %}
+        <div class="cert-number">{{ referenceNumber }}</div>
+        <div class="cert-date">{{ workDate }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parties -->
+  <div class="section">
+    <div class="two-col">
+      <div class="panel">
+        <div class="section-title" style="margin: 0; border-radius: 0;">Contractor</div>
+        <div class="form-grid">
+          <div class="form-row"><div class="form-label">Name</div><div class="form-value">{{ contractorName }}</div></div>
+          {% if contractorCompany and contractorCompany != '' %}<div class="form-row"><div class="form-label">Company</div><div class="form-value">{{ contractorCompany }}</div></div>{% endif %}
+          {% if contractorPhone and contractorPhone != '' %}<div class="form-row"><div class="form-label">Phone</div><div class="form-value">{{ contractorPhone }}</div></div>{% endif %}
+          {% if contractorEmail and contractorEmail != '' %}<div class="form-row"><div class="form-label">Email</div><div class="form-value">{{ contractorEmail }}</div></div>{% endif %}
+          {% if registrationScheme and registrationScheme != '' %}<div class="form-row"><div class="form-label">Scheme</div><div class="form-value">{{ registrationScheme }} {{ registrationNumber }}</div></div>{% endif %}
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-title" style="margin: 0; border-radius: 0;">Client &amp; Installation</div>
+        <div class="form-grid">
+          {% if clientName and clientName != '' %}<div class="form-row"><div class="form-label">Client</div><div class="form-value">{{ clientName }}</div></div>{% endif %}
+          {% if clientPhone and clientPhone != '' %}<div class="form-row"><div class="form-label">Phone</div><div class="form-value">{{ clientPhone }}</div></div>{% endif %}
+          {% if clientEmail and clientEmail != '' %}<div class="form-row"><div class="form-label">Email</div><div class="form-value">{{ clientEmail }}</div></div>{% endif %}
+          <div class="form-row"><div class="form-label">Address</div><div class="form-value">{{ installationAddress }}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disconnection Details -->
+  <div class="section">
+    <div class="section-title">Disconnection Details</div>
+    <div class="form-grid">
+      <div class="form-row"><div class="form-label">Type</div><div class="form-value">{{ disconnectionType }}</div></div>
+      {% if applianceDisconnected and applianceDisconnected != '' %}<div class="form-row"><div class="form-label">Appliance Disconnected</div><div class="form-value">{{ applianceDisconnected }}</div></div>{% endif %}
+      {% if circuitDisconnected and circuitDisconnected != '' %}<div class="form-row"><div class="form-label">Circuit Disconnected</div><div class="form-value">{{ circuitDisconnected }}</div></div>{% endif %}
+      {% if reasonForDisconnection and reasonForDisconnection != '' %}<div class="form-row"><div class="form-label">Reason</div><div class="form-value">{{ reasonForDisconnection }}</div></div>{% endif %}
+      {% if isolationMethod and isolationMethod != '' %}<div class="form-row"><div class="form-label">Method of Isolation</div><div class="form-value">{{ isolationMethod }}</div></div>{% endif %}
+    </div>
+  </div>
+
+  <!-- Safe Isolation Confirmation -->
+  <div class="section">
+    <div class="section-title">Safe Isolation Confirmation</div>
+    <div class="panel checks">
+      <div class="check-row"><span class="check-label">Circuit / appliance safely isolated and proved dead</span><span class="check-state {% if madeDead %}yes{% else %}no{% endif %}">{% if madeDead %}Confirmed{% else %}Not confirmed{% endif %}</span></div>
+      <div class="check-row"><span class="check-label">Exposed conductors safely terminated / made safe</span><span class="check-state {% if terminationsSafe %}yes{% else %}no{% endif %}">{% if terminationsSafe %}Confirmed{% else %}Not confirmed{% endif %}</span></div>
+      <div class="check-row"><span class="check-label">Disconnected point labelled where required</span><span class="check-state {% if labelled %}yes{% else %}no{% endif %}">{% if labelled %}Confirmed{% else %}Not confirmed{% endif %}</span></div>
+      <div class="check-row"><span class="check-label">No risk of inadvertent reconnection / left safe</span><span class="check-state {% if noReconnectionRisk %}yes{% else %}no{% endif %}">{% if noReconnectionRisk %}Confirmed{% else %}Not confirmed{% endif %}</span></div>
+      <div class="check-row"><span class="check-label">Remainder of installation left in safe working order</span><span class="check-state {% if remainderSafe %}yes{% else %}no{% endif %}">{% if remainderSafe %}Confirmed{% else %}Not confirmed{% endif %}</span></div>
+      <div class="check-row"><span class="check-label">Client advised: reconnection by a competent person only</span><span class="check-state {% if reconnectionAdvised %}yes{% else %}no{% endif %}">{% if reconnectionAdvised %}Confirmed{% else %}Not confirmed{% endif %}</span></div>
+    </div>
+  </div>
+
+  <!-- Declaration & Signatures -->
+  <div class="section">
+    <div class="section-title">Declaration &amp; Signatures</div>
+    <div class="declaration">I confirm that the circuit / appliance described above has been safely disconnected and made dead in accordance with safe isolation practice (GS38). No live testing has been carried out as part of this disconnection.</div>
+    <div class="signature-grid">
+      <div class="signature-box" style="flex: 2;">
+        <div class="signature-box-header">Contractor</div>
+        <div class="signature-box-body">
+          <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ contractorName }}</span></div>
+          {% if registrationScheme and registrationScheme != '' %}<div class="sig-field"><span class="sig-field-label">Scheme</span><span class="sig-field-value">{{ registrationScheme }} {{ registrationNumber }}</span></div>{% endif %}
+          <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ workDate }}</span></div>
+        </div>
+      </div>
+      <div class="signature-box" style="flex: 1;">
+        <div class="signature-box-header">Signature</div>
+        <div class="signature-box-body sig-pad">
+          {% if inspectorSignature %}<img src="{{ inspectorSignature }}" />{% else %}<div class="sig-line"></div>{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="signature-grid" style="margin-top: 6px;">
+      <div class="signature-box" style="flex: 2;">
+        <div class="signature-box-header">Client</div>
+        <div class="signature-box-body">
+          <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ clientName }}</span></div>
+          <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ workDate }}</span></div>
+        </div>
+      </div>
+      <div class="signature-box" style="flex: 1;">
+        <div class="signature-box-header">Signature</div>
+        <div class="signature-box-body sig-pad">
+          {% if clientRefusedToSign %}<span class="sig-declined">Client declined to sign</span>{% elsif clientSignature %}<img src="{{ clientSignature }}" />{% else %}<div class="sig-line"></div>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photos -->
+  {% if photos and photos.size > 0 %}
+  <div class="section">
+    <div class="section-title">Photographs</div>
+    <div class="panel photo-grid">
+      {% for photo in photos %}<img src="{{ photo }}" />{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Notes -->
+  {% if notes and notes != '' %}
+  <div class="section">
+    <div class="section-title">Additional Notes</div>
+    <div class="panel notes-body">{{ notes }}</div>
+  </div>
+  {% endif %}
+
+  <div class="footer">
+    <div><strong>{{ companyName }}</strong>{% if companyAddress and companyAddress != '' %}<br>{{ companyAddress }}{% endif %}{% if companyPhone and companyPhone != '' %}<br>Tel: {{ companyPhone }}{% endif %}{% if companyEmail and companyEmail != '' %} | {{ companyEmail }}{% endif %}</div>
+    <div style="text-align: right;"><span style="color: #94a3b8;">Disconnection Certificate &middot; BS 7671</span></div>
+  </div>
+  <div class="powered">Powered by <strong>Elec-Mate</strong></div>
+
+</body>
+</html>

@@ -53,6 +53,7 @@ const getTypeLabel = (type: string) => {
     'limitation-notice': 'LIMITATION',
     'non-compliance-notice': 'NON-COMP',
     'completion-notice': 'COMPLETION',
+    disconnection: 'DISCONN',
   };
   return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 8);
 };

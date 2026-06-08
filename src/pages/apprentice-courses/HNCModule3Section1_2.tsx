@@ -266,7 +266,7 @@ const HNCModule3Section1_2 = () => {
           />
 
           <RegsCallout
-            source="BS 7671 — Appendix 12 (Voltage drop)"
+            source="BS 7671 — Appendix 4, Section 6.4 (Voltage drop)"
             clause="The voltage at the terminals of any current-using equipment shall be greater than the lower limit corresponding to the relevant standard. Where the public supply is used, voltage drop within the consumer's installation should not exceed 3 % for lighting and 5 % for other uses of the nominal voltage."
             meaning={
               <>
@@ -275,7 +275,7 @@ const HNCModule3Section1_2 = () => {
                 check against 6.9 V (lighting) or 11.5 V (power) at 230 V nominal.
               </>
             }
-            cite="Source: BS 7671 (latest edition incl. A4:2026) Appendix 12."
+            cite="Source: BS 7671 (latest edition incl. A4:2026) Appendix 4, Section 6.4."
           />
 
           <LearningOutcomes
@@ -598,7 +598,7 @@ const HNCModule3Section1_2 = () => {
               'Ohmic devices (fixed resistors, copper conductors at constant temperature, heating elements) plot a straight line on V vs I.',
               'Non-ohmic devices (LEDs, NTC thermistors, diodes, lamp filaments) need a current-limiting resistor or a lookup table — not a single R value.',
               'Voltage drop V_d = I × R × 2 for single-phase — the ×2 is the go-and-return path.',
-              'BS 7671 Appendix 12 limits: 3 % for lighting (6.9 V at 230 V), 5 % for power (11.5 V at 230 V).',
+              'BS 7671 Appendix 4 (Section 6.4) limits: 3 % for lighting (6.9 V at 230 V), 5 % for power (11.5 V at 230 V).',
               'Fault current I_f = U₀ / Z_s — the basis for confirming protective device disconnection times to BS 7671 Table 41.3.',
               'Copper resistance rises ≈0.4 % per °C — cable at 70 °C is ≈20 % more resistive than at 20 °C. Apply the 1.2 factor when starting from a 20 °C R₁ measurement.',
               'Convert units before substituting: 7.41 mΩ/m = 0.00741 Ω/m. Mixing mΩ and Ω is the most common source of order-of-magnitude errors.',

@@ -683,6 +683,11 @@ export default function RadialCircuitGuidePage() {
       }
       heroSubtitle="Radial circuits are the simplest, most reliable circuit configuration in electrical installations. This guide covers how they work, when to choose a radial over a ring circuit, cable sizing from BS 7671, circuit protection requirements, and testing procedures for UK electricians."
       readingTime={12}
+      answerBox={{
+        question: 'What cable and MCB size does a radial circuit need?',
+        answer:
+          'A standard domestic socket radial circuit uses 2.5mm² twin and earth on a 20A breaker, or 4mm² on a 32A breaker for a larger floor area. Lighting radials use 1.0 to 1.5mm² on a 6A or 10A device. The cable current-carrying capacity (Iz) must equal or exceed the device rating after correction factors are applied (BS 7671 Reg 433.1.1).',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

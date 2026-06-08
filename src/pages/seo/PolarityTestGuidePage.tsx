@@ -600,6 +600,11 @@ export default function PolarityTestGuidePage() {
       }
       heroSubtitle="The complete UK electrician's guide to polarity testing — why polarity matters, the bell and battery dead test method, using a continuity tester, live verification at switch positions, common polarity errors, and how to trace and correct them."
       readingTime={12}
+      answerBox={{
+        question: 'What is a polarity test?',
+        answer:
+          'A polarity test confirms that every fuse, single-pole switch and protective device is connected in the line conductor only and not the neutral, that socket-outlets are correctly wired, and that centre-contact lampholders have the line connected to the centre contact. BS 7671 Regulation 643.6 requires polarity to be verified — as a dead test during installation and confirmed on energisation.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

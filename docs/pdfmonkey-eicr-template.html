@@ -1364,7 +1364,7 @@
         <div class="cover-row"><span class="cover-k">Report Reference</span><span class="cover-v">{{metadata.certificate_number}}</span></div>
         <div class="cover-row"><span class="cover-k">Date of Inspection</span><span class="cover-v">{{installation_details.test_date}}</span></div>
         <div class="cover-row"><span class="cover-k">Next Inspection Due</span><span class="cover-v">{{installation_details.next_inspection_date}}</span></div>
-        <div class="cover-row"><span class="cover-k">Inspected &amp; Tested By</span><span class="cover-v">{{inspector.name}}{% if inspector.qualifications and inspector.qualifications != "" %}&nbsp;<span class="muted">&middot; {{inspector.qualifications}}</span>{% endif %}</span></div>
+        <div class="cover-row"><span class="cover-k">Inspected &amp; Tested By</span><span class="cover-v">{{inspector.name}}</span></div>
         {% if inspector.company and inspector.company != "" %}<div class="cover-row"><span class="cover-k">For / On Behalf Of</span><span class="cover-v">{{inspector.company}}</span></div>{% endif %}
         {% if company_details.registration_scheme and company_details.registration_scheme != "" %}<div class="cover-row"><span class="cover-k">Registration Scheme</span><span class="cover-v">{{company_details.registration_scheme}}</span></div>{% endif %}
       </div>
@@ -1740,7 +1740,7 @@
         </div>
       </div>
 
-      <!-- Other sources of supply + DNO / MPAN / Cutout + PME / Electrode / Service Entry (grid-aligned) -->
+      <!-- Other sources of supply (tick-box only — BS 7671 model form) -->
       <div style="margin-top: 5px; padding: 6px 8px; border: 1px solid #e2e8f0; background: #fafbfc;">
         {% if supply_characteristics.other_sources_of_supply_present == "N/A" %}
           <div class="tick-row"><span class="marker-badge marker-na">N/A</span>&nbsp;Other sources of supply</div>
@@ -1749,50 +1749,6 @@
           <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.other_sources_of_supply_present == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other sources of supply (as detailed on attached continuation sheet)</div>
           {% if supply_characteristics.other_sources_of_supply_present == true and supply_characteristics.other_sources_of_supply != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply}}</div>{% endif %}
         {% endif %}
-        <div class="grid-row cols-3" style="margin-top: 4px;">
-          <div class="grid-cell">
-            <div class="cell-label">DNO</div>
-            <div class="cell-value{% if supply_characteristics.dno_name == 'LIM' or supply_characteristics.dno_name == 'N/V' or supply_characteristics.dno_name == 'N/A' %} is-marker{% endif %}">
-              {% if supply_characteristics.dno_name == "LIM" or supply_characteristics.dno_name == "N/V" or supply_characteristics.dno_name == "N/A" %}
-                <span class="marker-badge marker-{% if supply_characteristics.dno_name == 'LIM' %}lim{% elsif supply_characteristics.dno_name == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.dno_name}}</span>{% if supply_characteristics.dno_name_note != "" %}<span class="field-note">{{supply_characteristics.dno_name_note}}</span>{% endif %}
-              {% else %}{{supply_characteristics.dno_name}}{% endif %}
-            </div>
-          </div>
-          <div class="grid-cell">
-            <div class="cell-label">MPAN</div>
-            <div class="cell-value{% if supply_characteristics.mpan == 'LIM' or supply_characteristics.mpan == 'N/V' or supply_characteristics.mpan == 'N/A' %} is-marker{% endif %}">
-              {% if supply_characteristics.mpan == "LIM" or supply_characteristics.mpan == "N/V" or supply_characteristics.mpan == "N/A" %}
-                <span class="marker-badge marker-{% if supply_characteristics.mpan == 'LIM' %}lim{% elsif supply_characteristics.mpan == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.mpan}}</span>{% if supply_characteristics.mpan_note != "" %}<span class="field-note">{{supply_characteristics.mpan_note}}</span>{% endif %}
-              {% else %}{{supply_characteristics.mpan}}{% endif %}
-            </div>
-          </div>
-          <div class="grid-cell">
-            <div class="cell-label">Cutout Location</div>
-            <div class="cell-value{% if supply_characteristics.cutout_location == 'LIM' or supply_characteristics.cutout_location == 'N/V' or supply_characteristics.cutout_location == 'N/A' %} is-marker{% endif %}">
-              {% if supply_characteristics.cutout_location == "LIM" or supply_characteristics.cutout_location == "N/V" or supply_characteristics.cutout_location == "N/A" %}
-                <span class="marker-badge marker-{% if supply_characteristics.cutout_location == 'LIM' %}lim{% elsif supply_characteristics.cutout_location == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.cutout_location}}</span>{% if supply_characteristics.cutout_location_note != "" %}<span class="field-note">{{supply_characteristics.cutout_location_note}}</span>{% endif %}
-              {% else %}{{supply_characteristics.cutout_location}}{% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="grid-row cols-3">
-          <div class="grid-cell">
-            <div class="cell-label">Supply PME</div>
-            <div class="cell-value">{{supply_characteristics.supply_pme}}</div>
-          </div>
-          <div class="grid-cell">
-            <div class="cell-label">Earth Electrode Type</div>
-            <div class="cell-value{% if earthing_bonding.earth_electrode_type == 'LIM' or earthing_bonding.earth_electrode_type == 'N/V' or earthing_bonding.earth_electrode_type == 'N/A' %} is-marker{% endif %}">
-              {% if earthing_bonding.earth_electrode_type == "LIM" or earthing_bonding.earth_electrode_type == "N/V" or earthing_bonding.earth_electrode_type == "N/A" %}
-                <span class="marker-badge marker-{% if earthing_bonding.earth_electrode_type == 'LIM' %}lim{% elsif earthing_bonding.earth_electrode_type == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.earth_electrode_type}}</span>{% if earthing_bonding.earth_electrode_type_note != "" %}<span class="field-note">{{earthing_bonding.earth_electrode_type_note}}</span>{% endif %}
-              {% else %}{{earthing_bonding.earth_electrode_type}}{% endif %}
-            </div>
-          </div>
-          <div class="grid-cell">
-            <div class="cell-label">Service Entry</div>
-            <div class="cell-value">{{supply_characteristics.service_entry}}</div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1848,7 +1804,7 @@
       </div>
       {% endif %}
       <!-- Section G bonding — grid-aligned rows -->
-      <div class="grid-row cols-3" style="margin-top: 4px">
+      <div class="grid-row cols-2" style="margin-top: 4px">
         <div class="grid-cell">
           <div class="cell-label">Main Bonding Size (mm&#178;)</div>
           <div class="cell-value{% if earthing_bonding.main_bonding_size == 'LIM' or earthing_bonding.main_bonding_size == 'N/V' or earthing_bonding.main_bonding_size == 'N/A' %} is-marker{% endif %}">
@@ -1865,14 +1821,6 @@
             {% else %}{{earthing_bonding.bonding_compliance}}{% endif %}
           </div>
         </div>
-        <div class="grid-cell">
-          <div class="cell-label">Supplementary Bonding (mm&#178;)</div>
-          <div class="cell-value{% if earthing_bonding.supplementary_bonding_size == 'LIM' or earthing_bonding.supplementary_bonding_size == 'N/V' or earthing_bonding.supplementary_bonding_size == 'N/A' %} is-marker{% endif %}">
-            {% if earthing_bonding.supplementary_bonding_size == "LIM" or earthing_bonding.supplementary_bonding_size == "N/V" or earthing_bonding.supplementary_bonding_size == "N/A" %}
-              <span class="marker-badge marker-{% if earthing_bonding.supplementary_bonding_size == 'LIM' %}lim{% elsif earthing_bonding.supplementary_bonding_size == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.supplementary_bonding_size}}</span>{% if earthing_bonding.supplementary_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.supplementary_bonding_size_note}}</span>{% endif %}
-            {% else %}{{earthing_bonding.supplementary_bonding_size}}{% endif %}
-          </div>
-        </div>
       </div>
       <div class="grid-row" style="grid-template-columns: 1fr;">
         <div class="grid-cell">
@@ -1880,14 +1828,6 @@
           <div class="cell-value">{{earthing_bonding.main_bonding_locations}}</div>
         </div>
       </div>
-      {% if earthing_bonding.equipotential_bonding and earthing_bonding.equipotential_bonding != "" %}
-      <div class="grid-row" style="grid-template-columns: 1fr;">
-        <div class="grid-cell">
-          <div class="cell-label">Equipotential Bonding</div>
-          <div class="cell-value">{{earthing_bonding.equipotential_bonding}}</div>
-        </div>
-      </div>
-      {% endif %}
 
       <!-- Main Switch / Consumer's Switch (BS 7671 Section J) -->
       {% if main_protective_device.main_switch_location != "" or main_protective_device.main_switch_poles != "" or main_protective_device.main_switch_voltage_rating != "" or main_protective_device.fuse_device_rating != "" %}
@@ -2088,38 +2028,8 @@
 
       <!-- Cables (aligned 4-col / 3-col grids, kept together across page breaks) -->
       <div class="avoid-break">
-        <div class="section-subtitle">Meter &amp; Cable Details</div>
-        <div class="grid-row cols-4">
-        <div class="grid-cell">
-          <div class="cell-label">Intake Cable Type</div>
-          <div class="cell-value">
-            {% if cables.intake_cable_type == "LIM" or cables.intake_cable_type == "N/V" or cables.intake_cable_type == "N/A" %}
-              <span class="marker-badge marker-{% if cables.intake_cable_type == 'LIM' %}lim{% elsif cables.intake_cable_type == 'N/V' %}nv{% else %}na{% endif %}">{{cables.intake_cable_type}}</span>{% if cables.intake_cable_type_note != "" %}<span class="field-note">{{cables.intake_cable_type_note}}</span>{% endif %}
-            {% else %}{{cables.intake_cable_type}}{% endif %}
-          </div>
-        </div>
-        <div class="grid-cell">
-          <div class="cell-label">Intake Size (mm&#178;)</div>
-          <div class="cell-value">
-            {% if cables.intake_cable_size == "LIM" or cables.intake_cable_size == "N/V" or cables.intake_cable_size == "N/A" %}
-              <span class="marker-badge marker-{% if cables.intake_cable_size == 'LIM' %}lim{% elsif cables.intake_cable_size == 'N/V' %}nv{% else %}na{% endif %}">{{cables.intake_cable_size}}</span>{% if cables.intake_cable_size_note != "" %}<span class="field-note">{{cables.intake_cable_size_note}}</span>{% endif %}
-            {% else %}{{cables.intake_cable_size}}{% endif %}
-          </div>
-        </div>
-        <div class="grid-cell">
-          <div class="cell-label">Tails Size (mm&#178;)</div>
-          <div class="cell-value">
-            {% if cables.tails_size == "LIM" or cables.tails_size == "N/V" or cables.tails_size == "N/A" %}
-              <span class="marker-badge marker-{% if cables.tails_size == 'LIM' %}lim{% elsif cables.tails_size == 'N/V' %}nv{% else %}na{% endif %}">{{cables.tails_size}}</span>{% if cables.tails_size_note != "" %}<span class="field-note">{{cables.tails_size_note}}</span>{% endif %}
-            {% else %}{{cables.tails_size}}{% endif %}
-          </div>
-        </div>
-        <div class="grid-cell">
-          <div class="cell-label">Tails Length (m)</div>
-          <div class="cell-value">{{cables.tails_length}}</div>
-        </div>
-      </div>
-      <div class="grid-row cols-3">
+        <div class="section-subtitle">Main Earth &amp; Bonding Conductors</div>
+      <div class="grid-row cols-2">
         <div class="grid-cell">
           <div class="cell-label">Main Earth Conductor</div>
           <div class="cell-value">
@@ -2135,10 +2045,6 @@
               <span class="marker-badge marker-{% if earthing_bonding.main_bonding_conductor == 'LIM' %}lim{% elsif earthing_bonding.main_bonding_conductor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_bonding_conductor}}</span>{% if earthing_bonding.main_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_size_note}}</span>{% elsif earthing_bonding.main_bonding_conductor_type_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_conductor_type_note}}</span>{% endif %}
             {% else %}{{earthing_bonding.main_bonding_conductor}}{% endif %}
           </div>
-        </div>
-        <div class="grid-cell">
-          <div class="cell-label">Service Entry</div>
-          <div class="cell-value">{{supply_characteristics.service_entry}}</div>
         </div>
       </div>
       </div>
@@ -2173,7 +2079,7 @@
               {% assign has_c12 = true %}
               <tr>
                 <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 600;">{{forloop.index}}</td>
-                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.rectified %} <span style="display:inline-block; margin-left:4px; padding:1px 5px; border-radius:3px; font-size:7px; font-weight:700; letter-spacing:0.3px; background:#dcfce7; color:#15803d; border:1px solid #86efac;">RECTIFIED</span>{% endif %}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
                 <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;" class="{% if observation.defect_code == 'C1' %}code-c1{% else %}code-c2{% endif %}">{{observation.defect_code}}</td>
               </tr>
             {% endif %}
@@ -2207,7 +2113,7 @@
               {% assign has_c3fi = true %}
               <tr>
                 <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 600;">{{forloop.index}}</td>
-                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.rectified %} <span style="display:inline-block; margin-left:4px; padding:1px 5px; border-radius:3px; font-size:7px; font-weight:700; letter-spacing:0.3px; background:#dcfce7; color:#15803d; border:1px solid #86efac;">RECTIFIED</span>{% endif %}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
                 <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;" class="{% if observation.defect_code == 'C3' %}code-c3{% else %}code-fi{% endif %}">{{observation.defect_code}}</td>
               </tr>
             {% endif %}
@@ -2875,6 +2781,7 @@
           {% else %}
           <span class="classification-badge">{{observation.defect_code}}</span>
           {% endif %}
+          {% if observation.rectified %}<span style="display:inline-block; margin-left:8px; padding:5px 12px; border-radius:3px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; background:#dcfce7; color:#15803d; border:2px solid #86efac;">&#10003; Rectified</span>{% endif %}
         </div>
 
         <div class="observation-section">

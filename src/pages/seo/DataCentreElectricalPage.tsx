@@ -562,7 +562,7 @@ const sections = [
                 and thermal insulation derating factors. Voltage drop must be calculated and kept
                 within the limits of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671 Appendix 12
+                  BS 7671 Appendix 4 (Section 6.4)
                 </SEOInternalLink>
                 , typically 1.5 per cent for final circuits in sensitive equipment applications.
               </span>

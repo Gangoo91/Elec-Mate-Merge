@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/select';
 import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertCircle, Info, Zap, Building2, Plug, Shield, Globe, Check } from 'lucide-react';
+import { Info, Plug, Check } from 'lucide-react';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -24,10 +24,6 @@ import {
 
 // Fields managed by this section (for memoization comparison)
 const SUPPLY_SECTION_FIELDS = [
-  'dnoName',
-  'mpan',
-  'cutoutLocation',
-  'serviceEntry',
   'phases',
   'supplyAcDc',
   'conductorConfiguration',
@@ -56,9 +52,6 @@ const SUPPLY_SECTION_FIELDS = [
   'rcdMeasuredTime',
   'rcdBreakingCapacity',
   // ELE-849 — limitation reason notes, sibling to their marker-capable fields
-  'dnoNameNotes',
-  'mpanNotes',
-  'cutoutLocationNotes',
   'externalZeNotes',
   'prospectiveFaultCurrentNotes',
   'otherSourcesOfSupplyNotes',
@@ -166,20 +159,6 @@ const SupplyCharacteristicsSectionInner = ({
       onUpdate('rcdRating', '30mA');
     }
   }, [formData.earthingArrangement]);
-
-  // Auto-set earthing arrangement when PME is set to Yes
-  const handleSupplyPMEChange = (value: string) => {
-    haptic.light();
-    // Toggle off if already selected
-    if (formData.supplyPME === value) {
-      onUpdate('supplyPME', '');
-      return;
-    }
-    onUpdate('supplyPME', value);
-    if (value === 'yes' && !isTNCSSsystem) {
-      onUpdate('earthingArrangement', 'TN-C-S');
-    }
-  };
 
   // Show RCD fields only when RCD main switch is yes
   const showRCDFields = formData.rcdMainSwitch === 'yes';
@@ -314,148 +293,6 @@ const SupplyCharacteristicsSectionInner = ({
 
   return (
     <div className={cn('space-y-6', '')}>
-      {/* Supply Authority Section */}
-      <div>
-        <SectionTitle icon={Building2} title="Supply Authority" color="blue" isMobile={isMobile} />
-        <div className="space-y-3 py-3">
-          {/* Row 1: DNO + MPAN */}
-          <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField
-              label="DNO"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.dnoName || ''}
-                  markers={['LIM']}
-                  onChange={(v) => onUpdate('dnoName', v)}
-                />
-              }
-            >
-              {isFieldMarker(formData.dnoName) ? (
-                <Input
-                  value={formData.dnoName}
-                  disabled
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-                />
-              ) : (
-                <FormSelectSheet
-                  value={formData.dnoName || ''}
-                  onValueChange={(value) => onUpdate('dnoName', value)}
-                  label="Distribution Network Operator"
-                  placeholder="Select DNO"
-                  options={dnoOptions.map((dno) => ({ value: dno, label: dno }))}
-                  allowCustom
-                  customLabel="Other DNO"
-                />
-              )}
-              <FieldNotesInput
-                parentValue={formData.dnoName || ''}
-                value={formData.dnoNameNotes || ''}
-                onChange={(v) => onUpdate('dnoNameNotes', v)}
-                placeholder="Reason (e.g. not displayed on cutout)"
-              />
-            </FormField>
-            <FormField
-              label="MPAN"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.mpan || ''}
-                  markers={['LIM', 'N/A']}
-                  onChange={(v) => onUpdate('mpan', v)}
-                />
-              }
-            >
-              <Input
-                value={formData.mpan || ''}
-                onChange={(e) => onUpdate('mpan', e.target.value)}
-                placeholder="12 345 678 901 234"
-                disabled={isFieldMarker(formData.mpan)}
-                className={cn(
-                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
-                  isFieldMarker(formData.mpan) && 'opacity-60'
-                )}
-              />
-              <FieldNotesInput
-                parentValue={formData.mpan || ''}
-                value={formData.mpanNotes || ''}
-                onChange={(v) => onUpdate('mpanNotes', v)}
-                placeholder="Reason (e.g. sub-distribution, no MPAN)"
-              />
-            </FormField>
-          </div>
-
-          {/* Row 2: Cutout + Service Entry */}
-          <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField
-              label="Cutout Location"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.cutoutLocation || ''}
-                  markers={['LIM']}
-                  onChange={(v) => onUpdate('cutoutLocation', v)}
-                />
-              }
-            >
-              <Input
-                value={formData.cutoutLocation || ''}
-                onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
-                placeholder="Under stairs"
-                disabled={isFieldMarker(formData.cutoutLocation)}
-                className={cn(
-                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
-                  isFieldMarker(formData.cutoutLocation) && 'opacity-60'
-                )}
-              />
-              <FieldNotesInput
-                parentValue={formData.cutoutLocation || ''}
-                value={formData.cutoutLocationNotes || ''}
-                onChange={(v) => onUpdate('cutoutLocationNotes', v)}
-                placeholder="Reason (e.g. locked meter room)"
-              />
-            </FormField>
-            <FormField
-              label="Service Entry"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.serviceEntry || ''}
-                  markers={['N/A']}
-                  onChange={(v) => onUpdate('serviceEntry', v)}
-                />
-              }
-            >
-              <div className="grid grid-cols-2 gap-1.5">
-                {[
-                  { value: 'overhead', label: 'Over' },
-                  { value: 'underground', label: 'Under' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('serviceEntry', formData.serviceEntry === option.value ? '' : option.value);
-                    }}
-                    disabled={isFieldMarker(formData.serviceEntry)}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
-                      formData.serviceEntry === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]',
-                      isFieldMarker(formData.serviceEntry) && 'opacity-40 cursor-not-allowed'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </FormField>
-          </div>
-        </div>
-      </div>
-
       {/* Supply Details Section */}
       <div>
         <SectionTitle icon={Plug} title="Supply Details" color="yellow" isMobile={isMobile} />
@@ -513,8 +350,8 @@ const SupplyCharacteristicsSectionInner = ({
             </FormField>
           </div>
 
-          {/* Row 2: AC/DC + Wires + Hz + PME */}
-          <div className="grid grid-cols-4 gap-2">
+          {/* Row 2: AC/DC + Wires + Hz */}
+          <div className="grid grid-cols-3 gap-2">
             <FormField label="AC/DC">
               <div className="grid grid-cols-2 gap-1">
                 {[
@@ -594,28 +431,6 @@ const SupplyCharacteristicsSectionInner = ({
                 onChange={(v) => onUpdate('supplyFrequencyNotes', v)}
                 placeholder="Reason"
               />
-            </FormField>
-            <FormField label="PME">
-              <div className="grid grid-cols-2 gap-1">
-                {[
-                  { value: 'yes', label: 'Y' },
-                  { value: 'no', label: 'N' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => handleSupplyPMEChange(option.value)}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      formData.supplyPME === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
             </FormField>
           </div>
 

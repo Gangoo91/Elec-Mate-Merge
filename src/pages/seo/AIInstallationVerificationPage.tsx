@@ -142,7 +142,7 @@ export default function AIInstallationVerificationPage() {
                   prospective fault current at the point of installation.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Voltage drop (Appendix 12)</span> —
+                  <span className="font-semibold text-white">Voltage drop (Appendix 4)</span> —
                   calculated voltage drop checked against the 3% limit for lighting and 5% for other
                   circuits, measured from the origin of the installation.
                 </li>

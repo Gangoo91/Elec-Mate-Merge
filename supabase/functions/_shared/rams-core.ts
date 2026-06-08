@@ -219,8 +219,13 @@ async function streamOpenAIChat(opts: {
   /** Abort if no stream bytes arrive within this window (ms). Default 40s. */
   idleTimeoutMs?: number;
 }): Promise<{ text: string; finishReason: string | null }> {
-  const overallTimeoutMs = opts.overallTimeoutMs ?? 150_000;
-  const idleTimeoutMs = opts.idleTimeoutMs ?? 40_000;
+  // gpt-5.4-mini is a REASONING model: it can stay silent (no stream deltas) for
+  // a long while as it thinks before the first output token — longer on big jobs.
+  // The idle window must therefore be generous, or we'd abort healthy generations
+  // mid-reasoning (the very big jobs that already struggle). True hangs are still
+  // caught here; the 5-minute server-side reaper is the ultimate backstop.
+  const overallTimeoutMs = opts.overallTimeoutMs ?? 240_000;
+  const idleTimeoutMs = opts.idleTimeoutMs ?? 120_000;
 
   // Without an AbortController a hung connection (no first byte, or a stalled
   // mid-stream read) awaits forever and silently kills the background worker —

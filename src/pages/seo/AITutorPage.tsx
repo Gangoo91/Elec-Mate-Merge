@@ -285,7 +285,7 @@ const sections = [
           This approach works for any regulation in BS 7671 — from the fundamental principles in
           Part 1 through to the specific requirements of Part 7 for special installations and
           locations. The AI also covers the Appendices, including the cable sizing tables in
-          Appendix 4 and the voltage drop calculations in Appendix 12.
+          Appendix 4 and the voltage drop calculations in Appendix 4, Section 6.4.
         </p>
       </>
     ),

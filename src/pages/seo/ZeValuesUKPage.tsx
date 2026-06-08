@@ -43,7 +43,8 @@ const keyTakeaways = [
   'Ze directly affects every Zs reading on the installation — a high Ze pushes up Zs on every circuit, potentially causing widespread compliance failures.',
   'If measured Ze significantly exceeds the distributor-quoted typical maximum for the earthing arrangement, the DNO (Distribution Network Operator) should be queried because the supply earth may be defective.',
   'Elec-Mate records Ze at the origin on the EICR, validates it against expected values for the declared earthing arrangement, and uses it to cross-check every Zs reading in the schedule of test results.',
-  'BS 7671:2018+A4:2026 amended the Appendix 6 model forms to include new fields for recording SPD and AFDD details alongside Ze — ensure you are using the updated A4:2026 model forms when completing EICRs and EICs.',
+  // grounded: bs7671_facets — Reg 421.1.7 (A4:2026) recommends AFDDs; Appendix 6 schedule of inspections simplified with an example initial-verification checklist added. No SPD/AFDD "Ze field" claim is supported by the RAG.
+  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7 recommending arc fault detection devices (AFDDs) and simplified the Appendix 6 schedule of inspections, adding an example initial-verification checklist. Use the current A4:2026 model forms when completing EICRs and EICs.',
 ];
 
 const faqs = [
@@ -75,7 +76,7 @@ const faqs = [
   {
     question: 'Is the Ze value recorded on the EICR?',
     answer:
-      'Yes. Ze is a mandatory recording on the EICR (Electrical Installation Condition Report). It is recorded in the "Supply Characteristics and Earthing Arrangements" section, along with the earthing arrangement (TN-S, TN-C-S, or TT), the supply voltage, the prospective fault current, and the type of supply (single-phase or three-phase). The measured Ze value is used as a reference point for verifying the Zs readings throughout the installation — each Zs should approximately equal Ze plus the R1+R2 measured during continuity testing on that circuit. A significant discrepancy between the measured Zs and the calculated Zs (Ze + R1+R2) indicates a problem such as a parallel earth path or a high-resistance connection. Note: the BS 7671:2018+A4:2026 update amended the Appendix 6 model forms to add fields for SPD and AFDD details alongside Ze — use the current A4:2026 model forms to ensure compliance with the updated recording requirements.',
+      'Yes. Ze is a mandatory recording on the EICR (Electrical Installation Condition Report). It is recorded in the "Supply Characteristics and Earthing Arrangements" section, along with the earthing arrangement (TN-S, TN-C-S, or TT), the supply voltage, the prospective fault current, and the type of supply (single-phase or three-phase). The measured Ze value is used as a reference point for verifying the Zs readings throughout the installation — each Zs should approximately equal Ze plus the R1+R2 measured during continuity testing on that circuit. A significant discrepancy between the measured Zs and the calculated Zs (Ze + R1+R2) indicates a problem such as a parallel earth path or a high-resistance connection. Note: complete the current BS 7671:2018+A4:2026 Appendix 6 model forms — A4:2026 simplified the schedule of inspections and added an example initial-verification checklist.',
   },
 ];
 

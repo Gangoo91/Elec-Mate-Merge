@@ -96,10 +96,12 @@ const EICRTabContent = ({
     }
   };
 
-  const containerClasses =
-    tabValue === 'testing'
-      ? 'w-full max-w-none space-y-6 overflow-x-auto'
-      : 'md:max-w-6xl mx-auto space-y-6';
+  // Tables (testing schedule + inspection checklist) use the full page width;
+  // the form tabs centre in a comfortable wide column.
+  const fullWidth = tabValue === 'testing' || tabValue === 'inspection';
+  const containerClasses = fullWidth
+    ? 'w-full max-w-none space-y-6 overflow-x-auto'
+    : 'lg:max-w-6xl xl:max-w-7xl mx-auto space-y-6';
 
   return (
     <div className={containerClasses}>

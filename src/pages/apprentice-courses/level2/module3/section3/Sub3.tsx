@@ -225,7 +225,7 @@ const faqs = [
   {
     question: "Does voltage drop matter at this stage, or is that a separate calculation?",
     answer:
-      "Voltage drop is a separate check after CCC. Step 1 — pick a cable that satisfies 433.1.1 (Ib ≤ In ≤ Iz) using Appendix 4 It values + derates. Step 2 — calculate voltage drop from the mV/A/m tables for that CSA over the actual route length, and check it’s within the 3% (lighting) / 5% (other) limits in Section 525 / Appendix 12. If voltage drop fails you go up another CSA step and redo step 1.",
+      "Voltage drop is a separate check after CCC. Step 1 — pick a cable that satisfies 433.1.1 (Ib ≤ In ≤ Iz) using Appendix 4 It values + derates. Step 2 — calculate voltage drop from the mV/A/m tables for that CSA over the actual route length, and check it’s within the 3% (lighting) / 5% (other) limits in Section 525 / Appendix 4, Section 6.4. If voltage drop fails you go up another CSA step and redo step 1.",
   },
 ];
 

@@ -4,7 +4,9 @@ import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { draftStorage } from '@/utils/draftStorage';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
+import EICRLockBar from './eicr/EICRLockBar';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
+import { cn } from '@/lib/utils';
 import LastCertSuggestionCard from './certificates/LastCertSuggestionCard';
 import EICRValidationPanel from './EICRValidationPanel';
 import { useCertPrefill } from '@/hooks/useCertPrefill';
@@ -32,6 +34,11 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     isOnline,
     isAuthenticated,
     isLoadingReport,
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport,
+    amendReport,
   } = useEICRForm();
 
   // Board scan state
@@ -309,6 +316,21 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar (Issue & lock, read-only, Amend) */}
+      <EICRLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={
+          !isLocked &&
+          !!currentReportId &&
+          !!formData.inspectorName &&
+          !!formData.inspectorSignature
+        }
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       {/* ELE-881 — provenance banner */}
       {formData.duplicatedFrom && (
         <DuplicatedFromBanner
@@ -318,7 +340,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       )}
 
       {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
-      {lastCertSuggestion && (
+      {!isLocked && lastCertSuggestion && (
         <div className="px-4 pt-3">
           <LastCertSuggestionCard
             suggestion={lastCertSuggestion}
@@ -328,7 +350,9 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         </div>
       )}
 
-      {/* Main Content — full-width mobile */}
+      {/* Main Content — always full-width; the single-column tabs (Details /
+          Inspector / Certificate) centre themselves at the content level, so
+          the Testing & Inspection tables reliably get the full width. */}
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         {/* Validation panel — always visible, tap a row to jump to that tab */}
         <div className="px-4 mb-3 sm:px-0">
@@ -338,22 +362,29 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
             isLastTab={currentTabIndex === TAB_ORDER.length - 1}
           />
         </div>
-        <EICRFormContent
-          formData={formData}
-          onUpdate={updateFormData}
-          hasDraft={false}
-          draftTimestamp={0}
-          onLoadDraft={() => {}}
-          onStartNewFromDraft={() => {}}
-          hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
-          showStartNewDialog={showStartNewDialog}
-          onCloseStartNewDialog={() => setShowStartNewDialog(false)}
-          onConfirmStartNew={confirmStartNew}
-          onConfirmDuplicate={confirmDuplicate}
-          onOpenBoardScan={() => setShowBoardScan(true)}
-          currentTab={currentTab}
-          onTabChange={handleTabValueChange}
-        />
+        {/* When the certificate is locked the form body is read-only — autosave
+            is already gated off in the provider; this stops on-screen edits. */}
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
+          <EICRFormContent
+            formData={formData}
+            onUpdate={updateFormData}
+            hasDraft={false}
+            draftTimestamp={0}
+            onLoadDraft={() => {}}
+            onStartNewFromDraft={() => {}}
+            hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
+            showStartNewDialog={showStartNewDialog}
+            onCloseStartNewDialog={() => setShowStartNewDialog(false)}
+            onConfirmStartNew={confirmStartNew}
+            onConfirmDuplicate={confirmDuplicate}
+            onOpenBoardScan={() => setShowBoardScan(true)}
+            currentTab={currentTab}
+            onTabChange={handleTabValueChange}
+          />
+        </div>
       </main>
     </div>
   );

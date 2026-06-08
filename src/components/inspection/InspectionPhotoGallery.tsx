@@ -179,7 +179,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
             <div className="flex items-center gap-3 p-3">
               {/* Thumbnail — tap to view full */}
               <div
-                className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-muted cursor-pointer active:scale-[0.97] transition-transform touch-manipulation"
+                className="group relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-muted cursor-pointer active:scale-[0.97] transition-transform touch-manipulation"
                 onClick={() => setSelectedPhoto(photo)}
               >
                 <img
@@ -188,7 +188,9 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black/0 active:bg-black/20 transition-colors" />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 active:bg-black/30 transition-colors flex items-center justify-center">
+                  <ZoomIn className="h-4 w-4 text-white/70 group-hover:text-white drop-shadow" />
+                </div>
               </div>
 
               {/* Info */}
@@ -210,33 +212,45 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
               </button>
             </div>
 
-            {/* Action buttons row */}
-            <div className="flex gap-2 px-3 pb-3">
+            {/* Tools — surfaced so inspectors actually use them */}
+            <div className="px-3 pb-3 space-y-2">
               {!photo.aiAnalysis && (
+                /* The hero tool: AI cross-checks the inspector's call */
                 <button
                   onClick={() => handleScanClick(photo)}
                   disabled={isScanning === photo.id}
-                  className="flex-1 h-10 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 bg-white/[0.05] text-white border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
+                  className="w-full rounded-xl border border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/[0.12] to-amber-500/[0.05] p-3 text-left transition-colors hover:from-elec-yellow/[0.16] touch-manipulation disabled:opacity-60"
                 >
-                  {isScanning === photo.id ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  ) : (
-                    <Sparkles className="h-3.5 w-3.5" />
-                  )}
-                  AI Scan
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center">
+                      {isScanning === photo.id ? (
+                        <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                      ) : (
+                        <Sparkles className="h-4 w-4 text-elec-yellow" />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-elec-yellow leading-tight">
+                        {isScanning === photo.id ? 'AI is checking the photo…' : 'Get an AI second opinion'}
+                      </p>
+                      <p className="text-[11px] text-white/55 leading-snug mt-0.5">
+                        Confirms your {photo.faultCode || 'classification'} or flags a better code — with BS 7671 references.
+                      </p>
+                    </div>
+                  </div>
                 </button>
               )}
               <button
                 onClick={() => handleSendToPhotoDocs(photo)}
                 disabled={sendingToDocsId === photo.id}
-                className="flex-1 h-10 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 hover:bg-elec-yellow/15 transition-colors touch-manipulation disabled:opacity-50"
+                className="w-full h-11 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 bg-white/[0.05] text-white border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
               >
                 {sendingToDocsId === photo.id ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 ) : (
                   <FolderOutput className="h-3.5 w-3.5" />
                 )}
-                Save to Docs
+                Save to Photo Docs
               </button>
             </div>
 

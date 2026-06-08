@@ -591,6 +591,11 @@ export default function ContinuityTestingGuidePage() {
       }
       heroSubtitle="The complete UK electrician's guide to continuity testing — ring final circuit end-to-end and cross-connected tests, r1+rn, r2, and r1+r2 values, CPC continuity, bonding conductor testing, and recording results on the schedule of test results."
       readingTime={13}
+      answerBox={{
+        question: 'What is an acceptable R1+R2 reading?',
+        answer:
+          'There is no single pass or fail figure for R1+R2 — the measured value must be low enough that Zs (Ze + R1+R2) stays within the maximum for the protective device in BS 7671 Tables 41.2 to 41.4. Compare your reading against the expected R1+R2 for the cable type and length; a much higher value points to a loose or high-resistance connection.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

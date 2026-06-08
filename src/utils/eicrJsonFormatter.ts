@@ -71,6 +71,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     return String(value);
   };
 
+  // Default to 'N/A' only when a value is truly empty (null/undefined/'') — a
+  // measured/numeric 0 (e.g. a 0.00 Ω reading) is a real result and must be
+  // preserved, which the previous `value || 'N/A'` pattern wrongly discarded.
+  const na = (v: any) => (v === null || v === undefined || v === '' ? 'N/A' : v);
+
   // Defensive validation for critical fields
   const criticalFields = ['clientName', 'installationAddress', 'inspectorName'];
   criticalFields.forEach((field) => {
@@ -379,37 +384,37 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     if (!Array.isArray(testResults)) return [];
 
     return testResults.map((result: any) => ({
-      id: result.id || 'N/A',
-      circuit_number: result.circuitNumber || 'N/A',
-      circuit_description: result.circuitDescription || 'N/A',
-      circuit_type: result.circuitType || 'N/A',
-      type_of_wiring: result.typeOfWiring || 'N/A',
-      reference_method: result.referenceMethod || 'N/A',
-      points_served: result.pointsServed || 'N/A',
-      live_size: result.liveSize || 'N/A',
-      cpc_size: result.cpcSize || 'N/A',
-      bs_standard: result.bsStandard || 'N/A',
-      protective_device_type: result.protectiveDeviceType || 'N/A',
-      protective_device_curve: result.protectiveDeviceCurve || 'N/A',
-      protective_device_rating: result.protectiveDeviceRating || 'N/A',
-      protective_device_ka_rating: result.protectiveDeviceKaRating || 'N/A',
-      max_zs: result.maxZs || 'N/A',
-      protective_device_location: result.protectiveDeviceLocation || 'N/A',
-      rcd_bs_standard: result.rcdBsStandard || 'N/A',
-      rcd_type: result.rcdType || 'N/A',
-      rcd_rating: result.rcdRating || 'N/A',
-      rcd_rating_a: result.rcdRatingA || 'N/A',
-      ring_r1: result.ringR1 || 'N/A',
-      ring_rn: result.ringRn || 'N/A',
-      ring_r2: result.ringR2 || 'N/A',
-      r1r2: result.r1r2 || 'N/A',
-      r2: result.r2 || 'N/A',
-      ring_continuity_live: result.ringContinuityLive || 'N/A',
-      ring_continuity_neutral: result.ringContinuityNeutral || 'N/A',
-      insulation_test_voltage: result.insulationTestVoltage || 'N/A',
-      insulation_live_neutral: result.insulationLiveNeutral || 'N/A',
-      insulation_live_earth: result.insulationLiveEarth || 'N/A',
-      insulation_resistance: result.insulationResistance || 'N/A',
+      id: na(result.id),
+      circuit_number: na(result.circuitNumber),
+      circuit_description: na(result.circuitDescription),
+      circuit_type: na(result.circuitType),
+      type_of_wiring: na(result.typeOfWiring),
+      reference_method: na(result.referenceMethod),
+      points_served: na(result.pointsServed),
+      live_size: na(result.liveSize),
+      cpc_size: na(result.cpcSize),
+      bs_standard: na(result.bsStandard),
+      protective_device_type: na(result.protectiveDeviceType),
+      protective_device_curve: na(result.protectiveDeviceCurve),
+      protective_device_rating: na(result.protectiveDeviceRating),
+      protective_device_ka_rating: na(result.protectiveDeviceKaRating),
+      max_zs: na(result.maxZs),
+      protective_device_location: na(result.protectiveDeviceLocation),
+      rcd_bs_standard: na(result.rcdBsStandard),
+      rcd_type: na(result.rcdType),
+      rcd_rating: na(result.rcdRating),
+      rcd_rating_a: na(result.rcdRatingA),
+      ring_r1: na(result.ringR1),
+      ring_rn: na(result.ringRn),
+      ring_r2: na(result.ringR2),
+      r1r2: na(result.r1r2),
+      r2: na(result.r2),
+      ring_continuity_live: na(result.ringContinuityLive),
+      ring_continuity_neutral: na(result.ringContinuityNeutral),
+      insulation_test_voltage: na(result.insulationTestVoltage),
+      insulation_live_neutral: na(result.insulationLiveNeutral),
+      insulation_live_earth: na(result.insulationLiveEarth),
+      insulation_resistance: na(result.insulationResistance),
       polarity: (() => {
         const v = result.polarity;
         if (!v || v === 'N/A') return 'N/A';
@@ -425,8 +430,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         if (v === 'Incorrect' || v === 'incorrect' || v === '✗' || v === 'N') return 'N';
         return v;
       })(),
-      zs: result.zs || 'N/A',
-      rcd_one_x: result.rcdOneX || 'N/A',
+      zs: na(result.zs),
+      rcd_one_x: na(result.rcdOneX),
       rcd_test_button: (() => {
         const v = result.rcdTestButton;
         if (!v || v === 'N/A') return 'N/A';
@@ -457,25 +462,25 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         if (v === 'Fail' || v === 'fail' || v === '✗' || v === 'N') return 'N';
         return v;
       })(),
-      rcd_half_x: result.rcdHalfX || 'N/A',
-      rcd_five_x: result.rcdFiveX || 'N/A',
-      pfc: result.pfc || 'N/A',
-      pfc_live_neutral: result.pfcLiveNeutral || 'N/A',
-      pfc_live_earth: result.pfcLiveEarth || 'N/A',
-      functional_testing: result.functionalTesting || 'N/A',
-      notes: result.notes || 'N/A',
-      source_circuit_id: result.sourceCircuitId || 'N/A',
+      rcd_half_x: na(result.rcdHalfX),
+      rcd_five_x: na(result.rcdFiveX),
+      pfc: na(result.pfc),
+      pfc_live_neutral: na(result.pfcLiveNeutral),
+      pfc_live_earth: na(result.pfcLiveEarth),
+      functional_testing: na(result.functionalTesting),
+      notes: na(result.notes),
+      source_circuit_id: na(result.sourceCircuitId),
       auto_filled: result.autoFilled || false,
-      phase_type: result.phaseType || 'N/A',
-      phase_rotation: result.phaseRotation || 'N/A',
-      phase_balance_l1: result.phaseBalanceL1 || 'N/A',
-      phase_balance_l2: result.phaseBalanceL2 || 'N/A',
-      phase_balance_l3: result.phaseBalanceL3 || 'N/A',
-      line_to_line_voltage: result.lineToLineVoltage || 'N/A',
-      circuit_designation: result.circuitDesignation || 'N/A',
-      type: result.type || 'N/A',
-      cable_size: result.cableSize || 'N/A',
-      protective_device: result.protectiveDevice || 'N/A',
+      phase_type: na(result.phaseType),
+      phase_rotation: na(result.phaseRotation),
+      phase_balance_l1: na(result.phaseBalanceL1),
+      phase_balance_l2: na(result.phaseBalanceL2),
+      phase_balance_l3: na(result.phaseBalanceL3),
+      line_to_line_voltage: na(result.lineToLineVoltage),
+      circuit_designation: na(result.circuitDesignation),
+      type: na(result.type),
+      cable_size: na(result.cableSize),
+      protective_device: na(result.protectiveDevice),
     }));
   };
 
@@ -504,37 +509,37 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
 
     // Helper to format a circuit for PDF output
     const formatCircuit = (result: any) => ({
-      id: result.id || 'N/A',
-      circuit_number: result.circuitNumber || 'N/A',
-      circuit_description: result.circuitDescription || 'N/A',
-      circuit_type: result.circuitType || 'N/A',
-      type_of_wiring: result.typeOfWiring || 'N/A',
-      reference_method: result.referenceMethod || 'N/A',
-      points_served: result.pointsServed || 'N/A',
-      live_size: result.liveSize || 'N/A',
-      cpc_size: result.cpcSize || 'N/A',
-      bs_standard: result.bsStandard || 'N/A',
-      protective_device_type: result.protectiveDeviceType || 'N/A',
-      protective_device_curve: result.protectiveDeviceCurve || 'N/A',
-      protective_device_rating: result.protectiveDeviceRating || 'N/A',
-      protective_device_ka_rating: result.protectiveDeviceKaRating || 'N/A',
-      max_zs: result.maxZs || 'N/A',
-      protective_device_location: result.protectiveDeviceLocation || 'N/A',
-      rcd_bs_standard: result.rcdBsStandard || 'N/A',
-      rcd_type: result.rcdType || 'N/A',
-      rcd_rating: result.rcdRating || 'N/A',
-      rcd_rating_a: result.rcdRatingA || 'N/A',
-      ring_r1: result.ringR1 || 'N/A',
-      ring_rn: result.ringRn || 'N/A',
-      ring_r2: result.ringR2 || 'N/A',
-      r1r2: result.r1r2 || 'N/A',
-      r2: result.r2 || 'N/A',
-      ring_continuity_live: result.ringContinuityLive || 'N/A',
-      ring_continuity_neutral: result.ringContinuityNeutral || 'N/A',
-      insulation_test_voltage: result.insulationTestVoltage || 'N/A',
-      insulation_live_neutral: result.insulationLiveNeutral || 'N/A',
-      insulation_live_earth: result.insulationLiveEarth || 'N/A',
-      insulation_resistance: result.insulationResistance || 'N/A',
+      id: na(result.id),
+      circuit_number: na(result.circuitNumber),
+      circuit_description: na(result.circuitDescription),
+      circuit_type: na(result.circuitType),
+      type_of_wiring: na(result.typeOfWiring),
+      reference_method: na(result.referenceMethod),
+      points_served: na(result.pointsServed),
+      live_size: na(result.liveSize),
+      cpc_size: na(result.cpcSize),
+      bs_standard: na(result.bsStandard),
+      protective_device_type: na(result.protectiveDeviceType),
+      protective_device_curve: na(result.protectiveDeviceCurve),
+      protective_device_rating: na(result.protectiveDeviceRating),
+      protective_device_ka_rating: na(result.protectiveDeviceKaRating),
+      max_zs: na(result.maxZs),
+      protective_device_location: na(result.protectiveDeviceLocation),
+      rcd_bs_standard: na(result.rcdBsStandard),
+      rcd_type: na(result.rcdType),
+      rcd_rating: na(result.rcdRating),
+      rcd_rating_a: na(result.rcdRatingA),
+      ring_r1: na(result.ringR1),
+      ring_rn: na(result.ringRn),
+      ring_r2: na(result.ringR2),
+      r1r2: na(result.r1r2),
+      r2: na(result.r2),
+      ring_continuity_live: na(result.ringContinuityLive),
+      ring_continuity_neutral: na(result.ringContinuityNeutral),
+      insulation_test_voltage: na(result.insulationTestVoltage),
+      insulation_live_neutral: na(result.insulationLiveNeutral),
+      insulation_live_earth: na(result.insulationLiveEarth),
+      insulation_resistance: na(result.insulationResistance),
       polarity: (() => {
         const v = result.polarity;
         if (!v || v === 'N/A') return 'N/A';
@@ -550,8 +555,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         if (v === 'Incorrect' || v === 'incorrect' || v === '✗' || v === 'N') return 'N';
         return v;
       })(),
-      zs: result.zs || 'N/A',
-      rcd_one_x: result.rcdOneX || 'N/A',
+      zs: na(result.zs),
+      rcd_one_x: na(result.rcdOneX),
       rcd_test_button: (() => {
         const v = result.rcdTestButton;
         if (!v || v === 'N/A') return 'N/A';
@@ -582,25 +587,25 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         if (v === 'Fail' || v === 'fail' || v === '✗' || v === 'N') return 'N';
         return v;
       })(),
-      rcd_half_x: result.rcdHalfX || 'N/A',
-      rcd_five_x: result.rcdFiveX || 'N/A',
-      pfc: result.pfc || 'N/A',
-      pfc_live_neutral: result.pfcLiveNeutral || 'N/A',
-      pfc_live_earth: result.pfcLiveEarth || 'N/A',
-      functional_testing: result.functionalTesting || 'N/A',
-      notes: result.notes || 'N/A',
-      source_circuit_id: result.sourceCircuitId || 'N/A',
+      rcd_half_x: na(result.rcdHalfX),
+      rcd_five_x: na(result.rcdFiveX),
+      pfc: na(result.pfc),
+      pfc_live_neutral: na(result.pfcLiveNeutral),
+      pfc_live_earth: na(result.pfcLiveEarth),
+      functional_testing: na(result.functionalTesting),
+      notes: na(result.notes),
+      source_circuit_id: na(result.sourceCircuitId),
       auto_filled: result.autoFilled || false,
-      phase_type: result.phaseType || 'N/A',
-      phase_rotation: result.phaseRotation || 'N/A',
-      phase_balance_l1: result.phaseBalanceL1 || 'N/A',
-      phase_balance_l2: result.phaseBalanceL2 || 'N/A',
-      phase_balance_l3: result.phaseBalanceL3 || 'N/A',
-      line_to_line_voltage: result.lineToLineVoltage || 'N/A',
-      circuit_designation: result.circuitDesignation || 'N/A',
-      type: result.type || 'N/A',
-      cable_size: result.cableSize || 'N/A',
-      protective_device: result.protectiveDevice || 'N/A',
+      phase_type: na(result.phaseType),
+      phase_rotation: na(result.phaseRotation),
+      phase_balance_l1: na(result.phaseBalanceL1),
+      phase_balance_l2: na(result.phaseBalanceL2),
+      phase_balance_l3: na(result.phaseBalanceL3),
+      line_to_line_voltage: na(result.lineToLineVoltage),
+      circuit_designation: na(result.circuitDesignation),
+      type: na(result.type),
+      cable_size: na(result.cableSize),
+      protective_device: na(result.protectiveDevice),
     });
 
     // If no boards defined but we have test results, create a default main board
@@ -1271,7 +1276,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       additional_notes: get('additionalComments'),
       inspected_by: {
         name: get('inspectedByName'),
-        signature: get('inspectedBySignature'),
+        // Fall back to the inspector's own signature (captured on the Inspector
+        // tab) when the declaration-specific field wasn't drawn separately.
+        signature: get('inspectedBySignature') || get('inspectorSignature'),
         for_on_behalf_of: get('inspectedByForOnBehalfOf'),
         position: get('inspectedByPosition'),
         address: get('inspectedByAddress'),
@@ -1282,7 +1289,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       report_authorised_by: {
         name: get('reportAuthorisedByName'),
         date: get('reportAuthorisedByDate'),
-        signature: get('reportAuthorisedBySignature'),
+        signature: get('reportAuthorisedBySignature') || get('inspectorSignature'),
         for_on_behalf_of: get('reportAuthorisedByForOnBehalfOf'),
         position: get('reportAuthorisedByPosition'),
         address: get('reportAuthorisedByAddress'),
@@ -1482,8 +1489,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // Inspected By (flat)
     inspected_by_name: get('inspectedByName'),
     inspectedByName: get('inspectedByName'),
-    inspected_by_signature: get('inspectedBySignature'),
-    inspectedBySignature: get('inspectedBySignature'),
+    inspected_by_signature: get('inspectedBySignature') || get('inspectorSignature'),
+    inspectedBySignature: get('inspectedBySignature') || get('inspectorSignature'),
     inspected_by_for_on_behalf_of: get('inspectedByForOnBehalfOf'),
     inspected_by_position: get('inspectedByPosition'),
     inspected_by_address: get('inspectedByAddress'),
@@ -1493,7 +1500,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // Report Authorised By (flat)
     report_authorised_by_name: get('reportAuthorisedByName'),
     report_authorised_by_date: get('reportAuthorisedByDate'),
-    report_authorised_by_signature: get('reportAuthorisedBySignature'),
+    report_authorised_by_signature: get('reportAuthorisedBySignature') || get('inspectorSignature'),
     report_authorised_by_for_on_behalf_of: get('reportAuthorisedByForOnBehalfOf'),
     report_authorised_by_position: get('reportAuthorisedByPosition'),
     report_authorised_by_address: get('reportAuthorisedByAddress'),

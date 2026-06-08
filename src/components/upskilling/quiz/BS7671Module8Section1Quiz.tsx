@@ -15,9 +15,9 @@ const BS7671Module8Section1Quiz = () => {
     {
       question: 'What appendix lists Zs values?',
       options: ['Appendix 3', 'Appendix 4', 'Appendix 12', 'Appendix 14'],
-      correct: 3,
+      correct: 0,
       explanation:
-        'Appendix 14 contains the maximum earth fault loop impedance (Zs) values for different protective devices and disconnection times.',
+        'The maximum Zs values themselves are tabulated in Chapter 41 (Tables 41.2 to 41.6). Among the appendices, Appendix 3 carries the protective-device time/current characteristics and earth fault loop impedance guidance used to apply them. In BS 7671:2018+A4:2026, Appendix 14 covers prospective fault current.',
     },
     {
       question: 'What is Ca a correction factor for?',
@@ -29,9 +29,9 @@ const BS7671Module8Section1Quiz = () => {
     {
       question: 'Which appendix covers volt drop limits?',
       options: ['Appendix 3', 'Appendix 4', 'Appendix 12', 'Appendix 14'],
-      correct: 2,
+      correct: 1,
       explanation:
-        'Appendix 12 provides voltage drop limits and calculation methods for different types of circuits.',
+        'Appendix 4, Section 6.4 contains the voltage drop limits (3% for lighting, 5% for other circuits) and the mV/A/m values used to calculate volt drop.',
     },
     {
       question: "What's the consequence of an undersized conductor?",

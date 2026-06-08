@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Smart home wiring costs in the UK range from £500 for a single-room smart lighting setup to £5,000+ for a whole-house system with structured cabling, smart switches, and centralised control.',
-  'Smart lighting is the most popular entry point — replacing standard switches with smart dimmers costs £40 to £80 per switch (supply and fit), with smart LED downlights from approximately £20 to £60 each at trade price.',
+  'Smart lighting is the most popular entry point — a smart dimmer switch is around £25 to £60 at trade plus £30 to £50 labour to fit (roughly £55 to £110 supplied and fitted, more if a neutral wire must be retrofitted), with smart LED downlights from approximately £20 to £60 each at trade price.',
   'Structured cabling (Cat6 to every room plus WiFi access points) adds £1,500 to £3,000 to a new build or major renovation, but provides reliable high-speed connectivity throughout the property.',
   'Retrofitting smart wiring into an existing property costs more than installing during a new build or rewire because of the additional cable routing and making good.',
   'Most smart home electrical work is notifiable under Part P if it involves new circuits or modifications to existing circuits — a registered electrician should carry out the work.',
@@ -404,11 +404,11 @@ const sections = [
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/30 p-5 my-4">
           <p className="text-orange-300 text-sm leading-relaxed">
             <strong>Segregation requirement:</strong> Data cables (Cat6) must be run in separate
-            containment from mains power cables. Running both in the same trunking or conduit is a
-            common on-site mistake and a breach of OSG 9th Ed (A4) Reg 7.6, which requires
-            containment to allow separation of power, data, and other circuits. Use dedicated data
-            trunking or conduit, or maintain the separation distances specified by the containment
-            manufacturer.
+            containment from mains power cables. Data and communications cabling is a Band I circuit
+            and mains power is Band II — running both in the same trunking or conduit is a common
+            on-site mistake and a breach of the segregation requirement in OSG 9th Ed (A4) Reg 7.4.1
+            (Segregation of Band I and Band II circuits). Use dedicated data trunking or conduit, or
+            maintain the separation distances specified by the containment manufacturer.
           </p>
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
@@ -416,8 +416,8 @@ const sections = [
             <strong>Pro tip — RCBOs per lighting zone:</strong> Multi-zone smart lighting
             installations create many independent lighting circuits. Protecting these with a single
             upstream RCD means that one faulty smart switch or driver can trip the whole lighting
-            ring. BS 7671:2018+A4:2026 Reg 531.3.1.202(b) specifically recommends considering RCBOs
-            for individual final circuits in residential premises to reduce unwanted tripping.
+            ring. BS 7671:2018+A4:2026 Reg 531.3.2(b) specifically highlights the use of RCBOs for
+            individual final circuits in residential premises to minimise unwanted tripping.
             Specify one RCBO per smart lighting circuit — the modest extra cost avoids call-backs
             and nuisance trips.
           </p>
@@ -611,8 +611,8 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Installation Cost UK 2026: £500–£5,000+ Prices"
-      description="UK smart home installation cost 2026: single-room smart lighting from £500, whole-house Cat6 + lighting + hub installs £5,000+. Fair-margin pricing for UK electricians + clients."
+      title="Smart Home Wiring Renovation Cost UK 2026: £500–£5,000+"
+      description="Smart home wiring renovation cost in the UK (2026): single-room smart lighting from £500, whole-house retrofit with Cat6 + lighting + hub from £5,000+. Real retrofit & rewire pricing for clients and electricians."
       datePublished="2026-03-27"
       dateModified="2026-05-24"
       breadcrumbs={breadcrumbs}
@@ -627,10 +627,17 @@ export default function SmartHomeWiringCostPage() {
       }
       heroSubtitle="Planning a smart home renovation? This guide covers retrofit costs by room and whole-house rewire pricing — smart lighting, Cat6 structured cabling, WiFi access points, smart sockets, switches and dimmers. From £500 for a single room to £5,000+ for a full retrofit, with real 2026 UK pricing from working electricians."
       readingTime={10}
+      answerBox={{
+        question: 'How much does a smart home wiring renovation cost in the UK?',
+        answer:
+          'A smart home wiring renovation typically costs £500–£1,200 for a basic setup (smart switches in the main rooms of a 3-bedroom house), £1,500–£3,000 for a mid-range retrofit adding smart sockets, a hub and Cat6 to key rooms, and £3,000–£5,000+ for a comprehensive whole-house system with structured cabling and WiFi access points. Retrofitting an existing property adds roughly 30–50% over wiring during a new build or rewire.',
+        detail:
+          'The main cost driver is the labour to route cables and make good — not the smart devices themselves.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
-      faqHeading="Frequently Asked Questions About Smart Home Wiring Costs"
+      faqHeading="Frequently Asked Questions About Smart Home Wiring Renovation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Smart Home Installations on Your Phone"
       ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."

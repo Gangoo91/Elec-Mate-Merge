@@ -611,6 +611,11 @@ export default function NICEICvsNAPITComparisonPage() {
       }
       heroSubtitle="A practical comparison of the UK's two leading electrical competent person schemes — registration costs, assessment processes, consumer recognition, insurer acceptance, specialist work coverage, and how to choose between them."
       readingTime={12}
+      answerBox={{
+        question: 'NICEIC or NAPIT — which should I choose?',
+        answer:
+          'Both NICEIC and NAPIT are government-approved competent person scheme operators, letting registered electricians self-certify notifiable work under Part P and certify to BS 7671. Neither is technically "better" — both assess to the same standard. The choice usually comes down to registration and assessment cost, assessment style, customer and insurer recognition (NICEIC has higher public brand awareness), and the specialist schemes each offers.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

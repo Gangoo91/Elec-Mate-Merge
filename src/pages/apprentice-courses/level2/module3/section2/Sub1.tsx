@@ -109,7 +109,7 @@ const quizQuestions = [
       "IET Guidance Note 3 (GN3)",
       "BS 7671 itself",
       "IET On-Site Guide (OSG)",
-      "BS 7671 Appendix 12",
+      "BS 7671 Appendix 4",
     ],
     correctAnswer: 2,
     explanation:

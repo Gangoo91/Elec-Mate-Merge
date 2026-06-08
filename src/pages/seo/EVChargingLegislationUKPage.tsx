@@ -558,6 +558,11 @@ export default function EVChargingLegislationUKPage() {
       }
       heroSubtitle="The complete legal framework for EV charging in the UK — the Electric Vehicles (Smart Charge Points) Regulations 2021, Building Regulations Part S, BS 7671 Section 722, the IET Code of Practice, and the Public Charge Point Regulations 2023 — explained clearly for electricians, businesses, and property developers."
       readingTime={14}
+      answerBox={{
+        question: 'Do I need to notify an EV charger installation?',
+        answer:
+          'Yes. Installing an EV charge point is notifiable electrical work — it normally adds a new dedicated circuit, so it must be notified under the Building Regulations (Part P in England) and certified to BS 7671. It must comply with Section 722, including a dedicated RCD with DC fault detection, and is registered either through a competent person scheme or via building control.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -22,6 +22,18 @@ const boolish = z.preprocess((v) => {
   return false;
 }, z.boolean());
 
+// Numeric inputs (measured Zs, R1+R2, insulation MΩ, computed values, board
+// scan / AI fills) can arrive as JS numbers, but every text field in this
+// schema is a string. PDF Monkey renders numbers fine, so a number here is not
+// a real error — coerce defensively so validation doesn't raise false "schema
+// drift" noise (this was the Solar PV drift: number received where string
+// expected). Booleans are likewise stringified rather than rejected.
+const stringish = z.preprocess((v) => {
+  if (v === null || v === undefined) return v; // let .default() apply
+  if (typeof v === 'number' || typeof v === 'boolean') return String(v);
+  return v;
+}, z.string());
+
 // ─── Item numbers from BS 7671 inspection checklist ──────────────────
 // 85 items across 8 sections
 const INSPECTION_ITEM_NUMBERS = [
@@ -115,11 +127,11 @@ const INSPECTION_ITEM_NUMBERS = [
 const INSPECTION_COLUMNS = ['acc', 'na', 'c1c2', 'c3', 'fi', 'nv', 'lim'] as const;
 
 // Generate the flat inspection key schema: insp_1_0_acc, insp_1_0_na, ... (85 * 7 = 595 keys)
-function buildFlatInspectionSchema(): Record<string, z.ZodOptional<z.ZodDefault<z.ZodString>>> {
-  const shape: Record<string, z.ZodOptional<z.ZodDefault<z.ZodString>>> = {};
+function buildFlatInspectionSchema(): Record<string, z.ZodTypeAny> {
+  const shape: Record<string, z.ZodTypeAny> = {};
   for (const item of INSPECTION_ITEM_NUMBERS) {
     for (const col of INSPECTION_COLUMNS) {
-      shape[`insp_${item}_${col}`] = z.string().default('').optional();
+      shape[`insp_${item}_${col}`] = stringish.default('').optional();
     }
   }
   return shape;
@@ -129,80 +141,80 @@ function buildFlatInspectionSchema(): Record<string, z.ZodOptional<z.ZodDefault<
 
 const circuitSchema = z
   .object({
-    id: z.string().default('N/A'),
-    circuit_number: z.string().default('N/A'),
-    circuit_description: z.string().default('N/A'),
-    circuit_type: z.string().default('N/A'),
-    type_of_wiring: z.string().default('N/A'),
-    reference_method: z.string().default('N/A'),
-    points_served: z.string().default('N/A'),
-    live_size: z.string().default('N/A'),
-    cpc_size: z.string().default('N/A'),
-    bs_standard: z.string().default('N/A'),
-    protective_device_type: z.string().default('N/A'),
-    protective_device_curve: z.string().default('N/A'),
-    protective_device_rating: z.string().default('N/A'),
-    protective_device_ka_rating: z.string().default('N/A'),
-    max_zs: z.string().default('N/A'),
-    protective_device_location: z.string().default('N/A'),
-    rcd_bs_standard: z.string().default('N/A'),
-    rcd_type: z.string().default('N/A'),
-    rcd_rating: z.string().default('N/A'),
-    rcd_rating_a: z.string().default('N/A'),
-    ring_r1: z.string().default('N/A'),
-    ring_rn: z.string().default('N/A'),
-    ring_r2: z.string().default('N/A'),
-    r1r2: z.string().default('N/A'),
-    r2: z.string().default('N/A'),
-    ring_continuity_live: z.string().default('N/A'),
-    ring_continuity_neutral: z.string().default('N/A'),
-    insulation_test_voltage: z.string().default('N/A'),
-    insulation_live_neutral: z.string().default('N/A'),
-    insulation_live_earth: z.string().default('N/A'),
-    insulation_resistance: z.string().default('N/A'),
-    insulation_neutral_earth: z.string().default('N/A'),
-    polarity: z.string().default('N/A'),
-    zs: z.string().default('N/A'),
-    rcd_one_x: z.string().default('N/A'),
-    rcd_test_button: z.string().default('N/A'),
-    afdd_test: z.string().default('N/A'),
-    rcd_half_x: z.string().default('N/A'),
-    rcd_five_x: z.string().default('N/A'),
-    pfc: z.string().default('N/A'),
-    pfc_live_neutral: z.string().default('N/A'),
-    pfc_live_earth: z.string().default('N/A'),
-    functional_testing: z.string().default('N/A'),
-    notes: z.string().default('N/A'),
-    source_circuit_id: z.string().default('N/A'),
+    id: stringish.default('N/A'),
+    circuit_number: stringish.default('N/A'),
+    circuit_description: stringish.default('N/A'),
+    circuit_type: stringish.default('N/A'),
+    type_of_wiring: stringish.default('N/A'),
+    reference_method: stringish.default('N/A'),
+    points_served: stringish.default('N/A'),
+    live_size: stringish.default('N/A'),
+    cpc_size: stringish.default('N/A'),
+    bs_standard: stringish.default('N/A'),
+    protective_device_type: stringish.default('N/A'),
+    protective_device_curve: stringish.default('N/A'),
+    protective_device_rating: stringish.default('N/A'),
+    protective_device_ka_rating: stringish.default('N/A'),
+    max_zs: stringish.default('N/A'),
+    protective_device_location: stringish.default('N/A'),
+    rcd_bs_standard: stringish.default('N/A'),
+    rcd_type: stringish.default('N/A'),
+    rcd_rating: stringish.default('N/A'),
+    rcd_rating_a: stringish.default('N/A'),
+    ring_r1: stringish.default('N/A'),
+    ring_rn: stringish.default('N/A'),
+    ring_r2: stringish.default('N/A'),
+    r1r2: stringish.default('N/A'),
+    r2: stringish.default('N/A'),
+    ring_continuity_live: stringish.default('N/A'),
+    ring_continuity_neutral: stringish.default('N/A'),
+    insulation_test_voltage: stringish.default('N/A'),
+    insulation_live_neutral: stringish.default('N/A'),
+    insulation_live_earth: stringish.default('N/A'),
+    insulation_resistance: stringish.default('N/A'),
+    insulation_neutral_earth: stringish.default('N/A'),
+    polarity: stringish.default('N/A'),
+    zs: stringish.default('N/A'),
+    rcd_one_x: stringish.default('N/A'),
+    rcd_test_button: stringish.default('N/A'),
+    afdd_test: stringish.default('N/A'),
+    rcd_half_x: stringish.default('N/A'),
+    rcd_five_x: stringish.default('N/A'),
+    pfc: stringish.default('N/A'),
+    pfc_live_neutral: stringish.default('N/A'),
+    pfc_live_earth: stringish.default('N/A'),
+    functional_testing: stringish.default('N/A'),
+    notes: stringish.default('N/A'),
+    source_circuit_id: stringish.default('N/A'),
     auto_filled: z.union([boolish, z.string()]).default(false),
-    phase_type: z.string().default('N/A'),
-    phase_rotation: z.string().default('N/A'),
-    phase_balance_l1: z.string().default('N/A'),
-    phase_balance_l2: z.string().default('N/A'),
-    phase_balance_l3: z.string().default('N/A'),
-    line_to_line_voltage: z.string().default('N/A'),
-    circuit_designation: z.string().default('N/A'),
-    type: z.string().default('N/A'),
-    cable_size: z.string().default('N/A'),
-    protective_device: z.string().default('N/A'),
+    phase_type: stringish.default('N/A'),
+    phase_rotation: stringish.default('N/A'),
+    phase_balance_l1: stringish.default('N/A'),
+    phase_balance_l2: stringish.default('N/A'),
+    phase_balance_l3: stringish.default('N/A'),
+    line_to_line_voltage: stringish.default('N/A'),
+    circuit_designation: stringish.default('N/A'),
+    type: stringish.default('N/A'),
+    cable_size: stringish.default('N/A'),
+    protective_device: stringish.default('N/A'),
   })
   .passthrough();
 
 const boardWithScheduleSchema = z
   .object({
-    db_reference: z.string().default('Main DB'),
-    db_location: z.string().default(''),
-    db_manufacturer: z.string().default(''),
-    db_type: z.string().default(''),
-    db_ways: z.string().default(''),
-    db_zdb: z.string().default(''),
-    db_ipf: z.string().default(''),
-    zdb: z.string().default(''),
-    ipf: z.string().default(''),
-    supplied_from: z.string().default(''),
-    incoming_device_bs_en: z.string().default(''),
-    incoming_device_type: z.string().default(''),
-    incoming_device_rating: z.string().default(''),
+    db_reference: stringish.default('Main DB'),
+    db_location: stringish.default(''),
+    db_manufacturer: stringish.default(''),
+    db_type: stringish.default(''),
+    db_ways: stringish.default(''),
+    db_zdb: stringish.default(''),
+    db_ipf: stringish.default(''),
+    zdb: stringish.default(''),
+    ipf: stringish.default(''),
+    supplied_from: stringish.default(''),
+    incoming_device_bs_en: stringish.default(''),
+    incoming_device_type: stringish.default(''),
+    incoming_device_rating: stringish.default(''),
     polarity_confirmed: boolish.default(false),
     phase_sequence_confirmed: boolish.default(false),
     ring_final_circuit_confirmed: boolish.default(false),
@@ -211,15 +223,15 @@ const boardWithScheduleSchema = z
     spd_t1: boolish.default(false),
     spd_t2: boolish.default(false),
     spd_t3: boolish.default(false),
-    spd_type: z.string().default(''),
-    spd_make: z.string().default(''),
-    spd_model: z.string().default(''),
-    spd_location: z.string().default(''),
-    spd_rated_current_ka: z.string().default(''),
-    main_switch_bs_en: z.string().default(''),
-    main_switch_type: z.string().default(''),
-    main_switch_rating: z.string().default(''),
-    main_switch_poles: z.string().default(''),
+    spd_type: stringish.default(''),
+    spd_make: stringish.default(''),
+    spd_model: stringish.default(''),
+    spd_location: stringish.default(''),
+    spd_rated_current_ka: stringish.default(''),
+    main_switch_bs_en: stringish.default(''),
+    main_switch_type: stringish.default(''),
+    main_switch_rating: stringish.default(''),
+    main_switch_poles: stringish.default(''),
     circuit_count: z.number().default(0),
     circuits: z.array(circuitSchema).default([]),
   })
@@ -227,12 +239,12 @@ const boardWithScheduleSchema = z
 
 const observationSchema = z
   .object({
-    id: z.string().default(''),
-    item: z.string().default(''),
-    defect_code: z.string().default(''),
-    description: z.string().default(''),
-    recommendation: z.string().default(''),
-    regulation: z.string().default(''),
+    id: stringish.default(''),
+    item: stringish.default(''),
+    defect_code: stringish.default(''),
+    description: stringish.default(''),
+    recommendation: stringish.default(''),
+    regulation: stringish.default(''),
     rectified: boolish.default(false),
     photo_evidence: z.array(z.string()).default([]),
     photo_count: z.number().default(0),
@@ -241,22 +253,22 @@ const observationSchema = z
 
 const additionalBoardSchema = z
   .object({
-    designation: z.string().default(''),
-    location: z.string().default(''),
-    manufacturer: z.string().default(''),
-    board_type: z.string().default(''),
-    ways: z.string().default(''),
-    zdb: z.string().default(''),
-    ipf: z.string().default(''),
+    designation: stringish.default(''),
+    location: stringish.default(''),
+    manufacturer: stringish.default(''),
+    board_type: stringish.default(''),
+    ways: stringish.default(''),
+    zdb: stringish.default(''),
+    ipf: stringish.default(''),
     // A4:2026 — sub-boards must carry full board details (parity with main)
-    supplied_from: z.string().default(''),
-    incoming_device_bs_en: z.string().default(''),
-    incoming_device_type: z.string().default(''),
-    incoming_device_rating: z.string().default(''),
-    main_switch_bs_en: z.string().default(''),
-    main_switch_type: z.string().default(''),
-    main_switch_rating: z.string().default(''),
-    main_switch_poles: z.string().default(''),
+    supplied_from: stringish.default(''),
+    incoming_device_bs_en: stringish.default(''),
+    incoming_device_type: stringish.default(''),
+    incoming_device_rating: stringish.default(''),
+    main_switch_bs_en: stringish.default(''),
+    main_switch_type: stringish.default(''),
+    main_switch_rating: stringish.default(''),
+    main_switch_poles: stringish.default(''),
     polarity_confirmed: boolish.default(false),
     phase_sequence_confirmed: boolish.default(false),
     ring_final_circuit_confirmed: boolish.default(false),
@@ -265,67 +277,67 @@ const additionalBoardSchema = z
     spd_t1: boolish.default(false),
     spd_t2: boolish.default(false),
     spd_t3: boolish.default(false),
-    spd_type: z.string().default(''),
-    spd_make: z.string().default(''),
-    spd_model: z.string().default(''),
-    spd_location: z.string().default(''),
-    spd_rated_current_ka: z.string().default(''),
+    spd_type: stringish.default(''),
+    spd_make: stringish.default(''),
+    spd_model: stringish.default(''),
+    spd_location: stringish.default(''),
+    spd_rated_current_ka: stringish.default(''),
   })
   .passthrough();
 
 const inspectionChecklistItemSchema = z
   .object({
-    id: z.string().default(''),
-    item_number: z.string().default(''),
-    description: z.string().default(''),
-    outcome: z.string().default(''),
-    clause: z.string().default(''),
-    notes: z.string().default(''),
-    section_num: z.string().default(''),
-    col_acc: z.string().default(''),
-    col_na: z.string().default(''),
-    col_c1c2: z.string().default(''),
-    col_c3: z.string().default(''),
-    col_fi: z.string().default(''),
-    col_nv: z.string().default(''),
-    col_lim: z.string().default(''),
+    id: stringish.default(''),
+    item_number: stringish.default(''),
+    description: stringish.default(''),
+    outcome: stringish.default(''),
+    clause: stringish.default(''),
+    notes: stringish.default(''),
+    section_num: stringish.default(''),
+    col_acc: stringish.default(''),
+    col_na: stringish.default(''),
+    col_c1c2: stringish.default(''),
+    col_c3: stringish.default(''),
+    col_fi: stringish.default(''),
+    col_nv: stringish.default(''),
+    col_lim: stringish.default(''),
   })
   .passthrough();
 
 const inspectionSectionItemSchema = z
   .object({
-    id: z.string().default(''),
-    item_number: z.string().default(''),
-    item: z.string().default(''),
-    clause: z.string().default(''),
-    outcome: z.string().default(''),
-    outcome_display: z.string().default(''),
-    notes: z.string().default(''),
+    id: stringish.default(''),
+    item_number: stringish.default(''),
+    item: stringish.default(''),
+    clause: stringish.default(''),
+    outcome: stringish.default(''),
+    outcome_display: stringish.default(''),
+    notes: stringish.default(''),
   })
   .passthrough();
 
 const inspectionSectionSchema = z
   .object({
-    section_name: z.string().default(''),
-    clause: z.string().default(''),
+    section_name: stringish.default(''),
+    clause: stringish.default(''),
     items: z.array(inspectionSectionItemSchema).default([]),
   })
   .passthrough();
 
 const circuitPlanningSchema = z
   .object({
-    id: z.string().default(''),
-    circuit_number: z.string().default(''),
-    cable_size: z.string().default(''),
-    cable_type: z.string().default(''),
-    protective_device_rating: z.string().default(''),
-    circuit_description: z.string().default(''),
+    id: stringish.default(''),
+    circuit_number: stringish.default(''),
+    cable_size: stringish.default(''),
+    cable_type: stringish.default(''),
+    protective_device_rating: stringish.default(''),
+    circuit_description: stringish.default(''),
   })
   .passthrough();
 
 // ─── Root schema ─────────────────────────────────────────────────────
 
-const s = z.string().default('').optional();
+const s = stringish.default('').optional();
 const b = boolish.default(false).optional();
 
 export const eicrPayloadSchema = z
@@ -334,128 +346,128 @@ export const eicrPayloadSchema = z
 
     metadata: z
       .object({
-        certificate_number: z.string().default(''),
-        form_version: z.string().default('1.0'),
-        export_timestamp: z.string().default(''),
+        certificate_number: stringish.default(''),
+        form_version: stringish.default('1.0'),
+        export_timestamp: stringish.default(''),
       })
       .default({}),
 
     client_details: z
       .object({
-        client_name: z.string().default(''),
-        client_address: z.string().default(''),
-        client_phone: z.string().default(''),
-        client_email: z.string().default(''),
+        client_name: stringish.default(''),
+        client_address: stringish.default(''),
+        client_phone: stringish.default(''),
+        client_email: stringish.default(''),
       })
       .default({}),
 
     installation_details: z
       .object({
-        address: z.string().default(''),
+        address: stringish.default(''),
         same_as_client_address: boolish.default(false),
-        occupier: z.string().default(''),
-        installation_type: z.string().default(''),
-        description: z.string().default(''),
-        premises_type: z.string().default(''),
-        other_premises_description: z.string().default(''),
-        installation_date: z.string().default(''),
-        test_date: z.string().default(''),
-        construction_date: z.string().default(''),
-        estimated_age: z.string().default(''),
-        age_unit: z.string().default(''),
+        occupier: stringish.default(''),
+        installation_type: stringish.default(''),
+        description: stringish.default(''),
+        premises_type: stringish.default(''),
+        other_premises_description: stringish.default(''),
+        installation_date: stringish.default(''),
+        test_date: stringish.default(''),
+        construction_date: stringish.default(''),
+        estimated_age: stringish.default(''),
+        age_unit: stringish.default(''),
         // Valid values: '' | 'known' | 'unknown' | 'first'
         // Frontend stores 'not-applicable' — normaliseLastInspectionType() in eicrJsonFormatter maps it to 'first'
         last_inspection_type: z.enum(['', 'known', 'unknown', 'first']).default(''),
-        date_of_last_inspection: z.string().default(''),
-        evidence_of_alterations: z.string().default(''),
-        alterations_details: z.string().default(''),
-        alterations_age: z.string().default(''),
-        installation_records_available: z.string().default(''),
-        purpose_of_inspection: z.string().default(''),
-        other_purpose: z.string().default(''),
-        agreed_with: z.string().default(''),
-        extent_of_inspection: z.string().default(''),
-        limitations_of_inspection: z.string().default(''),
-        operational_limitations: z.string().default(''),
-        bs_amendment: z.string().default(''),
-        next_inspection_date: z.string().default(''),
-        inspection_interval: z.string().default(''),
-        interval_reasons: z.string().default(''),
+        date_of_last_inspection: stringish.default(''),
+        evidence_of_alterations: stringish.default(''),
+        alterations_details: stringish.default(''),
+        alterations_age: stringish.default(''),
+        installation_records_available: stringish.default(''),
+        purpose_of_inspection: stringish.default(''),
+        other_purpose: stringish.default(''),
+        agreed_with: stringish.default(''),
+        extent_of_inspection: stringish.default(''),
+        limitations_of_inspection: stringish.default(''),
+        operational_limitations: stringish.default(''),
+        bs_amendment: stringish.default(''),
+        next_inspection_date: stringish.default(''),
+        inspection_interval: stringish.default(''),
+        interval_reasons: stringish.default(''),
       })
       .default({}),
 
     standards_compliance: z
       .object({
-        design_standard: z.string().default('BS7671'),
-        part_p_compliance: z.string().default(''),
+        design_standard: stringish.default('BS7671'),
+        part_p_compliance: stringish.default(''),
       })
       .default({}),
 
     supply_characteristics: z
       .object({
-        supply_voltage: z.string().default(''),
-        supply_frequency: z.string().default('50'),
-        supply_ac_dc: z.string().default('ac'),
-        conductor_configuration: z.string().default(''),
-        dc_conductor_config: z.string().default(''),
-        phases: z.string().default(''),
-        earthing_arrangement: z.string().default(''),
-        tncs_variant: z.string().default(''), // A4:2026 — 'pme' | 'pnb' for TN-C-S
-        supply_type: z.string().default(''),
-        supply_pme: z.string().default(''),
-        dno_name: z.string().default(''),
-        mpan: z.string().default(''),
-        cutout_location: z.string().default(''),
-        service_entry: z.string().default(''),
-        external_ze: z.string().default(''),
-        prospective_fault_current: z.string().default(''),
+        supply_voltage: stringish.default(''),
+        supply_frequency: stringish.default('50'),
+        supply_ac_dc: stringish.default('ac'),
+        conductor_configuration: stringish.default(''),
+        dc_conductor_config: stringish.default(''),
+        phases: stringish.default(''),
+        earthing_arrangement: stringish.default(''),
+        tncs_variant: stringish.default(''), // A4:2026 — 'pme' | 'pnb' for TN-C-S
+        supply_type: stringish.default(''),
+        supply_pme: stringish.default(''),
+        dno_name: stringish.default(''),
+        mpan: stringish.default(''),
+        cutout_location: stringish.default(''),
+        service_entry: stringish.default(''),
+        external_ze: stringish.default(''),
+        prospective_fault_current: stringish.default(''),
         supply_polarity_confirmed: boolish.default(false),
-        other_sources_of_supply: z.string().default(''),
+        other_sources_of_supply: stringish.default(''),
         other_sources_of_supply_present: boolish.default(false),
       })
       .default({}),
 
     main_protective_device: z
       .object({
-        bs_en: z.string().default(''),
-        device_type: z.string().default(''),
-        main_switch_rating: z.string().default(''),
-        main_switch_location: z.string().default(''),
-        main_switch_poles: z.string().default(''),
-        main_switch_voltage_rating: z.string().default(''),
-        fuse_device_rating: z.string().default(''),
-        breaking_capacity: z.string().default(''),
+        bs_en: stringish.default(''),
+        device_type: stringish.default(''),
+        main_switch_rating: stringish.default(''),
+        main_switch_location: stringish.default(''),
+        main_switch_poles: stringish.default(''),
+        main_switch_voltage_rating: stringish.default(''),
+        fuse_device_rating: stringish.default(''),
+        breaking_capacity: stringish.default(''),
       })
       .default({}),
 
     rcd_details: z
       .object({
-        rcd_main_switch: z.string().default(''),
-        rcd_rating: z.string().default(''),
-        rcd_type: z.string().default(''),
-        rcd_time_delay: z.string().default(''),
-        rcd_measured_time: z.string().default(''),
-        rcd_breaking_capacity: z.string().default(''),
+        rcd_main_switch: stringish.default(''),
+        rcd_rating: stringish.default(''),
+        rcd_type: stringish.default(''),
+        rcd_time_delay: stringish.default(''),
+        rcd_measured_time: stringish.default(''),
+        rcd_breaking_capacity: stringish.default(''),
       })
       .default({}),
 
     distribution_board: z
       .object({
-        board_designation: z.string().default('Main DB'),
-        board_size: z.string().default(''),
-        board_type: z.string().default(''),
-        board_location: z.string().default(''),
-        board_manufacturer: z.string().default(''),
-        board_ways: z.string().default(''),
+        board_designation: stringish.default('Main DB'),
+        board_size: stringish.default(''),
+        board_type: stringish.default(''),
+        board_location: stringish.default(''),
+        board_manufacturer: stringish.default(''),
+        board_ways: stringish.default(''),
       })
       .default({}),
 
     cables: z
       .object({
-        intake_cable_size: z.string().default(''),
-        intake_cable_type: z.string().default(''),
-        tails_size: z.string().default(''),
-        tails_length: z.string().default(''),
+        intake_cable_size: stringish.default(''),
+        intake_cable_type: stringish.default(''),
+        tails_size: stringish.default(''),
+        tails_length: stringish.default(''),
       })
       .default({}),
 
@@ -463,56 +475,56 @@ export const eicrPayloadSchema = z
       .object({
         means_of_earthing_distributor: boolish.default(false),
         means_of_earthing_electrode: boolish.default(false),
-        earth_electrode_type: z.string().default(''),
-        earth_electrode_location: z.string().default(''),
-        earth_electrode_resistance: z.string().default(''),
-        main_earthing_conductor_type: z.string().default(''),
-        main_earthing_conductor_size: z.string().default(''),
-        main_earthing_conductor: z.string().default(''),
-        main_bonding_conductor_type: z.string().default(''),
-        main_bonding_conductor: z.string().default(''),
-        main_bonding_size: z.string().default(''),
-        main_bonding_size_custom: z.string().default(''),
-        main_bonding_locations: z.string().default(''),
+        earth_electrode_type: stringish.default(''),
+        earth_electrode_location: stringish.default(''),
+        earth_electrode_resistance: stringish.default(''),
+        main_earthing_conductor_type: stringish.default(''),
+        main_earthing_conductor_size: stringish.default(''),
+        main_earthing_conductor: stringish.default(''),
+        main_bonding_conductor_type: stringish.default(''),
+        main_bonding_conductor: stringish.default(''),
+        main_bonding_size: stringish.default(''),
+        main_bonding_size_custom: stringish.default(''),
+        main_bonding_locations: stringish.default(''),
         bonding_water: boolish.default(false),
         bonding_gas: boolish.default(false),
         bonding_oil: boolish.default(false),
         bonding_structural_steel: boolish.default(false),
         bonding_lightning_protection: boolish.default(false),
         bonding_other: boolish.default(false),
-        bonding_other_specify: z.string().default(''),
-        bonding_compliance: z.string().default(''),
+        bonding_other_specify: stringish.default(''),
+        bonding_compliance: stringish.default(''),
         earthing_conductor_continuity_verified: boolish.default(false),
         bonding_conductor_continuity_verified: boolish.default(false),
-        supplementary_bonding: z.string().default(''),
-        supplementary_bonding_size: z.string().default(''),
-        supplementary_bonding_size_custom: z.string().default(''),
-        equipotential_bonding: z.string().default(''),
+        supplementary_bonding: stringish.default(''),
+        supplementary_bonding_size: stringish.default(''),
+        supplementary_bonding_size_custom: stringish.default(''),
+        equipotential_bonding: stringish.default(''),
       })
       .default({}),
 
     test_instrument_details: z
       .object({
-        make_model: z.string().default(''),
-        serial_number: z.string().default(''),
-        calibration_date: z.string().default(''),
-        test_temperature: z.string().default(''),
+        make_model: stringish.default(''),
+        serial_number: stringish.default(''),
+        calibration_date: stringish.default(''),
+        test_temperature: stringish.default(''),
       })
       .default({}),
 
     test_information: z
       .object({
-        test_method: z.string().default(''),
-        test_voltage: z.string().default(''),
-        test_notes: z.string().default(''),
+        test_method: stringish.default(''),
+        test_voltage: stringish.default(''),
+        test_notes: stringish.default(''),
       })
       .default({}),
 
     distribution_board_verification: z
       .object({
-        db_reference: z.string().default('Main DB'),
-        zdb: z.string().default(''),
-        ipf: z.string().default(''),
+        db_reference: stringish.default('Main DB'),
+        zdb: stringish.default(''),
+        ipf: stringish.default(''),
         confirmed_correct_polarity: boolish.default(false),
         confirmed_phase_sequence: boolish.default(false),
         ring_final_circuit_confirmed: boolish.default(false),
@@ -521,26 +533,26 @@ export const eicrPayloadSchema = z
         spd_t1: boolish.default(false),
         spd_t2: boolish.default(false),
         spd_t3: boolish.default(false),
-        spd_type: z.string().default(''),
-        spd_make: z.string().default(''),
-        spd_model: z.string().default(''),
-        spd_location: z.string().default(''),
-        spd_rated_current_ka: z.string().default(''),
+        spd_type: stringish.default(''),
+        spd_make: stringish.default(''),
+        spd_model: stringish.default(''),
+        spd_location: stringish.default(''),
+        spd_rated_current_ka: stringish.default(''),
       })
       .default({}),
 
     designer: z
       .object({
-        name: z.string().default(''),
-        qualifications: z.string().default(''),
-        company: z.string().default(''),
-        address: z.string().default(''),
-        postcode: z.string().default(''),
-        phone: z.string().default(''),
-        date: z.string().default(''),
-        signature: z.string().default(''),
-        departures: z.string().default(''),
-        permitted_exceptions: z.string().default(''),
+        name: stringish.default(''),
+        qualifications: stringish.default(''),
+        company: stringish.default(''),
+        address: stringish.default(''),
+        postcode: stringish.default(''),
+        phone: stringish.default(''),
+        date: stringish.default(''),
+        signature: stringish.default(''),
+        departures: stringish.default(''),
+        permitted_exceptions: stringish.default(''),
       })
       .default({}),
 
@@ -550,22 +562,22 @@ export const eicrPayloadSchema = z
       (val) => (typeof val === 'function' ? undefined : val),
       z
         .object({
-          name: z.string().default(''),
-          qualifications: z.string().default(''),
-          company: z.string().default(''),
-          date: z.string().default(''),
-          signature: z.string().default(''),
+          name: stringish.default(''),
+          qualifications: stringish.default(''),
+          company: stringish.default(''),
+          date: stringish.default(''),
+          signature: stringish.default(''),
         })
         .default({})
     ),
 
     inspector: z
       .object({
-        name: z.string().default(''),
-        qualifications: z.string().default(''),
-        company: z.string().default(''),
-        date: z.string().default(''),
-        signature: z.string().default(''),
+        name: stringish.default(''),
+        qualifications: stringish.default(''),
+        company: stringish.default(''),
+        date: stringish.default(''),
+        signature: stringish.default(''),
       })
       .default({}),
 
@@ -573,58 +585,58 @@ export const eicrPayloadSchema = z
       .object({
         same_as_designer: boolish.default(false),
         same_as_constructor: boolish.default(false),
-        additional_notes: z.string().default(''),
+        additional_notes: stringish.default(''),
         inspected_by: z
           .object({
-            name: z.string().default(''),
-            signature: z.string().default(''),
-            date: z.string().default(''),
-            for_on_behalf_of: z.string().default(''),
-            position: z.string().default(''),
-            address: z.string().default(''),
-            cp_scheme: z.string().default(''),
+            name: stringish.default(''),
+            signature: stringish.default(''),
+            date: stringish.default(''),
+            for_on_behalf_of: stringish.default(''),
+            position: stringish.default(''),
+            address: stringish.default(''),
+            cp_scheme: stringish.default(''),
             cp_scheme_na: boolish.default(false),
           })
           .default({}),
         report_authorised_by: z
           .object({
-            name: z.string().default(''),
-            date: z.string().default(''),
-            signature: z.string().default(''),
-            for_on_behalf_of: z.string().default(''),
-            position: z.string().default(''),
-            address: z.string().default(''),
-            membership_no: z.string().default(''),
+            name: stringish.default(''),
+            date: stringish.default(''),
+            signature: stringish.default(''),
+            for_on_behalf_of: stringish.default(''),
+            position: stringish.default(''),
+            address: stringish.default(''),
+            membership_no: stringish.default(''),
           })
           .default({}),
         bs7671_compliance: boolish.default(false),
         building_regs_compliance: boolish.default(false),
         competent_person_scheme: boolish.default(false),
-        overall_assessment: z.string().default(''),
-        satisfactory_for_continued_use: z.string().default(''),
+        overall_assessment: stringish.default(''),
+        satisfactory_for_continued_use: stringish.default(''),
       })
       .default({}),
 
     company_details: z
       .object({
-        company_name: z.string().default(''),
-        company_address: z.string().default(''),
-        company_phone: z.string().default(''),
-        company_email: z.string().default(''),
-        company_website: z.string().default(''),
-        company_logo: z.string().default(''),
-        company_tagline: z.string().default(''),
-        company_accent_color: z.string().default(''),
-        company_registration_number: z.string().default(''),
-        vat_number: z.string().default(''),
-        registration_scheme: z.string().default(''),
-        registration_number: z.string().default(''),
-        registration_expiry: z.string().default(''),
-        insurance_provider: z.string().default(''),
-        insurance_policy_number: z.string().default(''),
-        insurance_coverage: z.string().default(''),
-        insurance_expiry: z.string().default(''),
-        registration_scheme_logo: z.string().default(''),
+        company_name: stringish.default(''),
+        company_address: stringish.default(''),
+        company_phone: stringish.default(''),
+        company_email: stringish.default(''),
+        company_website: stringish.default(''),
+        company_logo: stringish.default(''),
+        company_tagline: stringish.default(''),
+        company_accent_color: stringish.default(''),
+        company_registration_number: stringish.default(''),
+        vat_number: stringish.default(''),
+        registration_scheme: stringish.default(''),
+        registration_number: stringish.default(''),
+        registration_expiry: stringish.default(''),
+        insurance_provider: stringish.default(''),
+        insurance_policy_number: stringish.default(''),
+        insurance_coverage: stringish.default(''),
+        insurance_expiry: stringish.default(''),
+        registration_scheme_logo: stringish.default(''),
       })
       .default({}),
 

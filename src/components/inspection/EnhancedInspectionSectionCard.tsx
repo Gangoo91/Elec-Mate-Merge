@@ -121,13 +121,29 @@ const EnhancedInspectionSectionCard = ({
     return inspectionItem?.outcome !== undefined && inspectionItem.outcome !== '';
   });
   const completedCount = completedItems.length;
+  const countOutcomes = (codes: string[]) =>
+    sectionItems.filter((sItem) => {
+      const it = inspectionItems.find((item) => item.id === sItem.id);
+      return it?.outcome ? codes.includes(it.outcome) : false;
+    }).length;
+  const c1c2Count = countOutcomes(['C1', 'C2']);
+  const c3Count = countOutcomes(['C3']);
   const progressPercent =
     sectionItems.length > 0 ? Math.round((completedCount / sectionItems.length) * 100) : 0;
   const isComplete = progressPercent === 100;
 
   return (
-    <div data-section={section.id}>
-      <div className="h-[1px] bg-gradient-to-r from-elec-yellow/30 via-elec-yellow/10 to-transparent" />
+    <div
+      data-section={section.id}
+      className={cn(
+        'rounded-2xl border overflow-hidden transition-colors',
+        isComplete
+          ? 'border-green-500/20 bg-green-500/[0.03]'
+          : isExpanded
+            ? 'border-elec-yellow/25 bg-white/[0.035]'
+            : 'border-white/[0.08] bg-white/[0.025] hover:border-white/[0.14]'
+      )}
+    >
       <Collapsible
         open={isExpanded}
         onOpenChange={() => {
@@ -135,48 +151,70 @@ const EnhancedInspectionSectionCard = ({
           onToggle();
         }}
       >
-        {/* Section Header — clean compact */}
+        {/* Section Header — number badge, title, inline progress bar */}
         <CollapsibleTrigger className="w-full" asChild>
-          <button
-            className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all"
-          >
-            {/* Section number */}
+          <button className="w-full flex items-center gap-3 p-3.5 text-left touch-manipulation active:scale-[0.99] transition-all">
+            {/* Section number / done badge */}
             <span
               className={cn(
-                'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0',
+                'w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold flex-shrink-0 ring-1',
                 isComplete
-                  ? 'bg-green-500/15 text-green-400'
+                  ? 'bg-green-500/15 text-green-400 ring-green-500/30'
                   : progressPercent > 0
-                    ? 'bg-elec-yellow/15 text-elec-yellow'
-                    : 'bg-white/[0.06] text-white'
+                    ? 'bg-elec-yellow/15 text-elec-yellow ring-elec-yellow/30'
+                    : 'bg-white/[0.06] text-white/80 ring-white/10'
               )}
             >
-              {isComplete ? <CheckCircle className="h-3.5 w-3.5" /> : section.sectionNumber}
+              {isComplete ? <CheckCircle className="h-4 w-4" /> : section.sectionNumber}
             </span>
 
-            {/* Title */}
+            {/* Title + progress bar */}
             <div className="flex-1 min-w-0">
               <h3 className={cn('text-sm font-semibold truncate', isComplete ? 'text-green-400' : 'text-white')}>
                 {section.title}
               </h3>
+              <div className="mt-1.5 flex items-center gap-2">
+                <div className="flex-1 h-1 rounded-full bg-white/[0.07] overflow-hidden">
+                  <div
+                    className={cn(
+                      'h-full rounded-full transition-all duration-300',
+                      isComplete ? 'bg-green-500/80' : 'bg-elec-yellow/80'
+                    )}
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+                <span
+                  className={cn(
+                    'text-[10px] font-bold tabular-nums flex-shrink-0',
+                    isComplete ? 'text-green-400' : progressPercent > 0 ? 'text-elec-yellow' : 'text-white/45'
+                  )}
+                >
+                  {completedCount}/{sectionItems.length}
+                </span>
+              </div>
             </div>
 
-            {/* Progress */}
-            <span className={cn(
-              'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
-              isComplete
-                ? 'bg-green-500/15 text-green-400'
-                : progressPercent > 0
-                  ? 'bg-white/[0.06] text-elec-yellow'
-                  : 'bg-white/[0.04] text-white'
-            )}>
-              {completedCount}/{sectionItems.length}
-            </span>
+            {/* Defect badges — visible while collapsed so a section's state
+                reads at a glance without expanding it */}
+            {(c1c2Count > 0 || c3Count > 0) && (
+              <div className="flex items-center gap-1 flex-shrink-0">
+                {c1c2Count > 0 && (
+                  <span className="text-[10px] font-bold text-red-400 bg-red-500/15 border border-red-500/25 px-1.5 py-0.5 rounded-md">
+                    {c1c2Count}
+                  </span>
+                )}
+                {c3Count > 0 && (
+                  <span className="text-[10px] font-bold text-yellow-400 bg-yellow-500/15 border border-yellow-500/25 px-1.5 py-0.5 rounded-md">
+                    {c3Count}
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* Chevron */}
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white transition-transform duration-200 flex-shrink-0',
+                'h-5 w-5 text-white/60 transition-transform duration-200 flex-shrink-0',
                 isExpanded && 'rotate-180'
               )}
             />
@@ -237,23 +275,20 @@ const EnhancedInspectionSectionCard = ({
           <div className="h-[1px] bg-gradient-to-r from-elec-yellow/20 to-transparent" />
           <div className={cn(isMobile ? 'px-2 py-2' : 'p-4')}>
             {/* Desktop Table View */}
-            <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden">
+            <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden bg-black/20">
               <Table>
                 <TableHeader>
-                  <TableRow className="hover:bg-white/5 border-white/10 bg-white/[0.02]">
-                    <TableHead className="w-14 text-center text-white text-xs uppercase tracking-wider">
-                      Status
+                  <TableRow className="hover:bg-transparent border-white/10 bg-white/[0.03]">
+                    <TableHead className="pl-4 text-left text-white/55 text-[11px] font-semibold uppercase tracking-wider">
+                      Item &amp; Regulation
                     </TableHead>
-                    <TableHead className="text-left text-white text-xs uppercase tracking-wider">
-                      Item & Regulation
-                    </TableHead>
-                    <TableHead className="w-72 text-left text-white text-xs uppercase tracking-wider">
+                    <TableHead className="w-[440px] text-left text-white/55 text-[11px] font-semibold uppercase tracking-wider">
                       Outcome
                     </TableHead>
-                    <TableHead className="text-left text-white text-xs uppercase tracking-wider">
+                    <TableHead className="text-left text-white/55 text-[11px] font-semibold uppercase tracking-wider">
                       Notes
                     </TableHead>
-                    <TableHead className="w-24 text-center text-white text-xs uppercase tracking-wider">
+                    <TableHead className="w-24 text-center text-white/55 text-[11px] font-semibold uppercase tracking-wider">
                       Actions
                     </TableHead>
                   </TableRow>

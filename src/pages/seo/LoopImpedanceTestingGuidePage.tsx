@@ -608,6 +608,11 @@ export default function LoopImpedanceTestingGuidePage() {
       }
       heroSubtitle="The complete UK electrician's guide to earth fault loop impedance testing — measuring Ze and Zs, calculating prospective fault current, maximum Zs values for Type B and Type C MCBs, live vs calculated methods, temperature correction, and recording results."
       readingTime={14}
+      answerBox={{
+        question: 'What is the difference between Ze and Zs?',
+        answer:
+          'Ze is the external earth fault loop impedance — the part of the loop outside the installation (the supply transformer, the supply cable and the earth return). Zs is the total loop impedance at a point in a circuit, where Zs = Ze + (R1 + R2). Zs must not exceed the maximum for the protective device in BS 7671 Tables 41.2 to 41.4 so the circuit disconnects within the required time.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

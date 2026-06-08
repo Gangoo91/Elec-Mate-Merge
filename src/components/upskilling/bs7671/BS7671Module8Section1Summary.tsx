@@ -23,7 +23,7 @@ const BS7671Module8Section1Summary = () => {
               <ul className="text-sm space-y-1">
                 <li>• Appendix 4: Current-carrying capacities are installation method dependent</li>
                 <li>
-                  • Appendix 12: Voltage drop calculations must consider circuit type and loading
+                  • Appendix 4 (Section 6.4): Voltage drop calculations must consider circuit type and loading
                 </li>
                 <li>• Appendix 14: Zs values are critical for protective device coordination</li>
                 <li>• Cross-referencing between appendices is essential for accurate design</li>

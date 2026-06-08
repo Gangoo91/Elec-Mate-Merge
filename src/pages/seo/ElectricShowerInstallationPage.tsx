@@ -622,6 +622,11 @@ export default function ElectricShowerInstallationPage() {
       }
       heroSubtitle="Electric showers draw up to 52 amps — making the shower circuit one of the most demanding in a domestic installation. This guide covers cable sizing for every kW rating, MCB selection, pull cord vs ceiling switch options, RCD protection, bathroom zone requirements, Part P notification, and the installation mistakes that result in EICR defects."
       readingTime={14}
+      answerBox={{
+        question: 'What cable size do I need for an electric shower?',
+        answer:
+          'It depends on the shower rating and the install conditions. As a guide, an 8.5 to 9.5kW shower draws roughly 37 to 41A and is commonly wired in 10mm² twin and earth on a 40A or 45A breaker; a 10.5kW unit (around 46A) typically needs a 50A device. The correct size always depends on the cable route, grouping and insulation — size it from the design current and apply correction factors (BS 7671 Reg 433.1.1).',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

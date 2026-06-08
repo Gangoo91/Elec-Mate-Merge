@@ -44,6 +44,14 @@ const specialistCerts: CertDef[] = [
     accentColor: 'from-cyan-500 via-cyan-400 to-blue-400',
     category: 'electrical',
   },
+  {
+    id: 'disconnection',
+    title: 'Disconnection',
+    description: 'Circuit & appliance disconnection',
+    standard: 'BS 7671',
+    accentColor: 'from-rose-500 via-pink-400 to-rose-400',
+    category: 'electrical',
+  },
   // Renewables & Energy
   {
     id: 'solar-pv',

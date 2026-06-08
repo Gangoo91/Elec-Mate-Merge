@@ -219,16 +219,16 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'A4:2026 deleted one Appendix and one Annex. Which pair?',
+    question: 'Which item did A4:2026 delete when it withdrew the CRL surge-protection route?',
     options: [
-      'Appendix 7 and Annex A444',
-      'Appendix 17 and Annex B443 (Annex B inside Section 444)',
-      'Appendix 12 and Annex A415',
-      'Appendix 5 and Annex B722',
+      'Appendix 17 (Energy Efficiency)',
+      'Annex A443 (the CRL worked examples), together with Reg 443.5',
+      'Appendix 4 (cable tables)',
+      'Annex A444 (bonding network structures)',
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 deleted Appendix 17 — its energy-efficiency content was promoted into the new Chapter 81 — and deleted Annex B443 within Section 444 (electromagnetic disturbances). Appendix 7 was deleted earlier (by A2:2022). Appendix 12 is marked NOT USED but is not a new A4 deletion. The "NOT USED" markers preserve the IEC 60364 numbering scheme so cross-references stay stable across editions.',
+      "A4:2026 withdrew the CRL (calculated risk level) route for surge protection: Regulation 443.5 and its supporting Annex A443 were deleted, and SPD selection now follows Reg 443.4 directly. Appendix 17 (Energy Efficiency) and Annex A444 were retained. The headline structural change in A4 was the new Chapter 82 for Prosumer's Electrical Installations (PEIs).",
   },
 ];
 
@@ -251,7 +251,7 @@ const faqs = [
   {
     question: 'And what got deleted under A4?',
     answer:
-      'Appendix 7 was deleted by A2:2022. Appendix 12 is NOT USED. A4:2026 itself deleted Appendix 17 (Energy efficiency) — promoted to the new Chapter 81. A4 also deleted Annex B443 within Section 444 (electromagnetic disturbances). The deletion plus the "NOT USED" markers preserve the numbering for IEC alignment.',
+      'Under A4:2026 the main deletions were the CRL (calculated risk level) surge-protection route — Regulation 443.5 and its supporting Annex A443 — along with Appendix 3 Table 3A (RCD time/current performance criteria) and Regulation 514.14 (non-standard colours). Appendix 17 (Energy Efficiency) was retained, and A4 added the new Chapter 82 for Prosumer\'s Electrical Installations (PEIs). BS 7671 keeps the IEC 60364 numbering scheme, so deleted regulation numbers are marked "NOT USED" to keep cross-references stable.',
   },
   {
     question: 'What does Reg 110.1.1 actually do for me on the cert?',

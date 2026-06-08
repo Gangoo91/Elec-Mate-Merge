@@ -562,7 +562,7 @@ const HNCModule3Section6_6 = () => {
             
 
               <p className="text-sm font-medium text-elec-yellow/80">
-                Appendix 12 - Voltage Drop Calculations
+                Appendix 4 (Section 6.4) - Voltage Drop Calculations
               </p>
               <p>Voltage drop = (mV/A/m) × Ib × L / 1000</p>
               <p>

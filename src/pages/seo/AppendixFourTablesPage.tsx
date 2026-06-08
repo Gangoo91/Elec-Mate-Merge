@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -7,9 +8,10 @@ import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'l
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 Appendix 4 Tables: Current Capacity + Volt Drop';
+const PAGE_TITLE =
+  'BS 7671 Appendix 4 Current-Carrying Capacity Table (4D1A, 4D5A)';
 const PAGE_DESCRIPTION =
-  'BS 7671 Appendix 4 cable tables: 4D1A-4J4A current-carrying capacity, voltage drop (mV/A/m), correction factors Ca/Cg/Ci/Cs, reference methods. Free.';
+  'BS 7671 Appendix 4 cable tables in full: Table 4D1A & 4D5A current-carrying capacity (Iz), reference methods A–G, volt drop (mV/A/m) and correction factors Ca/Cg/Ci/Cs. Free lookup.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -19,6 +21,8 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'what-is-appendix-4', label: 'What Is Appendix 4?' },
   { id: 'table-numbering', label: 'Understanding Table Numbering' },
+  { id: 'cc-tables', label: 'Current-Carrying Capacity Table' },
+  { id: 'reference-methods', label: 'Which Reference Method?' },
   { id: 'thermoplastic-tables', label: 'Thermoplastic (PVC) Tables' },
   { id: 'thermosetting-tables', label: 'Thermosetting (XLPE/LSF) Tables' },
   { id: 'voltage-drop-tables', label: 'Voltage Drop Tables' },
@@ -32,7 +36,8 @@ const tocItems = [
 const keyTakeaways = [
   'Appendix 4 contains the current-carrying capacity tables for every cable type and installation method in BS 7671 — it is the core reference for all cable sizing calculations.',
   'Tables are numbered systematically: the letter indicates cable type (D for multicore thermoplastic, E for multicore thermosetting), and the column indicates the reference method (A, B, C, etc.).',
-  'Voltage drop values (mV/A/m) are now in Appendix 12 following Amendment 4 (A4:2026) — previously they were in Appendix 4. The values themselves are unchanged.',
+  // grounded: bs7671_facets — Reg 525.202/525.203 (A4:2026) cite "Appendix 4, Section 6.4" for voltage drop; Reg 125.8 gives 3% lighting / 5% other. No "Appendix 12" exists in the A4 source.
+  'Voltage drop (mV/A/m values and the 3% lighting / 5% other limits) lives in Appendix 4, Section 6.4 of BS 7671:2018+A4:2026 — the same place as the current-carrying capacity tables. Amendment 4 did not move it.',
   'You must use the correct table for your cable type AND the correct column for your reference method — getting either wrong gives the wrong current-carrying capacity.',
   'When sizing cables for underground or buried runs, apply the Cs (soil thermal resistivity) correction factor in addition to Ca (ambient), Cg (grouping), and Ci (thermal insulation) — Cs is required by Appendix 4 for Method D installations and is listed in the underground tables (e.g. Table 4D4A).',
   'Elec-Mate has every Appendix 4 table built into the cable sizing calculator. Select cable type and reference method, and the app looks up the correct value instantly — no more flicking through the brown book.',
@@ -42,7 +47,7 @@ const faqs = [
   {
     question: 'What does Appendix 4 of BS 7671 contain?',
     answer:
-      'Appendix 4 of BS 7671 contains the current-carrying capacity tables for all standard cable types used in UK electrical installations. These tables give the maximum current (in amperes) that a cable of a given size can carry continuously under specific reference conditions — a defined installation method, an ambient temperature of 30 degrees Celsius, no grouping with other circuits, and no thermal insulation. The tables cover thermoplastic (PVC) insulated cables, thermosetting (XLPE and LSF) insulated cables, mineral insulated (MICC) cables, and flexible cables, in sizes from 1mm squared up to 630mm squared or more. Appendix 4 also contains the correction factor tables (Table 4B1 for ambient temperature, Tables 4C1 to 4C5 for grouping) and, prior to Amendment 4, the voltage drop tables (mV/A/m values). After Amendment 4 (A4:2026), the voltage drop tables have been moved to Appendix 12, though the values remain the same.',
+      'Appendix 4 of BS 7671 contains the current-carrying capacity tables for all standard cable types used in UK electrical installations. These tables give the maximum current (in amperes) that a cable of a given size can carry continuously under specific reference conditions — a defined installation method, an ambient temperature of 30 degrees Celsius, no grouping with other circuits, and no thermal insulation. The tables cover thermoplastic (PVC) insulated cables, thermosetting (XLPE and LSF) insulated cables, mineral insulated (MICC) cables, and flexible cables, in sizes from 1mm squared up to 630mm squared or more. Appendix 4 also contains the correction factor tables (Table 4B1 for ambient temperature, Tables 4C1 to 4C5 for grouping) and, in Section 6, the voltage drop data — both the mV/A/m values and the percentage limits, with the numeric voltage-drop maxima given in Appendix 4, Section 6.4. This remains the case in BS 7671:2018+A4:2026.',
   },
   {
     question: 'How do I read the Appendix 4 current-carrying capacity tables?',
@@ -57,7 +62,7 @@ const faqs = [
   {
     question: 'What are mV/A/m voltage drop values and how do I use them?',
     answer:
-      'The mV/A/m (millivolts per ampere per metre) values are used to calculate the voltage drop across a cable run. The voltage drop formula is: VD = mV/A/m x Ib x L / 1000, where VD is the voltage drop in volts, Ib is the design current in amperes, and L is the cable length in metres. The mV/A/m values were previously in Appendix 4 of BS 7671 but have been moved to Appendix 12 following Amendment 4 (A4:2026). The values themselves have not changed. Each cable type and size has a specific mV/A/m value that depends on the conductor resistance and, for AC circuits, the conductor reactance. For single-phase circuits, you use the two-core or single-phase mV/A/m values. For three-phase circuits, the tables provide separate three-phase mV/A/m values that account for the different voltage relationship in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting circuits and 5 percent for all other circuits, measured from the origin of the installation.',
+      'The mV/A/m (millivolts per ampere per metre) values are used to calculate the voltage drop across a cable run. The voltage drop formula is: VD = mV/A/m x Ib x L / 1000, where VD is the voltage drop in volts, Ib is the design current in amperes, and L is the cable length in metres. The mV/A/m values are given in the cable tables of Appendix 4, and the percentage limits sit in Appendix 4, Section 6.4 of BS 7671:2018+A4:2026. Each cable type and size has a specific mV/A/m value that depends on the conductor resistance and, for AC circuits, the conductor reactance. For single-phase circuits, you use the two-core or single-phase mV/A/m values. For three-phase circuits, the tables provide separate three-phase mV/A/m values that account for the different voltage relationship in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting circuits and 5 percent for all other circuits, measured from the origin of the installation (Regulation 525 and Appendix 4, Section 6.4).',
   },
   {
     question: 'Where can I find the tables for SWA cable?',
@@ -67,12 +72,12 @@ const faqs = [
   {
     question: 'Have the Appendix 4 tables changed in Amendment 4 (A4:2026)?',
     answer:
-      'The main change in Amendment 4 affecting Appendix 4 is the relocation of the voltage drop tables. The mV/A/m (millivolts per ampere per metre) tables, which were previously located within Appendix 4, have been moved to a new Appendix 12. This is an organisational change — the voltage drop values themselves have not changed. The current-carrying capacity tables remain in Appendix 4 and their values are unchanged by Amendment 4. The reason for the relocation is to improve the structure of the standard and separate the current-carrying capacity data (which is about thermal performance) from the voltage drop data (which is about electrical performance). In practice, this means that when you are sizing cables, you still use Appendix 4 for current-carrying capacity and now use Appendix 12 for voltage drop — but the actual numbers you use are the same as before.',
+      'The current-carrying capacity values in the Appendix 4 tables are unchanged by Amendment 4 — a 2.5mm squared PVC twin and earth cable clipped direct is still rated 24A under Table 4D1A, and the XLPE equivalent is still 30A under Table 4D5A. The voltage drop data also remains in Appendix 4: the mV/A/m values are in the cable tables and the numeric voltage-drop limits are in Appendix 4, Section 6.4, which Regulation 525.202 and 525.203 of BS 7671:2018+A4:2026 still cite directly. If you have seen it claimed that Amendment 4 moved voltage drop to a new "Appendix 12", that is not correct — Reg 525 in the A4:2026 text continues to point to Appendix 4, Section 6.4. When you size a cable you use Appendix 4 for both current-carrying capacity and voltage drop.',
   },
   {
     question: 'Does Elec-Mate include all the Appendix 4 tables?',
     answer:
-      'Yes. Elec-Mate includes every current-carrying capacity table from BS 7671 Appendix 4 and every voltage drop table from Appendix 12 (previously Appendix 4). When you use the cable sizing calculator, you select the cable type (twin and earth, singles in conduit, SWA, MICC, flexible, etc.) and the reference method (A through G), and the calculator automatically looks up the correct value from the appropriate table. It also applies all correction factors (Ca, Cg, Ci, Cf) and checks voltage drop against the BS 7671 limits. The entire Appendix 4 dataset is stored locally on your device, so the calculator works offline on site without any mobile signal. This is one of 70 electrical calculators included in Elec-Mate, all built to BS 7671:2018+A4:2026.',
+      'Yes. Elec-Mate includes every current-carrying capacity table and voltage drop table from BS 7671 Appendix 4. When you use the cable sizing calculator, you select the cable type (twin and earth, singles in conduit, SWA, MICC, flexible, etc.) and the reference method (A through G), and the calculator automatically looks up the correct value from the appropriate table. It also applies all correction factors (Ca, Cg, Ci, Cf) and checks voltage drop against the BS 7671 limits. The entire Appendix 4 dataset is stored locally on your device, so the calculator works offline on site without any mobile signal. This is one of 70 electrical calculators included in Elec-Mate, all built to BS 7671:2018+A4:2026.',
   },
 ];
 
@@ -132,69 +137,182 @@ const sections = [
         </p>
         <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 my-4">
           <p className="text-white font-mono text-sm">
-            Table 4<strong className="text-yellow-400">[Letter]</strong>
-            <strong className="text-yellow-400">[Number]</strong>A
+            Table 4D5<strong className="text-yellow-400">A</strong> &nbsp;/&nbsp; Table 4D5
+            <strong className="text-yellow-400">B</strong>
           </p>
           <p className="text-white text-xs mt-2">
-            Letter = cable type | Number = conductor configuration | A = current-carrying capacity
-            (B = voltage drop)
+            The suffix is what matters most day to day:{' '}
+            <strong className="text-yellow-400">A</strong> = current-carrying capacity (amps),{' '}
+            <strong className="text-yellow-400">B</strong> = voltage drop (mV/A/m). The number
+            identifies a specific cable construction — so always read the table heading for
+            insulation type and operating temperature rather than guessing from the letter.
           </p>
         </div>
+        <p>
+          The single most important point: the letter alone does not tell you the insulation.{' '}
+          <strong className="text-yellow-400">Table 4D1A</strong> is 70&deg;C thermoplastic (PVC)
+          twin and earth, while <strong className="text-yellow-400">Table 4D5A</strong> — still in
+          the 4D series — is 90&deg;C thermosetting (XLPE) twin and earth. Both are &ldquo;4D&rdquo;.
+          Pick the table by what is printed in its heading.
+        </p>
+        {/* grounded: bs7671_facets context_prefix — Table 4D1A (PVC T+E 70C), 4D5A (XLPE T+E 90C), Reg 521.201 installation method per Table 4A1. */}
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">The tables you will actually use</h3>
+          <ul className="space-y-2 text-white text-sm leading-relaxed">
+            <li>
+              <strong className="text-yellow-400">Table 4D1A</strong> — 70&deg;C thermoplastic (PVC)
+              flat twin and earth, current-carrying capacity. The standard domestic cable.
+            </li>
+            <li>
+              <strong className="text-yellow-400">Table 4D2A</strong> — 70&deg;C thermoplastic (PVC)
+              single-core cables (singles in conduit/trunking).
+            </li>
+            <li>
+              <strong className="text-yellow-400">Table 4D5A</strong> — 90&deg;C thermosetting
+              (XLPE) flat twin and earth, current-carrying capacity. Roughly 25% more capacity than
+              4D1A for the same size.
+            </li>
+            <li>
+              <strong className="text-yellow-400">Table 4E / 4F series</strong> — thermosetting
+              multicore and armoured (SWA) cables.
+            </li>
+            <li>
+              <strong className="text-yellow-400">Table 4G / 4H</strong> — mineral insulated (MICC)
+              cables; <strong className="text-yellow-400">4J</strong> — flexible cables and cords.
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'cc-tables',
+    heading: 'Current-Carrying Capacity Table: 4D1A (PVC) and 4D5A (XLPE)',
+    content: (
+      <>
+        <p>
+          This is the table most electricians come to Appendix 4 for: the current-carrying capacity
+          (Iz) of twin and earth cable. The values below are for{' '}
+          <strong className="text-yellow-400">Reference Method C (clipped direct)</strong>, two
+          loaded conductors, at the standard reference conditions — 30&deg;C ambient, single circuit,
+          no grouping and no thermal insulation. Apply correction factors for any condition that
+          differs.
+        </p>
+        {/* grounded: bs7671_facets — BS 7671:2018+A4:2026 Appendix 4, Table 4D1A (PVC T+E 70°C, Method C) and Table 4D5A (XLPE T+E 90°C, Method C). Iz in amperes. Every value sourced from a per-cable facet. */}
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Iz (A) — Method C, two loaded conductors
+          </h3>
+          <p className="text-white/70 text-xs mb-4">
+            Table 4D1A = 70&deg;C thermoplastic (PVC) T&amp;E · Table 4D5A = 90&deg;C thermosetting
+            (XLPE) T&amp;E
+          </p>
+          <div className="grid grid-cols-3 gap-2 text-sm">
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              Conductor
+            </div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              4D1A · PVC
+            </div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              4D5A · XLPE
+            </div>
+            {(
+              [
+                ['1.0', 13, 16],
+                ['1.5', 16, 20],
+                ['2.5', 24, 30],
+                ['4.0', 32, 40],
+                ['6.0', 41, 51],
+                ['10', 57, 70],
+                ['16', 76, 94],
+                ['25', 101, 125],
+                ['35', 125, 156],
+                ['50', 151, 188],
+              ] as Array<[string, number, number]>
+            ).map(([size, pvc, xlpe]) => (
+              <Fragment key={size}>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-white">
+                  {size}mm&sup2;
+                </div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                  {pvc}
+                </div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                  {xlpe}
+                </div>
+              </Fragment>
+            ))}
+          </div>
+          <p className="text-white/70 text-xs mt-4">
+            Values per BS 7671:2018+A4:2026 Appendix 4, Tables 4D1A and 4D5A, Reference Method C. Iz
+            is the tabulated capacity before correction factors — always compare against the required
+            It once Ca, Cg, Ci and Cf are applied.
+          </p>
+        </div>
+        <p>
+          The XLPE (4D5A) column is consistently around 25% higher than the PVC (4D1A) column for the
+          same conductor size, because the 90&deg;C insulation tolerates more heat than 70&deg;C PVC.
+          For any installation method other than clipped direct, the capacity changes — read the
+          correct column for your{' '}
+          <SEOInternalLink href="/guides/reference-methods-cable-installation">
+            reference method
+          </SEOInternalLink>
+          .
+        </p>
+        <SEOAppBridge
+          title="Every Appendix 4 table built in"
+          description="Skip the lookup — Elec-Mate's cable sizing calculator reads off the right table and column, applies correction factors and checks volt drop in one go."
+          icon={Calculator}
+        />
+      </>
+    ),
+  },
+  {
+    id: 'reference-methods',
+    heading: 'Which Reference Method (Installation Method)?',
+    content: (
+      <>
+        <p>
+          A cable&apos;s current-carrying capacity depends as much on how it is installed as on its
+          size — the same 2.5mm&sup2; T&amp;E carries very different currents clipped to a wall
+          versus buried in loft insulation. BS 7671 calls the installation arrangement the{' '}
+          <strong className="text-yellow-400">reference method</strong>, and it sets which column of
+          the Appendix 4 table you read.
+        </p>
+        {/* grounded: bs7671_facets — Reg 521.201 (install method must accord with Table 4A1 of Appendix 4); Method C/D descriptions from Table 4D1A/4D5A facets. A/B/E/F/G descriptions not held in RAG — linked out rather than stated. */}
+        <p>
+          Regulation 521.201 of BS 7671:2018+A4:2026 requires the installation method to be in
+          accordance with <strong className="text-yellow-400">Table 4A1</strong> of Appendix 4, and
+          Table 4A2 illustrates each numbered method. The two methods you will meet most often are:
+        </p>
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Cable Type Letters</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">D</p>
-                <p className="text-white text-sm">Thermoplastic (PVC)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">E</p>
-                <p className="text-white text-sm">Thermosetting (XLPE/LSF)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">F</p>
-                <p className="text-white text-sm">Armoured (SWA)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">H</p>
-                <p className="text-white text-sm">Mineral insulated (MICC)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">J</p>
-                <p className="text-white text-sm">Flexible cables</p>
-              </div>
-            </div>
+            <h3 className="font-bold text-white mb-1">Method C — clipped direct</h3>
+            <p className="text-white text-sm leading-relaxed">
+              Cable clipped direct to a non-metallic surface, or run on a cable tray. This is the
+              column used for the capacity values in the table above (e.g. 2.5mm&sup2; PVC T&amp;E =
+              24A, XLPE = 30A).
+            </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Conductor Configuration Numbers</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">1</p>
-                <p className="text-white text-sm">Single-core (singles)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">2</p>
-                <p className="text-white text-sm">Single-core (specific arrangements)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">4</p>
-                <p className="text-white text-sm">Multicore (armoured types)</p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
-                <p className="text-yellow-400 font-bold">5</p>
-                <p className="text-white text-sm">Multicore (non-armoured)</p>
-              </div>
-            </div>
+            <h3 className="font-bold text-white mb-1">Method D — buried in the ground</h3>
+            <p className="text-white text-sm leading-relaxed">
+              Cable in a duct or directly buried underground — the standard method for SWA submains
+              and supplies to outbuildings. Method D also requires the Cs (soil thermal resistivity)
+              correction factor in addition to Ca and Cg.
+            </p>
           </div>
         </div>
         <p>
-          So <strong className="text-yellow-400">Table 4D5A</strong> is: Appendix 4, thermosetting
-          (XLPE 90&deg;C), multicore non-armoured twin and earth — the table used for XLPE T&amp;E
-          cable clipped direct. <strong className="text-yellow-400">Table 4D1A</strong> is the
-          equivalent table for PVC (70&deg;C) twin and earth cable clipped direct. The letter D in
-          the table number refers to the conductor type series, not exclusively to thermoplastic
-          cable — always check the table heading for insulation type and operating temperature.
+          Methods A, B, E, F and G cover conduit in a thermally insulating wall, conduit or trunking
+          on a surface, and cables in free air. The full A&ndash;G breakdown, with the Table 4A2
+          illustrations, is in our{' '}
+          <SEOInternalLink href="/guides/reference-methods-cable-installation">
+            cable reference methods guide
+          </SEOInternalLink>
+          . Choosing the wrong method is one of the most common cable-sizing errors — a cable rated
+          for clipping direct can be significantly overloaded once it is enclosed in insulation.
         </p>
       </>
     ),
@@ -369,14 +487,14 @@ const sections = [
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
           <div className="flex items-start gap-3">
             <div>
-              <h3 className="font-bold text-white mb-1">Amendment 4 change: Appendix 12</h3>
+              {/* grounded: bs7671_facets — Reg 525.202/525.203 (A4:2026) cite "Appendix 4, Section 6.4" for voltage drop. */}
+              <h3 className="font-bold text-white mb-1">Where voltage drop sits in the standard</h3>
               <p className="text-white text-sm leading-relaxed">
-                Following Amendment 4 (A4:2026), the voltage drop tables have been moved from
-                Appendix 4 to a new Appendix 12. The values themselves have not changed — this is an
-                organisational restructure to separate current-carrying capacity data from voltage
-                drop data. If you are using BS 7671:2018+A2:2022 (the physical brown book), the
-                voltage drop tables are still in Appendix 4. If you are using the Amendment 4
-                supplement, refer to Appendix 12.
+                Voltage drop stays in Appendix 4. The mV/A/m values are listed in the cable tables,
+                and the numeric limits are in Appendix 4, Section 6.4 — which Regulation 525.202 and
+                525.203 of BS 7671:2018+A4:2026 point to directly. This is unchanged by Amendment 4.
+                There is no separate &ldquo;Appendix 12&rdquo; for voltage drop; if you have seen
+                that claimed, it is incorrect.
               </p>
             </div>
           </div>
@@ -679,7 +797,7 @@ const relatedPages = [
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
-      'Calculate voltage drop using mV/A/m values from Appendix 12 for any cable type and circuit.',
+      'Calculate voltage drop using the mV/A/m values from Appendix 4 for any cable type and circuit.',
     icon: Zap,
     category: 'Tool' as const,
   },
@@ -714,12 +832,12 @@ export default function AppendixFourTablesPage() {
           <span className="text-yellow-400">Current Carrying Capacity</span>
         </>
       }
-      heroSubtitle="The complete guide to BS 7671 Appendix 4. How to read the current-carrying capacity tables (4D1A to 4J4A), understand the table numbering system, use voltage drop tables (now Appendix 12), and look up the right values for PVC, XLPE, SWA, and flexible cables."
+      heroSubtitle="The complete guide to BS 7671 Appendix 4, with the full current-carrying capacity tables on the page. Read off Table 4D1A (PVC) and Table 4D5A (XLPE) for every conductor size, choose the right reference method (A–G), apply correction factors, and check voltage drop — all to BS 7671:2018+A4:2026."
       readingTime={13}
       answerBox={{
         question: 'What is BS 7671 Appendix 4?',
         answer:
-          'Appendix 4 of BS 7671 contains the current-carrying capacity tables for every cable type and installation method — the core reference for all cable sizing. Tables are numbered by cable type (e.g. 4D for multicore thermoplastic) and a reference-method column (A, B, C…). Since Amendment 4 (A4:2026), voltage-drop (mV/A/m) values moved to Appendix 12, unchanged.',
+          'Appendix 4 of BS 7671 contains the current-carrying capacity tables for every cable type and installation method — the core reference for all cable sizing. Tables are named by cable type (e.g. Table 4D1A for 70°C PVC twin and earth, 4D5A for 90°C XLPE) and a reference-method column (A, B, C…). Voltage drop (mV/A/m values and the 3%/5% limits) sits in Appendix 4, Section 6.4, unchanged by Amendment 4 (A4:2026).',
         detail:
           'Use the correct table for your cable type and the correct column for your reference method — getting either wrong gives the wrong current-carrying capacity.',
       }}

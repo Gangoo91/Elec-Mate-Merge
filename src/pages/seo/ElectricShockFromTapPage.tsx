@@ -628,6 +628,11 @@ export default function ElectricShockFromTapPage() {
       }
       heroSubtitle="An electric shock from a tap means live current is energising your pipework. The most common cause is a faulty immersion heater, but bonding failures and PME supply faults can also be responsible. This guide covers what to do immediately, the causes, and how electricians diagnose the problem."
       readingTime={10}
+      answerBox={{
+        question: 'Why am I getting an electric shock from my tap?',
+        answer:
+          'A shock from a metal tap means the pipework has risen to a dangerous voltage. The most common causes are a faulty appliance such as an immersion heater leaking to the pipe, a missing or disconnected main protective bonding conductor to the water or gas service, or a lost PEN (combined neutral-earth) conductor on a TN-C-S (PME) supply. It is potentially dangerous — stop using the water, isolate, and have it investigated urgently.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

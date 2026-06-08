@@ -22,6 +22,7 @@ export type ReportType =
   | 'limitation-notice'
   | 'non-compliance-notice'
   | 'completion-notice'
+  | 'disconnection'
   | 'bess'
   | 'lightning-protection'
   | 'g98-commissioning'
@@ -45,6 +46,10 @@ export interface CloudReport {
   pdf_generated_at?: string;
   version?: number;
   edit_version?: number;
+  // Lock + versioning (ELE-1037)
+  locked_at?: string | null;
+  parent_report_id?: string | null;
+  superseded_by?: string | null;
 }
 
 export interface VersionConflict {
@@ -353,6 +358,9 @@ export const reportCloud = {
         if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
         // Testing Only
         if (reportType === 'testing-only' && data.testerSignature) return 'completed';
+        // Disconnection Certificate
+        if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
+          return 'completed';
         // Labels & Warnings types
         if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';
         if (reportType === 'isolation-cert' && data.personIsolatingSignature) return 'completed';
@@ -480,6 +488,8 @@ export const reportCloud = {
                                 ? 'smoke-co-alarm'
                                 : lc.startsWith('testing-only')
                                   ? 'testing-only'
+                                  : lc.startsWith('disconnection')
+                                  ? 'disconnection'
                                   : lc.startsWith('danger-notice')
                                     ? 'danger-notice'
                                     : lc.startsWith('isolation-cert')
@@ -516,6 +526,8 @@ export const reportCloud = {
         if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
         if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
         if (reportType === 'testing-only' && data.testerSignature) return 'completed';
+        if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
+          return 'completed';
         const hasContent =
           data.clientName ||
           data.inspectionDate ||
@@ -755,6 +767,82 @@ export const reportCloud = {
       };
     } catch (error) {
       console.error('[reportCloud] Failed to get edit version:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Lock a report ("Issue & Lock"). Sets locked_at = now() so the cert becomes
+   * read-only — autosave is gated off (see EICRFormProvider) and any change
+   * requires a new version. Idempotent: re-locking leaves locked_at unchanged.
+   */
+  lockReport: async (
+    reportId: string,
+    userId: string
+  ): Promise<{ success: boolean; lockedAt?: string; error?: unknown }> => {
+    try {
+      const { data: existing } = await supabase
+        .from('reports')
+        .select('locked_at')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .is('deleted_at', null)
+        .single();
+
+      if (existing?.locked_at) {
+        return { success: true, lockedAt: existing.locked_at };
+      }
+
+      const lockedAt = new Date().toISOString();
+      const { error } = await supabase
+        .from('reports')
+        .update({ locked_at: lockedAt })
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .is('deleted_at', null);
+
+      if (error) throw error;
+      return { success: true, lockedAt };
+    } catch (error) {
+      console.error('[reportCloud] Failed to lock report:', error);
+      return { success: false, error };
+    }
+  },
+
+  /**
+   * Read lock + version metadata for a report (keyed by report_id string).
+   */
+  getLockMeta: async (
+    reportId: string,
+    userId: string
+  ): Promise<{
+    id: string;
+    lockedAt: string | null;
+    parentReportId: string | null;
+    supersededBy: string | null;
+    editVersion: number;
+    certificateNumber: string | null;
+  } | null> => {
+    try {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('id, locked_at, parent_report_id, superseded_by, edit_version, certificate_number')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .is('deleted_at', null)
+        .single();
+
+      if (error) throw error;
+      return {
+        id: data?.id,
+        lockedAt: data?.locked_at ?? null,
+        parentReportId: data?.parent_report_id ?? null,
+        supersededBy: data?.superseded_by ?? null,
+        editVersion: data?.edit_version || 1,
+        certificateNumber: data?.certificate_number ?? null,
+      };
+    } catch (error) {
+      console.error('[reportCloud] Failed to get lock meta:', error);
       return null;
     }
   },

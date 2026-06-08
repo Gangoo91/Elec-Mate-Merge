@@ -114,7 +114,7 @@ export const cableSelection: FlashcardData[] = [
     question:
       'What are the maximum permitted voltage drop limits for a low voltage installation under BS 7671?',
     answer:
-      'BS 7671 Appendix 12 states that voltage drop between the origin of the installation and the load should not exceed 3% of the nominal supply voltage for lighting circuits and 5% for all other circuits. For a 230 V single-phase supply, this equates to a maximum of 6.9 V for lighting and 11.5 V for other uses such as socket outlets, cookers, and showers.',
+      'BS 7671 Appendix 4, Section 6.4 states that voltage drop between the origin of the installation and the load should not exceed 3% of the nominal supply voltage for lighting circuits and 5% for all other circuits. For a 230 V single-phase supply, this equates to a maximum of 6.9 V for lighting and 11.5 V for other uses such as socket outlets, cookers, and showers.',
     category: 'Voltage Drop',
     difficulty: 'easy',
   },

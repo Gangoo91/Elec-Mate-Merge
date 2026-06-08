@@ -77,7 +77,7 @@ const VoltageDropSection = () => {
                 Vd = (mV/A/m) × Ib × L / 1000
               </div>
               <p className="text-sm">
-                Where: mV/A/m from Appendix 12 tables, Ib = design current, L = circuit length in
+                Where: mV/A/m from Appendix 4 tables, Ib = design current, L = circuit length in
                 metres
               </p>
             </div>
@@ -111,7 +111,7 @@ const VoltageDropSection = () => {
                 <div className="text-xs font-mono bg-gray-900 p-2 rounded mb-2">
                   Vd = (mV/A/m) × Ib × L / 1000
                 </div>
-                <p className="text-xs">Use tabulated mV/A/m values from Appendix 12</p>
+                <p className="text-xs">Use tabulated mV/A/m values from Appendix 4</p>
               </div>
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="font-bold text-green-400 mb-2">Three-Phase</h6>

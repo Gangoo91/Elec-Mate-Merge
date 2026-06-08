@@ -337,6 +337,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       else if (rt === 'limitation-notice') edgeFunctionName = 'generate-limitation-notice-pdf';
       else if (rt === 'non-compliance-notice') edgeFunctionName = 'generate-non-compliance-notice-pdf';
       else if (rt === 'completion-notice') edgeFunctionName = 'generate-completion-notice-pdf';
+      else if (rt === 'disconnection') edgeFunctionName = 'generate-disconnection-certificate-pdf';
       else edgeFunctionName = `generate-${rt}-pdf`;
 
       // Load template IDs from storage
@@ -372,6 +373,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
           const { formatEmergencyLightingJson } = await import('@/utils/emergencyLightingJsonFormatter');
           dataForPdf = formatEmergencyLightingJson(reportData.data);
+        } else if (reportType === 'disconnection') {
+          const { formatDisconnectionCertificatePayload } = await import('@/utils/disconnection-certificate-formatter');
+          dataForPdf = formatDisconnectionCertificatePayload(reportData.data as Record<string, any>);
         }
         // EIC and Minor Works: no standalone formatter available, fall through with raw data
       }

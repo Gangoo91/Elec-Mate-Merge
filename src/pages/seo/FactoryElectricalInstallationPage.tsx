@@ -220,7 +220,7 @@ const sections = [
                 <strong>Voltage drop:</strong> Cable sizing for factory circuits must ensure voltage
                 drop stays within the limits of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671 Appendix 12
+                  BS 7671 Appendix 4 (Section 6.4)
                 </SEOInternalLink>
                 . For motor circuits, excessive voltage drop can prevent the motor starting under
                 load and cause overheating. A maximum voltage drop of 5 per cent from the origin to

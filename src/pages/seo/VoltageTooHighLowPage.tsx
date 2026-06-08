@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What is the voltage drop limit within an installation?',
     answer:
-      'BS 7671 Appendix 12 specifies maximum voltage drop limits within an installation. For a public supply (connection to the DNO network), the voltage drop from the origin of the installation (meter position) to the most distant point of use should not exceed 3% for lighting circuits (6.9V on a 230V supply) and 5% for other circuits (11.5V on a 230V supply). These limits apply to the installation wiring only — they do not include any voltage drop on the DNO supply cable. If you are seeing excessive voltage drop on your circuits, the most common causes are: undersized cable, long cable runs, high load current, and poor connections. Elec-Mate voltage drop calculator helps you verify compliance during design and installation.',
+      'BS 7671 Appendix 4, Section 6.4 specifies maximum voltage drop limits within an installation. For a public supply (connection to the DNO network), the voltage drop from the origin of the installation (meter position) to the most distant point of use should not exceed 3% for lighting circuits (6.9V on a 230V supply) and 5% for other circuits (11.5V on a 230V supply). These limits apply to the installation wiring only — they do not include any voltage drop on the DNO supply cable. If you are seeing excessive voltage drop on your circuits, the most common causes are: undersized cable, long cable runs, high load current, and poor connections. Elec-Mate voltage drop calculator helps you verify compliance during design and installation.',
   },
   {
     question: 'Does voltage optimisation save money?',

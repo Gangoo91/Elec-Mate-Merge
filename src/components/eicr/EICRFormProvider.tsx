@@ -11,7 +11,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useCloudSync, SyncNowImmediateResult } from '@/hooks/useCloudSync';
 import { useReportId } from '@/hooks/useReportId';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { reportCloud } from '@/utils/reportCloud';
+import { createNewVersion } from '@/utils/reportVersioning';
 import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { joinQualifications } from '@/utils/inspectorQualifications';
@@ -55,6 +57,12 @@ interface EICRFormContextType {
   syncNow: (() => void) | undefined;
   syncNowImmediate: (() => Promise<SyncNowImmediateResult>) | undefined; // For PDF generation - returns saved data
   getSyncIndicatorState: () => SyncState;
+  // Lock + versioning (ELE-1037)
+  isLocked: boolean;
+  lockedAt: string | null;
+  editVersion: number;
+  lockReport: () => Promise<void>;
+  amendReport: () => Promise<void>;
 }
 
 const EICRFormContext = createContext<EICRFormContextType | undefined>(undefined);
@@ -79,6 +87,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const location = useLocation();
+  const navigate = useNavigate();
   const { getDefaultProfile, isLoading: isLoadingProfiles } = useInspectorProfiles();
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
@@ -90,6 +99,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
   const lastSaveErrorToastRef = useRef<number>(0);
+
+  // Lock + versioning (ELE-1037). A locked certificate is read-only: autosave
+  // is gated off (see `enabled` below) and any change requires a new version.
+  const [lockedAt, setLockedAt] = useState<string | null>(null);
+  const [editVersion, setEditVersion] = useState<number>(1);
+  const isLocked = !!lockedAt;
 
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -332,13 +347,96 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     reportId: currentReportId,
     reportType: 'eicr',
     data: formData,
-    enabled: true,
+    // Locked certificates never autosave — they are immutable records.
+    enabled: !isLocked,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
     // Gate autosave while the report is loading from cloud — prevents the blank
     // initial state from overwriting real data before hydration completes.
     isHydrating: isLoadingReport,
   });
+
+  // Load lock + version metadata whenever the active report changes. Keyed by
+  // the report_id string (currentReportId), which is what reportCloud expects.
+  useEffect(() => {
+    if (!currentReportId || !userId) {
+      setLockedAt(null);
+      setEditVersion(1);
+      return;
+    }
+    let cancelled = false;
+    reportCloud.getLockMeta(currentReportId, userId).then((meta) => {
+      if (cancelled || !meta) return;
+      setLockedAt(meta.lockedAt);
+      setEditVersion(meta.editVersion);
+      // Backfill the DB uuid for reports created in-session (load path didn't run).
+      if (meta.id) setDatabaseId((prev) => prev || meta.id);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [currentReportId, userId]);
+
+  // Issue & Lock — flush any pending edits, then mark the certificate read-only.
+  const lockReport = useCallback(async () => {
+    if (!currentReportId || !userId) {
+      toast({
+        title: 'Save the certificate first',
+        description: 'The certificate needs to be saved before it can be issued.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    // Flush pending edits to the cloud BEFORE locking so nothing is lost.
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush; lock still proceeds */
+    }
+    const result = await reportCloud.lockReport(currentReportId, userId);
+    if (result.success) {
+      setLockedAt(result.lockedAt || new Date().toISOString());
+      toast({
+        title: 'Certificate issued & locked',
+        description: 'This certificate is now read-only. To make changes, create a new version.',
+      });
+    } else {
+      toast({
+        title: 'Could not lock certificate',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  }, [currentReportId, userId, syncNowImmediate, toast]);
+
+  // Amend — create a new editable version that supersedes the locked original,
+  // then navigate to it. The issued certificate is preserved as a record.
+  const amendReport = useCallback(async () => {
+    if (!databaseId || !userId) {
+      toast({
+        title: 'Cannot amend',
+        description: 'The original certificate could not be found.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const result = await createNewVersion(databaseId, userId);
+    if (result.success && result.newReportIdString) {
+      toast({
+        title: `Version ${result.version} created`,
+        description: 'Now editing a new version. The issued certificate is preserved.',
+      });
+      navigate(
+        `/electrician/inspection-testing?section=eicr&reportId=${encodeURIComponent(result.newReportIdString)}`
+      );
+    } else {
+      toast({
+        title: 'Could not create new version',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  }, [databaseId, userId, navigate, toast]);
 
   // Helper function to check if form is empty (for auto-filling profile)
   const isFormEmpty = (data: any) => {
@@ -1123,6 +1221,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     syncNow,
     syncNowImmediate,
     getSyncIndicatorState,
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport,
+    amendReport,
   };
 
   return (

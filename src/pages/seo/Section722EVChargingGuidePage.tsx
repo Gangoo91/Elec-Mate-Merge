@@ -661,6 +661,11 @@ export default function Section722EVChargingGuidePage() {
       }
       heroSubtitle="Everything you need to know about EV charger installations under BS 7671 Section 722. Dedicated circuits, RCD selection, PME earthing restrictions under Regulation 722.411.4.1, earth electrodes, load management, and cable sizing."
       readingTime={20}
+      answerBox={{
+        question: 'What is BS 7671 Section 722?',
+        answer:
+          'Section 722 of BS 7671 sets the requirements for electric vehicle charging installations. It covers protection against electric shock — including the loss-of-PEN risk on TN-C-S (PME) supplies — RCD protection with DC fault detection for each charge point, disconnection times, and external influences. A4:2026 also allows load curtailment to be considered when assessing maximum demand.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

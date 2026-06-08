@@ -52,7 +52,7 @@ function resolvePushDestinationUrl(
   if (data.type === 'college')
     return `/college/messages${data.conversationId ? `?conversation=${data.conversationId}` : ''}`;
   if (data.type === 'invoices_overdue')
-    return r === 'employer' ? '/employer?section=quotes' : '/electrician/quote-invoice-dashboard';
+    return r === 'employer' ? '/employer?section=quotes' : '/electrician/invoices?filter=overdue';
   if (data.type === 'peer' && data.conversationId)
     return `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
   if (data.conversationId) return `/electrician/messages?conversation=${data.conversationId}`;
@@ -66,8 +66,10 @@ function resolvePushDestinationUrl(
       : `/electrician/invoices/${data.invoiceId}/view`;
   if (data.deep_link) return data.deep_link;
   // Type-only fallbacks (no specific id) — land on the right list, never blank.
-  if (data.type === 'invoice' || data.type === 'quote')
-    return r === 'employer' ? '/employer?section=quotes' : '/electrician/quote-invoice-dashboard';
+  if (data.type === 'invoice')
+    return r === 'employer' ? '/employer?section=quotes' : '/electrician/invoices';
+  if (data.type === 'quote')
+    return r === 'employer' ? '/employer?section=quotes' : '/electrician/quotes';
   return null;
 }
 

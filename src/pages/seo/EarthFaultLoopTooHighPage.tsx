@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -35,6 +36,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-too-high-means', label: 'What "Too High" Means' },
+  { id: 'max-zs-table', label: 'Maximum Zs Table (41.3)' },
   { id: 'common-causes', label: 'Common Causes' },
   { id: 'solutions', label: 'Solutions' },
   { id: 'when-to-report-dno', label: 'When to Report to DNO' },
@@ -172,6 +174,69 @@ const sections = [
           description="Enter the protective device type and rating and Elec-Mate instantly shows the maximum permitted Zs from BS 7671 Table 41.3 (MCBs) or Table 41.2 (fuses)…"
           icon={Calculator}
         />
+      </>
+    ),
+  },
+  {
+    id: 'max-zs-table',
+    heading: 'Maximum Zs Table — BS 7671 Table 41.3 (Type B, C, D MCB)',
+    content: (
+      <>
+        <p>
+          This is the table to check your reading against. The values below are the maximum permitted
+          earth fault loop impedance (Zs) for circuit breakers at 230 V, 0.4 s disconnection (final
+          circuits), from BS 7671:2018+A4:2026 Table 41.3. If your measured Zs is higher than the
+          figure for your device, the circuit is non-compliant.
+        </p>
+        {/* grounded: bs7671_facets — Table 41.3(a) Type B, 41.3(b) Type C, 41.3(c) Type D, Reg 411.4.204, 230V 0.4s. Every value sourced from a per-device facet. */}
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Maximum Zs (&Omega;) — 230 V, 0.4 s disconnection
+          </h3>
+          <p className="text-white/70 text-xs mb-4">
+            MCB to BS EN 60898 / RCBO to BS EN 61009-1 · tabulated values (apply the GN3 0.8 factor
+            for the cold-measured site limit)
+          </p>
+          <div className="grid grid-cols-4 gap-2 text-sm">
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Rating</div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Type B</div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Type C</div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Type D</div>
+            {(
+              [
+                ['6 A', '7.28', '3.64', '1.82'],
+                ['16 A', '2.73', '1.37', '0.68'],
+                ['20 A', '2.19', '1.09', '0.55'],
+                ['32 A', '1.37', '0.68', '0.34'],
+                ['40 A', '1.09', '0.55', '0.27'],
+              ] as Array<[string, string, string, string]>
+            ).map(([rating, b, c, d]) => (
+              <Fragment key={rating}>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-white">{rating}</div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                  {b}
+                </div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                  {c}
+                </div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                  {d}
+                </div>
+              </Fragment>
+            ))}
+          </div>
+          <p className="text-white/70 text-xs mt-4">
+            Values per BS 7671:2018+A4:2026 Table 41.3, Reg 411.4.204, 230 V, 0.4 s. A higher trip
+            type needs a lower Zs (Type D needs roughly a quarter of the Type B limit). For the
+            on-site pass/fail figure, multiply by 0.8 — e.g. a 32 A Type B limit of 1.37 &Omega;
+            gives a maximum cold-measured site reading of 1.10 &Omega; (GN3, Appendix 3).
+          </p>
+        </div>
+        <p>
+          If your reading is over the figure for your device, work through the common causes below —
+          start by measuring Ze at the origin to split the problem between the supply (Ze) and your
+          circuit (R1+R2).
+        </p>
       </>
     ),
   },

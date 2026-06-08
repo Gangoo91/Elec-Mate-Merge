@@ -150,27 +150,6 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
           })}
         </div>
       </FormField>
-
-      <div className="grid grid-cols-2 gap-2 items-end">
-        <FormField label="Supply PME">
-          <Select
-            value={formData.supplyPME || ''}
-            onValueChange={(value) => onUpdate('supplyPME', value)}
-          >
-            <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow">
-              <SelectValue placeholder="PME status" />
-            </SelectTrigger>
-            <SelectContent className="bg-white/[0.06] border-white/[0.08] text-white z-50">
-              <SelectItem value="yes">Yes</SelectItem>
-              <SelectItem value="no">No</SelectItem>
-              <SelectItem value="unknown">Unknown</SelectItem>
-            </SelectContent>
-          </Select>
-          {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
-            <span className="text-[10px] text-elec-yellow/80 block mt-1">TN-C-S systems typically have PME</span>
-          )}
-        </FormField>
-      </div>
     </div>
   );
 };

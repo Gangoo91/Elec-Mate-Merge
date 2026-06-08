@@ -36,7 +36,6 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
   onUpdate,
 }) => {
   const isPMESelected = formData.earthElectrodeType === 'pme';
-  const isSupplementaryBondingNotRequired = formData.supplementaryBondingSize === 'not-required';
 
   // Parse existing main bonding locations into checkboxes
   const parseMainBondingLocations = (value: string = ''): Set<string> => {
@@ -525,78 +524,6 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
         <span className="text-[10px] text-white block">
           Select all services with main protective bonding installed
         </span>
-      </div>
-
-      {/* Supplementary Bonding */}
-      <SectionTitle title="Supplementary Bonding" />
-      <div className="space-y-3">
-        <FormField label="Supplementary Bonding Required">
-          <Select
-            value={formData.supplementaryBonding || ''}
-            onValueChange={(value) => onUpdate('supplementaryBonding', value)}
-          >
-            <SelectTrigger id="supplementaryBonding" className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent className="bg-white/[0.06] border-white/[0.08] text-foreground z-50">
-              <SelectItem value="yes">Yes</SelectItem>
-              <SelectItem value="no">No</SelectItem>
-              <SelectItem value="n/a">N/A</SelectItem>
-            </SelectContent>
-          </Select>
-        </FormField>
-
-        <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="Supplementary Bonding Size">
-            <Select
-              value={formData.supplementaryBondingSize || ''}
-              onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow">
-                <SelectValue placeholder="Select conductor size" />
-              </SelectTrigger>
-              <SelectContent className="bg-white/[0.06] border-white/[0.08] text-foreground z-50">
-                <SelectItem value="2.5mm">2.5mm²</SelectItem>
-                <SelectItem value="4mm">4mm²</SelectItem>
-                <SelectItem value="6mm">6mm²</SelectItem>
-                <SelectItem value="10mm">10mm²</SelectItem>
-                <SelectItem value="not-required">Not Required</SelectItem>
-                <SelectItem value="custom">Other/Custom</SelectItem>
-                <SelectItem value="n/a">N/A</SelectItem>
-              </SelectContent>
-            </Select>
-            {formData.supplementaryBondingSize === 'custom' && (
-              <Input
-                placeholder="Enter custom size (mm²)"
-                value={formData.supplementaryBondingSizeCustom || ''}
-                onChange={(e) => onUpdate('supplementaryBondingSizeCustom', e.target.value)}
-                className="mt-2 h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow"
-                inputMode="numeric"
-              />
-            )}
-            {isSupplementaryBondingNotRequired && (
-              <span className="text-[10px] text-white block mt-1">
-                Supplementary bonding may not be required if RCD protection is installed
-              </span>
-            )}
-          </FormField>
-
-          <FormField label="Equipotential Bonding">
-            <Select
-              value={formData.equipotentialBonding || ''}
-              onValueChange={(value) => onUpdate('equipotentialBonding', value)}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white/[0.06] border-white/[0.08] text-foreground z-50">
-                <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                <SelectItem value="not-applicable">Not Applicable</SelectItem>
-              </SelectContent>
-            </Select>
-          </FormField>
-        </div>
       </div>
     </div>
   );

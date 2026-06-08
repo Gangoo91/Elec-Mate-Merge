@@ -336,8 +336,8 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671 — Appendix 12 (voltage drop)"
-            clause="The voltage drop between the origin of the installation and any point in the installation should not exceed the values given in Appendix 12 — typically 3% for lighting circuits and 5% for other uses, expressed as a percentage of the nominal voltage of the supply."
+            source="BS 7671 — Appendix 4, Section 6.4 (voltage drop)"
+            clause="The voltage drop between the origin of the installation and any point in the installation should not exceed the values given in Appendix 4, Section 6.4 — typically 3% for lighting circuits and 5% for other uses, expressed as a percentage of the nominal voltage of the supply."
             meaning={
               <>
                 That's where percentages stop being a school exercise. On a 230 V supply, 3% = 6.9 V
@@ -345,7 +345,7 @@ export default function Sub1() {
                 size is wrong and your installation fails the design check.
               </>
             }
-            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Appendix 12 for full text"
+            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Appendix 4, Section 6.4 for full text"
           />
 
           <InlineCheck

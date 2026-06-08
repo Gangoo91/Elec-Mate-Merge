@@ -633,6 +633,11 @@ export default function GS38ProvingDeadPage() {
       }
       heroSubtitle="HSE Guidance Note GS 38 sets the standard for electrical test equipment. Proving units, voltage indicators, fused probes, the 4 mm probe tip rule, and the prove-test-prove procedure. This guide covers everything electricians need to know about safe testing."
       readingTime={9}
+      answerBox={{
+        question: 'What is GS38 and what does proving dead mean?',
+        answer:
+          'GS38 is the HSE guidance note on electrical test equipment for use by electricians. It sets out how voltage indicators, test probes and leads must be designed and used safely — finger barriers, minimal exposed metal at the probe tips, fused leads and clear ratings. Proving dead means confirming a circuit is isolated using an approved voltage indicator, after first verifying that indicator works on a known live source or proving unit.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

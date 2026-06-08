@@ -155,13 +155,13 @@ const quizQuestions = [
       'A4 deletes the CRL surge-protection risk-assessment route. Which clauses / annexes are withdrawn?',
     options: [
       'Reg 411.3.3, Annex A411, Appendix 6',
-      'Reg 443.5 (the CRL clause), Annex A443 (worked examples), Appendix 17, Annex B443',
+      'Reg 443.5 (the CRL clause) and Annex A443 (the CRL worked examples)',
       'Reg 421.1.7, Section 7, Annex A4',
-      'Reg 510, Annex F, Appendix 12',
+      'Reg 510, Annex F, Appendix 6',
     ],
     correctAnswer: 1,
     explanation:
-      'A4 strips out the CRL method end-to-end. Reg 443.5 was the BS 7671 clause permitting the CRL calculation; Annex A443 contained worked examples; Appendix 17 contained the lookup tables; Annex B443 supported the methodology. All four are deleted. SPD selection in A4 follows Reg 443.4 directly — SPDs are required where overvoltage affects safety of human life, public services, commercial / industrial activity or many co-located individuals.',
+      'A4 strips out the CRL (calculated risk level) route. Reg 443.5 was the BS 7671 clause permitting the CRL calculation and the supporting Annex A443 held its worked examples — both are deleted. SPD selection in A4 follows Reg 443.4 directly: SPDs are required where overvoltage affects safety of human life, public services, commercial / industrial activity or many co-located individuals. (Appendix 17 — Energy Efficiency — was not deleted by A4.)',
   },
   {
     id: 4,

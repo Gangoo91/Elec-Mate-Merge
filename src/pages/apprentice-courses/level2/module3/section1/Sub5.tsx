@@ -133,7 +133,7 @@ const quizQuestions = [
     question:
       "Where in BS 7671 would you find the model forms for an Electrical Installation Certificate (EIC), an Electrical Installation Condition Report (EICR) and a Minor Electrical Installation Works Certificate?",
     options: [
-      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity tables), Appendix 12 (voltage drop), Appendix 15 (ring and radial circuit arrangements) and Appendix 17 (protective measures against environmental influences). Knowing the appendices by topic is half of installer navigation.",
+      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity and voltage drop tables), Appendix 15 (ring and radial final circuit arrangements) and Appendix 17 (energy efficiency). Knowing the appendices by topic is half of installer navigation.",
       "Reg 3 puts the duty on EVERY employer, every self-employed person, and every employee — including apprentices — engaged in any work activity covered by the Regulations. The employee duty is to co-operate with the employer in complying with EAWR, AND to comply themselves with EAWR insofar as the matters relate to things within the employee's control. So an apprentice has a personal EAWR duty, not just an employer-mediated one.",
       "It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.",
       "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\"no documentation available\\\" as a limitation against affected items on the schedule.",
@@ -271,7 +271,7 @@ export default function Sub5() {
               "Describe the eight-Part structure of BS 7671 and the topic each Part covers.",
               "Use the BS 7671 reg-numbering convention (Part / Chapter / Section / Reg) to navigate to a specific regulation without an index.",
               "Apply the Part 2 definitions discipline — 'exposed-conductive-part', 'extraneous-conductive-part', 'circuit', 'conductor' — when classifying installation features.",
-              "Identify the headline appendices (Appendix 1 referenced standards, Appendix 4 current-carrying capacity, Appendix 6 model forms, Appendix 12 voltage drop) and what each one is for.",
+              "Identify the headline appendices (Appendix 1 referenced standards, Appendix 4 current-carrying capacity, Appendix 6 model forms, Appendix 4 voltage drop) and what each one is for.",
               "State the headline A4:2026 changes (Reg 411.3.4, Reg 514.16.1, expanded 421.1.7, redrafted 411.3.3, redrafted Section 443, model form updates) and where to find the verbatim text.",
             ]}
             initialVisibleCount={3}
@@ -651,7 +651,7 @@ export default function Sub5() {
                 Substantially redrafted under A4:2026 to add new schedule columns.
               </li>
               <li>
-                <strong>Appendix 12</strong> — Voltage drop in consumer&apos;s installations.
+                <strong>Appendix 4 (Section 6.4)</strong> — Voltage drop in consumer&apos;s installations.
                 The 3% lighting / 5% other-use limits and the worked-example tables.
               </li>
               <li>

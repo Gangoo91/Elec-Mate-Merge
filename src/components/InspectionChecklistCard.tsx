@@ -50,7 +50,7 @@ const InspectionChecklistCard = ({
   const filteredSections = sections;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       {filteredSections.map((section) => (
         <InspectionSectionCard
           key={section.id}

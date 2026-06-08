@@ -31,6 +31,20 @@ const INSPECTION_SECTION_FIELDS = [
   'description', // Referenced for recommended interval
 ] as const;
 
+// Standard model-form wording for the extent & limitations of the inspection
+// (BS 7671 Appendix 6 convention). Surfaced via the "Apply standard wording"
+// actions so inspectors don't retype the same boilerplate on every EICR.
+const STANDARD_SCOPE_TEXT = {
+  extentOfInspection:
+    'A periodic inspection and test of the electrical installation has been carried out in accordance with BS 7671. The inspection covered the consumer unit(s)/distribution board(s) and the final circuits detailed in the attached schedules of inspection and test results.',
+  limitationsOfInspection:
+    'Cables concealed within trunking and conduits, under floors, in roof spaces, and generally within the fabric of the building or underground, have not been inspected. No checks for safety alerts, corrective actions or product recalls for electrical equipment forming part of the installation have been made.',
+  operationalLimitations:
+    'None agreed prior to the inspection, unless otherwise stated above.',
+} as const;
+
+type StandardScopeField = keyof typeof STANDARD_SCOPE_TEXT;
+
 interface InspectionDetailsSectionProps {
   formData: any;
   onUpdate: (field: string, value: string) => void;
@@ -102,6 +116,37 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     const today = new Date().toISOString().split('T')[0];
     onUpdate('inspectionDate', today);
   };
+
+  // Standard wording auto-fill (Craig Soper request). A single field can be
+  // filled via its "Use standard" link, or all blanks at once via the
+  // section button. Bulk fill never overwrites text the inspector has typed.
+  const applyStandardField = useCallback(
+    (field: StandardScopeField) => {
+      haptic.light();
+      onUpdate(field, STANDARD_SCOPE_TEXT[field]);
+    },
+    [haptic, onUpdate]
+  );
+
+  const applyAllStandard = useCallback(() => {
+    const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
+    let filled = 0;
+    fields.forEach((field) => {
+      const current = (formData[field] || '').trim();
+      if (!current && !isFieldMarker(formData[field])) {
+        onUpdate(field, STANDARD_SCOPE_TEXT[field]);
+        filled += 1;
+      }
+    });
+    haptic.success();
+    toast({
+      title: filled > 0 ? 'Standard wording applied' : 'Nothing to fill',
+      description:
+        filled > 0
+          ? `Filled ${filled} blank field${filled === 1 ? '' : 's'}. Any text you'd already entered was left untouched.`
+          : 'All scope fields already contain text — nothing was overwritten.',
+    });
+  }, [formData, haptic, onUpdate, toast]);
 
   // Get recommended interval based on property type
   const getRecommendedInterval = (propertyType: string) => {
@@ -331,6 +376,18 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       <div>
         <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
         <div className="space-y-3 py-3">
+          {/* Standard wording — fills blank scope fields in one tap */}
+          <div className="flex justify-end -mt-1">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={applyAllStandard}
+              className="h-8 gap-1.5 px-2.5 text-xs font-medium text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+            >
+              <ClipboardList className="h-3.5 w-3.5" />
+              Apply standard wording
+            </Button>
+          </div>
           <div className="grid grid-cols-2 gap-3 items-end">
             <FormField
               label="Agreed With"
@@ -374,12 +431,23 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             label="Extent of Inspection"
             required
             trailing={
-              <FieldLimitationBadge
-                compact
-                value={formData.extentOfInspection || ''}
-                markers={['LIM']}
-                onChange={(v) => onUpdate('extentOfInspection', v)}
-              />
+              <div className="flex items-center gap-2.5">
+                {!isFieldMarker(formData.extentOfInspection) && (
+                  <button
+                    type="button"
+                    onClick={() => applyStandardField('extentOfInspection')}
+                    className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow touch-manipulation"
+                  >
+                    Use standard
+                  </button>
+                )}
+                <FieldLimitationBadge
+                  compact
+                  value={formData.extentOfInspection || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('extentOfInspection', v)}
+                />
+              </div>
             }
           >
             {isFieldMarker(formData.extentOfInspection) ? (
@@ -402,12 +470,23 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             <FormField
               label="Limitations"
               trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.limitationsOfInspection || ''}
-                  markers={['N/A']}
-                  onChange={(v) => onUpdate('limitationsOfInspection', v)}
-                />
+                <div className="flex items-center gap-2.5">
+                  {!isFieldMarker(formData.limitationsOfInspection) && (
+                    <button
+                      type="button"
+                      onClick={() => applyStandardField('limitationsOfInspection')}
+                      className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow touch-manipulation whitespace-nowrap"
+                    >
+                      Use standard
+                    </button>
+                  )}
+                  <FieldLimitationBadge
+                    compact
+                    value={formData.limitationsOfInspection || ''}
+                    markers={['N/A']}
+                    onChange={(v) => onUpdate('limitationsOfInspection', v)}
+                  />
+                </div>
               }
             >
               {isFieldMarker(formData.limitationsOfInspection) ? (
@@ -428,12 +507,23 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             <FormField
               label="Operational Limitations"
               trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.operationalLimitations || ''}
-                  markers={['N/A']}
-                  onChange={(v) => onUpdate('operationalLimitations', v)}
-                />
+                <div className="flex items-center gap-2.5">
+                  {!isFieldMarker(formData.operationalLimitations) && (
+                    <button
+                      type="button"
+                      onClick={() => applyStandardField('operationalLimitations')}
+                      className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow touch-manipulation whitespace-nowrap"
+                    >
+                      Use standard
+                    </button>
+                  )}
+                  <FieldLimitationBadge
+                    compact
+                    value={formData.operationalLimitations || ''}
+                    markers={['N/A']}
+                    onChange={(v) => onUpdate('operationalLimitations', v)}
+                  />
+                </div>
               }
             >
               {isFieldMarker(formData.operationalLimitations) ? (

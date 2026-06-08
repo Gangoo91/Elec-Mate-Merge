@@ -374,7 +374,7 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
           ? `/employer?section=quotes`
           : data.quoteId
             ? `/electrician/quotes/view/${data.quoteId}`
-            : '/electrician/quote-invoice-dashboard';
+            : '/electrician/quotes';
       break;
     case 'invoice':
       url =
@@ -382,13 +382,16 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
           ? `/employer?section=quotes`
           : data.invoiceId
             ? `/electrician/invoices/${data.invoiceId}/view`
-            : '/electrician/quote-invoice-dashboard';
+            : '/electrician/invoices';
       break;
     case 'invoices_overdue':
-      // Aggregated multi-invoice digest push — open the dashboard so the
-      // user sees all unpaid in one list.
+      // Aggregated multi-invoice digest push — open the invoices list filtered
+      // to overdue so the user sees all unpaid in one place (ELE-1051: was
+      // deep-linking to the removed /electrician/quote-invoice-dashboard page).
       url =
-        role === 'employer' ? `/employer?section=quotes` : `/electrician/quote-invoice-dashboard`;
+        role === 'employer'
+          ? `/employer?section=quotes`
+          : `/electrician/invoices?filter=overdue`;
       break;
     case 'application':
       url =

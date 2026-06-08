@@ -648,7 +648,7 @@ const HNCModule3Section1_1 = () => {
                 select a cable from BS 7671 Appendix 4 with I<sub>z</sub> ≥ 160 A under the
                 actual installation method, ambient and grouping factors. Finally check
                 voltage drop over 35 m using the cable’s mV/A/m figure × length ×
-                I<sub>b</sub> against the 5 % limit for power circuits in BS 7671 Appendix 12.
+                I<sub>b</sub> against the 5 % limit for power circuits in BS 7671 Appendix 4, Section 6.4.
               </>
             }
             whyItMatters={
@@ -674,7 +674,7 @@ const HNCModule3Section1_1 = () => {
               'Single-phase: I = P / V. Three-phase: I = P / (√3 × Vₗ × cos φ). Always include power factor on inductive loads.',
               'Cable selection rule: Iᵇ ≤ Iₙ ≤ I_z (design current ≤ device rating ≤ cable capacity at site conditions).',
               'I²R losses scale with the square of current — doubling the load quadruples the heat in the cable. Drives both cable sizing and voltage drop.',
-              'Voltage drop limits (BS 7671 Appendix 12): 3 % lighting, 5 % power — always use the go-and-return distance for single-phase calcs.',
+              'Voltage drop limits (BS 7671 Appendix 4, Section 6.4): 3 % lighting, 5 % power — always use the go-and-return distance for single-phase calcs.',
               'Energy is power × time (kWh) — the unit billed by the supply utility and reported in the Part L energy submission.',
               'Power density (W/m²) is the early-stage tool for sizing landlord supplies before the lighting and HVAC schedules are issued.',
             ]}

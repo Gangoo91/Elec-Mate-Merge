@@ -60,6 +60,8 @@ const getTypeLabel = (type: string, data?: Record<string, unknown>) => {
       return 'NON-COMP';
     case 'completion-notice':
       return 'COMPLETION';
+    case 'disconnection':
+      return 'DISCONN';
     case 'bess':
       return 'BESS';
     case 'lightning-protection':

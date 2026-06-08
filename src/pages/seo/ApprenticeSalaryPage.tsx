@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -180,6 +181,43 @@ const sections = [
           applicable) can reach £14.00 to £16.50 per hour. These are approximate ranges — exact
           figures are published annually by the JIB and vary by region.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            JIB apprentice stage rates (indicative, 2026)
+          </h3>
+          <p className="text-white/70 text-xs mb-4">
+            Indicative hourly ranges — the JIB publishes exact rates each year and they vary by
+            region (London and the South East carry a weighting). Confirm current figures with the
+            JIB or your employer.
+          </p>
+          <div className="grid grid-cols-3 gap-2 text-sm">
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Stage</div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Year</div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              Indicative £/hr
+            </div>
+            {(
+              [
+                ['Stage 1', 'Year 1', '£8.00 – £9.50'],
+                ['Stage 2', 'Year 2', '£10.00 – £12.50'],
+                ['Stage 3', 'Year 3', '£12.50 – £15.00'],
+                ['Stage 4', 'Year 4', '£14.00 – £16.50'],
+              ] as Array<[string, string, string]>
+            ).map(([stage, year, rate]) => (
+              <Fragment key={stage}>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-white">{stage}</div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-white">{year}</div>
+                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                  {rate}
+                </div>
+              </Fragment>
+            ))}
+          </div>
+          <p className="text-white/70 text-xs mt-4">
+            JIB rates sit well above the statutory apprentice minimum of £7.55/hr, and stage rises
+            are linked to passing qualifications as well as time served.
+          </p>
+        </div>
         <p>
           Beyond the base hourly rate, JIB terms include additional benefits: defined overtime rates
           (time-and-a-half and double time), travel allowances for working away from your base

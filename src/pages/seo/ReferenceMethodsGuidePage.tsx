@@ -687,6 +687,11 @@ export default function ReferenceMethodsGuidePage() {
       }
       heroSubtitle="The same cable can carry 20 A or 27 A depending on how it is installed. Reference methods A to G define the installation arrangement and directly determine the current-carrying capacity from the BS 7671 Appendix 4 tables. This guide explains each method, when it applies, and how to choose correctly."
       readingTime={13}
+      answerBox={{
+        question: 'What is Reference Method C in BS 7671?',
+        answer:
+          'Reference Method C is "clipped direct" — a cable fixed directly to a non-metallic surface or run on a cable tray, with free air around it. It is one of the installation methods in Appendix 4 (Tables 4A1 and 4A2) that determines which column of the current-carrying capacity tables you read. Method C gives higher ratings than enclosed methods because heat dissipates more easily.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

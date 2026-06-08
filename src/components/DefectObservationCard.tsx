@@ -143,6 +143,14 @@ const DefectObservationCard = ({
   const config = defectCodeConfig[defect.defectCode];
   const IconComponent = config.icon;
 
+  // Split photos into the defect (before) evidence and rectification (after)
+  // evidence. After-photos are tagged with a sentinel prefix on the description
+  // so we can keep a single store without a schema change.
+  const RECTIFIED_TAG = '[RECTIFIED]';
+  const isRectifiedPhoto = (desc?: string) => (desc || '').startsWith(RECTIFIED_TAG);
+  const beforePhotos = photos.filter((p) => !isRectifiedPhoto(p.faultDescription));
+  const rectifiedPhotos = photos.filter((p) => isRectifiedPhoto(p.faultDescription));
+
   const handleCodeChange = (code: DefectObservation['defectCode']) => {
     // Save scroll position before state update to prevent scroll jump
     const scrollY = window.scrollY;
@@ -278,27 +286,36 @@ const DefectObservationCard = ({
           </div>
         )}
 
-        {/* AI Enhance Button */}
-        {defect.defectCode !== 'N/A' && defect.description.length >= 5 && (
-          <Button
-            type="button"
-            onClick={async () => {
-              setShowAISheet(true);
-              await enhance({
-                description: defect.description,
-                location: defect.item,
-                currentCode: defect.defectCode,
-              });
-            }}
-            disabled={isEnhancing}
-            className="h-11 w-full gap-2 bg-gradient-to-r from-elec-yellow/20 to-amber-500/20
-                       border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/30
-                       touch-manipulation"
-            variant="outline"
-          >
-            <Sparkles className="h-4 w-4" />
-            AI Enhance Observation
-          </Button>
+        {/* AI Assist — the star tool: turns a few words into a full BS 7671
+            observation, recommendation and regulation references. Always shown
+            (when codeable) so inspectors know it's there. */}
+        {defect.defectCode !== 'N/A' && (
+          <div className="rounded-xl border border-elec-yellow/25 bg-gradient-to-br from-elec-yellow/[0.07] to-amber-500/[0.03] p-3">
+            <Button
+              type="button"
+              onClick={async () => {
+                setShowAISheet(true);
+                await enhance({
+                  description: defect.description,
+                  location: defect.item,
+                  currentCode: defect.defectCode,
+                });
+              }}
+              disabled={isEnhancing || defect.description.trim().length < 5}
+              variant="ghost"
+              className="h-12 w-full gap-2 bg-elec-yellow/10 border border-elec-yellow/40 text-elec-yellow font-bold
+                         hover:bg-elec-yellow/15 hover:text-elec-yellow touch-manipulation active:scale-[0.99]
+                         disabled:opacity-100 disabled:bg-white/[0.03] disabled:border-white/10 disabled:text-white/40"
+            >
+              <Sparkles className="h-4 w-4" />
+              {isEnhancing ? 'AI is writing…' : 'AI Assist — write this observation for me'}
+            </Button>
+            <p className="text-[10px] text-white/45 mt-2 text-center leading-relaxed">
+              {defect.description.trim().length < 5
+                ? 'Jot a few words in Observation above (e.g. “gas bonding missing”) — AI writes the full BS 7671 wording, recommendation & reg refs.'
+                : 'AI will draft the full observation, recommendation and BS 7671 references — review and accept.'}
+            </p>
+          </div>
         )}
 
         {/* Photo Evidence */}
@@ -309,7 +326,7 @@ const DefectObservationCard = ({
               Photo Evidence
             </Label>
             <span className="text-xs text-white">
-              {photos.length} photo{photos.length !== 1 ? 's' : ''}
+              {beforePhotos.length} photo{beforePhotos.length !== 1 ? 's' : ''}
             </span>
           </div>
 
@@ -320,10 +337,10 @@ const DefectObservationCard = ({
             isUploading={isUploading}
           />
 
-          {photos.length > 0 && (
+          {beforePhotos.length > 0 && (
             <div className="mt-3">
               <InspectionPhotoGallery
-                photos={photos}
+                photos={beforePhotos}
                 onDeletePhoto={deletePhoto}
                 onScanPhoto={scanPhotoWithAI}
                 isScanning={isScanning}
@@ -371,6 +388,50 @@ const DefectObservationCard = ({
                 {defect.rectified ? 'Rectified during inspection' : 'Mark as rectified'}
               </span>
             </button>
+
+            {/* Rectification (after) evidence — only once marked rectified */}
+            {defect.rectified && (
+              <div className="mt-3 rounded-xl border border-green-500/25 bg-green-500/[0.06] p-3">
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-xs text-green-300 flex items-center gap-1.5">
+                    <Camera className="h-3.5 w-3.5" />
+                    Rectification evidence (after)
+                  </Label>
+                  <span className="text-xs text-green-300/80">
+                    {rectifiedPhotos.length} photo{rectifiedPhotos.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+
+                <InspectionPhotoUpload
+                  onPhotoCapture={async (file) => {
+                    await uploadPhoto(
+                      file,
+                      defect.defectCode,
+                      `${RECTIFIED_TAG} ${defect.description}`.trim()
+                    );
+                  }}
+                  isUploading={isUploading}
+                />
+
+                {rectifiedPhotos.length > 0 && (
+                  <div className="mt-3">
+                    <InspectionPhotoGallery
+                      photos={rectifiedPhotos}
+                      onDeletePhoto={deletePhoto}
+                      onScanPhoto={scanPhotoWithAI}
+                      isScanning={isScanning}
+                      inspectorContext={{
+                        classification: defect.defectCode,
+                        itemLocation: defect.item || 'Not specified',
+                        description: defect.description || 'No description provided',
+                        recommendation: defect.recommendation,
+                      }}
+                      certificateContext={certificateContext}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>

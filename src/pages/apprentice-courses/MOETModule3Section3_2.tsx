@@ -103,7 +103,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 Regulation 525.1 and Appendix 12 recommend that the voltage drop from the origin of the installation to the most remote point should not exceed 3% for lighting circuits and 5% for other circuits. For a 230 V supply, this means a maximum of 6.9 V for lighting and 11.5 V for power circuits. These are recommendations rather than absolute limits, but exceeding them can cause visible lamp flicker and reduced equipment performance.',
+      'BS 7671 Regulation 525 and Appendix 4, Section 6.4 recommend that the voltage drop from the origin of the installation to the most remote point should not exceed 3% for lighting circuits and 5% for other circuits. For a 230 V supply, this means a maximum of 6.9 V for lighting and 11.5 V for power circuits. These are recommendations rather than absolute limits, but exceeding them can cause visible lamp flicker and reduced equipment performance.',
   },
   {
     id: 4,
@@ -699,7 +699,7 @@ const MOETModule3Section3_2 = () => {
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">
                   <strong>Limits:</strong> 3% for lighting (6.9 V at 230 V), 5% for other uses (11.5
-                  V at 230 V) — BS 7671 Appendix 12
+                  V at 230 V) — BS 7671 Appendix 4, Section 6.4
                 </li>
                 <li className="pl-1">
                   <strong>Calculation:</strong> VD = (mV/A/m x Ib x L) / 1,000 — where mV/A/m is

@@ -1476,12 +1476,6 @@
             <span class="checkbox-box {% if supply_characteristics.other_sources_of_supply %}checked{% endif %}">{% if supply_characteristics.other_sources_of_supply %}&#10003;{% endif %}</span>
             <span class="checkbox-label">Other sources of supply (as detailed on attached schedule)</span>
         </div>
-        {% if supply_characteristics.supply_pme and supply_characteristics.supply_pme != "" %}
-        <div class="inline-group" style="margin-left: 8px">
-            <span class="inline-label">Supply PME:</span>
-            <span class="inline-value">{{ supply_characteristics.supply_pme }}</span>
-        </div>
-        {% endif %}
     </div>
     {% if supply_characteristics.other_sources_details != blank %}
     <div class="form-grid" style="margin-top: 2px">
@@ -1491,29 +1485,6 @@
         </div>
     </div>
     {% endif %}
-</div>
-
-<!-- Cables -->
-<div class="section">
-    <div class="section-subtitle">Supply Cables</div>
-    <div class="inline-form">
-        <div class="inline-group">
-            <span class="inline-label">Intake cable size (mm&sup2;):</span>
-            <span class="inline-value">{{ cables.intake_cable_size }}</span>
-        </div>
-        <div class="inline-group">
-            <span class="inline-label">Intake cable type:</span>
-            <span class="inline-value">{{ cables.intake_cable_type }}</span>
-        </div>
-        <div class="inline-group">
-            <span class="inline-label">Tails size (mm&sup2;):</span>
-            <span class="inline-value">{{ cables.tails_size }}</span>
-        </div>
-        <div class="inline-group">
-            <span class="inline-label">Tails length (m):</span>
-            <span class="inline-value">{{ cables.tails_length }}</span>
-        </div>
-    </div>
 </div>
 
 <!-- Standards Compliance -->
@@ -1672,22 +1643,6 @@
         </div>
     </div>
     {% endif %}
-
-    <!-- Supplementary Bonding -->
-    <div class="inline-form" style="margin-top: 2px">
-        <div class="inline-group">
-            <span class="inline-label">Supplementary bonding:</span>
-            <span class="inline-value wide">{{ earthing_bonding.supplementary_bonding }}</span>
-        </div>
-        <div class="inline-group">
-            <span class="inline-label">csa (mm&sup2;):</span>
-            <span class="inline-value">{{ earthing_bonding.supplementary_bonding_size }}</span>
-        </div>
-        <div class="inline-group">
-            <span class="inline-label">Equipotential bonding:</span>
-            <span class="inline-value wide">{{ earthing_bonding.equipotential_bonding }}</span>
-        </div>
-    </div>
 
     <!-- Main Switch -->
     <div class="section-subtitle" style="margin-top: 4px">Main Switch / Switch-fuse / Circuit-breaker / RCD</div>

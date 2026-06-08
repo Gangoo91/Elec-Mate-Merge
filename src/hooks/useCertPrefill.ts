@@ -62,6 +62,7 @@ const LAST_CERT_FIELDS: Record<ReportType, string[]> = {
   'limitation-notice': [],
   'non-compliance-notice': [],
   'completion-notice': [],
+  disconnection: [],
   bess: [],
   'lightning-protection': [],
   'g98-commissioning': [],

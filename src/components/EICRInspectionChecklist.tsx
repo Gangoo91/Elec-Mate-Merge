@@ -1,4 +1,5 @@
 import React from 'react';
+import { Zap } from 'lucide-react';
 import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
 import InspectionStatsSummary from './InspectionStatsSummary';
 import InspectionChecklistCard from './InspectionChecklistCard';
@@ -483,40 +484,59 @@ const EICRInspectionChecklist = ({
 
   return (
     <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
-      {/* Progress + Quick Mark */}
-      <div className="space-y-3 px-1">
-        {/* Progress row */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className={`text-sm font-bold ${progressPercent === 100 ? 'text-green-400' : 'text-white'}`}>
-              {progressPercent}%
+      {/* Inspection dashboard header */}
+      <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-elec-yellow/[0.05] via-white/[0.02] to-transparent p-4 sm:p-5 space-y-4">
+        {/* Big progress + bar */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-baseline gap-1 flex-shrink-0">
+            <span className={`text-3xl sm:text-4xl font-bold tabular-nums leading-none ${progressPercent === 100 ? 'text-green-400' : 'text-white'}`}>
+              {progressPercent}
             </span>
-            <span className="text-[10px] text-white">{completedItems}/{totalItems}</span>
+            <span className="text-lg font-semibold text-white/40">%</span>
           </div>
-          <div className="flex items-center gap-1">
-            {c1Count > 0 && <span className="text-[8px] font-bold bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded">{c1Count}</span>}
-            {c2Count > 0 && <span className="text-[8px] font-bold bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded">{c2Count}</span>}
-            {c3Count > 0 && <span className="text-[8px] font-bold bg-yellow-500/20 text-yellow-400 px-1.5 py-0.5 rounded">{c3Count}</span>}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-xs font-medium text-white/60 uppercase tracking-wider">Inspection progress</span>
+              <span className="text-xs font-semibold text-white/70 tabular-nums">{completedItems}/{totalItems} items</span>
+            </div>
+            <div className="h-2 rounded-full bg-white/[0.07] overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-500 ${progressPercent === 100 ? 'bg-green-500' : 'bg-gradient-to-r from-elec-yellow to-amber-400'}`}
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
           </div>
         </div>
-        <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all duration-500 ${progressPercent === 100 ? 'bg-green-500' : 'bg-elec-yellow'}`}
-            style={{ width: `${progressPercent}%` }}
-          />
+
+        {/* Defect stats + Quick Mark toggle */}
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-2">
+            {c1Count > 0 && (
+              <span className="inline-flex items-center text-[11px] font-bold bg-red-500/15 text-red-400 border border-red-500/30 px-2.5 py-1 rounded-lg">{c1Count} C1</span>
+            )}
+            {c2Count > 0 && (
+              <span className="inline-flex items-center text-[11px] font-bold bg-orange-500/15 text-orange-400 border border-orange-500/30 px-2.5 py-1 rounded-lg">{c2Count} C2</span>
+            )}
+            {c3Count > 0 && (
+              <span className="inline-flex items-center text-[11px] font-bold bg-yellow-500/15 text-yellow-400 border border-yellow-500/30 px-2.5 py-1 rounded-lg">{c3Count} C3</span>
+            )}
+            {c1Count === 0 && c2Count === 0 && c3Count === 0 && (
+              <span className="text-[11px] text-white/40">No defects recorded yet</span>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => setQuickMarkMode(!quickMarkMode)}
+            className={`h-9 px-4 rounded-xl text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center gap-2 ${
+              quickMarkMode
+                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
+                : 'bg-white/[0.05] border border-white/[0.1] text-white/80 hover:bg-white/[0.08]'
+            }`}
+          >
+            <Zap className="h-3.5 w-3.5" />
+            {quickMarkMode ? 'Quick Mark ON — tap = OK' : 'Quick Mark Mode'}
+          </button>
         </div>
-        {/* Quick Mark */}
-        <button
-          type="button"
-          onClick={() => setQuickMarkMode(!quickMarkMode)}
-          className={`w-full h-10 rounded-xl text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${
-            quickMarkMode
-              ? 'bg-green-500/15 border border-green-500/30 text-green-400'
-              : 'bg-white/[0.03] border border-white/[0.06] text-white'
-          }`}
-        >
-          {quickMarkMode ? 'Quick Mark ON — tap item = OK' : 'Quick Mark Mode'}
-        </button>
       </div>
 
       {/* Checklist Sections */}

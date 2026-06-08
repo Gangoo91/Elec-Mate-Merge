@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Camera, Eye, Check } from 'lucide-react';
+import { Eye, Check } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionOutcomeSelect from './EnhancedInspectionOutcomeSelect';
 import { cn } from '@/lib/utils';
@@ -76,19 +76,25 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
     };
   }, [debounceTimer]);
 
-  // Get row highlight color based on outcome
-  const getRowBgClass = () => {
+  // Colour-coded left edge + subtle tint per outcome — status at a glance
+  const getRowAccent = () => {
     switch (currentOutcome) {
       case 'satisfactory':
-        return 'bg-green-500/5';
+        return 'border-l-green-500/80 bg-green-500/[0.035]';
       case 'C1':
-        return 'bg-red-500/10';
+        return 'border-l-red-500 bg-red-500/[0.07]';
       case 'C2':
-        return 'bg-orange-500/10';
+        return 'border-l-orange-500 bg-orange-500/[0.06]';
       case 'C3':
-        return 'bg-yellow-500/5';
+        return 'border-l-yellow-500 bg-yellow-500/[0.045]';
+      case 'not-verified':
+        return 'border-l-slate-400/70';
+      case 'limitation':
+        return 'border-l-amber-400/70';
+      case 'not-applicable':
+        return 'border-l-white/20';
       default:
-        return '';
+        return 'border-l-transparent';
     }
   };
 
@@ -97,24 +103,12 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
   return (
     <TableRow
       className={cn(
-        'group transition-all duration-200 border-b border-white/5 hover:bg-white/5',
-        getRowBgClass()
+        'group transition-colors duration-200 border-b border-white/[0.04] border-l-[3px] hover:bg-white/[0.035]',
+        getRowAccent()
       )}
     >
-      {/* Status Indicator */}
-      <TableCell className="w-14 text-center py-4">
-        <div
-          className={cn(
-            'w-7 h-7 rounded-lg flex items-center justify-center mx-auto transition-colors',
-            isCompleted ? 'bg-green-500/20' : 'bg-white/5 border border-white/10'
-          )}
-        >
-          {isCompleted && <Check className="h-4 w-4 text-green-400" />}
-        </div>
-      </TableCell>
-
       {/* Item Number + Title + Clause */}
-      <TableCell className="py-4 text-left">
+      <TableCell className="py-3.5 pl-4 text-left">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -126,7 +120,9 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
                   {sectionItem.item}
                 </p>
                 {sectionItem.clause && (
-                  <p className="text-xs text-white font-mono text-left">{sectionItem.clause}</p>
+                  <span className="inline-block text-[10px] text-white/55 font-mono bg-white/[0.05] border border-white/[0.07] rounded px-1.5 py-0.5">
+                    {sectionItem.clause}
+                  </span>
                 )}
               </div>
             </TooltipTrigger>
@@ -140,7 +136,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       </TableCell>
 
       {/* Outcome Chips - Compact mode */}
-      <TableCell className="w-72 py-4">
+      <TableCell className="w-[440px] py-4">
         <EnhancedInspectionOutcomeSelect
           itemId={sectionItem.id}
           currentOutcome={currentOutcome}
@@ -163,14 +159,6 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       {/* Actions */}
       <TableCell className="w-24 text-center py-4">
         <div className="flex items-center justify-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-white hover:text-white hover:bg-white/10"
-          >
-            <Camera className="h-4 w-4" />
-          </Button>
-
           {isCriticalOutcome && onNavigateToObservations && (
             <Button
               variant="ghost"

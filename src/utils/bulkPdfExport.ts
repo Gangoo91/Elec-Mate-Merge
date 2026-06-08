@@ -61,6 +61,7 @@ const getEdgeFunctionForReportType = (reportType: string): string => {
   if (t === 'limitation-notice') return 'generate-limitation-notice-pdf';
   if (t === 'non-compliance-notice') return 'generate-non-compliance-notice-pdf';
   if (t === 'completion-notice') return 'generate-completion-notice-pdf';
+  if (t === 'disconnection') return 'generate-disconnection-certificate-pdf';
 
   // Fallback — try generic pattern
   console.warn(`[bulkPdfExport] Unknown report type "${reportType}", trying generate-${t}-pdf`);
@@ -359,6 +360,11 @@ export const generateBulkPDFs = async (
         else if (rtLower === 'testing-only') {
           const { formatTestingOnlyJson } = await import('./testingOnlyJsonFormatter');
           dataForPdf = formatTestingOnlyJson(validation.data);
+        }
+        // Disconnection Certificate
+        else if (rtLower === 'disconnection') {
+          const { formatDisconnectionCertificatePayload } = await import('./disconnection-certificate-formatter');
+          dataForPdf = formatDisconnectionCertificatePayload(validation.data as Record<string, any>);
         }
         // Minor Works, notices: edge function handles transform internally
       }

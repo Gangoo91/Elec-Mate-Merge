@@ -25,7 +25,7 @@ const BS7671Module8Section1Intro = () => {
           <h5 className="text-elec-yellow font-semibold mb-2">Key Appendices Covered:</h5>
           <ul className="text-sm space-y-1">
             <li>• Appendix 4: Current-carrying capacities and correction factors</li>
-            <li>• Appendix 12: Voltage drop calculations and compliance limits</li>
+            <li>• Appendix 4 (Section 6.4): Voltage drop calculations and compliance limits</li>
             <li>• Appendix 14: Earth fault loop impedance values</li>
             <li>• Appendix 15: Ring final circuit calculations</li>
             <li>• Reference charts and derating tables</li>

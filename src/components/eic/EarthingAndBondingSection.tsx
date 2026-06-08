@@ -40,7 +40,6 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
   onUpdate,
 }) => {
   const isPMESelected = formData.earthElectrodeType === 'pme';
-  const isSupplementaryBondingNotRequired = formData.supplementaryBondingSize === 'not-required';
 
   // Parse existing main bonding locations into checkboxes
   const parseMainBondingLocations = (value: string = ''): Set<string> => {
@@ -448,64 +447,6 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
           />
         </FormField>
       )}
-
-      {/* Supplementary Bonding */}
-      <SectionTitle title="Supplementary Bonding" />
-      <div className="space-y-2">
-        <FormField label="Size">
-          <div className="grid grid-cols-5 gap-1">
-            {[
-              { value: '2.5mm', label: '2.5' },
-              { value: '4mm', label: '4' },
-              { value: '6mm', label: '6' },
-              { value: '10mm', label: '10' },
-              { value: 'not-required', label: 'N/R' },
-            ].map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => onUpdate('supplementaryBondingSize', formData.supplementaryBondingSize === opt.value ? '' : opt.value)}
-                className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                  formData.supplementaryBondingSize === opt.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {opt.label}{opt.value !== 'not-required' ? 'mm²' : ''}
-              </button>
-            ))}
-          </div>
-        </FormField>
-
-        <FormField label="Equipotential Bonding">
-          <div className="grid grid-cols-3 gap-1">
-            {[
-              { value: 'satisfactory', label: '✓ OK' },
-              { value: 'unsatisfactory', label: '✗ Unsat' },
-              { value: 'not-applicable', label: 'N/A' },
-            ].map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => onUpdate('equipotentialBonding', formData.equipotentialBonding === opt.value ? '' : opt.value)}
-                className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                  formData.equipotentialBonding === opt.value
-                    ? opt.value === 'satisfactory'
-                      ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                      : opt.value === 'unsatisfactory'
-                        ? 'bg-red-500/20 border border-red-500/40 text-red-400'
-                        : 'bg-white/[0.08] border border-white/[0.15] text-white'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </FormField>
-      </div>
     </div>
   );
 };

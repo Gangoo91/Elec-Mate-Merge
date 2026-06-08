@@ -47,6 +47,10 @@ const G99CommissioningCertificate = lazy(
 const TestingOnlyCertificate = lazy(
   () => import('@/pages/inspection/TestingOnlyCertificate')
 );
+// Disconnection Certificate
+const DisconnectionCertificate = lazy(
+  () => import('@/pages/inspection/DisconnectionCertificate')
+);
 
 // Labels & Warnings
 const DangerNoticePage = lazy(() => import('@/pages/inspection/DangerNoticePage'));
@@ -129,6 +133,10 @@ export default function InspectionRoutes() {
         {/* Testing Only Certificate */}
         <Route path="testing-only/new" element={<TestingOnlyCertificate />} />
         <Route path="testing-only/:id" element={<TestingOnlyCertificate />} />
+
+        {/* Disconnection Certificate */}
+        <Route path="disconnection/new" element={<DisconnectionCertificate />} />
+        <Route path="disconnection/:id" element={<DisconnectionCertificate />} />
 
         {/* Labels & Warnings */}
         <Route path="danger-notice" element={<DangerNoticePage />} />

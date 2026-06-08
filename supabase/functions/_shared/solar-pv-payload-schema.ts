@@ -9,145 +9,156 @@
 
 import { z } from 'https://esm.sh/zod@3.23.8';
 
+// Numeric inputs (measured Ze/Zs, RCD ratings/trip times, insulation MΩ, etc.)
+// can arrive as JS numbers, but text fields here are strings. PDF Monkey renders
+// numbers fine, so a number is not a real error — coerce defensively so
+// validation doesn't raise false "schema drift" noise (the recurring drift was
+// numbers in ac_tests where strings were expected).
+const stringish = z.preprocess((v) => {
+  if (v === null || v === undefined) return v; // let .default() apply
+  if (typeof v === 'number' || typeof v === 'boolean') return String(v);
+  return v;
+}, z.string());
+
 // ── Array Item Schemas ──────────────────────────────────────────────────────
 
 const pvArraySchema = z.object({
   array_number: z.number().default(0),
-  panel_make: z.string().default(''),
-  panel_model: z.string().default(''),
+  panel_make: stringish.default(''),
+  panel_model: stringish.default(''),
   panel_wattage: z.number().default(0),
   panel_count: z.number().default(0),
-  array_capacity: z.string().default('0.00'),
+  array_capacity: stringish.default('0.00'),
   mcs_certified: z.boolean().default(false),
-  orientation: z.string().default(''),
+  orientation: stringish.default(''),
   tilt_angle: z.number().default(0),
   shading_factor: z.number().default(1),
-  shading_percentage: z.string().default('0'),
-  string_voc: z.string().default(''),
-  string_isc: z.string().default(''),
-  mounting_type: z.string().default(''),
-  mounting_type_display: z.string().default(''),
+  shading_percentage: stringish.default('0'),
+  string_voc: stringish.default(''),
+  string_isc: stringish.default(''),
+  mounting_type: stringish.default(''),
+  mounting_type_display: stringish.default(''),
 });
 
 const inverterSchema = z.object({
   inverter_number: z.number().default(0),
-  make: z.string().default(''),
-  model: z.string().default(''),
-  serial_number: z.string().default(''),
+  make: stringish.default(''),
+  model: stringish.default(''),
+  serial_number: stringish.default(''),
   rated_power: z.number().default(0),
   mcs_certified: z.boolean().default(false),
-  type: z.string().default(''),
-  type_display: z.string().default(''),
+  type: stringish.default(''),
+  type_display: stringish.default(''),
   mppt_count: z.number().default(1),
-  phases: z.string().default('single'),
-  phases_display: z.string().default(''),
-  location: z.string().default(''),
+  phases: stringish.default('single'),
+  phases_display: stringish.default(''),
+  location: stringish.default(''),
 });
 
 const arrayTestSchema = z.object({
   array_number: z.number().default(0),
-  array_name: z.string().default(''),
-  voc_measured: z.string().default(''),
-  isc_measured: z.string().default(''),
-  insulation_resistance: z.string().default(''),
-  polarity_result: z.string().default(''),
-  polarity_class: z.string().default(''),
-  continuity_result: z.string().default(''),
-  continuity_class: z.string().default(''),
+  array_name: stringish.default(''),
+  voc_measured: stringish.default(''),
+  isc_measured: stringish.default(''),
+  insulation_resistance: stringish.default(''),
+  polarity_result: stringish.default(''),
+  polarity_class: stringish.default(''),
+  continuity_result: stringish.default(''),
+  continuity_class: stringish.default(''),
 });
 
 const inverterTestSchema = z.object({
   inverter_number: z.number().default(0),
-  inverter_name: z.string().default(''),
-  dc_isolator_result: z.string().default(''),
-  dc_isolator_class: z.string().default(''),
-  ac_isolator_result: z.string().default(''),
-  ac_isolator_class: z.string().default(''),
-  anti_islanding_result: z.string().default(''),
-  anti_islanding_class: z.string().default(''),
-  protection_result: z.string().default(''),
-  protection_class: z.string().default(''),
+  inverter_name: stringish.default(''),
+  dc_isolator_result: stringish.default(''),
+  dc_isolator_class: stringish.default(''),
+  ac_isolator_result: stringish.default(''),
+  ac_isolator_class: stringish.default(''),
+  anti_islanding_result: stringish.default(''),
+  anti_islanding_class: stringish.default(''),
+  protection_result: stringish.default(''),
+  protection_class: stringish.default(''),
 });
 
 const defectSchema = z.object({
   number: z.number().default(0),
-  description: z.string().default(''),
-  severity: z.string().default(''),
-  severity_class: z.string().default(''),
+  description: stringish.default(''),
+  severity: stringish.default(''),
+  severity_class: stringish.default(''),
   rectified: z.boolean().default(false),
-  rectification_date: z.string().default(''),
+  rectification_date: stringish.default(''),
 });
 
 const photoSchema = z.object({
-  url: z.string().default(''),
-  caption: z.string().default(''),
-  category: z.string().default('general'),
+  url: stringish.default(''),
+  caption: stringish.default(''),
+  category: stringish.default('general'),
 });
 
 // ── Nested Object Schemas ───────────────────────────────────────────────────
 
 const mcsDetailsSchema = z.object({
-  installer_number: z.string().default(''),
-  installation_number: z.string().default(''),
-  consumer_code: z.string().default(''),
-  consumer_code_display: z.string().default(''),
+  installer_number: stringish.default(''),
+  installation_number: stringish.default(''),
+  consumer_code: stringish.default(''),
+  consumer_code_display: stringish.default(''),
 }).default({});
 
 const batterySchema = z.object({
   installed: z.boolean().default(false),
-  make: z.string().default(''),
-  model: z.string().default(''),
-  serial_number: z.string().default(''),
+  make: stringish.default(''),
+  model: stringish.default(''),
+  serial_number: stringish.default(''),
   capacity: z.number().default(0),
-  chemistry: z.string().default(''),
-  chemistry_display: z.string().default(''),
+  chemistry: stringish.default(''),
+  chemistry_display: stringish.default(''),
 }).default({});
 
 const gridConnectionSchema = z.object({
-  dno_name: z.string().default(''),
-  mpan: z.string().default(''),
-  application_reference: z.string().default(''),
-  application_type: z.string().default(''),
-  application_type_display: z.string().default(''),
-  application_date: z.string().default(''),
-  approval_date: z.string().default(''),
-  approval_reference: z.string().default(''),
+  dno_name: stringish.default(''),
+  mpan: stringish.default(''),
+  application_reference: stringish.default(''),
+  application_type: stringish.default(''),
+  application_type_display: stringish.default(''),
+  application_date: stringish.default(''),
+  approval_date: stringish.default(''),
+  approval_reference: stringish.default(''),
   export_limited: z.boolean().default(false),
-  export_limit_kw: z.string().default(''),
+  export_limit_kw: stringish.default(''),
 }).default({});
 
 const meteringSchema = z.object({
-  meter_type: z.string().default(''),
-  meter_type_display: z.string().default(''),
-  meter_make: z.string().default(''),
-  meter_model: z.string().default(''),
-  meter_serial: z.string().default(''),
-  ct_ratio: z.string().default(''),
+  meter_type: stringish.default(''),
+  meter_type_display: stringish.default(''),
+  meter_make: stringish.default(''),
+  meter_model: stringish.default(''),
+  meter_serial: stringish.default(''),
+  ct_ratio: stringish.default(''),
 }).default({});
 
 const acTestsSchema = z.object({
-  earthing_arrangement: z.string().default(''),
-  earthing_arrangement_display: z.string().default(''),
-  ze_value: z.string().default(''),
-  zs_value: z.string().default(''),
-  rcd_type: z.string().default(''),
-  rcd_rating: z.string().default(''),
-  rcd_trip_time: z.string().default(''),
-  insulation_resistance: z.string().default(''),
-  polarity_result: z.string().default(''),
-  polarity_class: z.string().default(''),
+  earthing_arrangement: stringish.default(''),
+  earthing_arrangement_display: stringish.default(''),
+  ze_value: stringish.default(''),
+  zs_value: stringish.default(''),
+  rcd_type: stringish.default(''),
+  rcd_rating: stringish.default(''),
+  rcd_trip_time: stringish.default(''),
+  insulation_resistance: stringish.default(''),
+  polarity_result: stringish.default(''),
+  polarity_class: stringish.default(''),
   bidirectional_device_installed: z.boolean().default(false),
-  bidirectional_device_type: z.string().default(''),
-  bidirectional_device_make: z.string().default(''),
-  bidirectional_device_model: z.string().default(''),
-  bidirectional_device_result: z.string().default(''),
-  bidirectional_device_class: z.string().default(''),
+  bidirectional_device_type: stringish.default(''),
+  bidirectional_device_make: stringish.default(''),
+  bidirectional_device_model: stringish.default(''),
+  bidirectional_device_result: stringish.default(''),
+  bidirectional_device_class: stringish.default(''),
 }).default({});
 
 const commissioningSchema = z.object({
   system_operational: z.boolean().default(false),
   export_verified: z.boolean().default(false),
-  generation_meter_reading: z.string().default(''),
+  generation_meter_reading: stringish.default(''),
   customer_briefed: z.boolean().default(false),
   documentation_provided: z.boolean().default(false),
 }).default({});
@@ -164,37 +175,37 @@ const handoverSchema = z.object({
 
 export const solarPVPayloadSchema = z.object({
   // Metadata
-  certificate_number: z.string().default(''),
-  certificate_type: z.string().default('installation'),
-  certificate_type_display: z.string().default(''),
-  work_type: z.string().default('new-installation'),
-  work_type_display: z.string().default(''),
-  installation_date: z.string().default(''),
-  commissioning_date: z.string().default(''),
-  design_reference: z.string().default(''),
-  previous_installation_ref: z.string().default(''),
-  status: z.string().default(''),
+  certificate_number: stringish.default(''),
+  certificate_type: stringish.default('installation'),
+  certificate_type_display: stringish.default(''),
+  work_type: stringish.default('new-installation'),
+  work_type_display: stringish.default(''),
+  installation_date: stringish.default(''),
+  commissioning_date: stringish.default(''),
+  design_reference: stringish.default(''),
+  previous_installation_ref: stringish.default(''),
+  status: stringish.default(''),
 
   // Client details
-  client_name: z.string().default(''),
-  client_address: z.string().default(''),
-  client_postcode: z.string().default(''),
-  client_email: z.string().default(''),
-  client_phone: z.string().default(''),
+  client_name: stringish.default(''),
+  client_address: stringish.default(''),
+  client_postcode: stringish.default(''),
+  client_email: stringish.default(''),
+  client_phone: stringish.default(''),
 
   // Installation address
-  installation_address: z.string().default(''),
-  installation_postcode: z.string().default(''),
+  installation_address: stringish.default(''),
+  installation_postcode: stringish.default(''),
 
   // Property & ownership
-  property_type: z.string().default('domestic'),
-  property_type_display: z.string().default(''),
-  ownership_type: z.string().default(''),
-  property_age: z.string().default(''),
-  roof_age: z.string().default(''),
+  property_type: stringish.default('domestic'),
+  property_type_display: stringish.default(''),
+  ownership_type: stringish.default(''),
+  property_age: stringish.default(''),
+  roof_age: stringish.default(''),
 
   // Site access & safety
-  site_access_notes: z.string().default(''),
+  site_access_notes: stringish.default(''),
   safe_isolation_verified: z.boolean().default(false),
   asbestos_check_required: z.boolean().default(false),
   asbestos_check_completed: z.boolean().default(false),
@@ -205,15 +216,15 @@ export const solarPVPayloadSchema = z.object({
   mcs_details: mcsDetailsSchema,
 
   // System overview
-  system_type: z.string().default(''),
-  system_type_display: z.string().default(''),
-  total_capacity: z.string().default('0.00'),
+  system_type: stringish.default(''),
+  system_type_display: stringish.default(''),
+  total_capacity: stringish.default('0.00'),
   total_panels: z.number().default(0),
-  estimated_annual_yield: z.string().default('0'),
-  estimated_co2_savings: z.string().default('0'),
-  yield_calculation_method: z.string().default('mcs-estimator'),
-  yield_calculation_method_display: z.string().default(''),
-  yield_calculation_notes: z.string().default(''),
+  estimated_annual_yield: stringish.default('0'),
+  estimated_co2_savings: stringish.default('0'),
+  yield_calculation_method: stringish.default('mcs-estimator'),
+  yield_calculation_method_display: stringish.default(''),
+  yield_calculation_notes: stringish.default(''),
 
   // PV arrays
   arrays: z.array(pvArraySchema).default([]),
@@ -253,23 +264,23 @@ export const solarPVPayloadSchema = z.object({
   handover: handoverSchema,
 
   // Declarations — Installer
-  installer_name: z.string().default(''),
-  installer_company: z.string().default(''),
-  installer_mcs_number: z.string().default(''),
-  installer_address: z.string().default(''),
-  installer_phone: z.string().default(''),
-  installer_email: z.string().default(''),
-  installer_signature: z.string().default(''),
-  installer_date: z.string().default(''),
+  installer_name: stringish.default(''),
+  installer_company: stringish.default(''),
+  installer_mcs_number: stringish.default(''),
+  installer_address: stringish.default(''),
+  installer_phone: stringish.default(''),
+  installer_email: stringish.default(''),
+  installer_signature: stringish.default(''),
+  installer_date: stringish.default(''),
 
   // Declarations — Electrician (optional)
   electrician_required: z.boolean().default(false),
-  electrician_name: z.string().default(''),
-  electrician_company: z.string().default(''),
-  electrician_registration: z.string().default(''),
-  electrician_scheme: z.string().default(''),
-  electrician_signature: z.string().default(''),
-  electrician_date: z.string().default(''),
+  electrician_name: stringish.default(''),
+  electrician_company: stringish.default(''),
+  electrician_registration: stringish.default(''),
+  electrician_scheme: stringish.default(''),
+  electrician_signature: stringish.default(''),
+  electrician_date: stringish.default(''),
   has_electrician: z.boolean().default(false),
 
   // Photos
@@ -279,24 +290,24 @@ export const solarPVPayloadSchema = z.object({
 
   // Overall assessment
   overall_satisfactory: z.boolean().default(false),
-  overall_assessment_display: z.string().default(''),
-  overall_assessment_class: z.string().default(''),
+  overall_assessment_display: stringish.default(''),
+  overall_assessment_class: stringish.default(''),
 
   // Additional notes
-  additional_notes: z.string().default(''),
+  additional_notes: stringish.default(''),
   has_additional_notes: z.boolean().default(false),
 
   // Company branding
-  company_name: z.string().default(''),
-  company_address: z.string().default(''),
-  company_phone: z.string().default(''),
-  company_email: z.string().default(''),
-  company_website: z.string().default(''),
-  company_logo: z.string().default(''),
-  company_accent_color: z.string().default('#f59e0b'),
-  registration_scheme_logo: z.string().default(''),
-  registration_scheme: z.string().default(''),
-  registration_number: z.string().default(''),
+  company_name: stringish.default(''),
+  company_address: stringish.default(''),
+  company_phone: stringish.default(''),
+  company_email: stringish.default(''),
+  company_website: stringish.default(''),
+  company_logo: stringish.default(''),
+  company_accent_color: stringish.default('#f59e0b'),
+  registration_scheme_logo: stringish.default(''),
+  registration_scheme: stringish.default(''),
+  registration_number: stringish.default(''),
 }).passthrough();
 
 export type SolarPVPayload = z.infer<typeof solarPVPayloadSchema>;

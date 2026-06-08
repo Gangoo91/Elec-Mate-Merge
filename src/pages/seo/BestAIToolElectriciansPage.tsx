@@ -21,8 +21,8 @@ import {
 export default function BestAIToolElectriciansPage() {
   return (
     <ComparisonTemplate
-      title="Best AI Tools for UK Electricians 2026 (5 Apps Compared)"
-      description="Best AI tools for UK electricians 2026: 5 trade apps compared — circuit design, BS 7671 compliance, costing + estimating. Real-world time savings tested."
+      title="Best AI Tools for UK Electricians 2026 (Compared)"
+      description="Best AI tools for UK electricians 2026: Elec-Mate AI vs ChatGPT vs Gemini compared — circuit design, BS 7671 compliance, costing + estimating. Real-world time savings tested."
       datePublished="2026-02-10"
       dateModified="2026-05-22"
       breadcrumbs={[
@@ -155,9 +155,10 @@ export default function BestAIToolElectriciansPage() {
                 ChatGPT and Gemini have general awareness of electrical concepts from their web
                 training data, but they frequently produce regulation numbers that do not exist,
                 confuse different editions of BS 7671, and lack knowledge of Amendment 4 (A4:2026)
-                which added Regulation 530.3.201 — requiring the installer to determine which
-                directional characteristic (unidirectional or bidirectional) is appropriate when
-                selecting protective devices. When asked specific questions about Zs limits, cable
+                which added Regulation 530.3.201 — requiring the installer to determine whether a
+                protective device should be unidirectional or bidirectional wherever a supply can be
+                connected to either side, such as solar PV, battery storage or vehicle-to-load. When
+                asked specific questions about Zs limits, cable
                 grouping factors, or disconnection times, they often hallucinate values that are
                 close but incorrect — the most dangerous kind of error.
               </p>
@@ -186,10 +187,10 @@ export default function BestAIToolElectriciansPage() {
                     misattribute which edition introduced this.
                   </li>
                   <li>
-                    <strong>Reg 722.311.201</strong> — For EV charging installations, load
-                    curtailment (automatic or manual load reduction or disconnection) may be taken
-                    into account when determining maximum demand. Sizing an EV charger installation
-                    correctly depends on knowing this rule exists.
+                    <strong>Reg 643.3 (RCD testing)</strong> — A4:2026 changed how RCDs are tested:
+                    regardless of RCD type, an AC test at the rated residual current (IΔn) now
+                    verifies operation, and the old Appendix 3 Table 3A tripping-time criteria were
+                    deleted. A general chatbot will still quote the withdrawn test method.
                   </li>
                 </ul>
               </div>
@@ -280,7 +281,7 @@ export default function BestAIToolElectriciansPage() {
         {
           question: 'Does Elec-Mate AI know about BS 7671 Amendment 4?',
           answer:
-            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment which added Regulation 530.3.201 — requiring the installer to determine which directional characteristic (unidirectional or bidirectional) is appropriate when selecting protective devices. ChatGPT and Gemini have limited or no knowledge of Amendment 4 (edition label: BS 7671:2018+A4:2026), as their training data may not include this update.',
+            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment, which added Regulation 530.3.201 — requiring the installer to determine whether a protective device should be unidirectional or bidirectional wherever a supply can be connected to either side (solar PV, battery storage, vehicle-to-load). ChatGPT and Gemini have limited or no knowledge of Amendment 4 (edition label: BS 7671:2018+A4:2026), as their training data may not include this update.',
         },
         {
           question: 'How does the AI Cost Engineer work?',
