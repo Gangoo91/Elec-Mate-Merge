@@ -1,7 +1,8 @@
-import React from 'react';
-import { Lock, ShieldCheck, FilePlus2, History } from 'lucide-react';
+import React, { useState } from 'react';
+import { Lock, ShieldCheck, FilePlus2, History, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { VersionHistorySheet } from '@/components/ui/VersionHistorySheet';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 
 interface CertLockBarProps {
   isLocked: boolean;
@@ -51,7 +52,11 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
   hasVersions,
   onOpenVersion,
 }) => {
+  const [pdfOpen, setPdfOpen] = useState(false);
   const showHistory = !!databaseId && !!hasVersions;
+  const pdfViewer = databaseId ? (
+    <ReportPdfViewer reportId={databaseId} open={pdfOpen} onOpenChange={setPdfOpen} />
+  ) : null;
   const historySheet = showHistory ? (
     <VersionHistorySheet
       reportId={databaseId}
@@ -83,11 +88,22 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
               </p>
               <p className="text-xs text-white/60 mt-0.5 leading-relaxed">
                 This certificate is read-only
-                {lockedAt ? ` — issued ${formatLockedDate(lockedAt)}` : ''}. To make changes,
-                create a new version.
+                {lockedAt ? ` — issued ${formatLockedDate(lockedAt)}` : ''}. To make changes, create
+                a new version.
               </p>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
+              {databaseId && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setPdfOpen(true)}
+                  className="h-10 gap-1.5 text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
+                >
+                  <Download className="h-4 w-4" />
+                  PDF
+                </Button>
+              )}
               {historySheet}
               <Button
                 type="button"
@@ -101,6 +117,7 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
             </div>
           </div>
         </div>
+        {pdfViewer}
       </div>
     );
   }
@@ -142,9 +159,7 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
     return (
       <div className="px-4 pt-3">
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 flex items-center justify-between gap-3">
-          <p className="text-xs text-white/60">
-            Version {editVersion} of this certificate
-          </p>
+          <p className="text-xs text-white/60">Version {editVersion} of this certificate</p>
           {historySheet}
         </div>
       </div>

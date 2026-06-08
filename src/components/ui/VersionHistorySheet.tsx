@@ -4,10 +4,11 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Clock, CheckCircle2, FileText, RotateCcw } from 'lucide-react';
+import { Clock, CheckCircle2, FileText, RotateCcw, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { getVersionHistory } from '@/utils/reportVersioning';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { cn } from '@/lib/utils';
 
 interface VersionHistorySheetProps {
@@ -36,6 +37,8 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
   const [versions, setVersions] = useState<VersionInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  // report_id of the version whose PDF the user is downloading/viewing
+  const [pdfReportId, setPdfReportId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen && reportId) {
@@ -142,25 +145,34 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
                           <span className="ml-2 text-emerald-400">· locked</span>
                         )}
                       </p>
-                      <p className="text-xs text-white">
-                        {formatDate(version.created_at)}
-                      </p>
+                      <p className="text-xs text-white">{formatDate(version.created_at)}</p>
                     </div>
 
-                    {!version.is_latest_version && onOpenVersion && (
+                    <div className="flex items-center gap-1 flex-shrink-0">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 gap-1.5 text-xs touch-manipulation"
-                        onClick={() => {
-                          onOpenVersion(version.report_id);
-                          setIsOpen(false);
-                        }}
+                        className="h-8 gap-1.5 text-xs text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+                        onClick={() => setPdfReportId(version.report_id)}
                       >
-                        <RotateCcw className="h-3 w-3" />
-                        Open
+                        <Download className="h-3 w-3" />
+                        PDF
                       </Button>
-                    )}
+                      {!version.is_latest_version && onOpenVersion && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 gap-1.5 text-xs touch-manipulation"
+                          onClick={() => {
+                            onOpenVersion(version.report_id);
+                            setIsOpen(false);
+                          }}
+                        >
+                          <RotateCcw className="h-3 w-3" />
+                          Open
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -168,6 +180,18 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
           </div>
         </div>
       </SheetContent>
+
+      {/* PDF preview / download for the selected version (reads its preserved
+          data — works for old, locked versions and any cert type). */}
+      {pdfReportId && (
+        <ReportPdfViewer
+          reportId={pdfReportId}
+          open={!!pdfReportId}
+          onOpenChange={(o) => {
+            if (!o) setPdfReportId(null);
+          }}
+        />
+      )}
     </Sheet>
   );
 };
