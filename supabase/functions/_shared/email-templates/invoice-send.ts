@@ -15,6 +15,7 @@ import {
   type BrandedCompany,
   type BankDetails,
 } from '../email-template.ts';
+import { renderReviewBlock, type ReviewLink } from './review-block.ts';
 
 export interface InvoiceSendData {
   company: BrandedCompany;
@@ -44,6 +45,10 @@ export interface InvoiceSendData {
   customSubject?: string | null;
   /** Optional override of the email body paragraph. */
   customMessage?: string | null;
+  /** Review-request settings from the company profile. */
+  reviewEnabled?: boolean | null;
+  reviewLinks?: ReviewLink[] | null;
+  reviewMessage?: string | null;
 }
 
 export interface InvoiceSendEmail {
@@ -166,7 +171,15 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
     body: `<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">${subtotalRows.join('')}</table>`,
   });
 
-  const sectionsAfterCta = `${bankCard}${totalsCard}${notesCard}`;
+  // Optional review request — soft nudge on the invoice (a stronger ask
+  // goes out when the invoice is marked paid).
+  const reviewCard = renderReviewBlock({
+    enabled: data.reviewEnabled,
+    links: data.reviewLinks,
+    message: data.reviewMessage,
+  });
+
+  const sectionsAfterCta = `${bankCard}${totalsCard}${notesCard}${reviewCard}`;
 
   const signoff = `<tr>
     <td style="padding:0 36px 36px;">

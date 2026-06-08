@@ -5,6 +5,7 @@ export { default as AccountingSheet } from './AccountingSheet';
 export { default as PricingSheet } from './PricingSheet';
 export { default as QuoteSettingsSheet } from './QuoteSettingsSheet';
 export { default as InvoiceSettingsSheet } from './InvoiceSettingsSheet';
+export { default as ReviewsSheet } from './ReviewsSheet';
 export { default as InspectorSheet } from './InspectorSheet';
 export { default as InstrumentsSheet } from './InstrumentsSheet';
 export { default as RegionalSheet } from './RegionalSheet';

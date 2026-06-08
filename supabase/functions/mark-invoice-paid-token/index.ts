@@ -22,6 +22,7 @@
 
 import { corsHeaders } from '../_shared/cors.ts';
 import { createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -191,11 +192,27 @@ Deno.serve(async (req: Request) => {
       })
       .eq('id', tokenRow.id);
 
+    // Send the payment-received / review-request email (internal call; no-ops
+    // unless the user has review requests enabled). Non-blocking on failure.
+    try {
+      await fetch(`${SUPABASE_URL}/functions/v1/send-payment-received-resend`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        },
+        body: JSON.stringify({ invoiceId: invoice.id }),
+      });
+    } catch (e) {
+      console.warn('[mark-invoice-paid-token] review email skipped:', e);
+    }
+
     return jsonResponse({
       success: true,
       invoice: { ...summary, invoice_status: 'paid', invoice_paid_at: paidAtIso },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'mark-invoice-paid-token', requestUrl: req.url, requestMethod: req.method });
     console.error('[mark-invoice-paid-token] handler error', err);
     const msg = err instanceof Error ? err.message : String(err);
     return errorResponse('Unexpected server error', msg, 500);

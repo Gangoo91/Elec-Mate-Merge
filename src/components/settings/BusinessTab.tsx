@@ -19,6 +19,7 @@ import {
   PricingSheet,
   QuoteSettingsSheet,
   InvoiceSettingsSheet,
+  ReviewsSheet,
   InspectorSheet,
   InstrumentsSheet,
   RegionalSheet,
@@ -61,6 +62,7 @@ const GROUPS: BusinessGroup[] = [
     rows: [
       { id: 'quotes', title: 'Quotes', subtitle: 'Terms and defaults' },
       { id: 'invoices', title: 'Invoices', subtitle: 'Terms and payment' },
+      { id: 'reviews', title: 'Reviews', subtitle: 'Review links for invoice emails' },
     ],
   },
   {
@@ -205,6 +207,12 @@ const BusinessTab = () => {
       />
       <InvoiceSettingsSheet
         open={openSheet === 'invoices'}
+        onOpenChange={(o) => !o && setOpenSheet(null)}
+        profile={companyProfile}
+        onSave={handleSave}
+      />
+      <ReviewsSheet
+        open={openSheet === 'reviews'}
         onOpenChange={(o) => !o && setOpenSheet(null)}
         profile={companyProfile}
         onSave={handleSave}

@@ -424,6 +424,9 @@ const handler = async (req: Request): Promise<Response> => {
       trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=invoice_send&id=${invoiceId}`,
       customSubject,
       customMessage,
+      reviewEnabled: companyProfile?.review_request_enabled ?? false,
+      reviewLinks: Array.isArray(companyProfile?.review_links) ? companyProfile.review_links : [],
+      reviewMessage: companyProfile?.review_request_message ?? null,
     });
     const emailHtml = emailPayload.html;
 

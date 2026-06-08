@@ -93,6 +93,12 @@ export const MarkAsPaidDialog = ({
         variant: 'success',
       });
 
+      // Send the payment-received / review-request email (no-ops unless the
+      // user has review requests enabled). Fire-and-forget — never block.
+      supabase.functions
+        .invoke('send-payment-received-resend', { body: { invoiceId: invoice.id } })
+        .catch((e) => console.warn('[MarkAsPaid] review email skipped:', e));
+
       // Auto-sync to connected accounting software (e.g., Xero)
       if (hasConnectedProvider) {
         const connectedProvider = integrations.find((i) => i.status === 'connected');
