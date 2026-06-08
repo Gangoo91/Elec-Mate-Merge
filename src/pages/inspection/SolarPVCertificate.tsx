@@ -45,6 +45,9 @@ import CertificateGenerationDialog from '@/components/inspection/CertificateGene
 import { useReportSync } from '@/hooks/useReportSync';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
+import { cn } from '@/lib/utils';
 
 const REPORT_TYPE = 'solar-pv' as const;
 
@@ -69,6 +72,19 @@ export default function SolarPVCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+
+  // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave;
+  // lockReport is wrapped after useReportSync to flush pending edits first.
+  const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/solar-pv/${newId}`),
+  });
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
     null
@@ -89,13 +105,23 @@ export default function SolarPVCertificate() {
     reportId: savedReportId,
     reportType: REPORT_TYPE,
     formData,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/solar-pv/${newId}`);
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   // Hooks for tabs
   const tabProps = useSolarPVTabs(formData);
@@ -148,11 +174,15 @@ export default function SolarPVCertificate() {
       ...prev,
       installerDeclaration: {
         ...prev.installerDeclaration,
-        installerCompany: companyProfile.company_name || prev.installerDeclaration?.installerCompany || '',
-        installerPhone: companyProfile.company_phone || prev.installerDeclaration?.installerPhone || '',
-        installerEmail: companyProfile.company_email || prev.installerDeclaration?.installerEmail || '',
+        installerCompany:
+          companyProfile.company_name || prev.installerDeclaration?.installerCompany || '',
+        installerPhone:
+          companyProfile.company_phone || prev.installerDeclaration?.installerPhone || '',
+        installerEmail:
+          companyProfile.company_email || prev.installerDeclaration?.installerEmail || '',
         installerAddress: fullAddress || prev.installerDeclaration?.installerAddress || '',
-        installerDate: prev.installerDeclaration?.installerDate || new Date().toISOString().split('T')[0],
+        installerDate:
+          prev.installerDeclaration?.installerDate || new Date().toISOString().split('T')[0],
       },
     }));
   }, [isNew, companyProfile]);
@@ -519,35 +549,50 @@ export default function SolarPVCertificate() {
         <div className="h-[1px] bg-gradient-to-r from-amber-500/40 via-amber-500/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       {/* Main Content — full width on mobile */}
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
-        <SolarPVFormTabs
-          currentTab={tabProps.currentTab}
-          onTabChange={(tab) => {
-            tabProps.setCurrentTab(tab);
-            syncOnTabChange();
-          }}
-          canAccessTab={tabProps.canAccessTab}
-          formData={formData}
-          onUpdate={handleUpdate}
-          tabNavigationProps={{
-            currentTab: tabProps.currentTab,
-            currentTabIndex: tabProps.currentTabIndex,
-            totalTabs: tabProps.tabs.length,
-            canNavigateNext: tabProps.canNavigateNext,
-            canNavigatePrevious: tabProps.canNavigatePrevious,
-            navigateNext: tabProps.navigateNext,
-            navigatePrevious: tabProps.navigatePrevious,
-            getProgressPercentage: tabProps.getProgressPercentage,
-            isCurrentTabComplete: tabProps.isCurrentTabComplete,
-            onGenerateCertificate: handleGenerateCertificate,
-            canGenerateCertificate: !isGenerating,
-          }}
-          onGenerateCertificate={handleGenerateCertificate}
-          onCreateInvoice={handleCreateInvoice}
-          onSaveDraft={handleSaveDraft}
-          canGenerateCertificate={!isGenerating}
-        />
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
+          <SolarPVFormTabs
+            currentTab={tabProps.currentTab}
+            onTabChange={(tab) => {
+              tabProps.setCurrentTab(tab);
+              syncOnTabChange();
+            }}
+            canAccessTab={tabProps.canAccessTab}
+            formData={formData}
+            onUpdate={handleUpdate}
+            tabNavigationProps={{
+              currentTab: tabProps.currentTab,
+              currentTabIndex: tabProps.currentTabIndex,
+              totalTabs: tabProps.tabs.length,
+              canNavigateNext: tabProps.canNavigateNext,
+              canNavigatePrevious: tabProps.canNavigatePrevious,
+              navigateNext: tabProps.navigateNext,
+              navigatePrevious: tabProps.navigatePrevious,
+              getProgressPercentage: tabProps.getProgressPercentage,
+              isCurrentTabComplete: tabProps.isCurrentTabComplete,
+              onGenerateCertificate: handleGenerateCertificate,
+              canGenerateCertificate: !isGenerating,
+            }}
+            onGenerateCertificate={handleGenerateCertificate}
+            onCreateInvoice={handleCreateInvoice}
+            onSaveDraft={handleSaveDraft}
+            canGenerateCertificate={!isGenerating}
+          />
+        </div>
       </main>
       <CertificateGenerationDialog
         open={showGenerationDialog}
