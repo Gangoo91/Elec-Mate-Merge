@@ -14,6 +14,8 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 
 const inputCn = 'touch-manipulation';
@@ -106,19 +108,41 @@ export default function TestingOnlyCertificate() {
 
   const [data, setData] = useState<TestingOnlyData>(defaultData());
 
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/testing-only/${newId}`),
+  });
+
+const {
     status: syncStatus, saveNow, syncNowImmediate,
   } = useReportSync({
     reportId: savedReportId,
     reportType: 'testing-only',
     formData: data,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/testing-only/${newId}`);
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   // ── Load existing report ──────────────────────────────────────────────
   useEffect(() => {
@@ -445,15 +469,30 @@ export default function TestingOnlyCertificate() {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      {/* Tabs */}
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={setCurrentTab}
-        className="w-full"
-        completedTabs={completedTabs}
-        showProgress
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
       />
+
+      {/* Tabs */}
+      <div
+        className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+        aria-disabled={isLocked || undefined}
+      >
+        <SmartTabs
+          tabs={smartTabs}
+          value={currentTab}
+          onValueChange={setCurrentTab}
+          className="w-full"
+          completedTabs={completedTabs}
+          showProgress
+        />
+      </div>
 
       {/* PDF Generation Dialog (handles Capacitor download properly) */}
       <CertificateGenerationDialog

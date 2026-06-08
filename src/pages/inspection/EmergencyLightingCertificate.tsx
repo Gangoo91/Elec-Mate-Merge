@@ -38,6 +38,9 @@ import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLi
 import { formatEmergencyLightingJson } from '@/utils/emergencyLightingJsonFormatter';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
+import { cn } from '@/lib/utils';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
@@ -70,7 +73,19 @@ export default function EmergencyLightingCertificate() {
   } | null>(null);
 
   // ─── Report sync (replaces all custom sync code) ──────────────────────
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/emergency-lighting/${newId}`),
+  });
+
+const {
     status: syncStatus,
     saveNow,
     syncNowImmediate,
@@ -84,7 +99,7 @@ export default function EmergencyLightingCertificate() {
     reportId: savedReportId,
     reportType: REPORT_TYPE,
     formData,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
@@ -95,6 +110,16 @@ export default function EmergencyLightingCertificate() {
       );
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   // Track certificate opened
   useEffect(() => {
@@ -464,7 +489,18 @@ export default function EmergencyLightingCertificate() {
       </div>
 
       {/* Main Content */}
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <EmergencyLightingFormTabs
           currentTab={tabProps.currentTab}
           onTabChange={(tab) => {
@@ -500,6 +536,7 @@ export default function EmergencyLightingCertificate() {
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
         />
+      </div>
       </main>
 
       <CertificateGenerationDialog

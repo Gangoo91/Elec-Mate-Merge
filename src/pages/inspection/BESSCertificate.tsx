@@ -35,6 +35,9 @@ import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { formatBESSJson } from '@/utils/bessJsonFormatter';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
+import { cn } from '@/lib/utils';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
@@ -60,7 +63,19 @@ export default function BESSCertificate() {
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
 
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/bess/${newId}`),
+  });
+
+const {
     status: syncStatus, saveNow, syncNowImmediate,
     hasRecoverableDraft, recoverDraft, discardDraft,
     onTabChange: syncOnTabChange, activeConflict, resolveConflict,
@@ -68,7 +83,7 @@ export default function BESSCertificate() {
     reportId: savedReportId,
     reportType: REPORT_TYPE,
     formData,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     customerId,
     onReportCreated: (newId) => {
@@ -76,6 +91,16 @@ export default function BESSCertificate() {
       window.history.replaceState(null, '', `/electrician/inspection-testing/bess/${newId}`);
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -248,7 +273,18 @@ export default function BESSCertificate() {
       </div>
 
       {/* Form — full-width mobile */}
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <BESSFormTabs
           formData={formData}
           onUpdate={handleUpdate}
@@ -269,6 +305,7 @@ export default function BESSCertificate() {
           onSaveFirst={saveNow}
           isGenerating={isGenerating}
         />
+      </div>
       </main>
 
       {/* Draft recovery dialog */}

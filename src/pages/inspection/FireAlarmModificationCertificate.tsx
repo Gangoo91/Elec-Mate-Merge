@@ -27,6 +27,9 @@ import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
+import { cn } from '@/lib/utils';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 
@@ -57,7 +60,19 @@ export default function FireAlarmModificationCertificate() {
     lastModified: Date;
   } | null>(null);
 
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/fire-alarm-modification/${newId}`),
+  });
+
+const {
     status: syncStatus,
     syncNowImmediate,
     hasRecoverableDraft,
@@ -68,7 +83,7 @@ export default function FireAlarmModificationCertificate() {
     reportId: savedReportId,
     reportType: REPORT_TYPE,
     formData,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
@@ -79,6 +94,16 @@ export default function FireAlarmModificationCertificate() {
       );
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   const tabProps = useFireAlarmG7Tabs(formData);
   const { loadCompanyBranding, hasSavedCompanyBranding } = useFireAlarmSmartForm();
@@ -263,7 +288,18 @@ export default function FireAlarmModificationCertificate() {
         <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <FireAlarmG7FormTabs
           currentTab={tabProps.currentTab}
           onTabChange={(tab) => {
@@ -288,6 +324,7 @@ export default function FireAlarmModificationCertificate() {
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
         />
+      </div>
       </main>
 
       <CertificateGenerationDialog

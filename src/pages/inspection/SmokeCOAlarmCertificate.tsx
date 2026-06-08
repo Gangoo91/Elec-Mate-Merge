@@ -12,6 +12,8 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { draftStorage } from '@/utils/draftStorage';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -210,20 +212,42 @@ export default function SmokeCOAlarmCertificate() {
 
   const [data, setData] = useState<SmokeCOData>(defaultData());
 
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/smoke-co-alarm/${newId}`),
+  });
+
+const {
     status: syncStatus, saveNow, syncNowImmediate,
     hasRecoverableDraft, recoverDraft, discardDraft,
   } = useReportSync({
     reportId: savedReportId,
     reportType: 'smoke-co-alarm' as any,
     formData: data,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/smoke-co-alarm/${newId}`);
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   useEffect(() => {
     if (isNew || !editId) { setIsLoading(false); return; }
@@ -370,7 +394,18 @@ export default function SmokeCOAlarmCertificate() {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       <main className="py-4 pb-48 sm:px-4 sm:pb-8 space-y-6">
+        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         {/* Compliance warnings */}
         {(data.tenure === 'HMO' && data.gradeAchieved && data.gradeAchieved !== 'A' && data.gradeAchieved !== 'D') && (
           <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-2.5">
@@ -702,6 +737,7 @@ export default function SmokeCOAlarmCertificate() {
             Save Draft
           </button>
         </div>
+      </div>
       </main>
 
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>

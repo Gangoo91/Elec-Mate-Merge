@@ -32,6 +32,9 @@ import { getDefaultLightningProtectionFormData } from '@/types/lightning-protect
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
+import { cn } from '@/lib/utils';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
@@ -54,7 +57,19 @@ export default function LightningProtectionCertificate() {
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
 
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/lightning-protection/${newId}`),
+  });
+
+const {
     status: syncStatus, saveNow, syncNowImmediate,
     hasRecoverableDraft, recoverDraft, discardDraft,
     onTabChange: syncOnTabChange, activeConflict, resolveConflict,
@@ -62,13 +77,23 @@ export default function LightningProtectionCertificate() {
     reportId: savedReportId,
     reportType: REPORT_TYPE,
     formData,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/lightning-protection/${newId}`);
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -179,7 +204,18 @@ export default function LightningProtectionCertificate() {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <LPFormTabs
           formData={formData} onUpdate={handleUpdate}
           currentTab={currentTab} onTabChange={handleTabChange}
@@ -189,6 +225,7 @@ export default function LightningProtectionCertificate() {
           isCurrentTabComplete={isCurrentTabComplete} progress={getProgressPercentage()}
           onGenerate={handleGenerateCertificate} isGenerating={isGenerating}
         />
+      </div>
       </main>
 
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>

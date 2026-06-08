@@ -19,6 +19,8 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
+import { useCertLock } from '@/hooks/useCertLock';
+import CertLockBar from '@/components/inspection/CertLockBar';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { draftStorage } from '@/utils/draftStorage';
 import { useG98CommissioningTabs, G98TabValue } from '@/hooks/useG98CommissioningTabs';
@@ -277,7 +279,19 @@ export default function G98CommissioningCertificate() {
 
   const [data, setData] = useState<G98Data>(defaultData());
 
+    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
+    isLocked,
+    lockedAt,
+    editVersion,
+    lockReport: lockReportBase,
+    amendReport,
+  } = useCertLock({
+    reportId: savedReportId,
+    onAmended: (newId) => navigate(`/electrician/inspection-testing/g98-commissioning/${newId}`),
+  });
+
+const {
     status: syncStatus,
     saveNow,
     syncNowImmediate,
@@ -288,7 +302,7 @@ export default function G98CommissioningCertificate() {
     reportId: savedReportId,
     reportType: 'g98-commissioning' as any,
     formData: data,
-    enabled: !isLoading,
+    enabled: !isLoading && !isLocked,
     isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
@@ -299,6 +313,16 @@ export default function G98CommissioningCertificate() {
       );
     },
   });
+
+  // Issue & Lock — flush pending edits first, then lock.
+  const lockReport = useCallback(async () => {
+    try {
+      await syncNowImmediate?.();
+    } catch {
+      /* best-effort flush */
+    }
+    await lockReportBase();
+  }, [syncNowImmediate, lockReportBase]);
 
   // Load existing report
   useEffect(() => {
@@ -1063,12 +1087,24 @@ export default function G98CommissioningCertificate() {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!savedReportId}
+        onLock={lockReport}
+        onAmend={amendReport}
+      />
+
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <SmartTabs
           tabs={smartTabs}
           value={currentTab}
           onValueChange={(v) => setCurrentTab(v as G98TabValue)}
         />
+      </div>
       </main>
 
       <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
