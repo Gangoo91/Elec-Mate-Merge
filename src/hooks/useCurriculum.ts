@@ -43,13 +43,7 @@ export interface GeneratedCitation {
   is_a4_change: boolean;
 }
 
-export type BloomLevel =
-  | 'recall'
-  | 'understand'
-  | 'apply'
-  | 'analyse'
-  | 'evaluate'
-  | 'create';
+export type BloomLevel = 'recall' | 'understand' | 'apply' | 'analyse' | 'evaluate' | 'create';
 
 export interface GeneratedAnalogy {
   name: string;
@@ -160,7 +154,6 @@ export interface GeneratedLessonPlan {
   tutor_brief_markdown?: string;
 }
 
-
 export interface GenerateLessonResult {
   lesson_plan_id: string | null;
   facets_used: number;
@@ -238,8 +231,10 @@ export interface RagMatch {
 }
 
 /**
- * Top-level qualifications list (21 seeded UK quals: C&G 2365/2366/2357/5357/5393
- * + EAL L3 Installation/Maintenance + ECS + T-Levels etc.).
+ * Top-level qualifications list. Gated to only the qualifications that actually
+ * have LO/AC data (a direct row in qualification_requirements) — mirrors the
+ * apprentice QualificationSelector so tutors and apprentices see the same
+ * supported-only list, and non-Ofqual placeholder / mapped-only codes never show.
  */
 export function useQualifications() {
   const [data, setData] = useState<QualificationRow[]>([]);
@@ -249,18 +244,28 @@ export function useQualifications() {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    supabase
-      .from('qualifications')
-      .select('id, code, title, level, awarding_body, description, requires_portfolio')
-      .order('awarding_body', { ascending: true })
-      .order('level', { ascending: true })
-      .order('code', { ascending: true })
-      .then(({ data: rows, error: err }) => {
-        if (cancelled) return;
-        if (err) setError(err.message);
-        else setData((rows ?? []) as QualificationRow[]);
+    (async () => {
+      const [{ data: reqCodes, error: reqErr }, { data: rows, error: err }] = await Promise.all([
+        supabase.from('qualification_requirements').select('qualification_code'),
+        supabase
+          .from('qualifications')
+          .select('id, code, title, level, awarding_body, description, requires_portfolio')
+          .order('awarding_body', { ascending: true })
+          .order('level', { ascending: true })
+          .order('code', { ascending: true }),
+      ]);
+      if (cancelled) return;
+      if (reqErr || err) {
+        setError((reqErr ?? err)!.message);
         setLoading(false);
-      });
+        return;
+      }
+      const codesWithData = new Set(
+        (reqCodes ?? []).map((r: { qualification_code: string }) => r.qualification_code)
+      );
+      setData(((rows ?? []) as QualificationRow[]).filter((q) => codesWithData.has(q.code)));
+      setLoading(false);
+    })();
     return () => {
       cancelled = true;
     };
@@ -458,7 +463,9 @@ export function useResourcesForAc(
     setLoading(true);
     supabase
       .from('resource_ac_mapping')
-      .select('resource_id, confidence, mapping_source, teaching_resources!inner(id, title, resource_type)')
+      .select(
+        'resource_id, confidence, mapping_source, teaching_resources!inner(id, title, resource_type)'
+      )
       .eq('qualification_code', qualificationCode)
       .eq('unit_code', unitCode)
       .eq('ac_code', acCode)
@@ -645,7 +652,7 @@ export function useGenerateLesson() {
           for (const frame of frames) {
             const lines = frame.split('\n');
             let eventType = 'message';
-            let dataLines: string[] = [];
+            const dataLines: string[] = [];
             for (const line of lines) {
               if (line.startsWith('event: ')) eventType = line.slice(7).trim();
               else if (line.startsWith('data: ')) dataLines.push(line.slice(6));
@@ -900,8 +907,7 @@ export function useRefineSection() {
         }
 
         if (thrown) throw new Error(thrown);
-        if (final === null || final === undefined)
-          throw new Error('Stream ended without a value');
+        if (final === null || final === undefined) throw new Error('Stream ended without a value');
 
         setValue(final);
         return final;

@@ -322,7 +322,10 @@ export async function loadLearnerContext(
   if (courseRes.data) {
     const c = courseRes.data as { name: string | null; code: string | null };
     course = { name: c.name, code: c.code };
-    qualCode = c.code;
+    // Resolve the enrolment code to the canonical requirement code that holds
+    // LO/AC rows (e.g. EAL 603/3895/8 → 601/7345/2). course.code keeps the
+    // original enrolment code for display; qualCode drives the AC queries below.
+    qualCode = await resolveRequirementCode(sb, c.code);
   }
 
   // AC coverage
@@ -346,13 +349,15 @@ export async function loadLearnerContext(
   }
 
   // Observations
-  const observations = ((obsRes.data ?? []) as Array<{
-    activity_title: string;
-    outcome: string;
-    grade: string | null;
-    observed_at: string;
-    unit_code: string | null;
-  }>).map((o) => ({
+  const observations = (
+    (obsRes.data ?? []) as Array<{
+      activity_title: string;
+      outcome: string;
+      grade: string | null;
+      observed_at: string;
+      unit_code: string | null;
+    }>
+  ).map((o) => ({
     activity_title: o.activity_title,
     outcome: o.outcome,
     grade: o.grade,
@@ -379,7 +384,9 @@ export async function loadLearnerContext(
       ['submitted', 'in_review', 'under_review', 'resubmitted'].includes(s.status)
     ).length,
     requires_action: subRows.filter((s) => s.action_required).length,
-    recent_titles: ((portfolioTitlesRes.data ?? []) as Array<{ title: string }>).map((t) => t.title),
+    recent_titles: ((portfolioTitlesRes.data ?? []) as Array<{ title: string }>).map(
+      (t) => t.title
+    ),
   };
 
   // Mocks
@@ -410,7 +417,9 @@ export async function loadLearnerContext(
     total_minutes: Math.round(otjMinutes),
     required_minutes: REQUIRED_OTJ_MIN,
     pct:
-      REQUIRED_OTJ_MIN > 0 ? Math.min(100, Math.round((otjMinutes / REQUIRED_OTJ_MIN) * 100)) : null,
+      REQUIRED_OTJ_MIN > 0
+        ? Math.min(100, Math.round((otjMinutes / REQUIRED_OTJ_MIN) * 100))
+        : null,
     last_28_minutes: Math.round(last28Minutes),
   };
 
@@ -423,9 +432,13 @@ export async function loadLearnerContext(
   };
 
   // ILP + goals
-  const ilpRow = ilpRes.data as
-    | { id: string; status: string; headline_focus: string | null; target_completion_date: string | null; review_date: string | null }
-    | null;
+  const ilpRow = ilpRes.data as {
+    id: string;
+    status: string;
+    headline_focus: string | null;
+    target_completion_date: string | null;
+    review_date: string | null;
+  } | null;
   let ilpGoals: LearnerContext['ilp']['goals'] = [];
   if (ilpRow?.id) {
     const { data: g } = await sb
@@ -476,20 +489,25 @@ export async function loadLearnerContext(
   }
 
   // KSBs
-  const ksbs = ((ksbsRes.data ?? []) as Array<{
-    ksb_code: string;
-    status: string;
-    evidence_count: number | null;
-  }>).map((k) => ({
+  const ksbs = (
+    (ksbsRes.data ?? []) as Array<{
+      ksb_code: string;
+      status: string;
+      evidence_count: number | null;
+    }>
+  ).map((k) => ({
     ksb_code: k.ksb_code,
     status: k.status,
     evidence_count: k.evidence_count ?? 0,
   }));
 
   // Risk
-  const riskRow = riskRes.data as
-    | { risk_level: string | null; risk_score: number | null; reasons: string[] | null; updated_at: string | null }
-    | null;
+  const riskRow = riskRes.data as {
+    risk_level: string | null;
+    risk_score: number | null;
+    reasons: string[] | null;
+    updated_at: string | null;
+  } | null;
   const risk: LearnerContext['risk'] = {
     level: riskRow?.risk_level ?? null,
     score: riskRow?.risk_score ?? null,
@@ -558,7 +576,9 @@ function daysAgo(n: number): string {
   return new Date(Date.now() - n * 86_400_000).toISOString().slice(0, 10);
 }
 
-function aggregateAcCoverage(rows: Array<{ unit_code: string; status: string }>): LearnerContext['ac'] {
+function aggregateAcCoverage(
+  rows: Array<{ unit_code: string; status: string }>
+): LearnerContext['ac'] {
   const ac: LearnerContext['ac'] = {
     total: 0,
     not_started: 0,
@@ -686,17 +706,15 @@ async function aggregateQuizAttempts(
       ? Math.round(
           recent5
             .filter((a) => a.score != null && a.total_points != null && a.total_points > 0)
-            .reduce(
-              (sum, a) => sum + ((a.score as number) / (a.total_points as number)) * 100,
-              0
-            ) / Math.max(1, recent5.length)
+            .reduce((sum, a) => sum + ((a.score as number) / (a.total_points as number)) * 100, 0) /
+            Math.max(1, recent5.length)
         )
       : null;
 
   // Pull AC refs and categories for the quizzes the learner has attempted
   const quizIds = Array.from(new Set(attempts.map((a) => a.quiz_id)));
-  let acRefsByQuiz = new Map<string, string[]>();
-  let categoriesByQuiz = new Map<string, string[]>();
+  const acRefsByQuiz = new Map<string, string[]>();
+  const categoriesByQuiz = new Map<string, string[]>();
   if (quizIds.length > 0) {
     const { data: qs } = await sb
       .from('tutor_quiz_questions')
@@ -726,7 +744,10 @@ async function aggregateQuizAttempts(
     const { data: g } = await sb
       .from('tutor_quiz_answer_grades')
       .select('attempt_id, ai_score')
-      .in('attempt_id', attempts.map((a) => a.id));
+      .in(
+        'attempt_id',
+        attempts.map((a) => a.id)
+      );
     pending_ai_grades = ((g ?? []) as Array<{ ai_score: number | null }>).filter(
       (row) => row.ai_score == null
     ).length;
@@ -804,6 +825,24 @@ export interface QualificationKit {
   ac_index_lines: string[];
 }
 
+/**
+ * Resolve an enrolment qualification code to the canonical requirement code that
+ * holds LO/AC rows (e.g. EAL 603/3895/8 → 601/7345/2 via
+ * qualification_requirement_mappings). Returns the code unchanged when there is
+ * no primary mapping. Keep this in sync with the frontend useStudentQualification
+ * resolver and the match_qualification_acs RPC's internal resolution.
+ */
+export async function resolveRequirementCode(sb: Sb, code: string | null): Promise<string | null> {
+  if (!code) return code;
+  const { data } = await sb
+    .from('qualification_requirement_mappings')
+    .select('requirement_code')
+    .eq('qualification_code', code)
+    .eq('is_primary', true)
+    .maybeSingle();
+  return (data as { requirement_code?: string } | null)?.requirement_code ?? code;
+}
+
 // Module-level cache. Edge function warm starts share the v8 isolate so this
 // persists across requests within the same instance for ~5 minutes — cuts
 // 30-50ms off every warm call without needing materialised views.
@@ -817,6 +856,9 @@ export async function loadQualificationKit(
   if (!qualificationCode) {
     return { qualification_code: null, qualification_title: null, acs: [], ac_index_lines: [] };
   }
+  // Follow the mapping so a mapped enrolment code loads the canonical catalogue.
+  // Coalesce back to the input so the type stays `string` (narrowed above).
+  qualificationCode = (await resolveRequirementCode(sb, qualificationCode)) ?? qualificationCode;
   const now = Date.now();
   const cached = qualificationKitCache.get(qualificationCode);
   if (cached && now - cached.ts < QUAL_KIT_TTL_MS) {
@@ -829,11 +871,7 @@ export async function loadQualificationKit(
       .eq('qualification_code', qualificationCode)
       .order('unit_code', { ascending: true })
       .order('ac_code', { ascending: true }),
-    sb
-      .from('qualifications')
-      .select('title')
-      .eq('code', qualificationCode)
-      .maybeSingle(),
+    sb.from('qualifications').select('title').eq('code', qualificationCode).maybeSingle(),
   ]);
   const acs = ((reqsRes.data ?? []) as QualificationAc[]).map((a) => ({
     unit_code: a.unit_code,
@@ -883,11 +921,7 @@ export async function lookupBs7671Facets(
   maxQueries = 6
 ): Promise<Bs7671Facet[]> {
   const queries = Array.from(
-    new Set(
-      seedQueries
-        .map((q) => q?.trim())
-        .filter((q): q is string => !!q && q.length >= 3)
-    )
+    new Set(seedQueries.map((q) => q?.trim()).filter((q): q is string => !!q && q.length >= 3))
   ).slice(0, maxQueries);
   if (queries.length === 0) {
     queries.push('inspection and testing initial verification');
@@ -969,7 +1003,9 @@ export function qualificationAcLines(kit: QualificationKit, max = 50): string[] 
       `Qualification: ${kit.qualification_title ?? '?'} (${kit.qualification_code ?? '?'})`
     );
   }
-  lines.push(`AC catalogue (showing ${Math.min(max, kit.ac_index_lines.length)} of ${kit.ac_index_lines.length}):`);
+  lines.push(
+    `AC catalogue (showing ${Math.min(max, kit.ac_index_lines.length)} of ${kit.ac_index_lines.length}):`
+  );
   for (const l of kit.ac_index_lines.slice(0, max)) {
     lines.push(`  - ${l}`);
   }
@@ -1046,11 +1082,7 @@ export async function lookupQualificationAcs(
   const apiKey = Deno.env.get('OPENAI_API_KEY');
   if (!apiKey) return [];
   const queries = Array.from(
-    new Set(
-      seedQueries
-        .map((q) => q?.trim())
-        .filter((q): q is string => !!q && q.length >= 3)
-    )
+    new Set(seedQueries.map((q) => q?.trim()).filter((q): q is string => !!q && q.length >= 3))
   ).slice(0, maxSeeds);
   if (queries.length === 0) return [];
 
@@ -1126,7 +1158,6 @@ export const GROUNDING_RULES = `Grounding rules — non-negotiable.
 4. UK English (analyse, behaviour, programme).
 5. Be honest. If the data shows they're behind, say so plainly. If they're ready, say so. No hedging for politeness.`;
 
-
 /** Compact one-line summary line for any prompt header. */
 export function contextHeadline(ctx: LearnerContext): string {
   const parts: string[] = [];
@@ -1155,7 +1186,10 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
   if (ctx.student.employer_id) lines.push(`Employer on file: yes`);
   if (ctx.inclusion.send_flags.length > 0)
     lines.push(`SEND flags: ${ctx.inclusion.send_flags.join(', ')}`);
-  if (ctx.inclusion.eal) lines.push(`EAL learner${ctx.inclusion.first_language ? ` · L1 ${ctx.inclusion.first_language}` : ''}`);
+  if (ctx.inclusion.eal)
+    lines.push(
+      `EAL learner${ctx.inclusion.first_language ? ` · L1 ${ctx.inclusion.first_language}` : ''}`
+    );
   if (ctx.inclusion.ehcp) lines.push(`EHCP plan in place`);
 
   lines.push('');
@@ -1166,7 +1200,9 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
   if (ctx.ac.weak_units.length > 0) {
     lines.push('Weak units (most not-started):');
     for (const u of ctx.ac.weak_units) {
-      lines.push(`  - ${u.unit_code}${u.unit_title ? ` (${u.unit_title})` : ''}: ${u.not_started}/${u.total} not started`);
+      lines.push(
+        `  - ${u.unit_code}${u.unit_title ? ` (${u.unit_title})` : ''}: ${u.not_started}/${u.total} not started`
+      );
     }
   }
 
@@ -1198,8 +1234,7 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
       lines.push(`Weak categories (avg < 60%): ${ctx.quizzes.weak_categories.join(', ')}`);
     }
     for (const a of ctx.quizzes.attempts.slice(0, 6)) {
-      const verdict =
-        a.passed === true ? 'pass' : a.passed === false ? 'fail' : 'n/a';
+      const verdict = a.passed === true ? 'pass' : a.passed === false ? 'fail' : 'n/a';
       const pctStr = a.percentage != null ? `${a.percentage}%` : '—';
       const acStr = a.ac_refs.length > 0 ? ` · AC ${a.ac_refs.slice(0, 4).join(',')}` : '';
       lines.push(`  - ${a.title} [${a.kind}]: ${pctStr} (${verdict})${acStr}`);
@@ -1220,9 +1255,7 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
     lines.push('');
     lines.push('## Recent mock simulator runs');
     for (const m of ctx.mocks.slice(0, 4)) {
-      lines.push(
-        `  - ${m.session_type}: ${m.overall_score ?? '?'}% → ${m.predicted_grade ?? '?'}`
-      );
+      lines.push(`  - ${m.session_type}: ${m.overall_score ?? '?'}% → ${m.predicted_grade ?? '?'}`);
     }
   }
 
@@ -1253,10 +1286,14 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
     if (ctx.ilp.target_completion_date) lines.push(`Target: ${ctx.ilp.target_completion_date}`);
     const open = ctx.ilp.goals.filter((g) => g.status !== 'completed' && g.status !== 'cancelled');
     const blocked = ctx.ilp.goals.filter((g) => g.status === 'blocked' || g.blocked_reason);
-    lines.push(`${ctx.ilp.goals.length} goals total · ${open.length} open · ${blocked.length} blocked`);
+    lines.push(
+      `${ctx.ilp.goals.length} goals total · ${open.length} open · ${blocked.length} blocked`
+    );
     for (const g of ctx.ilp.goals.slice(0, 6)) {
       const flag = g.priority === 'high' ? ' [HIGH]' : '';
-      lines.push(`  - [${g.status}]${flag} ${g.title}${g.target_date ? ` · due ${g.target_date}` : ''}`);
+      lines.push(
+        `  - [${g.status}]${flag} ${g.title}${g.target_date ? ` · due ${g.target_date}` : ''}`
+      );
     }
   }
 
@@ -1264,24 +1301,36 @@ export function contextSummaryLines(ctx: LearnerContext): string[] {
     lines.push('');
     lines.push('## EPA verdicts (current)');
     if (ctx.judgements.learner)
-      lines.push(`  - Learner: ${ctx.judgements.learner.verdict} (${ctx.judgements.learner.predicted_grade ?? '?'})`);
+      lines.push(
+        `  - Learner: ${ctx.judgements.learner.verdict} (${ctx.judgements.learner.predicted_grade ?? '?'})`
+      );
     if (ctx.judgements.tutor)
-      lines.push(`  - Tutor: ${ctx.judgements.tutor.verdict} (${ctx.judgements.tutor.predicted_grade ?? '?'})`);
+      lines.push(
+        `  - Tutor: ${ctx.judgements.tutor.verdict} (${ctx.judgements.tutor.predicted_grade ?? '?'})`
+      );
     if (ctx.judgements.ai)
-      lines.push(`  - AI: ${ctx.judgements.ai.verdict} (${ctx.judgements.ai.predicted_grade ?? '?'})`);
+      lines.push(
+        `  - AI: ${ctx.judgements.ai.verdict} (${ctx.judgements.ai.predicted_grade ?? '?'})`
+      );
   }
 
   if (ctx.ksbs.length > 0) {
     lines.push('');
     lines.push('## KSBs');
-    const inProg = ctx.ksbs.filter((k) => k.status === 'in_progress' || k.status === 'evidence_submitted');
+    const inProg = ctx.ksbs.filter(
+      (k) => k.status === 'in_progress' || k.status === 'evidence_submitted'
+    );
     const completed = ctx.ksbs.filter((k) => k.status === 'completed' || k.status === 'verified');
-    lines.push(`${completed.length} complete, ${inProg.length} in progress, ${ctx.ksbs.length} total`);
+    lines.push(
+      `${completed.length} complete, ${inProg.length} in progress, ${ctx.ksbs.length} total`
+    );
   }
 
   if (ctx.risk.level) {
     lines.push('');
-    lines.push(`## Risk: ${ctx.risk.level}${ctx.risk.score != null ? ` (score ${ctx.risk.score})` : ''}`);
+    lines.push(
+      `## Risk: ${ctx.risk.level}${ctx.risk.score != null ? ` (score ${ctx.risk.score})` : ''}`
+    );
     for (const r of ctx.risk.reasons.slice(0, 4)) lines.push(`  - ${r}`);
   }
 

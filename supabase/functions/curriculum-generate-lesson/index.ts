@@ -570,15 +570,7 @@ const PLAN_TOOL_SCHEMA = {
               time_mins: { type: 'number' },
               phase: {
                 type: 'string',
-                enum: [
-                  'starter',
-                  'input',
-                  'modelling',
-                  'practice',
-                  'practical',
-                  'plenary',
-                  'afl',
-                ],
+                enum: ['starter', 'input', 'modelling', 'practice', 'practical', 'plenary', 'afl'],
               },
               title: { type: 'string' },
               description: { type: 'string' },
@@ -840,6 +832,20 @@ Deno.serve(async (req: Request) => {
     });
   }
 
+  // Resolve the enrolment code to the canonical requirement code that holds the
+  // LO/AC rows (e.g. EAL 603/3895/8 → 601/7345/2). The qualifications title
+  // lookup keeps the original code; the requirements query uses the resolved one.
+  let reqCode = qualification_code;
+  {
+    const { data: m } = await sb
+      .from('qualification_requirement_mappings')
+      .select('requirement_code')
+      .eq('qualification_code', qualification_code)
+      .eq('is_primary', true)
+      .maybeSingle();
+    if (m?.requirement_code) reqCode = m.requirement_code as string;
+  }
+
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const emit = (event: string, data: unknown) => controller.enqueue(sseEvent(event, data));
@@ -859,7 +865,7 @@ Deno.serve(async (req: Request) => {
         const { data: acRows } = await sb
           .from('qualification_requirements')
           .select('ac_code, ac_text, lo_text, unit_title')
-          .eq('qualification_code', qualification_code)
+          .eq('qualification_code', reqCode)
           .eq('unit_code', unit_code)
           .in('ac_code', ac_codes);
         if (!acRows || acRows.length === 0) throw new Error('ACs not found');
@@ -945,17 +951,11 @@ Deno.serve(async (req: Request) => {
           .eq('college_id', profile!.college_id)
           .maybeSingle();
         const include_british_values = settingsRow?.include_british_values ?? true;
-        const include_stretch_challenge =
-          settingsRow?.include_stretch_challenge ?? true;
-        const include_inclusive_practice =
-          settingsRow?.include_inclusive_practice ?? true;
+        const include_stretch_challenge = settingsRow?.include_stretch_challenge ?? true;
+        const include_inclusive_practice = settingsRow?.include_inclusive_practice ?? true;
         const collegeContextLines = [
-          settingsRow?.prevent_lead_name
-            ? `Prevent lead: ${settingsRow.prevent_lead_name}`
-            : null,
-          settingsRow?.dsl_name
-            ? `Designated safeguarding lead: ${settingsRow.dsl_name}`
-            : null,
+          settingsRow?.prevent_lead_name ? `Prevent lead: ${settingsRow.prevent_lead_name}` : null,
+          settingsRow?.dsl_name ? `Designated safeguarding lead: ${settingsRow.dsl_name}` : null,
           settingsRow?.safeguarding_notes
             ? `Safeguarding notes: ${settingsRow.safeguarding_notes}`
             : null,
@@ -1062,12 +1062,9 @@ Deno.serve(async (req: Request) => {
               if (s.ehcp_ref) bits.push('EHCP');
               if (s.pronouns) bits.push(`pronouns ${s.pronouns}`);
               if (s.accessibility_notes)
-                bits.push(
-                  `notes: ${(s.accessibility_notes as string).slice(0, 140)}`
-                );
+                bits.push(`notes: ${(s.accessibility_notes as string).slice(0, 140)}`);
               const ilp = ilpByStudent.get(s.id as string);
-              if (ilp?.support_needs)
-                bits.push(`ILP: ${ilp.support_needs.slice(0, 140)}`);
+              if (ilp?.support_needs) bits.push(`ILP: ${ilp.support_needs.slice(0, 140)}`);
               return `  - ${firstName(s.name as string)}: ${bits.join(' · ')}`;
             });
 
@@ -1079,9 +1076,7 @@ Deno.serve(async (req: Request) => {
             withSend.length > 0 ? `SEND learners: ${withSend.length}` : null,
             withEal.length > 0 ? `EAL learners: ${withEal.length}` : null,
             withEhcp.length > 0 ? `Learners with EHCP: ${withEhcp.length}` : null,
-            withNotes.length > 0
-              ? `Learners with accessibility notes: ${withNotes.length}`
-              : null,
+            withNotes.length > 0 ? `Learners with accessibility notes: ${withNotes.length}` : null,
             perLearnerLines.length > 0
               ? `\nIndividual needs (first-name only — DO NOT use surnames, ULNs, or identifiers):\n${perLearnerLines.join(
                   '\n'
@@ -1093,10 +1088,7 @@ Deno.serve(async (req: Request) => {
             .join('\n');
         }
 
-        const collegeContext = [
-          collegeContextLines.join('\n'),
-          cohortContext,
-        ]
+        const collegeContext = [collegeContextLines.join('\n'), cohortContext]
           .filter((s) => s && s.length > 0)
           .join('\n\n');
 

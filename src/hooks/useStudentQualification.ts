@@ -17,6 +17,24 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
+/**
+ * Resolve an enrolment qualification code to the canonical requirement code that
+ * actually holds LO/AC rows. Many qualifications (e.g. the 9 EAL codes) carry no
+ * direct `qualification_requirements` rows and instead map to a shared canonical
+ * code via `qualification_requirement_mappings` (e.g. 603/3895/8 → 601/7345/2).
+ * Returns the code unchanged when there's no primary mapping.
+ */
+async function resolveRequirementCode(code: string | null): Promise<string | null> {
+  if (!code) return code;
+  const { data } = await supabase
+    .from('qualification_requirement_mappings')
+    .select('requirement_code')
+    .eq('qualification_code', code)
+    .eq('is_primary', true)
+    .maybeSingle();
+  return data?.requirement_code ?? code;
+}
+
 interface StudentQualification {
   qualificationCode: string | null;
   qualificationName: string | null;
@@ -80,9 +98,11 @@ export function useStudentQualification(): StudentQualification {
           collegeCourseName = (course as { name?: string | null } | null)?.name ?? null;
         }
 
-        const qual = (sel?.qualification ?? null) as
-          | { id: string; code: string; title: string }
-          | null;
+        const qual = (sel?.qualification ?? null) as {
+          id: string;
+          code: string;
+          title: string;
+        } | null;
 
         if (cancelled) return;
 
@@ -93,8 +113,12 @@ export function useStudentQualification(): StudentQualification {
               `[useStudentQualification] active selection "${qual.code}" differs from college course "${collegeCourseCode}" — coverage/ACs may track the wrong qualification.`
             );
           }
+          // Resolve to the canonical requirement code (e.g. EAL 603/3895/8 →
+          // 601/7345/2) so the catalogue/coverage queries hit real LO/AC rows.
+          const resolved = await resolveRequirementCode(qual.code);
+          if (cancelled) return;
           setState({
-            qualificationCode: qual.code,
+            qualificationCode: resolved,
             qualificationName: qual.title,
             qualificationId: qual.id,
             collegeCourseCode,
@@ -104,8 +128,10 @@ export function useStudentQualification(): StudentQualification {
         } else if (collegeCourseCode) {
           // No selection — fall back to the college's course so the catalogue
           // and coverage still resolve to something.
+          const resolved = await resolveRequirementCode(collegeCourseCode);
+          if (cancelled) return;
           setState({
-            qualificationCode: collegeCourseCode,
+            qualificationCode: resolved,
             qualificationName: collegeCourseName,
             qualificationId: null,
             collegeCourseCode,

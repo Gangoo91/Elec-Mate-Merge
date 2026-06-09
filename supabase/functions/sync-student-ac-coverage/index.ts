@@ -11,6 +11,7 @@
 // Output: { seeded, students, per_student: [...] }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,8 +20,7 @@ const corsHeaders = {
 };
 
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS')
-    return new Response(null, { status: 204, headers: corsHeaders });
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
       status: 405,
@@ -50,11 +50,10 @@ Deno.serve(async (req) => {
   let scopedCollegeId = body.college_id ?? null;
   const authHeader = req.headers.get('authorization');
   if (authHeader && !scopedCollegeId) {
-    const userClient = createClient(
-      SUPABASE_URL,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: authHeader } }, auth: { persistSession: false } }
-    );
+    const userClient = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false },
+    });
     const { data: userRes } = await userClient.auth.getUser();
     if (userRes?.user) {
       const { data: profile } = await sb
@@ -80,12 +79,9 @@ Deno.serve(async (req) => {
     const { data: students, error: sErr } = await sq;
     if (sErr) throw sErr;
     if (!students || students.length === 0) {
-      return new Response(
-        JSON.stringify({ seeded: 0, students: 0, per_student: [] }),
-        {
-          headers: { ...corsHeaders, 'content-type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ seeded: 0, students: 0, per_student: [] }), {
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
     }
 
     // Cache course → qualification_code lookup
@@ -117,13 +113,34 @@ Deno.serve(async (req) => {
         if (code) selCodeByUser.set(r.user_id as string, code);
       }
     }
-    const qualForStudent = (s: { user_id?: string | null; course_id?: string | null }) =>
-      (s.user_id ? selCodeByUser.get(s.user_id) : undefined) ??
-      (s.course_id ? courseCodeById.get(s.course_id) : undefined);
+    // Resolve enrolment codes to the canonical requirement code that holds LO/AC
+    // rows (mapped codes like EAL 603/3895/8 carry no direct rows — their data
+    // lives under 601/7345/2 via qualification_requirement_mappings). Coverage is
+    // then seeded under the canonical code, matching what the progress UI reads.
+    const rawCodes = [...new Set([...courseCodeById.values(), ...selCodeByUser.values()])];
+    const resolvedByRaw = new Map<string, string>();
+    if (rawCodes.length) {
+      const { data: maps } = await sb
+        .from('qualification_requirement_mappings')
+        .select('qualification_code, requirement_code')
+        .in('qualification_code', rawCodes)
+        .eq('is_primary', true);
+      for (const m of maps ?? []) {
+        resolvedByRaw.set(m.qualification_code as string, m.requirement_code as string);
+      }
+    }
+    const resolveCode = (code: string | undefined): string | undefined =>
+      code ? (resolvedByRaw.get(code) ?? code) : undefined;
 
-    // Cache qualification_code → ACs (both course- and selection-derived).
+    const qualForStudent = (s: { user_id?: string | null; course_id?: string | null }) =>
+      resolveCode(
+        (s.user_id ? selCodeByUser.get(s.user_id) : undefined) ??
+          (s.course_id ? courseCodeById.get(s.course_id) : undefined)
+      );
+
+    // Cache qualification_code → ACs, keyed by the resolved canonical code.
     const qualCodes = [
-      ...new Set([...courseCodeById.values(), ...selCodeByUser.values()]),
+      ...new Set(rawCodes.map((c) => resolveCode(c)).filter((c): c is string => !!c)),
     ];
     const { data: acs } = await sb
       .from('qualification_requirements')
@@ -154,18 +171,11 @@ Deno.serve(async (req) => {
         .select('qualification_code, unit_code, ac_code')
         .eq('student_id', student.id);
       const existingKeys = new Set(
-        (existing ?? []).map(
-          (r) => `${r.qualification_code}|${r.unit_code}|${r.ac_code}`
-        )
+        (existing ?? []).map((r) => `${r.qualification_code}|${r.unit_code}|${r.ac_code}`)
       );
 
       const toInsert = acList
-        .filter(
-          (a) =>
-            !existingKeys.has(
-              `${a.qualification_code}|${a.unit_code}|${a.ac_code}`
-            )
-        )
+        .filter((a) => !existingKeys.has(`${a.qualification_code}|${a.unit_code}|${a.ac_code}`))
         .map((a) => ({
           student_id: student.id,
           qualification_code: a.qualification_code,
@@ -203,13 +213,15 @@ Deno.serve(async (req) => {
       }
     );
   } catch (e) {
+    await captureException(e, {
+      functionName: 'sync-student-ac-coverage',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[sync-ac-coverage] fatal', e);
-    return new Response(
-      JSON.stringify({ error: (e as Error).message ?? 'unknown' }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'content-type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ error: (e as Error).message ?? 'unknown' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'content-type': 'application/json' },
+    });
   }
 });
