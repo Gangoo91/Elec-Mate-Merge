@@ -381,12 +381,14 @@ export function AcEvidenceLockerSheet({
       const { data: staffRow } = userId
         ? await supabase
             .from('college_staff')
-            .select('name')
+            .select('id, name')
             .eq('user_id', userId)
             .is('archived_at', null)
             .maybeSingle()
         : { data: null };
       const assessorName = (staffRow as { name?: string } | null)?.name ?? null;
+      // college_staff.id — what student_ac_coverage.assessor_id FKs to.
+      const assessorStaffId = (staffRow as { id?: string } | null)?.id ?? null;
       const { error } = await supabase.from('ac_signoffs').upsert(
         {
           student_id: studentId,
@@ -441,7 +443,7 @@ export function AcEvidenceLockerSheet({
       // backwards would falsely "freshen" the timestamp).
       const { error } = await supabase
         .from('student_ac_coverage')
-        .update({ status: next })
+        .update({ status: next, assessor_id: assessorStaffId })
         .eq('student_id', studentId)
         .eq('qualification_code', cell.qualification_code)
         .eq('unit_code', cell.unit_code)

@@ -25,6 +25,7 @@ import { ArrowRight } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { LearnerQuickJump } from '@/components/college/sections/LearnerQuickJump';
 import { AtRiskPredictor } from '@/components/college/widgets/AtRiskPredictor';
 import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { ActivityFeed } from '@/components/college/widgets/ActivityFeed';
@@ -281,6 +282,8 @@ interface HubDef {
   description: string;
   meta: string;
   section: CollegeSection;
+  /** When there's a pressing item, jump straight to it instead of the hub grid. */
+  deepSection?: CollegeSection;
 }
 
 function CollegeHubs({
@@ -298,7 +301,7 @@ function CollegeHubs({
       className="space-y-4"
     >
       <motion.div variants={itemVariants} className="flex items-baseline justify-between gap-3">
-        <Eyebrow>02 · YOUR HUBS</Eyebrow>
+        <Eyebrow>03 · YOUR HUBS</Eyebrow>
         <span className="text-[11px] text-white/50 tabular-nums">{hubs.length} hubs</span>
       </motion.div>
       <motion.div
@@ -310,7 +313,7 @@ function CollegeHubs({
           <button
             key={hub.title}
             type="button"
-            onClick={() => onNavigate(hub.section)}
+            onClick={() => onNavigate(hub.deepSection ?? hub.section)}
             className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-5 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[170px] sm:min-h-[240px]"
           >
             <div className="flex items-baseline gap-2">
@@ -481,11 +484,10 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       eyebrow: 'Grading & progress',
       title: 'Assessment',
       description: 'Grades, ILPs, EPA gateway, portfolio review, work queue.',
-      meta:
-        pendingAssessments > 0
-          ? `${pendingAssessments} pending`
-          : 'All caught up',
+      meta: pendingAssessments > 0 ? `${pendingAssessments} pending` : 'All caught up',
       section: 'assessmenthub',
+      // When grades are waiting, the card takes you straight to grading.
+      deepSection: pendingAssessments > 0 ? 'grading' : undefined,
     },
     {
       eyebrow: 'Docs & settings',
@@ -510,6 +512,12 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         cta={{ label: "View today's queue", onClick: () => navigate('/college/today') }}
       />
 
+      {/* 00 · JUMP TO A LEARNER — Student 360 was buried 3–4 levels deep; bring
+          the most-used destination to the top of the dashboard. */}
+      <motion.div variants={itemVariants}>
+        <LearnerQuickJump />
+      </motion.div>
+
       {/* 01 · THIS MONTH */}
       <CollegeStats
         activeStudents={activeStudents}
@@ -520,20 +528,21 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         onOpenAssessment={() => onNavigate('assessmenthub')}
       />
 
-      {/* 02 · YOUR HUBS */}
-      <CollegeHubs hubs={hubs} onNavigate={onNavigate} />
-
-      {/* 03 · TODAY — TutorTodayBody in bare embed mode (no greeting,
-          since the editorial hero above already renders one). */}
+      {/* 02 · TODAY — lead with the actionable daily view (classes, inbox,
+          at-risk) before the navigation hubs. TutorTodayBody in bare embed mode
+          (no greeting; the editorial hero above already renders one). */}
       <motion.section variants={itemVariants} className="space-y-4">
         <NumberedHeader
-          number="03"
+          number="02"
           label="TODAY"
           action="Open full view"
           onAction={() => navigate('/college/today')}
         />
         <TutorTodayBody mode="embed-bare" />
       </motion.section>
+
+      {/* 03 · YOUR HUBS — navigation, below the daily action. */}
+      <CollegeHubs hubs={hubs} onNavigate={onNavigate} />
 
       {/* 04 · MOMENTUM */}
       <motion.section variants={itemVariants} className="space-y-4">

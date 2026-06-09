@@ -12,6 +12,7 @@ import {
   type TodayUpcomingDate,
 } from '@/hooks/useTutorToday';
 import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
+import { LearnerQuickJump } from '@/components/college/sections/LearnerQuickJump';
 import { useMarkingQueue } from '@/hooks/useMarkingQueue';
 import { useUnifiedInbox } from '@/hooks/useUnifiedInbox';
 import { AddPastoralNoteDialog } from '@/components/college/dialogs/AddPastoralNoteDialog';
@@ -79,9 +80,7 @@ export default function TutorTodayPage() {
     `mode="embed-bare"` suppresses greeting entirely — useful when the
     parent page already renders an editorial hero (College Hub overview
     sits above this with its own VerdictHero-style greeting). */
-export function TutorTodayBody({
-  mode = 'page',
-}: { mode?: 'page' | 'embed' | 'embed-bare' } = {}) {
+export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'embed-bare' } = {}) {
   const { data, loading, error, refresh } = useTutorToday();
   const { stats: markingStats } = useMarkingQueue();
   const { stats: inboxStats } = useUnifiedInbox();
@@ -129,6 +128,13 @@ export function TutorTodayBody({
             week. Type any inspector question into the search bar to land on the evidence chain in
             seconds.
           </p>
+        </motion.div>
+      )}
+      {/* Student 360 brought to the top of the tutor's daily view — one tap to
+          any learner's profile (the embedded overview has its own copy). */}
+      {mode === 'page' && (
+        <motion.div variants={itemVariants}>
+          <LearnerQuickJump />
         </motion.div>
       )}
       {mode === 'embed' && (
@@ -330,11 +336,7 @@ export function TutorTodayBody({
                 label: 'OTJ awaiting verification',
                 count: data.otj.length,
                 items: data.otj.map((o) => (
-                  <OtjRow
-                    key={o.id}
-                    otj={o}
-                    onOpen={() => navigate('/college/inbox?tab=otj')}
-                  />
+                  <OtjRow key={o.id} otj={o} onOpen={() => navigate('/college/inbox?tab=otj')} />
                 )),
               },
               {
@@ -381,9 +383,7 @@ export function TutorTodayBody({
                 row={r}
                 onOpenLearner={() => navigate(`/college/students/${r.student_id}`)}
                 onOpenEvidence={() => navigate(`/college/students/${r.student_id}/evidence`)}
-                onAddNote={() =>
-                  setPastoralNoteFor({ id: r.student_id, name: r.student_name })
-                }
+                onAddNote={() => setPastoralNoteFor({ id: r.student_id, name: r.student_name })}
                 onMarkAttendance={() =>
                   setAttendanceFor({ id: r.student_id, name: r.student_name })
                 }
@@ -725,8 +725,17 @@ function AtRiskRow({
             </span>
             {row.cohort_name && <span className="text-[11px] text-white">· {row.cohort_name}</span>}
           </div>
-          {row.top_factor && (
-            <div className="mt-0.5 text-[11.5px] text-white leading-snug">{row.top_factor}</div>
+          {row.top_factors.length > 0 && (
+            <div className="mt-1 flex flex-wrap gap-1">
+              {row.top_factors.map((f, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center rounded-md bg-white/[0.06] border border-white/[0.08] px-1.5 py-0.5 text-[10.5px] text-white/85 leading-snug"
+                >
+                  {f}
+                </span>
+              ))}
+            </div>
           )}
         </div>
         <div className="flex items-center gap-1.5 shrink-0 flex-wrap">

@@ -42,6 +42,7 @@ import { FromCollegeCallout } from './portfolio/FromCollegeCallout';
 import { PortfolioAttentionPanel } from './portfolio/PortfolioAttentionPanel';
 import { PortfolioStatementCard } from './portfolio/PortfolioStatementCard';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
+import { MyProgressCheckCard } from '@/components/apprentice/MyProgressCheckCard';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
 import { SharePortfolioSheet } from './SharePortfolioSheet';
 import {
@@ -96,10 +97,17 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const { entries: portfolioEntries } = usePortfolioData();
   const { actionRequiredCount, comments } = usePortfolioComments();
   const { userSelection, loading: qualLoading } = useQualifications();
-  const courseCode = userSelection?.qualification?.code ?? null;
+  // Enrolment is authoritative — track the college's course (resolved to its
+  // canonical requirement code, matching coverage-sync) over a divergent
+  // self-selection. Falls back to the learner's own selection when no college.
+  const {
+    qualificationCode: authoritativeCode,
+    divergesFromCollege,
+    collegeCourseCode,
+  } = useStudentQualification();
+  const selectionCode = userSelection?.qualification?.code ?? null;
+  const courseCode = authoritativeCode ?? selectionCode;
   const courseId = userSelection?.qualification_id ?? null;
-  // Divergence detector: warns when the active selection ≠ the college's course.
-  const { divergesFromCollege, collegeCourseCode } = useStudentQualification();
   const { tree, isLoading: acLoading } = useQualificationACs(courseCode);
   const {
     getByAC: getSignoff,
@@ -268,11 +276,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       <KpiCell
         label="Evidence items"
         value={portfolioTotal}
-        sub={
-          actionRequiredCount > 0
-            ? `${actionRequiredCount} need attention`
-            : 'All up to date'
-        }
+        sub={actionRequiredCount > 0 ? `${actionRequiredCount} need attention` : 'All up to date'}
         onClick={() => onNavigate('work')}
       />
       <KpiCell
@@ -419,26 +423,31 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </div>
       )}
 
-      {/* Qualification mismatch — coverage may track the wrong course */}
+      {/* Selection ≠ enrolment: we now track the college's course (authoritative);
+          nudge the learner to align their own selection. */}
       {divergesFromCollege && (
         <div className="rounded-xl border border-orange-400/40 bg-orange-400/[0.08] p-4 space-y-1.5">
           <p className="text-[13px] font-semibold text-orange-200">
-            Your qualification doesn't match your college
+            Your saved course doesn't match your college
           </p>
           <p className="text-[12px] text-orange-100/80 leading-relaxed">
-            You're evidencing against{' '}
-            <span className="font-mono text-orange-100">{courseCode}</span>, but your college has
-            you on <span className="font-mono text-orange-100">{collegeCourseCode}</span>. Your AC
-            coverage may track the wrong course.
+            You selected <span className="font-mono text-orange-100">{selectionCode}</span>, but
+            your college enrolled you on{' '}
+            <span className="font-mono text-orange-100">{collegeCourseCode}</span>. We're tracking
+            your college's course — update your selection to match.
           </p>
           <button
             onClick={() => setShowCourseSelector(true)}
             className="text-[12px] font-semibold text-orange-200 underline underline-offset-2 touch-manipulation"
           >
-            Switch qualification →
+            Update selection →
           </button>
         </div>
       )}
+
+      {/* College → apprentice loop: supportive "focus areas" derived from the
+          tutor-side risk signals (pastoral/safeguarding stripped server-side). */}
+      <MyProgressCheckCard />
 
       {/* Top fold — 2-column on lg: hero/KPIs/EPA pulse on the left,
           activity panels on the right. Stays narrow for readability. */}
@@ -447,10 +456,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           {Hero}
           {KpiStrip}
           {courseCode && (
-            <EPAGatewayPulse
-              qualificationCode={courseCode}
-              qualificationId={courseId}
-            />
+            <EPAGatewayPulse qualificationCode={courseCode} qualificationId={courseId} />
           )}
           {PrimaryActions}
         </div>
@@ -591,32 +597,32 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                             <div className="space-y-2">
                               <Eyebrow>Evidence linked</Eyebrow>
                               {entries.map((entry) => (
-                            <div
-                              key={entry.id}
-                              className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06]"
-                            >
-                              <EvidenceThumbnail entry={entry} />
-                              <div className="flex-1 min-w-0">
-                                <p className="text-[13px] font-medium text-white truncate">
-                                  {entry.title}
-                                </p>
-                                <div className="flex items-center gap-2 mt-0.5">
-                                  <span className="text-[10px] text-white/40 font-mono">
-                                    {formatRelativeDate(new Date(entry.dateCreated))}
+                                <div
+                                  key={entry.id}
+                                  className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06]"
+                                >
+                                  <EvidenceThumbnail entry={entry} />
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-[13px] font-medium text-white truncate">
+                                      {entry.title}
+                                    </p>
+                                    <div className="flex items-center gap-2 mt-0.5">
+                                      <span className="text-[10px] text-white/40 font-mono">
+                                        {formatRelativeDate(new Date(entry.dateCreated))}
+                                      </span>
+                                      {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
+                                        <span className="text-[10px] text-white/55">
+                                          {entry.evidenceFiles.length} file
+                                          {entry.evidenceFiles.length !== 1 ? 's' : ''}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
+                                    {String(entry.status || 'draft')}
                                   </span>
-                                  {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
-                                    <span className="text-[10px] text-white/55">
-                                      {entry.evidenceFiles.length} file
-                                      {entry.evidenceFiles.length !== 1 ? 's' : ''}
-                                    </span>
-                                  )}
                                 </div>
-                              </div>
-                              <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
-                                {String(entry.status || 'draft')}
-                              </span>
-                            </div>
-                          ))}
+                              ))}
                               <Button
                                 variant="outline"
                                 onClick={() => {
