@@ -6,6 +6,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Quote } from '@/types/quote';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { format, isPast, differenceInDays, addHours } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -331,6 +332,8 @@ const InvoiceViewPage = () => {
   const isOverdue = !!daysOverdue && daysOverdue > 0;
   const isSent = invoice.invoice_status === 'sent';
   const isDraft = invoice.invoice_status === 'draft' || !invoice.invoice_status;
+  // CIS / VAT reverse charge breakdown (single source of truth = computeQuoteTotals).
+  const cisT = computeQuoteTotals(((invoice.items as any) || []) as any, (invoice.settings as any) || null, { applyOverheadAndProfit: true });
   // ELE-1023: allow draft → paid directly. Sparks often send invoices externally
   // (WhatsApp/in person) and get paid immediately, so the strict draft→sent→paid
   // flow left them stuck. Any non-paid invoice can now be marked paid.
@@ -641,10 +644,33 @@ const InvoiceViewPage = () => {
                   <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount)}</span>
                 </div>
               )}
+              {cisT.reverseCharge && (
+                <div className="flex justify-between text-[13px]">
+                  <span className="text-white">VAT — reverse charge</span>
+                  <span className="text-white tabular-nums">£0.00</span>
+                </div>
+              )}
               <div className="flex justify-between items-baseline pt-3 border-t border-white/[0.08]">
                 <span className="text-[15px] font-bold text-white">Total</span>
                 <span className="text-[22px] font-bold text-elec-yellow tabular-nums">{formatCurrency(invoice.total)}</span>
               </div>
+              {cisT.cisAmount > 0 && (
+                <>
+                  <div className="flex justify-between items-baseline pt-1 text-[13px]">
+                    <span className="text-white/80">Less: CIS ({cisT.cisRate}% on labour)</span>
+                    <span className="text-red-300 tabular-nums">−{formatCurrency(cisT.cisAmount)}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-[14px] font-semibold text-white">Net payable</span>
+                    <span className="text-[18px] font-bold text-elec-yellow tabular-nums">{formatCurrency(cisT.netPayable)}</span>
+                  </div>
+                </>
+              )}
+              {cisT.reverseCharge && (
+                <p className="text-[11px] text-white/55 mt-2 leading-relaxed">
+                  Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(cisT.notionalVat)} @ {invoice.settings?.vatRate ?? 20}%.
+                </p>
+              )}
             </div>
           </div>
         )}

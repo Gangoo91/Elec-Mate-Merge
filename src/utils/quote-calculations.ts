@@ -36,6 +36,12 @@ export interface QuoteTotals {
   profit: number;
   vatAmount: number;
   total: number;
+  reverseCharge: boolean;
+  notionalVat: number;
+  labourNet: number;
+  cisRate: number;
+  cisAmount: number;
+  netPayable: number;
   categories: CategoryBreakdown[];
 }
 
@@ -173,10 +179,31 @@ export function computeQuoteTotals(
   discountAmount = round2(discountAmount);
 
   const netAfterDiscount = round2(baseForDiscount - discountAmount);
-  const vatAmount = settings?.vatRegistered
-    ? round2(netAfterDiscount * ((settings.vatRate || 0) / 100))
-    : 0;
+  // Under VAT reverse charge (DRC) the subcontractor charges £0 VAT — the
+  // customer accounts for it to HMRC. We still expose the notional VAT below.
+  const vatAmount =
+    settings?.vatRegistered && !settings?.reverseCharge
+      ? round2(netAfterDiscount * ((settings.vatRate || 0) / 100))
+      : 0;
   const total = round2(netAfterDiscount + vatAmount);
+
+  // ── CIS + VAT reverse charge (construction invoicing) ────────────────
+  // Reverse charge (DRC): VAT is £0 on the invoice; we state the notional VAT
+  // so the customer can account for it to HMRC.
+  const reverseCharge = !!settings?.reverseCharge;
+  const notionalVat = reverseCharge
+    ? round2(netAfterDiscount * ((settings?.vatRate ?? 20) / 100))
+    : 0;
+  // CIS is withheld from the LABOUR element only, ex-VAT. We take labour's
+  // share of the post-discount net, so any overhead/profit/discount is
+  // allocated proportionally; for a plain labour+materials invoice this is
+  // simply the labour subtotal.
+  const labourFinal = categories.find((c) => c.category === 'labour')?.finalSubtotal ?? 0;
+  const labourNet = subtotal > 0 ? round2(netAfterDiscount * (labourFinal / subtotal)) : 0;
+  const cisRate = settings?.cisEnabled ? settings?.cisRate || 0 : 0;
+  const cisAmount = settings?.cisEnabled ? round2(labourNet * (cisRate / 100)) : 0;
+  // What the customer actually pays once CIS is withheld.
+  const netPayable = round2(total - cisAmount);
 
   return {
     itemAdjustedSubtotal,
@@ -188,6 +215,12 @@ export function computeQuoteTotals(
     profit,
     vatAmount,
     total,
+    reverseCharge,
+    notionalVat,
+    labourNet,
+    cisRate,
+    cisAmount,
+    netPayable,
     categories,
   };
 }
