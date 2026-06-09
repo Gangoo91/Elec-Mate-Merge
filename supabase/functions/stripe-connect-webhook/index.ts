@@ -323,6 +323,18 @@ serve(async (req) => {
 
         console.log(`Invoice ${invoiceNumber} marked as paid`);
 
+        // Send the customer payment-received / review-request email (internal
+        // call; no-ops unless the user has review requests enabled). Legacy
+        // quotes path → invoiceId is quotes.id, which the function expects.
+        fetch(`${supabaseUrl}/functions/v1/send-payment-received-resend`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${supabaseServiceKey}`,
+          },
+          body: JSON.stringify({ invoiceId }),
+        }).catch((e) => console.warn('Review email skipped:', e));
+
         // Create notification for electrician — bell-icon log +
         // device push. Old public.notifications insert was 404'ing
         // (table doesn't exist), and the supabase.functions.invoke

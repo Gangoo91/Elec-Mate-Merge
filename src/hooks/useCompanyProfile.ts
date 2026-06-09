@@ -89,7 +89,10 @@ export const useCompanyProfile = () => {
         const cleanProfileData = {
           ...profileData,
           user_id: user.id,
-          company_name: profileData.company_name || '',
+          // Preserve the existing company name on partial saves (e.g. saving the
+          // Reviews / Invoice sub-sheets). Previously this defaulted to '' which
+          // silently wiped the company name whenever any other sheet was saved.
+          company_name: profileData.company_name ?? companyProfile?.company_name ?? '',
         };
 
         let result;

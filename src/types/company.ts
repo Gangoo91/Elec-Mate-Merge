@@ -55,6 +55,11 @@ export interface CompanyProfile {
   created_at: Date;
   updated_at: Date;
 
+  // Review requests — appended to invoice + payment-received emails.
+  review_request_enabled?: boolean;
+  review_links?: { url: string; label?: string }[];
+  review_request_message?: string | null;
+
   // Worker rates for different worker types
   worker_rates?: WorkerRates;
 
