@@ -1614,6 +1614,12 @@
               <div class="form-label">Zs Value</div>
               <div class="form-value">{{ ac_tests.zs_value }} Ω</div>
             </div>
+            {% if ac_tests.r1_r2_value != "" and ac_tests.r1_r2_value != "0" %}
+            <div class="form-row">
+              <div class="form-label">R1 + R2</div>
+              <div class="form-value">{{ ac_tests.r1_r2_value }} Ω</div>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div class="col">
@@ -1630,6 +1636,23 @@
               <div class="form-label">Insulation Resistance</div>
               <div class="form-value">{{ ac_tests.insulation_resistance }} MΩ</div>
             </div>
+            {% if ac_tests.pfc != "" and ac_tests.pfc != "0" %}
+            <div class="form-row">
+              <div class="form-label">Prospective Fault Current</div>
+              <div class="form-value">{{ ac_tests.pfc }} kA</div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="form-grid" style="margin-top: 4px">
+        <div class="form-row">
+          <div class="form-label">PV Circuit OCPD</div>
+          <div class="form-value">
+            {% if ac_tests.mcb_type != "" %}Type {{ ac_tests.mcb_type }}{% endif %}{% if
+            ac_tests.mcb_rating != "" and ac_tests.mcb_rating != "0" %} {{ ac_tests.mcb_rating }}A{%
+            endif %}{% if ac_tests.mcb_location != "" %} &middot; {{ ac_tests.mcb_location }}{% endif
+            %}{% if ac_tests.mcb_type == "" and ac_tests.mcb_rating == "0" %}&mdash;{% endif %}
           </div>
         </div>
       </div>
