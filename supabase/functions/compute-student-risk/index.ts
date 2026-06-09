@@ -7,6 +7,9 @@
 //   - grade trend (last 3 vs previous 3, when scores present)
 //   - overdue ILP review
 //   - outstanding pastoral flag/concern
+//   - observation gap / open observation follow-ups
+//   - off-the-job training gap
+//   - EPA gateway not passed as the end date approaches
 //
 // Output: rows in student_risk_scores, is_current=true for the latest row;
 // prior current row is marked is_current=false. Writes a JSONB array of the
@@ -70,11 +73,10 @@ Deno.serve(async (req) => {
   let scopedCollegeId = body.college_id ?? null;
   const authHeader = req.headers.get('authorization');
   if (authHeader && !scopedCollegeId) {
-    const userClient = createClient(
-      SUPABASE_URL,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: authHeader } }, auth: { persistSession: false } }
-    );
+    const userClient = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false },
+    });
     const { data: userRes } = await userClient.auth.getUser();
     if (userRes?.user) {
       const { data: profile } = await sb
@@ -270,9 +272,7 @@ Deno.serve(async (req) => {
           const sev = Math.min(1, (priorAvg - recentAvg) / 30);
           factors.push({
             key: 'grade_drop',
-            label: `Recent grade average has fallen ${Math.round(
-              priorAvg - recentAvg
-            )} points`,
+            label: `Recent grade average has fallen ${Math.round(priorAvg - recentAvg)} points`,
             severity: sev,
             detail: `Was ${priorAvg.toFixed(0)}, now ${recentAvg.toFixed(0)}.`,
           });
@@ -322,6 +322,125 @@ Deno.serve(async (req) => {
         score += Math.min(30, 10 + openFlags * 7);
       }
 
+      // 7. Observation gap — apprentices need regular observed practice.
+      const { data: obsRows } = await sb
+        .from('college_observations')
+        .select('observed_at, follow_up_required')
+        .eq('college_student_id', student.id)
+        .order('observed_at', { ascending: false })
+        .limit(20);
+      const lastObs = (obsRows ?? [])[0] as { observed_at?: string } | undefined;
+      const openFollowUps = (obsRows ?? []).filter(
+        (o) => (o as { follow_up_required?: boolean }).follow_up_required
+      ).length;
+      if (!lastObs?.observed_at) {
+        factors.push({
+          key: 'no_observations',
+          label: 'No workplace/lesson observations recorded',
+          severity: 0.45,
+          detail: 'Schedule an observation to evidence competence.',
+        });
+        score += 12;
+      } else {
+        const days = Math.floor(
+          (now.getTime() - new Date(lastObs.observed_at).getTime()) / 86400_000
+        );
+        signals.last_observation_days = days;
+        if (days > 60) {
+          const sev = Math.min(1, (days - 60) / 90);
+          factors.push({
+            key: 'observation_stale',
+            label: `No observation in ${days} days`,
+            severity: sev,
+            detail: 'Book an observed practical or professional discussion.',
+          });
+          score += sev * 14;
+        }
+      }
+      if (openFollowUps > 0) {
+        factors.push({
+          key: 'observation_followup',
+          label: `${openFollowUps} observation${openFollowUps === 1 ? '' : 's'} awaiting follow-up`,
+          severity: Math.min(1, 0.3 + 0.2 * openFollowUps),
+          detail: 'Close out the observation action points.',
+        });
+        score += Math.min(20, 8 + openFollowUps * 6);
+      }
+
+      // 8. Off-the-job training gap — OTJ is a statutory apprenticeship requirement.
+      const { data: otjRows } = await sb
+        .from('college_otj_entries')
+        .select('activity_date')
+        .eq('student_id', student.id)
+        .order('activity_date', { ascending: false })
+        .limit(1);
+      const lastOtj = (otjRows ?? [])[0] as { activity_date?: string } | undefined;
+      if (!lastOtj?.activity_date) {
+        factors.push({
+          key: 'otj_none',
+          label: 'No off-the-job training logged',
+          severity: 0.4,
+          detail: 'OTJ hours are a statutory apprenticeship requirement.',
+        });
+        score += 10;
+      } else {
+        const days = Math.floor(
+          (now.getTime() - new Date(lastOtj.activity_date).getTime()) / 86400_000
+        );
+        signals.otj_last_days = days;
+        if (days > 28) {
+          const sev = Math.min(1, (days - 28) / 60);
+          factors.push({
+            key: 'otj_gap',
+            label: `No off-the-job training logged in ${days} days`,
+            severity: sev,
+            detail: 'A sustained gap risks the funding OTJ requirement.',
+          });
+          score += sev * 14;
+        }
+      }
+
+      // 9. EPA gateway risk — gateway not passed as the end date approaches.
+      const { data: gw } = student.user_id
+        ? await sb
+            .from('epa_gateway_checklist')
+            .select('portfolio_signed_off, gateway_passed, ojt_hours_required, ojt_hours_completed')
+            .eq('user_id', student.user_id)
+            .order('updated_at', { ascending: false })
+            .limit(1)
+            .maybeSingle()
+        : { data: null };
+      if (gw && (gw as { gateway_passed?: boolean }).gateway_passed !== true) {
+        const monthsToEnd = student.expected_end_date
+          ? (new Date(student.expected_end_date).getTime() - now.getTime()) / (30 * 86400_000)
+          : null;
+        if (monthsToEnd !== null && monthsToEnd <= 4) {
+          const g = gw as {
+            portfolio_signed_off?: boolean;
+            ojt_hours_required?: number | null;
+            ojt_hours_completed?: number | null;
+          };
+          const ojtShort =
+            Number(g.ojt_hours_required ?? 0) > 0 &&
+            Number(g.ojt_hours_completed ?? 0) < Number(g.ojt_hours_required ?? 0);
+          const sev = Math.min(
+            1,
+            0.4 +
+              (g.portfolio_signed_off ? 0 : 0.25) +
+              (ojtShort ? 0.2 : 0) +
+              (monthsToEnd <= 2 ? 0.2 : 0)
+          );
+          signals.epa_months_to_end = Math.round(monthsToEnd);
+          factors.push({
+            key: 'epa_gateway_risk',
+            label: `EPA gateway not passed with ~${Math.max(0, Math.round(monthsToEnd))} month(s) to end date`,
+            severity: sev,
+            detail: 'Portfolio sign-off, OTJ hours and functional skills must be gateway-ready.',
+          });
+          score += sev * 20;
+        }
+      }
+
       // Normalise score 0..100 (cap)
       score = Math.max(0, Math.min(100, score));
 
@@ -365,15 +484,16 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
-    await captureException(e, { functionName: 'compute-student-risk', requestUrl: req.url, requestMethod: req.method });
+    await captureException(e, {
+      functionName: 'compute-student-risk',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[compute-risk] fatal', e);
-    return new Response(
-      JSON.stringify({ error: (e as Error).message ?? 'unknown' }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'content-type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ error: (e as Error).message ?? 'unknown' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'content-type': 'application/json' },
+    });
   }
 });
 
