@@ -5,6 +5,7 @@ import InspectionStatsSummary from './InspectionStatsSummary';
 import InspectionChecklistCard from './InspectionChecklistCard';
 import DefectCodesReference from './DefectCodesReference';
 import DefectObservationsSection from './DefectObservationsSection';
+import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
 import { useEICRForm } from './eicr/EICRFormProvider';
 
@@ -564,6 +565,43 @@ const EICRInspectionChecklist = ({
         onUpdateObservation={updateDefectObservation}
         onRemoveObservation={removeDefectObservation}
       />
+
+      {/* Inspected By sign-off (A4:2026 — Schedule of Inspections) */}
+      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4">
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
+        <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">Inspected By</h3>
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-white text-xs mb-1.5 block">Name (Capitals)</label>
+              <input
+                type="text"
+                value={formData.scheduleInspectedByName || ''}
+                onChange={(e) => onUpdate('scheduleInspectedByName', e.target.value.toUpperCase())}
+                placeholder="FULL NAME"
+                className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+              />
+            </div>
+            <div>
+              <label className="text-white text-xs mb-1.5 block">Date</label>
+              <input
+                type="date"
+                value={formData.scheduleInspectedByDate || ''}
+                onChange={(e) => onUpdate('scheduleInspectedByDate', e.target.value)}
+                className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="text-white text-xs mb-1.5 block">Signature</label>
+            <SignatureInput
+              value={formData.scheduleInspectedBySignature || ''}
+              onChange={(signature) => onUpdate('scheduleInspectedBySignature', signature)}
+              placeholder="Draw, type or use a saved signature"
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Reference Guide — at bottom for reference, not workflow */}
       <DefectCodesReference />

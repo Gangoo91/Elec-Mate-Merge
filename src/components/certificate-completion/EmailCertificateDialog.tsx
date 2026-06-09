@@ -234,7 +234,8 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
 
         {/* Body text */}
         <div className="space-y-2 text-muted-foreground">
-          <p>Dear {clientName || 'Customer'},</p>
+          {/* Mirror the sent email greeting (certificate-send.ts uses first name only) */}
+          <p>Hi {(clientName || 'there').split(' ')[0] || 'there'},</p>
           <p>
             Please find attached your{' '}
             {certificateType === 'EICR'

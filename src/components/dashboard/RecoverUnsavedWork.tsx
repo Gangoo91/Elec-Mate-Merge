@@ -109,17 +109,45 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
   const handleDelete = async () => {
     if (!user) return;
     setIsDeleting(true);
+    // Bound each delete so a hung/slow RPC can't freeze the sheet. The Supabase
+    // client only gives up after 30s — far too long to sit on a spinner — so we
+    // race each call against a 12s timeout and always let the UI recover.
+    const withTimeout = <T,>(p: Promise<T>, ms = 12000): Promise<T> =>
+      Promise.race([
+        p,
+        new Promise<T>((_, reject) =>
+          setTimeout(() => reject(new Error('Delete timed out')), ms)
+        ),
+      ]);
     try {
       if (deleteAll && autoDrafts) {
-        await Promise.all(
-          autoDrafts.map((d) => reportCloud.softDeleteReport(d.report_id, user.id))
+        // allSettled (not all): one slow/failed draft must not abort the batch.
+        const results = await Promise.allSettled(
+          autoDrafts.map((d) => withTimeout(reportCloud.softDeleteReport(d.report_id, user.id)))
         );
-        toast({ title: 'All drafts deleted' });
+        const failed = results.filter(
+          (r) => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.success)
+        ).length;
+        toast(
+          failed === 0
+            ? { title: 'All drafts deleted' }
+            : {
+                title: `${autoDrafts.length - failed} deleted, ${failed} failed`,
+                description: 'Some drafts could not be deleted — please try again.',
+                variant: 'destructive',
+              }
+        );
         setShowSheet(false);
         setIsDismissed(true);
       } else if (deleteTarget) {
-        const result = await reportCloud.softDeleteReport(deleteTarget.report_id, user.id);
-        if (result.success) toast({ title: 'Draft deleted' });
+        const result = await withTimeout(
+          reportCloud.softDeleteReport(deleteTarget.report_id, user.id)
+        );
+        toast(
+          result.success
+            ? { title: 'Draft deleted' }
+            : { title: 'Delete failed', variant: 'destructive' }
+        );
       }
       queryClient.invalidateQueries({ queryKey: ['auto-drafts'] });
     } catch {

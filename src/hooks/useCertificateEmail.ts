@@ -68,7 +68,7 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
    */
   const sendCertificateEmail = useCallback(
     async (params: SendEmailParams): Promise<void> => {
-      const { recipientEmail, customMessage } = params;
+      const { recipientEmail, cc, customMessage } = params;
 
       // Validate email
       if (!recipientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
@@ -94,6 +94,7 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
             body: {
               reportId: data.reportId,
               recipientEmail,
+              cc,
               customMessage,
               formattedData: data.formattedData,
             },

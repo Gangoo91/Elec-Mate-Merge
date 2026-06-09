@@ -2211,19 +2211,19 @@
           {% endfor %} {% endfor %}
         </tbody>
       </table>
-      <!-- A4:2026 — Schedule of Inspection — Tested by -->
+      <!-- A4:2026 — Schedule of Inspection — Inspected by -->
       <div class="inline-form" style="margin-top: 10px;">
         <div class="inline-group">
-          <span class="inline-label">Tested by (CAPITALS):</span>
-          <span class="inline-value">{{schedule_tested_by_name}}</span>
+          <span class="inline-label">Inspected by (CAPITALS):</span>
+          <span class="inline-value">{{schedule_inspected_by_name}}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Signature:</span>
-          <span class="inline-value">{{schedule_tested_by_signature}}</span>
+          <span class="inline-value">{% if schedule_inspected_by_signature contains "data:" %}<img src="{{schedule_inspected_by_signature}}" style="max-height: 32px; max-width: 130px; vertical-align: middle;" />{% else %}{{schedule_inspected_by_signature}}{% endif %}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Date:</span>
-          <span class="inline-value">{{schedule_tested_by_date}}</span>
+          <span class="inline-value">{{schedule_inspected_by_date}}</span>
         </div>
       </div>
     </div>
@@ -2387,7 +2387,7 @@
         </div>
         <div class="inline-group">
           <span class="inline-label">Signature:</span>
-          <span class="inline-value" style="font-style: italic; font-family: cursive;">{{schedule_tested_by_signature}}</span>
+          <span class="inline-value" style="font-style: italic; font-family: cursive;">{% if schedule_tested_by_signature contains "data:" %}<img src="{{schedule_tested_by_signature}}" style="max-height: 32px; max-width: 130px; vertical-align: middle; font-style: normal;" />{% else %}{{schedule_tested_by_signature}}{% endif %}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Date:</span>

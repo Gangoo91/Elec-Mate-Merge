@@ -899,6 +899,11 @@ export const eicrPayloadSchema = z
     maximum_demand: s,
     maximum_demand_unit: s,
 
+    // A4:2026 — Schedule of Inspections signature
+    schedule_inspected_by_name: s,
+    schedule_inspected_by_date: s,
+    schedule_inspected_by_signature: s,
+
     // A4:2026 — Schedule of Test Results signature
     schedule_tested_by_name: s,
     schedule_tested_by_date: s,

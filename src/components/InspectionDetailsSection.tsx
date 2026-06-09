@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,6 +14,7 @@ import {
   FieldLimitationBadge,
   isFieldMarker,
 } from '@/components/field-limitations';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 // Fields managed by this section (for memoization comparison)
 const INSPECTION_SECTION_FIELDS = [
@@ -44,6 +45,11 @@ const STANDARD_SCOPE_TEXT = {
 } as const;
 
 type StandardScopeField = keyof typeof STANDARD_SCOPE_TEXT;
+
+// Remembers the inspector's last-used scope wording (per device) so it can be
+// re-applied on future EICRs without retyping — see the "Apply my saved" action.
+const SAVED_SCOPE_KEY = 'eicr:savedInspectionScope';
+type SavedScope = Record<StandardScopeField, string>;
 
 interface InspectionDetailsSectionProps {
   formData: any;
@@ -147,6 +153,57 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           : 'All scope fields already contain text — nothing was overwritten.',
     });
   }, [formData, haptic, onUpdate, toast]);
+
+  // Remember the inspector's last-used scope wording so it can be re-applied on
+  // future EICRs without retyping. Persists whenever a scope field holds real text.
+  const [savedScope, setSavedScope] = useState<SavedScope | null>(() =>
+    storageGetJSONSync<SavedScope | null>(SAVED_SCOPE_KEY, null)
+  );
+
+  useEffect(() => {
+    const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
+    const trio = {} as SavedScope;
+    let hasText = false;
+    fields.forEach((f) => {
+      const v = (formData[f] ?? '').toString();
+      trio[f] = v;
+      if (v.trim() && !isFieldMarker(v)) hasText = true;
+    });
+    if (hasText) {
+      storageSetJSONSync(SAVED_SCOPE_KEY, trio);
+      setSavedScope(trio);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    formData.extentOfInspection,
+    formData.limitationsOfInspection,
+    formData.operationalLimitations,
+  ]);
+
+  const hasSavedScope =
+    !!savedScope && Object.values(savedScope).some((v) => (v || '').trim());
+
+  const applyMySaved = useCallback(() => {
+    if (!savedScope) return;
+    const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
+    let filled = 0;
+    fields.forEach((field) => {
+      const current = (formData[field] || '').trim();
+      const saved = (savedScope[field] || '').trim();
+      if (saved && !current && !isFieldMarker(formData[field])) {
+        onUpdate(field, savedScope[field]);
+        filled += 1;
+      }
+    });
+    haptic.success();
+    toast({
+      title: filled > 0 ? 'Your saved wording applied' : 'Nothing to fill',
+      description:
+        filled > 0
+          ? `Filled ${filled} blank field${filled === 1 ? '' : 's'} from your saved scope. Existing text was left untouched.`
+          : 'All scope fields already contain text — nothing was overwritten.',
+    });
+  }, [savedScope, formData, haptic, onUpdate, toast]);
 
   // Get recommended interval based on property type
   const getRecommendedInterval = (propertyType: string) => {
@@ -376,8 +433,19 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       <div>
         <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
         <div className="space-y-3 py-3">
-          {/* Standard wording — fills blank scope fields in one tap */}
-          <div className="flex justify-end -mt-1">
+          {/* Scope wording shortcuts — fill blank fields in one tap */}
+          <div className="flex justify-end gap-2 -mt-1">
+            {hasSavedScope && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={applyMySaved}
+                className="h-8 gap-1.5 px-2.5 text-xs font-medium text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+              >
+                <ClipboardList className="h-3.5 w-3.5" />
+                Apply my saved
+              </Button>
+            )}
             <Button
               type="button"
               variant="ghost"

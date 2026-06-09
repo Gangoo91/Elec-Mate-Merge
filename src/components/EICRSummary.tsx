@@ -33,6 +33,7 @@ import {
   ChevronUp,
   Loader2,
   User,
+  PenTool,
   Mail,
   Code,
   Receipt,
@@ -47,6 +48,7 @@ import { formatEICRJson } from '@/utils/eicrJsonFormatter';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import SignatureInput from '@/components/signature/SignatureInput';
+import { useSignatureProfiles } from '@/hooks/useSignatureProfiles';
 import { useEICRForm } from './eicr/EICRFormProvider';
 import { useQueryClient } from '@tanstack/react-query';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
@@ -121,6 +123,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const [estimateResult, setEstimateResult] = useState<EstimateResult | null>(null);
   const { estimate, isEstimating, progressStep, elapsedSeconds, cancel } =
     useEstimateRemedialCosts();
+
+  // Saved signature — "sign once, apply to every box on the cert"
+  const { getDefaultSignature } = useSignatureProfiles();
 
   // Collapsible sections for mobile
   const [inspectedByOpen, setInspectedByOpen] = useState(true);
@@ -1114,6 +1119,33 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             <User className="h-4 w-4 mr-2" />
             Copy from Inspector Details (both signatories)
           </Button>
+
+          {/* Use saved signature — applies a stored signature to every box at once */}
+          {getDefaultSignature() && (
+            <Button
+              onClick={() => {
+                haptic.light();
+                const sig = getDefaultSignature()?.signatureData;
+                if (!sig) return;
+                // Apply to the Inspector Details signature + both signatories + both schedules
+                onUpdate('inspectorSignature', sig);
+                onUpdate('inspectedBySignature', sig);
+                onUpdate('reportAuthorisedBySignature', sig);
+                onUpdate('scheduleInspectedBySignature', sig);
+                onUpdate('scheduleTestedBySignature', sig);
+                haptic.success();
+                toast({
+                  title: 'Saved signature applied',
+                  description: 'Your saved signature has been added to every signature box on this report.',
+                });
+              }}
+              className="w-full h-11 mt-2 touch-manipulation text-sm rounded-lg bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 active:scale-[0.98]"
+              variant="outline"
+            >
+              <PenTool className="h-4 w-4 mr-2" />
+              Use my saved signature (all boxes)
+            </Button>
+          )}
         </div>
 
         {/* INSPECTED BY Section - Collapsible */}

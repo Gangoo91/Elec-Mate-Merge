@@ -1623,7 +1623,12 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     maximum_demand: get('maximumDemand'),
     maximum_demand_unit: get('maximumDemandUnit') || 'amps',
 
-    // Schedule tested by (A4:2026)
+    // Schedule of inspections — inspected by (A4:2026)
+    schedule_inspected_by_name: get('scheduleInspectedByName'),
+    schedule_inspected_by_date: get('scheduleInspectedByDate'),
+    schedule_inspected_by_signature: get('scheduleInspectedBySignature'),
+
+    // Schedule of test results — tested by (A4:2026)
     schedule_tested_by_name: get('scheduleTestedByName'),
     schedule_tested_by_date: get('scheduleTestedByDate'),
     schedule_tested_by_signature: get('scheduleTestedBySignature'),

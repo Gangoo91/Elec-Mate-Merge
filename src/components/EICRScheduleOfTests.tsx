@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions */
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import SignatureInput from '@/components/signature/SignatureInput';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { SPD_MAKES, getSpdModelsForMake, SPD_LOCATIONS, SPD_RATED_KA } from '@/constants/spdData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -3162,12 +3163,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             </div>
             <div>
               <label className="text-white text-xs mb-1.5 block">Signature</label>
-              <input
-                type="text"
+              <SignatureInput
                 value={formData.scheduleTestedBySignature || ''}
-                onChange={(e) => onUpdate('scheduleTestedBySignature', e.target.value)}
-                placeholder="Type signature"
-                className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-[cursive] italic"
+                onChange={(signature) => onUpdate('scheduleTestedBySignature', signature)}
+                placeholder="Draw, type or use a saved signature"
               />
             </div>
           </div>

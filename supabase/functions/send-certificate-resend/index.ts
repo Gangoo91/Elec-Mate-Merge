@@ -22,6 +22,7 @@ interface CertificateEmailRequest {
   recipientEmail?: string;
   customMessage?: string;
   testMode?: boolean; // For sending test emails without full auth
+  cc?: string[]; // Optional carbon-copy recipients (e.g. the installer's own address)
 }
 
 // ============================================================================
@@ -420,10 +421,19 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`📧 From: ${sender.from}`);
     console.log(`📧 Reply-to: ${sender.replyTo || '(none — no company_email or auth email)'}`);
 
+    // CC — sanitise the optional carbon-copy list from the client (valid emails only)
+    const ccList = Array.isArray(body.cc)
+      ? body.cc
+          .map((e) => String(e).trim())
+          .filter((e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))
+      : [];
+    if (ccList.length > 0) console.log(`📧 CC: ${ccList.join(', ')}`);
+
     const emailOptions: {
       from: string;
       replyTo?: string;
       to: string[];
+      cc?: string[];
       subject: string;
       html: string;
       text?: string;
@@ -435,6 +445,10 @@ const handler = async (req: Request): Promise<Response> => {
       html: emailHtml,
       text: htmlToPlainText(emailHtml),
     };
+
+    if (ccList.length > 0) {
+      emailOptions.cc = ccList;
+    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       const filename = `${certificateTypeDisplay.replace(/\s+/g, '-')}_${certificateNumber}.pdf`;

@@ -188,6 +188,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       rcdRating: '',
       rcdType: '',
       rcdBreakingCapacity: '',
+      // A4:2026 — Schedule of Inspections signature
+      scheduleInspectedByName: '',
+      scheduleInspectedByDate: '',
+      scheduleInspectedBySignature: '',
       // A4:2026 — Schedule of Test Results signature
       scheduleTestedByName: '',
       scheduleTestedByDate: '',
@@ -983,6 +987,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       rcdRating: '',
       rcdType: '',
       rcdBreakingCapacity: '',
+      scheduleInspectedByName: '',
+      scheduleInspectedByDate: '',
+      scheduleInspectedBySignature: '',
       scheduleTestedByName: '',
       scheduleTestedByDate: '',
       scheduleTestedBySignature: '',
