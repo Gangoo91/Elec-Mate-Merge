@@ -108,6 +108,13 @@ export interface EVChargingFormData {
   ipRating: string; // e.g. IP54, IP65
   ikRating: string; // e.g. IK08, IK10 (mechanical impact, optional)
 
+  // Maximum demand assessment (722.311.201) — A4:2026 permits load curtailment
+  // to be taken into account when determining maximum demand.
+  maxDemandExisting: string; // existing installation demand (A)
+  maxDemandEv: string; // EV charger continuous load (A, no diversity)
+  maxDemandTotal: string; // total assessed demand (A)
+  supplyCapacity: string; // main fuse / supply rating (A)
+
   // Test results
   testResults: {
     r1r2: string;
@@ -266,6 +273,11 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
 
   ipRating: '',
   ikRating: '',
+
+  maxDemandExisting: '',
+  maxDemandEv: '',
+  maxDemandTotal: '',
+  supplyCapacity: '',
 
   testResults: {
     r1r2: '',

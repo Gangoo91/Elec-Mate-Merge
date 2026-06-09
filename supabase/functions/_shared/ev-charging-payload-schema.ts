@@ -124,6 +124,17 @@ const protectiveDevicesSchema = z.object({
   ik_rating: z.string().default(''),
 }).default({});
 
+// Maximum demand assessment (722.311.201)
+const demandAssessmentSchema = z.object({
+  existing_a: z.string().default(''),
+  ev_a: z.string().default(''),
+  total_a: z.string().default(''),
+  supply_capacity_a: z.string().default(''),
+  within_capacity: z.string().default(''),
+  load_curtailment: z.boolean().default(false),
+  load_curtailment_display: z.string().default(''),
+}).default({});
+
 const testResultsSchema = z.object({
   r1r2: z.string().default(''),
   r2: z.string().default(''),
@@ -264,6 +275,7 @@ export const evChargingPayloadSchema = z.object({
   circuit_details: circuitDetailsSchema,
   protection_details: protectionDetailsSchema,
   protective_devices: protectiveDevicesSchema,
+  demand_assessment: demandAssessmentSchema,
   test_results: testResultsSchema,
   test_equipment: testEquipmentSchema,
   verification: verificationSchema,

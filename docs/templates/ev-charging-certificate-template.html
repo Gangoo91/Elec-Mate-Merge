@@ -1069,6 +1069,41 @@
     </div>
 </div>
 
+<!-- SECTION G3: MAXIMUM DEMAND (A4:2026 — Regulation 722.311.201) -->
+{% if demand_assessment.total_a != "" or demand_assessment.supply_capacity_a != "" %}
+<div class="section">
+    <div class="section-title">Section G3: Maximum Demand (Regulation 722.311.201)</div>
+    <div class="inline-form" style="margin-bottom: 3px;">
+        <div class="inline-group">
+            <span class="inline-label">Existing Demand:</span>
+            <span class="inline-value">{{ demand_assessment.existing_a | default: "&mdash;" }} A</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">EV Charger Load:</span>
+            <span class="inline-value">{{ demand_assessment.ev_a | default: "&mdash;" }} A</span>
+        </div>
+    </div>
+    <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Total Assessed Demand:</span>
+            <span class="inline-value">{{ demand_assessment.total_a | default: "&mdash;" }} A</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Supply Capacity:</span>
+            <span class="inline-value">{{ demand_assessment.supply_capacity_a | default: "&mdash;" }} A</span>
+        </div>
+    </div>
+    {% if demand_assessment.load_curtailment_display != "" %}
+    <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Load Curtailment:</span>
+            <span class="inline-value">{{ demand_assessment.load_curtailment_display }}</span>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
 <!-- SECTION H: SCHEDULE OF TEST RESULTS -->
 <div class="section">
     <div class="section-title">Section H: Schedule of Test Results</div>

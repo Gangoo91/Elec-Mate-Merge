@@ -104,6 +104,14 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
     return checkDNORequirements(power, phases);
   }, [formData.powerRating, formData.phases, checkDNORequirements]);
 
+  // Max-demand adequacy — green if total demand is within supply capacity.
+  const demandStatus = useMemo(() => {
+    const total = parseFloat(formData.maxDemandTotal || '');
+    const cap = parseFloat(formData.supplyCapacity || '');
+    if (isNaN(total) || isNaN(cap)) return null;
+    return { ok: total <= cap, total, cap };
+  }, [formData.maxDemandTotal, formData.supplyCapacity]);
+
   // Auto-fill DNO notification date when checkbox is ticked and date is empty
   useEffect(() => {
     if (formData.dnoNotified && !formData.dnoNotificationDate) {
@@ -881,6 +889,82 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ========== Maximum Demand (722.311.201) ========== */}
+      <section>
+        <SectionHeading title="Maximum Demand (722.311.201)" />
+
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="maxDemandExisting">Existing Demand (A)</FieldLabel>
+              <Input
+                id="maxDemandExisting"
+                inputMode="decimal"
+                placeholder="e.g., 45"
+                value={formData.maxDemandExisting || ''}
+                onChange={(e) => onUpdate('maxDemandExisting', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <FieldLabel htmlFor="maxDemandEv">EV Charger Load (A)</FieldLabel>
+              <Input
+                id="maxDemandEv"
+                inputMode="decimal"
+                placeholder="e.g., 32 (no diversity)"
+                value={formData.maxDemandEv || ''}
+                onChange={(e) => onUpdate('maxDemandEv', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <FieldLabel htmlFor="maxDemandTotal">Total Demand (A)</FieldLabel>
+              <Input
+                id="maxDemandTotal"
+                inputMode="decimal"
+                placeholder="existing + EV"
+                value={formData.maxDemandTotal || ''}
+                onChange={(e) => onUpdate('maxDemandTotal', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <FieldLabel htmlFor="supplyCapacity">Supply Capacity (A)</FieldLabel>
+              <Input
+                id="supplyCapacity"
+                inputMode="decimal"
+                placeholder="e.g., 80 or 100"
+                value={formData.supplyCapacity || ''}
+                onChange={(e) => onUpdate('supplyCapacity', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          </div>
+
+          {demandStatus && (
+            <div
+              className={cn(
+                'rounded-xl px-3 py-2.5 text-xs font-semibold',
+                demandStatus.ok
+                  ? 'bg-green-500/10 border border-green-500/30 text-green-300'
+                  : 'bg-red-500/10 border border-red-500/30 text-red-300'
+              )}
+            >
+              {demandStatus.ok
+                ? `Within supply capacity — ${demandStatus.total}A ≤ ${demandStatus.cap}A`
+                : `Total demand ${demandStatus.total}A exceeds ${demandStatus.cap}A supply — apply load management or upgrade the supply`}
+            </div>
+          )}
+
+          {formData.loadManagement && (
+            <p className="text-[10px] text-white/45 leading-relaxed">
+              Load curtailment is applied — per Reg 722.311.201, this may be taken into account
+              when determining maximum demand.
+            </p>
+          )}
         </div>
       </section>
 

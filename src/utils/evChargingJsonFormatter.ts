@@ -188,6 +188,19 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       ik_rating: get('ikRating'),
     },
 
+    // Maximum demand assessment (722.311.201)
+    demand_assessment: {
+      existing_a: get('maxDemandExisting'),
+      ev_a: get('maxDemandEv'),
+      total_a: get('maxDemandTotal'),
+      supply_capacity_a: get('supplyCapacity'),
+      within_capacity: safeCompare(get('maxDemandTotal'), get('supplyCapacity'), 'lte'),
+      load_curtailment: getBool('loadManagement'),
+      load_curtailment_display: getBool('loadManagement')
+        ? 'Applied (722.311.201)'
+        : '',
+    },
+
     // Test Results
     test_results: {
       r1r2: getTestResult('r1r2'),
