@@ -619,6 +619,7 @@ const sections = [
 export default function PartPBuildingRegulationsGuidePage() {
   return (
     <GuideTemplate
+      noindex
       title="Part P Building Regulations | Electrical Work in Dwellings"
       description="Complete guide to Part P Building Regulations for electricians — what work is notifiable electrical work UK, how self-certification works via NICEIC/NAPIT/ELECSA, and the consequences of non-compliance."
       datePublished="2026-03-27"

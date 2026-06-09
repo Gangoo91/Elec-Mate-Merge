@@ -87,6 +87,13 @@
 # /guides/continuity-testing-electricians-guide: 518 imp / pos 9.6  (duplicate)
 /guides/continuity-testing-electricians-guide                /continuity-testing-guide 301!
 
+# part-p cluster → /guides/part-p-building-regulations (canonical, 2,220 imp / pos 9.4)
+# /part-p-building-regulations (57 imp): identical content (same component) — true dupe
+# /guides/part-p-building-regulations-electrical (56 imp): same Part-P intent, noindexed
+# LEFT distinct: /wiring-regulations-building-regulations (BS 7671 vs Building Regs comparison)
+/part-p-building-regulations                                 /guides/part-p-building-regulations 301!
+/guides/part-p-building-regulations-electrical               /guides/part-p-building-regulations 301!
+
 # mock-exams duplicate → /guides/mock-exams-electrician (canonical)
 # /guides/mock-exams-electrician : 3,808 imp / pos 10.3  (canonical — same intent)
 # /guides/mock-exams-electrical  : 786 imp / pos 22.0    (duplicate, noindexed)

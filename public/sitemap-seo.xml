@@ -3924,12 +3924,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/part-p-building-regulations-electrical</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/partial-power-loss-fault-finding</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -5080,12 +5074,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/outdoor-socket-fault-finding</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/part-p-building-regulations</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
