@@ -16,7 +16,6 @@ function makeMinimalPayload() {
     installationDate: '10/04/2026',
     commissioningDate: '10/04/2026',
     clientName: 'John Smith',
-    clientAddress: '123 Test St, London, SW1A 1AA',
     installerName: 'Bob Sparks',
     installerCompany: 'Sparks BESS Ltd',
     batteryManufacturer: 'Tesla',
@@ -37,7 +36,6 @@ function makeFullPayload() {
 
     // Client
     clientName: 'Jane Doe',
-    clientAddress: '456 Battery Lane, Manchester, M1 2AB',
     clientTelephone: '07700900123',
     clientEmail: 'jane@test.com',
 
@@ -79,7 +77,6 @@ function makeFullPayload() {
     roundTripEfficiency: '97.5',
     mcsBatteryProductCert: 'MCS-BATT-001',
     iec62619Compliant: true,
-    bmsFirmware: 'v2.1.4',
 
     // Inverter
     inverterManufacturer: 'Tesla',
@@ -88,7 +85,6 @@ function makeFullPayload() {
     inverterRatedPower: '11.5',
     inverterType: 'Hybrid',
     inverterPhases: 'single',
-    inverterFirmware: 'v3.0.1',
     mcsInverterProductCert: 'MCS-INV-001',
 
     // System config
@@ -146,7 +142,6 @@ function makeFullPayload() {
     fireServiceInfoProvided: true,
 
     // PAS 63100
-    pas63100Applicable: true,
     notInSleepingRoom: true,
     notInEscapeRoute: true,
     notInLoftOrVoid: true,
@@ -167,15 +162,9 @@ function makeFullPayload() {
 
     // EESS class
     eessClass: 'Class 1',
+    allLabelsFitted: true,
 
     // Labelling
-    labelAtOrigin: true,
-    labelAtMeteringPoint: true,
-    labelAtMainCU: true,
-    labelAtIsolationPoints: true,
-    batteryEnclosureLabel: true,
-    dcIsolationLabelled: true,
-    emergencyProcedureDisplayed: true,
 
     // AFDD
     afddInstalled: false,
@@ -203,10 +192,8 @@ function makeFullPayload() {
     ze: '0.18',
     zs: '0.52',
     r1r2: '0.34',
-    r2: '0.68',
     acInsulationResistance: '>200',
     acPolarity: 'Correct',
-    pscc: '4.8',
     rcdTripTimeIdn: '18',
     rcdTripTime5xIdn: '12',
 
@@ -218,26 +205,8 @@ function makeFullPayload() {
     dcPolarityVerified: true,
     batterySoCAtCommissioning: '85',
 
-    // Grid protection
-    ovStage1Voltage: '264',
-    ovStage1Time: '1.0',
-    ovStage2Voltage: '276',
-    ovStage2Time: '0.5',
-    uvStage1Voltage: '207',
-    uvStage1Time: '1.5',
-    uvStage2Voltage: '196',
-    uvStage2Time: '0.5',
-    ofStage1Freq: '50.4',
-    ofStage1Time: '0.5',
-    ofStage2Freq: '52',
-    ofStage2Time: '0.5',
-    ufStage1Freq: '47.5',
-    ufStage1Time: '0.5',
-    ufStage2Freq: '47',
-    ufStage2Time: '0.5',
-    rocoFRate: '1',
-    rocoFTime: '0.5',
-    reconnectionDelay: '60',
+    // Grid protection (verified against inverter G98/G99 type-test)
+    gridProtectionVerified: true,
 
     // DNO
     gridConnectionType: 'G98',
@@ -266,8 +235,6 @@ function makeFullPayload() {
     testInstrumentCalDate: '15/01/2026',
 
     // Warranty
-    batteryWarrantyYears: '10',
-    inverterWarrantyYears: '10',
 
     // Customer handover
     operatingInstructionsProvided: true,
@@ -351,7 +318,6 @@ Deno.test('Full payload parses', () => {
     assertEquals(result.data.dcPolarityVerified, true);
     assertEquals(result.data.batterySoCAtCommissioning, '85');
     assertEquals(result.data.dnoName, 'Electricity North West');
-    assertEquals(result.data.batteryWarrantyYears, '10');
     assertEquals(result.data.photos.length, 2);
   }
 });
@@ -381,7 +347,6 @@ Deno.test('Boolean coercion works — missing booleans get defaults', () => {
     // Booleans that default to true
     assertEquals(result.data.iec62619Compliant, true);
     assertEquals(result.data.locationSuitable, true);
-    assertEquals(result.data.pas63100Applicable, true);
   }
 });
 
@@ -400,7 +365,6 @@ Deno.test('PAS 63100 fields have correct defaults', () => {
   assertEquals(result.success, true);
   if (result.success) {
     // PAS 63100 is applicable by default (domestic BESS)
-    assertEquals(result.data.pas63100Applicable, true);
     // Location exclusions default to false (not yet confirmed)
     assertEquals(result.data.notInSleepingRoom, false);
     assertEquals(result.data.notInEscapeRoute, false);
@@ -424,35 +388,16 @@ Deno.test('PAS 63100 fields have correct defaults', () => {
   }
 });
 
-Deno.test('Grid protection settings have G98 defaults', () => {
+Deno.test('Grid protection is a single verified flag (settings are inverter type-tested)', () => {
   const result = bessPayloadSchema.safeParse({});
   assertEquals(result.success, true);
   if (result.success) {
-    // Over-voltage
-    assertEquals(result.data.ovStage1Voltage, '264');
-    assertEquals(result.data.ovStage1Time, '1.0');
-    assertEquals(result.data.ovStage2Voltage, '276');
-    assertEquals(result.data.ovStage2Time, '0.5');
-    // Under-voltage
-    assertEquals(result.data.uvStage1Voltage, '207');
-    assertEquals(result.data.uvStage1Time, '1.5');
-    assertEquals(result.data.uvStage2Voltage, '196');
-    assertEquals(result.data.uvStage2Time, '0.5');
-    // Over-frequency
-    assertEquals(result.data.ofStage1Freq, '50.4');
-    assertEquals(result.data.ofStage1Time, '0.5');
-    assertEquals(result.data.ofStage2Freq, '52');
-    assertEquals(result.data.ofStage2Time, '0.5');
-    // Under-frequency
-    assertEquals(result.data.ufStage1Freq, '47.5');
-    assertEquals(result.data.ufStage1Time, '0.5');
-    assertEquals(result.data.ufStage2Freq, '47');
-    assertEquals(result.data.ufStage2Time, '0.5');
-    // RoCoF
-    assertEquals(result.data.rocoFRate, '1');
-    assertEquals(result.data.rocoFTime, '0.5');
-    // Reconnection
-    assertEquals(result.data.reconnectionDelay, '60');
+    assertEquals(result.data.gridProtectionVerified, false);
+  }
+  const verified = bessPayloadSchema.safeParse({ gridProtectionVerified: true });
+  assertEquals(verified.success, true);
+  if (verified.success) {
+    assertEquals(verified.data.gridProtectionVerified, true);
   }
 });
 

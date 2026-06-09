@@ -141,9 +141,7 @@
             <div class="front-field"><div class="front-field-label">Installation Date</div><div class="front-field-value">{{ installationDate }}</div></div>
             <div class="front-field"><div class="front-field-label">Commissioning Date</div><div class="front-field-value">{{ commissioningDate }}</div></div>
             <div class="front-field"><div class="front-field-label">Client</div><div class="front-field-value">{{ clientName }}</div></div>
-            {% unless contactPerson == blank %}<div class="front-field"><div class="front-field-label">Contact Person</div><div class="front-field-value">{{ contactPerson }}</div></div>{% endunless %}
             {% unless clientTelephone == blank %}<div class="front-field"><div class="front-field-label">Contact</div><div class="front-field-value">{{ clientTelephone }}{% unless clientEmail == blank %} | {{ clientEmail }}{% endunless %}</div></div>{% endunless %}
-            {% unless clientAddress == blank %}<div class="front-field"><div class="front-field-label">Client Address</div><div class="front-field-value">{{ clientAddress }}</div></div>{% endunless %}
             <div class="front-field"><div class="front-field-label">Installation Address</div><div class="front-field-value">{{ installationAddress }}</div></div>
             <div class="front-field"><div class="front-field-label">Installation</div><div class="front-field-value">{{ installationType }} — {{ installationLocation }}</div></div>
             {% unless installerName == blank %}<div class="front-field"><div class="front-field-label">Installer</div><div class="front-field-value">{{ installerName }}{% unless installerCompany == blank %}, {{ installerCompany }}{% endunless %}</div></div>{% endunless %}
@@ -216,7 +214,6 @@
     </div>
     <div class="inline-form" style="margin-top: 2px;">
         {% if iec62619Compliant %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>IEC 62619 compliant</label></div>{% endif %}
-        {% unless bmsFirmware == blank %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>BMS firmware: {{ bmsFirmware }}</label></div>{% endunless %}
     </div>
 </div>
 
@@ -227,7 +224,7 @@
         <div class="form-row"><div class="form-label">Manufacturer</div><div class="form-value" style="font-weight: 600;">{{ inverterManufacturer }}</div><div class="form-label">Model</div><div class="form-value">{{ inverterModel }}</div></div>
         <div class="form-row"><div class="form-label">Serial No</div><div class="form-value">{{ inverterSerial }}</div><div class="form-label">Rated Power</div><div class="form-value">{{ inverterRatedPower }} kW</div></div>
         <div class="form-row"><div class="form-label">Type</div><div class="form-value">{{ inverterType }}</div><div class="form-label">Phases</div><div class="form-value">{{ inverterPhases }}-phase</div></div>
-        <div class="form-row"><div class="form-label">Firmware</div><div class="form-value">{{ inverterFirmware }}</div><div class="form-label">MCS Product Cert</div><div class="form-value">{{ mcsInverterProductCert }}</div></div>
+        <div class="form-row"><div class="form-label">MCS Product Cert</div><div class="form-value">{{ mcsInverterProductCert }}</div></div>
     </div>
 </div>
 
@@ -292,7 +289,7 @@
     {% unless distanceFromCombustibles == blank %}<div class="form-grid" style="margin-top: 2px;"><div class="form-row"><div class="form-label">Distance from Combustibles</div><div class="form-value">{{ distanceFromCombustibles }}mm</div><div class="form-label">Thermal Management</div><div class="form-value">{{ thermalManagement }}</div></div></div>{% endunless %}
 </div>
 
-{% if pas63100Applicable %}
+{% if installationType == 'domestic' %}
 <div class="section avoid-break">
     <div class="section-title red">Section G2: PAS 63100 — Domestic Fire Safety</div>
     <div class="inline-form">
@@ -322,14 +319,9 @@
 <div class="section avoid-break">
     <div class="section-title amber">Section G3: Labelling (Reg 514.15)</div>
     <div class="inline-form">
-        <div class="checkbox-item"><span class="checkbox-box {% if labelAtOrigin %}checked-amber{% endif %}">{% if labelAtOrigin %}&#10003;{% endif %}</span><label>Origin</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if labelAtMeteringPoint %}checked-amber{% endif %}">{% if labelAtMeteringPoint %}&#10003;{% endif %}</span><label>Metering point</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if labelAtMainCU %}checked-amber{% endif %}">{% if labelAtMainCU %}&#10003;{% endif %}</span><label>Main CU</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if labelAtIsolationPoints %}checked-amber{% endif %}">{% if labelAtIsolationPoints %}&#10003;{% endif %}</span><label>Isolation points</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if batteryEnclosureLabel %}checked-amber{% endif %}">{% if batteryEnclosureLabel %}&#10003;{% endif %}</span><label>Battery enclosure</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if dcIsolationLabelled %}checked-amber{% endif %}">{% if dcIsolationLabelled %}&#10003;{% endif %}</span><label>DC isolation</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if emergencyProcedureDisplayed %}checked-amber{% endif %}">{% if emergencyProcedureDisplayed %}&#10003;{% endif %}</span><label>Emergency procedure</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if allLabelsFitted %}checked-amber{% endif %}">{% if allLabelsFitted %}&#10003;{% endif %}</span><label>All required labels fitted &amp; durable (origin, metering, main CU, isolation points, battery enclosure, DC isolation, emergency procedure)</label></div>
     </div>
+    {% unless labelExceptions == blank %}<div class="form-grid" style="margin-top: 3px;"><div class="form-row"><div class="form-label">Exceptions</div><div class="form-value">{{ labelExceptions }}</div></div></div>{% endunless %}
 </div>
 
 <div class="footer">
@@ -354,9 +346,8 @@
     <div class="section-title">Section H: AC Test Results</div>
     <div class="form-grid">
         <div class="form-row"><div class="form-label">Ze</div><div class="form-value">{{ ze }} Ω</div><div class="form-label">Zs</div><div class="form-value">{{ zs }} Ω</div></div>
-        <div class="form-row"><div class="form-label">R1+R2</div><div class="form-value">{{ r1r2 }} Ω</div><div class="form-label">R2</div><div class="form-value">{{ r2 }} Ω</div></div>
+        <div class="form-row"><div class="form-label">R1+R2</div><div class="form-value">{{ r1r2 }} Ω</div></div>
         <div class="form-row"><div class="form-label">AC Insulation Res.</div><div class="form-value">{{ acInsulationResistance }} MΩ</div><div class="form-label">Polarity</div><div class="form-value">{{ acPolarity }}</div></div>
-        <div class="form-row"><div class="form-label">PSCC</div><div class="form-value">{{ pscc }} kA</div></div>
         <div class="form-row"><div class="form-label">RCD @ Idn</div><div class="form-value">{{ rcdTripTimeIdn }} ms</div><div class="form-label">RCD @ 5×Idn</div><div class="form-value">{{ rcdTripTime5xIdn }} ms</div></div>
         {% unless testInstrumentMake == blank %}<div class="form-row"><div class="form-label">Test Instrument</div><div class="form-value">{{ testInstrumentMake }} {{ testInstrumentModel }} (S/N: {{ testInstrumentSerial }})</div><div class="form-label">Cal. Date</div><div class="form-value">{{ testInstrumentCalDate }}</div></div>{% endunless %}
     </div>
@@ -371,20 +362,14 @@
     </div>
 </div>
 
-<!-- Grid Protection Settings -->
+<!-- Grid Protection -->
 <div class="section avoid-break">
-    <div class="section-title purple">Section J: Grid Protection Settings ({{ gridConnectionType }})</div>
-    <table class="grid-table">
-        <thead><tr><th>Parameter</th><th>Stage 1 Setting</th><th>Stage 1 Time</th><th>Stage 2 Setting</th><th>Stage 2 Time</th></tr></thead>
-        <tbody>
-            <tr><td>Over-voltage</td><td>{{ ovStage1Voltage }}V</td><td>{{ ovStage1Time }}s</td><td>{{ ovStage2Voltage }}V</td><td>{{ ovStage2Time }}s</td></tr>
-            <tr><td>Under-voltage</td><td>{{ uvStage1Voltage }}V</td><td>{{ uvStage1Time }}s</td><td>{{ uvStage2Voltage }}V</td><td>{{ uvStage2Time }}s</td></tr>
-            <tr><td>Over-frequency</td><td>{{ ofStage1Freq }}Hz</td><td>{{ ofStage1Time }}s</td><td>{{ ofStage2Freq }}Hz</td><td>{{ ofStage2Time }}s</td></tr>
-            <tr><td>Under-frequency</td><td>{{ ufStage1Freq }}Hz</td><td>{{ ufStage1Time }}s</td><td>{{ ufStage2Freq }}Hz</td><td>{{ ufStage2Time }}s</td></tr>
-            <tr><td>ROCOF</td><td colspan="2">{{ rocoFRate }} Hz/s</td><td colspan="2">{{ rocoFTime }}s</td></tr>
-            <tr><td>Reconnection Delay</td><td colspan="4">{{ reconnectionDelay }}s</td></tr>
-        </tbody>
-    </table>
+    <div class="section-title purple">Section J: Grid Protection ({{ gridConnectionType }})</div>
+    <div class="field-row">
+        <div class="field-label">Protection settings (OV/UV/OF/UF &amp; ROCOF)</div>
+        <div class="field-value">{% if gridProtectionVerified %}Verified against inverter {{ gridConnectionType | default: "G98/G99" }} type-test &#10003;{% else %}Not verified{% endif %}</div>
+    </div>
+    <p style="font-size: 8px; color: #64748b; margin-top: 4px;">Trip settings are factory type-tested per EREC G98/G99 and displayed on the inverter; verified correct at commissioning, not re-configured on site.</p>
 </div>
 
 <!-- DNO -->
@@ -426,6 +411,32 @@
     {% endunless %}
 </div>
 
+<!-- Commercial / Large-System Tests (MIS 3012 Part 3/4) — non-domestic only -->
+{% unless installationType == 'domestic' %}
+<div class="section avoid-break">
+    <div class="section-title cyan">Section L2: Commercial / Large-System Tests (MIS 3012)</div>
+    <div class="form-grid">
+        {% unless capacityTestResult == blank %}<div class="form-row"><div class="form-label">Capacity Test (BS EN 61427-1)</div><div class="form-value"><span class="badge {% if capacityTestResult == 'pass' %}pass{% else %}fail{% endif %}">{{ capacityTestResult }}</span>{% unless measuredCapacityKwh == blank %} — {{ measuredCapacityKwh }} kWh{% endunless %}</div></div>{% endunless %}
+        {% unless ancillaryEquipmentTest == blank %}<div class="form-row"><div class="form-label">Ancillary Equipment</div><div class="form-value"><span class="badge {% if ancillaryEquipmentTest == 'pass' %}pass{% else %}fail{% endif %}">{{ ancillaryEquipmentTest }}</span></div></div>{% endunless %}
+        {% unless ancillaryServicesTest == blank %}<div class="form-row"><div class="form-label">Grid / Ancillary Services</div><div class="form-value"><span class="badge {% if ancillaryServicesTest == 'pass' %}pass{% else %}fail{% endif %}">{{ ancillaryServicesTest }}</span>{% unless ancillaryServicesDetail == blank %} ({{ ancillaryServicesDetail }}){% endunless %}</div></div>{% endunless %}
+        {% unless revenueMeteringVerified == blank %}<div class="form-row"><div class="form-label">Revenue Metering</div><div class="form-value"><span class="badge {% if revenueMeteringVerified == 'pass' %}pass{% else %}fail{% endif %}">{{ revenueMeteringVerified }}</span></div></div>{% endunless %}
+        {% unless arcFlashAssessmentRef == blank %}<div class="form-row"><div class="form-label">Arc-Flash Assessment</div><div class="form-value">{{ arcFlashAssessmentRef }}</div></div>{% endunless %}
+    </div>
+</div>
+{% endunless %}
+{% if exportLimited %}{% unless g100ExportTestResult == blank %}
+<div class="section avoid-break">
+    <div class="section-title cyan">Export Limitation Test (G100)</div>
+    <div class="form-grid"><div class="form-row"><div class="form-label">Export-Limit Scheme</div><div class="form-value"><span class="badge {% if g100ExportTestResult == 'pass' %}pass{% else %}fail{% endif %}">{{ g100ExportTestResult }}</span> proven per G100</div></div></div>
+</div>
+{% endunless %}{% endif %}
+{% if batteryChemistry == 'lead-acid' or batteryChemistry == 'flow' %}{% unless wetChemicalCheckResult == blank %}
+<div class="section avoid-break">
+    <div class="section-title cyan">Wet-Chemical Check</div>
+    <div class="form-grid"><div class="form-row"><div class="form-label">Electrolyte / Hydrometer</div><div class="form-value"><span class="badge {% if wetChemicalCheckResult == 'pass' %}pass{% else %}fail{% endif %}">{{ wetChemicalCheckResult }}</span></div></div></div>
+</div>
+{% endunless %}{% endif %}
+
 <!-- Customer Handover -->
 <div class="section avoid-break">
     <div class="section-title cyan">Section M: Customer Handover</div>
@@ -447,11 +458,6 @@
     <div class="alert-box green" style="margin-bottom: 3px;">
         <div style="font-size: 7px; color: #166534; font-style: italic; line-height: 1.5;">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A4:2026, the IET Code of Practice for Electrical Energy Storage Systems (3rd Edition), MCS MIS 3012:2025, PAS 63100:2024 (where applicable), and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</div>
     </div>
-    {% unless batteryWarrantyYears == blank %}
-    <div class="form-grid" style="margin-bottom: 4px;">
-        <div class="form-row"><div class="form-label">Battery Warranty</div><div class="form-value">{{ batteryWarrantyYears }} years</div><div class="form-label">Inverter Warranty</div><div class="form-value">{{ inverterWarrantyYears }} years</div></div>
-    </div>
-    {% endunless %}
     {% unless nextInspectionDate == blank %}
     <div class="form-grid" style="margin-bottom: 4px;">
         <div class="form-row"><div class="form-label">Next Inspection</div><div class="form-value">{{ nextInspectionDate }} ({{ nextInspectionInterval }} months)</div></div>

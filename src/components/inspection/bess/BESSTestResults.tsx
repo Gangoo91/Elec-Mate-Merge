@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -7,15 +8,6 @@ import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 
 const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const pickerTrigger = 'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
-
-const SectionHeader = ({ title, badge }: { title: string; badge?: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">{title}
-      {badge && <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 px-2 py-0.5 rounded">{badge}</span>}
-    </h2>
-  </div>
-);
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
   <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
@@ -50,26 +42,24 @@ export default function BESSTestResults({ formData, onUpdate }: Props) {
   const chemGuidance = useMemo(() => getChemistryGuidance(formData.batteryChemistry), [formData.batteryChemistry, getChemistryGuidance]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
       {/* AC Test Results */}
       <div className="space-y-4">
         <SectionHeader title="AC Test Results" />
         <Sub title="Impedance" />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <Field label="Ze (Ω)" required><Input value={formData.ze} onChange={(e) => onUpdate('ze', e.target.value)} className={inputCn} placeholder="0.35" /></Field>
           <Field label="Zs (Ω)"><Input value={formData.zs} onChange={(e) => onUpdate('zs', e.target.value)} className={inputCn} placeholder="0.72" /></Field>
           <Field label="R1+R2 (Ω)"><Input value={formData.r1r2} onChange={(e) => onUpdate('r1r2', e.target.value)} className={inputCn} placeholder="0.37" /></Field>
-          <Field label="R2 (Ω)"><Input value={formData.r2} onChange={(e) => onUpdate('r2', e.target.value)} className={inputCn} placeholder="0.18" /></Field>
         </div>
         <Sub title="Insulation & Polarity" />
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <Field label="AC IR (MΩ)" required><Input value={formData.acInsulationResistance} onChange={(e) => onUpdate('acInsulationResistance', e.target.value)} className={inputCn} placeholder="≥1.0" /></Field>
           <Field label="Polarity">
             <MobileSelectPicker value={formData.acPolarity} onValueChange={(v) => onUpdate('acPolarity', v)}
               options={[{ value: 'correct', label: 'Correct' }, { value: 'incorrect', label: 'Incorrect' }]}
               placeholder="Select..." triggerClassName={pickerTrigger} />
           </Field>
-          <Field label="PSCC (kA)"><Input value={formData.pscc} onChange={(e) => onUpdate('pscc', e.target.value)} className={inputCn} /></Field>
         </div>
         <Sub title="RCD" />
         <div className="grid grid-cols-2 gap-3">
@@ -136,46 +126,37 @@ export default function BESSTestResults({ formData, onUpdate }: Props) {
         <Field label="Battery SoC at Commissioning (%)"><Input type="number" value={formData.batterySoCAtCommissioning} onChange={(e) => onUpdate('batterySoCAtCommissioning', e.target.value)} className={inputCn} placeholder="e.g. 85" /></Field>
       </div>
 
-      {/* Grid Protection Settings */}
+      {/* Grid Protection Settings — verified against inverter G98/G99 type-test */}
       <div className="space-y-4">
-        <SectionHeader title="Grid Protection Settings" badge="G98" />
-        <div className="rounded-lg p-2.5 bg-elec-yellow/5 border border-elec-yellow/15">
-          <p className="text-[11px] text-white">Pre-filled with EREC G98 Issue 5 defaults. Verify against inverter display.</p>
+        <SectionHeader title="Grid Protection Settings" />
+        <div className="flex items-center justify-between">
+          <Label className="text-white text-xs font-medium">
+            OV/UV/OF/UF & ROCOF verified against inverter type-test
+          </Label>
+          <div className="flex gap-1.5">
+            {[true, false].map((v) => (
+              <button
+                key={String(v)}
+                type="button"
+                onClick={() => onUpdate('gridProtectionVerified', v)}
+                className={cn(
+                  'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+                  formData.gridProtectionVerified === v
+                    ? v
+                      ? 'bg-green-500 text-white'
+                      : 'bg-red-500 text-white'
+                    : 'bg-white/[0.06] text-white border border-white/[0.08]'
+                )}
+              >
+                {v ? 'Yes' : 'No'}
+              </button>
+            ))}
+          </div>
         </div>
-        <Sub title="Over-voltage" />
-        <div className="grid grid-cols-4 gap-2">
-          <Field label="OV1 (V)"><Input value={formData.ovStage1Voltage} onChange={(e) => onUpdate('ovStage1Voltage', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.ovStage1Time} onChange={(e) => onUpdate('ovStage1Time', e.target.value)} className={inputCn} /></Field>
-          <Field label="OV2 (V)"><Input value={formData.ovStage2Voltage} onChange={(e) => onUpdate('ovStage2Voltage', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.ovStage2Time} onChange={(e) => onUpdate('ovStage2Time', e.target.value)} className={inputCn} /></Field>
-        </div>
-        <Sub title="Under-voltage" />
-        <div className="grid grid-cols-4 gap-2">
-          <Field label="UV1 (V)"><Input value={formData.uvStage1Voltage} onChange={(e) => onUpdate('uvStage1Voltage', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.uvStage1Time} onChange={(e) => onUpdate('uvStage1Time', e.target.value)} className={inputCn} /></Field>
-          <Field label="UV2 (V)"><Input value={formData.uvStage2Voltage} onChange={(e) => onUpdate('uvStage2Voltage', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.uvStage2Time} onChange={(e) => onUpdate('uvStage2Time', e.target.value)} className={inputCn} /></Field>
-        </div>
-        <Sub title="Over-frequency" />
-        <div className="grid grid-cols-4 gap-2">
-          <Field label="OF1 (Hz)"><Input value={formData.ofStage1Freq} onChange={(e) => onUpdate('ofStage1Freq', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.ofStage1Time} onChange={(e) => onUpdate('ofStage1Time', e.target.value)} className={inputCn} /></Field>
-          <Field label="OF2 (Hz)"><Input value={formData.ofStage2Freq} onChange={(e) => onUpdate('ofStage2Freq', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.ofStage2Time} onChange={(e) => onUpdate('ofStage2Time', e.target.value)} className={inputCn} /></Field>
-        </div>
-        <Sub title="Under-frequency" />
-        <div className="grid grid-cols-4 gap-2">
-          <Field label="UF1 (Hz)"><Input value={formData.ufStage1Freq} onChange={(e) => onUpdate('ufStage1Freq', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.ufStage1Time} onChange={(e) => onUpdate('ufStage1Time', e.target.value)} className={inputCn} /></Field>
-          <Field label="UF2 (Hz)"><Input value={formData.ufStage2Freq} onChange={(e) => onUpdate('ufStage2Freq', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.ufStage2Time} onChange={(e) => onUpdate('ufStage2Time', e.target.value)} className={inputCn} /></Field>
-        </div>
-        <Sub title="ROCOF & Reconnection" />
-        <div className="grid grid-cols-3 gap-2">
-          <Field label="Rate (Hz/s)"><Input value={formData.rocoFRate} onChange={(e) => onUpdate('rocoFRate', e.target.value)} className={inputCn} /></Field>
-          <Field label="Time (s)"><Input value={formData.rocoFTime} onChange={(e) => onUpdate('rocoFTime', e.target.value)} className={inputCn} /></Field>
-          <Field label="Reconnect (s)"><Input value={formData.reconnectionDelay} onChange={(e) => onUpdate('reconnectionDelay', e.target.value)} className={inputCn} /></Field>
-        </div>
+        <p className="text-[11px] text-white/60">
+          Trip settings are factory type-tested per EREC G98/G99 and shown on the inverter display —
+          confirmed correct, not re-configured on site.
+        </p>
       </div>
 
       {/* DNO Details */}
@@ -428,6 +409,42 @@ export default function BESSTestResults({ formData, onUpdate }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Commercial / Large-System Tests (MIS 3012 Part 3/4) — non-domestic only */}
+      {formData.installationType !== 'domestic' && (
+        <div className="space-y-4">
+          <SectionHeader title="Commercial / Large-System Tests" badge="MIS 3012" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <PassFailSelect label="Capacity test (BS EN 61427-1)" value={formData.capacityTestResult} onChange={(v) => onUpdate('capacityTestResult', v)} />
+            <Field label="Measured Capacity (kWh)"><Input value={formData.measuredCapacityKwh} onChange={(e) => onUpdate('measuredCapacityKwh', e.target.value)} className={inputCn} /></Field>
+            <PassFailSelect label="Ancillary equip (pumps/HVAC)" value={formData.ancillaryEquipmentTest} onChange={(v) => onUpdate('ancillaryEquipmentTest', v)} />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <PassFailSelect label="Grid / ancillary services" value={formData.ancillaryServicesTest} onChange={(v) => onUpdate('ancillaryServicesTest', v)} />
+            <PassFailSelect label="Revenue metering verified" value={formData.revenueMeteringVerified} onChange={(v) => onUpdate('revenueMeteringVerified', v)} />
+          </div>
+          {formData.ancillaryServicesTest && (
+            <Field label="Ancillary Services Detail (FFR/DFS etc.)"><Input value={formData.ancillaryServicesDetail} onChange={(e) => onUpdate('ancillaryServicesDetail', e.target.value)} className={inputCn} placeholder="Service type / DNO ref" /></Field>
+          )}
+          <Field label="Arc-Flash Assessment Ref (CoP App. E)"><Input value={formData.arcFlashAssessmentRef} onChange={(e) => onUpdate('arcFlashAssessmentRef', e.target.value)} className={inputCn} /></Field>
+        </div>
+      )}
+
+      {/* G100 export-limit test — when export-limited */}
+      {formData.exportLimited && (
+        <div className="space-y-4">
+          <SectionHeader title="Export Limitation Test (G100)" />
+          <PassFailSelect label="Export-limit scheme proven (G100)" value={formData.g100ExportTestResult} onChange={(v) => onUpdate('g100ExportTestResult', v)} />
+        </div>
+      )}
+
+      {/* Wet-chemical check — lead-acid / flow only */}
+      {(formData.batteryChemistry === 'lead-acid' || formData.batteryChemistry === 'flow') && (
+        <div className="space-y-4">
+          <SectionHeader title="Wet-Chemical Check" />
+          <PassFailSelect label="Electrolyte / hydrometer check" value={formData.wetChemicalCheckResult} onChange={(v) => onUpdate('wetChemicalCheckResult', v)} />
+        </div>
+      )}
     </div>
   );
 }

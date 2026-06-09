@@ -8,7 +8,7 @@
  *
  * BESS uses camelCase field names (not snake_case like PAT/EICR).
  * IET Code of Practice for EESS (3rd Ed) + MCS MIS 3012:2025
- * BS 7671:2018+A3:2024 + PAS 63100:2024
+ * BS 7671:2018+A4:2026 + PAS 63100:2024
  *
  * Deno-compatible — uses esm.sh for Zod import.
  */
@@ -25,10 +25,8 @@ export const bessPayloadSchema = z.object({
 
   // ── Client ────────────────────────────────────────────────────────────────
   clientName: z.string().default(''),
-  clientAddress: z.string().default(''),
   clientTelephone: z.string().default(''),
   clientEmail: z.string().default(''),
-  contactPerson: z.string().default(''),
 
   // ── Installation ──────────────────────────────────────────────────────────
   installationType: z.string().default('domestic'),
@@ -68,7 +66,6 @@ export const bessPayloadSchema = z.object({
   roundTripEfficiency: z.string().default(''),
   mcsBatteryProductCert: z.string().default(''),
   iec62619Compliant: z.boolean().default(true),
-  bmsFirmware: z.string().default(''),
 
   // ── Inverter ──────────────────────────────────────────────────────────────
   inverterManufacturer: z.string().default(''),
@@ -77,7 +74,6 @@ export const bessPayloadSchema = z.object({
   inverterRatedPower: z.string().default(''),
   inverterType: z.string().default(''),
   inverterPhases: z.string().default('single'),
-  inverterFirmware: z.string().default(''),
   mcsInverterProductCert: z.string().default(''),
 
   // ── System configuration ──────────────────────────────────────────────────
@@ -135,7 +131,6 @@ export const bessPayloadSchema = z.object({
   fireServiceInfoProvided: z.boolean().default(false),
 
   // ── PAS 63100 ─────────────────────────────────────────────────────────────
-  pas63100Applicable: z.boolean().default(true),
   notInSleepingRoom: z.boolean().default(false),
   notInEscapeRoute: z.boolean().default(false),
   notInLoftOrVoid: z.boolean().default(false),
@@ -158,13 +153,8 @@ export const bessPayloadSchema = z.object({
   eessClass: z.string().default(''),
 
   // ── Labelling ─────────────────────────────────────────────────────────────
-  labelAtOrigin: z.boolean().default(false),
-  labelAtMeteringPoint: z.boolean().default(false),
-  labelAtMainCU: z.boolean().default(false),
-  labelAtIsolationPoints: z.boolean().default(false),
-  batteryEnclosureLabel: z.boolean().default(false),
-  dcIsolationLabelled: z.boolean().default(false),
-  emergencyProcedureDisplayed: z.boolean().default(false),
+  allLabelsFitted: z.boolean().default(false),
+  labelExceptions: z.string().default(''),
 
   // ── AFDD ──────────────────────────────────────────────────────────────────
   afddInstalled: z.boolean().default(false),
@@ -192,10 +182,8 @@ export const bessPayloadSchema = z.object({
   ze: z.string().default(''),
   zs: z.string().default(''),
   r1r2: z.string().default(''),
-  r2: z.string().default(''),
   acInsulationResistance: z.string().default(''),
   acPolarity: z.string().default(''),
-  pscc: z.string().default(''),
   rcdTripTimeIdn: z.string().default(''),
   rcdTripTime5xIdn: z.string().default(''),
 
@@ -208,25 +196,7 @@ export const bessPayloadSchema = z.object({
   batterySoCAtCommissioning: z.string().default(''),
 
   // ── Grid protection (G98/G99 defaults) ────────────────────────────────────
-  ovStage1Voltage: z.string().default('264'),
-  ovStage1Time: z.string().default('1.0'),
-  ovStage2Voltage: z.string().default('276'),
-  ovStage2Time: z.string().default('0.5'),
-  uvStage1Voltage: z.string().default('207'),
-  uvStage1Time: z.string().default('1.5'),
-  uvStage2Voltage: z.string().default('196'),
-  uvStage2Time: z.string().default('0.5'),
-  ofStage1Freq: z.string().default('50.4'),
-  ofStage1Time: z.string().default('0.5'),
-  ofStage2Freq: z.string().default('52'),
-  ofStage2Time: z.string().default('0.5'),
-  ufStage1Freq: z.string().default('47.5'),
-  ufStage1Time: z.string().default('0.5'),
-  ufStage2Freq: z.string().default('47'),
-  ufStage2Time: z.string().default('0.5'),
-  rocoFRate: z.string().default('1'),
-  rocoFTime: z.string().default('0.5'),
-  reconnectionDelay: z.string().default('60'),
+  gridProtectionVerified: z.boolean().default(false),
 
   // ── DNO ───────────────────────────────────────────────────────────────────
   gridConnectionType: z.string().default(''),
@@ -248,6 +218,17 @@ export const bessPayloadSchema = z.object({
   manufacturerCommRef: z.string().default(''),
   firmwaresCurrent: z.boolean().default(false),
 
+  // Commercial / large-system tests (MIS 3012 Part 3/4 — conditionally shown)
+  capacityTestResult: z.string().default(''),
+  measuredCapacityKwh: z.string().default(''),
+  ancillaryServicesTest: z.string().default(''),
+  ancillaryServicesDetail: z.string().default(''),
+  revenueMeteringVerified: z.string().default(''),
+  ancillaryEquipmentTest: z.string().default(''),
+  arcFlashAssessmentRef: z.string().default(''),
+  g100ExportTestResult: z.string().default(''),
+  wetChemicalCheckResult: z.string().default(''),
+
   // ── Test instrument ───────────────────────────────────────────────────────
   testInstrumentMake: z.string().default(''),
   testInstrumentModel: z.string().default(''),
@@ -255,8 +236,6 @@ export const bessPayloadSchema = z.object({
   testInstrumentCalDate: z.string().default(''),
 
   // ── Warranty ──────────────────────────────────────────────────────────────
-  batteryWarrantyYears: z.string().default(''),
-  inverterWarrantyYears: z.string().default(''),
 
   // ── Customer handover ─────────────────────────────────────────────────────
   operatingInstructionsProvided: z.boolean().default(false),

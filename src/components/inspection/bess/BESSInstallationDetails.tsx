@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input';
+import { SectionHeader } from "./BESSSectionHeader";
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
@@ -9,13 +10,6 @@ import CertificateClientSection from '@/components/inspection/shared/Certificate
 const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const checkboxCn = 'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
 const pickerTrigger = 'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
-
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
   <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
@@ -39,7 +33,7 @@ export default function BESSInstallationDetails({ formData, onUpdate }: Props) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
       {/* Client Details */}
       <div className="space-y-4">
         <SectionHeader title="Client Details" />
@@ -50,9 +44,7 @@ export default function BESSInstallationDetails({ formData, onUpdate }: Props) {
         </div>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Email"><Input type="email" value={formData.clientEmail} onChange={(e) => onUpdate('clientEmail', e.target.value)} className={inputCn} /></Field>
-          <Field label="Contact Person"><Input value={formData.contactPerson} onChange={(e) => onUpdate('contactPerson', e.target.value)} className={inputCn} /></Field>
         </div>
-        <Field label="Client Address"><Input value={formData.clientAddress} onChange={(e) => onUpdate('clientAddress', e.target.value)} className={inputCn} /></Field>
       </div>
 
       {/* Installation Site */}

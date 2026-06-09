@@ -334,10 +334,7 @@ const {
       {activeConflict && (
         <ConflictResolutionDialog
           conflict={activeConflict}
-          onResolve={(resolution) => {
-            if (resolution === 'local') resolveConflict('local');
-            else if (resolution === 'remote') { resolveConflict('remote'); }
-          }}
+          onResolve={resolveConflict}
         />
       )}
 

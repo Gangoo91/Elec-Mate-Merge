@@ -34,10 +34,8 @@ export interface BESSFormData {
 
   // Client details
   clientName: string;
-  clientAddress: string;
   clientTelephone: string;
   clientEmail: string;
-  contactPerson: string;
 
   // Installation
   installationType: 'domestic' | 'commercial' | 'industrial';
@@ -85,7 +83,6 @@ export interface BESSFormData {
   inverterRatedPower: string; // kW
   inverterType: InverterType | '';
   inverterPhases: 'single' | 'three';
-  inverterFirmware: string;
   mcsInverterProductCert: string;
 
   // System configuration
@@ -143,7 +140,6 @@ export interface BESSFormData {
   fireServiceInfoProvided: boolean;
 
   // PAS 63100:2024 fire safety (domestic)
-  pas63100Applicable: boolean;
   notInSleepingRoom: boolean;
   notInEscapeRoute: boolean;
   notInLoftOrVoid: boolean;
@@ -165,14 +161,9 @@ export interface BESSFormData {
   // EESS classification (MCS MIS 3012:2025)
   eessClass: EESSClass;
 
-  // Labelling (Reg 514.15.1)
-  labelAtOrigin: boolean;
-  labelAtMeteringPoint: boolean;
-  labelAtMainCU: boolean;
-  labelAtIsolationPoints: boolean;
-  batteryEnclosureLabel: boolean;
-  dcIsolationLabelled: boolean;
-  emergencyProcedureDisplayed: boolean;
+  // Labelling (Reg 514.15) — single "all fitted" flag + any exceptions
+  allLabelsFitted: boolean;
+  labelExceptions: string;
 
   // AFDD
   afddInstalled: boolean;
@@ -193,10 +184,8 @@ export interface BESSFormData {
   ze: string;
   zs: string;
   r1r2: string;
-  r2: string;
   acInsulationResistance: string; // MΩ
   acPolarity: 'correct' | 'incorrect' | '';
-  pscc: string; // kA
   rcdTripTimeIdn: string; // ms
   rcdTripTime5xIdn: string; // ms
 
@@ -208,26 +197,10 @@ export interface BESSFormData {
   dcPolarityVerified: boolean;
   batterySoCAtCommissioning: string; // %
 
-  // Grid protection settings (G98 defaults pre-filled)
-  ovStage1Voltage: string;
-  ovStage1Time: string;
-  ovStage2Voltage: string;
-  ovStage2Time: string;
-  uvStage1Voltage: string;
-  uvStage1Time: string;
-  uvStage2Voltage: string;
-  uvStage2Time: string;
-  ofStage1Freq: string;
-  ofStage1Time: string;
-  ofStage2Freq: string;
-  ofStage2Time: string;
-  ufStage1Freq: string;
-  ufStage1Time: string;
-  ufStage2Freq: string;
-  ufStage2Time: string;
-  rocoFRate: string;
-  rocoFTime: string;
-  reconnectionDelay: string; // s
+  // Grid protection — OV/UV/OF/UF & ROCOF trip settings are factory type-tested
+  // per EREC G98/G99 (shown on the inverter display); the installer verifies, not
+  // re-configures, so this is a single verified flag rather than 19 typed values.
+  gridProtectionVerified: boolean;
 
   // DNO
   gridConnectionType: 'G98' | 'G99' | '';
@@ -255,6 +228,18 @@ export interface BESSFormData {
   manufacturerCommRef: string;
   firmwaresCurrent: boolean;
 
+  // Commercial / large-system tests (MIS 3012 Part 3/4) — only surfaced for
+  // commercial/industrial installs or specific conditions; domestic stays lean.
+  capacityTestResult: PassFail; // BS EN 61427-1 battery capacity test
+  measuredCapacityKwh: string;
+  ancillaryServicesTest: PassFail; // grid services (FFR/DFS/DC etc.)
+  ancillaryServicesDetail: string;
+  revenueMeteringVerified: PassFail;
+  ancillaryEquipmentTest: PassFail; // pumps, HVAC, containerised plant
+  arcFlashAssessmentRef: string; // IET CoP for EESS, Appendix E
+  g100ExportTestResult: PassFail; // shown when exportLimited
+  wetChemicalCheckResult: PassFail; // shown when chemistry = lead-acid / flow
+
   // Test instrument
   testInstrumentMake: string;
   testInstrumentModel: string;
@@ -267,11 +252,8 @@ export interface BESSFormData {
   segRegistered: boolean;
 
   // Warranty
-  batteryWarrantyYears: string;
-  inverterWarrantyYears: string;
 
   // BMS
-  bmsFirmware: string;
 
   // Customer handover
   operatingInstructionsProvided: boolean;
@@ -299,39 +281,14 @@ export interface BESSFormData {
   status: 'draft' | 'in-progress' | 'completed';
 }
 
-// G98 default protection settings
-const G98_DEFAULTS = {
-  ovStage1Voltage: '264',
-  ovStage1Time: '1.0',
-  ovStage2Voltage: '276',
-  ovStage2Time: '0.5',
-  uvStage1Voltage: '207',
-  uvStage1Time: '1.5',
-  uvStage2Voltage: '196',
-  uvStage2Time: '0.5',
-  ofStage1Freq: '50.4',
-  ofStage1Time: '0.5',
-  ofStage2Freq: '52',
-  ofStage2Time: '0.5',
-  ufStage1Freq: '47.5',
-  ufStage1Time: '0.5',
-  ufStage2Freq: '47',
-  ufStage2Time: '0.5',
-  rocoFRate: '1',
-  rocoFTime: '0.5',
-  reconnectionDelay: '60',
-};
-
 export const getDefaultBESSFormData = (): BESSFormData => ({
   certificateNumber: '',
   installationDate: new Date().toISOString().split('T')[0],
   commissioningDate: new Date().toISOString().split('T')[0],
 
   clientName: '',
-  clientAddress: '',
   clientTelephone: '',
   clientEmail: '',
-  contactPerson: '',
 
   installationType: 'domestic',
   installationAddress: '',
@@ -374,7 +331,6 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   inverterRatedPower: '',
   inverterType: '',
   inverterPhases: 'single',
-  inverterFirmware: '',
   mcsInverterProductCert: '',
 
   couplingType: '',
@@ -427,7 +383,6 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   fireServiceInfoProvided: false,
 
   // PAS 63100
-  pas63100Applicable: true,
   notInSleepingRoom: false,
   notInEscapeRoute: false,
   notInLoftOrVoid: false,
@@ -450,13 +405,8 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   eessClass: '',
 
   // Labelling
-  labelAtOrigin: false,
-  labelAtMeteringPoint: false,
-  labelAtMainCU: false,
-  labelAtIsolationPoints: false,
-  batteryEnclosureLabel: false,
-  dcIsolationLabelled: false,
-  emergencyProcedureDisplayed: false,
+  allLabelsFitted: false,
+  labelExceptions: '',
 
   // AFDD
   afddInstalled: false,
@@ -476,10 +426,8 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   ze: '',
   zs: '',
   r1r2: '',
-  r2: '',
   acInsulationResistance: '',
   acPolarity: '',
-  pscc: '',
   rcdTripTimeIdn: '',
   rcdTripTime5xIdn: '',
 
@@ -490,8 +438,7 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   dcPolarityVerified: false,
   batterySoCAtCommissioning: '',
 
-  // G98 defaults pre-filled
-  ...G98_DEFAULTS,
+  gridProtectionVerified: false,
 
   gridConnectionType: '',
   dnoName: '',
@@ -516,6 +463,16 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   manufacturerCommRef: '',
   firmwaresCurrent: false,
 
+  capacityTestResult: '',
+  measuredCapacityKwh: '',
+  ancillaryServicesTest: '',
+  ancillaryServicesDetail: '',
+  revenueMeteringVerified: '',
+  ancillaryEquipmentTest: '',
+  arcFlashAssessmentRef: '',
+  g100ExportTestResult: '',
+  wetChemicalCheckResult: '',
+
   testInstrumentMake: '',
   testInstrumentModel: '',
   testInstrumentSerial: '',
@@ -525,10 +482,7 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   smartMeterSerial: '',
   segRegistered: false,
 
-  batteryWarrantyYears: '',
-  inverterWarrantyYears: '',
 
-  bmsFirmware: '',
 
   operatingInstructionsProvided: false,
   emergencyShutdownExplained: false,

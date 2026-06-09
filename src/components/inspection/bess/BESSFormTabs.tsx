@@ -42,11 +42,11 @@ export default function BESSFormTabs({
   };
 
   const smartTabs: SmartTab[] = [
-    { value: 'installation', label: 'Installation', shortLabel: 'Install', content: (<div className="space-y-6"><BESSInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'system-design', label: 'System Design', shortLabel: 'Design', content: (<div className="space-y-6"><BESSSystemDesign formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'electrical', label: 'Electrical & Safety', shortLabel: 'Electrical', content: (<div className="space-y-6"><BESSElectricalSafety formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'testing', label: 'Test Results', shortLabel: 'Testing', content: (<div className="space-y-6"><BESSTestResults formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'declarations', label: 'Declarations', shortLabel: 'Sign', content: (<div className="space-y-6"><BESSDeclarations formData={formData} onUpdate={onUpdate} reportId={reportId} onSaveFirst={onSaveFirst} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'installation', label: 'Installation', shortLabel: 'Install', content: (<div className="space-y-6 mx-auto w-full lg:max-w-6xl xl:max-w-7xl sm:px-4"><BESSInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'system-design', label: 'System Design', shortLabel: 'Design', content: (<div className="space-y-6 mx-auto w-full lg:max-w-6xl xl:max-w-7xl sm:px-4"><BESSSystemDesign formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'electrical', label: 'Electrical & Safety', shortLabel: 'Electrical', content: (<div className="space-y-6 mx-auto w-full lg:max-w-6xl xl:max-w-7xl sm:px-4"><BESSElectricalSafety formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'testing', label: 'Test Results', shortLabel: 'Testing', content: (<div className="space-y-6 mx-auto w-full lg:max-w-6xl xl:max-w-7xl sm:px-4"><BESSTestResults formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'declarations', label: 'Declarations', shortLabel: 'Sign', content: (<div className="space-y-6 mx-auto w-full lg:max-w-6xl xl:max-w-7xl sm:px-4"><BESSDeclarations formData={formData} onUpdate={onUpdate} reportId={reportId} onSaveFirst={onSaveFirst} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
   ];
 
   return (

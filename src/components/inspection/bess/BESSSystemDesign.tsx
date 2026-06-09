@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -10,13 +11,6 @@ import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const selectTriggerCn = 'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
 const checkboxCn = 'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
-
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
   <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
@@ -41,49 +35,64 @@ interface BatteryPreset {
   maxDischarge: string;
   modules: string;
   efficiency: string;
+  // All-in-One units (battery + inverter/PCE in one enclosure = EESS Class 1):
+  // selecting the preset also fills the inverter block. Omit for modular systems
+  // where the installer pairs a separate inverter.
+  integrated?: boolean;
+  inverterPower?: string; // kW AC — rated output of the built-in inverter
+  inverterType?: 'hybrid' | 'ac-coupled' | 'dc-coupled';
+  coupling?: 'AC' | 'DC' | 'hybrid';
 }
 
+// Specs verified against manufacturer datasheets (June 2026). AIO units (battery +
+// inverter in one enclosure = EESS Class 1) carry integrated/inverter fields.
 const BATTERY_PRESETS: BatteryPreset[] = [
   // Tesla
-  { label: 'Tesla Powerwall 3', manufacturer: 'Tesla', model: 'Powerwall 3', chemistry: 'LFP', capacity: '13.5', voltage: '51.2', maxCharge: '11.5', maxDischarge: '11.5', modules: '1', efficiency: '97.5' },
-  { label: 'Tesla Powerwall 2', manufacturer: 'Tesla', model: 'Powerwall 2', chemistry: 'NMC', capacity: '13.5', voltage: '50', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '90' },
+  { label: 'Tesla Powerwall 3', manufacturer: 'Tesla', model: 'Powerwall 3', chemistry: 'LFP', capacity: '13.5', voltage: '51.2', maxCharge: '5.0', maxDischarge: '11.5', modules: '1', efficiency: '97.5', integrated: true, inverterPower: '11.04', inverterType: 'hybrid', coupling: 'hybrid' },
+  { label: 'Tesla Powerwall 2', manufacturer: 'Tesla', model: 'Powerwall 2', chemistry: 'NMC', capacity: '13.5', voltage: '50', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '90', integrated: true, inverterPower: '5.0', inverterType: 'ac-coupled', coupling: 'AC' },
   // GivEnergy
-  { label: 'GivEnergy 9.5kWh', manufacturer: 'GivEnergy', model: 'Giv-BAT-9.5', chemistry: 'LFP', capacity: '9.5', voltage: '51.2', maxCharge: '3.6', maxDischarge: '3.6', modules: '1', efficiency: '95.6' },
-  { label: 'GivEnergy AIO 13.5kWh', manufacturer: 'GivEnergy', model: 'AIO-13.5', chemistry: 'LFP', capacity: '13.5', voltage: '51.2', maxCharge: '6.0', maxDischarge: '6.0', modules: '1', efficiency: '95.6' },
-  { label: 'GivEnergy 2.6kWh', manufacturer: 'GivEnergy', model: 'Giv-BAT-2.6', chemistry: 'LFP', capacity: '2.6', voltage: '51.2', maxCharge: '2.6', maxDischarge: '2.6', modules: '1', efficiency: '95.6' },
+  { label: 'GivEnergy All-in-One 13.5kWh', manufacturer: 'GivEnergy', model: 'GIV-AIO-13.5-AC', chemistry: 'LFP', capacity: '13.5', voltage: '51.2', maxCharge: '6.0', maxDischarge: '6.0', modules: '1', efficiency: '97.6', integrated: true, inverterPower: '6.0', inverterType: 'ac-coupled', coupling: 'AC' },
+  { label: 'GivEnergy Giv-Bat 9.5 (Gen 3)', manufacturer: 'GivEnergy', model: 'Giv-Bat 9.5 (Gen 3)', chemistry: 'LFP', capacity: '9.5', voltage: '51.2', maxCharge: '5.1', maxDischarge: '5.1', modules: '1', efficiency: '95.6' },
+  { label: 'GivEnergy Giv-Bat 2.6', manufacturer: 'GivEnergy', model: 'Giv-Bat 2.6', chemistry: 'LFP', capacity: '2.6', voltage: '51.2', maxCharge: '1.5', maxDischarge: '1.5', modules: '1', efficiency: '95.6' },
+  // Sigenergy
+  { label: 'Sigenergy SigenStor 8kWh', manufacturer: 'Sigenergy', model: 'SigenStor (BAT-8.0)', chemistry: 'LFP', capacity: '8.06', voltage: '', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '97.5', integrated: true, inverterPower: '5.0', inverterType: 'hybrid', coupling: 'hybrid' },
   // Huawei
-  { label: 'Huawei LUNA2000 5kWh', manufacturer: 'Huawei', model: 'LUNA2000-5-S0', chemistry: 'LFP', capacity: '5.0', voltage: '51.2', maxCharge: '2.5', maxDischarge: '2.5', modules: '1', efficiency: '97.0' },
-  { label: 'Huawei LUNA2000 10kWh', manufacturer: 'Huawei', model: 'LUNA2000-10-S0', chemistry: 'LFP', capacity: '10.0', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '2', efficiency: '97.0' },
-  { label: 'Huawei LUNA2000 15kWh', manufacturer: 'Huawei', model: 'LUNA2000-15-S0', chemistry: 'LFP', capacity: '15.0', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '3', efficiency: '97.0' },
-  // Fox ESS
-  { label: 'Fox ESS ECS4100 8.2kWh', manufacturer: 'Fox ESS', model: 'ECS4100-H2', chemistry: 'LFP', capacity: '8.2', voltage: '51.2', maxCharge: '4.1', maxDischarge: '4.1', modules: '1', efficiency: '95.0' },
-  { label: 'Fox ESS ECS2900 5.76kWh', manufacturer: 'Fox ESS', model: 'ECS2900-H2', chemistry: 'LFP', capacity: '5.76', voltage: '51.2', maxCharge: '2.9', maxDischarge: '2.9', modules: '1', efficiency: '95.0' },
-  // BYD
-  { label: 'BYD HVS 5.1kWh', manufacturer: 'BYD', model: 'HVS 5.1', chemistry: 'LFP', capacity: '5.1', voltage: '204.8', maxCharge: '5.1', maxDischarge: '5.1', modules: '2', efficiency: '95.3' },
-  { label: 'BYD HVM 8.3kWh', manufacturer: 'BYD', model: 'HVM 8.3', chemistry: 'LFP', capacity: '8.3', voltage: '204.8', maxCharge: '8.3', maxDischarge: '8.3', modules: '3', efficiency: '95.3' },
-  { label: 'BYD HVS 10.2kWh', manufacturer: 'BYD', model: 'HVS 10.2', chemistry: 'LFP', capacity: '10.2', voltage: '409.6', maxCharge: '10.2', maxDischarge: '10.2', modules: '4', efficiency: '95.3' },
+  { label: 'Huawei LUNA2000 5kWh', manufacturer: 'Huawei', model: 'LUNA2000-5-S0', chemistry: 'LFP', capacity: '5.0', voltage: '450', maxCharge: '2.5', maxDischarge: '2.5', modules: '1', efficiency: '97.0' },
+  { label: 'Huawei LUNA2000 10kWh', manufacturer: 'Huawei', model: 'LUNA2000-10-S0', chemistry: 'LFP', capacity: '10.0', voltage: '450', maxCharge: '5.0', maxDischarge: '5.0', modules: '2', efficiency: '97.0' },
+  { label: 'Huawei LUNA2000 15kWh', manufacturer: 'Huawei', model: 'LUNA2000-15-S0', chemistry: 'LFP', capacity: '15.0', voltage: '450', maxCharge: '5.0', maxDischarge: '5.0', modules: '3', efficiency: '97.0' },
+  // Fox ESS (ECS HV stack — 2 modules minimum)
+  { label: 'Fox ESS ECS4100 8.1kWh', manufacturer: 'Fox ESS', model: 'ECS4100-H2', chemistry: 'LFP', capacity: '4.03', voltage: '115.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '2', efficiency: '95.0' },
+  { label: 'Fox ESS ECS2900 5.76kWh', manufacturer: 'Fox ESS', model: 'ECS2900-H2', chemistry: 'LFP', capacity: '2.88', voltage: '115.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '2', efficiency: '95.0' },
+  // BYD Battery-Box Premium
+  { label: 'BYD HVS 5.1kWh', manufacturer: 'BYD', model: 'Battery-Box Premium HVS 5.1', chemistry: 'LFP', capacity: '5.12', voltage: '204', maxCharge: '5.1', maxDischarge: '5.1', modules: '2', efficiency: '95.3' },
+  { label: 'BYD HVM 8.3kWh', manufacturer: 'BYD', model: 'Battery-Box Premium HVM 8.3', chemistry: 'LFP', capacity: '8.28', voltage: '153.6', maxCharge: '8.3', maxDischarge: '8.3', modules: '3', efficiency: '95.3' },
+  { label: 'BYD HVS 10.2kWh', manufacturer: 'BYD', model: 'Battery-Box Premium HVS 10.2', chemistry: 'LFP', capacity: '10.24', voltage: '409', maxCharge: '10.2', maxDischarge: '10.2', modules: '4', efficiency: '95.3' },
   // Pylontech
-  { label: 'Pylontech US5000 4.8kWh', manufacturer: 'Pylontech', model: 'US5000', chemistry: 'LFP', capacity: '4.8', voltage: '48', maxCharge: '2.4', maxDischarge: '2.4', modules: '1', efficiency: '95.0' },
-  { label: 'Pylontech Force-H2 7.1kWh', manufacturer: 'Pylontech', model: 'Force-H2', chemistry: 'LFP', capacity: '7.1', voltage: '192', maxCharge: '3.55', maxDischarge: '3.55', modules: '1', efficiency: '95.0' },
+  { label: 'Pylontech US5000 4.8kWh', manufacturer: 'Pylontech', model: 'US5000', chemistry: 'LFP', capacity: '4.8', voltage: '48', maxCharge: '4.8', maxDischarge: '4.8', modules: '1', efficiency: '95.0' },
+  { label: 'Pylontech Force-H2 7.1kWh', manufacturer: 'Pylontech', model: 'Force-H2', chemistry: 'LFP', capacity: '3.55', voltage: '192', maxCharge: '3.55', maxDischarge: '3.55', modules: '2', efficiency: '96.0' },
   // SolarEdge
-  { label: 'SolarEdge Home 9.7kWh', manufacturer: 'SolarEdge', model: 'Home Battery 9.7', chemistry: 'LFP', capacity: '9.7', voltage: '400', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '94.5' },
+  { label: 'SolarEdge Home Battery 48V 4.6kWh', manufacturer: 'SolarEdge', model: 'Home Battery 48V (BAT-05K48)', chemistry: 'LFP', capacity: '4.6', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '94.5' },
   // Enphase
-  { label: 'Enphase IQ 5P 5kWh', manufacturer: 'Enphase', model: 'IQ Battery 5P', chemistry: 'LFP', capacity: '5.0', voltage: '48', maxCharge: '3.84', maxDischarge: '3.84', modules: '1', efficiency: '96.0' },
-  { label: 'Enphase IQ 10T 10.5kWh', manufacturer: 'Enphase', model: 'IQ Battery 10T', chemistry: 'LFP', capacity: '10.5', voltage: '48', maxCharge: '5.76', maxDischarge: '5.76', modules: '1', efficiency: '96.0' },
+  { label: 'Enphase IQ 5P 5kWh', manufacturer: 'Enphase', model: 'IQ Battery 5P', chemistry: 'LFP', capacity: '5.0', voltage: '76.8', maxCharge: '3.84', maxDischarge: '3.84', modules: '1', efficiency: '90.0', integrated: true, inverterPower: '3.84', inverterType: 'ac-coupled', coupling: 'AC' },
+  { label: 'Enphase IQ Battery 10C', manufacturer: 'Enphase', model: 'IQ Battery 10C', chemistry: 'LFP', capacity: '10.0', voltage: '76.8', maxCharge: '7.08', maxDischarge: '7.08', modules: '1', efficiency: '90.0', integrated: true, inverterPower: '7.08', inverterType: 'ac-coupled', coupling: 'AC' },
   // SolaX
-  { label: 'SolaX T-BAT 5.8kWh', manufacturer: 'SolaX', model: 'T-BAT-SYS-5.8-HV', chemistry: 'LFP', capacity: '5.8', voltage: '172.8', maxCharge: '3.0', maxDischarge: '3.0', modules: '1', efficiency: '95.0' },
+  { label: 'SolaX T-BAT 5.8kWh', manufacturer: 'SolaX', model: 'T-BAT-SYS-HV-5.8', chemistry: 'LFP', capacity: '5.8', voltage: '115.2', maxCharge: '4.0', maxDischarge: '4.0', modules: '1', efficiency: '95.0' },
   // Sunsynk
-  { label: 'Sunsynk 5.32kWh', manufacturer: 'Sunsynk', model: 'BESS-5.32kWh', chemistry: 'LFP', capacity: '5.32', voltage: '51.2', maxCharge: '2.66', maxDischarge: '2.66', modules: '1', efficiency: '95.0' },
+  { label: 'Sunsynk L5.3 5.32kWh', manufacturer: 'Sunsynk', model: 'L5.3 (SUN-BATT-5.32)', chemistry: 'LFP', capacity: '5.32', voltage: '51.2', maxCharge: '5.1', maxDischarge: '5.1', modules: '1', efficiency: '95.0' },
   // Growatt
-  { label: 'Growatt APX 6.1kWh', manufacturer: 'Growatt', model: 'APX-6.1-HV', chemistry: 'LFP', capacity: '6.1', voltage: '192', maxCharge: '3.0', maxDischarge: '3.0', modules: '1', efficiency: '95.0' },
-  // AlphaESS
-  { label: 'AlphaESS SMILE5 5.7kWh', manufacturer: 'AlphaESS', model: 'SMILE5', chemistry: 'LFP', capacity: '5.7', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '95.0' },
+  { label: 'Growatt APX 5.0kWh', manufacturer: 'Growatt', model: 'APX 5.0P-B1', chemistry: 'LFP', capacity: '5.0', voltage: '385', maxCharge: '7.5', maxDischarge: '7.5', modules: '1', efficiency: '95.0' },
+  // AlphaESS (inverter + battery are separate enclosures — not AIO)
+  { label: 'AlphaESS SMILE-BAT 5.7kWh', manufacturer: 'AlphaESS', model: 'SMILE-BAT-5.7', chemistry: 'LFP', capacity: '5.7', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '95.0' },
   // Sofar
-  { label: 'Sofar Amass GTX 5kWh', manufacturer: 'Sofar', model: 'Amass GTX 5000', chemistry: 'LFP', capacity: '5.0', voltage: '51.2', maxCharge: '2.5', maxDischarge: '2.5', modules: '1', efficiency: '95.0' },
+  { label: 'Sofar AMASS GTX3000 10kWh', manufacturer: 'Sofar', model: 'AMASS GTX3000-H', chemistry: 'LFP', capacity: '2.5', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '4', efficiency: '95.0' },
   // Victron
-  { label: 'Victron Lynx 5.12kWh', manufacturer: 'Victron', model: 'Lynx Smart BMS 5.12', chemistry: 'LFP', capacity: '5.12', voltage: '51.2', maxCharge: '2.56', maxDischarge: '2.56', modules: '1', efficiency: '95.0' },
-  // Solis
-  { label: 'Solis 6.4kWh', manufacturer: 'Solis', model: 'AES-LV-6.4K', chemistry: 'LFP', capacity: '6.4', voltage: '51.2', maxCharge: '3.2', maxDischarge: '3.2', modules: '1', efficiency: '95.0' },
+  { label: 'Victron Lithium NG 5.12kWh', manufacturer: 'Victron', model: 'Lithium NG 51.2V/100Ah', chemistry: 'LFP', capacity: '5.12', voltage: '51.2', maxCharge: '5.1', maxDischarge: '5.1', modules: '1', efficiency: '95.0' },
+  // myenergi (UK)
+  { label: 'myenergi libbi 5kWh', manufacturer: 'myenergi', model: 'libbi', chemistry: 'LFP', capacity: '5.12', voltage: '51.2', maxCharge: '5.0', maxDischarge: '5.0', modules: '1', efficiency: '95.0', integrated: true, inverterPower: '5.0', inverterType: 'hybrid', coupling: 'hybrid' },
+  // Puredrive (UK)
+  { label: 'Puredrive PureStorage II 5kWh', manufacturer: 'Puredrive', model: 'PureStorage II (DC 5kWh)', chemistry: 'LFP', capacity: '5.0', voltage: '51.2', maxCharge: '5.1', maxDischarge: '5.1', modules: '1', efficiency: '95.0' },
+  // Solis (IntelliHome — launched 2026; "AES-LV" did not exist)
+  { label: 'Solis IntelliHome 5kWh', manufacturer: 'Solis', model: 'IntelliHome-5kWh-OD', chemistry: 'LFP', capacity: '5.1', voltage: '51.2', maxCharge: '2.56', maxDischarge: '2.56', modules: '1', efficiency: '95.0' },
 ];
 
 interface Props { formData: any; onUpdate: (field: string, value: any) => void }
@@ -116,6 +125,17 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
     onUpdate('roundTripEfficiency', preset.efficiency);
     onUpdate('depthOfDischarge', '100');
     onUpdate('configuration', parseInt(preset.modules) > 1 ? 'parallel' : 'single');
+
+    // All-in-One units: the inverter (PCE) is the same unit — fill it too and set
+    // EESS Class 1 (battery + BMS + PCE in one manufacturer enclosure, MIS 3012).
+    if (preset.integrated) {
+      onUpdate('inverterManufacturer', preset.manufacturer);
+      onUpdate('inverterModel', preset.model);
+      onUpdate('inverterRatedPower', preset.inverterPower || '');
+      onUpdate('inverterType', preset.inverterType || 'hybrid');
+      onUpdate('couplingType', preset.coupling || 'hybrid');
+      onUpdate('eessClass', '1');
+    }
   }, [onUpdate]);
 
   // Total capacity badge
@@ -130,7 +150,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
   const isPresetActive = (p: BatteryPreset) => formData.batteryManufacturer === p.manufacturer && formData.batteryModel === p.model;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
       {/* Quick-fill presets */}
       <div className="space-y-3">
         <SectionHeader title="Quick Fill — Popular Systems" />
@@ -245,7 +265,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* Performance */}
         <div className="space-y-3">
           <Sub title="Performance" />
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <Field label="Configuration">
               <MobileSelectPicker
                 value={formData.configuration || autoConfig}
@@ -269,7 +289,6 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
           <Sub title="Compliance" />
           <div className="grid grid-cols-2 gap-3">
             <Field label="MCS Product Cert"><Input value={formData.mcsBatteryProductCert} onChange={(e) => onUpdate('mcsBatteryProductCert', e.target.value)} className={inputCn} /></Field>
-            <Field label="BMS Firmware"><Input value={formData.bmsFirmware} onChange={(e) => onUpdate('bmsFirmware', e.target.value)} className={inputCn} placeholder="e.g. v3.2.1" /></Field>
           </div>
           <div className="flex items-center gap-3">
             <Checkbox checked={formData.iec62619Compliant} onCheckedChange={(v) => onUpdate('iec62619Compliant', v)} className={checkboxCn} />
@@ -306,7 +325,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* Inverter Config */}
         <div className="space-y-3">
           <Sub title="Configuration" />
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <Field label="Type" required>
               <MobileSelectPicker
                 value={formData.inverterType}
@@ -332,7 +351,6 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
                 triggerClassName={selectTriggerCn}
               />
             </Field>
-            <Field label="Firmware"><Input value={formData.inverterFirmware} onChange={(e) => onUpdate('inverterFirmware', e.target.value)} className={inputCn} /></Field>
           </div>
           <Field label="MCS Product Cert No."><Input value={formData.mcsInverterProductCert} onChange={(e) => onUpdate('mcsInverterProductCert', e.target.value)} className={inputCn} /></Field>
         </div>

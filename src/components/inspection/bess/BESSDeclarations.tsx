@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,13 +12,6 @@ import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 
 const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const textareaCn = 'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
-
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div><Label className="text-white text-xs mb-1.5 block">{label}</Label>{children}</div>
@@ -72,7 +66,7 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
   }, [pendingFile, reportId, uploadPhoto]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
       {/* Customer Handover */}
       <div className="space-y-4">
         <SectionHeader title="Customer Handover" />
@@ -122,14 +116,6 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
         </div>
       </div>
 
-      {/* Warranty */}
-      <div className="space-y-4">
-        <SectionHeader title="Warranty" />
-        <div className="grid grid-cols-2 gap-3">
-          <Field label="Battery (years)"><Input value={formData.batteryWarrantyYears} onChange={(e) => onUpdate('batteryWarrantyYears', e.target.value)} className={inputCn} placeholder="e.g. 10" /></Field>
-          <Field label="Inverter (years)"><Input value={formData.inverterWarrantyYears} onChange={(e) => onUpdate('inverterWarrantyYears', e.target.value)} className={inputCn} placeholder="e.g. 5" /></Field>
-        </div>
-      </div>
 
       {/* Declaration & Signatures */}
       <div className="space-y-4">
