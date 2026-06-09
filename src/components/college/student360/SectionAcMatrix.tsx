@@ -304,12 +304,16 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
       const { data: staffRow } = userId
         ? await supabase
             .from('college_staff')
-            .select('name')
+            .select('id, name')
             .eq('user_id', userId)
             .is('archived_at', null)
             .maybeSingle()
         : { data: null };
       const assessorName = (staffRow as { name?: string } | null)?.name ?? null;
+      // college_staff.id — what student_ac_coverage.assessor_id FKs to (NOT the
+      // user_id). Recording it here is what lets IQA audit "who assessed this"
+      // and powers the assessor-standardisation signal.
+      const assessorStaffId = (staffRow as { id?: string } | null)?.id ?? null;
       const stamp = new Date().toISOString();
       const trimmedNarrative = bulkNarrative.trim() || null;
 
@@ -338,7 +342,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             ),
             supabase
               .from('student_ac_coverage')
-              .update({ status: bulkStatus })
+              .update({ status: bulkStatus, assessor_id: assessorStaffId })
               .eq('student_id', studentId)
               .eq('qualification_code', cell.qualification_code)
               .eq('unit_code', cell.unit_code)
