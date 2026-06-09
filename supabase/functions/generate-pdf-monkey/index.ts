@@ -887,10 +887,30 @@ serve(async (req) => {
         : 0;
       const invNetAfterDiscount = invoiceSubtotalWithMarkups - invDiscountAmount;
 
-      const vatAmount = settings.vatRegistered
-        ? invNetAfterDiscount * ((settings.vatRate || 20) / 100)
-        : 0;
+      // VAT reverse charge (DRC): charge £0 VAT; customer accounts to HMRC.
+      const invReverseCharge = !!settings.reverseCharge;
+      const vatAmount =
+        settings.vatRegistered && !invReverseCharge
+          ? invNetAfterDiscount * ((settings.vatRate || 20) / 100)
+          : 0;
       const total = invNetAfterDiscount + vatAmount;
+
+      // CIS deduction (labour only, ex-VAT) + reverse-charge notional VAT.
+      // Mirrors src/utils/quote-calculations.ts so the PDF matches the screen.
+      const round2cis = (n: number) => Math.round(n * 100) / 100;
+      const invLabourItemAdjusted = adjustedRawItems
+        .filter((i: any) => i.category === 'labour')
+        .reduce((s: number, i: any) => s + (i.totalPrice || 0), 0);
+      const invLabourCatPct = invHideMarkupFromCustomer
+        ? 0
+        : settings.categoryAdjustments?.labour || 0;
+      const invLabourFinal = invLabourItemAdjusted * (1 + invLabourCatPct / 100);
+      const invLabourNet = itemsSubtotal > 0 ? invNetAfterDiscount * (invLabourFinal / itemsSubtotal) : 0;
+      const invCisEnabled = !!settings.cisEnabled;
+      const invCisRate = invCisEnabled ? Number(settings.cisRate) || 0 : 0;
+      const invCisAmount = invCisEnabled ? round2cis(invLabourNet * (invCisRate / 100)) : 0;
+      const invNotionalVat = invReverseCharge ? round2cis(invNetAfterDiscount * ((settings.vatRate || 20) / 100)) : 0;
+      const invNetPayable = round2cis(total - invCisAmount);
 
       // ELE-954 — "Deposit paid" summary. Resolved from (in priority):
       //   1. invoice settings.depositApplied (set on quote→invoice conversion)
@@ -1029,6 +1049,13 @@ serve(async (req) => {
           profit: profit,
           vatAmount: vatAmount,
           total: total,
+          // CIS + VAT reverse charge (construction invoicing)
+          reverseCharge: invReverseCharge,
+          notionalVat: invNotionalVat,
+          cisEnabled: invCisEnabled,
+          cisRate: invCisRate,
+          cisAmount: invCisAmount,
+          netPayable: invNetPayable,
           // Nested summary (for templates that prefer the object) +
           // flat convenience fields (for templates that use them
           // directly — your invoice template above uses these).
@@ -1064,6 +1091,13 @@ serve(async (req) => {
           vatAmount: vatAmount,
           vatRate: settings.vatRate || 20,
           total: total,
+          reverseCharge: invReverseCharge,
+          notionalVat: invNotionalVat,
+          cisEnabled: invCisEnabled,
+          cisRate: invCisRate,
+          cisAmount: invCisAmount,
+          labourNet: invLabourNet,
+          netPayable: invNetPayable,
         },
         // Branding settings for dynamic styling (same as quotes)
         branding: {
