@@ -30,6 +30,7 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'what-is-commissioning', label: 'What Is Commissioning?' },
   { id: 'commissioning-vs-testing', label: 'Commissioning vs Testing' },
+  { id: 'how-long', label: 'How Long It Takes' },
   { id: 'functional-checks', label: 'Functional Checks' },
   { id: 'documentation', label: 'Documentation Required' },
   { id: 'handover', label: 'Handover to the Client' },
@@ -39,6 +40,14 @@ const tocItems = [
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
+
+const answerBox = {
+  question: 'What is commissioning an electrical installation?',
+  answer:
+    'Commissioning is the final stage before an installation is put into service. It combines initial verification (inspection and testing to BS 7671 Chapter 64), functional testing of every device under Regulation 643.10, snagging of minor defects, completion of all documentation, and formal handover. Testing confirms each circuit; commissioning confirms the whole installation works and is ready for the client to use.',
+  detail:
+    'On a simple domestic job the distinction is small — verification effectively is the commissioning. On commercial and industrial projects commissioning is a separate, programmed phase with its own records and sign-off.',
+};
 
 const keyTakeaways = [
   'Commissioning is the final stage before an electrical installation is put into service — it includes initial verification, functional checks, and handover documentation.',
@@ -57,7 +66,7 @@ const faqs = [
   {
     question: 'Is commissioning a legal requirement?',
     answer:
-      'BS 7671 Part 6, Chapter 64 (Regulation 641) requires that every installation is inspected and tested during erection and on completion before being put into service. An Electrical Installation Certificate must be issued upon completion of initial verification under Regulation 644.4.201. While BS 7671 does not use the word "commissioning" as a formal requirement, the practical reality is that initial verification, functional testing, and certification together constitute commissioning. For notifiable work under Part P of the Building Regulations, the installation must be certified before it is put into service. Under the CDM Regulations 2015 (Construction Design and Management), the principal contractor must ensure that all building services — including electrical installations — are commissioned and tested before handover. In practice, commissioning is expected by clients, main contractors, scheme providers, and building control.',
+      'BS 7671 Part 6, Chapter 64 (Regulation 641) requires that every installation is inspected and tested during erection and on completion before being put into service. An Electrical Installation Certificate must be issued upon completion of initial verification under Regulation 644.1 (Regulation 644.4.201 allows a Minor Electrical Installation Works Certificate as an alternative for minor works). While BS 7671 does not use the word "commissioning" as a formal requirement, the practical reality is that initial verification, functional testing, and certification together constitute commissioning. For notifiable work under Part P of the Building Regulations, the installation must be certified before it is put into service. Under the CDM Regulations 2015 (Construction Design and Management), the principal contractor must ensure that all building services — including electrical installations — are commissioned and tested before handover. In practice, commissioning is expected by clients, main contractors, scheme providers, and building control.',
   },
   {
     question: 'What documentation should I provide at commissioning handover?',
@@ -67,7 +76,7 @@ const faqs = [
   {
     question: 'What functional checks are needed during commissioning?',
     answer:
-      'Functional checks confirm that every device operates correctly as part of the complete installation. BS 7671 Regulation 643.7.3.201 requires functional testing as part of initial verification. The checks include: operating every MCB, RCBO, and RCD to confirm they trip and reset correctly, testing every isolator switch for correct operation, verifying that emergency switching devices (fireman switches, emergency stop buttons) operate correctly, confirming that interlocked devices operate in the correct sequence, testing automation and control systems (timers, sensors, BMS interfaces), checking that all indicator lights and displays show the correct status, testing that no-volt release contactors and motor starters operate as designed, and verifying that standby generators and UPS systems switch correctly on loss of mains supply.',
+      'Functional checks confirm that every device operates correctly as part of the complete installation. BS 7671 Regulation 643.10 requires equipment to be functionally tested during initial verification to verify it is properly mounted, adjusted and installed and operates correctly. The checks include: operating every MCB, RCBO, and RCD to confirm they trip and reset correctly, testing every isolator switch for correct operation, verifying that emergency switching devices (fireman switches, emergency stop buttons) operate correctly, confirming that interlocked devices operate in the correct sequence, testing automation and control systems (timers, sensors, BMS interfaces), checking that all indicator lights and displays show the correct status, testing that no-volt release contactors and motor starters operate as designed, and verifying that standby generators and UPS systems switch correctly on loss of mains supply.',
   },
   {
     question: 'How long does commissioning take?',
@@ -98,6 +107,14 @@ const relatedPages: RelatedPage[] = [
     title: 'Testing Sequence Guide',
     description: 'The dead and live test sequence required by BS 7671 Chapter 64.',
     icon: ClipboardCheck,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/electrical-handover-documentation',
+    title: 'Handover Documentation Guide',
+    description:
+      'Exactly what goes in the handover pack — certificates, drawings, O&M manuals and warning notices.',
+    icon: BookOpen,
     category: 'Guide',
   },
   {
@@ -238,6 +255,58 @@ const sections = [
     ),
   },
   {
+    id: 'how-long',
+    heading: 'How Long Does Commissioning Take?',
+    content: (
+      <>
+        <p>
+          Commissioning time scales with the complexity of the installation, not just its size. The
+          instrument testing of initial verification is usually the largest single block of time,
+          but functional checks, snagging and documentation all add to it. These are indicative
+          planning figures, not a quote — always build commissioning into the project programme from
+          the start rather than squeezing it into the final day.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white/70">
+            <div className="col-span-5">Installation type</div>
+            <div className="col-span-3">Typical duration</div>
+            <div className="col-span-4">Main driver</div>
+          </div>
+          <div className="divide-y divide-white/10 text-sm text-white">
+            <div className="grid grid-cols-12 gap-0 px-4 py-3">
+              <div className="col-span-5 font-medium">Consumer unit change / single new circuit</div>
+              <div className="col-span-3">2&ndash;4 hours</div>
+              <div className="col-span-4 text-white/80">Dead and live testing</div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3">
+              <div className="col-span-5 font-medium">Full domestic rewire</div>
+              <div className="col-span-3">Half a day to a day</div>
+              <div className="col-span-4 text-white/80">Volume of circuits to test</div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3">
+              <div className="col-span-5 font-medium">Office / retail fit-out</div>
+              <div className="col-span-3">2&ndash;5 days</div>
+              <div className="col-span-4 text-white/80">Multiple boards, controls, emergency systems</div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3">
+              <div className="col-span-5 font-medium">Industrial / motor control</div>
+              <div className="col-span-3">A week or more</div>
+              <div className="col-span-4 text-white/80">MCC, PLC logic, standby power proving</div>
+            </div>
+          </div>
+        </div>
+        <p>
+          For domestic work the documentation can be completed on site as you test — see{' '}
+          <SEOInternalLink href="/guides/testing-sequence-guide">
+            the testing sequence guide
+          </SEOInternalLink>{' '}
+          for the order the tests are carried out. On larger projects the commissioning phase is
+          planned, resourced and signed off in its own right.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'functional-checks',
     heading: 'Functional Checks: Testing the Complete System',
     content: (
@@ -245,8 +314,10 @@ const sections = [
         <p>
           Functional checks go beyond the instrument-based testing of initial verification. They
           involve physically operating every device in the installation to confirm it works
-          correctly. BS 7671 Regulation 643.7.3.201 requires functional testing of assemblies such
-          as switchgear, controls, and interlocks.
+          correctly. BS 7671 Regulation 643.10 requires equipment — including switchgear and
+          controlgear assemblies, drives, controls and interlocks — to be functionally tested as
+          appropriate, to verify it is properly mounted, adjusted and installed and operates
+          correctly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Functional Checks Checklist</h3>
@@ -309,11 +380,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AFDD verification.</strong> Where arc fault detection devices (AFDDs) are
-                fitted — recommended by BS 7671 Reg 421.1.7 for AC final circuits — confirm the
-                operational indication (status LED or integral test button) shows the device is
-                active. Operate the device&apos;s test mechanism and confirm it resets correctly.
-                Per GN3, confirmation of AFDD operational status is a required inspection step.
+                <strong>AFDD verification.</strong> Under A4:2026, Regulation 421.1.7 makes AFDDs a
+                requirement for socket-outlet final circuits rated up to 32&nbsp;A in Higher-Risk
+                Residential Buildings, Houses in Multiple Occupation, purpose-built student
+                accommodation and care homes, and recommends them for single-phase AC socket-outlet
+                final circuits up to 32&nbsp;A in all other premises. Where AFDDs are fitted, confirm
+                the operational indication (status LED) shows the device is active, then operate the
+                manufacturer-specified test and confirm it resets correctly. Record the outcome on
+                the schedule of test results.
               </span>
             </li>
           </ul>
@@ -334,7 +408,11 @@ const sections = [
           Proper documentation is a core part of commissioning. The documentation package serves as
           evidence that the installation has been tested and is fit for purpose. It is also the
           reference that future electricians will use when maintaining or modifying the
-          installation.
+          installation. For the full breakdown of what belongs in the pack, see the{' '}
+          <SEOInternalLink href="/guides/electrical-handover-documentation">
+            handover documentation guide
+          </SEOInternalLink>
+          .
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -342,7 +420,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC).</strong> The formal certificate
-                issued under BS 7671 Regulation 644.4.201, based on the model in Appendix 6.
+                issued under BS 7671 Regulation 644.1, based on the model in Appendix 6.
                 Includes design, construction, and inspection signatures, plus the schedule of
                 inspections and schedule of test results.
               </span>
@@ -351,9 +429,10 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of test results.</strong> Every test value for every circuit —
-                R1+R2, IR, Zs, PFC, RCD trip times — based on the Appendix 6 model form required by
-                Reg 644.4.201. The A4:2026 Appendix 6 model includes columns for AFDD fitted and SPD
-                fitted per circuit. Accompanies the EIC.
+                R1+R2, IR, Zs, PFC, RCD trip times — recorded on the Appendix 6 model form. Under
+                A4:2026 this single-page schedule has been redrafted and split into a separate
+                schedule of circuit details and a separate schedule of test results, and the
+                operational status of any AFDDs is recorded here. Accompanies the EIC.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -382,6 +461,36 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <p>
+          What actually needs handing over depends on the job. A consumer unit change needs the
+          core certificate package; a commercial fit-out adds a full deliverables file. This matrix
+          shows the typical split:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white/70">
+            <div className="col-span-6">Handover item</div>
+            <div className="col-span-3 text-center">Domestic</div>
+            <div className="col-span-3 text-center">Commercial</div>
+          </div>
+          <div className="divide-y divide-white/10 text-sm text-white">
+            {[
+              ['EIC with schedules of inspections and test results', 'Required', 'Required'],
+              ['Circuit chart / distribution board labelling', 'Required', 'Required'],
+              ['Warning and user instruction notices', 'Required', 'Required'],
+              ['Manufacturer instructions for installed equipment', 'As applicable', 'Required'],
+              ['As-built drawings', 'Rarely', 'Required'],
+              ['O&M manual', 'Not usually', 'Required (contractual)'],
+              ['Specialist certificates (fire alarm, emergency lighting)', 'If installed', 'Required'],
+              ['Signed handover / training record', 'Optional', 'Required'],
+            ].map(([item, dom, com]) => (
+              <div key={item} className="grid grid-cols-12 gap-0 px-4 py-3 items-center">
+                <div className="col-span-6 font-medium">{item}</div>
+                <div className="col-span-3 text-center text-white/80">{dom}</div>
+                <div className="col-span-3 text-center text-white/80">{com}</div>
+              </div>
+            ))}
+          </div>
         </div>
         <p>
           For{' '}
@@ -542,10 +651,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                All live tests completed: Zs, PFC, RCD operation, phase sequence (if 3-phase). Where
-                site ambient temperature differs from 10&nbsp;&deg;C, apply the ambient correction
-                factor from GN3 Table A8 to the tabulated maximum Zs values before comparing against
-                measured results.
+                All live tests completed: Zs, PFC, RCD operation, phase sequence (if 3-phase).
+                Remember the tabulated maximum Zs values assume the conductor at its normal operating
+                temperature, so apply the appropriate temperature/rule-of-thumb correction before
+                comparing them against your measured cold values.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -556,14 +665,14 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Functional checks completed on all switchgear, controls, and interlocks (Reg
-                643.7.3.201)
+                643.10)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                AFDD operational status confirmed where fitted — test button operated and reset
-                verified (Reg 421.1.7 / GN3)
+                AFDD operational status confirmed where fitted — manufacturer test operated, reset
+                verified, and outcome recorded on the schedule (Reg 421.1.7 / 643.10)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -699,6 +808,7 @@ export default function CommissioningGuidePage() {
       }
       heroSubtitle="Commissioning is the final stage before an electrical installation is put into service. It covers initial verification testing, functional checks of every device, snagging, documentation, and formal handover to the client. This guide explains the complete process for domestic and commercial installations."
       readingTime={10}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

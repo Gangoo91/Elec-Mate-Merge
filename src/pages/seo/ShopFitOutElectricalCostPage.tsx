@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/commercial-eicr',
+    href: '/guides/commercial-eicr-guide',
     title: 'Commercial EICR Guide',
     description: 'Full guide to commercial EICRs — frequency, scope, and reporting requirements.',
     icon: FileCheck2,
@@ -289,20 +289,44 @@ const sections = [
                 increasingly specify SPD protection at the main or sub-distribution board to protect
                 sensitive electronic equipment (EPOS, DALI lighting controls, CCTV) from transient
                 overvoltages. A Type 2 SPD is installed at the distribution board as standard; a
-                Type 1 SPD is fitted at the incoming service where lightning current may enter the
-                installation. Guidance on SPD selection is given in BS 7671 Appendix 16
-                (Informative). SPD details must be recorded on the EIC Part 6 model form where
-                fitted (Reg 133.1.3). DIN-rail mounted Type 2 SPDs typically cost £50 to £150 at
-                trade price.
+                Type 1 SPD is fitted as close as possible to the origin of the installation where
+                the structure has external lightning protection (BS 7671 Reg 534.4.1.3); a Type 2
+                SPD is located in the fixed installation, such as a sub-distribution board (Reg
+                534.4.1.5). Further guidance on SPD selection is given in BS 7671 Appendix 16.
+                A4:2026 added dedicated fields to the Appendix 6 model forms for recording the
+                details of any SPDs fitted, so this must be captured on the certificate. DIN-rail
+                mounted Type 2 SPDs typically cost £50 to £150 at trade price.
               </span>
             </li>
           </ul>
         </div>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <h3 className="font-bold text-white text-lg mb-3">Single-phase 230 V</h3>
+            <ul className="text-white text-sm leading-relaxed space-y-1.5">
+              <li>Typical main fuse: 60–100 A</li>
+              <li>Approx. usable power at 100 A: ~23 kW (100 A × 230 V)</li>
+              <li>Best for: units under 100m², LED lighting, EPOS, light HVAC</li>
+              <li>Single distribution board, simpler design</li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <h3 className="font-bold text-white text-lg mb-3">3-phase 400 V</h3>
+            <ul className="text-white text-sm leading-relaxed space-y-1.5">
+              <li>Three live phases, higher total capacity</li>
+              <li>Best for: catering, multiple AC units, refrigeration, machinery</li>
+              <li>Load must be balanced across the three phases</li>
+              <li>Often needs sub-distribution boards by area</li>
+            </ul>
+          </div>
+        </div>
         <p>
-          If a new or upgraded supply is needed, the electrician submits an application to the DNO
-          (Distribution Network Operator). The DNO will survey the site, issue a quotation, and
-          schedule the connection works. This process typically takes 6 to 12 weeks and must be
-          factored into the project programme.
+          The decision is driven by the maximum demand calculation, not the floor area alone — a
+          compact unit with commercial catering can exceed a single-phase supply, while a large dry
+          retail unit may not. If a new or upgraded supply is needed, the electrician submits an
+          application to the DNO (Distribution Network Operator). The DNO will survey the site,
+          issue a quotation, and schedule the connection works. This process typically takes 6 to 12
+          weeks and must be factored into the project programme.
         </p>
       </>
     ),
@@ -341,10 +365,12 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting control</strong> — dimming, zoning, and scheduling systems allow
-                different lighting scenes for trading hours, cleaning, and displays. DALI (Digital
-                Addressable Lighting Interface) systems provide individual luminaire control and are
-                standard in modern retail. Basic DALI control adds £500 to £1,500 to the lighting
-                package.
+                different lighting scenes for trading hours, cleaning, and displays.{' '}
+                <SEOInternalLink href="/guides/dali-lighting-control-wiring-bs-en-62386">
+                  DALI (Digital Addressable Lighting Interface)
+                </SEOInternalLink>{' '}
+                systems provide individual luminaire control and are standard in modern retail.
+                Basic DALI control adds £500 to £1,500 to the lighting package.
               </span>
             </li>
           </ul>
@@ -401,7 +427,11 @@ const sections = [
                 emergency lighting system. This means the battery backup in each luminaire must
                 maintain illumination for a minimum of 3 hours after a mains failure. The luminaires
                 must be tested monthly (function test) and annually (full duration test), with
-                records maintained in a logbook.
+                records maintained in a logbook — see our{' '}
+                <SEOInternalLink href="/guides/emergency-lighting-testing">
+                  emergency lighting testing guide
+                </SEOInternalLink>{' '}
+                for the full BS 5266-1 test schedule.
               </span>
             </li>
           </ul>
@@ -570,10 +600,12 @@ const sections = [
           specific conditions of the installation (GN3 Reg 3.4).
         </p>
         <p>
-          Under BS 7671 Reg 133.1.3 (A4:2026), where RCDs, AFDDs, or SPDs are installed, their usage
-          must be explicitly recorded on the EIC Part 6 certificate. Electricians completing an EIC
-          for a commercial fit-out that includes these protective devices must ensure the relevant
-          fields on the model form are completed.
+          The A4:2026 amendment revised the Appendix 6 model forms used for certification, adding
+          dedicated fields for recording the details of SPDs and AFDDs. Electricians completing an
+          EIC for a commercial fit-out that includes these protective devices must ensure those
+          fields on the model form are completed. The schedule of test results has also been
+          redrafted into a separate schedule of circuit details and a separate schedule of test
+          results.
         </p>
       </>
     ),
@@ -615,7 +647,11 @@ const sections = [
                   <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Lighting, power, emergency lighting, fire alarm, data cabling — all broken down
                   with materials, labour, and your margins. Present a professional quotation to the
-                  main contractor or tenant.
+                  main contractor or tenant. New to commercial pricing? Read{' '}
+                  <SEOInternalLink href="/guides/how-to-price-commercial-install-as-an-electrician">
+                    how to price a commercial install
+                  </SEOInternalLink>
+                  .
                 </p>
               </div>
             </div>
@@ -668,6 +704,11 @@ export default function ShopFitOutElectricalCostPage() {
       }
       heroSubtitle="How much does a shop electrical fit-out cost in the UK? This guide covers typical prices from £3,000 to £15,000+, 3-phase supply, commercial lighting design, emergency lighting, fire alarm systems, and data cabling."
       readingTime={12}
+      answerBox={{
+        question: 'How much does a shop fit-out electrical installation cost in the UK?',
+        answer:
+          'A UK shop fit-out electrical installation typically costs £3,000 to £15,000+. A small retail unit (50–100m²) runs £3,000–£6,000; a medium unit £6,000–£10,000; a large unit £10,000–£15,000+. A 3-phase DNO supply upgrade adds £1,000–£3,000+. Costs cover power, lighting, emergency lighting, fire alarm and data cabling — fixtures and finishes are separate.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -219,6 +219,44 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold">Factor</th>
+                <th className="p-3 font-semibold">AC-coupled</th>
+                <th className="p-3 font-semibold">DC-coupled</th>
+              </tr>
+            </thead>
+            <tbody className="[&>tr]:border-t [&>tr]:border-white/10">
+              <tr>
+                <td className="p-3 font-medium">Round-trip efficiency</td>
+                <td className="p-3">~85% to 90%</td>
+                <td className="p-3">~90% to 95%</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium">Inverters needed</td>
+                <td className="p-3">Solar inverter + battery inverter</td>
+                <td className="p-3">Single hybrid inverter</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium">Best for</td>
+                <td className="p-3">Retrofit to existing solar PV</td>
+                <td className="p-3">New solar + battery install</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium">Solar compatibility</td>
+                <td className="p-3">Works with any existing inverter</td>
+                <td className="p-3">Hybrid must match panels + battery</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium">Typical relative cost</td>
+                <td className="p-3">Higher (two inverters)</td>
+                <td className="p-3">Lower (one inverter)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
           For existing solar PV installations with a working string inverter, AC-coupled is almost
           always the practical choice — replacing a functioning solar inverter with a hybrid
@@ -277,6 +315,39 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold">Battery size</th>
+                <th className="p-3 font-semibold">Best-fit household</th>
+                <th className="p-3 font-semibold">Primary benefit</th>
+              </tr>
+            </thead>
+            <tbody className="[&>tr]:border-t [&>tr]:border-white/10">
+              <tr className="bg-blue-900/20">
+                <td className="p-3 font-medium">3 to 5kWh</td>
+                <td className="p-3">Low usage, no solar or small array</td>
+                <td className="p-3">Off-peak tariff arbitrage only</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium">5 to 10kWh</td>
+                <td className="p-3">Typical UK home (8 to 10kWh/day)</td>
+                <td className="p-3">Solar self-consumption + tariff shift</td>
+              </tr>
+              <tr className="bg-green-900/20">
+                <td className="p-3 font-medium">10 to 13kWh</td>
+                <td className="p-3">Higher usage, 4kWp+ solar</td>
+                <td className="p-3">Most daily import avoided, some backup</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium">13 to 20kWh</td>
+                <td className="p-3">EV + heat pump, large solar array</td>
+                <td className="p-3">Full backup capability, high daytime loads</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           For most UK homes, a battery in the 5 to 13kWh range provides the best balance of cost and
@@ -395,14 +466,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labelling</strong> — warning labels must be applied at the consumer unit,
-                the meter position, and the battery/inverter location. Reg&nbsp;712.514.103 requires
-                a warning notice fixed to all inverters with wording that covers{' '}
-                <em>both AC and DC isolation</em> — for example: "WARNING — Isolate both AC and DC
-                sides before servicing." This dual-isolation wording is mandatory because residual
-                DC energy from the battery remains present even when the AC supply is isolated. It
-                protects other electricians and emergency services who may not be aware of the
-                battery system.
+                <strong>Labelling</strong> — Reg&nbsp;570.6.8.201 requires a warning notice
+                indicating the presence and location of the stationary secondary battery system,
+                fixed at the origin of the installation, at each metering position (if remote from
+                the origin), and at each consumer unit or distribution board fed from the battery.
+                In addition, Reg&nbsp;712.514.103 requires a warning notice fixed to all inverters
+                with wording similar to <em>"WARNING — Isolate both AC and DC sides before
+                servicing."</em> This dual-isolation wording matters because residual DC energy from
+                the battery remains present even when the AC supply is isolated. Together these
+                notices protect other electricians and emergency services who may not be aware of
+                the battery system.
               </span>
             </li>
           </ul>
@@ -419,7 +492,12 @@ const sections = [
           domestic electrical energy storage systems. PAS&nbsp;63100 covers suitable location,
           minimum clearances, ventilation, and fire separation requirements. Installers must consult
           it alongside the manufacturer instructions when selecting the battery position in a
-          dwelling (OSG&nbsp;12.4.2).
+          dwelling. Where the battery sits within a wider solar PV and self-generation setup, the
+          A4:2026 requirements covered in our{' '}
+          <SEOInternalLink href="/guides/section-712-prosumer-a4-2026">
+            Section 712 and prosumer installation guide
+          </SEOInternalLink>{' '}
+          also apply.
         </p>
       </>
     ),
@@ -450,7 +528,8 @@ const sections = [
               <span>
                 <strong>Quality assurance</strong> — MCS certification requires the installer to
                 demonstrate competence, follow documented installation procedures, and comply with
-                MCS installation standards (MIS 3002 for battery storage). The scheme includes
+                the relevant MCS installation standard for electrical energy storage. The scheme
+                includes
                 regular audits and customer satisfaction monitoring. Many manufacturers require MCS
                 certification for their product warranty to remain valid.
               </span>
@@ -551,8 +630,10 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Insulation resistance of AC wiring (500V DC with equipment disconnected, minimum
-                1&nbsp;M&#x03A9;). Where battery inverter or BMS electronics remain connected and
-                are likely to be damaged by standard test voltages, use 250V DC per Reg&nbsp;643.3
+                1&nbsp;M&#x03A9;). Where battery inverter or BMS electronics remain connected and are
+                likely to influence the result or be damaged, apply the test before connection, then
+                a 250V DC test between live conductors and the protective conductor (minimum
+                1&nbsp;M&#x03A9;) per Reg&nbsp;643.3.3
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -579,12 +660,12 @@ const sections = [
         <p>
           The standard BS&nbsp;7671 test sequence covers the AC wiring. The DC side and the battery
           management system (BMS) require additional checks beyond the scope of a standard EIC.
-          GN3&nbsp;Reg&nbsp;1.7 classifies electrical energy storage systems as installations
-          requiring specialist knowledge and mandates that designers, installers, and inspectors
-          refer to the <strong>IET Code of Practice for Electrical Energy Storage Systems</strong>{' '}
-          for test procedures, DC earthing arrangements, BMS functional verification, and capacity
-          testing. Key additional checks include: DC earth fault loop impedance, BMS communications
-          and protection function test, and a capacity verification against the rated output.
+          Electrical energy storage systems require specialist knowledge, and designers, installers,
+          and inspectors should refer to the{' '}
+          <strong>IET Code of Practice for Electrical Energy Storage Systems</strong> for test
+          procedures, DC earthing arrangements, BMS functional verification, and capacity testing.
+          Key additional checks include DC earth fault loop impedance, a BMS communications and
+          protection function test, and a capacity verification against the rated output.
         </p>
         <p>
           An{' '}
@@ -698,6 +779,11 @@ export default function BatteryStorageGuidePage() {
       embeddedTool={<BatteryStorageCalculator />}
       heroSubtitle="Home battery storage is booming. This guide covers AC-coupled vs DC-coupled systems, battery sizing, inverters, safety requirements, MCS certification, DNO notification, and the electrical installation and certification process."
       readingTime={15}
+      answerBox={{
+        question: 'What is required to install home battery storage in the UK?',
+        answer:
+          'The electrical work must comply with BS 7671:2018+A4:2026, and a domestic battery must be located in line with PAS 63100 (Reg 570.6.7.203). The installer notifies the DNO under G98 (up to 16 A per phase) or G99, fits dual AC and DC isolation with warning notices, and issues an Electrical Installation Certificate. MCS certification is needed only if the homeowner wants Smart Export Guarantee payments.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

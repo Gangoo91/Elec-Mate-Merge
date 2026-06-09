@@ -25,13 +25,18 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
   heroSuffix: 'Model Form Changes',
   heroSubtitle:
     'The Electrical Installation Certificate (EIC) under BS 7671:2018+A4:2026 has new sections, new earthing-arrangement tick-boxes, an expanded Schedule of Inspections (items 1.0 through 14.0 including the new Prosumer LV installation item) and updated terminology. This guide walks every change visible on the canonical IET form.',
+  answerBox: {
+    question: 'What changed on the BS 7671 A4:2026 Electrical Installation Certificate (EIC)?',
+    answer:
+      'The A4:2026 EIC adds item 14.0 "Prosumer\'s low voltage electrical installation(s)" to the Section H Schedule of Inspections (now 1.0 to 14.0), splits the TN-C-S earthing tick-box into PME and PNB, and keeps the three-signatory Design / Construction / Inspection & Testing structure. Item 6.0 now covers the new 30 mA RCD requirement for domestic luminaire final circuits (Regulation 411.3.4).',
+  },
   keyTakeaways: [
     'The EIC is the certificate issued for new electrical installations, additions and alterations — it is NOT the same as the EICR (which records the condition of an existing installation).',
     'Section H Schedule of Inspections under A4:2026 covers items 1.0 through 14.0 — item 14.0 is the new "Prosumer\'s low voltage electrical installation(s)" inspection point.',
     'Section F earthing-arrangement tick-boxes now distinguish TN-C-S (PME) from TN-C-S (PNB) — same change as on the EICR.',
     'Section C splits certification responsibility into Design, Construction, and Inspection & Testing — three separate signatures with separate liability statements per Regulations 120.3, 133.1.2, 133.1.3 and 133.5.',
     'Section G records Means of Earthing, Maximum Demand, Earth Electrode details, Main Protective Conductors and Main Switch in one consolidated block.',
-    'Schedule of Circuit Details and Schedule of Test Results that accompany the EIC use the same updated layout as the EICR — reference method, maximum permitted Zs, SPD type per board, AFDD test column 30.',
+    'Schedule of Circuit Details and Schedule of Test Results that accompany the EIC use the same updated layout as the EICR — reference method, maximum permitted Zs, SPD type per board, and a dedicated AFDD test column.',
   ],
   sections: [
     {
@@ -52,9 +57,20 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
             'The EIC certifies new work or alterations meeting BS 7671. The EICR (Electrical Installation Condition Report) records the condition of an existing installation at a point in time. The EIC has design and construction signatures; the EICR has inspection and testing signatures only.',
         },
         {
+          type: 'list',
+          items: [
+            '**New installation** — the initial certification of a complete new installation. Issue an EIC.',
+            '**Addition or alteration introducing a new circuit** — extending an existing installation with one or more new circuits. Issue an EIC.',
+            '**Consumer unit / distribution board replacement** — a board swap is explicitly an EIC job under the A4:2026 form notes, even where no new final circuit is added.',
+            '**Multiple additions / alterations / remedial works that do not extend to new circuits** — may be certified on a single EIC as an alternative to issuing multiple MEIWCs.',
+            '**Minor work with no new circuit** — a single small alteration that does not introduce a new circuit is documented on the [Minor Electrical Installation Works Certificate (MEIWC)](/guides/bs-7671-a4-2026-meiwc-model-form) instead.',
+            '**Periodic inspection of an existing installation** — never an EIC. Use an EICR (Electrical Installation Condition Report).',
+          ],
+        },
+        {
           type: 'paragraph',
           text:
-            'The A4:2026 EIC model form is used for: (a) a completely new installation; (b) an addition to an existing installation (new circuits); (c) an alteration to an existing installation (extensions, modifications). Minor works that do not extend to providing a new circuit are documented on the MEIWC instead.',
+            'The original EIC is issued to the person ordering the work and a duplicate is retained by the person issuing the certificate (Regulation 644.4). The certificate is only valid once the Schedule of Inspections is completed and the relevant Schedule(s) of Circuit Details and Schedule(s) of Test Results are attached (Regulation 644.3).',
         },
       ],
     },
@@ -154,7 +170,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
             '**3.0 Protective measure: Automatic Disconnection of Supply (ADS)** — earthing arrangement, protective device selection, disconnection time verification.',
             '**4.0 Basic protection** — insulation of live parts, barriers and enclosures.',
             '**5.0 Protective measures other than ADS** — SELV/PELV, double or reinforced insulation, electrical separation.',
-            '**6.0 Additional protection** — 30 mA RCDs on socket-outlets, luminaire final circuits (411.3.4 new under A4), cables concealed in walls.',
+            '**6.0 Additional protection** — 30 mA RCDs on socket-outlets not exceeding 32 A (411.3.3), cables concealed in walls at a depth of less than 50 mm (522.6.202, Table 52.1), and the [new requirement for domestic luminaire final circuits (411.3.4)](/guides/bs-7671-a4-2026-luminaire-rcd-protection).',
             '**7.0 Distribution equipment** — consumer unit / distribution board condition, suitability, identification.',
             '**8.0 Circuits (Distribution and Final)** — circuit wiring, cable types, segregation.',
             '**9.0 Isolation and switching** — emergency switching, functional switching, mechanical maintenance isolation.',
@@ -164,6 +180,13 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
             '**13.0 Other special installations or locations** — Part 7 compliance for whichever sections apply.',
             '**14.0 Prosumer\'s low voltage electrical installation(s)** — NEW under A4:2026.',
           ],
+        },
+        {
+          type: 'callout',
+          tone: 'info',
+          title: 'EIC outcomes are ✓ / N/A — not condition codes',
+          text:
+            'On the EIC each Schedule of Inspections item takes a simple Outcome entry — a tick to confirm the item is satisfactory, or N/A where it does not apply. This is initial verification of new work, so there are no observation classification codes. The C1 / C2 / C3 / FI condition codes belong to the EICR, which assesses an existing installation. See the [A4:2026 Schedule of Tests changes](/guides/bs-7671-a4-2026-schedule-of-tests) for the measurement columns that accompany this inspection.',
         },
       ],
     },
@@ -175,7 +198,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Item 14.0 is the most distinctive new inspection point on the A4:2026 EIC. A "prosumer" is an electrical installation that both consumes energy from the supply AND produces energy that may be exported — combining functions that were traditionally separated into "consumer" and "generator" installations.',
+            'Item 14.0 is the most distinctive new inspection point on the A4:2026 EIC. A4:2026 introduces an entirely new Chapter 82 covering Prosumer\'s Electrical Installations (PEIs) — low voltage installations that both consume energy from the supply AND produce or store energy that may be exported. BS 7671 defines a prosumer as an entity that can be both a producer and a consumer of electrical energy, combining functions traditionally separated into "consumer" and "generator" installations.',
         },
         {
           type: 'list',
@@ -255,7 +278,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
     {
       question: 'Does an EIC need a Schedule of Test Results attached?',
       answer:
-        'Yes. Section J of the EIC explicitly lists the attached schedules: Schedule of Inspections (Section H is integrated into the certificate), Schedule of Circuit Details, and Schedule of Test Results. These are not optional — the certificate is valid only when the attached schedules are included, and the Schedule of Test Results captures the verifiable measurements (continuity, insulation resistance, polarity, Zs, RCD test, AFDD test in column 30) that prove the inspection compliance.',
+        'Yes. Section J of the EIC explicitly lists the attached schedules: Schedule of Inspections (Section H is integrated into the certificate), Schedule of Circuit Details, and Schedule of Test Results. The certificate is valid only when the relevant schedules are completed and attached (Regulation 644.3), and the Schedule of Test Results captures the verifiable measurements — continuity, insulation resistance, polarity, earth fault loop impedance Zs, RCD operating time and the AFDD test — that prove the inspection outcome.',
     },
   ],
   relatedPages: [
@@ -276,7 +299,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-schedule-of-tests',
       title: 'A4:2026 Schedule of Tests New Columns',
-      description: 'Reference method, maximum permitted Zs, SPD type, AFDD column 30 — all attached to the EIC.',
+      description: 'Reference method, maximum permitted Zs, SPD type, the AFDD test column — all attached to the EIC.',
       icon: 'ClipboardCheck',
       category: 'Guide',
     },
@@ -297,7 +320,7 @@ export const a4EICModelFormConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-afdd-changes',
       title: 'A4:2026 AFDD Changes',
-      description: 'New AFDD inspection item 4.23 and test results column 30 — recorded with every EIC.',
+      description: 'Where AFDDs are fitted, the manual test facility is verified and recorded on the Schedule of Test Results attached to the EIC.',
       icon: 'Zap',
       category: 'Guide',
     },

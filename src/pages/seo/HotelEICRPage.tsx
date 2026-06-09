@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'What bathroom zone rules apply to hotel en-suites?',
     answer:
-      'Hotel en-suite bathrooms are special locations under BS 7671:2018 Part 7, Section 701 (Locations Containing a Bath or Shower). The section defines four zones based on proximity to the bath or shower: Zone 0 (inside the bath or shower), Zone 1 (directly above, up to 2.25m), Zone 2 (0.6m beyond Zone 1 horizontally), and outside zones. Socket outlets (other than shaver supply units) must not be within 3 metres of a shower or bath. Electrical equipment installed in zones must meet specified IP ratings. Supplementary equipotential bonding of all metalwork in the bathroom is required. These rules apply to every en-suite in a hotel without exception.',
+      'Hotel en-suite bathrooms are special locations under BS 7671:2018 Part 7, Section 701 (Locations Containing a Bath or Shower). The section defines zones based on proximity to the bath or shower: Zone 0 (the interior of the bath tub or shower basin), Zone 1 (up to 2.25m above floor level) and Zone 2 (0.6m beyond the Zone 1 boundary). Equipment in each zone must meet a minimum IP rating — IPX7 in Zone 0 and IPX4 in Zones 1 and 2 (Regulation 701.512.2). Socket outlets (other than SELV outlets and shaver supply units to BS EN 61558-2-5) are prohibited within 2.5 metres horizontally of the Zone 1 boundary (Regulation 701.512.3). Supplementary equipotential bonding (Regulation 701.415.2) and 30mA RCD protection (Regulation 701.411.3.3) apply. These rules apply to every en-suite in a hotel.',
   },
   {
     question: 'What fire alarm category does a hotel require under BS 5839-1?',
@@ -91,6 +91,12 @@ const faqs = [
       'Yes. Commercial kitchen and laundry circuits in hotels are high-load circuits with continuous operation that accelerates wear. The EICR inspector will pay particular attention to: correct MCB sizing for high-power equipment, cable ratings for continuous loads (applying derating factors for cables in conduit or bunched), extraction interlock systems, three-phase distribution where applicable, and the earthing and bonding of metalwork in commercial kitchens. Laundry circuits must accommodate commercial washing machines and tumble dryers with appropriate dedicated circuits and high-load wiring.',
   },
 ];
+
+const answerBox = {
+  question: 'Does a hotel need an EICR, and how often?',
+  answer:
+    'There is no single law that names an EICR for hotels, but the Regulatory Reform (Fire Safety) Order 2005, the Health and Safety at Work etc. Act 1974 and the Electricity at Work Regulations 1989 together require a hotel to keep its fixed electrical installation safe — and a periodic EICR by a competent person is the recognised evidence of that. A five-yearly cycle is standard; commercial kitchens, laundry rooms and plant rooms often warrant a three-year interval.',
+};
 
 const relatedPages: RelatedPage[] = [
   {
@@ -206,6 +212,20 @@ const sections = [
           plant rooms — makes it prudent for larger or higher-use properties to shorten the
           interval.
         </p>
+        <div className="grid sm:grid-cols-2 gap-3 my-4">
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <div className="text-2xl font-bold text-green-300">5 years</div>
+            <div className="text-sm text-white mt-1">
+              Standard interval — well-maintained hotels, modern distribution boards, no significant defect history.
+            </div>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+            <div className="text-2xl font-bold text-yellow-300">3 years</div>
+            <div className="text-sm text-white mt-1">
+              Higher-use areas — commercial kitchens, laundry rooms and plant rooms in continuous use, or older / coastal installations.
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -482,25 +502,38 @@ const sections = [
           of electric shock that exists in wet environments. Every en-suite in a hotel must comply
           with these requirements.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr_auto] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Zone</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Extent (BS 7671 701.32)</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white whitespace-nowrap">Min IP</div>
+
+            <div className="bg-blue-900/30 px-4 py-3 font-semibold text-blue-200">Zone 0</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white">Interior of the bath tub or shower basin</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white whitespace-nowrap">IPX7</div>
+
+            <div className="bg-blue-900/30 px-4 py-3 font-semibold text-blue-200">Zone 1</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white">Above Zone 0 up to 2.25m above finished floor level (or the highest fixed shower head if higher)</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white whitespace-nowrap">IPX4</div>
+
+            <div className="bg-blue-900/30 px-4 py-3 font-semibold text-blue-200">Zone 2</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white">0.60m horizontally beyond the Zone 1 boundary, up to the same height</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white whitespace-nowrap">IPX4</div>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/70">
+            IP ratings per Regulation 701.512.2. Equipment exposed to water jets (e.g. for cleaning) requires at least IPX5.
+          </p>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone definitions</strong> — Zone 0 is the inside of the bath or shower tray.
-                Zone 1 is directly above the bath or shower, up to 2.25m. Zone 2 extends 0.6m beyond
-                Zone 1 horizontally. Equipment in each zone must meet specified IP protection
-                ratings appropriate to the zone.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Socket outlets — 3 metre exclusion zone</strong> — no standard socket outlet
-                (other than a BS 3535 shaver supply unit) may be installed within 3 metres of a bath
-                or shower. In compact hotel en-suites, the positioning of shaver sockets requires
-                careful planning. Shaver supply units must provide isolation between input and
-                output.
+                <strong>Socket outlets — 2.5 metre rule (Regulation 701.512.3)</strong> — other than
+                SELV socket outlets and shaver supply units complying with BS EN 61558-2-5 (formerly
+                BS 3535), socket outlets are prohibited within 2.5 metres horizontally of the Zone 1
+                boundary. In compact hotel en-suites the positioning of shaver sockets requires
+                careful planning. Shaver supply units provide isolation between input and output.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -527,7 +560,12 @@ const sections = [
         <p>
           Hotel en-suite bathrooms are inspected particularly carefully during EICRs. The
           combination of moisture, high guest turnover, and the consequences of electric shock in
-          wet environments makes bathroom zone compliance a priority.
+          wet environments makes bathroom zone compliance a priority. Missing supplementary bonding
+          or absent RCD protection in a bathroom is typically recorded as a C2 — see our guide to{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            EICR observation codes
+          </SEOInternalLink>{' '}
+          for what each code means and the action required.
         </p>
       </>
     ),
@@ -602,43 +640,39 @@ const sections = [
           the property. The following figures are indicative for a 30-bedroom hotel with a
           commercial kitchen, bar, restaurant, and function room.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>EICR — 30-bedroom hotel</strong> — £2,000 to £5,000. The large number of
-                circuits, multiple distribution boards, bathroom zone inspections, and emergency
-                lighting and fire alarm wiring all add to the scope and the inspection time
-                required.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Distribution board replacement</strong> — £2,000 to £5,000 per board for a
-                commercial-grade RCBO distribution board. A 30-bedroom hotel may have a main
-                distribution board plus six to eight floor boards.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting upgrade — three-hour duration</strong> — £5,000 to
-                £20,000 depending on the number of luminaires required and whether the existing
-                wiring can be reused. Three-hour battery packs and maintained luminaires for public
-                areas are more expensive than standard one-hour non-maintained units.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Addressable fire alarm system</strong> — £15,000 to £50,000 for a fully
-                addressable L1 system in a 30-bedroom hotel. Annual maintenance contracts for BS
-                5839-1 compliant systems typically cost £1,500 to £4,000 per year.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1fr_auto] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Work item (30-bedroom hotel)</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white whitespace-nowrap">Indicative range</div>
+
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
+              <strong>EICR</strong> — many circuits, multiple distribution boards, bathroom zone checks, emergency lighting and fire alarm wiring
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-yellow-300 font-semibold whitespace-nowrap">£2,000–£5,000</div>
+
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
+              <strong>Distribution board replacement</strong> — commercial-grade RCBO board, per board (a hotel may have a main board plus six to eight floor boards)
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-yellow-300 font-semibold whitespace-nowrap">£2,000–£5,000</div>
+
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
+              <strong>Emergency lighting upgrade</strong> — three-hour duration; depends on luminaire count and whether existing wiring can be reused
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-yellow-300 font-semibold whitespace-nowrap">£5,000–£20,000</div>
+
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
+              <strong>Addressable fire alarm system</strong> — fully addressable L1 system to BS 5839-1
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-yellow-300 font-semibold whitespace-nowrap">£15,000–£50,000</div>
+
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
+              <strong>Fire alarm maintenance contract</strong> — annual, BS 5839-1 compliant
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-yellow-300 font-semibold whitespace-nowrap">£1,500–£4,000/yr</div>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/70">
+            Indicative market guidance for a 30-bedroom hotel with a commercial kitchen, bar, restaurant and function room — not a quotation. Actual costs vary with size, age and installation condition.
+          </p>
         </div>
       </>
     ),
@@ -718,6 +752,7 @@ export default function HotelEICRPage() {
       tocItems={tocItems}
       badge="Hotel Electrical Guide"
       badgeIcon={Building2}
+      answerBox={answerBox}
       heroTitle={
         <>
           Hotel EICR UK:{' '}

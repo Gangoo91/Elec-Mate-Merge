@@ -27,8 +27,8 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'overview', label: 'Chapter 44 Overview' },
-  { id: 'regulation-443', label: 'Regulation 443 — When SPDs Are Required' },
-  { id: 'risk-assessment', label: 'Reg 443.4.1 — Owner Declaration' },
+  { id: 'regulation-443', label: 'Reg 443.4.1 — When SPDs Are Required' },
+  { id: 'risk-assessment', label: 'The Default Rule & Owner Declaration' },
   { id: 'spd-types', label: 'Type 1, Type 2 and Type 3 SPDs' },
   { id: 'switching-overvoltages', label: 'Reg 443.4.2 — Switching Overvoltages' },
   { id: 'installation', label: 'Installing SPDs at the Consumer Unit' },
@@ -40,19 +40,19 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Chapter 44 of BS 7671:2018+A4:2026 covers protection against overvoltage caused by atmospheric origin (lightning) and switching overvoltages. A4:2026 redrafted Section 443: the old AQ lightning-density criteria no longer apply — protection is now required based on the consequence of an overvoltage, not its likelihood.',
-  'Regulation 443.4 sets four mandatory categories where SPDs shall be provided without any risk assessment: (a) risk to human life; (b) public services or cultural heritage; (c) interruption of commercial or industrial activity; (d) large numbers of co-located individuals. For all other installations, Regulation 443.4.1 applies.',
-  'Under Regulation 443.4.1, the default position is that SPDs shall be provided. The only route to omit them in a non-critical installation is a formal written owner declaration stating that any loss or damage is tolerable and that the owner accepts the risk. The declaration must be retained with the installation documentation and EIC.',
-  'Type 1 SPDs protect against direct lightning strikes and are installed at the origin of the installation. Type 2 SPDs protect against indirect lightning and switching surges, also at the origin. Type 3 SPDs provide fine protection at individual equipment locations.',
-  'Regulation 443.4.2 introduces a separate limb: where equipment is likely to produce switching overvoltages or disturbances — such as variable-frequency drives, large motors, or power factor correction capacitors — protection against those overvoltages shall be considered regardless of the Reg 443.4.1 assessment.',
-  'SPDs must be coordinated with the upstream protective device (MCB or fuse). The SPD manufacturer specifies the maximum recommended backup fuse or MCB rating. If the SPD is installed after the main switch but before the RCD, the disconnection of the SPD backup fuse does not affect the rest of the installation.',
+  'Chapter 44 of BS 7671:2018+A4:2026 covers protection against transient overvoltages of atmospheric origin (lightning) transmitted by the supply and switching overvoltages generated within the installation. A4:2026 redrafted Regulation 443.4 and deleted the old risk-assessment method (Reg 443.5) and Annex A443 (calculated risk level, CRL) entirely — need is now decided on the consequence of an overvoltage, not a CRL calculation.',
+  'Regulation 443.4.1 requires protection against transient overvoltages wherever the consequence could result in: (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), so only two active consequence limbs remain. In these cases SPDs shall be provided with no further assessment.',
+  'For all other installations, Regulation 443.4.1 sets a default-on position: protection shall be provided unless the owner of the installation declares it is not required — on the basis that any loss or damage is tolerable and that they accept the risk of equipment damage and any consequential loss. That owner declaration is the only compliant route to omission, and should be retained with the installation documentation.',
+  'Type 1 SPDs protect against partial lightning currents (10/350 µs waveform) and are installed at the origin of the installation. Type 2 SPDs protect against indirect lightning and switching surges (8/20 µs waveform), also at the origin / consumer unit. Type 3 SPDs provide fine protection close to individual equipment, used in addition to (never instead of) an upstream device.',
+  'Regulation 443.4.2 is a separate limb: where equipment is likely to produce switching overvoltages or disturbances exceeding the rated impulse voltage of Table 443.2 — motors, transformers, capacitor banks, storage units, high-current loads — protection shall be considered regardless of the Reg 443.4.1 outcome.',
+  'For an installation at 230/400 V, the voltage protection level (Up) of the installed SPD assembly shall not exceed 2.5 kV (Reg 534.4.4.2). It is recommended that Up does not exceed an 80% safety margin of the Category II required rated impulse voltage from Table 443.2 — i.e. a target of 2.0 kV — because the SPD connecting leads add inductive voltage drop.',
 ];
 
 const faqs = [
   {
     question: 'When are SPDs required under BS 7671?',
     answer:
-      'Under Regulation 443.4 (A4:2026), SPDs shall be provided without further assessment where the consequence of an overvoltage could: (a) result in serious injury or loss of human life; (b) interrupt public services or damage cultural heritage; (c) interrupt commercial or industrial activity; or (d) affect a large number of co-located individuals. For all other installations, Regulation 443.4.1 applies: SPDs shall be provided by default. The only route to omit them is a formal written owner declaration stating that any loss or damage is tolerable and that the owner accepts the risk of equipment damage and consequential loss. That declaration must be retained with the installation documentation. There is no longer a cost/benefit test as the operative compliance mechanism — omission requires the owner declaration route.',
+      'Under Regulation 443.4.1 (A4:2026), protection against transient overvoltages shall be provided where the consequence of an overvoltage could result in: (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), leaving two active consequence limbs. In those cases SPDs are required with no further assessment. For all other installations, Regulation 443.4.1 still sets protection as the default: it shall be provided unless the owner of the installation declares it is not required, on the basis that any loss or damage is tolerable and that they accept the risk of equipment damage and any consequential loss. That owner declaration is the only compliant route to omission and should be retained with the installation documentation. The old risk-assessment method (former Reg 443.5) and the calculated-risk-level annex have been deleted, so there is no longer a CRL calculation as the operative compliance mechanism.',
   },
   {
     question: 'What is the difference between Type 1, Type 2 and Type 3 SPDs?',
@@ -157,12 +157,13 @@ const sections = [
           sensitive to voltage spikes.
         </p>
         <p>
-          BS 7671:2018+A4:2026 redrafted Chapter 44 and Section 443, fundamentally changing how SPD
-          need is determined. The old AQ lightning-density criteria no longer apply. Instead,
-          protection is required based on the consequence of an overvoltage event — with four
-          mandatory categories (Reg 443.4) and a default-on rule for all other installations (Reg
-          443.4.1) that can only be set aside by a formal owner declaration. In practice, this means
-          SPDs are required for the vast majority of new installations. This guide explains the
+          BS 7671:2018+A4:2026 redrafted Regulation 443.4, fundamentally changing how SPD need is
+          determined. The previous risk-assessment method (former Reg 443.5) and Annex A443 (the
+          calculated risk level, CRL) have been deleted in full. Instead, protection is required
+          based on the <em>consequence</em> of an overvoltage event — two consequence limbs that
+          always require protection (Reg 443.4.1), plus a default-on rule for all other
+          installations that can only be set aside by a formal owner declaration. In practice, this
+          means SPDs are required for the vast majority of new installations. This guide explains the
           regulatory framework, SPD types, installation methods, and the practical and commercial
           implications.
         </p>
@@ -171,57 +172,54 @@ const sections = [
   },
   {
     id: 'regulation-443',
-    heading: 'Regulation 443 — When SPDs Are Required',
+    heading: 'Regulation 443.4.1 — When SPDs Are Required',
     content: (
       <>
         <p>
-          Regulation 443.4 sets out four categories where SPDs <strong>shall</strong> be provided
-          with no further assessment required. These are mandatory regardless of installation type:
+          Regulation 443.4 (Overvoltage control) is the parent clause; the operative requirement
+          sits in <strong>Regulation 443.4.1</strong>. It lists the consequence limbs where
+          protection against transient overvoltages <strong>shall</strong> be provided with no
+          further assessment required — regardless of installation type. Two limbs are active;
+          limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023):
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>(a) Mandatory — risk to life:</strong> SPDs shall be provided where an
-                overvoltage could result in serious injury or loss of human life. This includes
-                medical locations, safety services (fire alarms, emergency lighting), and
-                installations where equipment failure could endanger people.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>(b) Mandatory — public services and heritage:</strong> SPDs shall be
-                provided where an overvoltage could interrupt public services or cause damage to
-                cultural heritage. This covers essential public infrastructure and structures or
-                items of cultural significance.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>(c) Mandatory — commercial or industrial activity:</strong> SPDs shall be
-                provided where an overvoltage could result in interruption of commercial or
-                industrial activity. This directly applies to shops, offices, factories, and any
-                premises where supply loss or equipment damage from a transient would have material
-                commercial consequences.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>(d) Mandatory — large numbers of co-located individuals:</strong> SPDs shall
-                be provided where an overvoltage could affect a large number of co-located
-                individuals — for example, hotels, schools, residential care homes, and sports
-                venues.
-              </span>
-            </li>
-          </ul>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold w-16">Limb</th>
+                <th className="px-4 py-3 font-semibold">Consequence that triggers mandatory protection</th>
+              </tr>
+            </thead>
+            <tbody className="text-white/90">
+              <tr className="border-t border-white/10 bg-red-900/20">
+                <td className="px-4 py-3 font-bold align-top">(a)</td>
+                <td className="px-4 py-3">
+                  <strong>Serious injury to, or loss of, human life.</strong> Includes medical
+                  locations and any installation where equipment failure could endanger people.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-bold align-top text-white/50">(b)</td>
+                <td className="px-4 py-3 text-white/60">
+                  <em>Deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023).</em>
+                </td>
+              </tr>
+              <tr className="border-t border-white/10 bg-blue-900/20">
+                <td className="px-4 py-3 font-bold align-top">(c)</td>
+                <td className="px-4 py-3">
+                  <strong>Significant financial or data loss.</strong> Covers premises where supply
+                  loss or equipment damage from a transient would carry material commercial cost —
+                  shops, offices, server rooms, data-dependent operations.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          For all installations not covered by (a) to (d) above, Regulation 443.4.1 applies — see
-          the section below on the owner declaration mechanism.
+          For all installations not caught by limbs (a) or (c) above, Regulation 443.4.1 still
+          requires protection by default — it may only be omitted via a formal owner declaration.
+          See the section below on the declaration mechanism. The previous edition&apos;s
+          calculated-risk-level method has been deleted, so there is no CRL figure to compute.
         </p>
       </>
     ),
@@ -232,7 +230,7 @@ const sections = [
     content: (
       <>
         <p>
-          For all installations not caught by the four mandatory categories in Regulation 443.4,
+          For all installations not caught by the mandatory consequence limbs in Regulation 443.4.1,
           Regulation 443.4.1 sets a <strong>default-on position: SPDs shall be provided.</strong>{' '}
           The A4:2026 framework is not a cost/benefit test — the starting point is that protection
           is required. The only compliant route to omit SPDs in a non-critical installation is a
@@ -268,9 +266,10 @@ const sections = [
           declaration route is rarely used.
         </p>
         <p>
-          Note: the AQ lightning-density criteria (lightning flash density, overhead vs underground
-          supply) that were used under previous editions no longer form part of the compliance
-          decision. A4:2026 removed them from Section 443 entirely.
+          Note: the formal risk-assessment method (former Regulation 443.5) and Annex A443, which
+          set out a calculated risk level (CRL) using factors such as lightning flash density and
+          overhead-versus-underground supply, no longer form part of the compliance decision.
+          A4:2026 deleted both in full, so there is no CRL figure to calculate against a threshold.
         </p>
       </>
     ),
@@ -309,9 +308,10 @@ const sections = [
               Designed to handle indirect lightning surges and switching surges (8/20 microsecond
               waveform). Type 2 SPDs are the most common type installed in domestic and small
               commercial installations. They are installed at the consumer unit or main distribution
-              board. Typical discharge capacity is 20 to 40kA. Type 2 SPDs clamp the supply voltage
-              to a safe level (typically below 1500V) within nanoseconds of the surge arriving. For
-              most domestic installations, a Type 2 SPD at the consumer unit provides adequate
+              board. Typical discharge capacity is 20 to 40kA. Type 2 SPDs clamp the line voltage to
+              their rated voltage protection level (Up) within nanoseconds of the surge arriving;
+              for a 230/400 V installation that installed Up must not exceed 2.5 kV (Reg 534.4.4.2).
+              For most domestic installations, a Type 2 SPD at the consumer unit provides adequate
               protection.
             </p>
           </div>
@@ -322,40 +322,113 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               Provides fine protection at the point of use. Type 3 SPDs have a lower energy handling
-              capacity but clamp the voltage to a very low level (below 800V). They are installed
-              within 5 metres of the equipment being protected — either as plug-in adapters, built
-              into socket outlets, or as dedicated modules near sensitive equipment. Type 3 SPDs are
-              used in addition to (not instead of) Type 1 or Type 2 devices. They mop up residual
-              surges that the upstream SPD did not fully clamp.
+              capacity but clamp to a lower residual voltage, close to the equipment being
+              protected — either as plug-in adapters, built into socket outlets, or as dedicated
+              modules near sensitive equipment. Type 3 SPDs are used in addition to (not instead of)
+              Type 1 or Type 2 devices. They mop up residual surges that the upstream SPD did not
+              fully clamp, and matter where the protective distance from the consumer-unit SPD is
+              long (see coordination below).
             </p>
           </div>
         </div>
         <p>
           For combined protection, the SPDs must be coordinated. A Type 2 device at the consumer
-          unit handles the bulk of the surge energy, and a Type 3 device at the equipment provides
-          fine clamping. The cable distance between Type 2 and Type 3 must be at least 5 metres (or
-          an inductance decoupling device must be used) to ensure correct energy sharing.
+          unit handles the bulk of the surge energy, and a Type 3 device near the equipment provides
+          fine clamping. BS 7671 flags the protective distance directly: where the distance between
+          the SPD and the equipment to be protected exceeds <strong>10 metres</strong>, oscillations
+          can drive the voltage at the equipment terminals up to twice the SPD&apos;s voltage
+          protection level — so additional coordinated SPDs closer to the equipment, or an SPD with
+          a lower protection level, should be considered (Reg 534.4.4.2).
         </p>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold">Property</th>
+                <th className="px-4 py-3 font-semibold text-red-300">Type 1</th>
+                <th className="px-4 py-3 font-semibold text-blue-300">Type 2</th>
+                <th className="px-4 py-3 font-semibold text-green-300">Type 3</th>
+              </tr>
+            </thead>
+            <tbody className="text-white/90">
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-medium">Test waveform</td>
+                <td className="px-4 py-3">10/350 µs (Iimp)</td>
+                <td className="px-4 py-3">8/20 µs (In/Imax)</td>
+                <td className="px-4 py-3">Combination wave</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-4 py-3 font-medium">Protects against</td>
+                <td className="px-4 py-3">Partial direct lightning current</td>
+                <td className="px-4 py-3">Indirect lightning + switching surges</td>
+                <td className="px-4 py-3">Residual surges at the equipment</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-medium">Typical position</td>
+                <td className="px-4 py-3">Origin of installation</td>
+                <td className="px-4 py-3">Consumer unit / main board</td>
+                <td className="px-4 py-3">At/near the appliance</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-4 py-3 font-medium">Domestic need</td>
+                <td className="px-4 py-3">Only where an external LPS is fitted</td>
+                <td className="px-4 py-3">The usual choice at the board</td>
+                <td className="px-4 py-3">Optional, for sensitive kit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-base mb-3">
-            Overvoltage Categories (Table 443.2) and Voltage Protection Level (Reg 534.4.8)
+            Overvoltage Categories — Required Rated Impulse Voltage (Uw), Table 443.2
           </h3>
-          <p className="text-white text-sm leading-relaxed mb-3">
-            Equipment is classified into four overvoltage categories (I–IV) with corresponding
-            required rated impulse voltages (Uw) from Table 443.2. At 230/400 V nominal, the
-            required values are: Category I = 1.5 kV (sensitive electronics, protected equipment);
-            Category II = 2.5 kV (appliances, tools, most domestic equipment); Category III = 4 kV
-            (distribution boards, switchgear, cables); Category IV = 6 kV (origin of installation,
-            metering equipment, overhead line apparatus).
+          <p className="text-white text-sm leading-relaxed mb-4">
+            Equipment is classified into four overvoltage categories (I–IV), each with a minimum
+            rated impulse voltage (Uw) from Table 443.2. The values below are the required figures
+            for a <strong>230/400 V</strong> installation (the 300 V line-to-neutral row of the
+            table):
           </p>
-          <p className="text-white text-sm leading-relaxed">
-            Regulation 534.4.8 Note 2 recommends that the voltage protection level (Vp) of a
-            selected SPD should not exceed{' '}
-            <strong>80% of the equipment's required rated impulse voltage</strong> for overvoltage
-            category II (2.5 kV at 230/400 V). This gives a recommended maximum Vp of 2.0 kV for
-            protecting most domestic and commercial equipment. The figures of 1.5 kV (Type 3) and
-            below 2.5 kV (Type 2) cited by manufacturers correspond to this framework — not
-            arbitrary marketing claims.
+          <div className="overflow-hidden rounded-xl border border-white/10">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="bg-white/[0.06] text-white">
+                  <th className="px-4 py-3 font-semibold">Category</th>
+                  <th className="px-4 py-3 font-semibold">Required Uw</th>
+                  <th className="px-4 py-3 font-semibold">Example equipment</th>
+                </tr>
+              </thead>
+              <tbody className="text-white/90">
+                <tr className="border-t border-white/10 bg-blue-900/20">
+                  <td className="px-4 py-3 font-bold">IV</td>
+                  <td className="px-4 py-3 font-mono">6 kV</td>
+                  <td className="px-4 py-3">Origin of installation: energy meter, telecontrol systems</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-bold">III</td>
+                  <td className="px-4 py-3 font-mono">4 kV</td>
+                  <td className="px-4 py-3">Fixed installation: distribution boards, switchgear</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-green-900/20">
+                  <td className="px-4 py-3 font-bold">II</td>
+                  <td className="px-4 py-3 font-mono">2.5 kV</td>
+                  <td className="px-4 py-3">Current-using equipment: domestic appliances, tools</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-bold">I</td>
+                  <td className="px-4 py-3 font-mono">1.5 kV</td>
+                  <td className="px-4 py-3">Sensitive electronic equipment (needs upstream SPDs)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white text-sm leading-relaxed mt-4">
+            Regulation 534.4.4.2 sets the selection rule: for a 230/400 V installation the voltage
+            protection level (Up) of the installed SPD assembly{' '}
+            <strong>shall not exceed 2.5 kV</strong>, because the SPD connecting leads add an
+            inductive voltage drop. Note 2 to that regulation recommends Up does not exceed an{' '}
+            <strong>80% safety margin</strong> of the Category II required rated impulse voltage
+            from Table 443.2 — i.e. a target of <strong>2.0 kV</strong> (0.8 × 2.5 kV). It also
+            warns that beyond a 10 m protective distance the terminal voltage can reach twice Up.
           </p>
         </div>
       </>
@@ -535,7 +608,9 @@ const sections = [
         <p>
           From a business perspective, SPDs represent an opportunity for electricians. The
           regulation now effectively mandates SPDs for most new installations, which means every
-          consumer unit change, rewire, and new installation should include SPD provision.
+          consumer unit change, rewire, and new installation should include SPD provision. The
+          figures below are <strong>indicative market guidance</strong> to frame the conversation —
+          not a quote — and will vary by SPD type, board, and region.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -650,7 +725,12 @@ export default function Chapter44OvervoltageProtectionPage() {
           Chapter 44: <span className="text-yellow-400">Overvoltage and SPD Requirements</span>
         </>
       }
-      heroSubtitle="Under BS 7671:2018+A4:2026, SPDs are required by default for most installations — omission requires a formal written owner declaration. This guide explains the Reg 443.4 mandatory categories, the Reg 443.4.1 owner declaration mechanism, SPD types, installation, and the commercial case for your customers."
+      heroSubtitle="Under BS 7671:2018+A4:2026, SPDs are required by default for most installations — omission requires a formal written owner declaration. This guide explains the Reg 443.4.1 consequence limbs, the owner declaration mechanism, SPD types, installation, and the commercial case for your customers."
+      answerBox={{
+        question: 'When are SPDs required under BS 7671 (Chapter 44)?',
+        answer:
+          'Under Regulation 443.4.1 (A4:2026), surge protective devices shall be provided wherever a transient overvoltage could cause serious injury or loss of life, or significant financial or data loss. For all other installations protection is still the default — it may only be omitted if the owner declares any loss is tolerable and accepts the risk.',
+      }}
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

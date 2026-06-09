@@ -111,6 +111,13 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
+    href: '/guides/reduced-low-voltage-110v-cte-site-supplies',
+    title: 'Reduced Low Voltage (110V CTE)',
+    description: 'Why 110V centre-tapped earth is the preferred supply for portable tools.',
+    icon: Zap,
+    category: 'Guide',
+  },
+  {
     href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate confined space risk assessments and method statements.',
@@ -202,24 +209,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 3 — Avoid entry if possible</strong> — work in confined spaces
-                must be avoided wherever reasonably practicable. This means considering whether the
-                work can be done from outside the space using remote tools, cameras, or modified
-                working methods before permitting entry.
+                <strong>Regulation 4 — Work in confined spaces (avoid entry)</strong> — entry must
+                be avoided wherever it is reasonably practicable to do the work without it. This
+                means considering whether the work can be done from outside the space using remote
+                tools, cameras, or modified working methods before permitting entry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 4 — Safe system of work</strong> — if entry cannot be avoided, a
-                safe system of work must be established before any person enters. This must address
-                all the identified specified risks through risk assessment.
+                <strong>Regulation 4 — Safe system of work</strong> — where entry cannot be avoided,
+                Regulation 4 also requires that a safe system of work be established before any
+                person enters. This must address all the identified specified risks through risk
+                assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 5 — Rescue arrangements</strong> — adequate rescue arrangements
+                <strong>Regulation 5 — Emergency (rescue) arrangements</strong> — adequate rescue arrangements
                 must be in place before entry. These must not rely on emergency services for
                 immediate rescue — the response time for emergency services is often too long to
                 prevent a fatality from oxygen deficiency.
@@ -244,6 +252,43 @@ const sections = [
           Atmospheric monitoring is a critical control measure for confined space work. An
           atmosphere that looks clear and smells normal can be lethal — oxygen deficiency and most
           toxic gases are invisible and odourless at dangerous concentrations.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 gap-px bg-white/10 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Measurement</div>
+            <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Safe range / limit</div>
+            <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Why it matters</div>
+          </div>
+          <div className="grid grid-cols-12 gap-px bg-white/10 text-xs sm:text-sm text-white">
+            <div className="col-span-4 bg-green-900/30 px-3 py-3 font-semibold">Oxygen (O₂)</div>
+            <div className="col-span-4 bg-green-900/20 px-3 py-3">19.5% – 23.5% (normal 20.9%)</div>
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Below 16% causes rapid loss of consciousness; above 23.5% sharply raises fire risk.
+            </div>
+
+            <div className="col-span-4 bg-red-900/30 px-3 py-3 font-semibold">Flammable gas (%LEL)</div>
+            <div className="col-span-4 bg-red-900/20 px-3 py-3">Below 10% LEL to enter</div>
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Methane, hydrogen and solvent vapours can reach explosive concentration; ventilate and re-test.
+            </div>
+
+            <div className="col-span-4 bg-orange-900/30 px-3 py-3 font-semibold">Hydrogen sulphide (H₂S)</div>
+            <div className="col-span-4 bg-orange-900/20 px-3 py-3">WEL 5 ppm (15-min STEL)</div>
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Common in sewers and drainage; deadens the sense of smell, so detection must be by instrument.
+            </div>
+
+            <div className="col-span-4 bg-orange-900/30 px-3 py-3 font-semibold">Carbon monoxide (CO)</div>
+            <div className="col-span-4 bg-orange-900/20 px-3 py-3">WEL 20 ppm (8-hr TWA)</div>
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Odourless and colourless; risk wherever petrol or diesel plant has run or exhaust can enter.
+            </div>
+          </div>
+        </div>
+        <p className="text-white/60 text-xs">
+          Workplace Exposure Limits (WELs) are published in HSE document EH40. Test from outside the
+          space using a calibrated multi-gas detector with an integral pump before entry, then
+          monitor continuously throughout.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -402,6 +447,42 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 pt-4 pb-2">
+            <h4 className="font-bold text-white">Supply options, lowest risk first</h4>
+            <p className="text-white/70 text-sm">
+              Reduced low voltage is defined in BS 7671{' '}
+              <SEOInternalLink href="/guides/reduced-low-voltage-110v-cte-site-supplies">
+                Regulation 411.8.1.2
+              </SEOInternalLink>{' '}
+              — nominal voltage not exceeding 110V.
+            </p>
+          </div>
+          <div className="grid grid-cols-12 gap-px bg-white/10 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Supply</div>
+            <div className="col-span-3 bg-[#0c0c0e] px-3 py-2.5">Voltage</div>
+            <div className="col-span-5 bg-[#0c0c0e] px-3 py-2.5">Use in confined spaces</div>
+          </div>
+          <div className="grid grid-cols-12 gap-px bg-white/10 text-xs sm:text-sm text-white">
+            <div className="col-span-4 bg-green-900/30 px-3 py-3 font-semibold">Battery / SELV</div>
+            <div className="col-span-3 bg-green-900/20 px-3 py-3">≤ 50V AC</div>
+            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Preferred for lighting and hand tools; no shock risk at extra-low voltage.
+            </div>
+
+            <div className="col-span-4 bg-blue-900/30 px-3 py-3 font-semibold">110V CTE (RLV)</div>
+            <div className="col-span-3 bg-blue-900/20 px-3 py-3">55V to earthed midpoint</div>
+            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Centre-tapped earth via transformer; preferred for mains-powered portable tools.
+            </div>
+
+            <div className="col-span-4 bg-orange-900/30 px-3 py-3 font-semibold">230V (last resort)</div>
+            <div className="col-span-3 bg-orange-900/20 px-3 py-3">230V AC + 30mA RCD</div>
+            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white/80">
+              Only where reduced voltage is impracticable; additional protection by 30mA RCD required.
+            </div>
+          </div>
+        </div>
         <p>
           All electrical work in a confined space should be carried out dead — with the supply
           isolated and proved dead — as the default. Live working is only justified where it is
@@ -425,19 +506,35 @@ const sections = [
         <p>
           Where a confined space contains or may contain a flammable or explosive atmosphere, all
           electrical equipment used must be rated for that zone under the ATEX requirements.
+          Gas-atmosphere zones (0, 1, 2) describe how often a flammable atmosphere is present.
+          Equipment rated for a lower-numbered zone may always be used in higher-numbered zones —
+          but never the reverse.
         </p>
+        <div className="grid gap-3 sm:grid-cols-3 my-4">
+          <div className="rounded-2xl bg-red-900/30 border border-red-700/40 p-5">
+            <div className="text-2xl font-bold text-red-300 mb-1">Zone 0</div>
+            <p className="text-white/85 text-sm">
+              Flammable atmosphere present continuously, for long periods, or frequently. Requires
+              the highest equipment protection (typically Category 1 / Ex ia).
+            </p>
+          </div>
+          <div className="rounded-2xl bg-orange-900/30 border border-orange-700/40 p-5">
+            <div className="text-2xl font-bold text-orange-300 mb-1">Zone 1</div>
+            <p className="text-white/85 text-sm">
+              Flammable atmosphere likely to occur occasionally in normal operation. Category 2
+              equipment (e.g. Ex ib, Ex d, Ex e).
+            </p>
+          </div>
+          <div className="rounded-2xl bg-yellow-900/30 border border-yellow-700/40 p-5">
+            <div className="text-2xl font-bold text-yellow-300 mb-1">Zone 2</div>
+            <p className="text-white/85 text-sm">
+              Flammable atmosphere not likely in normal operation and, if it occurs, only briefly.
+              Category 3 equipment as a minimum.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Zone classification</strong> — Zone 0 (flammable atmosphere present
-                continuously or for long periods), Zone 1 (likely to occur occasionally in normal
-                operation), Zone 2 (not likely to occur, and if it does, only briefly). Equipment is
-                rated for specific zones — Zone 0 equipment can be used in Zone 1 and 2, but not
-                vice versa.
-              </span>
-            </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
@@ -673,6 +770,13 @@ export default function ConfinedSpaceElectricalPage() {
       }
       heroSubtitle="Everything UK electricians need to know about working safely in confined spaces. Confined Spaces Regulations 1997, what qualifies as a confined space, gas testing requirements, entry and standby team roles, ATEX equipment, and permit to work systems."
       readingTime={13}
+      answerBox={{
+        question: 'What are the rules for electrical work in confined spaces in the UK?',
+        answer:
+          'Work in a confined space must be avoided where reasonably practicable (Confined Spaces Regulations 1997, Regulation 4). Where it cannot be, you need a safe system of work, atmospheric testing (oxygen 19.5–23.5%, flammable gas below 10% LEL), a standby person outside, and rescue arrangements in place before entry. Work dead, use reduced low voltage (110V CTE), and use ATEX-rated equipment in any flammable atmosphere.',
+        detail:
+          'Reduced low voltage is defined in BS 7671 Regulation 411.8.1.2 (not exceeding 110V, 55V single-phase to the earthed midpoint). Solo entry is prohibited, and would-be rescuers must never enter a toxic atmosphere without self-contained breathing apparatus.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

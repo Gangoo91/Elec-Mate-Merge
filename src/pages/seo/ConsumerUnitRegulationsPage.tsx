@@ -38,7 +38,7 @@ const faqs = [
   {
     question: 'What did Amendment 4 (A4:2026) change for consumer units?',
     answer:
-      'Amendment 4 to BS 7671:2018, issued in July 2024, introduced several changes relevant to consumer units. The most significant addition is a new requirement in Section 530 addressing bidirectional and unidirectional protective devices. This requires that where a supply can operate in both directions — for example, in installations with battery storage or solar PV with battery backup that can export energy — the protective devices in the consumer unit must be suitable for bidirectional fault current flow. Standard MCBs and RCDs are typically unidirectional (designed to clear faults with current flowing in one direction only). With the growth of domestic battery storage and vehicle-to-grid (V2G) charging, this is an increasingly important consideration for consumer unit design. Amendment 4 also includes various corrections, clarifications, and editorial updates to the standard.',
+      'Amendment 4 to BS 7671:2018 introduced several changes relevant to consumer units. Regulation 530.3.201 requires that protective devices be selected and erected with the appropriate use of either a unidirectional or a bidirectional device, and notes that products such as RCBOs, RCCBs, circuit-breakers and AFDDs must be marked to show direction — important where battery storage, solar PV with battery backup or vehicle-to-grid charging can drive current in reverse. Regulation 421.1.7 was redrafted to make AFDDs a requirement for socket-outlet final circuits up to 32 A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes (and a recommendation elsewhere). Regulation 443.4 on transient overvoltage protection was also redrafted, with the previous risk-assessment method (Regulation 443.5) deleted. Amendment 4 adds to the requirements rather than replacing the fundamentals of consumer unit design.',
   },
   {
     question: 'Should I use RCBOs or a split-load board with dual RCDs?',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'When is a surge protection device (SPD) required in a consumer unit?',
     answer:
-      "BS 7671 Regulation 443.4 requires SPDs where the consequence of a transient overvoltage would include risk to human life, disruption to public services, interruption of commercial or industrial activity, or impact on a large number of co-located individuals (Regulation 443.4(a)–(d)). For all other cases a risk assessment determines whether protection is needed. Regulation 443.4 also contains an explicit exception for single dwelling units in certain situations — designers should check whether this exception applies before concluding SPDs are mandatory. Where a risk assessment confirms protection is required, SPDs are installed at the origin of the installation, typically within or adjacent to the consumer unit, with a dedicated overcurrent protective device sized per the manufacturer's instructions and Regulation 534.4.10 (minimum 6 mm² connecting conductor for Type 2 SPDs at the origin). A visual indicator confirms the SPD is operational.",
+      "Under BS 7671:2018+A4:2026, Regulation 443.4.1 requires transient overvoltage protection where an overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) having been deleted by the A2:2022 Corrigendum (May 2023). For all other cases protection must still be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. The old risk-assessment method (Regulation 443.5) has been deleted. Where protection is required, SPDs are installed at the origin — within or adjacent to the consumer unit — with a dedicated overcurrent protective device. Regulation 534.4.10 sets the minimum connecting conductor as 6 mm² copper for Type 2 SPDs and 16 mm² copper for Type 1 SPDs at the origin. A status indicator confirms the SPD is still operational.",
   },
   {
     question: 'Is replacing a consumer unit notifiable under Part P?',
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What RCD protection is required in a domestic consumer unit?',
     answer:
-      'BS 7671 Section 411 requires additional protection by a 30 mA RCD for several categories of circuit: all socket-outlet circuits rated up to 32 A, all circuits supplying mobile equipment intended for outdoor use up to 32 A, and all circuits where cables are concealed in walls at a depth of less than 50 mm unless the cable has an earthed metallic covering. In practice, this covers the vast majority of circuits in a domestic installation. The only circuits that may not require 30 mA RCD protection are those supplying fixed equipment with permanently connected cables at a depth exceeding 50 mm, and specific circuits where RCD protection might cause a greater hazard (such as fire alarm circuits, where the loss of supply due to an RCD trip could compromise fire safety). Even for these circuits, many designers choose to provide RCD protection as good practice.',
+      'BS 7671 requires additional protection by a 30 mA RCD for several categories of circuit. Regulation 411.3.3 covers socket-outlets rated up to 32 A and mobile equipment for use outdoors up to 32 A. Regulation 411.3.4 requires 30 mA RCD protection for AC final circuits supplying luminaires in domestic premises. Table 52.1 (Regulation 522.6.202) requires it for cables concealed in walls at less than 50 mm depth unless they have an earthed metallic covering or are in a prescribed zone with equivalent protection. In practice this covers the vast majority of circuits in a domestic installation. The circuits that may not need 30 mA RCD protection are typically those supplying fixed equipment with surface-clipped or metallic-contained cabling at greater depth — though many designers provide protection anyway as good practice. Note that an RCD is never recognised as a sole means of protection (Regulation 415.1.2).',
   },
 ];
 
@@ -191,17 +191,18 @@ export default function ConsumerUnitRegulationsPage() {
               <strong className="text-yellow-400">Consumer unit regulations</strong> in the UK are
               set by BS&nbsp;7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition). They
               require metal (non-combustible) enclosures under Regulation&nbsp;421.1.201, 30&nbsp;mA
-              RCD protection for nearly all domestic circuits under Section&nbsp;411, and surge
-              protection assessment under Regulation&nbsp;443.4. Amendment&nbsp;4 (A4:2026), issued
-              July&nbsp;2024, adds a recommendation for arc fault detection devices (AFDDs) under
-              Regulation&nbsp;421.1.7 and new requirements where bidirectional current flow is
-              possible.
+              RCD protection for almost all domestic circuits (Regulations&nbsp;411.3.3 and 411.3.4),
+              and transient overvoltage (surge) protection under Regulation&nbsp;443.4. Amendment&nbsp;4
+              (A4:2026) makes arc fault detection devices (AFDDs) a requirement for socket-outlet
+              final circuits up to 32&nbsp;A in higher-risk residential buildings, HMOs, student
+              accommodation and care homes under Regulation&nbsp;421.1.7, and requires devices to be
+              selected for the correct current direction under Regulation&nbsp;530.3.201.
             </p>
           </div>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The definitive guide to consumer unit regulations under BS 7671:2018+A4:2026. Metal
-            enclosures, RCD protection, RCBO design, SPD requirements, and the new Regulation
-            Section 530 (Amendment 4).
+            enclosures, RCD protection, RCBO design, SPD requirements, AFDDs, and the Amendment 4
+            bidirectional device rule (Regulation 530.3.201).
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -253,11 +254,70 @@ export default function ConsumerUnitRegulationsPage() {
             <p>
               For electricians, the consumer unit replacement is one of the most common jobs in
               domestic work. It is also one of the most regulation-intensive: it is notifiable under
-              Part P, requires a full Electrical Installation Certificate (EIC), involves decisions
-              about RCD architecture, SPD provision, circuit labelling, and (since Amendment 4) the
-              suitability of protective devices for bidirectional current flow. Getting it right
-              requires a thorough understanding of the current regulations.
+              Part P, requires a full{' '}
+              <SEOInternalLink href="/eic-certificate">
+                Electrical Installation Certificate (EIC)
+              </SEOInternalLink>
+              , and involves decisions about RCD architecture, SPD provision, circuit labelling and
+              (since Amendment 4) the suitability of protective devices for bidirectional current
+              flow. Getting it right requires a thorough understanding of the current regulations.
             </p>
+          </div>
+
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden mt-8">
+            <div className="px-5 py-4 border-b border-white/10 bg-white/[0.03]">
+              <h3 className="font-bold text-white text-lg">Protective Devices at a Glance</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-white">
+                <thead>
+                  <tr className="border-b border-white/10 text-left text-yellow-400">
+                    <th className="px-5 py-3 font-semibold">Device</th>
+                    <th className="px-5 py-3 font-semibold">Protects against</th>
+                    <th className="px-5 py-3 font-semibold">Typical use in a consumer unit</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  <tr>
+                    <td className="px-5 py-3 align-top font-medium text-yellow-300">MCB</td>
+                    <td className="px-5 py-3 align-top">Overload and short-circuit (overcurrent)</td>
+                    <td className="px-5 py-3 align-top">
+                      Per-circuit overcurrent protection, grouped behind a shared RCD on a
+                      split-load board.
+                    </td>
+                  </tr>
+                  <tr className="bg-white/[0.02]">
+                    <td className="px-5 py-3 align-top font-medium text-yellow-300">RCD (30 mA)</td>
+                    <td className="px-5 py-3 align-top">Earth leakage / electric shock (additional protection)</td>
+                    <td className="px-5 py-3 align-top">
+                      One or two main RCDs covering groups of circuits on a split-load board.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-5 py-3 align-top font-medium text-yellow-300">RCBO</td>
+                    <td className="px-5 py-3 align-top">Overcurrent + earth leakage in one device</td>
+                    <td className="px-5 py-3 align-top">
+                      Individual per-circuit protection — the basis of a full RCBO board.
+                    </td>
+                  </tr>
+                  <tr className="bg-white/[0.02]">
+                    <td className="px-5 py-3 align-top font-medium text-yellow-300">AFDD</td>
+                    <td className="px-5 py-3 align-top">Series and parallel arc faults (fire risk)</td>
+                    <td className="px-5 py-3 align-top">
+                      Socket-outlet final circuits up to 32 A; required in higher-risk premises
+                      (Reg 421.1.7).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-5 py-3 align-top font-medium text-yellow-300">SPD</td>
+                    <td className="px-5 py-3 align-top">Transient overvoltage (surge / lightning, switching)</td>
+                    <td className="px-5 py-3 align-top">
+                      Single module at the origin, protecting the whole installation (Section 443).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -324,72 +384,91 @@ export default function ConsumerUnitRegulationsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 Section 411 sets out the circumstances where additional protection by a 30 mA
-              RCD is required. The requirements have expanded with each edition of the standard, and
-              in the current 18th Edition, almost every circuit in a domestic consumer unit requires
-              RCD protection.
+              BS 7671 Section 411 sets out where additional protection by a 30 mA RCD is required.
+              An RCD providing additional protection must have a rated residual operating current
+              (I&#8710;n) not exceeding 30 mA and meet the characteristics in Regulation 415.1.1.
+              The requirements have expanded with each edition, and in the current 18th Edition
+              almost every circuit in a domestic consumer unit needs RCD protection.
             </p>
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
-              <h3 className="font-bold text-white text-lg mb-4">
-                Circuits Requiring 30 mA RCD Protection
-              </h3>
-              <ul className="space-y-3 text-white">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-yellow-400">All socket outlets rated up to 32 A</strong>{' '}
-                    — This covers every standard 13 A socket, 16 A industrial socket, and 32 A
-                    socket in the installation. There are no exceptions based on location or use —
-                    all socket outlets up to 32 A must be RCD-protected.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-yellow-400">
-                      Mobile equipment outdoors up to 32 A
-                    </strong>{' '}
-                    — Any circuit supplying equipment intended for outdoor use, including garden
-                    lighting supplies, external sockets, and circuits to outbuildings.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-yellow-400">
-                      Cables in walls at less than 50 mm depth
-                    </strong>{' '}
-                    — Unless the cable has an earthed metallic covering (SWA, MICC) or is in earthed
-                    metallic conduit or trunking, cables at shallow depth in walls must be
-                    RCD-protected.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-yellow-400">Cables in walls with metallic parts</strong>{' '}
-                    — Cables in metal-stud partitions, steelwork, or other walls containing metallic
-                    elements must be RCD-protected regardless of depth.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-yellow-400">
-                      Lighting circuits in domestic premises
-                    </strong>{' '}
-                    — Most lighting circuits in homes are wired in cable concealed in walls at less
-                    than 50 mm depth, bringing them within the RCD requirement.
-                  </span>
-                </li>
-              </ul>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
+              <div className="px-5 py-4 border-b border-white/10 bg-white/[0.03]">
+                <h3 className="font-bold text-white text-lg">
+                  When 30 mA RCD Protection Is Required
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-white">
+                  <thead>
+                    <tr className="border-b border-white/10 text-left text-yellow-400">
+                      <th className="px-5 py-3 font-semibold">Circuit / situation</th>
+                      <th className="px-5 py-3 font-semibold">Regulation</th>
+                      <th className="px-5 py-3 font-semibold">Requirement</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    <tr>
+                      <td className="px-5 py-3 align-top">
+                        Socket-outlets up to 32 A (general locations)
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">411.3.3</td>
+                      <td className="px-5 py-3 align-top">
+                        30 mA RCD required. A documented risk assessment may omit protection in
+                        certain non-domestic cases, but never for sockets liable to be used by
+                        ordinary persons or children.
+                      </td>
+                    </tr>
+                    <tr className="bg-white/[0.02]">
+                      <td className="px-5 py-3 align-top">Mobile equipment for use outdoors up to 32 A</td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">411.3.3</td>
+                      <td className="px-5 py-3 align-top">
+                        30 mA RCD required — external sockets, garden supplies, and outbuilding feeds.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 align-top">
+                        AC final circuits supplying luminaires (domestic)
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">411.3.4</td>
+                      <td className="px-5 py-3 align-top">
+                        30 mA RCD required — added by Amendment&nbsp;4 era updates; applies to all
+                        household lighting final circuits.
+                      </td>
+                    </tr>
+                    <tr className="bg-white/[0.02]">
+                      <td className="px-5 py-3 align-top">
+                        Cables concealed in a wall or partition at &lt; 50 mm depth
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                        522.6.202 (Table 52.1)
+                      </td>
+                      <td className="px-5 py-3 align-top">
+                        30 mA RCD required unless the cable is in a prescribed zone with an earthed
+                        metallic covering or earthed containment (per 522.6.204).
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 align-top">
+                        Cables in walls containing metallic parts (e.g. metal-stud)
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                        522.6.202 (Table 52.1)
+                      </td>
+                      <td className="px-5 py-3 align-top">
+                        30 mA RCD required regardless of depth, unless equivalent protection is
+                        provided.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <p>
               The practical effect is that almost every circuit in a domestic consumer unit now
               requires 30 mA RCD protection. The main exceptions are circuits supplying fixed
-              equipment with cables that are either clipped to the surface (not concealed in walls),
-              run in metallic containment, or routed at a depth exceeding 50 mm. Even for these
-              circuits, many designers provide RCD protection as a matter of good practice.
+              equipment with cables that are clipped to the surface (not concealed in walls), run in
+              earthed metallic containment, or routed at a depth exceeding 50 mm. Note that an RCD
+              is never recognised as a sole means of protection (Regulation 415.1.2) — it
+              supplements basic and fault protection rather than replacing them.
             </p>
           </div>
         </div>
@@ -476,13 +555,52 @@ export default function ConsumerUnitRegulationsPage() {
               </ul>
             </div>
           </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-white">
+                <thead>
+                  <tr className="border-b border-white/10 text-left text-yellow-400 bg-white/[0.03]">
+                    <th className="px-5 py-3 font-semibold">Consideration</th>
+                    <th className="px-5 py-3 font-semibold">Dual RCD split-load</th>
+                    <th className="px-5 py-3 font-semibold">Full RCBO board</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  <tr>
+                    <td className="px-5 py-3 align-top">Upfront cost</td>
+                    <td className="px-5 py-3 align-top text-yellow-300">Lower</td>
+                    <td className="px-5 py-3 align-top">Higher per circuit</td>
+                  </tr>
+                  <tr className="bg-white/[0.02]">
+                    <td className="px-5 py-3 align-top">Fault on one circuit</td>
+                    <td className="px-5 py-3 align-top">Disconnects the whole RCD group</td>
+                    <td className="px-5 py-3 align-top text-yellow-300">Trips only that circuit</td>
+                  </tr>
+                  <tr>
+                    <td className="px-5 py-3 align-top">Cumulative earth leakage</td>
+                    <td className="px-5 py-3 align-top">Shared across the group — nuisance-trip risk</td>
+                    <td className="px-5 py-3 align-top text-yellow-300">Isolated per circuit</td>
+                  </tr>
+                  <tr className="bg-white/[0.02]">
+                    <td className="px-5 py-3 align-top">Fault diagnosis</td>
+                    <td className="px-5 py-3 align-top">Isolate circuits to find the fault</td>
+                    <td className="px-5 py-3 align-top text-yellow-300">Tripped device pinpoints it</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               For most new domestic installations and consumer unit replacements, full RCBO boards
               are now the preferred choice among professional electricians. The additional material
               cost is easily justified by the improved discrimination, reduced nuisance tripping,
               and better fault diagnosis. The time saved in call-backs for nuisance tripping alone
-              often pays for the cost difference.
+              often pays for the cost difference. For pricing context, see our{' '}
+              <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
+                consumer unit replacement cost guide
+              </SEOInternalLink>
+              .
             </p>
           </div>
         </div>
@@ -501,14 +619,15 @@ export default function ConsumerUnitRegulationsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A4:2026 was issued on 31 July 2024 as a free PDF supplement to the main
-              standard. It is not a new book — it is an amendment document that modifies and adds to
-              the existing 18th Edition. The most significant change for consumer unit design is the
-              introduction of new bidirectional device requirements in Section 530.
+              BS 7671:2018+A4:2026 is an amendment document that modifies and adds to the existing
+              18th Edition rather than being a new book. The most significant changes for consumer
+              unit design are the bidirectional device rule in Regulation 530.3.201, the redrafted
+              AFDD requirement in Regulation 421.1.7, and the redrafted surge protection criteria in
+              Regulation 443.4.
             </p>
             <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">
-                BS 7671:2018+A4:2026, Section 530 — Bidirectional and Unidirectional Devices
+                Regulation 530.3.201 — Bidirectional and Unidirectional Devices
               </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
@@ -529,14 +648,16 @@ export default function ConsumerUnitRegulationsPage() {
                   the fault and allowing it to persist.
                 </p>
                 <p>
-                  BS 7671 Section 530 (Amendment 4) requires that where bidirectional current flow
-                  is possible, the protective devices must be suitable for operation in both
-                  directions, or additional measures must be taken to ensure correct fault clearance
-                  regardless of the direction of current flow. For consumer unit design, this means
-                  checking with the device manufacturer whether their MCBs and RCBOs are rated for
-                  bidirectional fault current, and if not, implementing appropriate measures such as
-                  dedicated protection for the battery or generator circuit that prevents reverse
-                  fault current from reaching the main distribution.
+                  Regulation 530.3.201 (Amendment 4) requires that the selection and erection of
+                  equipment for protection takes account of the appropriate use of either a
+                  unidirectional or a bidirectional protective device. The accompanying note records
+                  that product standards for devices such as RCCBs, RCBOs, circuit-breakers and
+                  AFDDs require them to be marked to show direction — for example
+                  &ldquo;in&rdquo;/&ldquo;out&rdquo;, &ldquo;line&rdquo;/&ldquo;load&rdquo;, or
+                  arrows. For consumer unit design, this means checking the device markings and the
+                  manufacturer&apos;s data so that a device installed where reverse current can flow
+                  is actually rated for it, or implementing measures so reverse fault current is
+                  cleared correctly.
                 </p>
               </div>
             </div>
@@ -546,19 +667,46 @@ export default function ConsumerUnitRegulationsPage() {
               </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
-                  Regulation 421.1.7 is a new addition introduced by Amendment&nbsp;4 (A4:2026),
-                  located in Part&nbsp;4 — Protection for Safety, Chapter&nbsp;42. It recommends the
-                  installation of arc fault detection devices (AFDDs) in AC final circuits of a
-                  fixed installation to mitigate the risk of fire due to the effects of arc fault
-                  currents.
+                  Regulation 421.1.7 sits in Part&nbsp;4 — Protection for Safety, Chapter&nbsp;42.
+                  Amendment&nbsp;4 redrafted it so that arc fault detection devices (AFDDs) are now a
+                  firm requirement for some premises and a recommendation for others. AFDDs mitigate
+                  the risk of fire caused by arc fault currents in AC final circuits.
                 </p>
+                <div className="rounded-xl border border-white/10 overflow-hidden my-2">
+                  <table className="w-full text-sm text-white">
+                    <thead>
+                      <tr className="border-b border-white/10 text-left text-yellow-400 bg-white/[0.03]">
+                        <th className="px-4 py-2.5 font-semibold">Premises type</th>
+                        <th className="px-4 py-2.5 font-semibold">AFDD status under 421.1.7</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      <tr>
+                        <td className="px-4 py-2.5 align-top">
+                          Higher-risk residential buildings, HMOs, purpose-built student
+                          accommodation, care homes
+                        </td>
+                        <td className="px-4 py-2.5 align-top text-yellow-300 font-medium">
+                          Required (shall) for socket-outlet final circuits up to 32 A
+                        </td>
+                      </tr>
+                      <tr className="bg-white/[0.02]">
+                        <td className="px-4 py-2.5 align-top">
+                          All other premises (incl. typical dwellings)
+                        </td>
+                        <td className="px-4 py-2.5 align-top">
+                          Recommended for single-phase AC final circuits supplying socket-outlets up
+                          to 32 A
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
                 <p>
-                  The wording of Regulation&nbsp;421.1.7 is advisory rather than mandatory — it uses
-                  &ldquo;recommending&rdquo; rather than &ldquo;shall&rdquo;. However, the
-                  recommendation carries regulatory weight as a BS&nbsp;7671 provision, and
-                  designers should consider AFDD provision at the consumer unit design stage,
-                  particularly for high-risk AC final circuits such as bedroom circuits and circuits
-                  in older wiring systems where degraded insulation may be present.
+                  Using AFDDs does not remove the need to apply the other protective measures in the
+                  standard. Designers should consider AFDD provision at the consumer unit design
+                  stage — particularly for circuits in older wiring systems where degraded
+                  insulation may be present.
                 </p>
                 <p>
                   AFDDs detect the characteristic high-frequency signatures of arc faults in
@@ -597,21 +745,46 @@ export default function ConsumerUnitRegulationsPage() {
             <p>
               BS 7671 Section 443 covers protection against transient overvoltages — voltage spikes
               caused by lightning strikes (direct or nearby) and switching events on the supply
-              network. Regulation 443.4.1 requires a risk assessment to determine whether SPDs are
-              necessary. Where the risk assessment identifies that the consequences of an
-              overvoltage event would include risk to human life, risk to a public service or
-              cultural heritage site, disruption to a commercial or industrial activity, or damage
-              to a large number of co-located individuals, SPD protection must be provided.
+              network. Amendment 4 redrafted Regulation 443.4. Protection against transient
+              overvoltages must now be provided wherever an overvoltage could result in either of the
+              two consequences below; for all other cases protection is still required unless the
+              owner of the installation declares it is not required because any loss or damage is
+              tolerable and they accept the risk. The old risk-assessment method of the previous
+              amendment (Regulation 443.5) has been deleted.
             </p>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+              <h3 className="font-bold text-white text-lg mb-4">
+                When SPD Protection Must Be Provided (Regulation 443.4.1)
+              </h3>
+              <ul className="space-y-3 text-white text-sm">
+                <li className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <span>
+                    <strong>(a)</strong> serious injury to, or loss of, human life.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <span>
+                    <strong>(c)</strong> significant financial or data loss.
+                  </span>
+                </li>
+              </ul>
+              <p className="text-white/60 text-xs leading-relaxed mt-3">
+                Limb (b) was deleted by the BS&nbsp;7671:2018+A2:2022 Corrigendum (May 2023), leaving
+                the two consequence conditions above.
+              </p>
+              <p className="text-white text-sm leading-relaxed mt-4">
+                For all other cases, protection against transient overvoltages shall be provided
+                unless the owner of the installation declares it is not required due to any loss or
+                damage being tolerable and they accept the risk of damage to equipment and any
+                consequential loss. Designers should therefore evaluate the specific installation
+                rather than assume SPDs are always mandatory or never needed.
+              </p>
+            </div>
             <p>
-              Regulation&nbsp;443.4 contains an explicit exception allowing single dwelling units to
-              be excluded from the requirement to provide transient overvoltage protection where the
-              specified conditions are met. Designers should evaluate whether this exception applies
-              before concluding that SPDs are mandatory for a particular domestic installation.
-            </p>
-            <p>
-              Where the exception does not apply, or where a risk assessment confirms the need for
-              protection, SPDs should be installed. The average UK home now contains thousands of
+              Where protection is required — or where the owner does not declare it unnecessary —
+              SPDs should be installed. The average UK home now contains thousands of
               pounds worth of electronic equipment — smart TVs, computers, broadband routers, smart
               home devices, LED lighting drivers, heating controls, and appliances with electronic
               controllers. A single transient overvoltage event can damage multiple items
@@ -622,11 +795,51 @@ export default function ConsumerUnitRegulationsPage() {
               (many modern consumer units have dedicated SPD modules) or in a separate enclosure
               adjacent to the consumer unit. The SPD requires a dedicated overcurrent protective
               device (MCB or fuse) for its supply, sized in accordance with the manufacturer&apos;s
-              instructions and Regulation 534.4.10 (which specifies minimum conductor
-              cross-sectional areas for SPD connecting conductors — not less than 6&nbsp;mm&sup2;
-              copper for Type&nbsp;2 SPDs at the origin). A green indicator on the SPD confirms it
-              is operational — when the indicator turns red or disappears, the SPD has operated and
-              expended its protection capacity and must be replaced.
+              instructions. Regulation 534.4.10 sets the minimum cross-sectional area of SPD
+              connecting conductors:
+            </p>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-white">
+                  <thead>
+                    <tr className="border-b border-white/10 text-left text-yellow-400 bg-white/[0.03]">
+                      <th className="px-5 py-3 font-semibold">Connecting conductor (Reg 534.4.10)</th>
+                      <th className="px-5 py-3 font-semibold">Type 2 SPD at origin</th>
+                      <th className="px-5 py-3 font-semibold">Type 1 SPD at origin</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    <tr>
+                      <td className="px-5 py-3 align-top">
+                        To main earthing terminal / protective conductor
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                        ≥ 6 mm² copper
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                        ≥ 16 mm² copper
+                      </td>
+                    </tr>
+                    <tr className="bg-white/[0.02]">
+                      <td className="px-5 py-3 align-top">
+                        Connecting SPDs and OCPDs to live conductors
+                      </td>
+                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                        ≥ 2.5 mm² copper
+                      </td>
+                      <td className="px-5 py-3 align-top text-white/70">
+                        Per manufacturer / short-circuit rating
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p>
+              SPD connecting leads should also be kept as short as practicable to preserve the level
+              of protection. A status indicator on the SPD confirms it is operational — when the
+              indicator changes state to show it has operated, the SPD has expended its protection
+              capacity and must be replaced.
             </p>
             <p>
               For installations on overhead supply lines, the risk of lightning-induced transient
@@ -651,21 +864,27 @@ export default function ConsumerUnitRegulationsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 requires comprehensive labelling of the consumer unit and its contents.
-              Regulation 514.9.1 requires that every circuit be identified by a durable label at the
-              distribution board. The label must identify the circuit (for example, "Upstairs
-              Sockets," "Kitchen Ring," "Immersion Heater") and must be accurate, legible, and
-              durable. The regulation specifically notes that labels depending on the position of
-              the device within the board are not sufficient on their own — each device must be
-              individually labelled.
+              BS 7671 requires comprehensive labelling and documentation of the consumer unit and
+              its circuits. Regulation 514.9.1 requires a diagram, chart, table or equivalent that
+              indicates the type and composition of each circuit, the method used for compliance
+              with automatic disconnection (Regulation 410.3.2), and the information needed to
+              identify each protective, isolation and switching device and its location. For simple
+              installations this may be a schedule, a durable copy of which must be kept within or
+              adjacent to the distribution board. Amendment 4 added an exception so this need not be
+              applied for domestic (household) premises where an initial verification certificate or
+              an Electrical Installation Condition Report — complete with the guidance for
+              recipients in Appendix 6 — has been issued to the person ordering the work.
             </p>
             <p>
-              Additional labelling requirements include: a warning notice at the origin of the
-              installation stating the type and rating of the main protective device (Regulation
-              514.12.1), a warning notice identifying that the installation has more than one source
-              of supply where applicable (BS 7671 Section 514), the earthing arrangement (TN-S,
-              TN-C-S, or TT), and a notice advising that the RCDs fitted should be tested at
-              quarterly intervals by pressing the test button.
+              Other notices required at or near the consumer unit include: an instruction notice on
+              periodic inspection and testing recording the date of last and recommended next
+              inspection (Regulation 514.12.1, with its own domestic-premises exception under
+              Amendment 4 where appropriate certification is issued); an isolation warning notice
+              where live parts cannot be isolated by a single device (Regulation 514.11.1); the
+              earthing arrangement and any RCD test advice; and, where the installation has more
+              than one source of supply, an appropriate warning notice. Devices must be arranged and
+              identified so that the circuit they protect can be easily recognised (Regulation
+              514.8.1).
             </p>
             <p>
               A consumer unit replacement requires a full{' '}

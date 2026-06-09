@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/off-job-training-hours',
     title: 'Off-the-Job Training Hours',
-    description: 'The 20% requirement — what counts and how to track your hours.',
+    description: 'The fixed-hours requirement — what counts and how to track your hours.',
     icon: Clock,
     category: 'Guide',
   },
@@ -146,30 +146,42 @@ const sections = [
           The National Minimum Wage (NMW) for apprentices is set by the government and typically
           changes every April. The current rates (from April 2025) are:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Apprentice rate: £7.55/hour</strong> — applies if you are under 19, or if
-                you are 19 or over and in the first year of your apprenticeship
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Age 18-20: £10.00/hour</strong> — applies after you turn 19 and have
-                completed the first year of your apprenticeship
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Age 21+: £12.21/hour</strong> — the National Living Wage, applies after you
-                turn 21 and have completed the first year of your apprenticeship
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 px-5 py-3 border-b border-white/10 bg-white/[0.03]">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Who it applies to
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/60 text-right">
+              Rate (from April 2025)
+            </span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10 bg-yellow-900/20">
+            <div>
+              <p className="font-bold text-white">Apprentice rate</p>
+              <p className="text-white/70 text-sm">
+                Under 19, or 19+ in the first year of the apprenticeship
+              </p>
+            </div>
+            <span className="font-bold text-yellow-400 text-lg tabular-nums">£7.55/hr</span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10">
+            <div>
+              <p className="font-bold text-white">Age 18-20 standard rate</p>
+              <p className="text-white/70 text-sm">
+                After you turn 19 and complete the first year
+              </p>
+            </div>
+            <span className="font-bold text-white text-lg tabular-nums">£10.00/hr</span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4">
+            <div>
+              <p className="font-bold text-white">Age 21+ (National Living Wage)</p>
+              <p className="text-white/70 text-sm">
+                After you turn 21 and complete the first year
+              </p>
+            </div>
+            <span className="font-bold text-white text-lg tabular-nums">£12.21/hr</span>
+          </div>
         </div>
         <p>
           <strong>JIB pay rates:</strong> If your employer is a JIB (Joint Industry Board) member,
@@ -218,13 +230,15 @@ const sections = [
             <div>
               <h3 className="font-bold text-white text-base mb-1">Study Time Is Paid</h3>
               <p className="text-white text-sm leading-relaxed">
-                If your employer directs you to study during working hours (which they should, to
-                meet the{' '}
+                Your employer must give you time during paid working hours to complete your{' '}
                 <SEOInternalLink href="/guides/off-job-training-hours">
-                  20% off-the-job training
-                </SEOInternalLink>{' '}
-                requirement), that study time is paid. Your employer cannot deduct pay for
-                off-the-job training activities that happen during your contracted hours.
+                  off-the-job training
+                </SEOInternalLink>
+                . Since 1 August 2025 this is a fixed number of hours set for your apprenticeship
+                standard (1,066 hours for the Installation & Maintenance Electrician standard,
+                ST0152) rather than a percentage of your hours. All of that training time is paid,
+                and your employer cannot deduct pay for off-the-job training that happens during
+                your contracted hours.
               </p>
             </div>
           </div>
@@ -474,6 +488,36 @@ const sections = [
             </li>
           </ul>
         </div>
+        <h3 className="font-bold text-white text-lg mt-6 mb-3">
+          Statutory minimum notice by length of service
+        </h3>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 px-5 py-3 border-b border-white/10 bg-white/[0.03]">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Continuous service
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/60 text-right">
+              Minimum notice
+            </span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10">
+            <span className="text-white">1 month to under 2 years</span>
+            <span className="font-bold text-white tabular-nums">1 week</span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10">
+            <span className="text-white">2 to 12 years</span>
+            <span className="font-bold text-white tabular-nums">1 week per full year</span>
+          </div>
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4">
+            <span className="text-white">12 years or more</span>
+            <span className="font-bold text-white tabular-nums">12 weeks (capped)</span>
+          </div>
+        </div>
+        <p className="text-white/60 text-sm">
+          This is the statutory minimum — your contract may set a longer notice period, in which
+          case the longer one applies. Statutory redundancy pay only becomes payable once you have
+          two or more years of continuous service.
+        </p>
         <p>
           Being made redundant is not a reflection of your ability. It happens in the construction
           industry due to project completions, contract losses, and economic downturns. The
@@ -493,15 +537,31 @@ const sections = [
           treated less favourably because of any protected characteristic:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Age, disability, gender reassignment, marriage and civil partnership, pregnancy and
-                maternity, race, religion or belief, sex, and sexual orientation
-              </span>
-            </li>
-          </ul>
+          <p className="text-white/70 text-sm mb-4">
+            The Equality Act 2010 protects nine characteristics. Your employer cannot treat you less
+            favourably because of any of them:
+          </p>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {[
+              'Age',
+              'Disability',
+              'Gender reassignment',
+              'Marriage & civil partnership',
+              'Pregnancy & maternity',
+              'Race',
+              'Religion or belief',
+              'Sex',
+              'Sexual orientation',
+            ].map((characteristic) => (
+              <div
+                key={characteristic}
+                className="flex items-center gap-2 rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2.5"
+              >
+                <Users className="w-4 h-4 text-yellow-400 shrink-0" />
+                <span className="text-white text-sm">{characteristic}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <p>
           In practice, this means your employer cannot refuse to hire you, pay you less, deny you
@@ -556,9 +616,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The apprenticeship agreement is a separate document signed by you, your employer, and
               your training provider. It sets out the details of the apprenticeship: the standard
-              being followed (ST0215 for electrical), the training plan, the duration, the
-              off-the-job training commitment, and the assessment arrangements. This agreement is
-              the basis for the apprenticeship funding.
+              being followed (ST0152 for the Installation & Maintenance Electrician), the training
+              plan, the duration, the off-the-job training commitment, and the assessment
+              arrangements. This agreement is the basis for the apprenticeship funding.
             </p>
           </div>
         </div>
@@ -599,6 +659,11 @@ export default function ApprenticeRightsPayPage() {
       }
       heroSubtitle="Every apprentice in the UK has clear legal rights — pay, holiday, sick leave, working hours, and protection against discrimination. This guide explains your entitlements so you know exactly what you are owed and where to get help if your employer falls short."
       readingTime={10}
+      answerBox={{
+        question: 'What rights and pay is a UK electrical apprentice entitled to?',
+        answer:
+          'A UK apprentice must be paid at least the National Minimum Wage (the apprentice rate is £7.55/hour from April 2025), with college and off-the-job training days paid as normal working time. You also get 5.6 weeks (28 days including bank holidays) of paid holiday, Statutory Sick Pay, Working Time Regulations break and rest rights, and full protection from discrimination under the Equality Act 2010.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

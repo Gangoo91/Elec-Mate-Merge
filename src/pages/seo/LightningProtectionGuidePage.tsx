@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are SPDs and why does BS 7671 Chapter 44 require them?',
     answer:
-      'SPDs (Surge Protection Devices) are devices installed in the electrical installation to limit transient overvoltages caused by lightning strikes and switching surges. BS 7671 Chapter 44 requires a risk assessment to determine whether SPDs are needed. The assessment considers the consequences of overvoltage on the installation — if loss of human life, public services, cultural heritage, or commercial value would result, SPDs are generally required. In practice, SPDs are now fitted in most new installations. Type 1 SPDs (also called Type B or Class I) are installed where the building has a lightning protection system or is fed by an overhead line. Type 2 SPDs (also called Type C or Class II) are the standard choice for most domestic and commercial installations. They are installed at the consumer unit or distribution board.',
+      'SPDs (Surge Protection Devices) are devices installed in the electrical installation to limit transient overvoltages caused by lightning strikes and switching surges. BS 7671 Chapter 44 sets out when protection is needed. Under Regulation 443.4.1, protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. (Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum of May 2023.) For all other cases, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. In practice, SPDs are now fitted in most new installations. Type 1 SPDs (also called Type B or Class I) are installed where the building has a lightning protection system or is fed by an overhead line. Type 2 SPDs (also called Type C or Class II) are the standard choice for most domestic and commercial installations. They are installed at the consumer unit or distribution board.',
   },
   {
     question: 'What is an earth termination system?',
@@ -301,10 +301,14 @@ const sections = [
           </ul>
         </div>
         <p>
-          BS 7671 Chapter 44 requires a risk assessment to determine whether SPDs are needed. Where
-          the consequence of transient overvoltage includes risk to human life or disruption of
-          public services, SPDs are generally required. In practice, SPDs are now installed in most
-          new domestic and commercial installations.
+          BS 7671 Chapter 44 sets out when SPDs are needed. Under Regulation 443.4.1, protection
+          against transient overvoltages shall be provided where the consequence caused by the
+          overvoltage could result in (a) serious injury to, or loss of, human life, or (c)
+          significant financial or data loss — limb (b) having been deleted by the BS 7671:2018+A2:2022
+          Corrigendum of May 2023. For all other cases, protection shall be provided unless the owner
+          of the installation declares it is not required because any loss or damage is tolerable and
+          they accept the risk of damage to equipment and any consequential loss. In practice, SPDs
+          are now installed in most new domestic and commercial installations.
         </p>
       </>
     ),

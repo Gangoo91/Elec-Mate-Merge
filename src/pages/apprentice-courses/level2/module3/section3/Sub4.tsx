@@ -177,14 +177,14 @@ const quizQuestions = [
     id: 8,
     question: 'BS 7671 443.4.1 requires SPD protection where:',
     options: [
-      'The consequence of an overvoltage could result in serious injury, loss of life, failure of a safety service, or significant financial / data loss',
+      'The consequence of an overvoltage could result in serious injury to, or loss of, human life, or significant financial / data loss',
       'Each person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s share should be reduced by at least one-third compared to their equal mathematical share',
       'Repetitive manual labour often creates physical strain without the cardiovascular and mental health benefits of varied, voluntary exercise',
       'The notice must be in writing, specify the ground(s) for suspension (non-payment of a sum due), allow at least 7 days before suspension takes effect, and identify the date payment was due',
     ],
     correctAnswer: 0,
     explanation:
-      'Reg 443.4.1 mandates SPDs where the consequence of an overvoltage could result in (a) serious injury or loss of life, (b) failure of a safety service, or (c) significant financial or data loss. For other cases SPDs are still required unless the owner declares the risk acceptable in writing.',
+      'Reg 443.4.1 mandates SPDs where the consequence of an overvoltage could result in (a) serious injury to, or loss of, human life or (c) significant financial or data loss — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases SPDs are still required unless the owner declares the risk acceptable in writing.',
   },
 ];
 
@@ -531,13 +531,14 @@ export default function Sub4() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 443.4.1 (Risk assessment for transient overvoltage protection)"
-            clause="443.4.1 now requires protection against transient overvoltages to be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) failure of a safety service, as defined in Part 2; and (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss."
+            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) [Deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023)]; (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss."
             meaning={
               <>
-                The SPD requirement has expanded. Three mandatory cases — life safety, safety
-                services, significant financial / data loss. ALL other cases also require SPDs
-                UNLESS the owner declares acceptance of the risk in writing. Effectively, default is
-                now ‘fit SPDs’ unless the customer opts out on paper.
+                Two mandatory cases remain — (a) serious injury to, or loss of, human life, and (c)
+                significant financial / data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022
+                Corrigendum (May 2023). ALL other cases also require SPDs UNLESS the owner declares
+                acceptance of the risk in writing. Effectively, default is now ‘fit SPDs’ unless the
+                customer opts out on paper.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 443.4.1."

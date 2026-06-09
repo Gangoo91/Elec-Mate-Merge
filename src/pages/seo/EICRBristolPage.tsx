@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out under BS 7671:2018+A4:2026 Chapter 65 (periodic inspection and testing) on the model form in Appendix 6. It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Bristol EICR costs typically range from £120 to £450 depending on property size. A two-bedroom flat costs £150 to £250, while a three-bedroom house costs £200 to £350. Prices are lower than London but slightly above the national average due to strong demand in the private rented sector.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Bristol City Council.',
   'Bristol has a large stock of Georgian and Victorian properties, particularly in Clifton, Redland, and Cotham. These properties frequently present aged wiring, inadequate earthing, and lead-sheathed cables that return C2 observations requiring remedial work.',
@@ -151,13 +151,14 @@ const sections = [
           electrical equipment.
         </p>
         <p>
-          The EICR is documented in accordance with{' '}
+          The EICR is carried out under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report is used for
-          periodic inspection and testing of existing installations — not an Electrical Installation
-          Certificate, which is for new work only.
+          Chapter 65 (periodic inspection and testing), using the model report form in Appendix 6.
+          An Electrical Installation Condition Report is the correct document for periodic
+          inspection of existing installations — not an Electrical Installation Certificate, which
+          is issued for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
@@ -179,11 +180,14 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white text-sm">
             <li>
-              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> A4:2026 recommends
-              the installation of AFDDs on AC final circuits to mitigate fire risk from arc fault
-              currents. The wording is recommendatory rather than mandatory. Inspectors must now
-              check for AFDD presence and record it on the EICR; absence may attract a C3
-              observation on circuits in higher-risk contexts.
+              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> A4:2026 makes
+              AFDDs a <em>requirement</em> for single-phase AC final circuits supplying
+              socket-outlets rated up to 32 A in Houses in Multiple Occupation, purpose-built
+              student accommodation, care homes, and higher-risk residential buildings. For all
+              other premises the regulation <em>recommends</em> AFDDs on the same circuits. Given
+              Bristol's large HMO and student-let stock, this is a material change — inspectors
+              record AFDD presence on the EICR, and the EICR confirms AFDDs are operational
+              (Regs 421.1.7, 532.6 and 651.2(e)).
             </li>
             <li>
               <strong>Reg 411.3.4 — RCD protection on domestic lighting circuits:</strong> Within
@@ -208,54 +212,98 @@ const sections = [
           the city's large private rented sector, a significant student population, and active HMO
           licensing enforcement. Below are typical 2026 prices for Bristol EICRs:
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1.4fr_1fr_0.8fr] gap-px bg-white/10 text-xs sm:text-sm">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 font-bold text-white">
+              Property type
+            </div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 font-bold text-white">
+              Indicative cost
+            </div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 font-bold text-white">Circuits</div>
+
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
+              Studio / 1-bed flat
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+              £120–£200
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">3–5</div>
+
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
+              Two-bedroom flat
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+              £150–£250
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">5–8</div>
+
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
+              Three-bedroom house
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+              £200–£350
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">8–15</div>
+
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
+              Four-bedroom+ house
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+              £300–£450+
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">15+</div>
+
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
+              HMO (multiple units)
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+              £350–£700+
+            </div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">Varies</div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
+          <h3 className="font-bold text-white mb-3">How Bristol's areas affect the price</h3>
+          <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Studio / one-bedroom flat</strong> — £120 to £200. Typically 3 to 5
-                circuits, single consumer unit. Common in converted Georgian houses in Clifton.
+                <strong>Converted Georgian houses (Clifton)</strong> — studios and flats split out
+                of period townhouses often share meters and communal boards, adding access time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat</strong> — £150 to £250. Usually 5 to 8 circuits.
-                Purpose-built flats in Harbourside and Temple Quay are generally quicker to inspect
-                than converted period properties.
+                <strong>Purpose-built flats (Harbourside, Temple Quay)</strong> — modern wiring and
+                a single accessible consumer unit make these the quickest and cheapest to inspect.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £200 to £350. Expect 8 to 15 circuits.
-                Victorian terraces in Bedminster, Southville, and Totterdown often take longer due
-                to aged wiring and cellar installations.
+                <strong>Victorian terraces (Bedminster, Southville, Totterdown)</strong> — aged
+                wiring and cellar installations push the inspection towards the upper end of the
+                range.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom+ house</strong> — £300 to £450+. Larger properties in Redland,
-                Henleaze, and Stoke Bishop may have multiple consumer units or outbuildings that
-                increase the scope of inspection.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £700+. Bristol has a
-                large number of HMOs particularly around the university areas. HMOs have multiple
-                consumer units, fire alarm systems, and emergency lighting that all form part of the
-                inspection scope.
+                <strong>Student HMOs (Redland, Cotham, Stokes Croft, Fishponds)</strong> — multiple
+                consumer units, fire alarm systems, and emergency lighting all fall within the
+                inspection scope, so cost scales with the number of units.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These prices are for the inspection and report only. Remedial work identified during the
-          EICR is quoted and charged separately. Some electricians offer a combined EICR and
-          remedial package at a reduced total cost.
+          These are indicative market prices for the inspection and report only — not a quote.
+          Remedial work identified during the EICR is priced separately. Some electricians offer a
+          combined EICR and remedial package at a reduced total cost. For a national comparison, see
+          our{' '}
+          <SEOInternalLink href="/guides/eicr-cost-uk">EICR cost UK guide</SEOInternalLink>.
         </p>
       </>
     ),
@@ -407,8 +455,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 findings in
               Bristol include absent or inadequate earthing (particularly in older Clifton flats),
-              lack of RCD protection on socket circuits (BS 7671 Section 411), overloaded circuits,
-              and deteriorated cable insulation.
+              lack of RCD additional protection on socket-outlet circuits up to 32&nbsp;A
+              (Reg&nbsp;411.3.3), overloaded circuits, and deteriorated cable insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -533,41 +581,80 @@ const sections = [
           standard property.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Visual inspection</strong> — the inspector examines the consumer unit,
-                protective devices, cable condition, socket outlets, light fittings, switches,
-                earthing and bonding connections, and the condition of all accessible wiring.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Dead testing</strong> — with the supply isolated, the inspector tests
-                continuity of protective conductors, continuity of ring final circuit conductors,
-                and insulation resistance (at 500V DC, minimum 1 megohm required).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Live testing</strong> — with the supply restored, the inspector tests earth
-                fault loop impedance (Ze and Zs values), prospective fault current (PFC), RCD
-                operation times, and polarity.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Regulation Section
-                631). The report includes observations with classification codes, an overall
-                assessment, and a recommended date for the next inspection.
-              </span>
-            </li>
-          </ul>
+          <h3 className="font-bold text-white mb-3 flex items-center gap-2">
+            <Search className="w-5 h-5 text-yellow-400 shrink-0" />
+            Visual inspection
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            The inspector examines the consumer unit, protective devices, cable condition, socket
+            outlets, light fittings, switches, earthing and bonding connections, and the condition
+            of all accessible wiring. Periodic inspection is carried out without dismantling, or
+            with partial dismantling as required (Reg 651.2).
+          </p>
+        </div>
+        <p>
+          A programme of measurements then follows, applying the relevant tests from BS 7671
+          Chapter 64. The dead tests are completed in sequence before the supply is restored:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[0.5fr_1.3fr_1fr] gap-px bg-white/10 text-xs sm:text-sm">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 font-bold text-white">Stage</div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 font-bold text-white">Test</div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 font-bold text-white">Reference</div>
+
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-blue-300 font-semibold">Dead</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">
+              Continuity of protective conductors and ring final circuit conductors
+            </div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.2</div>
+
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-blue-300 font-semibold">Dead</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">
+              Insulation resistance — 500&nbsp;V DC test, minimum 1.0&nbsp;M&Omega; (Table 64)
+            </div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.3</div>
+
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-blue-300 font-semibold">Dead</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">Polarity</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.6</div>
+
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-amber-300 font-semibold">
+              Live
+            </div>
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white">
+              Earth fault loop impedance (Ze and Zs) — protection by automatic disconnection
+            </div>
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.7</div>
+
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-amber-300 font-semibold">
+              Live
+            </div>
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white">
+              RCD operation as additional protection
+            </div>
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.8</div>
+
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-amber-300 font-semibold">
+              Live
+            </div>
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white">
+              Functional testing of switchgear, controlgear and protective devices
+            </div>
+            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.10</div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white mb-2 flex items-center gap-2">
+            <ClipboardCheck className="w-5 h-5 text-yellow-400 shrink-0" />
+            Report completion
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            The inspector completes the EICR including the Schedule of Inspections and the Schedule
+            of Test Results, using the model form in Appendix 6 of BS 7671. The report records
+            observations with classification codes, an overall Satisfactory or Unsatisfactory
+            assessment, and a recommended date for the next inspection. Details of any damage,
+            deterioration, defects or dangerous conditions are recorded in the report (Reg 651.4).
+          </p>
         </div>
         <p>
           In Bristol, tenants and landlords should prepare by ensuring clear access to the consumer
@@ -584,10 +671,11 @@ const sections = [
     content: (
       <>
         <p>
-          The required frequency of EICRs depends on the property type and use. BS 7671 Section 651
-          (Part 6, Chapter 65) establishes that where required, periodic inspection and testing of
-          every electrical installation shall be carried out in accordance with the Regulations, at
-          intervals suited to the property type:
+          The required frequency of EICRs depends on the property type and use. Under BS 7671
+          Chapter 65, Reg 651.1 requires periodic inspection and testing of every electrical
+          installation where required, and Reg 652.1 sets the frequency having regard to the type
+          of installation, its use and operation, and the maintenance and external influences it is
+          subject to. Typical intervals by property type are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -764,6 +852,13 @@ export default function EICRBristolPage() {
         </>
       }
       heroSubtitle="Everything you need to know about EICRs in Bristol — costs by property type, landlord legal requirements, HMO licensing, Georgian and Victorian property challenges, observation codes, and how to find a qualified inspector."
+      answerBox={{
+        question: 'How much does an EICR cost in Bristol?',
+        answer:
+          'An EICR in Bristol typically costs £120 to £200 for a one-bedroom flat, £150 to £250 for a two-bedroom flat, and £200 to £350 for a three-bedroom house. HMOs around the university areas run £350 to £700 depending on the number of consumer units and circuits. These are indicative market prices for the inspection and report only — remedial work is quoted separately.',
+        detail:
+          'Since 1 April 2021, landlords in England must hold a satisfactory EICR before a new tenancy and renew it at least every five years, enforced by Bristol City Council with penalties of up to £30,000 per breach.',
+      }}
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

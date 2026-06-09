@@ -84,13 +84,13 @@ const quizQuestions = [
       'Reg 443.4.1 (A4:2026 redraft) — when is SPD protection now required?',
     options: [
       'Never',
-      'Where consequences could result in: (a) serious injury to or loss of human life; (b) failure of a safety service as defined in Part 2; (c) significant financial or data loss. For all OTHER cases, protection against transient overvoltages shall be provided UNLESS the owner of the installation declares acceptance of the risk. A4:2026 simplified the trigger from a calculated-risk-level method (CRL) to a category test + owner opt-out. Annex A443 (CRL method) was deleted',
+      'Where consequences could result in: (a) serious injury to, or loss of, human life; (c) significant financial or data loss — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all OTHER cases, protection against transient overvoltages shall be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk. A4:2026 simplified the trigger from a calculated-risk-level method (CRL) to a category test + owner opt-out. Annex A443 (CRL method) was deleted',
       'Random',
       'Only commercial',
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 443.4.1 in A4:2026 was redrafted to simplify SPD requirement triggers. New criteria for when SPDs are required: (a) consequence of overvoltage could result in serious injury to / loss of human life; (b) failure of a safety service (as defined in Part 2); (c) significant financial or data loss. For all OTHER cases, SPDs shall be provided UNLESS the owner explicitly accepts the risk in writing. This is an opt-out model, not an opt-in. Practical effect: SPDs are the default expectation in most installs UNLESS owner explicitly opts out. (c) significant financial / data loss typically applies to LCT installs (PV inverter + BESS + EV charger + smart meter all costly + data-rich). Annex A443 (calculated risk level CRL method) was DELETED in A4:2026 — A4:2026 explicitly moved away from the formal calculation to a category-based test. BS EN 62305-2 remains the methodology where a formal risk assessment is appropriate (e.g. high-risk / heritage / commercial). Cert evidence bundle: SPD selection rationale + owner declaration if opted out + risk assessment summary where applied.',
+      'Reg 443.4.1 in A4:2026 was redrafted to simplify SPD requirement triggers. The criteria for when SPDs are required: (a) consequence of overvoltage could result in serious injury to, or loss of, human life; (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), so there are exactly two active consequence limbs. For all OTHER cases, SPDs shall be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk. This is an opt-out model, not an opt-in. Practical effect: SPDs are the default expectation in most installs UNLESS owner explicitly opts out. (c) significant financial / data loss typically applies to LCT installs (PV inverter + BESS + EV charger + smart meter all costly + data-rich). Annex A443 (calculated risk level CRL method) was DELETED in A4:2026 — A4:2026 explicitly moved away from the formal calculation to a category-based test. BS EN 62305-2 remains the methodology where a formal risk assessment is appropriate (e.g. high-risk / heritage / commercial). Cert evidence bundle: SPD selection rationale + owner declaration if opted out + risk assessment summary where applied.',
   },
   {
     question:
@@ -217,7 +217,7 @@ export default function RenewableEnergyModule11Section5() {
 
           <TLDR
             points={[
-              'A4:2026 redrafted Reg 443.4.1 SPD triggers: required where consequence could cause (a) loss of life, (b) failure of safety service, (c) significant financial / data loss. For other cases: required UNLESS owner opts out in writing. Annex A443 CRL method deleted.',
+              'A4:2026 redrafted Reg 443.4.1 SPD triggers: required where consequence could cause (a) serious injury to / loss of human life, or (c) significant financial / data loss — limb (b) deleted by the A2:2022 Corrigendum (May 2023). For other cases: required UNLESS owner declares the risk tolerable. Annex A443 CRL method deleted.',
               'Reg 534.4.1.1: SPDs at origin = Type 1 or Type 2; SPDs close to sensitive equipment = Type 2 or Type 3. Type 1 NOTE = "equipotential bonding SPDs" at origin.',
               'Type 1 = direct lightning current (10/350 µs); Type 2 = indirect surge (8/20 µs); Type 3 = residual + switching transients close to equipment.',
               'Reg 534.4.4.1 coordination: Up (SPD voltage protection level) < Uw (equipment rated impulse withstand voltage). Reg 443.6.1 + Table 443.2 classify equipment by overvoltage category.',
@@ -230,7 +230,7 @@ export default function RenewableEnergyModule11Section5() {
 
           <LearningOutcomes
             outcomes={[
-              'Apply Reg 443.4.1 (A4:2026 redraft) SPD requirement triggers: (a) life, (b) safety service, (c) financial / data loss; owner opt-out for other cases.',
+              'Apply Reg 443.4.1 (A4:2026 redraft) SPD requirement triggers: (a) serious injury / loss of life and (c) significant financial / data loss (limb (b) deleted by the A2:2022 Corrigendum); owner opt-out for other cases.',
               'Select SPD Type per Reg 534.4.1.1 by location: Type 1 / 2 at origin; Type 2 / 3 close to equipment.',
               'Coordinate Up (SPD voltage protection level) with Uw (equipment impulse withstand voltage) per Reg 534.4.4.1 + Reg 443.6.1 + Table 443.2.',
               'Select In / Iimp per Reg 534.4.4.4 + Table 534.4 + LPL + current sharing.',
@@ -250,22 +250,21 @@ export default function RenewableEnergyModule11Section5() {
 
           <ConceptBlock
             title="Reg 443.4.1 (A4:2026 redraft) — when SPDs are now required"
-            plainEnglish="A4:2026 simplified the SPD requirement test. SPDs are required where the consequence of overvoltage could cause: (a) serious injury or loss of human life; (b) failure of a safety service; (c) significant financial or data loss. For all OTHER cases, SPDs shall be provided UNLESS the owner explicitly accepts the risk in writing. Annex A443 (calculated risk level CRL method) was deleted."
+            plainEnglish="A4:2026 simplified the SPD requirement test. SPDs are required where the consequence of overvoltage could cause: (a) serious injury to, or loss of, human life; (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), leaving two active consequence limbs. For all OTHER cases, SPDs shall be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk. Annex A443 (calculated risk level CRL method) was deleted."
             onSite="UK 2025-26 practical effect: SPDs are the default expectation in most installs unless owner explicitly opts out. LCT installs (PV / BESS / EV / heat pump) typically trigger (c) significant financial / data loss criterion — opt-out is hard to justify on grounds. Designer records SPD selection rationale + customer evidence."
           >
             <p>Reg 443.4.1 A4:2026 redraft detail:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
                 <strong className="text-white">(a) Life criterion</strong>
-                — consequence of overvoltage could result in serious injury to /
-                loss of human life. Applies to: medical equipment, critical care,
+                — consequence of overvoltage could result in serious injury to, or
+                loss of, human life. Applies to: medical equipment, critical care,
                 public safety installations
               </li>
               <li>
-                <strong className="text-white">(b) Safety service
-                  criterion</strong> — failure of a safety service as defined in BS
-                7671 Part 2. Applies to: fire alarm, emergency lighting,
-                fire-fighting pumps, lifts, smoke control
+                <strong className="text-white">(b) Deleted</strong>
+                — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum
+                (May 2023); there is no (b) criterion in the current standard
               </li>
               <li>
                 <strong className="text-white">(c) Financial / data
@@ -275,8 +274,9 @@ export default function RenewableEnergyModule11Section5() {
               </li>
               <li>
                 <strong className="text-white">Other cases</strong>
-                — SPDs SHALL be provided UNLESS owner explicitly declares acceptance
-                of the risk in writing. Opt-out path requires evidence
+                — SPDs SHALL be provided UNLESS the owner of the installation
+                declares it is not required due to any loss or damage being
+                tolerable and they accept the risk. Opt-out path requires evidence
               </li>
               <li>
                 <strong className="text-white">Annex A443 deleted</strong>
@@ -362,8 +362,8 @@ export default function RenewableEnergyModule11Section5() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 443.4.1 — SPD requirement triggers (A4:2026 redraft)"
-            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) failure of a safety service, as defined in Part 2; and (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares acceptance of the risk."
-            meaning="Reg 443.4.1 in A4:2026 replaced the previous calculated risk level (CRL) approach with a category test + opt-out model. Three categorical triggers: (a) life risk, (b) safety service failure, (c) significant financial / data loss. For all other cases, SPDs are required UNLESS owner explicitly declines in writing. Practical effect for UK 2025-26 LCT installs: (c) typically applies (LCT equipment is costly + data-rich) — SPDs are the default expectation. Owner opt-out path exists but requires written customer declaration accepted as part of the cert evidence bundle. Annex A443 (CRL method) was deleted — A4:2026 simplified the test. BS EN 62305-2 risk assessment remains the appropriate methodology where a formal assessment is warranted (heritage / high-risk / commercial scale). M11 §5 covers Section 534 SPD selection in depth; M11 §3 + §4 covered BS EN 62305 lightning framework. Cert evidence bundle: Reg 443.4.1 trigger applied + SPD selection rationale + owner opt-out declaration if not installed + BS EN 62305-2 risk summary where applied."
+            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) [Deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023)]; (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss."
+            meaning="Reg 443.4.1 in A4:2026 replaced the previous calculated risk level (CRL) approach with a category test + opt-out model. Two active categorical triggers: (a) life risk and (c) significant financial / data loss — limb (b) was deleted by the A2:2022 Corrigendum (May 2023). For all other cases, SPDs are required UNLESS the owner declares the risk tolerable and accepts it. Practical effect for UK 2025-26 LCT installs: (c) typically applies (LCT equipment is costly + data-rich) — SPDs are the default expectation. Owner opt-out path exists but requires written customer declaration accepted as part of the cert evidence bundle. Annex A443 (CRL method) was deleted — A4:2026 simplified the test. BS EN 62305-2 risk assessment remains the appropriate methodology where a formal assessment is warranted (heritage / high-risk / commercial scale). M11 §5 covers Section 534 SPD selection in depth; M11 §3 + §4 covered BS EN 62305 lightning framework. Cert evidence bundle: Reg 443.4.1 trigger applied + SPD selection rationale + owner opt-out declaration if not installed + BS EN 62305-2 risk summary where applied."
           />
 
           <InlineCheck {...inlineChecks[0]} />
@@ -658,7 +658,7 @@ export default function RenewableEnergyModule11Section5() {
 
           <KeyTakeaways
             points={[
-              'A4:2026 redrafted Reg 443.4.1 SPD triggers: (a) life, (b) safety service, (c) financial / data loss + owner opt-out for other cases. Annex A443 CRL method deleted.',
+              'A4:2026 redrafted Reg 443.4.1 SPD triggers: (a) serious injury / loss of life and (c) significant financial / data loss (limb (b) deleted by the A2:2022 Corrigendum) + owner opt-out for other cases. Annex A443 CRL method deleted.',
               'LCT installs typically trigger (c) significant financial / data loss — SPDs are default expectation; owner opt-out is hard to justify on grounds.',
               'Reg 534.4.1.1: SPDs at origin = Type 1 (LPS present) or Type 2 (no LPS); SPDs close to sensitive equipment = Type 2 or Type 3.',
               'Reg 534.4.1.2: LPZ-boundary placement — SPD at each cable crossing of LPZ interfaces.',

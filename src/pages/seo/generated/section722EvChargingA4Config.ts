@@ -25,10 +25,15 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
   heroSuffix: '— What A4:2026 Actually Changed',
   heroSubtitle:
     'Amendment 4 to BS 7671:2018, published on 15 April 2026, reorganised Section 722 from the ground up. This guide is the clause-by-clause reading every UK installer needs — RDC-DD 6 mA DC detection, PME (TN-C-S) earthing for charge points, outdoor IP ratings, Type B versus Type A RCD selection, discrimination, bidirectional V2G implications, and how the EIC must record it all.',
+  answerBox: {
+    question: 'What did A4:2026 change in Section 722 for EV charging?',
+    answer:
+      'Amendment 4:2026 (issued 15 April 2026) rewrote the PME earthing rule in Regulation 722.411.4.1 — the old "not reasonably practicable" exception is deleted, leaving a TT earth electrode, a 70 V open-PEN protective device, or a 207–253 V voltage-limit device as the permitted routes. The 6 mA RDC-DD duty (722.531.3.101, BS IEC 62955) is retained, AFDDs are not required on EV circuits, and bidirectional V2G now invokes the new Regulation 551.7.1(c).',
+  },
   keyTakeaways: [
-    'Section 722 has been substantially reorganised under A4:2026 — clause numbering is broadly preserved but the technical content of 722.411, 722.531, 722.531.3 and the annexes has materially changed.',
-    'Residual Direct Current Detection Device (RDC-DD) at 6 mA DC remains mandatory for AC charge points without inherent isolation, but A4:2026 clarifies its position relative to the upstream Type A RCD and the conditions under which a Type B RCD discharges the duty on its own.',
-    'PME (TN-C-S) supplies feeding outdoor EV charge points may only be used where one of the permitted exception conditions of Regulation 722.411.4.1 is satisfied — typically an open-PEN detection device meeting BS EN 62955, or a dedicated earth electrode arrangement.',
+    'Section 722 has been substantially reorganised under A4:2026 — clause numbering is broadly preserved but the technical content of 722.411.4.1 and the RCD/RDC-DD selection at 722.531.3.101 has materially changed.',
+    'Residual Direct Current Detecting Device (RDC-DD) detecting 6 mA smooth DC remains mandatory for AC charge points without inherent isolation, but A4:2026 clarifies its position relative to the upstream Type A RCD and the conditions under which a Type B RCD discharges the duty on its own.',
+    'PME (TN-C-S) supplies feeding outdoor EV charge points may only be used where one of the permitted exception conditions of Regulation 722.411.4.1(b) to (e) is satisfied — typically a 70 V open-PEN protective device, a 207–253 V voltage-limit device, or a dedicated earth electrode (TT) arrangement.',
     'Outdoor charge points must achieve a minimum IP rating consistent with their installed environment — IPX4 against splashing water as a floor, with practical installations routinely specified at IP54 or IP65 for body and IK08 or higher against mechanical impact.',
     'Bidirectional charging (V2G / V2H / V2L) is recognised in A4:2026 alongside one-directional charging, and brings additional considerations around protection coordination, loss-of-mains detection, anti-islanding, and EIC documentation.',
     'The Electrical Installation Certificate (EIC) for an EV charger install must record the earthing arrangement (TN-C-S / TT / TN-S), the protective device types and ratings, the RDC-DD provision, and the inspection and test results — see the Elec-Mate EIC tool for a digital form aligned to A4:2026.',
@@ -42,12 +47,12 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Section 722 — Electric Vehicle Charging Installations — was first introduced into BS 7671 in the 17th Edition and has been re-edited at almost every amendment since. A2:2022 expanded the PME (TN-C-S) earthing rules; A3:2024 clarified open-PEN protection. A4:2026 is the first amendment to address bidirectional power flow head-on, and is drafted on the assumption that the typical EV charge point is an outdoor 7.4 kW domestic unit, not a commercial DC rapid charger.',
+            'Section 722 — Electric Vehicle Charging Installations — was first introduced into BS 7671 in the 17th Edition and has been re-edited at almost every amendment since. The headline A4:2026 change is to Regulation 722.411.4.1 on the use of a PME supply: the long-standing exception worded around "not reasonably practicable" has been deleted, and indent (a) is gone, so the permitted PME routes are now the explicit protective-device and earth-electrode options at (b) to (e). A4:2026 also makes changes to external influences, RCDs, socket-outlets and connectors, and aligns the section with the new bidirectional-energy rule at Regulation 551.7.1(c).',
         },
         {
           type: 'paragraph',
           text:
-            'The reorganisation is not cosmetic. A4:2026 brings Section 722 into line with the latest IEC 61851 series and with the Electric Vehicles (Smart Charge Points) Regulations 2021. It also tightens the link between Section 722 and the rest of BS 7671 — particularly Chapter 41 (protection against electric shock), Chapter 53 (protection, isolation, switching) and Section 712 where solar PV is co-located with V2G storage.',
+            'The reorganisation is not cosmetic. A4:2026 brings Section 722 into line with the latest IEC 61851 series and with the Electric Vehicles (Smart Charge Points) Regulations 2021. It also tightens the link between Section 722 and the rest of BS 7671 — particularly Chapter 41 (protection against electric shock), Chapter 53 (protection, isolation, switching) and the redrafted Regulation 551.7.1 on bidirectional energy flow where solar PV or battery storage is co-located with V2G.',
         },
         {
           type: 'callout',
@@ -71,7 +76,7 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Regulation 722.531.3 (as renumbered under A4:2026) requires that, for AC charge points, protection against DC fault currents be provided either by a Type B RCD or by an RDC-DD that disconnects when smooth DC residual current of 6 mA or more is detected. The RDC-DD is permitted as an integral function of the charge point — and is how almost every commercially available 7.4 kW UK-market unit satisfies the clause. Where the RDC-DD is integral, the upstream RCD may be Type A rather than Type B.',
+            'Regulation 722.531.3.101 requires that, for AC charge points, protection against DC fault currents be provided either by a Type B RCD or by an RDC-DD that disconnects when a smooth DC residual current of 6 mA or more is detected. BS 7671 defines the RDC-DD as a device having at least the functionality of detection and evaluation of 6 mA DC residual currents and switching of the monitored circuit, and the device standard is BS IEC 62955:2018. The RDC-DD is permitted as an integral function of the charge point — and is how almost every commercially available 7.4 kW UK-market unit satisfies the clause. Where the RDC-DD is integral, the upstream RCD may be Type A rather than Type B.',
         },
         {
           type: 'list',
@@ -81,14 +86,15 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
             'A Type B RCD upstream may be used in place of the Type A + RDC-DD combination, and is required where the charge point does not have an integral RDC-DD or where the installation is three-phase with no inherent DC isolation.',
             'Where multiple charge points share an upstream Type B RCD, discrimination must be considered — see the discrimination section below.',
             'The RDC-DD function must remain effective for the life of the installation and must be subject to the periodic test prescribed by the manufacturer; this should be recorded against the EIC and any subsequent EICR.',
+            'AFDDs are not required on circuits supplying EV charging equipment conforming to the BS EN 61851 series that incorporate socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2 (Regulation 722.421.1.7.201) — a useful clarification given the wider A4:2026 push on arc fault detection.',
           ],
         },
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Do not assume Type A + integral RDC-DD without checking the',
+          title: 'Confirm the integral RDC-DD on the datasheet before specifying a Type A upstream',
           text:
-            'Not every EV charge point on the UK market includes an integral RDC-DD that satisfies BS EN 62955. Some imports and heavy-duty commercial chargers require an external Type B RCD. Always confirm by manufacturer datasheet before specifying the upstream device. The Elec-Mate [cable size calculator](/guides/cable-size-for-ev-charger) prompts for the RDC-DD type as part of the design step.',
+            'Not every EV charge point on the UK market includes an integral RDC-DD that satisfies BS IEC 62955. Some imports and heavy-duty commercial chargers require an external Type B RCD. Always confirm by manufacturer datasheet before specifying the upstream device. The Elec-Mate [cable size calculator](/guides/cable-size-for-ev-charger) prompts for the RDC-DD type as part of the design step.',
         },
       ],
     },
@@ -105,28 +111,34 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Regulation 722.411.4.1 prohibits the use of a PME earthing facility for the protective earthing of an outdoor EV charge point, except where one of the listed exception conditions is satisfied. The two practical routes are: provide a dedicated earth electrode and convert the charge point circuit to TT, or fit a device that detects an open-PEN condition and disconnects within the required time. Open-PEN detection devices are typically tested to BS EN 62955.',
+            'Regulation 722.411.4.1 prohibits the use of a PME earthing facility as the means of earthing for the protective conductor contact of a charge point located outdoors (or one that might reasonably be expected to charge a vehicle located outdoors) unless one of the methods (b) to (e) is used. A4:2026 deleted the former indent (a) and the "not reasonably practicable" wording, so the four explicit routes below are now the only compliant ways to keep — or step away from — the PME earth.',
         },
         {
           type: 'list',
           ordered: true,
           items: [
-            'Option 1 — convert the charge point circuit to TT by driving an earth electrode local to the charge point, removing the PME connection from the charge point CPC, and protecting the circuit with an RCD providing the required disconnection time. The earth electrode resistance and the RCD operating current must together satisfy Regulation 411.5.3.',
-            'Option 2 — retain the PME earthing facility and fit an open-PEN detection and disconnection device that operates when the line-to-earth voltage exceeds the threshold specified in BS EN 62955 (broadly 70 V for a sustained period or higher voltages for shorter periods).',
-            'Option 3 (special cases) — where the EV charge point is located inside a building that is itself entirely on PME, and the parked vehicle cannot be touched simultaneously with extraneous-conductive-parts of the PME-earthed building, the prohibition does not bite. This is a narrow exception and should be documented carefully.',
+            'Method (b) — TT route. Connect the main earthing terminal to an installation earth electrode via a protective conductor complying with Regulation 544.1.1, sized so that the voltage between the MET and Earth during an open-circuit PEN fault does not exceed 70 V RMS. Annex A722, Item A722.3 gives the formula for the maximum earth electrode resistance (and notes electrodes above 200 Ω may be unstable).',
+            'Method (c) — open-PEN protective device. Retain the PME facility but fit a device that disconnects the vehicle from the live conductors and protective earth within 5 s when the voltage between the circuit protective conductor and Earth exceeds 70 V RMS due to an open-PEN fault (it need not operate if the excess lasts under 4 s). The device must provide isolation, be selected per Table 537.4, and reset only when CPC-to-Earth voltage is back below 70 V RMS.',
+            'Method (d) — voltage-limit device. A device that disconnects within 5 s when the utilisation voltage between line and neutral rises above 253 V RMS or falls below 207 V RMS, again providing isolation and selected per Table 537.4. This monitors the supply voltage envelope rather than the CPC-to-Earth voltage directly.',
+            'Method (e) — equivalent alternative device that gives no lesser degree of safety than (c) or (d), also providing isolation and selected per Table 537.4. Equivalent functionality may be built into the charging equipment itself.',
           ],
         },
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Earth electrode resistance for the TT route',
+          title: 'Earth electrode resistance for the TT route is calculated, not guessed',
           text:
-            'Driving a 1.2 m rod and recording the first measurement is not enough. The electrode resistance must be stable across seasons and soil moisture conditions, and the design must consider whether multiple electrodes are needed. A single deep electrode is often sufficient for domestic 7.4 kW; commercial installs should be supported by calculation. See our [EV charger installation guide](/ev-charger-installation) for typical earthing approaches.',
+            'For method (b), the earth electrode resistance is set by the formula in Annex A722, Item A722.3 — chosen so the MET-to-Earth voltage stays at or below 70 V RMS during an open-PEN fault, allowing for single-phase vehicles charging from three-phase points. BS 7671 notes that electrodes above 200 Ω may be unstable, and the design must hold across seasons and soil moisture. A single deep electrode is often sufficient for domestic 7.4 kW; commercial installs should be supported by calculation. See our [EV charger installation guide](/ev-charger-installation) for typical earthing approaches.',
         },
         {
           type: 'paragraph',
           text:
             'The PME restriction does not apply to TN-S supplies (separate earth back to the distribution transformer) — TN-S installations carry no open-PEN risk and may earth the charge point through the existing arrangement. It also does not apply to Protective Neutral Bonding (PNB) supplies, but PNB is a specific DNO arrangement and should be confirmed in writing before relying on it.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'There is also a fifth, less common route that sidesteps the PME question entirely: electrical separation under Regulation 722.413. Here a single electric vehicle is supplied from one unearthed source through a fixed isolating transformer complying with BS EN 61558-2-4 — only one charging point may be supplied per transformer (see Regulation 722.413.1.2). Note BS 7671 cautions (NOTE 3 to 722.411.4.1) that creating a TT system as an alternative to PME may itself be inappropriate where sufficient separation from buried metalwork connected to the supply PEN cannot be achieved.',
         },
       ],
     },
@@ -138,13 +150,13 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'A charge point on a UK driveway must survive rain, hose-down, dust, frost, salt spray near the coast, and accidental impact from car doors, bicycles and tools. A4:2026 reiterates the minimum IP rating against water ingress and updates the indicative IK rating for mechanical impact. The minimum requirement remains IPX4, but practical specification has tightened.',
+            'A charge point on a UK driveway must survive rain, hose-down, dust, frost, salt spray near the coast, and accidental impact from car doors, bicycles and tools. The IP rating flows from the external influences assessment in Chapter 32 and Section 522: water splashes from any direction (classification AD4) demand a degree of protection of at least IPX4, which is the floor for an outdoor charge point. A4:2026 made changes to the external-influences requirements of Section 722; the practical specification has tightened above the minimum.',
         },
         {
           type: 'list',
           items: [
             'IPX4 is the floor for any outdoor charge point enclosure under Section 722. In practice almost all current UK-market units achieve IP54 or IP65 on the body, with the connector face typically certified separately.',
-            'IK rating — mechanical impact — is not numerically prescribed in Section 722 but A4:2026 reinforces the duty under Regulation 522.6 to consider mechanical impact risk. Driveway-mounted units should achieve at least IK08 against accidental knocks.',
+            'IK rating — mechanical impact — is not numerically prescribed in Section 722, but Regulation 522.6 (Impact, classification AG) requires the impact risk to be assessed and the equipment selected accordingly. Driveway-mounted units should achieve at least IK08 against accidental knocks.',
             'Pedestals and bollard-mounted units in public car parks should consider IK10 against deliberate impact, plus a vehicle impact barrier or bollard where exposed to vehicular movement.',
             'Wall-mounted units installed at adult shoulder height typically achieve IK08–IK10 from the manufacturer and do not require additional impact protection in domestic settings.',
             'The connector and cable management (tethered or socketed) must be specified to retain the IP rating when stowed — IPX4 for the connector when stowed in the holster is the practical minimum.',
@@ -173,7 +185,7 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
             '32 A circuit for a 7.4 kW single-phase charge point — minimum 6 mm² thermoplastic twin-and-earth on a short run, but most installs use 10 mm² to give thermal headroom and voltage drop margin, particularly where the run from the consumer unit to the charge point exceeds 15 metres.',
             'Three-phase 22 kW charge points require careful cable design — 32 A per phase is typical, and the cable size should be checked against grouping, ambient temperature and the cable installation method.',
             'Where the circuit is run buried underground from house to garage or outbuilding, SWA (steel wire armoured) cable to BS 5467 or BS 6724 with appropriate gland and earth tail is the canonical choice.',
-            'Cables installed in conduit or trunking outdoors must be UV-stable or shielded from UV by the containment; standard thermoplastic insulation will degrade in direct sunlight over time.',
+            'Cables installed in conduit or trunking outdoors must be UV-stable or shielded from UV by the containment; standard thermoplastic insulation will degrade in direct sunlight over time. Regulation 522.11 covers the solar-radiation (AN) and ultraviolet external influence that drives this choice.',
             'Voltage drop must be checked under continuous load — Appendix 4 of BS 7671 is the reference. For domestic installations a maximum voltage drop of 5% is the consumer-installation default and a 6 mm² cable on a 25 m run at 32 A is typically inside that limit.',
           ],
         },
@@ -199,16 +211,16 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'A bidirectional charge point behaves like a hybrid between a Section 722 charge point and a Section 712 / 551 generator installation. It must meet the EV charging duties when importing and the generator interface duties when exporting. A4:2026 brings the two together: protective devices, isolation, anti-islanding and loss-of-mains detection must satisfy the more onerous of the two.',
+            'A bidirectional charge point behaves like a hybrid between a Section 722 charge point and a generator interface. It must meet the EV charging duties when importing and the generator-side duties when exporting. A4:2026 redrafted Regulation 551.7.1 and added a new indent (c) requiring a suitable protective device wherever energy flow is bidirectional — the same rule that now governs PV and battery inverters that can export. The practical effect: protective devices, isolation, anti-islanding and loss-of-mains detection must satisfy the more onerous of the import and export cases.',
         },
         {
           type: 'list',
           items: [
             'Loss-of-mains detection — a V2G inverter must detect loss of grid supply and disconnect within the time prescribed by ENA G99 (or G98 for smaller installations). The disconnection time applies whether the vehicle is currently exporting or idle.',
             'Anti-islanding — the V2G system must not export into a de-energised section of the network. This is functionally identical to the requirement for a solar PV inverter and is typically certified by the manufacturer to the G99/G98 family.',
-            'Protective coordination — the upstream RCD and circuit breaker must remain effective under both import and export current directions. Type B RCDs that are direction-independent are the standard choice; Type A is generally not suitable for bidirectional V2G.',
+            'Protective coordination — under the new Regulation 551.7.1(c), a suitable protective device must be provided where energy flow is bidirectional, and it must remain effective under both import and export current directions. Direction-independent Type B RCDs are the standard choice; Type A is generally not suitable for bidirectional V2G.',
             'Earthing — the open-PEN considerations of Regulation 722.411.4.1 apply equally to bidirectional installations. The earthing arrangement does not change just because power direction reverses.',
-            'EIC documentation — the certificate must record that the installation is bidirectional and reference both the EV charging regulations and the generator interface clauses. See our [smart EV charging](/smart-ev-charging) overview for how V2G is gated and certified.',
+            'EIC documentation — the certificate must record that the installation is bidirectional and reference both the EV charging regulations and the bidirectional-energy protection duty of Regulation 551.7.1(c). See our [smart EV charging](/smart-ev-charging) overview for how V2G is gated and certified.',
           ],
         },
         {
@@ -232,13 +244,20 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         },
         {
           type: 'list',
-          ordered: true,
           items: [
-            'Type A + integral RDC-DD — the dominant UK domestic arrangement. The upstream Type A RCD provides AC fault and pulsating DC fault protection; the integral RDC-DD inside the charge point handles smooth DC fault detection at 6 mA. Cheaper, simpler, and acceptable for any charge point with a certified RDC-DD.',
-            'Type B RCD upstream — required where the charge point does not have an integral RDC-DD, or where multiple charge points share a single RCD without individual integral RDC-DDs, or where a three-phase charge point lacks inherent DC isolation. More expensive but covers all DC fault scenarios on its own.',
-            'Where two or more charge points are protected by a single upstream RCD, the discrimination behaviour of the integral RDC-DDs against the upstream RCD must be considered — a fault on one charge point should not unnecessarily trip the others.',
-            'Type B RCDs are not interchangeable with Type A in terms of tripping characteristics — a Type B may trip on conditions a Type A would not, and the design must allow for this when sizing upstream protection and considering nuisance tripping risk.',
+            'Type AC — NOT acceptable on any EV charge point circuit. A Type AC RCD cannot reliably detect the pulsating DC components characteristic of single-phase charging, and should not even be fitted upstream of a Type A, Type F or Type B device because it can impair their intended operation.',
+            'Type A + integral RDC-DD — the dominant UK domestic arrangement. The upstream Type A RCD covers AC and pulsating DC fault current; the integral RDC-DD (to BS IEC 62955) inside the charge point handles smooth DC fault detection at 6 mA. Cheapest route, acceptable for any charge point with a certified RDC-DD.',
+            'Type B RCD upstream — covers all AC, pulsating DC and smooth DC fault current on its own. Required where the charge point has no integral RDC-DD, where several charge points share one RCD without individual RDC-DDs, or where a three-phase charge point lacks inherent DC isolation. More expensive, but no reliance on the unit’s internal device.',
+            'Type F — designed for frequency-controlled loads; not the default for EV charging but referenced alongside Type A and Type B in the device-selection notes. Specify only where the equipment manufacturer calls for it.',
+            'Tripping characteristics are not interchangeable — a Type B may trip on a fault a Type A would never see, so the upstream selection, discrimination and nuisance-tripping behaviour must be designed together, not swapped after the fact.',
           ],
+        },
+        {
+          type: 'callout',
+          tone: 'info',
+          title: 'The quick decision: integral RDC-DD or not?',
+          text:
+            'If the charge point datasheet confirms an integral RDC-DD certified to BS IEC 62955, a 30 mA Type A RCBO upstream is compliant and is the standard UK domestic choice. If it does not — or the install is three-phase without inherent DC isolation, or several points share one device — move to a Type B upstream. Confirm on the datasheet before ordering the consumer unit, not on site.',
         },
       ],
     },
@@ -280,8 +299,8 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
           items: [
             'Earthing arrangement — TN-C-S (with the exception condition under 722.411.4.1 explicitly named), TT (with the local earth electrode resistance recorded), or TN-S (with the supply earth confirmed in writing by the DNO).',
             'Protective device — the type, rating and breaking capacity of the upstream RCD or RCBO, and the type (Type A, Type B) and tripping current (typically 30 mA).',
-            'RDC-DD provision — whether the charge point includes an integral RDC-DD certified to BS EN 62955, and the manufacturer model number.',
-            'Open-PEN detection — if the earthing route is the open-PEN detection exception, the device model number and the BS EN 62955 certification.',
+            'RDC-DD provision — whether the charge point includes an integral RDC-DD to BS IEC 62955, and the manufacturer model number.',
+            'Open-PEN protection — if the PME earthing route under 722.411.4.1(c) or (d) is used, the device model number, the disconnection threshold (70 V RMS CPC-to-Earth, or the 207–253 V RMS band), and confirmation it provides isolation and is selected per Table 537.4.',
             'Inspection results — visible inspection of cable terminations, glands, IP rating, IK protection, mechanical security, identification of circuits, and confirmation of correct labelling at the consumer unit.',
             'Test results — continuity of CPC, insulation resistance (Line-Earth, Neutral-Earth and Line-Neutral with the charge point disconnected), polarity, earth fault loop impedance Zs, RCD operating time at IΔn and 5×IΔn, and where applicable the RDC-DD test using the procedure prescribed by the manufacturer.',
             'Functional test — confirmation that the charge point energises the vehicle correctly, that the contactor closes only when the control pilot is established, and (for V2G) that loss-of-mains detection operates correctly.',
@@ -336,17 +355,17 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
     {
       question: 'Does A4:2026 still require an RDC-DD on AC EV charge points?',
       answer:
-        'Yes — the requirement to detect 6 mA smooth DC residual current remains in A4:2026, under the renumbered Regulation 722.531.3. The duty can be discharged either by an integral RDC-DD inside the charge point (paired with an upstream Type A RCD) or by an upstream Type B RCD alone. A4:2026 sharpens the wording and the explicit linkage to BS EN 62955 for the device standard.',
+        'Yes — the requirement to detect 6 mA smooth DC residual current remains in A4:2026, under Regulation 722.531.3.101. The duty can be discharged either by an integral RDC-DD inside the charge point (paired with an upstream Type A RCD) or by an upstream Type B RCD alone. The device standard for the RDC-DD is BS IEC 62955:2018, selected per Table 537.4.',
     },
     {
       question: 'Can I still use a PME (TN-C-S) earth for an outdoor EV charge point?',
       answer:
-        'Yes, but only under one of the exception conditions of Regulation 722.411.4.1. In practice this means either fitting an open-PEN detection device certified to BS EN 62955 that disconnects when the line-to-earth voltage rises above the threshold, or converting the charge point circuit to TT by driving a local earth electrode and removing the PME connection from the charge point CPC. Both routes are compliant; the choice is a cost, complexity and reliability trade-off.',
+        'Yes, but only under one of the methods (b) to (e) of Regulation 722.411.4.1, since A4:2026 deleted the old "not reasonably practicable" exception. In practice this means a TT earth electrode sized so the MET-to-Earth voltage stays at or below 70 V RMS during an open-PEN fault, an open-PEN protective device that disconnects within 5 s above 70 V RMS, or a voltage-limit device that disconnects outside the 207–253 V RMS band. All are compliant; the choice is a cost, complexity and reliability trade-off.',
     },
     {
       question: 'Is a Type B RCD always required for an EV charger?',
       answer:
-        'No. Under A4:2026, where the charge point includes an integral RDC-DD certified to BS EN 62955, the upstream RCD may be Type A. A Type B is required where the charge point lacks an integral RDC-DD, where multiple charge points share an upstream RCD without individual RDC-DDs, or where the install is three-phase without inherent DC isolation. Most domestic 7.4 kW UK-market units include the RDC-DD and are paired with a Type A.',
+        'No. Under A4:2026, where the charge point includes an integral RDC-DD to BS IEC 62955, the upstream RCD may be Type A. A Type B is required where the charge point lacks an integral RDC-DD, where multiple charge points share an upstream RCD without individual RDC-DDs, or where the install is three-phase without inherent DC isolation. A Type AC RCD is never acceptable on an EV circuit. Most domestic 7.4 kW UK-market units include the RDC-DD and are paired with a Type A.',
     },
     {
       question: 'What IP rating does an outdoor EV charge point need?',
@@ -356,7 +375,7 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
     {
       question: 'Does Section 722 under A4:2026 cover V2G bidirectional charging?',
       answer:
-        'Yes. A4:2026 is the first amendment to explicitly recognise bidirectional power flow — V2G (Vehicle-to-Grid), V2H (Vehicle-to-Home) and V2L (Vehicle-to-Load). A bidirectional install must satisfy both the EV charging duties of Section 722 and the generator interface duties of Section 712 / Section 551 / ENA G98 or G99, whichever is more onerous. DNO notification is mandatory before commissioning the export function.',
+        'Yes. A4:2026 recognises bidirectional power flow — V2G (Vehicle-to-Grid), V2H (Vehicle-to-Home) and V2L (Vehicle-to-Load) — and its redrafted Regulation 551.7.1 adds indent (c) requiring a suitable protective device wherever energy flow is bidirectional. A bidirectional install must satisfy the EV charging duties of Section 722, the 551.7.1(c) bidirectional protection duty, and ENA G98 or G99, whichever is more onerous. DNO notification is mandatory before commissioning the export function.',
     },
     {
       question: 'What does the EIC have to record for an EV charger install?',
@@ -366,12 +385,12 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
     {
       question: 'How does A4:2026 affect existing EV charger installs that were certified under A2:2022 or A3:2024?',
       answer:
-        'Existing installs remain compliant with the edition under which they were certified — BS 7671 does not apply retrospectively. New installs from 28 September 2026 must be designed and certified to A4:2026. The next periodic EICR should record the edition under which the original install was certified, and flag any condition that would no longer comply if reinstalled today — typically as a C3 (improvement recommended), not a C2.',
+        'Existing installs remain compliant with the edition under which they were certified — BS 7671 does not apply retrospectively. A4:2026 was issued on 15 April 2026 and may be used immediately; A2:2022+A3:2024 remains current but is withdrawn on 15 October 2026, after which new installs should be designed and certified to A4:2026. The next periodic EICR should record the edition the original install was certified to, and flag any condition that would no longer comply if reinstalled today — typically as a C3 (improvement recommended), not a C2.',
     },
     {
       question: 'Do I need a separate earth electrode for every PME charge point?',
       answer:
-        'Only if the design relies on the TT route under Regulation 722.411.4.1. If the design uses an open-PEN detection device, no local earth electrode is required and the charge point earthing remains on the PME facility. The choice is a design decision driven by soil conditions, available space for an electrode, cost of the detection device versus the rod, and installer preference. Both are equally compliant under A4:2026.',
+        'Only if the design relies on the TT route — method (b) of Regulation 722.411.4.1. If the design uses an open-PEN protective device (method (c)) or a voltage-limit device (method (d)), no local earth electrode is required and the charge point earthing remains on the PME facility. The choice is a design decision driven by soil conditions, available space for an electrode, cost of the device versus the rod, and installer preference. All are equally compliant under A4:2026.',
     },
   ],
   relatedPages: [

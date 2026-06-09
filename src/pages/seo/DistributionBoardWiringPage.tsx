@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Do I need to install an SPD in the consumer unit?',
     answer:
-      'Regulation 443 of BS 7671:2018+A4:2026 requires a risk assessment to determine whether surge protection is needed — it does not impose a blanket requirement on every installation. Regulation 443.4 mandates an SPD where a transient overvoltage could result in loss of life, interruption of public services, commercial or industrial disruption, or affect a large number of co-located individuals. For all other cases (including many domestic installations) a risk assessment must be carried out to determine whether protection is required. Regulation 443.4 also contains a specific exception for single dwelling units in certain situations. In practice, most modern domestic risk assessments will conclude that an SPD is warranted given the prevalence of sensitive electronic equipment, but the risk assessment is the trigger — not an automatic rule. Where an SPD is required, a Type 2 SPD is installed at the consumer unit on the supply side of the protective devices, with its own overcurrent protection and a status indicator.',
+      'Regulation 443 of BS 7671:2018+A4:2026 determines whether protection against transient overvoltages is needed — it does not impose a blanket requirement on every installation. Regulation 443.4.1 requires an SPD where the consequence of a transient overvoltage could result in serious injury to, or loss of, human life (limb a) or significant financial or data loss (limb c) — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection must be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. In practice, most modern domestic installations will warrant an SPD given the prevalence of sensitive electronic equipment, but the regulation sets the trigger — it is not an automatic rule. Where an SPD is required, a Type 2 SPD is installed at the consumer unit on the supply side of the protective devices, with its own overcurrent protection and a status indicator.',
   },
   {
     question: 'Can I mix MCBs and RCBOs in the same consumer unit?',
@@ -189,6 +189,52 @@ const sections = [
           The three main configurations for domestic consumer units are split-load, dual-RCD, and
           full RCBO boards. Each has advantages and drawbacks.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="bg-white/[0.06] text-left">
+                  <th className="px-4 py-3 font-semibold">Feature</th>
+                  <th className="px-4 py-3 font-semibold text-blue-300">Split-Load</th>
+                  <th className="px-4 py-3 font-semibold text-purple-300">Dual-RCD</th>
+                  <th className="px-4 py-3 font-semibold text-green-300">Full RCBO</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="px-4 py-3 font-medium">Earth-fault protection</td>
+                  <td className="px-4 py-3">One RCD covers a bank of MCBs</td>
+                  <td className="px-4 py-3">Two RCDs, one per bank of MCBs</td>
+                  <td className="px-4 py-3">Individual 30&nbsp;mA RCD per circuit</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Effect of one earth fault</td>
+                  <td className="px-4 py-3">All circuits on that RCD lost</td>
+                  <td className="px-4 py-3">All circuits on that RCD lost</td>
+                  <td className="px-4 py-3">Only the faulty circuit trips</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Fault discrimination</td>
+                  <td className="px-4 py-3">Poor</td>
+                  <td className="px-4 py-3">Moderate</td>
+                  <td className="px-4 py-3">Best — circuit-level</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Relative cost</td>
+                  <td className="px-4 py-3">Lowest</td>
+                  <td className="px-4 py-3">Moderate</td>
+                  <td className="px-4 py-3">Highest</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Typical use today</td>
+                  <td className="px-4 py-3">Rare in new work</td>
+                  <td className="px-4 py-3">Legacy / budget upgrades</td>
+                  <td className="px-4 py-3">Standard choice for new boards</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -242,15 +288,21 @@ const sections = [
               <h4 className="font-bold text-white mb-1">
                 Arc Fault Detection Devices (AFDDs) — Regulation 421.1.7
               </h4>
+              <p className="text-white text-sm leading-relaxed mb-3">
+                Regulation 421.1.7 was redrafted in BS 7671:2018+A4:2026. It is now a{' '}
+                <strong>requirement</strong> to protect final circuits supplying socket-outlets
+                rated up to 32&nbsp;A with AFDDs in Higher Risk Residential Buildings, Houses in
+                Multiple Occupation, purpose-built student accommodation and care homes. For all
+                other premises — including ordinary dwellings — the regulation{' '}
+                <strong>recommends</strong> AFDDs on single-phase AC final circuits supplying
+                socket-outlets up to 32&nbsp;A. Using an AFDD does not remove the need for the other
+                protective measures in the standard.
+              </p>
               <p className="text-white text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs in AC
-                final circuits of a fixed installation to mitigate the risk of fire caused by arc
-                fault currents. The wording is recommendatory rather than mandatory, but it
-                represents the A4:2026 direction of travel. AFDDs fit within the consumer unit
-                alongside RCBOs, and several manufacturers now offer combined RCBO+AFDD devices that
-                provide overcurrent, RCD, and arc-fault protection in a single module. Installing
-                AFDDs on high-risk circuits (bedrooms, concealed wiring, older installations) is
-                considered best practice under the current standard.
+                AFDDs fit within the consumer unit alongside RCBOs, and several manufacturers now
+                offer combined RCBO+AFDD devices providing overcurrent, RCD and arc-fault protection
+                in a single module. Confirmation that any installed AFDDs are operational is an
+                inspection item under BS 7671 (Regulation 421.1.7).
               </p>
             </div>
           </div>
@@ -326,10 +378,74 @@ const sections = [
           </ul>
         </div>
         <p>
-          For a typical 3-bedroom house, a standard circuit schedule might include: 2 lighting
-          circuits (upstairs/downstairs), 2 socket circuits (upstairs/downstairs), 1 cooker circuit,
-          1 shower circuit, 1 smoke alarm circuit, and 1 or 2 spare ways for future additions. A
-          modern RCBO board with 12 to 16 ways accommodates this comfortably.
+          For a typical 3-bedroom house, a standard circuit schedule on a full RCBO board might look
+          like the example below. Ratings are indicative — always size every circuit against the
+          actual load, cable and installation method using the{' '}
+          <SEOInternalLink href="/tools/cable-sizing-calculator">
+            cable sizing calculator
+          </SEOInternalLink>
+          .
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="bg-white/[0.06] text-left">
+                  <th className="px-4 py-3 font-semibold">Circuit</th>
+                  <th className="px-4 py-3 font-semibold">Typical device</th>
+                  <th className="px-4 py-3 font-semibold">Cable</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="px-4 py-3">Downstairs lighting</td>
+                  <td className="px-4 py-3">6&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">1.0 / 1.5&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Upstairs lighting</td>
+                  <td className="px-4 py-3">6&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">1.0 / 1.5&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Downstairs ring final (sockets)</td>
+                  <td className="px-4 py-3">32&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">2.5&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Upstairs ring final (sockets)</td>
+                  <td className="px-4 py-3">32&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">2.5&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Cooker</td>
+                  <td className="px-4 py-3">32 / 40&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">6&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Electric shower</td>
+                  <td className="px-4 py-3">40 / 45&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">10&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Smoke alarms</td>
+                  <td className="px-4 py-3">6&nbsp;A Type&nbsp;B RCBO</td>
+                  <td className="px-4 py-3">1.5&nbsp;mm²</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Spare ways</td>
+                  <td className="px-4 py-3">1–2 ways left free</td>
+                  <td className="px-4 py-3">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p>
+          A modern RCBO board with 12 to 16 ways accommodates this comfortably and leaves room for
+          future additions such as an{' '}
+          <SEOInternalLink href="/guides/ev-charger-installation">EV charger</SEOInternalLink> or
+          solar PV.
         </p>
       </>
     ),
@@ -373,11 +489,62 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SPD notice</strong> — if an SPD is installed, a notice should indicate its
-                presence and the action required if the SPD status indicator shows a fault.
+                <strong>SPD notice (Regulation 514.16.1)</strong> — where an SPD is installed, a
+                label must indicate its presence so that anyone working on the installation knows
+                surge protection is fitted and can check the status indicator.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="bg-white/[0.06] text-left">
+                  <th className="px-4 py-3 font-semibold">Notice / label</th>
+                  <th className="px-4 py-3 font-semibold">Regulation</th>
+                  <th className="px-4 py-3 font-semibold">Where it goes</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="px-4 py-3">Circuit chart / schedule</td>
+                  <td className="px-4 py-3">514.9.1</td>
+                  <td className="px-4 py-3">At or near each distribution board</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Next inspection recommendation</td>
+                  <td className="px-4 py-3">514.12.1</td>
+                  <td className="px-4 py-3">At or near the origin</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">RCD six-monthly test notice</td>
+                  <td className="px-4 py-3">514.12.2</td>
+                  <td className="px-4 py-3">At or near the consumer unit</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">"Safety electrical connection — do not remove"</td>
+                  <td className="px-4 py-3">514.13.1</td>
+                  <td className="px-4 py-3">At earthing / bonding connections</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">Alternative / dual supply warning</td>
+                  <td className="px-4 py-3">514.15</td>
+                  <td className="px-4 py-3">Where a second supply exists</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3">SPD presence label</td>
+                  <td className="px-4 py-3">514.16.1</td>
+                  <td className="px-4 py-3">At or near the SPD</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+            A4:2026 introduced exceptions to Regulations 514.9.1, 514.12.1 and 514.12.2 for domestic
+            (household) premises — check the current amended text before recording an observation on
+            a domestic EICR.
+          </p>
         </div>
         <p>
           During an{' '}
@@ -447,9 +614,13 @@ const sections = [
     content: (
       <>
         <p>
-          The main switch provides a means of isolating the entire installation from the supply. It
-          must be a double-pole switch (disconnecting both line and neutral) rated for the maximum
-          demand of the installation.
+          The main switch provides a means of isolating the entire installation from the supply.
+          BS 7671 Regulation 462.1.201 requires a main linked switch or linked circuit-breaker as
+          near as practicable to the origin of every installation, serving both as a means of
+          switching the supply on load and as a means of isolation. Where it is intended for
+          operation by ordinary persons — a household or similar installation — it must interrupt
+          both live conductors of a single-phase supply (i.e. a double-pole switch breaking line and
+          neutral), rated for the maximum demand of the installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -465,8 +636,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Accessibility</strong> — the main switch must be readily accessible for
-                emergency switching. BS 7671 recommends that the consumer unit be installed at a
-                height between 450mm and 1350mm from the finished floor level (the accessible zone).
+                emergency switching. For new dwellings, Approved Document M of the Building
+                Regulations sets the accessible zone for switches and consumer unit controls between
+                450mm and 1350mm above finished floor level (this height range is a Building
+                Regulations requirement, not a BS 7671 one).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -501,14 +674,14 @@ const sections = [
           <SEOInternalLink href="/guides/spd-surge-protection">
             Surge protective devices (SPDs)
           </SEOInternalLink>{' '}
-          are addressed under Regulation 443 of BS 7671:2018+A4:2026, which requires a risk
-          assessment to determine whether surge protection is needed. Where the risk assessment
-          concludes that a transient overvoltage could cause loss of life, interruption of public
-          services, commercial or industrial disruption, or affect a large number of people
-          (Regulation 443.4), an SPD must be installed. For single dwelling units that do not meet
-          those criteria, Regulation 443.4 contains an exception — though in practice many modern
-          domestic installations will require an SPD because of the sensitive electronic equipment
-          present. See the{' '}
+          are addressed under Regulation 443 of BS 7671:2018+A4:2026, which determines whether
+          protection against transient overvoltages is needed. Regulation 443.4.1 requires
+          protection to be provided where the consequence of the overvoltage could result in serious
+          injury to, or loss of, human life (limb a) or significant financial or data loss (limb c)
+          — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other
+          cases, protection must be provided unless the owner of the installation declares it is not
+          required because any loss or damage is tolerable and they accept the risk — though in practice many modern domestic installations will warrant an
+          SPD because of the sensitive electronic equipment present. See the{' '}
           <SEOInternalLink href="/guides/spd-surge-protection">dedicated SPD guide</SEOInternalLink>{' '}
           for the full risk-assessment methodology. The SPD is installed at the distribution board
           to protect against transient overvoltages caused by lightning strikes, switching surges,
@@ -536,9 +709,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable length</strong> — the total cable length from the supply terminals,
-                through the SPD, to the earth terminal should not exceed 500mm (0.5m) for maximum
-                effectiveness. Keep the SPD cables as short and direct as possible.
+                <strong>Connecting conductor length</strong> — under BS 7671 Section 534, the total
+                wiring length of the conductors between the connection points of the SPD assembly
+                should preferably not exceed 0.5&nbsp;m, and in no case exceed 1.0&nbsp;m. Keep the
+                SPD leads as short and direct as possible to preserve its protective effectiveness.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -694,6 +868,13 @@ export default function DistributionBoardWiringPage() {
       tocItems={tocItems}
       badge="Installation Guide"
       badgeIcon={CircuitBoard}
+      answerBox={{
+        question: 'How is a distribution board (consumer unit) wired in the UK?',
+        answer:
+          'The incoming supply enters a double-pole main switch, then feeds the protective devices — MCBs, RCBOs or RCDs — that protect each final circuit. A surge protective device (SPD) sits on the supply side where a risk assessment requires it. Earths land on the earth bar, neutrals on the neutral bar (or the RCBO for RCBO boards), and a circuit chart identifies every way.',
+        detail:
+          'Domestic consumer units must be type-tested to BS EN 61439-3 and built from non-combustible material (Regulation 421.1.201). Replacing a board is notifiable under Part P and needs an Electrical Installation Certificate.',
+      }}
       heroTitle={
         <>
           Distribution Board Wiring Guide:{' '}

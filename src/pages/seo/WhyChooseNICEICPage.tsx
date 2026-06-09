@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/guides/part-p-building-regulations-electrical',
     title: 'Part P Building Regulations',
     description:
       'What electrical work requires notification, competent person schemes, and Building Control.',
@@ -109,21 +109,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/guides/electrical-safety-at-home',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description: 'When to call an electrician, DIY limits, danger signs, and EICR for homeowners.',
     icon: Home,
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form correctly.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -151,7 +151,7 @@ const sections = [
         </p>
         <p>
           NICEIC is approved by the UK government as a competent person scheme operator under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/guides/part-p-building-regulations-electrical">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           in England and Wales — and under equivalent building regulations in Scotland and Northern
@@ -234,6 +234,34 @@ const sections = [
               </div>
             </div>
           </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold">Registration type</th>
+                <th className="p-3 font-semibold">Scope of work</th>
+                <th className="p-3 font-semibold">Typical holder</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-yellow-400">Approved Contractor</td>
+                <td className="p-3">Design, install, inspect, test and certify domestic, commercial and industrial work</td>
+                <td className="p-3 text-white/80">Established contracting firms</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-blue-400">Domestic Installer</td>
+                <td className="p-3">Install, inspect, test and certify electrical work in dwellings</td>
+                <td className="p-3 text-white/80">Sole traders and small residential firms</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-green-400">Specialist categories</td>
+                <td className="p-3">Add-on scopes: EV chargers, solar PV, battery storage, fire alarms, emergency lighting</td>
+                <td className="p-3 text-white/80">Contractors extending an existing registration</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           When verifying a contractor's registration, check which categories they are registered
@@ -443,6 +471,56 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4 hidden sm:block">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold">Feature</th>
+                <th className="p-3 font-semibold text-yellow-400">NICEIC</th>
+                <th className="p-3 font-semibold text-blue-400">NAPIT</th>
+                <th className="p-3 font-semibold text-green-400">ELECSA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium">Approx. registered contractors</td>
+                <td className="p-3">~40,000</td>
+                <td className="p-3">~10,000</td>
+                <td className="p-3 text-white/80">Smaller</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium">Trades covered</td>
+                <td className="p-3">Electrical (plus add-ons)</td>
+                <td className="p-3">Multi-trade (electrical, gas, plumbing, ventilation)</td>
+                <td className="p-3">Electrical only</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium">Assessment frequency</td>
+                <td className="p-3">Annual</td>
+                <td className="p-3">Annual</td>
+                <td className="p-3">Annual</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium">Consumer guarantee</td>
+                <td className="p-3">Platinum Promise (up to 6 years)</td>
+                <td className="p-3">Insurance-backed warranty</td>
+                <td className="p-3">Workmanship guarantee</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium">Valid under Part P</td>
+                <td className="p-3">Yes</td>
+                <td className="p-3">Yes</td>
+                <td className="p-3">Yes</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium">Consumer recognition</td>
+                <td className="p-3">Highest</td>
+                <td className="p-3">High</td>
+                <td className="p-3 text-white/80">Lower</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
           For consumers, the practical advice is simple: choose an electrician registered with any
           of the three government-approved schemes. All three assess competence, require annual
@@ -500,9 +578,10 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ask for the full certificate pack, not just the front page</strong> — under
-                BS&nbsp;7671 Reg&nbsp;120.3, an Electrical Installation Certificate is only valid
-                when the Schedule of Inspection <em>and</em> the Schedule(s) of Circuit Details and
-                Test Results are attached. A responsible checklist: ask for all three documents
+                BS&nbsp;7671 Reg&nbsp;644.3, an Electrical Installation Certificate must include the
+                Schedule(s) of Inspection <em>and</em> the Schedule(s) of Circuit Details and Test
+                Results. The model form itself states the certificate is valid only when those
+                schedules are attached to it. A responsible checklist: ask for all the documents
                 together. NICEIC-registered electricians are specifically assessed on whether they
                 issue the complete pack. The correct certificate types are EIC (new work), Minor
                 Works, or <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
@@ -537,6 +616,46 @@ const sections = [
           defines the minimum qualifications required for each category of electrotechnical work.
           This applies equally whether you are registering with NICEIC, NAPIT, STROMA, or ELECSA.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold">Competence area</th>
+                <th className="p-3 font-semibold">What an assessor expects to see</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-yellow-400">Wiring Regulations</td>
+                <td className="p-3">Current qualification in BS&nbsp;7671:2018+A4:2026 (the 18th Edition as amended)</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-yellow-400">Inspection &amp; testing</td>
+                <td className="p-3">
+                  A recognised initial verification and periodic inspection qualification — see the{' '}
+                  <SEOInternalLink href="/inspection-testing-course">Inspection &amp; Testing course</SEOInternalLink>
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-yellow-400">Test instruments</td>
+                <td className="p-3">Calibrated, in-date instruments with calibration records available</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-yellow-400">Insurance</td>
+                <td className="p-3">Current public liability cover (and employer's liability where staff are employed)</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="p-3 font-medium text-yellow-400">Certification</td>
+                <td className="p-3">Correct use of the Appendix 6 model forms with all schedules completed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-white/60">
+          Qualifications from EAL and City &amp; Guilds are separate, standalone routes — the EAS
+          recognises each on its own terms. Hold whichever route you completed; there is no need to
+          convert one into the other.
+        </p>
         <p>Elec-Mate is designed to help you meet and exceed these standards:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -550,12 +669,13 @@ const sections = [
                   every field completed correctly — because the app validates each entry as you go.
                 </p>
                 <p className="text-white text-sm leading-relaxed mt-2">
-                  From A4:2026, the Appendix 6 model forms have been amended to include mandatory
-                  fields for recording SPD (surge protective device) and AFDD (arc fault detection
-                  device) details where such devices are installed (BS&nbsp;7671
-                  Reg&nbsp;722.826.3.201). NICEIC assessors will check that these fields are
-                  correctly populated on your EICs and EICRs — omitting them on a relevant
-                  installation is a certificate defect.
+                  From BS&nbsp;7671:2018+A4:2026, the Appendix 6 model forms have been amended to
+                  add fields for recording SPD (surge protective device) and AFDD (arc fault
+                  detection device) details. Reg&nbsp;421.1.7 now requires AFDDs conforming to
+                  BS&nbsp;EN&nbsp;62606 on single-phase AC final circuits supplying socket-outlets
+                  rated at 32&nbsp;A or less in higher-risk premises. NICEIC assessors will check
+                  that these fields are correctly populated on your EICs and EICRs — omitting them
+                  on a relevant installation is a certificate defect.
                 </p>
               </div>
             </div>
@@ -607,6 +727,13 @@ export default function WhyChooseNICEICPage() {
       }
       heroSubtitle="NICEIC is the UK's largest electrical contracting registration body. Every registered contractor is assessed annually, their work is backed by the Platinum Promise guarantee, and there is a formal complaints procedure if something goes wrong. This guide explains what NICEIC registration means and how to find a registered electrician."
       readingTime={10}
+      answerBox={{
+        question: 'Why should I choose a NICEIC-registered electrician?',
+        answer:
+          'A NICEIC-registered electrician has been independently assessed as competent and is reassessed at least once a year. Their work is backed by the Platinum Promise, which covers faulty workmanship for up to six years — even if the contractor stops trading. If something goes wrong, NICEIC runs a formal complaints procedure that can require corrective work at no cost to you.',
+        detail:
+          'NICEIC is a government-approved competent person scheme operator under Part P, so a registered contractor can self-certify notifiable work without a separate Building Control inspection.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

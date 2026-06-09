@@ -47,7 +47,7 @@ const keyTakeaways = [
   'Regulation 12 requires adequate precautions when working on equipment made dead — the legal basis for safe isolation procedures.',
   'Regulation 14 prohibits working on or near live conductors unless it is unreasonable for it to be dead, it is reasonable to work live, and suitable precautions are taken.',
   'Regulation 16 requires that persons carrying out electrical work must be competent — or supervised by a competent person — to prevent danger and injury.',
-  'BS 7671:2018+A4:2026 (A4) introduced new Regulation 4 construction requirements: AFDDs are recommended for socket-outlet circuits (mandatory in HMOs, HRRBs, care homes and student accommodation) under Reg 421.1.7, and 30 mA RCD protection is required for all domestic lighting circuits under Reg 411.3.4.',
+  'BS 7671:2018+A4:2026 (A4) tightened the construction requirements that underpin Regulation 4: AFDDs are mandatory for socket-outlet final circuits rated up to 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes (recommended elsewhere) under Reg 421.1.7, and 30 mA RCD protection is required for AC final circuits supplying luminaires in domestic premises under Reg 411.3.4.',
 ];
 
 const faqs = [
@@ -278,14 +278,13 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance</strong> — the installation must be periodically inspected and
-                tested by a competent person. Defects must be rectified promptly. Records of
+                tested by a competent person. Defects must be rectified promptly, and records of
                 inspections and tests must be kept. BS 7671 Regulation 652.1 requires that the
                 frequency of periodic inspection and testing be determined having regard to the type
-                of installation, its use, maintenance history, external influences, and previous
-                inspection reports (GN3 Ch. 2, Reg 2.4). As a general guide this is typically 5
-                years for domestic, 3 to 5 years for commercial, and 1 to 3 years for industrial —
-                but the inspector&apos;s assessed interval always takes precedence over these
-                defaults.
+                of installation, its use and operation, the frequency and quality of maintenance,
+                and the external influences to which it may be subjected — along with the results
+                and recommendations of previous reports. The inspector&apos;s assessed interval
+                always takes precedence over the indicative defaults below.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,6 +297,43 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <div className="bg-white/[0.06] px-4 py-2 text-xs uppercase tracking-wide text-white/70">
+            Indicative maximum periodic inspection intervals (assessed under Reg 652.1)
+          </div>
+          <table className="w-full text-left text-sm text-white">
+            <thead className="bg-white/[0.04] text-xs uppercase tracking-wide text-white/60">
+              <tr>
+                <th className="px-3 py-2 font-semibold">Installation type</th>
+                <th className="px-3 py-2 font-semibold">Typical interval</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-2">Domestic / owner-occupied dwelling</td>
+                <td className="px-3 py-2">Up to 10 years (or change of occupancy)</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-2">Rented domestic accommodation</td>
+                <td className="px-3 py-2">5 years (or change of occupancy)</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-2">Commercial premises</td>
+                <td className="px-3 py-2">5 years (or change of occupancy)</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-2">Industrial premises</td>
+                <td className="px-3 py-2">3 years</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="px-3 py-2 text-xs text-white/60 bg-white/[0.02] border-t border-white/10">
+            Indicative guidance only — the inspector sets the actual interval under Reg 652.1.
+            See the{' '}
+            <SEOInternalLink href="/guides/eicr-for-landlords">EICR for landlords</SEOInternalLink>{' '}
+            guide for the rented-sector statutory five-year requirement.
+          </p>
+        </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-4">
           <p className="text-yellow-300 font-semibold mb-2">
             A4:2026 Update — New construction requirements
@@ -308,18 +344,51 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white text-sm">
             <li>
-              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> AFDDs are
-              recommended for final circuits supplying socket-outlets. For Higher Risk Residential
-              Buildings, Houses in Multiple Occupation (HMOs), purpose-built student accommodation,
-              and care homes the requirement is mandatory. AFDDs shall conform to BS EN 62606.
+              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs):</strong> AFDDs conforming
+              to BS EN 62606 are now <em>mandatory</em> for single-phase AC final circuits supplying
+              socket-outlets rated not exceeding 32 A in the four building types in the table below.
+              For all other premises AFDDs are <em>recommended</em> for the same circuits. Where
+              used, an AFDD must be placed at the origin of the circuit it protects.
             </li>
             <li>
-              <strong>Reg 411.3.4 — RCD protection for lighting circuits:</strong> In domestic
+              <strong>Reg 411.3.4 — RCD protection for luminaire circuits:</strong> Within domestic
               (household) premises, additional protection by an RCD with a rated residual operating
-              current not exceeding 30 mA is now required for all AC final circuits supplying
+              current not exceeding 30 mA must now be provided for AC final circuits supplying
               luminaires. An RCBO rated at or below 30 mA satisfies this requirement.
             </li>
           </ul>
+          <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
+            <table className="w-full text-left text-sm text-white">
+              <thead className="bg-white/[0.06] text-xs uppercase tracking-wide text-white/70">
+                <tr>
+                  <th className="px-3 py-2 font-semibold">Premises type (Reg 421.1.7)</th>
+                  <th className="px-3 py-2 font-semibold">AFDD on socket circuits &le;32 A</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-white/10 bg-red-900/20">
+                  <td className="px-3 py-2">High rise residential buildings (HRRBs) — over 18 m or more than six storeys</td>
+                  <td className="px-3 py-2 font-semibold text-red-300">Mandatory</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-red-900/20">
+                  <td className="px-3 py-2">Houses in Multiple Occupation (HMOs)</td>
+                  <td className="px-3 py-2 font-semibold text-red-300">Mandatory</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-red-900/20">
+                  <td className="px-3 py-2">Purpose-built student accommodation</td>
+                  <td className="px-3 py-2 font-semibold text-red-300">Mandatory</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-red-900/20">
+                  <td className="px-3 py-2">Care homes</td>
+                  <td className="px-3 py-2 font-semibold text-red-300">Mandatory</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-white/[0.02]">
+                  <td className="px-3 py-2">All other premises (including standard dwellings)</td>
+                  <td className="px-3 py-2 font-semibold text-yellow-300">Recommended</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <p className="text-white/70 text-xs mt-3">
             Source: BS 7671:2018+A4:2026 Regs 421.1.7 and 411.3.4
           </p>
@@ -585,6 +654,33 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-left text-sm text-white">
+            <thead className="bg-white/[0.06] text-xs uppercase tracking-wide text-white/70">
+              <tr>
+                <th className="px-3 py-2 font-semibold">Enforcement route</th>
+                <th className="px-3 py-2 font-semibold">Maximum fine</th>
+                <th className="px-3 py-2 font-semibold">Maximum imprisonment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-2">Magistrates&apos; court (summary)</td>
+                <td className="px-3 py-2">Unlimited</td>
+                <td className="px-3 py-2">Up to 12 months</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-2">Crown Court (on indictment)</td>
+                <td className="px-3 py-2">Unlimited</td>
+                <td className="px-3 py-2">Up to 2 years</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="px-3 py-2 text-xs text-white/60 bg-white/[0.02] border-t border-white/10">
+            Fines became unlimited following the Legal Aid, Sentencing and Punishment of Offenders
+            Act 2012 (in force 2015). Both the organisation and named individuals can be prosecuted.
+          </p>
+        </div>
         <p>
           The HSE publishes annual statistics on electrical accidents and fatalities. Electrical
           contact is consistently one of the leading causes of workplace fatalities in the
@@ -686,6 +782,13 @@ export default function ElectricityAtWorkRegsPage() {
       tocItems={tocItems}
       badge="Regulations"
       badgeIcon={Scale}
+      answerBox={{
+        question: 'What are the Electricity at Work Regulations 1989?',
+        answer:
+          'The Electricity at Work Regulations 1989 (EAWR) are UK law made under the Health and Safety at Work Act 1974 and enforced by the HSE. They impose legal duties on employers, the self-employed and employees to prevent danger from electrical systems at work. The four regulations electricians rely on most are Reg 4 (safe systems), Reg 12 (working dead), Reg 14 (live working) and Reg 16 (competence).',
+        detail:
+          'Breach is a criminal offence. Following BS 7671 is the accepted way of showing an installation meets Reg 4, but the EAWR are broader and cover every electrical work activity, not just installation.',
+      }}
       heroTitle={
         <>
           Electricity at Work Regulations 1989:{' '}

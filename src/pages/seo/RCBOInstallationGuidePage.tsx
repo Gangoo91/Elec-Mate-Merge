@@ -39,7 +39,7 @@ const keyTakeaways = [
   'An RCBO (Residual Current Breaker with Overcurrent) combines the functions of an RCD and an MCB in a single device. It provides both overcurrent protection and 30mA residual current protection on a single circuit, meaning only that circuit trips when a fault occurs rather than a whole group of circuits.',
   'RCBOs eliminate the "half-dark house" problem caused by split-load consumer units, where a single RCD protects multiple circuits and a fault on one circuit disconnects all of them. With an RCBO board, each circuit has its own individual protection.',
   'RCBO types matter for LED lighting circuits: Type A RCBOs detect both sinusoidal and pulsating DC residual currents and are correct for most LED driver circuits. Type F RCBOs additionally detect higher-frequency currents and are suited to circuits supplying variable speed drives and modern inverter equipment.',
-  'BS 7671 Regulation 531.3 covers the requirements for residual current devices. Selection of the correct RCBO type (A, F, or B) is determined by the characteristics of the load being protected and the type of residual current that could arise under fault conditions.',
+  'BS 7671 Section 531.3 covers the requirements for residual current devices. Regulation 531.3.3 determines the correct device type (AC, A, F or B) from the DC components and frequencies a load can produce, and Regulation 531.3.2(b) recognises RCBOs on individual final circuits in residential premises as a way to limit unwanted tripping.',
   'RCBO costs range from approximately £15 to £45 per device depending on the brand, type, and current rating. A full RCBO consumer unit replacement for a typical 3-bedroom domestic property costs between £400 and £900 fitted, including labour and certification.',
 ];
 
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Are RCBOs required by BS 7671?',
     answer:
-      'BS 7671 Regulation 531.3 requires that residual current devices (RCDs) are selected and installed in accordance with the characteristics of the circuit and the load. It does not mandate RCBOs specifically — an RCD protecting multiple circuits on a split-load board remains compliant. However, RCBOs provide a higher level of protection by ensuring that a fault on one circuit does not affect other circuits, and they are widely regarded as best practice for new installations and consumer unit replacements. Many electricians now specify RCBO boards as standard.',
+'BS 7671 does not mandate RCBOs specifically — an RCD protecting multiple circuits on a split-load board can remain compliant. However, Regulation 531.3.2(b) explicitly recognises the use of RCBOs on individual final circuits in residential premises as a means of limiting unwanted tripping, and dividing the installation so that one fault does not disconnect unrelated circuits is encouraged. RCBO boards are now widely regarded as best practice for new installations and consumer unit replacements, and many electricians specify them as standard.',
   },
   {
     question: 'How many RCBOs can I install in a consumer unit?',
@@ -167,10 +167,10 @@ const sections = [
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standard residual current sensitivity</strong> — domestic RCBOs are
-                typically rated at 30mA residual current sensitivity, which is the threshold
-                required by BS 7671 Regulation 415.1 for additional protection (supplementary
-                protection against electric shock) on socket outlet circuits and circuits supplying
-                mobile equipment outdoors.
+                typically rated at 30mA residual current sensitivity. BS 7671 Regulation 415.1
+                recognises a 30mA RCD as additional protection against electric shock, and
+                Regulation 411.3.3 makes that 30mA protection a requirement for socket-outlets up to
+                32A and for mobile equipment up to 32A used outdoors.
               </span>
             </li>
           </ul>
@@ -187,7 +187,11 @@ const sections = [
           The traditional approach in domestic consumer units was a split-load arrangement: a main
           switch, one or two RCDs each protecting a group of MCBs. The alternative — now widely
           adopted for new installations and replacements — is an RCBO board, where every circuit has
-          its own RCBO and a main switch only (no shared RCDs).
+          its own RCBO and a main switch only (no shared RCDs). See our{' '}
+          <SEOInternalLink href="/consumer-unit-types-guide">
+            consumer unit types guide
+          </SEOInternalLink>{' '}
+          for how RCBO boards compare with split-load and high-integrity boards.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -243,51 +247,63 @@ const sections = [
     content: (
       <>
         <p>
-          RCBOs (and RCDs) are classified by the type of residual current they can detect. Selecting
-          the wrong type for the load being protected can result in either nuisance tripping or,
-          worse, failure to trip under a genuine fault condition.
+          RCBOs (and RCDs) are classified by the type of residual current they can detect. BS 7671
+          Regulation 531.3.3 defines four device types according to their behaviour in the presence
+          of DC components and frequencies. Selecting the wrong type for the load being protected can
+          result in either nuisance tripping or, worse, failure to trip under a genuine fault
+          condition.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Type AC</strong> — detects only sinusoidal (pure mains frequency) residual
-                current. No longer recommended for new installations in most applications. Modern
-                electronic equipment generates pulsating DC components that Type AC devices cannot
-                reliably detect.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Type A</strong> — detects sinusoidal residual current and pulsating DC
-                residual current. The standard type for domestic circuits including socket outlets,
-                lighting, and general domestic loads. Required for circuits supplying appliances
-                with electronic power supplies (washing machines, dishwashers, tumble dryers, LED
-                drivers).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Type F</strong> — detects sinusoidal residual current, pulsating DC residual
-                current, and higher-frequency (up to a few kHz) residual current. Suitable for
-                circuits supplying variable speed drives, frequency inverters, and modern heat pump
-                controllers. Helps prevent nuisance tripping on circuits where high-frequency
-                leakage currents are present.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Type B</strong> — additionally detects smooth DC residual current. Required
-                for specific equipment including certain EV chargers, solar inverters with a DC
-                leakage path, and medical equipment. More expensive than Type A and not typically
-                used for standard domestic circuits.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr_auto] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Type</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Detects</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Typical use</div>
+
+            <div className="bg-blue-900/30 px-4 py-3 font-semibold text-blue-200">AC</div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white/90">
+              Alternating sinusoidal residual current only
+            </div>
+            <div className="bg-blue-900/20 px-4 py-3 text-white/80">
+              Fixed equipment with no DC content only — restricted by Reg 531.3.3
+            </div>
+
+            <div className="bg-yellow-900/30 px-4 py-3 font-semibold text-yellow-200">A</div>
+            <div className="bg-yellow-900/20 px-4 py-3 text-white/90">
+              Sinusoidal + pulsating DC residual current
+            </div>
+            <div className="bg-yellow-900/20 px-4 py-3 text-white/80">
+              Standard domestic choice — sockets, lighting, appliances with electronic supplies
+            </div>
+
+            <div className="bg-green-900/30 px-4 py-3 font-semibold text-green-200">F</div>
+            <div className="bg-green-900/20 px-4 py-3 text-white/90">
+              Type A behaviour + composite and higher-frequency residual currents
+            </div>
+            <div className="bg-green-900/20 px-4 py-3 text-white/80">
+              Variable speed drives, frequency inverters, modern heat pump controllers
+            </div>
+
+            <div className="bg-purple-900/30 px-4 py-3 font-semibold text-purple-200">B</div>
+            <div className="bg-purple-900/20 px-4 py-3 text-white/90">
+              Type F behaviour + smooth DC residual current, up to 1 kHz AC
+            </div>
+            <div className="bg-purple-900/20 px-4 py-3 text-white/80">
+              Equipment with a DC leakage path — certain EV chargers, some solar inverters, medical
+              equipment
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <p className="flex items-start gap-3 text-white m-0">
+            <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+            <span>
+              Type AC devices are no longer a free choice. Regulation 531.3.3 restricts Type AC RCDs
+              to serving fixed equipment where it is known the load current contains no DC components
+              (for example, simple heating appliances or filament lighting with no electronic
+              components). Almost all modern circuits draw current through electronics that generate
+              pulsating DC, so Type A is now the practical minimum for domestic work.
+            </span>
+          </p>
         </div>
         <p>
           For most domestic circuits, Type A RCBOs are the correct choice. Specify Type F for
@@ -401,10 +417,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — Test and certify</strong>: carry out an RCD trip time test using a
-                calibrated RCD tester. The RCBO must trip within 300ms at 1x rated residual current
-                and within 40ms at 5x rated residual current (for 30mA devices, the 5x test is at
-                150mA). Record results and issue a Minor Electrical Installation Works Certificate.
+                <strong>Step 4 — Test and certify</strong>: verify the RCBO's effectiveness with a
+                calibrated RCD tester to BS EN 61557-6. Under BS 7671, a general (non-delay) type RCD
+                is deemed verified where it disconnects within 300ms maximum at its rated residual
+                operating current (IΔn). Many electricians also record ramp and 5× results from the
+                instrument as supporting evidence. Record the results and issue a Minor Electrical
+                Installation Works Certificate.
               </span>
             </li>
           </ul>
@@ -423,50 +441,54 @@ const sections = [
           installed. Consumer unit manufacturers design their busbars and enclosures around their
           own device ranges and do not generally warrant third-party devices fitted in their units.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Hager</strong> — Hager consumer units (Invicta, Klik, and other ranges)
-                accept Hager RCBOs. Some Hager boards accept certain compatible third-party devices,
-                but always verify with Hager's compatibility documentation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Schneider Electric (Acti9, Resi9, Domae)</strong> — Schneider consumer units
-                accept Schneider RCBOs. The Resi9 range is widely used in domestic work. Acti9
-                devices are commercial-grade. Do not mix ranges.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Eaton (MEM, Memshield)</strong> — Eaton Memshield 3 consumer units accept
-                Eaton RCBOs. Memshield 2 boards are older and may have different busbar
-                configurations.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ABB (Mistral)</strong> — ABB Mistral consumer units accept ABB RCBO ranges.
-                ABB also produce the MK range under their brand.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Cross-brand compatibility</strong> — never fit an RCBO in a consumer unit of
-                a different brand without explicit written confirmation from the consumer unit
-                manufacturer that the device is approved for use in their enclosure. BS EN 61439-3
-                requires that the consumer unit assembly is verified as a complete unit by the
-                manufacturer.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Manufacturer</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">
+              Board / RCBO ranges and notes
+            </div>
+
+            <div className="bg-white/[0.02] px-4 py-3 font-semibold text-white">Hager</div>
+            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+              Invicta, Klik and other ranges accept Hager RCBOs. Verify any third-party device
+              against Hager's own compatibility documentation before fitting.
+            </div>
+
+            <div className="bg-white/[0.04] px-4 py-3 font-semibold text-white">
+              Schneider Electric
+            </div>
+            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+              Acti9, Resi9 and Domae. Resi9 is widely used in domestic work; Acti9 is
+              commercial-grade. Do not mix ranges.
+            </div>
+
+            <div className="bg-white/[0.02] px-4 py-3 font-semibold text-white">Eaton</div>
+            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+              Memshield 3 boards accept Eaton RCBOs. Memshield 2 is older and may have a different
+              busbar configuration.
+            </div>
+
+            <div className="bg-white/[0.04] px-4 py-3 font-semibold text-white">ABB</div>
+            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+              Mistral consumer units accept ABB RCBO ranges. ABB also produce the MK range under
+              their brand.
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-4">
+          <p className="flex items-start gap-3 text-white m-0">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <span>
+              <strong>Cross-brand mixing is a compliance issue, not just a warranty one.</strong> For
+              a single-phase supply rated up to 100A under the control of ordinary persons, BS 7671
+              requires the consumer unit to be a complete assembly to BS EN 61439-3 incorporating the
+              components and protective devices specified by its manufacturer (Regulation 536.4.201,
+              including the 16 kA conditional short-circuit test of Annex ZB). Regulation 536.4.5
+              requires the assembly's declared characteristics to be respected. Fitting an
+              unapproved third-party RCBO breaks the verified assembly — never do it without written
+              confirmation from the board manufacturer.
+            </span>
+          </p>
         </div>
       </>
     ),
@@ -477,43 +499,52 @@ const sections = [
     content: (
       <>
         <p>
-          RCBO costs vary by brand, type, and current rating. As a general guide for the UK trade
-          market (2024/2025 prices):
+          RCBO costs vary by brand, type, and current rating. The figures below are indicative
+          market guidance for the UK trade only — not a quote. Always price from current supplier
+          rates and your own labour:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Entry-level Type A RCBO (6A to 32A)</strong> — £15 to £22 per device at
-                trade prices. Suitable for most standard domestic circuits.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Mid-range Type A RCBO (Hager, Schneider Resi9)</strong> — £22 to £32 per
-                device. Better build quality, easier installation, manufacturer-backed consumer unit
-                compatibility.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Type F RCBO</strong> — £28 to £45 per device. Specify for heat pump, EV
-                charger supply, or variable speed drive circuits.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Full RCBO consumer unit replacement (domestic)</strong> — £400 to £900
-                fitted, including labour, materials, certification, and Building Regulations
-                compliance certificate. Larger properties or those requiring rewiring of circuit
-                tails will be at the higher end of this range.
-              </span>
-            </li>
-          </ul>
+        <div className="grid sm:grid-cols-2 gap-4 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+              <PoundSterling className="w-5 h-5 shrink-0" />
+              <span className="text-2xl font-bold">£15–£22</span>
+            </div>
+            <p className="font-semibold text-white m-0">Entry-level Type A RCBO (6A–32A)</p>
+            <p className="text-white/70 text-sm m-0 mt-1">
+              Per device, trade price. Suitable for most standard domestic circuits.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+              <PoundSterling className="w-5 h-5 shrink-0" />
+              <span className="text-2xl font-bold">£22–£32</span>
+            </div>
+            <p className="font-semibold text-white m-0">Mid-range Type A RCBO (Hager, Resi9)</p>
+            <p className="text-white/70 text-sm m-0 mt-1">
+              Per device. Better build quality and manufacturer-backed board compatibility.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+              <PoundSterling className="w-5 h-5 shrink-0" />
+              <span className="text-2xl font-bold">£28–£45</span>
+            </div>
+            <p className="font-semibold text-white m-0">Type F RCBO</p>
+            <p className="text-white/70 text-sm m-0 mt-1">
+              Per device. Specify for heat pump, EV charger supply, or variable speed drive circuits.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5">
+            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+              <PoundSterling className="w-5 h-5 shrink-0" />
+              <span className="text-2xl font-bold">£400–£900</span>
+            </div>
+            <p className="font-semibold text-white m-0">Full RCBO board replacement (domestic)</p>
+            <p className="text-white/70 text-sm m-0 mt-1">
+              Fitted, including labour, materials, certification and Building Regulations
+              notification. Larger properties sit at the higher end.
+            </p>
+          </div>
         </div>
         <p>
           When quoting consumer unit replacement work, ensure you include the cost of the Building
@@ -533,40 +564,53 @@ const sections = [
     content: (
       <>
         <p>
-          The selection and installation of RCDs and RCBOs is governed by Section 531 of BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). Key requirements relevant to RCBO
-          selection and installation include:
+          The selection and installation of RCDs and RCBOs is governed by Section 531 of BS
+          7671:2018+A4:2026 (the 18th Edition Wiring Regulations, as amended). The key regulations
+          relevant to RCBO selection and installation are set out below.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 531.3.1</strong> — requires that RCDs are selected in accordance
-                with the characteristics of the circuit and the environment in which they are
-                installed. The type of residual current (sinusoidal, pulsating DC, smooth DC) that
-                may arise under fault conditions determines the required device type.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 411.3.3</strong> — requires 30mA RCD protection on all
-                socket-outlet circuits rated up to 32A in domestic premises, and on circuits
-                supplying mobile equipment for outdoor use. RCBOs with 30mA sensitivity satisfy this
-                requirement for individual circuits.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 531.3.6</strong> — where an RCD is used as the sole means of
-                protection for a group of circuits, a fault on one circuit will disconnect all
-                circuits in the group. The installation design should consider the consequences of
-                this and, where appropriate, provide additional discrimination or use RCBOs for
-                individual circuit protection.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Regulation</div>
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">
+              What it requires
+            </div>
+
+            <div className="bg-white/[0.02] px-4 py-3 font-semibold text-yellow-200">
+              411.3.3
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+              In AC systems, additional protection by a 30mA RCD is required for socket-outlets rated
+              up to 32A and for mobile equipment up to 32A used outdoors. A 30mA RCBO satisfies this
+              on an individual circuit.
+            </div>
+
+            <div className="bg-white/[0.04] px-4 py-3 font-semibold text-yellow-200">
+              531.3.2(b)
+            </div>
+            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+              Lists the use of RCBOs for individual final circuits in residential premises as a means
+              of limiting the risk of unwanted tripping — the regulatory basis for choosing an RCBO
+              board over a shared-RCD split-load board.
+            </div>
+
+            <div className="bg-white/[0.02] px-4 py-3 font-semibold text-yellow-200">
+              531.3.3
+            </div>
+            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+              Defines RCD Types AC, A, F and B by their response to DC components and frequencies, and
+              restricts Type AC to fixed equipment with no DC load content. Determines which device
+              type a circuit needs.
+            </div>
+
+            <div className="bg-white/[0.04] px-4 py-3 font-semibold text-yellow-200">
+              531.3.6
+            </div>
+            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+              Confirms a 30mA RCD is recognised as additional protection under Regulation 415.1 and
+              must comply with 411.3.3. Where installed at the origin of a final circuit, it may
+              provide fault protection and additional protection simultaneously.
+            </div>
+          </div>
         </div>
         <p>
           For a full analysis of your installation's RCD and RCBO requirements, an{' '}
@@ -601,6 +645,11 @@ export default function RCBOInstallationGuidePage() {
         </>
       }
       heroSubtitle="RCBOs provide individual circuit protection that split-load RCD boards cannot match. This guide covers the different RCBO types, how to resolve nuisance tripping on LED circuits, installation procedure, board compatibility, and how BS 7671 Regulation 531 applies."
+      answerBox={{
+        question: 'How do you install an RCBO in a consumer unit?',
+        answer:
+          'Safely isolate the consumer unit at the main switch and prove dead, confirm the RCBO is the device specified by the board manufacturer, withdraw the existing MCB and clip the RCBO onto the busbar, connect both the line and neutral of that circuit to the RCBO, then test the trip time and issue a Minor Electrical Installation Works Certificate. This is qualified-electrician work, not DIY.',
+      }}
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

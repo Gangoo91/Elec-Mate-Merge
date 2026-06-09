@@ -94,16 +94,16 @@ const quizQuestions = [
   },
   {
     question:
-      'Reg 443.1.1 references BS EN 62305-2 for SPD risk assessment. What changed in A4:2026 Reg 443.4.1 about SPD requirements?',
+      'Reg 443.1.1 references BS EN 62305-2 for SPD risk assessment. What does Reg 443.4.1 require about when SPD protection is mandatory?',
     options: [
       'No change',
-      'A4:2026 Reg 443.4.1 redrafted the SPD requirement criteria. Protection against transient overvoltages now required where consequences could result in (a) serious injury to or loss of human life; (b) failure of a safety service as defined in Part 2; (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares acceptance of the risk. Annex A443 (calculated risk level method) was deleted — A4:2026 simplified the trigger criteria',
+      'Per Reg 443.4.1, protection against transient overvoltages is required where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss',
       'SPDs banned',
       'Random',
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 redrafted Reg 443.4.1 SPD requirement criteria. New criteria: protection against transient overvoltages required where consequences caused by overvoltage could result in (a) serious injury to or loss of human life; (b) failure of a safety service as defined in Part 2; (c) significant financial or data loss. For all other cases, protection against transient overvoltages SHALL be provided UNLESS the owner of the installation declares acceptance of the risk (i.e. opt-out is allowed for non-critical cases but must be evidenced by owner declaration). Annex A443 (the calculated risk level CRL method) was DELETED — A4:2026 simplified the trigger from a calculation to a category-based test. Practical impact: SPDs now expected in most installs unless explicit owner opt-out. For LCT installs (PV, BESS, EV, heat pump) the (c) significant financial / data loss criterion typically triggers SPD requirement. BS EN 62305-2 risk assessment remains the methodology where formal lightning-protection risk justification is needed. Cert evidence: SPD selection rationale + owner declaration if opted out.',
+      'Reg 443.4.1 SPD requirement criteria: protection against transient overvoltages is required where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. There are exactly two active limbs — limb (b) was DELETED by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection against transient overvoltages SHALL be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss (i.e. opt-out is allowed for non-critical cases but must be evidenced by owner declaration). Practical impact: SPDs are expected in most installs unless explicit owner opt-out. For LCT installs (PV, BESS, EV, heat pump) the (c) significant financial / data loss criterion typically triggers the SPD requirement. BS EN 62305-2 risk assessment remains the methodology where formal lightning-protection risk justification is needed. Cert evidence: SPD selection rationale + owner declaration if opted out.',
   },
   {
     question:

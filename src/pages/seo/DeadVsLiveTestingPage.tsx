@@ -28,6 +28,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'why-sequence-matters', label: 'Why the Sequence Matters' },
+  { id: 'at-a-glance', label: 'Dead vs Live: At a Glance' },
   { id: 'safe-isolation', label: 'Safe Isolation Before Dead Testing' },
   { id: 'dead-tests', label: 'Dead Tests Explained' },
   { id: 'live-tests', label: 'Live Tests Explained' },
@@ -37,6 +38,14 @@ const tocItems = [
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
+
+const answerBox = {
+  question: 'What is the difference between dead testing and live testing?',
+  answer:
+    'Dead tests are carried out with the supply isolated and prove the circuit is safe to energise: continuity of conductors (R1+R2 and ring), insulation resistance, separation, polarity and earth electrode resistance. Live tests are carried out with the supply energised and prove the protection works: earth fault loop impedance (Zs), prospective fault current, RCD operation, phase sequence and functional testing.',
+  detail:
+    'BS 7671 Regulation 643.1 requires the dead tests of Regulations 643.2 to 643.6 to be carried out in that order before the installation is energised. The live tests then follow under Regulations 643.7 to 643.10.',
+};
 
 const keyTakeaways = [
   'Dead tests are performed with the supply isolated and include continuity of protective conductors (R1+R2), continuity of ring final circuit conductors, insulation resistance, and polarity.',
@@ -50,32 +59,32 @@ const faqs = [
   {
     question: 'Why must dead tests be done before live tests?',
     answer:
-      'Dead tests verify the fundamental safety of the circuit before it is energised. Continuity testing confirms that protective conductors are connected and will carry fault current. Insulation resistance testing confirms that there are no short circuits between live conductors or between live conductors and earth. If you skip dead testing and energise a circuit with a short circuit or a broken earth, you could cause a fault, a fire, or an electric shock. The sequence is not optional — it is a requirement of BS 7671 Chapter 64, which specifies that dead tests (Section 643) must be completed before the installation is energised for live testing (Section 644). GN3 (Guidance Note 3) reinforces this sequence and provides the detailed procedures for each test.',
+      'Dead tests verify the fundamental safety of the circuit before it is energised. Continuity testing confirms that protective conductors are connected and will carry fault current. Insulation resistance testing confirms there are no short circuits between live conductors or between live conductors and the protective conductor. If you skip dead testing and energise a circuit with a short circuit or a broken earth, you could cause a fault, a fire, or an electric shock. The sequence is not optional. BS 7671 Regulation 643.1 requires that the tests of Regulations 643.2 to 643.6 are carried out in that order before the installation is energised (and, where an earth electrode is present, the test of 643.7.2 as well). IET Guidance Note 3 reinforces this sequence and provides the detailed procedures for each test.',
   },
   {
     question: 'What counts as a dead test?',
     answer:
-      'The dead tests specified in BS 7671 Section 643 are: continuity of protective conductors including main and supplementary bonding (643.2), continuity of ring final circuit conductors (643.2), insulation resistance between live conductors and between live conductors and earth (643.3), separation of circuits such as SELV and PELV (643.4), insulation resistance or impedance of non-conducting floors and walls (643.5), polarity verification (643.6), and earth electrode resistance for TT systems (643.7). These tests are all performed with the supply isolated and the circuits de-energised. The instrument used depends on the test — a low-resistance ohmmeter for continuity, a 500 V DC insulation resistance tester for IR, and a dedicated earth electrode tester for RA.',
+      'The dead tests carried out before energising are specified in BS 7671 Regulations 643.2 to 643.6 (plus 643.7.2 where an earth electrode is present). They are: continuity of conductors covering protective conductors, protective bonding and the live conductors of ring final circuits (643.2), insulation resistance between live conductors and between live conductors and the protective conductor (643.3), verification of separation for SELV, PELV or electrical separation (643.4), insulation resistance or impedance of non-conducting floors and walls (643.5), polarity (643.6), and earth electrode resistance where the earthing system incorporates an electrode (643.7.2). These are all performed with the supply isolated. The instrument depends on the test: a low-resistance ohmmeter for continuity, a 500 V DC insulation resistance tester for IR, and an earth electrode tester for RA.',
   },
   {
     question: 'What counts as a live test?',
     answer:
-      'The live tests specified in BS 7671 Section 644 are: earth fault loop impedance Zs (644.3), prospective fault current — both prospective short-circuit current (PSCC) and prospective earth fault current (PEFC) (644.4), RCD operation including trip time and trip current (643.10), verification of phase sequence for three-phase supplies (644.5), and functional testing of switchgear, controls, interlocks, and other devices (643.10). These tests require the supply to be energised. A multifunction tester (MFT) can perform Zs, PSCC/PEFC, and RCD tests. Functional testing is done manually by operating each device and confirming correct operation.',
+      'The live tests require the supply to be energised and are specified later in the same test sequence: measurement of earth fault loop impedance Zs (643.7.3), prospective fault current covering both prospective short-circuit current (PSCC) and prospective earth fault current (PEFC) (643.7.3.201), verification of the effectiveness of additional protection including RCD operation (643.8), check of phase sequence for polyphase circuits (643.9), and functional testing of switchgear, controls and interlocks (643.10). A multifunction tester (MFT) performs Zs, PSCC/PEFC and RCD tests. Functional testing is done manually by operating each device and confirming correct operation.',
   },
   {
     question: 'Can I do live testing without completing all dead tests first?',
     answer:
-      'No. BS 7671 requires that every installation is inspected and tested during erection and on completion, before being put into service. The sequence in Part 6 is prescriptive: inspection first (Section 641), then dead testing (Section 643), then live testing (Section 644). Energising a circuit without completing dead tests is dangerous and non-compliant. If you are doing a periodic inspection and the installation is already energised, you should still follow the correct procedure: isolate each circuit before performing dead tests on it, then re-energise for live tests. In practice, some electricians perform live tests first on a periodic inspection to minimise supply disruption — this is accepted by some scheme providers but carries risk and should only be done where the electrician is confident the circuit is safe.',
+      'No. BS 7671 Regulation 643.1 is prescriptive: the dead tests of Regulations 643.2 to 643.6 (and 643.7.2 where an earth electrode is fitted) shall be carried out in that order before the installation is energised. Energising a circuit without completing those dead tests is dangerous and non-compliant. If you are doing a periodic inspection and the installation is already energised, you should still follow the correct procedure: isolate each circuit before performing dead tests on it, then re-energise for live tests. In practice some electricians perform live tests first on a periodic inspection to minimise supply disruption; this is tolerated by some scheme providers but carries risk and should only be done where the electrician is confident the circuit is safe.',
   },
   {
     question: 'Do I need to do dead and live tests on every circuit during a periodic inspection?',
     answer:
-      'For a periodic inspection (EICR), IET Guidance Note 3 (GN3) allows sampling — you do not have to test every circuit if the results from a representative sample indicate the installation is in good condition. However, certain tests must be done on every circuit regardless: earth fault loop impedance, RCD operation (where RCDs are installed), and polarity. Continuity and insulation resistance can be sampled, but if any sample fails, the scope must be extended to include all circuits. GN3 recommends a minimum sample size of 10% of similar circuits, increasing to 100% if faults are found. The decision on sampling should be justified and recorded on the EICR. For initial verification, every circuit must be fully tested — no sampling is permitted.',
+      'For a periodic inspection (EICR), IET Guidance Note 3 allows sampling — you do not have to test every circuit if the results from a representative sample indicate the installation is in good condition. The extent and limitations of sampling must be agreed with the client and recorded on the EICR. Some tests are typically applied to every circuit regardless: earth fault loop impedance, RCD operation where RCDs are installed, and polarity. Where a sample reveals defects, the scope is extended. For initial verification under Chapter 64, every circuit must be fully tested — no sampling is permitted.',
   },
   {
     question: 'What instrument settings do I need for dead tests vs live tests?',
     answer:
-      'For dead tests, you need: a low-resistance ohmmeter (typically part of a multifunction tester) set to continuity mode for R1+R2 and ring circuit testing, and a 500 V DC insulation resistance tester for IR testing on standard circuits (250 V DC for SELV circuits, 1000 V DC for circuits over 500 V). For live tests, you need: an earth fault loop impedance tester (Zs mode on your MFT), a prospective fault current meter (PSCC/PEFC mode — usually automatic on modern MFTs), an RCD tester set to the correct rating (30 mA, 100 mA, 300 mA) and trip time (x1 and x5 for general RCDs), and a voltage indicator for functional checks. Always check your instrument calibration is in date before testing.',
+      'For dead tests you need a low-resistance ohmmeter (usually part of a multifunction tester) in continuity mode for R1+R2 and ring circuit testing, and an insulation resistance tester at the test voltage in BS 7671 Table 64: 250 V DC for SELV and PELV, 500 V DC for circuits up to and including 500 V, and 1000 V DC above 500 V. For live tests you need an earth fault loop impedance tester (Zs mode), a prospective fault current function (PSCC/PEFC, usually automatic on modern MFTs), an RCD tester set to the correct rating and at x1 and x5 of rated residual current, and an approved voltage indicator for functional checks. Always confirm your instrument calibration is in date before testing.',
   },
 ];
 
@@ -140,9 +149,11 @@ const sections = [
     content: (
       <>
         <p>
-          Electrical testing is not a pick-and-choose exercise. BS 7671 Chapter 61 prescribes a
-          specific order: visual inspection first, then dead tests, then live tests. This sequence
-          exists for one reason — safety.
+          Electrical testing is not a pick-and-choose exercise. The test sequence in BS 7671 Chapter
+          64 prescribes a specific order: visual inspection first, then the dead tests, then the live
+          tests. This sequence exists for one reason — safety. Regulation 643.1 is explicit that the
+          tests of Regulations 643.2 to 643.6 are carried out in that order before the installation
+          is energised.
         </p>
         <p>
           Dead tests verify that the circuit is fundamentally sound before you energise it.{' '}
@@ -167,6 +178,118 @@ const sections = [
           <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink>{' '}
           is not guidance — it is a requirement. Follow it every time.
         </p>
+      </>
+    ),
+  },
+  {
+    id: 'at-a-glance',
+    heading: 'Dead vs Live Testing: At a Glance',
+    content: (
+      <>
+        <p>
+          Every test in BS 7671 Chapter 64 is either a <strong>dead test</strong> (supply isolated)
+          or a <strong>live test</strong> (supply energised). The table below maps each test to its
+          regulation reference, the supply state required, and the instrument used.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-4 my-4">
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <ZapOff className="w-5 h-5 text-blue-300 shrink-0" />
+              <h4 className="font-bold text-white">Dead Tests — Supply Isolated</h4>
+            </div>
+            <ul className="space-y-2.5 text-white text-sm">
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Continuity of conductors (R1+R2, ring)</span>
+                <span className="font-mono text-blue-300 shrink-0">643.2</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Insulation resistance</span>
+                <span className="font-mono text-blue-300 shrink-0">643.3</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>SELV / PELV / separation</span>
+                <span className="font-mono text-blue-300 shrink-0">643.4</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Insulation of floors and walls</span>
+                <span className="font-mono text-blue-300 shrink-0">643.5</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Polarity</span>
+                <span className="font-mono text-blue-300 shrink-0">643.6</span>
+              </li>
+              <li className="flex justify-between gap-3">
+                <span>Earth electrode resistance (RA)</span>
+                <span className="font-mono text-blue-300 shrink-0">643.7.2</span>
+              </li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-red-900/30 border border-red-700/40 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-red-300 shrink-0" />
+              <h4 className="font-bold text-white">Live Tests — Supply Energised</h4>
+            </div>
+            <ul className="space-y-2.5 text-white text-sm">
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Earth fault loop impedance (Zs)</span>
+                <span className="font-mono text-red-300 shrink-0">643.7.3</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Prospective fault current (PSCC / PEFC)</span>
+                <span className="font-mono text-red-300 shrink-0">643.7.3.201</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Additional protection / RCD operation</span>
+                <span className="font-mono text-red-300 shrink-0">643.8</span>
+              </li>
+              <li className="flex justify-between gap-3 border-b border-white/10 pb-2">
+                <span>Check of phase sequence</span>
+                <span className="font-mono text-red-300 shrink-0">643.9</span>
+              </li>
+              <li className="flex justify-between gap-3">
+                <span>Functional testing</span>
+                <span className="font-mono text-red-300 shrink-0">643.10</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+          <h4 className="font-bold text-white mb-3">Key contrasts</h4>
+          <div className="space-y-3 text-white text-sm">
+            <div className="grid sm:grid-cols-3 gap-2 border-b border-white/10 pb-3">
+              <span className="text-white/60">Supply state</span>
+              <span>
+                <span className="text-blue-300 font-semibold">Dead:</span> isolated, locked off,
+                proven dead
+              </span>
+              <span>
+                <span className="text-red-300 font-semibold">Live:</span> energised at nominal
+                voltage
+              </span>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-2 border-b border-white/10 pb-3">
+              <span className="text-white/60">Purpose</span>
+              <span>
+                <span className="text-blue-300 font-semibold">Dead:</span> confirm the circuit is
+                safe to energise
+              </span>
+              <span>
+                <span className="text-red-300 font-semibold">Live:</span> confirm the protection
+                operates under fault
+              </span>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-2">
+              <span className="text-white/60">Order</span>
+              <span>
+                <span className="text-blue-300 font-semibold">Dead:</span> first — 643.2 to 643.6 in
+                sequence
+              </span>
+              <span>
+                <span className="text-red-300 font-semibold">Live:</span> only after dead tests pass
+              </span>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -244,8 +367,8 @@ const sections = [
       <>
         <p>
           Dead tests are performed with the circuit de-energised (isolated). They are specified in
-          BS 7671 Section 643 and must be completed before the circuit is energised for live
-          testing. The dead tests are:
+          BS 7671 Regulations 643.2 to 643.6 and, where an earth electrode is fitted, 643.7.2 — and
+          must be carried out in that order before the circuit is energised. The dead tests are:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -290,11 +413,40 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Insulation Resistance</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Uses a 500 V DC test voltage to measure the resistance between live conductors and
-                  between live conductors and earth. The minimum acceptable value is 1.0 megohm for
-                  standard circuits. Values below this indicate insulation breakdown — a potential
-                  fault path that could cause leakage current, nuisance RCD tripping, or a short
-                  circuit. See the{' '}
+                  Measures the resistance between live conductors, and between live conductors and
+                  the protective conductor, at the DC test voltage set by BS 7671 Table 64. Values
+                  below the minimum indicate insulation breakdown — a fault path that can cause
+                  leakage current, nuisance RCD tripping, or a short circuit.
+                </p>
+                <div className="mt-3 rounded-xl bg-black/20 border border-white/10 overflow-hidden text-sm">
+                  <div className="grid grid-cols-3 gap-2 px-3 py-2 bg-white/5 font-semibold text-white/70 text-xs">
+                    <span>Circuit nominal voltage</span>
+                    <span className="text-center">Test voltage (DC)</span>
+                    <span className="text-right">Min. resistance</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 px-3 py-2 border-t border-white/10 text-white">
+                    <span>SELV and PELV</span>
+                    <span className="text-center font-mono">250 V</span>
+                    <span className="text-right font-mono">0.5 MΩ</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 px-3 py-2 border-t border-white/10 text-white">
+                    <span>Up to and incl. 500 V</span>
+                    <span className="text-center font-mono">500 V</span>
+                    <span className="text-right font-mono">1.0 MΩ</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 px-3 py-2 border-t border-white/10 text-white">
+                    <span>Above 500 V</span>
+                    <span className="text-center font-mono">1000 V</span>
+                    <span className="text-right font-mono">1.0 MΩ</span>
+                  </div>
+                </div>
+                <p className="text-white/60 text-xs mt-2">
+                  Source: BS 7671 Table 64. Where connected equipment may be damaged or affect the
+                  result, test before connection; a follow-up test at 250 V DC then applies, with a
+                  minimum of 1.0 MΩ (Regulation 643.3.3).
+                </p>
+                <p className="text-white text-sm leading-relaxed mt-3">
+                  See the{' '}
                   <SEOInternalLink href="/guides/insulation-resistance-testing">
                     insulation resistance testing guide
                   </SEOInternalLink>{' '}
@@ -347,8 +499,11 @@ const sections = [
     content: (
       <>
         <p>
-          Live tests are performed with the supply energised. They are specified in BS 7671 Section
-          644 and must only be carried out after all dead tests have been completed satisfactorily.
+          Live tests are performed with the supply energised. They sit later in the same Chapter 64
+          test sequence — earth fault loop impedance (643.7.3), prospective fault current
+          (643.7.3.201), additional protection including RCD operation (643.8), phase sequence
+          (643.9) and functional testing (643.10) — and must only be carried out after the dead
+          tests have been completed satisfactorily.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -361,8 +516,9 @@ const sections = [
                   point of the fault, through the CPC, back through the MET, and through the supply
                   transformer. The measured Zs must be less than the maximum value in BS 7671 Table
                   41.2, 41.3, or 41.4 for the protective device rating and type. If Zs is too high,
-                  the protective device will not disconnect within the required time (0.4 s for
-                  socket circuits, 5 s for fixed equipment in a TN system). See the{' '}
+                  the protective device will not disconnect within the required time — in a TN
+                  system, 0.4 s for final circuits up to 63 A and 5 s for distribution circuits (per
+                  Table 41.1). See the{' '}
                   <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">
                     earth fault loop impedance guide
                   </SEOInternalLink>{' '}
@@ -396,13 +552,14 @@ const sections = [
             <div className="flex items-start gap-4">
               <Zap className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">RCD Operation</h4>
+                <h4 className="font-bold text-white mb-1">RCD Operation (Additional Protection)</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Tests each RCD at its rated residual current (x1) and five times rated current
-                  (x5) to confirm it trips within the required time. A 30 mA RCD must trip within
-                  300 ms at x1 (30 mA) and within 40 ms at x5 (150 mA). The ramp test (gradually
-                  increasing current until the RCD trips) confirms the actual trip current. The test
-                  is done using the RCD test function on a multifunction tester, connected at a
+                  BS 7671 Regulation 643.8 requires the effectiveness of additional protection by
+                  RCDs to be verified with suitable test equipment to BS EN 61557-6. A general,
+                  non-delay type RCD is deemed effective where it disconnects within 300 ms at its
+                  rated residual operating current (IΔn). In practice you test at x1 and x5 of IΔn;
+                  the ramp test (gradually increasing current until trip) confirms the actual trip
+                  current. The test uses the RCD function on a multifunction tester, connected at a
                   socket or accessory on the protected circuit. See the{' '}
                   <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
                   detailed procedures.
@@ -440,9 +597,9 @@ const sections = [
     content: (
       <>
         <p>
-          Here is the complete test sequence as specified by BS 7671 Chapter 61 and GN3. Follow this
-          order for every initial verification. For periodic inspections, the same sequence applies
-          per circuit (isolate, dead test, re-energise, live test).
+          Here is the complete test sequence as specified by BS 7671 Chapter 64 and IET Guidance
+          Note 3. Follow this order for every initial verification. For periodic inspections, the
+          same sequence applies per circuit (isolate, dead test, re-energise, live test).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -631,6 +788,7 @@ export default function DeadVsLiveTestingPage() {
       }
       heroSubtitle="Dead tests first, live tests second. That sequence is not optional — it is a BS 7671 requirement. Dead tests confirm the circuit is safe to energise. Live tests confirm the protective devices will operate correctly under fault conditions. This guide explains every test, the correct order, and common mistakes."
       readingTime={10}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -74,7 +74,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'A4:2026 deletes the old quantitative risk-assessment formula (the calculated CRL value, formerly Reg 443.5 and Annex A443). Designers can no longer "calculate their way out" of providing SPDs. Instead, Reg 443.4.1 lists the consequence categories — loss of human life, public service, commercial activity, large groups affected — and where any of those apply, SPDs SHALL be installed. The default for typical UK installations is now: fit SPDs at the origin unless there is a documented reason not to.',
+      'A4:2026 deletes the old quantitative risk-assessment formula (the calculated CRL value, formerly Reg 443.5 and Annex A443). Designers can no longer "calculate their way out" of providing SPDs. Instead, Reg 443.4.1 lists the consequence limbs — (a) serious injury to, or loss of, human life; (c) significant financial or data loss (limb (b) was deleted by the A2:2022 May-2023 corrigendum) — and where either applies, SPDs SHALL be installed. For all other cases, protection shall be provided unless the owner declares it is not required because any loss or damage is tolerable. The default for typical UK installations is now: fit SPDs at the origin unless there is a documented reason not to.',
   },
   {
     id: 'm2s4-ev-pen-ban',
@@ -202,7 +202,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A4 removed the quantitative risk-assessment route. Reg 443.5 used to allow a calculation (CRL = AL × NL) which, if below a threshold, justified omitting SPDs. Both that regulation and the supporting Annex A443 are deleted in A4. The replacement route is the consequence-based Reg 443.4.1: if any of the listed consequences apply (loss of life, public service, commercial activity, large groups), SPDs SHALL be fitted. The practical effect: most UK installations now fit SPDs at the origin by default, with a documented Reg 120.3 departure if they are omitted.',
+      'A4 removed the quantitative risk-assessment route. Reg 443.5 used to allow a calculation (CRL = AL × NL) which, if below a threshold, justified omitting SPDs. Both that regulation and the supporting Annex A443 are deleted in A4. The replacement route is the consequence-based Reg 443.4.1: if either active limb applies — (a) serious injury to, or loss of, human life; (c) significant financial or data loss (limb (b) was deleted by the A2:2022 May-2023 corrigendum) — SPDs SHALL be fitted. The practical effect: most UK installations now fit SPDs at the origin by default, with the owner declaration documented if they are omitted.',
   },
   {
     id: 7,
@@ -271,7 +271,7 @@ const faqItems = [
     question:
       'Section 443 — what is the consequence-based route in Reg 443.4.1, and does it really mean "fit SPDs by default"?',
     answer:
-      'Reg 443.4.1 lists consequence categories that, if any apply, require SPDs to be fitted: (i) results in serious injury or loss of human life, (ii) results in interruption of public services, (iii) results in interruption of commercial or industrial activity, (iv) affects a large number of co-located individuals. For typical UK installations — most commercial premises, HMOs, healthcare, and any premises with significant electronic loads or critical services — at least one consequence applies. The practical guidance from BSI and IET commentary is to fit Type 2 SPDs at the origin of every new domestic and commercial installation by default, with a documented Reg 120.3 departure if they are omitted. The deletion of the old quantitative CRL calculation (formerly Reg 443.5 + Annex A443) means designers can no longer compute their way out.',
+      'Reg 443.4.1 lists the consequence limbs that, if any apply, require SPDs to be fitted: (a) serious injury to, or loss of, human life; (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), so only (a) and (c) remain. For all other cases, protection shall still be provided unless the owner declares it is not required due to any loss or damage being tolerable and they accept the risk. For typical UK installations — most commercial premises, HMOs, healthcare, and any premises with significant electronic loads or critical services — limb (c) readily applies. The practical guidance from BSI and IET commentary is to fit Type 2 SPDs at the origin of every new domestic and commercial installation by default, with the owner declaration documented if they are omitted. The deletion of the old quantitative CRL calculation (formerly Reg 443.5 + Annex A443) means designers can no longer compute their way out.',
   },
   {
     question: 'Reg 722.312.2.1 — why is the EV-circuit PEN ban specific to TN supplies?',
@@ -485,16 +485,19 @@ const BS7671Module2Section4 = () => {
             onSite="For most UK installations — commercial, healthcare, HMOs, anywhere with significant electronic loads or critical services — at least one consequence applies. Practical CPD guidance from BSI / IET / NICEIC: fit Type 2 SPDs at the origin of every new domestic and commercial install by default, and document a Reg 120.3 departure if you choose to omit them."
           >
             <p>
-              Reg 443.4.1 enumerates the consequence categories. SPDs SHALL be provided where the
-              consequence of an overvoltage event could include: <strong>(i)</strong> serious injury
-              to or loss of human life; <strong>(ii)</strong> failure of a public service or damage
-              to cultural heritage; <strong>(iii)</strong> interruption of commercial or industrial
-              activity; <strong>(iv)</strong> affecting a large number of co-located individuals.
+              Reg 443.4.1 enumerates the consequence categories. Protection against transient
+              overvoltages SHALL be provided where the consequence caused by the overvoltage could
+              result in: <strong>(a)</strong> serious injury to, or loss of, human life;{' '}
+              <strong>(c)</strong> significant financial or data loss. Limb <strong>(b)</strong> was
+              deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), so only limbs (a) and (c)
+              remain active. For all other cases, protection SHALL still be provided unless the owner
+              of the installation declares it is not required due to any loss or damage being
+              tolerable and they accept the risk of damage to equipment and any consequential loss.
               For a typical UK dwelling with significant electronic loads (smart-home kit, AV
-              equipment, computers, EV charger, PV/battery), category (iii) and arguably (i) apply —
-              the default position is therefore &quot;fit SPDs&quot;, with a documented Reg 120.3
-              departure if omitted. The cert form has a free-text field capturing the
-              consequence-route reasoning.
+              equipment, computers, EV charger, PV/battery), limb (c) readily applies — the default
+              position is therefore &quot;fit SPDs&quot;, with the owner declaration documented if
+              they are omitted. The cert form has a free-text field capturing the consequence-route
+              reasoning.
             </p>
             <p>
               The deletion of Reg 443.5 + Annex A443 is significant because the old CRL calculation

@@ -34,7 +34,7 @@ const tocItems = [
   { id: 'diagnose', label: '4. Diagnose' },
   { id: 'fix-verify', label: '5. Fix and Verify' },
   { id: 'methods', label: 'Half-Split, Elimination, and Experience-Based Methods' },
-  { id: 'safe-isolation', label: 'Safe Isolation — BS 7671 Appendix 2' },
+  { id: 'safe-isolation', label: 'Safe Isolation — BS 7671 Section 537' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -45,7 +45,7 @@ const keyTakeaways = [
   'The half-split method divides the circuit at its midpoint and tests there first, eliminating half the circuit with each test. This is the fastest approach for long circuits with a single fault.',
   'The elimination method disconnects items one by one until the fault disappears. Best used when the fault is likely in a load (appliance or accessory) rather than the fixed wiring.',
   'Experience-based fault finding uses knowledge of failure patterns (which components fail most commonly on this type of circuit or equipment) to go directly to the most likely cause first. Effective when the pattern matches known failure modes.',
-  'Safe isolation must be carried out before any hands-on work on the circuit. BS 7671 Appendix 2 sets out the requirements, and the Electricity at Work Regulations 1989 make it a legal requirement. Always prove dead with an approved GS38-compliant voltage indicator before touching conductors.',
+  'Safe isolation must be carried out before any hands-on work on the circuit. BS 7671 Section 537 (and Regulation 462) governs the devices for isolation, and the Electricity at Work Regulations 1989 make working dead a legal requirement. Always prove dead with an approved voltage indicator that complies with HSE Guidance Note GS38 before touching conductors.',
 ];
 
 const faqs = [
@@ -80,9 +80,9 @@ const faqs = [
       'Experience-based fault finding uses pattern recognition — knowledge of which faults occur most frequently on specific types of equipment, installations, and circuits — to go directly to the most likely cause without working through every possibility. For example, an experienced electrician called to an RCD nuisance trip in a domestic kitchen will check the electric shower first (the most common single cause of RCD tripping in domestic premises), then the washing machine, then the dishwasher, in that order — not because this is the most logical sequence, but because experience shows these are the most frequent causes. Experience-based fault finding is fast when the pattern is familiar, but can lead you astray on unusual faults. The safest approach is to use experience to identify the most likely cause first, but revert to systematic half-split or elimination if the first few experience-based guesses are wrong.',
   },
   {
-    question: 'What does BS 7671 Appendix 2 say about safe isolation?',
+    question: 'What does BS 7671 say about safe isolation for fault finding?',
     answer:
-      'BS 7671:2018+A4:2026 Appendix 2 (Safe Isolation Procedure) sets out the procedure for safely isolating an electrical circuit before carrying out inspection and testing or fault finding work. The procedure requires: identification of the circuit to be isolated; switching off the circuit at the appropriate point (MCB, fuse, or isolator); preventing re-energisation (lockout and warning sign); verifying that the circuit is dead using an approved voltage indicator (compliant with HSE GS38) that has been proved on a known live source before and after testing; and confirming that the circuit cannot be inadvertently energised from any other source (e.g., a generator, battery backup, or parallel circuit). The Electricity at Work Regulations 1989, Regulation 12, makes safe isolation a legal requirement — working on live conductors without specific justification and appropriate precautions is a criminal offence.',
+      'BS 7671:2018+A4:2026 Section 537 (Isolation and switching) and Regulation 462 set the requirements for the devices used to isolate a circuit — every circuit must have a means of isolation for all live conductors (Regulation 462.2), devices must be secured against unintentional or inadvertent closure by a lockable enclosure or padlocking (Regulation 462.3 / 537.2.4), and each isolation device must be clearly identified to show the circuit it isolates (Regulation 537.2.7). The standard does not contain a step-by-step "safe isolation procedure" — that procedure (identify, isolate, secure, prove dead) comes from HSE guidance, with HSE Guidance Note GS38 covering the test equipment and proving units. Working dead is a legal requirement under the Electricity at Work Regulations 1989; live working is only permitted where it is unreasonable for the conductor to be dead and suitable precautions are taken.',
   },
 ];
 
@@ -166,7 +166,7 @@ const sections = [
         <p>
           This guide covers the five-step systematic approach, the three main fault finding methods
           (half-split, elimination, and experience-based), and the safe isolation requirements of BS
-          7671 Appendix 2 and the Electricity at Work Regulations 1989.
+          7671 Section 537 and the Electricity at Work Regulations 1989.
         </p>
       </>
     ),
@@ -319,6 +319,100 @@ const sections = [
             </p>
           </div>
         </div>
+        <p>
+          When you reach for the insulation resistance tester, apply the correct DC test voltage for
+          the circuit. The minimum acceptable values and test voltages are set out in BS 7671 Table
+          64:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Circuit nominal voltage</th>
+                <th className="px-4 py-3 font-semibold">Test voltage (DC)</th>
+                <th className="px-4 py-3 font-semibold">Minimum insulation resistance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3">SELV and PELV</td>
+                <td className="px-4 py-3">250 V</td>
+                <td className="px-4 py-3">0.5 MΩ</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-4 py-3">
+                  Up to and including 500 V (except SELV/PELV)
+                </td>
+                <td className="px-4 py-3">500 V</td>
+                <td className="px-4 py-3">1.0 MΩ</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3">Above 500 V</td>
+                <td className="px-4 py-3">1000 V</td>
+                <td className="px-4 py-3">1.0 MΩ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          A reading below the minimum points to insulation breakdown — but disconnect or account for
+          connected loads first, because surge protection, electronic equipment and even damp can
+          drag a reading down on an otherwise sound circuit. See the{' '}
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
+            insulation resistance testing guide
+          </SEOInternalLink>{' '}
+          for the full procedure.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-yellow-400" />
+            Core diagnostic instruments
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="font-semibold text-white text-sm">Voltage indicator (GS38)</p>
+              <p className="text-white/80 text-sm mt-1">
+                Two-pole approved indicator for proving dead and confirming live voltage. Prove on a
+                known source before and after use.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="font-semibold text-white text-sm">Low-resistance ohmmeter</p>
+              <p className="text-white/80 text-sm mt-1">
+                Continuity of protective conductors and ring final circuits (R1+R2, R2). Null the
+                leads before measuring.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="font-semibold text-white text-sm">Insulation resistance tester</p>
+              <p className="text-white/80 text-sm mt-1">
+                Detects insulation breakdown between live conductors and Earth at the test voltage
+                from Table 64 above.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="font-semibold text-white text-sm">Loop impedance tester</p>
+              <p className="text-white/80 text-sm mt-1">
+                Measures Ze and Zs to confirm the protective device will disconnect within the
+                required time for an earth fault.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="font-semibold text-white text-sm">RCD tester</p>
+              <p className="text-white/80 text-sm mt-1">
+                Verifies trip current and disconnection time, separating a faulty RCD from a genuine
+                earth leakage fault on the circuit.
+              </p>
+            </div>
+            <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="font-semibold text-white text-sm">Clamp meter (mA AC)</p>
+              <p className="text-white/80 text-sm mt-1">
+                Measures load current for overload checks and earth leakage current on a live circuit
+                to chase down nuisance tripping.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -394,82 +488,124 @@ const sections = [
     heading: 'Half-Split, Elimination, and Experience-Based Methods',
     content: (
       <>
-        <p>The three main fault finding methods each have their optimal application:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-6 text-white">
-            <li>
-              <h4 className="font-bold text-white mb-2">Half-Split Method</h4>
-              <p className="text-sm leading-relaxed">
-                Test at the midpoint of the circuit or system. The result tells you which half
-                contains the fault. Repeat on the faulty half. Best for: long cables with an unknown
-                single fault, large distribution systems with many possible fault locations.
-                Mathematically the most efficient method when no other information is available.
-              </p>
-            </li>
-            <li>
-              <h4 className="font-bold text-white mb-2">Elimination Method</h4>
-              <p className="text-sm leading-relaxed">
-                Remove or disconnect items one at a time until the fault disappears. Best for:
-                multiple potential sources (appliances on a circuit), live testing where halving is
-                impractical, and faults that appear to be in a load rather than fixed wiring.
-              </p>
-            </li>
-            <li>
-              <h4 className="font-bold text-white mb-2">Experience-Based Method</h4>
-              <p className="text-sm leading-relaxed">
-                Go directly to the most common cause for this type of fault and installation. Best
-                for: well-known failure patterns (electric shower element, fluorescent fitting
-                capacitor), situations where the symptom matches a familiar pattern. Fastest when
-                correct, but should be abandoned quickly if the first two guesses are wrong.
-              </p>
-            </li>
-          </ul>
+        <p>
+          The three main fault finding methods each have their optimal application. The table below
+          summarises when to reach for each:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Method</th>
+                <th className="px-4 py-3 font-semibold">How it works</th>
+                <th className="px-4 py-3 font-semibold">Best for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-semibold align-top">Half-split</td>
+                <td className="px-4 py-3 align-top">
+                  Test at the midpoint; the result tells you which half holds the fault. Repeat on
+                  the faulty half, halving the search each time.
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Long cables with an unknown single fault and large distribution systems. The most
+                  efficient method when no other information is available.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10 bg-white/[0.02]">
+                <td className="px-4 py-3 font-semibold align-top">Elimination</td>
+                <td className="px-4 py-3 align-top">
+                  Remove or disconnect items one at a time until the fault disappears, isolating the
+                  culprit by exclusion.
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Multiple loads on one circuit, live testing where halving is impractical, and
+                  faults that appear to sit in a load rather than the fixed wiring.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-semibold align-top">Experience-based</td>
+                <td className="px-4 py-3 align-top">
+                  Go straight to the most common cause for this fault and installation type, guided
+                  by known failure patterns.
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Familiar symptoms (electric shower element, fitting capacitor). Fastest when
+                  correct — abandon quickly if the first two guesses are wrong.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     ),
   },
   {
     id: 'safe-isolation',
-    heading: 'Safe Isolation Throughout — BS 7671 Appendix 2',
+    heading: 'Safe Isolation Throughout — BS 7671 Section 537',
     content: (
       <>
         <p>
           Safe isolation must be applied whenever hands-on work is carried out on a circuit. BS 7671
-          Appendix 2 and the Electricity at Work Regulations 1989 Regulation 12 make this a legal
-          requirement. The procedure cannot be abbreviated, even for short tasks.
+          Section 537 and Regulation 462 set the requirements for isolation devices, and the
+          Electricity at Work Regulations 1989 make working dead a legal duty — live working is only
+          permitted where it is unreasonable for the conductor to be dead and suitable precautions
+          are taken. The procedure cannot be abbreviated, even for short tasks.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Identify</strong> — identify the correct isolation point for the circuit to
-                be worked on. Confirm the circuit labelling is correct by testing before isolation.
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
+                1
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Isolate</strong> — switch off at the correct MCB, fuse, or isolator. Apply a
-                lock and warning notice.
+              <h4 className="font-bold text-white">Identify</h4>
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              Identify the correct isolation point for the circuit to be worked on. Confirm the
+              circuit labelling is correct by testing before isolation — each isolation device must
+              be clearly marked to show the circuit it isolates (Regulation 537.2.7).
+            </p>
+          </div>
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
+                2
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Prove</strong> — use a GS38-compliant voltage indicator to prove the circuit
-                is dead. Test the indicator on a known live source before and after testing the
-                isolated circuit.
+              <h4 className="font-bold text-white">Isolate and secure</h4>
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              Switch off at the correct MCB, fuse, or isolator and secure the device against
+              inadvertent re-closure by a lockable enclosure or padlock (Regulation 462.3 / 537.2.4).
+              Apply a warning notice.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
+                3
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Maintain</strong> — keep the lockout in place throughout the work. Do not
-                rely on verbal assurance from others.
+              <h4 className="font-bold text-white">Prove dead</h4>
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              Use a voltage indicator that complies with HSE Guidance Note GS38 to prove the circuit
+              is dead. Prove the indicator on a known live source (or proving unit) before and after
+              testing the isolated circuit.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
+                4
               </span>
-            </li>
-          </ul>
+              <h4 className="font-bold text-white">Maintain isolation</h4>
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              Keep the lock and notice in place throughout the work, and confirm the circuit cannot
+              be back-fed from another supply (generator, battery storage, or parallel circuit). Do
+              not rely on verbal assurance from others.
+            </p>
+          </div>
         </div>
       </>
     ),
@@ -534,13 +670,18 @@ export default function ElectricalFaultFindingMethodologyPage() {
       tocItems={tocItems}
       badge="Fault Finding Guide"
       badgeIcon={Search}
+      answerBox={{
+        question: 'What is the methodology for electrical fault finding?',
+        answer:
+          'Electrical fault finding follows a five-step systematic sequence: gather information about the symptom, carry out a visual inspection, test with appropriate instruments, diagnose the cause from the evidence, then fix and verify. Within testing you choose half-split, elimination, or experience-based methods depending on the fault. Safe isolation is proved dead with a GS38-compliant voltage indicator before any hands-on work.',
+      }}
       heroTitle={
         <>
           Electrical Fault Finding Methodology:{' '}
           <span className="text-yellow-400">Systematic Approach for UK Electricians</span>
         </>
       }
-      heroSubtitle="A complete guide to systematic electrical fault finding. Covers the five-step approach (gather information, visual inspection, test, diagnose, fix and verify), the half-split method, elimination method, experience-based method, and BS 7671 Appendix 2 safe isolation throughout."
+      heroSubtitle="A complete guide to systematic electrical fault finding. Covers the five-step approach (gather information, visual inspection, test, diagnose, fix and verify), the half-split method, elimination method, experience-based method, and BS 7671 Section 537 safe isolation throughout."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -43,7 +43,7 @@ const keyTakeaways = [
   'CCTV integration with car park lighting columns can share trenching and power supplies, reducing combined installation costs by 15% to 25% compared to separate installations.',
   'BMS controls, photocell switching, and time scheduling reduce car park lighting energy consumption by 30% to 50% and are typically required by planning conditions for new developments.',
   'Car park lighting design must comply with BS 5489-1 (road lighting) and BS EN 12464-2 (outdoor workplaces), with typical lux levels of 5 to 20 lux depending on the risk assessment.',
-  'Electrical installations for car park lighting are governed by BS 7671:2018+A4:2026 Section 714 (Outdoor lighting installations), which sets specific requirements for additional protection and automatic disconnection of supply. SWA cables buried in vehicle movement areas require a minimum depth of 0.6 m unless additional mechanical protection is provided (Reg 730.521.101.3.2).',
+  'Electrical installations for car park lighting are governed by BS 7671:2018+A4:2026 Section 714 (Outdoor lighting installations), which covers roads, parks, car parks and places open to the public. Lighting accessible to the public must have RCD additional protection (Reg 714.411.3.4). Cables buried in the ground must incorporate earthed armour or be in conduit/duct giving equivalent mechanical protection, be marked by covers or marker tape, and be at a sufficient depth to avoid foreseeable ground disturbance (Reg 522.8.10).',
 ];
 
 const faqs = [
@@ -85,7 +85,7 @@ const faqs = [
   {
     question: 'What cable is used for car park lighting?',
     answer:
-      'Car park lighting columns are typically fed by SWA (steel wire armoured) cable buried in a trench with marker tape. BS 7671 Reg 730.521.101.3.2 requires unprotected buried cables to be at a sufficient depth to avoid damage from vehicle movement — 0.6 m is generally considered the minimum for unprotected cables in areas subject to vehicles. Where additional mechanical protection is provided (such as ducting or concrete encasement), a lesser depth may be acceptable. The cable size depends on the circuit length and load — 2.5mm² or 4mm² 3-core SWA is common for lighting circuits. Each column requires an isolation switch (typically a fused spur inside the column base) for safe maintenance. The SWA cable provides mechanical protection and the steel wire armour can be used as the circuit protective conductor (CPC), though a separate CPC within the cable is preferred.',
+      'Car park lighting columns are typically fed by SWA (steel wire armoured) cable buried in a trench. BS 7671 Reg 522.8.10 requires a buried cable to incorporate earthed armour or a metal sheath suitable for use as a protective conductor (or be installed in conduit or duct giving equivalent protection against mechanical damage), to be marked by cable covers or marker tape, and to be at a sufficient depth to avoid damage from any reasonably foreseeable disturbance of the ground. The regulation itself does not state a fixed depth, but a burial depth of around 0.6 m is widely adopted as custom and practice in vehicle areas; greater depth or added ducting/concrete encasement is used where heavier loading is expected. The cable size depends on the circuit length and load — 2.5mm² or 4mm² 3-core SWA is common for lighting circuits. Each column requires a means of isolation (typically a fused connection unit inside the column base) so the column can be worked on safely.',
   },
 ];
 
@@ -143,6 +143,45 @@ const sections = [
           project, this guide provides realistic per-column costs and practical guidance based on
           current UK market rates.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-2">Lighting levels by risk class</h3>
+          <p className="text-white/70 text-sm mb-4">
+            Maintained illuminance is set by a risk assessment under BS 5489-1. Higher footfall,
+            late-night use and crime risk push the target lux level up. Uniformity (the ratio of
+            minimum to average illuminance) matters as much as the average — poor uniformity leaves
+            dark spots that undermine safety and CCTV image quality.
+          </p>
+          <div className="space-y-2">
+            <div className="rounded-xl bg-green-900/30 border border-green-700/40 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-semibold text-white">Low risk</span>
+                <span className="font-mono text-green-300">5 lux min. maintained avg.</span>
+              </div>
+              <p className="text-white/70 text-sm mt-1">
+                Residential, short-stay or low-crime car parks with light evening use.
+              </p>
+            </div>
+            <div className="rounded-xl bg-yellow-900/30 border border-yellow-700/40 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-semibold text-white">Medium risk</span>
+                <span className="font-mono text-yellow-300">10–15 lux</span>
+              </div>
+              <p className="text-white/70 text-sm mt-1">
+                Retail, office and multi-storey car parks with steady through-the-day use.
+              </p>
+            </div>
+            <div className="rounded-xl bg-blue-900/30 border border-blue-700/40 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-semibold text-white">High risk</span>
+                <span className="font-mono text-blue-300">20 lux or more</span>
+              </div>
+              <p className="text-white/70 text-sm mt-1">
+                Late-night use, higher-crime locations and public transport interchanges. Aim for a
+                minimum-to-average uniformity of at least 0.25.
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -157,33 +196,55 @@ const sections = [
           cable run length.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Column Costs by Height (2026)</h3>
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>4-metre column</strong> — Column: £150 to £250. LED lantern (30 to 50W): £80
-                to £150. Foundation: £200 to £350. Cable and connection: £150 to £300. Total
-                installed: £500 to £900 per column.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>6-metre column</strong> — Column: £250 to £400. LED lantern (50 to 100W):
-                £120 to £250. Foundation: £300 to £500. Cable and connection: £200 to £400. Total
-                installed: £800 to £1,500 per column.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>8 to 10-metre column</strong> — Column: £400 to £700. LED lantern (100 to
-                200W): £200 to £400. Foundation: £400 to £700. Cable and connection: £250 to £500.
-                Total installed: £1,200 to £2,000 per column.
-              </span>
-            </li>
-          </ul>
+          <h3 className="font-bold text-white text-lg mb-1">Column costs by height (2026)</h3>
+          <p className="text-white/60 text-sm mb-4">
+            Indicative UK market guidance — not a quote. Figures show typical supply-and-install
+            ranges per column.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white border-collapse min-w-[560px]">
+              <thead>
+                <tr className="text-left text-white/60 border-b border-white/10">
+                  <th className="py-2 pr-3 font-medium">Element</th>
+                  <th className="py-2 px-3 font-medium">4 m column</th>
+                  <th className="py-2 px-3 font-medium">6 m column</th>
+                  <th className="py-2 pl-3 font-medium">8–10 m column</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 pr-3 text-white/80">Column</td>
+                  <td className="py-2 px-3 font-mono">£150–£250</td>
+                  <td className="py-2 px-3 font-mono">£250–£400</td>
+                  <td className="py-2 pl-3 font-mono">£400–£700</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 pr-3 text-white/80">LED lantern</td>
+                  <td className="py-2 px-3 font-mono">£80–£150<span className="text-white/50"> (30–50 W)</span></td>
+                  <td className="py-2 px-3 font-mono">£120–£250<span className="text-white/50"> (50–100 W)</span></td>
+                  <td className="py-2 pl-3 font-mono">£200–£400<span className="text-white/50"> (100–200 W)</span></td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 pr-3 text-white/80">Foundation</td>
+                  <td className="py-2 px-3 font-mono">£200–£350</td>
+                  <td className="py-2 px-3 font-mono">£300–£500</td>
+                  <td className="py-2 pl-3 font-mono">£400–£700</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-2 pr-3 text-white/80">Cable &amp; connection</td>
+                  <td className="py-2 px-3 font-mono">£150–£300</td>
+                  <td className="py-2 px-3 font-mono">£200–£400</td>
+                  <td className="py-2 pl-3 font-mono">£250–£500</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-3 font-semibold text-yellow-400">Total installed</td>
+                  <td className="py-2 px-3 font-mono font-semibold text-yellow-400">£500–£900</td>
+                  <td className="py-2 px-3 font-mono font-semibold text-yellow-400">£800–£1,500</td>
+                  <td className="py-2 pl-3 font-mono font-semibold text-yellow-400">£1,200–£2,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <p>
           Foundation costs assume a new concrete base with holding-down bolts. Where existing
@@ -393,15 +454,19 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026 — Section 714</strong> — The wiring regulations. Car
-                park and outdoor lighting installations are governed by Section 714 (Outdoor
-                lighting installations), which covers luminaires, wiring systems, and accessories
-                for roads, car parks, and places open to the public (Reg 712.6.101). Section 714
-                includes specific requirements for additional protection and automatic disconnection
-                of supply. RCD protection under Regulation 411.3.3 applies to socket-outlets rated
-                at 32 A or below — it does not extend to lighting circuits. For lighting circuits,
-                the additional protection requirements are set out in Section 714. Where the supply
-                includes domestic premises, Reg 411.3.4 (A4:2026) additionally requires ≤30 mA RCD
-                protection for all AC final circuits supplying luminaires.
+                park and outdoor lighting installations fall within Section 714 (Outdoor lighting
+                installations), whose scope expressly includes lighting for roads, car parks, parks
+                and places open to the public, together with highway power supplies and street
+                furniture. Section 714 sets specific requirements for protection against electric
+                shock, external influences and isolation — for example, a maximum disconnection time
+                of 5 s for fixed equipment in highway power supplies (Reg 714.411.202), and a
+                minimum degree of protection of IP33 for equipment (Reg 714.512.2.105). Crucially,
+                except where supplied from a SELV source, lighting that is accessible to the public
+                must have RCD additional protection at the rating specified in Regulation 415.1.1
+                (≤30 mA) — see Reg 714.411.3.4. Note that the socket-outlet RCD rule (Reg 411.3.3)
+                applies to socket-outlets rated at 32 A or below, not to lighting circuits; and the
+                A4:2026 luminaire RCD rule (Reg 411.3.4) applies only within domestic (household)
+                premises, so it is not normally engaged by a commercial car park.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -415,9 +480,13 @@ const sections = [
           </ul>
         </div>
         <p>
-          An Electrical Installation Certificate (EIC) must be issued for new car park lighting
-          installations. The EIC should cover the distribution board, submain cables, lighting
-          circuits, and controls.
+          An{' '}
+          <SEOInternalLink href="/eic-certificate">
+            Electrical Installation Certificate (EIC)
+          </SEOInternalLink>{' '}
+          must be issued for new car park lighting installations. The EIC should cover the
+          distribution board, submain cables, lighting circuits, and controls, with the schedule of
+          test results recording the verification carried out under Part 6 of BS 7671.
         </p>
       </>
     ),
@@ -452,9 +521,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Offer Combined Packages</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Car park clients often need lighting, CCTV, EV charging, and access control.
-                  Offering a combined package with shared infrastructure reduces the client's total
-                  cost and increases your contract value.
+                  Car park clients often need lighting, CCTV,{' '}
+                  <SEOInternalLink href="/guides/ev-charger-installation-cost">
+                    EV charging
+                  </SEOInternalLink>
+                  , and access control. Offering a combined package with shared infrastructure
+                  reduces the client's total cost and increases your contract value.
                 </p>
               </div>
             </div>
@@ -507,6 +579,13 @@ export default function CarParkLightingCostPage() {
       }
       heroSubtitle="What does car park lighting cost? This guide covers column lighting at £500 to £2,000 per column, bollard lighting, CCTV integration, BMS controls, and complete project pricing for property developers, facilities managers, and electrical contractors."
       readingTime={13}
+      answerBox={{
+        question: 'How much does car park lighting cost in 2026?',
+        answer:
+          'Car park lighting costs £500 to £2,000 per column fully installed in 2026, covering the column, LED lantern, foundation, cabling and connection. A 50-space surface car park typically needs 8 to 12 columns, giving a total lighting cost of around £8,000 to £18,000 before distribution boards, bollards and controls. CCTV can share trenching to cut combined cost.',
+        detail:
+          'Figures are indicative UK market guidance, not a quote — actual price depends on column height, luminaire output, foundation type, cable run length and site access.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

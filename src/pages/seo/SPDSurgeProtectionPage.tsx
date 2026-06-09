@@ -109,7 +109,8 @@ export default function SPDSurgeProtectionPage() {
               </p>
               <p>
                 The risk assessment considers the consequences of a transient overvoltage event.
-                Regulation 443.4.1 states that where the consequence includes:
+                Regulation 443.4.1 requires protection against transient overvoltages to be provided
+                where the consequence caused by the overvoltage could result in:
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
                 <h3 className="font-bold text-white text-lg mb-4">
@@ -119,8 +120,10 @@ export default function SPDSurgeProtectionPage() {
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Risk to human life</strong> —
-                      Installations in medical locations, safety services, or where loss of supply
+                      <strong className="text-yellow-400">
+                        Serious injury to, or loss of, human life
+                      </strong>{' '}
+                      — Installations in medical locations, safety services, or where loss of supply
                       could endanger life (fire detection systems, emergency lighting, security
                       systems, medical equipment).
                     </span>
@@ -129,34 +132,26 @@ export default function SPDSurgeProtectionPage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        Interruption of public services or cultural heritage
-                      </strong>{' '}
-                      — Installations supplying essential public infrastructure, telecommunications
-                      equipment, or heritage buildings with irreplaceable contents.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span>
-                      <strong className="text-yellow-400">
-                        Disruption of commercial or industrial activity
+                        Significant financial or data loss
                       </strong>{' '}
                       — Where loss of equipment or data could cause significant financial loss — IT
-                      installations, industrial process control, point-of-sale systems.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span>
-                      <strong className="text-yellow-400">
-                        Large number of co-located individuals
-                      </strong>{' '}
-                      — HMOs, blocks of flats, student accommodation, care homes, hotels — where
-                      multiple people are affected simultaneously by equipment failure.
+                      installations, industrial process control, point-of-sale systems, and homes
+                      containing valuable electronic equipment.
                     </span>
                   </li>
                 </ul>
+                <p className="text-white/60 text-sm mt-4">
+                  Regulation 443.4.1 originally listed a third consequence, but limb (b) was removed
+                  by the BS 7671:2018+A2:2022 Corrigendum (May 2023), leaving the two consequences
+                  above.
+                </p>
               </div>
+              <p>
+                For all other cases, Regulation 443.4.1 requires protection against transient
+                overvoltages to be provided unless the owner of the installation declares it is not
+                required because any loss or damage would be tolerable, and they accept the risk of
+                damage to equipment and any consequential loss.
+              </p>
               <p>
                 In practice, the risk assessment almost always concludes that SPDs should be
                 installed in modern domestic installations. The average UK home now contains

@@ -177,7 +177,11 @@ const sections = [
                 <strong>Where they overlap</strong> — commissioning engineers often come from an
                 installation background. Design engineers with site experience are highly valued.
                 Many electricians progress into engineering roles through part-time HNC/HND study
-                followed by a degree top-up.
+                followed by a degree top-up — see{' '}
+                <SEOInternalLink href="/how-to-become-electrician">
+                  how to become an electrician
+                </SEOInternalLink>{' '}
+                for the trade-qualification starting point.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -197,13 +201,15 @@ const sections = [
             <strong className="text-yellow-400">
               BS&nbsp;7671:2018+A4:2026 — current edition.
             </strong>{' '}
-            The A4:2026 amendments, in force from January 2025, introduced two significant new
-            requirements that affect both electricians and design engineers: mandatory arc fault
-            detection devices (AFDDs) on specified socket-outlet circuits in new domestic
-            installations (Reg&nbsp;421.1.7), and mandatory 30&nbsp;mA RCD additional protection for
-            AC final circuits supplying luminaires in domestic premises (Reg&nbsp;411.3.4). Any
-            design or installation work on UK domestic premises must be checked against the A4:2026
-            requirements — not the superseded A3 edition.{' '}
+            A4:2026 was issued on 15&nbsp;April&nbsp;2026 and may be implemented immediately; the
+            previous edition will be withdrawn on 15&nbsp;October&nbsp;2026. Two changes that affect
+            both electricians and design engineers: arc fault detection devices (AFDDs) are now
+            required to protect socket-outlet final circuits rated up to 32&nbsp;A in higher-risk
+            residential buildings, HMOs, purpose-built student accommodation and care homes
+            (recommended elsewhere) under Reg&nbsp;421.1.7; and 30&nbsp;mA RCD additional protection
+            is now required for AC final circuits supplying luminaires in domestic premises under
+            Reg&nbsp;411.3.4. Design and installation work should be checked against the A4:2026
+            text, not the superseded A3 edition.{' '}
             <SEOInternalLink href="/tools/eicr-certificate">
               Elec-Mate certificates are A4:2026 compliant.
             </SEOInternalLink>
@@ -228,6 +234,68 @@ const sections = [
           (Bachelor of Engineering) and the MEng (Master of Engineering). Both are accredited by the
           Engineering Council through professional bodies including the IET.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/60 uppercase text-xs tracking-wide">
+                  <th className="px-4 py-3 font-semibold">Route</th>
+                  <th className="px-4 py-3 font-semibold">Duration (full-time)</th>
+                  <th className="px-4 py-3 font-semibold hidden sm:table-cell">Professional outcome</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-white">
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">BEng</td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
+                    3 years
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Meets the academic standard for IEng; partially meets CEng (further learning
+                    required).
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">BEng with sandwich year</td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
+                    4 years
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Same outcome as BEng plus a year of industry placement and stronger graduate
+                    prospects.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">MEng</td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
+                    4–5 years
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Fully meets the academic standard for CEng registration.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">HNC to BEng top-up</td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
+                    ~2 years
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    HNC counts as year one; join in year two. Popular with working electricians.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">HND to BEng top-up</td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
+                    ~1 year
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    HND counts as years one and two; enter the final year directly.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -420,32 +488,66 @@ const sections = [
           only a small number of bodies licensed by the Engineering Council to award IEng and CEng
           registrations.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/60 uppercase text-xs tracking-wide">
+                  <th className="px-4 py-3 font-semibold">Grade</th>
+                  <th className="px-4 py-3 font-semibold">Post-nominal</th>
+                  <th className="px-4 py-3 font-semibold hidden sm:table-cell">Who it is for</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-white">
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">Student</td>
+                  <td className="px-4 py-3 align-top text-white/70">—</td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Those in full-time education. Free.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">Associate Member</td>
+                  <td className="px-4 py-3 align-top text-yellow-300 font-semibold">AMIET</td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Those developing their engineering career.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">Member</td>
+                  <td className="px-4 py-3 align-top text-yellow-300 font-semibold">MIET</td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Professionally active engineers; supports IEng/CEng applications.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">Fellow</td>
+                  <td className="px-4 py-3 align-top text-yellow-300 font-semibold">FIET</td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    Exceptional experience and contribution to the profession.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Membership grades</strong> — Student (in full-time education), Associate
-                Member (AMIET, for those developing their career), Member (MIET, for professionally
-                active engineers), and Fellow (FIET, for those with exceptional experience and
-                contributions to the profession).
-              </span>
-            </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Benefits</strong> — access to the IET online library (standards, journals,
                 and technical guides), CPD tracking tools, career development resources, local and
                 national networking events, mentoring programmes, and the IET Wiring Regulations (BS
-                7671) at a significant member discount.
+                7671) at a member discount.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual subscription</strong> — MIET subscription is approximately £210 per
-                year (2026). Student membership is free. Fellow membership is higher.
-                Employer-sponsored membership is common in larger engineering organisations.
+                <strong>Subscription</strong> — student membership is free; professional grades pay
+                an annual subscription (check the IET for current rates). Employer-sponsored
+                membership is common in larger engineering organisations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -504,9 +606,11 @@ const sections = [
                 background is highly valued. A key deliverable at handover is the Electrical
                 Installation Certificate (EIC): BS&nbsp;7671 Reg&nbsp;641.7 (Part&nbsp;6,
                 Chapter&nbsp;64) requires that on completion of verification a certificate shall be
-                prepared; Reg&nbsp;644.4.201 requires it be issued to the person ordering the work.
-                Commissioning engineers who can produce compliant EICs add direct value and reduce
-                the risk of project sign-off delays.{' '}
+                prepared, and Reg&nbsp;644.1 requires it be issued to the person ordering the work.
+                Under Reg&nbsp;644.5 the EIC must be compiled and signed by one or more skilled
+                persons competent to verify compliance with BS&nbsp;7671. Commissioning engineers
+                who can produce compliant EICs add direct value and reduce the risk of project
+                sign-off delays.{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
                   Issue EICs from the Elec-Mate certificate app.
                 </SEOInternalLink>
@@ -536,50 +640,85 @@ const sections = [
           location. The following figures are indicative for 2026 and reflect permanent employed
           positions in mainstream sectors.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Graduate / junior design engineer (0–3 years)</strong> — £30,000 to £40,000.
-                London roles typically £35,000 to £45,000. Graduate schemes with major contractors
-                and consultancies often include structured development and study support.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Mid-level design or project engineer (3–7 years)</strong> — £40,000 to
-                £58,000. IEng registration and relevant sector experience push towards the upper
-                end. Specialist sectors (HV, data centre, rail) pay a premium.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Senior engineer / principal engineer (7+ years)</strong> — £55,000 to
-                £75,000. CEng holders and those with recognised specialisms can command £75,000 to
-                £90,000, particularly in London-based consultancies and specialist contractors.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Engineering manager / director</strong> — £70,000 to £100,000+. Management
-                of technical teams, business development, and client relationships. CEng or
-                equivalent expected at this level. Package often includes bonus and car allowance.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Day rate contracting</strong> — experienced electrical engineers working as
-                contractors typically charge £350 to £650 per day depending on specialism and
-                sector. HV commissioning, data centre design, and offshore work command the highest
-                day rates.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/60 uppercase text-xs tracking-wide">
+                  <th className="px-4 py-3 font-semibold">Role / level</th>
+                  <th className="px-4 py-3 font-semibold">Typical salary</th>
+                  <th className="px-4 py-3 font-semibold hidden sm:table-cell">Notes</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-white">
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">
+                    Graduate / junior design engineer
+                    <span className="block text-white/50 font-normal">0–3 years</span>
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                    £30,000–£40,000
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    London roles typically £35,000–£45,000. Graduate schemes often include
+                    structured development and study support.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">
+                    Mid-level design or project engineer
+                    <span className="block text-white/50 font-normal">3–7 years</span>
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                    £40,000–£58,000
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    IEng registration and sector experience push towards the upper end. HV, data
+                    centre and rail pay a premium.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">
+                    Senior / principal engineer
+                    <span className="block text-white/50 font-normal">7+ years</span>
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                    £55,000–£75,000
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    CEng holders and recognised specialists can reach £75,000–£90,000, especially in
+                    London consultancies.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">Engineering manager / director</td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                    £70,000–£100,000+
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    CEng or equivalent expected. Package often includes bonus and car allowance.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold align-top">
+                    Day-rate contracting
+                    <span className="block text-white/50 font-normal">experienced</span>
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                    £350–£650 / day
+                  </td>
+                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                    HV commissioning, data centre design and offshore work command the highest day
+                    rates.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/50 border-t border-white/10">
+            Indicative market guidance for 2026, not a quote or offer. Actual pay varies by employer,
+            sector, location and specialism.
+          </p>
         </div>
         <p>
           Electricians working as sole traders in London and the South East regularly earn more than
@@ -750,6 +889,11 @@ export default function ElectricalEngineeringDegreePage() {
         tocItems={tocItems}
         badge="Career Guide"
         badgeIcon={GraduationCap}
+        answerBox={{
+          question: 'What is the difference between an electrical engineer and an electrician?',
+          answer:
+            'An electrician installs, tests and certifies electrical installations on site under BS 7671, qualifying via apprenticeship, NVQ Level 3 and AM2. An electrical engineer designs and specifies electrical systems at a higher technical level, typically holding a BEng or MEng. Experienced electricians can bridge into engineering through an HNC/HND and a degree top-up.',
+        }}
         heroTitle={
           <>
             Electrical Engineering Degree UK:{' '}

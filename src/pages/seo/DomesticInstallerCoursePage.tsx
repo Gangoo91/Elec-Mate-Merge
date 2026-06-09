@@ -405,11 +405,15 @@ const sections = [
           amendments.
         </p>
         <p>
-          <strong>Surge protection:</strong> Regulation 443.4 requires a risk assessment for surge
-          protection. If the consequence of an overvoltage includes risk to human life, risk to
-          public or cultural heritage, or risk to commercial or industrial activity, SPDs (Surge
-          Protection Devices) must be fitted. In practice, SPDs are increasingly fitted as standard
-          in new domestic consumer units.
+          <strong>Surge protection:</strong> Regulation 443.4.1 requires protection against
+          transient overvoltages to be provided where the consequence caused by the overvoltage
+          could result in (a) serious injury to, or loss of, human life, or (c) significant
+          financial or data loss — note that limb (b) was deleted by the BS 7671:2018+A2:2022
+          Corrigendum (May 2023). For all other cases, protection must be provided unless the owner
+          of the installation declares it is not required because any loss or damage is tolerable
+          and they accept the risk of damage to equipment and any consequential loss. In practice,
+          SPDs (Surge Protection Devices) are increasingly fitted as standard in new domestic
+          consumer units.
         </p>
       </>
     ),

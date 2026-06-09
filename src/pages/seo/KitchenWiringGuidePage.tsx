@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Should kitchen sockets be on a ring or radial circuit?',
     answer:
-      'Both ring and radial circuits are acceptable under BS 7671. A ring final circuit uses 2.5mm2 cable protected by a 32A MCB and can serve an unlimited number of sockets within a floor area of up to 100m2. A radial circuit can use 2.5mm2 cable with a 20A MCB (serving up to 50m2) or 4.0mm2 cable with a 32A MCB (serving up to 75m2). For a kitchen, a radial circuit on 4.0mm2 cable with a 32A RCBO is often the better choice. Radial circuits are simpler to install (one cable run rather than a loop), easier to test, and have fewer potential fault points than rings. The floor area of most kitchens is well within the 75m2 limit. If using a ring, the ring must serve only the kitchen sockets — do not extend a ring final circuit from another room into the kitchen.',
+      'Both ring and radial circuits are acceptable under BS 7671. A ring final circuit uses 2.5mm2 cable protected by a 30A or 32A device; the informative guidance in Appendix 15 notes a historical floor-area limit of 100m2. A radial circuit uses 2.5mm2 cable with a 20A device (historically limited to 50m2) or 4.0mm2 cable with a 32A device where more capacity is wanted. The governing rule is Regulation 433.1.204 — the load in any part of the circuit must be unlikely to exceed the cable current-carrying capacity for long periods. For a kitchen, a radial on 4.0mm2 cable with a 32A RCBO is often the better choice: simpler to install (one cable run rather than a loop), easier to test, and with fewer potential fault points than a ring. If using a ring, it must serve only the kitchen sockets — do not extend a ring final circuit from another room into the kitchen.',
   },
   {
     question: 'What size cable do I need for a cooker circuit?',
@@ -174,69 +174,78 @@ const sections = [
     content: (
       <>
         <p>
-          The number of circuits in a kitchen depends on the number and rating of the appliances. As
-          a minimum, a modern kitchen should have the following dedicated circuits:
+          The number of circuits in a kitchen depends on the number and rating of the appliances.
+          As a minimum, a modern kitchen should have the following circuits. The schedule below is a
+          typical starting point — always confirm cable size against the actual appliance rating,
+          cable length, and installation method.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Cooker/oven circuit</strong> — 32A or 45A depending on the cooker rating.
-                6.0mm2 or 10.0mm2 cable. Via a cooker control unit (45A switch with 13A socket).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Hob circuit (if separate from oven)</strong> — modern induction hobs can
-                draw 7kW or more. Requires its own 32A circuit on 6.0mm2 cable.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Worktop sockets</strong> — ring final circuit (2.5mm2, 32A MCB) or radial
-                circuit (4.0mm2, 32A MCB or 2.5mm2, 20A MCB). Serves all general-purpose sockets
-                above the worktop.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Dishwasher</strong> — dedicated 13A fused spur or dedicated socket on its
-                own circuit. 2.5mm2 cable, 16A or 20A MCB.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Washing machine</strong> — dedicated 13A fused spur or dedicated socket.
-                2.5mm2 cable, 16A or 20A MCB.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fridge/freezer</strong> — dedicated socket on a separate RCBO. This ensures
-                the fridge/freezer stays running if another kitchen circuit trips.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Extractor fan</strong> — switched fused spur (3A fuse for most fans). May
-                require a separate isolator if the fan is not accessible for switching.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Lighting</strong> — kitchen lighting on a dedicated lighting circuit or
-                shared with adjacent rooms. LED downlights are standard in modern kitchens.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="hidden sm:grid grid-cols-12 gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/10 text-xs font-semibold text-white/60 uppercase tracking-wide">
+            <div className="col-span-3">Circuit</div>
+            <div className="col-span-3">Typical protection</div>
+            <div className="col-span-2">Cable</div>
+            <div className="col-span-4">Connection / notes</div>
+          </div>
+          {[
+            {
+              circuit: 'Cooker / oven',
+              device: '32A or 45A',
+              cable: '6.0mm² or 10.0mm²',
+              notes: 'Via a cooker control unit (45A switch with 13A socket). 45A/10mm² for higher-rated cookers.',
+            },
+            {
+              circuit: 'Hob (if separate)',
+              device: '32A',
+              cable: '6.0mm²',
+              notes: 'Modern induction hobs can draw 7kW (~30A). Connect via a cooker switch or flex outlet plate.',
+            },
+            {
+              circuit: 'Worktop sockets',
+              device: '32A (ring/radial) or 20A',
+              cable: '2.5mm² or 4.0mm²',
+              notes: 'Ring (2.5mm², 32A), 32A radial (4.0mm²) or 20A radial (2.5mm²). Serves all general-purpose worktop sockets.',
+            },
+            {
+              circuit: 'Dishwasher',
+              device: '16A or 20A',
+              cable: '2.5mm²',
+              notes: 'Dedicated 13A fused spur or dedicated socket. Isolation point kept accessible, not behind the appliance.',
+            },
+            {
+              circuit: 'Washing machine',
+              device: '16A or 20A',
+              cable: '2.5mm²',
+              notes: 'Dedicated 13A fused spur or dedicated socket — same arrangement as the dishwasher.',
+            },
+            {
+              circuit: 'Fridge / freezer',
+              device: 'Own RCBO',
+              cable: '2.5mm²',
+              notes: 'Dedicated socket on a separate RCBO so it keeps running if another kitchen circuit trips.',
+            },
+            {
+              circuit: 'Extractor fan',
+              device: 'Switched fused spur (3A)',
+              cable: '1.5mm²',
+              notes: 'Add a separate isolator if the fan is not accessible for switching.',
+            },
+            {
+              circuit: 'Lighting',
+              device: 'RCBO (30mA)',
+              cable: '1.0mm² or 1.5mm²',
+              notes: 'LED downlights are standard. Domestic lighting circuits now require 30mA RCD protection (411.3.4).',
+            },
+          ].map((row) => (
+            <div
+              key={row.circuit}
+              className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-2 px-4 py-3 border-b border-white/5 last:border-b-0 text-sm"
+            >
+              <div className="sm:col-span-3 font-semibold text-white">{row.circuit}</div>
+              <div className="sm:col-span-3 text-yellow-300">{row.device}</div>
+              <div className="sm:col-span-2 text-white/80">{row.cable}</div>
+              <div className="sm:col-span-4 text-white/70">{row.notes}</div>
+            </div>
+          ))}
         </div>
         <p>
           Use Elec-Mate's{' '}
@@ -280,20 +289,53 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Radial Circuit</h3>
             <p className="text-white text-sm leading-relaxed">
-              Uses a single cable run from the consumer unit to each socket in sequence. Two
-              options: 2.5mm2 cable with 20A MCB (up to 50m2) or 4.0mm2 cable with 32A MCB (up to
-              75m2). Simpler to install and test — no ring continuity test needed. Easier to extend
-              in the future. For a kitchen, a 32A radial on 4.0mm2 cable provides the same
-              protection capacity as a ring but with a simpler, more reliable installation. The
-              4.0mm2 cable also provides a lower R1+R2 value, which improves earth fault loop
-              impedance and voltage drop performance.
+              Uses a single cable run from the consumer unit to each socket in sequence. A 2.5mm²
+              radial on a 20A device has historically been limited to a 50m² floor area; a 4.0mm²
+              radial on a 32A device is the common choice where more capacity is wanted. Simpler to
+              install and test — no ring continuity test needed — and easier to extend in future.
+              The larger 4.0mm² conductor also gives a lower R1+R2 value, which improves earth fault
+              loop impedance and voltage-drop performance.
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-4 gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/10 text-xs font-semibold text-white/60 uppercase tracking-wide">
+            <div>Arrangement</div>
+            <div>Cable</div>
+            <div>Protective device</div>
+            <div>Floor-area convention</div>
+          </div>
+          {[
+            ['Ring final circuit', '2.5mm²', '30A or 32A', 'Historically up to 100m²'],
+            ['Radial (smaller)', '2.5mm²', '20A', 'Historically up to 50m²'],
+            ['Radial (larger)', '4.0mm²', '32A', 'Common where more load is needed'],
+          ].map(([arr, cable, device, area]) => (
+            <div
+              key={arr}
+              className="grid grid-cols-4 gap-2 px-4 py-3 border-b border-white/5 last:border-b-0 text-sm"
+            >
+              <div className="font-semibold text-white">{arr}</div>
+              <div className="text-white/80">{cable}</div>
+              <div className="text-yellow-300">{device}</div>
+              <div className="text-white/70">{area}</div>
+            </div>
+          ))}
+        </div>
+        <p className="text-white/60 text-xs my-2">
+          Floor-area figures are long-standing design conventions from the informative guidance in
+          BS 7671 Appendix 15, not absolute limits — the governing requirement is Regulation
+          433.1.204, that the load current in any part of the circuit is unlikely to exceed the
+          cable&rsquo;s current-carrying capacity for long periods.
+        </p>
         <p>
-          For kitchen installations, a 32A radial on 4.0mm2 cable is increasingly the preferred
-          choice among experienced electricians. It is simpler, more reliable, and provides better
-          performance than a 2.5mm2 ring for the relatively small floor area of a kitchen.
+          For most kitchen installations a 32A radial on 4.0mm² cable is increasingly the preferred
+          choice among experienced electricians: simpler to install, simpler to test, and reliable
+          across the relatively small floor area of a kitchen. Either approach is fully compliant —
+          see our{' '}
+          <SEOInternalLink href="/guides/ring-main-explained">
+            ring main guide
+          </SEOInternalLink>{' '}
+          for the full continuity-testing method.
         </p>
       </>
     ),
@@ -361,21 +403,42 @@ const sections = [
           icon={Calculator}
         />
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
-          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+          <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-yellow-400 shrink-0" />
             A4:2026 — Arc Fault Detection Devices (AFDDs)
           </h4>
-          <p className="text-white/80 text-sm leading-relaxed">
-            BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
-            detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate the
-            risk of fire caused by arc fault currents. The regulation uses advisory wording
-            (&lsquo;recommends&rsquo;) rather than a mandatory &lsquo;shall&rsquo;, so AFDDs are not
-            currently a prescriptive requirement. In practice, a kitchen is a realistic candidate
-            for AFDD protection given the density of high-power circuits and the concealed cable
-            runs behind fitted units. Where a client requests or a designer specifies AFDD
-            protection, the devices fit in place of standard MCBs or RCBOs in most modern consumer
-            units.
+          <p className="text-white/80 text-sm leading-relaxed mb-4">
+            BS 7671:2018+A4:2026 Regulation 421.1.7 introduces an AFDD requirement that depends on
+            the premises type. For single-phase AC final circuits supplying socket outlets rated up
+            to 32A, AFDDs conforming to BS EN 62606 are <strong>mandatory</strong> in four
+            building types, and <strong>recommended</strong> in all others — which includes an
+            ordinary dwelling kitchen. Where used, the AFDD must be placed at the origin of the
+            circuit it protects.
           </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl bg-red-900/30 border border-red-700/40 p-4">
+              <p className="text-xs font-semibold text-red-300 uppercase tracking-wide mb-2">
+                AFDD mandatory (shall)
+              </p>
+              <ul className="text-white/80 text-sm space-y-1">
+                <li>High-rise residential buildings (over 18m / six storeys)</li>
+                <li>Houses in multiple occupation (HMOs)</li>
+                <li>Purpose-built student accommodation</li>
+                <li>Care homes</li>
+              </ul>
+            </div>
+            <div className="rounded-xl bg-blue-900/30 border border-blue-700/40 p-4">
+              <p className="text-xs font-semibold text-blue-300 uppercase tracking-wide mb-2">
+                AFDD recommended
+              </p>
+              <p className="text-white/80 text-sm leading-relaxed">
+                All other premises, including a standard domestic kitchen. The high density of
+                high-power circuits and concealed cable runs behind fitted units make a kitchen a
+                strong candidate. Where specified, AFDDs fit in place of standard MCBs or RCBOs in
+                most modern consumer units.
+              </p>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -495,6 +558,22 @@ const sections = [
           unsightly and a safety hazard. Too many sockets in the wrong positions means some are
           hidden behind appliances and never used.
         </p>
+        <div className="grid gap-3 sm:grid-cols-3 my-4">
+          {[
+            { label: 'Above worktop', value: '150–200mm', sub: 'from the worktop surface' },
+            { label: 'From floor', value: '~1050–1100mm', sub: 'with a standard 900mm worktop' },
+            { label: 'Minimum provision', value: '4–6 doubles', sub: 'for a medium kitchen' },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 text-center"
+            >
+              <p className="text-xs text-white/50 uppercase tracking-wide mb-1">{s.label}</p>
+              <p className="text-2xl font-bold text-yellow-400">{s.value}</p>
+              <p className="text-xs text-white/60 mt-1">{s.sub}</p>
+            </div>
+          ))}
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -634,6 +713,13 @@ export default function KitchenWiringGuidePage() {
       }
       heroSubtitle="The kitchen is the most electrically demanding room in the house. Multiple high-power appliances, worktop sockets, dedicated circuits, and specific RCD protection requirements all need careful design. This guide covers everything from circuit allocation to socket positioning."
       readingTime={12}
+      answerBox={{
+        question: 'How many circuits does a kitchen need?',
+        answer:
+          'A modern UK kitchen typically needs 5 to 8 separate circuits: a ring or radial for worktop sockets, a dedicated cooker circuit (32A or 45A), a separate hob circuit if the hob is not part of the oven, dedicated supplies for the dishwasher and washing machine, a fridge/freezer circuit on its own RCBO, an extractor-fan spur, and a lighting circuit. High-power appliances each get their own circuit to avoid overload and nuisance tripping.',
+        detail:
+          'Under BS 7671:2018+A4:2026, every socket outlet up to 32A needs 30mA RCD protection (Regulation 411.3.3) and every AC lighting final circuit in a dwelling now needs 30mA RCD protection too (Regulation 411.3.4).',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

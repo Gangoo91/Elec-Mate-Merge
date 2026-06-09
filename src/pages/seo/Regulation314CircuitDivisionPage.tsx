@@ -9,10 +9,8 @@ import {
   Calculator,
   Zap,
   GraduationCap,
-  ClipboardCheck,
   BookOpen,
   CircuitBoard,
-  Layers,
   Building,
   Lightbulb,
 } from 'lucide-react';
@@ -28,8 +26,8 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'overview', label: 'Division of Circuits Overview' },
-  { id: 'regulation-314-1', label: 'Regulation 314.1 — The Core Requirement' },
-  { id: 'regulation-314-3', label: 'Regulation 314.3 — Avoiding Danger' },
+  { id: 'regulation-314-1', label: 'Regulation 314.1 — The Six Objectives' },
+  { id: 'regulation-314-3', label: 'Regulations 314.2 to 314.4 — Separation' },
   { id: 'maximum-demand', label: 'Maximum Demand Per Circuit' },
   { id: 'ring-vs-radial', label: 'Ring vs Radial: When to Use Each' },
   { id: 'circuit-separation', label: 'Circuit Separation Requirements' },
@@ -40,18 +38,18 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Regulation 314.1 requires that every installation shall be divided into circuits as necessary to avoid danger and minimise inconvenience in the event of a fault. This is not a suggestion — it is a mandatory design requirement.',
-  'Regulation 314.3 requires that separate circuits are provided for parts of the installation that need to be separately controlled, so that a fault on one circuit does not affect the operation of other circuits. This prevents a single fault from disabling the entire installation.',
-  'The number of final circuits is determined by the maximum demand per circuit, the diversity of the load, the need for separate control, and the requirement to limit the consequences of a single fault (Regulation 314.2).',
-  'Ring final circuits are standard for 13A socket outlets in domestic installations (BS 7671 Appendix 15). Radial circuits are preferred for dedicated loads (cooker, shower, immersion heater) and where the cable run is too long for a ring. Both are equally valid — the choice depends on the application.',
-  'Circuit separation between lighting and power is essential in domestic installations. Regulation 314.3 effectively requires that at least one lighting circuit is on a separate protective device from the socket-outlet circuits, so that a trip on the socket circuit does not leave the occupants in darkness.',
+  'Regulation 314.1 requires that every installation shall be divided into circuits, as necessary, to avoid danger and minimise inconvenience in the event of a fault. This is not a suggestion — it is a mandatory design requirement listing six specific objectives, items (a) to (f).',
+  'Regulation 314.2 requires that separate circuits are provided for parts of the installation that need to be separately controlled, in such a way that those circuits are not affected by the failure of other circuits, with due account taken of the consequences of the operation of any single protective device.',
+  'Regulation 314.3 sets the number of final circuits and the number of points per final circuit, such that compliance with Chapter 43 (overcurrent), Chapter 46 and Section 537 (isolation and switching) and Chapter 52 (current-carrying capacity) is facilitated.',
+  'Ring final circuits are standard for 13A socket outlets in domestic installations (BS 7671 Appendix 15, Regulation 433.1.204). Radial circuits are preferred for dedicated loads (cooker, shower, immersion heater) and where the cable run is too long for a ring. Both are equally valid — the choice depends on the application.',
+  'Regulation 314.1(c) requires the design to take account of hazards that may arise from the failure of a single circuit, such as a lighting circuit — the basis for keeping lighting on a separate protective device from the socket-outlet circuits, so that a trip on a socket circuit does not leave the occupants in darkness.',
 ];
 
 const faqs = [
   {
     question: 'What does Regulation 314.1 actually require?',
     answer:
-      'Regulation 314.1 requires that every electrical installation shall be divided into circuits, as necessary, to avoid danger and minimise inconvenience in the event of a fault. The regulation also requires that the number and type of circuits is determined by considering: the maximum demand of the installation, the nature of the loads, the need for separate control of circuits, and the need to minimise the possibility of unwanted tripping of RCDs. In practice, this means that a single circuit supplying the entire installation is not acceptable. The installation must be divided into multiple circuits so that a fault or overload on one circuit does not affect others, and so that circuits can be individually isolated for maintenance.',
+      'Regulation 314.1 requires that every installation shall be divided into circuits, as necessary, to achieve six objectives, listed as items (a) to (f): (a) avoid danger and minimise inconvenience in the event of a fault; (b) facilitate safe inspection, testing and maintenance (see also Chapter 46 and Section 537); (c) take account of hazards that may arise from the failure of a single circuit, such as a lighting circuit; (d) reduce the possibility of unwanted tripping of RCDs due to excessive protective conductor (PE) currents not due to a fault; (e) mitigate the effects of electromagnetic disturbances (see also Chapter 44); and (f) prevent the indirect energising of a circuit intended to be isolated. In practice, a single circuit supplying the entire installation is not acceptable — the installation must be divided so that a fault on one circuit does not affect others, and so circuits can be individually isolated for maintenance.',
   },
   {
     question: 'How many circuits does a domestic installation need?',
@@ -66,12 +64,12 @@ const faqs = [
   {
     question: 'Can I put lighting and sockets on the same circuit?',
     answer:
-      'Technically, BS 7671 does not prohibit lighting and socket outlets on the same circuit. However, it is strongly discouraged and would fail the requirements of Regulation 314.3 in most cases. If lighting and sockets are on the same circuit and that circuit trips (due to a fault on an appliance plugged into a socket), the occupants are left in darkness — which is a danger, particularly on stairways. Regulation 314.3 requires separate circuits where necessary to avoid danger, and the loss of all lighting due to a socket-circuit fault is precisely the scenario the regulation aims to prevent. Always provide separate lighting circuits.',
+      'BS 7671 does not contain a blanket prohibition on lighting and socket outlets sharing a circuit, but it is strongly discouraged. Regulation 314.1(c) requires the division of circuits to take account of hazards that may arise from the failure of a single circuit, such as a lighting circuit. If lighting and sockets share a circuit and that circuit trips (for example, due to a fault on an appliance plugged into a socket), the occupants can be left in darkness — a danger, particularly on stairways. Combined with Regulation 314.2 (separate circuits for parts that need to be separately controlled), this is precisely the scenario the standard aims to prevent. Always provide separate lighting circuits.',
   },
   {
     question: 'What is the maximum floor area for a ring final circuit?',
     answer:
-      'Appendix 15 of BS 7671 recommends that a ring final circuit serves a floor area not exceeding 100 square metres. This is guidance, not a hard limit — but exceeding it significantly increases the cable length and therefore the R1+R2 and Zs values, which may compromise ADS compliance. For large open-plan areas (kitchens, living rooms), it is often better to use two ring circuits or a combination of ring and radial circuits. The 100 square metre limit also helps with load distribution — in a typical domestic installation, 100 square metres of floor area represents a manageable number of socket outlets and a predictable maximum demand.',
+      'Appendix 15 of BS 7671 (which supports Regulation 433.1.204) notes that, historically, a limit of 100 square metres of floor area has been adopted for a ring final circuit. It is informative guidance, not a hard regulatory limit — but exceeding it significantly increases the cable length and therefore the R1+R2 and Zs values, which may compromise automatic disconnection of supply. Appendix 15 also advises designers to locate socket outlets to share the load reasonably around the ring, to avoid supplying immersion heaters or comprehensive electric space heating from the ring, and to put cookers, ovens and hobs rated above 2 kW on their own dedicated radial circuit. For large open-plan areas it is often better to use two ring circuits or a mix of ring and radial circuits.',
   },
   {
     question: 'Do I need a dedicated circuit for a dishwasher or washing machine?',
@@ -81,7 +79,7 @@ const faqs = [
   {
     question: 'How does circuit division affect RCD arrangements?',
     answer:
-      'Regulation 314.2 requires that the division of circuits considers the need to minimise the possibility of unwanted tripping of RCDs due to normal (non-fault) earth leakage currents. This directly influences how circuits are distributed across RCDs in a split-load consumer unit, or whether individual RCBOs are used. If too many circuits share a single RCD, the accumulated standing earth leakage from all the connected equipment may approach the 30mA trip threshold, causing nuisance tripping. The solution is to limit the number of circuits per RCD or to use individual RCBOs. This is one of the strongest practical arguments for RCBO boards in modern installations.',
+      'Regulation 314.1(d) requires the division of circuits to reduce the possibility of unwanted tripping of RCDs due to excessive protective conductor (PE) currents that are not due to a fault. This directly influences how circuits are distributed across RCDs in a split-load consumer unit, or whether individual RCBOs are used. If too many circuits share a single RCD, the accumulated standing earth leakage from all the connected equipment may approach the 30mA trip threshold, causing nuisance tripping. The solution is to limit the number of circuits per RCD or to use individual RCBOs. This is one of the strongest practical arguments for RCBO boards in modern installations.',
   },
 ];
 
@@ -95,8 +93,8 @@ const relatedPages: RelatedPage[] = [
   },
   {
     href: '/guides/regulation-418-supplementary-protection',
-    title: 'Regulation 418 — Supplementary Protection',
-    description: 'RCD arrangements and how circuit division affects nuisance tripping.',
+    title: 'Additional RCD Protection',
+    description: '30mA RCD requirements, RCD types, and how circuit division affects nuisance tripping.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -166,46 +164,59 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 314.1 is clear: every installation shall be divided into circuits as necessary
-          to avoid danger and minimise inconvenience in the event of a fault. The regulation also
-          lists the factors that determine the number and type of circuits:
+          Regulation 314.1 is clear: every installation shall be divided into circuits, as
+          necessary, to achieve six objectives. The regulation lists them as items (a) to (f), and a
+          compliant design must satisfy each one that is relevant to the installation:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(a)</span>
               <span>
-                <strong>Reduction of the effects of electromagnetic interference (EMI)</strong> —
-                circuits supplying equipment sensitive to EMI (such as data and communications
-                equipment) should be separated from circuits supplying equipment that generates EMI
-                (such as motors, welders, and fluorescent lighting).
+                <strong>Avoid danger and minimise inconvenience</strong> in the event of a fault. A
+                single circuit feeding the whole installation is not acceptable — a fault must not be
+                allowed to disable everything at once.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(b)</span>
               <span>
-                <strong>Hazards from failure of a single circuit</strong> — the installation must be
-                designed so that a fault on one circuit does not cause danger. This means critical
-                circuits (fire alarm, emergency lighting, medical equipment) must be on separate
-                circuits from general loads.
+                <strong>Facilitate safe inspection, testing and maintenance</strong> (see also
+                Chapter 46 and Section 537). Dividing the installation lets individual circuits be
+                isolated for safe working without shutting down the whole property.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(c)</span>
               <span>
-                <strong>Minimising inconvenience</strong> — beyond safety, the regulation recognises
-                that loss of an entire installation due to a single circuit fault is unacceptable.
-                Even if not dangerous, losing all power because one appliance faults is an
-                inconvenience that proper circuit division prevents.
+                <strong>Take account of hazards arising from the failure of a single circuit</strong>{' '}
+                such as a lighting circuit. This is the regulatory basis for keeping lighting
+                separate from sockets and for dedicating critical circuits (fire alarm, emergency
+                lighting).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(d)</span>
               <span>
-                <strong>Unwanted tripping of RCDs</strong> — Regulation 314.2 specifically requires
-                that circuits are divided so as to minimise the possibility of unwanted tripping of
-                RCDs due to normal (non-fault) earth leakage. This drives the decision between
+                <strong>Reduce the possibility of unwanted tripping of RCDs</strong> due to excessive
+                protective conductor (PE) currents not due to a fault. This drives the choice between
                 split-load RCD boards and individual RCBO boards.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(e)</span>
+              <span>
+                <strong>Mitigate the effects of electromagnetic disturbances</strong> (see also
+                Chapter 44). Circuits supplying sensitive equipment (data and communications) are
+                kept apart from circuits supplying disturbance sources (motors, welders).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(f)</span>
+              <span>
+                <strong>Prevent the indirect energising of a circuit intended to be isolated</strong>{' '}
+                — supported by Regulation 314.4, which requires each final circuit to be wired
+                electrically separately from every other final circuit.
               </span>
             </li>
           </ul>
@@ -215,14 +226,54 @@ const sections = [
   },
   {
     id: 'regulation-314-3',
-    heading: 'Regulation 314.3 — Separate Circuits to Avoid Danger',
+    heading: 'Regulations 314.2, 314.3 and 314.4 — Separation and Numbers',
     content: (
       <>
         <p>
-          Regulation 314.3 reinforces the safety requirement: separate circuits shall be provided
-          for parts of the installation that need to be separately controlled so that a fault on one
-          circuit does not affect the safe operation of other circuits. The regulation identifies
-          specific circumstances where separate circuits are essential:
+          The remaining regulations in Section 314 turn the broad objectives of 314.1 into concrete
+          design rules. It is worth getting the numbering right, because each one means something
+          different:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
+                314.2
+              </span>
+              <span>
+                Separate circuits shall be provided for parts of the installation that need to be
+                separately controlled, in such a way that those circuits are not affected by the
+                failure of other circuits, and due account shall be taken of the consequences of the
+                operation of any single protective device.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
+                314.3
+              </span>
+              <span>
+                The number of final circuits required, and the number of points supplied by any
+                final circuit, shall be such as to facilitate compliance with Chapter 43
+                (overcurrent protection), Chapter 46 and Section 537 (isolation and switching) and
+                Chapter 52 (current-carrying capacities of conductors).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
+                314.4
+              </span>
+              <span>
+                Where an installation comprises more than one final circuit, each final circuit
+                shall be connected to a separate way in a distribution board, and the wiring of each
+                final circuit shall be electrically separate from that of every other final circuit,
+                to prevent the indirect energising of a circuit intended to be isolated.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          In practice, Regulation 314.2 is the one that drives the everyday separation decisions
+          below — the situations where giving a load its own circuit is not optional:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -342,7 +393,17 @@ const sections = [
           Diversity is applied to the total installation demand (at the main switch and supply
           level), not to individual circuit design. Each circuit must be designed to carry its full
           maximum demand — diversity is used when calculating the total demand on the main supply to
-          determine the supply cable size and main fuse rating.
+          determine the supply cable size and main fuse rating. For dedicated high-demand circuits,
+          see our detailed sizing guides for the{' '}
+          <SEOInternalLink href="/guides/cable-size-for-cooker-circuit">
+            cooker circuit
+          </SEOInternalLink>
+          , the{' '}
+          <SEOInternalLink href="/guides/cable-size-for-electric-shower">
+            electric shower
+          </SEOInternalLink>{' '}
+          and the{' '}
+          <SEOInternalLink href="/guides/cable-size-for-ev-charger">EV charger</SEOInternalLink>.
         </p>
       </>
     ),
@@ -370,13 +431,13 @@ const sections = [
                 same terminals.
               </p>
               <p>
-                <strong>Protection:</strong> 32A MCB
+                <strong>Protection:</strong> 30A or 32A overcurrent device (Appendix 15)
               </p>
               <p>
                 <strong>Cable:</strong> 2.5mm sq (copper, twin and earth)
               </p>
               <p>
-                <strong>Maximum floor area:</strong> 100 sq m (Appendix 15)
+                <strong>Floor area:</strong> historically limited to 100 sq m (Appendix 15)
               </p>
               <p>
                 <strong>Advantages:</strong> Lower Zs at mid-point (halved impedance), lower voltage
@@ -399,14 +460,14 @@ const sections = [
                 path to the consumer unit — the cable terminates at the last point on the circuit.
               </p>
               <p>
-                <strong>Protection:</strong> Varies (20A, 32A, or matched to load)
+                <strong>Protection:</strong> Varies (e.g. 20A socket radial, or matched to the load)
               </p>
               <p>
                 <strong>Cable:</strong> Sized for the design current and length
               </p>
               <p>
-                <strong>Maximum floor area:</strong> 50 sq m for 20A/2.5mm sq, 75 sq m for 32A/4.0mm
-                sq
+                <strong>Floor area:</strong> a 20A/2.5mm sq socket radial historically limited to 50
+                sq m (Appendix 15, Figure 15B)
               </p>
               <p>
                 <strong>Advantages:</strong> Simpler cable routing, ideal for dedicated loads, no
@@ -423,11 +484,13 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">
-              <strong>Common mistake:</strong> Spurs on ring circuits are often misunderstood. A
-              non-fused spur from a ring final circuit may supply one single or one twin socket
-              outlet only. Multiple spurs from the same point on the ring are not permitted. If you
-              need to supply multiple additional sockets, either extend the ring or use a fused
-              connection unit to create a fused spur.
+              <strong>Common mistake:</strong> Spurs on ring circuits are often misunderstood. Per
+              Appendix 15, an unfused spur run in 2.5mm sq cable should feed one single or one twin
+              socket-outlet only, and may be connected to the ring at a socket-outlet, at a junction
+              box, or at the origin of the circuit in the distribution board. If you need to supply
+              several additional sockets, either extend the ring itself or use a fused connection
+              unit (max 13A fuse) to create a fused spur — the number of sockets a fused spur can
+              feed then depends on the load, having taken diversity into account.
             </p>
           </div>
         </div>
@@ -639,9 +702,11 @@ const sections = [
         <p>
           The design process for a commercial installation typically starts with a load schedule
           (listing every item of equipment and its power demand), followed by a diversity assessment
-          (applying diversity factors from BS 7671 Appendix 4), then circuit allocation (deciding
-          which loads go on which circuits), and finally cable sizing and protective device
-          selection for each circuit. The{' '}
+          (applying allowances for diversity — BS 7671 defines diversity but the worked allowance
+          tables sit in the IET On-Site Guide and Guidance Note 1), then circuit allocation
+          (deciding which loads go on which circuits), and finally cable sizing and protective
+          device selection for each circuit. Current-carrying capacity and voltage drop figures for
+          that final step come from BS 7671 Appendix 4. The{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
@@ -667,6 +732,13 @@ export default function Regulation314CircuitDivisionPage() {
       tocItems={tocItems}
       badge="Regulation Deep-Dive"
       badgeIcon={BookOpen}
+      answerBox={{
+        question: 'What does Regulation 314 of BS 7671 require?',
+        answer:
+          'Regulation 314 requires every installation to be divided into circuits. Regulation 314.1 lists six objectives (a–f): avoid danger and inconvenience, allow safe testing and maintenance, limit the effect of a single circuit failing, reduce unwanted RCD tripping, mitigate electromagnetic disturbance, and prevent indirect energising. Regulations 314.2 to 314.4 then require separate circuits for parts needing separate control, set the number of circuits and points, and keep each final circuit electrically separate.',
+        detail:
+          'Section 314 sits in Part 3 (Assessment of General Characteristics) of BS 7671:2018+A4:2026 and is the foundation of circuit design.',
+      }}
       heroTitle={
         <>
           Regulation 314:{' '}

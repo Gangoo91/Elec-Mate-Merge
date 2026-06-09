@@ -26,13 +26,13 @@ const inlineChecks = [
       'Reg 443.4.1 requires SPD protection where the consequence of a transient overvoltage could result in which of these? (Pick the most complete answer.)',
     options: [
       'Loss of human life only',
-      'Loss of human life, failure of a safety service, interruption of public services / cultural heritage damage, interruption of commercial / industrial activity, or affecting a large number of co-located individuals',
+      'Serious injury to, or loss of, human life; or significant financial or data loss',
       'Only damage to electronic equipment',
       'Only loss of internet connectivity',
     ],
     correctIndex: 1,
     explanation:
-      "Reg 443.4.1 lists the consequences that mandate SPDs: serious injury or loss of human life, failure of a safety service, interruption of public services or damage to cultural heritage, interruption of commercial / industrial activity, or affecting a large number of co-located individuals. The list is broad — for most modern domestic dwellings, the 'affecting a large number of co-located individuals' or 'public services' criteria are interpreted to require SPDs as the default position rather than the exception.",
+      "Reg 443.4.1 lists the consequences that mandate SPDs: (a) serious injury to, or loss of, human life; and (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection shall still be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk. In practice this means SPDs are the default position for most modern installations rather than the exception.",
   },
   {
     id: 'm4s5-spd-type-origin',
@@ -172,7 +172,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 443.4.1: protection against transient overvoltages SHALL be provided where the consequence could result in any of the listed outcomes (a) to (e). 'Serious injury to or loss of human life' is item (a) — and triggers the mandatory protection requirement. There is no risk-assessment exception path; the requirement applies once the consequence test is met.",
+      "Reg 443.4.1: protection against transient overvoltages SHALL be provided where the consequence could result in (a) serious injury to, or loss of, human life; or (c) significant financial or data loss (limb (b) was deleted by the A2:2022 Corrigendum, May 2023). 'Serious injury to, or loss of, human life' is item (a) — and triggers the mandatory protection requirement. For all other cases protection shall still be provided unless the owner declares it is not required because any loss or damage is tolerable and they accept the risk.",
   },
   {
     id: 6,
@@ -257,7 +257,7 @@ const faqItems = [
   {
     question: "Are there environments where SPDs aren't required?",
     answer:
-      "Reg 443.4.1 is consequence-based — if NONE of the listed consequences apply (no risk to life, no safety service, no public service / cultural heritage, no commercial / industrial activity interruption, no impact on a large number of co-located individuals), SPDs may be omitted. In practice this is a narrow set: an isolated detached garage with no electronic equipment, a cattle shed with only lighting and a single socket, etc. For most domestic dwellings, at least one of the criteria applies — interpretation tends toward 'install SPDs by default'.",
+      "Reg 443.4.1 is consequence-based — protection is required where the consequence could be (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. For all other cases SPDs are still required unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk. In practice the genuine omission set is narrow — an isolated detached garage with no electronic equipment, a cattle shed with only lighting and a single socket — and even then it rests on a documented owner declaration. For most domestic dwellings the consequence test is met, so interpretation tends toward 'install SPDs by default'.",
   },
   {
     question: 'How does an SPD fail and how do I know?',
@@ -340,26 +340,27 @@ const BS7671Module4Section5 = () => {
 
           <ConceptBlock
             title="A4 simplified the decision — and most installs now need SPDs"
-            plainEnglish="Old A3 had a complex risk-assessment / CRL calculation. A4 deleted that. The current rule is consequence-based: if any of five listed outcomes could result from a transient overvoltage, SPDs are required. In practice, most modern installations meet at least one of the criteria."
-            onSite="Read Reg 443.4.1 once and bookmark it. The consequence list — life safety, safety service, public service / cultural heritage, commercial / industrial activity, large numbers of co-located individuals — covers most domestic, commercial and industrial installations. Industry consensus has moved to 'fit SPDs by default' for new work, with omission requiring positive justification under one of the few remaining exceptions."
+            plainEnglish="Old A3 had a complex risk-assessment / CRL calculation. A4 deleted that. The current rule is consequence-based: if a transient overvoltage could result in serious injury to or loss of human life, or significant financial or data loss, SPDs are required. For all other cases SPDs are still required unless the owner declares the risk tolerable and accepts it. In practice, most modern installations need SPDs."
+            onSite="Read Reg 443.4.1 once and bookmark it. The two consequence triggers — serious injury to or loss of human life, and significant financial or data loss — cover most domestic, commercial and industrial installations, and for all other cases SPDs are the default unless the owner formally declines and accepts the risk. Industry consensus has moved to 'fit SPDs by default' for new work, with omission requiring a documented owner declaration."
           >
             <p>
               Reg 443.4.1: protection against transient overvoltages shall be provided where the
-              consequence caused by the overvoltage could result in (a) serious injury to or loss of
-              human life, (b) failure of a safety service as defined in Part 2, (c) interruption of
-              public services or damage to cultural heritage, (d) interruption of commercial or
-              industrial activity, or (e) affecting a large number of co-located individuals. Reg
-              443.4.2 separately requires consideration of overvoltages from equipment likely to
-              produce switching surges (e.g. large inductive loads, capacitor banks). The previous
-              Reg 443.5 risk-assessment route — and its supporting Annex A443 — were both deleted in
-              A4:2026.
+              consequence caused by the overvoltage could result in (a) serious injury to, or loss
+              of, human life; or (c) significant financial or data loss. Limb (b) was deleted by the
+              BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection shall
+              still be provided unless the owner of the installation declares it is not required
+              because any loss or damage is tolerable and they accept the risk of damage to equipment
+              and any consequential loss. Reg 443.4.2 separately requires consideration of
+              overvoltages from equipment likely to produce switching surges (e.g. large inductive
+              loads, capacitor banks). The previous Reg 443.5 risk-assessment route — and its
+              supporting Annex A443 — were both deleted in A4:2026.
             </p>
           </ConceptBlock>
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 · Reg 443.4.1 — Where transient overvoltage protection is required"
-            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) failure of a safety service, as defined in Part 2; (c) interruption of public services and/or damage to cultural heritage; (d) interruption of commercial or industrial activity; (e) affecting a large number of co-located individuals."
-            meaning="Five consequence triggers. If any one applies, SPD provision is mandatory ('shall'). The list is broad — most modern installations meet at least one criterion. A4:2026 removed the risk-assessment method that previously could waive the requirement; the current decision is binary on consequence."
+            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) [Deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023)]; (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss."
+            meaning="Two active consequence triggers — limb (b) was deleted by the A2:2022 Corrigendum (May 2023). If (a) or (c) applies, SPD provision is mandatory ('shall'). For all other cases SPDs are still required unless the owner declares the loss or damage tolerable and accepts the risk. A4:2026 removed the older risk-assessment method; the decision is now consequence-based with an owner-declaration exception."
             cite="BS 7671:2018+A4:2026, Reg 443.4.1"
           />
 
@@ -564,7 +565,7 @@ const BS7671Module4Section5 = () => {
 
           <CommonMistake
             title="Missing the A4 update — still using the old risk-assessment route"
-            whatHappens="Designer follows pre-A4 practice: applies the Reg 443.5 CRL calculation, decides 'low risk', omits SPDs from a new 4-bed dwelling. EICR a year later flags the omission — Reg 443.5 was DELETED in A4:2026, the current rule is consequence-based, and a 4-bed dwelling meets at least one of the Reg 443.4.1(a)-(e) criteria. Customer wants the cost back."
+            whatHappens="Designer follows pre-A4 practice: applies the Reg 443.5 CRL calculation, decides 'low risk', omits SPDs from a new 4-bed dwelling. EICR a year later flags the omission — Reg 443.5 was DELETED in A4:2026, the current rule is consequence-based, and a 4-bed dwelling meets the Reg 443.4.1 consequence test (and even where it does not, SPDs are still required unless the owner formally declares the risk tolerable and accepts it). Customer wants the cost back."
             doInstead="A4:2026 is in force from 15 April 2026. Use the consequence-based Reg 443.4.1 directly. For most domestic / commercial installations, at least one consequence trigger applies and SPDs are mandatory. The simplification is in the designer's favour — the decision tree is now binary, not a multi-page risk calculation."
           />
 
@@ -587,15 +588,15 @@ const BS7671Module4Section5 = () => {
           <Scenario
             title="Rural farmhouse — exposed location, no existing LPS, frequent thunderstorms"
             situation="Rural detached property on a hilltop, 200 m from nearest neighbour. Standard TN-C-S domestic supply. Customer reports having lost three TVs and a microwave to lightning over the past 8 years. No external lightning protection system fitted to the building. Designer is asked to specify SPDs for the upgraded consumer unit."
-            whatToDo="Two-stage assessment. (1) Should the building have an external LPS? BS EN 62305-2 risk assessment based on the building's exposed location and lightning history strongly suggests yes — but that's a separate piece of work (typically a roofer / lightning specialist). (2) Within BS 7671, Reg 443.4.1 consequence test triggers (interruption of public services / commercial activity / large number of co-located individuals). Spec: Type 1+2 combined SPD at the consumer unit origin (Iimp ≥ 12.5 kA per pole, Uc ≥ 275 V, Up ≤ 1.5 kV) — treated as if LPS exists because of the direct-strike risk. Add a Type 3 close-protection SPD for the customer's hi-fi / IT rack as a value-add. Document the design under Reg 120.3 explaining the Type 1+2 specification despite no LPS being fitted."
+            whatToDo="Two-stage assessment. (1) Should the building have an external LPS? BS EN 62305-2 risk assessment based on the building's exposed location and lightning history strongly suggests yes — but that's a separate piece of work (typically a roofer / lightning specialist). (2) Within BS 7671, Reg 443.4.1 consequence test is met — the customer's repeated equipment losses point to significant financial or data loss, and a hilltop dwelling at direct-strike risk also engages the life-safety limb. Spec: Type 1+2 combined SPD at the consumer unit origin (Iimp ≥ 12.5 kA per pole, Uc ≥ 275 V, Up ≤ 1.5 kV) — treated as if LPS exists because of the direct-strike risk. Add a Type 3 close-protection SPD for the customer's hi-fi / IT rack as a value-add. Document the design under Reg 120.3 explaining the Type 1+2 specification despite no LPS being fitted."
             whyItMatters="Rural / exposed locations are exactly where the BS 7671 SPD requirements bite hardest. The customer's lost equipment history is direct evidence the consequence test of Reg 443.4.1 is met. Specifying Type 2-only because 'there's no LPS' would be technically defensible to the letter of Reg 534.4.1.1 but practically inadequate — the building is at direct-strike risk regardless of formal LPS status. Senior designers will spec Type 1+2 here; the cert documents the rationale."
           />
 
           <Scenario
             title="New 3-bed semi — A4 design from scratch"
             situation="Designer is specifying a new consumer unit for a 3-bed semi-detached. No external LPS, suburban location, standard DNO TN-C-S supply. Customer has questioned why an SPD is included on the quote when neighbours' boards don't have one."
-            whatToDo="Reg 443.4.1 consequence test. Item (e) 'affecting a large number of co-located individuals' is debatable for a single dwelling. Item (d) 'interruption of commercial / industrial activity' applies if anyone in the household runs a small business / works from home with IT equipment. Item (a) 'serious injury to or loss of human life' is interpreted broadly — a surge-damaged appliance creating fire risk meets the criterion. Specify a Type 2 SPD at origin (no LPS, so Type 1 not required), Uc 275 V (above the 1.1 × 230 V TN-C-S minimum), In 20 kA, Up under 1.5 kV, mounted in the way nearest the main switch with leads under 0.5 m. Quote stands."
-            whyItMatters="The A4 simplification has shifted the conversation from 'why are we fitting SPDs?' to 'what justification do we have for omission?'. For most domestic dwellings the consequence-based test is satisfied. Documenting the design decision (one line on the design sheet referencing Reg 443.4.1 (a) and (d)) makes it audit-defensible if the customer questions later."
+            whatToDo="Reg 443.4.1 consequence test. Item (c) 'significant financial or data loss' applies where surge-damaged appliances, home-office IT or stored data are at stake — common in any modern dwelling, more so if anyone works from home. Item (a) 'serious injury to, or loss of, human life' is interpreted broadly — a surge-damaged appliance creating fire risk meets the criterion. And for all other cases SPDs are still required unless the owner formally declares the risk tolerable and accepts it. Specify a Type 2 SPD at origin (no LPS, so Type 1 not required), Uc 275 V (above the 1.1 × 230 V TN-C-S minimum), In 20 kA, Up under 1.5 kV, mounted in the way nearest the main switch with leads under 0.5 m. Quote stands."
+            whyItMatters="The A4 simplification has shifted the conversation from 'why are we fitting SPDs?' to 'what justification do we have for omission?'. For most domestic dwellings the consequence-based test is satisfied, and where it is not, omission requires a documented owner declaration accepting the risk. Documenting the design decision (one line on the design sheet referencing Reg 443.4.1 (a) and (c)) makes it audit-defensible if the customer questions later."
           />
 
           <Scenario

@@ -330,12 +330,12 @@ const sections = [
             {
               title: 'Levy transfer from larger employers',
               description:
-                'Levy-paying employers can transfer up to 25% of their annual levy to other employers. This means a main M&E contractor could transfer levy funds to its…',
+                'Levy-paying employers can transfer up to 25% of their annual levy to other employers. This means a main M&E contractor could transfer levy funds to a smaller sub-contractor in its supply chain, fully covering the training cost of an apprentice the smaller firm could not otherwise afford to take on.',
             },
             {
               title: 'Additional learning support',
               description:
-                'Training providers receive additional funding for apprentices who need learning support — for example, those with learning difficulties, disabilities…',
+                'Training providers receive additional funding for apprentices who need learning support — for example, those with a learning difficulty, a disability, or a recognised additional need. This funding is paid to the provider, not the apprentice, and does not reduce the core training budget.',
             },
           ].map((item) => (
             <div
@@ -435,11 +435,56 @@ const sections = [
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 my-4 text-sm text-white leading-relaxed">
           <strong className="text-yellow-400">Important — buy the current edition:</strong> The live
           wiring regulations are <strong>BS 7671:2018+A4:2026</strong> (Amendment 4, April 2026 —
-          orange cover). Apprentices sitting the EPA knowledge test are examined on current rules
-          including changes introduced by A4:2026 (AFDD requirements, RCD protection on lighting
-          circuits, and TN-C-S earthing updates). A second-hand A2 or A3 copy will contain outdated
-          regulation numbers and deleted requirements. Always buy or borrow the A4:2026 consolidated
-          edition.
+          orange cover). Apprentices sitting the EPA knowledge test are examined on the current
+          edition, so a second-hand A2 or A3 copy will contain deleted requirements and outdated
+          regulation numbers. The table below shows examples of regulations apprentices are commonly
+          tested on under the current edition — always buy or borrow the A4:2026 consolidated book.
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="p-4 text-sm font-semibold text-white">Topic in the current edition</th>
+                  <th className="p-4 text-sm font-semibold text-yellow-400">Regulation</th>
+                  <th className="p-4 text-sm font-semibold text-white">What it requires</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    topic: 'Arc fault detection devices (AFDDs)',
+                    reg: '421.1.7',
+                    detail:
+                      'AFDDs to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high-rise residential buildings, HMOs, purpose-built student accommodation and care homes; recommended for all other premises.',
+                  },
+                  {
+                    topic: 'RCD protection for lighting circuits',
+                    reg: '411.3.4',
+                    detail:
+                      'Within domestic (household) premises, additional protection by a 30 mA RCD shall be provided for AC final circuits supplying luminaires.',
+                  },
+                  {
+                    topic: 'TN-C-S earthing — protective neutral bonding',
+                    reg: '312.2.1.1',
+                    detail:
+                      'Now includes a protective neutral bonding (PNB) figure and requirements alongside the existing PME arrangement for TN-C-S systems.',
+                  },
+                ].map((row, i) => (
+                  <tr key={row.reg} className={i < 2 ? 'border-b border-white/5' : ''}>
+                    <td className="p-4 text-sm text-white align-top">{row.topic}</td>
+                    <td className="p-4 text-sm text-yellow-400 font-semibold align-top whitespace-nowrap">
+                      {row.reg}
+                    </td>
+                    <td className="p-4 text-sm text-white align-top">{row.detail}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 pb-4 text-xs text-white/50">
+            Regulation references verified against BS 7671:2018+A4:2026.
+          </p>
         </div>
         <p>
           The total out-of-pocket cost for an apprentice over a 4-year apprenticeship is typically
@@ -565,7 +610,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your apprenticeship progress with Elec-Mate"
-          description="Study courses, portfolio guidance, AM2 preparation, and AI-powered regulation help — all designed for apprentices who want to qualify first time and…"
+          description="Study courses, portfolio guidance, AM2 preparation, and AI-powered regulation help — all designed for apprentices who want to qualify first time and start earning a qualified electrician's wage sooner."
           icon={Brain}
         />
       </>
@@ -581,7 +626,7 @@ export default function ElectricalApprenticeshipCostPage() {
   return (
     <GuideTemplate
       title="Electrical Apprenticeship Cost | Fees & Funding UK"
-      description="How much does an electrical apprenticeship cost in the UK? Apprenticeship levy explained, funding bands, co-investment…"
+      description="How much does an electrical apprenticeship cost in the UK? Apprenticeship levy explained, funding bands, 5% co-investment, tool and PPE costs, and apprentice wages from year 1 to qualified."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -596,6 +641,13 @@ export default function ElectricalApprenticeshipCostPage() {
       }
       heroSubtitle="An electrical apprenticeship costs almost nothing for the apprentice and far less than most employers think. The government funds 95 to 100% of training costs. This guide covers the levy, funding bands, co-investment, additional costs for tools and equipment, and what apprentices earn from year 1 to qualified."
       readingTime={11}
+      answerBox={{
+        question: 'How much does an electrical apprenticeship cost in the UK?',
+        answer:
+          'An apprentice pays nothing for their training. The government funds 95 to 100% of the cost, capped by the funding band — £18,000 for the Level 3 Installation Electrician standard. Levy-paying employers pay from their digital account; non-levy employers pay just 5% co-investment. Apprentices typically spend £1,500 to £4,000 over four years on tools, PPE, travel and textbooks.',
+        detail:
+          'Small employers (fewer than 50 staff) pay 0% when the apprentice is aged 16 to 18 at the start.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

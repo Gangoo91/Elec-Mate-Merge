@@ -43,8 +43,13 @@
 # cluster: house-extension-electrical-cost (guide)
 /house-extension-electrical-cost                             /guides/house-extension-electrical-cost 301!
 
-# cluster: insulation-resistance-testing (guide)
-/insulation-resistance-testing-guide                         /guides/insulation-resistance-testing 301!
+# cluster: insulation-resistance "how to test" → /guides/insulation-resistance-testing-bs7671
+# Canonical flipped to -bs7671 (894 imp / pos 5.4) — the clear winner over
+# -testing (89 imp / pos 10.7). All same-intent "how to test IR" dupes point
+# direct to the winner (no chain). Losers noindexed.
+/insulation-resistance-testing-guide                         /guides/insulation-resistance-testing-bs7671 301!
+/guides/insulation-resistance-testing                        /guides/insulation-resistance-testing-bs7671 301!
+/guides/how-to-test-insulation-resistance                    /guides/insulation-resistance-testing-bs7671 301!
 
 # cluster: spd-surge-protection (guide)
 /guides/spd-surge-protection-guide                           /guides/spd-surge-protection 301!
@@ -81,5 +86,15 @@
 # /guides/continuity-testing-r1-r2           : 564 imp / pos 11.8   (KEEP — wins R1+R2-specific queries)
 # /guides/continuity-testing-electricians-guide: 518 imp / pos 9.6  (duplicate)
 /guides/continuity-testing-electricians-guide                /continuity-testing-guide 301!
+
+# mock-exams duplicate → /guides/mock-exams-electrician (canonical)
+# /guides/mock-exams-electrician : 3,808 imp / pos 10.3  (canonical — same intent)
+# /guides/mock-exams-electrical  : 786 imp / pos 22.0    (duplicate, noindexed)
+/guides/mock-exams-electrical                                /guides/mock-exams-electrician 301!
+
+# electrical-work pricing duplicate → /guides/pricing-electrical-work-per-point (canonical)
+# /guides/pricing-electrical-work-per-point : 3,497 imp / pos 4.8  (canonical)
+# /guides/electrical-work-pricing-guide      : 31 imp / pos 7.0    (duplicate, noindexed)
+/guides/electrical-work-pricing-guide                        /guides/pricing-electrical-work-per-point 301!
 
 

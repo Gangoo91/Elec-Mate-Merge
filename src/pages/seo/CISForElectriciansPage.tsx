@@ -223,57 +223,98 @@ const sections = [
     content: (
       <>
         <p>
-          The CIS deduction rate depends on your registration status with HMRC. Understanding these
-          rates and their impact on your cash flow is critical.
+          The CIS deduction rate depends on your registration status with HMRC. There are three
+          rates — and the gap between them is pure cash flow.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>0% — Gross payment status:</strong> No deductions taken. You receive 100% of
-                your payment and pay tax through Self-Assessment. Available if you meet HMRC
-                criteria: minimum £30,000 annual turnover (excluding materials and VAT), a clean
-                compliance record (tax returns filed on time, no outstanding tax debts), and a
-                history of CIS compliance.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>20% — Standard registered rate:</strong> The contractor deducts 20% from the
-                labour element of your payment and pays it to HMRC. This is the default rate for
-                registered subcontractors. On a £1,000 labour payment, you receive £800. The £200 is
-                credited against your tax bill.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>30% — Unregistered rate:</strong> If you are not registered for CIS, the
-                contractor must deduct 30%. On a £1,000 labour payment, you receive only £700. There
-                is no legitimate reason to remain unregistered — it costs you cash flow for no
-                benefit.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[110px_1fr_1.4fr] text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-bold text-white border-b border-white/10">
+              Rate
+            </div>
+            <div className="hidden sm:block bg-white/[0.06] px-4 py-3 font-bold text-white border-b border-white/10">
+              Who it applies to
+            </div>
+            <div className="bg-white/[0.06] px-4 py-3 font-bold text-white border-b border-white/10">
+              On a £1,000 labour payment
+            </div>
+
+            <div className="px-4 py-4 border-b border-white/10 bg-green-900/20">
+              <span className="text-green-300 font-bold text-lg">0%</span>
+            </div>
+            <div className="hidden sm:block px-4 py-4 border-b border-white/10 text-white leading-relaxed">
+              Subcontractors with <strong>gross payment status</strong> who meet the HMRC turnover,
+              compliance and business tests.
+            </div>
+            <div className="px-4 py-4 border-b border-white/10 text-white leading-relaxed">
+              <strong className="text-green-300">You receive £1,000.</strong> Nothing deducted; you
+              settle the tax through Self-Assessment.
+            </div>
+
+            <div className="px-4 py-4 border-b border-white/10 bg-yellow-900/20">
+              <span className="text-yellow-300 font-bold text-lg">20%</span>
+            </div>
+            <div className="hidden sm:block px-4 py-4 border-b border-white/10 text-white leading-relaxed">
+              The <strong>standard rate</strong> for subcontractors registered with HMRC for CIS.
+            </div>
+            <div className="px-4 py-4 border-b border-white/10 text-white leading-relaxed">
+              <strong className="text-yellow-300">You receive £800.</strong> £200 goes to HMRC and is
+              credited against your tax bill.
+            </div>
+
+            <div className="px-4 py-4 bg-red-900/20">
+              <span className="text-red-300 font-bold text-lg">30%</span>
+            </div>
+            <div className="hidden sm:block px-4 py-4 text-white leading-relaxed">
+              Subcontractors who are <strong>not registered</strong> for CIS.
+            </div>
+            <div className="px-4 py-4 text-white leading-relaxed">
+              <strong className="text-red-300">You receive £700.</strong> £300 withheld — the same
+              tax, just locked up far longer.
+            </div>
+          </div>
         </div>
-        <p>Let us put this in real terms. If you earn £60,000 in CIS labour income over a year:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>At 30% (unregistered): £18,000 deducted, you receive £42,000</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>At 20% (registered): £12,000 deducted, you receive £48,000</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>At 0% (gross): £0 deducted, you receive £60,000</span>
-            </li>
-          </ul>
+        <p className="sm:hidden text-white/70 text-sm">
+          0% = gross payment status; 20% = registered subcontractor; 30% = unregistered.
+        </p>
+        <p>
+          The deduction applies to the <strong>labour element only</strong> — materials itemised
+          separately on the invoice are excluded. Gross payment status (0%) is available if you meet
+          HMRC's turnover, compliance and business criteria, covered in the next section.
+        </p>
+        <p>
+          Put it in real terms. The table below shows the same £60,000 of annual CIS labour income at
+          each rate — every pound deducted is still credited back through{' '}
+          <SEOInternalLink href="/guides/electrician-tax-guide-uk">Self-Assessment</SEOInternalLink>,
+          but the timing of when you see the cash is very different.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 text-sm">
+            <div className="bg-white/[0.06] px-4 py-3 font-bold text-white border-b border-white/10">
+              Rate
+            </div>
+            <div className="bg-white/[0.06] px-4 py-3 font-bold text-white border-b border-white/10">
+              Deducted in-year
+            </div>
+            <div className="bg-white/[0.06] px-4 py-3 font-bold text-white border-b border-white/10">
+              Cash you receive
+            </div>
+
+            <div className="px-4 py-3 border-b border-white/10 text-red-300 font-semibold">
+              30% (unregistered)
+            </div>
+            <div className="px-4 py-3 border-b border-white/10 text-white">£18,000</div>
+            <div className="px-4 py-3 border-b border-white/10 text-white">£42,000</div>
+
+            <div className="px-4 py-3 border-b border-white/10 text-yellow-300 font-semibold">
+              20% (registered)
+            </div>
+            <div className="px-4 py-3 border-b border-white/10 text-white">£12,000</div>
+            <div className="px-4 py-3 border-b border-white/10 text-white">£48,000</div>
+
+            <div className="px-4 py-3 text-green-300 font-semibold">0% (gross)</div>
+            <div className="px-4 py-3 text-white">£0</div>
+            <div className="px-4 py-3 text-white">£60,000</div>
+          </div>
         </div>
         <p>
           The deductions are not lost — they are credited against your tax bill. But the cash flow
@@ -651,6 +692,11 @@ export default function CISForElectriciansPage() {
       }
       heroSubtitle="If you work as a subcontractor for any contractor, CIS affects your pay. Understand the deduction rates, how to register, how to get gross payment status, and how to claim your deductions back on your tax return. This guide covers everything UK electricians need to know about CIS."
       readingTime={13}
+      answerBox={{
+        question: 'Does CIS apply to electricians, and what is deducted?',
+        answer:
+          'Yes — when you work as a subcontractor for a contractor, the Construction Industry Scheme applies and the contractor deducts tax at source from the labour element of your pay. Registered subcontractors are deducted 20%, unregistered ones 30%, and those with gross payment status 0%. Materials itemised separately are excluded. The deduction is an advance payment of tax, credited back through Self-Assessment.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

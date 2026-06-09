@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'How do I decide whether a missing bonding connection is C1 or C2?',
     answer:
-      'The distinction between C1 and C2 for missing bonding depends on the level of immediate danger. C1 (Danger Present) means a risk of injury exists right now. C2 (Potentially Dangerous) means a risk of injury may arise. For bonding: if the metalwork is accessible, could become live due to a fault, and there is no protective conductor connecting it to the earthing system, the question is whether the danger is present right now or only under fault conditions. Main protective bonding to gas, water, and oil services is required by Regulation 411.3.1.1 (extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal). If main bonding is absent and the service pipes enter the building, metalwork in the property could become live if a fault develops on any connected appliance. Because this scenario is foreseeable and the consequences are severe (electric shock), missing main bonding is typically classified as C2. If there is clear evidence that metalwork is already at a dangerous potential (for example, a tingle when touching a pipe), that is C1 because the danger is present right now, not just potential.',
+      'The distinction between C1 and C2 for missing bonding depends on the level of immediate danger. C1 (Danger Present) means a risk of injury exists right now. C2 (Potentially Dangerous) means a risk of injury may arise. For bonding: if the metalwork is accessible, could become live due to a fault, and there is no protective conductor connecting it to the earthing system, the question is whether the danger is present right now or only under fault conditions. Main protective bonding to gas, water, and oil services is required by Regulation 411.3.1.2 (extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal). If main bonding is absent and the service pipes enter the building, metalwork in the property could become live if a fault develops on any connected appliance. Because this scenario is foreseeable and the consequences are severe (electric shock), missing main bonding is typically classified as C2. If there is clear evidence that metalwork is already at a dangerous potential (for example, a tingle when touching a pipe), that is C1 because the danger is present right now, not just potential.',
   },
   {
     question: 'What happens if I get the classification code wrong?',
@@ -217,6 +217,53 @@ const sections = [
             </div>
           ))}
         </div>
+        <h4 className="font-bold text-white text-lg mt-6 mb-3">
+          The four codes at a glance
+        </h4>
+        <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold">Code</th>
+                <th className="px-4 py-3 font-semibold">Meaning</th>
+                <th className="px-4 py-3 font-semibold">Action required</th>
+                <th className="px-4 py-3 font-semibold">Overall assessment</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="bg-red-900/20 border-t border-red-700/30">
+                <td className="px-4 py-3 font-bold text-red-400 align-top">C1</td>
+                <td className="px-4 py-3 align-top">Danger present — risk of injury exists now</td>
+                <td className="px-4 py-3 align-top">Immediate action; make safe before leaving site</td>
+                <td className="px-4 py-3 font-semibold text-red-400 align-top">Unsatisfactory</td>
+              </tr>
+              <tr className="bg-orange-900/20 border-t border-orange-700/30">
+                <td className="px-4 py-3 font-bold text-orange-400 align-top">C2</td>
+                <td className="px-4 py-3 align-top">
+                  Potentially dangerous — risk of injury could arise
+                </td>
+                <td className="px-4 py-3 align-top">Urgent remedial action</td>
+                <td className="px-4 py-3 font-semibold text-red-400 align-top">Unsatisfactory</td>
+              </tr>
+              <tr className="bg-blue-900/20 border-t border-blue-700/30">
+                <td className="px-4 py-3 font-bold text-blue-400 align-top">C3</td>
+                <td className="px-4 py-3 align-top">
+                  Improvement recommended — non-compliant but not dangerous
+                </td>
+                <td className="px-4 py-3 align-top">Advisory; remediation optional</td>
+                <td className="px-4 py-3 font-semibold text-green-400 align-top">Satisfactory</td>
+              </tr>
+              <tr className="bg-purple-900/20 border-t border-purple-700/30">
+                <td className="px-4 py-3 font-bold text-purple-400 align-top">FI</td>
+                <td className="px-4 py-3 align-top">
+                  Further investigation — could not be fully assessed
+                </td>
+                <td className="px-4 py-3 align-top">Investigate without delay</td>
+                <td className="px-4 py-3 font-semibold text-red-400 align-top">Unsatisfactory</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </>
     ),
   },
@@ -301,7 +348,7 @@ const sections = [
             'Absence of RCD protection on socket outlet circuits where required by BS 7671 — particularly in bathrooms, kitchens, and circuits supplying equipment intended for outdoor use.',
             'Missing circuit protective conductor (CPC / earth wire) connection at an accessory — the socket or light fitting has no earth, meaning metalwork could become live under a fault condition.',
             'Earth fault loop impedance (Zs) exceeding the maximum permitted value for the protective device — meaning the device may not disconnect within the required time during a fault.',
-            'Absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.1 — extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal.',
+            'Absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2 — extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal.',
             'A circuit breaker or fuse that is incorrectly rated for the cable it protects — for example, a 32A MCB protecting a 1.0mm squared cable.',
             'Mixed wiring colours (old red/black with new brown/blue) without a warning notice at the distribution board — Regulation 514.14 was deleted in BS 7671:2018+A4:2026, but OSG Reg 6.12 (9th Ed) still recommends affixing a notice where mixed colours exist, and the absence of such a notice creates a risk of incorrect identification during future work.',
             'An RCD that fails to trip within the required time during testing.',
@@ -362,7 +409,7 @@ const sections = [
             'Absence of supplementary bonding in a bathroom where the conditions of Regulation 701.415.2 are met (all circuits RCD protected, main bonding effective) — no longer required by current regulations.',
             'Lack of cable support clips at the intervals specified in the current edition — typically seen in older installations where the cable is securely fixed but not at the precise intervals required today.',
             'Absence of IP-rated accessories in a location where the current edition would require them, but the existing accessories are in serviceable condition and the location does not present an immediate hazard.',
-            'Absence of arc fault detection devices (AFDDs) on AC final circuits — Regulation 421.1.7 (A4:2026) recommends AFDD installation to mitigate fire risk from arc fault currents, but the regulation uses advisory rather than mandatory wording. For new consumer unit replacements this is therefore typically C3; for unaltered existing installations the classification debate continues, though C3 remains the most widely adopted position where no other fire-risk factors are present.',
+            'Absence of arc fault detection devices (AFDDs) — under Regulation 421.1.7 (BS 7671:2018+A4:2026), AFDDs conforming to BS EN 62606 "shall be provided" for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built student accommodation and care homes. For all other premises the same regulation only "recommends" them. In ordinary domestic premises (which fall outside the mandatory categories) the absence of AFDDs is therefore typically recorded as C3; in the four named building types it carries more weight and the classification should reflect the foreseeable fire risk.',
           ].map((example, i) => (
             <div key={i} className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
@@ -530,9 +577,80 @@ const sections = [
       <>
         <p>
           Getting observation codes wrong is one of the most common reasons for EICR reports being
-          rejected or queried by competent person scheme providers. Here are the mistakes inspectors
-          make most often:
+          rejected or queried by competent person scheme providers. The table below summarises how
+          the most commonly debated defects are usually classified, and the single factor that
+          decides between codes. Classification always depends on the full picture on site — these
+          are the typical positions, not absolute rules.
         </p>
+        <div className="overflow-x-auto rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold">Defect</th>
+                <th className="px-4 py-3 font-semibold">Typical code</th>
+                <th className="px-4 py-3 font-semibold">Deciding factor</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top">
+                  No RCD protection on socket circuit in a domestic property
+                </td>
+                <td className="px-4 py-3 align-top font-semibold text-orange-400">C2</td>
+                <td className="px-4 py-3 align-top">
+                  Foreseeable shock risk; difficult to justify C3 for any domestic socket circuit
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top">
+                  No RCD on a domestic luminaire (lighting) final circuit
+                </td>
+                <td className="px-4 py-3 align-top font-semibold text-orange-400">C2</td>
+                <td className="px-4 py-3 align-top">
+                  Reg 411.3.4 (A4:2026) makes 30 mA RCD mandatory for new work; foreseeable risk on
+                  existing circuits
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top">Missing main protective bonding to a service</td>
+                <td className="px-4 py-3 align-top font-semibold text-orange-400">C2</td>
+                <td className="px-4 py-3 align-top">
+                  Reg 411.3.1.2; metalwork could become live under fault. C1 only if
+                  already at a dangerous potential
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top">
+                  No supplementary bonding in a bathroom
+                </td>
+                <td className="px-4 py-3 align-top font-semibold text-blue-400">C3 / none</td>
+                <td className="px-4 py-3 align-top">
+                  May be omitted where Reg 701.415.2 conditions (ADS, 30 mA RCD, effective main
+                  bonding) are all met
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top">Absence of a surge protection device (SPD)</td>
+                <td className="px-4 py-3 align-top font-semibold text-blue-400">C3</td>
+                <td className="px-4 py-3 align-top">
+                  Required for new work under Reg 443.4; not dangerous if absent in an existing
+                  installation
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top">
+                  Absence of AFDDs in ordinary domestic premises
+                </td>
+                <td className="px-4 py-3 align-top font-semibold text-blue-400">C3</td>
+                <td className="px-4 py-3 align-top">
+                  Reg 421.1.7 only recommends AFDDs outside HRRBs, HMOs, student accommodation and
+                  care homes
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Here are the mistakes inspectors make most often:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
@@ -580,7 +698,7 @@ const sections = [
                   enough detail that a different electrician could find and rectify the issue: what
                   is missing, where it is located, and (ideally) the relevant BS 7671 regulation
                   reference. For example: "Absence of main protective bonding to incoming gas supply
-                  at meter position — Regulation 411.3.1.1" is far more useful than "no bonding."
+                  at meter position — Regulation 411.3.1.2" is far more useful than "no bonding."
                 </p>
               </div>
             </div>
@@ -721,6 +839,11 @@ export default function EICRObservationCodesPage() {
       }
       heroSubtitle="Every defect on an EICR must be classified as C1, C2, C3, or FI. The code you choose determines whether the report is Satisfactory or Unsatisfactory — and whether the landlord faces a £30,000 penalty. This guide explains each code with real examples, common mistakes, and how Elec-Mate's Defect Code AI gets the right answer every time."
       readingTime={14}
+      answerBox={{
+        question: 'What do C1, C2, C3 and FI mean on an EICR?',
+        answer:
+          'C1 means danger is present and a risk of injury exists right now. C2 means potentially dangerous — a risk of injury could arise. C3 means improvement recommended — non-compliant with the current standard but not dangerous. FI means further investigation is needed. Any C1, C2 or FI makes the report Unsatisfactory; C3 alone keeps it Satisfactory.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

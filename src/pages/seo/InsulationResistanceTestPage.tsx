@@ -699,6 +699,7 @@ const relatedPages = [
 export default function InsulationResistanceTestPage() {
   return (
     <GuideTemplate
+      noindex
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-20"

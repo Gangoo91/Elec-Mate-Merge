@@ -27,7 +27,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
   keyTakeaways: [
     'Chapter 443 of BS 7671:2018+A4:2026 governs protection against transient overvoltages — atmospheric (lightning) and switching origin. Section 534 covers how the SPDs that deliver that protection are installed and coordinated.',
     'A4:2026 replaces the older AQ-based assessment with a clearer Calculated Risk Level (CRL) methodology at Regulation 443.5, drawing on the lightning protection risk model in BS EN 62305-2.',
-    'Where the CRL exceeds the tolerable level, or where the consequence of a transient overvoltage event would result in serious injury, loss of human life, loss of public services, loss of cultural heritage, or commercial or industrial activity loss, SPDs are mandatory.',
+    'Regulation 443.4.1 requires transient overvoltage protection where the consequence of the overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk.',
     'Type 1 SPDs (10/350 µs waveform) are needed where a structural Lightning Protection System (LPS) is present or where a direct strike to the supply is a credible risk. Type 2 SPDs (8/20 µs) are the standard origin-of-installation device. Type 3 SPDs sit close to sensitive equipment in addition to upstream protection.',
     'Section 534 imposes strict installation rules — total connecting-conductor length ideally below 0.5 m, never above 1 m, parallel (V-shape) connection at the busbar, and a backup overcurrent device sized to the SPD manufacturer\'s declared short-circuit current rating.',
     'For solar PV, battery energy storage and EV charging, A4:2026 makes clear that the DC side requires its own coordinated SPDs to BS EN 61643-31 / -41, separate from the AC origin device, with the same length and coordination rules applied to the DC cabling.',
@@ -87,9 +87,9 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
           type: 'list',
           ordered: true,
           items: [
-            'Establish whether the consequence of a transient overvoltage event would result in serious injury or loss of human life — a "Cl 1" consequence category. If yes, SPDs are mandatory regardless of CRL.',
-            'Establish whether the consequence would interrupt public services (telecoms, transport, healthcare), result in loss of cultural heritage, or cause significant commercial or industrial activity loss. If yes, SPDs are mandatory regardless of CRL.',
-            'For all other installations, calculate the CRL using the risk components in BS EN 62305-2 — supply type and length, structural exposure, lightning ground flash density (Ng), shielding, isolating interfaces — and compare with the tolerable risk level set in 443.5.',
+            'Apply the Regulation 443.4.1 consequence test first. Protection is required where the consequence of the overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss. Limb (b) was deleted by the A2:2022 Corrigendum (May 2023). If either limb applies, SPDs are mandatory regardless of CRL.',
+            'For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss.',
+            'Where the designer works through the quantitative route, calculate the CRL using the risk components in BS EN 62305-2 — supply type and length, structural exposure, lightning ground flash density (Ng), shielding, isolating interfaces — and compare with the tolerable risk level.',
             'If CRL exceeds the tolerable level, SPDs are mandatory. If CRL is below the tolerable level, SPDs are not mandatory by Chapter 443 — but the designer may still install them as a discretionary measure where the cost-benefit case is clear.',
             'Document the assessment. Whichever route — consequence trigger or CRL calculation — the designer must keep a record of the assessment so that it can be audited at handover and at periodic inspection.',
           ],
@@ -99,7 +99,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
           tone: 'warning',
           title: 'The "consequence" route triggers SPDs even on low-risk sites',
           text:
-            'A small rural building with a short underground supply may calculate a CRL well below the tolerable threshold — but if that building houses a dialysis clinic or a life-safety system, the consequence categories in 443.5 make SPDs mandatory anyway. Read the consequence triggers first; calculate the CRL second.',
+            'A small rural building with a short underground supply may calculate a CRL well below the tolerable threshold — but if the consequence of an overvoltage could result in serious injury or loss of human life, or significant financial or data loss, Regulation 443.4.1 makes SPDs mandatory anyway. Read the consequence test first; calculate the CRL second.',
         },
         {
           type: 'paragraph',
@@ -116,15 +116,15 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Putting Regulation 443.5 into plain English for working electricians: there are three routes that make SPDs mandatory under A4:2026, and a fourth that makes them strongly recommended even where they are technically optional.',
+            'Putting Regulation 443.4.1 into plain English for working electricians: protection is mandatory where the consequence of an overvoltage could result in serious injury or loss of human life, or significant financial or data loss. For all other cases, SPDs must still be fitted unless the owner declares the risk tolerable in writing.',
         },
         {
           type: 'list',
           items: [
-            'Mandatory by consequence — installations where a transient overvoltage event could result in serious injury or loss of life (e.g. medical locations to Chapter 710, fire detection and alarm systems, emergency lighting central battery systems, safety-related industrial control).',
-            'Mandatory by public service — installations supplying telecoms, transport infrastructure, power generation, water and waste, healthcare, where loss of service would have a wider public impact.',
-            'Mandatory by CRL — installations where the calculated CRL under 443.5 exceeds the tolerable risk level. The most common driver here is an overhead supply, a structure on an exposed elevation, or a relatively long supply length without shielding.',
-            'Strongly recommended (but not mandatory) — most modern domestic installations: a typical new-build or full rewire with a long supply, a mix of mains-connected smart electronics, solar PV, battery storage and EV charging will benefit from SPDs even where the CRL number sits below the tolerable threshold.',
+            'Mandatory by consequence — limb (a): installations where the consequence of an overvoltage could result in serious injury to, or loss of, human life (e.g. medical locations to Chapter 710, fire detection and alarm systems, emergency lighting central battery systems, safety-related industrial control).',
+            'Mandatory by consequence — limb (c): installations where the consequence of an overvoltage could result in significant financial or data loss (e.g. data centres, server rooms, commercial premises holding critical records).',
+            'For all other cases — protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. The calculated CRL informs that decision, but a written owner declaration is what permits omission.',
+            'Practical default — most modern domestic installations: a typical new-build or full rewire with a long supply, a mix of mains-connected smart electronics, solar PV, battery storage and EV charging will be fitted with SPDs by default, because the owner-declaration route makes discretionary omission harder to defend.',
           ],
         },
         {
@@ -320,10 +320,10 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
           type: 'list',
           items: [
             'C3 (improvement recommended) — the standard default for a domestic or small-commercial installation that has no SPDs where Chapter 443 would now require them. The consumer unit is older than A4:2026 and the absence is a non-compliance with the current edition, not an immediate danger. C3 communicates to the client that the absence should be remedied at the next opportunity (typically the next CU replacement).',
-            'C2 (potentially dangerous) — defensible where the consequence triggers in Regulation 443.5 apply. If the installation contains life-safety systems, medical equipment, fire detection central units, or other equipment whose failure during a transient event would create a real and present risk to people, C2 is the appropriate code.',
+            'C2 (potentially dangerous) — defensible where the consequence limbs in Regulation 443.4.1 apply. If the installation contains life-safety systems, medical equipment, fire detection central units, or other equipment whose failure during a transient event would create a real and present risk to people (limb (a)), C2 is the appropriate code.',
             'C1 (immediate danger) — rarely the right code for the mere absence of an SPD. C1 is reserved for situations where danger to persons or property is present and immediate. An SPD that has visibly failed in a way that exposes live parts, or that has burned out the consumer unit, may justify C1.',
             'FI (further investigation required) — appropriate where the inspector cannot determine without testing whether an installed SPD is still serviceable. Modern SPDs include a status window (green / red flag); if it is red, replace the device. If the window is missing or unreadable, FI is the honest call.',
-            'Notes on the schedule — whichever code is recorded, the inspector should reference Regulation 443.5 and 534 in the observation, and explicitly note whether the consequence trigger or the CRL trigger drove the coding.',
+            'Notes on the schedule — whichever code is recorded, the inspector should reference Regulation 443.4.1 and Section 534 in the observation, and explicitly note whether the consequence limb (serious injury/loss of life, or significant financial or data loss) or the owner-declaration route drove the coding.',
           ],
         },
         {
@@ -331,7 +331,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
           tone: 'info',
           title: 'The C2 vs C3 debate, settled by consequence',
           text:
-            'The recurring industry debate over whether missing SPDs are C2 or C3 is resolved cleanly by reading 443.5\'s consequence triggers. If the consequence categories apply (life safety, public service, cultural heritage, commercial loss) the absence is more than an improvement opportunity — it is potentially dangerous. If they do not apply, C3 remains the proportionate code.',
+            'The recurring industry debate over whether missing SPDs are C2 or C3 is resolved cleanly by reading the Regulation 443.4.1 consequence limbs. If the consequence of an overvoltage could result in serious injury or loss of human life, or significant financial or data loss, the absence is more than an improvement opportunity — it is potentially dangerous. If neither limb applies, C3 remains the proportionate code.',
         },
         {
           type: 'paragraph',
@@ -355,7 +355,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
           ordered: true,
           items: [
             'Regulation 443.5 has been rewritten around the Calculated Risk Level (CRL) methodology, replacing the older AQ-classification-led assessment for the general case.',
-            'The consequence categories in 443.5 have been clarified to make explicit that life safety, public service, cultural heritage and commercial / industrial activity loss each independently trigger mandatory SPDs.',
+            'The Regulation 443.4.1 consequence test makes mandatory protection turn on two limbs — (a) serious injury to, or loss of, human life, and (c) significant financial or data loss (limb (b) was deleted by the A2:2022 Corrigendum) — with a written owner declaration the only route to omission in all other cases.',
             'Cross-references between Chapter 443 and BS EN 62305-2 (lightning protection risk management) have been tightened so that designers working alongside a structural LPS designer can lift risk parameters directly.',
             'Chapter 712 (Solar PV) and Chapter 826 (Prosumer LV installations) cross-reference Chapter 443 more explicitly, anchoring the requirement for coordinated AC and DC SPDs on prosumer installations.',
             'Section 534 retains the existing connecting-conductor length rules but the supporting notes emphasise that exceeding 1 m total length voids the protection in practice.',
@@ -468,7 +468,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
     {
       name: 'Run the consequence check first',
       text:
-        'Before reaching for the CRL calculator, ask whether the installation falls into any of the 443.5 consequence categories: life safety, public service, cultural heritage, commercial / industrial activity loss. If yes, SPDs are mandatory and no further assessment is needed.',
+        'Before reaching for the CRL calculator, apply the Regulation 443.4.1 consequence test: could the overvoltage result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss? If either limb applies, SPDs are mandatory and no further assessment is needed.',
     },
     {
       name: 'Calculate the CRL for the general case',
@@ -500,7 +500,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
     {
       question: 'When is an SPD mandatory under BS 7671:2018+A4:2026?',
       answer:
-        'Regulation 443.5 makes SPDs mandatory in three situations: (a) where the consequence of a transient overvoltage event would result in serious injury or loss of human life, loss of public service, loss of cultural heritage, or significant commercial or industrial activity loss; (b) where the Calculated Risk Level (CRL) for the installation exceeds the tolerable level set in 443.5; or (c) where another specific chapter of BS 7671 — for example Chapter 710 (medical locations) or Chapter 712 (solar PV) — independently calls for surge protection. Outside these triggers, SPDs are recommended rather than mandatory, but most A4:2026 consumer unit replacements will now fit SPDs as a default position because the documentation trail and insurer expectation make discretionary omission harder to defend.',
+        'Regulation 443.4.1 makes SPDs mandatory where the consequence of a transient overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection against transient overvoltages shall still be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. A specific chapter of BS 7671 — for example Chapter 710 (medical locations) or Chapter 712 (solar PV) — may also independently call for surge protection. In practice most A4:2026 consumer unit replacements will fit SPDs as a default position because the documentation trail and insurer expectation make a discretionary owner declaration harder to defend.',
     },
     {
       question: 'How much do SPDs in a consumer unit add to the cost of a CU change?',
@@ -515,7 +515,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
     {
       question: 'What code do I give an EICR for a missing SPD — C2 or C3?',
       answer:
-        'The default code for a missing SPD where Chapter 443 would now require one is C3 (improvement recommended). This communicates to the client that the absence is a non-compliance with the current edition of BS 7671 and should be remedied at the next opportunity. C2 (potentially dangerous) becomes defensible where the installation contains equipment that maps onto the consequence triggers in Regulation 443.5 — life-safety systems, medical equipment, fire detection central units, or other equipment whose failure during a transient event would create a real and present risk. C1 is rarely the right code for the mere absence of an SPD; it is reserved for visible immediate danger such as a failed device that has burned out the consumer unit. Whichever code is used, the EICR observation should reference 443.5 and 534 explicitly and state which trigger drove the coding.',
+        'The default code for a missing SPD where Chapter 443 would now require one is C3 (improvement recommended). This communicates to the client that the absence is a non-compliance with the current edition of BS 7671 and should be remedied at the next opportunity. C2 (potentially dangerous) becomes defensible where the installation contains equipment that maps onto the consequence limbs in Regulation 443.4.1 — life-safety systems, medical equipment, fire detection central units, or other equipment whose failure during a transient event would create a real and present risk to people (limb (a)), or significant financial or data loss (limb (c)). C1 is rarely the right code for the mere absence of an SPD; it is reserved for visible immediate danger such as a failed device that has burned out the consumer unit. Whichever code is used, the EICR observation should reference 443.4.1 and Section 534 explicitly and state which consequence limb drove the coding.',
     },
     {
       question: 'How do I coordinate an SPD with downstream RCBOs without nuisance tripping?',
@@ -535,7 +535,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
     {
       question: 'How does the CRL methodology in A4:2026 differ from the older AQ assessment?',
       answer:
-        'The older Regulation 443 assessment in earlier editions relied heavily on an environmental classification of the structure\'s lightning exposure (AQ), and produced a relatively binary "fit / do not fit" outcome that two designers could reach inconsistently. A4:2026 rewrites 443.5 around a Calculated Risk Level (CRL), drawing explicitly on the risk-management framework in BS EN 62305-2. The designer establishes the relevant risk components — supply type and length, lightning ground flash density, structural exposure, shielding, isolating interfaces, and the consequence to people and property — calculates a CRL value, and compares it against a tolerable risk level fixed by the standard. The methodology is more quantitative, more reproducible between designers, and aligns BS 7671 more closely with how structural LPS designers already work under BS EN 62305. The consequence triggers in 443.5 (life safety, public service, cultural heritage, commercial activity loss) remain available as a separate route that makes SPDs mandatory regardless of CRL.',
+        'The older Regulation 443 assessment in earlier editions relied heavily on an environmental classification of the structure\'s lightning exposure (AQ), and produced a relatively binary "fit / do not fit" outcome that two designers could reach inconsistently. A4:2026 rewrites 443.5 around a Calculated Risk Level (CRL), drawing explicitly on the risk-management framework in BS EN 62305-2. The designer establishes the relevant risk components — supply type and length, lightning ground flash density, structural exposure, shielding, isolating interfaces, and the consequence to people and property — calculates a CRL value, and compares it against a tolerable risk level fixed by the standard. The methodology is more quantitative, more reproducible between designers, and aligns BS 7671 more closely with how structural LPS designers already work under BS EN 62305. The consequence test in Regulation 443.4.1 (serious injury to, or loss of, human life; or significant financial or data loss) remains a separate route that makes SPDs mandatory regardless of CRL.',
     },
   ],
   relatedPages: [

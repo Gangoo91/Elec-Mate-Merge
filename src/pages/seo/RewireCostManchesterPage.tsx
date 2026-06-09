@@ -127,36 +127,87 @@ const sections = [
           end found in city centre apartment work and affluent suburbs like Didsbury, Altrincham,
           and Hale.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
-          <h3 className="font-bold text-white text-lg mb-4">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-6 overflow-hidden">
+          <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
+            <Home className="w-5 h-5 text-yellow-400 shrink-0" />
             Manchester Rewire Costs by Property Type (2026)
           </h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>1-bed flat:</strong> £2,500–£4,000 (3–5 days)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>2-bed terraced house:</strong> £3,500–£5,500 (5–7 days)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>3-bed semi-detached:</strong> £5,000–£7,500 (6–9 days)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>4-bed detached:</strong> £7,500–£10,000+ (8–12 days)
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto -mx-4 sm:mx-0">
+            <table className="w-full min-w-[460px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 px-3 font-medium">Property type</th>
+                  <th className="py-2 px-3 font-medium">Indicative cost</th>
+                  <th className="py-2 px-3 font-medium">Typical duration</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/5">
+                  <td className="py-2.5 px-3 font-semibold">1-bed flat</td>
+                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£2,500–£4,000</td>
+                  <td className="py-2.5 px-3 text-white/80">3–5 days</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2.5 px-3 font-semibold">2-bed terraced house</td>
+                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£3,500–£5,500</td>
+                  <td className="py-2.5 px-3 text-white/80">5–7 days</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2.5 px-3 font-semibold">3-bed semi-detached</td>
+                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£5,000–£7,500</td>
+                  <td className="py-2.5 px-3 text-white/80">6–9 days</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 px-3 font-semibold">4-bed detached</td>
+                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£7,500–£10,000+</td>
+                  <td className="py-2.5 px-3 text-white/80">8–12 days</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/50 text-xs mt-4">
+            Indicative market guidance for 2026, not a quote. Actual prices depend on circuit count,
+            access, making good and supply upgrades.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-6 overflow-hidden">
+          <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-yellow-400 shrink-0" />
+            Manchester vs UK Average vs London (3-bed semi)
+          </h3>
+          <div className="overflow-x-auto -mx-4 sm:mx-0">
+            <table className="w-full min-w-[460px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 px-3 font-medium">Region</th>
+                  <th className="py-2 px-3 font-medium">3-bed rewire</th>
+                  <th className="py-2 px-3 font-medium">Day rate</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="bg-blue-900/30 border-b border-blue-700/40">
+                  <td className="py-2.5 px-3 font-semibold">Manchester</td>
+                  <td className="py-2.5 px-3 font-semibold">£5,000–£7,500</td>
+                  <td className="py-2.5 px-3 text-white/80">£250–£370</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2.5 px-3 font-semibold">UK average</td>
+                  <td className="py-2.5 px-3 text-white/80">£5,000–£8,000</td>
+                  <td className="py-2.5 px-3 text-white/80">£250–£400</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 px-3 font-semibold">London</td>
+                  <td className="py-2.5 px-3 text-white/80">£7,000–£10,000</td>
+                  <td className="py-2.5 px-3 text-white/80">£350–£500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/50 text-xs mt-4">
+            Manchester typically runs 20–30% below London on the same job. See the{' '}
+            <SEOInternalLink href="/guides/rewire-cost-uk">national rewire cost guide</SEOInternalLink>{' '}
+            for the full UK picture.
+          </p>
         </div>
         <p>
           These prices include materials, labour, a new{' '}
@@ -330,21 +381,55 @@ const sections = [
           for Greater Manchester areas).
         </p>
         <p>
-          Under BS 7671:2018+A4:2026, Reg 411.3.3 requires RCD protection for all socket outlets
-          rated ≤&nbsp;32&nbsp;A in dwellings — no risk-assessment exemption is permitted for
-          domestic premises. High-sensitivity 30&nbsp;mA RCDs satisfy the additional protection
-          requirement of Reg&nbsp;415.1. A4:2026 also introduces Reg&nbsp;411.3.4, which mandates
-          RCD additional protection (≤&nbsp;30&nbsp;mA) for AC final circuits supplying luminaires
-          in domestic premises — meaning lighting circuits in a new rewire must be individually
-          RCD-protected, not just socket circuits. Additionally, Reg&nbsp;421.1.7 recommends arc
-          fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault
-          currents. Both requirements affect consumer unit specification and cost: an RCBO board
-          with per-circuit protection is the standard solution, and AFDDs add a further cost per
-          circuit where fitted. The electrician must issue an{' '}
+          A new rewire must comply with the current edition of the Wiring Regulations,
+          BS&nbsp;7671:2018+A4:2026. The amendment tightened the protection rules that drive consumer
+          unit specification and cost — here is what a compliant Manchester rewire now has to deliver:
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 my-6">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 411.3.3</div>
+            <h4 className="font-bold text-white mb-2">RCD on socket-outlets ≤ 32&nbsp;A</h4>
+            <p className="text-white/80 text-sm leading-relaxed">
+              Socket-outlets with a rated current not exceeding 32&nbsp;A require RCD additional
+              protection. The risk-assessment exception is not permitted in a dwelling, so every
+              domestic socket circuit must be RCD-protected.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 411.3.4</div>
+            <h4 className="font-bold text-white mb-2">RCD on lighting circuits</h4>
+            <p className="text-white/80 text-sm leading-relaxed">
+              New in A4:2026 — within domestic premises, AC final circuits supplying luminaires must
+              have additional protection by a 30&nbsp;mA RCD. Lighting circuits now need RCD
+              protection too, not just socket circuits.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 415.1</div>
+            <h4 className="font-bold text-white mb-2">30&nbsp;mA additional protection</h4>
+            <p className="text-white/80 text-sm leading-relaxed">
+              Additional protection is provided by an RCD with a rated residual operating current not
+              exceeding 30&nbsp;mA. An RCBO board giving per-circuit protection is the standard way to
+              meet this across a whole rewire.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 421.1.7</div>
+            <h4 className="font-bold text-white mb-2">AFDDs recommended</h4>
+            <p className="text-white/80 text-sm leading-relaxed">
+              A4:2026 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate
+              fire risk from arc fault currents. The wording is recommendatory, but AFDDs add a
+              further cost per circuit where fitted.
+            </p>
+          </div>
+        </div>
+        <p>
+          Both RCD requirements mean an RCBO consumer unit with per-circuit protection is the standard
+          solution for a Manchester rewire. The electrician must issue an{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
-          on completion, documenting the design, construction, inspection, and testing of the
+          on completion, documenting the design, construction, inspection and testing of the
           installation.
         </p>
         <p>
@@ -400,10 +485,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing, EIC, and Part P</strong> — initial verification testing of every
-                circuit, the Electrical Installation Certificate (based on the updated
-                Appendix&nbsp;6 model forms in BS&nbsp;7671:2018+A4:2026, which include columns for
-                SPD type, AFDD presence, and reference installation method per circuit), and Part P
-                notification to the local authority.
+                circuit, the Electrical Installation Certificate with its Schedule of Circuit Details
+                and Schedule of Test Results (the Appendix&nbsp;6 model forms in
+                BS&nbsp;7671:2018+A4:2026), and Part P notification to the local authority.
               </span>
             </li>
           </ul>
@@ -452,8 +536,9 @@ const sections = [
           Most Manchester terraced and semi-detached properties are connected via a PME (Protective
           Multiple Earthing) supply — also known as TN-C-S — where the protective earth is derived
           from the neutral conductor at the distribution network. Under BS&nbsp;7671:2018+A4:2026
-          Reg&nbsp;312.2.1, the electrician must identify the earthing arrangement at the outset of
-          the rewire. This is particularly relevant if you plan to add an EV charger as part of the
+          Reg&nbsp;313.1, the characteristics of the supply — including the earthing arrangement —
+          must be determined by enquiry, measurement, inspection or calculation at the outset of the
+          rewire. This is particularly relevant if you plan to add an EV charger as part of the
           works: Section&nbsp;722 of BS&nbsp;7671 (significantly revised in A4:2026) sets out
           specific requirements for EV charging installations on PME supplies. Identifying the
           earthing arrangement early — before the consumer unit is specified — avoids costly
@@ -533,6 +618,13 @@ export default function RewireCostManchesterPage() {
       }
       heroSubtitle="Manchester rewire costs are broadly in line with the national average — significantly lower than London. This guide covers realistic pricing for Manchester's Victorian terraces, Edwardian semis, city centre apartments, and suburban estates."
       readingTime={10}
+      answerBox={{
+        question: 'How much does it cost to rewire a house in Manchester in 2026?',
+        answer:
+          'A full house rewire in Manchester typically costs £2,500–£4,000 for a 1-bed flat, £3,500–£5,500 for a 2-bed terrace, £5,000–£7,500 for a 3-bed semi and £7,500–£10,000+ for a 4-bed detached. Prices are broadly in line with the UK average and around 20–30% lower than London, with Greater Manchester day rates of £250–£370. Figures are indicative market guidance, not a quote.',
+        detail:
+          'Quotes should include a new consumer unit, all circuit cables, accessories, earthing and bonding, testing and the Electrical Installation Certificate. Making good, skip hire and any Electricity North West supply upgrade are usually quoted separately.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

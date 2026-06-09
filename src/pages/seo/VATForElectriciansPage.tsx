@@ -25,9 +25,10 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'registration-threshold', label: 'VAT Registration Threshold (£85,000)' },
+  { id: 'registration-threshold', label: 'VAT Registration Threshold (£90,000)' },
   { id: 'voluntary-registration', label: 'Voluntary VAT Registration' },
-  { id: 'flat-rate-scheme', label: 'Flat Rate Scheme (9.5%)' },
+  { id: 'scheme-comparison', label: 'VAT Schemes at a Glance' },
+  { id: 'flat-rate-scheme', label: 'Flat Rate Scheme (9.5% / 14.5%)' },
   { id: 'cash-accounting', label: 'Cash Accounting Scheme' },
   { id: 'materials-vs-labour', label: 'VAT on Materials vs Labour' },
   { id: 'domestic-reverse-charge', label: 'Domestic Reverse Charge (VAT RCM)' },
@@ -38,8 +39,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'You must register for VAT when your taxable turnover exceeds £85,000 in any rolling 12-month period. You have 30 days to notify HMRC once you know you will exceed the threshold.',
-  'The VAT Flat Rate Scheme allows electricians to pay a fixed percentage of their gross (VAT-inclusive) turnover to HMRC, currently 9.5% for electrical installation. This simplifies VAT accounting and can save money for businesses with low input VAT.',
+  'You must register for VAT when your taxable turnover exceeds £90,000 in any rolling 12-month period (the threshold rose from £85,000 to £90,000 on 1 April 2024). You have 30 days to notify HMRC once you know you will exceed the threshold.',
+  'The VAT Flat Rate Scheme lets electricians pay a fixed percentage of their gross (VAT-inclusive) turnover to HMRC. Most electricians who supply materials fall under "General building or construction services" at 9.5%; labour-only electricians (materials under 10% of turnover) use 14.5%. The scheme simplifies VAT accounting and can save money for businesses with low input VAT.',
   'The Domestic Reverse Charge (DRC) applies to electrical installation services supplied between VAT-registered CIS businesses. Under DRC, the customer (contractor) accounts for the VAT rather than the supplier (subcontractor). This fundamentally changes how you invoice CIS clients.',
   'VAT on materials purchased for resale to customers can be reclaimed in full as input tax. VAT on tools, equipment, and business overheads can also be reclaimed, subject to normal input tax rules.',
   'Making Tax Digital for VAT requires all VAT-registered businesses to keep digital records and submit returns using MTD-compatible software. Paper VAT returns are no longer accepted.',
@@ -49,17 +50,17 @@ const faqs = [
   {
     question: 'When do I have to register for VAT as an electrician?',
     answer:
-      'You must register for VAT when your taxable turnover in any rolling 12-month period exceeds £85,000. "Taxable turnover" includes all sales of goods and services subject to VAT — for electricians, this is essentially all income from electrical work and materials (both standard-rated at 20% and zero-rated supplies such as new build residential work). Once you know your taxable turnover will exceed £85,000, you have 30 days to notify HMRC. You must then charge VAT on all applicable supplies from your registration date. Failure to register on time results in penalties and you become liable for the VAT you should have charged, whether or not you collected it from customers.',
+      'You must register for VAT when your taxable turnover in any rolling 12-month period exceeds £90,000 (this threshold rose from £85,000 on 1 April 2024). "Taxable turnover" includes all sales of goods and services subject to VAT — for electricians, this is essentially all income from electrical work and materials (both standard-rated at 20% and zero-rated supplies such as new build residential work). Once you know your taxable turnover will exceed £90,000, you have 30 days to notify HMRC. You must then charge VAT on all applicable supplies from your registration date. Failure to register on time results in penalties and you become liable for the VAT you should have charged, whether or not you collected it from customers.',
   },
   {
-    question: 'Should I register for VAT voluntarily before I hit £85,000?',
+    question: 'Should I register for VAT voluntarily before I hit £90,000?',
     answer:
-      'Voluntary VAT registration can be beneficial if your customers are mostly VAT-registered businesses (such as main contractors), as they can reclaim the VAT you charge. This means VAT is neutral for your commercial customers, and you can reclaim all input VAT on your purchases — tools, materials, van, accountant fees. Voluntary registration is generally not beneficial if your customers are mainly domestic householders, as they cannot reclaim VAT and your prices effectively increase by 20%. Speak to an accountant before deciding.',
+      'Voluntary VAT registration can be beneficial if your customers are mostly VAT-registered businesses (such as main contractors), as they can reclaim the VAT you charge. This means VAT is neutral for your commercial customers, and you can reclaim all input VAT on your purchases — tools, materials, van, accountant fees. You can register voluntarily at any turnover below the £90,000 threshold. Voluntary registration is generally not beneficial if your customers are mainly domestic householders, as they cannot reclaim VAT and your prices effectively increase by 20%. Speak to an accountant before deciding.',
   },
   {
     question: 'What is the VAT Flat Rate Scheme for electricians?',
     answer:
-      'The Flat Rate Scheme (FRS) allows eligible businesses with taxable turnover under £150,000 to pay a fixed percentage of their gross VAT-inclusive turnover to HMRC, rather than calculating input and output VAT on every transaction. The flat rate for "electrical installation" is 9.5%. This means you charge your customer 20% VAT, but only pay 9.5% of the gross (VAT-inclusive) amount to HMRC, keeping the difference. On a £1,000 net invoice, you charge £1,200 gross, pay £114 to HMRC (9.5% of £1,200), and keep £86 more than under standard VAT accounting. The scheme simplifies administration but you cannot reclaim input VAT on purchases individually — except for certain capital assets over £2,000.',
+      'The Flat Rate Scheme (FRS) allows eligible businesses with taxable turnover under £150,000 (excluding VAT) to pay a fixed percentage of their gross VAT-inclusive turnover to HMRC, rather than calculating input and output VAT on every transaction. There is no single "electrical" sector — HMRC classifies electricians by how much material they supply. Electricians who supply materials worth 10% or more of turnover use "General building or construction services" at 9.5%; labour-only electricians (materials under 10% of turnover) use "Labour-only building or construction services" at 14.5%. At 9.5% you charge your customer 20% VAT but only pay 9.5% of the gross (VAT-inclusive) amount to HMRC, keeping the difference. On a £1,000 net invoice, you charge £1,200 gross, pay £114 to HMRC (9.5% of £1,200), and keep £86 more than under standard accounting. The scheme simplifies administration but you cannot reclaim input VAT on purchases individually — except for certain capital assets over £2,000.',
   },
   {
     question: 'What is the Domestic Reverse Charge and does it affect me?',
@@ -129,15 +130,57 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'registration-threshold',
-    heading: 'VAT Registration Threshold: The £85,000 Rule',
+    heading: 'VAT Registration Threshold: The £90,000 Rule',
     content: (
       <>
         <p>
-          VAT registration is mandatory once your taxable turnover exceeds £85,000 in any rolling
-          12-month period. This is not a calendar year limit — HMRC looks at any 12-month window
-          ending on any given day. Once you realise your turnover will exceed £85,000, you have 30
+          VAT registration is mandatory once your taxable turnover exceeds £90,000 in any rolling
+          12-month period. The threshold rose from £85,000 to £90,000 on 1 April 2024 and has stayed
+          at £90,000 since. This is not a calendar year limit — HMRC looks at any 12-month window
+          ending on any given day. Once you realise your turnover will exceed £90,000, you have 30
           days to register.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">VAT threshold (current)</th>
+                <th className="px-4 py-3 font-semibold">Amount</th>
+                <th className="px-4 py-3 font-semibold hidden sm:table-cell">What it means</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Compulsory registration</td>
+                <td className="px-4 py-3 text-yellow-400 font-bold whitespace-nowrap">£90,000</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Rolling 12-month taxable turnover — register within 30 days of going over
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Deregistration</td>
+                <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">£88,000</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  You can apply to cancel registration if turnover falls below this
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Flat Rate Scheme — join limit</td>
+                <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">£150,000</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Excluding VAT, in the next 12 months
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Cash Accounting Scheme — join limit</td>
+                <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">£1.35m</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Estimated taxable turnover in the next 12 months
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -156,7 +199,8 @@ const sections = [
                 <strong>Monitor monthly</strong> — check your rolling 12-month turnover at the end
                 of each month. Many electricians approach the threshold gradually and miss the point
                 at which they were required to register, leading to retrospective VAT liability and
-                penalties.
+                penalties. There is also a forward-look test: if you expect to go over £90,000 in the
+                next 30 days alone, you must register immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -186,7 +230,7 @@ const sections = [
     content: (
       <>
         <p>
-          You can register for VAT voluntarily at any time, even if your turnover is below £85,000.
+          You can register for VAT voluntarily at any time, even if your turnover is below £90,000.
           Whether this is beneficial depends on who your customers are.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -224,25 +268,122 @@ const sections = [
     ),
   },
   {
+    id: 'scheme-comparison',
+    heading: 'VAT Schemes at a Glance',
+    content: (
+      <>
+        <p>
+          Once you are VAT-registered, you account for VAT on the standard (accruals) basis by
+          default — but several optional schemes can simplify admin or improve cash flow. The right
+          choice depends on who your customers are and how much you spend on materials. Here is how
+          the main schemes compare for a typical electrician.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Scheme</th>
+                <th className="px-4 py-3 font-semibold">Turnover limit</th>
+                <th className="px-4 py-3 font-semibold hidden sm:table-cell">Best for</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Standard (accruals)</td>
+                <td className="px-4 py-3 text-white/80 whitespace-nowrap">No limit</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Material-heavy work; reclaiming all input VAT on every purchase
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Flat Rate Scheme</td>
+                <td className="px-4 py-3 text-white/80 whitespace-nowrap">Under £150,000</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Lower-cost / labour-led work; simpler admin, pay a fixed % of gross turnover
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Cash Accounting</td>
+                <td className="px-4 py-3 text-white/80 whitespace-nowrap">Up to £1.35m</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Slow-paying commercial clients; pay VAT only when you are paid
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Annual Accounting</td>
+                <td className="px-4 py-3 text-white/80 whitespace-nowrap">Up to £1.35m</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Steady turnover; one return a year with interim instalments
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-white/80 text-sm">
+          Schemes can sometimes be combined (for example Cash Accounting with Annual Accounting), but
+          the Flat Rate Scheme cannot be used together with the Domestic Reverse Charge. See the{' '}
+          <SEOInternalLink href="/cis-guide-electrician">CIS guide</SEOInternalLink> for how the
+          reverse charge interacts with subcontractor work.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'flat-rate-scheme',
-    heading: 'The VAT Flat Rate Scheme for Electrical Installation (9.5%)',
+    heading: 'The VAT Flat Rate Scheme for Electricians (9.5% / 14.5%)',
     content: (
       <>
         <p>
           The Flat Rate Scheme (FRS) is available to VAT-registered businesses with taxable turnover
-          under £150,000. It simplifies VAT by replacing standard VAT accounting with a single
-          percentage applied to gross turnover. The flat rate for electrical installation work is
-          9.5%.
+          under £150,000 (excluding VAT). It simplifies VAT by replacing standard VAT accounting with
+          a single percentage applied to gross turnover. There is no dedicated "electrical" trade
+          sector — HMRC classifies electricians by how much material they supply, so your flat rate
+          is either 9.5% or 14.5%.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">HMRC trade sector</th>
+                <th className="px-4 py-3 font-semibold">Flat rate</th>
+                <th className="px-4 py-3 font-semibold hidden sm:table-cell">Applies when</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">General building or construction services</td>
+                <td className="px-4 py-3 text-yellow-400 font-bold whitespace-nowrap">9.5%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Materials you supply are 10% or more of your turnover (most electricians)
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Labour-only building or construction services</td>
+                <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">14.5%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Materials you supply are less than 10% of your turnover
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Limited cost trader</td>
+                <td className="px-4 py-3 text-red-400 font-bold whitespace-nowrap">16.5%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Spend on goods is under 2% of turnover (or under £1,000 a year) — overrides the above
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong> — you still charge your customer 20% VAT on your
-                invoice. But instead of calculating output VAT minus input VAT, you simply pay 9.5%
-                of your gross (VAT-inclusive) turnover to HMRC. The difference between the 20% you
-                charge and the 9.5% you pay is your flat rate profit.
+                invoice. But instead of calculating output VAT minus input VAT, you simply pay your
+                flat rate (9.5% for most electricians) of your gross (VAT-inclusive) turnover to
+                HMRC. The difference between the 20% you charge and the flat rate you pay is your
+                flat rate profit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -257,17 +398,18 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>First year discount</strong> — in your first year of VAT registration, HMRC
-                offers a 1% discount on the flat rate. Electricians in their first year pay 8.5%
-                instead of 9.5%.
+                applies a 1% discount to your flat rate. An electrician on the 9.5% rate pays 8.5% in
+                year one; one on 14.5% pays 13.5%.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limited cost trader rules</strong> — if your spend on goods (not services)
-                is less than 2% of your gross turnover, you are classified as a "limited cost
-                trader" and must use a flat rate of 16.5% instead of 9.5%. This significantly
-                reduces the FRS benefit and means most material-heavy electrical jobs still benefit,
+                <strong>Limited cost trader rules</strong> — if your spend on relevant goods (not
+                services) is less than 2% of your gross turnover, or less than £1,000 a year, you
+                are a "limited cost trader" and must use 16.5% regardless of trade sector. This
+                almost wipes out the FRS benefit, so it mainly catches labour-only electricians who
+                buy very little material. Material-heavy installers usually stay well clear of it —
                 but check with an accountant.
               </span>
             </li>
@@ -328,7 +470,54 @@ const sections = [
       <>
         <p>
           Understanding how VAT applies differently to materials and labour is important for correct
-          invoicing and for maximising your input VAT reclaims.
+          invoicing and for maximising your input VAT reclaims. The VAT rate is driven by the type
+          of work, not by whether the line is labour or materials.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Type of work</th>
+                <th className="px-4 py-3 font-semibold">VAT rate</th>
+                <th className="px-4 py-3 font-semibold hidden sm:table-cell">Typical electrical example</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Most repair, rewire and maintenance work</td>
+                <td className="px-4 py-3 text-yellow-400 font-bold whitespace-nowrap">20%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Consumer unit change, fault finding, EICR remedials, commercial fit-out
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">New build residential construction</td>
+                <td className="px-4 py-3 text-green-400 font-bold whitespace-nowrap">0%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  First and second fix on a new dwelling for the developer
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Qualifying conversions / renovations</td>
+                <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">5%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Non-residential to residential conversion; some empty-home renovations
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Qualifying energy-saving materials</td>
+                <td className="px-4 py-3 text-green-400 font-bold whitespace-nowrap">0%</td>
+                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                  Certain installs in residential property (currently 0% in GB to 31 Mar 2027)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-white/80 text-sm">
+          Zero-rating and the reduced rate only apply in specific, evidenced circumstances. Get the
+          conditions wrong and HMRC can recover the under-charged VAT from you, so confirm
+          eligibility before quoting any job at less than 20%.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -414,11 +603,39 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" /> Reverse charge applies
+            </h4>
+            <ul className="space-y-2 text-sm text-white/90 list-disc pl-5">
+              <li>Both you and your customer are VAT-registered</li>
+              <li>The work falls within CIS</li>
+              <li>Your customer is not an end user or intermediary</li>
+              <li>The supply is standard or reduced rated (not zero-rated)</li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-green-400 shrink-0" /> Charge VAT as normal
+            </h4>
+            <ul className="space-y-2 text-sm text-white/90 list-disc pl-5">
+              <li>Customer is an end user (uses the building themselves)</li>
+              <li>Customer is not VAT-registered or not in CIS</li>
+              <li>You are working direct for a domestic householder</li>
+              <li>Supplier and customer are in the same VAT group</li>
+            </ul>
+          </div>
+        </div>
         <p>
           The DRC rules are complex and the consequences of getting them wrong — either charging VAT
           when DRC applies, or failing to apply DRC when it should be used — can result in
-          penalties. Many electricians consult an accountant specifically about DRC when they first
-          encounter it.
+          penalties. See our{' '}
+          <SEOInternalLink href="/cis-guide-electrician">
+            CIS guide for electricians
+          </SEOInternalLink>{' '}
+          for how CIS deductions and the reverse charge fit together. Many electricians consult an
+          accountant specifically about DRC when they first encounter it.
         </p>
       </>
     ),
@@ -528,9 +745,9 @@ export default function VATForElectriciansPage() {
   return (
     <GuideTemplate
       title="VAT for Electricians UK | When to Register & VAT Schemes"
-      description="Complete VAT guide for UK electricians — the £85,000 registration threshold, voluntary registration, flat rate scheme (9.5%), cash accounting, domestic reverse charge and MTD obligations."
+      description="Complete VAT guide for UK electricians — the £90,000 registration threshold, voluntary registration, flat rate scheme (9.5% / 14.5%), cash accounting, domestic reverse charge and MTD obligations."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-09"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"
@@ -541,11 +758,11 @@ export default function VATForElectriciansPage() {
           <span className="text-yellow-400">Registration, Schemes & Reverse Charge</span>
         </>
       }
-      heroSubtitle="Everything UK electricians need to know about VAT — when mandatory registration kicks in at £85,000, the benefits of voluntary registration, the 9.5% flat rate scheme, the cash accounting scheme, VAT on materials vs labour, and the domestic reverse charge for CIS subcontractors."
+      heroSubtitle="Everything UK electricians need to know about VAT — when mandatory registration kicks in at £90,000, the benefits of voluntary registration, the 9.5% / 14.5% flat rate scheme, the cash accounting scheme, VAT on materials vs labour, and the domestic reverse charge for CIS subcontractors."
       answerBox={{
         question: 'When do electricians have to register for VAT in the UK?',
         answer:
-          'UK electricians must register for VAT when taxable turnover exceeds £85,000 in any rolling 12-month period, with 30 days to notify HMRC. Once registered, the Flat Rate Scheme at 9.5% can simplify accounting and improve margins for most electrical installation businesses.',
+          'UK electricians must register for VAT when taxable turnover exceeds £90,000 in any rolling 12-month period (the threshold rose from £85,000 on 1 April 2024), with 30 days to notify HMRC. Once registered, the Flat Rate Scheme — 9.5% for most electricians who supply materials, 14.5% if labour-only — can simplify accounting and improve margins.',
         detail:
           'CIS subcontractors supplying VAT-registered contractors must also apply the Domestic Reverse Charge — the contractor accounts for the VAT rather than the electrician.',
       }}

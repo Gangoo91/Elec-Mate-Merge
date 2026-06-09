@@ -533,7 +533,7 @@ const sections = [
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-300 font-bold shrink-0">(b)</span>
-              <span>failure of a safety service, as defined in Part 2; or</span>
+              <span>deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023);</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-300 font-bold shrink-0">(c)</span>
@@ -541,10 +541,11 @@ const sections = [
             </li>
           </ul>
           <p className="text-white/70 text-xs mt-3 leading-relaxed">
-            For all other cases, protection must be provided unless the owner of the installation
-            declares it is not required because any loss or damage is tolerable and they accept the
-            risk. The previous standalone risk-assessment method (former Regulation 443.5 and Annex
-            A443) was deleted by A4:2026.
+            For all other cases, protection against transient overvoltages shall be provided unless
+            the owner of the installation declares it is not required due to any loss or damage
+            being tolerable and they accept the risk of damage to equipment and any consequential
+            loss. Limb (b) of Regulation 443.4.1 was deleted by the BS 7671:2018+A2:2022 Corrigendum
+            (May 2023).
           </p>
         </div>
         <p>

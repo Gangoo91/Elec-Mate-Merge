@@ -28,6 +28,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'causes-at-a-glance', label: 'Common Causes at a Glance' },
   { id: 'initial-checks', label: 'Initial Checks Before Calling an Electrician' },
   { id: 'tripped-mcb-rcd', label: 'Tripped MCB or RCD' },
   { id: 'broken-ring-circuit', label: 'Broken Ring Circuit' },
@@ -135,6 +136,97 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'causes-at-a-glance',
+    heading: 'Common Causes of Dead Sockets at a Glance',
+    content: (
+      <>
+        <p>
+          Dead sockets almost always trace back to one of five causes. Use this table to match your
+          symptoms to the most likely fault, see whether it is a safe homeowner check or a job for a
+          qualified electrician, and jump to the detailed section below.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-1 divide-y divide-white/10">
+            <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 bg-white/[0.04] text-xs font-semibold uppercase tracking-wide text-white/60">
+              <div className="col-span-3">Cause</div>
+              <div className="col-span-5">Typical symptom</div>
+              <div className="col-span-2">Who fixes it</div>
+              <div className="col-span-2">More detail</div>
+            </div>
+            {[
+              {
+                cause: 'Tripped MCB / RCD / RCBO',
+                symptom:
+                  'All sockets dead, or a whole half of the board off. A switch sits in the down or middle position at the consumer unit.',
+                who: 'Homeowner can reset; electrician if it re-trips',
+                href: '#tripped-mcb-rcd',
+                label: 'Tripped device',
+              },
+              {
+                cause: 'Broken ring final circuit',
+                symptom:
+                  'Some sockets on one circuit are dead while others on the same circuit still work. Often follows recent floorboard or drilling work.',
+                who: 'Qualified electrician',
+                href: '#broken-ring-circuit',
+                label: 'Broken ring',
+              },
+              {
+                cause: 'Loose connection',
+                symptom:
+                  'Intermittent power, sparking on plug-in, a warm faceplate, discolouration or a burning smell at the socket.',
+                who: 'Qualified electrician',
+                href: '#loose-connections',
+                label: 'Loose connections',
+              },
+              {
+                cause: 'Blown fuse in a fused spur (FCU)',
+                symptom:
+                  'One socket or a fixed appliance (extractor fan, towel rail) is dead while the rest of the ring works normally.',
+                who: 'Homeowner can replace the BS 1362 fuse',
+                href: '#spur-faults',
+                label: 'Spur faults',
+              },
+              {
+                cause: 'Supply / DNO fault',
+                symptom:
+                  'Everything is off, not just sockets, and neighbours may also be without power.',
+                who: 'Electricity network operator (call 105)',
+                href: '#initial-checks',
+                label: 'Initial checks',
+              },
+            ].map((row) => (
+              <div
+                key={row.cause}
+                className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 text-sm"
+              >
+                <div className="sm:col-span-3 font-semibold text-white">{row.cause}</div>
+                <div className="sm:col-span-5 text-white/80 leading-relaxed">{row.symptom}</div>
+                <div className="sm:col-span-2 text-white/80">{row.who}</div>
+                <div className="sm:col-span-2">
+                  <a href={row.href} className="text-yellow-400 hover:underline">
+                    {row.label}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-sm text-white/80 leading-relaxed">
+              <strong className="text-amber-300">Safe to do yourself:</strong> resetting a tripped
+              MCB or RCD, and replacing a blown BS 1362 fuse in a fused connection unit.{' '}
+              <strong className="text-amber-300">Always an electrician:</strong> anything behind a
+              socket faceplate or inside the consumer unit. That work is on the fixed installation,
+              can be dangerous, and may be notifiable under Part P of the Building Regulations.
+            </p>
+          </div>
+        </div>
+      </>
+    ),
+  },
   {
     id: 'initial-checks',
     heading: 'Initial Checks Before Calling an Electrician',
@@ -327,8 +419,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          To identify a broken ring, perform the ring circuit continuity test at the distribution
-          board. Disconnect both ends of the ring (line, neutral, and CPC at both legs). Measure R1
+          To identify a broken ring, perform the ring final circuit continuity test at the
+          distribution board — the live-conductor continuity measurement required for ring final
+          circuits by Regulation 643.2.1 of BS 7671:2018+A4:2026. Disconnect both ends of the ring
+          (line, neutral, and CPC at both legs). Measure R1
           (end-to-end line conductor resistance), Rn (end-to-end neutral conductor resistance), and
           R2 (end-to-end CPC resistance). If any of these reads open circuit, the ring is broken on
           that conductor. Cross-connect the conductors and measure the resistance between the line
@@ -424,11 +518,13 @@ const sections = [
               <p className="text-sm text-white/80 leading-relaxed">
                 Arcing at a loose socket terminal is precisely the hazard that arc fault detection
                 devices (AFDDs) are designed to detect. Regulation 421.1.7 of BS 7671:2018+A4:2026
-                recommends the installation of AFDDs on AC final circuits to mitigate the risk of
-                fire due to arc fault currents. For new domestic installations and rewires,
-                electricians should consider specifying AFDD-equipped consumer units on socket
-                circuits — the loose-connection fire risk described above is the regulatory
-                justification for the recommendation.
+                now <strong className="text-white">requires</strong> AFDDs conforming to BS EN 62606
+                for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high
+                rise residential buildings, houses in multiple occupation, purpose-built student
+                accommodation and care homes. For all other premises — including ordinary domestic
+                installations — AFDDs are recommended for those socket circuits. Where used, the AFDD
+                must be placed at the origin of the circuit it protects, and it does not remove the
+                need for the other protective measures in the standard.
               </p>
             </div>
           </div>
@@ -710,6 +806,13 @@ export default function NoPowerToSocketsPage() {
       }
       heroSubtitle="Dead sockets can be caused by a simple tripped MCB, a broken ring circuit, a loose connection, or a blown spur fuse. This guide covers every common cause, explains what homeowners can check safely, and provides a structured diagnostic approach for electricians."
       readingTime={10}
+      answerBox={{
+        question: 'Why have my sockets stopped working?',
+        answer:
+          'The most common cause is a tripped MCB or RCD at the consumer unit, so check there first. If only some sockets on one circuit are dead, suspect a broken ring final circuit or a loose connection. A single dead socket or appliance often means a blown fuse in a fused spur. If everything is off and neighbours are affected too, it is a supply fault — call 105.',
+        detail:
+          'You can safely reset a tripped breaker and replace a blown BS 1362 fuse in a fused connection unit. Any fault needing work behind a socket faceplate or inside the consumer unit should be left to a qualified electrician.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

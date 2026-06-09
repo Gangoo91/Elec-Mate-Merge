@@ -44,7 +44,7 @@ const keyTakeaways = [
   'JIB pay rates are updated annually (usually in January). The 2026 Electrician rate is approximately 18.21 pounds per hour, with Approved Electricians and Technicians earning more. London weighting adds approximately 1.67 pounds per hour.',
   'Progression from Electrician to Approved Electrician to Technician requires additional qualifications — inspection and testing (2391), design (2396), and relevant experience. Each step up increases your earning potential.',
   'JIB grading is not mandatory, but it is the industry standard. Most major electrical contractors operate under JIB terms, and many clients specify JIB-graded electricians in their contracts.',
-  'The C&G 2382 exam is now examined against BS 7671:2018+A4:2026 (Amendment 4, in force 2026). Candidates must know the A4:2026 updates including AFDD recommendations (Reg 421.1.7), the new requirement for 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), and the significant changes to EV charging installations (Section 722).',
+  'The C&G 2382 exam is now examined against BS 7671:2018+A4:2026 (Amendment 4, in force 2026). Candidates must know the A4:2026 updates including AFDD recommendations (Reg 421.1.7), the new requirement for 30 mA RCD additional protection on AC final circuits supplying luminaires in domestic premises (Reg 411.3.4), and the changes to electric vehicle charging installations (Section 722).',
   'BS 7671 Reg 641.6 requires that inspection, testing, and signing-off of installations be carried out by ‘skilled persons competent in such work’. This is a competence standard, not a JIB grade designation — non-JIB electricians who meet the competence requirement may also legally sign EICRs.',
 ];
 
@@ -233,6 +233,53 @@ const sections = [
             </div>
           </div>
         </div>
+        <p>
+          At a glance, here is how each JIB grade maps to its qualifications and{' '}
+          <SEOInternalLink href="/guides/ecs-card-types-explained">ECS card</SEOInternalLink>:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 overflow-x-auto">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="text-left py-2 px-3 font-semibold">JIB Grade</th>
+                <th className="text-left py-2 px-3 font-semibold">Core qualifications</th>
+                <th className="text-left py-2 px-3 font-semibold">Can sign EICRs?</th>
+                <th className="text-left py-2 px-3 font-semibold">ECS card</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.06]">
+                <td className="py-2 px-3 font-medium">Electrical Labourer</td>
+                <td className="py-2 px-3">Health &amp; safety only</td>
+                <td className="py-2 px-3">No</td>
+                <td className="py-2 px-3">Labourer card</td>
+              </tr>
+              <tr className="border-b border-white/[0.06] bg-blue-500/10">
+                <td className="py-2 px-3 font-medium">Electrician</td>
+                <td className="py-2 px-3">NVQ Level 3, C&amp;G 2382, AM2</td>
+                <td className="py-2 px-3">Not the usual grade</td>
+                <td className="py-2 px-3">Installation (blue)</td>
+              </tr>
+              <tr className="border-b border-white/[0.06] bg-green-500/10">
+                <td className="py-2 px-3 font-medium">Approved Electrician</td>
+                <td className="py-2 px-3">Electrician + C&amp;G 2391</td>
+                <td className="py-2 px-3">Yes (if competent)</td>
+                <td className="py-2 px-3">Gold</td>
+              </tr>
+              <tr className="bg-amber-500/10">
+                <td className="py-2 px-3 font-medium">Technician</td>
+                <td className="py-2 px-3">Approved + design (C&amp;G 2396)</td>
+                <td className="py-2 px-3">Yes (if competent)</td>
+                <td className="py-2 px-3">Gold</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-white/60 text-xs">
+          Signing-off competence is a BS 7671 standard, not a JIB grade: Reg 641.6 requires
+          verification by skilled persons competent in such work. The JIB grade is the industry
+          benchmark, while the statutory test is competence.
+        </p>
       </>
     ),
   },
@@ -309,9 +356,10 @@ const sections = [
                 <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
                   C&G 2382
                 </SEOInternalLink>{' '}
-                (now examined against BS 7671:2018+A4:2026 — including AFDD Reg 421.1.7, 30 mA RCD
-                on domestic lighting circuits Reg 411.3.4, and EV charging updates Section 722), and
-                pass the{' '}
+                (now examined against BS 7671:2018+A4:2026 — including AFDD requirements Reg
+                421.1.7, 30 mA RCD additional protection for circuits supplying luminaires in
+                domestic premises Reg 411.3.4, and electric vehicle charging updates Section 722),
+                and pass the{' '}
                 <SEOInternalLink href="/guides/am2-exam-tips">AM2 assessment</SEOInternalLink>.
               </span>
             </li>
@@ -340,10 +388,51 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 overflow-x-auto">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="text-left py-2 px-3 font-semibold">Step</th>
+                <th className="text-left py-2 px-3 font-semibold">Qualification to add</th>
+                <th className="text-right py-2 px-3 font-semibold">Typical time</th>
+                <th className="text-right py-2 px-3 font-semibold">Approx. rate uplift</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.06] bg-blue-500/10">
+                <td className="py-2 px-3 font-medium">Apprentice → Electrician</td>
+                <td className="py-2 px-3">NVQ Level 3, C&amp;G 2382, AM2</td>
+                <td className="py-2 px-3 text-right">3–4 years</td>
+                <td className="py-2 px-3 text-right">to ~£18.21/hr</td>
+              </tr>
+              <tr className="border-b border-white/[0.06] bg-green-500/10">
+                <td className="py-2 px-3 font-medium">Electrician → Approved</td>
+                <td className="py-2 px-3">C&amp;G 2391 (Inspection &amp; Testing)</td>
+                <td className="py-2 px-3 text-right">1–2 years</td>
+                <td className="py-2 px-3 text-right">~£1.46/hr more</td>
+              </tr>
+              <tr className="bg-amber-500/10">
+                <td className="py-2 px-3 font-medium">Approved → Technician</td>
+                <td className="py-2 px-3">C&amp;G 2396 (Design) or equivalent</td>
+                <td className="py-2 px-3 text-right">1–2 years</td>
+                <td className="py-2 px-3 text-right">~£1.46/hr more</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-white/60 text-xs">
+          Uplift figures are derived from the indicative 2026 national rates above and are for
+          guidance only — confirm current rates with the JIB.
+        </p>
         <p>
           From Technician, the progression routes are typically into supervision (site supervisor,
           contracts manager), design and consulting, or running your own business. Each step
-          increases your earning potential and the range of work you can take on.
+          increases your earning potential and the range of work you can take on. If you want to
+          plan which qualification to tackle next, the{' '}
+          <SEOInternalLink href="/guides/electrical-training-courses-uk">
+            electrical training courses guide
+          </SEOInternalLink>{' '}
+          maps each step in detail.
         </p>
       </>
     ),
@@ -468,6 +557,11 @@ export default function JIBGradingExplainedPage() {
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
+      answerBox={{
+        question: 'What are the JIB grades for electricians?',
+        answer:
+          'The JIB defines four main grades for the UK electrical contracting industry: Electrical Labourer (unqualified), Electrician (NVQ Level 3, C&G 2382 and AM2), Approved Electrician (Electrician plus C&G 2391 inspection and testing), and Technician (plus a design qualification such as C&G 2396). Each grade sets a minimum hourly pay rate and links to an ECS card. Higher grades require more qualifications and earn more.',
+      }}
       badge="Career Guide"
       badgeIcon={TrendingUp}
       heroTitle={

@@ -45,11 +45,17 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'What electrical supply does a ground source heat pump need?',
+  answer:
+    'A domestic ground source heat pump usually needs a dedicated compressor circuit plus separate circuits for the ground-loop and heating circulation pumps, zone valves, the controller, and any buffer-tank immersion heater. Single-phase models run to roughly 10kW electrical input; larger units typically need a three-phase supply, which means a DNO application booked early in the project.',
+};
+
 const keyTakeaways = [
   'Ground source heat pumps (GSHPs) typically have higher power demands than air source units — domestic systems range from 6 to 16kW electrical input, with larger properties often requiring three-phase supplies.',
   'Three-phase supply is commonly needed for GSHPs above 10kW. A DNO application for a three-phase supply upgrade can take 8 to 16 weeks and should be initiated at the earliest project stage.',
   'GSHPs require additional electrical circuits for circulation pumps (ground loop and heating circuits), zone valves, buffer tank immersion heaters, and the main compressor unit.',
-  'Ground loop isolation must be considered carefully — the ground loop is in contact with earth, and bonding the metalwork of the heat pump to the main earthing terminal is essential to prevent touch voltages. Reg 411.3.1.1 requires extraneous-conductive-parts (including central heating and heat pump metalwork) to be connected to the MET.',
+  'Ground loop isolation must be considered carefully — the ground loop is in contact with earth, and bonding the heating-system metalwork to the main earthing terminal is essential to prevent touch voltages. BS 7671 Reg 411.3.1.2 requires extraneous-conductive-parts liable to introduce a dangerous potential difference (its examples include central heating systems) to be connected to the MET by protective bonding conductors.',
   'MCS certification is mandatory for the installer to access the Boiler Upgrade Scheme (BUS) grant, which provides up to £7,500 for ground source heat pump installations.',
 ];
 
@@ -72,7 +78,7 @@ const faqs = [
   {
     question: 'How does the ground loop affect electrical safety?',
     answer:
-      'The ground loop consists of HDPE pipe buried in the ground, filled with a water-glycol mixture. While the pipe itself is non-conductive, the fluid is in thermal contact with the earth, and the metalwork of the heat pump (heat exchanger, compressor casing) is connected to this fluid circuit. This creates a path to earth that must be addressed. The metalwork of the heat pump must be bonded to the main earthing terminal (MET) as an extraneous conductive part. If the system uses a metallic manifold or buffer vessel, these must also be bonded. Regulation 411.3.1.1 requires extraneous-conductive-parts — including central heating and heat pump metalwork — to be connected to the main earthing terminal (MET) via protective bonding conductors.',
+      'The ground loop consists of HDPE pipe buried in the ground, filled with a water-glycol mixture. While the pipe itself is non-conductive, the fluid is in thermal contact with the earth, and the metalwork of the heat pump (heat exchanger, compressor casing) is connected to this fluid circuit. This creates a path to earth that must be addressed. Where the heating-system metalwork (a metallic manifold, buffer vessel or connected pipework) is liable to introduce a dangerous potential difference, it is an extraneous-conductive-part and must be bonded to the main earthing terminal (MET). Regulation 411.3.1.2 requires such extraneous-conductive-parts — its listed examples include central heating systems — to be connected to the main earthing terminal via protective bonding conductors complying with Chapter 54. Whether the heat pump casing itself needs bonding is assessed per the manufacturer instructions and a measurement of whether it is an extraneous-conductive-part.',
   },
   {
     question: 'What is a buffer tank and does it need its own circuit?',
@@ -175,46 +181,58 @@ const sections = [
           Ground source heat pumps have higher electrical demands than air source units because they
           are typically sized for larger properties. The electrical load includes:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Compressor</strong> — the main power consumer. A domestic GSHP compressor
-                typically draws 3 to 8kW electrical input. Starting current is 3 to 5 times the
-                running current (some units have soft-start to reduce inrush).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Ground loop circulation pump</strong> — pumps the water-glycol mixture
-                through the buried ground loop. Typically 100 to 500W depending on the loop length
-                and pump type.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Heating circulation pump</strong> — distributes heated water to the
-                radiators or underfloor heating. Typically 50 to 200W for domestic systems.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Immersion heaters</strong> — backup heating in the buffer tank or hot water
-                cylinder. Typically 3kW each, with some systems having two (upper and lower).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Controller and ancillaries</strong> — zone valves, outdoor sensor, room
-                thermostats, and the control panel. Typically 50 to 100W total.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70">
+                  <th className="px-4 py-3 font-semibold">Load</th>
+                  <th className="px-4 py-3 font-semibold">Typical rating</th>
+                  <th className="px-4 py-3 font-semibold">Notes</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Compressor</td>
+                  <td className="px-4 py-3 whitespace-nowrap">3–8kW input</td>
+                  <td className="px-4 py-3 text-white/80">
+                    Main power consumer. Starting current 3–5× running current; soft-start reduces
+                    inrush on many units.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Ground-loop circulation pump</td>
+                  <td className="px-4 py-3 whitespace-nowrap">100–500W</td>
+                  <td className="px-4 py-3 text-white/80">
+                    Pumps the water-glycol mixture through the buried loop. Rating scales with loop
+                    length.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Heating circulation pump</td>
+                  <td className="px-4 py-3 whitespace-nowrap">50–200W</td>
+                  <td className="px-4 py-3 text-white/80">
+                    Distributes heated water to radiators or underfloor heating.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Immersion heater(s)</td>
+                  <td className="px-4 py-3 whitespace-nowrap">3kW each</td>
+                  <td className="px-4 py-3 text-white/80">
+                    Backup heating in the buffer tank or cylinder. Some systems fit two (upper and
+                    lower).
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Controller and ancillaries</td>
+                  <td className="px-4 py-3 whitespace-nowrap">50–100W</td>
+                  <td className="px-4 py-3 text-white/80">
+                    Zone valves, outdoor sensor, room thermostats, and the control panel.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <p>
           Total electrical demand for a typical domestic GSHP installation is 5 to 12kW. Carry out a
@@ -263,6 +281,46 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70">
+                  <th className="px-4 py-3 font-semibold">Factor</th>
+                  <th className="px-4 py-3 font-semibold">Single-phase</th>
+                  <th className="px-4 py-3 font-semibold">Three-phase</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Typical GSHP size</td>
+                  <td className="px-4 py-3 text-white/80">Up to ~10kW electrical input</td>
+                  <td className="px-4 py-3 text-white/80">12kW and above (common)</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Supply capacity</td>
+                  <td className="px-4 py-3 text-white/80">60A or 80A — check spare headroom</td>
+                  <td className="px-4 py-3 text-white/80">~3× capacity (e.g. 3×100A)</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Starting current per phase</td>
+                  <td className="px-4 py-3 text-white/80">Higher — can cause voltage dips</td>
+                  <td className="px-4 py-3 text-white/80">Lower — load shared across phases</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Long-run voltage drop</td>
+                  <td className="px-4 py-3 text-white/80">Higher current per conductor</td>
+                  <td className="px-4 py-3 text-white/80">Reduced current per conductor</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">DNO lead time</td>
+                  <td className="px-4 py-3 text-white/80">Usually existing supply</td>
+                  <td className="px-4 py-3 text-white/80">8–16 weeks for an upgrade</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <p>
           A three-phase supply upgrade requires a DNO application and typically takes 8 to 16 weeks.
@@ -430,6 +488,52 @@ const sections = [
             </li>
           </ul>
         </div>
+        <h4 className="font-bold text-white mt-6 mb-2">Typical GSHP circuit schedule (indicative)</h4>
+        <p className="text-white/80 text-sm mb-3">
+          Indicative only — always size every circuit to the manufacturer data and confirm with a{' '}
+          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculation</SEOInternalLink>{' '}
+          against your install method, grouping, and run length.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70">
+                  <th className="px-4 py-3 font-semibold">Circuit</th>
+                  <th className="px-4 py-3 font-semibold">Supply</th>
+                  <th className="px-4 py-3 font-semibold">Protection</th>
+                  <th className="px-4 py-3 font-semibold">Isolation</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Compressor</td>
+                  <td className="px-4 py-3 text-white/80">1-ph or 3-ph per model</td>
+                  <td className="px-4 py-3 text-white/80">Sized to manufacturer FLC/MCA</td>
+                  <td className="px-4 py-3 text-white/80">Local isolator at the unit</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Immersion heater (3kW)</td>
+                  <td className="px-4 py-3 text-white/80">230V single-phase</td>
+                  <td className="px-4 py-3 text-white/80">16A or 20A, ~2.5mm² cable</td>
+                  <td className="px-4 py-3 text-white/80">Double-pole switch / FCU</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Circulation pumps</td>
+                  <td className="px-4 py-3 text-white/80">230V single-phase</td>
+                  <td className="px-4 py-3 text-white/80">Often fed from controller</td>
+                  <td className="px-4 py-3 text-white/80">Fused spur / controller isolation</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-semibold">Controller / ancillaries</td>
+                  <td className="px-4 py-3 text-white/80">230V single-phase</td>
+                  <td className="px-4 py-3 text-white/80">Switched fused connection unit</td>
+                  <td className="px-4 py-3 text-white/80">Local FCU</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </>
     ),
   },
@@ -450,10 +554,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bonding requirement</strong> — Regulation 411.3.1.1 requires
-                extraneous-conductive-parts, including the metallic casings of heat exchangers,
-                compressor units, manifolds, and buffer vessels, to be connected to the main
-                earthing terminal (MET) via protective bonding conductors complying with Chapter 54.
+                <strong>Bonding requirement</strong> — Regulation 411.3.1.2 requires
+                extraneous-conductive-parts liable to introduce a dangerous potential difference to
+                be connected to the main earthing terminal (MET) via protective bonding conductors
+                complying with Chapter 54. Where metallic manifolds, buffer vessels or connected
+                heating pipework meet that test, they are bonded; the heat pump casing is assessed
+                individually rather than assumed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -531,28 +637,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.1.1</strong> — extraneous-conductive-parts liable to
-                introduce a dangerous potential difference (including central heating systems, heat
-                pump metalwork, metallic pipework, and buffer vessels) shall be connected to the
-                main earthing terminal by protective bonding conductors complying with Chapter 54.
+                <strong>Regulation 411.3.1.2</strong> — extraneous-conductive-parts liable to
+                introduce a dangerous potential difference shall be connected to the main earthing
+                terminal by protective bonding conductors complying with Chapter 54. The
+                regulation's listed examples include central heating systems and other metallic
+                installation pipework, which captures the heating side of a GSHP where those parts
+                are extraneous-conductive-parts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.1.2</strong> — sets the maximum disconnection times from
-                Table 41.1 for final circuits rated up to 63 A with socket-outlets, and up to 32 A
-                supplying only fixed equipment. Compressor circuits above 32 A are assessed against
-                Regulation 411.4.
+                <strong>Regulation 411.3.2.2</strong> — sets that the maximum disconnection times
+                in Table 41.1 apply to final circuits rated up to 63 A with one or more
+                socket-outlets, and up to 32 A supplying only fixed connected current-using
+                equipment. Compressor circuits above 32 A are assessed against the TN-system
+                requirements of Regulation 411.4.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 537.3</strong> — every circuit shall be capable of being
-                isolated. The GSHP compressor circuit, immersion heater circuits, and circulation
-                pump circuits each require a local means of isolation to permit safe servicing
-                without de-energising unrelated circuits.
+                <strong>Regulation 462.2</strong> — every circuit shall be provided with a means of
+                isolation for all live conductors (except as detailed in Reg 461.2). The GSHP
+                compressor circuit, immersion heater circuits, and circulation pump circuits each
+                benefit from a local means of isolation to permit safe servicing without
+                de-energising unrelated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -617,6 +727,43 @@ const sections = [
           £35,000. Building relationships with MCS-certified GSHP installers provides a steady
           stream of well-paid work.
         </p>
+        <h4 className="font-bold text-white mt-2 mb-2">Indicative electrical cost breakdown</h4>
+        <p className="text-white/80 text-sm mb-3">
+          Indicative UK market guidance, not a quote — actual prices vary by region, access, and
+          supply distance.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70">
+                  <th className="px-4 py-3 font-semibold">Item</th>
+                  <th className="px-4 py-3 font-semibold">Indicative range</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3">GSHP electrical package (circuits, pumps, controller)</td>
+                  <td className="px-4 py-3 whitespace-nowrap">£1,000–£2,500</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3">Three-phase supply upgrade (DNO + board)</td>
+                  <td className="px-4 py-3 whitespace-nowrap">£1,500–£3,000</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3">Whole GSHP project (loop, pump, distribution)</td>
+                  <td className="px-4 py-3 whitespace-nowrap">£20,000–£35,000</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-green-900/20">
+                  <td className="px-4 py-3 font-semibold">Boiler Upgrade Scheme (BUS) grant</td>
+                  <td className="px-4 py-3 whitespace-nowrap font-semibold text-green-300">
+                    up to £7,500 off
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -724,6 +871,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       }
       heroSubtitle="Ground source heat pumps have higher electrical demands than air source — often requiring three-phase supplies, multiple circulation pump circuits, and careful earthing around the ground loop. This guide covers everything an electrician needs to know."
       readingTime={15}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -112,6 +112,13 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
+    href: '/how-to-do-safe-isolation',
+    title: 'How to Do Safe Isolation',
+    description: 'The step-by-step procedure that prevents most reportable electrical accidents.',
+    icon: ShieldCheck,
+    category: 'Safety',
+  },
+  {
     href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments to prevent reportable accidents.',
@@ -236,6 +243,40 @@ const sections = [
             </li>
           </ul>
         </div>
+
+        {/* Reportable vs not reportable — quick decision grid */}
+        <div className="grid sm:grid-cols-2 gap-4 my-4">
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
+              Typically reportable
+            </h4>
+            <ul className="space-y-2 text-white/90 text-sm leading-relaxed list-disc pl-4">
+              <li>Electric shock causing unconsciousness</li>
+              <li>Electrical burn requiring hospital treatment</li>
+              <li>Fracture (other than to fingers, thumbs or toes) from a fall off a ladder after a shock</li>
+              <li>Worker off normal duties for more than seven days</li>
+              <li>Arc flash that stops plant for over 24 hours</li>
+              <li>Member of the public taken to hospital for treatment</li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-400 shrink-0" />
+              Usually not RIDDOR-reportable
+            </h4>
+            <ul className="space-y-2 text-white/90 text-sm leading-relaxed list-disc pl-4">
+              <li>Minor shock with full immediate recovery and no time off</li>
+              <li>Small burn treated by on-site first aid only</li>
+              <li>Absence of seven consecutive days or fewer</li>
+              <li>Member of the public examined but not treated</li>
+              <li>A near miss with no injury that is not a listed dangerous occurrence</li>
+            </ul>
+            <p className="text-white/60 text-xs mt-3">
+              Still record these in the accident book and investigate — they are early warnings.
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
@@ -255,11 +296,10 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical short circuit or overload with fire or explosion</strong> —
-                paragraph 14 of Schedule 2: "The unintended collapse or failure of any closed vessel
-                or associated pipework which forms part of a pressure system" and the specified
-                electrical incident — an electrical short circuit or overload accompanied by fire or
-                explosion which results in the stoppage of the plant for more than 24 hours or which
-                has the potential to cause death.
+                Schedule 2 lists, as a dangerous occurrence, an electrical short circuit or overload
+                accompanied by fire or explosion which results in the stoppage of the plant involved
+                for more than 24 hours, or which has the potential to cause the death of any person.
+                This is the dangerous occurrence electricians encounter most often.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -353,43 +393,80 @@ const sections = [
     content: (
       <>
         <p>
-          Missing RIDDOR reporting deadlines is itself an offence. Understanding the correct
-          deadline for each type of incident is important.
+          Missing RIDDOR reporting deadlines is itself an offence. The deadline depends on the type
+          of incident — use the table below to identify the correct timescale at a glance, then read
+          the notes for the practical detail electricians most often get wrong.
         </p>
+
+        {/* Deadline reference table */}
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-white border-collapse">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70 uppercase text-xs tracking-wide">
+                  <th className="px-4 py-3 font-semibold">Incident type</th>
+                  <th className="px-4 py-3 font-semibold">Deadline</th>
+                  <th className="px-4 py-3 font-semibold">Initial method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-red-900/30 border-t border-red-700/40">
+                  <td className="px-4 py-3 font-semibold">Fatality</td>
+                  <td className="px-4 py-3">Without delay (same day)</td>
+                  <td className="px-4 py-3">Phone or online; follow up in writing</td>
+                </tr>
+                <tr className="bg-red-900/20 border-t border-red-700/30">
+                  <td className="px-4 py-3 font-semibold">Specified injury</td>
+                  <td className="px-4 py-3">Without delay</td>
+                  <td className="px-4 py-3">Phone or online</td>
+                </tr>
+                <tr className="bg-red-900/30 border-t border-red-700/40">
+                  <td className="px-4 py-3 font-semibold">Dangerous occurrence</td>
+                  <td className="px-4 py-3">Without delay</td>
+                  <td className="px-4 py-3">Online</td>
+                </tr>
+                <tr className="bg-amber-900/25 border-t border-amber-700/40">
+                  <td className="px-4 py-3 font-semibold">Over-seven-day injury</td>
+                  <td className="px-4 py-3">Within 15 days of the accident</td>
+                  <td className="px-4 py-3">Online</td>
+                </tr>
+                <tr className="bg-blue-900/25 border-t border-blue-700/40">
+                  <td className="px-4 py-3 font-semibold">Reportable occupational disease</td>
+                  <td className="px-4 py-3">Without delay on written diagnosis</td>
+                  <td className="px-4 py-3">Online</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fatalities — immediately (without delay)</strong> — report as soon as
-                practicable after the incident. In practice, this means the same day. Fatalities
-                also trigger an HSE investigation — do not move the scene unless required for
-                ongoing safety or medical treatment.
+                <strong>Without delay means as soon as practicable</strong> — for deaths and
+                specified injuries this means the same day in practice. Where a specified injury
+                requires hospitalisation, report while the person is still receiving treatment — do
+                not wait until they are discharged.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specified injuries — immediately (without delay)</strong> — report as soon
-                as practicable. Where the injury requires hospitalisation, report while the person
-                is receiving treatment — do not wait until they are discharged.
+                <strong>The 15-day clock starts on the day of the accident</strong> — not the day on
+                which seven days of incapacitation is reached. If an injury that first appeared
+                minor results in absence exceeding seven days, report it as soon as that becomes
+                apparent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Over-seven-day injuries — within 15 days</strong> — the 15-day clock starts
-                from the day of the accident (not the day the seventh day of absence is reached). If
-                an injury that initially appeared minor results in absence exceeding seven days,
-                report it as soon as this becomes apparent.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Dangerous occurrences — immediately (without delay)</strong> — report as
-                soon as practicable. Even if there is uncertainty about whether the event qualifies
-                as a dangerous occurrence, err on the side of reporting.
+                <strong>When in doubt, report</strong> — even if there is uncertainty about whether
+                an event qualifies as a dangerous occurrence, err on the side of reporting. Doing
+                so on time is far less serious than a late report uncovered during an HSE
+                investigation.
               </span>
             </li>
           </ul>
@@ -408,15 +485,45 @@ const sections = [
           accidents. Reporting and investigating them is one of the most effective ways to prevent
           future injuries.
         </p>
+
+        {/* Accident ratio stat grid (safety-pyramid model) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-4 text-center">
+            <div className="text-2xl font-bold text-red-400">1</div>
+            <div className="text-white/80 text-xs mt-1 leading-snug">Fatal accident</div>
+          </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-4 text-center">
+            <div className="text-2xl font-bold text-orange-400">29</div>
+            <div className="text-white/80 text-xs mt-1 leading-snug">Serious injuries</div>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 text-center">
+            <div className="text-2xl font-bold text-yellow-400">300</div>
+            <div className="text-white/80 text-xs mt-1 leading-snug">Minor injuries</div>
+          </div>
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-4 text-center">
+            <div className="text-2xl font-bold text-green-400">3,000</div>
+            <div className="text-white/80 text-xs mt-1 leading-snug">Near misses</div>
+          </div>
+        </div>
+        <p className="text-white/60 text-sm">
+          The widely cited accident-ratio model (often attributed to Heinrich) illustrates the
+          principle rather than precise statistics: serious injuries sit on a much larger base of
+          minor injuries and near misses. Ratios vary by study and industry, but the lesson holds —
+          reduce the near misses at the base and you reduce the serious accidents at the top.
+        </p>
+
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical near misses to report internally</strong> — isolation failures
-                discovered before contact; live conductors found exposed in accessible locations;
-                tools or equipment contacting live conductors without injury; incorrect isolation of
-                the wrong circuit discovered before work began; lockout tagout breaches.
+                <strong>Electrical near misses to report internally</strong> —{' '}
+                <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+                failures discovered before contact; live conductors found exposed in accessible
+                locations; tools or equipment contacting live conductors without injury; incorrect
+                isolation of the wrong circuit discovered before work began;{' '}
+                <SEOInternalLink href="/lockout-tagout-guide">lockout tagout</SEOInternalLink>{' '}
+                breaches.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -467,10 +574,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Immediate actions</strong> — make the site safe, provide first aid, call
-                emergency services if needed, preserve the scene, notify the HSE if RIDDOR
-                reportable, and notify the employer and next of kin if a worker is seriously
-                injured.
+                <strong>Immediate actions</strong> — make the site safe, follow the correct{' '}
+                <SEOInternalLink href="/electrical-rescue-procedure">
+                  electrical rescue procedure
+                </SEOInternalLink>{' '}
+                and provide first aid, call emergency services if needed, preserve the scene, notify
+                the HSE if RIDDOR reportable, and notify the employer and next of kin if a worker is
+                seriously injured.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -613,6 +723,13 @@ export default function ElectricalAccidentReportingPage() {
       }
       heroSubtitle="Complete UK guide to reporting electrical accidents under RIDDOR 2013. Covers what must be reported (fatalities, specified injuries, arc flash dangerous occurrences), how and when to report to the HSE, near miss reporting, accident investigation, and RIDDOR duties for self-employed electricians."
       readingTime={14}
+      answerBox={{
+        question: 'How do you report an electrical accident in the UK?',
+        answer:
+          'Electrical accidents are reported under RIDDOR 2013 to the HSE. Report online at riddor.hse.gov.uk, or call 0345 300 9923 for deaths and specified injuries. Fatalities, specified injuries (including unconsciousness from electric shock) and dangerous occurrences are reported without delay; over-seven-day injuries within 15 days.',
+        detail:
+          'The duty falls on the responsible person — usually the employer, the self-employed worker, or the person in control of the premises. Records of reportable incidents must be kept for at least three years.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

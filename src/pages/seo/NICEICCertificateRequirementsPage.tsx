@@ -39,13 +39,19 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'What does NICEIC require on an electrical certificate?',
+  answer:
+    'NICEIC requires every certificate to follow the BS 7671 Appendix 6 model forms with all mandatory fields completed: contractor and client details, supply characteristics, a full schedule of test results for every circuit, correctly coded observations on EICRs, and signed designer, constructor and inspection-and-testing declarations. Assessors review a sample of your recent certificates during scheme visits, checking accuracy, completeness and consistency.',
+};
+
 const keyTakeaways = [
   'NICEIC requires every certificate to follow the BS 7671 Appendix 6 model forms with all mandatory fields completed — no blank sections, no missing data.',
   'Common rejection reasons include missing earth fault loop impedance values, incomplete schedules of inspections, wrong observation code classification, and absent designer/installer declarations.',
   'NICEIC assessors review a sample of recent certificates during scheme visits — consistent quality across all certificates is essential, not just the ones you expect them to see.',
   'Digital certificates submitted through the NICEIC portal or produced by approved software like Elec-Mate are fully accepted and often preferred for their legibility and completeness.',
   'Elec-Mate automatically validates required fields and flags missing data before you finalise — reducing the risk of rejection at assessment.',
-  'BS 7671:2018+A4:2026 amended the Appendix 6 model forms to add mandatory SPD and AFDD fields on both EICs and EICRs — contractors using pre-A4 paper pads or outdated software will have missing fields and face rejection.',
+  'BS 7671:2018+A4:2026 redrew the Appendix 6 model forms — adding fields for recording SPDs and AFDDs and splitting the schedule of test results into separate circuit-details and test-results pages — so contractors using pre-A4 paper pads or outdated software will have missing fields and an outdated layout.',
 ];
 
 const faqs = [
@@ -231,6 +237,48 @@ const sections = [
           during a NICEIC assessment. The assessor may treat it as a minor advisory or, if the
           omission is significant (such as missing test results), as a formal concern.
         </p>
+        <p>
+          The schedule of test results is where most blank fields appear. BS 7671 Chapter 64 sets
+          the tests for initial verification, carried out in the order below and recorded for every
+          circuit:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr]">
+            <div className="contents text-xs font-semibold uppercase tracking-wide text-white/60">
+              <div className="px-4 py-3 border-b border-white/10">Reg</div>
+              <div className="px-4 py-3 border-b border-white/10">Test</div>
+            </div>
+            {[
+              ['643.2', 'Continuity of conductors (R1+R2, R2, and protective/bonding conductors)'],
+              ['643.3', 'Insulation resistance'],
+              ['643.6', 'Polarity'],
+              [
+                '643.7',
+                'Protection by automatic disconnection of supply (earth electrode resistance and earth fault loop impedance, Zs)',
+              ],
+              ['643.8', 'Additional protection (RCD operation)'],
+              ['643.10', 'Functional testing'],
+            ].map(([reg, test], i, arr) => (
+              <div className="contents" key={reg}>
+                <div
+                  className={`px-4 py-4 ${i < arr.length - 1 ? 'border-b border-white/10' : ''} bg-blue-900/20`}
+                >
+                  <span className="font-mono text-sm text-blue-300">{reg}</span>
+                </div>
+                <div
+                  className={`px-4 py-4 ${i < arr.length - 1 ? 'border-b border-white/10' : ''} text-white text-sm`}
+                >
+                  {test}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Reg 643.11 (verification of voltage drop) and Reg 643.9 (phase sequence, on polyphase
+          circuits) also apply where relevant. Every applicable test must produce a recorded result
+          — a blank where a value is expected is the single most common assessment finding.
+        </p>
       </>
     ),
   },
@@ -254,12 +302,13 @@ const sections = [
                 prospective fault current been measured (not estimated)? Are observation codes
                 correctly classified — is a C2 genuinely "potentially dangerous" or should it be a
                 C3? The assessor is an experienced electrician and will spot results that do not add
-                up. One commonly missed point: measured Zs values are taken at ambient (site)
-                temperature, not at the conductor&apos;s maximum operating temperature. BS 7671 Reg
-                411.4.201 and GN3 Reg 3.18 require a temperature correction (using the Appendix 3
-                procedure and Table A7 correction factors) before comparing a measured Zs to the
-                tabulated maximum permitted values. Recording a raw measured Zs without confirming
-                it satisfies the corrected acceptance criterion is a common accuracy failure that
+                up. One commonly missed point: the maximum permitted earth fault loop impedance
+                values in BS 7671 (for example Table 41.2 for fuses, referenced by Reg 411.4.201)
+                are tabulated for conductors at their normal operating temperature, whereas a
+                measured Zs is taken at the cooler ambient site temperature. IET Guidance Note 3
+                (GN3) sets out how to apply a temperature correction before comparing a measured Zs
+                to the tabulated maximum. Recording a raw measured Zs without confirming it
+                satisfies the corrected acceptance criterion is a common accuracy failure that
                 assessors flag.
               </span>
             </li>
@@ -312,10 +361,11 @@ const sections = [
                 <strong>Missing or incomplete test results.</strong> The most frequent issue. Earth
                 fault loop impedance (Zs) values left blank, insulation resistance not recorded for
                 every circuit, RCD operating times not recorded, or continuity values missing. Every
-                circuit must have a complete set of test results. Note: BS 7671 requires RCD
-                operating times to be verified at 1&times; rated tripping current (I&#x394;n) only —
-                testing at 5&times; I&#x394;n is an optional diagnostic test under GN3 Reg 5.6, not
-                a mandatory verification requirement.
+                circuit must have a complete set of test results. Note: BS 7671 Reg 643.8 deems an
+                RCD&apos;s effectiveness verified where it disconnects within the stated time using
+                an alternating-current test at its rated residual operating current (I&#x394;n) — for
+                a general non-delay type, 300 ms maximum. Testing at 5&times; I&#x394;n is an
+                optional diagnostic check, not a mandatory verification requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -346,9 +396,9 @@ const sections = [
                 declaration and installer declaration are separate sections. When responsibilities
                 are split between different people, both declarations must be completed by the
                 respective individuals. Where the same person carries out design, construction,
-                inspection and testing, GN3 Reg 2.5 permits the use of the single-signature
-                declaration (Appendix 6, item (c)) in place of the multiple-signature section — but
-                that single-signature section must still be fully completed and signed. Leaving any
+                inspection and testing, BS 7671 permits the single-signature form of the EIC in
+                Appendix 6 to be used in place of the three-signature declaration — but that
+                single-signature section must still be fully completed and signed. Leaving any
                 declaration section blank is the most common EIC omission flagged by NICEIC.
               </span>
             </li>
@@ -405,12 +455,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>A4:2026 Appendix 6 update — SPD and AFDD fields are now mandatory.</strong>{' '}
-                BS 7671:2018+A4:2026 (Reg 722.826.3.201) amended the Appendix 6 model forms for both
-                EICs and EICRs to include dedicated fields for recording surge protective devices
-                (SPDs) and arc fault detection devices (AFDDs) where installed. Contractors still
-                using pre-A4 paper pads or software that has not been updated will have these fields
-                missing — this is precisely the "wrong form version" reason that leads to rejection.
+                <strong>A4:2026 redrew the Appendix 6 model forms — use the current version.</strong>{' '}
+                BS 7671:2018+A4:2026 made several changes to the Appendix 6 model forms for
+                certification and reporting. These include the addition of fields for recording the
+                details of surge protective devices (SPDs) and arc fault detection devices (AFDDs);
+                the single generic schedule of test results being split into a separate schedule of
+                circuit details and a separate schedule of test results; and the schedule of
+                inspections being simplified for initial verification. Contractors still using
+                pre-A4 paper pads or software that has not been updated will have missing fields and
+                an outdated layout — exactly the "wrong form version" issue that leads to rejection.
                 Check that your software supplier has applied the A4:2026 form update.
               </span>
             </li>
@@ -444,6 +497,73 @@ const sections = [
           The EICR is the most scrutinised certificate at NICEIC assessments because it involves the
           most judgement — classifying observations, assessing the overall condition, and
           determining the next inspection date. NICEIC has specific expectations:
+        </p>
+        <p>
+          Getting the classification right starts with using the correct code. The four condition
+          report codes and their exact BS 7671 model-form meanings are:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto]">
+            <div className="contents text-xs font-semibold uppercase tracking-wide text-white/60">
+              <div className="px-4 py-3 border-b border-white/10">Code</div>
+              <div className="px-4 py-3 border-b border-white/10">Meaning (model-form wording)</div>
+              <div className="hidden sm:block px-4 py-3 border-b border-white/10">
+                Affects outcome?
+              </div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 border-b border-white/10 bg-red-500/10">
+                <span className="font-bold text-red-400">C1</span>
+              </div>
+              <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
+                Danger present. Risk of injury. Immediate remedial action required.
+              </div>
+              <div className="hidden sm:flex px-4 py-4 border-b border-white/10 text-sm text-red-300 items-center">
+                Unsatisfactory
+              </div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 border-b border-white/10 bg-orange-500/10">
+                <span className="font-bold text-orange-400">C2</span>
+              </div>
+              <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
+                Potentially dangerous. Urgent remedial action required.
+              </div>
+              <div className="hidden sm:flex px-4 py-4 border-b border-white/10 text-sm text-orange-300 items-center">
+                Unsatisfactory
+              </div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 border-b border-white/10 bg-yellow-500/10">
+                <span className="font-bold text-yellow-400">C3</span>
+              </div>
+              <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
+                Improvement recommended.
+              </div>
+              <div className="hidden sm:flex px-4 py-4 border-b border-white/10 text-sm text-white/60 items-center">
+                Advisory only
+              </div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 bg-blue-500/10">
+                <span className="font-bold text-blue-400">FI</span>
+              </div>
+              <div className="px-4 py-4 text-white text-sm">
+                Further investigation advised without delay.
+              </div>
+              <div className="hidden sm:flex px-4 py-4 text-sm text-white/60 items-center">
+                Advisory only
+              </div>
+            </div>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Only C1 and C2 observations make the overall assessment Unsatisfactory. C3 and FI are
+          advisory and do not, on their own, change the outcome. See our full{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            guide to observation codes
+          </SEOInternalLink>{' '}
+          for worked examples.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -485,8 +605,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>FI (Further Investigation) must be used sparingly.</strong> Per GN3 Reg
-                3.11, the FI code is permitted only <em>exceptionally</em> — where a hazard is
+                <strong>FI (Further Investigation) must be used sparingly.</strong> Industry
+                guidance (IET Guidance Note 3) treats the FI code as one to use only{' '}
+                <em>exceptionally</em> — where a hazard is
                 suspected but cannot be confirmed without further investigation (for example, a
                 concealed section of wiring that cannot be accessed). Only one classification code
                 may be recorded per observation. An FI code alone does not make the overall
@@ -518,6 +639,48 @@ const sections = [
           </SEOInternalLink>
           . The most common issues are:
         </p>
+        <p>
+          Using the wrong certificate type for the scope of work is one of the simplest things to
+          get right and one of the first things an assessor checks. Use this as a quick guide:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.4fr]">
+            <div className="contents text-xs font-semibold uppercase tracking-wide text-white/60">
+              <div className="px-4 py-3 border-b border-white/10">Scope of work</div>
+              <div className="px-4 py-3 border-b border-white/10">Certificate to issue</div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
+                New installation, or an alteration that adds a new circuit
+              </div>
+              <div className="px-4 py-4 border-b border-white/10 text-sm">
+                <span className="font-semibold text-yellow-400">EIC</span>
+                <span className="text-white/70"> — Electrical Installation Certificate</span>
+              </div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
+                Addition or alteration to an existing circuit with no new circuit
+              </div>
+              <div className="px-4 py-4 border-b border-white/10 text-sm">
+                <span className="font-semibold text-yellow-400">Minor Works Certificate</span>
+                <span className="text-white/70"> (or a single EIC covering several minor works)</span>
+              </div>
+            </div>
+            <div className="contents">
+              <div className="px-4 py-4 text-white text-sm">
+                Periodic inspection of an existing installation
+              </div>
+              <div className="px-4 py-4 text-sm">
+                <span className="font-semibold text-yellow-400">EICR</span>
+                <span className="text-white/70">
+                  {' '}
+                  — Electrical Installation Condition Report
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -526,8 +689,8 @@ const sections = [
                 <strong>EIC: Missing or incomplete declaration.</strong> The EIC has separate
                 sections for the designer and the installer. Where responsibilities are split, each
                 person must complete and sign their respective declaration. Where the same person
-                carries out all roles, GN3 Reg 2.5 requires the use of the single-signature
-                declaration in Appendix 6 — but that section must be fully completed and signed. An
+                carries out all roles, BS 7671 allows the single-signature form of the EIC in
+                Appendix 6 to be used — but that section must be fully completed and signed. An
                 unsigned or blank declaration section is the single most common EIC omission flagged
                 by NICEIC.
               </span>
@@ -566,17 +729,17 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <h4 className="font-bold text-white mb-2">MEIWC and the EIC-as-alternative rule</h4>
+          <h4 className="font-bold text-white mb-2">Single EIC for multiple minor works</h4>
           <p className="text-white text-sm leading-relaxed">
-            Appendix 6 of BS 7671 also contains the Model Electrical Installation Works Certificate
-            (MEIWC) — a single-signature alternative to the standard EIC for use where a single
-            individual takes full responsibility for the work (GN3 Reg 2.5). Separately, BS 7671 Reg
-            120.3 confirms that a single EIC may be used to certify multiple additions, alterations,
-            or remedial works to an existing installation that do not extend to new circuits — as an
-            alternative to issuing a separate Minor Works Certificate for each job. Using the
-            correct form type for the scope of work is a basic assessment check: issuing individual
-            Minor Works Certificates where a single EIC (or MEIWC) is more appropriate, or vice
-            versa, will be queried.
+            The Appendix 6 notes confirm that an Electrical Installation Certificate may be used to
+            certify multiple additions, alterations, or remedial works to an existing installation
+            that do not extend to new circuits — as an alternative to issuing a separate Minor Works
+            Certificate for each job. Where a single competent person carries out the design,
+            construction, and inspection and testing, BS 7671 allows the single-signature form of
+            the EIC to be used in place of the three-signature declaration. Using the correct form
+            type for the scope of work is a basic assessment check: issuing individual Minor Works
+            Certificates where a single EIC would be more appropriate, or vice versa, will be
+            queried.
           </p>
         </div>
       </>
@@ -669,6 +832,7 @@ export default function NICEICCertificateRequirementsPage() {
       tocItems={tocItems}
       badge="Scheme Compliance"
       badgeIcon={Shield}
+      answerBox={answerBox}
       heroTitle={
         <>
           NICEIC Certificate Requirements:{' '}

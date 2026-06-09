@@ -87,7 +87,7 @@ const faqs = [
   {
     question: 'What is an SPD and should my consumer unit have one?',
     answer:
-      'An SPD (Surge Protection Device) protects your electrical installation and connected equipment against transient overvoltages — voltage spikes caused by lightning strikes, switching of heavy loads on the network, or faults on the electricity supply. These surges can damage sensitive electronic equipment (computers, routers, smart home devices, TVs) and can also damage the fixed installation itself. BS 7671:2018+A4:2026 Regulation 443.4 requires SPD protection where transient overvoltage could result in serious injury or loss of life, interruption of public services or damage to cultural heritage, interruption of commercial or industrial activity, or affect a large number of co-located individuals. In all other cases a risk assessment is required to determine whether protection is needed. Importantly, Regulation 443.4 includes an exception for single dwelling units in certain situations — meaning SPD protection is not automatically mandatory for a typical domestic installation, and the risk assessment may conclude none is strictly required. In practice, however, many electricians recommend fitting a Type 2 SPD as standard during a consumer unit upgrade, as best practice to protect expensive electronics against surges. Cost: approximately £40 to £80 for the device.',
+      'An SPD (Surge Protection Device) protects your electrical installation and connected equipment against transient overvoltages — voltage spikes caused by lightning strikes, switching of heavy loads on the network, or faults on the electricity supply. These surges can damage sensitive electronic equipment (computers, routers, smart home devices, TVs) and can also damage the fixed installation itself. BS 7671:2018+A4:2026 Regulation 443.4.1 requires SPD protection where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) was deleted by the A2:2022 Corrigendum (May 2023). For all other cases, protection against transient overvoltages must be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. This means SPD protection is not automatically mandatory for a typical domestic installation where the owner accepts that risk. In practice, however, many electricians recommend fitting a Type 2 SPD as standard during a consumer unit upgrade, as best practice to protect expensive electronics against surges. Cost: approximately £40 to £80 for the device.',
   },
 ];
 
@@ -403,10 +403,11 @@ const sections = [
                   SPDs protect against transient voltage surges from lightning, network switching,
                   or supply faults. They divert surge energy safely to earth, protecting your
                   electrical installation and connected equipment. BS 7671:2018+A4:2026 Regulation
-                  443.4 requires SPD protection in specified situations (risk to life, public
-                  services, industrial activity) and requires a risk assessment in all other cases.
-                  Regulation 443.4 includes an exception for single dwelling units in certain
-                  situations — so SPDs are not automatically mandatory for a typical domestic
+                  443.4.1 requires SPD protection where the overvoltage could result in (a) serious
+                  injury to, or loss of, human life, or (c) significant financial or data loss —
+                  limb (b) was deleted by the A2:2022 Corrigendum (May 2023). For all other cases,
+                  protection must be provided unless the owner declares it not required because the
+                  risk is tolerable — so SPDs are not automatically mandatory for a typical domestic
                   installation, but are strongly recommended best practice. A Type 2 SPD is fitted
                   at the consumer unit. Cost: approximately £40 to £80 for the device.
                 </p>

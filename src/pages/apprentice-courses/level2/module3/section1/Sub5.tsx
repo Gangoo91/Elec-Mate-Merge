@@ -713,10 +713,13 @@ export default function Sub5() {
               </li>
               <li>
                 <strong>Section 443</strong> — redrafted: protection against transient
-                overvoltages of atmospheric origin or due to switching. The decision tree for
-                when SPDs are required moved to a risk-assessment basis with specific scenarios
-                listed (consequences for human life, public services, commercial/industrial
-                activity, large numbers of co-located individuals).
+                overvoltages of atmospheric origin or due to switching. Under Reg 443.4.1,
+                protection shall be provided where the consequence of the overvoltage could
+                result in (a) serious injury to, or loss of, human life, or (c) significant
+                financial or data loss — limb (b) was deleted by the A2:2022 Corrigendum
+                (May 2023). For all other cases, protection shall be provided unless the
+                owner of the installation declares it is not required because any loss or
+                damage is tolerable and they accept the risk.
               </li>
             </ul>
             <p>

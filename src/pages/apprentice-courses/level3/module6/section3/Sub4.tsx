@@ -89,13 +89,13 @@ const quizQuestions = [
     question: "Section 443 of BS 7671 A4:2026 sets the requirement for surge protection on a:",
     options: [
       "Because the retail trading hours can't be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.",
-      "Consequence-based assessment — the designer assesses the consequences of an overvoltage event (risk to life, public services, commercial / industrial activity, loss of cultural heritage, large numbers of co-located individuals) and provides protection where the assessment indicates it is needed. Reg 443.4 sets the four 'shall provide' criteria; for cases not covered, a risk assessment determines whether protection is required.",
+      "Consequence-based assessment — the designer assesses the consequences of an overvoltage event and provides protection where the assessment indicates it is needed. Reg 443.4.1 lists two active 'shall provide' consequences (serious injury or loss of human life; significant financial or data loss); for all other cases protection shall be provided unless the owner declares it is not required because any loss or damage is tolerable and they accept the risk.",
       "Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor\\\\'s team. For a client representative the escort is usually the Project Manager or Site Manager because they\\\\'ll want to talk through progress, snags and any commercial issues.",
       "They allow two independent strings to run at their own MPP. A roof with both an east-facing and a west-facing slope gets one string per slope, each tracked independently — the east string MPPs in the morning, the west string MPPs in the afternoon, and the inverter combines the AC outputs. Without dual-MPPT, mixing east and west panels in one string forces a compromise MPP that wastes 10-20% of the available energy. Many domestic UK installs benefit from dual-MPPT given typical roof geometries.",
     ],
     correctAnswer: 1,
     explanation:
-      "Section 443 in BS 7671 A4:2026 uses a consequence-based decision procedure. Reg 443.4 lists four cases where transient overvoltage protection 'shall be provided': (a) risk to human life, (b) interruption of public services / damage to cultural heritage, (c) interruption of commercial or industrial activity, (d) affecting a large number of co-located individuals. For cases not covered by (a)-(d) a risk assessment determines whether protection is required. The L3 designer documents the assessment on the design pack — protection provided / not provided, with the reasoning.",
+      "Section 443 in BS 7671 A4:2026 uses a consequence-based decision procedure. Reg 443.4.1 lists the consequences where transient overvoltage protection 'shall be provided': (a) serious injury to, or loss of, human life; (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. The L3 designer documents the assessment on the design pack — protection provided / not provided, with the reasoning.",
   },
   {
     id: 2,
@@ -138,7 +138,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: "Reg 443.4(a) requires SPD protection where transient overvoltage:",
+    question: "Reg 443.4.1(a) requires SPD protection where transient overvoltage:",
     options: [
       "It tells you the appliance has been double-insulated by the manufacturer to provide protection without relying on a CPC — so you don’t add an earth wire to the casing thinking you’re improving safety.",
       "Could result in serious injury to, or loss of, human life. This is the headline mandatory case — life-safety circuits, medical premises, fire alarm and detection systems. SPD protection shall be provided regardless of installation type or location.",
@@ -147,7 +147,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 443.4(a) is the life-safety case — transient overvoltage protection 'shall be provided' where the consequence of failure could be serious injury or death. This applies regardless of installation type or location: hospitals, care homes, hazardous areas, life-safety circuits, fire alarm systems, emergency lighting feeders. The designer cannot weigh cost-benefit on (a); it is mandatory. The other three cases (b) to (d) — public services, commercial / industrial activity, large numbers of people — also mandate protection but with more nuanced trigger criteria.",
+      "Reg 443.4.1(a) is the life-safety case — transient overvoltage protection 'shall be provided' where the consequence of an overvoltage could be serious injury to, or loss of, human life. This applies regardless of installation type or location: hospitals, care homes, hazardous areas, life-safety circuits, fire alarm systems, emergency lighting feeders. The designer cannot weigh cost-benefit on (a); it is mandatory. The only other active consequence is (c) significant financial or data loss; limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases protection shall be provided unless the owner declares it is not required because any loss or damage is tolerable and they accept the risk.",
   },
   {
     id: 6,
@@ -186,7 +186,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 443 requires a risk assessment for cases not covered by Reg 443.4(a)-(d). Most owner-occupied domestic installations fall outside the mandatory triggers (no risk to life from a transient on a standard residential circuit, not a public service, not commercial activity, not large numbers of co-located individuals). The risk assessment outcome is therefore 'protection recommended where consequences justify' rather than mandatory. Present the case to the customer: Type 2 SPD at the CU costs £80-£200 typical, protects all connected appliances against induced surges (a near-miss lightning strike on the local network can damage thousands of pounds of electronics on a single transient). Most informed customers accept the protection on a CU upgrade.",
+      "For cases not covered by the Reg 443.4.1 consequence limbs, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk. Most owner-occupied domestic installations fall outside the active triggers (no serious injury or loss of human life from a transient on a standard residential circuit, no significant financial or data loss). The outcome is therefore 'protection recommended unless the owner declares the loss tolerable' rather than absolutely mandatory. Present the case to the customer: Type 2 SPD at the CU costs £80-£200 typical, protects all connected appliances against induced surges (a near-miss lightning strike on the local network can damage thousands of pounds of electronics on a single transient). Most informed customers accept the protection on a CU upgrade.",
   },
 ];
 
@@ -202,9 +202,9 @@ const faqs = [
       "Usually only if the building has an external lightning protection system (LPS) per BS EN 62305-3, or if there is a specific direct-strike risk to the supply (overhead service, exposed building, high keraunic-level area without LPS). Without those triggers, Type 2 at the origin / main board is the standard answer. For most typical urban / suburban commercial fit-outs in the UK there is no LPS and the Type 2 specification is correct. Always confirm by walking the site — an LPS is visible (down-conductors, air-rods, earth electrode network, equipotential bonding to the structural steel) and is recorded on the building's structural / fire-safety drawings.",
   },
   {
-    question: "How does the Reg 443.4 'shall be provided' wording differ from Reg 443.5?",
+    question: "How does the Reg 443.4.1 'shall be provided' wording differ from Reg 443.5?",
     answer:
-      "Reg 443.4 sets four mandatory cases — risk to life, public services / cultural heritage, commercial / industrial activity, large numbers of co-located individuals. Where any of these applies, SPDs 'shall be provided'. Reg 443.5 then gets into the detail of how the protection is selected and installed — the impulse withstand voltage categories of equipment (I, II, III, IV — each with a specified withstand voltage at the supply nominal), how to match the SPD's Up to the downstream equipment category, the requirement to coordinate cascade. Reg 443.4 says 'protect or not'; Reg 443.5 says 'how to protect'. The L3 designer reads both and produces a design that satisfies both.",
+      "Reg 443.4.1 sets the consequence cases — (a) serious injury to, or loss of, human life; and (c) significant financial or data loss (limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum, May 2023). Where either applies, SPDs 'shall be provided'. For all other cases protection shall be provided unless the owner declares it is not required because any loss or damage is tolerable and they accept the risk. Reg 443.5 then gets into the detail of how the protection is selected and installed — the impulse withstand voltage categories of equipment (I, II, III, IV — each with a specified withstand voltage at the supply nominal), how to match the SPD's Up to the downstream equipment category, the requirement to coordinate cascade. Reg 443.4.1 says 'protect or not'; Reg 443.5 says 'how to protect'. The L3 designer reads both and produces a design that satisfies both.",
   },
   {
     question: "What is the impulse withstand voltage category and where does it come from?",
@@ -247,7 +247,7 @@ export default function Sub4() {
 
           <TLDR
             points={[
-              "Section 443 of BS 7671 A4:2026 uses a consequence-based decision procedure. Reg 443.4 sets four mandatory triggers (risk to life, public services, commercial activity, large numbers of people); for other cases a risk assessment determines whether protection is required.",
+              "Section 443 of BS 7671 A4:2026 uses a consequence-based decision procedure. Reg 443.4.1 sets two consequence triggers (serious injury or loss of human life; significant financial or data loss); for all other cases protection shall be provided unless the owner declares it is not required because the loss or damage is tolerable.",
               "Three SPD types in cascade: Type 1 at the origin for partial direct-lightning current (10/350 microsecond impulse, required where LPS is present); Type 2 at distribution for induced surges (8/20 microsecond impulse, standard); Type 3 close to sensitive equipment for residual surge.",
               "Section 534 sets installation rules: minimum protective conductor CSA per Reg 534.4.10 (6 mm² for Type 2, 16 mm² for Type 1 at origin), conductor length less than 0.5 m total per Reg 534.4.8 (inductance kills SPD performance at surge frequencies).",
             ]}
@@ -256,7 +256,7 @@ export default function Sub4() {
           <LearningOutcomes
             outcomes={[
               "Apply the Section 443 consequence-based decision procedure to determine whether SPDs are required on an installation.",
-              "Identify the four Reg 443.4 mandatory triggers and explain the difference between mandatory protection and risk-assessment-based protection.",
+              "Identify the Reg 443.4.1 consequence triggers (serious injury or loss of human life; significant financial or data loss) and explain the difference between mandatory protection and the owner-declaration route for all other cases.",
               "Distinguish Type 1, Type 2 and Type 3 SPDs by their characteristic impulse waveform, location in the cascade and typical protection level Up.",
               "Apply BS EN 61643 product standard requirements when specifying SPDs on the design schedule.",
               "Apply Section 534 installation rules — protective conductor CSA per Reg 534.4.10, conductor length per Reg 534.4.8, dedicated overcurrent protection for the SPD.",
@@ -304,21 +304,23 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 443.4 (Where transient overvoltage protection shall be provided)"
-            clause="Protection against transient overvoltages shall be provided where the consequence caused by overvoltage: (a) could result in serious injury to, or loss of, human life; or (b) could result in interruption of public services or damage to cultural heritage; or (c) could result in interruption of commercial or industrial activity; or (d) could affect a large number of co-located individuals. For all other cases, a risk assessment has to be performed in order to determine if protection against transient overvoltage is required."
+            source="BS 7671:2018+A4:2026 — Regulation 443.4.1 (Transient overvoltages due to the effects of indirect lightning strokes)"
+            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) [Deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023)]; (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss."
             meaning={
               <>
-                Reg 443.4 sets the four mandatory cases for SPD provision. Where any of (a) to (d)
-                applies, SPDs shall be provided — no further assessment, no cost-benefit, just
-                protection. For installations not covered by (a) to (d), a risk assessment
-                determines whether protection is required. The L3 designer documents the
-                assessment on the design pack — the four (a)-(d) triggers checked with
-                yes / no and reasoning, the risk assessment for the residual case, the conclusion
-                'protection provided / not provided' with the SPD specification or the reason for
-                omission.
+                Reg 443.4.1 sets the consequence-based cases for SPD provision. There are two
+                active limbs — (a) serious injury to, or loss of, human life, and (c) significant
+                financial or data loss; limb (b) was deleted by the BS 7671:2018+A2:2022
+                Corrigendum (May 2023). Where (a) or (c) applies, SPDs shall be provided — no
+                cost-benefit, just protection. For all other cases, protection shall be provided
+                unless the owner of the installation declares it is not required because any loss
+                or damage is tolerable and they accept the risk. The L3 designer documents the
+                assessment on the design pack — the consequence limbs checked with yes / no and
+                reasoning, any owner declaration for the residual case, the conclusion 'protection
+                provided / not provided' with the SPD specification or the reason for omission.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 44, Section 443, Regulation 443.4."
+            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 44, Section 443, Regulation 443.4.1."
           />
 
           <SectionRule />
@@ -370,12 +372,14 @@ export default function Sub4() {
               <li>Dedicated overcurrent protection per the SPD manufacturer's specification (typically a 25 A or 32 A MCB or HRC fuse).</li>
             </ul>
             <p>
-              When to specify Type 2: most installations without LPS. Standard fit on commercial
-              fit-outs (Reg 443.4(c) commercial activity trigger), HMOs (Reg 443.4(a) sleeping
-              accommodation), care homes (Reg 443.4(a) life-safety), public buildings (Reg
-              443.4(b) public services / Reg 443.4(d) co-located individuals). On owner-occupied
-              domestic, the risk assessment outcome is typically 'recommended' rather than
-              'mandatory' — present the case to the customer and let them decide.
+              When to specify Type 2: most installations without LPS. Standard fit where a
+              Reg 443.4.1 consequence applies — care homes, HMOs and clinical premises engage the
+              (a) serious injury / loss of human life limb; commercial premises with valuable data
+              or business continuity engage the (c) significant financial or data loss limb. On
+              owner-occupied domestic, none of the active consequence limbs is usually triggered,
+              so protection shall be provided unless the owner declares it is not required because
+              the loss or damage is tolerable — present the case to the customer and let them
+              decide.
             </p>
           </ConceptBlock>
 
@@ -649,12 +653,14 @@ export default function Sub4() {
             }
             whatToDo={
               <>
-                Apply Section 443. None of Reg 443.4(a)-(d) mandatory triggers apply (single
-                owner-occupied dwelling, not a public service, not commercial activity, not
-                large numbers of co-located individuals). Risk assessment for the residual case
-                — sensitive AV / IT equipment present, supply-network induced surges plausible,
-                cost of replacement equipment in event of strike-near-miss substantial. Risk
-                assessment outcome: protection recommended. Specify a Type 2 SPD at the new
+                Apply Section 443. Neither Reg 443.4.1(a) (serious injury or loss of human life)
+                nor (c) (significant financial or data loss) is engaged on a single
+                owner-occupied dwelling, so protection shall be provided unless the owner declares
+                it is not required because the loss or damage is tolerable. Sensitive AV / IT
+                equipment is present, supply-network induced surges are plausible, and the cost of
+                replacement equipment in the event of a strike near-miss is substantial — so the
+                owner is unlikely to declare the loss tolerable. Outcome: protection recommended.
+                Specify a Type 2 SPD at the new
                 consumer unit, supply-side of the main switch, dedicated 25 A MCB for SPD OPD,
                 6 mm² copper protective conductor to the MET (Reg 534.4.10(a)), 2.5 mm² live
                 connections (Reg 534.4.10(c)), conductor lengths less than 0.5 m total combined
@@ -665,11 +671,12 @@ export default function Sub4() {
             }
             whyItMatters={
               <>
-                The Section 443 risk assessment is the L3 designer's discipline. Where
-                Reg 443.4 mandatory triggers apply, protection is required. Where they do not,
-                the assessment determines the answer — and on most informed customer
-                installations the answer is 'protection recommended', particularly with
-                connected sensitive electronics. The customer ends up with appropriate
+                The Section 443 consequence assessment is the L3 designer's discipline. Where a
+                Reg 443.4.1 consequence applies, protection is required. Where it does not,
+                protection shall still be provided unless the owner declares the loss or damage
+                tolerable — and on most informed customer installations the owner does not, so
+                the answer is 'protection recommended', particularly with connected sensitive
+                electronics. The customer ends up with appropriate
                 protection (Type 2 at the CU plus Type 3 at the AV cluster), proper installation
                 discipline (short conductors, correct CSA) and documented assessment that
                 supports a future periodic inspection or insurance enquiry. This is design
@@ -791,7 +798,7 @@ export default function Sub4() {
 
           <KeyTakeaways
             points={[
-              "Section 443 of BS 7671 A4:2026 uses a consequence-based decision procedure. Reg 443.4 sets four mandatory triggers (risk to life, public services, commercial activity, large numbers of people); for other cases a documented risk assessment determines whether protection is required.",
+              "Section 443 of BS 7671 A4:2026 uses a consequence-based decision procedure. Reg 443.4.1 sets two consequence triggers (serious injury or loss of human life; significant financial or data loss — limb (b) deleted by the A2:2022 Corrigendum, May 2023); for all other cases protection shall be provided unless the owner declares it is not required because the loss or damage is tolerable.",
               "Type 1 SPDs handle 10/350 microsecond direct-lightning current — required at the origin where the building has external LPS (BS EN 62305-3) or has direct-strike supply risk. Iimp 12.5-25 kA per pole; Up 1.5-4 kV.",
               "Type 2 SPDs handle 8/20 microsecond induced surges and switching transients — standard at the installation origin / main board on most installations without LPS. In 5-20 kA per pole; Up 1.0-2.5 kV.",
               "Type 3 SPDs are point-of-use devices for sensitive equipment — installed within ~5-10 m of the equipment. Used in addition to upstream Type 2; alone they would fail at first significant event.",

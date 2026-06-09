@@ -528,10 +528,10 @@ export default function Sub5() {
               Section 443 assessment for the worked brief:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Reg 443.4(a) risk to life — N/A (no life-safety circuits or vulnerable occupants documented).</li>
-              <li>Reg 443.4(b) public services / cultural heritage — N/A.</li>
-              <li>Reg 443.4(c) commercial / industrial activity — N/A (residential).</li>
-              <li>Reg 443.4(d) large numbers of co-located individuals — N/A.</li>
+              <li>Reg 443.4.1(a) serious injury to, or loss of, human life — N/A (no life-safety circuits or vulnerable occupants documented).</li>
+              <li>Reg 443.4.1(b) — deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023); no longer a consequence to assess.</li>
+              <li>Reg 443.4.1(c) significant financial or data loss — N/A (residential; no commercial financial or data-loss exposure).</li>
+              <li>All other cases — where none of the above consequences applies, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss.</li>
               <li>Risk assessment for residual case — owner has connected sensitive electronics (NAS, AV, smart home); cost of replacement equipment in event of strike-near-miss substantial; supply-network induced surges plausible in the suburban location. Outcome: protection recommended.</li>
             </ul>
             <p>
@@ -761,7 +761,7 @@ export default function Sub5() {
               "L3 design is supply-first, brief-second, per-circuit third. Read the TN type, declared Ze, PSCC and intake fuse before touching any per-circuit calc; they propagate through every later decision.",
               "Each final circuit walks the chain: Ib → In → Iz → device type / characteristic / breaking capacity → RCD class → AFDD decision → design Zs verified against Table 41.3 A4:2026 max for the chosen device.",
               "On the worked CU upgrade: shower 50 A Type B (Zs 0.49 ohms vs max 0.87 ohms = OK); EV 32 A Type B with Type B RCD or Type A + RDC-DD per Reg 722.531.3.101 plus O-PEN protection per Reg 722.411.4.1; PV 25 A Type B; heat pump 40 A Type C with ADS via RCD where Zs exceeds OPD max.",
-              "Section 443 SPD risk assessment for the residual case (no Reg 443.4(a)-(d) trigger) — outcome 'recommended' for owner with sensitive electronics. Type 2 SPD at the CU per BS EN 61643, supply-side of main switch, conductors per Reg 534.4.10 and Reg 534.4.8.",
+              "Section 443 SPD risk assessment for the residual case (no Reg 443.4.1 consequence trigger — neither serious injury / loss of human life nor significant financial or data loss applies) — outcome 'recommended' for owner with sensitive electronics. Type 2 SPD at the CU per BS EN 61643, supply-side of main switch, conductors per Reg 534.4.10 and Reg 534.4.8.",
               "Reg 421.1.7 AFDD per-circuit conversation with customer — documented decision per circuit. Engineering benefit strongest on socket circuits in sleeping accommodation; modest on dedicated fixed-flex single-load circuits.",
               "Consolidated MD and design ultimate on the cover sheet. If design ultimate approaches the intake fuse rating, raise DNO supply upgrade at design stage rather than at handover plus 2 years.",
               "Reg 132.13 documentation is part of the design product. Cover sheet, schedule, single-line, cable schedule, SPD assessment, AFDD record, risk register, device specs, test schedule, customer summary — all required.",

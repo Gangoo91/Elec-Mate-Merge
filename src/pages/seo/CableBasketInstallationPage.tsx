@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'How do you earth wire cable basket?',
     answer:
-      "Wire cable basket must be bonded section-to-section with earth bond connectors at every joint, and the system must be connected to the installation's main earthing terminal with a suitably sized earth conductor. Cablofil and other manufacturers supply clip-on earth bond connectors that attach to the wire mesh without requiring drilling or separate hardware. The earth conductor cross-section must be calculated per BS 7671 Regulation 543, taking into account the maximum earth fault current and disconnection time of the upstream protective device.",
+      "Wire cable basket must be bonded section-to-section with earth bond connectors at every joint, and the system must be connected to the installation's main earthing terminal with a suitably sized earth conductor. Cablofil and other manufacturers supply clip-on earth bond connectors that attach to the wire mesh without requiring drilling or separate hardware. The earth conductor cross-section is determined either from BS 7671 Table 54.7 (Regulation 543.1.1) or by the adiabatic calculation in Regulation 543.1.3, taking into account the maximum earth fault current and disconnection time of the upstream protective device.",
   },
   {
     question: 'What support spacing is required for cable basket?',
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'Is cable basket suitable for fire-resistant cable installations?',
     answer:
-      "Wire cable basket can be used to support and route fire-resistant cables such as FP200 Gold and MICC cable, subject to the fire strategy for the building. The basket itself is not fire-rated, but fire-resistant cables installed in basket will maintain their circuit integrity for the rated period provided the basket supports do not fail and cause the cables to fall. Where a fire-rated cable management system is required (for circuits needing circuit integrity for 60 or 90 minutes), purpose-made fire-rated cable management systems should be specified. Always consult the fire engineer's specification.",
+      "Wire cable basket can be used to support and route fire-resistant cables such as FP200 Gold and MICC cable, subject to the fire strategy for the building. The basket itself is not fire-rated, but BS 7671 Regulation 521.10.202 requires wiring systems to be supported such that they will not be liable to premature collapse in the event of fire — so the supports and fixings (not just the cable) must be metal and survive long enough to keep the cables in place. Fire-resistant cables in basket will maintain their circuit integrity for their rated period only while those supports hold. Where a fire-rated cable management assembly is specified, follow the fire engineer's design and the cable manufacturer's fixing requirements.",
   },
 ];
 
@@ -250,45 +250,67 @@ const sections = [
       <>
         <p>
           Cablofil and equivalent wire basket systems are available in a range of widths, depths,
-          and wire diameters to suit different applications and cable loadings.
+          and wire diameters to suit different applications and cable loadings. The table below
+          summarises the typical specification ranges you will encounter on UK commercial projects.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Width range</strong> — standard widths from 50mm to 600mm. Common sizes in
-                commercial installations are 100mm, 150mm, 200mm, 300mm, and 450mm. Choose width
-                based on cable fill calculation; manufacturers typically recommend a maximum fill of
-                around 40% as a practical guide to preserve ventilation and maintain the BS 7671
-                Appendix 4 Cg grouping correction factor assumptions for cables in free air.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Depth range</strong> — standard depths from 35mm to 105mm. Deeper basket
-                allows higher cable volumes without exceeding width. 54mm depth is the most common
-                for standard commercial applications.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Wire diameter</strong> — heavier wire provides greater load capacity and
-                allows wider support spacing. Cablofil CF54 series uses 2.9mm wire as standard.
-                CF105 deep-section basket uses heavier wire for larger span capability.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Finishes</strong> — pre-galvanised (indoor dry use), hot-dip galvanised
-                (indoor/sheltered outdoor), PVC coated (humid or mild outdoor), and stainless steel
-                316 (corrosive outdoor or marine environments).
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Dimension</th>
+                <th className="px-4 py-3 font-semibold">Typical range</th>
+                <th className="px-4 py-3 font-semibold">Most common</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Width</td>
+                <td className="px-4 py-3">50mm – 600mm</td>
+                <td className="px-4 py-3">100 / 150 / 200 / 300 / 450mm</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Depth</td>
+                <td className="px-4 py-3">35mm – 105mm</td>
+                <td className="px-4 py-3">54mm (standard commercial)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Wire diameter</td>
+                <td className="px-4 py-3">~3mm – 5mm+</td>
+                <td className="px-4 py-3">2.9mm (Cablofil CF54 series)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Choose width based on a cable fill calculation. Manufacturers typically recommend a
+          maximum cross-sectional fill of around 40% as a practical guide to preserve ventilation
+          and keep cables in something close to free-air conditions — note that this 40% figure is
+          manufacturer guidance, not a specific BS 7671 threshold. Deeper basket (e.g. the 105mm
+          deep-section profile) and heavier wire allow higher cable volumes and wider support
+          spans.
+        </p>
+        <h4 className="font-bold text-white mt-6 mb-3">Finishes by environment</h4>
+        <div className="grid sm:grid-cols-2 gap-3 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="font-semibold text-yellow-400 mb-1">Pre-galvanised (electro-galvanised)</p>
+            <p className="text-sm text-white/90">Indoor, dry use only. The thin zinc coating
+              corrodes rapidly in damp or external conditions.</p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="font-semibold text-yellow-400 mb-1">Hot-dip galvanised (HDG)</p>
+            <p className="text-sm text-white/90">Indoor and sheltered outdoor use where not in
+              direct contact with weather.</p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="font-semibold text-yellow-400 mb-1">PVC coated</p>
+            <p className="text-sm text-white/90">Humid or mildly corrosive environments; good
+              corrosion resistance for external or wash-down areas.</p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="font-semibold text-yellow-400 mb-1">Stainless steel 316</p>
+            <p className="text-sm text-white/90">Fully exposed outdoor, marine and corrosive
+              environments where galvanising will not last.</p>
+          </div>
         </div>
       </>
     ),
@@ -301,42 +323,66 @@ const sections = [
         <p>
           Wire cable basket must be adequately supported to prevent deflection under cable loading.
           The flexible nature of wire mesh means it will sag more than rigid pressed steel tray if
-          supports are spaced too widely.
+          supports are spaced too widely. The figures below are typical manufacturer guidance — always
+          confirm against the specific load/span table for the basket series and cable load you are
+          installing.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Location</th>
+                <th className="px-4 py-3 font-semibold">Typical max support spacing</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Horizontal straight run (CF54, standard load)</td>
+                <td className="px-4 py-3">1500mm centres</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Heavily loaded or wide basket</td>
+                <td className="px-4 py-3">1200mm or 1000mm centres</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Either side of a bend, tee or direction change</td>
+                <td className="px-4 py-3">Within 300mm of the fitting</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Vertical run</td>
+                <td className="px-4 py-3">1200mm centres (plus cable ties/cleats for cable weight)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Horizontal straight runs</strong> — typically 1500mm maximum support spacing
-                for Cablofil CF54 with standard cable loading. Reduce to 1200mm or 1000mm for
-                heavily loaded baskets or wide widths. Always check the manufacturer's load/span
-                tables.
+                <strong>Support against premature collapse in fire</strong> — BS 7671 Regulation
+                521.10.202 requires wiring systems to be supported such that they will not be liable
+                to premature collapse in the event of fire, and this applies throughout the
+                installation. For basket, that means using metal supports and fixings on escape
+                routes rather than relying on plastic cable ties or fixings that would fail early in
+                a fire and let cables fall.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>At fittings and route changes</strong> — install supports within 300mm on
-                each side of bends, tees, and changes of direction. Joints in wire basket are the
-                weakest point in the system.
+                <strong>Joints are the weak point</strong> — joints in wire basket are the weakest
+                point in the run, so position supports close to every connector and fitting rather
+                than mid-span only.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Support types</strong> — threaded rod hangers with Cablofil hanger brackets
-                are the most common support method for suspended installations. Wall brackets and
-                ceiling clips are used for surface-mounted basket. All fixings into structural
-                elements only — not lightweight partitions.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Vertical runs</strong> — support at maximum 1200mm centres for vertical
-                cable basket. Cable weight on vertical runs must be managed with cable ties or
-                dedicated cable cleats at regular intervals within the basket.
+                are the most common method for suspended installations. Wall brackets and ceiling
+                clips are used for surface-mounted basket. Fix into structural elements only — not
+                lightweight partitions.
               </span>
             </li>
           </ul>
@@ -377,9 +423,12 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>System earth connection</strong> — connect the wire basket system to the
-                main earthing terminal with a suitably sized earth conductor, sized per BS 7671
-                Regulation 543. The connection point should be at the origin of the basket run,
-                nearest the distribution board or panel.
+                main earthing terminal with a suitably sized earth conductor. Protective conductor
+                cross-section is determined either from BS 7671 Table 54.7 (Regulation 543.1.1) or
+                by the adiabatic calculation in Regulation 543.1.3, taking account of the maximum
+                earth fault current and the disconnection time of the upstream protective device.
+                The connection point should be at the origin of the basket run, nearest the
+                distribution board or panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -387,12 +436,12 @@ const sections = [
               <span>
                 <strong>Testing and certifying basket earthing</strong> — earth continuity of the
                 basket system must be verified and recorded on the Electrical Installation
-                Certificate (EIC) or EICR. BS 7671 Reg 830.3.201 requires that the presence and
-                adequacy of circuit protective conductors shall be checked during periodic
-                inspection, confirming both continuity and correct sizing per Section 543. In
-                practice, test between the origin earth connection and remote sections of basket
-                with a low-resistance ohmmeter; results should be a fraction of an ohm for a
-                well-bonded system. Record all readings on the schedule of test results.
+                Certificate (EIC) or EICR. The presence and adequacy of circuit protective
+                conductors is a required inspection item, grounded in BS 7671 Regulation 411.3.1 and
+                Section 543, confirming both continuity and correct sizing. In practice, test
+                between the origin earth connection and remote sections of basket with a
+                low-resistance ohmmeter; results should be a fraction of an ohm for a well-bonded
+                system. Record all readings on the schedule of test results.
               </span>
             </li>
           </ul>
@@ -442,15 +491,15 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable segregation</strong> — separate wire basket runs should be used for
-                power and data cables. BS 7671 Section 528 (Reg 528.3.4) requires that wiring
-                systems shall be suitably protected against hazards from proximity to other
-                services, which includes electromagnetic interference risks to data circuits. Where
-                power and data basket runs must share a space, a central divider or physical
-                separation should be maintained; the commonly cited 200mm figure derives from
-                structured-cabling standards (CENELEC EN 50174) and cable manufacturers&apos; EMC
-                guidance rather than a specific BS 7671 distance — refer to the data cabling system
-                specification and manufacturer guidance for the required separation in your
-                installation.
+                power and data cables. BS 7671 addresses this through Regulation 528.1 (proximity to
+                other electrical services, including separation of Band I extra-low-voltage/data
+                circuits from Band II low-voltage power circuits) and Regulation 528.2 (proximity of
+                communications cables). Where power and data basket runs must share a space, a
+                central divider or physical separation should be maintained; the commonly cited
+                200mm figure derives from structured-cabling standards (CENELEC EN 50174) and cable
+                manufacturers&apos; EMC guidance rather than a specific BS 7671 distance — refer to
+                the data cabling system specification and manufacturer guidance for the required
+                separation in your installation.
               </span>
             </li>
           </ul>
@@ -466,49 +515,47 @@ const sections = [
         <p>
           Wire cable basket is generally more expensive per metre in material cost than equivalent
           pressed steel perforated cable tray, but this premium must be assessed against the
-          installation labour saving.
+          installation labour saving. The figures below are indicative market guidance to frame the
+          trade-off — they are not a quote, and the actual installed cost varies by project, route
+          complexity and supplier.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Material cost</strong> — wire basket is typically 20–40% more expensive per
-                metre than equivalent hot-dip galvanised perforated tray. On a large project with
-                hundreds of metres of basket, this difference is significant.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Labour saving</strong> — on-site bending and cutting without power tools,
-                clip-on earth bonds, and faster cable installation into open basket can reduce
-                installation labour by 15–30% on complex commercial routes compared to pressed steel
-                tray requiring factory-made fittings.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Programme saving</strong> — on fast-track commercial fit-outs where
-                programme is critical, the ability to adapt basket routes on site without waiting
-                for additional tray fittings can save days on the programme. Time savings have a
-                real monetary value on tight commercial contracts.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>When to use solid tray instead</strong> — pressed steel solid bottom tray is
-                better value where routes are long and straight, where cables need physical
-                protection from below, or where the cable management system will not be changed over
-                time. See the{' '}
-                <SEOInternalLink href="/cable-tray-installation">cable tray guide</SEOInternalLink>{' '}
-                for comparison.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Factor</th>
+                <th className="px-4 py-3 font-semibold">Wire basket vs perforated tray</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Material cost per metre</td>
+                <td className="px-4 py-3">Typically ~20–40% higher than equivalent HDG perforated tray</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Installation labour</td>
+                <td className="px-4 py-3">Often ~15–30% lower on complex routes (on-site cutting/bending, clip-on earth bonds, faster cable laying)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Programme</td>
+                <td className="px-4 py-3">Faster on fast-track fit-outs — routes adapt on site without waiting for factory fittings</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Best where tray wins</td>
+                <td className="px-4 py-3">Long straight runs, cables needing protection from below, fixed routes that won't change</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <p>
+          On a large project with hundreds of metres of basket the material premium is significant,
+          but the labour and programme savings can partially or fully offset it — so always compare
+          on a project-specific installed-cost basis rather than on headline material price. Where
+          routes are long, straight and unlikely to change, pressed steel solid-bottom or perforated
+          tray is often better value. See the{' '}
+          <SEOInternalLink href="/cable-tray-installation">cable tray installation guide</SEOInternalLink>{' '}
+          for a direct comparison.
+        </p>
       </>
     ),
   },
@@ -522,44 +569,78 @@ const sections = [
           7671 Appendix 4 correction factors to the base current-carrying capacity (I<sub>z</sub>).
           The three factors most relevant to basket installations are:
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Factor</th>
+                <th className="px-4 py-3 font-semibold">What it corrects for</th>
+                <th className="px-4 py-3 font-semibold">BS 7671 source</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">C<sub>a</sub></td>
+                <td className="px-4 py-3">Ambient temperature above 30&deg;C (e.g. ceiling voids, plant rooms)</td>
+                <td className="px-4 py-3">Table 4B1</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">C<sub>g</sub></td>
+                <td className="px-4 py-3">Grouping — mutual heating from other circuits sharing the basket</td>
+                <td className="px-4 py-3">Tables 4C4 / 4C5 (free-air methods E/F)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">C<sub>i</sub></td>
+                <td className="px-4 py-3">Contact with thermal insulation elsewhere on the route</td>
+                <td className="px-4 py-3">Reg 523 / Appendix 4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ca — ambient temperature correction</strong> — if the ambient temperature in
-                the ceiling void or plant room exceeds 30&deg;C, apply the Ca factor from BS 7671
-                Appendix 4 Table 4B1. At 40&deg;C ambient, Ca = 0.87 for 70&deg;C PVC cables.
+                <strong>C<sub>a</sub> — ambient temperature</strong> — if the ambient temperature in
+                the ceiling void or plant room exceeds 30&deg;C, apply the C<sub>a</sub> factor from
+                BS 7671 Appendix 4 Table 4B1. For example, at 40&deg;C ambient C<sub>a</sub> = 0.87
+                for 70&deg;C thermoplastic (PVC) cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cg — grouping derating</strong> — this is the critical factor for basket
-                installations. Where multiple circuits are run together in the basket, Cg reduces
-                the rated current to account for mutual heating. Per BS 7671 Appendix 4 Table 4C1,
-                Cg for 3 circuits = 0.70, for 5 circuits = 0.60, for 10 circuits = 0.50. On a fully
-                loaded basket, this derating is the primary driver for upsizing conductors — not the
-                fill percentage. Always calculate Cg for the actual number of circuits in the
-                basket.
+                <strong>C<sub>g</sub> — grouping</strong> — this is the critical factor on a loaded
+                basket. Because the open mesh has more than 30% free area, cables on basket are rated
+                to Reference Method E or F (free air), so the grouping factor comes from BS 7671
+                Appendix 4 <strong>Tables 4C4 (multicore) and 4C5 (single-core)</strong> — not the
+                bunched/enclosed factors in Table 4C1. The free-air factors are less severe: for a
+                single perforated tray of touching multicore cables, Table 4C4 gives around 0.87 for
+                two cables, reducing as more cables and tiers are added. Spacing cables apart (one
+                cable diameter or more) reduces the derating further. On a fully loaded basket this
+                grouping derating — not the fill percentage — is the primary driver for upsizing
+                conductors, so always look up the factor for the actual number of cables and the
+                installation arrangement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ci — thermal insulation</strong> — does not normally apply on open basket,
-                but applies if cables leave the basket and pass through or are in contact with
-                thermal insulation in another part of their route.
+                <strong>C<sub>i</sub> — thermal insulation</strong> — does not normally apply on open
+                basket, but applies if cables leave the basket and pass through or are in contact
+                with thermal insulation elsewhere on their route.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The combined derated capacity is: I<sub>z</sub>(derated) = I<sub>z</sub>(tabulated)
-          &times; Ca &times; Cg. The selected conductor must satisfy I<sub>z</sub>(derated) &ge; I
-          <sub>n</sub> (the nominal current of the protective device). Refer to BS 7671 Appendix 4
-          Tables 4D1A–4D5A for the base tabulated values for your cable type and installation
-          method.
+          The combined derated capacity is: I<sub>z</sub>(derated) = I<sub>t</sub>(tabulated)
+          &times; C<sub>a</sub> &times; C<sub>g</sub> (&times; C<sub>i</sub> where it applies). The
+          selected conductor must satisfy I<sub>z</sub> &ge; I<sub>n</sub> (the nominal current of
+          the protective device). Take the base tabulated current-carrying capacity for your cable
+          type from the relevant Appendix 4 current-carrying-capacity table using the Reference
+          Method E or F column for free-air / tray installation.
         </p>
       </>
     ),
@@ -619,6 +700,13 @@ export default function CableBasketInstallationPage() {
       tocItems={tocItems}
       badge="Installation Guide"
       badgeIcon={Layers}
+      answerBox={{
+        question: 'What is wire cable basket and what is it used for?',
+        answer:
+          'Wire cable basket is a cable management system made from welded steel wire mesh formed into a channel. It is a lighter, faster-to-install alternative to pressed steel cable tray, used to route power and data cables in commercial buildings and data centres. Its open mesh gives excellent airflow, easy cable identification and on-site flexibility. Like all metallic cable management, it must be earthed.',
+        detail:
+          'Because the open mesh has more than 30% free area, cables on basket are rated to Reference Method E or F (free air) under BS 7671 — the same basis as a perforated cable tray.',
+      }}
       heroTitle={
         <>
           Wire Cable Basket Installation UK:{' '}

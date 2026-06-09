@@ -43,9 +43,9 @@ const keyTakeaways = [
   'Validation is the formal documented process of demonstrating that systems do what they are designed to do. Electrical systems in pharmaceutical facilities are validated through Installation Qualification (IQ), Operational Qualification (OQ), and Performance Qualification (PQ).',
   'FDA 21 CFR Part 11 governs electronic records and electronic signatures for facilities supplying the US market. Electrical control systems, building management systems, and SCADA systems that record GMP-relevant data must comply.',
   'Isolation transformers are widely used in pharmaceutical cleanrooms to provide a floating earth reference, reduce electromagnetic interference to sensitive instrumentation, and provide an additional level of electrical safety for personnel working with critical equipment.',
-  'BS 7671 Reg 710.555.201 sets a mandatory acceptance criterion for medical IT systems: with all final circuits connected and without load, the total leakage current (transformer plus all connected final circuits) shall not exceed 10 mA. Reg 710.531.2.2.3 prohibits overload protection in the secondary circuit of the isolation transformer — protection against overload must be provided at each individual final circuit instead.',
+  'BS 7671 sets mandatory acceptance criteria for medical IT systems. Reg 710.555.201(a) limits the no-load leakage current of the transformer output winding and enclosure to 0.5 mA, and limits each transformer to a rated output of 0.5–10 kVA. Across the whole medical IT system, with all final circuits connected and without load, the total leakage current (transformer plus all connected final circuits) shall not exceed 10 mA. Reg 710.531.2.2.3 prohibits overload protection in the secondary circuit of the isolating transformer — overload protection must instead be provided at each individual final circuit.',
   'BS 7671 Reg 710.415.1 prohibits the use of RCDs as additional protection on final circuits supplied by a medical IT system. Where a second insulation fault occurs, automatic disconnection must be achieved via overcurrent protective devices in accordance with Reg 411.6.5 (Reg 717.411.6).',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of fire caused by arc fault currents. This recommendation applies across premises — including pharmaceutical facilities undertaking new installations or subject to EICR — and should be considered when upgrading or certifying electrical systems.',
+'BS 7671:2018+A4:2026 redrafted Reg 421.1.7. It is now a requirement to protect final circuits supplying socket-outlets rated up to 32 A with arc fault detection devices (AFDDs) in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation, and care homes. For all other premises — including most pharmaceutical facilities — Reg 421.1.7 recommends AFDDs for single-phase AC final circuits supplying socket-outlets not exceeding 32 A, which should be considered on new work and at periodic inspection.',
 ];
 
 const faqs = [
@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'Why are isolation transformers used in pharmaceutical cleanrooms?',
     answer:
-      'Isolation transformers are used in pharmaceutical cleanrooms for several reasons. They provide a floating (unearthed) secondary winding, which means that a single earth fault on the secondary does not cause a circuit breaker trip — important in critical manufacturing processes where an unexpected power interruption could ruin a product batch. They also reduce electromagnetic interference (EMI) from the supply, which can affect sensitive analytical instruments. An insulation monitoring device (IMD) is used with an isolated power system to detect earth faults without tripping the supply. Where an insulation fault location system (IFLS) is provided, it shall comply with BS EN IEC 61557-9 (BS 7671 Reg 411.6.3). Medical IT transformers must comply with BS EN 61558-2-15 (Reg 710.55.101.2), and the total leakage current of the transformer and all connected final circuits shall not exceed 10 mA with no load applied (Reg 710.555.201). Importantly, RCDs shall not be used as additional protection on final circuits supplied by a medical IT system (Reg 710.415.1) — second-fault disconnection relies on overcurrent protective devices instead.',
+      'Isolation transformers are used in pharmaceutical cleanrooms for several reasons. They provide a floating (unearthed) secondary winding, which means that a single earth fault on the secondary does not cause a circuit breaker trip — important in critical manufacturing processes where an unexpected power interruption could ruin a product batch. They also reduce electromagnetic interference (EMI) from the supply, which can affect sensitive analytical instruments. An insulation monitoring device (IMD) is used with an isolated power system to detect earth faults without tripping the supply. Where an insulation fault location system (IFLS) is provided to indicate the location of a first fault, it may comply with BS EN IEC 61557-9 (BS 7671 Reg 411.6.4). Medical IT transformers must comply with BS EN 61558-2-15, and the no-load leakage current of the output winding and enclosure shall not exceed 0.5 mA per transformer (Reg 710.555.201). Across the whole medical IT system, the total leakage current of the transformer plus all connected final circuits shall not exceed 10 mA with no load applied. Importantly, RCDs shall not be used as additional protection on final circuits supplied by a medical IT system (Reg 710.415.1) — second-fault disconnection relies on overcurrent protective devices instead.',
   },
   {
     question: 'What are the particle count limits for ISO 5, ISO 6, ISO 7, and ISO 8 cleanrooms?',
@@ -246,7 +246,12 @@ const sections = [
           The electrical installation within a pharmaceutical cleanroom must not compromise the
           room's ability to maintain its defined particle count classification. This drives a
           specific approach to materials, methods, and detailing that differs significantly from
-          standard industrial or commercial electrical work.
+          standard industrial or commercial electrical work. The same principles underpin
+          general{' '}
+          <SEOInternalLink href="/cleanroom-electrical">
+            cleanroom electrical installation
+          </SEOInternalLink>{' '}
+          across regulated industries.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -301,45 +306,63 @@ const sections = [
     content: (
       <>
         <p>
-          ISO 14644-1 defines cleanroom classifications by maximum permitted airborne particle
-          concentrations. The classification of each area in a pharmaceutical facility drives the
-          electrical specification for that area.
+          ISO 14644-1 defines cleanroom classifications by the maximum permitted airborne particle
+          concentration. The classification of each area in a pharmaceutical facility drives the
+          electrical specification for that area — the table below summarises the ISO classes most
+          relevant to pharmaceutical manufacturing, their indicative EU GMP Annex 1 grade
+          equivalents, and what each demands of the electrical installation.
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ISO 5 / Grade A (≤3,520 particles/m³ at 0.5µm)</strong> — the most stringent
-                classification, used for filling zones, critical surfaces, and directly exposed
-                product in aseptic manufacturing. Electrical installations must be minimal and
-                flush-mounted. All penetrations must be sealed. No materials that shed particles may
-                be used. Unidirectional (laminar) airflow must not be disrupted by the electrical
-                installation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ISO 7 / Grade B-C (≤352,000 particles/m³ at 0.5µm)</strong> — background
-                environment for aseptic operations (Grade B) and general aseptic preparation areas
-                (Grade C). Electrical installation requirements are rigorous but somewhat less
-                stringent than Grade A — flush mounting still required, but some surface-mounted
-                equipment with cleanable housings may be acceptable depending on location.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ISO 8 / Grade D (≤3,520,000 particles/m³ at 0.5µm)</strong> — general
-                pharmaceutical manufacturing areas for non-sterile products and less critical
-                sterile manufacturing steps. Electrical installation is more similar to clean
-                industrial than to cleanroom, but particle generation and cleanability remain
-                important considerations.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] text-xs font-semibold uppercase tracking-wide text-white/70 px-4 py-3">
+            <div className="col-span-3">ISO class</div>
+            <div className="col-span-3">Max particles/m³ ≥0.5µm</div>
+            <div className="col-span-2">GMP grade</div>
+            <div className="col-span-4">Electrical implication</div>
+          </div>
+          <div className="grid grid-cols-12 gap-0 items-start bg-blue-900/30 border-t border-blue-700/40 px-4 py-3 text-sm text-white">
+            <div className="col-span-3 font-bold">ISO 5</div>
+            <div className="col-span-3 tabular-nums">3,520</div>
+            <div className="col-span-2">Grade A</div>
+            <div className="col-span-4 text-white/90">
+              Filling zones, critical surfaces, exposed product. Minimal, flush-mounted fittings;
+              all penetrations sealed; no particle-shedding materials; unidirectional (laminar)
+              airflow must not be disrupted.
+            </div>
+          </div>
+          <div className="grid grid-cols-12 gap-0 items-start border-t border-white/10 px-4 py-3 text-sm text-white">
+            <div className="col-span-3 font-bold">ISO 6</div>
+            <div className="col-span-3 tabular-nums">35,200</div>
+            <div className="col-span-2">—</div>
+            <div className="col-span-4 text-white/90">
+              Less critical aseptic support areas. Flush mounting remains the default; cleanability
+              and sealed entries still apply.
+            </div>
+          </div>
+          <div className="grid grid-cols-12 gap-0 items-start border-t border-white/10 px-4 py-3 text-sm text-white">
+            <div className="col-span-3 font-bold">ISO 7</div>
+            <div className="col-span-3 tabular-nums">352,000</div>
+            <div className="col-span-2">Grade B / C</div>
+            <div className="col-span-4 text-white/90">
+              Background environment for aseptic operations (B) and general aseptic preparation (C).
+              Flush mounting still required; some surface-mounted equipment with cleanable housings
+              may be acceptable by location.
+            </div>
+          </div>
+          <div className="grid grid-cols-12 gap-0 items-start border-t border-white/10 px-4 py-3 text-sm text-white">
+            <div className="col-span-3 font-bold">ISO 8</div>
+            <div className="col-span-3 tabular-nums">3,520,000</div>
+            <div className="col-span-2">Grade D</div>
+            <div className="col-span-4 text-white/90">
+              General manufacturing for non-sterile products and less critical sterile steps. Closer
+              to clean industrial, but particle generation and cleanability still matter.
+            </div>
+          </div>
         </div>
+        <p className="text-sm text-white/60">
+          Particle limits are at the 0.5µm size for the ISO 14644-1 occupancy state being assessed.
+          GMP grade equivalents are indicative — the formal grade is fixed by the qualified design,
+          not by the ISO class alone.
+        </p>
       </>
     ),
   },
@@ -354,6 +377,29 @@ const sections = [
           and pressure differential all depend on the HVAC system — and the HVAC system depends
           entirely on its electrical installation.
         </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="text-2xl font-bold text-yellow-400 tabular-nums">10–15 Pa</div>
+            <div className="text-sm text-white/80 mt-1">
+              Typical positive pressure differential held between a cleanroom and the adjacent area,
+              monitored by BMS-connected pressure transducers.
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="text-2xl font-bold text-yellow-400 tabular-nums">99.97%</div>
+            <div className="text-sm text-white/80 mt-1">
+              HEPA filter efficiency at the 0.3µm most-penetrating particle size; differential
+              pressure across the filter is monitored to detect loading.
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="text-2xl font-bold text-yellow-400">VSD-driven</div>
+            <div className="text-sm text-white/80 mt-1">
+              AHU fans run on variable speed drives to hold constant airflow as filters load —
+              demanding EMC-aware cable screening and earthing.
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -410,8 +456,36 @@ const sections = [
         <p>
           Isolation transformers are a common feature of pharmaceutical cleanroom electrical
           systems, particularly in areas where critical manufacturing processes or sensitive
-          instrumentation require an uninterrupted, low-interference power supply.
+          instrumentation require an uninterrupted, low-interference power supply. Where the
+          installation is a medical IT system, BS 7671 Section 710 imposes the verified acceptance
+          criteria below.
         </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
+            <div className="text-xl font-bold text-white tabular-nums">≤0.5 mA</div>
+            <div className="text-xs text-white/70 mt-1">
+              No-load leakage, transformer output winding &amp; enclosure (710.555.201(a))
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
+            <div className="text-xl font-bold text-white tabular-nums">≤10 mA</div>
+            <div className="text-xs text-white/70 mt-1">
+              Total no-load leakage across the whole system (transformer + all final circuits)
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
+            <div className="text-xl font-bold text-white tabular-nums">0.5–10 kVA</div>
+            <div className="text-xs text-white/70 mt-1">
+              Permitted rated output per transformer (710.555.201(b))
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
+            <div className="text-xl font-bold text-white">No RCD</div>
+            <div className="text-xs text-white/70 mt-1">
+              RCDs not used for additional protection on IT final circuits (710.415.1)
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -428,10 +502,13 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation monitoring device (IMD)</strong> — an IT system must be monitored
-                by an IMD (as required by BS 7671 Reg 411.6.3). The IMD detects the first earth
-                fault and raises an alarm, allowing the fault to be located and rectified without
-                interrupting the supply. Where an insulation fault location system (IFLS) is also
-                provided, it shall comply with BS EN IEC 61557-9 (Reg 411.6.3). This is the critical
+                by an IMD — Reg 411.6.3 permits insulation monitoring devices (IMDs), residual
+                current monitors (RCMs) and insulation fault location systems (IFLS) on an IT
+                system. The IMD detects the first earth fault and raises an alarm, allowing the
+                fault to be located and rectified without interrupting the supply. Where an
+                insulation fault location system (IFLS) is also provided to indicate the location of
+                a first fault, it may comply with BS EN IEC 61557-9 (Reg 411.6.4). This is the
+                critical
                 difference from a TN or TT system — the first fault is detected but does not cause
                 supply interruption.
               </span>
@@ -449,14 +526,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>
-                  Transformer product standard and leakage limit (Reg 710.55.101.2 / Reg
-                  710.555.201)
-                </strong>{' '}
-                — medical IT transformers shall comply with BS EN 61558-2-15. With all final
-                circuits connected and without load, the total leakage current of the medical IT
-                transformer and all connected final circuits combined shall not exceed 10 mA (Reg
-                710.555.201). This is a mandatory acceptance criterion verified at commissioning.
+                <strong>Transformer product standard and leakage limit (Reg 710.555.201)</strong>{' '}
+                — medical IT transformers shall comply with BS EN 61558-2-15. The no-load leakage
+                current of the output winding to earth and of the enclosure shall not exceed 0.5 mA,
+                and each transformer shall have a rated output of not less than 0.5 kVA and not more
+                than 10 kVA (Reg 710.555.201). Separately, across the whole medical IT system — with
+                all final circuits connected and without load — the total leakage current of the
+                transformer plus all connected final circuits shall not exceed 10 mA. These are
+                mandatory acceptance criteria verified at commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -647,12 +724,13 @@ const sections = [
                 A4:2026 Update: Arc Fault Detection Devices (AFDDs)
               </h4>
               <p className="text-white text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection
-                devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk of
-                fire due to arc fault currents. Pharmaceutical facilities undergoing new electrical
-                installation work or periodic inspection (EICR) should consider AFDDs — particularly
-                on socket-outlet and lighting circuits — as part of a current-standard-compliant
-                design. AFDDs detect dangerous series and parallel arcing conditions that
+                BS 7671:2018+A4:2026 redrafted Reg 421.1.7. AFDDs are now a requirement for final
+                circuits supplying socket-outlets rated up to 32 A in Higher Risk Residential
+                Buildings, Houses in Multiple Occupation, purpose-built student accommodation, and
+                care homes. For all other premises — which covers most pharmaceutical facilities —
+                the regulation recommends AFDDs on single-phase AC final circuits supplying
+                socket-outlets not exceeding 32 A. Consider them on new work and at periodic
+                inspection (EICR): AFDDs detect dangerous series and parallel arcing conditions that
                 conventional MCBs and RCDs cannot detect.
               </p>
             </div>
@@ -691,6 +769,13 @@ export default function PharmaceuticalElectricalPage() {
       }
       heroSubtitle="Everything UK electricians need to know about pharmaceutical electrical installation — GMP compliance, cleanroom wiring requirements, ISO 5–8 classifications, HVAC electrical integration, isolation transformers, IQ/OQ/PQ validation, and FDA 21 CFR Part 11 electronic records."
       readingTime={18}
+      answerBox={{
+        question: 'What are the electrical installation requirements for UK pharmaceutical facilities?',
+        answer:
+          'Pharmaceutical electrical work must satisfy BS 7671 and Good Manufacturing Practice (GMP), enforced in the UK by the MHRA. Cleanroom wiring uses flush-mounted, sealed, particle-free fittings; HVAC, monitoring and control systems are qualified through IQ, OQ and PQ. Where medical IT supplies are used, BS 7671 Part 7 (Section 710) governs transformers, insulation monitoring and second-fault protection.',
+        detail:
+          'All electrical work is documented under change control and traceable for MHRA inspection, and systems exporting to the US must also meet FDA 21 CFR Part 11 for electronic records.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -35,6 +35,12 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'Does an Edwardian house need rewiring?',
+  answer:
+    'Most Edwardian houses (built 1901–1910) with original or early wiring need a full rewire. The rubber (VIR) insulation is now over a century old, brittle and unsafe, and original installations usually lack a protective earth and RCD protection required by BS 7671. A full Edwardian rewire typically costs £4,500 to £9,500, more for large detached properties. Always confirm condition with an EICR first.',
+};
+
 const keyTakeaways = [
   'Edwardian properties (1901–1910) were built during the early years of domestic electricity supply. Wiring installed in this era used rubber insulation that is now over 115 years old — well beyond any safe service life.',
   'Edwardian houses are typically larger than Victorian terraces, with more generous room sizes and higher ceilings. This means more circuits, more cable runs, and higher rewire costs than a comparably-sized Victorian property.',
@@ -265,8 +271,10 @@ const sections = [
               <span>
                 <strong>Bakelite consumer units</strong> — Bakelite (an early thermosetting plastic)
                 was used for consumer unit enclosures from the 1920s through to the 1960s. Bakelite
-                is brittle and combustible under sustained arcing conditions. A modern
-                non-combustible metal-clad consumer unit is required under BS 7671 Amendment 4.
+                is brittle and combustible under sustained arcing conditions. Within domestic
+                premises, BS 7671 Regulation 421.1.201 requires consumer units and similar
+                switchgear to have a non-combustible enclosure — a metal-clad consumer unit
+                satisfies this (steel is deemed non-combustible).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -373,20 +381,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ring final circuits</strong> — a standard ring final circuit can serve a
-                floor area of up to 100m² under BS 7671. Large Edwardian houses may have individual
-                floor areas that approach or exceed this, requiring additional ring circuits or
-                spurs to ensure adequate socket provision without overloading any single circuit.
+                <strong>Ring final circuits</strong> — BS 7671 installation guidance (associated
+                with Regulation 433.1.204) historically adopts a limit of around 100m² of floor
+                area served by a single 32A ring final circuit. Large Edwardian houses may have
+                individual floor areas that approach or exceed this, so a second ring is often
+                added per floor to share load and avoid overloading any single circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchen circuits</strong> — a large Edwardian kitchen requires a dedicated
-                circuit for the oven, a dedicated circuit for the hob (if induction), a circuit for
-                the dishwasher, a circuit for the washing machine and dryer, and a ring final
-                circuit for worktop sockets. Five dedicated kitchen circuits is not unusual in a
-                large Edwardian renovation.
+                <strong>Kitchen circuits</strong> — BS 7671 installation guidance recommends
+                connecting cookers, ovens and hobs rated above 2 kW on their own dedicated radial
+                circuit rather than the ring. A large Edwardian kitchen therefore typically needs a
+                dedicated oven circuit, a dedicated hob circuit, separate supplies for the
+                dishwasher and washing machine/dryer, and a ring final circuit for worktop sockets.
+                Five dedicated kitchen circuits is not unusual in a large Edwardian renovation.
               </span>
             </li>
           </ul>
@@ -405,46 +415,54 @@ const sections = [
           The following are typical costs for a full rewire including consumer unit, all circuits,
           sockets, switches, and lighting points.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Three-bedroom Edwardian terrace</strong> — £4,500 to £7,500. Solid masonry
-                walls and larger room sizes add time. London properties typically 20 to 30 per cent
-                higher.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Four-bedroom Edwardian semi-detached</strong> — £6,000 to £9,500. Common
-                configuration. Detached equivalents add 10 to 15 per cent due to additional external
-                wall cable routes.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Five or six-bedroom Edwardian detached</strong> — £8,500 to £14,000+. Large
-                detached Edwardian properties with original features, multiple reception rooms, and
-                full-height basements at the upper end of this range.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Making good (plastering)</strong> — typically £800 to £2,500 in addition to
-                the electrical cost, depending on the extent of chasing and whether lime or modern
-                plaster finish is used.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1.4fr_0.9fr] sm:grid-cols-[1.6fr_0.9fr_1.3fr] bg-white/[0.06] text-xs uppercase tracking-wide text-white/60 font-semibold">
+            <div className="px-4 py-3">Property type</div>
+            <div className="px-4 py-3">Typical cost</div>
+            <div className="hidden sm:block px-4 py-3">Notes</div>
+          </div>
+          {[
+            {
+              type: '3-bed Edwardian terrace',
+              cost: '£4,500 – £7,500',
+              note: 'Solid masonry walls and larger rooms add time. London typically 20–30% higher.',
+            },
+            {
+              type: '4-bed Edwardian semi-detached',
+              cost: '£6,000 – £9,500',
+              note: 'Common configuration. Detached equivalents add 10–15% for external wall routes.',
+            },
+            {
+              type: '5–6 bed Edwardian detached',
+              cost: '£8,500 – £14,000+',
+              note: 'Multiple reception rooms, original features and full-height basements at upper end.',
+            },
+            {
+              type: 'Making good (plastering)',
+              cost: '£800 – £2,500',
+              note: 'In addition to electrical cost; depends on chasing extent and lime vs modern finish.',
+            },
+          ].map((row, i) => (
+            <div
+              key={row.type}
+              className={`grid grid-cols-[1.4fr_0.9fr] sm:grid-cols-[1.6fr_0.9fr_1.3fr] border-t border-white/10 ${
+                i % 2 ? 'bg-white/[0.02]' : ''
+              }`}
+            >
+              <div className="px-4 py-3 text-white font-medium flex items-center gap-2">
+                <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" />
+                {row.type}
+              </div>
+              <div className="px-4 py-3 text-yellow-400 font-semibold">{row.cost}</div>
+              <div className="hidden sm:block px-4 py-3 text-white/70 text-sm">{row.note}</div>
+            </div>
+          ))}
         </div>
-        <p>
-          Always obtain a written, itemised quote specifying the number of circuits, sockets,
-          lighting points, and the consumer unit specification. Vague quotes make it difficult to
-          compare between electricians and may lead to disputes over scope during the job.
+        <p className="text-white/60 text-sm">
+          Figures are indicative 2026 market guidance, not a quote. Always obtain a written,
+          itemised quote specifying the number of circuits, sockets, lighting points, and the
+          consumer unit specification. Vague quotes make it difficult to compare between
+          electricians and may lead to disputes over scope during the job.
         </p>
       </>
     ),
@@ -460,43 +478,73 @@ const sections = [
           the most commonly encountered findings in unmodernised or partially modernised Edwardian
           installations.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C2 — Deteriorated insulation</strong> — rubber or VIR cable insulation has
-                degraded to the point where it poses a potential risk. The inspector will note
-                specific locations where deterioration is observed.
+        <div className="space-y-3 my-4">
+          {[
+            {
+              code: 'C2',
+              colour: 'bg-orange-500/15 border-orange-500/30 text-orange-300',
+              title: 'Deteriorated insulation',
+              body: 'Rubber or VIR cable insulation has degraded to the point where it poses a potential risk. The inspector notes specific locations where deterioration is observed.',
+              reg: null,
+            },
+            {
+              code: 'C2',
+              colour: 'bg-orange-500/15 border-orange-500/30 text-orange-300',
+              title: 'Absence of RCD protection',
+              body: 'No RCD additional protection on socket-outlet circuits rated up to 32A, as required by Regulation 411.3.3. Almost universal in Edwardian properties with original or early-replacement consumer units.',
+              reg: '411.3.3',
+            },
+            {
+              code: 'C2',
+              colour: 'bg-orange-500/15 border-orange-500/30 text-orange-300',
+              title: 'No protective earth',
+              body: 'Earth conductors absent from some or all circuits. Particularly common in original lighting circuits installed before protective earthing was standardised.',
+              reg: null,
+            },
+            {
+              code: 'C2',
+              colour: 'bg-orange-500/15 border-orange-500/30 text-orange-300',
+              title: 'Inadequate main protective bonding',
+              body: 'Bonding to incoming gas and water services absent or corroded, contrary to Regulation 411.3.1.2. Frequently found on Edwardian properties with original lead or early copper pipework.',
+              reg: '411.3.1.2',
+            },
+            {
+              code: 'C3',
+              colour: 'bg-blue-500/15 border-blue-500/30 text-blue-300',
+              title: 'Insufficient socket outlets',
+              body: 'Accessible socket outlets so few that extension leads and adaptors are clearly necessary. A C3 is a recommendation rather than a requirement, but inadequate sockets increase the risk of overloaded extension leads.',
+              reg: null,
+            },
+          ].map((f, i) => (
+            <div
+              key={i}
+              className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-5 flex items-start gap-4"
+            >
+              <span
+                className={`shrink-0 rounded-lg border px-2.5 py-1 text-sm font-bold ${f.colour}`}
+              >
+                {f.code}
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C2 — Absence of RCD protection</strong> — no RCD protection on socket-outlet
-                circuits as required by Regulation 411.3.3. This is almost universal in Edwardian
-                properties with original or early-replacement consumer units.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C2 — No protective earth</strong> — earth conductors absent from some or all
-                circuits. Particularly common in the original lighting circuits which were installed
-                before protective earthing was standardised.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C3 — Insufficient socket outlets</strong> — where the number of accessible
-                socket outlets is so low that the use of extension leads and adaptors is clearly
-                necessary. A C3 is a recommendation rather than a requirement, but inadequate
-                sockets increase the risk of overloaded extension leads.
-              </span>
-            </li>
-          </ul>
+              <div>
+                <h4 className="font-bold text-white">
+                  {f.title}
+                  {f.reg && (
+                    <span className="ml-2 text-xs font-medium text-white/50">Reg {f.reg}</span>
+                  )}
+                </h4>
+                <p className="text-white/80 text-sm leading-relaxed mt-1">{f.body}</p>
+              </div>
+            </div>
+          ))}
         </div>
+        <p className="text-white/60 text-sm">
+          Codes follow the BS 7671 model EICR: C1 (danger present), C2 (potentially dangerous), C3
+          (improvement recommended) and FI (further investigation). See our{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            EICR observation codes guide
+          </SEOInternalLink>{' '}
+          for a full breakdown.
+        </p>
       </>
     ),
   },
@@ -581,6 +629,7 @@ export default function EdwardianHouseElectricalPage() {
       }
       heroSubtitle="Edwardian houses built between 1901 and 1910 contain some of the UK's oldest surviving electrical installations. This guide covers the specific wiring hazards, early consumer units, the challenges of rewiring larger Edwardian rooms through solid masonry, and what to expect at renovation — including rewire costs of £4,500 to £9,500."
       readingTime={12}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

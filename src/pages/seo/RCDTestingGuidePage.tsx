@@ -576,13 +576,14 @@ const sections = [
               <span>
                 <strong>Transient overvoltages (lightning and switching)</strong>: Voltage
                 transients can cause a momentary current imbalance that trips a sensitive RCD. Surge
-                protective devices (SPDs) reduce this risk. BS 7671:2018+A4:2026 Reg 443.4 mandates
-                SPD protection where transient overvoltage could: (a) result in serious injury to or
-                loss of human life; (b) interrupt public services or damage cultural heritage; (c)
-                affect commercial or industrial activity; or (d) affect a large number of co-located
-                individuals (e.g. a multi-occupancy building or public assembly venue). For all
-                other cases a risk assessment is required to determine whether protection is
-                necessary.
+                protective devices (SPDs) reduce this risk. BS 7671:2018+A4:2026 Reg 443.4.1
+                requires protection against transient overvoltages where the consequence caused by
+                the overvoltage could result in: (a) serious injury to, or loss of, human life; or
+                (c) significant financial or data loss. Limb (b) was deleted by the BS
+                7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection shall be
+                provided unless the owner of the installation declares it is not required because
+                any loss or damage is tolerable and they accept the risk of damage to equipment and
+                any consequential loss.
               </span>
             </li>
             <li className="flex items-start gap-3">

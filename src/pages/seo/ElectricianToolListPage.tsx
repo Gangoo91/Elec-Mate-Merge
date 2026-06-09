@@ -36,6 +36,12 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'What tools do I need to be an electrician in the UK?',
+  answer:
+    'A UK electrician needs VDE 1000V insulated hand tools (screwdrivers, pliers, cutters, strippers), test equipment (a multifunction tester, a two-pole voltage indicator and a proving unit), cordless power tools (SDS drill, combi drill, impact driver) and PPE. The multifunction tester, voltage indicator and proving unit are the safety-critical core. A full professional kit costs roughly GBP 1,500 to GBP 4,000.',
+};
+
 const keyTakeaways = [
   'A professional electrician tool kit costs between GBP 1,500 and GBP 4,000 depending on brands and whether you buy new or second-hand -- the multifunction tester is the single most expensive item.',
   'VDE 1000V insulated tools are a legal requirement for any work on or near live conductors (GN3 and the Electricity at Work Regulations 1989) -- never use standard tools for electrical work.',
@@ -43,7 +49,7 @@ const keyTakeaways = [
   'Cordless power tools have largely replaced corded equivalents for electricians -- the time saved not dealing with extension leads and RCDs pays for the premium in weeks.',
   'Calibrate your test equipment annually (or as specified by the manufacturer) to maintain accuracy, comply with scheme requirements, and ensure your test results are legally defensible.',
   'When recording measured earth fault loop impedance (Zs), your reading must satisfy Zs(measured) ≤ 0.8 × (Uo / Ia) per GN3 Reg 1.16.9 -- the 0.8 factor corrects for conductors at operating temperature. Apply this check before marking a circuit as compliant.',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 (Amendment A4) recommends Arc Fault Detection Devices (AFDDs) in AC final circuits. Verify that your test instruments support AFDD testing before working on new domestic installations where AFDDs are fitted.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 now requires Arc Fault Detection Devices (AFDDs) on socket-outlet final circuits up to 32 A in high rise residential buildings (HRRBs), HMOs, purpose-built student accommodation and care homes, and recommends them elsewhere. Verify that your test instruments support AFDD testing.',
 ];
 
 const faqs = [
@@ -245,7 +251,11 @@ const sections = [
         <p>
           Test equipment is what separates a qualified electrician from someone who just connects
           wires. Without proper test instruments, you cannot verify that an installation is safe,
-          you cannot produce electrical certificates, and you cannot carry out{' '}
+          you cannot produce an{' '}
+          <SEOInternalLink href="/tools/eic-certificate">
+            Electrical Installation Certificate
+          </SEOInternalLink>
+          , and you cannot carry out{' '}
           <SEOInternalLink href="/guides/safe-isolation-procedure">safe isolation</SEOInternalLink>.
           Your test equipment is the single most important investment in your tool kit.
         </p>
@@ -299,6 +309,44 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">
+            Popular Multifunction Testers Compared
+          </h3>
+          <div className="overflow-x-auto -mx-2 px-2">
+            <table className="w-full text-sm text-white border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-left">
+                  <th className="py-2 pr-3 font-semibold text-white/70">Model</th>
+                  <th className="py-2 pr-3 font-semibold text-white/70">Indicative price</th>
+                  <th className="py-2 font-semibold text-white/70">Best known for</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3 font-semibold">Megger MFT1741</td>
+                  <td className="py-2.5 pr-3">GBP 700-GBP 850</td>
+                  <td className="py-2.5">Industry standard; widely supported and familiar to most UK electricians</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3 font-semibold">Fluke 1664FC</td>
+                  <td className="py-2.5 pr-3">GBP 900-GBP 1,100</td>
+                  <td className="py-2.5">Bluetooth wireless data download; saves time on large schedules</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3 font-semibold">Metrel MI3155</td>
+                  <td className="py-2.5 pr-3">GBP 600-GBP 800</td>
+                  <td className="py-2.5">Strong value; comparable performance at a lower price point</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            All three perform the same core tests: insulation resistance, continuity (R1+R2),
+            earth fault loop impedance (Zs and Ze), RCD trip time and current, prospective fault
+            current (PFC/PSCC) and polarity. Prices are indicative market guidance, not a quote.
+          </p>
+        </div>
         <p>
           Additional test equipment you may need depending on your work type includes a PAT tester
           (for portable appliance testing), an earth electrode tester (for installations with earth
@@ -324,12 +372,15 @@ const sections = [
             AFDD Testing Capability — BS 7671:2018+A4:2026 Reg 421.1.7
           </h3>
           <p className="text-white/90 text-sm">
-            BS 7671:2018+A4:2026 Reg 421.1.7 (introduced by Amendment A4) recommends the
-            installation of Arc Fault Detection Devices (AFDDs) in AC final circuits of fixed
-            installations to mitigate fire risk from arc fault currents. Check that your
-            multifunction tester or a supplementary instrument supports AFDD operation testing — not
-            all older instruments do. Confirming AFDD operation is now an expected inspection item
-            on new domestic work where AFDDs are fitted.
+            Under BS 7671:2018+A4:2026, Reg 421.1.7 has been redrafted. It is now a{' '}
+            <strong>requirement</strong> to protect final circuits supplying socket-outlets with a
+            rated current not exceeding 32 A using Arc Fault Detection Devices (AFDDs) in high
+            rise residential buildings (HRRBs), Houses in Multiple Occupation, purpose-built
+            student accommodation and care homes. For all other premises, the regulation{' '}
+            <strong>recommends</strong> AFDDs for single-phase AC final circuits supplying
+            socket-outlets not exceeding 32 A. Check that your multifunction tester or a
+            supplementary instrument supports AFDD operation testing — not all older instruments
+            do.
           </p>
         </div>
         <SEOAppBridge
@@ -536,6 +587,49 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">Indicative Spend by Category</h3>
+          <div className="overflow-x-auto -mx-2 px-2">
+            <table className="w-full text-sm text-white border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-left">
+                  <th className="py-2 pr-3 font-semibold text-white/70">Category</th>
+                  <th className="py-2 font-semibold text-white/70">Indicative cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3">Multifunction tester (single most expensive item)</td>
+                  <td className="py-2.5">GBP 600-GBP 1,200</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3">Voltage indicator and proving unit</td>
+                  <td className="py-2.5">GBP 100-GBP 250</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3">VDE hand tools (screwdrivers, pliers, cutters, strippers, spanners)</td>
+                  <td className="py-2.5">GBP 200-GBP 500</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3">Power tools (SDS drill, combi drill, impact driver, jigsaw)</td>
+                  <td className="py-2.5">GBP 300-GBP 800</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-2.5 pr-3">Access equipment (step and extension ladders)</td>
+                  <td className="py-2.5">GBP 100-GBP 300</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3">PPE, tool bags and sundries</td>
+                  <td className="py-2.5">GBP 100-GBP 250</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            Indicative market guidance for new equipment, not a quote. Buying second-hand power
+            tools and tool sets rather than individual items reduces these figures.
+          </p>
+        </div>
         <p>
           All tool purchases are deductible business expenses. Under the Annual Investment
           Allowance, you can claim 100% of the cost against your taxable profit in the year of
@@ -711,6 +805,7 @@ export default function ElectricianToolListPage() {
       heroSubtitle="Every hand tool, VDE insulated tool, test instrument, power tool, and PPE item you need as a UK electrician. Includes budget tiers from GBP 1,500 starter kits to GBP 5,000+ full professional setups, with brand recommendations from working electricians."
       readingTime={11}
       keyTakeaways={keyTakeaways}
+      answerBox={answerBox}
       sections={sections}
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Electrician Tools"

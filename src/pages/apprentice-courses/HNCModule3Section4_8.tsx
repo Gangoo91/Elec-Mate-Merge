@@ -285,21 +285,23 @@ const HNCModule3Section4_8 = () => {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 443.4 (Risk assessment for protection against transient overvoltages of atmospheric origin or due to switching)"
-            clause="Protection against transient overvoltages shall be provided where the consequence caused by overvoltage affects: (a) human life (e.g. medical safety services, life support), (b) public services and cultural heritage, (c) commercial or industrial activity, or (d) a large number of co-located individuals."
+            source="BS 7671:2018+A4:2026 — Regulation 443.4 Overvoltage control (443.4.1 Transient overvoltages due to the effects of indirect lightning strokes)"
+            clause="Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) [deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023)]; (c) significant financial or data loss. For all other cases, protection shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss."
             meaning={
               <>
                 BS 7671 A4:2026 made SPD provision the default for all but the simplest
-                domestic installations. As the BSE designer of every commercial /
-                industrial / public-access distribution board you must conduct the
-                Reg 443.4 risk assessment, document the outcome, and specify SPDs to
+                installations. As the BSE designer of every commercial /
+                industrial / public-access distribution board you must apply the
+                Reg 443.4.1 consequence test, document the outcome, and specify SPDs to
                 BS EN 61643-11 (Type 1 + 2 at the origin, Type 2 at sub-boards in
-                long-cable runs). Failure to do so leaves the building&rsquo;s electronics
+                long-cable runs). For all other cases protection is still the default
+                unless the owner declares in writing that any loss or damage is tolerable
+                and accepts the risk. Failure to do so leaves the building&rsquo;s electronics
                 exposed to switching and atmospheric transients with insurance and
                 product-liability consequences.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 443.4 + Section 534; BS EN 61439-1/-2 (low-voltage switchgear assemblies, Forms of separation); BS EN 61643-11 (SPDs)"
+            cite="Source: BS 7671:2018+A4:2026, Reg 443.4.1 + Section 534; BS EN 61439-1/-2 (low-voltage switchgear assemblies, Forms of separation); BS EN 61643-11 (SPDs)"
           />
 
           <LearningOutcomes
@@ -702,18 +704,23 @@ const HNCModule3Section4_8 = () => {
               </li>
             </ul>
             <p className="text-sm font-medium text-elec-yellow/80">
-              BS 7671 Regulation 443 Requirements
+              BS 7671 Regulation 443.4.1 Requirements
             </p>
-            <p>SPD protection is required when the consequence of overvoltage affects:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Human life (medical facilities, safety systems)</li>
-              <li>Public services and cultural heritage</li>
-              <li>Commercial/industrial activities</li>
-              <li>Large groups of individuals</li>
-            </ul>
             <p>
-              <strong>Risk assessment</strong> per BS EN 62305-2 determines necessity. When Crl
-              (risk with lightning) exceeds Ct (tolerable risk), SPDs are mandatory.
+              Protection against transient overvoltages shall be provided where the consequence
+              caused by the overvoltage could result in:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>(a) serious injury to, or loss of, human life</li>
+              <li>(c) significant financial or data loss</li>
+            </ul>
+            <p className="text-sm text-elec-yellow/70">
+              Note: limb (b) was deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023).
+            </p>
+            <p>
+              For all other cases, protection shall be provided unless the owner of the
+              installation declares it is not required due to any loss or damage being tolerable
+              and they accept the risk of damage to equipment and any consequential loss.
             </p>
             <p className="text-sm font-medium text-elec-yellow/80">SPD Selection Parameters</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

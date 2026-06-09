@@ -46,6 +46,14 @@ const keyTakeaways = [
   'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A4:2026.',
 ];
 
+const answerBox = {
+  question: 'How much does it cost to rewire a house in Sheffield?',
+  answer:
+    'A full house rewire in Sheffield typically costs £2,100–£3,400 for a 2-bed terrace, £3,100–£5,000 for a 3-bed semi and £4,400–£7,200 for a 4-bed detached (2025 market guidance, not a quote). South Yorkshire day rates of £255–£370 are competitive nationally. Prices include a new consumer unit, testing and the Electrical Installation Certificate; replastering is usually extra.',
+  detail:
+    'Hillside Victorian terraces in Walkley, Crookes and Hillsborough sit at the top of each range because split-level layouts and lath-and-plaster walls add labour hours. Always get an itemised quote and an EICR first if you are unsure work is needed.',
+};
+
 const faqs = [
   {
     question: 'How much does it cost to rewire a house in Sheffield in 2025?',
@@ -146,36 +154,47 @@ const sections = [
           housing stock mean rewires in inner Sheffield areas often require more labour hours than
           equivalent-sized modern properties.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-6 overflow-hidden">
           <h3 className="font-bold text-white text-lg mb-4">
             Sheffield Rewire Costs by Property Type (2025)
           </h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>2-bed terraced house:</strong> £2,100–£3,400 (3–5 days)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>3-bed semi-detached:</strong> £3,100–£5,000 (5–7 days)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>4-bed detached:</strong> £4,400–£7,200 (6–10 days)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-left">
-                <strong>Large period property (5-bed+):</strong> £7,200–£11,500+ (10–15 days)
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto -mx-1">
+            <table className="w-full text-left text-sm text-white border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 pr-3 font-semibold">Property type</th>
+                  <th className="py-2 pr-3 font-semibold">Indicative cost</th>
+                  <th className="py-2 font-semibold">Typical duration</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="py-3 pr-3 font-medium">2-bed terraced house</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£2,100–£3,400</td>
+                  <td className="py-3 whitespace-nowrap">3–5 days</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-medium">3-bed semi-detached</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£3,100–£5,000</td>
+                  <td className="py-3 whitespace-nowrap">5–7 days</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-medium">4-bed detached</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£4,400–£7,200</td>
+                  <td className="py-3 whitespace-nowrap">6–10 days</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-medium">Large period property (5-bed+)</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£7,200–£11,500+</td>
+                  <td className="py-3 whitespace-nowrap">10–15 days</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/50 text-xs mt-4">
+            2025 indicative market guidance for Sheffield and South Yorkshire — not a quote. Final
+            price depends on circuit count, property age and access.
+          </p>
         </div>
         <p>
           These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
@@ -435,6 +454,63 @@ const sections = [
           </SEOInternalLink>{' '}
           confirming compliance with BS 7671:2018+A4:2026.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-6 overflow-hidden">
+          <h3 className="font-bold text-white text-lg mb-4">
+            BS 7671 Requirements a Sheffield Rewire Must Meet
+          </h3>
+          <div className="overflow-x-auto -mx-1">
+            <table className="w-full text-left text-sm text-white border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 pr-3 font-semibold">Requirement</th>
+                  <th className="py-2 pr-3 font-semibold">Reference</th>
+                  <th className="py-2 font-semibold">What it means for your rewire</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="py-3 pr-3 font-medium">Surge protection (SPD)</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Reg 443.4</td>
+                  <td className="py-3">
+                    Protection against transient overvoltages must be provided where the consequences
+                    affect safety or large numbers of people — driving SPDs into most modern consumer
+                    units.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-medium">AFDD (arc fault detection)</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Reg 421.1.7</td>
+                  <td className="py-3">
+                    Recommended for single-phase AC final circuits supplying socket-outlets up to 32 A
+                    in dwellings; a requirement in higher-risk residential buildings, HMOs, student
+                    accommodation and care homes.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-medium">Initial verification</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Chapter 64</td>
+                  <td className="py-3">
+                    Every circuit must be inspected and tested before being energised, with the
+                    results recorded on the certification.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-medium">Certification</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Appendix 6</td>
+                  <td className="py-3">
+                    The Electrical Installation Certificate follows the model form in Appendix 6 and
+                    is issued to the person ordering the work.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/50 text-xs mt-4">
+            References are to BS 7671:2018+A4:2026 (issued 15 April 2026). Older rewirable fuse boards
+            commonly found in Sheffield use semi-enclosed fuses to BS 3036 and no longer meet current
+            protection standards.
+          </p>
+        </div>
       </>
     ),
   },
@@ -555,7 +631,8 @@ export default function RewireCostSheffieldPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Sheffield 2025 | Rewire Prices South"
-      description="House rewire cost in Sheffield 2026: 2-bed £3,000–£4,200, 3-bed £4,000–£5,800, 4-bed £5,200–£7,800. Part P notification + EIC certificate included."
+      description="House rewire cost in Sheffield 2025: 2-bed £2,100–£3,400, 3-bed £3,100–£5,000, 4-bed £4,400–£7,200. Part P notification + EIC certificate included."
+      answerBox={answerBox}
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -552,13 +552,15 @@ const sections = [
               <span>
                 <strong>Regulation 443.4.1 — Surge Protective Devices (SPDs)</strong> — Redrafted in
                 BS&nbsp;7671:2018+A4:2026. Protection against transient overvoltages must be provided
-                where the consequence of an overvoltage could cause serious injury or loss of life,
-                failure of a safety service, or significant financial or data loss. A commercial
-                kitchen with refrigeration, BMS controls, POS systems and extraction interlock
-                panels meets the significant-financial-or-data-loss criterion. For all other cases,
-                protection must be provided unless the owner declares in writing that the risk is
-                tolerable. An SPD rated to the equipment overvoltage category should be installed at
-                the origin of the installation or at the kitchen distribution board.
+                where the consequence of an overvoltage could result in (a) serious injury to, or
+                loss of, human life, or (c) significant financial or data loss — limb (b) having been
+                deleted by the A2:2022 Corrigendum (May 2023). A commercial kitchen with
+                refrigeration, BMS controls, POS systems and extraction interlock panels meets the
+                significant-financial-or-data-loss criterion. For all other cases, protection must be
+                provided unless the owner of the installation declares it is not required because any
+                loss or damage is tolerable and they accept the risk of damage to equipment and any
+                consequential loss. An SPD rated to the equipment overvoltage category should be
+                installed at the origin of the installation or at the kitchen distribution board.
               </span>
             </li>
           </ul>

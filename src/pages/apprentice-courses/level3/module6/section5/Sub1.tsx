@@ -181,7 +181,7 @@ const quizQuestions = [
       'Because the EIC and any future EICR have to be able to trace the calculation back to a defensible source — DNO Form 1 or BS 7671 assumed maximum for Ze; OSG Table I1 / IET GN1 cable resistance tables for (R1 + R2) — and confirm the temperature correction was applied. Without the trace the design Zs is unverifiable.',
       'Three: Category 1 (visitable dwellings — accessible to visitors), Category 2 (accessible and adaptable dwellings), Category 3 (wheelchair user dwellings, with sub-categories 3a and 3b for adaptable and accessible respectively).',
       'The Construction Phase Plan is the Principal Contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s plan for managing H&S throughout the construction phase (CDM 2015 Reg 12). It documents the controls, the welfare arrangements, the emergency procedures, the trade-clash management, the high-risk activities and the supervision arrangements. The PC writes it and updates it as the project evolves.',
-      'The consequence of overvoltage could result in serious injury or loss of life, interruption of public services, damage to cultural heritage, interruption of commercial or industrial activity, or affect a large number of co-located individuals — assessed by risk per Section 443.',
+      'Under Reg 443.4.1, protection against transient overvoltages shall be provided where the consequence could result in (a) serious injury to, or loss of, human life or (c) significant financial or data loss (limb (b) was deleted by the A2:2022 May 2023 corrigendum); for all other cases protection is provided unless the owner declares it not required and accepts the risk.',
     ],
     correctAnswer: 0,
     explanation:

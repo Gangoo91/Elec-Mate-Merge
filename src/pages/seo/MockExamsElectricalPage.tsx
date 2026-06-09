@@ -668,6 +668,7 @@ const sections = [
 export default function MockExamsElectricalPage() {
   return (
     <GuideTemplate
+      noindex
       title="Mock Exams for Electricians — 18th Edition, 2391, AM2 &amp; EPA (2026)"
       description="How to revise for UK electrical qualifications using mock exams effectively: study schedule, weak-area technique, exam-day strategy, common pitfalls. Plus where to take each free mock test."
       datePublished="2025-02-28"

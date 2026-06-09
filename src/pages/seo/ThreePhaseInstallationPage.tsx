@@ -354,9 +354,12 @@ const sections = [
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SPD (Surge Protection Device)</strong> — BS 7671 Regulation 443.4.1 requires
-                an SPD where the consequence of an overvoltage would cause serious injury, danger to
-                life, disruption to a public service, or damage to cultural heritage. In practice,
-                most new three phase installations should include a Type 2 SPD as a minimum.
+                an SPD where the consequence of a transient overvoltage could result in (a) serious
+                injury to, or loss of, human life, or (c) significant financial or data loss (limb
+                (b) was deleted by the A2:2022 Corrigendum of May 2023). For all other cases, an SPD
+                must be provided unless the owner of the installation declares it is not required
+                because any loss or damage is tolerable and they accept the risk. In practice, most
+                new three phase installations should include a Type 2 SPD as a minimum.
               </span>
             </li>
           </ul>

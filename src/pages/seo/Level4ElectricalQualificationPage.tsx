@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Is Level 4 the same as an HNC?',
     answer:
-      'Level 4 qualifications sit at the same level as an HNC on the Qualifications and Credit Framework (QCF). However, they are not identical. The Pearson BTEC Level 4 HNC in Construction (Electrical Installation pathway) is an HNC. The C&G Level 4 Award in Design and Verification is a Level 4 qualification but is smaller in scope than a full HNC. Both are Level 4, but the HNC is a broader qualification. For practical purposes, employers in the electrical industry accept either. If you plan to progress to a degree (Level 5/6), the HNC provides a more direct pathway.',
+      'Level 4 qualifications sit at the same level as an HNC on the Regulated Qualifications Framework (RQF). However, they are not identical. The Pearson BTEC Level 4 HNC in Construction (Electrical Installation pathway) is an HNC. The C&G Level 4 Award in Design and Verification is a Level 4 qualification but is smaller in scope than a full HNC. Both are Level 4, but the HNC is a broader qualification. For practical purposes, employers in the electrical industry accept either. If you plan to progress to a degree (Level 5/6), the HNC provides a more direct pathway.',
   },
   {
     question: 'Do I need the Level 4 to get the Gold Card?',
@@ -157,10 +157,44 @@ const sections = [
           being a competent designer and manager.
         </p>
         <p>
-          The most common Level 4 qualifications for electricians are the C&G Level 4 Award in
-          Design and Verification (which is essentially the 2396), the EAL Level 4 Diploma in
-          Electrical Installation, and the Pearson BTEC Level 4 HNC in Construction (Electrical
-          Installation pathway).
+          There is no single "Level 4 in electrical installation" — it is a family of qualifications
+          at the same level on the Regulated Qualifications Framework (RQF). The three most common
+          routes for electricians are:
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h4 className="font-bold text-white mb-1">C&G Level 4 Award</h4>
+            <p className="text-xs text-yellow-400 font-medium mb-2">Design & Verification</p>
+            <p className="text-white text-sm leading-relaxed">
+              The smallest route — essentially the{' '}
+              <SEOInternalLink href="/guides/city-guilds-2396-design-course">2396</SEOInternalLink>.
+              Focused purely on design and verification competence. Quickest to complete and
+              sufficient for the Gold Card.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h4 className="font-bold text-white mb-1">EAL Level 4 Diploma</h4>
+            <p className="text-xs text-yellow-400 font-medium mb-2">Electrical Installation</p>
+            <p className="text-white text-sm leading-relaxed">
+              A broader diploma from EAL covering design and advanced installation knowledge. A
+              standalone EAL qualification — not interchangeable with the C&G route even where topics
+              overlap.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h4 className="font-bold text-white mb-1">Pearson BTEC Level 4 HNC</h4>
+            <p className="text-xs text-yellow-400 font-medium mb-2">Construction (Electrical)</p>
+            <p className="text-white text-sm leading-relaxed">
+              The widest route. A full Higher National Certificate covering engineering principles,
+              project management and building services — and the clearest pathway on to an HND and
+              degree.
+            </p>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Note: EAL and City &amp; Guilds qualifications are separate awarding-body routes. Holding
+          one does not automatically count towards the other, even when the learning outcomes look
+          similar — always confirm what your employer or scheme requires.
         </p>
       </>
     ),
@@ -372,38 +406,40 @@ const sections = [
     heading: 'Study Options',
     content: (
       <>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Part-time day release</strong> — one day per week at college while working
-                the other four days. The most popular option. Takes 1 to 2 years.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Evening classes</strong> — typically two evenings per week. Takes 2 years.
-                Good if your employer cannot release you during the day.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Block release</strong> — intensive study blocks (1 to 2 weeks at a time,
-                several times per year). Good if you work away from the college location.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Distance learning</strong> — some providers offer online or blended
-                learning. Flexible but requires strong self-discipline. Practical elements may
-                require occasional attendance.
-              </span>
-            </li>
-          </ul>
+        <p>
+          Most Level 4 students study while working full-time as electricians, so the mode you choose
+          usually comes down to how your employer can release you:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1.4fr_0.8fr_1.8fr] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Mode</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Typical duration</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Best for</div>
+
+            <div className="bg-blue-900/30 p-3 text-white font-medium">Part-time day release</div>
+            <div className="bg-blue-900/30 p-3 text-white">1–2 years</div>
+            <div className="bg-blue-900/30 p-3 text-white/90">
+              The most popular option — one day a week at college, working the other four.
+            </div>
+
+            <div className="bg-white/[0.02] p-3 text-white font-medium">Evening classes</div>
+            <div className="bg-white/[0.02] p-3 text-white">~2 years</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">
+              Typically two evenings a week — if your employer cannot release you during the day.
+            </div>
+
+            <div className="bg-white/[0.02] p-3 text-white font-medium">Block release</div>
+            <div className="bg-white/[0.02] p-3 text-white">1–2 years</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">
+              Intensive 1–2 week blocks, several times a year — if you work away from the college.
+            </div>
+
+            <div className="bg-white/[0.02] p-3 text-white font-medium">Distance / blended</div>
+            <div className="bg-white/[0.02] p-3 text-white">1–3 years</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">
+              Flexible online study — needs self-discipline; practical elements may need attendance.
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -413,20 +449,32 @@ const sections = [
     heading: 'Costs and Funding',
     content: (
       <>
-        <p>Costs depend on the qualification and provider:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04]">
-              <span className="text-white font-medium">C&G Level 4 Award (2396)</span>
-              <span className="text-white">500-1,000 pounds</span>
+        <p>
+          Costs depend heavily on the qualification and provider. The figures below are indicative
+          market guidance, not a quote — always confirm the current fee with your chosen provider.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[1.6fr_1fr_1.4fr] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Qualification</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Indicative fee</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Funding notes</div>
+
+            <div className="bg-white/[0.02] p-3 text-white font-medium">C&amp;G Level 4 Award (2396)</div>
+            <div className="bg-white/[0.02] p-3 text-white">£500–£1,000</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">
+              Often employer-funded or CPD self-investment.
             </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04]">
-              <span className="text-white font-medium">EAL Level 4 Diploma</span>
-              <span className="text-white">1,500-3,000 pounds</span>
+
+            <div className="bg-white/[0.02] p-3 text-white font-medium">EAL Level 4 Diploma</div>
+            <div className="bg-white/[0.02] p-3 text-white">£1,500–£3,000</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">
+              May be eligible for college funding depending on provider.
             </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04]">
-              <span className="text-white font-medium">BTEC Level 4 HNC</span>
-              <span className="text-white">2,000-5,000 pounds</span>
+
+            <div className="bg-blue-900/30 p-3 text-white font-medium">BTEC Level 4 HNC</div>
+            <div className="bg-blue-900/30 p-3 text-white">£2,000–£5,000+</div>
+            <div className="bg-blue-900/30 p-3 text-white/90">
+              Often eligible for an Advanced Learner Loan.
             </div>
           </div>
         </div>
@@ -465,8 +513,13 @@ const sections = [
 export default function Level4ElectricalQualificationPage() {
   return (
     <GuideTemplate
-      title="Level 4 Electrical Qualification | HNC Equivalent for"
-      description="Complete guide to Level 4 electrical qualifications for UK electricians. Course content, entry requirements, career progression, HNC comparison…"
+      title="Level 4 Electrical Qualification | HNC Equivalent for Electricians"
+      description="Complete guide to Level 4 electrical qualifications for UK electricians. Course content, entry requirements, career progression, HNC comparison, costs and funding."
+      answerBox={{
+        question: 'What is the Level 4 electrical qualification?',
+        answer:
+          'The Level 4 electrical qualification is the HNC-equivalent step above Level 3. It moves you from installing systems to designing and managing them, covering advanced design, three-phase distribution, building services and project management. Common routes are the C&G Level 4 Award in Design and Verification, the EAL Level 4 Diploma, and the Pearson BTEC Level 4 HNC.',
+      }}
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

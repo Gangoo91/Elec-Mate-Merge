@@ -60,7 +60,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'A4 deletes the CRL risk-assessment method entirely. Reg 443.5 (the CRL clause), Annex A443 (worked examples), Appendix 17 and Annex B443 are all withdrawn. SPD requirements now run through Reg 443.4 — SPDs are required where the consequence of overvoltage affects safety of human life, public services, commercial / industrial activity, or many co-located individuals. The "low CRL = no SPD" shortcut no longer exists.',
+      'A4 deletes the CRL risk-assessment method entirely. Reg 443.5 (the CRL clause), Annex A443 (worked examples), Appendix 17 and Annex B443 are all withdrawn. SPD requirements now run through Reg 443.4 — under Reg 443.4.1 protection against transient overvoltages shall be provided where the consequence of overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss (limb (b) was deleted by the A2:2022 May-2023 corrigendum). For all other cases protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk. The "low CRL = no SPD" shortcut no longer exists.',
   },
   {
     id: 'm8s3-419-ads-not-feasible',
@@ -161,7 +161,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A4 strips out the CRL (calculated risk level) route. Reg 443.5 was the BS 7671 clause permitting the CRL calculation and the supporting Annex A443 held its worked examples — both are deleted. SPD selection in A4 follows Reg 443.4 directly: SPDs are required where overvoltage affects safety of human life, public services, commercial / industrial activity or many co-located individuals.',
+      'A4 strips out the CRL (calculated risk level) route. Reg 443.5 was the BS 7671 clause permitting the CRL calculation and the supporting Annex A443 held its worked examples — both are deleted. SPD selection in A4 follows Reg 443.4 directly: under Reg 443.4.1 protection against transient overvoltages shall be provided where the consequence could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss (limb (b) deleted by the A2:2022 May-2023 corrigendum), and for all other cases unless the owner declares it not required and accepts the risk.',
   },
   {
     id: 4,
@@ -256,7 +256,7 @@ const faqItems = [
     question:
       'The CRL risk-assessment method is gone — how do I now justify omitting an SPD on a small commercial unit?',
     answer:
-      "You don't use CRL — that method (Reg 443.5, Annex A443, Appendix 17, Annex B443) was deleted in A4. SPD requirements now run through Reg 443.4 directly: SPDs are required where the consequence of overvoltage could affect (i) safety of human life, (ii) public services, (iii) commercial / industrial activity, or (iv) many co-located individuals. For a small commercial unit, work the four triggers explicitly. If none apply, document the reasoning in the design file and on the EIC. The justification is now narrative, not a CRL number.",
+      "You don't use CRL — that method (Reg 443.5, Annex A443, Appendix 17, Annex B443) was deleted in A4. SPD requirements now run through Reg 443.4 directly. Under Reg 443.4.1, protection against transient overvoltages shall be provided where the consequence of overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) was deleted by the A2:2022 May-2023 corrigendum. For all other cases, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk of damage to equipment and any consequential loss. For a small commercial unit, work the two consequence limbs explicitly; if neither applies, the owner-declaration route is what lets you omit the SPD — record that declaration in the design file and on the EIC. The justification is now narrative, not a CRL number.",
   },
   {
     question:
@@ -445,17 +445,22 @@ const BS7671Module8Section3 = () => {
           <ConceptBlock
             title="Reg 443.5, Annex A443, Appendix 17 and Annex B443 — withdrawn"
             plainEnglish="A4 deletes the CRL (calculated risk level) surge-protection risk-assessment method end-to-end. Designers can no longer use the 'low CRL = no SPD' shortcut."
-            onSite="Replace it with Reg 443.4 directly: SPDs are required where the consequence of overvoltage could affect (i) safety of human life, (ii) public services, (iii) commercial / industrial activity, or (iv) many co-located individuals. The justification is now narrative — work the four triggers explicitly and document the conclusion in the design file."
+            onSite="Replace it with Reg 443.4 directly. Under Reg 443.4.1, protection against transient overvoltages shall be provided where the consequence could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) was deleted by the A2:2022 May-2023 corrigendum. For all other cases protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk. The justification is now narrative — work the two consequence limbs, then the owner-declaration route, and document the conclusion in the design file."
           >
             <p>
               The CRL deletion is one of A4&apos;s biggest paperwork changes. Reg 443.5 (the BS 7671
               clause permitting CRL), Annex A443 (worked examples), Appendix 17 (lookup tables) and
               Annex B443 (supporting material) are all withdrawn. Designers using CRL-calculation
-              worksheets in their templates need to update them. The four-trigger test in Reg 443.4
-              is more open-ended but also more honest — a small commercial unit with no
-              critical-life-safety load and no public-service consequence may legitimately omit
-              SPDs, but the reasoning is a design narrative, not a calculated number below a
-              threshold. SPD specification still follows the Type 1 / 2 / 3 cascade and Reg 443.6
+              worksheets in their templates need to update them. The consequence test in Reg
+              443.4.1 is more open-ended but also more honest — protection shall be provided where
+              the consequence could result in (a) serious injury to, or loss of, human life, or (c)
+              significant financial or data loss (limb (b) was deleted by the A2:2022 May-2023
+              corrigendum); for all other cases protection shall be provided unless the owner of the
+              installation declares it is not required because any loss or damage is tolerable and
+              they accept the risk. A small commercial unit with no critical-life-safety load may
+              legitimately omit SPDs via the owner-declaration route, but the reasoning is a design
+              narrative, not a calculated number below a threshold. SPD specification still follows
+              the Type 1 / 2 / 3 cascade and Reg 443.6
               for selection at origin, sub-distribution and end-of-circuit.
             </p>
           </ConceptBlock>
@@ -590,7 +595,7 @@ const BS7671Module8Section3 = () => {
           <CommonMistake
             title="Using the deleted CRL method on a post-A4 design"
             whatHappens="Designer pulls a CRL spreadsheet from the office templates folder, calculates a CRL of 800, and omits SPDs on a small commercial unit on the basis of the calculation. EIC issued April 2026. Assessor flags it: the CRL method (Reg 443.5, Annex A443, Appendix 17, Annex B443) is deleted in A4 — the calculation cannot be cited."
-            doInstead="Apply Reg 443.4 directly. Work the four triggers: does overvoltage at this premises affect (i) safety of human life, (ii) public services, (iii) commercial / industrial activity, or (iv) many co-located individuals? If none apply, document the reasoning narratively in the design file and on the cert. If any apply, fit SPDs per the Type 1 / 2 / 3 cascade. Delete the CRL spreadsheet from the templates folder."
+            doInstead="Apply Reg 443.4 directly. Under Reg 443.4.1, work the two consequence limbs: could overvoltage at this premises result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss? (Limb (b) was deleted by the A2:2022 May-2023 corrigendum.) If either applies, fit SPDs per the Type 1 / 2 / 3 cascade. For all other cases, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk — record that declaration in the design file and on the cert. Delete the CRL spreadsheet from the templates folder."
           />
 
           <SectionRule />

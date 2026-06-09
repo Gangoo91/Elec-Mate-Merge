@@ -11,7 +11,6 @@ import {
   ShieldCheck,
   ClipboardCheck,
   Factory,
-  Settings,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -36,6 +35,14 @@ const tocItems = [
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
+
+const answerBox = {
+  question: 'How much does industrial electrical installation cost in the UK?',
+  answer:
+    'UK industrial electrical installation costs typically run £18–£65/m² depending on load density and motor control. A 1,000m² light industrial unit is around £18,000–£40,000; a 3,000m² medium manufacturing facility £100,000–£290,000; and a large 10,000m²+ plant with full motor control centre and HV substation £500,000–£2,000,000+. These are indicative market rates, not a quote.',
+  detail:
+    'Motor control centres and variable speed drives are the single largest cost element in most manufacturing facilities. Always obtain a detailed tender against drawings and an equipment schedule before contract.',
+};
 
 const keyTakeaways = [
   'Industrial electrical installation costs in the UK range from £15,000 for a small light industrial unit to £100,000+ for a large manufacturing facility, with per square metre rates typically £18–£65/m² depending on load density and motor control requirements.',
@@ -85,6 +92,30 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/factory-electrical-installation',
+    title: 'Factory Electrical Installation Guide',
+    description:
+      'Distribution design, motor control, machine wiring, and commissioning for manufacturing.',
+    icon: Factory,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/three-phase-installation-cost',
+    title: '3-Phase Installation Cost',
+    description:
+      'Three-phase supply upgrades, switchboards, and distribution cost guide for UK premises.',
+    icon: Zap,
+    category: 'Guide',
+  },
+  {
+    href: '/warehouse-electrical-installation',
+    title: 'Warehouse Electrical Installation',
+    description:
+      'High-bay lighting, distribution, and EV/forklift charging for logistics and storage sites.',
+    icon: Building2,
+    category: 'Guide',
+  },
   {
     href: '/restaurant-electrical-cost',
     title: 'Restaurant Electrical Installation Cost',
@@ -285,8 +316,12 @@ const sections = [
       <>
         <p>
           The 3-phase distribution system is the backbone of an industrial electrical installation.
-          Getting the distribution architecture right at the design stage avoids costly alterations
-          as production capacity grows.
+          Almost all industrial premises take a 3-phase 400V supply — see{' '}
+          <SEOInternalLink href="/guides/single-phase-vs-three-phase">
+            single-phase vs three-phase
+          </SEOInternalLink>{' '}
+          for why single-phase is rarely sufficient. Getting the distribution architecture right at
+          the design stage avoids costly alterations as production capacity grows.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -344,46 +379,67 @@ const sections = [
           costs combined. Understanding the different control options and their costs is essential
           for accurate budgeting.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Direct On Line (DOL) starters</strong> — the simplest and lowest-cost method
-                for motors below 4kW (sometimes up to 7.5kW). A DOL starter with contactor and
-                thermal overload in a panel: £200–£600. Suitable for pumps, fans, and conveyors
-                where full-speed starting current is acceptable.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Soft starters</strong> — reduce inrush current on starting. Cost for a 15kW
-                soft starter unit: £400–£900. Suitable for pumps, compressors, and conveyors where
-                starting torque is not critical. Do not provide energy savings in steady-state
-                running.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Variable Speed Drives (VSDs/inverters)</strong> — vary the motor speed to
-                match the process requirement. Provide 30–60% energy savings on fan and pump
-                applications. Cost for a 15kW VSD: £800–£2,000 for the drive unit. Significant
-                energy savings mean payback periods of 1–4 years are common for pumps and fans.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Motor Control Centre (MCC)</strong> — a complete MCC housing starters or
-                VSDs for 20 motors, with PLC control interface: £80,000–£200,000 for the panel
-                assembly, drives, and associated control equipment. Installation and commissioning:
-                £15,000–£40,000 additional.
-              </span>
-            </li>
-          </ul>
+        <div className="overflow-x-auto my-4 rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.08] text-left">
+                <th className="px-4 py-3 font-semibold">Control method</th>
+                <th className="px-4 py-3 font-semibold">Indicative cost</th>
+                <th className="px-4 py-3 font-semibold">Best for</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">
+                  <strong>Direct On Line (DOL) starter</strong>
+                  <span className="block text-white/60 text-xs mt-0.5">
+                    Contactor + thermal overload, motors below ~4kW (sometimes to 7.5kW)
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">£200–£600</td>
+                <td className="px-4 py-3">Pumps, fans, conveyors where full-speed inrush is acceptable</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">
+                  <strong>Soft starter</strong>
+                  <span className="block text-white/60 text-xs mt-0.5">
+                    Reduces starting inrush; no steady-state energy saving (15kW unit)
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">£400–£900</td>
+                <td className="px-4 py-3">Pumps, compressors, conveyors where starting torque is non-critical</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">
+                  <strong>Variable Speed Drive (VSD / inverter)</strong>
+                  <span className="block text-white/60 text-xs mt-0.5">
+                    Varies motor speed to the process; 30–60% saving on fans/pumps (15kW drive)
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">£800–£2,000</td>
+                <td className="px-4 py-3">Fan and pump loads; payback of 1–4 years is common</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">
+                  <strong>Motor Control Centre (MCC)</strong>
+                  <span className="block text-white/60 text-xs mt-0.5">
+                    Complete assembly housing starters/VSDs for ~20 motors with PLC interface
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">£80,000–£200,000</td>
+                <td className="px-4 py-3">Central control of many motors; add £15,000–£40,000 install &amp; commissioning</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <p className="text-sm text-white/60">
+          Figures are indicative market guidance for the equipment only, not a quote. For balanced
+          three-phase board and motor circuit design, see our{' '}
+          <SEOInternalLink href="/guides/three-phase-installation">
+            three-phase installation guide
+          </SEOInternalLink>
+          .
+        </p>
       </>
     ),
   },
@@ -398,45 +454,53 @@ const sections = [
           perforated cable tray handles secondary distribution; steel conduit protects final circuit
           cables in areas subject to mechanical damage, vehicle traffic, or chemical attack.
         </p>
+        <div className="overflow-x-auto my-4 rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.08] text-left">
+                <th className="px-4 py-3 font-semibold">Containment type</th>
+                <th className="px-4 py-3 font-semibold">Typical size</th>
+                <th className="px-4 py-3 font-semibold">Installed cost</th>
+                <th className="px-4 py-3 font-semibold">Primary use</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3"><strong>Heavy cable ladder</strong></td>
+                <td className="px-4 py-3 whitespace-nowrap">300–600mm wide, 50mm deep</td>
+                <td className="px-4 py-3 whitespace-nowrap">£40–£120/m</td>
+                <td className="px-4 py-3">Main HV/LV distribution at high level</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3"><strong>Medium cable tray</strong></td>
+                <td className="px-4 py-3 whitespace-nowrap">150–300mm wide, perforated</td>
+                <td className="px-4 py-3 whitespace-nowrap">£20–£55/m</td>
+                <td className="px-4 py-3">Sub-distribution, motor feeders, control cabling</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3"><strong>Steel conduit</strong></td>
+                <td className="px-4 py-3 whitespace-nowrap">20–32mm heavy gauge</td>
+                <td className="px-4 py-3 whitespace-nowrap">£12–£30/m</td>
+                <td className="px-4 py-3">Machine final circuits, areas of mechanical damage</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-white/60 mb-4">
+          Bends, tees, and reducers add £80–£300 each depending on size. Ex-rated (explosion-proof)
+          conduit is required in ATEX zones — see the hazardous-area section below.
+        </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Heavy cable ladder (main distribution)</strong> — 300–600mm wide, 50mm deep
-                galvanised steel cable ladder for main HV and LV distribution cables. Installed cost
-                including supports and fixings: £40–£120/m. Bends, tees, and reducers: £80–£300 each
-                depending on size.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Medium cable tray (secondary distribution)</strong> — 150–300mm wide
-                perforated tray for sub-distribution and machine cables. Installed: £20–£55/m.
-                Widely used for lighting circuit cables, motor feeder cables, and control cabling.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Steel conduit (machine final circuits)</strong> — 20–32mm heavy gauge
-                galvanised steel conduit for machine final circuits, safety circuits, and areas
-                subject to mechanical damage. Installed: £12–£30/m. Explosion-proof steel conduit
-                (to BS EN 60423) required in ATEX zones.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Armoured cable (SWA)</strong> — used for runs across vehicle traffic areas,
-                into pits and trenches, or where the cable must resist mechanical damage without
-                being enclosed in conduit. Sizes from 2.5mm² 3-core (small motor finals) to 185mm²
-                4-core (large distribution). Budget an additional 30–50% for armoured cable versus
-                equivalent unarmoured cable in containment.
-              </span>
-            </li>
-          </ul>
+          <div className="flex items-start gap-3 text-white">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <span>
+              <strong>Armoured cable (SWA)</strong> — used for runs across vehicle traffic areas,
+              into pits and trenches, or where the cable must resist mechanical damage without being
+              enclosed in conduit. Sizes from 2.5mm² 3-core (small motor finals) to 185mm² 4-core
+              (large distribution). Budget an additional 30–50% for armoured cable versus the
+              equivalent unarmoured cable in containment.
+            </span>
+          </div>
         </div>
       </>
     ),
@@ -452,17 +516,59 @@ const sections = [
           Substances and Explosive Atmospheres Regulations 2002 (DSEAR) require employers to
           classify hazardous zones and use equipment with the appropriate ATEX/UKCA marking.
         </p>
+        <div className="overflow-x-auto my-4 rounded-2xl border border-red-500/20">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-red-500/15 text-left">
+                <th className="px-4 py-3 font-semibold">Hazard</th>
+                <th className="px-4 py-3 font-semibold">Zone</th>
+                <th className="px-4 py-3 font-semibold">Likelihood of explosive atmosphere</th>
+                <th className="px-4 py-3 font-semibold">Typical UK examples</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-red-500/15">
+              <tr className="bg-red-500/[0.06]">
+                <td className="px-4 py-3" rowSpan={3}><strong>Gas / vapour / mist</strong></td>
+                <td className="px-4 py-3 whitespace-nowrap">Zone 0</td>
+                <td className="px-4 py-3">Present continuously or for long periods</td>
+                <td className="px-4 py-3">Inside tanks and vessels (relatively rare)</td>
+              </tr>
+              <tr className="bg-red-500/[0.06]">
+                <td className="px-4 py-3 whitespace-nowrap">Zone 1</td>
+                <td className="px-4 py-3">Likely in normal operation</td>
+                <td className="px-4 py-3">Spray booths, solvent handling areas</td>
+              </tr>
+              <tr className="bg-red-500/[0.06]">
+                <td className="px-4 py-3 whitespace-nowrap">Zone 2</td>
+                <td className="px-4 py-3">Unlikely, and only briefly if it occurs</td>
+                <td className="px-4 py-3">Areas around flanges and pumps</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3" rowSpan={3}><strong>Combustible dust</strong></td>
+                <td className="px-4 py-3 whitespace-nowrap">Zone 20</td>
+                <td className="px-4 py-3">Present continuously or for long periods</td>
+                <td className="px-4 py-3">Inside dust-handling plant</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 whitespace-nowrap">Zone 21</td>
+                <td className="px-4 py-3">Likely in normal operation</td>
+                <td className="px-4 py-3">Flour mills, grain stores</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 whitespace-nowrap">Zone 22</td>
+                <td className="px-4 py-3">Unlikely, and only briefly if it occurs</td>
+                <td className="px-4 py-3">Areas adjacent to dusty processes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-white/60 mb-4">
+          Zone 1 and Zone 21 are the most common in UK industrial premises. Equipment selection,
+          erection, and inspection of installations in these areas are governed by the BS EN IEC
+          60079 series.
+        </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Zone classification</strong> — Zone 0/1/2 (flammable gas/vapour), Zone
-                20/21/22 (combustible dust). Zone 1 and 21 are the most common in UK industrial
-                premises (spray booths, flour mills, grain stores, solvent storage areas). Zone 0 is
-                relatively rare (inside tanks and vessels).
-              </span>
-            </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
@@ -497,62 +603,74 @@ const sections = [
           3,000m² with moderate motor loads. Labour and materials, excluding VAT and DNO/substation
           connection charges.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Main LV switchboard (400–800A TPN)</strong> — £8,000–£25,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Sub-distribution boards and 3-phase distribution</strong> — £15,000–£40,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Motor control centre (10–20 motors, DOL/VSD mix)</strong> —
-                £30,000–£120,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Cable containment (ladder, tray, conduit)</strong> — £18,000–£55,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Lighting and general power</strong> — £12,000–£30,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting (BS 5266-1)</strong> — £4,000–£10,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fire alarm system</strong> — £4,000–£12,000.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Total — 3,000m² medium manufacturing facility</strong> —{' '}
-                <strong>£100,000–£290,000</strong>. Light industrial unit (1,000m²):
-                £15,000–£40,000. Heavy manufacturing or food processing (10,000m²+):
-                £500,000–£2,000,000+.
-              </span>
-            </li>
-          </ul>
+        <div className="overflow-x-auto my-4 rounded-2xl border border-white/10">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.08] text-left">
+                <th className="px-4 py-3 font-semibold">Element</th>
+                <th className="px-4 py-3 font-semibold">Indicative cost</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">Main LV switchboard (400–800A TPN)</td>
+                <td className="px-4 py-3 whitespace-nowrap">£8,000–£25,000</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Sub-distribution boards and 3-phase distribution</td>
+                <td className="px-4 py-3 whitespace-nowrap">£15,000–£40,000</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">Motor control centre (10–20 motors, DOL/VSD mix)</td>
+                <td className="px-4 py-3 whitespace-nowrap">£30,000–£120,000</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Cable containment (ladder, tray, conduit)</td>
+                <td className="px-4 py-3 whitespace-nowrap">£18,000–£55,000</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">Lighting and general power</td>
+                <td className="px-4 py-3 whitespace-nowrap">£12,000–£30,000</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">
+                  Emergency lighting (
+                  <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
+                    BS 5266-1
+                  </SEOInternalLink>
+                  )
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">£4,000–£10,000</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">Fire alarm system</td>
+                <td className="px-4 py-3 whitespace-nowrap">£4,000–£12,000</td>
+              </tr>
+              <tr className="bg-yellow-900/30 border-t border-yellow-700/40 font-semibold">
+                <td className="px-4 py-3">Total — 3,000m² medium manufacturing facility</td>
+                <td className="px-4 py-3 whitespace-nowrap text-yellow-400">£100,000–£290,000</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <div className="grid sm:grid-cols-2 gap-4 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
+              Light industrial unit (1,000m²)
+            </p>
+            <p className="text-lg font-bold text-white">£15,000–£40,000</p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
+              Heavy manufacturing / food processing (10,000m²+)
+            </p>
+            <p className="text-lg font-bold text-white">£500,000–£2,000,000+</p>
+          </div>
+        </div>
+        <p className="text-sm text-white/60">
+          All figures are indicative market guidance for estimating, not a quote. They exclude VAT
+          and DNO/substation connection charges.
+        </p>
       </>
     ),
   },
@@ -682,6 +800,7 @@ export default function IndustrialElectricalCostPage() {
       tocItems={tocItems}
       badge="Industrial Cost Guide"
       badgeIcon={Factory}
+      answerBox={answerBox}
       heroTitle={
         <>
           Industrial Electrical Installation Cost UK 2025:{' '}

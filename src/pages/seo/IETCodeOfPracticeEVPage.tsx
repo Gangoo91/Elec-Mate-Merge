@@ -518,14 +518,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Surge protection (SPD):</strong> BS 7671:2018+A4:2026 Reg 443.4 requires
-                surge protection where transient overvoltage could result in serious injury to or
-                loss of human life (443.4(a)), interruption of public services (443.4(b)),
-                interruption of commercial or industrial activity (443.4(c)), or risk to a large
-                number of co-located individuals (443.4(d)). For all other cases a risk assessment
-                determines whether protection is needed. EV chargers with electronic control
-                circuitry are susceptible to surge damage. A Type 2 SPD at the consumer unit
-                provides effective protection.
+                <strong>Surge protection (SPD):</strong> BS 7671:2018+A4:2026 Reg 443.4.1 requires
+                protection against transient overvoltages where the consequence caused by the
+                overvoltage could result in serious injury to, or loss of, human life (limb (a)) or
+                significant financial or data loss (limb (c)). Limb (b) was deleted by the
+                BS 7671:2018+A2:2022 Corrigendum (May 2023), so these are the two active conditions.
+                For all other cases, protection must be provided unless the owner of the installation
+                declares it is not required because any loss or damage is tolerable and they accept
+                the risk of damage to equipment and any consequential loss. EV chargers with
+                electronic control circuitry are susceptible to surge damage. A Type 2 SPD at the
+                consumer unit provides effective protection.
               </span>
             </li>
             <li className="flex items-start gap-3">

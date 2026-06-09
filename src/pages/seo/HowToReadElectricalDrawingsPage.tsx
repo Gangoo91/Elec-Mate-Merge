@@ -28,19 +28,21 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'why-read-drawings', label: 'Why Reading Drawings Matters' },
+  { id: 'bs-7671-requirement', label: 'What BS 7671 Requires' },
   { id: 'types-of-drawings', label: 'Types of Electrical Drawings' },
   { id: 'bs-en-60617-symbols', label: 'BS EN 60617 Symbols' },
   { id: 'single-line-diagrams', label: 'Single-Line Diagrams' },
   { id: 'wiring-diagrams', label: 'Wiring Diagrams' },
   { id: 'schematic-diagrams', label: 'Schematic Diagrams' },
   { id: 'common-symbols-reference', label: 'Common Symbols Reference' },
+  { id: 'board-schedule', label: 'Reading a Board Schedule' },
   { id: 'reading-tips', label: 'Practical Reading Tips' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
 
 const keyTakeaways = [
-  'BS EN 60617 is the international standard for graphical symbols on electrical drawings — knowing these symbols is essential for every UK electrician.',
+  'BS EN 60617 is the international standard for graphical symbols on electrical drawings — and Regulation 514.9.1 of BS 7671 requires any symbol used on installation diagrams to comply with it, so reading these symbols is a core competency.',
   'Single-line (one-line) diagrams show the overall system layout in simplified form and are the most common drawing type you will encounter on site.',
   'Wiring diagrams show the physical connections between components and are used for installation, while schematic diagrams show the logical circuit operation.',
   'Reading drawings is a mandatory part of the Level 2 and Level 3 electrical qualifications and features heavily in the AM2 practical assessment.',
@@ -71,7 +73,7 @@ const faqs = [
   {
     question: 'How do I read a distribution board schedule?',
     answer:
-      'A distribution board schedule is a table that lists every circuit connected to the board. Each row represents one circuit and typically includes: the circuit number, the circuit description (e.g., "Kitchen sockets", "Upstairs lighting"), the protective device type and rating (e.g., "32A Type B MCB", "16A RCBO"), the cable size and type (e.g., "2.5mm2 T+E"), the design current, the maximum Zs value, and any test results from the most recent inspection. Reading the schedule tells you what each circuit feeds, how it is protected, and what cable is used. This information is essential for testing (you need to know the expected Zs values), fault-finding (you need to identify which circuit serves a particular area), and alterations (you need to confirm the existing protection and cable ratings before adding loads).',
+      'A distribution board schedule is a table that lists every circuit connected to the board, with one row per circuit. The columns typically cover the circuit number, the description (e.g. "Kitchen sockets"), the protective device type and rating (e.g. 32 A Type B MCB or 16 A RCBO), the cable size and type, the reference method, the design current, the maximum Zs value and any recorded test results. Under Regulation 514.9.1 of BS 7671, a durable copy must be kept within or adjacent to the board. Reading it tells you what each circuit feeds, how it is protected and what cable is used — essential for testing, fault-finding by area, and confirming existing ratings before adding loads.',
   },
   {
     question: 'Are electrical drawing skills tested in the AM2?',
@@ -165,6 +167,65 @@ const sections = [
           This guide covers the three main types of electrical drawings (single-line, wiring, and
           schematic), the BS EN 60617 symbol standard, and the most common symbols you will
           encounter in UK domestic and commercial work.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'bs-7671-requirement',
+    heading: 'What BS 7671 Requires',
+    content: (
+      <>
+        <p>
+          Drawings are not just good practice — for most installations they are a regulatory
+          requirement. Regulation 514.9.1 of{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
+            BS 7671:2018+A4:2026
+          </SEOInternalLink>{' '}
+          states that a diagram, chart, table or equivalent form of information shall be provided
+          indicating, in particular, the type and composition of each circuit, the method used to
+          comply with the requirements for protection against electric shock, the information
+          needed to identify each protective, isolation and switching device and its location, and
+          any circuit or equipment vulnerable to the electrical tests required by Part 6.
+        </p>
+        <p>
+          Crucially, the same regulation requires that{' '}
+          <strong className="text-white">any symbol used shall comply with IEC 60617</strong> —
+          adopted in the UK as BS EN 60617. This is the legal hook that makes symbol literacy a
+          competency rather than a nicety: the drawing in front of you on site is required to use
+          these symbols, so being able to read them is required to do the work.
+        </p>
+        <div className="space-y-4 my-4">
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5">
+            <h4 className="font-bold text-white mb-1">For simple installations</h4>
+            <p className="text-white text-sm leading-relaxed">
+              The information may be given in a schedule. A durable copy of the schedule relating to
+              a distribution board must be provided within or adjacent to that board — which is why
+              you find a circuit chart inside the consumer unit door.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h4 className="font-bold text-white mb-1">Domestic exception</h4>
+            <p className="text-white text-sm leading-relaxed">
+              Regulation 514.9.1 need not be applied for domestic (household) or similar
+              installations where certification for initial verification, or an Electrical
+              Installation Condition Report — complete with the guidance for recipients in Appendix
+              6 — has been issued to the person ordering the work.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h4 className="font-bold text-white mb-1">Standards for diagrams and notices</h4>
+            <p className="text-white text-sm leading-relaxed">
+              Under Regulation 514.9.2, all diagrams, charts and information or instruction notices
+              shall comply with BS EN 61082-1 and the related documentation standards. In short, the
+              format as well as the symbols is standardised.
+            </p>
+          </div>
+        </div>
+        <p>
+          The practical upshot: when you pick up a set of drawings, you can rely on them being drawn
+          to a common standard. If a symbol looks unfamiliar, it is in the standard somewhere — and
+          the legend on the drawing should explain any company-specific additions.
         </p>
       </>
     ),
@@ -459,6 +520,93 @@ const sections = [
     ),
   },
   {
+    id: 'board-schedule',
+    heading: 'How to Read a Distribution Board Schedule',
+    content: (
+      <>
+        <p>
+          The distribution board schedule is the most important document an electrician reads day to
+          day. It is a table where each row is one circuit, and the columns tell you what the circuit
+          feeds, how it is protected and what cable runs to it. Under Regulation 514.9.1 a durable
+          copy must be provided within or adjacent to the board, so you should always find one inside
+          the consumer unit door. Here is what each column tells you and why it matters.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2 my-4">
+          {[
+            {
+              column: 'Circuit number',
+              meaning:
+                'The way (slot) on the board the circuit occupies. Matches the physical position of the protective device.',
+            },
+            {
+              column: 'Circuit description',
+              meaning:
+                'What the circuit feeds — e.g. "Kitchen sockets" or "Upstairs lighting". Your first reference when fault-finding by area.',
+            },
+            {
+              column: 'Protective device type & rating',
+              meaning:
+                'e.g. a 32 A Type B MCB or a 16 A RCBO. Tells you the overcurrent and, where applicable, RCD protection on that circuit.',
+            },
+            {
+              column: 'Cable size & type',
+              meaning:
+                'e.g. 2.5 mm² twin and earth, or 6 mm² SWA. Determines the current-carrying capacity and the conductors you are connecting.',
+            },
+            {
+              column: 'Reference method',
+              meaning:
+                'The installation method (clipped direct, in conduit, in insulation), which sets the cable’s rated capacity.',
+            },
+            {
+              column: 'Design current / rating',
+              meaning:
+                'The expected load on the circuit, used to confirm the device and cable are correctly coordinated.',
+            },
+            {
+              column: 'Maximum Zs',
+              meaning:
+                'The highest earth fault loop impedance permitted for the device to disconnect in time. You compare your measured Zs against this when testing.',
+            },
+            {
+              column: 'RCD / test results',
+              meaning:
+                'Where recorded, the RCD details and the most recent insulation resistance, continuity and Zs readings from inspection.',
+            },
+          ].map((row) => (
+            <div
+              key={row.column}
+              className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
+            >
+              <h4 className="font-bold text-yellow-400 mb-1 text-sm">{row.column}</h4>
+              <p className="text-white text-sm leading-relaxed">{row.meaning}</p>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            The maximum Zs value is the column electricians lean on most during testing: it is the
+            figure your measured earth fault loop impedance must come in under for the protective
+            device to disconnect within the time required by BS 7671. See the{' '}
+            <SEOInternalLink href="/guides/testing-sequence-guide">
+              testing sequence guide
+            </SEOInternalLink>{' '}
+            for where Zs fits in the dead and live test order, and the{' '}
+            <SEOInternalLink href="/tools/cable-sizing-calculator">
+              cable sizing calculator
+            </SEOInternalLink>{' '}
+            to confirm the cable size against the design current.
+          </p>
+        </div>
+        <p>
+          Elec-Mate can build a digital board schedule from a photograph of the consumer unit, then
+          carry those circuit details straight through to your test schedule and certificate — so the
+          schedule you read becomes the schedule you certify.
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'reading-tips',
     heading: 'Practical Tips for Reading Drawings on Site',
     content: (
@@ -538,7 +686,12 @@ export default function HowToReadElectricalDrawingsPage() {
         </>
       }
       heroSubtitle="Electrical drawings are the language of the trade. This guide covers the three main types of electrical drawing, the BS EN 60617 symbol standard, and a quick reference of the most common symbols you will encounter in UK domestic and commercial work."
-      readingTime={14}
+      answerBox={{
+        question: 'How do you read an electrical drawing?',
+        answer:
+          'Start with the title block and legend, then trace the circuit from the incoming supply through the main switch, distribution board and protective devices to the final load. Identify each component by its BS EN 60617 symbol and cross-reference the distribution board schedule for cable sizes, device ratings and circuit descriptions. The three main drawing types are single-line, wiring and schematic diagrams.',
+      }}
+      readingTime={15}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

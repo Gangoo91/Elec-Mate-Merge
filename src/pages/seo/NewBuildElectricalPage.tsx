@@ -43,7 +43,7 @@ const keyTakeaways = [
   'New build electrical installations must comply with BS 7671, Building Regulations Part P (electrical safety), Part L (energy efficiency), Part B (fire safety), and Part M (accessibility).',
   'Since June 2022, the Infrastructure for Electric Vehicles Regulations require every new build with associated parking to have at least one EV charge point — not just a cable route, but a fully installed and functional charge point.',
   'Smoke and heat detectors must comply with Building Regulations Approved Document B — interlinked, mains-powered with battery backup, on a dedicated circuit, with detectors in every habitable room in new builds from 2022.',
-  'SPDs (Surge Protection Devices) are effectively mandatory in new builds under BS 7671 Regulation 443.4 — the consequences of overvoltage in a modern home with smart systems and expensive electronics easily meet the "risk of serious injury or significant financial loss" threshold.',
+  'SPDs (Surge Protection Devices) are effectively mandatory in new builds under BS 7671 Regulation 443.4.1 — the consequences of overvoltage in a modern home with smart systems and expensive electronics easily meet the "serious injury to, or loss of, human life" or "significant financial or data loss" thresholds.',
   "Elec-Mate's AI circuit designer creates complete circuit schedules, cable sizing, and board layouts for new build projects — enter the property type and it designs the full installation.",
 ];
 
@@ -471,13 +471,16 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">SPDs</h3>
             <p className="text-white text-sm leading-relaxed">
-              BS 7671 Regulation 443.4 requires SPDs where the consequence of an overvoltage event
-              would result in serious injury, danger to life, disruption to public services, damage
-              to cultural heritage, or significant financial loss. In a modern new build with smart
-              home systems, network equipment, EV chargers, heat pumps, and expensive electronics,
-              the financial loss threshold is easily met. In practice, SPDs are expected in
-              virtually every new build installation. A Type 2 SPD fitted at the consumer unit is
-              the standard minimum provision.
+              BS 7671 Regulation 443.4.1 requires protection against transient overvoltages where
+              the consequence of an overvoltage event could result in (a) serious injury to, or loss
+              of, human life, or (c) significant financial or data loss — limb (b) was deleted by
+              the A2:2022 corrigendum (May 2023). For all other cases, protection must be provided
+              unless the owner of the installation declares it is not required because any loss or
+              damage is tolerable and they accept the risk. In a modern new build with smart home
+              systems, network equipment, EV chargers, heat pumps, and expensive electronics, the
+              financial or data loss threshold is easily met, so SPDs are expected in virtually
+              every new build installation. A Type 2 SPD fitted at the consumer unit is the standard
+              minimum provision.
             </p>
           </div>
         </div>

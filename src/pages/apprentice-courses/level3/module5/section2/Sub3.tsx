@@ -118,16 +118,16 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'Section 443 of BS 7671:2018+A4:2026 requires SPD protection where:',
+    question: 'Per Reg 443.4.1, transient-overvoltage (SPD) protection is required where the consequence of the overvoltage could result in:',
     options: [
-      'The consequence of overvoltage could result in serious injury or loss of life, interruption of public services, damage to cultural heritage, interruption of commercial or industrial activity, or affect a large number of co-located individuals — assessed by risk per Section 443.',
+      'Serious injury to, or loss of, human life (limb a), or significant financial or data loss (limb c). Limb (b) was deleted by the A2:2022 Corrigendum (May 2023). For all other cases, protection is still required unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk.',
       'Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms',
       'Tailored to the specific installation, agreed in writing in advance, signed by both parties (or evidenced via written quote acceptance), reproduced on the front of the EICR, and specific enough that anyone reading the report can understand exactly what was inspected and what was not.',
       'That pressing the emergency stop immediately de-energises all hazardous motion, that the stop is maintained (latched) until manually reset, and that the machine cannot restart until the stop is released and a deliberate start action is taken',
     ],
     correctAnswer: 0,
     explanation:
-      "Section 443 sets the SPD requirement based on consequences. Where consequences are serious (life safety, public services, commercial loss, cultural heritage, many people affected) SPD is required. Otherwise risk-assessed per Section 443.5. Visual inspection confirms SPD presence at origin (Type 1 or 2 typically), the status indicator showing healthy, the upstream protective device matching the SPD manufacturer's specification.",
+      "Reg 443.4.1 sets the SPD requirement based on consequences. Protection is required where the overvoltage could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss — limb (b) was deleted by the A2:2022 Corrigendum (May 2023). For all other cases protection is still required unless the owner declares it is not required because the loss or damage is tolerable and accepts the risk. Visual inspection confirms SPD presence at origin (Type 1 or 2 typically), the status indicator showing healthy, the upstream protective device matching the SPD manufacturer's specification.",
   },
   {
     id: 5,
@@ -427,8 +427,8 @@ export default function Sub3() {
           </ConceptBlock>
 
           <ConceptBlock
-            title="SPD per Section 443 — required where consequences are serious"
-            plainEnglish="Section 443 sets when SPD protection is required based on what could happen in an overvoltage event. Life safety, public services, commercial/industrial activity, cultural heritage, many people affected — those trigger SPD requirement. Domestic where consequences are limited may rely on risk assessment."
+            title="SPD per Reg 443.4.1 — required where consequences are serious"
+            plainEnglish="Reg 443.4.1 sets when transient-overvoltage protection is required based on what could happen in an overvoltage event. Two consequence limbs trigger the requirement: (a) serious injury to, or loss of, human life, and (c) significant financial or data loss — limb (b) was deleted by the A2:2022 Corrigendum (May 2023). For all other cases protection is still required unless the owner of the installation declares it is not required because the loss or damage is tolerable and they accept the risk."
           >
             <p>What visual inspection of SPDs covers:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
