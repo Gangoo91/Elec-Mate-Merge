@@ -344,6 +344,34 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
           />
         </Field>
 
+        <Field label="Meter Location">
+          <Input
+            value={formData.metering?.meterLocation || ''}
+            onChange={(e) => updateMetering('meterLocation', e.target.value)}
+            placeholder="e.g., Meter cupboard, hallway"
+            className={inputCn}
+          />
+        </Field>
+
+        <CheckboxCard
+          label="Generation Meter Required"
+          checked={!!formData.metering?.generationMeterRequired}
+          onChange={(v) => updateMetering('generationMeterRequired', v)}
+          accentColor="amber"
+        />
+        <CheckboxCard
+          label="Export Meter Required"
+          checked={!!formData.metering?.exportMeterRequired}
+          onChange={(v) => updateMetering('exportMeterRequired', v)}
+          accentColor="amber"
+        />
+        <CheckboxCard
+          label="Smart Meter Compatible"
+          checked={!!formData.metering?.smartMeterCompatible}
+          onChange={(v) => updateMetering('smartMeterCompatible', v)}
+          accentColor="blue"
+        />
+
         <CheckboxCard
           label="Smart Export Guarantee (SEG) Registered"
           description="Customer receives payment for exported electricity"

@@ -7,7 +7,7 @@
 import { useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2, CheckCircle } from 'lucide-react';
+import { Plus, Trash2, CheckCircle, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   SolarPVFormData,
@@ -59,6 +59,20 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
       smartForm.recalculateAllValues({ ...formData, arrays: updatedArrays }, onUpdate);
     },
     [formData, onUpdate, smartForm]
+  );
+
+  const duplicateArray = useCallback(
+    (index: number) => {
+      haptic.light();
+      const source = formData.arrays[index];
+      const clone = {
+        ...source,
+        id: crypto.randomUUID(),
+        arrayNumber: formData.arrays.length + 1,
+      };
+      onUpdate('arrays', [...formData.arrays, clone]);
+    },
+    [formData.arrays, onUpdate, haptic]
   );
 
   const updateArray = useCallback(
@@ -147,14 +161,23 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
                   )}
                 </div>
               </div>
-              {formData.arrays.length > 1 && (
+              <div className="flex items-center gap-2">
                 <button
-                  onClick={() => removeArray(index)}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                  onClick={() => duplicateArray(index)}
+                  title="Duplicate array"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-amber-500/20 bg-amber-500/10 text-amber-400 touch-manipulation active:scale-90"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Copy className="h-4 w-4" />
                 </button>
-              )}
+                {formData.arrays.length > 1 && (
+                  <button
+                    onClick={() => removeArray(index)}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -638,6 +661,53 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
                 className={inputCn}
               />
             </Field>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <Field label="Max Charge (kW)">
+                <Input
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  value={formData.battery?.maxChargePower || ''}
+                  onChange={(e) => onUpdate('battery', { ...formData.battery, maxChargePower: parseFloat(e.target.value) || 0 })}
+                  className={inputSmCn}
+                  placeholder="kW"
+                />
+              </Field>
+              <Field label="Max Discharge (kW)">
+                <Input
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  value={formData.battery?.maxDischargePower || ''}
+                  onChange={(e) => onUpdate('battery', { ...formData.battery, maxDischargePower: parseFloat(e.target.value) || 0 })}
+                  className={inputSmCn}
+                  placeholder="kW"
+                />
+              </Field>
+            </div>
+            <div className="grid grid-cols-2 gap-2.5">
+              <Field label="Depth of Discharge (%)">
+                <Input
+                  type="number"
+                  inputMode="decimal"
+                  value={formData.battery?.depthOfDischarge || ''}
+                  onChange={(e) => onUpdate('battery', { ...formData.battery, depthOfDischarge: parseFloat(e.target.value) || 0 })}
+                  className={inputSmCn}
+                  placeholder="e.g., 90"
+                />
+              </Field>
+              <Field label="Warranty Cycles">
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={formData.battery?.cycles || ''}
+                  onChange={(e) => onUpdate('battery', { ...formData.battery, cycles: parseInt(e.target.value) || 0 })}
+                  className={inputSmCn}
+                  placeholder="e.g., 6000"
+                />
+              </Field>
+            </div>
           </div>
         )}
       </Section>

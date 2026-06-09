@@ -566,7 +566,7 @@ export const getDefaultPVArray = (arrayNumber: number = 1): PVArray => ({
   dcCableLength: 0,
   stringOcpdType: '',
   stringOcpdRatingA: 0,
-  stringOcpdDcRatingV: 0,
+  stringOcpdDcRatingV: 1000,
   stringOcpdBreakingCapacityKa: 0,
   notes: '',
 });

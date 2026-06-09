@@ -635,7 +635,11 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     commissioning_date: getDate('commissioningDate'),
     design_reference: get('designReference'),
     linked_eic_reference: get('linkedEicReference'),
-    recommended_retest_interval_years: get('recommendedRetestIntervalYears'),
+    // Emit '' (not '0') when unset so the template's != "" guard hides it
+    recommended_retest_interval_years:
+      Number(formData.recommendedRetestIntervalYears) > 0
+        ? String(formData.recommendedRetestIntervalYears)
+        : '',
     previous_installation_ref: get('previousInstallationRef'),
     status: get('status'),
 

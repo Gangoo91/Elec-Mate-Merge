@@ -171,6 +171,15 @@ const DNO_BY_POSTCODE: Record<string, { name: string; region: string }> = {
   BT: { name: 'NIE Networks', region: 'Northern Ireland' },
 };
 
+// Standard gPV string-fuse ratings (A). Suggest the next size ≥ 1.5× Isc
+// (BS 7671 712.43x / IEC 62548), so the installer doesn't size it by hand.
+const STD_PV_FUSES = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 16, 20, 25, 30, 32, 40, 50, 63];
+const suggestPvFuse = (isc: number): number => {
+  if (!isc || isc <= 0) return 0;
+  const min = isc * 1.5;
+  return STD_PV_FUSES.find((f) => f >= min) ?? Math.ceil(min);
+};
+
 interface UseSolarPVSmartFormReturn {
   // Auto-calculations
   calculateTotalCapacity: () => number;
@@ -255,13 +264,18 @@ export function useSolarPVSmartForm(
   const calculateArrayValues = useCallback((array: PVArray): Partial<PVArray> => {
     const panelsPerString = array.panelsPerString || array.panelCount;
     const stringsInParallel = array.stringsInParallel || 1;
+    const stringIsc = calculateStringIsc(array.iscRated, stringsInParallel);
 
     return {
       arrayCapacity: calculateArrayCapacity(array.panelWattage, array.panelCount),
       stringVoltageVoc: calculateStringVoc(array.vocRated, panelsPerString),
       stringVoltageVmp: calculateStringVoc(array.vmpRated, panelsPerString),
-      stringCurrentIsc: calculateStringIsc(array.iscRated, stringsInParallel),
+      stringCurrentIsc: stringIsc,
       stringCurrentImp: calculateStringIsc(array.impRated, stringsInParallel),
+      // Smart compliance defaults — fill only when unset so manual edits stick.
+      dcEarthCableSize: array.dcEarthCableSize || array.dcCableSize || 6,
+      stringOcpdDcRatingV: array.stringOcpdDcRatingV || 1000,
+      stringOcpdRatingA: array.stringOcpdRatingA || suggestPvFuse(stringIsc),
     };
   }, []);
 
@@ -588,7 +602,7 @@ export function useSolarPVSmartForm(
       ) {
         warnings.push({
           field: 'acTests.bidirectionalDeviceInstalled',
-          message: 'Bidirectional protection required per BS 7671:2018+A3:2024 Reg. 530.3.201',
+          message: 'Bidirectional protection required per BS 7671:2018+A4:2026 Reg. 530.3.201',
           severity: 'error',
         });
       }
@@ -665,7 +679,7 @@ export function useSolarPVSmartForm(
       if (hasBattery || systemType === 'hybrid') {
         return {
           required: true,
-          reason: 'BS 7671:2018+A3:2024 Reg. 530.3.201 requires bidirectional protection for systems that can export',
+          reason: 'BS 7671:2018+A4:2026 Reg. 530.3.201 requires bidirectional protection for systems that can export',
         };
       }
       return {
