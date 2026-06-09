@@ -241,7 +241,7 @@ const {
         </AlertDialogContent>
       </AlertDialog>
 
-      {activeConflict && <ConflictResolutionDialog conflict={activeConflict} onResolve={(r) => resolveConflict(r === 'local' ? 'local' : 'remote')} />}
+      {activeConflict && <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />}
       {showGenerationDialog && <CertificateGenerationDialog open={showGenerationDialog} onOpenChange={setShowGenerationDialog} isGenerating={isGenerating} pdfUrl={generatedPdfUrl} filename={pdfFilename} error={generationError} certificateType="Lightning Protection" />}
     </div>
   );
