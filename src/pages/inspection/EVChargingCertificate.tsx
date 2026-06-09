@@ -489,6 +489,12 @@ const {
             syncOnTabChange();
           }}
           canAccessTab={tabProps.canAccessTab}
+          completedTabs={{
+            installation: !!tabProps.isTabComplete('installation'),
+            supply: !!tabProps.isTabComplete('supply'),
+            testing: !!tabProps.isTabComplete('testing'),
+            declarations: !!tabProps.isTabComplete('declarations'),
+          }}
           formData={formData}
           onUpdate={handleUpdate}
           customerId={customerId}

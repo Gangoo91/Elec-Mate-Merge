@@ -80,7 +80,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'PME bonding requirements',
-          text: 'Main protective bonding conductor sizes for PME installations are governed by Regulation 544.11 and Table 54.8. Where the PME supply PEN conductor is 35 mm² or less (the most common domestic and small commercial case), the minimum copper main protective bonding conductor is 10 mm². Larger PEN conductors require proportionally larger bonding conductors — consult Table 54.8 for the full schedule. This reflects the higher fault current that can flow through the PEN under broken-neutral conditions in a PME network.',
+          text: 'Main protective bonding conductor sizes for PME installations are governed by Regulation 544.1.1 and Table 54.8. Where the PME supply PEN conductor is 35 mm² or less (the most common domestic and small commercial case), the minimum copper main protective bonding conductor is 10 mm². Larger PEN conductors require proportionally larger bonding conductors — consult Table 54.8 for the full schedule. This reflects the higher fault current that can flow through the PEN under broken-neutral conditions in a PME network.',
         },
       ],
     },
@@ -122,7 +122,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
         {
           type: 'list',
           items: [
-            'Main protective bonding conductor sizing — PME sizing rules (Regulation 544.11, Table 54.8) apply where the supply is PME. For a PEN conductor of 35 mm² or less the minimum bonding conductor is 10 mm² copper; larger PEN conductors scale upward per Table 54.8. PNB sizing follows the standard TN-S rules once downstream of the split.',
+            'Main protective bonding conductor sizing — PME sizing rules (Regulation 544.1.1, Table 54.8) apply where the supply is PME. For a PEN conductor of 35 mm² or less the minimum bonding conductor is 10 mm² copper; larger PEN conductors scale upward per Table 54.8. PNB sizing follows the standard TN-S rules once downstream of the split.',
             'EV charger installation — PME supplies have specific additional requirements for EV charging final circuits to mitigate broken-neutral risk (Chapter 72 / Section 722 of BS 7671 and associated IET guidance). A4:2026 also introduced Regulation 722.311.201, which permits load curtailment (automatic or manual load reduction or disconnection) to be taken into account when determining maximum demand — directly relevant to multi-charger installations on PNB industrial and campus sites. PNB installations downstream of the privately-owned transformer have different exposure to broken-neutral effects and must be assessed separately.',
             'Distributor consultation — modifications affecting the means of earthing on a PME supply require consultation with the distributor. PNB installations have no equivalent distributor relationship (because the PEN is privately owned).',
             'Earthing electrode requirements — PME supplies do not require a separate consumer earth electrode (the PEN provides the means of earthing). PNB installations may also use the privately-owned transformer earthing system, but check the design documentation.',

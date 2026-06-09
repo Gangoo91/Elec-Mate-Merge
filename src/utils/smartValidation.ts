@@ -104,7 +104,7 @@ export function validateZs(
 
 /**
  * Validate R1+R2 (Continuity of CPC)
- * Per BS7671 Reg 612.2
+ * Per BS7671 Reg 643.2
  */
 export function validateR1R2(value: string, cableSize?: string): ValidationResult {
   const r1r2 = parseFloat(value);
@@ -134,7 +134,7 @@ export function validateR1R2(value: string, cableSize?: string): ValidationResul
       message: 'Invalid reading - check connections',
       hint: 'R1+R2 must be greater than 0Ω',
       action: 'Verify test leads and connections',
-      bs7671Reference: 'Reg 612.2',
+      bs7671Reference: 'Reg 643.2',
     };
   }
 
@@ -144,7 +144,7 @@ export function validateR1R2(value: string, cableSize?: string): ValidationResul
       message: 'Unusually high reading',
       hint: `Measured: ${r1r2.toFixed(2)}Ω - check for poor connections`,
       action: 'Inspect all terminations and joints',
-      bs7671Reference: 'Reg 612.2.1',
+      bs7671Reference: 'Reg 643.2.1',
     };
   }
 
@@ -164,13 +164,13 @@ export function validateR1R2(value: string, cableSize?: string): ValidationResul
       cableSize && range
         ? `Within expected range for ${cableSize}mm² cable`
         : `Measured: ${r1r2.toFixed(2)}Ω`,
-    bs7671Reference: 'Reg 612.2',
+    bs7671Reference: 'Reg 643.2',
   };
 }
 
 /**
  * Validate Insulation Resistance
- * Per BS7671 Reg 612.3
+ * Per BS7671 Reg 643.3
  */
 export function validateInsulationResistance(
   value: string,
@@ -200,7 +200,7 @@ export function validateInsulationResistance(
       message: `Below minimum (${minRequired}MΩ)`,
       hint: `Measured: ${ir.toFixed(1)}MΩ at ${testVoltage}`,
       action: 'Check for moisture, damage, or contamination',
-      bs7671Reference: 'Reg 612.3, Table 61',
+      bs7671Reference: 'Reg 643.3, Table 61',
     };
   }
 
@@ -210,7 +210,7 @@ export function validateInsulationResistance(
       message: 'Low insulation resistance',
       hint: `Measured: ${ir.toFixed(1)}MΩ - monitor for deterioration`,
       action: 'Investigate cause - may indicate ageing',
-      bs7671Reference: 'Reg 612.3',
+      bs7671Reference: 'Reg 643.3',
     };
   }
 
@@ -219,7 +219,7 @@ export function validateInsulationResistance(
       status: 'pass',
       message: '>200MΩ - Excellent',
       hint: 'Very good insulation condition',
-      bs7671Reference: 'Reg 612.3',
+      bs7671Reference: 'Reg 643.3',
     };
   }
 
@@ -227,7 +227,7 @@ export function validateInsulationResistance(
     status: 'pass',
     message: 'Satisfactory',
     hint: `${ir.toFixed(1)}MΩ at ${testVoltage} (min ${minRequired}MΩ)`,
-    bs7671Reference: 'Reg 612.3',
+    bs7671Reference: 'Reg 643.3',
   };
 }
 
@@ -318,7 +318,7 @@ export function validatePolarity(value: string): ValidationResult {
     return {
       status: 'pass',
       message: 'Correct polarity confirmed',
-      bs7671Reference: 'Reg 612.6',
+      bs7671Reference: 'Reg 643.6',
     };
   }
 
@@ -333,7 +333,7 @@ export function validatePolarity(value: string): ValidationResult {
       message: 'Incorrect polarity detected',
       hint: 'Circuit must be isolated and rectified',
       action: 'DANGER: Correct wiring before energising',
-      bs7671Reference: 'Reg 612.6',
+      bs7671Reference: 'Reg 643.6',
     };
   }
 

@@ -470,7 +470,7 @@ export const getOverallCompliance = (
 };
 
 // ============================================================================
-// THREE-PHASE VALIDATION RULES (BS7671 Reg 612.12)
+// THREE-PHASE VALIDATION RULES (BS7671 Reg 643.9)
 // ============================================================================
 
 export interface ThreePhaseValidationResult {
@@ -481,14 +481,14 @@ export interface ThreePhaseValidationResult {
 }
 
 /**
- * Validates phase rotation (sequence) per BS7671 Reg 612.12
+ * Validates phase rotation (sequence) per BS7671 Reg 643.9
  */
 export const validatePhaseRotation = (value: string): ValidationResult => {
   if (!value || value.trim() === '') {
     return {
       isValid: false,
       level: 'warning',
-      message: 'Phase rotation test required for three-phase circuits (BS7671 Reg 612.12)',
+      message: 'Phase rotation test required for three-phase circuits (BS7671 Reg 643.9)',
     };
   }
 

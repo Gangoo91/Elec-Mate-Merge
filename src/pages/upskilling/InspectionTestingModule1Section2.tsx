@@ -21,12 +21,12 @@ const inlineChecks = [
   {
     id: 'mod1-s2-renumbering',
     question:
-      'A scheme auditor pulls an EICR you signed in May 2026 and flags Reg 610.1 cited in the observations. Why is that a defect?',
+      'A scheme auditor pulls an EICR you signed in May 2026 and flags Reg 641.1 cited in the observations. Why is that a defect?',
     options: [
-      'Reg 610.1 is fine — it is a long-standing reference.',
-      'A4:2026 restructured Part 6. The old Chapter 61 (Initial verification) and Chapter 62 (Periodic) numbering is gone — Reg 610.1 does not exist in the edition the certificate is supposed to be against. The current equivalents are Chapter 64 (Reg 641 / 642 / 643 / 644) for initial and Chapter 65 (Reg 651 / 652 / 653) for periodic.',
-      'Reg 610.1 only applies to industrial installations.',
-      'Reg 610.1 has been renumbered to Reg 510.1.',
+      'Reg 641.1 is fine — it is a long-standing reference.',
+      'A4:2026 restructured Part 6. The old Chapter 61 (Initial verification) and Chapter 62 (Periodic) numbering is gone — Reg 641.1 does not exist in the edition the certificate is supposed to be against. The current equivalents are Chapter 64 (Reg 641 / 642 / 643 / 644) for initial and Chapter 65 (Reg 651 / 652 / 653) for periodic.',
+      'Reg 641.1 only applies to industrial installations.',
+      'Reg 641.1 has been renumbered to Reg 510.1.',
     ],
     correctIndex: 1,
     explanation:
@@ -242,7 +242,7 @@ const InspectionTestingModule1Section2 = () => {
 
           <TLDR
             points={[
-              'Part 6 of BS 7671 has been completely restructured in A4:2026 to align with the CENELEC standard. Chapter 64 = Initial verification (was Chapter 61). Chapter 65 = Periodic inspection and testing (was Chapter 62). Old reg numbers like 610.1 / 631.1 / 650.1 are gone.',
+              'Part 6 of BS 7671 has been completely restructured in A4:2026 to align with the CENELEC standard. Chapter 64 = Initial verification (was Chapter 61). Chapter 65 = Periodic inspection and testing (was Chapter 62). Old reg numbers like 641.1 / 641.7 / 650.1 are gone.',
               'Reg 643.1: the tests of Reg 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised. The sequence is mandatory, not stylistic.',
               'The Reg 643 test set: 643.2 continuity, 643.3 insulation resistance, 643.4 separation (SELV/PELV), 643.5 floor and wall resistance, 643.6 polarity, 643.7 earth electrode resistance / earth fault loop / prospective fault current, 643.8 RCD operation, 643.9 phase sequence, 643.10 functional checks (main switch, OCPDs, RCDs), 643.11 voltage drop where relevant. Schedule each one against the specific Reg.',
               'Inspection (Reg 642) precedes testing (Reg 643). Reg 642.1 puts inspection first and normally with the supply disconnected. Reg 642.3 gives the formal — but not exhaustive — checklist of items to check.',
@@ -265,8 +265,8 @@ const InspectionTestingModule1Section2 = () => {
 
           <ConceptBlock
             title="Part 6 in A4:2026 — completely restructured"
-            plainEnglish="A4:2026 reorganised Part 6 from the ground up to align with the CENELEC standard for inspection and testing. The old Chapter 61 (Initial verification) and Chapter 62 (Periodic inspection) numbering is gone. Practitioners holding pre-A4 paperwork will see references to 610.1, 631.1, 650.1, 651.x — these no longer match the regulation numbers in force."
-            onSite="When you read older training materials, IET Guidance Notes, or competent person scheme audit checklists, check the edition. A reference to &lsquo;Reg 610.1&rsquo; is a pre-A4 reference. The equivalent in A4:2026 sits in Chapter 64."
+            plainEnglish="A4:2026 reorganised Part 6 from the ground up to align with the CENELEC standard for inspection and testing. The old Chapter 61 (Initial verification) and Chapter 62 (Periodic inspection) numbering is gone. Practitioners holding pre-A4 paperwork will see references to 641.1, 641.7, 650.1, 651.x — these no longer match the regulation numbers in force."
+            onSite="When you read older training materials, IET Guidance Notes, or competent person scheme audit checklists, check the edition. A reference to &lsquo;Reg 641.1&rsquo; is a pre-A4 reference. The equivalent in A4:2026 sits in Chapter 64."
           >
             <p>The current structure of Part 6 is:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
@@ -1092,8 +1092,8 @@ const InspectionTestingModule1Section2 = () => {
           </ConceptBlock>
 
           <CommonMistake
-            title="Quoting pre-A4 reg numbers (610.1, 631.1, 650.1) on A4 certificates"
-            whatHappens="Inspector trained on Amendment 2 / 3 holds onto the old chapter numbers out of habit. EICR is signed with reference to Reg 610.1. Reviewer / scheme auditor flags the certificate because Reg 610.1 does not exist in the edition the certificate is supposed to be against. The certificate is now defective — the citation is wrong."
+            title="Quoting pre-A4 reg numbers (641.1, 641.7, 650.1) on A4 certificates"
+            whatHappens="Inspector trained on Amendment 2 / 3 holds onto the old chapter numbers out of habit. EICR is signed with reference to Reg 641.1. Reviewer / scheme auditor flags the certificate because Reg 641.1 does not exist in the edition the certificate is supposed to be against. The certificate is now defective — the citation is wrong."
             doInstead="Update the cheat sheet you carry on the van. The substantive duty has not changed dramatically — it is the same test sequence in essence — but the regulation numbers have. Initial verification = Chapter 64, Reg 643.x. Periodic inspection = Chapter 65, Reg 651.x / 652.x / 653.x. Reference these on the certificate and in any observations."
           />
 
@@ -1158,7 +1158,7 @@ const InspectionTestingModule1Section2 = () => {
           <KeyTakeaways
             title="What to remember on site"
             points={[
-              'Part 6 in A4:2026 is restructured. Initial verification = Chapter 64 (Reg 641 / 642 / 643 / 644). Periodic inspection = Chapter 65 (Reg 651 / 652 / 653). Pre-A4 reg numbers (610.1, 631.1, 650.1) do not exist in the current edition.',
+              'Part 6 in A4:2026 is restructured. Initial verification = Chapter 64 (Reg 641 / 642 / 643 / 644). Periodic inspection = Chapter 65 (Reg 651 / 652 / 653). Pre-A4 reg numbers (641.1, 641.7, 650.1) do not exist in the current edition.',
               'Reg 643.1 fixes the order: 643.2 continuity → 643.3 IR → 643.4 separation → 643.5 floor/wall → 643.6 polarity, all before energisation. 643.7 onwards may be live.',
               'Reg 642.1: inspection precedes testing, normally with the supply disconnected. Reg 642.3 gives the formal but non-exhaustive checklist.',
               'Reg 643.3.3 (A4): after re-connecting equipment that was disconnected for the primary IR test, run a 250 V DC test between live conductors and earth and record it.',
@@ -1173,9 +1173,9 @@ const InspectionTestingModule1Section2 = () => {
             items={[
               {
                 question:
-                  'Why was Part 6 renumbered? My old certificates all reference 610.1 / 631.1 / 650.1.',
+                  'Why was Part 6 renumbered? My old certificates all reference 641.1 / 641.7 / 650.1.',
                 answer:
-                  'A4:2026 brought Part 6 into alignment with the CENELEC standard for inspection and testing. The technical content is largely the same — what changed is the chapter and regulation numbers. Pre-A4 references map approximately: old Chapter 61 → new Chapter 64; old Chapter 62 → new Chapter 65; old 610.1 (every installation inspected and tested) → 134.2 + 643.x in current edition. Update your reference materials and certificate templates; old reg numbers on a current EIC are technically a defective citation.',
+                  'A4:2026 brought Part 6 into alignment with the CENELEC standard for inspection and testing. The technical content is largely the same — what changed is the chapter and regulation numbers. Pre-A4 references map approximately: old Chapter 61 → new Chapter 64; old Chapter 62 → new Chapter 65; old 641.1 (every installation inspected and tested) → 134.2 + 643.x in current edition. Update your reference materials and certificate templates; old reg numbers on a current EIC are technically a defective citation.',
               },
               {
                 question:

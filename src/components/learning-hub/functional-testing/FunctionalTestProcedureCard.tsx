@@ -57,7 +57,7 @@ const FunctionalTestProcedureCard = () => {
           </Badge>
         </div>
         <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          BS 7671 Regulation 612.13 - Testing operation and functionality of installed equipment
+          BS 7671 Regulation 643.10 - Testing operation and functionality of installed equipment
         </CardDescription>
       </CardHeader>
 
@@ -121,7 +121,7 @@ const FunctionalTestProcedureCard = () => {
         {/* Regulation Compliance */}
         <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5">
           <h4 className="font-semibold text-blue-400 mb-2 text-sm sm:text-base">
-            BS 7671 Regulation 612.13
+            BS 7671 Regulation 643.10
           </h4>
           <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
             Functional testing is required to verify that installed electrical equipment operates

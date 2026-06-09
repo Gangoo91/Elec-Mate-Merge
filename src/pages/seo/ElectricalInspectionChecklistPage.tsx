@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Do I inspect the whole installation or just the new work?',
     answer:
-      'It depends on the type of certificate being issued. For an EICR (Electrical Installation Condition Report), you inspect and test the entire fixed electrical installation within the agreed extent and limitations. For an EIC (Electrical Installation Certificate) for new work, you inspect and test the new work and verify that it does not adversely affect the safety of the existing installation. You are not required to carry out a full inspection of the entire existing installation when issuing an EIC for an addition or alteration. However, if you observe obvious defects in the existing installation during your work, you should record them and bring them to the client attention -- Regulation 634.2 of BS 7671 requires this.',
+      'It depends on the type of certificate being issued. For an EICR (Electrical Installation Condition Report), you inspect and test the entire fixed electrical installation within the agreed extent and limitations. For an EIC (Electrical Installation Certificate) for new work, you inspect and test the new work and verify that it does not adversely affect the safety of the existing installation. You are not required to carry out a full inspection of the entire existing installation when issuing an EIC for an addition or alteration. However, if you observe obvious defects in the existing installation during your work, you should record them and bring them to the client attention -- Regulation 644.3 of BS 7671 requires this.',
   },
   {
     question: 'What PPE do I need for an electrical inspection?',

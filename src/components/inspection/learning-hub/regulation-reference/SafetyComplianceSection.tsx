@@ -167,10 +167,10 @@ const SafetyComplianceSection = () => {
       regulation: '132.14.1',
       status: 'check',
     },
-    { item: 'Protective conductor continuity verified', regulation: '612.2.1', status: 'check' },
-    { item: 'Insulation resistance ≥1MΩ achieved', regulation: '612.3.2', status: 'check' },
+    { item: 'Protective conductor continuity verified', regulation: '643.2.1', status: 'check' },
+    { item: 'Insulation resistance ≥1MΩ achieved', regulation: '643.3.2', status: 'check' },
     { item: 'Earth fault loop impedance within limits', regulation: '411.4.5', status: 'check' },
-    { item: 'RCD operation times within specification', regulation: '612.13.2', status: 'check' },
+    { item: 'RCD operation times within specification', regulation: '643.10', status: 'check' },
     {
       item: 'Installation complies with special location requirements',
       regulation: 'Part 7',

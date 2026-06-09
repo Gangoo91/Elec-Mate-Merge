@@ -286,13 +286,13 @@ const BS7671ExamGuide = () => {
                   </h4>
                   <ul className="space-y-2 text-sm">
                     <li className="text-white">
-                      <span className="text-white font-mono">612.1</span> - Test sequence
+                      <span className="text-white font-mono">643.1</span> - Test sequence
                     </li>
                     <li className="text-white">
-                      <span className="text-white font-mono">612.3</span> - Insulation resistance
+                      <span className="text-white font-mono">643.3</span> - Insulation resistance
                     </li>
                     <li className="text-white">
-                      <span className="text-white font-mono">612.9</span> - RCD testing
+                      <span className="text-white font-mono">643.7.3</span> - RCD testing
                     </li>
                     <li className="text-white">
                       <span className="text-white font-mono">643.3</span> - Initial verification

@@ -205,7 +205,7 @@ const FunctionalTestCard = () => {
             Functional Testing
           </h1>
           <p className="text-sm sm:text-base text-gray-300">
-            BS 7671 Regulation 612.13 - Testing operation and functionality
+            BS 7671 Regulation 643.10 - Testing operation and functionality
           </p>
         </div>
       </div>

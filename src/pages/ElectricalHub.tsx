@@ -375,6 +375,14 @@ const ElectricalHubInner = () => {
       meta: '60+ calculators',
     },
     {
+      id: 'renewables',
+      eyebrow: 'Green',
+      title: 'Renewables',
+      description: 'Solar, battery, EV and heat pump — design to certificate.',
+      to: '/electrician/renewables',
+      meta: 'New',
+    },
+    {
       id: 'site-safety',
       eyebrow: 'Safety',
       title: 'Site safety',

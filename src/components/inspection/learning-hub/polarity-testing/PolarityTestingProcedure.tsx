@@ -50,7 +50,7 @@ const PolarityTestingProcedure = ({ onBack }: PolarityTestingProcedureProps) => 
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Polarity Testing</h1>
-              <p className="text-[10px] text-white">BS 7671 Regulation 612.6</p>
+              <p className="text-[10px] text-white">BS 7671 Regulation 643.6</p>
             </div>
           </div>
         </div>

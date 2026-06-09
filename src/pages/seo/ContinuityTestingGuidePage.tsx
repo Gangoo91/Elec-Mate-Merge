@@ -409,7 +409,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <span>
                 <strong>Expected resistance values</strong>: Main equipotential bonding conductors
-                are short and of large cross-sectional area. Under BS 7671 Reg 544.11 / Table 54.8,
+                are short and of large cross-sectional area. Under BS 7671 Reg 544.1.1 / Table 54.8,
                 where the supply PEN conductor is 35mm² or less (the normal domestic TN-C-S case),
                 the minimum copper main protective bonding conductor is 10mm². The resistance should
                 be very low — typically 0.05Ω or less. Higher values indicate a poor connection at a

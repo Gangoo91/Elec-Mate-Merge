@@ -62,7 +62,7 @@ const PfcTestProcedureCard = () => {
           </div>
           <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
             Essential testing to verify sufficient fault current for protective device operation -
-            BS 7671 Regulation 612.11
+            BS 7671 Regulation 643.7.3.201
           </CardDescription>
         </CardHeader>
 
@@ -208,7 +208,7 @@ const PfcTestProcedureCard = () => {
             </div>
             <ul className="space-y-1.5 text-xs sm:text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 font-mono shrink-0">612.11:</span>
+                <span className="text-blue-400 font-mono shrink-0">643.7.3.201:</span>
                 <span>PFC shall be measured at the origin of every circuit</span>
               </li>
               <li className="flex items-start gap-2">

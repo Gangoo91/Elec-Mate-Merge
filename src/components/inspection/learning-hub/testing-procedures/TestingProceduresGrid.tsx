@@ -86,7 +86,7 @@ const TestingProceduresGrid = ({
               variant="outline"
               className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
             >
-              BS 7671 Regulation 612.1
+              BS 7671 Regulation 643.1
             </Badge>
             <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
               Essential safety procedure for isolating electrical installations before any work
@@ -141,7 +141,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Section 612.2
+                BS 7671 Section 643.2
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Test continuity of protective conductors and ring final circuits
@@ -185,7 +185,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Section 612.3
+                BS 7671 Section 643.3
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Test insulation resistance between conductors and earth
@@ -229,7 +229,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Section 612.6
+                BS 7671 Section 643.6
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Verify correct polarity of all electrical connections
@@ -273,7 +273,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Sections 612.9 & 411.4.5
+                BS 7671 Sections 643.7.3 & 411.4.5
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Measure earth fault loop impedance for safety verification
@@ -317,7 +317,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Sections 612.10 & 612.13
+                BS 7671 Sections 643.10 & 643.10
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Test RCD operation and trip times for protection verification
@@ -361,7 +361,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Sections 612.11 & 434.5.2
+                BS 7671 Sections 643.7.3.201 & 434.5.2
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Measure prospective fault current for protective device verification
@@ -405,7 +405,7 @@ const TestingProceduresGrid = ({
                 variant="outline"
                 className="bg-blue-500/10 text-blue-400 border-blue-400/20 text-xs w-fit mb-2"
               >
-                BS 7671 Section 612.13
+                BS 7671 Section 643.10
               </Badge>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                 Test operation and functionality of electrical installations and controls

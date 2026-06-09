@@ -50,7 +50,7 @@ const CONDUCTOR_RESISTANCE_20C: Record<number, number> = {
 
 /**
  * Calculate expected R1+R2 based on cable sizes and length
- * BS 7671 Reg 612.2 - Continuity of protective conductors
+ * BS 7671 Reg 643.2 - Continuity of protective conductors
  */
 export function calculateExpectedR1R2(
   liveSize: number,
@@ -76,7 +76,7 @@ export function calculateExpectedR1R2(
 
 /**
  * Calculate expected Zs (Ze + R1+R2)
- * BS 7671 Reg 612.9 - Earth fault loop impedance
+ * BS 7671 Reg 643.7.3 - Earth fault loop impedance
  */
 export function calculateExpectedZs(ze: number, r1r2: number): number {
   return Number((ze + r1r2).toFixed(3));
@@ -116,7 +116,7 @@ export function getExpectedInsulationResistance(
 
 /**
  * Calculate expected polarity test result
- * BS 7671 Reg 612.6 - Polarity
+ * BS 7671 Reg 643.6 - Polarity
  */
 export function getExpectedPolarity(): string {
   return 'Correct - Line conductor connected to center contact of lampholder/switching contacts';
@@ -162,7 +162,7 @@ export function getMaxZsForDevice(params: {
 
 /**
  * Calculate expected RCD trip time
- * BS 7671 Reg 612.13 - RCD operation
+ * BS 7671 Reg 643.10 - RCD operation
  */
 export function getExpectedRCDTripTime(params: {
   rcdRating: number; // mA
@@ -177,19 +177,19 @@ export function getExpectedRCDTripTime(params: {
     // Test at 1× IΔn
     return {
       maxTripTime: '< 300ms',
-      regulation: 'BS 7671 Reg 612.13.2 (1× IΔn)',
+      regulation: 'BS 7671 Reg 643.10 (1× IΔn)',
     };
   } else if (testMultiplier === 5) {
     // Test at 5× IΔn
     return {
       maxTripTime: '< 40ms',
-      regulation: 'BS 7671 Reg 612.13.2 (5× IΔn)',
+      regulation: 'BS 7671 Reg 643.10 (5× IΔn)',
     };
   }
 
   return {
     maxTripTime: '< 300ms',
-    regulation: 'BS 7671 Reg 612.13.2',
+    regulation: 'BS 7671 Reg 643.10',
   };
 }
 
@@ -227,13 +227,13 @@ export function generateExpectedValues(circuit: {
       value: r1r2Result.formatted,
       at20C: r1r2Result.at20C,
       at70C: r1r2Result.at70C,
-      regulation: 'BS 7671 Reg 612.2',
+      regulation: 'BS 7671 Reg 643.2',
     },
     zs: {
       value: expectedZs,
       maxPermitted: maxZs,
       compliant: expectedZs <= maxZs,
-      regulation: 'BS 7671 Reg 612.9',
+      regulation: 'BS 7671 Reg 643.7.3',
     },
     insulationResistance: insulationRequirements,
     earthFaultLoopImpedance: {

@@ -274,7 +274,7 @@ export default function Sub3() {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>IR (insulation resistance)</strong> — pass: ≥ 1 MΩ. Healthy: 100+ MΩ. A reading of 2 MΩ passes but flags developing degradation.</li>
               <li><strong>Zs (earth fault loop)</strong> — pass: within Table 41.3 maximum. Healthy: matches calculated expected from supply Ze + cable R1+R2. A reading 50% above expected (still within Table 41.3) suggests added impedance.</li>
-              <li><strong>RCD trip-time</strong> — pass: within Table 643.7 maximum (300 ms at I∆n for general). Healthy: 10–30 ms. A reading of 250 ms passes but suggests RCD approaching end of life.</li>
+              <li><strong>RCD trip-time</strong> — pass: within Reg 643.7.3 maximum (300 ms at I∆n for general). Healthy: 10–30 ms. A reading of 250 ms passes but suggests RCD approaching end of life.</li>
               <li><strong>R1+R2 / continuity</strong> — pass: any low reading. Healthy: matches calculated from cable mΩ/m. A reading 50% above expected suggests HRJ.</li>
             </ul>
           </ConceptBlock>

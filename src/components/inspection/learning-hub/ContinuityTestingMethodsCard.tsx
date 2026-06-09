@@ -25,7 +25,7 @@ const ContinuityTestingMethodsCard = () => {
       id: 'r1r2',
       name: 'R1+R2 Method',
       description: 'Combined resistance of line conductor and circuit protective conductor',
-      regulation: 'BS 7671 Regulation 612.2.1',
+      regulation: 'BS 7671 Regulation 643.2.1',
       when: 'For all final circuits to verify protective conductor continuity',
       procedure: [
         'Ensure circuit is safely isolated and secured',

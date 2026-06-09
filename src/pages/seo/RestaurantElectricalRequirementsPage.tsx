@@ -785,6 +785,11 @@ export default function RestaurantElectricalRequirementsPage() {
       }
       heroSubtitle="From three-phase supply calculations to gas interlocks, emergency lighting to fire alarm systems — this guide covers every electrical requirement for restaurants and commercial kitchens in the UK. Whether you are fitting out new premises or maintaining an existing installation, this is the reference you need."
       readingTime={14}
+      answerBox={{
+        question: 'What are the electrical requirements for a commercial kitchen?',
+        answer:
+          'A commercial kitchen usually needs a three-phase supply to handle high-load cooking equipment, with each fixed appliance on its own correctly-sized circuit. Key requirements include a clearly-labelled emergency shut-off, a gas-interlock system linking the ventilation to the gas supply, emergency lighting on escape routes, fire detection, and RCD protection — all installed and certified to BS 7671. A periodic EICR keeps the installation compliant and insurable.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

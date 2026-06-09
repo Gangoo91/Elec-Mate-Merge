@@ -95,11 +95,11 @@ Deno.serve(async (req) => {
       if (c.code) courseCodeById.set(c.id, c.code);
     }
 
-    // Prefer the learner's ACTIVE app-side qualification selection — the same
-    // source the capture flow, AC picker and progress UI all read from — over
-    // the college course code, so the coverage tracker can't drift from what
-    // the student is actually studying. Falls back to the course code when no
-    // active selection exists (typical college-managed enrolment).
+    // Also load the learner's ACTIVE app-side selection — used only as a fallback
+    // when there is no college course. The college enrolment is authoritative
+    // (see qualForStudent), so a divergent self-selection can't make the coverage
+    // tracker drift onto the wrong qualification. Kept in sync with the frontend
+    // useStudentQualification resolver.
     const userIds = [...new Set(students.map((s) => s.user_id as string).filter(Boolean))];
     const selCodeByUser = new Map<string, string>();
     if (userIds.length) {
@@ -134,8 +134,11 @@ Deno.serve(async (req) => {
 
     const qualForStudent = (s: { user_id?: string | null; course_id?: string | null }) =>
       resolveCode(
-        (s.user_id ? selCodeByUser.get(s.user_id) : undefined) ??
-          (s.course_id ? courseCodeById.get(s.course_id) : undefined)
+        // College enrolment is AUTHORITATIVE; the learner's self-selection is only
+        // a fallback when they are not enrolled on a college course (otherwise a
+        // divergent self-selection would track the wrong qualification).
+        (s.course_id ? courseCodeById.get(s.course_id) : undefined) ??
+          (s.user_id ? selCodeByUser.get(s.user_id) : undefined)
       );
 
     // Cache qualification_code → ACs, keyed by the resolved canonical code.

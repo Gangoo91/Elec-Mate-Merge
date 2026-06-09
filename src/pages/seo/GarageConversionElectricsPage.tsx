@@ -777,6 +777,11 @@ export default function GarageConversionElectricsPage() {
       }
       heroSubtitle="Everything you need to know about the electrical work in a garage conversion — Building Regulations, consumer unit design, lighting, socket layout, heating and ventilation circuits, fire safety, and realistic 2026 pricing."
       readingTime={16}
+      answerBox={{
+        question: 'Does a garage conversion need new electrics and certification?',
+        answer:
+          'Almost always. Converting a garage into habitable space is building work, so it must meet the Building Regulations — including Part P for the electrical work in England. Typically you add or modify lighting and socket circuits, often a heating circuit, and may need consumer-unit changes. The electrical work must be designed, installed, tested and certified to BS 7671, and notified through a registered electrician on a competent-person scheme or via building control.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -34,7 +34,7 @@ const WhyTestSection = () => {
                 Regulatory Compliance
               </h4>
               <ul className="space-y-2 text-sm">
-                <li>• Required by BS 7671 Regulation 612.13</li>
+                <li>• Required by BS 7671 Regulation 643.10</li>
                 <li>• Part of initial verification process</li>
                 <li>• Essential for EIC/EICR certification completion</li>
                 <li>• Demonstrates due diligence in testing procedures</li>

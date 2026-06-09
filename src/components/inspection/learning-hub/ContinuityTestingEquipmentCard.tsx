@@ -32,7 +32,7 @@ const ContinuityTestingEquipmentCard = () => {
       required: true,
       category: 'primary',
       calibrationRequired: true,
-      regulationRef: 'BS 7671 Regulation 612.2.2',
+      regulationRef: 'BS 7671 Regulation 643.2.1',
     },
     {
       id: 'test-leads',

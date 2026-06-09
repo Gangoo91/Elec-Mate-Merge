@@ -633,6 +633,11 @@ export default function MinorWorksVsEICPage() {
       }
       heroSubtitle="New circuit? EIC. Alteration to an existing circuit? Minor Works. Consumer unit replacement? Always EIC — the regulation is unambiguous. This guide covers the straightforward cases, the genuine grey areas (circuit splitting, bathroom work), and the practical examples that help you get it right every time."
       readingTime={11}
+      answerBox={{
+        question: 'When do I use a Minor Works Certificate vs an EIC?',
+        answer:
+          'Use an Electrical Installation Certificate (EIC) for any new circuit, a consumer unit replacement, or a new installation. Use a Minor Electrical Installation Works Certificate only for an addition or alteration to an existing circuit that does not include a new circuit — for example adding a socket or a fused spur to an existing ring. If the work includes a new circuit, or you are in doubt, issue an EIC.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

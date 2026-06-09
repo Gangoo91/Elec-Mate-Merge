@@ -38,7 +38,7 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
             type: 'compliance',
             message: 'Inspector must hold appropriate qualifications per BS 7671',
             status: value ? 'pass' : 'warning',
-            regulation: 'BS 7671:2018 Section 610.1',
+            regulation: 'BS 7671:2018 Section 641.1',
           },
           {
             id: '2',
@@ -82,7 +82,7 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
               value.includes('10-test') || value.includes('25-test') || value.includes('100-test')
                 ? 'pass'
                 : 'info',
-            regulation: 'BS 7671:2018 Section 634.2',
+            regulation: 'BS 7671:2018 Section 644.3',
           }
         );
         break;

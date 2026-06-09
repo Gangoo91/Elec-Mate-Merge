@@ -178,7 +178,7 @@ const quizQuestions = [
       'Regulation 411.3',
       'Regulation 536.4',
       'Regulation 434.5',
-      'Regulation 612.1',
+      'Regulation 643.1',
     ],
     correctAnswer: 1,
     explanation:

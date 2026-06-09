@@ -577,6 +577,11 @@ export default function OutbuildingElectricalSupplyPage() {
       }
       heroSubtitle="Supplying an outbuilding with electricity requires the right cable route (SWA underground or overhead at minimum 3.5m — 6m where vehicles pass), a consumer unit in the outbuilding, correct TT earthing, and RCD protection at both ends. This guide covers every aspect of outbuilding electrical supply."
       readingTime={12}
+      answerBox={{
+        question: 'What do I need to supply electricity to an outbuilding?',
+        answer:
+          'Supplying a detached outbuilding usually means a buried steel-wire-armoured (SWA) cable from the house, its own small consumer unit in the outbuilding, RCD protection, and careful attention to earthing — a TT arrangement with a local earth electrode is often used rather than exporting a PME earth to a building with extraneous-conductive-parts. The circuit is sized for the outbuilding load, and the work is designed, tested and certified to BS 7671.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -157,7 +157,7 @@ const quizQuestions = [
     options: [
       "Part L (Conservation of Fuel and Power) requires every new build and every notifiable refurbishment to demonstrate compliance via a SAP calculation that meets the Target Emission Rate (TER) and Target Fabric Energy Efficiency (TFEE) for the property type. A heat pump's contribution to the SAP calculation depends on its SCOP and the carbon intensity of grid electricity. Modern heat pumps in well-designed homes pass Part L comfortably. The Future Homes Standard (in force from 2025) effectively rules out fossil-fuel boilers from new-build because the SAP calculation cannot reach compliance with a gas boiler under the tightening targets. The MCS designer's SCOP estimate feeds the SAP calculation.",
       "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\"good enough\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
-      "Trip-time test injects a calibrated residual current and measures how long the RCD takes to disconnect. BS 7671 643.7 / Table 643.7 maximums: at I∆n (rated trip current, e.g. 30 mA): ≤ 300 ms (general type, ≤ 40 ms for type S); at 1×IΔn: ≤ 40 ms (general type). Modern RCDs typically trip at I∆n in 10–30 ms — well under the limit. Slow tripping (&gt;50 ms at I∆n) indicates a failing RCD. The MFT (Megger MFT1741+) tests at multiple injection levels and at 0° / 180° phase angles — the slowest of the four readings is the recorded trip time.",
+      "Trip-time test injects a calibrated residual current and measures how long the RCD takes to disconnect. BS 7671 Reg 643.7.3 maximums: at I∆n (rated trip current, e.g. 30 mA): ≤ 300 ms (general type, ≤ 40 ms for type S); at 1×IΔn: ≤ 40 ms (general type). Modern RCDs typically trip at I∆n in 10–30 ms — well under the limit. Slow tripping (&gt;50 ms at I∆n) indicates a failing RCD. The MFT (Megger MFT1741+) tests at multiple injection levels and at 0° / 180° phase angles — the slowest of the four readings is the recorded trip time.",
       "Cool, dry, ventilated location away from sources of ignition; not directly above or below escape routes; minimum clearances per the manufacturer's instructions for thermal management; not in a habitable room without a fire-rated enclosure or adequate fire separation; not in a loft (high temperature in summer, restricted access for emergency response); accessible for emergency isolation. The IET Code of Practice for Electrical Energy Storage Systems gives the framework. The manufacturer's installation manual is the binding instruction set; deviating from it voids the warranty and the BS 7671 compliance basis.",
     ],
     correctAnswer: 2,
@@ -277,7 +277,7 @@ export default function Sub4() {
               <li><strong>3. Insulation resistance</strong> (Reg 643.3) — between live conductors and earth, between live conductors. 500 V DC for LV (250 V for circuits with electronics).</li>
               <li><strong>4. Polarity</strong> (Section 643) — confirms line connected to line terminal at every accessory; switches break line not neutral.</li>
               <li><strong>5. Earth fault loop impedance</strong> (Reg 643.7.3) — Ze at origin, Zs at every protective device. Verify against Table 41.3 maximums.</li>
-              <li><strong>6. Operation of RCDs</strong> (Reg 643.7.1, 643.8) — trip-time at I∆n and 1×IΔn. Verify against Table 643.7 maximums.</li>
+              <li><strong>6. Operation of RCDs</strong> (Reg 643.7.1, 643.8) — trip-time at I∆n and 1×IΔn. Verify against Reg 643.7.3 maximums.</li>
             </ul>
             <p>Tests 1–4 are dead tests; tests 5–6 are live. The dead-then-live order keeps you safe and gives clean diagnostic data.</p>
           </ConceptBlock>
@@ -402,7 +402,7 @@ export default function Sub4() {
             title="Verifying the protective device is actually protecting"
             onSite="An RCD that\'s slow to trip is more dangerous than no RCD at all — the customer believes they\'re protected. Trip-time testing is the L3 fault-diagnosis equivalent of putting your hand in front of a fan to check it\'s spinning the right speed."
           >
-            <p>BS 7671 Reg 643.7.1 / Table 643.7 maximum trip times:</p>
+            <p>BS 7671 Reg 643.7.1 / Reg 643.7.3 maximum trip times:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>At I∆n (rated trip current, 30 mA): ≤ 300 ms (general type), ≤ 40 ms for type S.</li>
               <li>At 1×IΔn (150 mA on a 30 mA RCD): ≤ 40 ms (general type).</li>

@@ -30,7 +30,7 @@ const inlineChecks = [
     ],
     correctIndex: 2,
     explanation:
-      'Reg 544.11 sends PME (TN-C-S) supplies to Table 54.8. PEN of 50 mm² falls in the "over 35–50 mm²" row → 16 mm² minimum. The "half the earthing conductor" rule is the non-PME default and does not apply here. DNO may still require larger by local agreement.',
+      'Reg 544.1.1 sends PME (TN-C-S) supplies to Table 54.8. PEN of 50 mm² falls in the "over 35–50 mm²" row → 16 mm² minimum. The "half the earthing conductor" rule is the non-PME default and does not apply here. DNO may still require larger by local agreement.',
   },
   {
     id: 'mod3-s3-clamp-on-paint',
@@ -108,7 +108,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'Reg 544.11 sets the minimum csa of a main protective bonding conductor on a non-PME supply. What is it?',
+      'Reg 544.1.1 sets the minimum csa of a main protective bonding conductor on a non-PME supply. What is it?',
     options: [
       'Always 10 mm² copper',
       'Not less than half the csa of the earthing conductor of the installation',
@@ -117,7 +117,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 544.11 first sentence: except where PME conditions apply, a main protective bonding conductor shall have a csa not less than half the csa required for the earthing conductor. Where PME applies, sizing follows Table 54.8 against the PEN conductor — typically 10 mm² for PEN ≤ 35 mm². The "half the earthing conductor" rule is the non-PME default.',
+      'Reg 544.1.1 first sentence: except where PME conditions apply, a main protective bonding conductor shall have a csa not less than half the csa required for the earthing conductor. Where PME applies, sizing follows Table 54.8 against the PEN conductor — typically 10 mm² for PEN ≤ 35 mm². The "half the earthing conductor" rule is the non-PME default.',
   },
   {
     id: 4,
@@ -220,7 +220,7 @@ const InspectionTestingModule3Section3 = () => {
   useSEO({
     title: 'Main bonding conductor testing | I&T Module 3.3 | Elec-Mate',
     description:
-      'Reg 643.2.1 + Reg 411.3.1.2 + Reg 544.1.1 / 544.11: continuity testing of the main protective bonding conductors from MET to gas, water, structural steel, oil and district heating — with conductor sizing per Table 54.7 / 54.8 and the "within 600 mm of meter inlet" rule.',
+      'Reg 643.2.1 + Reg 411.3.1.2 + Reg 544.1.1 / 544.1.1: continuity testing of the main protective bonding conductors from MET to gas, water, structural steel, oil and district heating — with conductor sizing per Table 54.7 / 54.8 and the "within 600 mm of meter inlet" rule.',
   });
 
   return (
@@ -246,7 +246,7 @@ const InspectionTestingModule3Section3 = () => {
             points={[
               'Main protective bonding is not optional dressing. It is the protective measure that ties the metalwork of incoming services (gas, water, structural steel, oil, district heating) to the MET so that, during an earth fault, every metallic part inside the building rises and falls together — touch voltage between two simultaneously accessible parts stays inside the safe envelope.',
               'Reg 411.3.1.2 is the duty-bearing regulation: extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors. The regulation lists examples (water, gas, other metallic pipework, central heating / air conditioning, structural steelwork) and explicitly excludes incoming plastic pipework.',
-              'Reg 544.1.1 / 544.11 size the conductor. On non-PME supplies: not less than half the csa of the earthing conductor. On PME (TN-C-S): per Table 54.8 against the PEN conductor — typically 10 mm² for PEN ≤ 35 mm². Reg 544.1.2 sets the location: consumer’s hard metal pipework, before any branch, within 600 mm of the meter outlet where practicable.',
+              'Reg 544.1.1 / 544.1.1 size the conductor. On non-PME supplies: not less than half the csa of the earthing conductor. On PME (TN-C-S): per Table 54.8 against the PEN conductor — typically 10 mm² for PEN ≤ 35 mm². Reg 544.1.2 sets the location: consumer’s hard metal pipework, before any branch, within 600 mm of the meter outlet where practicable.',
               'Reg 643.2.1 requires every main bonding conductor to be tested by resistance measurement. GN3 Chapter 2 names the instrument (low-resistance ohmmeter, BS EN 61557-4) and the technique: meter from MET to the extraneous-conductive-part itself (the metal beyond the clamp) — the reading captures the conductor plus both terminations.',
               'Acceptance: "low resistance". No fixed numeric maximum in BS 7671. Expect a small fraction of an ohm for the conductor plus the clamp. Anything in the order of an ohm or more is a flag, not an acceptance value. The "cross-bond" between gas and water meters via a combi-boiler / copper cylinder is a parallel path that lowers readings and should be noted, not relied on.',
             ]}
@@ -255,7 +255,7 @@ const InspectionTestingModule3Section3 = () => {
           <LearningOutcomes
             outcomes={[
               'State the duty in Reg 411.3.1.2 and identify the extraneous-conductive-parts in any given installation that require main protective bonding',
-              'Size a main protective bonding conductor correctly under both non-PME (Reg 544.11 first sentence) and PME (Table 54.8) regimes',
+              'Size a main protective bonding conductor correctly under both non-PME (Reg 544.1.1 first sentence) and PME (Table 54.8) regimes',
               'Apply Reg 544.1.2 — connect on the consumer’s hard metal pipework, before any branch, within 600 mm of the meter outlet — and explain why each part of the rule matters',
               'Carry out the main bonding continuity test in the correct sequence using a low-resistance ohmmeter, capturing the reading from MET to the metalwork beyond the clamp',
               'Recognise the cross-bond signature where two bonded services share an unintended parallel path (combi-boiler, copper cylinder, structural steel), and record it correctly',
@@ -317,14 +317,14 @@ const InspectionTestingModule3Section3 = () => {
 
           <SectionRule />
 
-          <ContentEyebrow>The conductor — sizing per Reg 544.11</ContentEyebrow>
+          <ContentEyebrow>The conductor — sizing per Reg 544.1.1</ContentEyebrow>
 
           <ConceptBlock
             title="Two regimes: non-PME (half the earthing conductor) vs PME (Table 54.8)"
             plainEnglish="On a non-PME supply (TN-S, TT), the main bonding conductor must be at least half the csa of the earthing conductor of the installation. On a PME (TN-C-S) supply, the main bonding conductor is sized against Table 54.8 — typically 10 mm² where the PEN conductor of the supply is 35 mm² or smaller."
             onSite="Always confirm the supply earthing arrangement first: it determines which sizing rule applies. A 10 mm² bond on a non-PME supply with a 16 mm² earthing conductor is undersized (should be ≥ 8 mm² — so 10 mm² is fine in that case). A 10 mm² bond on a PME supply with a 35 mm² PEN is at the minimum and acceptable, unless the local distributor requires larger."
           >
-            <p>Reg 544.11 sets out the two regimes explicitly. For non-PME (default rule):</p>
+            <p>Reg 544.1.1 sets out the two regimes explicitly. For non-PME (default rule):</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
                 Main bonding csa ≥ half the csa of the earthing conductor of the installation.
@@ -342,7 +342,7 @@ const InspectionTestingModule3Section3 = () => {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 544.11 · Table 54.8"
+            source="BS 7671:2018+A4:2026 · Reg 544.1.1 · Table 54.8"
             clause={
               <>
                 Except where PME conditions apply, a main protective bonding conductor shall have a
@@ -953,7 +953,7 @@ const InspectionTestingModule3Section3 = () => {
             whatToDo={
               <>
                 <span className="block">
-                  Sizing per Reg 544.11 / Table 54.8: PEN ≤ 35 mm² → main bond minimum 10 mm²
+                  Sizing per Reg 544.1.1 / Table 54.8: PEN ≤ 35 mm² → main bond minimum 10 mm²
                   copper. Specify 10 mm² G/Y singles for all three bonds.
                 </span>
                 <span className="block">
@@ -981,7 +981,7 @@ const InspectionTestingModule3Section3 = () => {
             title="What to remember on site"
             points={[
               'Reg 411.3.1.2 lists the duty: bond every extraneous-conductive-part liable to introduce a dangerous potential difference. Plastic incoming pipework that feeds metalwork inside is normally NOT extraneous — verify with a resistance test (≥ 22 kΩ to true earth = not extraneous).',
-              'Reg 544.11: non-PME main bond ≥ half the earthing conductor csa. PME main bond per Table 54.8 — typically 10 mm² for PEN ≤ 35 mm². DNO may require larger.',
+              'Reg 544.1.1: non-PME main bond ≥ half the earthing conductor csa. PME main bond per Table 54.8 — typically 10 mm² for PEN ≤ 35 mm². DNO may require larger.',
               'Reg 544.1.2: connection on consumer’s hard pipework, before any branch, within 600 mm of the meter outlet where practicable.',
               'Reg 643.2.1 + GN3 Ch 2: test every bond by low-resistance ohmmeter from MET to the metalwork beyond the clamp. Acceptance is "low resistance" — typically a small fraction of an ohm.',
               'No fixed numeric maximum in BS 7671. Calculate the expected reading from cable size, length and clamp/MET termination contribution, then compare. 0.02–0.05 Ω for a typical 10 mm² × 4 m bond.',
@@ -1015,7 +1015,7 @@ const InspectionTestingModule3Section3 = () => {
               {
                 question: 'On a TT supply, do the same bonding rules apply?',
                 answer:
-                  'Yes for the duty (Reg 411.3.1.2 applies to every consumer’s installation regardless of earthing arrangement) and the test (Reg 643.2.1 applies likewise). For sizing, TT falls under the non-PME default in Reg 544.11 — the bond must be at least half the csa of the earthing conductor of the installation. The earthing conductor itself is sized to the buried-conductor table 54.1, so on a TT installation with a 16 mm² protected earthing conductor, the main bond must be ≥ 8 mm² — round to 10 mm² for the next standard size.',
+                  'Yes for the duty (Reg 411.3.1.2 applies to every consumer’s installation regardless of earthing arrangement) and the test (Reg 643.2.1 applies likewise). For sizing, TT falls under the non-PME default in Reg 544.1.1 — the bond must be at least half the csa of the earthing conductor of the installation. The earthing conductor itself is sized to the buried-conductor table 54.1, so on a TT installation with a 16 mm² protected earthing conductor, the main bond must be ≥ 8 mm² — round to 10 mm² for the next standard size.',
               },
               {
                 question:

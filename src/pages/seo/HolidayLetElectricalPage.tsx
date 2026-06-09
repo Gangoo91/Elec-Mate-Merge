@@ -718,6 +718,11 @@ export default function HolidayLetElectricalPage() {
       }
       heroSubtitle="Holiday lets are not subject to mandatory EICR legislation, but owners still owe a duty of care to guests under the Occupiers Liability Act 1957. This guide explains your legal position, the recommended five-yearly EICR, PAT testing, smoke and CO detection, RCD protection, insurance implications, and how to use safety certificates for marketing."
       readingTime={14}
+      answerBox={{
+        question: 'Do holiday lets need an EICR?',
+        answer:
+          "There is no law specifically mandating an EICR for holiday lets (unlike the mandatory five-yearly EICR for private rented tenancies), but owners still owe guests a clear duty of care under the Occupiers' Liability Act 1957. In practice that means a periodic EICR — commonly every five years — plus PAT testing of appliances, working smoke and CO alarms, and RCD protection are strongly recommended, and most holiday-let insurers expect them.",
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

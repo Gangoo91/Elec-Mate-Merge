@@ -1049,7 +1049,7 @@ export const module5Questions: Question[] = [
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 701.512.2 + Table 701.55.1: Zone 1 IPX4 minimum (IPX5 if water jets used). Zone 0 = IPX7. The X allows any solid-particle rating.",
+      "Reg 701.512.2: Zone 1 IPX4 minimum (IPX5 if water jets used). Zone 0 = IPX7. The X allows any solid-particle rating.",
     section: "3.5",
     difficulty: "intermediate",
   },

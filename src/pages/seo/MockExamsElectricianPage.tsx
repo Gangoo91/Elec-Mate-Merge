@@ -530,6 +530,11 @@ export default function MockExamsElectricianPage() {
       }
       heroSubtitle="Prepare for the 18th Edition, 2391, and AM2 exams with unlimited AI-powered mock exams. Instant marking, detailed explanations for every answer, and intelligent progress tracking that targets your weak areas."
       readingTime={14}
+      answerBox={{
+        question: 'How should I revise for the 18th Edition and AM2 exams?',
+        answer:
+          'The most effective revision for the 18th Edition (C&G 2382), 2391 and AM2 exams is repeated practice under timed conditions: work through full-length mock exams, read the explanation for every question whether you got it right or wrong, and re-test your weak topics until you consistently score above the pass mark. Elec-Mate provides unlimited AI-marked mock exams with per-answer explanations and weak-area tracking.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -50,7 +50,7 @@ export const advancedInspection: FlashcardData[] = [
     question:
       'How is polarity verified at each point during dead testing, and why is it important?',
     answer:
-      'Polarity is verified using a low-resistance ohmmeter or continuity tester to confirm that single-pole switching devices are connected in the line conductor only, that the centre contact of Edison-screw lampholders is connected to the line conductor, and that socket outlets are correctly wired (line, neutral, and earth in the correct terminals). Per BS 7671:2018+A2:2022 Regulation 612.6, incorrect polarity can result in parts remaining live when a switch is turned off, creating a serious electric shock risk.',
+      'Polarity is verified using a low-resistance ohmmeter or continuity tester to confirm that single-pole switching devices are connected in the line conductor only, that the centre contact of Edison-screw lampholders is connected to the line conductor, and that socket outlets are correctly wired (line, neutral, and earth in the correct terminals). Per BS 7671:2018+A2:2022 Regulation 643.6, incorrect polarity can result in parts remaining live when a switch is turned off, creating a serious electric shock risk.',
     category: 'Dead Tests',
     difficulty: 'easy',
   },
@@ -59,7 +59,7 @@ export const advancedInspection: FlashcardData[] = [
     question:
       'How do you test continuity of main protective bonding conductors and supplementary bonding conductors?',
     answer:
-      'Using a low-resistance ohmmeter, measure from the main earthing terminal to each bonding clamp on the extraneous-conductive-parts (gas, water, oil, structural steelwork) for main bonding. For supplementary bonding (e.g., in bathrooms), measure between simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts. Per GN3 and BS 7671:2018+A2:2022 Regulation 612.2, the readings should be very low (typically below 0.05 Ω for main bonding) and must demonstrate a continuous, sound connection throughout the protective conductor path.',
+      'Using a low-resistance ohmmeter, measure from the main earthing terminal to each bonding clamp on the extraneous-conductive-parts (gas, water, oil, structural steelwork) for main bonding. For supplementary bonding (e.g., in bathrooms), measure between simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts. Per GN3 and BS 7671:2018+A2:2022 Regulation 643.2, the readings should be very low (typically below 0.05 Ω for main bonding) and must demonstrate a continuous, sound connection throughout the protective conductor path.',
     category: 'Dead Tests',
     difficulty: 'medium',
   },
@@ -77,7 +77,7 @@ export const advancedInspection: FlashcardData[] = [
     id: 'ai9',
     question: 'What is prospective fault current (PFC) and why must it be measured?',
     answer:
-      'Prospective fault current is the maximum current that would flow under a fault condition (both line-earth and line-neutral) at any point in the installation, most critically at the origin. Per BS 7671:2018+A2:2022 Regulation 612.11, PFC must be measured or determined to confirm that all protective devices have an adequate breaking capacity (rated short-circuit capacity) to safely interrupt the fault. If the PFC exceeds the breaking capacity of a device, the device could fail to clear the fault, leading to fire or explosion. PFC is measured using a loop impedance tester set to the PFC/PSCC function.',
+      'Prospective fault current is the maximum current that would flow under a fault condition (both line-earth and line-neutral) at any point in the installation, most critically at the origin. Per BS 7671:2018+A2:2022 Regulation 643.7.3.201, PFC must be measured or determined to confirm that all protective devices have an adequate breaking capacity (rated short-circuit capacity) to safely interrupt the fault. If the PFC exceeds the breaking capacity of a device, the device could fail to clear the fault, leading to fire or explosion. PFC is measured using a loop impedance tester set to the PFC/PSCC function.',
     category: 'Live Tests',
     difficulty: 'medium',
   },
@@ -85,7 +85,7 @@ export const advancedInspection: FlashcardData[] = [
     id: 'ai10',
     question: 'Describe the full RCD test sequence including x1, x5, ramp, and phase angle tests.',
     answer:
-      'Per GN3 and BS 7671:2018+A2:2022 Regulation 612.13, the full RCD test sequence for a 30mA general-type RCD is: (1) at rated residual current (x1 or 30mA), the RCD must trip within 300ms; (2) at five times rated residual current (x5 or 150mA), the RCD must trip within 40ms; (3) a ramp test gradually increases the current to determine the actual tripping current, which must be between 50% and 100% of IΔn (15–30mA for a 30mA device). All tests should be carried out at both 0° and 180° phase angle to check operation on both positive and negative half-cycles of the waveform, as the RCD must operate reliably regardless of fault inception point.',
+      'Per GN3 and BS 7671:2018+A2:2022 Regulation 643.10, the full RCD test sequence for a 30mA general-type RCD is: (1) at rated residual current (x1 or 30mA), the RCD must trip within 300ms; (2) at five times rated residual current (x5 or 150mA), the RCD must trip within 40ms; (3) a ramp test gradually increases the current to determine the actual tripping current, which must be between 50% and 100% of IΔn (15–30mA for a 30mA device). All tests should be carried out at both 0° and 180° phase angle to check operation on both positive and negative half-cycles of the waveform, as the RCD must operate reliably regardless of fault inception point.',
     category: 'Live Tests',
     difficulty: 'hard',
   },
@@ -110,7 +110,7 @@ export const advancedInspection: FlashcardData[] = [
     id: 'ai13',
     question: 'What is the purpose of testing phase sequence on a three-phase system?',
     answer:
-      'Phase sequence (also called phase rotation) testing confirms that the three phases (L1, L2, L3) are connected in the correct order — typically a clockwise rotation. Per BS 7671:2018+A2:2022 Regulation 612.12, incorrect phase sequence can cause three-phase motors to run in reverse, damage equipment, and create safety hazards. A phase rotation meter is connected to the three phases to verify the direction. This test is essential at the origin and at any three-phase distribution equipment or motor connection point.',
+      'Phase sequence (also called phase rotation) testing confirms that the three phases (L1, L2, L3) are connected in the correct order — typically a clockwise rotation. Per BS 7671:2018+A2:2022 Regulation 643.9, incorrect phase sequence can cause three-phase motors to run in reverse, damage equipment, and create safety hazards. A phase rotation meter is connected to the three phases to verify the direction. This test is essential at the origin and at any three-phase distribution equipment or motor connection point.',
     category: 'Live Tests',
     difficulty: 'easy',
   },
@@ -119,7 +119,7 @@ export const advancedInspection: FlashcardData[] = [
     question:
       'What functional tests must be carried out during initial verification and periodic inspection?',
     answer:
-      'Per BS 7671:2018+A2:2022 Regulation 612.13, functional testing includes operating all switchgear and protective devices to confirm they function correctly, testing RCDs via their built-in test button, verifying interlocks (e.g., isolator interlocks on panels), testing controls and switches for correct operation, and checking that drives, contactors, and relays operate as intended. All assemblies must be checked for proper operation under normal service conditions. For periodic inspection, GN3 states that functional testing is also required on fire alarm circuits, emergency lighting, and any other safety systems present.',
+      'Per BS 7671:2018+A2:2022 Regulation 643.10, functional testing includes operating all switchgear and protective devices to confirm they function correctly, testing RCDs via their built-in test button, verifying interlocks (e.g., isolator interlocks on panels), testing controls and switches for correct operation, and checking that drives, contactors, and relays operate as intended. All assemblies must be checked for proper operation under normal service conditions. For periodic inspection, GN3 states that functional testing is also required on fire alarm circuits, emergency lighting, and any other safety systems present.',
     category: 'Live Tests',
     difficulty: 'easy',
   },
@@ -225,7 +225,7 @@ export const advancedInspection: FlashcardData[] = [
     question:
       'What type of instrument is required for insulation resistance testing, and what standard must it comply with?',
     answer:
-      'Per BS 7671:2018+A2:2022 Regulation 612.3 and GN3, insulation resistance must be measured using an insulation resistance tester that outputs DC voltage at the prescribed test level (250V, 500V, or 1000V depending on circuit voltage). The instrument must comply with BS EN 61557-2 and be capable of delivering the test voltage with a minimum load current of 1mA. The instrument must display the result in megohms (MΩ). Using an instrument with insufficient output current or incorrect test voltage will produce unreliable results and may fail to detect insulation defects.',
+      'Per BS 7671:2018+A2:2022 Regulation 643.3 and GN3, insulation resistance must be measured using an insulation resistance tester that outputs DC voltage at the prescribed test level (250V, 500V, or 1000V depending on circuit voltage). The instrument must comply with BS EN 61557-2 and be capable of delivering the test voltage with a minimum load current of 1mA. The instrument must display the result in megohms (MΩ). Using an instrument with insufficient output current or incorrect test voltage will produce unreliable results and may fail to detect insulation defects.',
     category: 'Instrument Use',
     difficulty: 'medium',
   },

@@ -253,7 +253,7 @@ const PracticalGuidanceSection = () => {
               <div>
                 <h6 className="font-medium text-foreground mb-2">Regulatory Framework:</h6>
                 <ul className="space-y-1 text-xs">
-                  <li>• BS 7671 Regulation 612.13 - Functional testing mandatory</li>
+                  <li>• BS 7671 Regulation 643.10 - Functional testing mandatory</li>
                   <li>• Electricity at Work Regulations 1989</li>
                   <li>• Health and Safety at Work Act 1974</li>
                   <li>• CDM Regulations 2015 (construction sites)</li>

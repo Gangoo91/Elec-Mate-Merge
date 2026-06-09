@@ -110,7 +110,7 @@ export const DocumentationQuiz = () => {
       question: 'Which regulation covers the provision of diagrams and documentation?',
       options: [
         'Regulation 514.9.1',
-        'Regulation 611.3',
+        'Regulation 642.3',
         'Regulation 132.13',
         'Regulation 421.1.7',
       ],

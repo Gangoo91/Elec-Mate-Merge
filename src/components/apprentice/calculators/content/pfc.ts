@@ -51,7 +51,7 @@ export const pfcContent: CalculatorContent = {
       citation: 'Regulation 434.5.2',
       clauseText:
         'The breaking capacity of each protective device shall be not less than the prospective fault current at the point where the device is installed, so that it can interrupt the fault current without damage.',
-      tableRefs: ['Regulation 612.11'],
+      tableRefs: ['Regulation 643.7.3.201'],
       sourceFacetIds: ['ae0f3b79-c8a8-4183-85c0-d35e30baf822', 'e72dac3b-a097-4065-a1f8-01cee06e7334'],
     },
   ],
@@ -60,6 +60,6 @@ export const pfcContent: CalculatorContent = {
     status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Reg 434.5.2 verified against A4:2026 facets. PFC determination/measurement also relates to Reg 612.11 (measurement during verification).',
+      'Reg 434.5.2 verified against A4:2026 facets. PFC determination/measurement also relates to Reg 643.7.3.201 (measurement during verification).',
   },
 };

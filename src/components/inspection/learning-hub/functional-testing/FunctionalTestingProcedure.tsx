@@ -43,7 +43,7 @@ const FunctionalTestingProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Functional Testing</h1>
-              <p className="text-[10px] text-white">BS 7671 Reg 612.13</p>
+              <p className="text-[10px] text-white">BS 7671 Reg 643.10</p>
             </div>
           </div>
         </div>

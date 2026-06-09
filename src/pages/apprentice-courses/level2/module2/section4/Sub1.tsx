@@ -530,7 +530,7 @@ export default function Sub1() {
                 Two checks, both Ohm’s law underneath. <strong>(1) Compare to the BS 7671 Table
                 41.3 limit</strong> — max Zs for a 32 A Type B at 230 V is{' '}
                 <strong>1.09 Ω</strong>. Your reading of 0.62 Ω is well under. <strong>(2) Apply
-                the 80% rule (Reg 612.3) for measurement uncertainty</strong> — you want your
+                the 80% rule (Reg 643.3) for measurement uncertainty</strong> — you want your
                 site reading to sit at or under 0.8 × 1.09 = <strong>0.87 Ω</strong>. 0.62 Ω is
                 inside that too, with about 30% headroom for cable temperature rise. Then use
                 Ohm’s law to find the prospective fault current: <strong>I = U ÷ Zs = 230 ÷ 0.62

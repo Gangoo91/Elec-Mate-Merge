@@ -222,7 +222,7 @@ const SafeIsolationGuide = () => {
         'Audible and visual indication',
         'Battery condition indicator if applicable',
       ],
-      regulations: 'GS38, BS 7671 Section 612.1',
+      regulations: 'GS38, BS 7671 Section 643.1',
     },
     {
       equipment: 'Proving Unit or Known Live Supply',

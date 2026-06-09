@@ -13,7 +13,7 @@ const QuickAccess: React.FC<QuickAccessProps> = ({ onRegulationClick }) => {
       title: 'Testing Essentials',
       icon: TestTube,
       color: 'text-green-400',
-      regulations: ['612.1', '612.2.1', '612.3.1', '612.6', '612.8', '612.10'],
+      regulations: ['643.1', '643.2.1', '643.3.1', '643.6', '643.7.3', '643.10'],
     },
     {
       title: 'Protection Requirements',
@@ -36,17 +36,17 @@ const QuickAccess: React.FC<QuickAccessProps> = ({ onRegulationClick }) => {
   ];
 
   const mostUsedRegulations = [
-    '612.1',
-    '612.2.1',
-    '612.3.1',
-    '612.8',
-    '612.10',
+    '643.1',
+    '643.2.1',
+    '643.3.1',
+    '643.7.3',
+    '643.10',
     '411.3.3',
     '415.1.1',
     'Table 41.3',
     '701.411.3.3',
     '522.6.204',
-    '612.6',
+    '643.6',
     '643.7',
   ];
 

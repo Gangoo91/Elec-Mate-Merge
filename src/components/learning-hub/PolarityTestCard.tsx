@@ -86,7 +86,7 @@ const PolarityTestCard = () => {
             Polarity Testing
           </CardTitle>
           <CardDescription className="text-white">
-            Verify correct polarity of all electrical connections - BS 7671 Regulation 612.6
+            Verify correct polarity of all electrical connections - BS 7671 Regulation 643.6
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

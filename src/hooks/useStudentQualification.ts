@@ -106,37 +106,39 @@ export function useStudentQualification(): StudentQualification {
 
         if (cancelled) return;
 
-        if (qual) {
-          const diverges = !!(collegeCourseCode && qual.code !== collegeCourseCode);
+        if (collegeCourseCode) {
+          // College enrolment is AUTHORITATIVE when present — a learner's own
+          // app-side selection cannot override the qualification their college
+          // enrolled them on, otherwise coverage/ACs track the wrong qualification
+          // (e.g. apprentice enrolled on 5357 but self-selected the bare 2357).
+          // The selection is only used when there is no college enrolment.
+          const diverges = !!(qual && qual.code !== collegeCourseCode);
           if (diverges) {
             console.warn(
-              `[useStudentQualification] active selection "${qual.code}" differs from college course "${collegeCourseCode}" — coverage/ACs may track the wrong qualification.`
+              `[useStudentQualification] active selection "${qual?.code}" differs from college course "${collegeCourseCode}" — using the college course (authoritative); learner should update their selection.`
             );
           }
-          // Resolve to the canonical requirement code (e.g. EAL 603/3895/8 →
-          // 601/7345/2) so the catalogue/coverage queries hit real LO/AC rows.
+          const resolved = await resolveRequirementCode(collegeCourseCode);
+          if (cancelled) return;
+          setState({
+            qualificationCode: resolved,
+            qualificationName: collegeCourseName ?? qual?.title ?? null,
+            qualificationId: qual?.id ?? null,
+            collegeCourseCode,
+            divergesFromCollege: diverges,
+            source: 'college',
+          });
+        } else if (qual) {
+          // No college enrolment — use the learner's own selection.
           const resolved = await resolveRequirementCode(qual.code);
           if (cancelled) return;
           setState({
             qualificationCode: resolved,
             qualificationName: qual.title,
             qualificationId: qual.id,
-            collegeCourseCode,
-            divergesFromCollege: diverges,
-            source: 'selection',
-          });
-        } else if (collegeCourseCode) {
-          // No selection — fall back to the college's course so the catalogue
-          // and coverage still resolve to something.
-          const resolved = await resolveRequirementCode(collegeCourseCode);
-          if (cancelled) return;
-          setState({
-            qualificationCode: resolved,
-            qualificationName: collegeCourseName,
-            qualificationId: null,
-            collegeCourseCode,
+            collegeCourseCode: null,
             divergesFromCollege: false,
-            source: 'college',
+            source: 'selection',
           });
         } else {
           setState({

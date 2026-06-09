@@ -127,10 +127,10 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: 10,
     question: 'Which regulation in BS 7671 covers continuity testing requirements?',
-    options: ['Regulation 612.2', 'Regulation 543.1', 'Regulation 411.3', 'Regulation 531.2'],
+    options: ['Regulation 643.2', 'Regulation 543.1', 'Regulation 411.3', 'Regulation 531.2'],
     correctAnswer: 0,
     explanation:
-      'Regulation 612.2 in BS 7671 specifically covers the requirements for continuity of protective conductors, including test methods and acceptance criteria.',
+      'Regulation 643.2 in BS 7671 specifically covers the requirements for continuity of protective conductors, including test methods and acceptance criteria.',
   },
 ];
 

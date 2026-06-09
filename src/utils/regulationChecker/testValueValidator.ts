@@ -38,7 +38,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           severity: 'info',
           title: 'Insulation Resistance for Electronic Equipment',
           description: `${result.insulationLiveNeutral}MΩ meets minimum for circuits with electronic equipment (0.5MΩ) but is below standard 1.0MΩ requirement.`,
-          regulation: 'BS 7671 Regulation 612.3.2 & Table 61',
+          regulation: 'BS 7671 Regulation 643.3.2 & Table 61',
           suggestion:
             'Verify sensitive electronic equipment was isolated during test. If not isolated, retest with equipment disconnected or accept lower value if manufacturer permits.',
         });
@@ -48,7 +48,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           severity: 'critical',
           title: 'Insulation Resistance Below Minimum',
           description: `${result.insulationLiveNeutral}MΩ is below BS 7671 Table 61 minimum of ${minRequired}MΩ (${regulationNote}).`,
-          regulation: 'BS 7671 Regulation 612.3.2 & Table 61',
+          regulation: 'BS 7671 Regulation 643.3.2 & Table 61',
           suggestion:
             'Investigate cause: moisture ingress, damaged insulation, or incorrect test voltage. Rectify before energising circuit.',
         });
@@ -58,7 +58,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           severity: 'warning',
           title: 'Low Insulation Resistance',
           description: `${result.insulationLiveNeutral}MΩ meets minimum but is relatively low. Good practice is ≥2MΩ for most circuits.`,
-          regulation: 'BS 7671 Regulation 612.3.2',
+          regulation: 'BS 7671 Regulation 643.3.2',
           suggestion:
             'Monitor insulation resistance over time. Values typically improve after initial energisation as moisture dissipates.',
         });
@@ -72,7 +72,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
       severity: 'critical',
       title: 'Incorrect Polarity Detected',
       description: 'Incorrect polarity is a serious safety hazard.',
-      regulation: 'BS 7671 Regulation 612.6',
+      regulation: 'BS 7671 Regulation 643.6',
       suggestion: 'Correct polarity before energising circuit. Check all connections.',
     });
   }

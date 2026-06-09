@@ -99,7 +99,7 @@ const SEARCHABLE_REGULATIONS: SearchableItem[] = [
   {
     id: 'insulation-min',
     title: 'Minimum Insulation Resistance',
-    regulation: '612.3.2',
+    regulation: '643.3.2',
     description: 'Minimum acceptable insulation resistance values',
     category: 'Testing',
     content:

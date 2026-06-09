@@ -59,7 +59,7 @@ export const PolarityPurposeContent = () => {
                 <h4 className="text-blue-200 font-medium">BS 7671 Requirements</h4>
               </div>
               <ul className="space-y-2 text-foreground text-sm">
-                <li>• Section 612.6: Polarity testing requirements</li>
+                <li>• Section 643.6: Polarity testing requirements</li>
                 <li>• All single-pole devices must be on line conductor</li>
                 <li>• Edison screw lampholders centre contact must be line</li>
                 <li>• Socket outlets must have correct terminal identification</li>

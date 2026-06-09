@@ -57,7 +57,7 @@ const inlineChecks = [
     options: ['250 V DC, ≥ 0.5 MΩ', '500 V DC, ≥ 1 MΩ', '1000 V DC, ≥ 1 MΩ', '500 V AC, ≥ 2 MΩ'],
     correctIndex: 1,
     explanation:
-      'Reg 643.3.2 / Table 64.1: for nominal circuit voltages between 0 and 500 V (i.e. typical LV final and distribution circuits — including 230 V single-phase and 400 V three-phase), the test voltage is 500 V DC and the minimum IR value is 1 MΩ. 250 V DC applies only to SELV / PELV (≤ 50 V) circuits, and 1000 V DC applies to circuits above 500 V. AC test voltages are not used.',
+      'Reg 643.3.2 / Table 64: for nominal circuit voltages between 0 and 500 V (i.e. typical LV final and distribution circuits — including 230 V single-phase and 400 V three-phase), the test voltage is 500 V DC and the minimum IR value is 1 MΩ. 250 V DC applies only to SELV / PELV (≤ 50 V) circuits, and 1000 V DC applies to circuits above 500 V. AC test voltages are not used.',
   },
   {
     id: 'm6s3-polarity-where',
@@ -121,7 +121,7 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'Reg 643.3.2 specifies the test voltage and minimum IR for an LV (50 V to 500 V) circuit. Which row of Table 64.1 applies?',
+      'Reg 643.3.2 specifies the test voltage and minimum IR for an LV (50 V to 500 V) circuit. Which row of Table 64 applies?',
     options: [
       '250 V DC test, 0.5 MΩ minimum',
       '500 V DC test, 1 MΩ minimum',
@@ -130,7 +130,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Table 64.1 in BS 7671:2018+A4:2026: (i) ELV ≤ 50 V (SELV/PELV) → 250 V DC, ≥ 0.5 MΩ; (ii) LV up to 500 V → 500 V DC, ≥ 1 MΩ; (iii) > 500 V → 1000 V DC, ≥ 1 MΩ. The 1 MΩ figure is a floor, not a target — a healthy new circuit reads in the hundreds of MΩ or "OL" (over-range). A circuit reading just above 1 MΩ should be investigated, not signed off.',
+      'Table 64 in BS 7671:2018+A4:2026: (i) ELV ≤ 50 V (SELV/PELV) → 250 V DC, ≥ 0.5 MΩ; (ii) LV up to 500 V → 500 V DC, ≥ 1 MΩ; (iii) > 500 V → 1000 V DC, ≥ 1 MΩ. The 1 MΩ figure is a floor, not a target — a healthy new circuit reads in the hundreds of MΩ or "OL" (over-range). A circuit reading just above 1 MΩ should be investigated, not signed off.',
   },
   {
     id: 3,
@@ -194,13 +194,13 @@ const quizQuestions = [
       'Reg 643.4 covers protection by SELV, PELV or electrical separation. On a 24 V SELV control circuit, what does the verification specifically check?',
     options: [
       'Only that the secondary voltage is below 50 V',
-      'That the SELV source meets Section 414 (safety isolating transformer to BS EN 61558-2-6, simple separation), that the SELV circuit has no intentional earth connection, that basic protection is in place where required (Reg 414.4.4), AND insulation resistance to other circuits is verified per Table 64.1 row (i) — 250 V DC, ≥ 0.5 MΩ',
+      'That the SELV source meets Section 414 (safety isolating transformer to BS EN 61558-2-6, simple separation), that the SELV circuit has no intentional earth connection, that basic protection is in place where required (Reg 414.4.4), AND insulation resistance to other circuits is verified per Table 64 row (i) — 250 V DC, ≥ 0.5 MΩ',
       'Only the 1 MΩ insulation resistance value',
       'Just visual inspection of the transformer label',
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 643.4 is broader than just measuring volts. It verifies the protective measure is correctly built: source per Section 414, no earth on SELV, basic protection where the voltage exceeds 25 V AC / 60 V DC ripple-free or where equipment is immersed (Reg 414.4.4), and IR between SELV and any other circuit is at the row-(i) value of Table 64.1 (250 V DC test, 0.5 MΩ minimum). Electrical separation (Reg 413) follows similar logic for the separated circuit.',
+      'Reg 643.4 is broader than just measuring volts. It verifies the protective measure is correctly built: source per Section 414, no earth on SELV, basic protection where the voltage exceeds 25 V AC / 60 V DC ripple-free or where equipment is immersed (Reg 414.4.4), and IR between SELV and any other circuit is at the row-(i) value of Table 64 (250 V DC test, 0.5 MΩ minimum). Electrical separation (Reg 413) follows similar logic for the separated circuit.',
   },
   {
     id: 8,
@@ -317,7 +317,7 @@ const BS7671Module6Section3 = () => {
             outcomes={[
               'State the Reg 643.1 test sequence in order and explain why each step depends on the previous one.',
               'Apply Reg 643.2 — verify continuity of protective conductors using R1+R2 or wander-lead methods, and choose between them based on the circuit topology.',
-              'Apply Reg 643.3 / Table 64.1 — pick the correct test voltage and minimum acceptable IR value (250 V / 0.5 MΩ for SELV-PELV; 500 V / 1 MΩ for LV; 1000 V / 1 MΩ for above 500 V).',
+              'Apply Reg 643.3 / Table 64 — pick the correct test voltage and minimum acceptable IR value (250 V / 0.5 MΩ for SELV-PELV; 500 V / 1 MΩ for LV; 1000 V / 1 MΩ for above 500 V).',
               'Apply Reg 643.4 — verify protection by SELV, PELV and electrical separation, including source isolation and IR-to-other-circuits checks.',
               'Apply Reg 643.6 (polarity), Reg 643.7 (Zs and PFC) and Reg 643.8 (RCD operation at IΔn ≤ 300 ms and 5×IΔn ≤ 40 ms for additional protection).',
               'Apply Reg 643.10 — verify three-phase rotation, and record the new A4 AFDD verification entry on the schedule of test results (item 4.23 / col 30 area).',
@@ -410,7 +410,7 @@ const BS7671Module6Section3 = () => {
             onSite="A healthy new circuit reads in the hundreds of MΩ — modern PVC and XLPE insulation routinely shows 200 MΩ, 500 MΩ or simply 'OL' (over-range) on the meter. The 1 MΩ floor is a fail threshold, not a target. A 2 MΩ reading on a new install is a sign something is wrong — wet conduit, damaged cable, electronic equipment left connected — and warrants investigation rather than a tick."
           >
             <p>
-              Reg 643.3.2 / Table 64.1 specifies test voltages and minimum values: SELV/PELV (≤ 50
+              Reg 643.3.2 / Table 64 specifies test voltages and minimum values: SELV/PELV (≤ 50
               V) → 250 V DC, 0.5 MΩ. LV up to 500 V (covers all standard 230 V / 400 V
               installations) → 500 V DC, 1 MΩ. Above 500 V → 1000 V DC, 1 MΩ. The IR test is run
               between (a) all live conductors connected together vs earth, and where practicable (b)
@@ -426,7 +426,7 @@ const BS7671Module6Section3 = () => {
             channel={videos.insulationResistanceAmd2.channel}
             duration={videos.insulationResistanceAmd2.duration}
             topic="Watch · IR test method for current edition"
-            caption="Craig Wiltshire walks the insulation-resistance test method for the current edition — instrument settings, conductor configuration (live conductors connected together vs earth, then line vs neutral), and the 1 MΩ minimum result for LV circuits per Table 64.1."
+            caption="Craig Wiltshire walks the insulation-resistance test method for the current edition — instrument settings, conductor configuration (live conductors connected together vs earth, then line vs neutral), and the 1 MΩ minimum result for LV circuits per Table 64."
           />
 
           <InlineCheck {...inlineChecks[2]} />
@@ -438,7 +438,7 @@ const BS7671Module6Section3 = () => {
           <ConceptBlock
             title="Verifying the protective measure, not just the voltage"
             plainEnglish="Reg 643.4 is broader than measuring volts. It verifies the entire SELV / PELV / separated-circuit construction is intact: the right source, the right separation, the right earth handling and basic protection where required."
-            onSite="On a SELV control circuit you confirm: (a) source is a safety isolating transformer to BS EN 61558-2-6 (or equivalent), (b) no intentional earth on the SELV side, (c) basic protection per Reg 414.4.4 if voltage exceeds 25 V AC / 60 V DC ripple-free or equipment is immersed, (d) IR between SELV circuit and any other circuit at row (i) of Table 64.1 — 250 V DC, 0.5 MΩ minimum."
+            onSite="On a SELV control circuit you confirm: (a) source is a safety isolating transformer to BS EN 61558-2-6 (or equivalent), (b) no intentional earth on the SELV side, (c) basic protection per Reg 414.4.4 if voltage exceeds 25 V AC / 60 V DC ripple-free or equipment is immersed, (d) IR between SELV circuit and any other circuit at row (i) of Table 64 — 250 V DC, 0.5 MΩ minimum."
           >
             <p>
               For PELV the same checks apply except that an earth connection is permitted (and often
@@ -446,7 +446,7 @@ const BS7671Module6Section3 = () => {
               separation (Section 413), Reg 643.4 confirms the source isolation, the separated
               circuit&apos;s freedom from earth, and the integrity of the separation. The test
               instrument measures IR between the separated circuit and earth at the test voltage of
-              Table 64.1 — but the verification is procedural as well as instrument-based.
+              Table 64 — but the verification is procedural as well as instrument-based.
             </p>
           </ConceptBlock>
 
@@ -689,7 +689,7 @@ const BS7671Module6Section3 = () => {
             points={[
               'Reg 643.1 fixes the test sequence — dead before live, in the order continuity → IR → SELV/PELV → polarity → electrode (dead) then live polarity → Zs → PFC → RCD → phase rotation → functional → voltage drop.',
               'The order is engineered: each test depends on the previous one having passed. A failure means going back to the earliest test the failure could have invalidated and retesting forwards.',
-              'Reg 643.3 / Table 64.1 — 250 V DC / 0.5 MΩ for SELV-PELV, 500 V DC / 1 MΩ for LV up to 500 V, 1000 V DC / 1 MΩ above 500 V. The 1 MΩ figure is a fail floor, not a target.',
+              'Reg 643.3 / Table 64 — 250 V DC / 0.5 MΩ for SELV-PELV, 500 V DC / 1 MΩ for LV up to 500 V, 1000 V DC / 1 MΩ above 500 V. The 1 MΩ figure is a fail floor, not a target.',
               'Reg 643.7.3 — measured Zs must satisfy Reg 411.4.4 at conductor operating temperature; correct cold readings up by ~1.20 for typical PVC before comparing to published Zs(max).',
               'Reg 643.8 — at IΔn the RCD trips in ≤ 300 ms; at 5×IΔn ≤ 40 ms is the additional-protection figure. Record both.',
               'A4:2026 — AFDDs (Reg 421.1.7) get a new in-installation self-test verification entry on the schedule of test results (item 4.23 / col 30 area). Manufacturer pre-test does not satisfy Reg 643.',

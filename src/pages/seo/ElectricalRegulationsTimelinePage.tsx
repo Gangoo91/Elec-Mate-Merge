@@ -685,6 +685,11 @@ export default function ElectricalRegulationsTimelinePage() {
       }
       heroSubtitle="From 12 rules about fire prevention in 1882 to the 700+ pages of BS 7671:2018+A4:2026, the UK's electrical wiring regulations have evolved through 18 editions. This timeline traces every key milestone, amendment, and regulatory change."
       readingTime={15}
+      answerBox={{
+        question: 'How have the UK wiring regulations changed over time?',
+        answer:
+          'The UK wiring rules have run through 18 editions since the first IEE Wiring Rules in 1882, becoming BS 7671 in 1992. The current edition is the 18th (BS 7671:2018), kept up to date by amendments — the latest in force being Amendment 4 (BS 7671:2018+A4:2026). Always check the dated edition on the cover, as older editions reference regulations that have since changed.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

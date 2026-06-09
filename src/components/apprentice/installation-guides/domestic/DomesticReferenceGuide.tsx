@@ -113,18 +113,18 @@ const DomesticReferenceGuide = () => {
         part: 'Part 6: Inspection and Testing',
         keyRegulations: [
           {
-            reg: '610.1',
+            reg: '641.1',
             topic: 'Initial Verification',
             description: 'All installations must be inspected and tested before use',
           },
           {
-            reg: '612.1',
+            reg: '643.1',
             topic: 'Inspection',
             description: 'Detailed visual inspection requirements',
           },
-          { reg: '612.2', topic: 'Testing Sequence', description: 'Prescribed sequence of tests' },
+          { reg: '643.2', topic: 'Testing Sequence', description: 'Prescribed sequence of tests' },
           {
-            reg: '631.1',
+            reg: '641.7',
             topic: 'EICR',
             description: 'Periodic inspection and testing requirements',
           },

@@ -611,6 +611,11 @@ export default function AgriculturalElectricalInstallationPage() {
       }
       heroSubtitle="Everything electricians need to know about agricultural and horticultural electrical installations — BS 7671 Section 705, livestock building requirements, IP ratings, 30 mA RCD protection, damp environments, lightning protection considerations, and farm earthing arrangements."
       readingTime={14}
+      answerBox={{
+        question: 'What are the BS 7671 rules for agricultural electrical installations?',
+        answer:
+          'Agricultural and horticultural installations are covered by BS 7671 Section 705. Electrical equipment and isolation/switching devices must be inaccessible to livestock (Regs 705.513.2 and 705.537.2); RCDs provided for additional fire protection must have a rated residual operating current not exceeding 300 mA (Reg 705.422.7); socket-outlet circuits need 30 mA RCD additional protection; and equipment must be rated for the damp, dusty and corrosive conditions with an appropriate IP rating.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

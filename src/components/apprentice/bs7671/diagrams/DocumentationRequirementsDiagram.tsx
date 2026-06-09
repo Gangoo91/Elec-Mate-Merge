@@ -92,7 +92,7 @@ const DocumentationRequirementsDiagram = ({
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Regulation 631.1 — documentation requirements
+          Regulation 641.7 — documentation requirements
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
           Upon completion of the work, the person responsible for the construction of the

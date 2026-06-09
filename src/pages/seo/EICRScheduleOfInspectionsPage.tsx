@@ -59,12 +59,12 @@ const faqs = [
   {
     question: 'What are the most common C2 observations found during visual inspection?',
     answer:
-      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.1 requires exposed-conductive-parts to be connected to a protective conductor; Regulation 544.11 governs bonding conductor sizing); absence of 30 mA RCD protection on domestic lighting circuits as now required by Regulation 411.3.4 (A4:2026); incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
+      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.1 requires exposed-conductive-parts to be connected to a protective conductor; Regulation 544.1.1 governs bonding conductor sizing); absence of 30 mA RCD protection on domestic lighting circuits as now required by Regulation 411.3.4 (A4:2026); incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
   },
   {
     question: 'How do I record an unsatisfactory item on the schedule of inspections?',
     answer:
-      'When you find an item on the schedule of inspections that is unsatisfactory, you should mark the item with a cross on the schedule. You must then record the deficiency as an observation in the observations section of the EICR, with a description of the issue, its location, and the appropriate classification code (C1, C2, C3, or FI). The description should be specific enough that a different electrician could locate and rectify the issue from your description alone. For example, rather than writing "bonding missing," write "Main protective bonding to incoming water service absent at point of entry, utility cupboard under stairs — Regulation 411.3.1.1 / 544.11." Include the relevant BS 7671 regulation reference where applicable. The classification code should reflect the severity of the risk: C1 for immediate danger, C2 for potentially dangerous conditions, C3 for improvements recommended, or FI if further investigation is needed to determine the classification.',
+      'When you find an item on the schedule of inspections that is unsatisfactory, you should mark the item with a cross on the schedule. You must then record the deficiency as an observation in the observations section of the EICR, with a description of the issue, its location, and the appropriate classification code (C1, C2, C3, or FI). The description should be specific enough that a different electrician could locate and rectify the issue from your description alone. For example, rather than writing "bonding missing," write "Main protective bonding to incoming water service absent at point of entry, utility cupboard under stairs — Regulation 411.3.1.1 / 544.1.1." Include the relevant BS 7671 regulation reference where applicable. The classification code should reflect the severity of the risk: C1 for immediate danger, C2 for potentially dangerous conditions, C3 for improvements recommended, or FI if further investigation is needed to determine the classification.',
   },
   {
     question: 'Can I use the Elec-Mate app for the schedule of inspections on site?',
@@ -347,7 +347,7 @@ const sections = [
                 <strong>Main protective bonding:</strong> Are main protective bonding conductors
                 connected to incoming water, gas, oil, and other metallic services? Regulation
                 411.3.1.1 requires exposed-conductive-parts to be connected to a protective
-                conductor; Regulation 544.11 governs bonding conductor sizing — under PME (TN-C-S),
+                conductor; Regulation 544.1.1 governs bonding conductor sizing — under PME (TN-C-S),
                 Table 54.8 sets the minimum at 10 mm² copper where the PEN conductor is 35 mm² or
                 less. Check at the point of entry of each service.
               </span>
@@ -553,7 +553,7 @@ const sections = [
               <li>Missing CPC on one or more circuits (older installations)</li>
               <li>
                 Absent main protective bonding to water, gas, or oil services (Reg 411.3.1.1 /
-                544.11)
+                544.1.1)
               </li>
               <li>No RCD protection on socket outlet circuits up to 32A</li>
               <li>No 30 mA RCD on domestic lighting circuits (Reg 411.3.4, A4:2026)</li>
@@ -738,6 +738,11 @@ export default function EICRScheduleOfInspectionsPage() {
       }
       heroSubtitle="The complete guide to the EICR schedule of inspections per BS 7671 Appendix 6. Every section explained — distribution equipment, wiring systems, current-using equipment, protective measures, isolation and switching, and miscellaneous items. Common C2 and C3 observations for each section, plus practical tips for a thorough visual inspection."
       readingTime={12}
+      answerBox={{
+        question: 'What is the schedule of inspections on an EICR?',
+        answer:
+          'The schedule of inspections is the visual-inspection checklist that accompanies an EICR, based on the model forms in BS 7671 Appendix 6. It works through the installation section by section — intake and distribution equipment, wiring systems, current-using equipment, special locations, and isolation and switching — recording each item as acceptable or noting a defect with a classification code (C1, C2, C3 or FI). Every relevant item must be checked before the report can be issued.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

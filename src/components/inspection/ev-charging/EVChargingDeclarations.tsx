@@ -7,6 +7,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { LoadInstallerButton } from './LoadInstallerButton';
+import { EVSectionHeader } from './EVSectionHeader';
 import {
   useEVChargingSmartForm,
   InstallerDetails,
@@ -17,12 +18,7 @@ interface EVChargingDeclarationsProps {
   onUpdate: (field: string, value: unknown) => void;
 }
 
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const SectionHeader = ({ title }: { title: string }) => <EVSectionHeader title={title} />;
 
 const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formData, onUpdate }) => {
   const { hasSavedInstallerDetails } = useEVChargingSmartForm();
@@ -45,7 +41,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
     formData.installerName && formData.installerSignature && formData.installerScheme;
 
   return (
-    <div className="space-y-5 px-4 py-2">
+    <div className="space-y-5 px-4 sm:px-0 py-2 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-5">
       {/* OZEV Grant Section */}
       <div>
         <SectionHeader title="OZEV Grant Details" />

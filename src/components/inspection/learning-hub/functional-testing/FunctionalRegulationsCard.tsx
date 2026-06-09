@@ -10,9 +10,9 @@ interface Props {
 }
 
 const coreRegulations = [
-  { number: 'Reg 612.13', title: 'Functional Testing Requirement', description: 'Assemblies, including switchgear and controlgear assemblies, and components of the electrical installation shall be subjected to a functional test to show that they are properly mounted, adjusted and installed in accordance with BS 7671.' },
-  { number: 'Reg 612.13.1', title: 'Switchgear and Controlgear', description: 'Every item of switchgear and controlgear shall be operated to verify that it is properly fixed and adjusted. This includes main switches, isolators, MCBs, RCBOs, contactors, and all control devices.' },
-  { number: 'Reg 612.13.2', title: 'Interlocks', description: 'Where interlocks are provided, they shall be tested to verify that they function correctly and cannot be easily defeated. This includes mechanical interlocks, electrical interlocks, and key-operated systems.' },
+  { number: 'Reg 643.10', title: 'Functional Testing Requirement', description: 'Assemblies, including switchgear and controlgear assemblies, and components of the electrical installation shall be subjected to a functional test to show that they are properly mounted, adjusted and installed in accordance with BS 7671.' },
+  { number: 'Reg 643.10', title: 'Switchgear and Controlgear', description: 'Every item of switchgear and controlgear shall be operated to verify that it is properly fixed and adjusted. This includes main switches, isolators, MCBs, RCBOs, contactors, and all control devices.' },
+  { number: 'Reg 643.10', title: 'Interlocks', description: 'Where interlocks are provided, they shall be tested to verify that they function correctly and cannot be easily defeated. This includes mechanical interlocks, electrical interlocks, and key-operated systems.' },
   { number: 'Reg 514.12.2', title: 'RCD Test Notice', description: 'Where an RCD is fitted, a notice shall be fixed at the origin stating it should be tested regularly. The T button is a functional test — verify it operates during functional testing.' },
   { number: 'Reg 537.3', title: 'Emergency Switching', description: 'Emergency switching devices shall be readily accessible and clearly identifiable. Functional testing shall verify they disconnect the relevant circuits when operated.' },
   { number: 'Reg 514.8', title: 'Circuit Chart', description: 'A durable chart or schedule giving details of every circuit shall be provided at the distribution board. Functional testing should verify the chart matches the actual circuit arrangement.' },

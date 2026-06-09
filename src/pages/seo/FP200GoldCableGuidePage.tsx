@@ -626,6 +626,11 @@ export default function FP200GoldCableGuidePage() {
       }
       heroSubtitle="Everything electricians need to know about FP200 Gold fire-resistant cable — BS 7629-1 compliance, 105°C temperature rating, correct clipping and support, BS 5839 and BS 5266 requirements, and how it compares to mineral insulated cable."
       readingTime={11}
+      answerBox={{
+        question: 'What is FP200 Gold cable used for?',
+        answer:
+          'FP200 Gold is a fire-resistant cable used for life-safety circuits — fire alarm systems (to BS 5839) and emergency lighting (to BS 5266) — where the cable must keep working during a fire. It is manufactured to BS 7629-1, withstands around 105°C continuous operation, and is a lighter, easier-to-install alternative to mineral-insulated (MICC) cable. It must be clipped with fire-resistant fixings so it stays supported when exposed to fire.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

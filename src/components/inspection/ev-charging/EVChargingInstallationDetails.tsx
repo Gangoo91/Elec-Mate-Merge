@@ -8,6 +8,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChargerAutocomplete from './ChargerAutocomplete';
+import { EVSectionHeader } from './EVSectionHeader';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import {
@@ -25,12 +26,7 @@ interface EVChargingInstallationDetailsProps {
   onCustomerIdChange?: (id: string | undefined) => void;
 }
 
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const SectionHeader = ({ title }: { title: string }) => <EVSectionHeader title={title} />;
 
 const ToggleButton = ({
   label,
@@ -151,7 +147,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
   };
 
   return (
-    <div className="space-y-6 px-4 py-4">
+    <div className="space-y-5 px-4 sm:px-0 py-4 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-5">
       {/* Client Details */}
       <div>
         <SectionHeader title="Client Details" />

@@ -105,7 +105,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'For circuits with nominal voltage up to and including 500V AC (which includes 230V circuits), insulation resistance testing must be performed at 500V DC per Table 64.3 of BS 7671.',
+      'For circuits with nominal voltage up to and including 500V AC (which includes 230V circuits), insulation resistance testing must be performed at 500V DC per Table 64 of BS 7671.',
   },
   {
     id: 3,

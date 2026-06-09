@@ -622,6 +622,11 @@ export default function UnderfloorHeatingElectricalPage() {
       }
       heroSubtitle="Electric underfloor heating requires a dedicated radial circuit, correct cable sizing, RCD protection, and proper thermostat wiring. This guide covers everything electricians need to know — from cable vs mat systems to insulation resistance testing and EIC certification."
       readingTime={12}
+      answerBox={{
+        question: 'What are the electrical requirements for underfloor heating?',
+        answer:
+          'Electric underfloor heating needs a dedicated circuit with RCD additional protection. Under BS 7671 Section 753, circuits supplying heating units must have RCD additional protection and time-delayed RCD types are not permitted (Reg 753.415.1); a heating unit embedded in a concrete floor must be at least IPX7 (Reg 753.512.2.5). The cold tails connect to a fused spur or thermostat, and an insulation-resistance test of the element is taken before and after installation.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

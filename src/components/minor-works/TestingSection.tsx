@@ -538,7 +538,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
               </div>
               <Alert className="border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/20">
                 <AlertDescription className="text-blue-700 dark:text-blue-300 text-xs">
-                  All insulation resistance values must be ≥1.0 MΩ per BS 7671 Regulation 612.3
+                  All insulation resistance values must be ≥1.0 MΩ per BS 7671 Regulation 643.3
                 </AlertDescription>
               </Alert>
             </div>

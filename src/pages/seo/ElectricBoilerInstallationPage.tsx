@@ -587,6 +587,11 @@ export default function ElectricBoilerInstallationPage() {
       }
       heroSubtitle="Everything you need to know about installing an electric boiler: types, correct sizing, BS 7671 circuit requirements, Part P notification, and realistic costs for UK properties."
       readingTime={11}
+      answerBox={{
+        question: 'What cable size and circuit does an electric boiler need?',
+        answer:
+          'It depends on the boiler kW rating and supply. As a guide, a 9kW single-phase electric boiler draws around 39A and is commonly wired in 10mm² twin and earth on a 40A breaker; larger 12kW+ units (50A+) often need a higher-rated dedicated circuit or a three-phase supply. Always size from the design current and apply correction factors (BS 7671 Reg 433.1.1), on a dedicated circuit with 30mA RCD protection.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

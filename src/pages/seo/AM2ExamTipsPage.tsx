@@ -568,6 +568,11 @@ export default function AM2ExamTipsPage() {
       }
       heroSubtitle="The AM2 practical assessment is the final hurdle before you qualify as an electrician. This guide covers what the AM2 tests, the format and tasks, what to bring, the most common failures, how to prepare effectively, and tips for the day itself."
       readingTime={15}
+      answerBox={{
+        question: 'How do you pass the AM2 first time?',
+        answer:
+          'The AM2 (and AM2E/AM2S) is the practical end-point assessment run by NET. It tests safe isolation, installing and wiring an installation to a specification, inspection and testing to BS 7671, and fault diagnosis — all against the clock. Passing first time comes down to working methodically, managing time per section, and practising safe isolation and the full test sequence until they are second nature.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

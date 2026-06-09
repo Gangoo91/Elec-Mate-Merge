@@ -243,7 +243,7 @@ const WhyTestSection = () => (
         <div>
           <p className="font-medium text-foreground">Primary legislation and standards:</p>
           <p className="ml-4">
-            • <strong>BS 7671 Regulation 612.9:</strong> Mandatory test for verification of ADS
+            • <strong>BS 7671 Regulation 643.7.3:</strong> Mandatory test for verification of ADS
           </p>
           <p className="ml-4">
             • <strong>BS 7671 Regulation 411.3:</strong> Requirements for automatic disconnection

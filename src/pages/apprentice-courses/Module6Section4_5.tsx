@@ -301,7 +301,7 @@ const Module6Section4_5 = () => {
                 <h3 className="font-medium text-white mb-3">Legal and Regulatory Compliance</h3>
                 <ul className="text-sm space-y-2">
                   <li>
-                    • <strong>BS 7671 Requirements:</strong> Regulation 632.1 mandates adequate
+                    • <strong>BS 7671 Requirements:</strong> Regulation 644.3 mandates adequate
                     information for operation, inspection, testing, and maintenance
                   </li>
                   <li>

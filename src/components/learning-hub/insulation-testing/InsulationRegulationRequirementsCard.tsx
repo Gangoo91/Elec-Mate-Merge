@@ -13,11 +13,11 @@ interface Props {
 const regulations = [
   {
     id: 'reg-612',
-    title: 'Regulation 612.3 \u2014 Insulation Resistance Testing',
+    title: 'Regulation 643.3 \u2014 Insulation Resistance Testing',
     accent: 'cyan',
     content: [
       {
-        heading: '612.3.1 \u2014 Test Requirements',
+        heading: '643.3.1 \u2014 Test Requirements',
         items: [
           'Test voltage shall be DC (not AC \u2014 to avoid capacitive effects)',
           'Test voltage selection based on circuit nominal voltage',
@@ -27,7 +27,7 @@ const regulations = [
         ],
       },
       {
-        heading: '612.3.2 \u2014 Test Procedure',
+        heading: '643.3.2 \u2014 Test Procedure',
         items: [
           'All equipment and accessories must be disconnected',
           'Surge protective devices (SPDs) must be isolated',

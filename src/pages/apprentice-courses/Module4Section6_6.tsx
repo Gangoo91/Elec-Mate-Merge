@@ -16,13 +16,13 @@ const quickCheckQuestions = [
     question: 'Which regulation requires test results to be recorded?',
     options: [
       'BS 7671 Regulation 411.4',
-      'BS 7671 Regulation 631.3',
+      'BS 7671 Regulation 644.3',
       'BS 7671 Regulation 110.1',
       'BS 7671 Regulation 521.5',
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 Regulation 631.3 specifically requires test results to be recorded as part of the verification process to demonstrate compliance with the standard.',
+      'BS 7671 Regulation 644.3 specifically requires test results to be recorded as part of the verification process to demonstrate compliance with the standard.',
   },
   {
     id: 2,
@@ -61,13 +61,13 @@ const Module4Section6_6 = () => {
       question: 'Which BS 7671 regulation specifically requires test results to be recorded?',
       options: [
         '521.5',
-        '631.3',
+        '644.3',
         '411.4',
         '110.1',
       ],
       correctAnswer: 1,
       explanation:
-        'BS 7671 Regulation 631.3 specifically requires that the results of verification, including inspection and testing, shall be recorded.',
+        'BS 7671 Regulation 644.3 specifically requires that the results of verification, including inspection and testing, shall be recorded.',
     },
     {
       id: 2,
@@ -593,7 +593,7 @@ const Module4Section6_6 = () => {
               <p className="font-medium text-red-400 text-sm mb-2">Legal Framework</p>
               <ul className="text-sm text-white space-y-1 list-disc pl-4">
                 <li>
-                  <strong>BS 7671 Regulation 631.3</strong> — "The results of verification shall be
+                  <strong>BS 7671 Regulation 644.3</strong> — "The results of verification shall be
                   recorded"
                 </li>
                 <li>

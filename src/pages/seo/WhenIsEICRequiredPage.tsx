@@ -81,7 +81,7 @@ export default function WhenIsEICRequiredPage() {
                 testing of the completed work, making it a complete record of compliance.
               </p>
               <p>
-                Issuing an EIC is not optional. BS 7671 Regulation 632.1 requires that an EIC,
+                Issuing an EIC is not optional. BS 7671 Regulation 644.3 requires that an EIC,
                 together with a schedule of inspections and a schedule of test results, be given to
                 the person ordering the work upon completion of the installation. This applies to
                 all new installation work, regardless of size.
@@ -591,7 +591,7 @@ export default function WhenIsEICRequiredPage() {
         {
           question: 'Is an EIC legally required or just best practice?',
           answer:
-            'It is both a regulatory requirement and best practice. BS 7671 Regulation 632.1 requires that an EIC be issued upon completion of new installation work. Under Part P of the Building Regulations (England and Wales), notifiable electrical work must be either self-certified by a registered competent person or notified to building control — and in both cases, the EIC is the primary evidence of compliance. Failure to issue an EIC for notifiable work can result in enforcement action from the local authority, rejection by competent person schemes, and potential liability if a fault or incident occurs. For the electrician, the EIC is also essential protection — it is the documentary evidence that the work was designed, installed, and tested to the standard.',
+            'It is both a regulatory requirement and best practice. BS 7671 Regulation 644.3 requires that an EIC be issued upon completion of new installation work. Under Part P of the Building Regulations (England and Wales), notifiable electrical work must be either self-certified by a registered competent person or notified to building control — and in both cases, the EIC is the primary evidence of compliance. Failure to issue an EIC for notifiable work can result in enforcement action from the local authority, rejection by competent person schemes, and potential liability if a fault or incident occurs. For the electrician, the EIC is also essential protection — it is the documentary evidence that the work was designed, installed, and tested to the standard.',
         },
         {
           question: 'What is the difference between an EIC and a Minor Works Certificate?',

@@ -2232,7 +2232,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       'Part 6 - Section 612',
-      '612.6 - Polarity testing',
+      '643.6 - Polarity testing',
       '510.3.2 - Single-pole switching in phase conductor',
     ],
     category: 'testing-inspection',
@@ -2288,7 +2288,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
     },
     bs7671References: [
-      'Part 6 - Section 610.4',
+      'Part 6 - Section 641',
       'GS38 - Electrical test equipment for use by electricians',
     ],
     category: 'testing-inspection',

@@ -112,7 +112,7 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
           Earth Fault Loop Impedance (Zs) Testing
         </CardTitle>
         <CardDescription className="text-white">
-          Measure and verify earth fault loop impedance - BS 7671 Regulation 612.9
+          Measure and verify earth fault loop impedance - BS 7671 Regulation 643.7.3
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

@@ -14,7 +14,7 @@ export const testSequence = [
   {
     step: 1,
     title: 'Continuity of Protective Conductors',
-    regulation: '612.2.1',
+    regulation: '643.2.1',
     description:
       'Test continuity of circuit protective conductors (cpc) and main earthing conductors',
     method: 'Low reading ohmmeter (typically 200mA test current)',
@@ -27,7 +27,7 @@ export const testSequence = [
   {
     step: 2,
     title: 'Continuity of Ring Final Circuit Conductors',
-    regulation: '612.2.2',
+    regulation: '643.2.1',
     description: 'Verify ring continuity and correct polarity of ring final circuits',
     method: 'End-to-end test followed by cross-connection test',
     acceptance: 'R1+R2 values should be consistent around the ring',
@@ -39,7 +39,7 @@ export const testSequence = [
   {
     step: 3,
     title: 'Insulation Resistance',
-    regulation: '612.3',
+    regulation: '643.3',
     description: 'Test insulation between live conductors and between live conductors and earth',
     method: '500V DC for circuits ≤500V, 1000V DC for circuits >500V',
     acceptance: 'Minimum 1MΩ for circuits ≤500V, 5MΩ for circuits >500V',
@@ -51,7 +51,7 @@ export const testSequence = [
   {
     step: 4,
     title: 'Polarity',
-    regulation: '612.6',
+    regulation: '643.6',
     description: 'Verify correct polarity of single-pole devices and accessories',
     method: 'Continuity test or approved test method',
     acceptance: 'All single-pole devices connected in line conductor only',
@@ -63,7 +63,7 @@ export const testSequence = [
   {
     step: 5,
     title: 'Earth Electrode Resistance (if applicable)',
-    regulation: '612.7',
+    regulation: '643.7.2',
     description: 'Measure resistance of earth electrode to remote earth',
     method: 'Earth electrode resistance tester',
     acceptance: 'Varies by system type - typically ≤200Ω for TT systems',
@@ -75,7 +75,7 @@ export const testSequence = [
   {
     step: 6,
     title: 'Earth Fault Loop Impedance (Ze then Zs)',
-    regulation: '612.9',
+    regulation: '643.7.3',
     description:
       'Measure external earth fault loop impedance (Ze), then earth fault loop impedance (Zs) at relevant points',
     method: 'Loop impedance tester with supply energised (line-to-earth method standard)',
@@ -89,7 +89,7 @@ export const testSequence = [
   {
     step: 7,
     title: 'Additional Protection (RCD Testing)',
-    regulation: '612.13',
+    regulation: '643.10',
     description: 'Test operation of RCDs at rated residual current',
     method: 'RCD tester at 1×In (Amendment 3)',
     acceptance: 'Trip within 300ms at 1×In',
@@ -101,7 +101,7 @@ export const testSequence = [
   {
     step: 8,
     title: 'Prospective Fault Current',
-    regulation: '612.11',
+    regulation: '643.7.3.201',
     description: 'Measure prospective short-circuit and earth fault current',
     method: 'PFC tester at origin and relevant points',
     acceptance: 'Protective devices must be capable of breaking the fault current',
@@ -113,11 +113,11 @@ export const testSequence = [
 ];
 
 export const quickRefValues = [
-  { label: 'Min Insulation Resistance', value: '≥1MΩ', regulation: '612.3.2' },
-  { label: 'RCD Trip Time (1×In)', value: '≤300ms', regulation: '612.13.2' },
-  { label: 'Ring Circuit Tolerance', value: '±0.05Ω', regulation: '612.2.2' },
-  { label: 'Test Voltage (LV)', value: '500V DC', regulation: '612.3.2' },
-  { label: 'Continuity Test Current', value: '4-24mA', regulation: '612.2.1' },
+  { label: 'Min Insulation Resistance', value: '≥1MΩ', regulation: '643.3.2' },
+  { label: 'RCD Trip Time (1×In)', value: '≤300ms', regulation: '643.10' },
+  { label: 'Ring Circuit Tolerance', value: '±0.05Ω', regulation: '643.2.1' },
+  { label: 'Test Voltage (LV)', value: '500V DC', regulation: '643.3.2' },
+  { label: 'Continuity Test Current', value: '4-24mA', regulation: '643.2.1' },
 ];
 
 export const testingChecklist = [

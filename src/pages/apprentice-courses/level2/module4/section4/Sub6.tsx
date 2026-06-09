@@ -213,12 +213,12 @@ const faqs = [
   {
     question: 'What about a domestic with a TN-S supply that\'s been converted to TN-C-S (PME) by the DNO?',
     answer:
-      'The bonding sizing changes. Original TN-S install would have been sized per Reg 544.11 first half (half earthing, 6 mm² floor, 25 mm² cap). PME installs use Reg 544.11 second half (Table 54.8, indexed by PEN). After conversion, the bonding may need upgrading — typical scenario is a 6 mm² bond on the original TN-S being insufficient for the new PME requirement (which mandates 10 mm² minimum for typical domestic PEN sizes). Always check the bonding meets the current supply system, not the historical one.',
+      'The bonding sizing changes. Original TN-S install would have been sized per Reg 544.1.1 first half (half earthing, 6 mm² floor, 25 mm² cap). PME installs use Reg 544.1.1 second half (Table 54.8, indexed by PEN). After conversion, the bonding may need upgrading — typical scenario is a 6 mm² bond on the original TN-S being insufficient for the new PME requirement (which mandates 10 mm² minimum for typical domestic PEN sizes). Always check the bonding meets the current supply system, not the historical one.',
   },
   {
     question: 'Does bonding apply to small-diameter incoming services like a single 15 mm copper water pipe?',
     answer:
-      'If the pipe is metal and enters the building from outside, yes — it\'s extraneous-conductive and gets bonded per Reg 411.3.1.2. The diameter doesn\'t change the requirement. The cable size for the bond comes from Reg 544.11 / Table 54.8 (PME) — same 10 mm² Cu minimum on a typical domestic regardless of whether the pipe is 15 mm, 22 mm or 28 mm. The clamp gets sized for the pipe diameter.',
+      'If the pipe is metal and enters the building from outside, yes — it\'s extraneous-conductive and gets bonded per Reg 411.3.1.2. The diameter doesn\'t change the requirement. The cable size for the bond comes from Reg 544.1.1 / Table 54.8 (PME) — same 10 mm² Cu minimum on a typical domestic regardless of whether the pipe is 15 mm, 22 mm or 28 mm. The clamp gets sized for the pipe diameter.',
   },
   {
     question: 'A modern fire suppression system has metal sprinkler pipes throughout the building. Do they need bonding?',
@@ -386,7 +386,7 @@ export default function Sub6() {
                 any branch, within 600 mm of point of entry to the building where practicable.
               </li>
               <li>
-                Sized per Reg 544.11 — same as gas/water main bonding (typically 10 mm² Cu on
+                Sized per Reg 544.1.1 — same as gas/water main bonding (typically 10 mm² Cu on
                 domestic PME, 16 mm² on bigger PEN).
               </li>
             </ul>
@@ -436,7 +436,7 @@ export default function Sub6() {
                 size. Each bond independent, each routed back to the MET.
               </li>
               <li>
-                <strong>Sized per Reg 544.11</strong> — large commercial PEN often requires
+                <strong>Sized per Reg 544.1.1</strong> — large commercial PEN often requires
                 25 mm² or 35 mm² Cu bonding per Table 54.8.
               </li>
               <li>

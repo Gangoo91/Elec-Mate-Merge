@@ -47,7 +47,7 @@ const EnhancedInsulationResistanceTestCard = () => {
           </CardTitle>
           <CardDescription className="text-gray-300">
             Comprehensive learning module for insulation resistance testing with temperature
-            correction - BS 7671 Regulation 612.3
+            correction - BS 7671 Regulation 643.3
           </CardDescription>
         </CardHeader>
         <CardContent>

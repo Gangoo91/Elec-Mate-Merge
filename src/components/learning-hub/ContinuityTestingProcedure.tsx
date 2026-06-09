@@ -50,7 +50,7 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Continuity Testing</h1>
-              <p className="text-[10px] text-white">BS 7671 Section 612.2</p>
+              <p className="text-[10px] text-white">BS 7671 Section 643.2</p>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
             />
             <BusinessCard
               title="Regulations"
-              description="612.2, 543.1, 411.3.2 compliance"
+              description="643.2, 543.1, 411.3.2 compliance"
               icon={FileText}
               onClick={() => setView('regulations')}
               variant="hero"

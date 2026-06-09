@@ -629,6 +629,11 @@ export default function ProspectiveFaultCurrentGuidePage() {
       }
       heroSubtitle="The complete guide to prospective fault current (PFC/Ipf). What it is, why it matters, how to measure it on site, typical values for domestic and commercial installations, breaking capacity of MCBs and fuses, and the BS 7671 regulatory requirements under Regulation 434.5."
       readingTime={12}
+      answerBox={{
+        question: 'What is prospective fault current (PFC)?',
+        answer:
+          'Prospective fault current (PFC, or Ipf) is the maximum current that would flow if a fault of negligible impedance occurred — taken as the greater of the prospective short-circuit current (line-to-neutral) and the prospective earth fault current. It is measured at the origin and recorded on the certificate. Under BS 7671 Reg 434.5.1, every protective device must have a rated breaking capacity not less than the PFC at its point of installation.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

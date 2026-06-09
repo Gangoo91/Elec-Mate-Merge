@@ -437,7 +437,7 @@ const PracticalGuidanceSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-teal-400 mb-2">BS 7671 Requirements:</p>
             <div className="space-y-1 text-xs">
-              <p>• Regulation 612.3 compliance</p>
+              <p>• Regulation 643.3 compliance</p>
               <p>• Minimum 1.0MΩ for LV installations</p>
               <p>• 0.5MΩ only for SELV circuits</p>
               <p>• Temperature correction required</p>

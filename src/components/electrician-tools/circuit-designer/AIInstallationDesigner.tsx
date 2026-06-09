@@ -82,7 +82,7 @@ const transformExpectedTests = (expectedTests: any): any => {
       ? {
           at1x: `≤${expectedTests.rcd.maxTripTimeMs}ms @ ${expectedTests.rcd.ratingmA}mA`,
           at5x: `≤40ms @ ${expectedTests.rcd.ratingmA * 5}mA`,
-          regulation: expectedTests.rcd.regulation || 'BS 7671 Reg 612.13.2',
+          regulation: expectedTests.rcd.regulation || 'BS 7671 Reg 643.10',
         }
       : null,
   };

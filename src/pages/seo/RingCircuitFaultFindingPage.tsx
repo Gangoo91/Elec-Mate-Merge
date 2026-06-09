@@ -627,6 +627,11 @@ export default function RingCircuitFaultFindingPage() {
       }
       heroSubtitle="Ring circuits are unique to UK wiring practice and their faults require a specific testing approach. This guide covers open rings, bridged rings, borrowed neutrals, interconnected rings, and how to analyse R1, R2, and R1+R2 readings to locate the fault."
       readingTime={12}
+      answerBox={{
+        question: 'How do you find a fault on a ring final circuit?',
+        answer:
+          'Use the three-step continuity test from the board: with the ring open, measure end-to-end resistance of line (r1), neutral (rn) and CPC (r2); then cross-connect line to CPC and measure at every socket. A correctly wired ring reads about a quarter of (r1+r2) and stays consistent at every point. A reading that climbs or jumps reveals an open leg, a spur mistaken for the ring, or an interconnection — trace by the readings, not by guesswork.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

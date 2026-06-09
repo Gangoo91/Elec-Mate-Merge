@@ -815,6 +815,11 @@ export default function GeneratorInstallationGuidePage() {
       }
       heroSubtitle="Everything UK electricians need to know about standby generator installation — standby vs prime power ratings, automatic transfer switches, manual changeover, G99 DNO requirements, generator earthing in TN-S systems, fuel storage regulations, testing schedules, and load bank testing."
       readingTime={16}
+      answerBox={{
+        question: 'What are the BS 7671 requirements for a standby generator?',
+        answer:
+          'A standby generator is a switched alternative supply under BS 7671 Section 551. The installation must prevent the generator and the public supply being connected in parallel unless designed for it — normally via a changeover or automatic transfer switch that switches all live conductors. Where an RCD provides additional protection on the generator circuit it must disconnect all live conductors including the neutral (Reg 551.6.2), and the earthing/neutral arrangement must suit the system. A grid-connected (G99) install also needs DNO approval.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

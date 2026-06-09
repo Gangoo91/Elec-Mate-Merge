@@ -15,11 +15,11 @@ type SectionId = 'reg612' | 'reg543' | 'reg411' | 'compliance';
 const regulations = [
   {
     id: 'reg612' as SectionId,
-    title: 'Regulation 612.2 - Continuity of Protective Conductors',
+    title: 'Regulation 643.2 - Continuity of Protective Conductors',
     accent: 'blue',
     content: [
       {
-        heading: '612.2.1 - Test Requirements:',
+        heading: '643.2.1 - Test Requirements:',
         items: [
           'Continuity of every protective conductor must be verified',
           'Test current shall not be less than 200mA',
@@ -29,7 +29,7 @@ const regulations = [
         ],
       },
       {
-        heading: '612.2.2 - Test Methods:',
+        heading: '643.2.1 - Test Methods:',
         items: [
           'Method 1: Test between phase and protective conductor (R1+R2)',
           'Method 2: Test protective conductor only (R2)',

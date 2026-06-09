@@ -616,6 +616,11 @@ export default function TestingThreePhasePage() {
       }
       heroSubtitle="The complete guide to testing three-phase electrical installations for UK electricians. Phase rotation, voltage measurement, per-phase loop impedance and PFC, RCD testing on three-phase systems, and neutral-earth voltage checks."
       readingTime={14}
+      answerBox={{
+        question: 'How do you test a three-phase installation?',
+        answer:
+          'Follow the same BS 7671 sequence as single-phase, but per phase: confirm the phase rotation (L1-L2-L3) is correct, measure each line-to-line voltage (around 400V) and line-to-neutral (around 230V), carry out the dead tests (continuity and insulation resistance), then live-test earth fault loop impedance (Zs) and prospective fault current on each phase. RCDs are tested on the relevant phase, and per-phase results are recorded on the schedule of test results.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

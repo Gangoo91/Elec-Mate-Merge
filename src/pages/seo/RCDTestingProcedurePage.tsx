@@ -689,6 +689,11 @@ export default function RCDTestingProcedurePage() {
       }
       heroSubtitle="The complete RCD testing procedure for UK electricians. Full test sequence at half-rated, 1x, and 5x rated current. Testing at 0 and 180 degree phase angle. Ramp test, button test, Type S time-delayed testing, and discrimination testing. BS 7671 compliant."
       readingTime={22}
+      answerBox={{
+        question: 'How do you test an RCD to BS 7671?',
+        answer:
+          "Under BS 7671:2018+A4:2026, an RCD's effectiveness is verified by an alternating-current test at its rated residual operating current (IΔn) — a general (non-delay) type must disconnect within 300 ms (Reg 643.7.3), using test equipment to BS EN 61557-6 — and the integral test button is operated to confirm the test facility works. The familiar sequence of ½×, 1× and 5× tests at 0° and 180° is still used in practice, but A4 simplified the pass criterion to the single IΔn AC test.",
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       howToSteps={howToSteps}

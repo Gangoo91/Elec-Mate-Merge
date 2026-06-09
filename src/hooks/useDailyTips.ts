@@ -300,7 +300,7 @@ export function useDailyTips(): UseDailyTipsResult {
         eyebrow: 'Test sequence',
         title: 'Dead before live — every single time',
         body:
-          'Continuity → IR → polarity → Zs → RCD. Live tests only after every dead test passes. Reg 612.1 + GN3 Table 10.1.',
+          'Continuity → IR → polarity → Zs → RCD. Live tests only after every dead test passes. Reg 643.1 + GN3 Table 10.1.',
         actionLabel: 'Drill the sequence',
         actionHref: '/apprentice/am2-simulator?tab=testing',
         askDave: 'Quiz me on the initial verification sequence',

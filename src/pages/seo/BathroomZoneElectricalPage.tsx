@@ -180,6 +180,49 @@ const sections = [
           outwards, and from the finished floor level upwards. The zones determine what equipment is
           permitted and what IP rating is required.
         </p>
+        {/* grounded: bs7671_facets — Reg 701.32.3: Zone 1 vertical limit 2.25 m above finished floor (or highest shower head); Zone 2 extends 0.60 m beyond Zone 1; Zone 0 = interior of the bath/shower basin. */}
+        <figure className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-5 my-6">
+          <figcaption className="font-bold text-white text-base mb-1">
+            Bathroom zones — cross-section
+          </figcaption>
+          <p className="text-white/60 text-xs mb-4">
+            Vertical limits measured from finished floor level (BS 7671 Reg 701.32.3)
+          </p>
+          <svg
+            viewBox="0 0 360 250"
+            role="img"
+            aria-label="Cross-section of BS 7671 bathroom electrical zones: Zone 0 is the interior of the bath, Zone 1 is the area above the bath up to 2.25 metres from the floor, and Zone 2 extends a further 0.6 metres beyond Zone 1."
+            className="w-full h-auto"
+          >
+            {/* Zone 1 column (orange) */}
+            <rect x="20" y="50" width="130" height="170" fill="#f9731626" />
+            {/* Zone 2 strip (yellow) */}
+            <rect x="150" y="50" width="70" height="170" fill="#eab30826" />
+            {/* 2.25 m line */}
+            <line x1="20" y1="50" x2="300" y2="50" stroke="#ffffff55" strokeWidth="1" strokeDasharray="4 4" />
+            <text x="304" y="54" fill="#ffffffcc" fontSize="11">2.25 m</text>
+            {/* floor + wall */}
+            <line x1="20" y1="220" x2="345" y2="220" stroke="#ffffff66" strokeWidth="1.5" />
+            <line x1="20" y1="50" x2="20" y2="220" stroke="#ffffff66" strokeWidth="1.5" />
+            {/* bath tub with Zone 0 interior (red) */}
+            <path d="M30 180 q0 32 26 32 h60 q26 0 26 -32 z" fill="#ef444459" stroke="#ef4444" strokeWidth="1.5" />
+            <text x="60" y="205" fill="#ffffff" fontSize="11" fontWeight="bold">Zone 0</text>
+            {/* zone labels */}
+            <text x="58" y="100" fill="#ffffff" fontSize="13" fontWeight="bold">Zone 1</text>
+            <text x="160" y="100" fill="#ffffff" fontSize="13" fontWeight="bold">Zone 2</text>
+            <text x="244" y="100" fill="#ffffff99" fontSize="12">Outside</text>
+            <text x="244" y="116" fill="#ffffff99" fontSize="12">the zones</text>
+            {/* 0.6 m bracket under zone 2 */}
+            <line x1="150" y1="230" x2="220" y2="230" stroke="#eab308" strokeWidth="1.5" />
+            <line x1="150" y1="226" x2="150" y2="234" stroke="#eab308" strokeWidth="1.5" />
+            <line x1="220" y1="226" x2="220" y2="234" stroke="#eab308" strokeWidth="1.5" />
+            <text x="167" y="245" fill="#eab308" fontSize="11">0.6 m</text>
+          </svg>
+          <p className="text-white/50 text-xs mt-3">
+            Schematic only — for a shower without a basin there is no Zone 2; Zone 1 instead extends
+            1.2 m horizontally from the fixed water outlet (Reg 701.32.3).
+          </p>
+        </figure>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-xl mb-2 flex items-center gap-2">

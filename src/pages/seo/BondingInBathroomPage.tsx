@@ -598,6 +598,11 @@ export default function BondingInBathroomPage() {
       }
       heroSubtitle="Supplementary bonding in bathrooms is one of the most common questions in domestic electrical work. This guide explains when bonding is required, when it can be omitted under Regulation 701.415.2, what to bond, conductor sizing, testing procedures, and how to record bonding observations on the EICR."
       readingTime={11}
+      answerBox={{
+        question: 'Do you need supplementary bonding in a bathroom?',
+        answer:
+          'Not always. Under BS 7671 Reg 701.415.2, supplementary equipotential bonding in a room containing a bath or shower can be omitted only if all three conditions are met: (a) every circuit meets its required disconnection time, (b) every circuit has 30mA RCD additional protection, and (c) all extraneous-conductive-parts are connected to the main earthing terminal by main protective bonding. If any one is not met, supplementary bonding is required.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

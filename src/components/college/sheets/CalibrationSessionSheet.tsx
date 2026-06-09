@@ -14,6 +14,7 @@ import {
   type CalibrationGrade,
   type CalibrationSampleKind,
 } from '@/hooks/useCalibrationSessions';
+import { CalibrationDriftCard } from '@/components/college/CalibrationDriftCard';
 
 /* ==========================================================================
    CalibrationSessionSheet — three modes:
@@ -107,6 +108,7 @@ function ListView({
         </>
       }
     >
+      <CalibrationDriftCard />
       {loading && <div className="text-[12.5px] text-white/55">Loading…</div>}
       {!loading && sessions.length === 0 && (
         <div className="rounded-2xl border border-dashed border-white/[0.10] px-5 py-8 text-center text-[12.5px] text-white/45 leading-snug">

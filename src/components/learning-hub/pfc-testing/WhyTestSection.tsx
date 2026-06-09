@@ -253,7 +253,7 @@ const WhyTestSection = () => (
           <div className="bg-card rounded p-3">
             <p className="font-medium text-cyan-400 mb-2">Regulatory Compliance:</p>
             <div className="space-y-1 text-xs">
-              <p>• BS 7671 Regulation 612.11 mandatory requirement</p>
+              <p>• BS 7671 Regulation 643.7.3.201 mandatory requirement</p>
               <p>• Building Regulations Part P compliance</p>
               <p>• Health and Safety at Work Act duties</p>
               <p>• Electricity at Work Regulations 1989</p>

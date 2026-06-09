@@ -25,6 +25,7 @@ import { SectionApprenticeOtj } from '@/components/college/student360/SectionApp
 import { SectionCourseProgress } from '@/components/college/student360/SectionCourseProgress';
 import { SectionPortfolio } from '@/components/college/student360/SectionPortfolio';
 import { SectionAcMatrix } from '@/components/college/student360/SectionAcMatrix';
+import { StudentAssessmentConfidence } from '@/components/college/student360/StudentAssessmentConfidence';
 import { SectionQuizzes } from '@/components/college/student360/SectionQuizzes';
 import { SectionEpaReadiness } from '@/components/college/student360/SectionEpaReadiness';
 import { SectionIlp } from '@/components/college/student360/SectionIlp';
@@ -402,6 +403,7 @@ export default function Student360Page() {
               />
               <SectionIlp id="ilp" studentName={core.name} collegeStudentId={core.id} />
               <SectionCourseProgress id="progress" studentName={core.name} userId={core.user_id} />
+              <StudentAssessmentConfidence studentId={core.id} />
               <SectionCoverage
                 id="coverage"
                 rows={acCoverage}

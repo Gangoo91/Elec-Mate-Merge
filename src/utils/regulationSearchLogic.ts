@@ -133,10 +133,10 @@ export const getSearchSuggestions = (): string[] => {
     'SELV systems',
 
     // Regulation numbers (most common)
-    '612.1',
-    '612.2.1',
-    '612.3.1',
-    '612.8',
+    '643.1',
+    '643.2.1',
+    '643.3.1',
+    '643.7.3',
     '411.3.3',
     '415.1.1',
     'Table 41.3',

@@ -59,7 +59,7 @@ const quizQuestions: QuizQuestionType[] = [
   {
     id: 5,
     question: 'Which regulation in BS 7671 specifically requires visual inspection before testing?',
-    options: ['Regulation 610.1', 'Regulation 643.1', 'Regulation 514.1', 'Regulation 411.1'],
+    options: ['Regulation 641.1', 'Regulation 643.1', 'Regulation 514.1', 'Regulation 411.1'],
     correctAnswer: 1,
     explanation:
       'BS 7671 Regulation 643.1 specifically requires that visual inspection must be carried out before any electrical testing begins.',

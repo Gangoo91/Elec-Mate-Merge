@@ -4,7 +4,7 @@
  *   AC 4.1 — "Identify cable sizes"
  *
  * Frame: Main bonding sizing isn't a guess. Reg 544.1 + Table 54.8 (PME) and
- * Reg 544.11 (TN-S/TT) decide. 10 mm² is the workhorse but it's not the rule.
+ * Reg 544.1.1 (TN-S/TT) decide. 10 mm² is the workhorse but it's not the rule.
  * Read the supply, read the table, fit what the regs actually require.
  */
 
@@ -30,7 +30,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Identify cable sizes for main bonding | Level 2 Module 4.4.1 | Elec-Mate';
 const DESCRIPTION =
-  'Sizing main protective bonding conductors against BS 7671 Table 54.8 (PME), Reg 544.11 (TN-S/TT) and the supply earth fault arrangement — 10 mm², 16 mm², 25 mm², when each applies and why.';
+  'Sizing main protective bonding conductors against BS 7671 Table 54.8 (PME), Reg 544.1.1 (TN-S/TT) and the supply earth fault arrangement — 10 mm², 16 mm², 25 mm², when each applies and why.';
 
 const checks = [
   {
@@ -45,12 +45,12 @@ const checks = [
     ],
     correctIndex: 3,
     explanation:
-      'BS 7671 Table 54.8 — for a PEN conductor of 35 mm² or less (which 25 mm² Cu equivalent is), the minimum copper-equivalent main bonding is 10 mm². Reg 544.11 mandates the PME bonding sizing comes from the PEN (supplier neutral), not the line conductor.',
+      'BS 7671 Table 54.8 — for a PEN conductor of 35 mm² or less (which 25 mm² Cu equivalent is), the minimum copper-equivalent main bonding is 10 mm². Reg 544.1.1 mandates the PME bonding sizing comes from the PEN (supplier neutral), not the line conductor.',
   },
   {
     id: 'm4-s4-sub1-tns-rule',
     question:
-      'On a TN-S supply where PME conditions do NOT apply, how is the minimum main protective bonding conductor sized under Reg 544.11?',
+      'On a TN-S supply where PME conditions do NOT apply, how is the minimum main protective bonding conductor sized under Reg 544.1.1?',
     options: [
       'To take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions',
       'Not less than half the cross-sectional area required for the earthing conductor of the installation, with a 6 mm² minimum and 25 mm² maximum (in copper).',
@@ -59,7 +59,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'Reg 544.11 — "Except where PME conditions apply, a main protective bonding conductor shall have a cross-sectional area not less than half the cross-sectional area required for the earthing conductor of the installation." Minimum 6 mm² Cu, no need to exceed 25 mm² Cu equivalent.',
+      'Reg 544.1.1 — "Except where PME conditions apply, a main protective bonding conductor shall have a cross-sectional area not less than half the cross-sectional area required for the earthing conductor of the installation." Minimum 6 mm² Cu, no need to exceed 25 mm² Cu equivalent.',
   },
   {
     id: 'm4-s4-sub1-supplementary-size',
@@ -85,7 +85,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Table 54.8 is the PME bonding sizing table. PEN ≤ 35 mm² → 10 mm² Cu equivalent bonding; PEN over 35 to 50 mm² → 16 mm²; over 50 to 95 mm² → 25 mm²; over 95 to 150 mm² → 35 mm²; over 150 mm² → 50 mm². Reg 544.11 mandates its use whenever PME applies.',
+      'Table 54.8 is the PME bonding sizing table. PEN ≤ 35 mm² → 10 mm² Cu equivalent bonding; PEN over 35 to 50 mm² → 16 mm²; over 50 to 95 mm² → 25 mm²; over 95 to 150 mm² → 35 mm²; over 150 mm² → 50 mm². Reg 544.1.1 mandates its use whenever PME applies.',
   },
   {
     id: 2,
@@ -104,7 +104,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'A small commercial unit has a TT supply with a 16 mm² Cu earthing conductor (corrosion-protected, mechanical protection). Reg 544.11 applies. What is the minimum main protective bonding conductor?',
+      'A small commercial unit has a TT supply with a 16 mm² Cu earthing conductor (corrosion-protected, mechanical protection). Reg 544.1.1 applies. What is the minimum main protective bonding conductor?',
     options: [
       '6 mm²',
       '4 mm²',
@@ -113,7 +113,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Reg 544.11 — bonding "not less than half the cross-sectional area required for the earthing conductor". 16 ÷ 2 = 8 mm². Standard sizes are 6 / 10 / 16, so round up to the next standard size: 10 mm². Minimum allowed is 6 mm² but the half rule pushes it to 10. Maximum need not exceed 25 mm² Cu.',
+      'Reg 544.1.1 — bonding "not less than half the cross-sectional area required for the earthing conductor". 16 ÷ 2 = 8 mm². Standard sizes are 6 / 10 / 16, so round up to the next standard size: 10 mm². Minimum allowed is 6 mm² but the half rule pushes it to 10. Maximum need not exceed 25 mm² Cu.',
   },
   {
     id: 4,
@@ -201,7 +201,7 @@ const faqs = [
   {
     question: 'What is the difference between main bonding sizing and earthing conductor sizing?',
     answer:
-      'Main bonding (Reg 544.11 + Table 54.8 on PME) sizes the conductors from the MET out to the gas, water and other extraneous services. Main earthing conductor (Reg 544.1.1 + Table 54.7 or 54.8 + Table 54.1 if buried) sizes the conductor from the MET back to the source earth (PEN block on PME, sheath on TN-S, electrode on TT). Different jobs, related sizing rules, often the same physical conductor cross-section but they should be checked against the right table each time.',
+      'Main bonding (Reg 544.1.1 + Table 54.8 on PME) sizes the conductors from the MET out to the gas, water and other extraneous services. Main earthing conductor (Reg 544.1.1 + Table 54.7 or 54.8 + Table 54.1 if buried) sizes the conductor from the MET back to the source earth (PEN block on PME, sheath on TN-S, electrode on TT). Different jobs, related sizing rules, often the same physical conductor cross-section but they should be checked against the right table each time.',
   },
   {
     question: 'When does supplementary bonding sizing apply instead of main bonding?',
@@ -211,7 +211,7 @@ const faqs = [
   {
     question: 'How does the regs distinguish between PME and non-PME for bonding sizing?',
     answer:
-      'Reg 544.11 has two halves. "Except where PME conditions apply" → bonding is half the earthing conductor with a 6 mm² minimum and 25 mm² maximum cap (in copper). "Where PME conditions apply" → bonding is sized against the PEN per Table 54.8. PME forces a step up because of the broken-PEN fault scenario. Always identify the supply type first (look at the meter cabinet, ask the DNO if unclear) — getting it wrong means the bonding may melt under fault conditions.',
+      'Reg 544.1.1 has two halves. "Except where PME conditions apply" → bonding is half the earthing conductor with a 6 mm² minimum and 25 mm² maximum cap (in copper). "Where PME conditions apply" → bonding is sized against the PEN per Table 54.8. PME forces a step up because of the broken-PEN fault scenario. Always identify the supply type first (look at the meter cabinet, ask the DNO if unclear) — getting it wrong means the bonding may melt under fault conditions.',
   },
   {
     question: 'Can I use a smaller bond if the run is short and the cable is well-protected?',
@@ -238,14 +238,14 @@ export default function Sub1() {
           <PageHero
             eyebrow="Module 4 · Section 4 · Subsection 1"
             title="Identify cable sizes for main bonding"
-            description="Sizing main protective bonding against BS 7671 Table 54.8 (PME) and Reg 544.11 (TN-S / TT). 10 mm² is the workhorse on domestic but it is not the rule — read the supply, read the table, fit what the regs actually require."
+            description="Sizing main protective bonding against BS 7671 Table 54.8 (PME) and Reg 544.1.1 (TN-S / TT). 10 mm² is the workhorse on domestic but it is not the rule — read the supply, read the table, fit what the regs actually require."
             tone="emerald"
           />
 
           <TLDR
             points={[
-              'PME (TN-C-S) bonding: Reg 544.11 + Table 54.8. PEN ≤ 35 mm² → 10 mm² Cu minimum. PEN over 35 mm² up to 50 mm² → 16 mm². PEN over 50 to 95 mm² → 25 mm².',
-              'Non-PME (TN-S, TT): Reg 544.11 — bonding is half the earthing conductor CSA, 6 mm² minimum, no need to exceed 25 mm² Cu equivalent.',
+              'PME (TN-C-S) bonding: Reg 544.1.1 + Table 54.8. PEN ≤ 35 mm² → 10 mm² Cu minimum. PEN over 35 mm² up to 50 mm² → 16 mm². PEN over 50 to 95 mm² → 25 mm².',
+              'Non-PME (TN-S, TT): Reg 544.1.1 — bonding is half the earthing conductor CSA, 6 mm² minimum, no need to exceed 25 mm² Cu equivalent.',
               'Always read the supplier neutral first. The PEN size sets the table row. Domestic 100 A supplies normally have a PEN of 25 mm² aluminium or smaller, so 10 mm² is the routine bonding answer.',
             ]}
           />
@@ -253,8 +253,8 @@ export default function Sub1() {
           <LearningOutcomes
             outcomes={[
               'Identify the standard cross-sectional areas of main protective bonding conductors used in UK installations: 6 mm², 10 mm², 16 mm², 25 mm² and beyond.',
-              'Cite Reg 544.11 and apply Table 54.8 to size a main bonding conductor for a given PME supply.',
-              'Apply the half-of-earthing-conductor rule (Reg 544.11) for non-PME (TN-S, TT) installations with the 6 mm² minimum and 25 mm² Cu maximum cap.',
+              'Cite Reg 544.1.1 and apply Table 54.8 to size a main bonding conductor for a given PME supply.',
+              'Apply the half-of-earthing-conductor rule (Reg 544.1.1) for non-PME (TN-S, TT) installations with the 6 mm² minimum and 25 mm² Cu maximum cap.',
               'Identify the minimum buried earthing conductor sizes from Table 54.1 (with and without mechanical and corrosion protection).',
               'Identify the supplementary bonding sizing rules from Reg 544.2 (4 mm² unprotected / 2.5 mm² protected for extraneous-to-extraneous).',
               'Read the BS 7671 colour code (Reg 514.4.2 — green-and-yellow exclusive to protective conductors) and pick conductors that meet Reg 543.3.201 insulation cover.',
@@ -289,7 +289,7 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 544.11 (Cross-sectional area of main protective bonding conductors)"
+            source="BS 7671:2018+A4:2026 — Regulation 544.1.1 (Cross-sectional area of main protective bonding conductors)"
             clause="Except where PME conditions apply, a main protective bonding conductor shall have a cross-sectional area not less than half the cross-sectional area required for the earthing conductor of the installation. Where an installation serves more than one building, a main protective bonding conductor shall be selected in accordance with the characteristics of the distribution circuit protective conductor for that particular building. The cross-sectional area shall be not less than 6 mm², and need not exceed 25 mm² if the bonding conductor is of copper or a cross-sectional area affording equivalent conductance in other metals. Except for highway power supplies and street furniture, where PME conditions apply the main protective bonding conductor shall be selected in accordance with the PEN conductor of the supply and Table 54.8."
             meaning={
               <>
@@ -386,7 +386,7 @@ export default function Sub1() {
           >
             <p>
               On a TN-S supply (cable sheath as protective conductor) and on TT (local electrode),
-              PME conditions do not apply. Reg 544.11 first half kicks in: the main protective
+              PME conditions do not apply. Reg 544.1.1 first half kicks in: the main protective
               bonding conductor cross-sectional area shall be not less than half that required for
               the earthing conductor of the installation. The 6 mm² minimum and 25 mm² Cu maximum
               both apply.
@@ -604,7 +604,7 @@ export default function Sub1() {
                 conductor coming out of the MET measures 10 mm². The half-of-earthing rule says
                 bonding can be 5 mm² → round up to 6 mm². You fit a 6 mm² G/Y strap, tighten the
                 clamp and move on. Six months later an EICR codes your install C2 (potentially
-                dangerous) because the supply is PME and Reg 544.11 / Table 54.8 demanded a 10 mm²
+                dangerous) because the supply is PME and Reg 544.1.1 / Table 54.8 demanded a 10 mm²
                 bonding minimum based on the supplier neutral, not on the earthing conductor.
               </>
             }
@@ -632,7 +632,7 @@ export default function Sub1() {
             }
             whatToDo={
               <>
-                Identify the supply: PME → Reg 544.11 second half → Table 54.8. Find the supplier
+                Identify the supply: PME → Reg 544.1.1 second half → Table 54.8. Find the supplier
                 PEN: 25 mm² aluminium ≈ 16 mm² copper-equivalent. That is "35 mm² or less" in the
                 table → 10 mm² Cu minimum bonding. Fit 10 mm² G/Y single-core (insulated, meets
                 Reg 543.3.201 cover requirement) from the MET to the BS 951 earth clamp on the
@@ -645,7 +645,7 @@ export default function Sub1() {
             whyItMatters={
               <>
                 Sizing the bond against the supply rather than against the earthing conductor is
-                the entire point of Reg 544.11's PME branch. A correctly sized 10 mm² bond can
+                the entire point of Reg 544.1.1's PME branch. A correctly sized 10 mm² bond can
                 handle the broken-PEN fault current long enough for protection to operate. A
                 6 mm² bond (which would meet the half-of-earthing rule for a 10 mm² earthing
                 conductor) cannot, and would melt — leaving the gas pipe at the broken-PEN
@@ -663,7 +663,7 @@ export default function Sub1() {
 
           <KeyTakeaways
             points={[
-              'Main bonding sizing is governed by Reg 544.11. Two methods: PME uses Table 54.8 indexed by PEN; non-PME uses half the earthing conductor with a 6 mm² floor and 25 mm² Cu cap.',
+              'Main bonding sizing is governed by Reg 544.1.1. Two methods: PME uses Table 54.8 indexed by PEN; non-PME uses half the earthing conductor with a 6 mm² floor and 25 mm² Cu cap.',
               'Table 54.8 (PME): PEN ≤ 35 mm² → 10 mm² Cu; over 35–50 → 16 mm²; over 50–95 → 25 mm²; over 95–150 → 35 mm²; over 150 → 50 mm².',
               'Domestic 100 A PME supplies typically have 16 mm² or 25 mm² aluminium PEN — both fall in the "≤ 35 mm²" row, so 10 mm² bonding is the routine answer.',
               'Buried earthing conductor sizing is governed separately by Table 54.1 — 16 mm² Cu protected against corrosion, 25 mm² Cu unprotected.',

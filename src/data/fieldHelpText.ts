@@ -22,13 +22,13 @@ export const fieldHelpText = {
   // Testing
   testMethod: {
     content: 'Method used for insulation resistance testing as per BS 7671.',
-    regulation: '612.3',
+    regulation: '643.3',
     example:
       'Method 1 (whole installation), Method 2 (by sub-circuit), Method 3 (by individual circuit)',
   },
   testVoltage: {
     content: 'DC test voltage applied during insulation resistance testing.',
-    regulation: '612.3.2',
+    regulation: '643.3.2',
     example: '500V for LV installations (SELV/PELV use 250V)',
   },
 

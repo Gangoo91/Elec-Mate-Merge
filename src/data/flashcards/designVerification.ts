@@ -198,7 +198,7 @@ export const designVerification: FlashcardData[] = [
     question:
       'What minimum insulation resistance values are acceptable during initial verification of a low-voltage installation?',
     answer:
-      'For circuits at nominal voltages up to and including 500V AC, the minimum insulation resistance is 1 megohm when tested at 500V DC, as stated in Table 64.3 of BS 7671:2018+A2:2022. For SELV and PELV circuits up to 50V, the minimum is 0.5 megohms tested at 250V DC. For circuits between 500V and 1000V, the minimum is 1 megohm tested at 1000V DC. Values below these indicate a potential insulation breakdown.',
+      'For circuits at nominal voltages up to and including 500V AC, the minimum insulation resistance is 1 megohm when tested at 500V DC, as stated in Table 64 of BS 7671:2018+A2:2022. For SELV and PELV circuits up to 50V, the minimum is 0.5 megohms tested at 250V DC. For circuits between 500V and 1000V, the minimum is 1 megohm tested at 1000V DC. Values below these indicate a potential insulation breakdown.',
     category: 'Verification',
     difficulty: 'medium',
   },
@@ -235,7 +235,7 @@ export const designVerification: FlashcardData[] = [
     question:
       'What documentation must be provided to the person ordering the electrical work upon completion of initial verification?',
     answer:
-      'Upon completion, the contractor must provide an Electrical Installation Certificate (EIC) together with a schedule of inspections and a schedule of test results, as required by Regulation 631.1. These documents certify that the installation has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A2:2022. A copy must be given to the person ordering the work, and the contractor should retain a copy for their own records.',
+      'Upon completion, the contractor must provide an Electrical Installation Certificate (EIC) together with a schedule of inspections and a schedule of test results, as required by Regulation 641.7. These documents certify that the installation has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A2:2022. A copy must be given to the person ordering the work, and the contractor should retain a copy for their own records.',
     category: 'Documentation',
     difficulty: 'easy',
   },

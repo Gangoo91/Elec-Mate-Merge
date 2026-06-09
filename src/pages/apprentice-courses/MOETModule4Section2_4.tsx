@@ -36,7 +36,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      'BS 7671 Regulation 612.3 specifies a minimum insulation resistance of 1.0 megohm for circuits rated up to 500 V tested at 500 V DC. While 1.0 megohm is the absolute minimum for compliance, healthy insulation on new installations should read considerably higher — typically 100 megohms or more.',
+      'BS 7671 Regulation 643.3 specifies a minimum insulation resistance of 1.0 megohm for circuits rated up to 500 V tested at 500 V DC. While 1.0 megohm is the absolute minimum for compliance, healthy insulation on new installations should read considerably higher — typically 100 megohms or more.',
   },
   {
     id: 'ir-temperature-effect',

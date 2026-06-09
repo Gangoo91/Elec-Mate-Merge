@@ -484,7 +484,7 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
       'Circuits at ELV (SELV and PELV up to 50V) have a minimum IR requirement of 0.5 MΩ when tested at 250V DC.',
     category: 'Insulation Resistance',
     difficulty: 'Intermediate',
-    regulation: 'BS 7671:Table 64.3',
+    regulation: 'BS 7671:Table 64',
   },
   {
     id: 'ir-31',
@@ -726,7 +726,7 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
       'The minimum IR values in BS 7671 apply regardless of cable insulation class. The test voltage is determined by the circuit voltage, not insulation class.',
     category: 'Insulation Resistance',
     difficulty: 'Intermediate',
-    regulation: 'BS 7671:Table 64.3',
+    regulation: 'BS 7671:Table 64',
   },
   {
     id: 'ir-46',

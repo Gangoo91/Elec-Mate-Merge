@@ -117,7 +117,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
               </TooltipTrigger>
               <TooltipContent side="top" className="max-w-xs z-50">
                 <p className="text-xs">
-                  <strong>Phase Sequence Test (BS 7671 Reg 612.12)</strong>
+                  <strong>Phase Sequence Test (BS 7671 Reg 643.9)</strong>
                   <br />
                   Verify clockwise rotation L1→L2→L3 using phase rotation meter.
                   <br />

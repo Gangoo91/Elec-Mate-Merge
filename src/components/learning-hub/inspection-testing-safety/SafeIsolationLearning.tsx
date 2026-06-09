@@ -34,7 +34,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
         'Switch off using appropriate switching sequence',
         'Verify switching operation is complete',
       ],
-      regulation: 'BS 7671: 612.1',
+      regulation: 'BS 7671: 643.1',
     },
     {
       id: 'isolation',
@@ -46,7 +46,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
         'Check isolation device is suitable for load',
         'Verify no parallel feed paths exist',
       ],
-      regulation: 'BS 7671: 612.2',
+      regulation: 'BS 7671: 643.2',
     },
     {
       id: 'securing',
@@ -58,7 +58,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
         'Inform other personnel of isolation',
         'Retain key control where applicable',
       ],
-      regulation: 'BS 7671: 612.3',
+      regulation: 'BS 7671: 643.3',
     },
     {
       id: 'testing',
@@ -70,7 +70,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
         'Test voltage indicator again on known live source',
         'Test between all conductors and earth',
       ],
-      regulation: 'BS 7671: 612.4',
+      regulation: 'BS 7671: 643.4',
     },
   ];
 

@@ -90,7 +90,7 @@ const WhyTestSection = ({ onBack }: Props) => {
           <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 612.3</span>
+                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 643.3</span>
               </div>
               <p className="text-sm text-white leading-relaxed">
                 Insulation resistance shall be measured between live conductors and between live conductors and the protective conductor connected to earth. The test shall be carried out with the installation isolated from the supply.

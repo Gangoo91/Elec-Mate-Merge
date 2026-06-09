@@ -1312,7 +1312,7 @@ const FireAlarmModule5Section4 = () => {
 
           <ConceptBlock
             title="The cable IR test — devices removed"
-            plainEnglish="Before energising the panel for the first time, the cable wiring undergoes an insulation resistance (IR) test to verify it is fit to be energised. The test applies 500 V dc between the loop conductors and earth (and between conductors), and measures the resistance. The cable IR acceptance is at least 1 MΩ per BS 7671 §612.3 — the same rule used for any LV wiring. CRITICAL: loop devices must be DISCONNECTED before the test. A 500 V dc shot through addressable detector electronics, isolators and interface modules will destroy them. The cable is the test subject; remove devices first, IR-test the cable, re-fit devices only after the cable IR passes."
+            plainEnglish="Before energising the panel for the first time, the cable wiring undergoes an insulation resistance (IR) test to verify it is fit to be energised. The test applies 500 V dc between the loop conductors and earth (and between conductors), and measures the resistance. The cable IR acceptance is at least 1 MΩ per BS 7671 §643.3 — the same rule used for any LV wiring. CRITICAL: loop devices must be DISCONNECTED before the test. A 500 V dc shot through addressable detector electronics, isolators and interface modules will destroy them. The cable is the test subject; remove devices first, IR-test the cable, re-fit devices only after the cable IR passes."
             onSite="The pre-energisation IR is a non-negotiable check. Procedure: at every base, lift the head OR pull the cable from one set of base terminals; at every MCP, remove the MCP from the back-box; at the panel, disconnect the loop from the SLC terminals. Now you have a cable with no electronics on it. Apply 500 V dc, read the IR. Each conductor to earth: ≥1 MΩ. Conductor to conductor: ≥1 MΩ. Re-connect devices ONLY after the IR passes."
           >
             <p>The IR test methodology:</p>
@@ -1328,7 +1328,7 @@ const FireAlarmModule5Section4 = () => {
               </li>
               <li>
                 <strong>IR conductor-to-earth.</strong> 500 V dc between (+) loop conductor and
-                earth. Read; ≥1 MΩ acceptance per BS 7671 §612.3. Repeat for (−) loop conductor to
+                earth. Read; ≥1 MΩ acceptance per BS 7671 §643.3. Repeat for (−) loop conductor to
                 earth.
               </li>
               <li>
@@ -1365,7 +1365,7 @@ const FireAlarmModule5Section4 = () => {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · §612.3 (Insulation resistance) · Applied to fire alarm wiring per BS 5839-1:2025"
+            source="BS 7671:2018+A4:2026 · §643.3 (Insulation resistance) · Applied to fire alarm wiring per BS 5839-1:2025"
             clause={
               <>
                 The insulation resistance between live conductors, and between live conductors and
@@ -1374,7 +1374,7 @@ const FireAlarmModule5Section4 = () => {
                 this test, electronic devices connected to the circuit should be disconnected.
               </>
             }
-            meaning="The 500 V / 1 MΩ rule from BS 7671 §612.3 applies to fire alarm cable. Critically, the same clause specifies that electronic devices connected to the circuit should be disconnected for the test. The rule is in BS 7671; it applies on every LV circuit including fire alarm loops. Devices in place + 500 V dc = destroyed devices."
+            meaning="The 500 V / 1 MΩ rule from BS 7671 §643.3 applies to fire alarm cable. Critically, the same clause specifies that electronic devices connected to the circuit should be disconnected for the test. The rule is in BS 7671; it applies on every LV circuit including fire alarm loops. Devices in place + 500 V dc = destroyed devices."
           />
 
           <SectionRule />
@@ -1490,7 +1490,7 @@ const FireAlarmModule5Section4 = () => {
               'Joint boxes AVOIDED. If used: fire-rated, accessible, labelled, recorded on as-installed drawing.',
               'Voids: containment continues into void; detectors mounted per the 2025 Figure (≤1.25 m / 1.25-1.5 m / >1.5 m bands).',
               'Polarity maintained at every base, every MCP, every sounder. (+) IN to (+) OUT, (−) IN to (−) OUT. Walk the loop pre-energisation.',
-              'Pre-energisation IR: devices DISCONNECTED, 500 V dc, ≥1 MΩ acceptance per BS 7671 §612.3. Never IR with devices in place.',
+              'Pre-energisation IR: devices DISCONNECTED, 500 V dc, ≥1 MΩ acceptance per BS 7671 §643.3. Never IR with devices in place.',
               'Batteries: date-of-install label by permanent marker (BS 5839-1:2025 §16 acknowledged custom and practice). Earthing per BS 7671:2018+A4:2026 §560.',
               'Mains isolation per §19 (NEW consolidated 2025 clause): dedicated, labelled, accessible to authorised persons, lockable / tagged.',
               'ALL variations recorded (NEW 2025 — was "major" only in 2017). Cable colour deviation from red, JB use, screen scheme deviation — all recorded.',
@@ -1529,7 +1529,7 @@ const FireAlarmModule5Section4 = () => {
               {
                 question: 'Pre-energisation IR test — at what voltage and what acceptance?',
                 answer:
-                  '500 V dc, ≥1 MΩ acceptance per BS 7671 §612.3 (the rule for any LV wiring). Loop devices DISCONNECTED before the test — 500 V dc through addressable electronics destroys them. Test conductor-to-earth, conductor-to-conductor, screen-to-earth. Re-fit devices only after IR passes.',
+                  '500 V dc, ≥1 MΩ acceptance per BS 7671 §643.3 (the rule for any LV wiring). Loop devices DISCONNECTED before the test — 500 V dc through addressable electronics destroys them. Test conductor-to-earth, conductor-to-conductor, screen-to-earth. Re-fit devices only after IR passes.',
               },
               {
                 question:

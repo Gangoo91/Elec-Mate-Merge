@@ -61,7 +61,7 @@ const InitialVerificationDiagram = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="space-y-0.5">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Regulation 610.1
+              Regulation 641.1
             </span>
             <p className="text-[14px] text-white/85 leading-relaxed">
               Every installation shall be inspected and tested during erection and upon completion.

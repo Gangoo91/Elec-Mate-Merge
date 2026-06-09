@@ -141,7 +141,7 @@ export const mftFunctions: MFTFunction[] = [
       'Confirms the circuit protective conductor (CPC / earth) is continuous from the DB to the furthest point. Measures the combined resistance of the live and earth conductors.',
     acceptableRange:
       'Below the design value — typically 0.01Ω to 1.5Ω depending on cable size and length',
-    standard: 'BS 7671 Regulation 612.2',
+    standard: 'BS 7671 Regulation 643.2',
   },
   {
     test: 'Insulation Resistance (IR)',
@@ -149,7 +149,7 @@ export const mftFunctions: MFTFunction[] = [
       'Tests that the insulation between live conductors, and between live conductors and earth, is intact. Detects breakdown, moisture, or damage.',
     acceptableRange:
       'Minimum 1MΩ (megaohm) at 500V DC test voltage for LV circuits. Higher is better — a new installation should read >200MΩ.',
-    standard: 'BS 7671 Regulation 612.3',
+    standard: 'BS 7671 Regulation 643.3',
   },
   {
     test: 'Loop Impedance (Zs)',
@@ -157,7 +157,7 @@ export const mftFunctions: MFTFunction[] = [
       'Measures the earth fault loop impedance to confirm that the protective device (MCB/fuse) will disconnect within the required time in a fault condition.',
     acceptableRange:
       'Must be below the maximum Zs value for the protective device — refer to BS 7671 Table 41.2 to 41.6',
-    standard: 'BS 7671 Regulation 612.9',
+    standard: 'BS 7671 Regulation 643.7.3',
   },
   {
     test: 'External Loop (Ze)',
@@ -165,7 +165,7 @@ export const mftFunctions: MFTFunction[] = [
       'Measures the impedance of the supply side of the installation — from the transformer to the main earthing terminal.',
     acceptableRange:
       'TN-C-S: 0.35Ω max | TN-S: 0.8Ω max | TT: 21Ω max (typical, depends on electrode)',
-    standard: 'BS 7671 Regulation 612.9',
+    standard: 'BS 7671 Regulation 643.7.3',
   },
   {
     test: 'RCD Trip Time',
@@ -173,7 +173,7 @@ export const mftFunctions: MFTFunction[] = [
       'Tests that RCDs disconnect within the required time at rated residual current (IΔn). Ensures the RCD provides the expected fault protection.',
     acceptableRange:
       '30mA Type A/AC: ≤300ms at IΔn, ≤40ms at 5×IΔn. 30mA Type B: check manufacturer data.',
-    standard: 'BS 7671 Regulation 612.13',
+    standard: 'BS 7671 Regulation 643.10',
   },
   {
     test: 'Prospective Fault Current (PFC/PSCC)',
@@ -181,14 +181,14 @@ export const mftFunctions: MFTFunction[] = [
       'Measures the maximum current that would flow in a short circuit. Confirms that the protective device can safely interrupt this fault current.',
     acceptableRange:
       'Must not exceed the rated breaking capacity of the protective device (typically 6kA or 10kA for domestic MCBs)',
-    standard: 'BS 7671 Regulation 612.11',
+    standard: 'BS 7671 Regulation 643.7.3.201',
   },
   {
     test: 'Polarity',
     purpose:
       'Confirms that line, neutral, and earth conductors are connected to the correct terminals throughout the installation.',
     acceptableRange: 'Pass/Fail — all connections must be correct',
-    standard: 'BS 7671 Regulation 612.6',
+    standard: 'BS 7671 Regulation 643.6',
   },
   {
     test: 'Earth Electrode Resistance (Ra)',
@@ -196,7 +196,7 @@ export const mftFunctions: MFTFunction[] = [
       'Measures the resistance of the earth electrode to general mass of earth. For TT installations only.',
     acceptableRange:
       'Ra × IΔn ≤ 50V (so with a 30mA RCD, Ra must be ≤1667Ω, but in practice aim for ≤200Ω)',
-    standard: 'BS 7671 Regulation 612.7',
+    standard: 'BS 7671 Regulation 643.7.2',
   },
 ];
 

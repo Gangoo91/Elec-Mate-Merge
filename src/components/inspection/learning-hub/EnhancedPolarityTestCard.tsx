@@ -105,7 +105,7 @@ const EnhancedPolarityTestCard = () => {
             Enhanced Polarity Testing Module
           </CardTitle>
           <CardDescription className="text-gray-300 text-sm sm:text-base">
-            Comprehensive learning module for polarity verification - BS 7671 Regulation 612.6
+            Comprehensive learning module for polarity verification - BS 7671 Regulation 643.6
           </CardDescription>
         </CardHeader>
         <CardContent>

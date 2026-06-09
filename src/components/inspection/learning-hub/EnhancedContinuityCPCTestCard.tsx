@@ -71,7 +71,7 @@ const EnhancedContinuityCPCTestCard = () => {
           </CardTitle>
           <CardDescription className="text-gray-300">
             Comprehensive learning module for Circuit Protective Conductor continuity testing - BS
-            7671 Regulation 612.2.1
+            7671 Regulation 643.2.1
           </CardDescription>
         </CardHeader>
         <CardContent>

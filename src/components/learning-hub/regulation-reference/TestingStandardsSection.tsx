@@ -11,7 +11,7 @@ const TestingStandardsSection = () => {
   const testStandards = {
     continuity: {
       title: 'Continuity Testing',
-      regulation: 'Regulation 612.2',
+      regulation: 'Regulation 643.2',
       description: 'Testing protective conductor continuity and ring circuit continuity',
       requirements: [
         { item: 'Test current', value: 'Between 4mA and 24mA DC', critical: true },
@@ -35,7 +35,7 @@ const TestingStandardsSection = () => {
     },
     insulation: {
       title: 'Insulation Resistance',
-      regulation: 'Regulation 612.3',
+      regulation: 'Regulation 643.3',
       description: 'Testing insulation between conductors and to earth',
       requirements: [
         { item: 'Test voltage', value: '250V DC (SELV), 500V DC (LV)', critical: true },
@@ -59,7 +59,7 @@ const TestingStandardsSection = () => {
     },
     zs: {
       title: 'Earth Fault Loop Impedance',
-      regulation: 'Regulation 612.9',
+      regulation: 'Regulation 643.7.3',
       description: 'Testing Ze, Zs and prospective fault current',
       requirements: [
         { item: 'Maximum Zs', value: 'Per BS 7671 Tables 41.2-41.5', critical: true },
@@ -83,7 +83,7 @@ const TestingStandardsSection = () => {
     },
     rcd: {
       title: 'RCD Testing',
-      regulation: 'Regulation 612.13',
+      regulation: 'Regulation 643.10',
       description: 'Testing residual current device operation and effectiveness',
       requirements: [
         { item: 'Trip time at IΔn', value: '≤300ms (≤40ms for Type S)', critical: true },

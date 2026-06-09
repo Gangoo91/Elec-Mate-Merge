@@ -299,7 +299,7 @@ const Module6Section4_3 = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>
-                      BS 7671:2018+A2:2022 Section 612.6 mandates polarity verification testing
+                      BS 7671:2018+A2:2022 Section 643.6 mandates polarity verification testing
                     </span>
                   </li>
                   <li className="flex items-start gap-2">

@@ -551,6 +551,11 @@ export default function CPDForElectriciansPage() {
       }
       heroSubtitle="Everything you need to know about CPD as a UK electrician. How many hours you need, what types of learning count, the most valuable courses for 2026, how to record CPD for your scheme assessment, and how Elec-Mate tracks it all automatically."
       readingTime={14}
+      answerBox={{
+        question: 'How much CPD does an electrician need?',
+        answer:
+          'There is no single legal CPD-hours figure for electricians, but the competent-person schemes (NICEIC, NAPIT and others) and the ECS expect you to keep your knowledge current and to evidence it at assessment. A sensible working benchmark is around 30 hours of relevant learning a year — staying current with BS 7671 amendments, product and technology updates, and any specialist areas you work in. Record what you do as you go, with dates and evidence.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

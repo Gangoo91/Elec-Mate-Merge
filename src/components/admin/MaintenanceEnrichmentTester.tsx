@@ -83,8 +83,8 @@ export function MaintenanceEnrichmentTester() {
 
 ## BS 7671 References
 - Regulation 643.11: RCD testing
-- Regulation 612.3.2: Insulation resistance
-- Regulation 612.6: Earth fault loop impedance
+- Regulation 643.3.2: Insulation resistance
+- Regulation 643.6: Earth fault loop impedance
 `;
 
       const parseResponse = await supabase.functions.invoke('parse-maintenance-knowledge', {

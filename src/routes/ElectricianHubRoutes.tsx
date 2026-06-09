@@ -4,6 +4,7 @@ import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
 const TasksPage = lazy(() => import('@/pages/electrician/TasksPage'));
+const RenewablesHub = lazy(() => import('@/pages/electrician/RenewablesHub'));
 const ProjectsPage = lazy(() => import('@/pages/electrician/ProjectsPage'));
 const ProjectDetailPage = lazy(() => import('@/pages/electrician/ProjectDetailPage'));
 const BusinessAdmin = lazy(() => import('@/pages/electrician/BusinessAdmin'));
@@ -406,6 +407,16 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <TasksPage />
+        </LazyRoute>
+      }
+    />
+
+    {/* Renewables hub */}
+    <Route
+      path="renewables"
+      element={
+        <LazyRoute>
+          <RenewablesHub />
         </LazyRoute>
       }
     />

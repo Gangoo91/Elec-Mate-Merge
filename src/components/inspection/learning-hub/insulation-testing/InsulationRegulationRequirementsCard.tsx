@@ -19,13 +19,13 @@ const InsulationRegulationRequirementsCard = () => (
           <div className="flex items-center gap-2 mb-3">
             <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
             <h4 className="font-medium text-purple-400 text-sm sm:text-base">
-              Regulation 612.3 - Insulation Resistance
+              Regulation 643.3 - Insulation Resistance
             </h4>
           </div>
           <div className="space-y-3 text-sm text-gray-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="font-medium text-foreground mb-2">612.3.1 - Test Requirements:</p>
+                <p className="font-medium text-foreground mb-2">643.3.1 - Test Requirements:</p>
                 <div className="space-y-1 text-xs">
                   <p>• Test voltage shall be DC</p>
                   <p>• Test voltage selection based on circuit nominal voltage</p>
@@ -36,7 +36,7 @@ const InsulationRegulationRequirementsCard = () => (
                 </div>
               </div>
               <div>
-                <p className="font-medium text-foreground mb-2">612.3.2 - Test Procedure:</p>
+                <p className="font-medium text-foreground mb-2">643.3.2 - Test Procedure:</p>
                 <div className="space-y-1 text-xs">
                   <p>• All equipment and accessories disconnected</p>
                   <p>• Surge protective devices isolated</p>

@@ -95,7 +95,7 @@ const sections = [
     accent: 'green',
     content: {
       legal: [
-        'BS 7671:18+A3:2024: Regulation 612.2 - Continuity of protective conductors',
+        'BS 7671:18+A3:2024: Regulation 643.2 - Continuity of protective conductors',
         'Electricity at Work Regulations 1989: Regulation 4 - Systems to be safe',
         'Building Regulations Part P: Electrical safety in dwellings',
         'IET Guidance Note 3: Inspection & Testing procedures',

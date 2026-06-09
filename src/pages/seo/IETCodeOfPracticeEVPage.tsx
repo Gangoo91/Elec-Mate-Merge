@@ -693,6 +693,11 @@ export default function IETCodeOfPracticeEVPage() {
       }
       heroSubtitle="Everything you need to know about the IET Code of Practice for Electric Vehicle Charging Equipment Installation. Load assessment, earthing (PME and TT), O-PEN protection, cable sizing, smart charging regulations, OCPP, and documentation requirements."
       readingTime={14}
+      answerBox={{
+        question: 'What is the IET Code of Practice for EV charging?',
+        answer:
+          'The IET Code of Practice for Electric Vehicle Charging Equipment Installation is the UK industry-standard guidance for installing EV charge points. It sits alongside BS 7671 Section 722 and covers supply arrangements, earthing — especially the PME (broken-PEN) risk — load and demand management, RCD selection with DC fault detection, and installation, testing and handover. It is the reference most schemes and manufacturers expect installers to follow.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

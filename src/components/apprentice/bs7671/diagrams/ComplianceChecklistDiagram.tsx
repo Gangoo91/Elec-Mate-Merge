@@ -60,7 +60,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Regulation 610.3 — inspection requirements
+          Regulation 641.3 — inspection requirements
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
           The inspection shall be made to verify that the installed electrical equipment is in
@@ -98,7 +98,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Competent person requirements (Regulation 610.2)
+          Competent person requirements (Regulation 641.4)
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">

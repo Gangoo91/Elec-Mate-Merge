@@ -618,6 +618,11 @@ export default function ElectricianDayRatesPage() {
       }
       heroSubtitle="From £200 per day for domestic work to £450+ for specialist roles — this is the definitive guide to electrician day rates across the UK. Know the market, calculate your true costs, and set a rate that actually makes money."
       readingTime={13}
+      answerBox={{
+        question: 'How much does an electrician charge per day in the UK?',
+        answer:
+          'UK electrician day rates typically run from around £200 per day for domestic work to £350–£450+ for specialist or commercial roles, varying by region (London and the South East are highest). Self-employed electricians need to price in their true costs — van, tools, insurance, certification, pension and non-billable admin time — before setting a rate that actually makes a profit rather than just covering the day.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

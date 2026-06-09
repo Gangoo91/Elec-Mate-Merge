@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 3,
     question:
       'Which BS 7671 regulation is the head reference for selecting equipment based on the external influences present at the location of the installation?',
-    options: ['Reg 411.3.1', 'Reg 522.1', 'Reg 543.1.1', 'Reg 612.3'],
+    options: ['Reg 411.3.1', 'Reg 522.1', 'Reg 543.1.1', 'Reg 643.3'],
     correctAnswer: 1,
     explanation:
-      'Reg 522.1 is the headline external-influences regulation in Chapter 52. It requires that the wiring system be selected and erected having regard to the external influences to which it may be subjected, and references Appendix 5 for the AD / AE / AG codes (water, dust, mechanical impact). 411.3.1 is shock protection; 543.1.1 is CPC sizing; 612.3 is initial verification.',
+      'Reg 522.1 is the headline external-influences regulation in Chapter 52. It requires that the wiring system be selected and erected having regard to the external influences to which it may be subjected, and references Appendix 5 for the AD / AE / AG codes (water, dust, mechanical impact). 411.3.1 is shock protection; 543.1.1 is CPC sizing; 643.3 is initial verification.',
   },
   {
     id: 4,
@@ -192,7 +192,7 @@ const quizQuestions = [
       'Reg 411.3.4 — luminaire RCD',
       'Reg 522.11.1 — solar radiation external influence (AN)',
       'Reg 543.2 — protective conductor types',
-      'Reg 612.7 — insulation resistance',
+      'Reg 643.7.2 — insulation resistance',
     ],
     correctAnswer: 1,
     explanation:

@@ -274,7 +274,7 @@ const Module6Section4_2 = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>
-                      BS 7671:2018+A2:2022 Section 612.2.2 mandates ring continuity verification
+                      BS 7671:2018+A2:2022 Section 643.2.1 mandates ring continuity verification
                     </span>
                   </li>
                   <li className="flex items-start gap-2">

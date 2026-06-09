@@ -578,7 +578,7 @@ export default function HowToFillInMinorWorksPage() {
         },
         {
           name: 'Issue the certificate to the client',
-          text: 'Provide a copy of the completed Minor Works Certificate to the person who ordered the work. This is a requirement of BS 7671 Regulation 632.3. With Elec-Mate, you can export a professional PDF and email or WhatsApp it to the client before you leave site. Retain your own copy for at least six years.',
+          text: 'Provide a copy of the completed Minor Works Certificate to the person who ordered the work. This is a requirement of BS 7671 Regulation 644.3. With Elec-Mate, you can export a professional PDF and email or WhatsApp it to the client before you leave site. Retain your own copy for at least six years.',
         },
       ]}
       faqs={[
@@ -600,7 +600,7 @@ export default function HowToFillInMinorWorksPage() {
         {
           question: 'Is a Minor Works Certificate a legal requirement?',
           answer:
-            'BS 7671 Regulation 632.3 requires that a Minor Works Certificate be issued for all minor electrical work. While BS 7671 itself is not legislation (it is a British Standard), compliance with BS 7671 is referenced in the Building Regulations and is the accepted benchmark for safe electrical installation practice in the UK. Competent person scheme providers require their members to issue certificates for all work. In practice, failing to issue a Minor Works Certificate exposes the electrician to liability if a fault or incident later occurs — without a certificate, there is no documented evidence that the work was tested and found compliant.',
+            'BS 7671 Regulation 644.3 requires that a Minor Works Certificate be issued for all minor electrical work. While BS 7671 itself is not legislation (it is a British Standard), compliance with BS 7671 is referenced in the Building Regulations and is the accepted benchmark for safe electrical installation practice in the UK. Competent person scheme providers require their members to issue certificates for all work. In practice, failing to issue a Minor Works Certificate exposes the electrician to liability if a fault or incident later occurs — without a certificate, there is no documented evidence that the work was tested and found compliant.',
         },
         {
           question: 'How many Minor Works Certificates can I issue for one job?',

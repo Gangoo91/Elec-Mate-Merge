@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'What is protective bonding and why does it matter?',
     answer:
-      'Main protective bonding is a fundamental safety measure required by BS 7671. It involves connecting the main earthing terminal of the electrical installation to extraneous-conductive-parts — metalwork that is not part of the electrical installation but could introduce a potential. Regulation 544.1.2 requires that the bonding connection to any extraneous-conductive-part (water pipe, gas pipe, other metallic service) shall be made as near as practicable to the point of entry into the premises. In a domestic property, this means bonding conductors connected to the incoming water pipe, the incoming gas pipe, and (where applicable) incoming oil pipes and structural steelwork. The purpose is to ensure that all metalwork in the property is at the same potential — so if a fault puts a voltage on one piece of metalwork, the bonding ensures all metalwork rises to the same voltage, preventing a dangerous voltage difference. Bonding conductor sizing is governed by Regulation 544.11: under PME (TN-C-S) supplies, sizing follows Table 54.8 based on the PEN conductor CSA; under non-PME supplies (TN-S or TT) the conductor must be at least half the CSA of the earthing conductor, with a minimum of 6mm² copper. If the bonding is missing, disconnected, or undersized, a fault can create a dangerous voltage difference between metalwork — which is exactly what causes a shock from a tap.',
+      'Main protective bonding is a fundamental safety measure required by BS 7671. It involves connecting the main earthing terminal of the electrical installation to extraneous-conductive-parts — metalwork that is not part of the electrical installation but could introduce a potential. Regulation 544.1.2 requires that the bonding connection to any extraneous-conductive-part (water pipe, gas pipe, other metallic service) shall be made as near as practicable to the point of entry into the premises. In a domestic property, this means bonding conductors connected to the incoming water pipe, the incoming gas pipe, and (where applicable) incoming oil pipes and structural steelwork. The purpose is to ensure that all metalwork in the property is at the same potential — so if a fault puts a voltage on one piece of metalwork, the bonding ensures all metalwork rises to the same voltage, preventing a dangerous voltage difference. Bonding conductor sizing is governed by Regulation 544.1.1: under PME (TN-C-S) supplies, sizing follows Table 54.8 based on the PEN conductor CSA; under non-PME supplies (TN-S or TT) the conductor must be at least half the CSA of the earthing conductor, with a minimum of 6mm² copper. If the bonding is missing, disconnected, or undersized, a fault can create a dangerous voltage difference between metalwork — which is exactly what causes a shock from a tap.',
   },
   {
     question: 'Could the shock be caused by my neighbour installation?',
@@ -304,7 +304,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The minimum bonding conductor size is determined by Regulation 544.11 and depends on the
+          The minimum bonding conductor size is determined by Regulation 544.1.1 and depends on the
           earthing arrangement. Where PME (TN-C-S) conditions apply, the conductor shall be selected
           in accordance with the PEN conductor CSA and Table 54.8 — typically 10mm², 16mm², or 25mm²
           copper depending on the supply. Where PME does not apply (TN-S or TT), the conductor shall
@@ -548,7 +548,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify main protective bonding.</strong> Check that bonding conductors are
-                connected to water and gas pipes, correctly sized per Reg 544.11 (Table 54.8 under
+                connected to water and gas pipes, correctly sized per Reg 544.1.1 (Table 54.8 under
                 PME; minimum 6mm² half-earthing-conductor rule under non-PME), and securely clamped
                 with labelled BS EN clamps.
               </span>

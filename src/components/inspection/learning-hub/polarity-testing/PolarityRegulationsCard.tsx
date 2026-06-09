@@ -11,7 +11,7 @@ interface Props {
 
 const coreRegulations = [
   {
-    number: 'Reg 612.6',
+    number: 'Reg 643.6',
     title: 'Verification of Polarity',
     description: 'A polarity test shall be made to verify that single-pole devices for protection or switching are connected in the line conductor only. This applies to every circuit in the installation.',
   },

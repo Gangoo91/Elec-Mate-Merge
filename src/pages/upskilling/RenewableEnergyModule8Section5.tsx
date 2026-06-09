@@ -32,7 +32,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 abbreviations index + Table 53.2 list RCD types: Type AC (BS EN 61008 / BS EN 61009 — AC fault only); Type A (BS EN 62423 — AC + pulsating DC); Type F (BS EN 62423 — adds high-frequency / multi-frequency); Type B (BS EN 62423 — adds smooth DC fault current detection). For heat pump installs: Type AC is NOT permitted as ADS protection because VSD inverter electronics produce pulsating DC fault currents that Type AC fails to detect (Reg 531.3.3 — Type AC permitted only where load contains no DC components). Type A is the UK 2025-26 default for heat pumps with simple inverters. Type F or Type B required where manufacturer DoC declares smooth-DC leakage exceeds Type A capability (typical for advanced VSD compressors). Cert evidence bundle records the chosen RCD type + manufacturer DoC justification.',
+      'The RCD types defined in BS EN 61008/61009/62423 are: Type AC (BS EN 61008 / BS EN 61009 — AC fault only); Type A (BS EN 62423 — AC + pulsating DC); Type F (BS EN 62423 — adds high-frequency / multi-frequency); Type B (BS EN 62423 — adds smooth DC fault current detection). For heat pump installs: Type AC is NOT permitted as ADS protection because VSD inverter electronics produce pulsating DC fault currents that Type AC fails to detect (Reg 531.3.3 — Type AC permitted only where load contains no DC components). Type A is the UK 2025-26 default for heat pumps with simple inverters. Type F or Type B required where manufacturer DoC declares smooth-DC leakage exceeds Type A capability (typical for advanced VSD compressors). Cert evidence bundle records the chosen RCD type + manufacturer DoC justification.',
   },
   {
     id: 'm8s5-vsd-smooth-dc',

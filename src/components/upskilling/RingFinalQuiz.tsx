@@ -128,10 +128,10 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: 10,
     question: 'Which regulation in BS 7671 covers ring final circuit testing?',
-    options: ['Regulation 612.2.2', 'Regulation 433.1.5', 'Regulation 411.3.2', 'Regulation 543.7'],
+    options: ['Regulation 643.2.1', 'Regulation 433.1.5', 'Regulation 411.3.2', 'Regulation 543.7'],
     correctAnswer: 0,
     explanation:
-      'Regulation 612.2.2 in BS 7671 specifically covers the testing requirements for ring final circuits, including continuity and cross-connection tests.',
+      'Regulation 643.2.1 in BS 7671 specifically covers the testing requirements for ring final circuits, including continuity and cross-connection tests.',
   },
 ];
 

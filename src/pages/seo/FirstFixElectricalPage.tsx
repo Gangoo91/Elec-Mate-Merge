@@ -694,6 +694,11 @@ export default function FirstFixElectricalPage() {
       }
       heroSubtitle="First fix is the foundation of every electrical installation. Cable routing, back boxes, containment, and coordination with other trades must be right before the plaster goes on — because mistakes discovered after plastering are expensive to fix. This guide covers everything you need to know."
       readingTime={12}
+      answerBox={{
+        question: 'What is first fix in electrical installation?',
+        answer:
+          'First fix is all the electrical work done before the walls are plastered and floors laid: running cables, fitting back boxes, installing containment (conduit, trunking, capping) and drilling or notching joists within the permitted zones. It must be right first time and coordinated with the other trades, because anything wrong is buried and expensive to put right once the plaster is on. Second fix — accessories, the consumer unit and testing — follows later.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

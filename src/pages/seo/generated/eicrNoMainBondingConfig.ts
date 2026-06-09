@@ -23,7 +23,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
   heroSubtitle:
     'Across UK domestic EICRs, "no main protective bonding to incoming gas / water / oil services" is the single most common C2 observation. It makes the report unsatisfactory and triggers urgent remedial action under PRS Regs 2020 in rented properties. This guide explains what BS 7671 actually requires, how to identify the defect at inspection, and the exact remedial work that clears the C2.',
   keyTakeaways: [
-    'Main protective bonding to extraneous-conductive-parts is required by Regulation 411.3.1.1 and the bonding conductor is sized per Regulation 544.11 (and Table 54.8 on PME supplies).',
+    'Main protective bonding to extraneous-conductive-parts is required by Regulation 411.3.1.1 and the bonding conductor is sized per Regulation 544.1.1 (and Table 54.8 on PME supplies).',
     'Extraneous-conductive-parts that must be bonded: metallic gas installation pipes, metallic water installation pipes, metallic oil installation pipes, structural steel where applicable, lightning protection systems, other metallic services that could introduce a potential.',
     'Missing bonding is a C2 observation in almost all cases — danger could become present under fault conditions when the missing bonding allows touch voltage to appear on metalwork accessible throughout the dwelling.',
     'PME supplies require LARGER bonding conductors than non-PME TN-C-S — typically 10 mm² minimum on a 100 A service, going to 16 mm² on larger supplies. Refer to Table 54.8.',
@@ -44,7 +44,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
           type: 'list',
           items: [
             '**Regulation 411.3.1.1** — main protective bonding requirement: extraneous-conductive-parts shall be connected to the main earthing terminal.',
-            '**Regulation 544.11** — sizing of main protective bonding conductors.',
+            '**Regulation 544.1.1** — sizing of main protective bonding conductors.',
             '**Table 54.8** — minimum main protective bonding conductor CSA on PME supplies, by PEN conductor size of the supply.',
             '**Regulation 411.3.1.2** — sets the maximum disconnection times (Table 41.1) that apply to socket-outlet and fixed-load final circuits under ADS.',
           ],
@@ -121,8 +121,8 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
         {
           type: 'list',
           items: [
-            '**Non-PME TN-S and TT supplies (single building)** — main bonding CSA shall be not less than half the cross-sectional area of the earthing conductor of the installation (Regulation 544.11). There is no 6 mm² floor for a single building on non-PME; the half-earthing-conductor rule applies directly.',
-            '**Non-PME supplies serving more than one building** — the 6 mm² minimum applies (and the CSA is based on the distribution circuit protective conductor for that building), with an upper practical limit of 25 mm² copper (Regulation 544.11).',
+            '**Non-PME TN-S and TT supplies (single building)** — main bonding CSA shall be not less than half the cross-sectional area of the earthing conductor of the installation (Regulation 544.1.1). There is no 6 mm² floor for a single building on non-PME; the half-earthing-conductor rule applies directly.',
+            '**Non-PME supplies serving more than one building** — the 6 mm² minimum applies (and the CSA is based on the distribution circuit protective conductor for that building), with an upper practical limit of 25 mm² copper (Regulation 544.1.1).',
             "**TN-C-S (PME) supplies** — main bonding CSA is dictated by Table 54.8, based on the PEN conductor size of the distributor's supply. Typical 100 A domestic PME service: minimum 10 mm² main bonding. Larger services: 16 mm² or higher.",
             '**TN-C-S (PNB) supplies** — sized per the standard non-PME rules where downstream of the PEN-to-PE split, but the upstream private network may have specific design requirements.',
           ],
@@ -131,7 +131,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'warning',
           title: 'PME supply: always check with the DNO',
-          text: "Before finalising the bonding conductor CSA on a PME supply, check with the local Distribution Network Operator — their network conditions may require a larger conductor than the Table 54.8 minimum. This is a mandatory procedural step per Regulation 544.11; failure to check may result in an undersized bonding conductor that does not meet the DNO's requirements.",
+          text: "Before finalising the bonding conductor CSA on a PME supply, check with the local Distribution Network Operator — their network conditions may require a larger conductor than the Table 54.8 minimum. This is a mandatory procedural step per Regulation 544.1.1; failure to check may result in an undersized bonding conductor that does not meet the DNO's requirements.",
         },
         {
           type: 'callout',
@@ -206,7 +206,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
     {
       question: 'What sized cable goes from the consumer unit to the gas meter?',
       answer:
-        "On a typical 100 A PME domestic supply: 10 mm² 6491X green-and-yellow conductor, with a BS 951 clamp at the gas service end (within 600 mm of the meter or first point of entry). On larger supplies (over 100 A or three-phase), the conductor sizes up per Table 54.8 — 16 mm² is common on 200 A services. On non-PME TN-S or TT (single building), the conductor shall be not less than half the cross-sectional area of the installation's earthing conductor (Regulation 544.11) — in practice often 6 mm² or 10 mm² depending on the earthing conductor size.",
+        "On a typical 100 A PME domestic supply: 10 mm² 6491X green-and-yellow conductor, with a BS 951 clamp at the gas service end (within 600 mm of the meter or first point of entry). On larger supplies (over 100 A or three-phase), the conductor sizes up per Table 54.8 — 16 mm² is common on 200 A services. On non-PME TN-S or TT (single building), the conductor shall be not less than half the cross-sectional area of the installation's earthing conductor (Regulation 544.1.1) — in practice often 6 mm² or 10 mm² depending on the earthing conductor size.",
     },
     {
       question: 'Does the bonding need a separate label?',

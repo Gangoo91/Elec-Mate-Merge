@@ -32,7 +32,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'These Regulations apply to the design, erection, verification and periodic inspection and testing of electrical installations.',
     keywords: ['scope', 'design', 'erection', 'verification', 'inspection', 'testing'],
-    relatedRegs: ['610.1', '612.1'],
+    relatedRegs: ['641.1', '643.1'],
     apprenticeNote:
       'This is what BS 7671 covers - everything from design to testing electrical installations.',
     difficulty: 'beginner',
@@ -77,7 +77,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'Every fuse and single-pole control and protective device shall be inserted in the line conductor.',
     keywords: ['single-pole', 'switching', 'line conductor', 'fuse', 'control'],
-    relatedRegs: ['612.6', '537.2'],
+    relatedRegs: ['643.6', '537.2'],
     apprenticeNote: 'Never switch or fuse the neutral - always the line conductor for safety.',
     difficulty: 'beginner',
     frequency: 'common',
@@ -163,7 +163,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
       'tables',
       'conductor temperature',
     ],
-    relatedRegs: ['Table 41.3', '612.8'],
+    relatedRegs: ['Table 41.3', '643.7.3'],
     apprenticeNote:
       'Zs measured at ambient temperature must be ≤80% of table values (×0.8 factor) because conductors heat up under fault conditions.',
     testMethod: 'Measure Zs at outlets. For compliance: measured Zs ≤ (Table value × 0.8).',
@@ -180,7 +180,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'RCDs for additional protection shall have rated residual operating current ≤30mA and operating time ≤40ms at 5×IΔn.',
     keywords: ['RCD', 'characteristics', '30mA', '40ms', 'operating time'],
-    relatedRegs: ['411.3.3', '612.10'],
+    relatedRegs: ['411.3.3', '643.10'],
     apprenticeNote:
       '30mA max current, 40ms max trip time at 5×IΔn (150mA). Also test at 1×IΔn (30mA) ≤300ms.',
     testMethod:
@@ -214,7 +214,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'Type B MCB Zs limits (0.4s): 6A=7.28Ω, 10A=4.37Ω, 16A=2.73Ω, 20A=2.19Ω, 25A=1.75Ω, 32A=1.37Ω, 40A=1.09Ω, 50A=0.87Ω. Type C: 6A=3.64Ω, 10A=2.19Ω, 16A=1.37Ω, 20A=1.09Ω, 25A=0.87Ω, 32A=0.68Ω, 40A=0.55Ω, 50A=0.44Ω',
     keywords: ['Zs', 'maximum', 'earth fault', 'loop impedance', 'MCB', 'table'],
-    relatedRegs: ['612.8', '411.4.5'],
+    relatedRegs: ['643.7.3', '411.4.5'],
     apprenticeNote:
       'Most important table! These are the maximum permitted values from BS 7671. The table already accounts for Cmin (0.95). Compare measured Zs directly with these values.',
     testMethod:
@@ -251,7 +251,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'The cross-sectional area of protective conductors shall be determined by Regulation 543.1.3 or Table 54.7.',
     keywords: ['protective conductors', 'cross-sectional area', 'sizing', 'earth', 'cpc'],
-    relatedRegs: ['543.1.3', 'Table 54.7', '612.2.1'],
+    relatedRegs: ['543.1.3', 'Table 54.7', '643.2.1'],
     apprenticeNote:
       'Earth wire size depends on line conductor size. Use Table 54.7 for quick reference.',
     testMethod: 'Check earth conductor sizes match Table 54.7 requirements during inspection.',
@@ -263,31 +263,31 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
 
   // Part 6 - Inspection and Testing
   {
-    number: '612.1',
+    number: '643.1',
     title: 'General requirements for testing',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'Every installation shall be inspected and tested during erection and on completion before being put into service.',
     keywords: ['inspection', 'testing', 'installation', 'completion', 'verification'],
-    relatedRegs: ['610.1', '612.2.1'],
+    relatedRegs: ['641.1', '643.2.1'],
     apprenticeNote:
       'This is the foundation regulation - every installation MUST be tested before energising!',
-    testMethod: 'Visual inspection followed by testing in sequence per Regulation 612.1',
+    testMethod: 'Visual inspection followed by testing in sequence per Regulation 643.1',
     safetyTip: 'Never energise an installation without proper testing - lives depend on it!',
     difficulty: 'beginner',
     frequency: 'common',
     category: 'testing',
   },
   {
-    number: '612.2.1',
+    number: '643.2.1',
     title: 'Continuity of protective conductors',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'The continuity of every protective conductor, including main and supplementary equipotential bonding conductors, shall be verified.',
     keywords: ['continuity', 'protective conductors', 'testing', 'bonding', 'earth'],
-    relatedRegs: ['612.1', '543.1.1', '612.2.2'],
+    relatedRegs: ['643.1', '543.1.1', '643.2.1'],
     apprenticeNote: 'First test to perform! Use low resistance ohmmeter with test current ≥200mA.',
     testMethod:
       'Test between earth terminal at DB and all earth points. Reading should be very low (typically <0.5Ω for domestic).',
@@ -297,14 +297,14 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.3.1',
+    number: '643.3.1',
     title: 'Insulation resistance testing',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'The insulation resistance between live conductors and between live conductors and earth shall be measured.',
     keywords: ['insulation resistance', 'testing', 'live conductors', 'earth', 'megger'],
-    relatedRegs: ['612.3.2', 'Table 61'],
+    relatedRegs: ['643.3.2', 'Table 61'],
     apprenticeNote:
       'Use correct test voltage: 250V for SELV, 500V for up to 500V circuits, 1000V for higher voltages.',
     testMethod:
@@ -316,14 +316,14 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.6',
+    number: '643.6',
     title: 'Polarity testing',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'It shall be verified that single-pole control and protective devices are connected in the line conductor only.',
     keywords: ['polarity', 'testing', 'single-pole', 'control devices', 'line conductor'],
-    relatedRegs: ['612.1', '132.14'],
+    relatedRegs: ['643.1', '132.14'],
     apprenticeNote:
       'Check all switches, fuses, and MCBs are in the line (not neutral). Critical safety test!',
     testMethod:
@@ -334,13 +334,13 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.8',
+    number: '643.7.3',
     title: 'Earth fault loop impedance (Zs)',
     part: 6,
     section: 'Inspection and Testing',
     content: 'The earth fault loop impedance shall be measured at the origin and at all outlets.',
     keywords: ['earth fault', 'loop impedance', 'Zs', 'outlets', 'measurement'],
-    relatedRegs: ['411.4.5', 'Table 41.3', '612.9'],
+    relatedRegs: ['411.4.5', 'Table 41.3', '643.7.3'],
     apprenticeNote:
       'Critical test! Measured Zs must be ≤80% of Table 41.3 values to account for temperature rise under fault.',
     testMethod:
@@ -351,7 +351,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.10',
+    number: '643.10',
     title: 'Functional testing of RCDs',
     part: 6,
     section: 'Inspection and Testing',
@@ -499,14 +499,14 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'installation',
   },
   {
-    number: '612.2.2',
+    number: '643.2.1',
     title: 'Continuity of ring final circuit conductors',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'For ring final circuits, the continuity of both the line and neutral conductors and the protective conductor shall be verified.',
     keywords: ['ring circuit', 'continuity', 'line', 'neutral', 'protective conductor'],
-    relatedRegs: ['612.2.1', 'Appendix 15'],
+    relatedRegs: ['643.2.1', 'Appendix 15'],
     apprenticeNote:
       'Ring circuits need special testing! Test line, neutral AND earth rings separately.',
     testMethod: 'End-to-end test, then cross-connect test. All readings should be similar and low.',
@@ -516,14 +516,14 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.9',
+    number: '643.7.3',
     title: 'Prospective fault current',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'The prospective short-circuit current and earth fault current shall be measured or determined by calculation.',
     keywords: ['prospective fault current', 'short-circuit', 'earth fault', 'calculation'],
-    relatedRegs: ['612.8', '434.1', '435.1'],
+    relatedRegs: ['643.7.3', '434.1', '435.1'],
     apprenticeNote:
       'Ensures protective devices can handle fault currents. High current = need higher rated devices.',
     testMethod: 'Use prospective fault current tester at origin of installation.',
@@ -553,7 +553,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     section: 'Inspection and Testing',
     content: 'RCDs shall be tested at appropriate intervals to ensure they remain functional.',
     keywords: ['periodic testing', 'RCD', 'intervals', 'functional', 'maintenance'],
-    relatedRegs: ['612.10', '415.1.1'],
+    relatedRegs: ['643.10', '415.1.1'],
     apprenticeNote: 'RCDs need regular testing: quarterly for socket RCDs using test button.',
     testMethod: 'Use test button monthly, proper RCD tester annually or after any electrical work.',
     safetyTip: 'RCDs can fail over time - regular testing saves lives!',
@@ -778,13 +778,13 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
 
   // Additional Part 6 regulations
   {
-    number: '612.3.2',
+    number: '643.3.2',
     title: 'Insulation resistance test voltages',
     part: 6,
     section: 'Inspection and Testing',
     content: 'Test voltages: SELV/PELV circuits 250V DC, other circuits 500V DC or 1000V DC.',
     keywords: ['insulation resistance', 'test voltages', '250V', '500V', '1000V'],
-    relatedRegs: ['612.3.1', '612.3.3'],
+    relatedRegs: ['643.3.1', '643.3.3'],
     apprenticeNote: 'Use correct test voltage: 250V for SELV, 500V for most installations.',
     testMethod: 'Set insulation tester to correct voltage before testing.',
     difficulty: 'intermediate',
@@ -792,7 +792,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.4.1',
+    number: '643.4.1',
     title: 'Protection by SELV, PELV or electrical separation',
     part: 6,
     section: 'Inspection and Testing',
@@ -807,7 +807,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.5',
+    number: '643.5',
     title: 'Insulation of non-conducting floors and walls',
     part: 6,
     section: 'Inspection and Testing',
@@ -822,14 +822,14 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.7',
+    number: '643.7.2',
     title: 'Phase sequence',
     part: 6,
     section: 'Inspection and Testing',
     content:
       'Phase sequence shall be verified where the sequence is important for the correct operation of equipment.',
     keywords: ['phase sequence', 'three phase', 'rotation', 'motors'],
-    relatedRegs: ['612.12', '551.1'],
+    relatedRegs: ['643.9', '551.1'],
     apprenticeNote: 'Three-phase motors need correct phase sequence to rotate properly.',
     testMethod: 'Use phase rotation meter on three-phase supplies.',
     difficulty: 'intermediate',
@@ -837,7 +837,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     category: 'testing',
   },
   {
-    number: '612.11',
+    number: '643.7.3.201',
     title: 'Verification of voltage drop',
     part: 6,
     section: 'Inspection and Testing',
@@ -957,7 +957,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'Final circuits: 0.4s (230V), 0.2s (400V). Distribution circuits: 5s (230V), 1s (400V).',
     keywords: ['disconnection times', 'maximum', 'final circuits', 'distribution', '0.4s', '5s'],
-    relatedRegs: ['411.3.2.2', '612.8'],
+    relatedRegs: ['411.3.2.2', '643.7.3'],
     apprenticeNote: 'Learn these times! Socket circuits = 0.4s max, distribution = 5s max.',
     safetyTip: 'Longer disconnection = higher shock risk!',
     difficulty: 'beginner',
@@ -986,7 +986,7 @@ export const REGULATIONS_DATABASE: RegulationData[] = [
     content:
       'Type B MCB Zs limits (0.4s, Cmin=0.95): 6A=7.28Ω, 10A=4.37Ω, 16A=2.73Ω, 20A=2.19Ω, 25A=1.75Ω, 32A=1.37Ω, 40A=1.09Ω, 50A=0.87Ω, 63A=0.69Ω, 80A=0.55Ω, 100A=0.44Ω, 125A=0.35Ω',
     keywords: ['Zs', 'MCB', 'Type B', 'maximum', 'earth fault', 'loop impedance', 'table'],
-    relatedRegs: ['612.8', '411.4.5'],
+    relatedRegs: ['643.7.3', '411.4.5'],
     apprenticeNote:
       'Most important table. Values already include Cmin = 0.95, so compare measured Zs directly with these limits (after temperature correction if required).',
     testMethod:

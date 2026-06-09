@@ -38,7 +38,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 Regulation 610.1 requires that every electrical installation shall be inspected and tested during erection and on completion, before being put into service. Initial verification must be completed before energisation.',
+      'BS 7671 Regulation 641.1 requires that every electrical installation shall be inspected and tested during erection and on completion, before being put into service. Initial verification must be completed before energisation.',
   },
   {
     id: 'dead-testing',
@@ -343,19 +343,19 @@ const HNCModule5Section5_2 = () => {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Regulation 610.1:</strong> Every installation shall be inspected and tested
+                <strong>Regulation 641.1:</strong> Every installation shall be inspected and tested
                 during erection and on completion
               </li>
               <li>
-                <strong>Regulation 610.2:</strong> Precautions shall be taken to avoid danger to
+                <strong>Regulation 641.4:</strong> Precautions shall be taken to avoid danger to
                 persons and damage to property
               </li>
               <li>
-                <strong>Regulation 631.1:</strong> Certification shall be provided confirming
+                <strong>Regulation 641.7:</strong> Certification shall be provided confirming
                 compliance with BS 7671
               </li>
               <li>
-                <strong>Regulation 632.1:</strong> Schedule of test results shall accompany
+                <strong>Regulation 644.3:</strong> Schedule of test results shall accompany
                 certification
               </li>
             </ul>

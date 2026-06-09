@@ -366,7 +366,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                 <p className="text-sm font-medium text-orange-400">Installation Age Warning</p>
                 <p className="text-sm text-foreground mt-1">
                   Installation is {results.ageYears} years old. EICR recommended within 6 months (BS
-                  7671 Section 631.1)
+                  7671 Section 641.7)
                 </p>
               </div>
             </div>

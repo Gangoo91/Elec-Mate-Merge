@@ -1,6 +1,6 @@
 # Auto-generated cannibalisation redirects
 # Source: reports/seo-audit.json (run 2026-05-22T14:52:03.927Z)
-# Clusters: 17
+# Clusters: 18
 # Do not edit by hand. Regenerate via:
 #   node scripts/seo-audit/run.mjs && node scripts/seo-audit/emit-redirects.mjs
 
@@ -55,6 +55,10 @@
 # cluster: testing-sequence (guide)
 /testing-sequence-guide                                      /guides/testing-sequence-guide 301!
 
+# cluster: earth-loop-impedance-calculator (tool)
+/earth-loop-impedance-calculator                             /tools/earth-loop-impedance-calculator 301!
+
+# --- manual rules below ---
 # --- manual rules below ---
 
 # wiring-colours-uk → cable-colour-codes-uk
@@ -77,4 +81,5 @@
 # /guides/continuity-testing-r1-r2           : 564 imp / pos 11.8   (KEEP — wins R1+R2-specific queries)
 # /guides/continuity-testing-electricians-guide: 518 imp / pos 9.6  (duplicate)
 /guides/continuity-testing-electricians-guide                /continuity-testing-guide 301!
+
 

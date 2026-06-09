@@ -543,6 +543,11 @@ export default function GoldCardRequirementsPage() {
       }
       heroSubtitle="The Gold Card is the highest standard ECS card for UK electricians. This guide covers every qualification you need, how to apply, the benefits, and how long the journey takes."
       readingTime={11}
+      answerBox={{
+        question: 'How do you get an ECS Gold Card?',
+        answer:
+          'The ECS Gold Card (Installation or Maintenance Electrician) requires a recognised Level 3 electrotechnical qualification — typically an NVQ Level 3 (such as the 2346 or 5357) plus the AM2, or the equivalent apprenticeship — together with the current 18th Edition (C&G 2382) and a pass in the ECS Health, Safety & Environmental Assessment. Once you hold these, you apply through the ECS with proof of qualifications.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

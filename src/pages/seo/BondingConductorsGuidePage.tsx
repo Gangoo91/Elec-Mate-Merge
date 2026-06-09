@@ -29,7 +29,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Main protective bonding connects all metallic services entering the building (gas, water, oil pipes) to the main earthing terminal, ensuring they are all at the same potential and preventing dangerous voltage differences between them.',
-  'BS 7671:2018+A4:2026 (Reg 544.11) requires main bonding conductors to be at least half the csa of the earthing conductor on non-PME supplies (minimum 6mm², maximum 25mm²), or sized per Table 54.8 against the PEN conductor on PME/TN-C-S supplies — typically 10mm² for domestic PME supplies (PEN ≤35mm²), rising to 16mm² where the PEN is over 35mm² up to 50mm².',
+  'BS 7671:2018+A4:2026 (Reg 544.1.1) requires main bonding conductors to be at least half the csa of the earthing conductor on non-PME supplies (minimum 6mm², maximum 25mm²), or sized per Table 54.8 against the PEN conductor on PME/TN-C-S supplies — typically 10mm² for domestic PME supplies (PEN ≤35mm²), rising to 16mm² where the PEN is over 35mm² up to 50mm².',
   'Supplementary bonding in bathroom zones connects simultaneously accessible metallic parts (taps, pipework, radiators, baths, shower trays) to prevent dangerous potential differences within the bathroom.',
   'Supplementary bonding in a bathroom can be omitted only when all three conditions in Reg 701.415.2 are simultaneously met: (d) all circuits comply with automatic disconnection per Reg 411.3.2; (e) all circuits have 30mA RCD additional protection per Reg 415.1.1; and (f) all extraneous-conductive-parts are effectively connected to main protective bonding per Reg 411.3.1.2.',
   'Missing or inadequate main bonding is one of the most common C2 observations on EICRs, particularly in older properties where gas or water services have been renewed without reconnecting bonding.',
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What size bonding conductor do I need?',
     answer:
-      'The minimum csa of main protective bonding conductors is determined by Reg 544.11. On non-PME supplies (TN-S, TT), the bonding conductor must be at least half the csa of the earthing conductor, subject to a minimum of 6mm² copper. On PME/TN-C-S supplies — which is the majority of UK domestic properties — the conductor is sized against the PEN conductor using Table 54.8: PEN ≤35mm² requires 10mm²; PEN over 35mm² up to 50mm² requires 16mm². The absolute maximum required is 25mm² for copper. In practice, 10mm² is the standard for most domestic TN-C-S supplies. For supplementary bonding, the minimum is 2.5mm² if mechanically protected or 4mm² if not.',
+      'The minimum csa of main protective bonding conductors is determined by Reg 544.1.1. On non-PME supplies (TN-S, TT), the bonding conductor must be at least half the csa of the earthing conductor, subject to a minimum of 6mm² copper. On PME/TN-C-S supplies — which is the majority of UK domestic properties — the conductor is sized against the PEN conductor using Table 54.8: PEN ≤35mm² requires 10mm²; PEN over 35mm² up to 50mm² requires 16mm². The absolute maximum required is 25mm² for copper. In practice, 10mm² is the standard for most domestic TN-C-S supplies. For supplementary bonding, the minimum is 2.5mm² if mechanically protected or 4mm² if not.',
   },
   {
     question: 'Is supplementary bonding required in bathrooms?',
@@ -246,20 +246,69 @@ const sections = [
       <>
         <p>
           The minimum cross-sectional area (csa) of main protective bonding conductors is governed
-          by Reg 544.11. The rule differs depending on whether PME (TN-C-S) or non-PME earthing
+          by Reg 544.1.1. The rule differs depending on whether PME (TN-C-S) or non-PME earthing
           applies:
         </p>
+        {/* grounded: BS 7671:2018+A4:2026 Table 54.8 (standard PDF p.209), Reg 544.1.2 — PME main bonding vs PEN csa. */}
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Table 54.8 — PME main bonding conductor sizing
+          </h3>
+          <p className="text-white/60 text-xs mb-4">
+            Minimum main bonding conductor vs the supply PEN (neutral) conductor — BS 7671 Reg
+            544.1.2
+          </p>
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              Supply PEN (Cu equiv)
+            </div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              Min main bonding
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">≤ 35 mm²</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              10 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">
+              over 35 up to 50 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              16 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">
+              over 50 up to 95 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              25 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">
+              over 95 up to 150 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              35 mm²
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">over 150 mm²</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              50 mm²
+            </div>
+          </div>
+          <p className="text-white/50 text-xs mt-3">
+            Most UK domestic PME supplies use a 16–25 mm² PEN, so <strong>10 mm²</strong> is the
+            standard main bonding size. Non-PME (TN-S/TT): at least half the earthing-conductor csa,
+            minimum 6 mm² (Reg 544.1.1).
+          </p>
+        </div>
         <ul className="list-disc pl-6 space-y-1 text-white my-2">
           <li>
             <strong>Non-PME supplies (TN-S, TT)</strong> — the bonding conductor must be at least
             half the csa of the earthing conductor of the installation, subject to a minimum of 6mm²
-            and a maximum of 25mm² copper-equivalent (Reg 544.11).
+            and a maximum of 25mm² copper-equivalent (Reg 544.1.1).
           </li>
           <li>
             <strong>PME / TN-C-S supplies</strong> — the bonding conductor is selected against the
             PEN conductor of the supply using Table 54.8: PEN ≤35mm² → <strong>10mm²</strong>; PEN
             &gt;35mm² up to 50mm² → <strong>16mm²</strong>; PEN &gt;50mm² up to 95mm² → 25mm² (Reg
-            544.11 / Table 54.8).
+            544.1.2 / Table 54.8).
           </li>
         </ul>
         <p>
@@ -274,7 +323,7 @@ const sections = [
               <span>
                 <strong>Typical domestic PME supply (PEN ≤35mm²)</strong> — a standard 100A
                 single-phase domestic TN-C-S supply uses a PEN conductor of 16mm² or 25mm². Table
-                54.8 (Reg 544.11) requires a minimum <strong>10mm²</strong> main bonding conductor
+                54.8 (Reg 544.1.1) requires a minimum <strong>10mm²</strong> main bonding conductor
                 for these supplies. This is the most common bonding conductor size for domestic
                 properties in the UK.
               </span>
@@ -302,7 +351,7 @@ const sections = [
               <span>
                 <strong>Older installations with 6mm²</strong> — many older properties have 6mm²
                 main bonding conductors installed to a previous edition's minimum. On a standard PME
-                (TN-C-S) supply, Reg 544.11 / Table 54.8 requires 10mm² where the PEN conductor is
+                (TN-C-S) supply, Reg 544.1.1 / Table 54.8 requires 10mm² where the PEN conductor is
                 ≤35mm². A 6mm² conductor on such a supply is undersized and is commonly observed as
                 a C2 during EICRs.
               </span>
@@ -646,7 +695,7 @@ export default function BondingConductorsGuidePage() {
   return (
     <GuideTemplate
       title="Bonding Conductor Sizes BS 7671: Main + Supplementary"
-      description="Bonding conductor sizes for UK installs: main protective bonding (gas, water, oil) and supplementary bonding to BS 7671:2018+A4:2026 Reg 544.11 / Table 54.8. Worked examples."
+      description="Bonding conductor sizes for UK installs: main protective bonding (gas, water, oil) and supplementary bonding to BS 7671:2018+A4:2026 Reg 544.1.1 / Table 54.8. Worked examples."
       datePublished="2026-03-27"
       dateModified="2026-05-29"
       breadcrumbs={breadcrumbs}

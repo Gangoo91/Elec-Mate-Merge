@@ -517,7 +517,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="Test voltage selection — 250 V, 500 V or 1000 V"
-            plainEnglish="The IR test voltage is selected to stress the insulation safely without damaging the equipment. BS 7671 Table 64.1 sets the rated test voltages by circuit nominal: SELV / PELV uses 250 V DC, the standard 230 V LV final circuit uses 500 V DC, distribution and sub-mains above 500 V AC use 1000 V DC. A4:2026 added a new 643.3 provision — where the equipment connected is likely to influence the result or be damaged, drop to 250 V DC instead of the default."
+            plainEnglish="The IR test voltage is selected to stress the insulation safely without damaging the equipment. BS 7671 Table 64 sets the rated test voltages by circuit nominal: SELV / PELV uses 250 V DC, the standard 230 V LV final circuit uses 500 V DC, distribution and sub-mains above 500 V AC use 1000 V DC. A4:2026 added a new 643.3 provision — where the equipment connected is likely to influence the result or be damaged, drop to 250 V DC instead of the default."
             onSite="Read the test voltage selector on the MFT before pressing the button. The default is usually 500 V; circuits with surge protective devices, RCDs with electronic test buttons, dimmers or any LED driver wired in benefit from the 250 V setting. The 1000 V setting is reserved for distribution and sub-main testing where the cables are oversized and the equipment is robust. Record the test voltage used on the schedule of test results — same circuit retested at a different voltage gives a different reading."
           >
             <p>

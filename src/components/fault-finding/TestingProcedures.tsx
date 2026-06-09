@@ -69,7 +69,7 @@ const testingProcedures: TestingStep[] = [
       'Record all readings on test sheet',
     ],
     acceptableLimits: 'R1 + R2 ≤ maximum values in BS 7671 Tables',
-    regulation: 'BS 7671 Section 612.2',
+    regulation: 'BS 7671 Section 643.2',
   },
   {
     id: 'insulation',
@@ -96,7 +96,7 @@ const testingProcedures: TestingStep[] = [
       'Record minimum values found',
     ],
     acceptableLimits: 'Minimum 1MΩ for final circuits, 0.5MΩ acceptable with investigation',
-    regulation: 'BS 7671 Section 612.3',
+    regulation: 'BS 7671 Section 643.3',
   },
   {
     id: 'polarity',
@@ -122,7 +122,7 @@ const testingProcedures: TestingStep[] = [
       'Verify centre contact of ES holders connected to phase',
     ],
     acceptableLimits: 'Phase conductor connected to phase terminals only',
-    regulation: 'BS 7671 Section 612.6',
+    regulation: 'BS 7671 Section 643.6',
   },
   {
     id: 'rcd',
@@ -143,7 +143,7 @@ const testingProcedures: TestingStep[] = [
       'Record all test times and currents',
     ],
     acceptableLimits: '30mA RCD: ≤300ms at 1× rating, ≤40ms at 5× rating',
-    regulation: 'BS 7671 Section 612.13',
+    regulation: 'BS 7671 Section 643.10',
   },
 ];
 

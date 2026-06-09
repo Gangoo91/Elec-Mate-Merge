@@ -10,7 +10,7 @@ interface Props {
 }
 
 const coreRegulations = [
-  { number: 'Reg 612.11', title: 'Measurement of PFC', description: 'The prospective fault current shall be measured, calculated or determined by another method at the origin of the installation and at every relevant point. The value shall not exceed the rated breaking capacity of the protective device.' },
+  { number: 'Reg 643.7.3.201', title: 'Measurement of PFC', description: 'The prospective fault current shall be measured, calculated or determined by another method at the origin of the installation and at every relevant point. The value shall not exceed the rated breaking capacity of the protective device.' },
   { number: 'Reg 434.5.2', title: 'Fault Current Calculation', description: 'Prospective fault current I = U₀ ÷ Zs. This must be calculated or measured for every circuit to verify that protective devices will operate within the required time under fault conditions.' },
   { number: 'Reg 132.2', title: 'Documentation of PFC', description: 'Calculation and documentation of prospective fault current and external earth fault loop impedance by calculation, measurement or enquiry to select protective devices and verify disconnection times.' },
   { number: 'Reg 131.5', title: 'Conductor & Equipment Withstand', description: 'Conductors and equipment must be verified to survive the magnitude and duration of prospective fault currents thermally and mechanically until the protective device disconnects.' },

@@ -263,7 +263,7 @@ const HowToTestSection = () => {
               <div>
                 <h6 className="font-medium text-foreground mb-2">Compliance Notes:</h6>
                 <ul className="space-y-1">
-                  <li>• Reference to BS 7671 Regulation 612.13</li>
+                  <li>• Reference to BS 7671 Regulation 643.10</li>
                   <li>• Manufacturer's test procedures followed</li>
                   <li>• Site-specific safety requirements met</li>
                   <li>• Next test due date recorded</li>

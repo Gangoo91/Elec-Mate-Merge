@@ -1603,7 +1603,7 @@ export const safetyScenarios: SafetyScenario[] = [
             feedback:
               '0.3 megohms is below the minimum. Energising could cause earth leakage, RCD tripping, or fire risk.',
             outcome: 'Potentially dangerous circuit energised, fire risk from insulation breakdown',
-            regulation: 'BS 7671:2018 Table 64.3, Regulation 643.3',
+            regulation: 'BS 7671:2018 Table 64, Regulation 643.3',
           },
           {
             id: 'B',

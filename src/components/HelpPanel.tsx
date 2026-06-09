@@ -520,10 +520,10 @@ const helpArticles: HelpCategory[] = [
       },
       {
         title: 'Insulation Resistance Testing',
-        badge: 'BS 7671 612.3',
+        badge: 'BS 7671 643.3',
         badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'insulation', 'resistance'],
-        content: 'Test insulation resistance to BS 7671 Section 612.3.',
+        content: 'Test insulation resistance to BS 7671 Section 643.3.',
         steps: [
           'Test voltage: 500V DC for LV installations (250V for SELV/PELV)',
           'Minimum acceptable: 1.0 MOhm',
@@ -540,7 +540,7 @@ const helpArticles: HelpCategory[] = [
       },
       {
         title: 'Earth Fault Loop Impedance (Zs)',
-        badge: 'BS 7671 612.6',
+        badge: 'BS 7671 643.6',
         badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'Zs', 'impedance', 'earth'],
         content: 'Measure and verify Zs values for each circuit.',
@@ -560,10 +560,10 @@ const helpArticles: HelpCategory[] = [
       },
       {
         title: 'RCD Testing Requirements',
-        badge: 'BS 7671 612.13',
+        badge: 'BS 7671 643.10',
         badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'RCD', 'safety'],
-        content: 'Test RCDs to BS 7671 Regulation 612.13.',
+        content: 'Test RCDs to BS 7671 Regulation 643.10.',
         steps: [
           'Test at rated tripping current (I delta n): should trip between 140-280ms at 30mA',
           'Test at 5x rated current: should trip within 40ms',
@@ -580,7 +580,7 @@ const helpArticles: HelpCategory[] = [
       },
       {
         title: 'Test Methods Explained',
-        badge: 'BS 7671 612.3',
+        badge: 'BS 7671 643.3',
         badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'method', 'BS7671'],
         content: 'BS 7671 defines three test methods for earth fault loop impedance.',
@@ -849,9 +849,9 @@ const helpArticles: HelpCategory[] = [
           '415.2: Supplementary equipotential bonding requirements',
           '531.2: RCD selection and ratings',
           '543.1: Protective conductor sizes',
-          '612.3: Insulation resistance test requirements',
-          '612.6: Earth fault loop impedance requirements',
-          '612.13: RCD testing requirements',
+          '643.3: Insulation resistance test requirements',
+          '643.6: Earth fault loop impedance requirements',
+          '643.10: RCD testing requirements',
           '701: Bathrooms and shower rooms special requirements',
         ],
       },

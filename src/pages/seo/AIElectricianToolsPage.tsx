@@ -281,7 +281,7 @@ export default function AIElectricianToolsPage() {
               For each circuit, the designer specifies the protective device type and rating (MCB or
               RCBO, with the correct type — Type B for resistive loads, Type C for small motor
               loads, Type D for large inductive loads), the cable type and size calculated using the
-              full adiabatic method from BS 7671 Appendix 4, the maximum Zs value for the chosen
+              BS 7671 Appendix 4 cable tables with an adiabatic check (Reg 543.1.3), the maximum Zs value for the chosen
               protective device rating, and whether additional RCD protection is required under
               Regulation 411.3.2. The calculations account for all correction factors: ambient
               temperature (Ca), grouping (Cg), thermal insulation (Ci), and the semi-enclosed fuse

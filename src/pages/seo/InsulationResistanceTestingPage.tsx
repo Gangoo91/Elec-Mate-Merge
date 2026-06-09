@@ -172,7 +172,7 @@ const sections = [
     content: (
       <>
         <p>
-          The test voltage for insulation resistance testing is specified in BS 7671 Table 64.1.
+          The test voltage for insulation resistance testing is specified in BS 7671 Table 64.
           Using the correct test voltage is essential — too low a voltage may not reveal insulation
           weaknesses, while too high a voltage can damage sensitive equipment.
         </p>
@@ -217,10 +217,45 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Table 64.1 sets the minimum acceptable insulation resistance values. For circuits
+          BS 7671 Table 64 sets the minimum acceptable insulation resistance values. For circuits
           up to 500V (tested at 500V DC), the minimum is 1 MΩ. This is a regulatory minimum, not a
           design target.
         </p>
+        {/* grounded: BS 7671:2018+A4:2026 Table 64 (Minimum values of insulation resistance) — confirmed in bs7671_facets + the standard PDF p.249. */}
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">BS 7671 Table 64 — at a glance</h3>
+          <p className="text-white/60 text-xs mb-4">
+            Minimum insulation resistance and DC test voltage by circuit type
+          </p>
+          <div className="grid grid-cols-3 gap-2 text-sm">
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Circuit</div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
+              Test voltage
+            </div>
+            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Min IR</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">SELV &amp; PELV</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">250 V DC</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              0.5 MΩ
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">
+              Up to &amp; incl. 500 V
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">500 V DC</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              1.0 MΩ
+            </div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">Above 500 V</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-white">1000 V DC</div>
+            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+              1.0 MΩ
+            </div>
+          </div>
+          <p className="text-white/50 text-xs mt-3">
+            Per BS 7671:2018+A4:2026 Table 64, Regulation 643.3. A pass at the minimum is not a target
+            — a sound new installation reads well above 100 MΩ.
+          </p>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -433,7 +468,7 @@ const sections = [
           noting equipment as "not disconnected" and recording a limitation.
         </p>
         <p>
-          The minimum acceptable IR values from Table 64.1 are the legal minimum under BS 7671.
+          The minimum acceptable IR values from Table 64 are the legal minimum under BS 7671.
           Where the inspector considers that a reading — although above the minimum — represents a
           deteriorating condition warranting monitoring, a C3 (improvement recommended) observation
           should be recorded on the{' '}
@@ -517,6 +552,11 @@ export default function InsulationResistanceTestingPage() {
       }
       heroSubtitle="A complete guide to insulation resistance (IR) testing for UK electricians. Covers test voltages, the ≥1 MΩ minimum value, how to test new circuits, precautions on live circuits, and what Regulation 643.3 requires."
       readingTime={10}
+      answerBox={{
+        question: 'What is the minimum insulation resistance value?',
+        answer:
+          'For a standard 230V/400V circuit, BS 7671 requires a minimum insulation resistance of 1.0 MΩ, tested at 500V DC; SELV and PELV circuits are tested at 250V DC with a 0.5 MΩ minimum (Table 64). The test is required by Regulation 643.3 as a dead test, with the supply isolated and sensitive equipment disconnected. A low or steadily falling reading points to moisture, damaged insulation or a wiring fault.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -53,7 +53,7 @@ const WhyTestSection = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 612.13</span>
+              <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 643.10</span>
             </div>
             <p className="text-sm text-white leading-relaxed">
               "Assemblies, including switchgear and controlgear assemblies, and components of the electrical installation shall be subjected to a functional test to show that they are properly mounted, adjusted and installed in accordance with BS 7671."

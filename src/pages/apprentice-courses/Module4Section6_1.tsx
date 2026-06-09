@@ -21,7 +21,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 Regulation 611.3 states that visual inspection shall precede testing. This ensures visible defects are identified and corrected before electrical testing begins.',
+      'BS 7671 Regulation 642.3 states that visual inspection shall precede testing. This ensures visible defects are identified and corrected before electrical testing begins.',
   },
   {
     id: 2,
@@ -66,7 +66,7 @@ const Module4Section6_1 = () => {
       ],
       correctAnswer: 1,
       explanation:
-        'BS 7671 Regulation 611.3 clearly states that visual inspection shall precede testing to identify defects before energisation.',
+        'BS 7671 Regulation 642.3 clearly states that visual inspection shall precede testing to identify defects before energisation.',
     },
     {
       id: 2,
@@ -318,7 +318,7 @@ const Module4Section6_1 = () => {
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
                   <li>
-                    Regulation 611.3: Visual inspection shall precede testing and be carried out
+                    Regulation 642.3: Visual inspection shall precede testing and be carried out
                     with the installation de-energised
                   </li>
                   <li>
@@ -626,7 +626,7 @@ const Module4Section6_1 = () => {
               <p className="font-medium text-white mb-2">Key Regulatory Requirements</p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                 <li>
-                  <strong>Regulation 611.3:</strong> Visual inspection shall precede testing and be
+                  <strong>Regulation 642.3:</strong> Visual inspection shall precede testing and be
                   carried out with the installation de-energised
                 </li>
                 <li>

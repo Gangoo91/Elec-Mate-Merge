@@ -775,6 +775,11 @@ export default function SwimmingPoolElectricalPage() {
       }
       heroSubtitle="Swimming pools are one of the highest-risk electrical environments. Section 702 of BS 7671 defines zones, IP ratings, SELV requirements, and mandatory supplementary bonding. This guide covers every requirement — including hot tubs, paddling pools, and outdoor installations."
       readingTime={10}
+      answerBox={{
+        question: 'What are the BS 7671 rules for swimming pool electrics?',
+        answer:
+          'BS 7671 Section 702 applies to swimming pools, paddling pools, hot tubs and their surrounding zones. It defines zones 0, 1 and 2 by proximity to the water, restricts the equipment and IP ratings allowed in each, generally requires SELV (at reduced voltage) for equipment in the pool itself, and mandates supplementary protective equipotential bonding (Reg 702.415.2) connecting all extraneous- and exposed-conductive-parts in the zones.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

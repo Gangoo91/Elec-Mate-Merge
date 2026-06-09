@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { EVSectionHeader } from './EVSectionHeader';
 import { cn } from '@/lib/utils';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
 import EVCircuitPresets from './EVCircuitPresets';
@@ -16,12 +17,7 @@ interface EVChargingSupplyDetailsProps {
 /*  Reusable bits                                                      */
 /* ------------------------------------------------------------------ */
 
-const SectionHeading = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const SectionHeading = ({ title }: { title: string }) => <EVSectionHeader title={title} />;
 
 const FieldLabel = ({ htmlFor, children }: { htmlFor?: string; children: React.ReactNode }) => (
   <Label htmlFor={htmlFor} className="text-white text-xs mb-1.5 block">
@@ -132,7 +128,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
   const isPME = formData.earthingArrangement === 'TN-C-S' || formData.isPME;
 
   return (
-    <div className="space-y-5 px-4 py-2">
+    <div className="space-y-5 px-4 sm:px-0 py-2 sm:[&>section]:rounded-2xl sm:[&>section]:border sm:[&>section]:border-white/[0.07] sm:[&>section]:bg-white/[0.03] sm:[&>section]:p-5">
       {/* EV Circuit Presets */}
       <EVCircuitPresets
         onApplyPreset={(preset) => {

@@ -112,7 +112,7 @@ const WhyTestSection = ({ onBack }: Props) => {
           <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 612.6</span>
+                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 643.6</span>
               </div>
               <p className="text-sm text-white leading-relaxed">
                 A polarity test shall be made to verify that single-pole devices for protection or switching are connected in the line conductor only. This applies to every circuit in the installation.

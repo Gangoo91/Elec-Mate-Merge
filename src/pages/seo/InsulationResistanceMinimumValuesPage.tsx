@@ -131,7 +131,7 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 renumbered Chapter 61 (Inspection and Testing) to{' '}
                 <strong>Chapter 64</strong>. The insulation resistance requirements previously in
-                Reg 613.3 and Table 61 are now in <strong>Reg 643.3</strong> and{' '}
+                Reg 643.3 and Table 61 are now in <strong>Reg 643.3</strong> and{' '}
                 <strong>Table 64</strong>. Reg 643.3 was also redrafted to clarify testing
                 procedures for circuits where connected equipment is likely to influence the test or
                 be damaged — introducing the explicit two-stage test sequence in Reg 643.3.3.

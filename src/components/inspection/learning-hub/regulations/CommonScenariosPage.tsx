@@ -35,8 +35,8 @@ const scenarios = [
   },
   {
     question: 'Can I use the 80% rule for Zs?',
-    answer: 'Yes. Your measured Zs must not exceed 80% of the BS 7671 Appendix 3 maximum value. The 80% accounts for conductor resistance increasing from ambient temperature to 70°C during a fault. If your reading is between 80% and 100%, apply full temperature correction to determine compliance.',
-    regs: ['Appendix 3', 'IET Guidance Note 3'],
+    answer: 'Yes. Your measured Zs must not exceed 80% of the BS 7671 maximum value tabulated in Tables 41.2–41.6. The 80% accounts for conductor resistance increasing from ambient temperature to 70°C during a fault. If your reading is between 80% and 100%, apply full temperature correction to determine compliance.',
+    regs: ['Tables 41.2–41.6', 'IET Guidance Note 3'],
   },
   {
     question: 'When is a Minor Works Certificate acceptable?',
@@ -51,7 +51,7 @@ const scenarios = [
   {
     question: 'What is the maximum cable length for a circuit?',
     answer: 'There is no fixed maximum length — it depends on the conductor size, protective device rating, installation method, and acceptable voltage drop (3% lighting, 5% other). The limiting factor is usually Zs (must not exceed the 80% value for the protective device) or voltage drop.',
-    regs: ['Reg 525 — Voltage drop', 'Appendix 3 — Zs tables', 'Appendix 4 — Voltage drop'],
+    regs: ['Reg 525 — Voltage drop', 'Tables 41.2–41.6 — Max Zs', 'Appendix 4 — Voltage drop'],
   },
   {
     question: 'Can I use the existing earth on a TN-C-S supply for solar PV?',
@@ -96,7 +96,7 @@ const scenarios = [
   {
     question: 'How do I know if an installation is TN-S, TN-C-S or TT?',
     answer: 'TN-S: separate earth conductor visible at the service head (often the lead sheath of the supply cable). TN-C-S (PME): combined neutral/earth — the earth terminal at the cutout is connected to the neutral. TT: no earth from the supply — a local earth electrode is used. Check the service head and main earthing terminal. If unsure, contact the DNO.',
-    regs: ['Reg 312', 'Appendix 3'],
+    regs: ['Reg 312.2', 'Reg 542.1.2.1'],
   },
   {
     question: 'What does the "N/A" column mean on the Schedule of Test Results?',

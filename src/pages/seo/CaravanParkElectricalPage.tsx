@@ -582,6 +582,11 @@ export default function CaravanParkElectricalPage() {
       }
       heroSubtitle="Everything electricians and park operators need to know about caravan park electrical installations — BS 7671 Section 708 requirements, IEC 60309 CEE connectors, 30 mA RCD protection, socket outlet spacing, TT earthing, and annual inspection obligations."
       readingTime={13}
+      answerBox={{
+        question: 'What are the BS 7671 rules for caravan park electrics?',
+        answer:
+          'BS 7671 Section 708 covers caravan and camping park installations. Each pitch socket-outlet must be rated at least 16A (Reg 708.55.1.5), individually protected by its own overcurrent device (Reg 708.533) and a 30mA RCD, with no more than four socket-outlets grouped together (Reg 708.55.1.3). Sockets are mounted 0.5–1.5m above ground and rated at least IP44 for outdoor use.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

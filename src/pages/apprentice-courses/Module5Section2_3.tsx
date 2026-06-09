@@ -810,10 +810,10 @@ const Module5Section2_3 = () => {
                     <strong>Table 41.5:</strong> Maximum disconnection times for shock protection
                   </li>
                   <li>
-                    <strong>Appendix 3:</strong> Current-carrying capacity of cables
+                    <strong>Appendix 4:</strong> Current-carrying capacity and voltage drop tables
                   </li>
                   <li>
-                    <strong>Appendix 4:</strong> Voltage drop calculations
+                    <strong>Appendix 3:</strong> Time/current characteristics of protective devices
                   </li>
                   <li>
                     <strong>Section 536:</strong> Co-ordination of protective devices

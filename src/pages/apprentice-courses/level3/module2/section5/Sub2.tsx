@@ -300,7 +300,7 @@ export default function Sub2() {
               <li>
                 <strong>Insulation resistance</strong> — measured at 500 V DC for LV
                 circuits, between live conductors and between live conductors and earth.
-                Minimum 1 MΩ per BS 7671 Table 64.1.
+                Minimum 1 MΩ per BS 7671 Table 64.
               </li>
               <li>
                 <strong>Polarity</strong> — line, neutral and earth correctly connected at

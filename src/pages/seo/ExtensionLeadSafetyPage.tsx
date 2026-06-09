@@ -535,6 +535,11 @@ export default function ExtensionLeadSafetyPage() {
       }
       heroSubtitle="Everything you need to know about using extension leads safely in the UK — from calculating loads and avoiding daisy-chaining, to choosing RCD-protected leads and knowing when to get a permanent socket installed."
       readingTime={10}
+      answerBox={{
+        question: 'Are extension leads safe to use permanently in the UK?',
+        answer:
+          'Extension leads are designed for temporary use, not permanent wiring. The main risks are overloading (a standard 4-gang lead is rated 13A total — the combined appliance wattages must stay under roughly 3,000W), daisy-chaining leads together, and trailing-cable trip hazards. For a load needed permanently, have an electrician fit a fixed socket-outlet rather than rely on an extension lead, and use RCD-protected leads for outdoor or wet areas.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

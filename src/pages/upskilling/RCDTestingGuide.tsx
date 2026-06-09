@@ -869,7 +869,7 @@ const RCDTestingGuide = () => {
                 <strong>Table 41.5:</strong> Maximum disconnection times for RCDs
               </p>
               <p>
-                <strong>Regulation 612.13:</strong> RCD testing requirements
+                <strong>Regulation 643.10:</strong> RCD testing requirements
               </p>
               <p>
                 <strong>Appendix 6:</strong> Test methods and procedures

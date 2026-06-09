@@ -18,7 +18,7 @@ export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanc
   // Test 1: Continuity of Protective Conductors (R1+R2)
   guidance.push({
     test: 'Continuity of Protective Conductors (R1+R2)',
-    regulation: 'BS 7671 Reg 612.2',
+    regulation: 'BS 7671 Reg 643.2',
     procedure: `1. Isolate circuit at consumer unit
 2. Disconnect circuit protective conductor (CPC) at the consumer unit
 3. Connect one test lead to the line conductor at the consumer unit
@@ -43,7 +43,7 @@ export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanc
   // Test 2: Insulation Resistance
   guidance.push({
     test: 'Insulation Resistance',
-    regulation: 'BS 7671 Reg 612.3',
+    regulation: 'BS 7671 Reg 643.3',
     procedure: `1. Ensure all equipment is disconnected or switched off
 2. Remove lamps and link switches to ON position
 3. Test 1: Link Line and Neutral together, test between L+N and Earth
@@ -70,7 +70,7 @@ export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanc
   // Test 3: Polarity
   guidance.push({
     test: 'Polarity',
-    regulation: 'BS 7671 Reg 612.6',
+    regulation: 'BS 7671 Reg 643.6',
     procedure: `1. Visual inspection at consumer unit:
    - Check line conductor connected to MCB
    - Check neutral connected to neutral bar
@@ -94,7 +94,7 @@ export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanc
   // Test 4: Earth Fault Loop Impedance (Zs)
   guidance.push({
     test: 'Earth Fault Loop Impedance (Zs)',
-    regulation: 'BS 7671 Reg 612.9',
+    regulation: 'BS 7671 Reg 643.7.3',
     procedure: `1. Ensure circuit is energized
 2. Test at the furthest point on the circuit
 3. Measure Zs using earth loop impedance tester
@@ -120,7 +120,7 @@ export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanc
   if (circuit.rcdRating) {
     guidance.push({
       test: 'RCD Operation',
-      regulation: 'BS 7671 Reg 612.13',
+      regulation: 'BS 7671 Reg 643.10',
       procedure: `1. Test at 1× IΔn (${circuit.rcdRating}):
    - RCD must trip
    - Record trip time: ${circuit.rcdOneX || '< 300ms'}
@@ -169,7 +169,7 @@ export function generateTestingGuidance(circuit: EICCircuitData): TestingGuidanc
   // Test 7: Functional Testing
   guidance.push({
     test: 'Functional Testing',
-    regulation: 'BS 7671 Reg 612.13.2',
+    regulation: 'BS 7671 Reg 643.10',
     procedure: `1. Test all switches and controls operate correctly
 2. Verify all loads function as intended
 3. Check operation of any control equipment (timers, sensors, etc.)

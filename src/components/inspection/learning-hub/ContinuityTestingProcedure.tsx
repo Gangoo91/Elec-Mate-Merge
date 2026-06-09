@@ -50,7 +50,7 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Continuity Testing</h1>
-              <p className="text-[10px] text-white">BS 7671 Section 612.2</p>
+              <p className="text-[10px] text-white">BS 7671 Section 643.2</p>
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ const RegulationRequirementsSection = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground flex items-center gap-2">
               <Scale className="h-4 w-4 text-blue-400" />
-              Regulation 612.13 - Functional Testing
+              Regulation 643.10 - Functional Testing
             </h4>
 
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
@@ -33,7 +33,7 @@ const RegulationRequirementsSection = () => {
                     requirements of BS 7671."
                   </p>
                   <div className="text-xs text-blue-400 bg-blue-500/10 px-2 py-1 rounded inline-block">
-                    BS 7671:18+A3:2024 - Regulation 612.13
+                    BS 7671:18+A3:2024 - Regulation 643.10
                   </div>
                 </div>
               </div>
@@ -50,7 +50,7 @@ const RegulationRequirementsSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Card className="bg-muted/30 border-border">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-foreground">Regulation 612.13.1</CardTitle>
+                  <CardTitle className="text-sm text-foreground">Regulation 643.10</CardTitle>
                   <Badge
                     variant="outline"
                     className="text-green-400 border-green-400 text-xs w-fit"
@@ -74,7 +74,7 @@ const RegulationRequirementsSection = () => {
 
               <Card className="bg-muted/30 border-border">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-foreground">Regulation 612.13.2</CardTitle>
+                  <CardTitle className="text-sm text-foreground">Regulation 643.10</CardTitle>
                   <Badge variant="outline" className="text-blue-400 border-blue-400 text-xs w-fit">
                     RCD Testing
                   </Badge>
@@ -94,7 +94,7 @@ const RegulationRequirementsSection = () => {
 
               <Card className="bg-muted/30 border-border">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-foreground">Regulation 612.13.3</CardTitle>
+                  <CardTitle className="text-sm text-foreground">Regulation 643.10</CardTitle>
                   <Badge variant="outline" className="text-red-400 border-red-400 text-xs w-fit">
                     Emergency Systems
                   </Badge>
@@ -114,7 +114,7 @@ const RegulationRequirementsSection = () => {
 
               <Card className="bg-muted/30 border-border">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-foreground">Regulation 612.13.4</CardTitle>
+                  <CardTitle className="text-sm text-foreground">Regulation 643.10</CardTitle>
                   <Badge
                     variant="outline"
                     className="text-purple-400 border-purple-400 text-xs w-fit"

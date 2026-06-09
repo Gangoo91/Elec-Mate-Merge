@@ -300,7 +300,7 @@ const FireAlarmModule5Section5 = () => {
               </li>
               <li>
                 <strong>Insulation resistance — devices removed.</strong> 500 V dc, ≥1 MΩ acceptance
-                per BS 7671 §612.3. Loop devices DISCONNECTED before the test (covered in §4 of this
+                per BS 7671 §643.3. Loop devices DISCONNECTED before the test (covered in §4 of this
                 module). Cable conductor-to-earth, conductor-to-conductor, screen-to-earth.
               </li>
               <li>
@@ -475,7 +475,7 @@ const FireAlarmModule5Section5 = () => {
                 devices REMOVED
               </text>
               <text x="480" y="142" textAnchor="middle" fill="rgba(255,255,255,0.65)" fontSize="9">
-                ≥1 MΩ BS 7671 §612.3
+                ≥1 MΩ BS 7671 §643.3
               </text>
 
               <rect

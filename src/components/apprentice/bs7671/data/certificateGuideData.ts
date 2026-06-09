@@ -53,7 +53,7 @@ export const certificateTypes: CertificateType[] = [
       'ECA — Available to ECA members',
       'Certsure/ELECSA — Digital certificate platforms',
     ],
-    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 631.1 and Appendix 6',
+    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 641.7 and Appendix 6',
   },
   {
     id: 'eicr',
@@ -94,7 +94,7 @@ export const certificateTypes: CertificateType[] = [
       'NAPIT — Member portal',
       'ECA — Member resources',
     ],
-    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 631.2 and Chapter 65',
+    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 644.3 and Chapter 65',
   },
   {
     id: 'meiwc',
@@ -129,7 +129,7 @@ export const certificateTypes: CertificateType[] = [
       'NICEIC — Available to registered contractors',
       'NAPIT — Available to registered members',
     ],
-    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 631.3 and Appendix 6',
+    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 644.3 and Appendix 6',
   },
   {
     id: 'schedule-inspections',

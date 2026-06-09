@@ -649,6 +649,11 @@ export default function NAPICertificateGuidePage() {
       }
       heroSubtitle="NAPIT is a Government-authorised competent person scheme under Part P of the Building Regulations, giving electricians the same self-certification ability as NICEIC for notifiable domestic work. The complete guide covers registration categories, qualification requirements, costs, application process, building control notification, and a detailed comparison with NICEIC."
       readingTime={16}
+      answerBox={{
+        question: 'Is NAPIT as good as NICEIC?',
+        answer:
+          'Legally they are equivalent. NAPIT and NICEIC are both Government-authorised competent person schemes under Part P, so a Building Regulations compliance certificate from either carries the same standing, and the underlying BS 7671 certificates (EIC, Minor Works, EICR) follow the same model forms regardless of scheme. The differences are in registration cost, assessment style, brand recognition and member benefits — not legal weight or technical requirements.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

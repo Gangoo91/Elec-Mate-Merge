@@ -610,7 +610,7 @@ const EnhancedContinuityRingTestCard = () => {
           </CardTitle>
           <CardDescription className="text-white">
             Comprehensive learning module for ring final circuit continuity testing - BS 7671
-            Regulation 612.2.2
+            Regulation 643.2.1
           </CardDescription>
         </CardHeader>
         <CardContent>

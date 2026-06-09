@@ -42,7 +42,7 @@ const inspectionCategories = {
       {
         id: 'polarity_connections',
         text: 'Correct polarity at all single pole devices',
-        clause: '612.6',
+        clause: '643.6',
       },
     ],
   },

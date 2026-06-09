@@ -654,6 +654,11 @@ export default function ECSCardTypesPage() {
       }
       heroSubtitle="The ECS card is your proof of qualifications and your passport to UK construction sites. There are different cards for different career stages — Apprentice, Provisional, Installation Electrician (gold), and Technician. This guide explains each type, what qualifications you need, how to apply, and how to renew."
       readingTime={9}
+      answerBox={{
+        question: 'What are the different ECS card types?',
+        answer:
+          "The ECS (Electrotechnical Certification Scheme) issues a card for each career stage: the Apprentice card while training, the Provisional card for those still gaining qualifications, the Installation Electrician 'Gold' card (the main qualified-electrician card, needing a Level 3 NVQ, the AM2 and the ECS Health, Safety & Environmental assessment), and Technician/specialist cards. The card proves your qualifications and grants access to UK construction sites.",
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

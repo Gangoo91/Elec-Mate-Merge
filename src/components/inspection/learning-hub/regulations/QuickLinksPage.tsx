@@ -9,13 +9,13 @@ interface Props { onBack: () => void }
 
 const testRegLinks = [
   { test: 'Safe Isolation', regs: ['Reg 132.15 — Provision for isolation', 'Reg 133.2 — Disconnecting devices', 'Reg 537.3 — Emergency switching', 'EAW Reg 12, 13, 14 — Dead/live working', 'GS38 — Test equipment requirements'] },
-  { test: 'Continuity Testing', regs: ['Reg 612.2 — Continuity of protective conductors', 'Reg 543 — Earthing conductor requirements', 'Table 54.7 — Minimum conductor sizes'] },
-  { test: 'Insulation Resistance', regs: ['Reg 612.3 — IR test requirements', 'Reg 643.3 — Initial verification', 'Table 61 — Minimum IR values by voltage'] },
-  { test: 'Polarity', regs: ['Reg 612.6 — Polarity verification', 'Reg 133.2 — Single-pole devices in line only', 'Reg 463.1.2 — Domestic lighting switching', 'Reg 533.3 — Fuse base connections'] },
+  { test: 'Continuity Testing', regs: ['Reg 643.2 — Continuity of protective conductors', 'Reg 543 — Earthing conductor requirements', 'Table 54.7 — Minimum conductor sizes'] },
+  { test: 'Insulation Resistance', regs: ['Reg 643.3 — IR test requirements', 'Reg 643.3 — Initial verification', 'Table 61 — Minimum IR values by voltage'] },
+  { test: 'Polarity', regs: ['Reg 643.6 — Polarity verification', 'Reg 133.2 — Single-pole devices in line only', 'Reg 463.1.2 — Domestic lighting switching', 'Reg 533.3 — Fuse base connections'] },
   { test: 'Zs Testing', regs: ['Reg 411.3.2 — Disconnection times', 'Reg 134.2.2 — Zs definition', 'Reg 643.7 — Zs measurement', 'Appendix 3 — Maximum Zs tables'] },
-  { test: 'PFC Testing', regs: ['Reg 612.11 — PFC measurement', 'Reg 434.5.2 — Fault current calculation', 'Reg 131.5 — Conductor withstand'] },
-  { test: 'RCD Testing', regs: ['Reg 411.3.3 — Additional RCD protection', 'Reg 531.2 — RCD type selection', 'Reg 514.12.2 — Test notice', 'Reg 612.13 — RCD testing', 'GN3 Table 2.17 — Trip time limits'] },
-  { test: 'Functional Testing', regs: ['Reg 612.13 — Functional test requirement', 'Reg 537.3 — Emergency switching', 'Reg 514.8 — Circuit chart'] },
+  { test: 'PFC Testing', regs: ['Reg 643.7.3.201 — PFC measurement', 'Reg 434.5.2 — Fault current calculation', 'Reg 131.5 — Conductor withstand'] },
+  { test: 'RCD Testing', regs: ['Reg 411.3.3 — Additional RCD protection', 'Reg 531.2 — RCD type selection', 'Reg 514.12.2 — Test notice', 'Reg 643.10 — RCD testing', 'GN3 Table 2.17 — Trip time limits'] },
+  { test: 'Functional Testing', regs: ['Reg 643.10 — Functional test requirement', 'Reg 537.3 — Emergency switching', 'Reg 514.8 — Circuit chart'] },
 ];
 
 const specialLocationRegs = [

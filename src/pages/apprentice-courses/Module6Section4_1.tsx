@@ -252,7 +252,7 @@ const Module6Section4_1 = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>
-                      BS 7671:2018+A2:2022 Section 612.2 requires verification of protective
+                      BS 7671:2018+A2:2022 Section 643.2 requires verification of protective
                       conductor continuity
                     </span>
                   </li>

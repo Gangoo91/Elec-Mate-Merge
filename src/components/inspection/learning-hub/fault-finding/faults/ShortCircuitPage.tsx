@@ -113,7 +113,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
             {[
               'Reg 434 — Protection against fault current. Protective devices must disconnect within the time required to prevent conductor damage.',
               'Reg 522.6.6 — Cables in walls must be in safe zones or mechanically protected.',
-              'Reg 612.3 — Insulation resistance testing to detect and locate short circuits.',
+              'Reg 643.3 — Insulation resistance testing to detect and locate short circuits.',
               'EICR: Short circuit = C1 (danger present) if active, C2 if protective device has cleared it but cause is unresolved.',
             ].map((r, i) => (
               <div key={i} className="flex items-start gap-2">

@@ -47,7 +47,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Broken or damaged earth conductors',
       'High resistance readings due to corrosion',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.2.1',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.2.1',
     steps: [
       {
         id: 'safe-isolation',
@@ -172,7 +172,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Incorrect wiring of sockets',
       'Spurs wired as part of ring',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.2.2',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.2.1',
     steps: [
       {
         id: 'safe-isolation',
@@ -310,7 +310,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Damaged cable insulation',
       'Electronic equipment not isolated',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.3',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.3',
     steps: [
       {
         id: 'isolate-equipment',
@@ -446,7 +446,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Switches connected to neutral instead of phase',
       'Incorrect socket wiring',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.6',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.6',
     steps: [
       {
         id: 'visual-inspection-db',
@@ -549,7 +549,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Poor earthing arrangements',
       'Long cable runs increasing impedance',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.9',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.7.3',
     steps: [
       {
         id: 'preparation-rcd',
@@ -670,7 +670,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Nuisance tripping due to leakage',
       'Mechanical failure of RCD',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.13',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.10',
     steps: [
       {
         id: 'identify-type',
@@ -802,7 +802,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'High fault currents in urban areas',
       'Inadequate cable sizing for fault conditions',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.11',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.7.3.201',
     steps: [
       {
         id: 'understand-pfc',
@@ -914,7 +914,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Phase transposition errors',
       'Installation wiring errors',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.12',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.9',
     steps: [
       {
         id: 'when-why',
@@ -1013,7 +1013,7 @@ export const allBS7671Tests: BS7671Test[] = [
       'Emergency lighting insufficient duration',
       'Fire alarm system faults',
     ],
-    regulationClause: 'BS 7671:2018+A3:2024 Regulation 612.13',
+    regulationClause: 'BS 7671:2018+A3:2024 Regulation 643.10',
     steps: [
       {
         id: 'prepare-checklist',

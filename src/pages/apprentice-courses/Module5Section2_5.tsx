@@ -818,10 +818,10 @@ const Module5Section2_5 = () => {
                         • <strong>537.1:</strong> Isolation and switching
                       </li>
                       <li>
-                        • <strong>610.1:</strong> Initial verification
+                        • <strong>641.1:</strong> Initial verification
                       </li>
                       <li>
-                        • <strong>621.1:</strong> Periodic inspection and testing
+                        • <strong>651.1:</strong> Periodic inspection and testing
                       </li>
                     </ul>
                   </div>

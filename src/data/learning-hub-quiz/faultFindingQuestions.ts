@@ -24,7 +24,7 @@ export const faultFindingQuestions: QuizQuestion[] = [
     'A loose or broken neutral — extremely dangerous',
     'Gather information from the client',
     'Open circuit — a break in the circuit path',
-  ], correctAnswer: 0, explanation: 'An IR test between live conductors and earth reveals the insulation fault. Low L-E indicates a line-to-earth fault. Low N-E indicates a neutral-to-earth fault. Always disconnect loads first.', category: 'Fault Finding', difficulty: 'Intermediate', regulation: 'BS 7671:612.3' },
+  ], correctAnswer: 0, explanation: 'An IR test between live conductors and earth reveals the insulation fault. Low L-E indicates a line-to-earth fault. Low N-E indicates a neutral-to-earth fault. Always disconnect loads first.', category: 'Fault Finding', difficulty: 'Intermediate', regulation: 'BS 7671:643.3' },
   { id: 'ff-5', question: 'When diagnosing nuisance RCD tripping, what should you do after isolating the supply?', options: [
     'Gather information from the client',
     'Short circuit or severe earth fault',
@@ -36,13 +36,13 @@ export const faultFindingQuestions: QuizQuestion[] = [
     'Thermal imaging camera or IR thermometer',
     'A dead short between line and neutral',
     'A possible break in the ring',
-  ], correctAnswer: 2, explanation: 'Zero ohms between L and N means the line and neutral conductors are in direct contact — a dead short. This will cause the MCB to trip instantly on energisation.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:612.3' },
+  ], correctAnswer: 2, explanation: 'Zero ohms between L and N means the line and neutral conductors are in direct contact — a dead short. This will cause the MCB to trip instantly on energisation.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:643.3' },
   { id: 'ff-7', question: 'A socket outlet has no power but the MCB is ON. What is the most likely fault type?', options: [
     'Gather information from the client',
     'Open circuit — a break in the circuit path',
     'Short circuit or severe earth fault',
     'An appliance has an internal earth fault',
-  ], correctAnswer: 1, explanation: 'No power with the MCB ON indicates an open circuit — a break in the conductive path. The most common cause is a loose terminal where the conductor has pulled out.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:612.2' },
+  ], correctAnswer: 1, explanation: 'No power with the MCB ON indicates an open circuit — a break in the conductive path. The most common cause is a loose terminal where the conductor has pulled out.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:643.2' },
   { id: 'ff-8', question: 'What instrument would you use to diagnose an overloaded circuit?', options: [
     'Clamp meter to measure load current',
     'Thermal imaging camera or IR thermometer',
@@ -102,13 +102,13 @@ export const faultFindingQuestions: QuizQuestion[] = [
     'Short circuit or severe earth fault',
     'Clamp meter to measure load current',
     'Gather information from the client',
-  ], correctAnswer: 0, explanation: 'Inconsistent Zs readings around a ring indicate a broken ring — the circuit is functioning as two radials from the break point. Perform three-step continuity testing to locate the break.', category: 'Fault Finding', difficulty: 'Intermediate', regulation: 'BS 7671:612.2' },
+  ], correctAnswer: 0, explanation: 'Inconsistent Zs readings around a ring indicate a broken ring — the circuit is functioning as two radials from the break point. Perform three-step continuity testing to locate the break.', category: 'Fault Finding', difficulty: 'Intermediate', regulation: 'BS 7671:643.2' },
   { id: 'ff-18', question: 'What is the most common cause of low insulation resistance on a circuit?', options: [
     'Incorrect cable sizing',
     'Moisture ingress',
     'High ambient temperature',
     'Long cable runs',
-  ], correctAnswer: 1, explanation: 'Moisture ingress is the number one cause of low IR readings. Water in junction boxes, cable glands, and conduit creates conductive paths between conductors and earth.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:612.3' },
+  ], correctAnswer: 1, explanation: 'Moisture ingress is the number one cause of low IR readings. Water in junction boxes, cable glands, and conduit creates conductive paths between conductors and earth.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:643.3' },
   { id: 'ff-19', question: 'What common mistake do electricians make when fault finding RCD tripping?', options: [
     'A high-resistance connection causing series arcing',
     'A loose or broken neutral — extremely dangerous',
@@ -174,7 +174,7 @@ export const faultFindingQuestions: QuizQuestion[] = [
     'An appliance has an internal earth fault',
     'A loose or broken neutral — extremely dangerous',
     'A high-resistance connection causing series arcing',
-  ], correctAnswer: 1, explanation: 'If IR improves when loads are disconnected, the fault is in a connected appliance — not the fixed wiring. Reconnect appliances one at a time to identify the faulty one.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:612.3' },
+  ], correctAnswer: 1, explanation: 'If IR improves when loads are disconnected, the fault is in a connected appliance — not the fixed wiring. Reconnect appliances one at a time to identify the faulty one.', category: 'Fault Finding', difficulty: 'Beginner', regulation: 'BS 7671:643.3' },
   { id: 'ff-30', question: 'What EICR code should be applied when an MCB has been found in the neutral conductor?', options: [
     'C3 — Improvement recommended',
     'C2 — Potentially dangerous',

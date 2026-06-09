@@ -95,8 +95,8 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Identify any special requirements',
     ],
     regulations: [
-      'BS 7671 Regulation 610.1 - General requirements',
-      'BS 7671 Regulation 610.2 - Competence of inspector',
+      'BS 7671 Regulation 641.1 - General requirements',
+      'BS 7671 Regulation 641.4 - Competence of inspector',
       'IET Guidance Note 3 - Inspection & Testing',
     ],
     nextSteps: 'Proceed to compliance verification to ensure all regulatory requirements are met',
@@ -136,7 +136,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Risk assessments and method statements prepared',
     ],
     regulations: [
-      'BS 7671 Regulation 630.1 - Certification and reporting',
+      'BS 7671 Regulation 644.1 - Certification and reporting',
       'Building Regulations Part P compliance',
       'Construction (Design and Management) Regulations',
     ],
@@ -184,7 +184,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Cross-reference with cable length calculations',
     ],
     regulations: [
-      'BS 7671 Regulation 612.2.1 - Continuity of protective conductors',
+      'BS 7671 Regulation 643.2.1 - Continuity of protective conductors',
       'IET Guidance Note 3 Section 10.3',
     ],
     nextSteps: 'Continue with insulation resistance testing between live conductors and earth',
@@ -220,7 +220,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Investigate any low readings',
     ],
     regulations: [
-      'BS 7671 Regulation 612.3.2 - Insulation resistance',
+      'BS 7671 Regulation 643.3.2 - Insulation resistance',
       'IET Guidance Note 3 Section 10.4',
     ],
     nextSteps: 'Proceed with polarity testing to verify correct connections',
@@ -249,7 +249,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Test using continuity method',
       'Record results for each circuit',
     ],
-    regulations: ['BS 7671 Regulation 612.6 - Polarity', 'IET Guidance Note 3 Section 10.6'],
+    regulations: ['BS 7671 Regulation 643.6 - Polarity', 'IET Guidance Note 3 Section 10.6'],
     nextSteps: 'Continue with earth fault loop impedance testing',
   },
   {
@@ -266,7 +266,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Calculate or verify disconnection times',
     ],
     regulations: [
-      'BS 7671 Regulation 612.9 - Earth fault loop impedance',
+      'BS 7671 Regulation 643.7.3 - Earth fault loop impedance',
       'BS 7671 Chapter 41 - Protection by automatic disconnection',
     ],
     nextSteps: 'Test RCD operation if RCD protection is installed',
@@ -296,7 +296,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Record all test results',
     ],
     regulations: [
-      'BS 7671 Regulation 612.13 - Additional protection',
+      'BS 7671 Regulation 643.10 - Additional protection',
       'IET Guidance Note 3 Section 10.13',
     ],
     nextSteps: 'Complete functional testing of all systems and prepare certification',
@@ -326,7 +326,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Test any special installations or equipment',
     ],
     regulations: [
-      'BS 7671 Regulation 612.12 - Functional testing',
+      'BS 7671 Regulation 643.9 - Functional testing',
       'Relevant product standards for specific equipment',
     ],
     nextSteps: 'Complete all documentation and issue electrical installation certificate',

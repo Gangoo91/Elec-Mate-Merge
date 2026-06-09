@@ -91,7 +91,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 411.3.1.2 — "In each consumer\'s installation within a building, extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors complying with Chapter 54." This is the regulation that mandates main bonding to gas, water and other extraneous services. Sizing rules then come from Chapter 54 (Reg 544.11 + Table 54.8 covered in Sub 1).',
+      'Reg 411.3.1.2 — "In each consumer\'s installation within a building, extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors complying with Chapter 54." This is the regulation that mandates main bonding to gas, water and other extraneous services. Sizing rules then come from Chapter 54 (Reg 544.1.1 + Table 54.8 covered in Sub 1).',
   },
   {
     id: 2,
@@ -147,7 +147,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 544.2.1 (between two exposed-conductive-parts) — conductance at least equal to the smaller CPC, with a 4 mm² minimum if not mechanically protected. The exact CSA depends on the CPC sizes of the circuits feeding the exposed-conductive-parts. Different rule again from main bonding (Reg 544.11 + Table 54.8) — supplementary uses Reg 544.2.x.',
+      'Reg 544.2.1 (between two exposed-conductive-parts) — conductance at least equal to the smaller CPC, with a 4 mm² minimum if not mechanically protected. The exact CSA depends on the CPC sizes of the circuits feeding the exposed-conductive-parts. Different rule again from main bonding (Reg 544.1.1 + Table 54.8) — supplementary uses Reg 544.2.x.',
   },
   {
     id: 6,
@@ -250,7 +250,7 @@ export default function Sub5() {
 
           <TLDR
             points={[
-              'Main bonding (Reg 411.3.1.2) — equalises potential between extraneous-conductive-parts and the MET at the building intake. Mandatory on every install with metal services. Sized by Table 54.8 (PME) or Reg 544.11 (TN-S/TT).',
+              'Main bonding (Reg 411.3.1.2) — equalises potential between extraneous-conductive-parts and the MET at the building intake. Mandatory on every install with metal services. Sized by Table 54.8 (PME) or Reg 544.1.1 (TN-S/TT).',
               'Supplementary bonding (Reg 415.2) — equalises potential between exposed and extraneous-conductive-parts at a specific high-risk location. Sized by Reg 544.2.x. Smaller conductors (2.5 / 4 mm²).',
               'Reg 701.415.2 permits omission of supplementary bonding in a bathroom when all three conditions met: ADS-compliant final circuits + 30 mA RCD on every final circuit + main bonding compliant. Modern new-builds usually meet all three.',
             ]}
@@ -263,7 +263,7 @@ export default function Sub5() {
               'Cite Reg 411.3.1.2 (main) and Reg 415.2 (supplementary) and identify which applies in different scenarios.',
               'Apply the Reg 415.2.2 resistance condition R < 50 V / I_a for AC supplementary bonding effectiveness.',
               'Apply the Reg 701.415.2 three-condition test for permitted omission of supplementary bonding in rooms containing a bath or shower.',
-              'Identify the sizing rules for main bonding (Reg 544.11 + Table 54.8) vs supplementary bonding (Reg 544.2.1 / 544.2.2 / 544.2.3) and apply each correctly.',
+              'Identify the sizing rules for main bonding (Reg 544.1.1 + Table 54.8) vs supplementary bonding (Reg 544.2.1 / 544.2.2 / 544.2.3) and apply each correctly.',
               'Identify the locations and special-location sections of BS 7671 (Section 701, 702, 703, 705, etc.) where supplementary bonding rules apply.',
             ]}
             initialVisibleCount={3}
@@ -430,7 +430,7 @@ export default function Sub5() {
           <ContentEyebrow>Sizing — the rules diverge</ContentEyebrow>
 
           <ConceptBlock
-            title="Main bonding sizing — Reg 544.11 + Table 54.8 (PME) — covered in Sub 1"
+            title="Main bonding sizing — Reg 544.1.1 + Table 54.8 (PME) — covered in Sub 1"
             plainEnglish="Main bonding sizing is detailed in Sub 1. Quick recap: PME uses Table 54.8 against the supplier PEN. Non-PME uses half the earthing conductor with 6 mm² floor and 25 mm² Cu cap."
           >
             <p>Quick reference for main bonding from Sub 1:</p>
@@ -753,7 +753,7 @@ export default function Sub5() {
 
           <KeyTakeaways
             points={[
-              'Main bonding (Reg 411.3.1.2 + 544.11) — system-wide intake equipotential. From MET to every extraneous-conductive-part. Mandatory on every install with metal services.',
+              'Main bonding (Reg 411.3.1.2 + 544.1.1) — system-wide intake equipotential. From MET to every extraneous-conductive-part. Mandatory on every install with metal services.',
               'Supplementary bonding (Reg 415.2 + 544.2) — local high-risk equipotential. At a specific location, between exposed and extraneous parts at that location.',
               'Different sizing: main uses Table 54.8 (PME) or half-earthing (non-PME); supplementary uses Reg 544.2.1/2/3 (typically 2.5 mm² protected or 4 mm² unprotected).',
               'Reg 415.2.2 sets the supplementary effectiveness condition R < 50/I_a (AC). 30 mA RCD makes this very loose (1667 ohm); high-current MCB makes it tight (under 1 ohm).',

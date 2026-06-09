@@ -33,8 +33,8 @@ const REGULATION_EXPLANATIONS: Record<string, RegulationExplanation> = {
     severity: 'critical',
   },
 
-  'BS 7671 Regulation 612.3.2': {
-    regulation: 'BS 7671 Regulation 612.3.2',
+  'BS 7671 Regulation 643.3.2': {
+    regulation: 'BS 7671 Regulation 643.3.2',
     plainEnglish:
       'Insulation resistance must be at least 1MΩ to ensure cables and equipment are properly insulated.',
     why: 'Low insulation resistance indicates damaged or deteriorated insulation, which could cause electric shock or fire.',
@@ -55,8 +55,8 @@ const REGULATION_EXPLANATIONS: Record<string, RegulationExplanation> = {
     severity: 'critical',
   },
 
-  'BS 7671 Regulation 612.6': {
-    regulation: 'BS 7671 Regulation 612.6',
+  'BS 7671 Regulation 643.6': {
+    regulation: 'BS 7671 Regulation 643.6',
     plainEnglish:
       'All single-pole switches and protective devices must be connected in the line conductor only, not the neutral.',
     why: 'Incorrect polarity means switches might not isolate the dangerous live conductor, creating serious shock risks.',

@@ -58,7 +58,7 @@ const ContinuityCPCTestCard = () => {
             Circuit Protective Conductor (CPC) Continuity Test
           </CardTitle>
           <CardDescription className="text-white">
-            R1+R2 method testing for protective conductor continuity - BS 7671 Regulation 612.2.1
+            R1+R2 method testing for protective conductor continuity - BS 7671 Regulation 643.2.1
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

@@ -43,7 +43,7 @@ const PfcTestingProcedure = ({ onBack }: Props) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">PFC Testing</h1>
-              <p className="text-[10px] text-white">BS 7671 Reg 612.11 & 434.5.2</p>
+              <p className="text-[10px] text-white">BS 7671 Reg 643.7.3.201 & 434.5.2</p>
             </div>
           </div>
         </div>

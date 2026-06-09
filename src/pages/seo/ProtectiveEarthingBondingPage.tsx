@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What size bonding conductor do I need?',
     answer:
-      "The size of the main protective bonding conductor depends on the earthing arrangement. For TN-C-S (PME) supplies — the most common arrangement in the UK — Regulation 544.11 requires selection in accordance with Table 54.8 based on the cross-sectional area of the supply PEN conductor. Where the PEN conductor is 35 mm² or less (which covers virtually all single-phase domestic PME supplies), the minimum bonding conductor is 10 mm² copper. For larger PEN conductors, Table 54.8 gives increasing minimum sizes. For non-PME supplies (TN-S or TT), Regulation 544.11 requires the bonding conductor to be not less than half the cross-sectional area of the installation's earthing conductor, with a minimum of 6 mm² copper (and need not exceed 25 mm² copper). In practice, for a typical domestic PME installation with 25 mm² tails, a 10 mm² copper bonding conductor is the standard requirement. The bonding conductor must run in a continuous length from the main earthing terminal to the point of connection on the service pipe — it must not pass through any intermediate connection or junction box. Where the conductor is liable to mechanical damage, it must be protected with conduit, trunking, or mechanical protection.",
+      "The size of the main protective bonding conductor depends on the earthing arrangement. For TN-C-S (PME) supplies — the most common arrangement in the UK — Regulation 544.1.1 requires selection in accordance with Table 54.8 based on the cross-sectional area of the supply PEN conductor. Where the PEN conductor is 35 mm² or less (which covers virtually all single-phase domestic PME supplies), the minimum bonding conductor is 10 mm² copper. For larger PEN conductors, Table 54.8 gives increasing minimum sizes. For non-PME supplies (TN-S or TT), Regulation 544.1.1 requires the bonding conductor to be not less than half the cross-sectional area of the installation's earthing conductor, with a minimum of 6 mm² copper (and need not exceed 25 mm² copper). In practice, for a typical domestic PME installation with 25 mm² tails, a 10 mm² copper bonding conductor is the standard requirement. The bonding conductor must run in a continuous length from the main earthing terminal to the point of connection on the service pipe — it must not pass through any intermediate connection or junction box. Where the conductor is liable to mechanical damage, it must be protected with conduit, trunking, or mechanical protection.",
   },
   {
     question: 'Where should the main bonding connection be made on a water pipe?',
@@ -415,7 +415,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>6 mm copper minimum (non-PME)</strong> — where PME does not apply,
-                Regulation 544.11 requires the bonding conductor to be not less than half the
+                Regulation 544.1.1 requires the bonding conductor to be not less than half the
                 cross-sectional area of the installation's earthing conductor, with a minimum of 6
                 mm&sup2; copper (and need not exceed 25 mm&sup2; copper). In practice, 6 mm is found
                 in some older or smaller non-PME installations, but 10 mm is now the common

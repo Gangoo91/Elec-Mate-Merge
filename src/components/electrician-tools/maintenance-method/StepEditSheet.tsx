@@ -254,7 +254,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
                   <Input
                     value={item}
                     onChange={(e) => updateItem(setEditedReferences, idx, e.target.value)}
-                    placeholder="e.g., Reg 621.1"
+                    placeholder="e.g., Reg 651.1"
                     className="flex-1 min-h-[48px] font-mono text-sm touch-manipulation"
                   />
                   <Button

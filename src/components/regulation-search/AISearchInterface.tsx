@@ -63,12 +63,12 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
   const autocompleteTerms = useMemo(
     () => [
       // Regulation numbers
-      '612.1',
-      '612.2.1',
-      '612.3',
-      '612.6',
-      '612.8',
-      '612.10',
+      '643.1',
+      '643.2.1',
+      '643.3',
+      '643.6',
+      '643.7.3',
+      '643.10',
       '411.3.3',
       '415.1.1',
       'Table 41.3',

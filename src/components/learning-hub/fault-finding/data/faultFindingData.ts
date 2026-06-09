@@ -118,7 +118,7 @@ export const methodologySteps: MethodologyStep[] = [
       'Notify relevant parties of planned investigation work',
     ],
     estimatedTime: '15-30 minutes',
-    regulation: 'BS 7671: 610.1, CDM Regulations',
+    regulation: 'BS 7671: 641.1, CDM Regulations',
     priority: 'critical',
   },
   {
@@ -141,7 +141,7 @@ export const methodologySteps: MethodologyStep[] = [
       'Review electrical installation certificates and test results',
     ],
     estimatedTime: '10-20 minutes',
-    regulation: 'BS 7671: 610.1',
+    regulation: 'BS 7671: 641.1',
     priority: 'high',
   },
   {

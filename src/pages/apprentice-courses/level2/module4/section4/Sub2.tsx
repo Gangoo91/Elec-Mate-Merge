@@ -278,7 +278,7 @@ export default function Sub2() {
               The bonding conductor's purpose is to maintain a low-impedance path from the
               extraneous-conductive-part (gas pipe, water service, structural steel) back to the
               MET — at all times, including under the worst-case fault current the supply can
-              deliver. The cable itself, sized per Reg 544.11 / Table 54.8 (covered in Sub 1), can
+              deliver. The cable itself, sized per Reg 544.1.1 / Table 54.8 (covered in Sub 1), can
               easily handle that current. What kills bonds is the joints at each end:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

@@ -6,6 +6,7 @@ import { Switch } from '@/components/ui/switch';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 // No icons — clean design
 import { cn } from '@/lib/utils';
+import { EVSectionHeader } from './EVSectionHeader';
 import {
   useEVChargingSmartForm,
   TestResultValidation,
@@ -19,12 +20,7 @@ interface EVChargingTestScheduleProps {
 type TestResult = 'pass' | 'fail' | '';
 
 // Section header — gradient line style
-const SectionTitle: React.FC<{ title: string }> = ({ title }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const SectionTitle: React.FC<{ title: string }> = ({ title }) => <EVSectionHeader title={title} />;
 
 // Pass/Fail toggle buttons
 const TestResultToggle: React.FC<{
@@ -173,7 +169,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
   }, [testResults, validateTestResults]);
 
   return (
-    <div className="space-y-5 px-4 py-2">
+    <div className="space-y-5 px-4 sm:px-0 py-2 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-5">
       {/* Circuit Tests */}
       <div>
         <SectionTitle title="Circuit Tests" />

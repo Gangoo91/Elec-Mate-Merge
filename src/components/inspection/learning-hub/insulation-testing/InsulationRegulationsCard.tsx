@@ -10,7 +10,7 @@ interface Props {
 }
 
 const coreRegulations = [
-  { number: 'Reg 612.3', title: 'Insulation Resistance Test', description: 'Insulation resistance shall be measured between live conductors and between live conductors and the protective conductor connected to earth, with the installation isolated from the supply.' },
+  { number: 'Reg 643.3', title: 'Insulation Resistance Test', description: 'Insulation resistance shall be measured between live conductors and between live conductors and the protective conductor connected to earth, with the installation isolated from the supply.' },
   { number: 'Reg 643.3', title: 'Initial Verification', description: 'Initial insulation resistance measurements must be taken prior to energisation of new installations. Minimum acceptable value for final circuits up to 500V is 1.0MΩ at 500V DC test voltage.' },
   { number: 'Reg 643.3', title: 'Domestic Circuits', description: 'Insulation resistance for single-phase domestic ring final and radial lighting circuits must meet acceptable values using standard test practices. Each circuit tested individually.' },
   { number: 'Reg 643.3', title: 'Post-Fault Verification', description: 'Mandatory insulation resistance testing after a significant earth fault or short-circuit event to confirm insulation condition before re-energisation. Deterioration or damage must be documented.' },

@@ -161,7 +161,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A4 strips out the CRL (calculated risk level) route. Reg 443.5 was the BS 7671 clause permitting the CRL calculation and the supporting Annex A443 held its worked examples — both are deleted. SPD selection in A4 follows Reg 443.4 directly: SPDs are required where overvoltage affects safety of human life, public services, commercial / industrial activity or many co-located individuals. (Appendix 17 — Energy Efficiency — was not deleted by A4.)',
+      'A4 strips out the CRL (calculated risk level) route. Reg 443.5 was the BS 7671 clause permitting the CRL calculation and the supporting Annex A443 held its worked examples — both are deleted. SPD selection in A4 follows Reg 443.4 directly: SPDs are required where overvoltage affects safety of human life, public services, commercial / industrial activity or many co-located individuals.',
   },
   {
     id: 4,

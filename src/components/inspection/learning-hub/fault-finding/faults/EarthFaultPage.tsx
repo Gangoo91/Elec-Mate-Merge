@@ -125,7 +125,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
       <motion.div variants={itemVariants}>
         <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-1.5">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Regulations</p>
-          {['Reg 411.3.3 — Additional RCD protection (≤30mA) for socket outlets and mobile equipment', 'Reg 612.3 — Insulation resistance testing to detect earth faults', 'Reg 531.2 — RCD type selection for the loads present', 'EICR: Active earth fault on accessible metalwork = C1 (danger present)'].map((r, i) => (
+          {['Reg 411.3.3 — Additional RCD protection (≤30mA) for socket outlets and mobile equipment', 'Reg 643.3 — Insulation resistance testing to detect earth faults', 'Reg 531.2 — RCD type selection for the loads present', 'EICR: Active earth fault on accessible metalwork = C1 (danger present)'].map((r, i) => (
             <div key={i} className="flex items-start gap-2"><div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" /><p className="text-xs text-white">{r}</p></div>
           ))}
         </div>

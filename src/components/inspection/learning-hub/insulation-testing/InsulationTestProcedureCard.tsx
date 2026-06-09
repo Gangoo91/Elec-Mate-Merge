@@ -71,7 +71,7 @@ const InsulationTestProcedureCard = () => {
         </div>
         <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
           Step-by-step procedure for testing insulation resistance in accordance with BS 7671
-          Regulation 612.3
+          Regulation 643.3
         </CardDescription>
       </CardHeader>
 

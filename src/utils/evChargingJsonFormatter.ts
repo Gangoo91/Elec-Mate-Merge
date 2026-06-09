@@ -89,8 +89,11 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       serial: get('chargerSerial'),
       mode: get('chargerType'),
       connection_type: get('chargerConnection'),
-      connection_display:
-        get('chargerConnection') === 'tethered' ? 'Tethered Cable' : 'Socket Outlet',
+      connection_display: !get('chargerConnection')
+        ? ''
+        : get('chargerConnection') === 'tethered'
+          ? 'Tethered Cable'
+          : 'Socket Outlet',
       power_rating_kw: get('powerRating'),
       rated_current_a: get('ratedCurrent'),
       phases: get('phases'),
@@ -101,7 +104,11 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     supply_details: {
       voltage: get('supplyVoltage'),
       phases: get('supplyPhases'),
-      phases_display: get('supplyPhases') === 'single' ? 'Single Phase' : 'Three Phase',
+      phases_display: !get('supplyPhases')
+        ? ''
+        : get('supplyPhases') === 'single'
+          ? 'Single Phase'
+          : 'Three Phase',
       earthing_arrangement: get('earthingArrangement'),
       ze: get('ze'),
       pfc: get('prospectiveFaultCurrent'),

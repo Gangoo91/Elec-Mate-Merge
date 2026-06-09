@@ -11,6 +11,7 @@ interface EVChargingFormTabsProps {
   currentTab: EVChargingTabValue;
   onTabChange: (value: string) => void;
   canAccessTab: (tabId: EVChargingTabValue) => boolean;
+  completedTabs?: Record<string, boolean>;
   formData: any;
   onUpdate: (field: string, value: any) => void;
   customerId?: string;
@@ -45,6 +46,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
   currentTab,
   onTabChange,
   canAccessTab,
+  completedTabs,
   formData,
   onUpdate,
   customerId,
@@ -61,7 +63,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       label: 'Install',
       shortLabel: 'Install',
       content: (
-        <div className="pt-2 pb-48 sm:px-4">
+        <div className="pt-2 pb-48 sm:px-4 mx-auto w-full lg:max-w-6xl xl:max-w-7xl">
           <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
@@ -72,7 +74,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       label: 'Supply',
       shortLabel: 'Supply',
       content: (
-        <div className="pt-2 pb-48 sm:px-4">
+        <div className="pt-2 pb-48 sm:px-4 mx-auto w-full lg:max-w-6xl xl:max-w-7xl">
           <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
@@ -94,7 +96,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       label: 'Declare',
       shortLabel: 'Sign',
       content: (
-        <div className="pt-2 pb-48 sm:px-4">
+        <div className="pt-2 pb-48 sm:px-4 mx-auto w-full lg:max-w-6xl xl:max-w-7xl">
           <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
           <EVChargingTabNavigation
             {...tabNavigationProps}
@@ -114,6 +116,8 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       tabs={smartTabs}
       value={currentTab}
       onValueChange={onTabChange}
+      completedTabs={completedTabs}
+      showProgress
     />
   );
 };

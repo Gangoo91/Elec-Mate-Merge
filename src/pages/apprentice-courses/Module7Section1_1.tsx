@@ -390,7 +390,7 @@ const Module7Section1_1 = () => {
                 <li>
                   Earth fault loop impedance must not exceed specified values (Regulation 411.4.5)
                 </li>
-                <li>Insulation resistance must meet minimum standards (Regulation 612.3)</li>
+                <li>Insulation resistance must meet minimum standards (Regulation 643.3)</li>
               </ul>
             </div>
           </div>
