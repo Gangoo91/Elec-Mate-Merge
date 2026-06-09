@@ -206,54 +206,87 @@ export default function TestingSequenceGuidePage() {
         </div>
       </section>
 
-      {/* Direct-Answer Summary */}
+      {/* Direct Answer */}
       <section className="py-10 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
-            The GN3 Testing Sequence — 8 Steps in Order
+          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+              What is the correct electrical testing sequence?
+            </h2>
+            <p className="text-white leading-relaxed">
+              The correct testing sequence per IET Guidance Note 3 is: continuity of protective
+              conductors, continuity of ring final circuit conductors, insulation resistance,
+              polarity, earth electrode resistance, earth fault loop impedance, prospective fault
+              current, then functional testing including RCDs. Every dead test is completed before
+              any live test, because each test relies on the safety verified by the one before it.
+              The same order is reflected in BS 7671 Part 6, Chapter 64 (Regulations 643.2 to
+              643.10).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Direct-Answer Summary Table */}
+      <section className="py-10 px-5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+            The Testing Sequence at a Glance — 8 Steps in Order
           </h2>
-          <ol className="space-y-2 text-white text-sm sm:text-base leading-relaxed list-decimal list-inside">
-            <li>
-              <strong className="text-yellow-400">Continuity of protective conductors</strong> —
-              confirm every CPC is continuous from the board to each outlet (dead test, low-reading
-              ohmmeter).
-            </li>
-            <li>
-              <strong className="text-yellow-400">
-                Continuity of ring final circuit conductors
-              </strong>{' '}
-              — verify the ring is complete and correctly wired; record R1+R2 at the furthest point
-              (dead test).
-            </li>
-            <li>
-              <strong className="text-yellow-400">Insulation resistance</strong> — test at 500 V DC
-              (250 V DC for SELV/PELV); minimum 1.0 MΩ per BS 7671 Table 64 (dead test).
-            </li>
-            <li>
-              <strong className="text-yellow-400">Polarity</strong> — confirm all single-pole
-              devices are in the line conductor and all accessories are correctly wired (dead +
-              visual).
-            </li>
-            <li>
-              <strong className="text-yellow-400">Earth electrode resistance</strong> — TT systems
-              only; RA must not exceed 200 Ω where IΔn ≤ 100 mA (Reg 411.5.3).
-            </li>
-            <li>
-              <strong className="text-yellow-400">Earth fault loop impedance (Zs)</strong> — live
-              test at the furthest point; measured Zs must satisfy the protective device table value
-              (live test).
-            </li>
-            <li>
-              <strong className="text-yellow-400">Prospective fault current (Ipf)</strong> —
-              measured or calculated at the origin; must not exceed the breaking capacity of the
-              installed devices (live test).
-            </li>
-            <li>
-              <strong className="text-yellow-400">Functional testing</strong> — RCD trip times at
-              0.5×, 1× and 5× IΔn on both half-cycles; all switchgear and controls verified (live
-              test).
-            </li>
-          </ol>
+          <p className="text-white/70 text-sm mb-5">
+            Dead tests first (steps 1–4), then live tests (steps 6–8). BS 7671 reference shown
+            against each test.
+          </p>
+          <div className="overflow-hidden rounded-2xl border border-white/10">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/80">
+                  <th className="px-3 py-3 font-semibold w-8">#</th>
+                  <th className="px-3 py-3 font-semibold">Test</th>
+                  <th className="px-3 py-3 font-semibold hidden sm:table-cell">Dead / Live</th>
+                  <th className="px-3 py-3 font-semibold hidden sm:table-cell">BS 7671 Reg</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {[
+                  ['1', 'Continuity of protective conductors', 'Dead', '643.2'],
+                  ['2', 'Continuity of ring final circuit conductors', 'Dead', '643.2.1'],
+                  ['3', 'Insulation resistance', 'Dead', '643.3'],
+                  ['4', 'Polarity', 'Dead / visual', '643.6'],
+                  ['5', 'Earth electrode resistance (TT only)', 'Dead / live', '643.7.2'],
+                  ['6', 'Earth fault loop impedance (Zs / Ze)', 'Live', '643.7.3'],
+                  ['7', 'Prospective fault current (Ipf)', 'Live', '643.7.3.201'],
+                  ['8', 'Functional testing (incl. RCDs)', 'Live', '643.8 / 643.10'],
+                ].map(([n, test, mode, reg]) => (
+                  <tr key={n} className="text-white">
+                    <td className="px-3 py-3 font-bold text-yellow-400">{n}</td>
+                    <td className="px-3 py-3 font-medium">
+                      {test}
+                      <span className="block sm:hidden text-white/50 text-xs mt-0.5">
+                        {mode} · Reg {reg}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 hidden sm:table-cell">
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+                          mode.startsWith('Live')
+                            ? 'bg-red-900/30 text-red-300 border border-red-700/40'
+                            : 'bg-blue-900/30 text-blue-300 border border-blue-700/40'
+                        }`}
+                      >
+                        {mode}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 hidden sm:table-cell font-mono text-white/70">{reg}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/60 text-xs mt-3">
+            Regulation numbers are from BS 7671:2018+A4:2026, Part 6, Chapter 64. The continuity
+            test (Reg 643.2) must be carried out before the loop impedance measurement (Reg
+            643.7.3).
+          </p>
         </div>
       </section>
 
@@ -348,7 +381,11 @@ export default function TestingSequenceGuidePage() {
                 for the circuit. A reading of infinity (open circuit) indicates a break in the CPC.
                 An unexpectedly high reading may indicate a loose connection or damaged conductor.
                 The measured R1+R2 value is recorded and used later to verify the earth fault loop
-                impedance (Zs).
+                impedance (Zs) — see the{' '}
+                <SEOInternalLink href="/guides/continuity-testing-r1-r2">
+                  R1+R2 continuity testing guide
+                </SEOInternalLink>{' '}
+                for the full method.
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is first:</strong> The earth path must be
@@ -428,11 +465,48 @@ export default function TestingSequenceGuidePage() {
                 500V test voltage.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> Minimum acceptable value:
-                1.0 MΩ (megohm) for circuits up to 500V. Typical values for healthy circuits: 50 MΩ
-                to 200+ MΩ. Values between 1 MΩ and 2 MΩ pass but indicate deteriorating insulation
-                that should be monitored. Values below 1 MΩ are failures requiring investigation and
-                remediation.
+                <strong className="text-yellow-400">Pass/fail (BS 7671 Table 64):</strong> The
+                minimum acceptable values depend on the circuit nominal voltage. A healthy circuit
+                in good condition will normally read far higher than the minimum — 50 MΩ to 200+ MΩ
+                is common on new work. Readings just above the minimum (for example 1–2 MΩ) pass
+                but warrant investigation; anything below the minimum is a failure that must be
+                rectified before energising.
+              </p>
+              <div className="my-4 overflow-hidden rounded-xl border border-white/10">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-white/[0.06] text-white/80">
+                      <th className="px-3 py-2 font-semibold">Circuit nominal voltage</th>
+                      <th className="px-3 py-2 font-semibold">Test voltage (DC)</th>
+                      <th className="px-3 py-2 font-semibold">Minimum IR</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-white">
+                    <tr>
+                      <td className="px-3 py-2">SELV and PELV</td>
+                      <td className="px-3 py-2 font-mono">250 V</td>
+                      <td className="px-3 py-2 font-mono text-yellow-300">0.5 MΩ</td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2">Up to and including 500 V (excl. SELV/PELV)</td>
+                      <td className="px-3 py-2 font-mono">500 V</td>
+                      <td className="px-3 py-2 font-mono text-yellow-300">1.0 MΩ</td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2">Above 500 V</td>
+                      <td className="px-3 py-2 font-mono">1000 V</td>
+                      <td className="px-3 py-2 font-mono text-yellow-300">1.0 MΩ</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/60 text-xs">
+                Values per BS 7671 Table 64 (Part 6, Chapter 64). Standard 230 V and 400 V
+                installations fall in the second row. See the{' '}
+                <SEOInternalLink href="/guides/insulation-resistance-minimum-values">
+                  insulation resistance minimum values guide
+                </SEOInternalLink>{' '}
+                for worked examples.
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is third:</strong> Insulation resistance
@@ -516,13 +590,44 @@ export default function TestingSequenceGuidePage() {
                 company.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The earth electrode
-                resistance must be low enough that the product of the electrode resistance and the
-                rated residual operating current of the RCD does not exceed 50 V (the touch voltage
-                limit). For a 30 mA RCD: RA × IΔn must be no greater than 50 V, giving a maximum RA
-                of 1,667 ohms. Where IΔn does not exceed 100 mA, BS 7671 Reg 411.5.3 (Table 41.5)
-                requires the earth electrode resistance not to exceed 200 ohms — this is a mandatory
-                upper limit, not a preference.
+                <strong className="text-yellow-400">Pass/fail:</strong> Under BS 7671 Reg 411.5.3,
+                where an RCD provides fault protection on a TT system the condition Ra × IΔn ≤ 50 V
+                must be met (Ra being the sum of the earth electrode resistance and the protective
+                conductor connecting it to the exposed-conductive-parts). The requirement is deemed
+                met where the earth fault loop impedance satisfies Table 41.5. A NOTE to Table 41.5
+                adds that an earth electrode resistance exceeding 200 Ω may not be stable, so a low,
+                stable value is preferred in practice.
+              </p>
+              <div className="my-4 overflow-hidden rounded-xl border border-white/10">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-white/[0.06] text-white/80">
+                      <th className="px-3 py-2 font-semibold">RCD rated IΔn</th>
+                      <th className="px-3 py-2 font-semibold">Max Zs (Table 41.5)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-white">
+                    {[
+                      ['30 mA', '1667 Ω'],
+                      ['100 mA', '500 Ω'],
+                      ['300 mA', '167 Ω'],
+                      ['500 mA', '100 Ω'],
+                    ].map(([i, z]) => (
+                      <tr key={i}>
+                        <td className="px-3 py-2 font-mono">{i}</td>
+                        <td className="px-3 py-2 font-mono text-yellow-300">{z}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/60 text-xs">
+                BS 7671 Table 41.5 — maximum earth fault loop impedance for non-delayed and ‘S’ type
+                RCDs at Uo of 230 V. See the{' '}
+                <SEOInternalLink href="/earth-electrode-testing">
+                  earth electrode testing guide
+                </SEOInternalLink>{' '}
+                for the fall-of-potential method.
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is fifth:</strong> Earth electrode
@@ -564,23 +669,62 @@ export default function TestingSequenceGuidePage() {
               </p>
               <p>
                 <strong className="text-yellow-400">Pass/fail:</strong> The measured Zs must not
-                exceed the maximum value tabulated in BS 7671 for the protective device. For
-                example, a B32 MCB has a maximum Zs of 1.37 ohms at the design stage. In practice,
-                the rule of thumb is that the measured Zs should not exceed 80% of the tabulated
-                maximum (to allow for temperature rise during normal operation). Values exceeding
-                the tabulated maximum are failures.
+                exceed the maximum value tabulated in BS 7671 for the type and rating of the
+                protective device. The table below gives the BS 7671 Table 41.3 maxima for common
+                Type B circuit-breakers (and the overcurrent characteristics of equivalent RCBOs) at
+                Uo of 230 V.
+              </p>
+              <div className="my-4 overflow-hidden rounded-xl border border-white/10">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-white/[0.06] text-white/80">
+                      <th className="px-3 py-2 font-semibold">Type B device</th>
+                      <th className="px-3 py-2 font-semibold">Max Zs (Table 41.3)</th>
+                      <th className="px-3 py-2 font-semibold hidden sm:table-cell">
+                        ≈ 0.8× rule limit
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-white">
+                    {[
+                      ['B6', '7.28 Ω', '5.82 Ω'],
+                      ['B16', '2.73 Ω', '2.18 Ω'],
+                      ['B20', '2.19 Ω', '1.75 Ω'],
+                      ['B32', '1.37 Ω', '1.10 Ω'],
+                      ['B40', '1.09 Ω', '0.87 Ω'],
+                    ].map(([d, z, r]) => (
+                      <tr key={d}>
+                        <td className="px-3 py-2 font-mono">{d}</td>
+                        <td className="px-3 py-2 font-mono text-yellow-300">{z}</td>
+                        <td className="px-3 py-2 font-mono text-white/70 hidden sm:table-cell">
+                          {r}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/60 text-xs">
+                BS 7671 Table 41.3(a) — maximum Zs for Type B circuit-breakers to BS EN 60898 at the
+                0.4 s disconnection time. See the{' '}
+                <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
+                  maximum Zs values guide
+                </SEOInternalLink>{' '}
+                for Type C, Type D and fuse tables.
               </p>
               <p>
-                <strong className="text-yellow-400">Temperature correction:</strong> Site
-                measurements are made at ambient temperature, but the OSG Tables B1–B6 maximum
-                measured Zs values are referenced to 10 °C. Where the site temperature differs from
-                10 °C, GN3 Reg 1.08 provides a correction factor of (1 + 0.004 × (ambient °C − 20
-                °C)) applied to the Table B1 conductor resistance values, so that the designer or
-                inspector can determine the resistance at the expected test temperature. For a quick
-                on-site check, the GN3 Tables B1–B2 give maximum measured Zs values at typical
-                ambient temperatures, removing the need to calculate manually. The 0.8× site factor
-                described above provides a conservative working margin that accounts for this effect
-                in most routine situations.
+                <strong className="text-yellow-400">The 0.8 rule:</strong> The tabulated maxima are
+                referenced to the conductor at its normal operating temperature, but site
+                measurements are taken with cold conductors. A common, conservative on-site practice
+                is therefore to apply a 0.8 factor — the measured Zs should not exceed roughly 80% of
+                the tabulated maximum (the third column above). Where a measured value sits between
+                the 0.8× figure and the tabulated maximum, apply a temperature correction before
+                deciding pass or fail. Any measured Zs above the full tabulated maximum is a clear
+                failure. Use the{' '}
+                <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
+                  earth fault loop impedance guide
+                </SEOInternalLink>{' '}
+                to work through Zs = Ze + (R1 + R2).
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is sixth:</strong> This is a live test —
@@ -619,11 +763,35 @@ export default function TestingSequenceGuidePage() {
                 is the one that must not exceed the device breaking capacity.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The prospective fault
-                current must not exceed the rated breaking capacity of the protective device.
-                Standard domestic MCBs have a minimum breaking capacity of 6 kA. If the measured Ipf
-                exceeds 6 kA, higher-rated devices must be installed. This is recorded on the EIC or
-                EICR.
+                <strong className="text-yellow-400">Pass/fail:</strong> The measured Ipf must not
+                exceed the rated short-circuit capacity of every protective device through which it
+                could flow. Common breaking capacities for MCBs/RCBOs to BS EN 60898 / BS EN 61009
+                are shown below; if the measured Ipf exceeds the device rating, a device with a
+                higher rating must be fitted. The value is recorded on the EIC or EICR.
+              </p>
+              <div className="my-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  ['6 kA', 'Common minimum for domestic consumer units'],
+                  ['10 kA', 'Higher domestic / light commercial'],
+                  ['15 kA', 'Commercial boards near the supply'],
+                  ['25 kA+', 'Industrial / close to transformer'],
+                ].map(([kA, use]) => (
+                  <div
+                    key={kA}
+                    className="rounded-xl bg-white/[0.04] border border-white/10 p-3 text-center"
+                  >
+                    <div className="text-yellow-300 font-bold text-lg">{kA}</div>
+                    <div className="text-white/70 text-xs mt-1 leading-snug">{use}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-white/60 text-xs">
+                Figures are typical device ratings, not BS 7671 limits — always confirm the breaking
+                capacity marked on the actual device. See the{' '}
+                <SEOInternalLink href="/guides/prospective-fault-current-explained">
+                  prospective fault current guide
+                </SEOInternalLink>{' '}
+                for how Ipf is determined (BS 7671 Reg 643.7.3.201, Appendix 14).
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is seventh:</strong> It follows naturally
@@ -651,14 +819,47 @@ export default function TestingSequenceGuidePage() {
                 and interlocking arrangements operate as designed.
               </p>
               <p>
-                <strong className="text-yellow-400">RCD testing method:</strong> For each RCD, carry
-                out the following tests using the RCD test function on the multifunction tester:
-                push-button test (mechanical function check), half-rated current test at 0.5x IΔn on
-                both half-cycles (must NOT trip), full rated current test at 1x IΔn on both
-                half-cycles (must trip within 300 ms for general type, 130-500 ms for Type S), and
-                five-times rated current test at 5x IΔn on both half-cycles (must trip within 40 ms
-                for general type, 50-200 ms for Type S). Record the worst-case trip time from both
-                half-cycles for each test.
+                <strong className="text-yellow-400">RCD testing method:</strong> For each RCD,
+                carry out the push-button test (mechanical function check) followed by the
+                instrument tests on both positive and negative half-cycles, recording the worst-case
+                (longest) trip time for each step. The table below sets out the test multiples and
+                the time limits used to confirm satisfactory operation.
+              </p>
+              <div className="my-4 overflow-hidden rounded-xl border border-white/10">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-white/[0.06] text-white/80">
+                      <th className="px-3 py-2 font-semibold">Test current</th>
+                      <th className="px-3 py-2 font-semibold">General (non-delay)</th>
+                      <th className="px-3 py-2 font-semibold">Type S (time-delayed)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-white">
+                    <tr>
+                      <td className="px-3 py-2 font-mono">0.5× IΔn</td>
+                      <td className="px-3 py-2 text-blue-300">Must NOT trip</td>
+                      <td className="px-3 py-2 text-blue-300">Must NOT trip</td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2 font-mono">1× IΔn</td>
+                      <td className="px-3 py-2">Trip ≤ 300 ms</td>
+                      <td className="px-3 py-2">Trip 130–500 ms</td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2 font-mono">5× IΔn</td>
+                      <td className="px-3 py-2">Trip ≤ 40 ms</td>
+                      <td className="px-3 py-2">Trip ≤ 150 ms</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/60 text-xs">
+                BS 7671 Reg 643.8 deems effectiveness verified where a general non-delay RCD trips
+                within 300 ms (130–500 ms for ‘S’ type) at rated IΔn. The 0.5× and 5× multiples and
+                their limits derive from the RCD product standards (BS EN 61008-1 / 61009-1). See
+                the{' '}
+                <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
+                the full procedure.
               </p>
               <p>
                 <strong className="text-yellow-400">Other functional tests:</strong> Verify correct
@@ -668,16 +869,15 @@ export default function TestingSequenceGuidePage() {
                 correctly.
               </p>
               <p>
-                <strong className="text-yellow-400">A4:2026 additions:</strong> Where an Arc Fault
-                Detection Device (AFDD) is installed, BS 7671:2018+A4:2026 Reg 421.1.7 recommends
-                AFDDs on AC final circuits to mitigate fire risk from arc fault currents. During
-                functional testing, verify the AFDD self-test indicator operates correctly by
-                pressing the test button and confirming the device resets. Under Reg 133.1.3
-                (A4:2026), the use of any equipment whose installation BS 7671 requires to be
-                recorded must be noted on the appropriate Part 6 certification (EIC or EICR). This
-                includes AFDD presence — ensure it is captured on the certificate so that the
-                inspecting electrician at the next periodic inspection is aware of its presence and
-                function.
+                <strong className="text-yellow-400">A4:2026 additions:</strong> Under BS
+                7671:2018+A4:2026 Reg 421.1.7, Arc Fault Detection Devices (AFDDs) conforming to BS
+                EN 62606 are now <strong className="text-white">required</strong> for single-phase
+                AC final circuits supplying socket-outlets rated up to and including 32 A in high
+                rise residential buildings (HRRBs), houses in multiple occupation (HMOs),
+                purpose-built student accommodation and care homes. For all other premises, an AFDD
+                on such circuits is recommended. Where fitted, the AFDD must be placed at the origin
+                of the circuit it protects. During functional testing, operate the AFDD test button
+                and confirm the device trips and resets correctly.
               </p>
               <p>
                 <strong className="text-yellow-400">Pass/fail (RCDs):</strong> At 0.5x IΔn — must

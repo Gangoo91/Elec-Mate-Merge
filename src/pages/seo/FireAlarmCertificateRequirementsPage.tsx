@@ -10,7 +10,6 @@ import {
   BookOpen,
   GraduationCap,
   AlertTriangle,
-  CheckCircle2,
   Calendar,
   Wrench,
   Building2,
@@ -47,7 +46,7 @@ const keyTakeaways = [
   'BS 5839-1 requires a design certificate confirming the system category, detector layout, sounder coverage, and cable routes before installation begins.',
   'The commissioning certificate must record functional tests of every device, cause-and-effect verification, sounder level measurements, and battery drain tests.',
   'Annual service records are a legal requirement under the Regulatory Reform (Fire Safety) Order 2005 and must be kept in the fire safety logbook.',
-  'The fire alarm panel’s mains supply circuit also requires a BS 7671 EIC. Under A4:2026 Reg 133.1.3, any AFDD or SPD on that circuit must be explicitly recorded on the Part 6 certificate.',
+  'The fire alarm panel’s mains supply circuit also requires a BS 7671 Electrical Installation Certificate. Under A4:2026 the Appendix 6 model forms now include dedicated fields for recording the details of any SPDs and AFDDs fitted on that circuit.',
   'Elec-Mate provides digital fire alarm certificate templates for all five certificate types, with professional PDF export and cloud storage.',
 ];
 
@@ -152,45 +151,78 @@ const sections = [
           through to ongoing annual servicing. Each stage requires specific documentation to
           demonstrate compliance with the standard and with fire safety legislation.
         </p>
-        <p>The five key certificate types for fire alarm systems are:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Design certificate</strong> — confirms the system has been designed in
-                accordance with BS 5839-1 and the fire risk assessment.
+        <p>
+          The five key certificate types for fire alarm systems map onto five distinct stages of the
+          system&apos;s life. Each has a different author and a different job to do:
+        </p>
+        <div className="grid sm:grid-cols-2 gap-4 my-6">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-black bg-yellow-400 rounded-full px-2 py-0.5">
+                1
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Installation certificate</strong> — confirms the physical installation
-                matches the approved design.
+              <h3 className="font-bold text-white">Design certificate</h3>
+            </div>
+            <p className="text-white/80 text-sm mb-2">
+              Confirms the system was designed to BS 5839-1 and the fire risk assessment.
+            </p>
+            <p className="text-yellow-400/90 text-xs font-medium">Issued by: the system designer</p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-black bg-yellow-400 rounded-full px-2 py-0.5">
+                2
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Commissioning certificate</strong> — records the results of all functional
-                tests carried out during commissioning.
+              <h3 className="font-bold text-white">Installation certificate</h3>
+            </div>
+            <p className="text-white/80 text-sm mb-2">
+              Confirms the physical installation matches the approved design.
+            </p>
+            <p className="text-yellow-400/90 text-xs font-medium">Issued by: the installer</p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-black bg-yellow-400 rounded-full px-2 py-0.5">
+                3
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Verification certificate</strong> — an independent third-party confirmation
-                of compliance (where required).
+              <h3 className="font-bold text-white">Commissioning certificate</h3>
+            </div>
+            <p className="text-white/80 text-sm mb-2">
+              Records the results of all functional tests carried out during commissioning.
+            </p>
+            <p className="text-yellow-400/90 text-xs font-medium">
+              Issued by: the commissioning engineer
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-black bg-yellow-400 rounded-full px-2 py-0.5">
+                4
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Annual service records</strong> — ongoing documentation of testing,
-                maintenance, and any defects found.
+              <h3 className="font-bold text-white">Verification certificate</h3>
+            </div>
+            <p className="text-white/80 text-sm mb-2">
+              Independent third-party confirmation of compliance, where required.
+            </p>
+            <p className="text-yellow-400/90 text-xs font-medium">
+              Issued by: an independent verifier
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-black bg-yellow-400 rounded-full px-2 py-0.5">
+                5
               </span>
-            </li>
-          </ul>
+              <h3 className="font-bold text-white">Annual service records</h3>
+            </div>
+            <p className="text-white/80 text-sm mb-2">
+              Ongoing documentation of testing, maintenance, and any defects found — kept for the
+              life of the system.
+            </p>
+            <p className="text-yellow-400/90 text-xs font-medium">
+              Issued by: the servicing engineer (with weekly tests logged by the Responsible Person)
+            </p>
+          </div>
         </div>
         <p>
           Together, these certificates form a complete audit trail demonstrating that the fire alarm
@@ -254,6 +286,67 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <p>
+          The single most important entry on the design certificate is the system category, because
+          it dictates the level of detection coverage the whole installation must achieve. BS 5839-1
+          uses three letter prefixes — L for life protection, P for property protection, and M for
+          manual systems:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">BS 5839-1 System Categories</h3>
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">L1</span>
+              <span className="text-white text-sm">
+                Life protection with automatic detection throughout all areas of the building.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">L2</span>
+              <span className="text-white text-sm">
+                As L3, plus detection in specified high-risk or higher-hazard areas.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">L3</span>
+              <span className="text-white text-sm">
+                Detection on escape routes and in rooms opening onto those escape routes, to give
+                early warning for evacuation.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">L4</span>
+              <span className="text-white text-sm">
+                Detection within the escape routes only.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">L5</span>
+              <span className="text-white text-sm">
+                A bespoke life-safety category covering only specific areas defined by the fire risk
+                assessment or a particular fire safety objective.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">P1</span>
+              <span className="text-white text-sm">
+                Property protection with automatic detection throughout all areas of the building.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">P2</span>
+              <span className="text-white text-sm">
+                Property protection with detection in defined parts of the building only.
+              </span>
+            </div>
+            <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-gray-900/60 border border-gray-700/40">
+              <span className="text-yellow-400 font-bold shrink-0 w-12">M</span>
+              <span className="text-white text-sm">
+                A manual system — manual call points and sounders only, with no automatic detection.
+              </span>
+            </div>
+          </div>
         </div>
         <p>
           The design certificate must be signed by the designer and should be reviewed and accepted
@@ -344,11 +437,12 @@ const sections = [
           <SEOInternalLink href="/guides/electrical-certificate-types-uk">
             electrical certificate types
           </SEOInternalLink>
-          , the installation certificate for the fire alarm system is separate from the EIC for the
-          general electrical installation. That EIC — covering the panel&apos;s mains supply circuit
-          — must be completed in accordance with BS 7671 and, under A4:2026 Regulation 133.1.3, any
-          AFDD or SPD fitted on that supply circuit must be explicitly recorded on the Part 6
-          certificate.
+          , the installation certificate for the fire alarm system is separate from the Electrical
+          Installation Certificate for the general electrical installation. That EIC — covering the
+          panel&apos;s mains supply circuit — must be completed in accordance with BS 7671. Under
+          A4:2026 the Appendix 6 model forms were revised to add dedicated fields for recording the
+          details of any surge protective devices (SPDs) and arc fault detection devices (AFDDs)
+          fitted on that circuit, so these now have to be captured on the certificate.
         </p>
       </>
     ),
@@ -492,6 +586,29 @@ const sections = [
           be documented through service records. BS 5839-1 requires regular servicing at defined
           intervals, and each visit must be recorded in the fire alarm logbook.
         </p>
+        <div className="grid sm:grid-cols-3 gap-4 my-6">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="text-yellow-400 font-bold text-sm mb-1">Weekly</p>
+            <p className="text-white font-bold mb-1">Test a call point</p>
+            <p className="text-white/70 text-xs">
+              Logged by the Responsible Person — a different manual call point each week.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="text-yellow-400 font-bold text-sm mb-1">Every six months</p>
+            <p className="text-white font-bold mb-1">Periodic service</p>
+            <p className="text-white/70 text-xs">
+              Carried out by a competent servicing engineer; recorded as a service report.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <p className="text-yellow-400 font-bold text-sm mb-1">Annually</p>
+            <p className="text-white font-bold mb-1">Full inspection</p>
+            <p className="text-white/70 text-xs">
+              Every device tested over the course of the year, with a comprehensive report.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Service Record Requirements</h3>
           <ul className="space-y-3 text-white">
@@ -694,6 +811,11 @@ export default function FireAlarmCertificateRequirementsPage() {
       }
       heroSubtitle="BS 5839 requires five types of certificate across the fire alarm system lifecycle: design, installation, commissioning, verification, and annual service records. This guide explains what each certificate must contain, who can issue them, and how long they must be kept."
       readingTime={12}
+      answerBox={{
+        question: 'What certificates do you need for a fire alarm system?',
+        answer:
+          'A BS 5839-1 fire alarm system needs a design certificate (confirming the chosen category and layout), an installation certificate (confirming the work matches the design), and a commissioning certificate (recording every functional test). Independent verification is recommended for complex or sleeping-risk premises. Annual service records are then kept for the life of the system in the fire safety logbook.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

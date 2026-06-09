@@ -100,8 +100,16 @@ export interface PVArray {
 
   // DC Cabling
   dcCableType: string; // e.g., "H1Z2Z2-K Solar Cable"
-  dcCableSize: number; // mm²
+  dcCableSize: number; // mm² (live conductor CSA)
+  dcEarthCableSize: number; // mm² (earthing/bonding conductor CSA — BS 7671 712)
   dcCableLength: number; // metres (one way)
+
+  // String overcurrent protection (BS 7671 712.432 / BS EN 62446-1) — required for
+  // parallel strings; "None — sized for reverse current" is a valid entry where N≤2.
+  stringOcpdType: string; // e.g., gPV fuse, "None (cable sized for reverse current)"
+  stringOcpdRatingA: number; // A (In)
+  stringOcpdDcRatingV: number; // V DC rating
+  stringOcpdBreakingCapacityKa: number; // kA breaking capacity
 
   // Notes
   notes: string;
@@ -253,6 +261,8 @@ export interface InverterTestResult {
   // Isolators
   dcIsolatorOperational: boolean;
   dcIsolatorLocation: string;
+  dcIsolatorRatingA: number; // A — DC isolator current rating (BS EN 62446-1)
+  dcIsolatorRatingV: number; // V — DC isolator voltage rating (≥ string Voc at min temp)
   acIsolatorOperational: boolean;
   acIsolatorLocation: string;
 
@@ -478,6 +488,10 @@ export interface SolarPVFormData {
   designReference?: string; // Internal design/quote reference
   previousInstallationRef?: string; // If retrofit/extension, reference to prior work
 
+  // ========== Verification references (MCS / BS EN 62446-1 handover) ==========
+  linkedEicReference: string; // Ref of the BS 7671 EIC / IEC 60364-6 cert for the AC installation
+  recommendedRetestIntervalYears: number; // Next inspection recommended after not more than (years)
+
   // ========== PV Arrays ==========
   arrays: PVArray[];
 
@@ -548,7 +562,12 @@ export const getDefaultPVArray = (arrayNumber: number = 1): PVArray => ({
   arrayCapacity: 0,
   dcCableType: 'H1Z2Z2-K Solar Cable',
   dcCableSize: 6,
+  dcEarthCableSize: 6,
   dcCableLength: 0,
+  stringOcpdType: '',
+  stringOcpdRatingA: 0,
+  stringOcpdDcRatingV: 0,
+  stringOcpdBreakingCapacityKa: 0,
   notes: '',
 });
 
@@ -594,6 +613,8 @@ export const getDefaultInverterTestResult = (inverterId: string): InverterTestRe
   inverterId,
   dcIsolatorOperational: false,
   dcIsolatorLocation: '',
+  dcIsolatorRatingA: 0,
+  dcIsolatorRatingV: 0,
   acIsolatorOperational: false,
   acIsolatorLocation: '',
   antiIslandingTest: false,
@@ -659,6 +680,8 @@ export const getDefaultSolarPVFormData = (): SolarPVFormData => ({
   yieldCalculationNotes: '',
   designReference: '',
   previousInstallationRef: '',
+  linkedEicReference: '',
+  recommendedRetestIntervalYears: 0,
 
   // Arrays - start with one empty array
   arrays: [getDefaultPVArray(1)],

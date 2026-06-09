@@ -173,11 +173,42 @@ export default function ElectricianAppForiPhonePage() {
                 with your finger or an Apple Pencil (on compatible models).
               </p>
               <p>
-                The EICR and EIC workflows include all A4:2026 fields: AFDD presence (Reg 421.1.7 —
-                recommended in AC final circuits), RCD on lighting circuits (Reg 411.3.4 —
-                30&nbsp;mA RCD mandatory in domestic premises), and SPD labelling (Reg 514.16.1),
-                keeping your certificates current with the latest edition of BS&nbsp;7671.
+                The EICR and EIC workflows include the fields introduced by BS&nbsp;7671:2018+A4:2026,
+                keeping your certificates current with the latest edition rather than the superseded A3
+                forms still used by older tools:
               </p>
+              <div className="grid sm:grid-cols-3 gap-3 not-prose">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+                    AFDD presence
+                  </div>
+                  <div className="mt-1 text-sm font-mono text-white/70">Reg 421.1.7</div>
+                  <p className="mt-2 text-sm text-white/80">
+                    Records whether arc fault detection devices are fitted. A4:2026 recommends AFDDs in
+                    AC final circuits of a fixed installation to mitigate the risk of fire.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+                    RCD on luminaire circuits
+                  </div>
+                  <div className="mt-1 text-sm font-mono text-white/70">Reg 411.3.4</div>
+                  <p className="mt-2 text-sm text-white/80">
+                    Within domestic (household) premises, additional protection by a 30&nbsp;mA RCD is
+                    required for AC final circuits supplying luminaires.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+                    SPD labelling
+                  </div>
+                  <div className="mt-1 text-sm font-mono text-white/70">Reg 514.16.1</div>
+                  <p className="mt-2 text-sm text-white/80">
+                    A label is required to indicate the presence of surge protective devices, with an
+                    exception for domestic (household) premises or similar.
+                  </p>
+                </div>
+              </div>
             </>
           ),
         },
@@ -201,33 +232,58 @@ export default function ElectricianAppForiPhonePage() {
                 results display clearly with colour-coded pass/fail indicators. Popular calculators
                 include:
               </p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>
+              <div className="grid sm:grid-cols-2 gap-3 not-prose">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
-                    Cable sizing calculator
-                  </SEOInternalLink>{' '}
-                  — BS 7671 cable selection with all correction factors
-                </li>
-                <li>
+                    <span className="font-semibold text-white">Cable sizing calculator</span>
+                  </SEOInternalLink>
+                  <p className="mt-1 text-sm text-white/80">
+                    BS 7671 cable selection applying all correction factors before checking
+                    current-carrying capacity.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
                   <SEOInternalLink href="/tools/voltage-drop-calculator">
-                    Voltage drop calculator
-                  </SEOInternalLink>{' '}
-                  — verify compliance with Regulation 525.202 (Appendix 4, Section 6.4 — 3% lighting
-                  / 5% other circuits)
-                </li>
-                <li>
+                    <span className="font-semibold text-white">Voltage drop calculator</span>
+                  </SEOInternalLink>
+                  <p className="mt-1 text-sm text-white/80">
+                    Checks compliance with Regulation 525.202 against the limits in Appendix 4, Table
+                    4Ab.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
                   <SEOInternalLink href="/tools/max-demand-calculator">
-                    Maximum demand calculator
-                  </SEOInternalLink>{' '}
-                  — total installation demand with diversity factors
-                </li>
-                <li>Earth fault loop impedance verification</li>
-                <li>
-                  Prospective fault current calculation — follows GN3 Reg 7.5 procedure, calculating
-                  both short-circuit current (between live conductors) and earth-fault current (line
-                  to MET), then returning the greater value for entry on the EIC or EICR
-                </li>
-              </ul>
+                    <span className="font-semibold text-white">Maximum demand calculator</span>
+                  </SEOInternalLink>
+                  <p className="mt-1 text-sm text-white/80">
+                    Totals installation demand with diversity factors applied per circuit type.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <span className="font-semibold text-white">Earth fault loop impedance</span>
+                  <p className="mt-1 text-sm text-white/80">
+                    Verifies measured Zs against the maximum permitted value for the protective device
+                    and disconnection time.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:col-span-2">
+                  <span className="font-semibold text-white">Prospective fault current</span>
+                  <p className="mt-1 text-sm text-white/80">
+                    Regulation 643.7.3.201 requires the prospective short-circuit current and the
+                    prospective earth fault current to be determined. The calculator returns the
+                    greater of the two for entry on the EIC or EICR, with the determination methods set
+                    out in Appendix 14.
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4 not-prose">
+                <p className="text-sm text-white/85">
+                  <span className="font-semibold text-white">Voltage drop limits (Table 4Ab).</span> For
+                  a low voltage installation supplied directly from a public LV distribution system, the
+                  permitted drop is 3% for lighting and 5% for other uses. Where the installation is fed
+                  from a private LV supply, the limits rise to 6% for lighting and 8% for other uses.
+                </p>
+              </div>
             </>
           ),
         },
@@ -278,15 +334,29 @@ export default function ElectricianAppForiPhonePage() {
                 and downloaded training content function without any internet connection.
               </p>
               <p>
-                Data auto-saves to local iPhone storage every 10 seconds. When connectivity returns,
-                cloud sync happens automatically every 30 seconds. The beforeunload emergency save
-                captures any unsaved data when you close the app.
+                Data auto-saves to local iPhone storage continuously. When connectivity returns,
+                cloud sync happens automatically, and an emergency save captures any unsaved data when
+                you close the app. Storage stays light: a typical month of certificates, test data, and
+                downloaded courses uses well under 200MB.
               </p>
-              <p>
-                The iPhone's local storage is used efficiently — a typical month of certificates,
-                test data, and downloaded courses uses less than 200MB. The app does not consume
-                excessive storage even with heavy use.
-              </p>
+              <div className="grid sm:grid-cols-2 gap-3 not-prose">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-2xl font-bold text-yellow-400">Every 10s</div>
+                  <div className="mt-1 text-sm text-white/80">Local auto-save while you work</div>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-2xl font-bold text-yellow-400">Every 30s</div>
+                  <div className="mt-1 text-sm text-white/80">Cloud sync once you are back online</div>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-2xl font-bold text-yellow-400">~50MB</div>
+                  <div className="mt-1 text-sm text-white/80">Base app download size</div>
+                </div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+                  <div className="text-2xl font-bold text-yellow-400">&lt;200MB</div>
+                  <div className="mt-1 text-sm text-white/80">Typical month with downloaded courses</div>
+                </div>
+              </div>
               <p>
                 For electricians working in basements, plant rooms, or rural locations, offline mode
                 means you never have to worry about losing work. The app detects network state
@@ -399,7 +469,7 @@ export default function ElectricianAppForiPhonePage() {
         {
           question: 'Does the app support A4:2026 BS 7671 requirements?',
           answer:
-            'Yes. Elec-Mate certificates are current with BS 7671:2018+A4:2026. The EICR and EIC forms include fields for AFDD presence (Reg 421.1.7 — recommended in AC final circuits to mitigate fire risk from arc fault currents), RCD protection on lighting circuits (Reg 411.3.4 — 30 mA RCD mandatory on AC luminaire circuits in domestic premises), and SPD labelling (Reg 514.16.1 — label required where surge protective devices are installed). This keeps your certificates compliant with the current edition rather than the superseded A3 forms used by older tools.',
+            'Yes. Elec-Mate certificates are current with BS 7671:2018+A4:2026. The EICR and EIC forms include fields for AFDD presence (Reg 421.1.7 — recommended in AC final circuits of a fixed installation to mitigate the risk of fire), RCD protection on luminaire circuits (Reg 411.3.4 — within domestic premises, a 30 mA RCD is required for AC final circuits supplying luminaires), and SPD labelling (Reg 514.16.1 — a label is required where surge protective devices are installed, with an exception for domestic premises or similar). This keeps your certificates compliant with the current edition rather than the superseded A3 forms used by older tools.',
         },
         {
           question: 'Can I share certificates from iPhone via AirDrop?',

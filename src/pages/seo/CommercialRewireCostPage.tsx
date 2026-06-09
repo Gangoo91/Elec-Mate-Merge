@@ -6,13 +6,9 @@ import {
   PoundSterling,
   Calculator,
   Building2,
-  Zap,
-  ShieldCheck,
   AlertTriangle,
   FileCheck2,
   Wrench,
-  Cable,
-  Flame,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -164,44 +160,87 @@ const sections = [
           internal floor area. The rate varies significantly depending on the specification level
           and building complexity.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Per Square Metre Rates (2026)</h3>
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Basic specification (£30 to £45/m²)</strong> — Standard office rewire with
-                power, lighting, and basic containment. No fire alarm or emergency lighting in
-                scope. Single distribution board replacement. Suitable for small office
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 py-4 border-b border-white/10">
+            <h3 className="font-bold text-white text-lg">Per Square Metre Rates (2026)</h3>
+            <p className="text-white/60 text-xs mt-1">
+              Indicative UK market guidance — not a quote. Rates cover supply, install, test and
+              certification.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+            <div className="p-5 bg-green-500/[0.06]">
+              <div className="text-xs font-semibold uppercase tracking-wide text-green-300/80">
+                Basic
+              </div>
+              <div className="text-2xl font-bold text-white mt-1">£30–£45/m²</div>
+              <p className="text-white/70 text-sm leading-relaxed mt-3">
+                Standard office rewire with power, lighting and basic containment. No fire alarm or
+                emergency lighting in scope. Single distribution board replacement. Suits small
                 refurbishments under 300m².
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Mid specification (£45 to £60/m²)</strong> — Full rewire with 3-phase
-                distribution, sub-distribution boards, structured data cabling, fire alarm (Category
-                L2 to BS 5839-1), emergency lighting (to BS 5266-1), and dado or floor box
-                containment. The most common specification for medium-sized commercial
-                refurbishments.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>High specification (£60 to £80/m²)</strong> — Full rewire with MCCB panel
-                board, multiple sub-distribution boards, high-density power and data (1 double per
-                desk position), addressable fire alarm, maintained emergency lighting, lighting
-                control systems (DALI), BMS integration, and UPS provisions. Typical for corporate
-                offices, medical centres, and high-end retail.
-              </span>
-            </li>
-          </ul>
+              </p>
+            </div>
+            <div className="p-5 bg-yellow-500/[0.06]">
+              <div className="text-xs font-semibold uppercase tracking-wide text-yellow-300/80">
+                Mid · Most common
+              </div>
+              <div className="text-2xl font-bold text-white mt-1">£45–£60/m²</div>
+              <p className="text-white/70 text-sm leading-relaxed mt-3">
+                Full rewire with 3-phase distribution, sub-distribution boards, structured data
+                cabling, fire alarm (Category L2 to BS 5839-1), emergency lighting (BS 5266-1) and
+                dado or floor-box containment.
+              </p>
+            </div>
+            <div className="p-5 bg-blue-500/[0.06]">
+              <div className="text-xs font-semibold uppercase tracking-wide text-blue-300/80">
+                High spec
+              </div>
+              <div className="text-2xl font-bold text-white mt-1">£60–£80/m²</div>
+              <p className="text-white/70 text-sm leading-relaxed mt-3">
+                MCCB panel board, multiple sub-distribution boards, high-density power and data,
+                addressable fire alarm, maintained emergency lighting, DALI lighting control, BMS
+                integration and UPS provisions. Corporate offices, medical centres, high-end retail.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 py-3 border-b border-white/10">
+            <h3 className="font-bold text-white text-base">Worked Examples by Floor Area</h3>
+          </div>
+          <table className="w-full text-sm text-left">
+            <thead className="text-white/60 text-xs uppercase tracking-wide">
+              <tr className="border-b border-white/10">
+                <th className="px-5 py-3 font-semibold">Floor area</th>
+                <th className="px-5 py-3 font-semibold">Specification</th>
+                <th className="px-5 py-3 font-semibold text-right">Indicative cost</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-b border-white/5">
+                <td className="px-5 py-3">200m²</td>
+                <td className="px-5 py-3 text-white/80">Basic office</td>
+                <td className="px-5 py-3 text-right font-medium">£6,000–£9,000</td>
+              </tr>
+              <tr className="border-b border-white/5 bg-yellow-500/[0.04]">
+                <td className="px-5 py-3">500m²</td>
+                <td className="px-5 py-3 text-white/80">Mid spec</td>
+                <td className="px-5 py-3 text-right font-medium">£22,500–£30,000</td>
+              </tr>
+              <tr>
+                <td className="px-5 py-3">1,000m²</td>
+                <td className="px-5 py-3 text-white/80">High spec fit-out</td>
+                <td className="px-5 py-3 text-right font-medium">£60,000–£80,000</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          For a typical 500m² commercial office at mid specification, the electrical installation
-          cost would be £22,500 to £30,000. A 1,000m² high-specification fit-out would be £60,000 to
-          £80,000. These figures include materials, labour, containment, testing, and certification.
+          These figures include materials, labour, containment, testing and certification. They
+          exclude specialist systems such as access control or CCTV unless specifically scoped, and
+          assume a vacant or partly occupied building. Always treat per-m² rates as a starting point
+          for a measured estimate, not a fixed price — the factors covered further down this guide
+          can move the rate by a factor of two.
         </p>
       </>
     ),
@@ -212,46 +251,67 @@ const sections = [
     content: (
       <>
         <p>
-          Almost all commercial premises operate on a 3-phase supply. The distribution architecture
+          Almost all commercial premises operate on a 3-phase supply. The{' '}
+          <SEOInternalLink href="/guides/distribution-board-wiring">
+            distribution architecture
+          </SEOInternalLink>{' '}
           is the backbone of the installation and must be designed to accommodate the assessed load
           with appropriate diversity applied.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Distribution Equipment Costs</h3>
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>3-phase main distribution board (TPN)</strong> — £2,000 to £6,000 supply and
-                install depending on rating and number of ways. An 18-way TPN board with MCCB
-                incomer costs approximately £3,500 installed.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Sub-distribution boards</strong> — £800 to £2,500 each supply and install.
-                Each floor or zone typically has its own sub-distribution board fed from the main
-                board via a submain cable.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Submain cables</strong> — £15 to £60 per metre installed depending on CSA. A
-                4-core 25mm² SWA cable for a floor sub-distribution costs approximately £25 per
-                metre installed including containment and termination.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>SPD protection</strong> — Required under BS 7671:2018+A4:2026 Regulation
-                443.4. Type 1+2 SPDs at the main board cost £300 to £600 installed. Type 2 SPDs at
-                sub-distribution boards cost £150 to £300 each.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 py-3 border-b border-white/10">
+            <h3 className="font-bold text-white text-base">Distribution Equipment Costs</h3>
+          </div>
+          <table className="w-full text-sm text-left">
+            <thead className="text-white/60 text-xs uppercase tracking-wide">
+              <tr className="border-b border-white/10">
+                <th className="px-5 py-3 font-semibold">Item</th>
+                <th className="px-5 py-3 font-semibold text-right">Supply &amp; install</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-b border-white/5 align-top">
+                <td className="px-5 py-3">
+                  <strong>3-phase main distribution board (TPN)</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    An 18-way TPN board with MCCB incomer is roughly £3,500 installed; rate scales
+                    with rating and number of ways.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£2,000–£6,000</td>
+              </tr>
+              <tr className="border-b border-white/5 align-top">
+                <td className="px-5 py-3">
+                  <strong>Sub-distribution board (each)</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    Each floor or zone typically has its own board fed from the main board via a
+                    submain cable.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£800–£2,500</td>
+              </tr>
+              <tr className="border-b border-white/5 align-top">
+                <td className="px-5 py-3">
+                  <strong>Submain cables (per metre)</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    Depends on CSA. A 4-core 25mm² SWA floor submain is roughly £25/m installed
+                    including containment and termination.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£15–£60/m</td>
+              </tr>
+              <tr className="align-top bg-blue-500/[0.04]">
+                <td className="px-5 py-3">
+                  <strong>Surge protection (SPD)</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    Type 1+2 at the main board £300–£600 installed; Type 2 at sub-boards £150–£300
+                    each. See the regulations section for when these are required.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£150–£600</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           Phase balancing is critical in commercial installations. The design should distribute
@@ -260,9 +320,9 @@ const sections = [
         </p>
         <p>
           Commercial fit-outs increasingly include EV charging provision. BS 7671:2018+A4:2026
-          Chapter 722 covers electric vehicle charging installations, and Regulation 722.311.201
-          specifically permits load curtailment — automatic or manual reduction or disconnection of
-          EV charger loads — to be taken into account when calculating maximum demand. This means
+          Section 722 covers electric vehicle charging installations, and Regulation 722.311.201
+          permits load curtailment — load reduction or disconnection, automatic or manual — to be
+          taken into account when determining the maximum demand of the installation. This means
           that multiple EV charging points can often be accommodated on an existing incoming supply
           provided a suitable load management system is specified, without requiring a costly DNO
           supply upgrade. Designers must document the curtailment assumptions used in the demand
@@ -322,36 +382,52 @@ const sections = [
           and emergency lighting. These are often the responsibility of the electrical contractor
           even though they require specialist design competence.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Structured data cabling</strong> — Cat6A data point: £80 to £150 per point
-                installed (including patch panel termination and testing). A typical office desk
-                position requires 2 data points. Fibre backbone between comms rooms: £500 to £1,500
-                per link.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fire alarm to BS 5839-1</strong> — A Category L2 addressable fire alarm
-                system costs £6 to £12 per square metre. This includes detectors, manual call
-                points, sounders, interface units, and an addressable panel. Design must be by a
-                competent fire alarm designer.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting to BS 5266-1</strong> — £3 to £6 per square metre for a
-                maintained or non-maintained system. This includes emergency luminaires on escape
-                routes, open areas, and high-risk task areas. 3-hour duration is standard for most
-                commercial premises.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 py-3 border-b border-white/10">
+            <h3 className="font-bold text-white text-base">Ancillary System Costs</h3>
+          </div>
+          <table className="w-full text-sm text-left">
+            <thead className="text-white/60 text-xs uppercase tracking-wide">
+              <tr className="border-b border-white/10">
+                <th className="px-5 py-3 font-semibold">System</th>
+                <th className="px-5 py-3 font-semibold text-right">Indicative cost</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-b border-white/5 align-top">
+                <td className="px-5 py-3">
+                  <strong>Structured data cabling (Cat6A point)</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    Includes patch-panel termination and testing. A typical desk needs 2 points.
+                    Fibre backbone between comms rooms: £500–£1,500 per link.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">
+                  £80–£150/point
+                </td>
+              </tr>
+              <tr className="border-b border-white/5 align-top">
+                <td className="px-5 py-3">
+                  <strong>Fire alarm to BS 5839-1 (Category L2, addressable)</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    Detectors, manual call points, sounders, interface units and an addressable
+                    panel. Design must be by a competent fire alarm designer.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£6–£12/m²</td>
+              </tr>
+              <tr className="align-top">
+                <td className="px-5 py-3">
+                  <strong>Emergency lighting to BS 5266-1</strong>
+                  <span className="block text-white/60 text-xs mt-1">
+                    Maintained or non-maintained luminaires on escape routes, open areas and
+                    high-risk task areas. 3-hour duration is standard for most commercial premises.
+                  </span>
+                </td>
+                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£3–£6/m²</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           For a 500m² office, ancillary systems might add £8,000 to £15,000 to the base electrical
@@ -370,48 +446,57 @@ const sections = [
           The per-square-metre rate can vary by a factor of two or more depending on these key
           variables:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Building type and access</strong> — A vacant shell with clear ceiling voids
-                is far cheaper to wire than an occupied building with limited access, asbestos
-                risks, and out-of-hours working requirements.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Specification density</strong> — Power and data outlet density varies
-                hugely. A basic warehouse office might have 1 double socket per 10m². A trading
-                floor might have 4 doubles per desk position at 6m² per desk.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Working hours restrictions</strong> — Occupied buildings may require evening
-                and weekend working, adding 25% to 50% to labour costs through overtime rates and
-                reduced productivity.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Asbestos and legacy services</strong> — Pre-2000 buildings often contain
-                asbestos. Removal or encapsulation costs are borne by the client but cause programme
-                delays that affect the electrical contractor.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Location</strong> — London rates are 20% to 40% higher than regional rates
-                due to labour costs, parking, congestion charge, and site access restrictions.
-              </span>
-            </li>
-          </ul>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
+              <h4 className="font-bold text-white text-sm">Building type and access</h4>
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              A vacant shell with clear ceiling voids is far cheaper to wire than an occupied
+              building with limited access, asbestos risks and out-of-hours working.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
+              <h4 className="font-bold text-white text-sm">Specification density</h4>
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Outlet density varies hugely. A basic warehouse office might have 1 double socket per
+              10m²; a trading floor might have 4 doubles per desk at 6m² per desk.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
+              <h4 className="font-bold text-white text-sm">Working-hours restrictions</h4>
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Occupied buildings may need evening and weekend working, adding 25% to 50% to labour
+              costs through overtime rates and reduced productivity.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
+              <h4 className="font-bold text-white text-sm">Asbestos and legacy services</h4>
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Pre-2000 buildings often contain asbestos. Removal or encapsulation is the client's
+              cost but causes programme delays that affect the electrical contractor.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
+              <h4 className="font-bold text-white text-sm">Location</h4>
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              London rates are 20% to 40% higher than regional rates due to labour costs, parking,
+              congestion charge and site-access restrictions.
+            </p>
+          </div>
         </div>
       </>
     ),
@@ -436,20 +521,50 @@ const sections = [
           inspection may be split across multiple schedules of test results.
         </p>
         <p>
-          Surge protection devices (SPDs) are effectively mandatory on commercial rewires under BS
-          7671:2018+A4:2026 Regulation 443.4. Specifically, Regulation 443.4(c) requires SPD
-          protection where a transient overvoltage could result in interruption of commercial or
-          industrial activity — a criterion that virtually all commercial premises meet. Where it is
-          not immediately clear whether criteria (a) to (d) of Regulation 443.4 are met, Regulation
-          443.4(e) requires a risk assessment to determine whether protection is necessary. In
-          practice this means a Type 1+2 SPD at the main distribution board is required on every
-          commercial rewire, with Type 2 SPDs at downstream sub-distribution boards where the
-          separation distance from the main SPD exceeds 10 metres.
+          Surge protection is a key consideration on commercial rewires. BS 7671:2018+A4:2026
+          redrafted Regulation 443.4, and Regulation 443.4.1 now requires protection against
+          transient overvoltages where the consequence of an overvoltage could result in:
+        </p>
+        <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5 my-4">
+          <ul className="space-y-2 text-white text-sm">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-300 font-bold shrink-0">(a)</span>
+              <span>serious injury to, or loss of, human life;</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-300 font-bold shrink-0">(b)</span>
+              <span>failure of a safety service, as defined in Part 2; or</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-300 font-bold shrink-0">(c)</span>
+              <span>significant financial or data loss.</span>
+            </li>
+          </ul>
+          <p className="text-white/70 text-xs mt-3 leading-relaxed">
+            For all other cases, protection must be provided unless the owner of the installation
+            declares it is not required because any loss or damage is tolerable and they accept the
+            risk. The previous standalone risk-assessment method (former Regulation 443.5 and Annex
+            A443) was deleted by A4:2026.
+          </p>
+        </div>
+        <p>
+          On most commercial premises the "significant financial or data loss" condition is readily
+          met, so in practice a Type 1+2{' '}
+          <SEOInternalLink href="/guides/spd-surge-protection">SPD</SEOInternalLink> at the main
+          distribution board is specified on the large majority of commercial rewires. Where SPDs
+          are used they must be selected and
+          erected to Section 534. If the protective distance between an SPD and the equipment it
+          protects exceeds 10 metres, Regulation 534.4.4.2 warns that oscillations can lift the
+          voltage at the equipment terminals to up to twice the SPD's voltage protection level —
+          so additional coordinated Type 2 SPDs are typically fitted closer to downstream
+          sub-distribution boards and sensitive equipment.
         </p>
         <p>
-          RCD protection is required for socket outlets up to 32A per Regulation 411.3.3 of BS 7671.
-          In commercial installations, this is typically provided by RCBOs on individual circuits
-          rather than bank RCDs, to avoid nuisance tripping affecting multiple circuits.
+          Additional protection by a 30mA RCD is required for socket-outlets with a rated current
+          not exceeding 32A under Regulation 411.3.3 of BS 7671. In commercial installations this is
+          typically delivered by RCBOs on individual circuits rather than bank RCDs, so that a fault
+          on one circuit does not take out several others — the same approach the regulations
+          encourage to avoid unwanted tripping.
         </p>
         <p>
           Fire alarm systems must be designed and installed to BS 5839-1, with a separate
@@ -546,6 +661,11 @@ export default function CommercialRewireCostPage() {
       }
       heroSubtitle="What does a commercial rewire really cost? This guide covers per-square-metre pricing for 3-phase distribution, containment systems, data cabling, fire alarm, and emergency lighting — with realistic figures for electricians pricing commercial contracts."
       readingTime={14}
+      answerBox={{
+        question: 'How much does a commercial rewire cost per square metre in the UK?',
+        answer:
+          'A commercial rewire typically costs £30 to £80 per square metre in 2026. Basic office work sits at £30 to £45/m²; a mid-spec rewire with 3-phase distribution, fire alarm and emergency lighting runs £45 to £60/m²; and a high-spec corporate fit-out reaches £60 to £80/m². Figures include containment, cabling, distribution, testing and certification to BS 7671:2018+A4:2026.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

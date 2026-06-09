@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Systems up to 3.68kW single-phase (16A per phase) can be notified to the DNO under the simplified G98 procedure after installation. Larger systems require a G99 application with prior DNO approval — which must be obtained before installation begins.',
   'BS 7671:2018+A4:2026 Section 712 covers photovoltaic power supply systems and applies to all solar PV electrical installations. Key requirements include DC isolators at the array and inverter, protection against reverse current, and appropriate labelling throughout the installation.',
   'SAP (Standard Assessment Procedure) calculations are used for new-build solar PV sizing under Building Regulations Part L. For retrofit installations, energy monitoring data or EPC assessments provide the consumption baseline for sizing calculations.',
-  'Battery storage integration requires careful consideration of protection coordination, particularly where export limiting is applied. The combined inverter-battery system must be assessed under BS 7671 Section 712 and the relevant product standards.',
+  'Battery storage integration requires careful consideration of protection coordination, particularly where export limiting is applied. The PV side is assessed under BS 7671 Section 712, while energy storage falls under the prosumer installation requirements of Section 826, together with the relevant product standards.',
 ];
 
 const faqs = [
@@ -56,12 +56,12 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 712 require for solar PV installations?',
     answer:
-      'BS 7671:2018+A4:2026 Section 712 (Photovoltaic Power Supply Systems) sets out the specific requirements for solar PV electrical installations. Key requirements include: a DC isolator must be installed at the array and at the inverter (Regulation 712.537.2); protection against reverse current where required by the array design (Regulation 712.443); suitable protection against overvoltage on both the DC and AC sides; the installation must include appropriate labelling at every point where live parts could be accessed, warning of the dual-supply nature of PV systems (Regulation 712.514); and all cables used on the DC side must be rated for DC use and for the maximum open-circuit voltage of the array (Regulation 712.522). The protective earth continuity of the mounting structure must also be verified.',
+      'BS 7671:2018+A4:2026 Section 712 (Solar photovoltaic (PV) power supply systems) sets out the specific requirements for solar PV electrical installations. Key requirements include isolation on both the AC and DC sides (Regulation 712.537.2); overvoltage protection and surge protective device selection on the DC side (Regulation 712.534); identification and warning notices indicating the presence of a PV system and that DC parts can remain live after isolation (Regulation 712.514); DC cables selected to minimise earth-fault and short-circuit risk, using H1Z2Z2-K cable to BS EN 50618 or equivalent (Regulation 712.521.101); and equipotential bonding of the PV mounting structure where required (Regulation 712.542.101). Note that the former Regulation 712.443 was deleted by A4:2026.',
   },
   {
     question: 'How does battery storage affect the electrical installation requirements?',
     answer:
-      'Battery storage adds complexity to solar PV electrical installations in several areas. Protection coordination: the battery management system (BMS) and inverter-charger must be assessed together to ensure fault current protection operates correctly under both import and export conditions. BS 7671 Regulation 712.560 requires that energy storage systems comply with the relevant product standard (typically BS EN IEC 62619 for lithium-ion batteries). Export limiting: where a DNO requires export limiting as a condition of G99 approval, the inverter must have an active export limiter with current transformer (CT) monitoring at the grid connection point. Fire safety: battery storage systems must be positioned in accordance with manufacturer requirements and relevant fire safety guidance — lithium-ion batteries must not be installed in habitable rooms without appropriate fire protection.',
+      'Battery storage adds complexity to solar PV electrical installations in several areas. Protection coordination: the battery management system (BMS) and inverter-charger must be assessed together to ensure fault current protection operates correctly under both import and export conditions. Energy storage forms part of a prosumer\'s electrical installation, which BS 7671:2018+A4:2026 addresses in Section 826, and the equipment must comply with its relevant product standard. Export limiting: where a DNO requires export limiting as a condition of G99 approval, the inverter must have an active export limiter with current transformer (CT) monitoring at the grid connection point. Fire safety: battery storage systems must be positioned in accordance with manufacturer requirements and relevant fire safety guidance — lithium-ion batteries should not be installed in habitable rooms without appropriate fire protection.',
   },
   {
     question: 'Do I need MCS accreditation to install solar PV in the UK?',
@@ -80,7 +80,34 @@ const faqs = [
   },
 ];
 
+const answerBox = {
+  question: 'What size solar PV system do I need for a UK home?',
+  answer:
+    'Match system size to your annual electricity use, roof area and orientation. A typical UK home uses about 3,100 kWh per year and suits a 3.5–4 kWp system, since each 1 kWp generates roughly 850–1,100 kWh annually. Systems up to 3.68 kW single-phase can be notified to the DNO under G98; larger systems need prior G99 approval. Each panel needs around 1.7–2.0 m² of unshaded roof.',
+};
+
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/solar-pv-system-design',
+    title: 'Solar PV System Design',
+    description: 'String design, inverter sizing, string voltage limits, and DC array layout.',
+    icon: Sun,
+    category: 'Guide',
+  },
+  {
+    href: '/solar-pv-certificate',
+    title: 'Solar PV Certificates',
+    description: 'EIC and MCS handover documentation required for a compliant PV installation.',
+    icon: FileCheck2,
+    category: 'Guide',
+  },
+  {
+    href: '/solar-pv-maintenance',
+    title: 'Solar PV Maintenance',
+    description: 'Inspection, testing, and periodic maintenance for PV arrays and inverters.',
+    icon: Wrench,
+    category: 'Guide',
+  },
   {
     href: '/electrical-load-calculation',
     title: 'Electrical Load Calculation',
@@ -101,20 +128,6 @@ const relatedPages: RelatedPage[] = [
     description: 'C1, C2, C3 and FI codes — what they mean and what action is required.',
     icon: FileCheck2,
     category: 'Guide',
-  },
-  {
-    href: '/electrician-oxfordshire',
-    title: 'Electricians in Oxfordshire',
-    description: 'Find qualified electricians across Oxford, Abingdon, and the Harwell energy hub.',
-    icon: Zap,
-    category: 'Location',
-  },
-  {
-    href: '/electrician-berkshire',
-    title: 'Electricians in Berkshire',
-    description: 'Find qualified electricians across Reading, Slough, Windsor, and Bracknell.',
-    icon: Zap,
-    category: 'Location',
   },
 ];
 
@@ -177,7 +190,9 @@ const sections = [
           MCS-certified solar PV installers use formal design tools — including the MCS Planning
           Standards methodology and tools such as PVGIS (Photovoltaic Geographic Information System)
           — to produce accurate yield estimates and system sizing calculations. The following
-          simplified approach is useful for initial assessments.
+          simplified approach is useful for initial assessments; once the capacity is fixed, the{' '}
+          <SEOInternalLink href="/solar-pv-system-design" label="solar PV system design guide" />{' '}
+          covers string layout, inverter sizing, and DC voltage limits.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Step-by-Step Sizing Method</h3>
@@ -238,50 +253,36 @@ const sections = [
           Joint Research Centre, provides location-specific yield estimates for any combination of
           tilt and orientation.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <h3 className="text-lg font-semibold text-white px-5 pt-5 pb-1">
             Orientation Yield Factors (South England Reference)
           </h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>South (180°), 35–40° tilt:</strong> 100% — reference yield ~1,000
-                kWh/kWp/year
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>South-East or South-West (135° or 225°), 35° tilt:</strong> ~95%
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>East or West (90° or 270°), 25–30° tilt:</strong> ~80–85%
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>North-East or North-West, any tilt:</strong> ~65–70%
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>North (0°), any tilt:</strong> ~50–60% — marginal viability
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Flat roof (0° tilt):</strong> ~87% of south-facing inclined — use ballasted
-                frames at 10–15° for maintenance access
-              </span>
-            </li>
-          </ul>
+          <p className="text-white/50 text-xs px-5 pb-3">
+            Indicative relative annual yield versus an optimal south-facing array. Use PVGIS for the
+            specific site, location and tilt.
+          </p>
+          <div className="grid grid-cols-[1fr_auto] text-sm divide-y divide-white/10 border-t border-white/10">
+            <div className="px-5 py-3 text-white/50 text-xs uppercase tracking-wide">Orientation &amp; tilt</div>
+            <div className="px-5 py-3 text-white/50 text-xs uppercase tracking-wide text-right">Relative yield</div>
+
+            <div className="px-5 py-3 text-white bg-green-900/20">South (180°), 35–40° tilt</div>
+            <div className="px-5 py-3 text-green-300 font-semibold text-right bg-green-900/20">100%</div>
+
+            <div className="px-5 py-3 text-white">South-East / South-West (135° / 225°), 35° tilt</div>
+            <div className="px-5 py-3 text-white font-semibold text-right">~95%</div>
+
+            <div className="px-5 py-3 text-white">East / West (90° / 270°), 25–30° tilt</div>
+            <div className="px-5 py-3 text-white font-semibold text-right">~80–85%</div>
+
+            <div className="px-5 py-3 text-white">Flat roof, ballasted at 10–15° tilt</div>
+            <div className="px-5 py-3 text-white font-semibold text-right">~87%</div>
+
+            <div className="px-5 py-3 text-white">North-East / North-West, any tilt</div>
+            <div className="px-5 py-3 text-amber-300 font-semibold text-right">~65–70%</div>
+
+            <div className="px-5 py-3 text-white bg-red-900/20">North (0°), any tilt — marginal</div>
+            <div className="px-5 py-3 text-red-300 font-semibold text-right bg-red-900/20">~50–60%</div>
+          </div>
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -335,26 +336,47 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">G98 vs G99 Thresholds</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>G98 (notification after installation):</strong> Single-phase up to 3.68kW
-                (16A); three-phase up to 11.04kW (16A per phase). Notify DNO within 28 days of
-                commissioning.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>G99 (prior application required):</strong> Any system above the G98
-                thresholds. Apply to DNO before installation. Assessment period: 45 working days
-                (standard residential), 90 days (complex sites).
-              </span>
-            </li>
-          </ul>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-green-900/20 border border-green-700/40 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-green-300" />
+              <h3 className="text-lg font-semibold text-white m-0">G98 — notify after install</h3>
+            </div>
+            <dl className="space-y-2 text-sm m-0">
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/60">Single-phase</dt>
+                <dd className="text-white font-semibold text-right m-0">Up to 3.68 kW (16 A)</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/60">Three-phase</dt>
+                <dd className="text-white font-semibold text-right m-0">Up to 11.04 kW (16 A/phase)</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/60">Approval</dt>
+                <dd className="text-white font-semibold text-right m-0">Notify DNO within 28 days of commissioning</dd>
+              </div>
+            </dl>
+          </div>
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-blue-300" />
+              <h3 className="text-lg font-semibold text-white m-0">G99 — apply before install</h3>
+            </div>
+            <dl className="space-y-2 text-sm m-0">
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/60">Applies to</dt>
+                <dd className="text-white font-semibold text-right m-0">Any system above the G98 thresholds</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/60">Standard assessment</dt>
+                <dd className="text-white font-semibold text-right m-0">Up to 45 working days (residential)</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/60">Complex sites</dt>
+                <dd className="text-white font-semibold text-right m-0">Up to 90 working days</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </>
     ),
@@ -369,46 +391,69 @@ const sections = [
           photovoltaic power supply systems. These requirements supplement the general requirements
           of BS 7671 and apply to all solar PV electrical installations, regardless of system size.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 712.411.3.1 — Isolation:</strong> A DC isolator must be provided
-                at the array and at the inverter input, rated for the maximum open-circuit voltage
-                of the array and the maximum short-circuit current. DC isolators must be suitable
-                for DC switching duty — AC isolators must not be used.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 712.443 — Overvoltage protection:</strong> Surge protection
-                devices (SPDs) are required on the DC side where the risk of overvoltage from
-                lightning is assessed as significant (typically where the DC cable run is long or
-                external).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 712.514 — Labelling:</strong> Warning labels must be placed at
-                every accessible point warning that the installation contains live parts that may
-                remain live when isolated from the AC supply. Labels must comply with BS EN ISO 7010
-                and be positioned at the inverter, consumer unit, and at the array junction boxes.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 712.522 — DC cable selection:</strong> DC cables must be rated
-                for DC use, have a voltage rating not less than the maximum open-circuit voltage of
-                the array at minimum temperature, and be of a type listed in Appendix 4 as
-                appropriate for the installation method. PV-specific cable (H1Z2Z2-K or equivalent)
-                is required for exposed roof cable runs.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr] divide-y divide-white/10">
+            <div className="contents text-xs uppercase tracking-wide text-white/50">
+              <div className="px-4 py-3 font-semibold border-b border-white/10">Regulation</div>
+              <div className="px-4 py-3 font-semibold border-b border-white/10">Requirement</div>
+            </div>
+            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.537.2</div>
+            <div className="px-4 py-4 text-white text-sm">
+              <strong className="block text-white">Isolation and switching</strong>
+              Means of isolation must be provided on both the AC and DC sides. Devices without DC
+              breaking capacity (such as fuse carriers and SPD carriages) that could open a DC circuit
+              must be secured against inadvertent operation, for example by a lockable enclosure or
+              padlocking (Regulation 712.537.2.2.104).
+            </div>
+            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.534</div>
+            <div className="px-4 py-4 text-white text-sm">
+              <strong className="block text-white">Overvoltage protection (SPDs)</strong>
+              Surge protective devices on the DC side must comply with BS EN 61643-31. SPDs are
+              generally Type 2 with a minimum nominal discharge current of 5 kA; Type 1 SPDs apply
+              where lightning separation distance cannot be maintained per BS EN 62305-3.
+            </div>
+            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.514</div>
+            <div className="px-4 py-4 text-white text-sm">
+              <strong className="block text-white">Identification and notices</strong>
+              An instruction notice indicating the presence of a PV system must be fixed at the origin,
+              the metering position and the consumer unit (712.514.101). Each DC access point needs a
+              warning that live parts can remain energised after isolation (712.514.102), and every
+              inverter must be labelled to isolate both AC and DC before servicing (712.514.103).
+            </div>
+            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.521.101</div>
+            <div className="px-4 py-4 text-white text-sm">
+              <strong className="block text-white">DC wiring system</strong>
+              DC cables must be selected and erected to minimise earth-fault and short-circuit risk,
+              using single-core non-metallic-sheathed cable such as H1Z2Z2-K to BS EN 50618, or
+              insulated conductors in individually insulated conduit or trunking. Cables must not be
+              placed directly on the roof surface.
+            </div>
+            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.533.101</div>
+            <div className="px-4 py-4 text-white text-sm">
+              <strong className="block text-white">DC overcurrent protection</strong>
+              DC-side overcurrent protective devices must be gPV fuses to BS EN 60269-6 or
+              circuit-breakers to BS EN 60947-2 / BS EN 60898-2 / BS IEC 60898-3, and must be
+              bidirectional with a breaking capacity at least equal to the array short-circuit current.
+            </div>
+            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.542.101</div>
+            <div className="px-4 py-4 text-white text-sm">
+              <strong className="block text-white">Equipotential bonding of PV structures</strong>
+              Where bonding is needed to prevent electrostatic charge accumulation, the metallic
+              support structures and cable management must be bonded; functional bonding conductors
+              must be at least 4 mm² copper equivalent (712.542.3.101).
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <p className="text-white text-sm m-0">
+              <strong>A4:2026 change:</strong> the former Regulation 712.443 was deleted by
+              BS 7671:2018+A4:2026. Always cite the current numbering — DC-side overvoltage and SPD
+              requirements now sit under Regulation 712.534. Outdoor PV enclosures must achieve at
+              least IP44 to BS EN 60529 and IK07 to BS EN 62262 (Regulation 712.512.102).
+            </p>
+          </div>
         </div>
         <p>
           See the{' '}
@@ -433,37 +478,50 @@ const sections = [
           storage introduces additional electrical design and safety considerations under BS 7671
           and the relevant product standards.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>BS EN IEC 62619:</strong> Safety requirements for secondary lithium cells
-                and batteries for use in stationary applications. BS 7671 Regulation 712.560
-                requires compliance with the relevant product standard for energy storage equipment.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
+              <div>
+                <h4 className="text-white font-semibold mb-1">Standards and product compliance</h4>
+                <p className="text-white/80 text-sm m-0">
+                  Battery storage forms part of a prosumer&apos;s electrical installation, addressed
+                  in BS 7671:2018+A4:2026 Section 826. The battery system must comply with its
+                  relevant product standard, and the combined inverter-battery system must satisfy the
+                  PV requirements of Section 712.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>AC-coupled vs DC-coupled:</strong> AC-coupled systems (battery with its own
-                inverter-charger) are simpler to retrofit to existing PV systems. DC-coupled systems
-                (battery connected to the DC bus of the PV inverter) are more efficient but require
-                a compatible inverter/battery combination. Both require G98/G99 assessment as a
-                combined system.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
+              <div>
+                <h4 className="text-white font-semibold mb-1">AC-coupled vs DC-coupled</h4>
+                <p className="text-white/80 text-sm m-0">
+                  AC-coupled batteries have their own inverter-charger and are simpler to retrofit.
+                  DC-coupled batteries connect to the PV inverter&apos;s DC bus and are more efficient
+                  but need a compatible inverter/battery pairing. Both require G98/G99 assessment as a
+                  combined system.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 sm:col-span-2">
+            <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fire safety:</strong> Lithium-ion battery systems must not be installed in
-                habitable rooms without fire separation meeting the manufacturer's requirements.
-                Battery enclosures should have thermal runaway venting to the outside where
-                practicable. Follow manufacturer installation instructions strictly — these form
-                part of the compliance basis for BS 7671 Regulation 132.16.
-              </span>
-            </li>
-          </ul>
+              <div>
+                <h4 className="text-white font-semibold mb-1">Fire safety and siting</h4>
+                <p className="text-white/80 text-sm m-0">
+                  Lithium-ion battery systems should not be installed in habitable rooms without fire
+                  separation meeting the manufacturer&apos;s requirements. Enclosures should vent
+                  thermal runaway to outside where practicable. Manufacturer installation instructions
+                  must be followed and taken into account as part of equipment selection and erection
+                  under BS 7671.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     ),
@@ -522,10 +580,10 @@ const sections = [
 export default function SolarPVSystemSizingPage() {
   return (
     <GuideTemplate
-      title="Solar PV System Sizing — UK Guide 2024 | kWp Calculation,"
-      description="How to size a solar PV system for UK homes: kWp calculation methods, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds…"
+      title="Solar PV System Sizing — UK Guide | kWp Calculation & G98/G99"
+      description="How to size a solar PV system for UK homes: kWp calculation methods, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds, and BS 7671 Section 712 requirements."
       datePublished="2024-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-09"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar PV Guide"
@@ -537,6 +595,7 @@ export default function SolarPVSystemSizingPage() {
       }
       heroSubtitle="A complete guide to sizing solar PV systems for UK homes: kWp calculations, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds, BS 7671 Section 712 requirements, and battery storage integration."
       readingTime={10}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

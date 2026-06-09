@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Correction Factors | Ca Cg Ci Cf Explained';
 const PAGE_DESCRIPTION =
-  'BS 7671 correction factors for cable sizing: Ca (4B1), Cg (4C1-4C5), Ci (Reg 523.9), Cf (0.725 BS 3036). Worked examples, formula, mistakes.';
+  'BS 7671 correction factors for cable sizing: Ca (4B1), Cg (4C1-4C6), Ci (Reg 523.9), Cf (0.725 BS 3036). Worked examples, formula, mistakes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -43,7 +43,7 @@ const tocItems = [
 const keyTakeaways = [
   'The correction factor formula is It = In / (Ca x Cg x Ci x Cf) — you must calculate the tabulated current rating before selecting a cable from BS 7671 Appendix 4.',
   'Ca (ambient temperature) comes from Table 4B1 and accounts for temperatures above the standard 30 degrees Celsius reference — at 40 degrees Celsius, Ca drops to 0.87 for PVC cables, requiring a larger cable.',
-  'Cg (grouping) from Table 4C1 to 4C5 is the most commonly applied factor — three circuits touching on a surface have Cg of 0.70, meaning the cable can only carry 70% of its tabulated current.',
+  'Cg (grouping) from Tables 4C1 to 4C6 is the most commonly applied factor — three circuits bunched and touching have Cg of 0.70, meaning each cable can only carry 70% of its tabulated current.',
   'Ci (thermal insulation) under Reg 523.9 is the most punishing factor — a cable totally surrounded by thermal insulation for more than 0.5 metres drops to Ci = 0.50, which is 0.5 times the current-carrying capacity for that cable clipped direct and open (Reference Method C).',
   'When a cable is totally enclosed in thermal insulation for less than 0.5 metres, the derating depends on three factors: conductor size, length in insulation, and the thermal conductivity of the insulation material — not length alone (Reg 523.9 and OSG Reg 2.6).',
   "Elec-Mate's cable sizing calculator applies all four correction factors automatically with every BS 7671 table built in — no manual lookups, no calculation errors.",
@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'How does the grouping correction factor Cg work?',
     answer:
-      'The grouping correction factor Cg accounts for the reduction in current-carrying capacity when multiple circuits are installed together. When cables are grouped, each cable generates heat and that heat is shared with adjacent cables, reducing the ability of each cable to dissipate its own heat. The more cables grouped together, the lower the Cg factor. For example, two circuits touching on a surface have Cg = 0.80, three circuits have Cg = 0.70, four circuits have Cg = 0.65, six circuits have Cg = 0.57, and nine or more circuits have Cg = 0.50. The Cg values depend on the arrangement — cables bunched together, cables touching on a surface, cables spaced on a cable tray, or cables in conduit or trunking. These values are found in Tables 4C1 to 4C5 in BS 7671. An important exception is that circuits which are not expected to carry more than 30% of their rated current simultaneously can be excluded from the grouping count, as stated in Note 2 of Table 4C1.',
+      'The grouping correction factor Cg accounts for the reduction in current-carrying capacity when multiple circuits are installed together. When cables are grouped, each cable generates heat and that heat is shared with adjacent cables, reducing the ability of each cable to dissipate its own heat. The more cables grouped together, the lower the Cg factor. For example, two circuits bunched and touching have Cg = 0.80, three circuits have Cg = 0.70, four circuits have Cg = 0.65, six circuits have Cg = 0.57, and nine or more circuits have Cg = 0.50. The Cg values depend on the arrangement — cables bunched on a surface or enclosed (Table 4C1), single-layer on a wall, floor or cable tray, or cables buried, in ducts or in floor troughs. These values are found in Tables 4C1 to 4C6 in BS 7671. An important exception comes from Regulation 523.5: where a cable in a group is expected to carry not more than 30% of its grouped current-carrying capacity, it may be ignored when obtaining the rating factor for the rest of the group.',
   },
   {
     question: 'What is the thermal insulation correction factor Ci and when does it apply?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Can I apply diversity to reduce the effect of grouping?',
     answer:
-      'Yes, in certain circumstances. Note 2 to Table 4C1 in BS 7671 states that where cables in a group are not expected to carry more than 30% of their grouped current rating simultaneously, the grouping factor need not be applied. This is a form of diversity applied at the cable sizing stage. In practice, this is most relevant in situations where you have a large number of circuits in a common route (such as cables leaving a distribution board through a common hole or in a shared trunking run) but the circuits serve different loads that are unlikely to be fully loaded at the same time. For example, a residential distribution board might have twelve circuits leaving through a common void, but lighting circuits, cooker circuits, and socket circuits do not all operate at full load simultaneously. Applying this note requires engineering judgement and documentation of the diversity assumptions. If you are unsure, the safe approach is to apply the full grouping factor without diversity.',
+      'Yes, in certain circumstances. Regulation 523.5 in BS 7671 states that where a cable in a group is expected to carry a current not greater than 30% of its grouped current-carrying capacity, it may be ignored for the purpose of obtaining the rating factor for the rest of the group. This is a form of diversity applied at the cable sizing stage. In practice, this is most relevant where you have a large number of circuits in a common route (such as cables leaving a distribution board through a common hole or in a shared trunking run) but the circuits serve different loads that are unlikely to be fully loaded at the same time. For example, a residential distribution board might have twelve circuits leaving through a common void, but lighting circuits, cooker circuits, and socket circuits do not all operate at full load simultaneously. Applying this allowance requires engineering judgement and documentation of the diversity assumptions, and the 30% rule should not be applied again to any adjacent cable grouping factor calculations. If you are unsure, the safe approach is to apply the full grouping factor without diversity.',
   },
   {
     question: 'Does Elec-Mate apply all correction factors automatically?',
@@ -193,9 +193,52 @@ const sections = [
         <p>
           Thermosetting cables (XLPE, LSF) have different Ca values because they have a higher
           maximum conductor temperature of 90 degrees Celsius compared to 70 degrees Celsius for
-          PVC. This means thermosetting cables are less affected by elevated ambient temperatures.
-          For example, at 40 degrees Celsius, XLPE cable has Ca = 0.91 compared to 0.87 for PVC.
+          PVC. This means thermosetting cables are less affected by elevated ambient temperatures —
+          the same Table 4B1 gives a separate column for 90&nbsp;&deg;C thermosetting insulation.
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">
+            Table 4B1 — Key Ca Values (90 degrees Celsius thermosetting / XLPE)
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">25&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">1.02</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">30&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">1.00</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">35&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">0.96</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">40&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">0.91</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">45&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">0.87</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">50&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">0.82</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">55&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">0.76</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">60&deg;C</p>
+              <p className="text-yellow-400 text-lg font-bold">0.71</p>
+            </div>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            At 40&nbsp;&deg;C, 90&nbsp;&deg;C thermosetting cable derates to 0.91 versus 0.87 for
+            70&nbsp;&deg;C PVC — one reason thermosetting is favoured for hot routes.
+          </p>
+        </div>
         <p>
           Common situations where Ca must be applied include loft spaces (35 to 50 degrees Celsius
           in summer), plant rooms, airing cupboards, near hot water cylinders, commercial kitchens,
@@ -237,9 +280,13 @@ const sections = [
           cable in the group. This reduces the safe current each individual cable can carry.
         </p>
         <p>
-          Cg values are found in Tables 4C1 to 4C5 of BS 7671 Appendix 4. The correct table depends
-          on the installation arrangement — whether cables are bunched together (Table 4C1),
-          installed on a cable tray (Table 4C2 to 4C4), or in conduit or trunking (Table 4C5).
+          Cg values are found in Tables 4C1 to 4C6 of BS 7671 Appendix 4. The correct table depends
+          on the installation arrangement. Table 4C1 is the one you reach for most often — it covers
+          a single circuit or a group bunched in air, on a surface, embedded or enclosed (including
+          cables in the same conduit or trunking), and also single-layer arrangements on a wall,
+          floor or cable tray. Tables 4C2 to 4C6 cover specialised cases such as cables buried
+          directly in the ground, single cables in buried ducts, groups of multicore cables, groups
+          of single-core cables, and cables in in-floor concrete troughs.
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
@@ -281,11 +328,12 @@ const sections = [
           </div>
         </div>
         <p>
-          An important exception exists in Note 2 of Table 4C1: if cables in a group are not
-          expected to carry more than 30% of their grouped current rating simultaneously, the
-          grouping factor need not be applied. This allows for diversity to be taken into account at
-          the cable sizing stage, reducing the impact of grouping in installations where not all
-          circuits are fully loaded at the same time.
+          An important exception comes from Regulation 523.5: where a cable in a group is expected
+          to carry not more than 30% of its grouped current-carrying capacity, it may be ignored when
+          obtaining the rating factor for the rest of the group. This allows diversity to be taken
+          into account at the cable sizing stage, reducing the impact of grouping in installations
+          where not all circuits are fully loaded at the same time. The 30% allowance must not then
+          be applied a second time to any adjacent cable grouping calculation.
         </p>
         <p>
           Grouping is the correction factor most frequently encountered in practice because cables
@@ -370,6 +418,39 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">
+            Ci by Length in Insulation (&le;10&nbsp;mm&sup2;, Appendix 4 Section 2.6)
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">50&nbsp;mm</p>
+              <p className="text-yellow-400 text-lg font-bold">0.88</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">100&nbsp;mm</p>
+              <p className="text-yellow-400 text-lg font-bold">0.78</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">200&nbsp;mm</p>
+              <p className="text-yellow-400 text-lg font-bold">0.63</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
+              <p className="text-white text-sm font-bold">400&nbsp;mm</p>
+              <p className="text-yellow-400 text-lg font-bold">0.51</p>
+            </div>
+            <div className="p-3 rounded-lg bg-red-900/20 border border-red-700/40 text-center">
+              <p className="text-white text-sm font-bold">&ge;500&nbsp;mm</p>
+              <p className="text-red-300 text-lg font-bold">0.50</p>
+            </div>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            These factors apply to conductors up to 10&nbsp;mm&sup2; in insulation with a thermal
+            conductivity (&lambda;) greater than 0.04&nbsp;W&nbsp;m&#8315;&sup1;&nbsp;K&#8315;&sup1;.
+            Above 0.5&nbsp;m of full enclosure, Reg 523.9 fixes the worst case at 0.5 &times; the
+            Reference Method C rating, in the absence of more precise information.
+          </p>
+        </div>
         <p>
           The Ci factor is the one most commonly forgotten by electricians, particularly in domestic
           loft installations where insulation depths have increased from 100mm to 270mm or more in
@@ -397,12 +478,49 @@ const sections = [
           2.0 — meaning they may not blow until the current reaches twice their rated value.
         </p>
         <p>
-          By comparison, an MCB to BS EN 60898 has a much more precise operating characteristic,
-          with guaranteed tripping between 1.13 and 1.45 times its rated current. HRC fuses to BS 88
-          are similarly precise. Because BS 3036 fuses allow significantly higher currents to flow
-          for longer periods before they blow, the cable must be rated to handle these higher
-          currents without overheating — hence the 0.725 derating factor.
+          By comparison, an MCB to BS EN 60898 has a much tighter operating characteristic — BS 7671
+          treats the conventional operating current (I<sub>2</sub>) of an MCB, RCBO or cartridge fuse
+          as not exceeding 1.45 times the device rating (Reg 433.1.1). HRC fuses to the BS 88 series
+          are similarly precise. Because a BS 3036 fuse can allow significantly higher currents to
+          flow for longer before it blows, the cable must be rated to handle those currents without
+          overheating — hence the 0.725 derating factor (which is 1.45 / 2, restoring the same
+          degree of protection afforded by other devices).
         </p>
+        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">Cf by Protective Device Type</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-red-900/20 border border-red-700/40">
+              <p className="text-white text-sm font-semibold">
+                BS 3036 semi-enclosed (rewirable) fuse
+              </p>
+              <p className="text-red-300 text-lg font-bold ml-3 shrink-0">0.725</p>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
+              <p className="text-white text-sm font-semibold">MCB — BS EN 60898</p>
+              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
+              <p className="text-white text-sm font-semibold">RCBO — BS EN 61009-1</p>
+              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
+              <p className="text-white text-sm font-semibold">HRC fuse — BS 88 series</p>
+              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
+              <p className="text-white text-sm font-semibold">Cartridge fuse — BS 88-3 / BS 1362</p>
+              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
+              <p className="text-white text-sm font-semibold">MCCB — BS EN 60947-2</p>
+              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+            </div>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            Only the BS 3036 rewirable fuse attracts a Cf below 1.0. For every other device on this
+            list Cf = 1.0 and drops out of the calculation.
+          </p>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -410,9 +528,10 @@ const sections = [
               <h3 className="font-bold text-white mb-1">When does Cf apply?</h3>
               <p className="text-white text-sm leading-relaxed">
                 Cf = 0.725 applies <strong className="text-yellow-400">only</strong> when the
-                protective device is a BS 3036 semi-enclosed fuse. For MCBs (BS EN 60898), RCBOs,
-                HRC fuses (BS 88), and cartridge fuses (BS 1361), Cf = 1.0 and has no effect on the
-                calculation. BS 3036 fuses are rarely installed in new work but are commonly
+                protective device is a BS 3036 semi-enclosed fuse. For MCBs (BS EN 60898), RCBOs
+                (BS EN 61009-1), HRC fuses (BS 88 series), and cartridge fuses (BS 88-3), Cf = 1.0
+                and has no effect on the calculation. BS 3036 fuses are rarely installed in new work
+                but are commonly
                 encountered during periodic inspection of older installations, particularly those
                 with rewirable fuse boards.
               </p>
@@ -424,23 +543,30 @@ const sections = [
           apply Cf = 0.725 when verifying the existing cable sizes. If the cable was originally
           sized without this factor (as was common in older installations designed before this
           requirement was introduced), the cable may be undersized for the fuse protecting it. This
-          is a common finding on older installations and may warrant a C3 observation code on the
-          EICR, depending on the magnitude of the shortfall and the actual loading of the circuit.
+          is a common finding on older installations and the appropriate{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            EICR observation code
+          </SEOInternalLink>{' '}
+          depends on the magnitude of the shortfall and the actual loading of the circuit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <div className="flex items-start gap-3">
             <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h3 className="font-bold text-white mb-1">EICR obligation — Reg 622.85</h3>
+              <h3 className="font-bold text-white mb-1">EICR obligation — Section 523</h3>
               <p className="text-white text-sm leading-relaxed">
-                Regulation 622.85 requires inspectors carrying out an EICR to verify that cables are
-                adequate for current-carrying capacity with regard for the type and nature of the
-                installation (Section 523). This explicitly includes confirming that conductor
-                cross-sectional areas account for applicable correction factors — ambient
-                temperature, grouping, and thermal insulation. An original design that omitted any
-                correction factor is a verifiable defect under Reg 622.85, not merely a legacy
-                sizing decision. Record it with an appropriate EICR observation code and
-                cross-reference the correction factor calculation.
+                The BS 7671 Schedule of Inspections requires the inspector to confirm the
+                &ldquo;adequacy of cables for current-carrying capacity with regard for the type and
+                nature of installation&rdquo; — verified against Section 523 (item 8.10 on the model{' '}
+                <SEOInternalLink href="/guides/eicr-schedule-of-inspections">
+                  schedule of inspections
+                </SEOInternalLink>
+                ). That assessment implicitly covers the applicable correction factors:
+                ambient temperature, grouping, and thermal insulation. An existing circuit whose
+                conductor cross-sectional area does not stand up once the relevant correction factors
+                are applied is a verifiable shortfall against Section 523, not merely a legacy sizing
+                decision. Record it with an appropriate EICR observation code and cross-reference the
+                correction factor calculation.
               </p>
             </div>
           </div>
@@ -524,23 +650,25 @@ const sections = [
                 41.3A)
               </p>
               <p>
-                <strong>Correction factors:</strong> Ca = 0.94 (35&deg;C) | Cg = 0.80 (3 circuits
-                including this one, but using 2-group for touching arrangement) | Ci = 0.89 (one
-                side) | Cf = 1.0 (MCB)
+                <strong>Correction factors:</strong> Ca = 0.94 (35&deg;C, 70&deg;C PVC) | Cg = 0.70
+                (3 circuits bunched and touching, Table 4C1 row 1) | Ci = 0.89 (in contact with
+                insulation on one side) | Cf = 1.0 (MCB)
               </p>
               <p>
-                <strong>Combined factor:</strong> 0.94 &times; 0.80 &times; 0.89 &times; 1.0 = 0.669
+                <strong>Combined factor:</strong> 0.94 &times; 0.70 &times; 0.89 &times; 1.0 = 0.586
               </p>
               <p>
                 <strong>
                   Required I<sub>t</sub>:
                 </strong>{' '}
-                45 &divide; 0.669 = <strong>67.3A</strong>
+                45 &divide; 0.586 = <strong>76.8A</strong>
               </p>
               <p>
-                <strong>Cable selected:</strong> 16mm&sup2; twin and earth (Reference Method A: I
-                <sub>z</sub> = 57A — NOT sufficient. Must use Reference Method C: I<sub>z</sub> =
-                73A, or increase to 16mm&sup2; even for Method A)
+                <strong>Cable selection:</strong> the cable must be chosen from the correct Appendix
+                4 table so that its tabulated I<sub>z</sub> meets or exceeds 76.8A under the chosen
+                reference method. The grouping and insulation conditions push this circuit well
+                beyond the cable a 45A MCB alone would suggest — the difference between an installed
+                cable that survives and one that overheats.
               </p>
             </div>
           </div>
@@ -569,10 +697,12 @@ const sections = [
                 32 &divide; 0.50 = <strong>64.0A</strong>
               </p>
               <p>
-                <strong>Result:</strong> Standard 2.5mm&sup2; T&E (I<sub>z</sub> = 27A for Method A)
-                is nowhere near sufficient. Even 10mm&sup2; (I<sub>z</sub> = 43A for Method A)
-                fails. You would need to reconsider the cable route to avoid being totally enclosed
-                in insulation, or use thermosetting cable with higher ratings.
+                <strong>Result:</strong> the ring would need each leg to carry an effective It of
+                64A through the enclosed section — far beyond what a standard 2.5mm&sup2; twin and
+                earth ring leg can deliver once halved by Ci = 0.50. The practical fix is to reroute
+                the cable so it is not totally surrounded by insulation, or to redesign the circuit.
+                This is exactly why Reg 523.9 advises that cables should preferably not be installed
+                where they are liable to be covered by thermal insulation.
               </p>
             </div>
           </div>
@@ -708,6 +838,14 @@ const relatedPages = [
     icon: ShieldCheck,
     category: 'Guide' as const,
   },
+  {
+    href: '/guides/eicr-observation-codes-explained',
+    title: 'EICR Observation Codes Explained',
+    description:
+      'C1, C2, C3 and FI codes — how to classify an undersized or under-derated cable found during periodic inspection.',
+    icon: ClipboardCheck,
+    category: 'Guide' as const,
+  },
 ];
 
 // -------------------------------------------------------------------
@@ -731,12 +869,12 @@ export default function CorrectionFactorsGuidePage() {
           <span className="text-yellow-400">Ca, Cg, Ci &amp; Cf Explained</span>
         </>
       }
-      heroSubtitle="The complete guide to cable sizing correction factors under BS 7671. Ambient temperature (Ca from Table 4B1), grouping (Cg from Table 4C1-4C5), thermal insulation (Ci from Regulation 523.9), and semi-enclosed fuse factor (Cf = 0.725). Worked examples, common mistakes, and how to apply the formula It = In / (Ca x Cg x Ci x Cf)."
+      heroSubtitle="The complete guide to cable sizing correction factors under BS 7671. Ambient temperature (Ca from Table 4B1), grouping (Cg from Tables 4C1-4C6), thermal insulation (Ci from Regulation 523.9), and semi-enclosed fuse factor (Cf = 0.725). Worked examples, common mistakes, and how to apply the formula It = In / (Ca x Cg x Ci x Cf)."
       readingTime={14}
       answerBox={{
         question: 'What are correction factors in cable sizing (BS 7671)?',
         answer:
-          'Correction factors reduce a cable’s tabulated current-carrying capacity to allow for the real installation conditions. The four BS 7671 factors are: Ca for ambient temperature (Table 4B1, 1.0 at 30°C), Cg for grouping with other cables (Tables 4C1–4C5), Ci for thermal insulation (Reg 523.9 — 0.5 if fully surrounded), and Cf for a BS 3036 semi-enclosed fuse (0.725). Apply them so the required tabulated rating It ≥ In ÷ (Ca × Cg × Ci × Cf) — the more onerous the conditions, the larger the cable you need.',
+          'Correction factors reduce a cable’s tabulated current-carrying capacity to allow for the real installation conditions. The four BS 7671 factors are: Ca for ambient temperature (Table 4B1, 1.0 at 30°C), Cg for grouping with other cables (Tables 4C1–4C6), Ci for thermal insulation (Reg 523.9 — 0.5 if totally surrounded over 0.5m), and Cf for a BS 3036 semi-enclosed fuse (0.725). Apply them so the required tabulated rating It ≥ In ÷ (Ca × Cg × Ci × Cf) — the more onerous the conditions, the larger the cable you need.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

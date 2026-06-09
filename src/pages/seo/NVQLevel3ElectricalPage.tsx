@@ -176,10 +176,13 @@ const sections = [
                 <strong>BS 7671:2018+A4:2026 knowledge required</strong> — while there is no written
                 exam, candidates are expected to demonstrate working knowledge of BS 7671 (the IET
                 Wiring Regulations, 18th Edition) during observations and assessor questioning. The
-                current edition is BS 7671:2018+A4:2026 — Amendment 4 was issued April 2026 and
-                introduced Regulation 421.1.7 recommending arc fault detection devices (AFDDs) in AC
-                final circuits. NVQ portfolios built now must evidence competence against A4
-                requirements. Study the consolidated A4:2026 text, not pre-amendment copies.
+                current edition is BS 7671:2018+A4:2026. Under the redrafted Regulation 421.1.7,
+                arc fault detection devices (AFDDs) conforming to BS EN 62606 must now be provided
+                for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high
+                rise residential buildings, houses in multiple occupation, purpose-built student
+                accommodation and care homes; for all other premises AFDDs are recommended. NVQ
+                portfolios built now must evidence competence against the current text, not
+                pre-amendment copies.
               </span>
             </li>
           </ul>
@@ -195,7 +198,58 @@ const sections = [
         <p>
           Both the NVQ Level 3 and the City and Guilds 2365 Diploma are recognised routes to
           electrical qualifications in the UK, but they serve different purposes and suit different
-          candidates.
+          candidates. The table below sets them side by side.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold border-b border-white/10">Feature</th>
+                <th className="p-3 font-semibold border-b border-white/10 text-yellow-400">
+                  NVQ Level 3
+                </th>
+                <th className="p-3 font-semibold border-b border-white/10 text-blue-300">
+                  City &amp; Guilds 2365
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/10">
+                <td className="p-3 font-medium text-white/70">Assessment basis</td>
+                <td className="p-3">Competency — observed on site</td>
+                <td className="p-3">Knowledge — exams &amp; practicals</td>
+              </tr>
+              <tr className="border-b border-white/10 bg-white/[0.02]">
+                <td className="p-3 font-medium text-white/70">Written exams</td>
+                <td className="p-3">None</td>
+                <td className="p-3">Yes (online + written papers)</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className="p-3 font-medium text-white/70">Where it is done</td>
+                <td className="p-3">In your workplace / on live jobs</td>
+                <td className="p-3">In a college or training centre</td>
+              </tr>
+              <tr className="border-b border-white/10 bg-white/[0.02]">
+                <td className="p-3 font-medium text-white/70">Best suited to</td>
+                <td className="p-3">Experienced electricians already working</td>
+                <td className="p-3">New entrants / apprentices learning the trade</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className="p-3 font-medium text-white/70">Needs an employer / site work</td>
+                <td className="p-3">Yes — real evidence required</td>
+                <td className="p-3">No — can be studied without a job</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium text-white/70">Leads to Gold Card</td>
+                <td className="p-3">Yes, with the AM2</td>
+                <td className="p-3">Yes, with the NVQ + AM2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-white/70 my-4">
+          The two are complementary, not interchangeable — a full electrical apprenticeship includes
+          both. The notes below explain each in more detail.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -267,8 +321,11 @@ const sections = [
               <span>
                 <strong>Overseas-qualified electricians</strong> — electricians who qualified in
                 countries where their qualification is not directly recognised in the UK. The NVQ
-                provides a recognised UK competency qualification to support registration with
-                competent person schemes such as NICEIC or NAPIT.
+                provides a recognised UK competency qualification to support{' '}
+                <SEOInternalLink href="/niceic-registration">
+                  registration with a competent person scheme
+                </SEOInternalLink>{' '}
+                such as NICEIC or NAPIT.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -458,8 +515,49 @@ const sections = [
       <>
         <p>
           The total cost of achieving the NVQ Level 3 varies significantly by provider. Understand
-          what is included in any quoted price before committing.
+          what is included in any quoted price before committing. The figures below are indicative
+          market guidance for 2026, not a quote — always confirm exactly what each centre includes.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="p-3 font-semibold border-b border-white/10">Cost item</th>
+                <th className="p-3 font-semibold border-b border-white/10 text-yellow-400">
+                  Indicative range
+                </th>
+                <th className="p-3 font-semibold border-b border-white/10">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/10">
+                <td className="p-3 font-medium text-white/70">Registration fee</td>
+                <td className="p-3 whitespace-nowrap">£100 – £300</td>
+                <td className="p-3">Usually non-refundable</td>
+              </tr>
+              <tr className="border-b border-white/10 bg-white/[0.02]">
+                <td className="p-3 font-medium text-white/70">Per assessor visit</td>
+                <td className="p-3 whitespace-nowrap">£80 – £150</td>
+                <td className="p-3">Only where charged per visit</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className="p-3 font-medium text-white/70">All-inclusive package</td>
+                <td className="p-3 whitespace-nowrap">£800 – £2,500</td>
+                <td className="p-3">Varies by location &amp; visits included</td>
+              </tr>
+              <tr className="border-b border-white/10 bg-white/[0.02]">
+                <td className="p-3 font-medium text-white/70">AM2 assessment (separate)</td>
+                <td className="p-3 whitespace-nowrap">£350 – £500</td>
+                <td className="p-3">Rarely included in NVQ packages</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-medium text-white/70">Adult Skills funding</td>
+                <td className="p-3 whitespace-nowrap">Co- or fully funded</td>
+                <td className="p-3">If eligible — check before paying</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -518,6 +616,25 @@ const sections = [
           evidence across all required units. Candidates working across a variety of project types
           complete faster; those in a narrow work environment take longer.
         </p>
+        <div className="grid sm:grid-cols-2 gap-4 my-4">
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <div className="text-2xl font-bold text-green-400">6–12 months</div>
+            <div className="text-sm font-semibold text-white mt-1">Broad work mix</div>
+            <p className="text-sm text-white/80 mt-2 leading-relaxed">
+              Working across domestic and commercial projects, regularly inspecting and testing, and
+              producing certificates. A wide evidence base lets all units be covered quickly.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+            <div className="text-2xl font-bold text-orange-400">12–24 months</div>
+            <div className="text-sm font-semibold text-white mt-1">Narrow work mix</div>
+            <p className="text-sm text-white/80 mt-2 leading-relaxed">
+              Working in a single environment (e.g. only domestic rewires, or only commercial
+              maintenance), needing to seek extra opportunities to evidence units not covered by
+              day-to-day work.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -640,6 +757,11 @@ export default function NVQLevel3ElectricalPage() {
       tocItems={tocItems}
       badge="Qualification Guide"
       badgeIcon={BookOpen}
+      answerBox={{
+        question: 'What is the NVQ Level 3 in electrical installation?',
+        answer:
+          'The NVQ Level 3 Diploma in Electrotechnical Technology is a competency-based qualification assessed entirely through workplace observation and a portfolio of evidence — there are no written exams. It is the standard route for experienced electricians without a formal qualification. Combined with the AM2, it leads to the JIB ECS Gold Card.',
+      }}
       heroTitle={
         <>
           NVQ Level 3 Electrical Installation:{' '}

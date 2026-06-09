@@ -42,6 +42,12 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'Can a UK electrician work abroad?',
+  answer:
+    'Yes. UK electrical qualifications are highly regarded, but they rarely entitle you to work independently overseas without further steps. Most countries require you to have your qualifications assessed, learn the local wiring standard (such as AS/NZS 3000 in Australia and New Zealand), and obtain a local licence or registration. Australia, New Zealand, Canada and the Gulf states are the most established destinations.',
+};
+
 const keyTakeaways = [
   'UK electrical qualifications (City & Guilds 2365, 2357, 2391, and BS 7671) are well-regarded internationally, but most countries require additional local certification or licensing before you can work independently.',
   'Australia, New Zealand, Canada, and the Middle East are the most popular destinations for UK electricians, each with different recognition pathways and visa options.',
@@ -124,6 +130,42 @@ const sections = [
           apply for formal recognition of your qualifications before you can work independently. The
           process varies significantly from country to country.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">
+            Recognition at a Glance
+          </h3>
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-2 px-1 pb-1 border-b border-white/10 text-xs font-semibold uppercase tracking-wide text-white/50">
+              <span>Country</span>
+              <span>Assessing body</span>
+              <span>Local standard</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20 text-sm">
+              <span className="text-white font-medium">Australia</span>
+              <span className="text-white/80">Trades Recognition Australia (TRA), then state licensing</span>
+              <span className="text-yellow-400">AS/NZS 3000</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
+              <span className="text-white font-medium">New Zealand</span>
+              <span className="text-white/80">Electrical Workers Registration Board (EWRB)</span>
+              <span className="text-yellow-400">AS/NZS 3000</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
+              <span className="text-white font-medium">Canada</span>
+              <span className="text-white/80">Provincial bodies + Red Seal endorsement</span>
+              <span className="text-yellow-400">Canadian Electrical Code (CEC)</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
+              <span className="text-white font-medium">Gulf states</span>
+              <span className="text-white/80">Employer verification (often no formal assessment)</span>
+              <span className="text-yellow-400">Local municipality rules (e.g. DEWA)</span>
+            </div>
+          </div>
+          <p className="text-xs text-white/50 mt-4">
+            Indicative guidance only — confirm current requirements with the relevant licensing
+            authority before you apply.
+          </p>
+        </div>
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
             <div className="flex items-center gap-2 mb-3">
@@ -641,6 +683,7 @@ export default function ElectricalWorkingAbroadPage() {
       }
       heroSubtitle="Everything you need to know about taking your UK electrical qualifications overseas. Qualification recognition, visa pathways, earnings comparison, popular destinations, and how to prepare for a successful move abroad."
       readingTime={12}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

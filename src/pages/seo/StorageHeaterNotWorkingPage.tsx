@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Storage heaters require a dedicated off-peak circuit, separate from the normal power circuits. This circuit is controlled by a time switch or teleswitch that only provides power during off-peak hours.',
   'Element failure is common in older storage heaters. Elements are embedded in thermal bricks and cannot be easily replaced on most models — a failed element usually means replacing the entire heater.',
   'If none of your storage heaters are working, the most likely cause is a fault with the off-peak supply — the time switch, teleswitch, or the off-peak meter may have failed. Check whether the off-peak circuit MCB has tripped.',
-  'Storage heater circuits are dedicated fixed-wiring circuits and must have overcurrent protection correctly rated for the cable size and connected load in accordance with Part 4 of BS 7671. BS 7671:2018+A4:2026 Reg 411.3.3 applies specifically to socket-outlets rated not exceeding 32 A and does not apply to fixed heating circuits.',
+  'Storage heater circuits are dedicated fixed-wiring circuits and must have overcurrent protection correctly rated for the cable size and connected load in accordance with Part 4 of BS 7671. A storage heater is a space heating appliance, so it is a hardwired final circuit rather than a socket-outlet — the additional 30 mA RCD requirement of Reg 411.3.3 (socket-outlets rated not exceeding 32 A) is not triggered by the appliance itself.',
 ];
 
 const faqs = [
@@ -186,6 +186,36 @@ const sections = [
             </li>
           </ul>
         </div>
+        <h3 className="text-lg font-bold text-white mt-6 mb-3">Typical storage heater sizes and loads</h3>
+        <p>
+          Storage heaters are sized to the room. The figures below are indicative of common
+          domestic models — always confirm the actual rating from the appliance data plate before
+          sizing the cable and protective device.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Heater size</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Typical element load</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Approx. current at 230 V</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Small (single room)</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">1.7 kW</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">~7.4 A</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Medium</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">2.55 kW</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">~11 A</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Large</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">3.4 kW</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">~14.8 A</div>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Several heaters are usually grouped on one off-peak distribution board, so the diversity
+          and total connected load — not a single heater — determine the supply cable and main
+          off-peak protective device.
+        </p>
       </>
     ),
   },
@@ -251,6 +281,31 @@ const sections = [
           Many storage heater problems are caused by misunderstanding the controls. Here is a clear
           explanation:
         </p>
+        <h3 className="text-lg font-bold text-white mt-2 mb-3">Quick input/output setting guide</h3>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Weather</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Input (charge) — set the night before</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Output (release) — adjust through the day</div>
+
+            <div className="bg-blue-900/30 p-3 text-white/90">Cold / frosty</div>
+            <div className="bg-blue-900/30 p-3 text-white/90">4 to 5 (or max)</div>
+            <div className="bg-blue-900/30 p-3 text-white/90">Low in the morning, open up from midday</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Mild</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">2 to 3</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">Low, open only when in the room</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Warm / unoccupied</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">0 to 1</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">Closed</div>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Dial numbers vary by make and model — these are general guides, not precise temperatures.
+          The golden rule: the input only affects the <em>next</em> overnight charge, so turning it
+          up in the morning does nothing for that day.
+        </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -304,7 +359,29 @@ const sections = [
       <>
         <p>
           Storage heaters depend on off-peak electricity — a cheaper tariff available during
-          designated hours (typically midnight to 7am on Economy 7, or split hours on Economy 10).
+          designated hours. The exact window depends on your tariff and supplier, and on whether
+          your meter runs on local clock time. Common patterns are shown below.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Tariff</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Off-peak hours</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">How it suits storage heaters</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Economy 7</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">7 hours overnight (often around midnight–7am)</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">Single overnight charge — the classic storage heater tariff</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Economy 10</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">10 hours split across night, afternoon and evening</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">Allows an afternoon top-up charge as well as overnight</div>
+          </div>
+        </div>
+        <p className="text-sm text-white/70">
+          Off-peak rates are typically cheaper than the standard daytime rate, but the peak-rate
+          units on these tariffs are usually dearer than a single-rate tariff — they only pay off if
+          most of your usage is genuinely off-peak. Check your latest tariff for the exact times and
+          prices.
         </p>
         <p>The off-peak supply is typically controlled by one of these methods:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -348,6 +425,31 @@ const sections = [
     heading: 'What to Check Yourself',
     content: (
       <>
+        <p>
+          Use the symptom below to jump to the most likely cause before you start poking around the
+          consumer unit.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-2 gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Symptom</div>
+            <div className="bg-white/[0.06] p-3 font-bold text-white">Most likely cause / first check</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">One heater cold, others fine</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">That heater's input dial, then element/thermostat — call an electrician to test</div>
+
+            <div className="bg-red-500/10 p-3 text-white/90">All heaters cold, rest of the home has power</div>
+            <div className="bg-red-500/10 p-3 text-white/90">Off-peak supply: off-peak MCB, time switch or teleswitch</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Warm by morning, cold by afternoon</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">Input set too low, or output opened too far too early</div>
+
+            <div className="bg-white/[0.02] p-3 text-white/90">Never warm despite high input setting</div>
+            <div className="bg-white/[0.02] p-3 text-white/90">Charge thermostat or element failure, or no off-peak charge reaching the heater</div>
+
+            <div className="bg-red-500/10 p-3 text-white/90">Off-peak MCB trips when reset</div>
+            <div className="bg-red-500/10 p-3 text-white/90">Circuit fault — stop and call an electrician</div>
+          </div>
+        </div>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">1. Input dial setting</h4>
@@ -360,7 +462,12 @@ const sections = [
             <h4 className="font-bold text-white mb-2">2. Consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
               Check the off-peak circuit MCB. It may be labelled "off-peak", "storage heaters", or
-              "Economy 7". If it has tripped, reset it. If it trips again, call an electrician.
+              "Economy 7". If it has tripped, reset it once. If it{' '}
+              <SEOInternalLink href="/guides/circuit-breaker-keeps-tripping">
+                trips again
+              </SEOInternalLink>
+              , stop and call an electrician — a repeatedly tripping breaker is signalling a real
+              fault, not a nuisance.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -497,17 +604,18 @@ const sections = [
               <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
-                  4. Regulatory Requirements — Chapter 75
+                  4. Regulatory Requirements — Overheating and Building Regulations
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Storage heater installations fall within Part 7, Chapter 75 of BS 7671. Regulation
-                  753.515.1 requires that electric heating systems are selected and erected so as to
-                  avoid any harmful influence between the heating system and any electrical or
-                  non-electrical installations envisaged. In practice this means ensuring adequate
-                  clearance from combustible materials, that wiring routes do not suffer derating
-                  due to the heat output, and that protective devices in adjacent circuits are not
-                  adversely affected. Regulation 753.515.101 additionally prohibits heating units
-                  from crossing expansion joints in the building structure.
+                  A free-standing storage heater is a space heating appliance, so it is covered by
+                  the protection-against-overheating requirements of Chapter 42. Regulation 424.1
+                  of BS 7671 states that locations containing space heating appliances must comply
+                  with the appropriate parts of the Building Regulations. Apply the general Chapter
+                  42 principles: keep adequate clearance from combustible materials, and route
+                  wiring so that the heat output does not reduce the current-carrying capacity of
+                  nearby cables. Note that Section 753 (heating cables and embedded heating systems)
+                  is scoped to embedded surface heating — floors, ceilings, walls, de-icing and the
+                  like — so it does not apply to a free-standing storage heater appliance.
                 </p>
               </div>
             </div>
@@ -516,15 +624,18 @@ const sections = [
             <div className="flex items-start gap-4">
               <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">5. A4:2026 — AFDD Recommendation</h4>
+                <h4 className="font-bold text-white mb-1">5. A4:2026 — AFDDs and Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
-                  detection devices (AFDDs) on AC final circuits of a fixed installation to mitigate
-                  the risk of fire due to arc fault currents. The wording is recommendatory rather
-                  than mandatory, but for new or replacement storage heater circuits in dwellings
-                  the recommendation should be considered and, where not adopted, the decision
-                  documented. AFDDs are fitted at the consumer unit in place of, or combined with,
-                  the circuit MCB.
+                  Under BS 7671:2018+A4:2026, Regulation 421.1.7 requires arc fault detection
+                  devices (AFDDs) conforming to BS EN 62606 for single-phase AC final circuits
+                  supplying <strong>socket-outlets</strong> rated not exceeding 32 A in high rise
+                  residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built
+                  student accommodation and care homes; for all other premises AFDDs are recommended
+                  on those socket-outlet circuits. Because the regulation is written around
+                  socket-outlet final circuits, it does not directly mandate an AFDD on a hardwired
+                  storage heater circuit — but the underlying fire-risk thinking is the same, so
+                  where AFDD protection is provided at the board it is sound practice to cover the
+                  off-peak heating circuits too, and to record the design decision.
                 </p>
               </div>
             </div>
@@ -562,6 +673,11 @@ export default function StorageHeaterNotWorkingPage() {
       }
       heroSubtitle="Cold storage heaters? This guide explains how they work, what the input and output controls do, why your off-peak supply might have failed, and when you need an electrician."
       readingTime={12}
+      answerBox={{
+        question: 'Why is my storage heater not working?',
+        answer:
+          'The most common reason a storage heater is cold is that it did not charge overnight. Check the input (charge) dial is turned up before bedtime, then check the off-peak circuit MCB in the consumer unit. If every heater is cold but the rest of your power works, the off-peak supply — the time switch, radio teleswitch or smart meter switching — has likely failed, which needs an electrician or your energy supplier.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

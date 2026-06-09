@@ -76,6 +76,16 @@ export default function CableDeratingCalculatorPage() {
                   Content verified against BS 7671:2018+A4:2026 by a JIB-registered electrician.
                 </span>
               </div>
+              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 mb-4">
+                <p className="font-semibold text-yellow-400 mb-2">How do you calculate cable derating?</p>
+                <p className="text-white text-sm">
+                  Identify the four BS 7671 correction factors for your installation: Ca (ambient
+                  temperature), Cg (grouping), Ci (thermal insulation) and Cf (semi-enclosed fuse).
+                  Multiply them together, then divide the protective device rating (In) by the
+                  result — It = In / (Ca × Cg × Ci × Cf). Select a cable whose tabulated capacity
+                  (Iz) for your reference method is at least equal to It.
+                </p>
+              </div>
               <p>
                 Cable derating is the process of reducing the tabulated current carrying capacity of
                 a cable to account for installation conditions that are less favourable than the
@@ -136,28 +146,42 @@ export default function CableDeratingCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <p className="font-semibold text-white mb-3">
-                  Common Ca values for 70°C thermoplastic (PVC) cable:
+                  Ca values from Table 4B1 — 70°C thermoplastic (PVC) vs 90°C thermosetting (XLPE):
                 </p>
-                <ul className="space-y-1 text-white text-sm">
-                  <li>
-                    <strong className="text-yellow-400">25°C:</strong> Ca = 1.03
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">30°C:</strong> Ca = 1.00 (reference)
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">35°C:</strong> Ca = 0.94
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">40°C:</strong> Ca = 0.87
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">45°C:</strong> Ca = 0.79
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">50°C:</strong> Ca = 0.71
-                  </li>
-                </ul>
+                <div className="overflow-hidden rounded-xl border border-white/10">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-yellow-500/10 text-yellow-400">
+                        <th className="text-left font-semibold px-3 py-2">Ambient temperature</th>
+                        <th className="text-center font-semibold px-3 py-2">70°C thermoplastic</th>
+                        <th className="text-center font-semibold px-3 py-2">90°C thermosetting</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-white">
+                      {[
+                        { t: '25°C', tp: '1.03', ts: '1.04' },
+                        { t: '30°C (reference)', tp: '1.00', ts: '1.00' },
+                        { t: '35°C', tp: '0.94', ts: '0.96' },
+                        { t: '40°C', tp: '0.87', ts: '0.91' },
+                        { t: '45°C', tp: '0.79', ts: '0.87' },
+                        { t: '50°C', tp: '0.71', ts: '0.82' },
+                        { t: '55°C', tp: '0.61', ts: '0.76' },
+                        { t: '60°C', tp: '0.50', ts: '0.71' },
+                      ].map((row) => (
+                        <tr key={row.t} className="border-t border-white/10">
+                          <td className="px-3 py-2 font-medium">{row.t}</td>
+                          <td className="px-3 py-2 text-center font-mono">{row.tp}</td>
+                          <td className="px-3 py-2 text-center font-mono">{row.ts}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-white/60 text-xs mt-3">
+                  90°C thermosetting (XLPE/LSOH) cable derates far less aggressively at high
+                  temperatures, which is one reason it is preferred in hot locations such as plant
+                  rooms and beneath PV modules.
+                </p>
               </div>
               <p>
                 In most UK domestic installations, the ambient temperature is close to 30°C and Ca
@@ -210,28 +234,47 @@ export default function CableDeratingCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <p className="font-semibold text-white mb-3">
-                  Example Cg values (Table 4C1 — bunched in conduit/trunking):
+                  Cg values from Table 4C1 — bunched/enclosed vs single layer spaced on a
+                  perforated tray:
                 </p>
-                <ul className="space-y-1 text-white text-sm">
-                  <li>
-                    <strong className="text-yellow-400">1 circuit:</strong> Cg = 1.00
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">2 circuits:</strong> Cg = 0.80
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">3 circuits:</strong> Cg = 0.70
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">4 circuits:</strong> Cg = 0.65
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">6 circuits:</strong> Cg = 0.57
-                  </li>
-                  <li>
-                    <strong className="text-yellow-400">9 circuits:</strong> Cg = 0.50
-                  </li>
-                </ul>
+                <div className="overflow-hidden rounded-xl border border-white/10">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-yellow-500/10 text-yellow-400">
+                        <th className="text-left font-semibold px-3 py-2">Circuits grouped</th>
+                        <th className="text-center font-semibold px-3 py-2">
+                          Bunched / enclosed
+                        </th>
+                        <th className="text-center font-semibold px-3 py-2">
+                          Single layer on tray
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-white">
+                      {[
+                        { n: '1 circuit', b: '1.00', t: '1.00' },
+                        { n: '2 circuits', b: '0.80', t: '0.88' },
+                        { n: '3 circuits', b: '0.70', t: '0.82' },
+                        { n: '4 circuits', b: '0.65', t: '0.77' },
+                        { n: '5 circuits', b: '0.60', t: '0.75' },
+                        { n: '6 circuits', b: '0.57', t: '0.73' },
+                        { n: '9 circuits', b: '0.50', t: '0.72' },
+                      ].map((row) => (
+                        <tr key={row.n} className="border-t border-white/10">
+                          <td className="px-3 py-2 font-medium">{row.n}</td>
+                          <td className="px-3 py-2 text-center font-mono">{row.b}</td>
+                          <td className="px-3 py-2 text-center font-mono">{row.t}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-white/60 text-xs mt-3">
+                  Bunched factors apply when cables touch in conduit, trunking or clipped together;
+                  the single-layer column applies to multicore cables spaced on a perforated
+                  horizontal or vertical tray. No grouping factor is needed at all where horizontal
+                  spacing between cables exceeds twice their overall diameter.
+                </p>
               </div>
               <p>
                 Grouping is one of the most impactful correction factors. Six circuits in a single
@@ -293,11 +336,46 @@ export default function CableDeratingCalculatorPage() {
                       <strong className="text-yellow-400">
                         Short penetration through insulation:
                       </strong>{' '}
-                      If the cable passes through insulation for less than 0.5m, the derating
-                      depends on the length of penetration relative to the cable spacing.
+                      If the cable is totally surrounded for less than 0.5m, the derating depends on
+                      the length in insulation, as set out in the table below.
                     </span>
                   </li>
                 </ul>
+              </div>
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
+                <p className="font-semibold text-white mb-3">
+                  Derating for a cable totally surrounded for less than 0.5m (Appendix 4, Section
+                  2.6):
+                </p>
+                <div className="overflow-hidden rounded-xl border border-white/10">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-yellow-500/10 text-yellow-400">
+                        <th className="text-left font-semibold px-3 py-2">Length in insulation</th>
+                        <th className="text-center font-semibold px-3 py-2">Derating factor</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-white">
+                      {[
+                        { l: '50 mm', f: '0.88' },
+                        { l: '100 mm', f: '0.78' },
+                        { l: '200 mm', f: '0.63' },
+                        { l: '400 mm', f: '0.51' },
+                        { l: '500 mm or more', f: '0.50' },
+                      ].map((row) => (
+                        <tr key={row.l} className="border-t border-white/10">
+                          <td className="px-3 py-2 font-medium">{row.l}</td>
+                          <td className="px-3 py-2 text-center font-mono">{row.f}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-white/60 text-xs mt-3">
+                  These factors apply to conductors up to 10mm&sup2; in insulation with a thermal
+                  conductivity greater than 0.04 W/m·K. At 0.5m or more, the factor settles at 0.5 —
+                  the same as the fully enclosed case.
+                </p>
               </div>
               <p>
                 In practice, the most common scenario in domestic installations is flat twin and
@@ -344,12 +422,14 @@ export default function CableDeratingCalculatorPage() {
                 protective device type and the 0.725 factor is applied automatically.
               </p>
               <p>
-                Under BS 7671 Reg 622.85, inspectors must verify during an EICR that cables are
-                adequate for current-carrying capacity with regard to Section 523 — which means
-                checking that all applicable correction factors (Ca, Cg, Ci, and Cf) were correctly
-                applied at the design stage. Correct cable derating is therefore not just a design
-                obligation but an inspection checkpoint that feeds directly into the EICR coding
-                decision.
+                The current-carrying capacity requirements that the correction factors serve sit in
+                Section 523 of BS 7671. During periodic inspection and testing (Chapter 65), an
+                inspector assessing an installation has to satisfy themselves that conductors were
+                selected with adequate current-carrying capacity for the conditions — which in
+                practice means that all applicable correction factors (Ca, Cg, Ci, and Cf) were
+                correctly applied at the design stage. Correct cable derating is therefore not just
+                a design obligation but a judgement that feeds directly into the EICR coding
+                decision when an undersized circuit is found.
               </p>
             </>
           ),

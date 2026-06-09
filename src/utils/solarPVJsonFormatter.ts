@@ -311,6 +311,12 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       mounting_type_display: formatMountingType(arr.mountingType || ''),
       dc_cable_type: arr.dcCableType || '',
       dc_cable_size: arr.dcCableSize || '',
+      dc_earth_cable_size: arr.dcEarthCableSize || '',
+      dc_cable_length: arr.dcCableLength || '',
+      string_ocpd_type: arr.stringOcpdType || '',
+      string_ocpd_rating_a: arr.stringOcpdRatingA || '',
+      string_ocpd_dc_rating_v: arr.stringOcpdDcRatingV || '',
+      string_ocpd_breaking_capacity_ka: arr.stringOcpdBreakingCapacityKa || '',
       notes: arr.notes || '',
     }));
   };
@@ -404,6 +410,8 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
         dc_isolator_result: formatTestResult(test.dcIsolatorOperational),
         dc_isolator_class: getTestResultClass(test.dcIsolatorOperational),
         dc_isolator_location: test.dcIsolatorLocation || '',
+        dc_isolator_rating_a: test.dcIsolatorRatingA || '',
+        dc_isolator_rating_v: test.dcIsolatorRatingV || '',
         ac_isolator_result: formatTestResult(test.acIsolatorOperational),
         ac_isolator_class: getTestResultClass(test.acIsolatorOperational),
         ac_isolator_location: test.acIsolatorLocation || '',
@@ -521,6 +529,10 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       chemistry: battery.chemistry || '',
       chemistry_display: formatBatteryChemistry(battery.chemistry || ''),
       location: battery.location || '',
+      max_charge_power: battery.maxChargePower || '',
+      max_discharge_power: battery.maxDischargePower || '',
+      depth_of_discharge: battery.depthOfDischarge || '',
+      cycles: battery.cycles || '',
     };
   };
 
@@ -559,7 +571,11 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       meter_make: metering.meterMake || '',
       meter_model: metering.meterModel || '',
       meter_serial: metering.meterSerial || '',
+      meter_location: metering.meterLocation || '',
       ct_ratio: metering.ctRatio || '',
+      generation_meter_required: metering.generationMeterRequired || false,
+      export_meter_required: metering.exportMeterRequired || false,
+      smart_meter_compatible: metering.smartMeterCompatible || false,
       seg_registered: metering.segRegistered || false,
       seg_supplier: metering.segSupplier || '',
       notes: metering.notes || '',
@@ -618,6 +634,8 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     installation_date: getDate('installationDate'),
     commissioning_date: getDate('commissioningDate'),
     design_reference: get('designReference'),
+    linked_eic_reference: get('linkedEicReference'),
+    recommended_retest_interval_years: get('recommendedRetestIntervalYears'),
     previous_installation_ref: get('previousInstallationRef'),
     status: get('status'),
 

@@ -40,7 +40,7 @@ const keyTakeaways = [
   'High voltage (HV) in the UK electrical industry context means voltages above 1kV AC (or 1.5kV DC). This is the boundary defined by BS 7671:2018+A4:2026 and IEC 60038. Standard distribution voltages above LV include 11kV, 33kV, 66kV, 132kV, and 275kV/400kV transmission.',
   'HV systems are operated through formal Authorisation systems. Key roles are: Authorised Person (AP) — responsible for establishing and maintaining safe working conditions; Competent Person (CP) — can carry out HV work under the control of an AP; Senior Authorised Person (SAP) — issues sanctions for testing and manages complex switching operations.',
   'ENA Engineering Recommendation G74 covers the protection of HV consumer installations. ENA Engineering Recommendation G99 is the current standard for new embedded generation connections to the distribution network (from 2019 onwards). These are the key industry standards for HV work on distribution networks.',
-  'BS 7671:2018+A4:2026 Section 442 (Regs 442.2.1 and 442.2.2) requires LV installations supplied from HV consumer substations (typically 11kV) to be designed to withstand temporary power-frequency overvoltages arising from earth faults on the HV system. The magnitude limit is set by Reg 442.2.1 (Uc, per Table 44.1); the duration limits are set by Reg 442.2.2 (Up+250V for long disconnection times; Up+1,200V for short disconnection times under 5 s). GN3 Chapter 2 Reg 2.36 requires inspectors to verify this protection at initial verification and periodic inspection.',
+  'BS 7671:2018+A4:2026 Section 442 (Regs 442.2.1 and 442.2.2) requires LV installations supplied from HV consumer substations (typically 11kV) to withstand temporary power-frequency overvoltages arising from earth faults on the HV system. Reg 442.2.1 limits the power frequency fault voltage Uf (per Table 44.1) to a non-dangerous level; Reg 442.2.2 limits the stress voltages U1 and U2 per Table 44.2 (Up+250V for HV earth faults with long disconnection times above 5 s; Up+1,200V for short disconnection times below 5 s, as on the low-impedance earthed 11kV networks used by most UK DNOs).',
   'Electricity at Work Regulations 1989 Regulation 14 prohibits live working on HV systems in virtually all circumstances. Regulation 14 states that no person shall work on live conductors unless it is unreasonable in all the circumstances for it to be dead. For HV, "unreasonable" almost never applies — all HV work is carried out dead.',
   'HV-authorised electricians work in power generation, large industrial sites, data centres, DNO substation construction, and offshore wind. Pay rates range from £55 to £100+ per hour depending on the authorisation level and sector.',
 ];
@@ -179,38 +179,78 @@ const sections = [
           The voltage band definitions that apply in UK electrical work come from BS 7671 (based on
           IEC 60038):
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Extra Low Voltage (ELV):</strong> Not exceeding 50V AC or 120V ripple-free
-                DC. Safe to touch in most circumstances.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Low Voltage (LV):</strong> Exceeding ELV but not exceeding 1kV AC or 1.5kV
-                DC. The standard domestic and commercial supply (230V/400V) falls in this band.
-                Governed by BS 7671.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>High Voltage (HV):</strong> Exceeding 1kV AC or 1.5kV DC. UK distribution:
-                11kV, 33kV, 66kV, 132kV. Transmission: 275kV, 400kV. Beyond BS 7671 scope.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 text-xs sm:text-sm font-semibold text-white bg-white/[0.03] border-b border-white/10">
+            <div className="col-span-3 px-4 py-3">Band</div>
+            <div className="col-span-6 px-4 py-3 border-l border-white/10">Definition</div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10">In practice</div>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white bg-green-900/30 border-b border-green-700/40">
+            <div className="col-span-3 px-4 py-3 font-semibold">Extra-Low (ELV)</div>
+            <div className="col-span-6 px-4 py-3 border-l border-white/10">
+              Not exceeding 50V AC or 120V ripple-free DC
+            </div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white/80">
+              SELV/PELV, signalling
+            </div>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white bg-yellow-900/30 border-b border-yellow-700/40">
+            <div className="col-span-3 px-4 py-3 font-semibold">Low (LV)</div>
+            <div className="col-span-6 px-4 py-3 border-l border-white/10">
+              Exceeding ELV but not exceeding 1000V AC or 1500V DC between conductors (600V AC /
+              900V DC to earth)
+            </div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white/80">
+              230V / 400V — governed by BS 7671
+            </div>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white bg-red-900/30">
+            <div className="col-span-3 px-4 py-3 font-semibold">High (HV)</div>
+            <div className="col-span-6 px-4 py-3 border-l border-white/10">
+              Normally exceeding low voltage (above 1kV AC / 1.5kV DC)
+            </div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white/80">
+              11/33/66/132kV; beyond BS 7671 scope
+            </div>
+          </div>
         </div>
         <p>
           In UK industry, HV most commonly refers to 11kV — the voltage at which power is
           distributed to large sites from DNO substations. Transformers step 11kV down to 400V/230V
           for building distribution. Many large industrial and commercial sites own and operate
-          their own 11kV switchgear and transformers (HV consumer installations).
+          their own 11kV switchgear and transformers (HV consumer installations). The voltage levels
+          above LV that an HV electrician encounters in the UK network are:
         </p>
+        <div className="grid gap-3 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="font-bold text-yellow-400 text-lg">11kV</div>
+            <p className="text-white text-sm mt-1">
+              Primary distribution. Feeds large industrial/commercial sites and local
+              transformers stepping down to 400V/230V.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="font-bold text-yellow-400 text-lg">33kV</div>
+            <p className="text-white text-sm mt-1">
+              Sub-transmission. Connects primary substations and larger embedded generation (solar
+              and wind farms).
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="font-bold text-yellow-400 text-lg">66 / 132kV</div>
+            <p className="text-white text-sm mt-1">
+              Bulk distribution / lower sub-transmission feeding grid supply points and major
+              industrial loads.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+            <div className="font-bold text-red-400 text-lg">275 / 400kV</div>
+            <p className="text-white text-sm mt-1">
+              National Grid transmission (Super Grid). Specialist transmission roles, not typical
+              consumer-site HV work.
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
@@ -353,44 +393,69 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reg 442.2.1 — Magnitude:</strong> The power-frequency fault voltage Uc
-                (appearing between exposed-conductive-parts and Earth in the LV installation during
-                an HV earth fault) shall not exceed a dangerous level. The value of Uc is calculated
-                from Table 44.1, which accounts for the earthing arrangement (TN, TT, or IT) and
-                whether the HV and LV earthing systems are interconnected or separated.
+                <strong>Reg 442.2.1 — Power frequency fault voltage:</strong> The fault voltage Uf
+                (appearing in the LV installation between exposed-conductive-parts and Earth during
+                an HV earth fault), as calculated in Table 44.1, shall not exceed a dangerous level.
+                Table 44.1 accounts for the system earthing arrangement (TN, TT, or IT) and whether
+                the HV and LV earthing arrangements (Rb and Re) are connected or separated.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reg 442.2.2 — Duration limits:</strong> The permissible stress voltage on LV
-                equipment depends on how quickly the HV protection clears the fault. For HV systems
-                with long disconnection times (for example, isolated-neutral or resonant-earthed
-                networks), the limit is Up+250V. For systems with short disconnection times below 5
-                s (for example, low-impedance earthed 11kV networks as used by most UK DNOs), the
-                limit is Up+1,200V.
+                <strong>Reg 442.2.2 — Magnitude and duration of stress voltages:</strong> The power
+                frequency stress voltages (U1 and U2) on LV equipment due to an HV earth fault shall
+                not exceed the limits in Table 44.2. The permissible value depends on how quickly
+                the HV protection clears the fault — see the table below.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reg 442.2.3 — Compliance measures:</strong> Where the calculated limits are
-                not met, the standard permits three compliance measures: (a) separation of HV and LV
-                earthing arrangements; (b) change of LV system earthing; or (c) reduction of earth
-                resistance Rp. Where SPDs are used as part of the solution, they shall be selected
-                and erected in accordance with Section 534.
+                <strong>Reg 442.2.3 — Requirements for calculation of limits:</strong> The
+                requirements of 442.2.1 and 442.2.2 are deemed to be fulfilled for installations
+                taking an LV supply from the public distribution network. Where calculation is
+                needed, possible measures are: (a) separation of HV and LV earthing arrangements;
+                (b) change of LV system earthing; or (c) reduction of earth resistance Rb.
               </span>
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 py-3 border-b border-white/10">
+            <h3 className="font-bold text-white text-base">
+              Table 44.2 — Permissible power frequency stress voltage on LV equipment
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 text-sm">
+            <div className="px-5 py-3 font-semibold text-white bg-white/[0.03] border-b border-r border-white/10">
+              Earth fault duration in the HV system (t)
+            </div>
+            <div className="px-5 py-3 font-semibold text-white bg-white/[0.03] border-b border-white/10">
+              Permissible stress voltage (U)
+            </div>
+            <div className="px-5 py-3 text-white border-b border-r border-white/10">
+              t &gt; 5 s <span className="text-white/60">(long disconnection — for example
+              isolated-neutral or resonant-earthed HV systems)</span>
+            </div>
+            <div className="px-5 py-3 text-white border-b border-white/10 font-mono">
+              Up + 250 V
+            </div>
+            <div className="px-5 py-3 text-white border-r border-white/10">
+              t &lt; 5 s <span className="text-white/60">(short disconnection — for example the
+              low-impedance earthed 11kV networks used by most UK DNOs)</span>
+            </div>
+            <div className="px-5 py-3 text-white font-mono">Up + 1,200 V</div>
+          </div>
+        </div>
         <p>
-          <strong>Inspection and verification:</strong> GN3 (9th Edition, A4:2026) Chapter 2 Reg
-          2.36 requires inspectors carrying out initial verification or periodic inspection of an LV
-          installation supplied from a consumer substation to verify that protection against
-          temporary overvoltages from HV faults is in place and effective. This check is in addition
-          to the standard LV inspection schedule. Common findings on HV-fed sites include
-          insufficient earthing provision and inadequate records of HV protection relay settings —
-          both of which affect whether the Reg 442.2.2 duration limits are met.
+          <strong>Inspection and verification:</strong> When an LV installation takes its supply
+          from a consumer substation, the inspector should confirm that protection against temporary
+          overvoltages arising from an HV earth fault has been considered and that the relevant
+          calculations and earthing arrangements are documented. This is in addition to the standard
+          LV inspection. Common findings on HV-fed sites include insufficient earthing provision and
+          inadequate records of HV protection relay settings — both of which affect whether the Reg
+          442.2.2 stress-voltage limits are met.
         </p>
         <p>
           The LV installer is normally not required to perform the Uc/Up calculations themselves —
@@ -401,12 +466,13 @@ const sections = [
           <SEOInternalLink href="/guides/eicr-certificate-guide">EICR schedule</SEOInternalLink>.
         </p>
         <p>
-          <strong>SPDs and transient overvoltages:</strong> Where SPDs are assessed as part of the
-          HV-fed site's overvoltage protection, BS 7671 Note 3 to Chapter 443 confirms that
-          transient overvoltages transmitted by the supply distribution system are not significantly
-          attenuated downstream. This means the LV main distribution board at an HV-connected site
-          is exposed to near-source transient levels, and the SPD requirement assessment (per
-          Section 534) must account for this.
+          <strong>SPDs and transient overvoltages:</strong> Separately from the power-frequency
+          overvoltages of Section 442, transient (atmospheric/switching) overvoltages are addressed
+          in Section 443. Note 3 to Section 443 states that transient overvoltages transmitted by
+          the supply distribution system are not significantly attenuated downstream in most
+          installations — so the LV main distribution board at an HV-connected site can still see
+          substantial transient levels. Where SPDs are used for protection against overvoltages,
+          Section 443 requires them to be selected and erected in accordance with Section 534.
         </p>
       </>
     ),
@@ -511,6 +577,54 @@ const sections = [
           <SEOInternalLink href="/guides/compex-qualification-guide">CompEx</SEOInternalLink> and
           the relevant security vetting are also required.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-5 py-3 border-b border-white/10">
+            <h3 className="font-bold text-white text-base">
+              Indicative UK day-rate guide by authorisation level
+            </h3>
+            <p className="text-white/60 text-xs mt-1">
+              Market guidance only — actual rates vary by sector, region and contract.
+            </p>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm font-semibold text-white bg-white/[0.03] border-b border-white/10">
+            <div className="col-span-5 px-4 py-3">Role</div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10">Typical rate</div>
+            <div className="col-span-4 px-4 py-3 border-l border-white/10">Highest in</div>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white border-b border-white/10">
+            <div className="col-span-5 px-4 py-3 font-semibold">
+              Competent Person (CP) — under AP supervision
+            </div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 font-mono">
+              £45–£60/hr
+            </div>
+            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white/80">
+              Industrial HV maintenance
+            </div>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white border-b border-white/10">
+            <div className="col-span-5 px-4 py-3 font-semibold">
+              Authorised Person (AP) — independent switching authority
+            </div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 font-mono">
+              £60–£80/hr
+            </div>
+            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white/80">
+              DNO substation projects
+            </div>
+          </div>
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white">
+            <div className="col-span-5 px-4 py-3 font-semibold">
+              Senior Authorised Person (SAP) — complex system management
+            </div>
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 font-mono">
+              £75–£100+/hr
+            </div>
+            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white/80">
+              Offshore wind, nuclear
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -565,6 +679,13 @@ export default function HighVoltageElectricalWorkPage() {
       }
       heroSubtitle="HV work (above 1kV AC) requires formal authorisation, strict switching procedures, and deep knowledge of EWR Regulation 14. This guide covers everything from AP/CP/SAP roles to ENA G74, DNO connections, and HV career paths."
       readingTime={17}
+      answerBox={{
+        question: 'What counts as high voltage electrical work in the UK?',
+        answer:
+          'In UK electrical work, high voltage (HV) means a voltage exceeding 1kV AC or 1.5kV DC — the boundary above low voltage in BS 7671. Common HV levels are the 11kV, 33kV, 66kV and 132kV distribution networks and the 275kV/400kV transmission grid. HV work falls outside the scope of BS 7671 and requires formal site-specific authorisation (AP/CP/SAP) under a safe system of work.',
+        detail:
+          'BS 7671 defines low voltage as exceeding extra-low voltage but not exceeding 1000V AC or 1500V DC between conductors; high voltage is "normally exceeding low voltage". One BS 7671 section still applies indirectly to HV-fed sites: Section 442 protects the LV installation against power-frequency overvoltages from HV earth faults.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

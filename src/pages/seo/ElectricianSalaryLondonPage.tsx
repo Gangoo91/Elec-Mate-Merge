@@ -36,6 +36,12 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'How much do electricians earn in London?',
+  answer:
+    'Employed electricians in London typically earn £38,000 to £65,000 a year — around 20 to 35% above the UK average for the same role. Self-employed and limited company electricians commonly take home £55,000 to £90,000, and specialist roles such as HV, data centre and rail reach £70,000 to £100,000+. Figures are indicative 2026 market guidance, not a quote.',
+};
+
 const keyTakeaways = [
   'Employed electricians in London typically earn £38,000 to £65,000 per year, around 20 to 35% above the UK national average for the same role.',
   'Self-employed and limited company electricians in London commonly achieve £55,000 to £90,000 per year, with established contractors billing significantly more.',
@@ -124,6 +130,20 @@ const relatedPages: RelatedPage[] = [
     title: 'Specialist Electrician Routes',
     description: 'ATEX, HV, rail, data centre and other high-earning specialist paths.',
     icon: Star,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/electrician-salary-uk',
+    title: 'Electrician Salary UK',
+    description: 'National salary benchmarks to compare against the London premium.',
+    icon: PoundSterling,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/dividend-vs-salary-electrician',
+    title: 'Dividend vs Salary',
+    description: 'Draw income tax-efficiently from your limited company.',
+    icon: Calculator,
     category: 'Guide',
   },
 ];
@@ -269,49 +289,73 @@ const sections = [
           roles:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>High-voltage (HV) electrician</strong> — £70,000 to £95,000 employed, £500
-                to £700 per day self-employed. Authorised Person (AP) or Competent Person (CP) roles
-                on distribution networks and large building substations.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Data centre electrician</strong> — £60,000 to £85,000 employed, with
-                significant shift and on-call supplements. Critical environment work requiring
-                structured cabling, UPS, and generator expertise.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Rail and transport electrician</strong> — £55,000 to £80,000 employed on
-                TfL, Network Rail, and Crossrail successor projects. Shift and weekend working
-                supplements can add £10,000 to £20,000 annually.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Building Management Systems (BMS) / controls</strong> — £60,000 to £80,000.
-                Programming and commissioning of Trend, Siemens, Honeywell, or Johnson Controls BMS
-                systems on large commercial buildings.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Electrical contracts manager</strong> — £80,000 to £110,000. Managing
-                multiple electrical projects commercially, including P&amp;L responsibility.
-                Typically 10+ years of experience.
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-2 pr-4 font-semibold">Specialist role</th>
+                  <th className="text-left py-2 pr-4 font-semibold">Employed (London)</th>
+                  <th className="text-left py-2 pr-4 font-semibold">Self-employed day rate</th>
+                  <th className="text-left py-2 font-semibold">What sets the premium</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="py-2 pr-4 font-medium">High-voltage (HV)</td>
+                  <td className="py-2 pr-4">£70,000–£95,000</td>
+                  <td className="py-2 pr-4">£500–£700</td>
+                  <td className="py-2">
+                    Authorised / Competent Person roles on distribution networks and building
+                    substations.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">Data centre</td>
+                  <td className="py-2 pr-4">£60,000–£85,000</td>
+                  <td className="py-2 pr-4">£450–£650</td>
+                  <td className="py-2">
+                    Critical-environment work — UPS, generators, structured cabling; shift and
+                    on-call supplements.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">Rail / transport</td>
+                  <td className="py-2 pr-4">£55,000–£80,000</td>
+                  <td className="py-2 pr-4">£350–£550</td>
+                  <td className="py-2">
+                    TfL, Network Rail and successor programmes; shift and weekend supplements of
+                    £10,000–£20,000 a year.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">BMS / controls</td>
+                  <td className="py-2 pr-4">£60,000–£80,000</td>
+                  <td className="py-2 pr-4">£400–£600</td>
+                  <td className="py-2">
+                    Programming and commissioning Trend, Siemens, Honeywell or Johnson Controls on
+                    large commercial buildings.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">Contracts manager</td>
+                  <td className="py-2 pr-4">£80,000–£110,000</td>
+                  <td className="py-2 pr-4">—</td>
+                  <td className="py-2">
+                    Commercial and technical responsibility for multiple projects, including P&amp;L.
+                    Typically 10+ years' experience.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+        <p className="text-white/70 text-sm">
+          Specialist routes are covered in depth in our{' '}
+          <SEOInternalLink href="/guides/specialist-electrician-routes-uk">
+            guide to specialist electrician routes
+          </SEOInternalLink>{' '}
+          — including the qualifications each path requires.
+        </p>
       </>
     ),
   },
@@ -362,6 +406,51 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>
+          For employed electricians, much of this premium is formalised through the JIB (Joint
+          Industry Board) national agreement, which sets graded minimum rates negotiated between the
+          ECA and Unite. London attracts a separate "London plus" rate on top of the standard graded
+          rate:
+        </p>
+        <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-6 my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-2 pr-4 font-semibold">London weighting route</th>
+                  <th className="text-left py-2 pr-4 font-semibold">Typical uplift</th>
+                  <th className="text-left py-2 font-semibold">How it is applied</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="py-2 pr-4 font-medium">JIB "London plus" graded rate</td>
+                  <td className="py-2 pr-4">~20–25% over standard graded rate</td>
+                  <td className="py-2">Set under the JIB national agreement for ECS-graded operatives.</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">Separate London allowance</td>
+                  <td className="py-2 pr-4">~£2,000–£5,000 a year</td>
+                  <td className="py-2">Paid on top of base salary by many M&amp;E contractors.</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">Consolidated London rate</td>
+                  <td className="py-2 pr-4">Built into headline salary</td>
+                  <td className="py-2">A single figure with no separate allowance line.</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-medium">Self-employed</td>
+                  <td className="py-2 pr-4">No formal weighting</td>
+                  <td className="py-2">You set your own day rates to reflect London costs and demand.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            JIB rates are renegotiated annually; treat the percentages above as indicative market
+            guidance rather than a current published figure.
+          </p>
+        </div>
       </>
     ),
   },
@@ -372,9 +461,13 @@ const sections = [
       <>
         <p>
           The UK-wide average employed electrician salary in 2026 is approximately £32,000 to
-          £48,000. London sits 20 to 35% above this range. For self-employed electricians, the UK
-          national average is approximately £40,000 to £60,000; London self-employed electricians
-          consistently achieve £55,000 to £90,000.
+          £48,000 — see our{' '}
+          <SEOInternalLink href="/guides/electrician-salary-uk">
+            UK electrician salary guide
+          </SEOInternalLink>{' '}
+          for the national picture. London sits 20 to 35% above this range. For self-employed
+          electricians, the UK national average is approximately £40,000 to £60,000; London
+          self-employed electricians consistently achieve £55,000 to £90,000.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="overflow-x-auto">
@@ -441,8 +534,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Gain specialist qualifications</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The biggest single salary step-changes come from specialist qualifications. CompEx
-                  for explosive atmospheres, HV authorisation, 2391 inspection and testing, and BMS
-                  qualifications all deliver immediate rate increases of 20 to 50%.
+                  for explosive atmospheres, HV authorisation,{' '}
+                  <SEOInternalLink href="/training/city-guilds-2391">
+                    City &amp; Guilds 2391 inspection and testing
+                  </SEOInternalLink>
+                  , and BMS qualifications all deliver immediate rate increases of 20 to 50%.
                 </p>
               </div>
             </div>
@@ -456,7 +552,11 @@ const sections = [
                   For most experienced London electricians, the move to self-employment or a limited
                   company structure adds £15,000 to £30,000 per year in effective take-home pay
                   compared to equivalent employment, once business costs and tax efficiency are
-                  factored in.
+                  factored in. Our{' '}
+                  <SEOInternalLink href="/guides/dividend-vs-salary-electrician">
+                    dividend vs salary guide
+                  </SEOInternalLink>{' '}
+                  explains how to draw income tax-efficiently through a limited company.
                 </p>
               </div>
             </div>
@@ -509,6 +609,7 @@ export default function ElectricianSalaryLondonPage() {
       }
       heroSubtitle="London electricians earn 20 to 40% above the UK average. This guide covers realistic employed and self-employed earnings, specialist role premiums, and practical advice on maximising your income in the capital."
       readingTime={12}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

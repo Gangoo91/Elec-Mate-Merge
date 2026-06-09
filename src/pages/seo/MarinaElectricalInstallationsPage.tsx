@@ -213,16 +213,113 @@ const sections = [
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           applies to installations in marinas and similar locations for the supply to pleasure craft
-          and houseboats. The key regulations are:
+          and houseboats. Use this reg-by-reg reference as your on-site checklist:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold">Regulation</th>
+                <th className="px-4 py-3 font-semibold">Requirement</th>
+              </tr>
+            </thead>
+            <tbody className="text-white/90">
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.313.1.2
+                </td>
+                <td className="px-4 py-3">
+                  Supply voltage to craft/houseboats shall be 230&nbsp;V AC single-phase or
+                  400&nbsp;V AC three-phase.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.531.2
+                </td>
+                <td className="px-4 py-3">
+                  Each socket-outlet protected individually by an RCD to Reg 415.1.1 (30&nbsp;mA),
+                  disconnecting all live conductors including the neutral.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.533
+                </td>
+                <td className="px-4 py-3">
+                  Each socket-outlet protected by its own overcurrent device to Chapter 43.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.537.2.1.1
+                </td>
+                <td className="px-4 py-3">
+                  At least one means of isolation per distribution cabinet, disconnecting all live
+                  conductors including the neutral; one isolator per maximum of four socket-outlets.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.553.1.8
+                </td>
+                <td className="px-4 py-3">
+                  Socket-outlets to BS EN IEC 60309-2 up to 63&nbsp;A and BS EN IEC 60309-1 above
+                  63&nbsp;A; at least IP44 (or IPX5/IPX6 where AD5/AD6 apply).
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.553.1.10
+                </td>
+                <td className="px-4 py-3">
+                  A maximum of four socket-outlets may be grouped together in one enclosure.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.553.1.11
+                </td>
+                <td className="px-4 py-3">
+                  One socket-outlet shall supply only one pleasure craft or houseboat.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.553.1.13
+                </td>
+                <td className="px-4 py-3">
+                  Socket-outlets at least 1&nbsp;m above the highest water level; on floating
+                  pontoons/walkways this may reduce to 300&nbsp;mm with additional splash
+                  protection.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.553.1.14
+                </td>
+                <td className="px-4 py-3">
+                  Socket-outlet protective conductors shall not be connected to a PME earthing
+                  facility.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The earthing, external-influence and cable rules are detailed in the sections below. The
+          remaining headline requirements:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 709.411.4:</strong> PME (TN-C-S) earthing must not be used as the
-                means of earthing for the supply to a boat. TT earthing with an earth rod is the
-                standard solution. A TN-S supply is acceptable where available.
+                <strong>Regulation 709.411.4 &amp; 709.553.1.14:</strong> the ESQCR prohibit
+                connecting a PME (TN-C-S) earthing facility to any metalwork in a boat, and Reg
+                709.553.1.14 forbids connecting socket-outlet protective conductors to a PME earth.
+                In practice the berth supply is taken from a TT arrangement (local earth electrode)
+                or an isolating transformer; a TN-S supply is acceptable where the DNO provides one.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,13 +465,51 @@ const sections = [
             <li className="flex items-start gap-3">
               <PlugZap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket ratings.</strong> Standard provision is 16A single-phase for smaller
-                craft (yachts up to approximately 12m) and 32A single-phase for larger vessels. Very
-                large vessels may require 63A or 125A three-phase supplies. The socket type must be
-                BS EN 60309-2 (CEE blue for single-phase, CEE red for three-phase).
+                <strong>Socket ratings.</strong> BS 7671 sets 16&nbsp;A single-phase, 200–250&nbsp;V
+                as the general default (Reg 709.553.1.12), with higher ratings provided where greater
+                demand is envisaged. The CEE socket type and standard are set by Reg 709.553.1.8 —
+                see the table below.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold">Rating</th>
+                <th className="px-4 py-3 font-semibold">Supply</th>
+                <th className="px-4 py-3 font-semibold">Connector standard</th>
+                <th className="px-4 py-3 font-semibold">Typical craft</th>
+              </tr>
+            </thead>
+            <tbody className="text-white/90">
+              <tr className="border-t border-white/10 bg-blue-900/20">
+                <td className="px-4 py-3 font-mono whitespace-nowrap align-top">16&nbsp;A</td>
+                <td className="px-4 py-3 whitespace-nowrap">Single-phase</td>
+                <td className="px-4 py-3">BS EN IEC 60309-2 (blue CEE)</td>
+                <td className="px-4 py-3">Default provision; smaller yachts and motor cruisers</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-blue-900/20">
+                <td className="px-4 py-3 font-mono whitespace-nowrap align-top">32&nbsp;A</td>
+                <td className="px-4 py-3 whitespace-nowrap">Single-phase</td>
+                <td className="px-4 py-3">BS EN IEC 60309-2 (blue CEE)</td>
+                <td className="px-4 py-3">Larger vessels with higher demand</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono whitespace-nowrap align-top">63&nbsp;A</td>
+                <td className="px-4 py-3 whitespace-nowrap">3-phase</td>
+                <td className="px-4 py-3">BS EN IEC 60309-2 (red CEE)</td>
+                <td className="px-4 py-3">Large craft and superyachts</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-mono whitespace-nowrap align-top">&gt;&nbsp;63&nbsp;A</td>
+                <td className="px-4 py-3 whitespace-nowrap">3-phase</td>
+                <td className="px-4 py-3">BS EN IEC 60309-1 (above 63&nbsp;A)</td>
+                <td className="px-4 py-3">Superyachts and commercial vessels</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           The supply cable from the pillar to the boat is typically provided by the boat owner. It
@@ -398,8 +533,68 @@ const sections = [
         <p>
           The marine environment is extremely demanding on electrical equipment. Salt spray, rain,
           wave splash, condensation, UV radiation, and airborne moisture all attack enclosures,
-          terminals, and insulation. BS 7671 Section 709 specifies minimum IP ratings for equipment
-          based on its location:
+          terminals, and insulation. Regulation 709.512.2 selects equipment for jetties, wharves,
+          piers and pontoons against four external-influence codes — water (AD), solid bodies (AE),
+          corrosion (AF) and impact (AG):
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="bg-white/[0.06] text-white">
+                <th className="px-4 py-3 font-semibold">Influence</th>
+                <th className="px-4 py-3 font-semibold">Condition</th>
+                <th className="px-4 py-3 font-semibold">Minimum protection</th>
+                <th className="px-4 py-3 font-semibold">Regulation</th>
+              </tr>
+            </thead>
+            <tbody className="text-white/90">
+              <tr className="border-t border-white/10 bg-blue-900/20">
+                <td className="px-4 py-3 font-semibold align-top">Water (AD)</td>
+                <td className="px-4 py-3">
+                  Splashes (AD4) / jets (AD5) / waves (AD6)
+                </td>
+                <td className="px-4 py-3 font-mono whitespace-nowrap">
+                  IPX4 / IPX5 / IPX6
+                </td>
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.512.2.1.1
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-semibold align-top">Solid bodies (AE)</td>
+                <td className="px-4 py-3">Small objects (AE2)</td>
+                <td className="px-4 py-3 font-mono whitespace-nowrap">IP3X</td>
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.512.2.1.2
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-semibold align-top">Corrosion (AF)</td>
+                <td className="px-4 py-3">
+                  Atmospheric corrosive/polluting substances (AF2); hydrocarbons present (AF3)
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">AF2 / AF3</td>
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.512.2.1.3
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-semibold align-top">Impact (AG)</td>
+                <td className="px-4 py-3">
+                  Medium-severity mechanical impact (AG2)
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">AG2 / IK08</td>
+                <td className="px-4 py-3 font-mono text-yellow-400 whitespace-nowrap align-top">
+                  709.512.2.1.4
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The headline socket and enclosure rule under Reg 709.553.1.8 is{' '}
+          <strong>IP44 as a minimum</strong>, rising to IPX5 (water jets, AD5) or IPX6 (water waves,
+          AD6) where those conditions apply. The notes below add the practical detail:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -415,9 +610,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP56 or higher</strong> — for equipment exposed to wave splash or heavy
-                rain. IP56 provides protection against dust ingress and powerful water jets. This
-                applies to equipment at the outer edges of pontoons or in exposed coastal locations.
+                <strong>IPX5 / IPX6 where exposed</strong> — where water jets (AD5) or water waves
+                (AD6) are present, the degree of protection against water rises to at least IPX5 or
+                IPX6 respectively (Reg 709.512.2.1.1 / 709.553.1.8). This applies to equipment at
+                the outer edges of pontoons and in exposed coastal locations; specifiers often
+                select a combined rating such as IP66 to satisfy both the solid-body and water
+                digits at once.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -438,7 +636,8 @@ const sections = [
                 or above a jetty, wharf, pier or pontoon must be protected against medium-severity
                 mechanical impact (AG2) — a real hazard from boat hooks, mooring ropes, fenders, and
                 vessel movement. Protection may be achieved by siting equipment to avoid foreseeable
-                impacts, or by providing local or general mechanical guards or barriers.
+                impacts, by providing local or general mechanical guards or barriers, or by
+                installing equipment with a minimum impact rating of IK08 to BS EN 62262.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -594,13 +793,34 @@ const sections = [
           installations due to the harsh environment and higher risk level. Guidance Note 3 (GN3)
           recommends a maximum interval of <strong>1 year</strong> for periodic inspection.
         </p>
+        <div className="grid gap-3 sm:grid-cols-3 my-4">
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-4">
+            <div className="text-2xl font-bold text-green-300">Annual</div>
+            <p className="text-white/90 text-sm mt-1">
+              Full EICR of the fixed installation, with RCD, earth electrode and insulation
+              resistance testing.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-4">
+            <div className="text-2xl font-bold text-blue-300">Monthly</div>
+            <p className="text-white/90 text-sm mt-1">
+              Visual checks of pillars, cables and connections; RCD test-button operation.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4">
+            <div className="text-2xl font-bold text-yellow-300">After storms</div>
+            <p className="text-white/90 text-sm mt-1">
+              Inspection after any flooding, extreme tide or severe weather event.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual EICR.</strong> A full periodic inspection and testing following BS
-                7671 Chapter 62, with specific attention to Section 709 requirements. This includes:
+                7671 Chapter 65, with specific attention to Section 709 requirements. This includes:
                 insulation resistance of all circuits, RCD trip time and sensitivity testing, earth
                 electrode resistance measurement,{' '}
                 <SEOInternalLink href="/guides/earthing-fault-diagnosis">

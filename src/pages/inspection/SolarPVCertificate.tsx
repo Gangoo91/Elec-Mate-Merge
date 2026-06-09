@@ -597,6 +597,13 @@ export default function SolarPVCertificate() {
             onCreateInvoice={handleCreateInvoice}
             onSaveDraft={handleSaveDraft}
             canGenerateCertificate={!isGenerating}
+            completedTabs={{
+              installation: tabProps.isTabComplete('installation'),
+              system: tabProps.isTabComplete('system'),
+              grid: tabProps.isTabComplete('grid'),
+              testing: tabProps.isTabComplete('testing'),
+              signoff: tabProps.isTabComplete('signoff'),
+            }}
           />
         </div>
       </main>

@@ -41,11 +41,17 @@ const tocItems = [
 
 const keyTakeaways = [
   'Garden lighting installation costs range from £500 for a simple scheme with 4 to 6 LED lights to £5,000+ for a comprehensive landscape lighting design with multiple zones, SWA cable runs, and automated controls.',
-  'BS 7671:2018+A4:2026 Section 714 governs outdoor lighting installations including gardens, pathways, driveways, and amenity areas. Regulation 714.537.2 defines the scope and specific requirements.',
-  'All outdoor lighting circuits require RCD protection (30mA). Regulation 710.511.1 confirms RCD requirements for outdoor outlet circuits to provide earth-fault protection.',
-  'IP ratings are critical for garden lighting — IP44 minimum for sheltered locations, IP65 for exposed installations, IP67 or IP68 for in-ground or underwater fittings.',
+  'BS 7671:2018+A4:2026 Section 714 governs outdoor lighting installations including gardens, pathways, driveways, and amenity areas. Regulation 714.1 sets the scope to cover gardens and places open to the public.',
+  'Domestic garden lighting circuits require 30mA RCD protection. Regulation 411.3.4 (added in A4:2026) requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires within domestic premises.',
+  'IP ratings are critical for garden lighting — IP44 minimum for sheltered locations, IP65 for exposed installations, IP67 or IP68 for in-ground or submerged fittings.',
   'Garden lighting that involves new outdoor circuits is notifiable under Part P of the Building Regulations and requires an Electrical Installation Certificate.',
 ];
+
+const answerBox = {
+  question: 'How much does garden lighting installation cost in the UK?',
+  answer:
+    'A simple pathway scheme of 4 to 6 LED lights on one circuit typically costs £500 to £1,000 fitted. A mid-range garden with pathway, deck and feature lights across two circuits runs £1,200 to £2,500. A comprehensive landscape scheme with multiple zones, long SWA runs and smart controls reaches £3,000 to £5,000 or more. Trenching and cable runs are usually the biggest cost driver, not the fittings.',
+};
 
 const faqs = [
   {
@@ -66,7 +72,7 @@ const faqs = [
   {
     question: 'What cable should I use for garden lighting?',
     answer:
-      'For mains voltage garden lighting circuits buried underground, SWA (steel wire armoured) cable is the standard choice. SWA cable has built-in mechanical protection from the steel wire armouring, making it suitable for direct burial at a minimum depth of 500mm (or 450mm under a grass lawn). The typical size for a domestic garden lighting circuit is 1.5mm2 SWA for lighting loads. For longer runs or higher-power installations, 2.5mm2 SWA may be needed to manage voltage drop. Regulation 528.3 of BS 7671 requires adequate depth, warning tapes, and mechanical protection for buried cables.',
+      'For mains voltage garden lighting circuits buried underground, SWA (steel wire armoured) cable is the standard choice. BS 7671 Regulation 522.8.10 requires that a cable buried in the ground incorporates an earthed armour or metal sheath (or both) suitable for use as a protective conductor, unless installed in a conduit or duct giving equivalent mechanical protection — SWA satisfies this directly. The same regulation requires the cable route to be marked with cable covers or a suitable marker tape, and buried at a sufficient depth to avoid damage from any reasonably foreseeable disturbance of the ground. The typical size for a domestic garden lighting circuit is 1.5mm2 SWA for lighting loads. For longer runs or higher-power installations, 2.5mm2 SWA may be needed to manage voltage drop.',
   },
   {
     question: 'Can I use solar-powered garden lights instead of mains lighting?',
@@ -76,12 +82,12 @@ const faqs = [
   {
     question: 'Do garden lighting circuits need RCD protection?',
     answer:
-      'Yes. All outdoor circuits must be protected by a 30mA RCD as required by BS 7671 Regulation 710.511.1. This provides earth-fault protection in an environment where the risk of electric shock is higher due to moisture, contact with earth, and the use of portable equipment outdoors. The garden lighting circuit should be protected by a dedicated RCBO at the consumer unit, ensuring that a fault on the outdoor circuit does not affect other circuits in the house.',
+      'Yes. Within domestic premises, BS 7671 Regulation 411.3.4 (added in A4:2026) requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires — this captures garden lighting directly. Regulation 411.3.3 separately requires 30mA RCD protection for socket-outlets up to 32A and for mobile equipment up to 32A used outdoors. A 30mA RCD provides additional protection against electric shock in an environment where the risk is higher due to moisture and contact with earth. Best practice is to protect the garden lighting circuit with a dedicated RCBO at the consumer unit, so a fault outdoors does not trip other circuits in the house.',
   },
   {
     question: 'How deep should garden lighting cable be buried?',
     answer:
-      'SWA cable for garden lighting should be buried at a minimum depth of 500mm in soil (BS 7671 Regulation 528.3). Under a lawn, 450mm is generally acceptable. Under driveways or areas subject to vehicle traffic, the cable should be at a minimum depth of 600mm and ideally run through a duct for additional protection. Cable route markers or warning tape should be placed 150mm above the cable to alert anyone digging in the future. The cable route should be documented on the as-built drawings provided to the homeowner.',
+      'BS 7671 Regulation 522.8.10 does not set a single fixed depth — it requires buried cables to be at a sufficient depth to avoid damage from any reasonably foreseeable disturbance of the ground, with the route marked by cable covers or a suitable marker tape. In practice, the widely adopted UK conventions are around 450mm under a lawn or planted bed, 500mm or more across open garden soil, and 600mm under driveways or areas subject to vehicle traffic, ideally run through a duct for extra protection. Place marker tape above the cable run and document the route on the as-built drawings handed to the homeowner so future digging avoids the cable.',
   },
 ];
 
@@ -162,7 +168,14 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Section 714 that apply to outdoor lighting installations.
+          Section 714 that apply to outdoor lighting installations. For the regulatory detail on its
+          own, see our{' '}
+          <SEOInternalLink href="/guides/garden-lighting-regs">
+            garden lighting regulations guide
+          </SEOInternalLink>{' '}
+          and the wider{' '}
+          <SEOInternalLink href="/guides/outdoor-electrics">outdoor electrics guide</SEOInternalLink>
+          .
         </p>
       </>
     ),
@@ -179,38 +192,75 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Pathway and Bollard Lights</h3>
-            <p className="text-white text-sm leading-relaxed">
-              LED post lights and bollards for paths, driveways, and garden borders. Typically 2W to
-              10W per fitting, producing 100 to 400 lumens. IP65 rated for outdoor use. Cost: £30 to
-              £120 per fitting depending on quality and design. Budget for 4 to 8 fittings for a
-              typical garden path.
+            <p className="text-white text-sm leading-relaxed mb-4">
+              LED post lights and bollards for paths, driveways, and garden borders. The everyday
+              workhorse of a scheme — used to mark routes and edges for safe navigation after dark.
+              Budget for 4 to 8 fittings for a typical garden path.
             </p>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
+              <dt className="text-white/60">Power</dt>
+              <dd className="text-white font-medium text-right">2W – 10W</dd>
+              <dt className="text-white/60">Output</dt>
+              <dd className="text-white font-medium text-right">100 – 400 lm</dd>
+              <dt className="text-white/60">IP rating</dt>
+              <dd className="text-white font-medium text-right">IP65</dd>
+              <dt className="text-white/60">Cost each</dt>
+              <dd className="text-yellow-300 font-semibold text-right">£30 – £120</dd>
+            </dl>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Deck and Step Lights</h3>
-            <p className="text-white text-sm leading-relaxed">
-              Recessed LED fittings for timber decking, steps, and retaining walls. Low-profile and
-              typically 1W to 3W per fitting. IP67 rated for recessed locations. Cost: £15 to £60
-              per fitting. Usually installed in groups of 6 to 12 for consistent coverage across a
-              deck area.
+            <p className="text-white text-sm leading-relaxed mb-4">
+              Recessed low-profile LED fittings for timber decking, steps, and retaining walls.
+              Usually installed in groups of 6 to 12 for consistent coverage across a deck area and
+              to wash steps for safety.
             </p>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
+              <dt className="text-white/60">Power</dt>
+              <dd className="text-white font-medium text-right">1W – 3W</dd>
+              <dt className="text-white/60">Mounting</dt>
+              <dd className="text-white font-medium text-right">Recessed</dd>
+              <dt className="text-white/60">IP rating</dt>
+              <dd className="text-white font-medium text-right">IP67</dd>
+              <dt className="text-white/60">Cost each</dt>
+              <dd className="text-green-300 font-semibold text-right">£15 – £60</dd>
+            </dl>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Uplights and Feature Lighting</h3>
-            <p className="text-white text-sm leading-relaxed">
-              In-ground or spike-mounted uplights for trees, walls, and architectural features. 5W
-              to 20W per fitting for dramatic effect. IP67 minimum for in-ground. Cost: £40 to £150
-              per fitting. These are the fittings that create the "wow factor" in a garden lighting
-              scheme.
+            <p className="text-white text-sm leading-relaxed mb-4">
+              In-ground or spike-mounted uplights for trees, walls, and architectural features.
+              These are the fittings that create the "wow factor" — the dramatic effect that sells a
+              full scheme to the homeowner.
             </p>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
+              <dt className="text-white/60">Power</dt>
+              <dd className="text-white font-medium text-right">5W – 20W</dd>
+              <dt className="text-white/60">Mounting</dt>
+              <dd className="text-white font-medium text-right">In-ground / spike</dd>
+              <dt className="text-white/60">IP rating</dt>
+              <dd className="text-white font-medium text-right">IP67 min</dd>
+              <dt className="text-white/60">Cost each</dt>
+              <dd className="text-blue-300 font-semibold text-right">£40 – £150</dd>
+            </dl>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Security and Floodlighting</h3>
-            <p className="text-white text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed mb-4">
               Motion-activated LED floodlights for driveways, side passages, and rear gardens.
-              Typically 10W to 50W producing 800 to 4,000 lumens. IP65 rated. Cost: £30 to £100 per
-              fitting. Usually 2 to 4 fittings per property covering all approach areas.
+              Usually 2 to 4 fittings per property covering all approach areas, often wall-mounted
+              and surface-wired without trenching.
             </p>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
+              <dt className="text-white/60">Power</dt>
+              <dd className="text-white font-medium text-right">10W – 50W</dd>
+              <dt className="text-white/60">Output</dt>
+              <dd className="text-white font-medium text-right">800 – 4,000 lm</dd>
+              <dt className="text-white/60">IP rating</dt>
+              <dd className="text-white font-medium text-right">IP65</dd>
+              <dt className="text-white/60">Cost each</dt>
+              <dd className="text-red-300 font-semibold text-right">£30 – £100</dd>
+            </dl>
           </div>
         </div>
         <p>
@@ -355,41 +405,70 @@ const sections = [
           Here are realistic total costs for different garden lighting projects in 2026, including
           all materials, labour, testing, and certification.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-5 text-white">
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Simple pathway scheme (4 to 6 lights)</strong> — £500 to £1,000 total.
-                Budget fittings, short cable run, single circuit, photocell control. Ideal for a
-                front path or short garden walkway.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Mid-range garden scheme (8 to 15 lights)</strong> — £1,200 to £2,500 total.
-                Mix of pathway, deck, and feature lights across two circuits. SWA cable runs of 20
-                to 40 metres. Astronomical time switch or smart controller.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Comprehensive landscape lighting (15 to 30+ lights)</strong> — £3,000 to
-                £5,000+ total. Multiple zones with independent switching, premium fittings, SWA runs
-                exceeding 50 metres, smart home integration, and professional lighting design.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Security lighting only (2 to 4 floodlights)</strong> — £300 to £700 total.
-                Wall-mounted LED floodlights with PIR sensors, surface-wired from the consumer unit.
-                No trenching required if mounted on the house exterior.
-              </span>
-            </li>
-          </ul>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-white/70">
+                <th className="px-4 py-3 font-semibold">Project type</th>
+                <th className="px-4 py-3 font-semibold">Fittings</th>
+                <th className="px-4 py-3 font-semibold text-right">Typical total</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10 text-white">
+              <tr className="bg-green-900/20">
+                <td className="px-4 py-3 align-top">
+                  <span className="font-semibold text-white">Security lighting only</span>
+                  <p className="text-white/60 text-xs mt-1">
+                    Wall-mounted LED floodlights with PIR sensors, surface-wired from the consumer
+                    unit. No trenching if mounted on the house exterior.
+                  </p>
+                </td>
+                <td className="px-4 py-3 align-top whitespace-nowrap">2 – 4</td>
+                <td className="px-4 py-3 align-top text-right font-semibold text-green-300 whitespace-nowrap">
+                  £300 – £700
+                </td>
+              </tr>
+              <tr className="bg-yellow-900/20">
+                <td className="px-4 py-3 align-top">
+                  <span className="font-semibold text-white">Simple pathway scheme</span>
+                  <p className="text-white/60 text-xs mt-1">
+                    Budget fittings, short cable run, single circuit, photocell control. Ideal for a
+                    front path or short garden walkway.
+                  </p>
+                </td>
+                <td className="px-4 py-3 align-top whitespace-nowrap">4 – 6</td>
+                <td className="px-4 py-3 align-top text-right font-semibold text-yellow-300 whitespace-nowrap">
+                  £500 – £1,000
+                </td>
+              </tr>
+              <tr className="bg-blue-900/20">
+                <td className="px-4 py-3 align-top">
+                  <span className="font-semibold text-white">Mid-range garden scheme</span>
+                  <p className="text-white/60 text-xs mt-1">
+                    Mix of pathway, deck and feature lights across two circuits. SWA runs of 20 to
+                    40 metres. Astronomical time switch or smart controller.
+                  </p>
+                </td>
+                <td className="px-4 py-3 align-top whitespace-nowrap">8 – 15</td>
+                <td className="px-4 py-3 align-top text-right font-semibold text-blue-300 whitespace-nowrap">
+                  £1,200 – £2,500
+                </td>
+              </tr>
+              <tr className="bg-purple-900/20">
+                <td className="px-4 py-3 align-top">
+                  <span className="font-semibold text-white">Comprehensive landscape</span>
+                  <p className="text-white/60 text-xs mt-1">
+                    Multiple zones with independent switching, premium fittings, SWA runs exceeding
+                    50 metres, smart home integration and professional lighting design.
+                  </p>
+                </td>
+                <td className="px-4 py-3 align-top whitespace-nowrap">15 – 30+</td>
+                <td className="px-4 py-3 align-top text-right font-semibold text-purple-300 whitespace-nowrap">
+                  £3,000 – £5,000+
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <SEOAppBridge
           title="Design and quote garden lighting schemes"
@@ -409,62 +488,80 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          contains the specific requirements for outdoor lighting installations. Regulation
-          714.537.2 defines the scope to include luminaires, wiring, and accessories for gardens,
-          parks, driveways, and public places.
+          contains the particular requirements for outdoor lighting installations. Regulation 714.1
+          sets the scope to cover one or more luminaires, a wiring system and accessories for places
+          including gardens, parks, car parks, driveways and places open to the public. The table
+          below lists the regulations most relevant to a domestic garden lighting job.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Scope (Regulation 714.537.2)</strong> — Section 714 covers outdoor lighting
-                installations for roads, parks, car parks, gardens, public places, sporting areas,
-                monument illumination, floodlighting, and highway power supplies. It excludes
-                temporary festoon lighting and luminaires fixed to the outside of a building when
-                supplied from internal wiring.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Prohibited protective measures</strong> — Regulation 714.537.2 prohibits the
-                use of "non-conducting location" (Regulation 418.1) and "earth-free local
-                equipotential bonding" (Regulation 418.2) as protective measures for outdoor
-                lighting installations.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Basic protection</strong> — when automatic disconnection is the protective
-                measure, all live parts must have basic protection by insulation, barrier, or
-                enclosure. Doors in street furniture are not acceptable as the barrier or enclosure.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Disconnection time</strong> — a maximum automatic disconnection time of 5
-                seconds applies for circuits feeding fixed outdoor lighting equipment.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Accessibility</strong> — luminaires mounted less than 2.80m above ground
-                must have the light source accessible only after removal of a barrier or enclosure
-                requiring a tool. This prevents casual contact with live parts.
-              </span>
-            </li>
-          </ul>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-white/70">
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">Regulation</th>
+                <th className="px-4 py-3 font-semibold">Requirement</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10 text-white align-top">
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.1</td>
+                <td className="px-4 py-3">
+                  Scope — applies to outdoor lighting comprising luminaires, a wiring system and
+                  accessories, including gardens, car parks, driveways and places open to the
+                  public. Excludes temporary festoon lighting and luminaires fixed to the outside of
+                  a building and supplied directly from that building's internal wiring.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.410.3.6</td>
+                <td className="px-4 py-3">
+                  The protective measures of non-conducting location (Regulation 418.1) and
+                  earth-free local equipotential bonding (Regulation 418.2) shall not be used.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.201</td>
+                <td className="px-4 py-3">
+                  Where automatic disconnection of supply is the protective measure, all live parts
+                  must have basic protection by insulation, barrier or enclosure. A door in street
+                  furniture used for access shall not be used as the barrier or enclosure.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.2.201</td>
+                <td className="px-4 py-3">
+                  For a luminaire less than 2.80m above ground level, access to the light source
+                  shall only be possible after removing a barrier or enclosure requiring the use of
+                  a tool — preventing casual contact with live parts.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.3.4</td>
+                <td className="px-4 py-3">
+                  Except for lighting supplied from a SELV source, outdoor lighting accessible to
+                  the public must have additional protection by an RCD with the rated residual
+                  operating current specified in Regulation 415.1.1 (30mA).
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.202</td>
+                <td className="px-4 py-3">
+                  A maximum disconnection time of 5 seconds applies to circuits feeding fixed
+                  equipment used in highway power supplies (for compliance with 411.3.2.3 in a TN
+                  system or 411.3.2.4 in a TT system).
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <p>
-          For domestic garden installations, the key practical implications are: use IP-rated
-          fittings appropriate for the location, provide 30mA RCD protection, bury cables at
-          adequate depth with mechanical protection (SWA), and ensure all outdoor connections use
-          IP-rated enclosures.
-        </p>
+        <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Domestic garden takeaways:</strong> use IP-rated fittings suited to each
+            location, provide 30mA RCD protection (Regulation 411.3.4 requires it for all AC final
+            circuits supplying luminaires within domestic premises), use SWA for direct-buried runs
+            so the armour acts as the protective conductor and mechanical protection (Regulation
+            522.8.10), and ensure all outdoor connections use IP-rated enclosures.
+          </p>
+        </div>
       </>
     ),
   },
@@ -476,8 +573,37 @@ const sections = [
         <p>
           Selecting the correct IP (Ingress Protection) rating for each fitting is essential for
           safety and longevity. Using a fitting with an inadequate IP rating in an exposed location
-          leads to premature failure, potential electric shock, and will fail an inspection.
+          leads to premature failure, potential electric shock, and will fail an inspection. Match
+          the rating to the location using the quick reference below.
         </p>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-white/70">
+                <th className="px-4 py-3 font-semibold">Location</th>
+                <th className="px-4 py-3 font-semibold text-right whitespace-nowrap">Min. IP</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10 text-white">
+              <tr>
+                <td className="px-4 py-3">Under a porch, canopy or pergola (sheltered)</td>
+                <td className="px-4 py-3 text-right font-mono text-blue-300">IP44</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Exposed walls, bollards, post lights (open weather)</td>
+                <td className="px-4 py-3 text-right font-mono text-green-300">IP65</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">In-ground uplights, driveway and flood-prone spots</td>
+                <td className="px-4 py-3 text-right font-mono text-yellow-300">IP67</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Pond, fountain and permanently submerged fittings</td>
+                <td className="px-4 py-3 text-right font-mono text-red-300">IP68</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">IP44</h3>
@@ -508,7 +634,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Dust-tight and protected against continuous immersion in water beyond 1 metre.
               Required for pond lights, water feature lighting, and any permanently submerged
-              installation. Must be a SELV or PELV supply.
+              installation. Submerged fittings are normally run at extra-low voltage (SELV/PELV) for
+              safety.
             </p>
           </div>
         </div>
@@ -610,6 +737,7 @@ export default function GardenLightingCostPage() {
       }
       heroSubtitle="From subtle pathway bollards to dramatic tree uplighting, garden lighting transforms outdoor spaces. This guide breaks down every cost — LED fittings, SWA cable, labour, trenching, controls, and certification — so you know exactly what to expect."
       readingTime={11}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

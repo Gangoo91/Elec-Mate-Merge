@@ -177,6 +177,34 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Site Plug and Socket Colour Coding (BS EN 60309 / BS 4343)
+          </h3>
+          <p className="text-white/60 text-sm mb-4">
+            Each voltage has a dedicated colour and pin position so equipment physically cannot be
+            connected to the wrong supply. On a UK construction site you should see predominantly
+            yellow.
+          </p>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-900/30 border border-yellow-700/40">
+              <span className="text-white font-bold">110V single-phase (site tools)</span>
+              <span className="text-yellow-400 font-bold">Yellow</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
+              <span className="text-white font-bold">230V single-phase</span>
+              <span className="text-yellow-400 font-bold">Blue</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-white font-bold">400V three-phase</span>
+              <span className="text-yellow-400 font-bold">Red</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-purple-900/30 border border-purple-700/40">
+              <span className="text-white font-bold">25V / 50V extra-low voltage</span>
+              <span className="text-yellow-400 font-bold">Violet / White</span>
+            </div>
+          </div>
+        </div>
         <p>
           Battery-powered tools are increasingly common on site and offer the ultimate solution —
           zero mains voltage risk. Where battery-powered alternatives exist, they should be
@@ -307,6 +335,45 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Four Permitted Protection Methods (Reg 704.410.3.10)
+          </h3>
+          <p className="text-white/60 text-sm mb-4">
+            Any circuit feeding a socket-outlet or hand-held equipment rated up to and including 32 A
+            must use one of these four methods.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="p-4 rounded-xl bg-yellow-900/30 border border-yellow-700/40">
+              <p className="text-yellow-400 font-bold mb-1">(a) Reduced low voltage</p>
+              <p className="text-white/80 text-sm">
+                110V CTE per Reg 411.8 — the industry-standard yellow site transformer. Strongly
+                preferred for hand tools.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
+              <p className="text-yellow-400 font-bold mb-1">(b) ADS + 30mA RCD</p>
+              <p className="text-white/80 text-sm">
+                Automatic disconnection of supply (Section 411) with additional protection by an RCD
+                meeting Reg 415.1.1 (≤30 mA).
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <p className="text-yellow-400 font-bold mb-1">(c) Electrical separation</p>
+              <p className="text-white/80 text-sm">
+                Section 413 — each socket-outlet or item of equipment fed by an individual
+                transformer or separate transformer winding.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-purple-900/30 border border-purple-700/40">
+              <p className="text-yellow-400 font-bold mb-1">(d) SELV or PELV</p>
+              <p className="text-white/80 text-sm">
+                Section 414 — separated or protected extra-low voltage. Strongly preferred for
+                handlamps in confined or damp locations.
+              </p>
+            </div>
+          </div>
+        </div>
         <p>
           Temporary installations on construction sites should be periodically inspected and tested
           at intervals not exceeding 3 months. This is more frequent than for permanent
@@ -367,6 +434,34 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Suggested Inspection and Test Intervals
+          </h3>
+          <p className="text-white/60 text-sm mb-4">
+            The HSE sets no legally fixed intervals — these are the indicative frequencies from HSE
+            guidance (INDG236) for the harsh construction environment. Always risk-assess for your
+            own site.
+          </p>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-900/30 border border-yellow-700/40">
+              <span className="text-white font-bold">110V portable site tools</span>
+              <span className="text-yellow-400 font-bold">User check + test every 3 months</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-orange-900/30 border border-orange-700/40">
+              <span className="text-white font-bold">230V portable equipment (where justified)</span>
+              <span className="text-yellow-400 font-bold">Test monthly</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
+              <span className="text-white font-bold">110V / 230V extension leads &amp; RCD adaptors</span>
+              <span className="text-yellow-400 font-bold">Test monthly to 3-monthly</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <span className="text-white font-bold">Site office IT &amp; similar equipment</span>
+              <span className="text-yellow-400 font-bold">Test every 12 months</span>
+            </div>
+          </div>
         </div>
         <p>
           Any equipment that fails an inspection or test must be immediately removed from service,
@@ -452,10 +547,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Route cables overhead where possible.</strong> Under BS 7671 Reg
-                708.521.7.3, overhead conductors must be at a minimum height of 6 metres where
-                vehicles pass beneath, or 3.5 metres minimum in pedestrian-only areas. Use proper
-                cable supports — never drape cables over scaffolding or hang them from nails.
+                <strong>Route cables overhead where possible.</strong> BS 7671 Reg 704.522.8.101
+                requires that cables are not run across site roads or walkways, and where this is
+                unavoidable, adequate protection against mechanical damage and contact with
+                construction plant must be provided. HSE good practice for overhead site routes is a
+                minimum height of 6 metres where vehicles pass beneath, reduced clearances elsewhere.
+                Use proper cable supports — never drape cables over scaffolding or hang them from
+                nails.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -584,6 +682,11 @@ export default function ElectricalSafetyOnSitePage() {
       }
       heroSubtitle="Construction sites are one of the most electrically hazardous working environments in the UK. 110V reduced voltage systems, PAT testing, temporary supplies, permit to work procedures, and proper cable routing are not optional extras — they are the minimum standards that keep people alive."
       readingTime={11}
+      answerBox={{
+        question: 'What are the rules for electrical safety on a construction site?',
+        answer:
+          'Use 110V centre-tapped earth (CTE) supplies for portable tools — this caps the voltage to earth at 55V (BS 7671 Reg 411.8). Every circuit feeding socket-outlets or hand-held tools up to 32A must be protected by reduced low voltage, ADS with a 30mA RCD, electrical separation, or SELV/PELV (Reg 704.410.3.10). All equipment must be kept safe under the Electricity at Work Regulations 1989, with visual checks before use and PAT testing roughly every 3 months.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

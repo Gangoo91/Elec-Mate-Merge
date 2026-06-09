@@ -39,12 +39,18 @@ const tocItems = [
   { id: 'related', label: 'Related Guides' },
 ];
 
+const answerBox = {
+  question: 'What is Regulation 530.3.201 in BS 7671?',
+  answer:
+    'Regulation 530.3.201, introduced by BS 7671:2018+A3:2024, requires that the selection and erection of equipment for protection takes account of the appropriate use of either a unidirectional or a bidirectional protective device. It matters for solar PV, battery storage and V2G EV chargers, where current can flow back towards the supply. A NOTE adds that some devices are marked (in/out, line/load, arrows) to indicate direction.',
+};
+
 const keyTakeaways = [
   'Regulation 530.3.201 was introduced by BS 7671:2018+A3:2024 (Amendment 3, issued 31 July 2024). It requires that those selecting and erecting protective equipment take account of the appropriate use of either a unidirectional or bidirectional protective device — and follow any orientation marking (in/out, line/load, arrows) on the device.',
   'Bidirectional power flow occurs in installations with solar PV, battery storage, vehicle-to-grid (V2G) EV chargers, or other embedded generation where current can flow both from the supply to the installation and from the installation back to the supply.',
   'Standard MCBs and RCDs are designed and tested for unidirectional current flow only. Using a unidirectional device where bidirectional flow occurs may result in the device failing to operate correctly under fault conditions or failing to break the circuit safely.',
   'RCCBs, RCBOs, circuit-breakers, and AFDDs may carry orientation markings (such as "in"/"out", "line"/"load", or arrows) required by the relevant product standard listed in Appendix I of BS 7671. Installers must follow this marking when connecting the device.',
-  'BS 7671:2018+A4:2026 (Amendment 4, issued April 2026) introduced additional new requirements including Reg 421.1.7 recommending arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk, and the insertion of Reg 411.6.5 and new Regulation group 419.',
+  'BS 7671:2018+A4:2026 (Amendment 4) introduced further changes including a redrafted Reg 421.1.7 — now requiring AFDDs (to BS EN 62606) on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes (and recommending them in all other premises) — plus a new Reg 411.6.5 and a new Regulation group 419 for where automatic disconnection is not feasible.',
   'Elec-Mate solar PV and battery storage certificates include fields for confirming bidirectional device selection in compliance with Regulation 530.3.201. The app references BS 7671:2018+A4:2026 on relevant certificates.',
 ];
 
@@ -72,7 +78,7 @@ const faqs = [
   {
     question: 'Where can I find A4:2026 and is it free?',
     answer:
-      'BS 7671:2018+A3:2024 (Amendment 3) was issued on 31 July 2024 by the IET and introduced Regulation 530.3.201 (bidirectional devices) along with two new definitions. It is available as a free PDF supplement from the IET website. BS 7671:2018+A4:2026 (Amendment 4) followed, issued on 15 April 2026, and introduced further new requirements including Reg 421.1.7 recommending AFDDs on AC final circuits and the insertion of Reg 411.6.5. The full current citation is BS 7671:2018+A4:2026 and should be used on all certificates and documentation from April 2026.',
+      'BS 7671:2018+A3:2024 (Amendment 3) was issued on 31 July 2024 by the IET and introduced Regulation 530.3.201 (bidirectional devices) along with supporting definitions. It is available as a free PDF supplement from the IET website. BS 7671:2018+A4:2026 (Amendment 4) followed and introduced further changes, including a redrafted Reg 421.1.7 that now requires AFDDs on socket-outlet final circuits up to 32 A in certain higher-risk premises, plus a new Reg 411.6.5. The full current citation is BS 7671:2018+A4:2026 and should be used on certificates and documentation.',
   },
   {
     question: 'Do V2G (vehicle-to-grid) EV chargers require bidirectional devices?',
@@ -83,9 +89,16 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/bs-7671-amendment-3-changes',
+    href: '/guides/bs-7671-amendment-4-2026',
     title: 'BS 7671 Amendment 4',
     description: 'Complete overview of all changes in A4:2026.',
+    icon: BookOpen,
+    category: 'Regulations' as const,
+  },
+  {
+    href: '/guides/bs-7671-amendment-3-changes',
+    title: 'BS 7671 Amendment 3',
+    description: 'A3:2024 changes, including Regulation 530.3.201.',
     icon: BookOpen,
     category: 'Regulations' as const,
   },
@@ -111,7 +124,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description: 'Digital solar PV installation certificate with A4:2026 compliance fields.',
     icon: FileCheck2,
@@ -173,10 +186,14 @@ const sections = [
           <blockquote className="border-l-4 border-yellow-400 pl-4 text-white italic text-sm leading-relaxed">
             &ldquo;Selection and erection of equipment for protection shall take account of
             appropriate use of either a unidirectional protective device or a bidirectional
-            protective device. The installer or designer shall determine which directional
-            characteristic is appropriate for the application when selecting protective
-            devices.&rdquo;
+            protective device.&rdquo;
           </blockquote>
+          <p className="text-white/70 text-xs leading-relaxed mt-3">
+            NOTE: Product standards as listed in Appendix I, for some protective devices including
+            RCCBs, RCBOs, circuit-breakers and AFDDs, require these devices to be marked to indicate
+            if they are unidirectional &mdash; e.g. &ldquo;in&rdquo; and &ldquo;out&rdquo;,
+            &ldquo;line&rdquo; and &ldquo;load&rdquo;, or arrows.
+          </p>
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
@@ -189,10 +206,9 @@ const sections = [
                 and AFDDs — require those devices to be marked to indicate if they are
                 unidirectional (e.g. &ldquo;in&rdquo;/&ldquo;out&rdquo;,
                 &ldquo;line&rdquo;/&ldquo;load&rdquo;, or arrows). Where such marking is present,
-                the installer shall connect the device in accordance with that marking. Before
-                signing off a solar PV, battery storage, or V2G installation, check every protective
-                device in the bidirectional current path for orientation markings and confirm they
-                are installed accordingly.
+                connect the device in line with it. Before signing off a solar PV, battery storage,
+                or V2G installation, check every protective device in the bidirectional current path
+                for orientation markings and confirm they are installed accordingly.
               </p>
             </div>
           </div>
@@ -214,10 +230,11 @@ const sections = [
           definitions.
         </p>
         <p>
-          BS 7671:2018+A4:2026 (Amendment 4) followed, issued on 15 April 2026. Amendment 4 is the
-          current consolidated amendment and introduced Reg 421.1.7 (recommending arc fault
-          detection devices on AC final circuits), Reg 411.6.5, and a new Regulation group 419. The
-          full current citation for the standard is BS 7671:2018+A4:2026.
+          BS 7671:2018+A4:2026 (Amendment 4) followed in 2026. Amendment 4 is the current amendment
+          and, among other changes, redrafted Reg 421.1.7 on arc fault detection devices (AFDDs),
+          inserted a new Reg 411.6.5, and added a new Regulation group 419 for situations where
+          automatic disconnection in accordance with Regulation 411.3.2 is not feasible. The full
+          current citation for the standard is BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">BS 7671 Amendment Timeline</h3>
@@ -248,9 +265,10 @@ const sections = [
               </span>
             </div>
             <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
-              <span className="text-yellow-400 font-bold shrink-0">Apr 2026</span>
+              <span className="text-yellow-400 font-bold shrink-0">2026</span>
               <span className="text-white">
-                Amendment 4 (A4:2026) — Reg 421.1.7 (AFDDs), Reg 411.6.5, new group 419 — current
+                Amendment 4 (A4:2026) — redrafted Reg 421.1.7 (AFDDs now required for socket-outlet
+                circuits ≤32 A in higher-risk premises), new Reg 411.6.5, new group 419 — current
                 standard
               </span>
             </div>
@@ -275,25 +293,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Reg 421.1.7</strong> — recommends the
-                installation of arc fault detection devices (AFDDs) in AC final circuits of a fixed
-                installation to mitigate the risk of fire due to arc fault currents. The wording is
-                advisory (not &ldquo;shall&rdquo;), but practitioners should consider AFDDs on
-                higher-risk circuits.
+                <strong className="text-yellow-400">Reg 421.1.7 (AFDDs)</strong> — redrafted. AFDDs
+                conforming to BS EN 62606 are now <strong>required</strong> on single-phase AC final
+                circuits supplying socket-outlets rated up to 32 A in high rise residential
+                buildings, houses in multiple occupation, purpose-built student accommodation and
+                care homes. For all other premises, AFDDs are <strong>recommended</strong> on such
+                circuits. Where used, the AFDD is placed at the origin of the circuit it protects.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Reg 411.6.5 and new group 419</strong> —
-                inserted into Chapter 41 (Protection for Safety), extending the automatic
-                disconnection provisions.
+                <strong className="text-yellow-400">Reg 411.6.5</strong> — inserted as part of a
+                reorganisation of the IT system requirements in Section 411.6 (Chapter 41,
+                Protection Against Electric Shock).
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <span>
+                <strong className="text-yellow-400">New Regulation group 419</strong> — inserted for
+                installations where automatic disconnection in accordance with Regulation 411.3.2 is
+                not feasible, such as electronic equipment with limited short-circuit current.
               </span>
             </li>
           </ul>
           <p className="text-white text-sm leading-relaxed mt-3">
             See the{' '}
-            <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">
+            <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">
               full A4:2026 changes guide
             </SEOInternalLink>{' '}
             for a complete overview.
@@ -309,8 +336,30 @@ const sections = [
       <>
         <p>
           Understanding the difference between bidirectional and unidirectional switching devices is
-          essential for compliance with Regulation 530.3.201.
+          essential for compliance with Regulation 530.3.201. BS 7671 Part 2 (Definitions) defines
+          both terms by reference to how the manufacturer intends the supply to be connected:
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h4 className="font-bold text-yellow-400 text-sm uppercase tracking-wide mb-3">
+            BS 7671 Part 2 — Definitions
+          </h4>
+          <div className="space-y-3 text-sm">
+            <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
+              <p className="text-white">
+                <strong className="text-white">Unidirectional protective device.</strong> A
+                protective device where it is intended by the manufacturer that a source of supply is
+                only connected to one defined set of connection terminals.
+              </p>
+            </div>
+            <div className="rounded-xl bg-yellow-500/5 border border-yellow-500/20 p-4">
+              <p className="text-white">
+                <strong className="text-yellow-400">Bidirectional protective device.</strong> A
+                protective device where it is intended by the manufacturer that a source of supply is
+                connected to either or both sets of connection terminals.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <ArrowRightIcon className="w-6 h-6 text-white mb-3" />
@@ -372,40 +421,41 @@ const sections = [
           property's loads (self-consumption) and to the grid (export).
         </p>
         <p>
-          The key devices that experience bidirectional current in a typical domestic solar PV
-          installation are:
+          The key devices that experience bidirectional current in a typical domestic grid-tied
+          solar PV installation are set out below:
         </p>
-        <ul className="space-y-3 my-4">
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">AC isolator at the inverter</strong> — current
-              flows from the inverter to the consumer unit. This device must be bidirectional as
-              current flows through it in the generation direction.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">MCB or RCBO for the PV circuit</strong> — the
-              protective device for the AC output circuit of the inverter carries bidirectional
-              current. During generation, current flows from the inverter through this device to the
-              consumer unit busbars.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">Main switch</strong> — if the installation exports
-              surplus PV generation to the grid, the main switch of the consumer unit carries
-              bidirectional current (import and export). The main switch must be rated for
-              bidirectional operation.
-            </span>
-          </li>
-        </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-bold uppercase tracking-wide text-yellow-400">
+            <div className="col-span-5">Device</div>
+            <div className="col-span-7">Why current can flow both ways</div>
+          </div>
+          <div className="divide-y divide-white/10">
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
+              <div className="col-span-5 font-semibold text-white">AC isolator at the inverter</div>
+              <div className="col-span-7 text-white/90">
+                Generated current flows from the inverter towards the consumer unit through this
+                isolator, so it sits in the generation-direction path.
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
+              <div className="col-span-5 font-semibold text-white">MCB / RCBO for the PV circuit</div>
+              <div className="col-span-7 text-white/90">
+                The protective device for the inverter's AC output circuit carries generated current
+                from the inverter to the consumer unit busbars.
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
+              <div className="col-span-5 font-semibold text-white">Consumer unit main switch</div>
+              <div className="col-span-7 text-white/90">
+                Where surplus generation is exported, the main switch sees both import and export
+                current, so it must suit bidirectional operation.
+              </div>
+            </div>
+          </div>
+        </div>
         <p>
           When specifying protective devices for a{' '}
-          <SEOInternalLink href="/tools/solar-pv-certificate">
+          <SEOInternalLink href="/solar-pv-certificate">
             solar PV installation
           </SEOInternalLink>
           , confirm with the device manufacturer that each device in the bidirectional current path
@@ -520,48 +570,67 @@ const sections = [
     content: (
       <>
         <p>
-          Major switchgear manufacturers now produce specific bidirectional-rated devices. Here is
-          guidance on selecting the right devices for prosumer installations:
+          Major switchgear manufacturers now produce devices specified for prosumer (generation +
+          storage) installations. Use the table below as a starting checklist, then confirm
+          bidirectional suitability against the manufacturer's datasheet for the specific catalogue
+          number before you order.
         </p>
-        <ul className="space-y-3 my-4">
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">Main switches</strong> — look for main switches
-              specifically marketed for prosumer or generation applications. Many consumer unit
-              manufacturers now offer main switch versions rated for bidirectional operation. Check
-              that the breaking capacity is rated in both directions.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">MCBs and RCBOs</strong> — some standard MCBs and
-              RCBOs are already tested for bidirectional operation but not marketed as such. Contact
-              the manufacturer to confirm. Dedicated bidirectional MCBs and RCBOs are available from
-              Hager, Schneider, ABB, and others.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">AC isolators</strong> — rotary isolators for PV
-              and battery installations should be specifically rated for the application.
-              Solar-rated AC isolators from manufacturers such as IMO and Socomec are designed for
-              bidirectional operation.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white">
-              <strong className="text-yellow-400">RCDs</strong> — if an RCD is in the bidirectional
-              current path, it must detect residual current in both directions. Most modern{' '}
-              <SEOInternalLink href="/guides/rcd-types-explained">Type A RCDs</SEOInternalLink> are
-              inherently bidirectional in their detection capability, but the switching mechanism
-              must also be rated for bidirectional breaking.
-            </span>
-          </li>
-        </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-bold uppercase tracking-wide text-yellow-400">
+            <div className="col-span-4">Device</div>
+            <div className="col-span-8">What to check before specifying</div>
+          </div>
+          <div className="divide-y divide-white/10">
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
+              <div className="col-span-4 font-semibold text-white">Main switch</div>
+              <div className="col-span-8 text-white/90">
+                Choose a main switch suited to generation/prosumer applications and confirm the
+                breaking capacity is rated for both directions of current flow.
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
+              <div className="col-span-4 font-semibold text-white">MCBs &amp; RCBOs</div>
+              <div className="col-span-8 text-white/90">
+                Some standard devices are already tested for bidirectional operation but not
+                marketed as such — confirm with the manufacturer. Check for any in/out or line/load
+                marking and observe it.
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
+              <div className="col-span-4 font-semibold text-white">AC isolators</div>
+              <div className="col-span-8 text-white/90">
+                Rotary isolators for PV and battery circuits should be rated for the application and
+                for current flow in the generation direction.
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
+              <div className="col-span-4 font-semibold text-white">RCDs</div>
+              <div className="col-span-8 text-white/90">
+                If an RCD sits in the bidirectional path, confirm both its residual-current detection
+                and its switching/breaking capability are suitable for current in either direction.
+                See{' '}
+                <SEOInternalLink href="/guides/rcd-types-explained">RCD types</SEOInternalLink>.
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
+              <div className="col-span-4 font-semibold text-white">AFDDs</div>
+              <div className="col-span-8 text-white/90">
+                Per the NOTE to 530.3.201, AFDDs (BS EN 62606) may be marked for orientation. Where
+                A4:2026 Reg 421.1.7 applies, place the AFDD at the origin of the circuit it protects.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
+            <p className="text-white text-sm leading-relaxed">
+              Manufacturer names and ranges change frequently — always verify the current datasheet
+              for the exact catalogue number rather than relying on a brand having a suitable device
+              in the past.
+            </p>
+          </div>
+        </div>
       </>
     ),
   },
@@ -641,6 +710,7 @@ export default function Regulation530Page() {
       }
       heroSubtitle="Amendment 3 (A3:2024) to BS 7671 introduced Regulation 530.3.201, requiring designers and installers to take account of whether a unidirectional or bidirectional protective device is appropriate — and to follow any orientation marking on the device. This guide explains what it means, which installations are affected, and how to comply."
       readingTime={12}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

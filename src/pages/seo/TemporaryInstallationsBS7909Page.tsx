@@ -46,8 +46,9 @@ const keyTakeaways = [
   'All temporary installations must be inspected and tested before first use and at regular intervals thereafter — typically every 3 months on construction sites.',
   'Comprehensive documentation is required including single-line diagrams, test certificates, risk assessments, and method statements for the installation.',
   'Elec-Mate generates electrical installation certificates, risk assessments, and RAMS documents for temporary installations — saving hours of paperwork per project.',
-  'RCD type selection matters: Type A covers pulsating DC; Type F covers composite/mixed-frequency loads (variable-speed drives); Type B covers smooth DC components — do not default to Type AC on any modern load (BS 7671 Reg 534.4.7).',
+  'RCD type selection matters: Type A covers pulsating DC; Type F covers composite/mixed-frequency loads (variable-speed drives); Type B covers smooth DC components — Type AC (BS 7671 Reg 531.3.3) may now only serve fixed equipment where the load contains no DC components, so it cannot be the default on modern loads.',
   'Section 704 does not apply to administrative locations on construction sites (offices, canteens, welfare facilities) — those areas are subject to the general requirements of BS 7671 only (Reg 704.1.1).',
+  'On construction and demolition sites a PME (TN-C-S) earthing facility must not be used unless every extraneous-conductive-part is reliably bonded to the main earthing terminal (BS 7671 Reg 704.411.3.1) — in practice TT with an earth electrode is the default.',
 ];
 
 const faqs = [
@@ -69,7 +70,7 @@ const faqs = [
   {
     question: 'How often should a temporary installation be inspected?',
     answer:
-      'The inspection frequency depends on the type of temporary installation and the environment. BS 7671 Table 3A provides guidance on maximum intervals between periodic inspections: construction site installations should be inspected at least every 3 months. For entertainment and events, BS 7909 recommends inspection and testing before each event or season of use. If the temporary installation remains in place for an extended period (for example, a long-running construction project), periodic inspection should continue at 3-monthly intervals throughout. Between formal inspections, visual checks should be carried out daily or weekly by a competent person — looking for cable damage, loose connections, water ingress, and signs of overheating. Any defects found during visual checks must be reported and rectified before the installation is used.',
+      'The inspection frequency depends on the type of temporary installation and the environment. BS 7671 Regulation 652 requires the interval to be determined by a competent person having regard to the type of installation, its use, and the external influences it is subjected to. Established industry practice (reflected in IET Guidance Note 3 and HSE guidance) is that construction site temporary installations are inspected and tested at intervals not exceeding 3 months. For entertainment and events, BS 7909 recommends inspection and testing before each event or season of use. If the installation remains in place for an extended period — for example, a long-running construction project — periodic inspection should continue at 3-monthly intervals throughout. Between formal inspections, visual checks should be carried out daily or weekly by a competent person — looking for cable damage, loose connections, water ingress, and signs of overheating. Any defects found during visual checks must be reported and rectified before the installation is used.',
   },
   {
     question: 'What IP rating is required for temporary outdoor electrical equipment?',
@@ -255,6 +256,45 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-x-auto">
+          <h3 className="font-bold text-white text-lg mb-1">Minimum IP ratings by environment</h3>
+          <p className="text-white/60 text-sm mb-4">
+            Indicative guidance for distribution equipment, enclosures and connectors. Select for
+            the worst conditions the equipment will actually see (rain, hose-down, ground water),
+            not the conditions on a dry commissioning day.
+          </p>
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr className="text-white/70 border-b border-white/10">
+                <th className="py-2 pr-3 font-semibold">Location</th>
+                <th className="py-2 pr-3 font-semibold">Minimum IP</th>
+                <th className="py-2 font-semibold">Protects against</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-b border-white/5">
+                <td className="py-3 pr-3 align-top">Indoor / under cover, dry</td>
+                <td className="py-3 pr-3 font-semibold align-top">IP2X – IP4X</td>
+                <td className="py-3 align-top">Finger/solid-object contact; no specific water protection</td>
+              </tr>
+              <tr className="border-b border-white/5 bg-blue-900/20">
+                <td className="py-3 pr-3 align-top">Outdoor, general exposure</td>
+                <td className="py-3 pr-3 font-semibold align-top">IP44</td>
+                <td className="py-3 align-top">Solid objects &gt;1mm and splashing water from any direction</td>
+              </tr>
+              <tr className="border-b border-white/5 bg-blue-900/20">
+                <td className="py-3 pr-3 align-top">Heavy rain / hose-down cleaning</td>
+                <td className="py-3 pr-3 font-semibold align-top">IP55 – IP65</td>
+                <td className="py-3 align-top">Dust ingress and low-pressure water jets from any direction</td>
+              </tr>
+              <tr className="bg-blue-900/30">
+                <td className="py-3 pr-3 align-top">Ground level, flood / standing water risk</td>
+                <td className="py-3 pr-3 font-semibold align-top">IP67</td>
+                <td className="py-3 align-top">Dust-tight and temporary immersion (up to 1m for 30 min)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </>
     ),
   },
@@ -296,11 +336,67 @@ const sections = [
                 <strong>Bonding:</strong> All extraneous conductive parts within the temporary
                 installation must be bonded to the main earthing terminal. This includes metal
                 structures (scaffolding, staging, trusses), metallic water pipes, and any other
-                metalwork that could introduce an earth potential. Bonding conductors must be a
-                minimum of 10mm copper for main bonding and 4mm copper for supplementary bonding.
+                metalwork that could introduce an earth potential. Main protective bonding
+                conductors are sized per BS 7671 Reg 544.1.1 — not less than half the
+                cross-sectional area of the earthing conductor, with an absolute minimum of 6mm²
+                copper (or 10mm² copper where PME supply conditions apply, per Table 54.8).
+                Supplementary bonding conductors (Reg 544.2) must be at least 2.5mm² copper where
+                mechanically protected, or 4mm² copper where they are not.
               </span>
             </li>
           </ul>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-x-auto">
+          <h3 className="font-bold text-white text-lg mb-1">Earthing systems for temporary supplies</h3>
+          <p className="text-white/60 text-sm mb-4">
+            On construction and demolition sites, a PME (TN-C-S) earthing facility must not be used
+            unless every extraneous-conductive-part is reliably bonded to the main earthing terminal
+            (BS 7671 Reg 704.411.3.1) — in practice this is very difficult to maintain, so TT is the
+            default.
+          </p>
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr className="text-white/70 border-b border-white/10">
+                <th className="py-2 pr-3 font-semibold">System</th>
+                <th className="py-2 pr-3 font-semibold">Source</th>
+                <th className="py-2 font-semibold">Suitability for temporary work</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-b border-white/5 bg-green-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">TT</td>
+                <td className="py-3 pr-3 align-top">Mains or generator with earth electrode</td>
+                <td className="py-3 align-top">
+                  Preferred outdoors and on sites. Fault protection relies on RCDs; electrode
+                  resistance must be measured and stable.
+                </td>
+              </tr>
+              <tr className="border-b border-white/5 bg-blue-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">TN-S</td>
+                <td className="py-3 pr-3 align-top">DNO TN-S, or generator with earthed star point + separate PE</td>
+                <td className="py-3 align-top">
+                  Acceptable where a sound, dedicated earth conductor is available all the way back
+                  to the source.
+                </td>
+              </tr>
+              <tr className="border-b border-white/5 bg-red-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">TN-C-S (PME)</td>
+                <td className="py-3 pr-3 align-top">DNO combined PEN</td>
+                <td className="py-3 align-top">
+                  Restricted on sites (Reg 704.411.3.1); a lost PEN puts metalwork at mains
+                  potential — avoid outdoors.
+                </td>
+              </tr>
+              <tr className="bg-amber-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">IT</td>
+                <td className="py-3 pr-3 align-top">Unearthed generator</td>
+                <td className="py-3 align-top">
+                  Continues to run on a first fault, but requires an insulation monitoring device to
+                  alarm before a second fault occurs.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           For generator-supplied installations, the earthing arrangement depends on the generator
@@ -329,17 +425,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection:</strong> All socket outlets in temporary installations must
-                have 30mA RCD protection (note: certain exceptions apply — see BS 7671 and OSG Reg
-                4.6.4). For TT earthing systems, RCD protection is essential for fault protection:
+                <strong>RCD protection:</strong> Socket-outlets with a rated current up to 32A
+                require additional protection by a 30mA RCD (BS 7671 Reg 411.3.3), with limited
+                exceptions permitted by that regulation. For TT earthing systems, RCD protection is
+                essential for fault protection:
                 earth fault loop impedance via driven electrodes is typically too high for
-                overcurrent devices alone to achieve the required disconnection times (OSG Reg
-                3.76), so RCDs are the primary means of achieving disconnection. Select the RCD type
-                to match the load: Type AC for purely sinusoidal residual currents only; Type A for
-                loads producing pulsating DC residual currents (most modern electronics); Type F for
-                circuits with variable-speed drives or mixed-frequency loads that produce composite
-                residual currents (Reg 534.4.7); Type B where smooth DC fault components are present
-                (three-phase drives, EV chargers).
+                overcurrent devices alone to achieve the required disconnection times, so RCDs are
+                the primary means of achieving disconnection. The RCD type must be matched to the
+                load it protects (BS 7671 Reg 531.3.3) — see the table below.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,6 +456,56 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-x-auto">
+          <h3 className="font-bold text-white text-lg mb-1">RCD type selection (Reg 531.3.3)</h3>
+          <p className="text-white/60 text-sm mb-4">
+            Choose the lowest type that fully covers the residual-current waveform the load can
+            produce. Type AC may only serve fixed equipment with no DC content.
+          </p>
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr className="text-white/70 border-b border-white/10">
+                <th className="py-2 pr-3 font-semibold">Type</th>
+                <th className="py-2 pr-3 font-semibold">Detects</th>
+                <th className="py-2 font-semibold">Typical temporary-installation loads</th>
+              </tr>
+            </thead>
+            <tbody className="text-white">
+              <tr className="border-b border-white/5 bg-red-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">AC</td>
+                <td className="py-3 pr-3 align-top">Sinusoidal AC residual current only</td>
+                <td className="py-3 align-top">
+                  Fixed resistive loads with no DC content only (e.g. simple heaters, filament
+                  lamps). Not suitable as a default for modern electronics.
+                </td>
+              </tr>
+              <tr className="border-b border-white/5 bg-blue-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">A</td>
+                <td className="py-3 pr-3 align-top">AC + pulsating DC residual current</td>
+                <td className="py-3 align-top">
+                  General socket outlets, single-phase tools, most LED and switch-mode loads — the
+                  practical minimum for modern equipment.
+                </td>
+              </tr>
+              <tr className="border-b border-white/5 bg-amber-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">F</td>
+                <td className="py-3 pr-3 align-top">As Type A + composite/mixed-frequency residual currents</td>
+                <td className="py-3 align-top">
+                  Single-phase variable-speed drives, dimmers and stage equipment producing
+                  mixed-frequency residual currents.
+                </td>
+              </tr>
+              <tr className="bg-purple-900/20">
+                <td className="py-3 pr-3 font-semibold align-top">B</td>
+                <td className="py-3 pr-3 align-top">As Type F + smooth DC residual currents (incl. 3-phase rectified)</td>
+                <td className="py-3 align-top">
+                  Three-phase drives, EV charge points and other equipment that can produce smooth
+                  DC fault current.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
           The{' '}
           <SEOInternalLink href="/guides/rcd-types-explained">
@@ -372,7 +515,7 @@ const sections = [
           and stage equipment often contain electronic drivers that produce pulsating DC or
           composite fault currents — a standard Type AC RCD will not detect these. Use Type A as a
           minimum for most modern equipment; Type F where variable-speed drives or mixed-frequency
-          loads are present; and Type B where smooth DC components exist (Reg 534.4.7).
+          loads are present; and Type B where smooth DC components exist (Reg 531.3.3).
         </p>
       </>
     ),
@@ -399,8 +542,9 @@ const sections = [
             <li>
               <strong>Dead tests:</strong> Continuity of protective conductors (including main and
               supplementary bonding); continuity of ring final circuits (if applicable); insulation
-              resistance (minimum 1 megohm at 500V DC between live conductors and earth); polarity
-              checks at all points.
+              resistance per Reg 643.3 (for circuits up to and including 500V, test at 500V DC with
+              a minimum acceptable value of 1.0 MΩ — BS 7671 Table 64); polarity checks at all
+              points.
             </li>
             <li>
               <strong>Live tests:</strong> Earth fault loop impedance at the furthest point of each
@@ -409,9 +553,10 @@ const sections = [
               rated current, 5x rated current, and ramp test); voltage and frequency at the origin.
             </li>
             <li>
-              <strong>Functional tests:</strong> Verify all switching and isolation devices operate
-              correctly; test emergency stop buttons and emergency lighting (where installed);
-              verify that generator changeover systems operate correctly (where installed).
+              <strong>Functional tests (Reg 643.10):</strong> Verify all switching and isolation
+              devices operate correctly; test emergency stop buttons and emergency lighting (where
+              installed); verify that generator changeover systems operate correctly (where
+              installed).
             </li>
           </ol>
         </div>
@@ -510,7 +655,7 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <HardHat className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>110V CTE for portable tools (mandatory)</span>
+                <span>110V CTE reduced low voltage strongly preferred for portable tools (Reg 704.410.3.10)</span>
               </li>
               <li className="flex items-start gap-2">
                 <HardHat className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -587,6 +732,13 @@ export default function TemporaryInstallationsBS7909Page() {
       tocItems={tocItems}
       badge="Technical Guide"
       badgeIcon={Zap}
+      answerBox={{
+        question: 'What is BS 7909 and how does it relate to BS 7671?',
+        answer:
+          'BS 7909 is the UK Code of Practice for temporary electrical systems for entertainment and related purposes — outdoor events, concerts, festivals, exhibitions and temporary structures. It supplements BS 7671 (the IET Wiring Regulations) rather than replacing it: every temporary installation must still meet BS 7671 as the baseline. Temporary installations on construction and demolition sites are instead covered directly by BS 7671 Section 704.',
+        detail:
+          'Section 704 mandates that a PME (TN-C-S) earthing facility shall not be used on a construction site unless all extraneous-conductive-parts are reliably bonded (Reg 704.411.3.1), and that socket-outlets and hand-held equipment up to 32 A are protected by reduced low voltage, automatic disconnection with a 30 mA RCD, electrical separation or SELV/PELV (Reg 704.410.3.10).',
+      }}
       heroTitle={
         <>
           Temporary Installations:{' '}

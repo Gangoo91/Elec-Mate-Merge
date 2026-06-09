@@ -13,7 +13,6 @@ import {
   Building2,
   Search,
   Clock,
-  Zap,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -143,41 +142,68 @@ const sections = [
         </p>
         <p>
           Each observation in an EICR is given a classification code that indicates the severity of
-          the issue:
+          the issue and what the landlord must do about it:
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C1 — Danger present:</strong> Immediate risk of injury. Remedial action must
-                be taken urgently. The inspector may recommend isolating the affected circuit.
+        <div className="space-y-3 my-4">
+          <div className="rounded-2xl bg-red-900/30 border border-red-700/40 p-5">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
+                C1
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C2 — Potentially dangerous:</strong> Not immediately dangerous but requires
-                urgent remedial action. Under the 2020 Regulations, landlords must complete
-                rectification within 28 days.
+              <div>
+                <p className="font-bold text-white mb-1">Danger present — risk of injury</p>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  An immediate danger exists. The inspector may recommend isolating the affected
+                  circuit there and then. Makes the report Unsatisfactory; the landlord must act
+                  urgently.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-orange-900/30 border border-orange-700/40 p-5">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-orange-500/20 text-orange-300 font-bold text-sm shrink-0">
+                C2
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C3 — Improvement recommended:</strong> Does not meet current standards but
-                is not classified as dangerous. No mandatory action under the regulations, but
-                advisable to address over time.
+              <div>
+                <p className="font-bold text-white mb-1">Potentially dangerous</p>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  Not immediately dangerous, but urgent remedial action is required. Makes the report
+                  Unsatisfactory; landlords must complete rectification within 28 days under the 2020
+                  Regulations.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-blue-500/20 text-blue-300 font-bold text-sm shrink-0">
+                C3
               </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>FI — Further investigation:</strong> An issue exists but cannot be fully
-                assessed without additional investigation. Should be arranged promptly.
+              <div>
+                <p className="font-bold text-white mb-1">Improvement recommended</p>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  Does not meet current standards but is not dangerous. The report can still be
+                  Satisfactory. No mandatory action under the regulations, but advisable to address
+                  over time.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-yellow-900/30 border border-yellow-700/40 p-5">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-yellow-500/20 text-yellow-300 font-bold text-sm shrink-0">
+                FI
               </span>
-            </li>
-          </ul>
+              <div>
+                <p className="font-bold text-white mb-1">Further investigation required</p>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  An issue exists that cannot be fully assessed without additional investigation. An
+                  FI on its own also makes the report Unsatisfactory and should be arranged promptly.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
         <p>
           An EICR containing only C3 observations (or no observations) is classified as
@@ -307,43 +333,68 @@ const sections = [
           Prices vary based on property size, age, circuit complexity, and the electrician's
           qualifications and registration.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>One-bedroom flat</strong> — £150 to £180. Typical for purpose-built flats in
-                the city centre or Roker area.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Two-bedroom property</strong> — £180 to £260. Most common rental type in
-                Sunderland. Older terraces in Pallion or Ford may attract higher prices.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Three-bedroom house</strong> — £220 to £300. Semi-detached or terraced
-                properties in Washington or Houghton-le-Spring typically fall in this range.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>HMO or four-bedroom plus</strong> — £300 to £500+. Multiple consumer units
-                and additional circuits significantly increase inspection time.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-left text-white">
+            <thead>
+              <tr className="border-b border-white/10 bg-white/[0.03]">
+                <th className="px-4 py-3 font-semibold">Property type</th>
+                <th className="px-4 py-3 font-semibold text-right whitespace-nowrap">
+                  Indicative price
+                </th>
+                <th className="px-4 py-3 font-semibold hidden sm:table-cell">
+                  Typical Sunderland example
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/5">
+                <td className="px-4 py-3 font-medium">One-bedroom flat</td>
+                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                  £150–£180
+                </td>
+                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                  Purpose-built flats in the city centre or Roker
+                </td>
+              </tr>
+              <tr className="border-b border-white/5">
+                <td className="px-4 py-3 font-medium">Two-bedroom property</td>
+                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                  £180–£260
+                </td>
+                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                  Most common rental type; older terraces in Pallion or Ford sit higher
+                </td>
+              </tr>
+              <tr className="border-b border-white/5">
+                <td className="px-4 py-3 font-medium">Three-bedroom house</td>
+                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                  £220–£300
+                </td>
+                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                  Semi-detached or terraced in Washington or Houghton-le-Spring
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">HMO or four-bedroom plus</td>
+                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                  £300–£500+
+                </td>
+                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                  Multiple consumer units and extra circuits add inspection time
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <p className="text-white/60 text-sm">
+          Prices are indicative market guidance for 2026, not a quote. The inspection and report are
+          covered by these figures; remedial work is quoted and charged separately.
+        </p>
         <p>
-          The inspection and report are covered by these prices. Remedial work is quoted and charged
-          separately. Many Sunderland electricians offer to quote the remedial work immediately
-          after completing the inspection, which can save landlords time when working to the 28-day
-          remedial deadline.
+          Many Sunderland electricians offer to quote the remedial work immediately after completing
+          the inspection, which can save landlords time when working to the 28-day remedial
+          deadline. Compare quotes from competent person scheme registered electricians using the{' '}
+          <SEOInternalLink href="/find-electrician">Elec-Mate electrician finder</SEOInternalLink>.
         </p>
       </>
     ),
@@ -628,6 +679,11 @@ export default function EICRSunderlandPage() {
       }
       heroSubtitle="Everything Sunderland landlords and homeowners need to know about EICR — legal requirements under the 2020 Regulations, Sunderland City Council enforcement, inspection costs, common findings in Sunderland's housing stock, and HMO obligations."
       readingTime={12}
+      answerBox={{
+        question: 'Do I need an EICR for a rental property in Sunderland?',
+        answer:
+          'Yes. Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, every Sunderland private landlord must have the fixed electrical installation inspected and tested at least every five years, and before a new tenancy. The EICR must be carried out by a qualified, competent person, given to tenants within 28 days, and supplied to Sunderland City Council within seven days of a request.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

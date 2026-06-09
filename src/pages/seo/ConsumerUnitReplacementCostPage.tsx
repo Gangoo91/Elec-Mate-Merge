@@ -28,6 +28,7 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'overview', label: 'Why Replace a Consumer Unit?' },
   { id: 'material-costs', label: 'Material Costs Breakdown' },
+  { id: 'device-types', label: 'MCB vs RCD vs RCBO' },
   { id: 'labour-costs', label: 'Labour and Installation Costs' },
   { id: 'total-costs', label: 'Total Cost by Type' },
   { id: 'factors', label: 'Factors Affecting Price' },
@@ -44,8 +45,8 @@ const keyTakeaways = [
   'Material costs range from around £90 for a basic 6-way enclosure to over £930 for a high-integrity 14-way unit with SPD and Type A RCBOs (trade prices from Wylex, BG Electrical, and Crabtree).',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or inspected by Building Control.',
   'BS 7671:2018+A4:2026 Regulation 421.1.201 requires that consumer units in domestic premises shall comply with BS EN 61439-3 and have their enclosure manufactured from non-combustible material (or be enclosed in a non-combustible cabinet complying with Regulation 132.12). Since January 2016, following Amendment 3 to BS 7671:2008, all new domestic consumer units must use a non-combustible (metal) enclosure.',
-  'An Electrical Installation Certificate (EIC) must be issued after every consumer unit replacement, as required by Regulation 644.4.201 (which explicitly covers replacement of a distribution board or consumer unit) read with Regulation 120.3.',
-  'Arc fault detection devices (AFDDs) may be included in a consumer unit assembly to mitigate the risk of fire from arc faults, as recognised by BS 7671:2018+A4:2026 and the On-Site Guide 9th Edition. They are an optional but increasingly specified addition, particularly on bedroom and living-room circuits.',
+  'An Electrical Installation Certificate (EIC) must be issued after every consumer unit replacement. Regulation 644.1 of BS 7671:2018+A4:2026 requires an EIC, based on the model in Appendix 6, upon completion of verification of a new installation, addition or alteration — including the replacement of a distribution board or consumer unit.',
+  'Under BS 7671:2018+A4:2026 (Regulation 421.1.7), arc fault detection devices (AFDDs) conforming to BS EN 62606 are now required for single-phase socket-outlet final circuits rated up to 32 A in high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes. For all other premises, AFDDs are recommended for those circuits.',
 ];
 
 const faqs = [
@@ -62,7 +63,7 @@ const faqs = [
   {
     question: 'Do I need an SPD when replacing a consumer unit?',
     answer:
-      'Since the introduction of Amendment 2 to BS 7671:2018, surge protection devices (SPDs) are required where specified by Regulation 443.4. That regulation mandates SPD protection where transient overvoltages could (a) result in serious injury or loss of life, (b) interrupt public services or damage cultural heritage, (c) interrupt commercial or industrial activity, or (d) affect a large number of co-located individuals. For all other situations — including many domestic properties — a risk assessment is required to determine whether an SPD is necessary. There is an exception for single dwelling units in certain circumstances. In practice, electricians often recommend including an SPD during a consumer unit replacement due to the modest additional cost (approximately £80 to £150) versus the protection it provides against transient overvoltages from lightning and switching surges, but the installer must carry out the Section 443 assessment rather than assuming SPD is always required.',
+      'Surge protection against transient overvoltages is governed by Regulation 443.4 of BS 7671:2018+A4:2026. Protection shall be provided where the consequence of an overvoltage could result in serious injury to, or loss of, human life, or in significant financial or data loss. For all other cases, protection shall be provided unless the owner of the installation declares it is not required because any loss or damage is tolerable and they accept the risk. In practice this means that for most domestic consumer unit replacements an SPD should be fitted by default, and it is omitted only where the owner makes that documented declaration. The additional cost is modest — approximately £80 to £150 — versus the protection it provides against transient overvoltages from indirect lightning strokes and switching surges.',
   },
   {
     question: 'How long does a consumer unit replacement take?',
@@ -195,93 +196,149 @@ const sections = [
           protective devices fitted, and whether additional components such as an SPD are included.
           Here is a breakdown based on current trade prices from major UK wholesalers.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-hidden">
           <h3 className="font-bold text-white text-lg mb-4">
-            Consumer Unit Enclosure (Trade Prices)
+            Consumer Unit Enclosure (Indicative Trade Prices)
           </h3>
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>6-way metal consumer unit</strong> — £90 to £120 trade (Dorman Smith LoadPro
-                6-way from £90.60, Eaton 6-way from £119.28). Suitable for small flats or properties
-                with few circuits.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>10 to 12-way metal consumer unit</strong> — £93 to £130 trade (Crabtree
-                10-way from £93.27, Dorman Smith 12-way from £102.68, Eaton 10-way from £128.17).
-                The most common size for average UK homes with 8 to 10 circuits.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>14-way high-integrity unit with SPD</strong> — £630 to £940 trade (BG
-                Electrical 14-way with RCDs, MCBs and SPD from £632.50, Wylex 14-way high-integrity
-                from £938.86). These units come pre-populated with protective devices and are
-                designed for larger properties or installations requiring flexible configuration.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>12-way populated with Type A RCBOs and SPD</strong> — £690 to £935 trade (BG
-                Electrical 12-way with 10 Type A RCBOs and SPD at £932.30). The premium option for
-                modern installations with full individual circuit protection.
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 pr-3 font-medium">Board</th>
+                  <th className="py-2 pr-3 font-medium whitespace-nowrap">Trade price</th>
+                  <th className="py-2 font-medium">Typical use</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">6-way metal unit</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£90–£120</td>
+                  <td className="py-3 text-white/80">Small flats or properties with few circuits.</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">10–12-way metal unit</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£93–£130</td>
+                  <td className="py-3 text-white/80">Most common size for average homes with 8–10 circuits.</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">14-way high-integrity with SPD</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£630–£940</td>
+                  <td className="py-3 text-white/80">Pre-populated with protective devices; larger properties.</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-semibold">12-way, Type A RCBOs + SPD</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£690–£935</td>
+                  <td className="py-3 text-white/80">Full individual circuit protection, premium fit-out.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/50 text-xs mt-3">
+            Indicative wholesaler prices (Crabtree, Wylex, BG Electrical, Eaton, Dorman Smith) — for
+            guidance only, not a quote. Prices vary by supplier, account and date.
+          </p>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-hidden">
           <h3 className="font-bold text-white text-lg mb-4">Additional Materials</h3>
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Individual MCBs</strong> — £10 to £15 each (Dorman Smith CU Series from
-                £10.87). You will need one per circuit if using an unpopulated board.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>RCBOs (Type A)</strong> — £35 to £55 each depending on manufacturer and
-                rating. Type A RCBOs detect both AC and pulsating DC residual currents.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>SPD (Surge Protection Device)</strong> — £80 to £150 including the dedicated
-                MCB for the SPD circuit.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>AFDDs (Arc Fault Detection Devices)</strong> — £40 to £70 each at trade
-                price. Permitted as a fire-risk mitigation measure under OSG 9th Edition guidance,
-                AFDDs detect hazardous arc faults and disconnect the circuit before ignition can
-                occur. Not mandatory on all circuits, but increasingly specified on bedroom and
-                lounge circuits where ignition risk is higher.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Sundries</strong> — cable tails, earth and neutral bars, labels, glands, and
-                fixings: approximately £20 to £50.
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 pr-3 font-medium">Component</th>
+                  <th className="py-2 pr-3 font-medium whitespace-nowrap">Trade price</th>
+                  <th className="py-2 font-medium">Notes</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">MCB</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£10–£15 ea</td>
+                  <td className="py-3 text-white/80">One per circuit on an unpopulated board.</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">RCBO (Type A)</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£35–£55 ea</td>
+                  <td className="py-3 text-white/80">Detects AC and pulsating DC residual currents.</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">SPD</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£80–£150</td>
+                  <td className="py-3 text-white/80">Including the dedicated MCB for the SPD circuit.</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">AFDD (BS EN 62606)</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£40–£70 ea</td>
+                  <td className="py-3 text-white/80">Required on socket circuits ≤32 A in HRRBs, HMOs, student accommodation and care homes; recommended elsewhere.</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-semibold">Sundries</td>
+                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£20–£50</td>
+                  <td className="py-3 text-white/80">Cable tails, earth/neutral bars, labels, glands, fixings.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <p>
           For a typical 10-way board with RCBOs and SPD, total material cost to the electrician is
           approximately £350 to £550 at trade prices. Pre-populated boards from BG Electrical or
           Wylex reduce on-site assembly time but cost more upfront.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'device-types',
+    heading: 'MCB vs RCD vs RCBO: Which Protective Devices Drive the Cost',
+    content: (
+      <>
+        <p>
+          The single biggest factor in the price of a consumer unit — after board size — is the type
+          of protective device fitted. The choice between a split-load RCD board and an all-RCBO
+          board changes both the material cost and the level of protection. Here is how the three
+          common devices compare.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-hidden">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 pr-3 font-medium">Device</th>
+                  <th className="py-2 pr-3 font-medium">Protects against</th>
+                  <th className="py-2 font-medium">On a fault…</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">MCB</td>
+                  <td className="py-3 pr-3 text-white/80">Overload and short circuit (overcurrent) only</td>
+                  <td className="py-3 text-white/80">Trips that circuit on overcurrent; no earth-leakage protection.</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">RCD</td>
+                  <td className="py-3 pr-3 text-white/80">Earth leakage (residual current) only</td>
+                  <td className="py-3 text-white/80">Trips and disconnects every circuit on its bank — often half the house.</td>
+                </tr>
+                <tr className="bg-green-900/20">
+                  <td className="py-3 pr-3 font-semibold">RCBO</td>
+                  <td className="py-3 pr-3 text-white/80">Both overcurrent <em>and</em> earth leakage, per circuit</td>
+                  <td className="py-3 text-white/80">Trips only the faulty circuit; the rest of the installation stays live.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p>
+          A board fitted with individual RCBOs per circuit gives the best fault discrimination: a
+          fault on one circuit leaves every other circuit running. With a traditional split-load RCD
+          arrangement, a single earth fault trips the RCD and disconnects all the circuits on that
+          bank. The material premium for an all-RCBO board is roughly £150 to £300 over a split-load
+          RCD configuration, which is why most modern domestic replacements specify RCBOs. For more
+          detail on selecting and fitting an SPD alongside these devices, see the{' '}
+          <SEOInternalLink href="/guides/spd-surge-protection">
+            SPD surge protection guide
+          </SEOInternalLink>
+          .
         </p>
       </>
     ),
@@ -345,43 +402,58 @@ const sections = [
           Here are realistic total costs for consumer unit replacements in 2026, covering materials,
           labour, testing, Part P notification, and the EIC.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-5 text-white">
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Basic 6-way with split-load RCDs</strong> — £450 to £650 total. Suitable for
-                a small flat with 4 to 6 circuits. Materials: £150 to £250. Labour: £250 to £350.
-                Notification and certification: £50 to £80.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Standard 10-way with RCBOs and SPD</strong> — £750 to £1,200 total. The most
-                common domestic replacement. Materials: £350 to £550. Labour: £300 to £500.
-                Notification and certification: £50 to £80.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Large 14 to 16-way high-integrity with SPD</strong> — £1,200 to £1,800
-                total. For larger properties with 12+ circuits, EV charger, and solar PV
-                connections. Materials: £650 to £950. Labour: £400 to £650. Notification and
-                certification: £50 to £80.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Three-phase consumer unit</strong> — £1,800 to £2,500+ total. Required for
-                properties with three-phase supply (large homes, workshops, commercial units).
-                Materials: £800 to £1,200. Labour: £600 to £900. Notification and certification: £50
-                to £80.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4 overflow-hidden">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-white/60">
+                  <th className="py-2 pr-3 font-medium">Job type</th>
+                  <th className="py-2 pr-3 font-medium whitespace-nowrap">Materials</th>
+                  <th className="py-2 pr-3 font-medium whitespace-nowrap">Labour</th>
+                  <th className="py-2 pr-3 font-medium whitespace-nowrap">Cert + notify</th>
+                  <th className="py-2 font-medium whitespace-nowrap">Total</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">Basic 6-way, split-load RCDs</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£150–£250</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£250–£350</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£450–£650</td>
+                </tr>
+                <tr className="border-b border-white/10 bg-blue-900/30">
+                  <td className="py-3 pr-3 font-semibold">
+                    Standard 10-way, RCBOs + SPD
+                    <span className="block text-xs text-blue-300 font-normal">Most common</span>
+                  </td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£350–£550</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£300–£500</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£750–£1,200</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-3 font-semibold">14–16-way high-integrity + SPD</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£650–£950</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£400–£650</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£1,200–£1,800</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 font-semibold">Three-phase consumer unit</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£800–£1,200</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£600–£900</td>
+                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£1,800–£2,500+</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/50 text-xs mt-3">
+            Indicative 2026 market guidance for England and Wales — not a quote. Standard 10-way
+            suits homes with 8–10 circuits; large boards suit 12+ circuits with EV charger or solar
+            PV; three-phase is for properties on a three-phase supply.
+          </p>
         </div>
         <SEOAppBridge
           title="Price consumer unit replacements accurately"
@@ -525,12 +597,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Arc fault detection (AFDD)</strong> — under BS 7671:2018+A4:2026 and OSG 9th
-                Edition guidance, a consumer unit assembly may include arc fault detection devices
-                (AFDDs) to mitigate the risk of arc-fault ignition. AFDDs detect the characteristic
-                signature of hazardous arc faults and disconnect the affected circuit to reduce the
-                risk of fire. Including AFDDs is a permitted enhancement when specifying a new
-                consumer unit; they add approximately £40 to £70 per circuit at trade price.
+                <strong>Arc fault detection (AFDD)</strong> — under Regulation 421.1.7 of BS
+                7671:2018+A4:2026, AFDDs conforming to BS EN 62606 are now required on single-phase
+                socket-outlet final circuits rated up to 32 A in high-rise residential buildings,
+                houses in multiple occupation, purpose-built student accommodation and care homes;
+                in all other premises they are recommended for those circuits. AFDDs detect the
+                signature of hazardous arc faults and disconnect the affected circuit to reduce fire
+                risk. Where used, they must be placed at the origin of the circuit and add
+                approximately £40 to £70 per circuit at trade price.
               </span>
             </li>
           </ul>
@@ -553,13 +627,15 @@ const sections = [
           afterwards.
         </p>
         <p>
-          Regulation 644.4.201 of BS 7671:2018+A4:2026 explicitly requires that an Electrical
-          Installation Certificate (EIC) — based on the model in Appendix 6 — shall be issued upon
-          completion of verification of a new installation, an addition or alteration, or the
-          replacement of a distribution board or consumer unit. Regulation 120.3 confirms that the
-          EIC is the correct certification document to use for a consumer unit replacement. The EIC
-          documents the design, construction, inspection, and testing of the installation and
-          provides the homeowner with proof of compliance.
+          Regulation 644.1 of BS 7671:2018+A4:2026 requires that an Electrical Installation
+          Certificate (EIC) — based on the model in Appendix 6 — shall be issued upon completion of
+          the verification of a new installation, or an addition or alteration to an existing
+          installation, including the replacement of a distribution board or consumer unit. A Minor
+          Electrical Installation Works Certificate is not an acceptable alternative for a consumer
+          unit replacement: Regulation 644.4.201 only permits a Minor Works Certificate where the
+          work does <em>not</em> include a new circuit or the replacement of a distribution board or
+          consumer unit. The EIC documents the design, construction, inspection and testing of the
+          installation and gives the homeowner proof of compliance.
         </p>
         <p>
           A registered electrician will self-certify the work and submit notification to the local
@@ -707,6 +783,13 @@ export default function ConsumerUnitReplacementCostPage() {
       tocItems={tocItems}
       badge="Cost Guide"
       badgeIcon={PoundSterling}
+      answerBox={{
+        question: 'How much does it cost to replace a consumer unit in the UK?',
+        answer:
+          'A consumer unit replacement in the UK typically costs £450 to £2,500 in 2026, including the board, protective devices, labour, Part P notification and the Electrical Installation Certificate. The most common job — a 10-way board with RCBOs and an SPD — runs £750 to £1,200. The work is notifiable under Part P and must be certified.',
+        detail:
+          'Final price depends on board size, RCBOs versus split-load RCDs, the condition of the existing wiring and earthing, and your region.',
+      }}
       heroTitle={
         <>
           Consumer Unit Replacement Cost:{' '}

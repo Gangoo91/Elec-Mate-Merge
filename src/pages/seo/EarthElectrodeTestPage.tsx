@@ -43,8 +43,8 @@ const keyTakeaways = [
   'Earth electrode resistance testing is essential for every TT earthing system to confirm the earth path is effective and protective devices will operate within disconnection times.',
   'The fall of potential method (using two temporary test spikes) is the standard measurement technique specified in BS 7671 and GN3.',
   'For a TT system protected by a 30 mA RCD, the maximum earth electrode resistance (RA) is 1667 ohms — but in practice, values below 200 ohms are preferred for reliability.',
-  'Test spike placement matters: GN3 (Reg 2.26) recommends a separation of 15&ndash;25 m between test spikes, with the current spike at least ten times the electrode length from the electrode under test. The potential spike is placed at approximately 62% of the electrode-to-current-spike distance.',
-  'Regulation 643.7.3 (Chapter 64 of BS 7671:2018+A4:2026) requires measurement of the earth electrode resistance RA as part of verifying TT system compliance with Regulation 411.5 — this applies to both initial verification and periodic inspection.',
+  'Test spike placement matters: industry guidance (IET Guidance Note 3) recommends placing the current spike well clear of the electrode under test and the potential spike at approximately 62% of the electrode-to-current-spike distance, in the flat part of the voltage gradient.',
+  'Regulation 643.7.2 (Chapter 64 of BS 7671:2018+A4:2026) requires that, where the earthing system incorporates an earth electrode, the electrode resistance to Earth shall be measured — this verifies TT system compliance with Regulation 411.5 at both initial verification and periodic inspection. Where measuring RA is not practicable, the external earth fault loop impedance may be used instead.',
   'Elec-Mate lets you record earth electrode test results by voice while your hands stay on the instrument leads — no putting probes down to type.',
 ];
 
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'What is the maximum acceptable earth electrode resistance for a TT system?',
     answer:
-      'The maximum earth electrode resistance depends on the protective device. For a TT system protected by a 30 mA RCD (the most common arrangement in domestic properties), the maximum RA is calculated as RA x Ia less than or equal to 50 V. With a 30 mA RCD, that gives RA = 50 / 0.03 = 1667 ohms. However, this is the absolute maximum — in practice, earth electrode resistance values below 200 ohms are strongly preferred. A high resistance near the theoretical limit means the RCD is the sole line of defence, with very little margin. If the earth electrode resistance is consistently above 200 ohms, consider driving the electrode deeper, using a longer electrode, adding a second electrode in parallel, or treating the surrounding soil to reduce resistivity (for example, adding bentonite or moisture). BS 7671 Regulation 411.5.1 and Table 41.5 set out the disconnection time requirements for TT systems.',
+      'The maximum earth electrode resistance depends on the protective device. For a TT system protected by a 30 mA RCD (the most common arrangement in domestic properties), the maximum RA is calculated as RA x Ia less than or equal to 50 V. With a 30 mA RCD, that gives RA = 50 / 0.03 = 1667 ohms. However, this is the absolute maximum — in practice, earth electrode resistance values below 200 ohms are strongly preferred. A high resistance near the theoretical limit means the RCD is the sole line of defence, with very little margin. If the earth electrode resistance is consistently above 200 ohms, consider driving the electrode deeper, using a longer electrode, adding a second electrode in parallel, or treating the surrounding soil to reduce resistivity (for example, adding bentonite or moisture). BS 7671 Regulation 411.5.3 gives the condition RA x IΔn ≤ 50 V, and Table 41.5 lists the maximum earth fault loop impedance for each RCD rating, with disconnection within the times of Table 41.1. Note 2 to Table 41.5 adds that a resistance exceeding 200 ohms may not be stable (see Regulation 542.2.4).',
   },
   {
     question: 'Can I test an earth electrode with a standard multifunction tester?',
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'How far apart should the test spikes be from the earth electrode?',
     answer:
-      'GN3 (Reg 2.26) recommends a separation of 15–25 m between the two test spikes (current spike C and potential spike P). The current spike should be placed at a distance from the earth electrode of at least ten times the maximum dimension of the electrode system — so for a standard 1.2 m rod, at least 12 m; for a 3 m rod, at least 30 m. The potential spike (P) is placed at approximately 62% of the electrode-to-current-spike distance. This 62% rule places the potential spike in the "flat" part of the voltage gradient curve, where the reading is least affected by the resistance zones around either the electrode or the current spike. If space is limited, reduce distances as far as necessary and verify accuracy using the 52%/62%/72% check — if the three readings converge within 5%, the result is valid. GN3 provides detailed diagrams of spike placement for different site configurations.',
+      'Industry guidance (IET Guidance Note 3) is that the current spike (C) should be placed well clear of the electrode under test — a common rule of thumb is at least ten times the maximum dimension of the electrode system, so for a standard 1.2 m rod allow plenty of distance, and more again for longer or multiple-rod arrays. The potential spike (P) is then placed at approximately 62% of the electrode-to-current-spike distance. This 62% rule places the potential spike in the "flat" part of the voltage gradient curve, where the reading is least affected by the resistance zones around either the electrode or the current spike. If space is limited, reduce distances as far as necessary and verify accuracy using the 52%/62%/72% check — if the three readings converge within about 5%, the result is valid. GN3 provides detailed diagrams of spike placement for different site configurations.',
   },
   {
     question: 'Why does the earth electrode resistance change with the weather?',
@@ -180,9 +180,10 @@ const sections = [
               <span>
                 <strong>Initial verification of a new TT installation.</strong> Before the
                 installation is energised, the earth electrode resistance must be measured and
-                confirmed to be within acceptable limits. Regulation 643.7.3 (Chapter 64 of BS 7671)
-                requires verification of compliance with Regulation 411.5 by measurement of the
-                earth electrode resistance RA before the installation is put into service.
+                confirmed to be within acceptable limits. Regulation 643.7.2 (Chapter 64 of BS 7671)
+                requires that, where the earthing system incorporates an earth electrode, the
+                electrode resistance to Earth is measured — verifying compliance with Regulation
+                411.5 before the installation is put into service.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -344,50 +345,112 @@ const sections = [
       <>
         <p>
           The maximum acceptable earth electrode resistance depends on the type of protective device
-          and its rated residual operating current. The fundamental requirement from BS 7671 BS 7671
-          Section 411 for TT systems is:
+          and its rated residual operating current. The fundamental condition for TT systems comes
+          from BS 7671 Regulation 411.5.3:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <p className="text-white font-mono text-lg text-center mb-4">RA x I&#916;n &le; 50 V</p>
           <p className="text-white text-sm">
-            Where RA is the earth electrode resistance (in ohms) and I&#916;n is the rated residual
-            operating current of the RCD (in amps). 50 V is the touch voltage limit for normal dry
-            conditions.
+            Where RA is the sum of the resistances of the earth electrode and the protective
+            conductor connecting it to the exposed-conductive-parts (in ohms), and I&#916;n is the
+            rated residual operating current of the RCD (in amps). 50 V is the touch voltage limit
+            for normal dry conditions. Regulation 411.5.3 also confirms the requirement is met where
+            the earth fault loop impedance meets Table 41.5.
           </p>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Maximum RA by RCD Rating</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>30 mA RCD:</strong> RA = 50 / 0.03 = 1667 ohms maximum
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>100 mA RCD:</strong> RA must not exceed 200 ohms (Table 41.5, Reg 411.5.3 —
-                the regulatory cap for I&#916;n &le; 100 mA is 200 ohms, not the arithmetic 500
-                ohms)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>300 mA RCD:</strong> RA = 50 / 0.3 = 167 ohms maximum
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 overflow-hidden">
+          <h3 className="font-bold text-white text-lg mb-1">
+            Maximum Earth Fault Loop Impedance (Z<sub>s</sub>) by RCD Rating
+          </h3>
+          <p className="text-white/60 text-xs mb-4">
+            BS 7671 Table 41.5 — non-delayed and time-delayed &lsquo;S&rsquo; type RCDs to BS EN
+            61008-1 / 61009-1, U<sub>0</sub> = 230 V. Disconnection within the times of Table 41.1.
+          </p>
+          <div className="grid grid-cols-3 text-sm">
+            <div className="bg-white/[0.06] border-b border-white/10 px-3 py-2 font-semibold text-white">
+              RCD rating (I&#916;n)
+            </div>
+            <div className="bg-white/[0.06] border-b border-white/10 px-3 py-2 font-semibold text-white">
+              Max Z<sub>s</sub> (ohms)
+            </div>
+            <div className="bg-white/[0.06] border-b border-white/10 px-3 py-2 font-semibold text-white">
+              RA = 50 / I&#916;n
+            </div>
+
+            <div className="bg-green-900/30 border-b border-white/10 px-3 py-2 text-white font-medium">
+              30 mA
+            </div>
+            <div className="bg-green-900/30 border-b border-white/10 px-3 py-2 text-white">1667*</div>
+            <div className="bg-green-900/30 border-b border-white/10 px-3 py-2 text-white/70">
+              1667 &Omega;
+            </div>
+
+            <div className="bg-blue-900/30 border-b border-white/10 px-3 py-2 text-white font-medium">
+              100 mA
+            </div>
+            <div className="bg-blue-900/30 border-b border-white/10 px-3 py-2 text-white">500*</div>
+            <div className="bg-blue-900/30 border-b border-white/10 px-3 py-2 text-white/70">
+              500 &Omega;
+            </div>
+
+            <div className="bg-amber-900/30 border-b border-white/10 px-3 py-2 text-white font-medium">
+              300 mA
+            </div>
+            <div className="bg-amber-900/30 border-b border-white/10 px-3 py-2 text-white">167</div>
+            <div className="bg-amber-900/30 border-b border-white/10 px-3 py-2 text-white/70">
+              167 &Omega;
+            </div>
+
+            <div className="bg-red-900/30 px-3 py-2 text-white font-medium">500 mA</div>
+            <div className="bg-red-900/30 px-3 py-2 text-white">100</div>
+            <div className="bg-red-900/30 px-3 py-2 text-white/70">100 &Omega;</div>
+          </div>
+          <p className="text-white/70 text-xs mt-4">
+            * Note 2 to Table 41.5: the resistance of the installation earth electrode should be as
+            low as practicable — a value exceeding 200 &Omega; may not be stable (see Regulation
+            542.2.4). So although the arithmetic limit for a 30 mA RCD is 1667 &Omega;, the practical
+            target is far lower.
+          </p>
         </div>
         <p>
-          While the calculated maximums seem generous (especially for 30 mA RCDs), there are
-          practical reasons to aim for much lower values. An earth electrode with RA below 200 ohms
-          provides a good margin of safety and ensures the RCD operates reliably under all soil
-          conditions. Electrodes in the range of 20 to 100 ohms are common in clay and loam soils.
-          Sandy, rocky, or chalk soils may produce higher values that require longer electrodes or
-          multiple rods in parallel.
+          While the tabulated maximums look generous (especially for 30 mA RCDs), there are good
+          reasons to aim much lower. An earth electrode with RA comfortably below 200 ohms provides a
+          margin of safety and keeps the reading stable across the seasons. Electrodes in the range
+          of 20 to 100 ohms are common in clay and loam soils; sandy, rocky, or chalk soils may
+          produce higher values that need longer electrodes or multiple rods in parallel. Regulation
+          542.2.4 also requires the type and embedded depth of the electrode to be chosen so that
+          soil drying and freezing will not raise its resistance above the required value.
         </p>
+        <div className="grid sm:grid-cols-2 gap-4 my-4">
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
+            <h4 className="font-bold text-white mb-1">Clay &amp; loam</h4>
+            <p className="text-white text-sm leading-relaxed">
+              Lowest and most stable resistivity. A single 1.2 m rod will often read well within
+              limits and hold its value through dry spells.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+            <h4 className="font-bold text-white mb-1">Sandy &amp; gravelly</h4>
+            <p className="text-white text-sm leading-relaxed">
+              Higher resistivity and drains quickly, so readings swing with the weather. Expect to
+              need a longer rod or two rods in parallel.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <h4 className="font-bold text-white mb-1">Chalk &amp; rock</h4>
+            <p className="text-white text-sm leading-relaxed">
+              Highest resistivity and hardest to drive into. Multiple electrodes, deep driving, or
+              an earth mat with conductive backfill may be required.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
+            <h4 className="font-bold text-white mb-1">Parallel rods</h4>
+            <p className="text-white text-sm leading-relaxed">
+              Space rods at least twice their driven length apart — closer than that and the
+              resistance zones overlap, so the second rod adds little benefit.
+            </p>
+          </div>
+        </div>
         <p>
           Use the{' '}
           <SEOInternalLink href="/tools/earth-loop-impedance-calculator">
@@ -540,9 +603,11 @@ const sections = [
           certificate.
         </p>
         <p>
-          Regulation 643.7.3 (Chapter 64 of BS 7671) requires verification of earth electrode
-          resistance as part of TT system compliance with Regulation 411.5. When recording the
-          result, note the following:
+          Regulation 643.7.2 (Chapter 64 of BS 7671) requires that, where the earthing system
+          incorporates an earth electrode, the electrode resistance to Earth is measured — this
+          verifies TT system compliance with Regulation 411.5. Where measuring RA is not
+          practicable, the standard permits the measured external earth fault loop impedance to be
+          used instead. When recording the result, note the following:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -555,10 +620,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Record the electrode type and location.</strong> GN3 (Reg 5.9) requires the
-                EICR to include the type (e.g. copper-clad rod, plate), location (e.g. "front
-                garden, 1.2 m from consumer unit"), and measured resistance or soil conditions as
-                appropriate.
+                <strong>Record the electrode type and location.</strong> Good practice (and IET
+                Guidance Note 3) is to record the type (e.g. copper-clad rod, plate), location (e.g.
+                "front garden, 1.2 m from consumer unit"), and measured resistance or soil
+                conditions as appropriate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -616,6 +681,11 @@ export default function EarthElectrodeTestPage() {
       tocItems={tocItems}
       badge="Testing Guide"
       badgeIcon={Gauge}
+      answerBox={{
+        question: 'How do you test an earth electrode and what resistance is acceptable?',
+        answer:
+          'Disconnect the electrode from the installation earthing conductor, then use the fall of potential (3-pin) method: drive a current spike well clear of the electrode and a potential spike at 62% of that distance, and read RA in ohms. Under BS 7671 Regulation 411.5.3, RA x IΔn must not exceed 50 V; for a 30 mA RCD that is 1667 ohms maximum, but aim well below 200 ohms for stability.',
+      }}
       heroTitle={
         <>
           Earth Electrode Testing:{' '}

@@ -165,6 +165,32 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
         </button>
       </Section>
 
+      {/* Verification References (MCS / BS EN 62446-1 handover) */}
+      <Section title="Verification References" accentColor="from-amber-500/40 to-yellow-400/20">
+        <div className="grid grid-cols-2 gap-2.5">
+          <Field label="Linked BS 7671 EIC Ref">
+            <Input
+              value={formData.linkedEicReference || ''}
+              onChange={(e) => onUpdate('linkedEicReference', e.target.value)}
+              placeholder="EIC / cert number"
+              className={inputSmCn}
+            />
+          </Field>
+          <Field label="Retest Within (years)">
+            <Input
+              type="number"
+              inputMode="numeric"
+              value={formData.recommendedRetestIntervalYears || ''}
+              onChange={(e) =>
+                onUpdate('recommendedRetestIntervalYears', parseInt(e.target.value) || 0)
+              }
+              placeholder="e.g., 4"
+              className={inputSmCn}
+            />
+          </Field>
+        </div>
+      </Section>
+
       {/* Handover Documentation */}
       <Section title="Handover Documentation" accentColor="from-green-500/40 to-emerald-400/20">
         <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">

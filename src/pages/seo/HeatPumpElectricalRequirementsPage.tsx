@@ -175,38 +175,50 @@ const sections = [
           the thermal output. The COP (Coefficient of Performance) determines the relationship
           between thermal output and electrical input:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>5kW to 8kW output ASHP (COP 3)</strong> — electrical input 1.7kW to 2.7kW.
-                Recommended circuit: 16A RCBO, 2.5mm twin and earth. Maximum cable run approximately
-                30m before voltage drop requires 4mm upgrade.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>10kW to 12kW output ASHP (COP 3)</strong> — electrical input 3.3kW to 4kW.
-                Recommended circuit: 20A to 25A RCBO, 4mm twin and earth.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>16kW to 20kW output ASHP (COP 3)</strong> — electrical input 5.3kW to 6.7kW.
-                Recommended circuit: 32A to 40A RCBO, 6mm twin and earth. Verify starting current
-                with manufacturer — may require a time-delay device at the consumer unit if starting
-                current is high.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70">
+                  <th className="px-4 py-3 font-semibold">Heat output (COP ~3)</th>
+                  <th className="px-4 py-3 font-semibold">Electrical input</th>
+                  <th className="px-4 py-3 font-semibold">Indicative circuit</th>
+                  <th className="px-4 py-3 font-semibold">Cable (T&amp;E)</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10 bg-green-900/20">
+                  <td className="px-4 py-3 font-medium">5kW – 8kW</td>
+                  <td className="px-4 py-3">1.7kW – 2.7kW</td>
+                  <td className="px-4 py-3">16A RCBO</td>
+                  <td className="px-4 py-3">2.5mm²</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-yellow-900/20">
+                  <td className="px-4 py-3 font-medium">10kW – 12kW</td>
+                  <td className="px-4 py-3">3.3kW – 4kW</td>
+                  <td className="px-4 py-3">20A – 25A RCBO</td>
+                  <td className="px-4 py-3">4mm²</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-orange-900/20">
+                  <td className="px-4 py-3 font-medium">16kW – 20kW</td>
+                  <td className="px-4 py-3">5.3kW – 6.7kW</td>
+                  <td className="px-4 py-3">32A – 40A RCBO</td>
+                  <td className="px-4 py-3">6mm²</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+            Indicative only. Confirm the conductor size against the actual run length and installation
+            method — a long run to an outdoor unit can force the next size up on voltage drop, and a
+            high compressor starting current may need a time-delay device at the consumer unit.
+          </p>
         </div>
         <p>
           Always request the electrical specification sheet from the heat pump manufacturer before
           sizing the circuit. The rated current, maximum current, and starting current are all
-          relevant. Use the{' '}
+          relevant. Heat pump compressors draw a high inrush at start-up, so check the inrush figure
+          against the protective device characteristic. Use the{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
@@ -396,45 +408,77 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical installation for a heat pump must be tested and certified in accordance
-          with BS 7671. The test schedule for the dedicated ASHP circuit includes:
+          The electrical installation for a heat pump must be inspected and tested as part of
+          initial verification under{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
+            BS 7671:2018+A4:2026
+          </SEOInternalLink>{' '}
+          Chapter 64. Carry out the dead tests before energising, then the live tests, recording the
+          results on the Schedule of Test Results. The test sequence for the dedicated ASHP circuit:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Continuity of protective conductor (CPC) from MET to heat pump enclosure earth
-                terminal
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Insulation resistance (500V DC, minimum 1 megohm) — with the heat pump disconnected
-                at the local isolator
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Polarity at the local isolator and at the heat pump supply terminals</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Earth fault loop impedance (Zs) at the heat pump supply terminals</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>RCD operation on the ASHP circuit RCBO (30mA, maximum 300ms trip time)</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Functional test — energise the ASHP and verify that the compressor starts and runs
-                correctly
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="bg-white/[0.06] text-white/70">
+                  <th className="px-4 py-3 font-semibold">Test</th>
+                  <th className="px-4 py-3 font-semibold">BS 7671 reference</th>
+                  <th className="px-4 py-3 font-semibold">What good looks like</th>
+                </tr>
+              </thead>
+              <tbody className="text-white align-top">
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-medium">Continuity of conductors / CPC</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.2</td>
+                  <td className="px-4 py-3">
+                    Low, stable end-to-end reading on the protective conductor from the MET to the
+                    heat pump enclosure earth terminal.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10 bg-white/[0.02]">
+                  <td className="px-4 py-3 font-medium">Insulation resistance</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.3, Table 64</td>
+                  <td className="px-4 py-3">
+                    Tested at 500V DC for a 230/400V circuit; minimum 1.0 MΩ. Disconnect the heat
+                    pump at the local isolator so its electronics do not influence or suffer from the
+                    test.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-medium">Polarity</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.6</td>
+                  <td className="px-4 py-3">
+                    Correct polarity confirmed at the local isolator and at the heat pump supply
+                    terminals.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10 bg-white/[0.02]">
+                  <td className="px-4 py-3 font-medium">Earth fault loop impedance (Zs)</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.7.3</td>
+                  <td className="px-4 py-3">
+                    Measured Zs at the heat pump supply terminals within the maximum permitted for
+                    the protective device and disconnection time.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-3 font-medium">RCD additional protection</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.8</td>
+                  <td className="px-4 py-3">
+                    Where a 30mA RCD/RCBO provides additional protection, it disconnects within
+                    300ms at rated residual operating current for a general non-delay type.
+                  </td>
+                </tr>
+                <tr className="border-t border-white/10 bg-white/[0.02]">
+                  <td className="px-4 py-3 font-medium">Functional test</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.10</td>
+                  <td className="px-4 py-3">
+                    Energise and verify the isolator, controls and compressor operate correctly —
+                    the compressor starts and runs as intended.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <p>
           An{' '}
@@ -516,6 +560,13 @@ export default function HeatPumpElectricalRequirementsPage() {
       tocItems={tocItems}
       badge="Installation Guide"
       badgeIcon={Leaf}
+      answerBox={{
+        question: 'What electrical supply does an air source heat pump need?',
+        answer:
+          'A domestic ASHP needs a dedicated circuit sized to the compressor electrical input (not the thermal output) — typically a 16A circuit on 2.5mm² for a 5–8kW unit, rising to 32–40A on 6mm² for 16–20kW units. Most run on single-phase 230V. Add an immersion backup circuit (usually 16A) and controls wiring, then test and certify the work to BS 7671:2018+A4:2026 and issue an EIC.',
+        detail:
+          'Always size from the manufacturer’s electrical data sheet — rated current, maximum current and starting current all matter. Check the DNO supply fuse has spare capacity before connecting.',
+      }}
       heroTitle={
         <>
           Heat Pump Electrical Requirements:{' '}

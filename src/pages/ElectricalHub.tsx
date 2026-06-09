@@ -343,6 +343,13 @@ const ElectricalHubInner = () => {
     }
   }, [onboardingProfile]);
 
+  // Renewables is in private preview — only visible to Andrew Moore and Alex Gibbons.
+  const RENEWABLES_ALLOWLIST = [
+    'b0113c59-8611-4c5e-8503-1797a75bb64f', // Andrew Moore
+    '6f8bf099-f81b-446d-aa99-ed48f23f8329', // Alex Gibbons
+  ];
+  const canSeeRenewables = RENEWABLES_ALLOWLIST.includes(profile?.id ?? '');
+
   const coreTools: ToolCard[] = [
     {
       id: 'certificates',
@@ -406,7 +413,7 @@ const ElectricalHubInner = () => {
       to: '/electrician/agent-selector',
       meta: 'AI-led',
     },
-  ];
+  ].filter((c) => c.id !== 'renewables' || canSeeRenewables);
 
   const identityTools: ToolCard[] = [
     {

@@ -46,7 +46,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Safe isolation is a legal requirement under the Electricity at Work Regulations 1989 (Regulation 12) and must be carried out before any work on or near live conductors.',
+  'Safe isolation is a legal requirement under the Electricity at Work Regulations 1989: Reg 12 requires a means of cutting off and isolating supply, Reg 13 requires precautions (lock-off, prove dead) before working on equipment made dead, and Reg 14 makes dead working the default over live work.',
   'The prove-test-prove method is the standard: prove your voltage indicator works, test the circuit is dead, prove the indicator still works.',
   'HSE Guidance Note GS 38 specifies the requirements for test equipment — HBC fused leads, finger guards, maximum 4 mm exposed probe tips, and a proving unit.',
   'Lock-off with a personal padlock is not optional — it prevents inadvertent re-energisation and is the physical guarantee of your safety.',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Do I need to lock off every circuit I work on?',
     answer:
-      'Yes. Regulation 12 of the Electricity at Work Regulations 1989 requires that adequate precautions are taken to prevent equipment being inadvertently re-energised while work is being carried out. BS 7671:2018+A4:2026 Regulation 462 reinforces this requirement. In practice, this means physically locking off the means of isolation using a padlock and lock-off device on the circuit breaker or fuse carrier, and attaching a warning label ("Danger — Do Not Switch On — Men at Work"). The padlock must be a personal padlock with a unique key that only you hold. On multi-person jobs, each person working on the circuit must apply their own padlock using a multi-lock hasp. Simply switching off a circuit breaker without locking it is not sufficient — another person could switch it back on. This has been a factor in serious and fatal accidents where a colleague, building manager, or occupant switched a circuit back on while someone was working on it.',
+      'Yes. Regulation 13 of the Electricity at Work Regulations 1989 requires that adequate precautions are taken to prevent equipment made dead becoming live while work is being carried out, and Regulation 12 requires a means of cutting off and isolating the supply in the first place. BS 7671:2018+A4:2026 Regulation 462 reinforces this requirement. In practice, this means physically locking off the means of isolation using a padlock and lock-off device on the circuit breaker or fuse carrier, and attaching a warning label ("Danger — Do Not Switch On — Men at Work"). The padlock must be a personal padlock with a unique key that only you hold. On multi-person jobs, each person working on the circuit must apply their own padlock using a multi-lock hasp. Simply switching off a circuit breaker without locking it is not sufficient — another person could switch it back on. This has been a factor in serious and fatal accidents where a colleague, building manager, or occupant switched a circuit back on while someone was working on it.',
   },
   {
     question: 'What are the legal requirements for safe isolation?',
@@ -168,6 +168,58 @@ const sections = [
           dead and suitable precautions are taken — a rare situation that most domestic and
           commercial electricians should never encounter.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">
+            Prove–Test–Prove at a Glance
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-5">
+            {[
+              {
+                n: '1',
+                t: 'Prove',
+                d: 'Confirm your voltage indicator reads live on a proving unit or known source.',
+                tint: 'bg-green-500/10 border-green-500/20',
+              },
+              {
+                n: '2',
+                t: 'Isolate',
+                d: 'Switch off, then lock off the means of isolation with your personal padlock.',
+                tint: 'bg-yellow-500/10 border-yellow-500/30',
+              },
+              {
+                n: '3',
+                t: 'Test',
+                d: 'Test the dead circuit at the point of work — every conductor combination.',
+                tint: 'bg-blue-900/30 border-blue-700/40',
+              },
+              {
+                n: '4',
+                t: 'Prove',
+                d: 'Re-test the indicator on the known source to confirm it did not fail mid-test.',
+                tint: 'bg-green-500/10 border-green-500/20',
+              },
+              {
+                n: '5',
+                t: 'Work',
+                d: 'Keep the lock and caution notice on throughout — remove only when clear.',
+                tint: 'bg-white/[0.04] border-white/10',
+              },
+            ].map((s) => (
+              <div key={s.n} className={`rounded-xl border ${s.tint} p-4`}>
+                <div className="text-yellow-400 font-bold text-2xl leading-none mb-1">{s.n}</div>
+                <div className="font-bold text-white text-sm mb-1">{s.t}</div>
+                <p className="text-white/80 text-xs leading-relaxed">{s.d}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-white/60 text-xs mt-3">
+            Full detail in the{' '}
+            <SEOInternalLink href="/how-to-do-safe-isolation">
+              GS 38 proving-dead guide
+            </SEOInternalLink>{' '}
+            and the 10-step procedure below.
+          </p>
+        </div>
       </>
     ),
   },
@@ -582,6 +634,47 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
+            Single-Phase Dead Tests (for comparison)
+          </h3>
+          <p className="text-white/70 text-sm mb-4 leading-relaxed">
+            Before comparing, here is the single-phase test set every electrician proves on a
+            domestic or small commercial circuit. All three combinations must read zero volts.
+          </p>
+          <div className="overflow-hidden rounded-xl border border-white/10">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-white/[0.06] text-left">
+                  <th className="px-4 py-2.5 font-bold text-white">Test</th>
+                  <th className="px-4 py-2.5 font-bold text-white">Conductors</th>
+                  <th className="px-4 py-2.5 font-bold text-white">Expected reading</th>
+                </tr>
+              </thead>
+              <tbody className="text-white/85">
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-2.5">L–N</td>
+                  <td className="px-4 py-2.5">Line to Neutral</td>
+                  <td className="px-4 py-2.5 text-green-400 font-medium">0 V</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-white/[0.02]">
+                  <td className="px-4 py-2.5">L–E</td>
+                  <td className="px-4 py-2.5">Line to Earth (cpc)</td>
+                  <td className="px-4 py-2.5 text-green-400 font-medium">0 V</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="px-4 py-2.5">N–E</td>
+                  <td className="px-4 py-2.5">Neutral to Earth</td>
+                  <td className="px-4 py-2.5 text-green-400 font-medium">0 V</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/60 text-xs mt-3">
+            Any reading other than zero on any pair means the circuit is not isolated — stop and
+            investigate before proceeding.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
+          <h3 className="font-bold text-white text-lg mb-3">
             Required Tests for Three-Phase Isolation
           </h3>
           <div className="grid gap-2 sm:grid-cols-2 text-white text-sm leading-relaxed">
@@ -641,9 +734,11 @@ const sections = [
       <>
         <p>
           Installations with solar PV panels, battery storage, or EV charge points introduce
-          additional isolation hazards that are not present in conventional circuits. The page's
+          additional isolation hazards that are not present in conventional circuits. The
           prove-test-prove procedure still applies, but these systems require extra steps before
-          work can be considered safe.
+          work can be considered safe — see the dedicated{' '}
+          <SEOInternalLink href="/guides/solar-panel-installation">solar PV guide</SEOInternalLink>{' '}
+          for full DC-side isolation detail.
         </p>
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">

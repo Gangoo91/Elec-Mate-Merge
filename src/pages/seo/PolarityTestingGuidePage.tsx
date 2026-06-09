@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Polarity verification confirms that line, neutral, and earth conductors are correctly connected at every point in the installation. Reversed polarity can leave equipment energised when apparently switched off, creating a lethal shock risk.',
-  'BS 7671 Section 643 (testing under initial verification) requires polarity to be verified on every circuit — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder. Regulation 643.6(b) requires that, in earthed-neutral circuits, the outer contact of centre-contact bayonet and Edison screw lampholders connects to the neutral conductor. E14 and E27 lampholders to BS EN 60238 are excepted (Reg 643.5.201).',
+  'BS 7671 Section 643 (testing under initial verification) requires polarity to be verified on every circuit — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder. Regulation 643.6(b) requires that, in earthed-neutral circuits, the outer or screwed contact of centre-contact bayonet and Edison screw lampholders connects to the neutral conductor — except for E14 and E27 lampholders to BS EN 60238, which are excluded from this requirement within the same clause.',
   'Polarity is verified by continuity testing during dead testing (GN3 sequence). A dedicated polarity test using a continuity instrument confirms that the line conductor is connected to the correct terminal at every accessory.',
   'Common polarity faults include crossed line and neutral at a socket outlet, line connected to the neutral terminal of a single-pole switch, and reversed connections at the consumer unit busbar or RCBO.',
   'Elec-Mate schedule of test results captures polarity verification for every circuit. The app flags any circuit where polarity is not confirmed as a deficiency requiring immediate attention.',
@@ -284,12 +284,41 @@ const sections = [
           confirm that conductor colours match their intended function.
         </p>
         <p>
-          At the consumer unit, confirm that brown conductors are connected to the line busbars and
-          outgoing line terminals of MCBs or RCBOs. Blue conductors should connect to the neutral
-          bar. Green/yellow conductors should connect to the earth bar. Check that no conductors are
-          incorrectly identified — for example, a blue conductor used as a switch wire without brown
-          sleeving.
+          At the consumer unit, confirm that every conductor lands on the terminal that matches its
+          function. Check that no conductors are incorrectly identified — for example, a blue
+          conductor used as a switch wire without brown sleeving.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <h3 className="font-bold text-white text-lg mb-4">Conductor to Terminal Reference</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-left">
+                  <th className="py-2 pr-4 font-semibold text-yellow-400">Conductor</th>
+                  <th className="py-2 pr-4 font-semibold text-yellow-400">Colour</th>
+                  <th className="py-2 font-semibold text-yellow-400">Lands on</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-4">Line</td>
+                  <td className="py-3 pr-4">Brown (red pre-2004)</td>
+                  <td className="py-3">Line busbar / outgoing line terminal of MCB or RCBO</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="py-3 pr-4">Neutral</td>
+                  <td className="py-3 pr-4">Blue (black pre-2004)</td>
+                  <td className="py-3">Neutral bar</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-4">Protective (earth)</td>
+                  <td className="py-3 pr-4">Green/yellow</td>
+                  <td className="py-3">Earth bar / main earthing terminal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <p>
           At each accessory (socket outlet, switch, light fitting, junction box), visually confirm
           that conductor colours are correctly terminated. Pay particular attention to{' '}
@@ -370,13 +399,13 @@ const sections = [
                 OSG Method: Temporary Shorting Link (Lighting Circuits)
               </h4>
               <p className="text-white text-sm leading-relaxed">
-                For lighting circuits with single-pole switching arrangements, the On-Site Guide
-                (OSG Reg 10.3.4, Figure 10.3.4) permits the use of a temporary shorting link to aid
-                polarity verification. A short wire link is temporarily connected across the switch
-                terminals to bridge the switched line conductor back to the origin, allowing the
-                continuity instrument to confirm the line conductor path through to the lampholder
-                centre contact. The shorting link must be removed immediately after the test —
-                before the circuit is energised.
+                For lighting circuits with single-pole switching arrangements, a recognised
+                technique is to temporarily link the switched line back to the origin so the
+                continuity instrument can confirm the line conductor path through to the lampholder
+                centre contact. A short wire link is temporarily connected to bridge the switch,
+                the reading is taken, and the link must then be removed immediately — before the
+                circuit is energised. This confirms the centre contact carries the line, satisfying
+                Regulation 643.6(b).
               </p>
             </div>
           </div>
@@ -573,9 +602,9 @@ const sections = [
                   lampholders is connected to the neutral conductor (so the centre contact carries
                   the line). If the line is connected to the outer shell instead, touching the shell
                   while inserting or removing a lamp could cause an electric shock, even with the
-                  switch off. Note: E14 and E27 lampholders to BS EN 60238 are excepted from this
-                  requirement — their outer or screwed contacts may be connected to either conductor
-                  (Reg 643.5.201).
+                  switch off. The same clause excludes E14 and E27 lampholders to BS EN 60238 from
+                  this requirement — for those lampholders the outer or screwed contact need not be
+                  connected to the neutral.
                 </p>
               </div>
             </div>
@@ -597,6 +626,58 @@ const sections = [
               </div>
             </div>
           </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">
+            Typical Observation Codes at a Glance
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-white/15 text-left">
+                  <th className="py-2 pr-4 font-semibold text-yellow-400">Polarity fault</th>
+                  <th className="py-2 pr-4 font-semibold text-yellow-400">Why it is dangerous</th>
+                  <th className="py-2 font-semibold text-yellow-400">Typical EICR code</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-b border-white/10 bg-red-900/20">
+                  <td className="py-3 pr-4 align-top">Single-pole switch in the neutral</td>
+                  <td className="py-3 pr-4 align-top">
+                    Lampholder or accessory stays live when switched off
+                  </td>
+                  <td className="py-3 align-top font-semibold text-red-300">C1</td>
+                </tr>
+                <tr className="border-b border-white/10 bg-red-900/20">
+                  <td className="py-3 pr-4 align-top">
+                    Line on outer/screwed contact of an ES/BC lampholder
+                  </td>
+                  <td className="py-3 pr-4 align-top">
+                    Exposed shell live when changing a lamp (643.6(b))
+                  </td>
+                  <td className="py-3 align-top font-semibold text-red-300">C1</td>
+                </tr>
+                <tr className="border-b border-white/10 bg-orange-900/20">
+                  <td className="py-3 pr-4 align-top">Crossed line and neutral at a socket</td>
+                  <td className="py-3 pr-4 align-top">
+                    Fused plug fuses the neutral; switched-neutral appliances stay live
+                  </td>
+                  <td className="py-3 align-top font-semibold text-orange-300">C2</td>
+                </tr>
+                <tr className="bg-orange-900/20">
+                  <td className="py-3 pr-4 align-top">Line/neutral reversed at the consumer unit</td>
+                  <td className="py-3 pr-4 align-top">
+                    Reverses polarity for every accessory on the circuit
+                  </td>
+                  <td className="py-3 align-top font-semibold text-orange-300">C2</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/70 text-xs mt-4 leading-relaxed">
+            Codes shown are typical classifications. The final code is always a matter of the
+            inspecting electrician&rsquo;s judgement for the specific circumstances on site.
+          </p>
         </div>
       </>
     ),
@@ -659,6 +740,13 @@ export default function PolarityTestingGuidePage() {
       }
       heroSubtitle="Polarity verification confirms that line, neutral, and earth conductors are correctly connected at every point in an installation. This guide covers why polarity matters, the three verification methods, common faults, and how to record results correctly on EIC and EICR certificates."
       readingTime={13}
+      answerBox={{
+        question: 'How do you test polarity under BS 7671?',
+        answer:
+          'Polarity is verified during dead testing using the continuity function of a low-resistance ohmmeter. Connect one lead to the line terminal at the consumer unit and confirm a low-resistance reading to the line terminal at every accessory, then repeat for neutral. Regulation 643.6 also requires you confirm single-pole devices are in the line conductor only and that wiring is correctly connected throughout.',
+        detail:
+          'A plug-in socket tester gives a quick live indication at sockets but does not test lighting points, switches or junction boxes and cannot replace the continuity-based dead test required for initial verification.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -38,6 +38,14 @@ const pvArraySchema = z.object({
   string_isc: stringish.default(''),
   mounting_type: stringish.default(''),
   mounting_type_display: stringish.default(''),
+  dc_cable_type: stringish.default(''),
+  dc_cable_size: stringish.default(''),
+  dc_cable_length: stringish.default(''),
+  dc_earth_cable_size: stringish.default(''),
+  string_ocpd_type: stringish.default(''),
+  string_ocpd_rating_a: stringish.default(''),
+  string_ocpd_dc_rating_v: stringish.default(''),
+  string_ocpd_breaking_capacity_ka: stringish.default(''),
 });
 
 const inverterSchema = z.object({
@@ -72,6 +80,9 @@ const inverterTestSchema = z.object({
   inverter_name: stringish.default(''),
   dc_isolator_result: stringish.default(''),
   dc_isolator_class: stringish.default(''),
+  dc_isolator_location: stringish.default(''),
+  dc_isolator_rating_a: stringish.default(''),
+  dc_isolator_rating_v: stringish.default(''),
   ac_isolator_result: stringish.default(''),
   ac_isolator_class: stringish.default(''),
   anti_islanding_result: stringish.default(''),
@@ -112,19 +123,32 @@ const batterySchema = z.object({
   capacity: z.number().default(0),
   chemistry: stringish.default(''),
   chemistry_display: stringish.default(''),
+  location: stringish.default(''),
+  max_charge_power: stringish.default(''),
+  max_discharge_power: stringish.default(''),
+  depth_of_discharge: stringish.default(''),
+  cycles: stringish.default(''),
 }).default({});
 
 const gridConnectionSchema = z.object({
   dno_name: stringish.default(''),
+  dno_region: stringish.default(''),
   mpan: stringish.default(''),
+  supply_phases: stringish.default(''),
+  supply_phases_display: stringish.default(''),
+  supply_voltage: stringish.default(''),
+  max_supply_fuse: stringish.default(''),
+  cut_out_location: stringish.default(''),
   application_reference: stringish.default(''),
   application_type: stringish.default(''),
   application_type_display: stringish.default(''),
   application_date: stringish.default(''),
+  approval_status: stringish.default(''),
   approval_date: stringish.default(''),
   approval_reference: stringish.default(''),
   export_limited: z.boolean().default(false),
   export_limit_kw: stringish.default(''),
+  export_limiting_method: stringish.default(''),
 }).default({});
 
 const meteringSchema = z.object({
@@ -133,7 +157,14 @@ const meteringSchema = z.object({
   meter_make: stringish.default(''),
   meter_model: stringish.default(''),
   meter_serial: stringish.default(''),
+  meter_location: stringish.default(''),
   ct_ratio: stringish.default(''),
+  generation_meter_required: z.boolean().default(false),
+  export_meter_required: z.boolean().default(false),
+  smart_meter_compatible: z.boolean().default(false),
+  seg_registered: z.boolean().default(false),
+  seg_supplier: stringish.default(''),
+  notes: stringish.default(''),
 }).default({});
 
 const acTestsSchema = z.object({
@@ -183,6 +214,8 @@ export const solarPVPayloadSchema = z.object({
   installation_date: stringish.default(''),
   commissioning_date: stringish.default(''),
   design_reference: stringish.default(''),
+  linked_eic_reference: stringish.default(''),
+  recommended_retest_interval_years: stringish.default(''),
   previous_installation_ref: stringish.default(''),
   status: stringish.default(''),
 

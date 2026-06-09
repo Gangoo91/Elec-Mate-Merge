@@ -402,6 +402,10 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 <p className="text-xs font-medium text-white">Isolators</p>
                 <TestResultRow label="DC Isolator" value={test.dcIsolatorOperational ? 'pass' : test.dcIsolatorOperational === false ? 'fail' : ''} onChange={(v) => updateInverterTest(test.inverterId, 'dcIsolatorOperational', v === 'pass')} />
                 <Input value={test.dcIsolatorLocation || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorLocation', e.target.value)} placeholder="DC isolator location..." className={inputSmCn} />
+                <div className="grid grid-cols-2 gap-2">
+                  <Input type="number" inputMode="decimal" value={test.dcIsolatorRatingA || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorRatingA', parseFloat(e.target.value) || 0)} placeholder="DC isolator rating (A)" className={inputSmCn} />
+                  <Input type="number" inputMode="decimal" value={test.dcIsolatorRatingV || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorRatingV', parseFloat(e.target.value) || 0)} placeholder="DC isolator rating (V)" className={inputSmCn} />
+                </div>
                 <TestResultRow label="AC Isolator" value={test.acIsolatorOperational ? 'pass' : test.acIsolatorOperational === false ? 'fail' : ''} onChange={(v) => updateInverterTest(test.inverterId, 'acIsolatorOperational', v === 'pass')} />
                 <Input value={test.acIsolatorLocation || ''} onChange={(e) => updateInverterTest(test.inverterId, 'acIsolatorLocation', e.target.value)} placeholder="AC isolator location..." className={inputSmCn} />
               </div>

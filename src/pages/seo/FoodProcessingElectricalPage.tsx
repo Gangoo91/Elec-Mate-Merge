@@ -36,6 +36,12 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'What IP rating do you need for electrical equipment in a food factory?',
+  answer:
+    'Electrical equipment in food processing wash-down areas needs a minimum of IP69K — the highest ingress rating, certifying protection against high-pressure (80 bar), high-temperature (80°C) close-range water jets. IP65 and IP66 are not sufficient where steam or hot-water lances are used. Equipment must also be hygienically designed, made of stainless steel, and chemically compatible with the cleaning agents on site.',
+};
+
 const keyTakeaways = [
   'Food processing electrical installations must withstand regular high-pressure, high-temperature wash-down using aggressive cleaning agents. Minimum IP69K rating is required for equipment in wash-down zones — IP65 or IP66 is not sufficient.',
   'Grain, flour, sugar, and other organic dusts present a real explosion risk. ATEX dust zone classification (Zone 20, 21, 22) applies to mills, silos, conveyors, and mixing areas. DSEAR (Dangerous Substances and Explosive Atmospheres Regulations 2002) compliance is mandatory.',
@@ -43,9 +49,9 @@ const keyTakeaways = [
   'BRC Global Standards (specifically BRC Food Safety) require that all equipment and structures in food manufacturing areas be hygienic in design and construction, cleanable without contaminating the product, and maintained in a condition that does not create a food safety risk.',
   'Allergen zone segregation may require dedicated electrical systems, separate cable routes, and physical separation of control panels to prevent cross-contamination between allergen and non-allergen production areas.',
   'CompEx qualification is required for electricians carrying out electrical work in ATEX dust-classified zones in flour mills, grain stores, and sugar processing facilities.',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc faults. Food factory environments — where cable damage from wash-down equipment, pest activity, vibration, and frequent maintenance are common — represent elevated arc fault risk. AFDDs are a recommended (not mandatory) measure under the current wording.',
-  'In high-ambient-temperature zones (near ovens, dryers, tunnel pasteurisers), cable current-carrying capacity must be derated. BS 7671 Reg 523.4 requires that where cables with different maximum operating temperatures are grouped together, the current-carrying capacity of all cables in the group shall be based on the lowest maximum operating temperature of any cable in the group, together with the appropriate group rating factor from Appendix 4 Tables 4C1 to 4C6.',
-  'Food factories with large VFD-driven conveyors, refrigeration compressors, and motor-heavy plant generate switching transients that can damage sensitive control equipment. BS 7671 Reg 534.4.1.6 requires that consideration be given to the provision of surge protective devices (SPDs) to protect against switching overvoltages produced by current-using equipment within the installation — including large motors and variable speed drives.',
+  'Reg 421.1.7 was redrafted in BS 7671:2018+A4:2026. AFDDs are now required on socket-outlet final circuits (≤32 A) in Higher Risk Residential Buildings, HMOs, student accommodation and care homes; for all other premises — including food factories — they are recommended on single-phase socket-outlet final circuits (≤32 A). Food factory conditions (cable damage from wash-down, pest activity, vibration, frequent maintenance) make arc fault risk a genuine design consideration.',
+  'In high-ambient-temperature zones (near ovens, dryers, tunnel pasteurisers), cable current-carrying capacity must be derated. BS 7671 Reg 523.4 sets how ambient temperature is established, and Reg 523.5 requires that where cables with different maximum operating temperatures are grouped together, the current-carrying capacity of all cables in the group shall be based on the lowest maximum operating temperature of any cable in the group, together with the appropriate group rating factor from Appendix 4 Tables 4C1 to 4C6.',
+  'Food factories with large VFD-driven conveyors, refrigeration compressors, and motor-heavy plant generate switching transients that can damage sensitive control equipment. BS 7671 Reg 534.4.1.6 requires that consideration be given to the provision of surge protective devices (SPDs) to protect against switching overvoltages produced by current-using equipment located within the installation — exactly the transients that large motors and variable speed drives generate.',
 ];
 
 const faqs = [
@@ -191,6 +197,29 @@ const sections = [
           withstand this process without ingress of water, loss of function, or release of
           contaminants.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Rating</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Protects against</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Food factory use</div>
+
+            <div className="bg-white/[0.02] p-3 text-white font-mono">IP65</div>
+            <div className="bg-white/[0.02] p-3 text-white">Dust-tight; low-pressure water jets from any direction</div>
+            <div className="bg-white/[0.02] p-3 text-red-300">Not sufficient for wash-down areas</div>
+
+            <div className="bg-white/[0.02] p-3 text-white font-mono">IP66</div>
+            <div className="bg-white/[0.02] p-3 text-white">Dust-tight; powerful water jets from any direction</div>
+            <div className="bg-white/[0.02] p-3 text-red-300">Not sufficient for wash-down areas</div>
+
+            <div className="bg-blue-900/30 p-3 text-white font-mono">IP69K</div>
+            <div className="bg-blue-900/30 p-3 text-white">High-pressure (80 bar), high-temperature (80°C) close-range steam/water jets, all angles</div>
+            <div className="bg-blue-900/30 p-3 text-blue-200 font-semibold">Required minimum</div>
+          </div>
+          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+            IP ratings are defined in IEC 60529 / BS EN 60529. The rating must be verified on the
+            equipment certificate, not assumed from the enclosure material.
+          </p>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -250,35 +279,43 @@ const sections = [
           damage in the UK. DSEAR 2002 and the ATEX Regulations require formal zone classification
           and appropriate equipment selection wherever these dusts are present.
         </p>
+        <div className="grid gap-3 sm:grid-cols-3 my-4">
+          <div className="rounded-2xl bg-red-900/30 border border-red-700/40 p-5">
+            <div className="text-red-300 font-bold text-lg mb-1">Zone 20</div>
+            <div className="text-xs uppercase tracking-wide text-red-400/80 mb-3">
+              Category 1D (Da) equipment
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              A combustible dust cloud is present <strong>continuously or for long periods</strong>{' '}
+              inside equipment. Typically the interior of hoppers, silos, mills, conveyors,
+              cyclones, and bag filters.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-orange-900/30 border border-orange-700/40 p-5">
+            <div className="text-orange-300 font-bold text-lg mb-1">Zone 21</div>
+            <div className="text-xs uppercase tracking-wide text-orange-400/80 mb-3">
+              Category 2D (Db) equipment
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              A combustible dust cloud is <strong>likely to occur in normal operation</strong>.
+              Typically the immediate surroundings of Zone 20 equipment, filling points, transfer
+              points, loading spouts, and sifters.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-yellow-900/30 border border-yellow-700/40 p-5">
+            <div className="text-yellow-300 font-bold text-lg mb-1">Zone 22</div>
+            <div className="text-xs uppercase tracking-wide text-yellow-400/80 mb-3">
+              Category 3D (Dc) equipment
+            </div>
+            <p className="text-white text-sm leading-relaxed">
+              A combustible dust cloud is <strong>unlikely in normal operation</strong> but may
+              occur in abnormal conditions. The wider area around Zone 21 locations where dust
+              layers may accumulate.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Zone 20</strong> — a combustible dust cloud is present continuously or for
-                long periods inside equipment. Typically applies to the interior of hoppers, silos,
-                mills, conveyors, cyclones, and bag filters. Zone 20 equipment must be Category 1D
-                (Da).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Zone 21</strong> — a combustible dust cloud is likely to occur in normal
-                operation. Typically applies to the immediate surroundings of Zone 20 equipment,
-                filling points, transfer points, loading spouts, and sifters. Category 2D (Db)
-                equipment required.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Zone 22</strong> — a combustible dust cloud is unlikely to occur in normal
-                operation but may occur in abnormal conditions. Typically applies to the wider area
-                around Zone 21 locations where dust layers may accumulate. Category 3D (Dc)
-                equipment required.
-              </span>
-            </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
@@ -366,6 +403,32 @@ const sections = [
           wash-down, does not harbour bacteria, and meets hygienic design requirements when
           correctly fabricated and finished.
         </p>
+        <div className="grid gap-3 sm:grid-cols-3 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="font-bold text-white mb-1">304 (EN 1.4301)</div>
+            <div className="text-xs text-white/60 mb-3">18/8 austenitic</div>
+            <p className="text-white text-sm leading-relaxed">
+              Suitable for most food processing environments. Good corrosion resistance to common
+              cleaning chemicals.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5">
+            <div className="font-bold text-white mb-1">316 (EN 1.4401)</div>
+            <div className="text-xs text-blue-200/70 mb-3">18/10/2, with molybdenum</div>
+            <p className="text-white text-sm leading-relaxed">
+              Required in high-chloride environments — fish processing, brine handling, and where
+              hypochlorite disinfectants are used regularly.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <div className="font-bold text-white mb-1">316L</div>
+            <div className="text-xs text-white/60 mb-3">Low-carbon variant</div>
+            <p className="text-white text-sm leading-relaxed">
+              Preferred for welded fabrications to avoid carbide precipitation (sensitisation) at
+              weld zones.
+            </p>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -570,39 +633,77 @@ const sections = [
         <p>
           Beyond the food-industry-specific requirements covered above, food factory electrical
           installations must satisfy several BS 7671:2018+A4:2026 design obligations that are
-          particularly relevant in these environments.
+          particularly relevant in these environments. The{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
+            18th Edition Wiring Regulations
+          </SEOInternalLink>{' '}
+          underpin every food factory design alongside the food-safety standards.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-[auto_1fr] gap-px bg-white/10 text-sm">
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">Regulation</div>
+            <div className="bg-white/[0.06] p-3 font-semibold text-white">What it requires</div>
+
+            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">421.1.7</div>
+            <div className="bg-white/[0.02] p-3 text-white">
+              AFDDs on socket-outlet final circuits (≤32 A) — required in specified residential
+              building types, recommended for other premises such as food factories
+            </div>
+
+            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">523.4 / 523.5</div>
+            <div className="bg-white/[0.02] p-3 text-white">
+              Cable derating — ambient temperature determination, and lowest-temperature basis for
+              mixed-temperature cable groups (Tables 4C1–4C6, Appendix 4)
+            </div>
+
+            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">534.4.1.6</div>
+            <div className="bg-white/[0.02] p-3 text-white">
+              Consideration of SPDs against switching overvoltages produced by current-using
+              equipment within the installation (large motors, VFDs)
+            </div>
+
+            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">411.3.3</div>
+            <div className="bg-white/[0.02] p-3 text-white">
+              Additional protection by 30 mA RCD for socket-outlets (≤32 A), subject to the
+              documented risk-assessment exception in non-dwellings
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Arc fault detection — BS 7671 Reg 421.1.7</strong> — BS 7671:2018+A4:2026
-                Reg 421.1.7 recommends the installation of arc fault detection devices (AFDDs) on AC
-                final circuits to mitigate the risk of fire due to arc fault currents. The
-                regulation's wording is advisory rather than mandatory. Food factory environments
-                present elevated arc fault risk factors: mechanical damage to cables from wash-down
-                equipment and machinery, pest activity gnawing cable insulation, vibration from
-                plant and conveyors, and frequent maintenance disturbing terminations. AFDDs should
-                be considered as part of the electrical design for food factory final circuits,
-                particularly in concealed or inaccessible cable runs.
+                <strong>Arc fault detection — BS 7671 Reg 421.1.7</strong> — Reg 421.1.7 was
+                redrafted in BS 7671:2018+A4:2026. It is now a <em>requirement</em> to fit arc
+                fault detection devices (AFDDs) on final circuits supplying socket-outlets rated
+                not exceeding 32 A in Higher Risk Residential Buildings, Houses in Multiple
+                Occupation, purpose-built student accommodation, and care homes. For all other
+                premises — which includes food factories — the regulation <em>recommends</em> AFDDs
+                on single-phase AC final circuits supplying socket-outlets not exceeding 32 A. Food
+                factory environments present elevated arc fault risk factors: mechanical damage to
+                cables from wash-down equipment and machinery, pest activity gnawing cable
+                insulation, vibration from plant and conveyors, and frequent maintenance disturbing
+                terminations. AFDDs should therefore be actively considered as part of the
+                electrical design for food factory final circuits, particularly in concealed or
+                inaccessible cable runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable derating in high-temperature zones — BS 7671 Reg 523.4</strong> —
-                Areas adjacent to ovens, tunnel pasteurisers, hot-fill lines, and drying plant can
+                <strong>Cable derating in high-temperature zones — BS 7671 Regs 523.4 &amp; 523.5</strong>{' '}
+                — Areas adjacent to ovens, tunnel pasteurisers, hot-fill lines, and drying plant can
                 sustain ambient temperatures well above the 30&deg;C reference used in standard
-                cable sizing tables. BS 7671 Reg 523.4 requires that ambient temperature be taken as
-                the temperature of the surrounding medium when the cable is not loaded, and that the
-                appropriate correction factor from Appendix 4 be applied. Where cables of different
-                maximum operating temperatures are grouped together, the current-carrying capacity
-                of all cables in the group shall be based on the lowest maximum operating
-                temperature of any cable in the group, together with the appropriate group rating
-                factor from Tables 4C1 to 4C6 of Appendix 4. Using a cable rated at 90&deg;C in a
-                group also containing a 70&deg;C cable requires the whole group to be sized on the
-                70&deg;C basis.
+                cable sizing tables. BS 7671 Reg 523.4 requires the ambient temperature to be taken
+                as the temperature of the surrounding medium when the cable is not loaded, with the
+                appropriate rating factor from Appendix 4 then applied. Under Reg 523.5, where a
+                group contains cables of different maximum operating temperatures, the
+                current-carrying capacity of all cables in the group shall be based on the lowest
+                maximum operating temperature of any cable in the group, together with the
+                appropriate group rating factor from Tables 4C1 to 4C6 of Appendix 4. Grouping a
+                90&deg;C-rated cable with a 70&deg;C cable therefore forces the whole group to be
+                sized on the 70&deg;C basis.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -612,12 +713,26 @@ const sections = [
                 factories typically contain large numbers of VFD-driven conveyors, refrigeration
                 compressors, pump motors, and contactors. BS 7671 Reg 534.4.1.6 requires that
                 consideration be given to the provision of SPDs to protect against switching
-                overvoltages produced by current-using equipment within the installation — with
-                large motor switching and variable speed drives explicitly cited as examples.
-                Switching transients from VFDs can damage PLCs, HMIs, instrumentation, and other
-                sensitive control equipment if SPDs are not provided at appropriate points in the
-                distribution system. SPD requirements should form part of the electrical design
-                scope for any food factory with significant motor or VFD loading.
+                overvoltages produced by current-using equipment located within the installation.
+                Large motors and variable speed drives are exactly the kind of current-using
+                equipment that generates these switching transients, and they can damage PLCs,
+                HMIs, instrumentation, and other sensitive control equipment if SPDs are not
+                provided at appropriate points in the distribution system. SPD requirements should
+                form part of the electrical design scope for any food factory with significant
+                motor or VFD loading.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>RCD additional protection — BS 7671 Reg 411.3.3</strong> — As revised in
+                A4:2026, Reg 411.3.3 applies additional protection by a 30 mA RCD to socket-outlets
+                with a rated current not exceeding 32 A. In wash-down and damp food production
+                areas this protection matters all the more. The regulation retains an exception
+                allowing RCD protection to be omitted — other than in a dwelling — where a
+                documented risk assessment determines it is not necessary, though for
+                general-purpose socket-outlets in a food factory that exception is rarely
+                justified.
               </span>
             </li>
           </ul>
@@ -704,6 +819,7 @@ export default function FoodProcessingElectricalPage() {
       }
       heroSubtitle="Everything UK electricians need to know about food processing electrical installation — IP69K wash-down ratings, ATEX dust explosion zones, hygienic design principles, stainless steel enclosures, BRC Global Standard requirements, and allergen zone electrical segregation."
       readingTime={17}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

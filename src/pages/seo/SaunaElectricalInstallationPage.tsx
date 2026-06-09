@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Sauna heaters typically draw 4.5kW to 9kW for domestic units, requiring a dedicated 20A to 40A radial circuit. Larger commercial saunas may require three-phase supplies up to 18kW or more.',
-  'BS 7671 Section 703 (saunas and steam rooms) applies. The sauna interior is divided into three temperature zones under Regs 703.32.2 and 703.32.3: Zone 1 (the heater volume, bounded by a vertical surface 0.5 m from the heater surface), Zone 2 (outside Zone 1, from floor to 1.0 m above floor), and Zone 3 (outside Zone 1, from 1.0 m above floor to the cold side of the ceiling insulation). Strict limits govern what equipment may be installed in each zone.',
+  'BS 7671 Section 703 (rooms and cabins containing sauna heaters) applies. The sauna interior is divided into three zones under Regs 703.32.1 to 703.32.3: Zone 1 (the heater volume, bounded by a vertical surface 0.5 m from the heater surface — Reg 703.32.1), Zone 2 (outside Zone 1, from floor to 1.0 m above floor — Reg 703.32.2), and Zone 3 (outside Zone 1, above 1.0 m to the cold side of the ceiling insulation — Reg 703.32.3). Strict limits govern what equipment may be installed in each zone.',
   'All wiring within the sauna room must use heat-resistant cable rated for the temperatures encountered. Standard PVC-insulated cable (rated 70°C) must not be used inside the sauna — use silicone rubber or XLPE cable rated to at least 170°C.',
   'RCD protection for sauna circuits is governed by BS 7671 Regulation 703.411.3.3 (the sauna-specific Part 7 rule). All sauna circuits require additional protection by 30mA RCD(s). Note the manufacturer exception: RCD protection need not be provided for the sauna heater itself unless the heater manufacturer recommends it.',
   'An Electrical Installation Certificate (EIC) must be issued, and the work must be notified under Part P as it involves a special location.',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are the BS 7671 Section 703 zones for a sauna?',
     answer:
-      'BS 7671 Section 703 defines three zones within the sauna room (Regs 703.32.2 and 703.32.3). Zone 1 is the volume containing the sauna heater, bounded by the floor, the cold side of the ceiling insulation, and a vertical surface circumscribing the heater at a radial distance of 0.5 m from the heater surface — only the heater and its dedicated wiring are permitted here. Zone 2 is the volume outside Zone 1, from the floor up to a horizontal plane 1.0 m above the floor, laterally bounded by the cold side of the wall insulation — luminaires and temperature sensors suitable for the zone temperature may be installed here. Zone 3 is the volume outside Zone 1, between 1.0 m above the floor and the cold side of the ceiling insulation. No socket outlets are permitted inside the sauna room under any circumstances. The sauna control unit and any switching must be located outside the sauna room.',
+      'BS 7671 Section 703 defines three zones within the sauna room (Regs 703.32.1 to 703.32.3). Zone 1 (Reg 703.32.1) is the volume containing the sauna heater, bounded by the floor, the cold side of the ceiling insulation, and a vertical surface circumscribing the heater at a distance of 0.5 m from the heater surface — only the heater and equipment belonging to the sauna heater are permitted here (Reg 703.512.2). Zone 2 (Reg 703.32.2) is the volume outside Zone 1, from the floor up to a horizontal surface 1.0 m above the floor — BS 7671 states there is no special heat-resistance requirement for equipment in Zone 2. Zone 3 (Reg 703.32.3) is the volume outside Zone 1, above 1.0 m to the cold side of the ceiling and wall insulation — here equipment must withstand a minimum of 125°C and cable insulation and sheaths a minimum of 170°C (Reg 703.512.2). Socket outlets must not be installed in the location containing the sauna heater (Reg 703.537.5), and switchgear for lighting must be placed outside the sauna room.',
   },
   {
     question: 'Does a sauna need RCD protection?',
@@ -182,23 +182,61 @@ const sections = [
           Sauna heater selection is based on the volume of the sauna room. The general rule is 1kW
           per cubic metre of sauna space, with adjustments for insulation quality and glazing:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-3 text-white">
-            <li>
-              <strong>Small sauna (3 to 5m³):</strong> 4.5kW heater — 20A circuit, 4.0mm² cable
-            </li>
-            <li>
-              <strong>Medium sauna (5 to 8m³):</strong> 6kW to 8kW heater — 32A circuit, 6.0mm²
-              cable
-            </li>
-            <li>
-              <strong>Large sauna (8 to 12m³):</strong> 9kW heater — 40A circuit, 10.0mm² cable
-            </li>
-            <li>
-              <strong>Commercial sauna (12m³+):</strong> 12kW to 18kW+ — three-phase supply, consult
-              manufacturer
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Sauna size</th>
+                <th className="px-4 py-3 font-semibold">Heater</th>
+                <th className="px-4 py-3 font-semibold">Approx. current</th>
+                <th className="px-4 py-3 font-semibold">Circuit</th>
+                <th className="px-4 py-3 font-semibold">Cable</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3">Small (3 to 5m³)</td>
+                <td className="px-4 py-3 font-semibold text-yellow-300">4.5kW</td>
+                <td className="px-4 py-3">~20A</td>
+                <td className="px-4 py-3">20A radial</td>
+                <td className="px-4 py-3">4.0mm²</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Medium (5 to 8m³)</td>
+                <td className="px-4 py-3 font-semibold text-yellow-300">6kW to 8kW</td>
+                <td className="px-4 py-3">~26 to 35A</td>
+                <td className="px-4 py-3">32A radial</td>
+                <td className="px-4 py-3">6.0mm²</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Large (8 to 12m³)</td>
+                <td className="px-4 py-3 font-semibold text-yellow-300">9kW</td>
+                <td className="px-4 py-3">~39A</td>
+                <td className="px-4 py-3">40A radial</td>
+                <td className="px-4 py-3">10.0mm²</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">Commercial (12m³+)</td>
+                <td className="px-4 py-3 font-semibold text-yellow-300">12kW to 18kW+</td>
+                <td className="px-4 py-3">Per data plate</td>
+                <td className="px-4 py-3" colSpan={2}>
+                  Three-phase supply — consult manufacturer
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed">
+            <strong>Always size from the data plate, not from kW.</strong> The rated current on the
+            manufacturer plate is the definitive figure — single-phase current shown above is a
+            guide only (kW ÷ 230V). Size the cable and protective device to the actual installation
+            conditions using the{' '}
+            <SEOInternalLink href="/tools/cable-sizing-calculator">
+              cable sizing calculator
+            </SEOInternalLink>{' '}
+            so that grouping, ambient temperature and run length derating are applied correctly.
+          </p>
         </div>
         <p>
           Verify the existing supply has sufficient spare capacity for the heater. A 9kW heater on a
@@ -215,65 +253,127 @@ const sections = [
       <>
         <p>
           BS 7671 Section 703 defines the requirements for rooms and cabins containing sauna
-          heaters. The key requirements are:
+          heaters. Equipment selection turns on which of the three zones (Regs 703.32.1 to
+          703.32.3) it sits in. The zone definitions and the heat-resistance rules from Reg
+          703.512.2 are summarised below.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Zone</th>
+                <th className="px-4 py-3 font-semibold">Extent</th>
+                <th className="px-4 py-3 font-semibold">What may be installed</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-red-900/20">
+                <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">
+                  Zone 1
+                  <span className="block text-xs font-normal text-white/60">Reg 703.32.1</span>
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Volume containing the heater, bounded by the floor, the cold side of the ceiling
+                  insulation and a vertical surface 0.5 m from the heater surface (or the cold side
+                  of a wall if the heater sits closer than 0.5 m).
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Only the sauna heater and equipment belonging to the sauna heater
+                  (Reg 703.512.2).
+                </td>
+              </tr>
+              <tr className="bg-amber-900/20">
+                <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">
+                  Zone 2
+                  <span className="block text-xs font-normal text-white/60">Reg 703.32.2</span>
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Outside Zone 1, from the floor up to a horizontal surface 1.0 m above the floor,
+                  bounded laterally by the cold side of the wall insulation.
+                </td>
+                <td className="px-4 py-3 align-top">
+                  No special requirement concerning heat-resistance of equipment (Reg 703.512.2).
+                  Switchgear forming part of the heater or other fixed equipment may sit here per
+                  the manufacturer (Reg 703.537.5).
+                </td>
+              </tr>
+              <tr className="bg-orange-900/20">
+                <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">
+                  Zone 3
+                  <span className="block text-xs font-normal text-white/60">Reg 703.32.3</span>
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Outside Zone 1, above 1.0 m from the floor to the cold side of the ceiling and
+                  wall insulation.
+                </td>
+                <td className="px-4 py-3 align-top">
+                  Equipment must withstand a minimum of 125°C; cable insulation and sheaths a
+                  minimum of 170°C (Reg 703.512.2).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 1 (Reg 703.32.3)</strong> — the volume containing the sauna heater,
-                bounded by the floor, the cold side of the ceiling insulation, and a vertical
-                surface circumscribing the heater at 0.5 m from the heater surface. Only the heater
-                and equipment belonging to the sauna heater are permitted in Zone 1.
+                <strong>Minimum IP rating (Reg 703.512.2)</strong> — equipment in the sauna shall
+                have a degree of protection of at least IPX4. Where cleaning by water jets may
+                reasonably be expected, at least IPX5 is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 2 (Reg 703.32.2)</strong> — the volume outside Zone 1, from the floor
-                to a horizontal plane 1.0 m above the floor, limited laterally by the cold side of
-                the wall insulation. Heat-resistant luminaires and temperature sensors may be
-                installed in Zone 2.
+                <strong>Wiring (Reg 703.52)</strong> — the wiring system should preferably be
+                installed outside the zones, on the cold side of the thermal insulation. Where it is
+                on the warm side of the thermal insulation in Zone 1 or Zone 3 it shall be
+                heat-resisting, and metallic sheaths and metallic conduits shall not be accessible
+                in normal use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 3 (Reg 703.32.3)</strong> — the volume outside Zone 1, between 1.0 m
-                above the floor and the cold side of the ceiling insulation. Wiring on the warm side
-                of thermal insulation in Zones 1 or 3 must be heat-resisting and metallic sheaths or
-                conduits must not be accessible in normal use (Reg 703.52).
+                <strong>No socket outlets (Reg 703.537.5)</strong> — socket outlets shall not be
+                installed within the location containing the sauna heater. Switchgear and
+                controlgear for lighting shall be placed outside the sauna room or cabin.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No socket outlets inside</strong> — socket outlets must not be installed
-                inside the sauna room under any circumstances. The sauna control unit and any
-                switching must be located outside the sauna room.
+                <strong>Protective measures not permitted</strong> — obstacles and placing out of
+                reach (Reg 703.410.3.5) and non-conducting location / earth-free local bonding (Reg
+                703.410.3.6) shall not be used in a sauna.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equipotential bonding</strong> — accessible extraneous-conductive-parts
-                within the sauna (metal bench supports, metallic door handles, etc.) must be
-                connected by supplementary equipotential bonding.
+                <strong>SELV/PELV (Reg 703.414.3, A4:2026)</strong> — where SELV or PELV is used in
+                Zones 1, 2 and/or 3, a source as described in Regulation 414.3(d) shall not be used.
+                SELV is commonly used for sauna luminaires as an alternative protective measure, and
+                any such installation must comply with Reg 703.414.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SELV/PELV (Reg 703.414.3, A4:2026)</strong> — BS 7671:2018+A4:2026
-                introduces Regulation 703.414.3, which sets specific requirements for SELV and PELV
-                circuits used in sauna locations. SELV supplies are commonly used for sauna
-                luminaires in Zones 2 and 3 as an alternative protective measure, and any such
-                installation must comply with the requirements of 703.414.3.
+                <strong>Sauna heating appliances (Reg 703.55)</strong> — must comply with BS EN
+                60335-2-53 and be installed in accordance with the manufacturer's instructions.
               </span>
             </li>
           </ul>
         </div>
+        <p className="text-white/70 text-sm">
+          The earlier guidance that supplementary equipotential bonding may be needed for accessible
+          extraneous-conductive-parts (metal bench frames, metallic door fittings) still holds where
+          such parts could introduce a potential — assess each installation on its merits and bond
+          where required.
+        </p>
       </>
     ),
   },
@@ -308,6 +408,43 @@ const sections = [
               electricians use silicone rubber throughout the sauna room for simplicity and safety.
             </p>
           </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Cable / insulation</th>
+                <th className="px-4 py-3 font-semibold">Max conductor temp</th>
+                <th className="px-4 py-3 font-semibold">Use in a sauna</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-red-900/20">
+                <td className="px-4 py-3 align-top">PVC twin-and-earth (6242Y)</td>
+                <td className="px-4 py-3 align-top font-semibold">70°C</td>
+                <td className="px-4 py-3 align-top">
+                  Not inside the sauna. Acceptable only outside the room, up to the transition
+                  junction box.
+                </td>
+              </tr>
+              <tr className="bg-amber-900/20">
+                <td className="px-4 py-3 align-top">XLPE</td>
+                <td className="px-4 py-3 align-top font-semibold">90°C</td>
+                <td className="px-4 py-3 align-top">
+                  Lower zones only, where ambient stays well below the rating. Not for Zone 3 or near
+                  the heater.
+                </td>
+              </tr>
+              <tr className="bg-green-900/20">
+                <td className="px-4 py-3 align-top">Silicone rubber</td>
+                <td className="px-4 py-3 align-top font-semibold">170°C to 180°C</td>
+                <td className="px-4 py-3 align-top">
+                  Standard choice inside the sauna, including the heater connection. Meets the
+                  170°C cable requirement for Zone 3 (Reg 703.512.2).
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           Outside the sauna room (from the consumer unit to the wall penetration), standard PVC
@@ -358,9 +495,10 @@ const sections = [
               manufacturer instructions. Ensure minimum clearances to combustible materials.
             </li>
             <li>
-              <strong>Install sauna lighting (if required)</strong> — use heat-resistant luminaires
-              rated for sauna use (typically IP44 minimum, 125°C rated). Wire in silicone rubber
-              cable.
+              <strong>Install sauna lighting (if required)</strong> — use luminaires rated for
+              sauna use. BS 7671 requires at least IPX4 (IPX5 where water jets are expected, Reg
+              703.512.2); in Zone 3 the equipment must withstand a minimum of 125°C. Wire in
+              silicone rubber cable.
             </li>
             <li>
               <strong>Install control unit</strong> — mount the sauna control unit outside the sauna
@@ -438,8 +576,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                RCD operation — 30mA device must trip within 300ms at rated current and within 40ms
-                at 5x rated current
+                RCD operation — for a general (non-delay) type RCD, effectiveness is deemed
+                verified where it disconnects within 300ms maximum at its rated residual operating
+                current (IΔn)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -467,32 +606,62 @@ const sections = [
     heading: 'Realistic Pricing for Sauna Electrical Installation (2026)',
     content: (
       <>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-3 text-white">
-            <li>
-              <strong>Small sauna (4.5kW), short run:</strong> £400 to £550 — 20A circuit, RCBO,
-              standard + silicone cable, testing, EIC
-            </li>
-            <li>
-              <strong>Medium sauna (6 to 8kW), medium run:</strong> £550 to £700 — 32A circuit,
-              longer cable run, heat-resistant cable and fixings
-            </li>
-            <li>
-              <strong>Large sauna (9kW), long run:</strong> £650 to £850 — 40A circuit, 10.0mm²
-              cable, more labour
-            </li>
-            <li>
-              <strong>Sauna lighting circuit:</strong> add £150 to £300 — heat-resistant luminaires
-              and silicone cable
-            </li>
-            <li>
-              <strong>Consumer unit upgrade:</strong> add £350 to £600 if no spare ways available
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Scope</th>
+                <th className="px-4 py-3 font-semibold">Indicative price</th>
+                <th className="px-4 py-3 font-semibold">What it covers</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 align-top">Small sauna (4.5kW), short run</td>
+                <td className="px-4 py-3 align-top font-semibold text-green-300 whitespace-nowrap">
+                  £400 to £550
+                </td>
+                <td className="px-4 py-3 align-top">
+                  20A circuit, RCBO, standard + silicone cable, testing, EIC
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 align-top">Medium sauna (6 to 8kW), medium run</td>
+                <td className="px-4 py-3 align-top font-semibold text-green-300 whitespace-nowrap">
+                  £550 to £700
+                </td>
+                <td className="px-4 py-3 align-top">
+                  32A circuit, longer cable run, heat-resistant cable and fixings
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 align-top">Large sauna (9kW), long run</td>
+                <td className="px-4 py-3 align-top font-semibold text-green-300 whitespace-nowrap">
+                  £650 to £850
+                </td>
+                <td className="px-4 py-3 align-top">40A circuit, 10.0mm² cable, more labour</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 align-top">Sauna lighting circuit (add-on)</td>
+                <td className="px-4 py-3 align-top font-semibold text-green-300 whitespace-nowrap">
+                  + £150 to £300
+                </td>
+                <td className="px-4 py-3 align-top">Heat-resistant luminaires and silicone cable</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 align-top">Consumer unit upgrade (add-on)</td>
+                <td className="px-4 py-3 align-top font-semibold text-green-300 whitespace-nowrap">
+                  + £350 to £600
+                </td>
+                <td className="px-4 py-3 align-top">If no spare ways are available</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          Prices include materials, labour (half a day to a full day), testing, and EIC certificate.
-          They do not include the sauna heater, sauna cabin, or building work.
+          These are indicative market figures for guidance, not a quote — price each job to its
+          conditions. They include materials, labour (half a day to a full day), testing, and the
+          EIC certificate, and exclude the sauna heater, sauna cabin, and any building work.
         </p>
       </>
     ),
@@ -569,6 +738,13 @@ export default function SaunaElectricalInstallationPage() {
         </>
       }
       heroSubtitle="Saunas are special locations under BS 7671 Section 703. Heat-resistant cable, temperature zones, dedicated circuits, and correct zoning are essential. This guide covers everything from heater sizing to testing and certification."
+      answerBox={{
+        question: 'What are the electrical requirements for a sauna installation in the UK?',
+        answer:
+          'A sauna is a special location under BS 7671 Section 703. It needs a dedicated radial circuit sized to the heater (typically 20A to 40A), heat-resistant cable inside the room (silicone rubber rated 170°C to 180°C), and 30mA RCD protection on all circuits under Reg 703.411.3.3. Equipment must meet the zone rules of Regs 703.32.1 to 703.32.3. An EIC must be issued and the work notified under Part P.',
+        detail:
+          'No socket outlets are permitted in the location containing the sauna heater (Reg 703.537.5), and switchgear for lighting must be placed outside the sauna room.',
+      }}
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

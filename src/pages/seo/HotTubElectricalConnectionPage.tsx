@@ -42,10 +42,10 @@ const tocItems = [
 
 const keyTakeaways = [
   'Hot tubs require a dedicated radial circuit — typically 32A for smaller tubs (up to 7kW) or 40A for larger models (up to 9kW). Never connect a hot tub to an existing socket circuit.',
-  'RCD protection is mandatory under BS 7671 Section 702 and Reg 411.3.3 (socket-outlets) — a 30mA RCD or RCBO must protect the fixed hot tub circuit. Section 702 imposes additional RCD requirements for this special location.',
-  'Supplementary equipotential bonding is required under BS 7671 Reg 702.415.2 — all extraneous-conductive-parts within zones 0, 1 and 2 (metalwork of the tub, pipework, pump housing, handrails) must be connected by supplementary bonding conductors to the circuit protective conductor.',
+  'RCD protection is mandatory — a 30mA RCD or RCBO must protect the hot tub circuit. BS 7671 Section 702 calls for additional protection in this special location using an RCD with the characteristics of Reg 415.1.1 (30mA), and Reg 411.3.3 separately requires 30mA RCD protection for socket-outlets and outdoor mobile equipment up to 32A.',
+  'Supplementary equipotential bonding is required under BS 7671 Reg 702.415.2 — all extraneous-conductive-parts in zones 0, 1 and 2 (tub metalwork, pipework, pump housing, handrails) must be connected by supplementary protective bonding conductors to the protective conductors of exposed-conductive-parts of equipment in those zones.',
   'All outdoor electrical equipment must have an appropriate IP rating — IP56 minimum for the isolator switch, and the cable route must be protected against mechanical damage using SWA cable or conduit.',
-  'A lockable rotary isolator must be installed within sight of the hot tub but at least 2 metres away from the tub edge, in accordance with BS 7671 Section 702 (swimming pools and hot tubs).',
+  'Switchgear and socket-outlets must not be installed in zones 0 or 1 (BS 7671 Reg 702.53). Because zone 1 extends to a vertical plane 2 metres from the rim of the tub, the lockable IP-rated isolator must sit beyond that 2 metre zone — and, as good isolation practice, within sight of the tub.',
   'An Electrical Installation Certificate (EIC) must be issued for the new circuit, and the work must be notified under Part P of the Building Regulations as it involves a special location (zone around a hot tub).',
 ];
 
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Do I need an RCD for a hot tub?',
     answer:
-      'Yes. For a fixed hardwired hot tub, RCD protection is required under BS 7671 Section 702 (swimming pools and similar locations), which mandates additional protection for this special location. Reg 411.3.3 requires 30mA RCD protection for socket-outlets rated up to 32A, and 411.3.3(c) covers mobile equipment for outdoor use — for a fixed hardwired circuit the Section 702 requirement is the primary driver. A 30mA RCD or RCBO must protect the circuit. Type A is preferred over Type AC as hot tub pump motors and electronic control boards can produce pulsating DC fault currents that a Type AC RCD may not detect. For installations with variable-speed drives or inverter-controlled pumps (common in swim spas), a Type B RCD should be considered — Type B detects pulsating rectified DC from two or more phases as well as smooth DC residual currents (OSG Reg 3.6.4.5). If the consumer unit already has RCD protection on the relevant way, verify it is 30mA and test it before relying on it.',
+      'Yes. For a fixed hardwired hot tub, RCD protection is required under BS 7671 Section 702 (swimming pools and similar locations, applied to outdoor hot tubs), which is satisfied by an RCD with the characteristics of Reg 415.1.1 — a 30mA rated residual operating current. Reg 411.3.3 separately requires 30mA RCD protection for socket-outlets up to 32A and outdoor mobile equipment up to 32A (Reg 411.3.3(c)). A 30mA RCD or RCBO must protect the circuit. Type A is preferred over Type AC as hot tub pump motors and electronic control boards can produce pulsating DC fault currents that a Type AC RCD may not detect. For installations with variable-speed drives or inverter-controlled pumps (common in swim spas), a Type B RCD should be considered — Type B detects pulsating rectified DC from two or more phases as well as smooth DC residual currents. If the consumer unit already has RCD protection on the relevant way, verify it is 30mA and test it before relying on it.',
   },
   {
     question: 'How far can the hot tub be from the consumer unit?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'What IP rating does the outdoor isolator need?',
     answer:
-      'The isolator switch for an outdoor hot tub must be rated at least IP56 (protected against powerful water jets and dust ingress). Many electricians specify IP66 for extra protection against heavy rain and pressure washing. The isolator must be a lockable rotary type so the supply can be locked off during maintenance. It must be located within sight of the hot tub but at least 2 metres from the tub edge — this is a BS 7671 Section 702 requirement for swimming pools and hot tubs.',
+      'A common specification for an outdoor hot tub isolator is IP56 (protected against powerful water jets and dust ingress), and many electricians fit IP66 for extra protection against heavy rain and pressure washing — both comfortably exceed the IPX4/IPX5 water-ingress minimum that BS 7671 Reg 702.512.2 sets for the zones around the tub. Use a lockable rotary type so the supply can be locked off during maintenance. Under Reg 702.53, switchgear must not be installed in zones 0 or 1, so the isolator must be positioned beyond the 2 metre zone 1 boundary around the rim — ideally still within sight of the tub for safe isolation.',
   },
   {
     question: 'Can I use a plug-in hot tub on a 13A socket?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Does hot tub wiring need to be notified under Part P?',
     answer:
-      'Yes. Hot tub electrical installations fall under Part P of the Building Regulations because they involve work in a special location (the zone around a bath or shower, which includes hot tubs under BS 7671 Section 702). The work must be either carried out by a registered competent person scheme member (NICEIC, NAPIT, etc.) who can self-certify, or notified to Building Control before the work starts. Failure to notify is a legal requirement breach and can cause problems when selling the property.',
+      'Yes. Hot tub electrical work is notifiable under Part P of the Building Regulations: it is a new circuit, and the area around the tub is a special location under BS 7671 Section 702 (which the standard applies to outdoor hot tubs). The work must be either carried out by a registered competent person scheme member (NICEIC, NAPIT, etc.) who can self-certify, or notified to Building Control before the work starts. Failure to notify breaches the Building Regulations and can cause problems when selling the property.',
   },
   {
     question: 'What cable type should I use for an outdoor hot tub?',
@@ -202,6 +202,36 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-4 gap-px bg-white/10 text-xs sm:text-sm font-bold text-white">
+            <div className="bg-white/[0.06] p-3">Rated load</div>
+            <div className="bg-white/[0.06] p-3">Approx. current (230V)</div>
+            <div className="bg-white/[0.06] p-3">Protective device</div>
+            <div className="bg-white/[0.06] p-3">Typical SWA size</div>
+          </div>
+          <div className="grid grid-cols-4 gap-px bg-white/10 text-xs sm:text-sm text-white">
+            <div className="bg-blue-900/30 p-3">Up to 5kW</div>
+            <div className="bg-blue-900/30 p-3">~22A</div>
+            <div className="bg-blue-900/30 p-3">32A MCB / RCBO</div>
+            <div className="bg-blue-900/30 p-3">6.0mm²</div>
+            <div className="bg-blue-900/20 p-3">Up to 7kW</div>
+            <div className="bg-blue-900/20 p-3">~30A</div>
+            <div className="bg-blue-900/20 p-3">32A MCB / RCBO</div>
+            <div className="bg-blue-900/20 p-3">6.0mm²</div>
+            <div className="bg-green-900/30 p-3">Up to 9kW</div>
+            <div className="bg-green-900/30 p-3">~39A</div>
+            <div className="bg-green-900/30 p-3">40A MCB / RCBO</div>
+            <div className="bg-green-900/30 p-3">10.0mm²</div>
+            <div className="bg-green-900/20 p-3">Over 9kW / swim spa</div>
+            <div className="bg-green-900/20 p-3">40A+ (or 3-phase)</div>
+            <div className="bg-green-900/20 p-3">50A device or split supply</div>
+            <div className="bg-green-900/20 p-3">16.0mm²+ / per design</div>
+          </div>
+          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+            Indicative only — always size the device and cable from the manufacturer data plate
+            current and the installation method, not from the kW figure alone.
+          </p>
+        </div>
         <p>
           Before starting, verify the existing supply has sufficient spare capacity. Check the main
           fuse or service head rating (typically 60A or 100A for domestic properties) and calculate
@@ -213,17 +243,17 @@ const sections = [
   },
   {
     id: 'rcd-protection',
-    heading: 'RCD Protection: BS 7671 Section 702 and Reg 411.3.3',
+    heading: 'RCD Protection: BS 7671 Section 702 and Reg 415.1.1',
     content: (
       <>
         <p>
           RCD protection is mandatory for hot tub circuits. For a fixed hardwired hot tub, the
-          primary requirement derives from BS 7671 Section 702 (swimming pools and similar
-          locations), which imposes additional protective measures for this special location. Reg
-          411.3.3 requires 30mA RCD additional protection for socket-outlets rated up to 32A and for
-          mobile equipment rated up to 32A for outdoor use (Reg 411.3.3(c)) — for a fixed hardwired
-          circuit, Section 702 is the governing requirement. In either case, a 30mA RCD or RCBO must
-          protect the circuit.
+          governing requirement is BS 7671 Section 702 (swimming pools and similar locations, applied
+          to outdoor hot tubs), whose additional-protection provisions are met using an RCD with the
+          characteristics specified in Reg 415.1.1 — that is, a rated residual operating current not
+          exceeding 30mA. Separately, Reg 411.3.3 requires 30mA RCD additional protection for
+          socket-outlets up to 32A and for outdoor mobile equipment up to 32A (Reg 411.3.3(c)). In
+          every case, a 30mA RCD or RCBO must protect the circuit.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -253,7 +283,7 @@ const sections = [
                 produce pulsating rectified DC from two or more phases. A Type A RCD will not detect
                 smooth DC fault currents. Where such equipment is installed, a Type B RCD should be
                 specified — it covers all Type A fault current waveforms plus smooth DC and
-                pulsating rectified DC from multi-phase rectification (OSG Reg 3.6.4.5). Check the
+                pulsating rectified DC from multi-phase rectification. Check the
                 manufacturer&apos;s installation manual for the required RCD type.
               </span>
             </li>
@@ -289,9 +319,11 @@ const sections = [
               <span>
                 <strong>SWA cable (Steel Wire Armoured)</strong> — the standard choice for the
                 outdoor section. 3-core SWA (line, neutral, earth) in 6.0mm² (32A circuit) or
-                10.0mm² (40A circuit). SWA can be direct-buried at a minimum depth of 500mm with
-                warning tape above, or surface-mounted on cable cleats. The steel wire armour
-                provides mechanical protection and acts as an additional CPC.
+                10.0mm² (40A circuit). BS 7671 Reg 522.8.10 requires a cable buried in the ground to
+                have earthed armour or metal sheath and to be at a sufficient depth — in practice
+                electricians bury garden runs around 450–600mm with marker tape above, or
+                surface-mount on cable cleats. The steel wire armour provides mechanical protection
+                and acts as an additional CPC.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -328,14 +360,40 @@ const sections = [
         <p>
           All electrical equipment installed outdoors for a hot tub must have an appropriate Ingress
           Protection (IP) rating. The IP rating indicates protection against solid objects (first
-          digit) and water (second digit).
+          digit) and water (second digit). BS 7671 Reg 702.512.2 sets the minimum protection by
+          zone; the practical specifications below meet or exceed those minimums for typical
+          weather-exposed outdoor equipment.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-xs sm:text-sm font-bold text-white">
+            <div className="bg-white/[0.06] p-3">Zone</div>
+            <div className="bg-white/[0.06] p-3">BS 7671 minimum (Reg 702.512.2)</div>
+            <div className="bg-white/[0.06] p-3">Extent</div>
+          </div>
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-xs sm:text-sm text-white">
+            <div className="bg-red-900/30 p-3 font-semibold">Zone 0</div>
+            <div className="bg-red-900/30 p-3">IPX8</div>
+            <div className="bg-red-900/30 p-3">Interior of the basin / tub</div>
+            <div className="bg-orange-900/30 p-3 font-semibold">Zone 1</div>
+            <div className="bg-orange-900/30 p-3">IPX4 (IPX5 where water jets used for cleaning)</div>
+            <div className="bg-orange-900/30 p-3">Within 2m of the rim, up to 2.5m high</div>
+            <div className="bg-blue-900/30 p-3 font-semibold">Zone 2 (outdoor)</div>
+            <div className="bg-blue-900/30 p-3">IPX4 (IPX5 where water jets used for cleaning)</div>
+            <div className="bg-blue-900/30 p-3">A further 1.5m beyond zone 1</div>
+          </div>
+          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+            The second digit (water) is what 702.512.2 fixes by zone; specify the first digit (dust /
+            solid ingress) to suit the location — full IP ratings such as IP56 or IP66 comfortably
+            satisfy these minimums.
+          </p>
+        </div>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-2">Isolator Switch</h3>
             <p className="text-white text-sm leading-relaxed">
-              IP56 minimum. IP66 recommended. Must be a lockable rotary type positioned at least 2
-              metres from the tub edge but within sight of the tub.
+              IP56 is a common spec, IP66 for heavy exposure. Lockable rotary type. Reg 702.53 bars
+              switchgear from zones 0 and 1, so site it beyond the 2m zone — ideally within sight of
+              the tub.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -378,13 +436,14 @@ const sections = [
               <strong>Run the cable</strong> — route twin-and-earth or singles in conduit from the
               consumer unit to the building exit point. Transition to SWA cable using an IP-rated
               adaptable box with SWA glands. Route the SWA to the isolator position — either buried
-              in a trench (minimum 500mm deep with warning tape) or surface-mounted on cleats.
+              in a trench at a sufficient depth (commonly 450–600mm) with marker tape above (Reg
+              522.8.10) or surface-mounted on cleats.
             </li>
             <li>
-              <strong>Install the isolator</strong> — mount a lockable IP56/IP66 rotary isolator at
-              least 2 metres from the hot tub edge. Gland the SWA into the isolator. Run a short
-              length of SWA or flexible armoured cable from the isolator to the hot tub connection
-              point.
+              <strong>Install the isolator</strong> — mount a lockable IP56/IP66 rotary isolator
+              beyond the 2 metre zone 1 boundary around the rim (Reg 702.53 bars switchgear from
+              zones 0 and 1). Gland the SWA into the isolator. Run a short length of SWA or flexible
+              armoured cable from the isolator to the hot tub connection point.
             </li>
             <li>
               <strong>Make the final connection</strong> — connect to the hot tub terminal block as
@@ -426,7 +485,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Continuity of ring final circuit conductors — not applicable (radial circuit)
+                Test in the order set out in BS 7671 Reg 643.1 — the dead tests (continuity,
+                insulation resistance, polarity) before energising, then the live tests (Zs, RCD
+                operation). A hot tub is a dedicated radial, so ring-continuity testing does not
+                apply.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -447,9 +509,10 @@ const sections = [
               <span>
                 Earth fault loop impedance (Zs) — must be within the maximum permitted Zs for the
                 protective device. When comparing the measured Zs against the tabulated maximum,
-                apply the GN3 temperature correction factor of 0.8: multiply the measured value by
-                0.8 to derive the corrected Zs at maximum operating temperature (GN3 Reg 2.29,
-                Appendix A2). Record both the measured and corrected values on the EIC schedule.
+                apply the IET Guidance Note 3 rule-of-thumb correction factor of 0.8: a measured Zs
+                is acceptable if it does not exceed 0.8 × the tabulated maximum Zs, allowing for the
+                rise in conductor resistance at operating temperature. Record both the measured and
+                corrected values on the EIC schedule.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -502,29 +565,33 @@ const sections = [
           Pricing varies by cable run length, cable size, and local labour rates. The following are
           realistic prices for 2026 in the UK:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-3 text-white">
-            <li>
-              <strong>Short run (under 10m), 32A circuit:</strong> £450 to £600 — includes RCBO,
-              6.0mm² SWA, IP66 isolator, glands, testing, EIC
-            </li>
-            <li>
-              <strong>Medium run (10 to 20m), 32A circuit:</strong> £550 to £750 — longer cable run,
-              possible trenching
-            </li>
-            <li>
-              <strong>Long run (20 to 30m), 40A circuit:</strong> £700 to £950 — 10.0mm² SWA, more
-              labour for trenching and backfill
-            </li>
-            <li>
-              <strong>Consumer unit upgrade required:</strong> add £350 to £600 — if no spare ways
-              or the board needs replacing to accommodate an RCBO
-            </li>
-            <li>
-              <strong>Trenching (by customer):</strong> if the customer digs the trench themselves,
-              deduct £100 to £200 from the above
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-xs sm:text-sm font-bold text-white">
+            <div className="bg-white/[0.06] p-3">Scenario</div>
+            <div className="bg-white/[0.06] p-3">Indicative price</div>
+            <div className="bg-white/[0.06] p-3">What it covers</div>
+          </div>
+          <div className="grid grid-cols-3 gap-px bg-white/10 text-xs sm:text-sm text-white">
+            <div className="bg-green-900/30 p-3 font-semibold">Short run (under 10m), 32A</div>
+            <div className="bg-green-900/30 p-3">£450–£600</div>
+            <div className="bg-green-900/30 p-3">RCBO, 6.0mm² SWA, IP66 isolator, glands, testing, EIC</div>
+            <div className="bg-blue-900/30 p-3 font-semibold">Medium run (10–20m), 32A</div>
+            <div className="bg-blue-900/30 p-3">£550–£750</div>
+            <div className="bg-blue-900/30 p-3">Longer cable run, possible trenching</div>
+            <div className="bg-blue-900/30 p-3 font-semibold">Long run (20–30m), 40A</div>
+            <div className="bg-blue-900/30 p-3">£700–£950</div>
+            <div className="bg-blue-900/30 p-3">10.0mm² SWA, more labour for trenching and backfill</div>
+            <div className="bg-orange-900/30 p-3 font-semibold">Consumer unit upgrade</div>
+            <div className="bg-orange-900/30 p-3">+£350–£600</div>
+            <div className="bg-orange-900/30 p-3">If no spare ways or the board needs replacing</div>
+            <div className="bg-white/[0.03] p-3 font-semibold">Customer digs trench</div>
+            <div className="bg-white/[0.03] p-3">−£100–£200</div>
+            <div className="bg-white/[0.03] p-3">Deduct from the figures above</div>
+          </div>
+          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+            Indicative UK market guidance for 2026, not a quote — actual pricing depends on the
+            cable route, local labour rates and site access.
+          </p>
         </div>
         <p>
           These prices include materials, labour, testing, and the EIC certificate. They do not
@@ -611,6 +678,13 @@ export default function HotTubElectricalConnectionPage() {
       tocItems={tocItems}
       badge="Installation Guide"
       badgeIcon={Droplets}
+      answerBox={{
+        question: 'How do you connect a hot tub to the electrics in the UK?',
+        answer:
+          'A hot tub needs its own dedicated radial circuit from the consumer unit — normally 32A (6mm² cable) for tubs up to about 7kW or 40A (10mm²) up to about 9kW — protected by a 30mA RCD or RCBO. SWA cable feeds a lockable, IP-rated outdoor isolator sited outside the 2m zone around the tub. Supplementary bonding, full testing and an EIC are required, and the work is notifiable under Part P.',
+        detail:
+          'BS 7671 Section 702 applies its requirements to hot tubs installed outdoors, including supplementary equipotential bonding of metalwork in zones 0, 1 and 2 (Reg 702.415.2) and the prohibition on switchgear inside zones 0 and 1 (Reg 702.53).',
+      }}
       heroTitle={
         <>
           Hot Tub Electrical Connection:{' '}

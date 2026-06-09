@@ -35,6 +35,7 @@ const tocItems = [
   { id: 'test-instruments', label: 'Test Instruments and GS38 Requirements' },
   { id: 'proving-dead', label: 'Proving Dead' },
   { id: 'locking-off', label: 'Locking Off and Multi-Lock Hasps' },
+  { id: 'bs7671-isolation', label: 'BS 7671 Isolation Requirements' },
   { id: 'complex-isolations', label: 'Complex Isolations' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
@@ -255,6 +256,44 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+        <p>
+          The CAT (measurement category) rating tells you where an instrument and its leads can be
+          used safely. The higher the category, the closer to the supply origin — and the larger the
+          potential transient overvoltage — the equipment is designed to withstand. Match the rating
+          to where you are working:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4 overflow-hidden">
+          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
+            <div className="col-span-3">CAT rating</div>
+            <div className="col-span-6">Where it applies</div>
+            <div className="col-span-3">Typical use</div>
+          </div>
+          <div className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 mb-2 text-sm text-white">
+            <div className="col-span-3 font-bold">CAT II</div>
+            <div className="col-span-6">Appliances and equipment downstream of a socket-outlet</div>
+            <div className="col-span-3">Plug-in loads</div>
+          </div>
+          <div className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 mb-2 text-sm text-white">
+            <div className="col-span-3 font-bold">CAT III</div>
+            <div className="col-span-6">
+              Fixed installation wiring — distribution boards, final circuits, socket-outlets and
+              fixed wiring
+            </div>
+            <div className="col-span-3">Most fixed-wiring work</div>
+          </div>
+          <div className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 text-sm text-white">
+            <div className="col-span-3 font-bold">CAT IV</div>
+            <div className="col-span-6">
+              The origin of the installation — supply intake, meter tails and the main switch
+            </div>
+            <div className="col-span-3">Origin / intake work</div>
+          </div>
+          <p className="text-white/60 text-xs px-2 pt-3">
+            For most fixed installation work a CAT III 1000&nbsp;V or CAT IV 600&nbsp;V rated
+            instrument and matching leads are appropriate. The whole setup — instrument, leads and
+            probes — must carry the rating; the lowest-rated component sets the safe limit.
+          </p>
         </div>
       </>
     ),
@@ -518,6 +557,69 @@ const sections = [
           sequence. This confirms both that the circuit is dead and that the instrument used to make
           that determination was functioning correctly.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4">
+          <h3 className="font-semibold text-white text-base mb-2 px-2 pt-2">
+            Two-pole voltage indicator vs multimeter
+          </h3>
+          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
+            <div className="col-span-4">Factor</div>
+            <div className="col-span-4">Two-pole voltage indicator</div>
+            <div className="col-span-4">Multimeter</div>
+          </div>
+          {[
+            {
+              factor: 'Primary proving-dead use',
+              vi: 'Designed for it — HSE preferred instrument',
+              mm: 'Secondary check only, not on its own',
+            },
+            {
+              factor: 'Input impedance',
+              vi: 'Lower — rejects capacitive coupling',
+              mm: 'High (typically ~10 MΩ) — can show phantom voltage',
+            },
+            {
+              factor: 'Range selection',
+              vi: 'No selection — clear go / no-go indication',
+              mm: 'May auto-range with a settling delay',
+            },
+            {
+              factor: 'Prove before and after',
+              vi: 'Integral or separate proving unit',
+              mm: 'Relies on a separate known source',
+            },
+          ].map((row) => (
+            <div
+              key={row.factor}
+              className="grid grid-cols-12 gap-2 rounded-xl bg-white/[0.03] border border-white/10 px-2 py-3 mb-2 text-sm text-white last:mb-0"
+            >
+              <div className="col-span-4 font-semibold">{row.factor}</div>
+              <div className="col-span-4 text-green-300">{row.vi}</div>
+              <div className="col-span-4 text-white/70">{row.mm}</div>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">Prove dead on every conductor combination</h4>
+          <p className="text-white text-sm mb-3 leading-relaxed">
+            At the point of work, test every combination — a single test is not enough. For a
+            single-phase circuit that is line, neutral and earth:
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {['Line to neutral', 'Line to earth', 'Neutral to earth'].map((combo) => (
+              <div
+                key={combo}
+                className="rounded-xl bg-black/30 border border-yellow-500/30 px-2 py-3 text-center text-sm font-semibold text-white"
+              >
+                {combo}
+              </div>
+            ))}
+          </div>
+          <p className="text-white/70 text-xs mt-3">
+            Any reading on any combination means the circuit is not dead — stop and investigate.
+            Borrowed neutrals and shared CPCs can leave a conductor live even when the controlling
+            device is off.
+          </p>
+        </div>
       </>
     ),
   },
@@ -569,6 +671,97 @@ const sections = [
             </li>
           </ul>
         </div>
+        <p>Match the securing method to the board and the job:</p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4">
+          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
+            <div className="col-span-5">Method</div>
+            <div className="col-span-7">Best suited to</div>
+          </div>
+          {[
+            { m: 'Remove fuse / carrier and keep it', s: 'Rewireable or cartridge fuse boards, single-operative domestic work' },
+            { m: 'MCB lock-off clip with padlock', s: 'Standard MCB consumer units with no fuse to remove' },
+            { m: 'Padlock on isolator / switch-disconnector', s: 'Boards and equipment with built-in provision for a padlock' },
+            { m: 'Multi-lock hasp', s: 'Multiple operatives on one circuit or item of plant' },
+          ].map((row) => (
+            <div
+              key={row.m}
+              className="grid grid-cols-12 gap-2 rounded-xl bg-white/[0.03] border border-white/10 px-2 py-3 mb-2 text-sm text-white last:mb-0"
+            >
+              <div className="col-span-5 font-semibold">{row.m}</div>
+              <div className="col-span-7 text-white/70">{row.s}</div>
+            </div>
+          ))}
+          <p className="text-white/60 text-xs px-2 pt-2">
+            BS 7671 Regulation 462.3 recognises padlocking and lockable enclosures as means of
+            preventing unintentional re-closure. A warning notice should accompany every method.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'bs7671-isolation',
+    heading: 'How BS 7671 Supports Safe Isolation',
+    content: (
+      <>
+        <p>
+          The legal duty to isolate comes from the Electricity at Work Regulations 1989, but BS 7671
+          (the IET Wiring Regulations) determines that the means of isolation you rely on actually
+          exists and is fit for the job. BS 7671 defines isolation as the function intended to make
+          dead, for reasons of safety, all or a discrete section of an installation by separating it
+          from every source of electrical energy. Chapter 46 and Section 537 set out where isolation
+          devices must be provided and how they must behave.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4">
+          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
+            <div className="col-span-3">Regulation</div>
+            <div className="col-span-9">Requirement</div>
+          </div>
+          {[
+            {
+              reg: '462.1.201',
+              text: 'A main linked switch or linked circuit-breaker shall be provided as near as practicable to the origin of every installation, as a means of switching the supply on load and as a means of isolation. A main switch intended for operation by ordinary persons (for example in a household installation) shall interrupt both live conductors of a single-phase supply.',
+            },
+            {
+              reg: '462.2',
+              text: 'Every circuit shall be provided with a means of isolation for all live conductors, except as detailed in Regulation 461.2. A group of circuits may be isolated by a common means where the service conditions allow it.',
+            },
+            {
+              reg: '462.3',
+              text: 'Devices for isolation shall be designed and/or installed to prevent unintentional or inadvertent closure. The examples given are: located within a lockable space or enclosure; padlocking; or located adjacent to the associated equipment.',
+            },
+            {
+              reg: '462.4',
+              text: 'Where residual electrical energy may be present, suitable means shall be provided for its discharge, with a warning label indicating the discharge time before the enclosure can be safely opened where relevant.',
+            },
+          ].map((row) => (
+            <div
+              key={row.reg}
+              className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 mb-2 text-sm text-white last:mb-0"
+            >
+              <div className="col-span-3 font-bold">{row.reg}</div>
+              <div className="col-span-9 leading-relaxed">{row.text}</div>
+            </div>
+          ))}
+        </div>
+        <p>
+          Regulation 462.3 is the link between the wiring regulations and the lock-off practice
+          covered above — padlocking and lockable enclosures are written into BS 7671 itself as
+          recognised ways to stop a device being re-closed. Section 537 then sets the device-level
+          requirements, with Table 537.4 giving guidance on selecting protective, isolation and
+          switching devices and their relevant product standards. When you choose an isolator,
+          switch-disconnector or lock-off arrangement, you are working to these requirements.
+        </p>
+        <p className="text-white/70 text-sm">
+          Recording isolation and the test instruments used is part of completing an{' '}
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. For the wider
+          inspection workflow, see the{' '}
+          <SEOInternalLink href="/training/inspection-and-testing">
+            inspection and testing course
+          </SEOInternalLink>
+          .
+        </p>
       </>
     ),
   },
@@ -697,6 +890,11 @@ export default function SafeIsolationProcedureGuidePage() {
       }
       heroSubtitle="Safe isolation is a legal requirement under the Electricity at Work Regulations 1989. This guide covers the prove-isolate-secure-prove sequence, HSE GS38 requirements for test instruments, locking off, multi-lock hasps, and the correct method for proving dead."
       readingTime={12}
+      answerBox={{
+        question: 'What is the safe isolation procedure for electricians?',
+        answer:
+          'Safe isolation follows a prove-isolate-secure-prove sequence: identify the circuit, prove your GS38 voltage indicator works on a known live source, switch off and isolate, secure the isolation point with a lock or by removing the fuse, prove dead at the point of work testing all conductors, then re-prove the indicator still works. It is a legal duty under the Electricity at Work Regulations 1989.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

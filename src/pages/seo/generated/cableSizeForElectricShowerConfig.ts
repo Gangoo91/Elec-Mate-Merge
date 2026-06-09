@@ -22,6 +22,11 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   heroSuffix: '(8.5 / 9.5 / 10.8 kW)',
   heroSubtitle:
     'The most-asked UK domestic cable-sizing question after the EV charger. Short answer: 6 mm² twin-and-earth for most 8.5 kW units on short runs; 10 mm² for 9.5 kW and many 10.5/10.8 kW units. This guide walks the BS 7671 Section 701 + Appendix 4 process including RCD selection and the bathroom-zone implications.',
+  answerBox: {
+    question: 'What size cable do I need for an electric shower?',
+    answer:
+      'For most UK domestic showers: 6 mm² twin-and-earth suits an 8.5 kW unit (≈37 A) on a short, well-ventilated run, while 9.5 kW (≈41 A) and 10.5–10.8 kW (≈46–47 A) units take 10 mm². Longer runs or cable in insulation can push you to 16 mm². Every shower also needs a 30 mA RCD (BS 7671 701.411.3.3) and a double-pole isolator outside the bathroom zones.',
+  },
   keyTakeaways: [
     '**8.5 kW shower (37 A)** — 6 mm² twin-and-earth typically suffices for short runs in good thermal conditions. Verify with BS 7671 Appendix 4 calculation.',
     '**9.5 kW shower (41 A)** — 10 mm² twin-and-earth is the standard UK practice; 6 mm² is borderline and typically fails voltage drop on longer runs.',
@@ -66,23 +71,29 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Design current (Ib) for an electric shower is calculated from the rated power divided by the nominal supply voltage:',
+          text: 'Design current (Ib) for an electric shower is the rated power divided by the nominal supply voltage. For UK domestic installations the nominal voltage is 230 V, so Ib (A) = rated power (W) ÷ 230.',
         },
         {
           type: 'list',
+          tone: 'pricing',
           items: [
-            'Ib (A) = Rated power (W) / Nominal voltage (V)',
-            'For UK domestic: Vn = 230 V.',
-            '8.5 kW → 8,500 / 230 ≈ 37 A',
-            '9.5 kW → 9,500 / 230 ≈ 41 A',
-            '10.5 kW → 10,500 / 230 ≈ 46 A',
-            '10.8 kW → 10,800 / 230 ≈ 47 A',
-            '11.5 kW → 11,500 / 230 ≈ 50 A',
+            '**7.5 kW** → 7,500 ÷ 230 ≈ **33 A** → 40 A device → 6 mm² (short run)',
+            '**8.5 kW** → 8,500 ÷ 230 ≈ **37 A** → 40 A device → 6 mm² (short run, vd checked)',
+            '**9.5 kW** → 9,500 ÷ 230 ≈ **41 A** → 45 A device → 10 mm²',
+            '**10.5 kW** → 10,500 ÷ 230 ≈ **46 A** → 50 A device → 10 mm²',
+            '**10.8 kW** → 10,800 ÷ 230 ≈ **47 A** → 50 A device → 10 mm²',
+            '**11.5 kW** → 11,500 ÷ 230 ≈ **50 A** → 50 A device → 10 mm² (16 mm² on long runs)',
           ],
         },
         {
           type: 'paragraph',
-          text: "Electric showers operate at maximum power for the full duration of use — there's no diversity to apply. The protective device rating should be the next standard MCB / RCBO rating at or above Ib: typically 40 A for 8.5 kW, 45 A or 50 A for 9.5 kW, 50 A for 10.5-10.8 kW.",
+          text: "Electric showers operate at maximum power for the full duration of use — there is no diversity to apply, so Ib is the full nameplate current. The protective device is the next standard MCB / RCBO rating at or above Ib: typically 40 A for 7.5–8.5 kW, 45 A or 50 A for 9.5 kW, and 50 A for 10.5–11.5 kW. The cable column above is the usual UK starting point; every run must still pass the three checks in the next section against its own length, reference method and ambient temperature.",
+        },
+        {
+          type: 'callout',
+          tone: 'info',
+          title: 'Confirm the voltage on site',
+          text: 'Some supplies sit closer to 240 V, which lowers Ib slightly, while the worst case for voltage drop is the declared 230 V. Use the nameplate kW and 230 V for sizing — never assume the shower runs below its rating.',
         },
       ],
     },
@@ -101,7 +112,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
           items: [
             '**Current-carrying capacity (Iz)** — the cable must carry Ib continuously. Iz is read from BS 7671 Appendix 4 tables for the chosen cable type and reference method, adjusted by Ca (ambient temperature) and Cg (grouping).',
             '**Voltage drop** — total voltage drop from origin to load must not exceed 3% for lighting or 5% for "other" circuits (Regulation 525). Designing to 3% is good practice for shower circuits.',
-            '**Disconnection time at calculated Zs** — Regulation 411.3.2 requires a maximum 0.4 s disconnection time for TN final circuits with socket-outlets or with rating ≤ 32 A supplying fixed equipment. For a shower (fixed equipment > 32 A typically), the 5 s rule applies — but the 30 mA RCD requirement of Regulation 701.411.3.3 makes the practical disconnection time well under 0.4 s anyway.',
+'**Disconnection time at calculated Zs** — under BS 7671:2018+A4:2026 the Table 41.1 maximum disconnection times (0.4 s for a 230 V TN circuit) apply to final circuits rated up to 63 A with socket-outlets, and up to 32 A supplying only fixed equipment (Regulation 411.3.2.2). A shower is fixed equipment above 32 A, so the 5 s TN limit of Regulation 411.3.2.3 applies — but the mandatory 30 mA RCD (Regulation 701.411.3.3) brings the actual disconnection time far below that anyway.',
           ],
         },
       ],
@@ -134,7 +145,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'An electric shower is installed in a Section 701 location (location containing a bath or shower). Several specific requirements apply:',
+          text: 'An electric shower is installed in a Section 701 location (a location containing a bath or shower), so the cable size is only half the job — the zone, RCD, IP-rating and bonding rules apply to the whole circuit. The headline requirements are below; the [Section 701 bathrooms complete guide](/guides/section-701-bathrooms-complete-guide) covers the zone geometry in full.',
         },
         {
           type: 'list',
@@ -183,7 +194,7 @@ export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
             '**Not accounting for cable in roof insulation** — Reference Method 101 (cable in thermally insulating wall) gives lower Iz than the same cable clipped direct. Many real installations have part of the route in loft insulation — apply the correct reference method to the worst-case section.',
             '**Forgetting the RCD** — Regulation 701.411.3.3 requires 30 mA RCD on every shower circuit. A 40 A Type B MCB with no RCD is non-compliant regardless of cable size.',
             '**Omitting the dedicated isolator** — installing the shower directly from the consumer unit with no dedicated isolator outside the bathroom is non-compliant with Regulation 701.512.3.',
-            "**Mixing 7.5 kW protective device with 9.5 kW shower upgrade** — when upgrading the shower without upgrading the protective device, the old 40 A MCB may protect 6 mm² cable that's now overloaded by the 9.5 kW unit. Always re-check the whole circuit when changing the shower rating.",
+            "**Mixing a 7.5 kW protective device with a 9.5 kW shower upgrade** — when upgrading the shower without upgrading the protective device, the old 40 A MCB may protect 6 mm² cable that is now overloaded by the 9.5 kW unit. Always re-check the whole circuit (cable, device and isolator) when changing the shower rating — the same discipline applies to the [cooker circuit](/guides/cable-size-for-cooker-circuit) and the [EV charger circuit](/guides/cable-size-for-ev-charger).",
           ],
         },
       ],

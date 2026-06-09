@@ -31,6 +31,12 @@ const breadcrumbs = [
   { label: 'Method Statement for Electrical Work', href: '/guides/method-statement-electrical' },
 ];
 
+const answerBox = {
+  question: 'What is a method statement for electrical work?',
+  answer:
+    'A method statement is a written, step-by-step description of how a specific electrical job will be carried out safely — from site set-up through safe isolation, installation, testing and handover. It states what is done at each stage, who does it, the equipment used and the safety controls in place. Paired with a risk assessment it forms a RAMS pack, the standard document clients and principal contractors require before work begins.',
+};
+
 const tocItems = [
   { id: 'what-is-method-statement', label: 'What Is a Method Statement?' },
   { id: 'when-required', label: 'When Is a Method Statement Required?' },
@@ -50,7 +56,7 @@ const keyTakeaways = [
   'The method statement must be specific to the job and site — generic template method statements that do not address the actual work being done are increasingly being rejected by safety-conscious clients.',
   'Together with the risk assessment, the method statement forms a RAMS pack (Risk Assessment and Method Statement) — the standard safety document package for electrical contracting.',
   'Elec-Mate generates professional, site-specific method statements from a plain-English job description in under 60 seconds using its AI Health and Safety agent and RAMS Generator.',
-  'Post-A4:2026 method statements for domestic consumer unit changes and rewires must address two new design checkpoints: AFDDs on AC final circuits (Reg 421.1.7, recommended) and RCD protection not exceeding 30 mA on all lighting circuits in domestic premises (Reg 411.3.4, mandatory).',
+  'Post-A4:2026 method statements for domestic consumer unit changes and rewires must address two new design checkpoints: AFDDs on socket-outlet final circuits not exceeding 32 A (Reg 421.1.7 — a requirement in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes; recommended elsewhere) and RCD protection not exceeding 30 mA on all final circuits supplying luminaires in domestic premises (Reg 411.3.4, mandatory).',
   'Safe isolation described in a method statement must follow the OSG Reg 12.5 minimum three-stage sequence before testing dead: (1) positively identify the isolation point, (2) check the VID condition, (3) confirm VID functioning on a known live source.',
 ];
 
@@ -107,6 +113,106 @@ const howToSteps = [
   {
     name: 'Review and approve',
     text: 'Have the method statement reviewed by a competent person before issuing it. Check that the sequence is logical, the safety precautions are adequate, the resources are realistic, and the document is specific to the actual job and site. On commercial sites, the method statement will be reviewed by the principal contractor or their safety team as part of the RAMS approval process. Incorporate their feedback and resubmit if required. Only begin work after the method statement has been approved.',
+  },
+];
+
+const commonMethodStatements = [
+  {
+    title: 'Domestic Rewire',
+    icon: Home,
+    tint: 'bg-yellow-500/5 border-yellow-500/20',
+    steps: [
+      'Mobilisation, customer briefing, and agreement of working hours and access',
+      'Asbestos assessment (mandatory consideration in pre-2000 properties)',
+      'Existing installation survey and circuit identification',
+      'Temporary supply arrangements where the customer remains in residence',
+      'Safe isolation of existing circuits before any disconnection',
+      'First fix — cable routes, containment, and cabling with fire stopping at every penetration',
+      'Consumer unit installation and termination in a non-combustible enclosure (Reg 421.1.201)',
+      'Second fix — accessories, terminations, and final connections',
+      'Initial verification — dead and live tests in the BS 7671 sequence',
+      'Building control notification under Part P via a competent person scheme',
+      'Customer handover with the EIC and operating instructions',
+    ],
+    checkpointsHeading: 'A4:2026 Design & Commissioning Checkpoints',
+    checkpoints: [
+      {
+        label: 'AFDDs (Reg 421.1.7):',
+        text: 'arc fault detection devices are a requirement on socket-outlet final circuits rated up to 32 A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes, and are recommended for single-phase socket-outlet circuits up to 32 A elsewhere. Record the AFDD decision in the method statement.',
+      },
+      {
+        label: 'RCD on luminaires (Reg 411.3.4):',
+        text: 'within domestic premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. Verify this at commissioning before completing the EIC.',
+      },
+    ],
+  },
+  {
+    title: 'Consumer Unit Change',
+    icon: Wrench,
+    tint: 'bg-white/[0.04] border-white/10',
+    steps: [
+      'Site assessment and review of the existing installation',
+      'Safe isolation of the incoming supply (coordinate with the DNO if the service fuse must be pulled)',
+      'Removal of the existing consumer unit',
+      'Installation of the new non-combustible (e.g. ferrous metal) consumer unit per Reg 421.1.201',
+      'Circuit transfer and termination to the correct manufacturer torque settings',
+      'Labelling of every circuit and the main switch',
+      'Initial verification — dead and live tests',
+      'Completion of the Electrical Installation Certificate (EIC)',
+      'Part P building control notification',
+      'Customer handover, addressing the period when the supply was isolated and power was lost',
+    ],
+    checkpointsHeading: 'A4:2026 Design & Commissioning Checkpoints',
+    checkpoints: [
+      {
+        label: 'AFDDs (Reg 421.1.7):',
+        text: 'confirm whether AFDDs are required (socket-outlet circuits up to 32 A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes) or recommended (single-phase socket-outlet circuits up to 32 A elsewhere), and record the decision.',
+      },
+      {
+        label: 'RCD on luminaires (Reg 411.3.4):',
+        text: 'verify that all final circuits supplying luminaires in domestic premises are protected by a 30 mA RCD before completing the EIC.',
+      },
+    ],
+  },
+  {
+    title: 'EICR (Electrical Installation Condition Report)',
+    icon: ClipboardCheck,
+    tint: 'bg-white/[0.04] border-white/10',
+    steps: [
+      'Pre-inspection consultation — scope, access requirements, and shutdown arrangements',
+      'Visual inspection of the installation',
+      'Safe isolation in preparation for dead testing',
+      'Dead tests in the GN3 sequence — continuity, insulation resistance, polarity',
+      'Re-energise and carry out live tests — earth fault loop impedance (Zs), prospective fault current, RCD operation',
+      'Record all measured results',
+      'Classify observations using codes C1, C2, C3 and FI',
+      'Complete the EICR form',
+      'Handover and explanation of findings to the client',
+    ],
+  },
+  {
+    title: 'EV Charger Installation',
+    icon: Zap,
+    tint: 'bg-white/[0.04] border-white/10',
+    steps: [
+      'Site survey — supply capacity, maximum demand calculation, cable route, and charger location',
+      'DNO notification (G98/G99 application where required)',
+      'Cable sizing calculation including voltage drop',
+      'Installation of a dedicated circuit from the consumer unit to the charge point',
+      'Cable containment and mechanical protection',
+      'Earth electrode installation where a TT system or supplementary earthing is required',
+      'Charger mounting and connection',
+      'Testing and commissioning',
+      'Completion of the EIC',
+      'OZEV grant paperwork where applicable, then customer handover and operating instructions',
+    ],
+    checkpointsHeading: 'A4:2026 Commissioning Checkpoint',
+    checkpoints: [
+      {
+        label: 'Load curtailment (Reg 722.311.201):',
+        text: 'load curtailment — including load reduction or disconnection, automatically or manually — may be taken into account when determining maximum demand of the installation or part thereof. Where a dynamic load management device is fitted, record the curtailment scheme and confirm its correct operation at commissioning.',
+      },
+    ],
   },
 ];
 
@@ -321,122 +427,47 @@ const sections = [
           key sections you would expect in method statements for the most common electrical jobs.
         </p>
         <div className="space-y-6 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Home className="w-5 h-5 text-yellow-400" />
-              <h3 className="font-bold text-white text-lg">Domestic Rewire</h3>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Mobilisation and customer briefing, asbestos assessment (pre-2000 property), existing
-              installation survey and circuit identification, temporary supply arrangements (if
-              customer is in residence), safe isolation of existing circuits, first fix — cable
-              routes, containment, and cabling with fire stopping at all penetrations, consumer unit
-              installation and termination (metal-enclosure type — BS 7671 Reg 421.1.201), second
-              fix — accessories and final connections, initial verification testing (BS 7671
-              sequence), Part P notification to building control via competent person scheme,
-              customer handover including EIC and operating instructions.
-            </p>
-            <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
-              <h4 className="font-semibold text-white text-sm mb-2">
-                A4:2026 Design &amp; Commissioning Checkpoints
-              </h4>
-              <ul className="space-y-1 text-white/80 text-sm leading-relaxed list-disc list-inside">
-                <li>
-                  <strong>AFDDs (Reg 421.1.7):</strong> A4:2026 recommends arc fault detection
-                  devices on AC final circuits to mitigate fire risk from arc fault currents. Record
-                  the AFDD decision in the method statement.
-                </li>
-                <li>
-                  <strong>RCD on lighting (Reg 411.3.4):</strong> In domestic premises, all AC final
-                  circuits supplying luminaires shall have additional RCD protection with a rated
-                  residual operating current not exceeding 30 mA. This is a mandatory commissioning
-                  verification step.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Wrench className="w-5 h-5 text-yellow-400" />
-              <h3 className="font-bold text-white text-lg">Consumer Unit Change</h3>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Site assessment and existing installation review, safe isolation of incoming supply
-              (coordination with DNO if required for service fuse), removal of existing consumer
-              unit, installation of new metal-enclosure consumer unit (required under BS 7671 Reg
-              421.1.201 — domestic premises shall use non-combustible enclosures; steel is deemed to
-              satisfy this), circuit transfer and termination with correct torque settings,
-              labelling of all circuits, initial verification testing, completion of electrical
-              installation certificate (EIC), Part P notification, customer handover. Method
-              statement must address the period when the supply is isolated and customers have no
-              power.
-            </p>
-            <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
-              <h4 className="font-semibold text-white text-sm mb-2">
-                A4:2026 Design &amp; Commissioning Checkpoints
-              </h4>
-              <ul className="space-y-1 text-white/80 text-sm leading-relaxed list-disc list-inside">
-                <li>
-                  <strong>AFDDs (Reg 421.1.7):</strong> BS 7671:2018+A4:2026 recommends arc fault
-                  detection devices on AC final circuits to mitigate fire risk from arc fault
-                  currents. Confirm whether client or designer has specified AFDDs and record the
-                  decision in the method statement.
-                </li>
-                <li>
-                  <strong>RCD on lighting (Reg 411.3.4):</strong> In domestic premises, AC final
-                  circuits supplying luminaires shall be provided with additional protection by an
-                  RCD with a rated residual operating current not exceeding 30 mA. Verify all
-                  lighting circuits are RCD-protected before completing the EIC.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
-              <h3 className="font-bold text-white text-lg">
-                EICR (Electrical Installation Condition Report)
-              </h3>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Pre-inspection consultation with client (scope, access requirements, shutdown
-              arrangements), visual inspection of the installation, safe isolation for dead testing,
-              dead tests in the correct sequence per GN3 (continuity, insulation resistance,
-              polarity), re-energise and carry out live tests (Zs, PFC, RCD), record all results,
-              identify observation codes (C1, C2, C3, FI), complete the EICR form, handover report
-              to client with explanation of findings. Method statement must address the sequential
-              testing procedure and the repeated isolation and re-energisation cycles.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
-              <h3 className="font-bold text-white text-lg">EV Charger Installation</h3>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Site survey (supply capacity assessment, maximum demand calculation, cable route,
-              charger location), DNO notification (G98/G99 application if required), cable sizing
-              calculation including voltage drop, installation of dedicated circuit from consumer
-              unit to charger location, cable containment and mechanical protection, earth electrode
-              installation (if TT system or supplementary earth required), charger mounting and
-              connection, testing and commissioning, completion of EIC, OZEV grant paperwork (if
-              applicable), customer handover with charger operating instructions.
-            </p>
-            <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
-              <h4 className="font-semibold text-white text-sm mb-2">
-                A4:2026 Commissioning Checkpoint — Load Curtailment (Reg 722.311.201)
-              </h4>
-              <p className="text-white/80 text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 Reg 722.311.201 states that load curtailment — including
-                automatic or manual load reduction or disconnection — may be taken into account when
-                determining the maximum demand of an EV charging installation or part thereof. Where
-                a dynamic load management or demand-response device is fitted, record the
-                curtailment scheme in the method statement and confirm its correct operation at
-                commissioning. This is a design and commissioning checkpoint for all post-A4 EV
-                charger installations.
-              </p>
-            </div>
-          </div>
+          {commonMethodStatements.map((ms) => {
+            const Icon = ms.icon;
+            return (
+              <div key={ms.title} className={`rounded-2xl border p-5 ${ms.tint}`}>
+                <div className="flex items-center gap-2 mb-4">
+                  <Icon className="w-5 h-5 text-yellow-400" />
+                  <h3 className="font-bold text-white text-lg">{ms.title}</h3>
+                </div>
+                <ol className="space-y-2">
+                  {ms.steps.map((step, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 rounded-xl bg-black/20 border border-white/10 px-3 py-2"
+                    >
+                      <span className="flex items-center justify-center w-6 h-6 shrink-0 rounded-full bg-yellow-400 text-black text-xs font-bold mt-0.5">
+                        {i + 1}
+                      </span>
+                      <span className="text-white text-sm leading-relaxed">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                {ms.checkpoints && (
+                  <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 mt-4">
+                    <h4 className="font-semibold text-white text-sm mb-2">
+                      {ms.checkpointsHeading}
+                    </h4>
+                    <ul className="space-y-2 text-white/80 text-sm leading-relaxed">
+                      {ms.checkpoints.map((c, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-blue-300 mt-0.5 shrink-0">▸</span>
+                          <span>
+                            <strong className="text-white">{c.label}</strong> {c.text}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </>
     ),
@@ -452,6 +483,34 @@ const sections = [
           are needed; the method statement describes how those controls are implemented within the
           practical sequence of work. Neither document is complete without the other.
         </p>
+        <div className="grid sm:grid-cols-2 gap-4 my-6">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
+              <Scale className="w-4 h-4 text-yellow-400" />
+              Risk Assessment
+            </h3>
+            <ul className="space-y-2 text-white/85 text-sm leading-relaxed">
+              <li>Answers "what could go wrong, and what will we do about it?"</li>
+              <li>Identifies hazards and the people at risk</li>
+              <li>Scores risk on a likelihood-times-severity matrix</li>
+              <li>Specifies control measures and the hierarchy of controls</li>
+              <li>Completed first — it defines the controls</li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+            <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
+              <ListOrdered className="w-4 h-4 text-yellow-400" />
+              Method Statement
+            </h3>
+            <ul className="space-y-2 text-white/85 text-sm leading-relaxed">
+              <li>Answers "how exactly will we do this work safely?"</li>
+              <li>Describes the chronological sequence of operations</li>
+              <li>States the safety precautions at each stage</li>
+              <li>Embeds the risk assessment controls into the work process</li>
+              <li>Written second — it implements the controls</li>
+            </ul>
+          </div>
+        </div>
         <p>
           The relationship is directional: the{' '}
           <SEOInternalLink href="/guides/risk-assessment-electrical-work">
@@ -490,14 +549,39 @@ const sections = [
           RAMS," they expect to receive both the risk assessment and the method statement for the
           specific work being carried out on their specific site.
         </p>
-        <p>
-          A complete RAMS pack for electrical work typically includes: a cover sheet with project
-          details, contractor information, and document control; a risk assessment with hazard
-          identification, risk matrix scoring, control measures, and hierarchy of controls; a method
-          statement with step-by-step work sequence, safety precautions, and emergency procedures;
-          COSHH assessments where hazardous substances are involved; and appendices such as site
-          plans, circuit diagrams, competence records, and insurance certificates.
-        </p>
+        <p>A complete RAMS pack for electrical work typically contains the following parts.</p>
+        <div className="grid sm:grid-cols-2 gap-3 my-6">
+          {[
+            {
+              t: 'Cover sheet',
+              d: 'Project details, contractor information, and document control (reference, revision, date).',
+            },
+            {
+              t: 'Risk assessment',
+              d: 'Hazard identification, risk matrix scoring, control measures, and the hierarchy of controls.',
+            },
+            {
+              t: 'Method statement',
+              d: 'Step-by-step work sequence, safety precautions at each stage, and emergency procedures.',
+            },
+            {
+              t: 'COSHH assessments',
+              d: 'Where hazardous substances are involved — for example resins, solvents, or dust from chasing.',
+            },
+            {
+              t: 'Appendices',
+              d: 'Site plans, circuit diagrams, competence records, and insurance certificates.',
+            },
+          ].map((item) => (
+            <div
+              key={item.t}
+              className="rounded-2xl bg-white/[0.04] border border-white/10 p-4"
+            >
+              <h4 className="font-semibold text-white text-sm mb-1">{item.t}</h4>
+              <p className="text-white/80 text-sm leading-relaxed">{item.d}</p>
+            </div>
+          ))}
+        </div>
         <p>
           The quality of your RAMS directly affects your ability to win work. Principal contractors
           and safety teams review RAMS for substance and specificity — they can immediately identify
@@ -680,6 +764,7 @@ export default function MethodStatementElectricalPage() {
       tocItems={tocItems}
       badge="Safety Hub"
       badgeIcon={ClipboardCheck}
+      answerBox={answerBox}
       heroTitle={
         <>
           Method Statement for Electrical Work:{' '}

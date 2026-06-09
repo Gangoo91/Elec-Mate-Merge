@@ -24,6 +24,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'how-it-works', label: 'How Electric Showers Work' },
+  { id: 'symptom-finder', label: 'Quick Symptom Finder' },
   { id: 'safe-isolation', label: 'Safe Isolation First' },
   { id: 'rcd-tripping', label: 'RCD Tripping' },
   { id: 'heating-element', label: 'Heating Element Failure' },
@@ -40,15 +41,21 @@ const keyTakeaways = [
   'An electric shower that trips the RCD every time it is used almost certainly has a heating element with failed insulation — the element must be replaced, not just the RCD reset.',
   'Solenoid valve failure is one of the most common causes of an electric shower that runs cold or will not start the flow of water — the valve is replaceable without replacing the entire unit.',
   'Low water pressure is a plumbing issue, not an electrical one — the flow switch in the shower requires a minimum dynamic pressure (typically 0.7 to 1.0 bar) to activate the heating element.',
-  'Electric showers are wired on a dedicated radial circuit from the consumer unit, protected by a Type B MCB rated at 40A to 50A for a 10.5kW shower. BS 7671 Reg 701.411.3.3 requires 30mA RCD additional protection for all LV circuits in rooms containing a bath or shower.',
+  'Electric showers are wired on a dedicated radial circuit from the consumer unit. A 10.5kW unit draws roughly 46A at 230V and is typically protected by a 50A Type B device. BS 7671 Reg 701.411.3.3 requires 30mA RCD additional protection (per Reg 415.1.1) for low-voltage circuits serving a room containing a bath or shower, and for circuits passing through zones 1 and 2.',
   'Repair is usually more economical than replacement for showers under five years old. A new electric shower costs £150 to £400 for the unit, plus £150 to £300 for installation.',
 ];
+
+const answerBox = {
+  question: 'Why is my electric shower not working?',
+  answer:
+    'Most electric shower faults fall into three groups. If it trips the RCD, the heating element has likely failed to earth and must be replaced. If it runs cold, the element has gone open-circuit, or the flow switch or solenoid valve is not activating the element. If there is no water flow, suspect low pressure or a blocked inlet filter. Isolate at the consumer unit and prove dead before any work; element, PCB and wiring faults are electrician-only.',
+};
 
 const faqs = [
   {
     question: 'Why does my electric shower keep tripping the RCD?',
     answer:
-      'Repeated RCD tripping from an electric shower almost always indicates the heating element has developed a fault to earth — current is leaking through degraded element insulation to the earth conductor, which the RCD detects and disconnects within 300 milliseconds (the maximum permitted under BS 7671 Reg 643.7.3.201; in practice most RCDs trip considerably faster). This is a genuine safety fault. Do not continue to reset and use the shower. A qualified electrician will test the element insulation resistance and replace it if it has failed.',
+      'Repeated RCD tripping from an electric shower almost always indicates the heating element has developed a fault to earth — current is leaking through degraded element insulation to the earth conductor, which the 30mA RCD detects and disconnects. Under BS 7671 Reg 643.8, a general non-delay RCD is deemed effective where it disconnects within 300 milliseconds at its rated residual operating current; in practice most trip considerably faster. This is a genuine safety fault. Do not continue to reset and use the shower. A qualified electrician will test the element insulation resistance and replace it if it has failed.',
   },
   {
     question: 'My electric shower runs cold — what is wrong?',
@@ -68,7 +75,7 @@ const faqs = [
   {
     question: 'What size MCB does an electric shower need?',
     answer:
-      'The MCB rating depends on the shower power rating. A 7.5kW shower requires a 32A MCB, a 8.5kW shower a 40A MCB, a 9.5kW or 10.5kW shower a 45A or 50A MCB. The cable size must be matched to the MCB rating and the cable run length. 6mm² cable is required for most 40A circuits; 10mm² for 50A circuits over longer runs. Always refer to BS 7671 Table 4D5 for the correct cable size based on installation method and circuit length.',
+      'The protective device rating follows the shower power rating and its full-load current (power divided by 230V). As a typical starting point a 7.5kW or 8.5kW shower uses a 40A device, a 9.5kW a 45A device, and a 10.5kW a 50A device — usually Type B. The cable must be sized for that load and the installation conditions, not just matched to the device. Confirm the cable cross-sectional area against BS 7671 Table 4D5 (the typical flat twin-and-earth shower cable) with the correct correction factors for installation method, grouping and run length, and provide 30mA RCD additional protection per Reg 701.411.3.3.',
   },
   {
     question: 'My electric shower makes a clicking noise and then goes cold — what is it?',
@@ -174,6 +181,74 @@ const sections = [
               </span>
             </li>
           </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'symptom-finder',
+    heading: 'Quick Symptom Finder',
+    content: (
+      <>
+        <p>
+          Use the table below to narrow down the fault before you start. Match the symptom to the
+          most likely cause, then jump to the relevant section. Anything involving the element, PCB,
+          solenoid coil or wiring is electrician-only work — always isolate and prove dead first.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-white">
+              <thead>
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                  <th className="px-4 py-3 font-semibold">Symptom</th>
+                  <th className="px-4 py-3 font-semibold">Most likely cause</th>
+                  <th className="px-4 py-3 font-semibold">Who to call</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr className="bg-red-900/20">
+                  <td className="px-4 py-3 font-medium">Trips the RCD on switch-on, every time</td>
+                  <td className="px-4 py-3">Element failed dead-short to earth</td>
+                  <td className="px-4 py-3 text-red-200">Electrician</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Trips the RCD after a few minutes</td>
+                  <td className="px-4 py-3">Element insulation breaking down when hot</td>
+                  <td className="px-4 py-3 text-red-200">Electrician</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Runs cold, water flows normally</td>
+                  <td className="px-4 py-3">Open-circuit element or flow switch not activating</td>
+                  <td className="px-4 py-3 text-red-200">Electrician</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">No water flow at all</td>
+                  <td className="px-4 py-3">Solenoid stuck closed, blocked inlet filter</td>
+                  <td className="px-4 py-3 text-white/80">Either</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Weak / cold only at peak times</td>
+                  <td className="px-4 py-3">Low dynamic water pressure</td>
+                  <td className="px-4 py-3 text-blue-200">Plumber</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Drips from head after switch-off</td>
+                  <td className="px-4 py-3">Solenoid not closing or worn valve seat</td>
+                  <td className="px-4 py-3 text-white/80">Either</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Clicks then goes cold</td>
+                  <td className="px-4 py-3">Thermal cut-out (TCO) operating</td>
+                  <td className="px-4 py-3 text-red-200">Electrician</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Erratic temperature / dead unit</td>
+                  <td className="px-4 py-3">PCB failure</td>
+                  <td className="px-4 py-3 text-red-200">Electrician</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </>
     ),
@@ -289,17 +364,66 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulatory requirement</strong> — BS 7671 Reg 701.411.3.3 (referencing Reg
-                415.1.1) requires a 30mA RCD to provide additional protection for all low-voltage
-                circuits in rooms containing a bath or shower. This applies to every circuit serving
-                or passing through the bathroom zone, including the dedicated shower circuit. Where
-                the shower circuit is the only circuit in that location, a dedicated RCBO or RCD
+                <strong>Regulatory requirement</strong> — BS 7671 Reg 701.411.3.3 requires
+                additional protection by one or more RCDs having the characteristics specified in
+                Reg 415.1.1 (rated residual operating current not exceeding 30mA) for low-voltage
+                circuits serving a room containing a bath or shower, and for circuits passing through
+                zones 1 and 2 not serving the location. This includes the dedicated shower circuit.
+                Where the shower circuit is the only circuit in that location, a dedicated RCBO
                 protecting the shower circuit alone is the correct approach and avoids nuisance
                 tripping affecting other circuits.
               </span>
             </li>
           </ul>
         </div>
+        <p>
+          Interpreting the insulation resistance reading at a 500V DC test between each element
+          terminal and earth:
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-white">
+              <thead>
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                  <th className="px-4 py-3 font-semibold">IR reading (element to earth)</th>
+                  <th className="px-4 py-3 font-semibold">Verdict</th>
+                  <th className="px-4 py-3 font-semibold">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr className="bg-green-900/20">
+                  <td className="px-4 py-3 font-medium">Above 1 MΩ</td>
+                  <td className="px-4 py-3 text-green-200">Healthy</td>
+                  <td className="px-4 py-3">Look elsewhere for the fault</td>
+                </tr>
+                <tr className="bg-yellow-900/20">
+                  <td className="px-4 py-3 font-medium">0.5–1 MΩ</td>
+                  <td className="px-4 py-3 text-yellow-200">Degrading</td>
+                  <td className="px-4 py-3">Investigate; retest hot</td>
+                </tr>
+                <tr className="bg-red-900/20">
+                  <td className="px-4 py-3 font-medium">Below 0.5 MΩ</td>
+                  <td className="px-4 py-3 text-red-200">Failing element</td>
+                  <td className="px-4 py-3">Replace element</td>
+                </tr>
+                <tr className="bg-red-900/30">
+                  <td className="px-4 py-3 font-medium">Near zero</td>
+                  <td className="px-4 py-3 text-red-200">Dead short to earth</td>
+                  <td className="px-4 py-3">Replace element</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p className="text-white/70 text-sm">
+          These thresholds are practical fault-finding guidance for a single appliance element, not
+          a circuit insulation resistance acceptance value. For circuit insulation resistance
+          minimums during inspection and testing, refer to{' '}
+          <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+            insulation resistance testing
+          </SEOInternalLink>
+          .
+        </p>
       </>
     ),
   },
@@ -312,7 +436,12 @@ const sections = [
           The heating element is the most failure-prone component in an electric shower, typically
           lasting five to ten years depending on water hardness, usage frequency, and power rating.
           In hard water areas, limescale deposits on the element surface reduce heat transfer and
-          cause the element to overheat, accelerating insulation breakdown.
+          cause the element to overheat, accelerating insulation breakdown — the same failure mode
+          seen in{' '}
+          <SEOInternalLink href="/immersion-heater-fault-finding">
+            immersion heater elements
+          </SEOInternalLink>
+          .
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -499,49 +628,63 @@ const sections = [
       <>
         <p>
           Repair costs for electric showers vary by fault type and shower model. Older models may
-          have discontinued parts, making repair uneconomical. Here are typical UK costs for 2026:
+          have discontinued parts, making repair uneconomical. The figures below are indicative UK
+          market guidance for 2026 — not a quote. Always get a price confirmed for your specific
+          unit and circuit.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Heating element replacement</strong> — £80 to £150 all-in. Element parts £30
-                to £60, labour £50 to £90. Most common repair.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Solenoid valve replacement</strong> — £60 to £120 all-in. Solenoid parts £20
-                to £50, labour £40 to £70.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>PCB replacement</strong> — £140 to £300 all-in. PCB parts £80 to £200
-                (model-dependent), labour £60 to £100. If the PCB costs more than 60% of a new unit,
-                replacement of the entire shower is better value.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>New shower unit fitted</strong> — £300 to £700 all-in. Shower unit £150 to
-                £400, installation and certification £150 to £300. A modern 10.5kW unit provides
-                noticeably better performance than an older 7.5kW unit, particularly in winter.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Circuit upgrade (if cable or MCB is undersized)</strong> — £200 to £500 for
-                a new dedicated radial circuit from the consumer unit to the shower position,
-                including correct cable sizing, MCB, and RCD protection.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-white">
+              <thead>
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                  <th className="px-4 py-3 font-semibold">Repair</th>
+                  <th className="px-4 py-3 font-semibold">Parts</th>
+                  <th className="px-4 py-3 font-semibold">Labour</th>
+                  <th className="px-4 py-3 font-semibold">Typical all-in</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr className="bg-yellow-900/20">
+                  <td className="px-4 py-3 font-medium">Heating element (most common)</td>
+                  <td className="px-4 py-3">£30–£60</td>
+                  <td className="px-4 py-3">£50–£90</td>
+                  <td className="px-4 py-3 font-semibold text-yellow-300">£80–£150</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">Solenoid valve</td>
+                  <td className="px-4 py-3">£20–£50</td>
+                  <td className="px-4 py-3">£40–£70</td>
+                  <td className="px-4 py-3 font-semibold text-yellow-300">£60–£120</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">PCB (model-dependent)</td>
+                  <td className="px-4 py-3">£80–£200</td>
+                  <td className="px-4 py-3">£60–£100</td>
+                  <td className="px-4 py-3 font-semibold text-yellow-300">£140–£300</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">New shower unit fitted</td>
+                  <td className="px-4 py-3">£150–£400</td>
+                  <td className="px-4 py-3">£150–£300</td>
+                  <td className="px-4 py-3 font-semibold text-yellow-300">£300–£700</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">New dedicated circuit</td>
+                  <td className="px-4 py-3" colSpan={2}>
+                    Cable, MCB/RCBO, RCD protection &amp; certification
+                  </td>
+                  <td className="px-4 py-3 font-semibold text-yellow-300">£200–£500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4 text-white text-sm leading-relaxed">
+          <strong className="text-blue-200">Repair or replace?</strong> If the total repair cost
+          exceeds roughly half the cost of a new fitted unit — or the PCB alone exceeds 60% of a new
+          unit — replacement is usually the better value, especially for showers over five years old
+          where further failures are likely. A modern 10.5kW unit also performs noticeably better
+          than an older 7.5kW unit in winter, when incoming mains water is coldest.
         </div>
       </>
     ),
@@ -556,6 +699,56 @@ const sections = [
           Building Regulations in England and Wales. Registration with NICEIC, NAPIT, or ELECSA
           allows you to self-certify the work and issue an Electrical Installation Certificate on
           completion. The certificate must be handed to the customer before you leave site.
+        </p>
+        <p>
+          The dedicated shower circuit must be designed for the unit's power rating. Approximate
+          full-load current is the power rating divided by the nominal supply voltage (230V). The
+          MCB or RCBO and cable must both be sized for that load and the installation conditions.
+          Cable cross-sectional area depends on the installation method, grouping, ambient
+          temperature and run length — verify against BS 7671 Table 4D5 (70°C thermoplastic flat
+          twin-and-earth cable, the typical shower cable) and apply the relevant correction factors
+          rather than relying on a rule of thumb.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-white">
+              <thead>
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                  <th className="px-4 py-3 font-semibold">Shower rating</th>
+                  <th className="px-4 py-3 font-semibold">Approx. load at 230V</th>
+                  <th className="px-4 py-3 font-semibold">Typical protective device</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                <tr>
+                  <td className="px-4 py-3 font-medium">7.5 kW</td>
+                  <td className="px-4 py-3">≈ 33 A</td>
+                  <td className="px-4 py-3">40 A Type B</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">8.5 kW</td>
+                  <td className="px-4 py-3">≈ 37 A</td>
+                  <td className="px-4 py-3">40 A Type B</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium">9.5 kW</td>
+                  <td className="px-4 py-3">≈ 41 A</td>
+                  <td className="px-4 py-3">45 A Type B</td>
+                </tr>
+                <tr className="bg-yellow-900/20">
+                  <td className="px-4 py-3 font-medium">10.5 kW</td>
+                  <td className="px-4 py-3">≈ 46 A</td>
+                  <td className="px-4 py-3">50 A Type B</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p className="text-white/70 text-sm">
+          Device ratings shown are a common starting point; the final selection is the designer's
+          and must satisfy overload and fault protection for the actual cable, length and
+          installation method. Confirm the consumer unit can accommodate the load and that 30mA RCD
+          additional protection is in place per Reg 701.411.3.3.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -601,13 +794,19 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   When installing or replacing a shower in an older property, verify supplementary
-                  protective equipotential bonding under BS 7671 Reg 701.415.2 — metallic water and
-                  waste pipes, central heating pipework, and accessible metallic structural parts
-                  within the bathroom must all be bonded to the protective conductor of each
-                  supplying circuit. Where the consumer unit is being upgraded as part of the shower
-                  circuit work, BS 7671 Reg 421.1.7 (introduced in A4:2026) recommends fitting an
-                  arc fault detection device (AFDD) on AC final circuits to mitigate fire risk from
-                  arc fault currents.
+                  protective equipotential bonding under BS 7671 Reg 701.415.2 — the terminals of the
+                  protective conductor of each circuit supplying Class I and Class II equipment must
+                  be connected to accessible extraneous-conductive-parts in the room, including
+                  metallic service and waste pipes, metallic central heating pipework, and accessible
+                  metallic structural parts. This local supplementary bonding may be omitted only
+                  where the location's final circuits meet automatic disconnection, have 30mA RCD
+                  additional protection, and the extraneous-conductive-parts are effectively
+                  connected to the main protective bonding. Note that the A4:2026 AFDD requirement in
+                  Reg 421.1.7 applies to single-phase AC final circuits supplying socket-outlets
+                  rated up to 32A in specified building types (such as high-rise residential
+                  buildings, HMOs, purpose-built student accommodation and care homes) — a dedicated
+                  shower circuit is not a socket-outlet circuit, so 421.1.7 does not mandate an AFDD
+                  on the shower circuit itself.
                 </p>
               </div>
             </div>
@@ -646,6 +845,7 @@ export default function ElectricShowerFaultFindingPage() {
       }
       heroSubtitle="Complete fault finding guide for electric showers — RCD tripping, cold water, solenoid valve faults, element failure, flow switch issues, low pressure diagnosis, when to call an electrician vs plumber, and typical repair costs for 2026."
       readingTime={13}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

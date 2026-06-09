@@ -162,6 +162,44 @@ const sections = [
           your bookshelf or an experienced electrician updating your library for the latest
           amendments, this is your reading list for 2026.
         </p>
+        <h3 className="font-bold text-white text-lg mt-6 mb-3">The core four at a glance</h3>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-bold text-white">Book</th>
+                <th className="px-4 py-3 font-bold text-white">Who needs it</th>
+                <th className="px-4 py-3 font-bold text-white">Indicative price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10 bg-yellow-500/[0.06]">
+                <td className="px-4 py-3 font-bold text-white">BS 7671 (Brown Book)</td>
+                <td className="px-4 py-3 text-white">Every electrician</td>
+                <td className="px-4 py-3 font-bold text-yellow-400">£90 — £100</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-bold text-white">On-Site Guide (OSG)</td>
+                <td className="px-4 py-3 text-white">Every electrician — daily use</td>
+                <td className="px-4 py-3 font-bold text-yellow-400">£30 — £35</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-yellow-500/[0.06]">
+                <td className="px-4 py-3 font-bold text-white">Guidance Note 3 (GN3)</td>
+                <td className="px-4 py-3 text-white">Inspectors, 2391 students</td>
+                <td className="px-4 py-3 font-bold text-yellow-400">£35 — £40</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 font-bold text-white">Electrician's Guide to the Building Regs</td>
+                <td className="px-4 py-3 text-white">Domestic electricians (Part P)</td>
+                <td className="px-4 py-3 font-bold text-yellow-400">£30 — £35</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-white/60 text-xs -mt-2">
+          Prices are indicative market guidance, not a quote — check the IET and trade suppliers for
+          current pricing.
+        </p>
       </>
     ),
   },
@@ -217,8 +255,10 @@ const sections = [
         <p>
           The current printed edition is BS 7671:2018+A2:2022 (incorporating Amendments 1 and 2).
           Amendment 4 (A4:2026) is a free PDF supplement available from the IET website — download
-          it and keep it with your Brown Book. Amendment 4 adds Regulation 530.3.2 covering
-          bidirectional and unidirectional devices.
+          it and keep it with your Brown Book. Among the A4:2026 changes, Regulation 530.3.201
+          requires the selection and erection of protective equipment to take account of whether a
+          device is unidirectional or bidirectional — relevant to installations with solar PV,
+          battery storage, and other sources that can export energy.
         </p>
       </>
     ),
@@ -257,18 +297,104 @@ const sections = [
         <p>
           The On-Site Guide is the practical companion to BS 7671. Where the Brown Book gives you
           the regulations, the OSG gives you the quick-reference tables and simplified guidance you
-          need day-to-day on site.
+          need day-to-day on site. It distils the data you reach for most often into a tool-bag-sized
+          book:
         </p>
+        <div className="grid sm:grid-cols-2 gap-3 my-4">
+          {[
+            {
+              label: 'Cable current-carrying capacity',
+              detail:
+                'Installation-method tables for tabulated current (It) — the starting point for every cable-sizing calculation.',
+            },
+            {
+              label: 'Maximum Zs values',
+              detail:
+                'Earth fault loop impedance limits by protective device type and rating, so disconnection times are met.',
+            },
+            {
+              label: 'Correction factors',
+              detail:
+                'Grouping, ambient temperature, and thermal insulation factors applied when de-rating a cable.',
+            },
+            {
+              label: 'Disconnection times',
+              detail:
+                'Maximum disconnection times from BS 7671 Table 41.1 for automatic disconnection of supply.',
+            },
+            {
+              label: 'Standard final circuits',
+              detail:
+                'Simplified guidance and example circuits for common domestic ring and radial arrangements.',
+            },
+            {
+              label: 'Bonding & earthing sizes',
+              detail:
+                'Minimum sizes for main protective bonding and circuit protective conductors.',
+            },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="rounded-2xl bg-white/[0.04] border border-white/10 p-4"
+            >
+              <div className="flex items-start gap-3">
+                <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <div>
+                  <h4 className="font-bold text-white text-sm mb-1">{item.label}</h4>
+                  <p className="text-white text-sm leading-relaxed">{item.detail}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <p>
-          Key contents include: cable current-carrying capacity tables, maximum Zs values for
-          various protective device types and ratings, correction factors for grouping, ambient
-          temperature, and thermal insulation, disconnection time requirements, and simplified cable
-          selection procedures.
+          One table candidates lean on most is the maximum disconnection times for automatic
+          disconnection of supply. These are set by BS 7671 Regulation 411.3.2.2 and Table 41.1 for
+          final circuits up to 63 A with socket-outlets (or 32 A supplying fixed equipment), at a
+          nominal line-to-earth voltage of 230 V AC:
+        </p>
+        <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-bold text-white">Circuit / system</th>
+                <th className="px-4 py-3 font-bold text-white">Max disconnection time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10 bg-blue-900/20">
+                <td className="px-4 py-3 text-white">Final circuit, TN system (230 V AC)</td>
+                <td className="px-4 py-3 font-bold text-yellow-400">0.4 s</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 text-white">Final circuit, TT system (230 V AC)</td>
+                <td className="px-4 py-3 font-bold text-yellow-400">0.2 s</td>
+              </tr>
+              <tr className="border-t border-white/10 bg-blue-900/20">
+                <td className="px-4 py-3 text-white">
+                  Distribution circuit, TN system
+                </td>
+                <td className="px-4 py-3 font-bold text-yellow-400">5 s</td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 text-white">
+                  Distribution circuit, TT system
+                </td>
+                <td className="px-4 py-3 font-bold text-yellow-400">1 s</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-white/60 text-xs -mt-2 mb-4">
+          Final-circuit values from BS 7671:2018 Table 41.1; distribution-circuit values from
+          Regulations 411.3.2.3 (TN) and 411.3.2.4 (TT). Indicative summary — always confirm against
+          the current standard for the exact system and voltage.
         </p>
         <p>
           The OSG is small enough to carry in your tool bag or van and is the book most electricians
-          reach for most often. It is also permitted in the 2391 exam alongside BS 7671 and GN3 —
-          tab the key tables in advance so you can find them quickly under exam conditions.
+          reach for most often. It is also permitted in the{' '}
+          <SEOInternalLink href="/city-guilds2391">2391 exam</SEOInternalLink> alongside BS 7671 and
+          GN3 — tab the key tables in advance so you can find them quickly under exam conditions.
         </p>
         <SEOAppBridge
           title="OSG tables on your phone with Elec-Mate"
@@ -524,7 +650,11 @@ const sections = [
       <>
         <p>
           Beyond the core texts, these additional publications are worth investing in as your career
-          develops and you take on more specialised work:
+          develops and you take on more specialised work — for example, the IET Code of Practice for{' '}
+          <SEOInternalLink href="/guides/ev-charger-installation">
+            EV charging equipment installation
+          </SEOInternalLink>{' '}
+          complements the Section 722 requirements in BS 7671:
         </p>
         <div className="space-y-4 my-4">
           {[
@@ -602,6 +732,11 @@ export default function BestElectricalBooksPage() {
       }
       heroSubtitle="From the BS 7671 Brown Book to Brian Scaddan's apprentice textbooks, these are the essential reads for UK electricians in 2026. Whether you are a first-year apprentice or an experienced inspector, this guide covers every book worth buying — and how Elec-Mate complements your bookshelf on site."
       readingTime={13}
+      answerBox={{
+        question: 'What are the best electrical books for UK electricians?',
+        answer:
+          'The four essentials are BS 7671:2018+A2:2022 (the Brown Book), the IET On-Site Guide, IET Guidance Note 3 (Inspection and Testing), and a Brian Scaddan training textbook. Domestic installers should add the Electrician’s Guide to the Building Regulations for Part P. Keep the free A4:2026 amendment PDF with your Brown Book.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -318,6 +318,86 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
                   />
                 </Field>
               </div>
+              <div className="grid grid-cols-2 gap-2.5">
+                <Field label="Earth CSA (mm²)">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    value={array.dcEarthCableSize || ''}
+                    onChange={(e) =>
+                      updateArray(index, 'dcEarthCableSize', parseFloat(e.target.value) || 0)
+                    }
+                    className={inputSmCn}
+                    placeholder="e.g., 6"
+                  />
+                </Field>
+                <Field label="Cable Run (m)">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    value={array.dcCableLength || ''}
+                    onChange={(e) =>
+                      updateArray(index, 'dcCableLength', parseFloat(e.target.value) || 0)
+                    }
+                    className={inputSmCn}
+                    placeholder="one way"
+                  />
+                </Field>
+              </div>
+
+              {/* String Overcurrent Protection (BS 7671 712.432) */}
+              <div className="grid grid-cols-2 gap-2.5">
+                <Field label="String OCPD Type">
+                  <Input
+                    value={array.stringOcpdType || ''}
+                    onChange={(e) => updateArray(index, 'stringOcpdType', e.target.value)}
+                    className={inputSmCn}
+                    placeholder="gPV fuse / None"
+                  />
+                </Field>
+                <Field label="OCPD Rating (A)">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    value={array.stringOcpdRatingA || ''}
+                    onChange={(e) =>
+                      updateArray(index, 'stringOcpdRatingA', parseFloat(e.target.value) || 0)
+                    }
+                    className={inputSmCn}
+                    placeholder="e.g., 15"
+                  />
+                </Field>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5">
+                <Field label="OCPD DC Rating (V)">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    value={array.stringOcpdDcRatingV || ''}
+                    onChange={(e) =>
+                      updateArray(index, 'stringOcpdDcRatingV', parseFloat(e.target.value) || 0)
+                    }
+                    className={inputSmCn}
+                    placeholder="e.g., 1000"
+                  />
+                </Field>
+                <Field label="OCPD Capacity (kA)">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    value={array.stringOcpdBreakingCapacityKa || ''}
+                    onChange={(e) =>
+                      updateArray(
+                        index,
+                        'stringOcpdBreakingCapacityKa',
+                        parseFloat(e.target.value) || 0
+                      )
+                    }
+                    className={inputSmCn}
+                    placeholder="e.g., 10"
+                  />
+                </Field>
+              </div>
 
               {/* Notes */}
               <Field label="Array Notes">

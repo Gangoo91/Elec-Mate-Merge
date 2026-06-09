@@ -293,6 +293,93 @@ const sections = [
             </p>
           </div>
         </div>
+        <h3 className="font-bold text-white text-lg mt-6 mb-3">
+          Borrowed Neutral vs Other Causes of RCD Tripping
+        </h3>
+        <p className="mb-3">
+          The pattern of the trip is the single most useful diagnostic clue. Match the behaviour you
+          observe against the table below before opening the board.
+        </p>
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <table className="w-full min-w-[560px] text-sm border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06]">
+                <th className="text-left font-bold text-white p-3 border border-white/10">
+                  Observed pattern
+                </th>
+                <th className="text-left font-bold text-white p-3 border border-white/10">
+                  Most likely cause
+                </th>
+                <th className="text-left font-bold text-white p-3 border border-white/10">
+                  First test
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-yellow-500/10">
+                <td className="p-3 border border-white/10 text-white">
+                  Trips only when two specific circuits are on together; each holds alone
+                </td>
+                <td className="p-3 border border-white/10 text-white font-semibold text-yellow-300">
+                  Borrowed neutral
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Disconnect neutrals, test for cross-continuity between circuits
+                </td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="p-3 border border-white/10 text-white">
+                  Trips the instant the RCD is reset, with all circuits off
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  N&ndash;E fault or RCD/neutral wiring fault inside the board
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Insulation resistance, neutral&ndash;earth
+                </td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="p-3 border border-white/10 text-white">
+                  Trips during or after rain / damp weather
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Moisture ingress (outdoor sockets, lights, SWA glands)
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Insulation resistance on exposed circuits
+                </td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="p-3 border border-white/10 text-white">
+                  Trips as more appliances are switched on; many small leakages
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Cumulative protective-conductor (leakage) current
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Measure standing earth leakage with a clamp meter
+                </td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="p-3 border border-white/10 text-white">
+                  One MCB/RCBO trips under load only, never others
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Overload or short circuit on that circuit (not the neutral)
+                </td>
+                <td className="p-3 border border-white/10 text-white">
+                  Check load, then live&ndash;neutral and live&ndash;earth resistance
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-white/60 mt-2">
+          A borrowed neutral is the classic{' '}
+          <SEOInternalLink href="/guides/nuisance-tripping-rcd">nuisance-tripping</SEOInternalLink>{' '}
+          culprit that holds in isolation but trips on a circuit combination &mdash; use the pattern
+          to narrow the search before disconnecting anything.
+        </p>
         <SEOAppBridge
           title="AI Fault Diagnosis"
           description="Describe the tripping pattern to Elec-Mate's AI diagnostic agent — which circuits are in use when it trips…"
@@ -563,15 +650,65 @@ const sections = [
             </p>
           </div>
         </div>
-        <p>
-          For these reasons, a borrowed neutral should be classified as at least a Code C2 defect on
-          an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. Under GN3 (IET
-          Guidance Note 3), C2 is defined as{' '}
-          <em>potentially dangerous — remedial action required</em>. Where the neutral is confirmed
-          to be floating at a hazardous voltage during isolation of the associated circuit —
-          creating an immediate shock risk — the finding should be escalated to C1 (
-          <em>danger present — immediate remedial action required</em>). Either way, the
-          installation should not be left in service without rectification.
+        <h3 className="font-bold text-white text-lg mt-6 mb-3">
+          How to Code a Borrowed Neutral on an EICR
+        </h3>
+        <p className="mb-3">
+          A borrowed neutral is a genuine safety defect, so it should never be recorded as merely
+          &ldquo;improvement recommended&rdquo;. Use the classification codes (defined in BS 7671
+          and the IET model forms, with detailed guidance in IET Guidance Note 3) as follows.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div className="p-4 rounded-2xl bg-red-900/30 border border-red-700/40">
+            <div className="flex items-center gap-2 mb-1">
+              <AlertTriangle className="w-4 h-4 text-red-400" />
+              <span className="font-bold text-white">C1</span>
+            </div>
+            <p className="text-xs font-semibold text-red-300 mb-1">
+              Danger present — immediate action
+            </p>
+            <p className="text-white text-sm leading-relaxed">
+              Use only where the neutral is confirmed live/floating at a hazardous voltage when the
+              affected circuit is isolated, presenting an immediate shock risk.
+            </p>
+          </div>
+          <div className="p-4 rounded-2xl bg-yellow-500/10 border border-yellow-500/30">
+            <div className="flex items-center gap-2 mb-1">
+              <AlertTriangle className="w-4 h-4 text-yellow-400" />
+              <span className="font-bold text-white">C2</span>
+            </div>
+            <p className="text-xs font-semibold text-yellow-300 mb-1">
+              Potentially dangerous — remedial action required
+            </p>
+            <p className="text-white text-sm leading-relaxed">
+              The default code for a typical borrowed neutral: RCD protection is compromised and the
+              shared neutral can be overloaded, but no immediate danger is present at the time of
+              inspection.
+            </p>
+          </div>
+          <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+            <div className="flex items-center gap-2 mb-1">
+              <Search className="w-4 h-4 text-white/70" />
+              <span className="font-bold text-white">FI</span>
+            </div>
+            <p className="text-xs font-semibold text-white/70 mb-1">
+              Further investigation required
+            </p>
+            <p className="text-white text-sm leading-relaxed">
+              Where the tripping pattern strongly suggests a borrowed neutral but it cannot be
+              confirmed within the scope of the inspection, record FI so the cause is followed up
+              without delay.
+            </p>
+          </div>
+        </div>
+        <p className="mt-4">
+          Whichever code applies, the{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> should record the
+          observation, the affected circuits, and the recommended remedial action so the
+          installation is not left in service without rectification. A C1 or C2 makes the overall
+          result <strong className="text-white">Unsatisfactory</strong>; an FI is advisory and does
+          not by itself change the overall assessment, but the further investigation should be
+          carried out without delay.
         </p>
       </>
     ),

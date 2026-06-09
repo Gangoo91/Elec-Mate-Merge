@@ -26,8 +26,58 @@ const breadcrumbs = [
   { label: 'History', href: '/guides/electrical-wiring-regulations-history' },
 ];
 
+const answerBox = {
+  question: 'What is the history of the UK wiring regulations?',
+  answer:
+    'The UK wiring regulations began in 1882 as fire-prevention rules from the Society of Telegraph Engineers, later the IEE. They became a British Standard — BS 7671 — with the 16th Edition in 1992 and are now published by the IET. The current standard is BS 7671:2018+A4:2026, the 18th Edition with four amendments, issued 15 April 2026.',
+  detail:
+    'There have been 18 editions over more than 140 years, evolving from basic fire prevention to a comprehensive safety standard covering RCD protection, AFDDs, EV charging, solar PV and battery storage.',
+};
+
+const editionTimeline = [
+  { edition: '1st', year: '1882', body: 'IEE', milestone: 'First fire-prevention rules' },
+  { edition: '2nd — 4th', year: '1888 — 1903', body: 'IEE', milestone: 'Wider insulation methods' },
+  { edition: '5th — 8th', year: '1907 — 1924', body: 'IEE', milestone: 'Domestic electrification' },
+  { edition: '9th — 11th', year: '1927 — 1939', body: 'IEE', milestone: 'National Grid, voltage standards' },
+  { edition: '12th', year: '1950', body: 'IEE', milestone: 'First post-war edition' },
+  { edition: '13th', year: '1955', body: 'IEE', milestone: 'Shock protection introduced' },
+  { edition: '14th', year: '1966', body: 'IEE', milestone: 'Restructured into parts' },
+  { edition: '15th', year: '1981', body: 'IEE', milestone: 'Aligned with HD 384' },
+  { edition: '16th', year: '1992', body: 'IEE', milestone: 'Became BS 7671' },
+  { edition: '17th', year: '2008', body: 'IEE', milestone: 'Aligned with HD 60364' },
+  { edition: '18th', year: '2018', body: 'IET', milestone: 'Current edition (now +A4:2026)' },
+];
+
+const a4Changes = [
+  {
+    reg: 'Reg 411.3.4',
+    title: 'RCD protection for domestic lighting',
+    detail:
+      'A new regulation requiring 30 mA RCD additional protection for AC final circuits supplying luminaires within domestic (household) premises. The most impactful practical change for domestic electricians.',
+  },
+  {
+    reg: 'Reg 421.1.7',
+    title: 'AFDDs now required in higher-risk premises',
+    detail:
+      'Redrafted so that AFDDs are now a requirement (not just a recommendation) for socket-outlet final circuits rated up to 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. AFDDs remain recommended for single-phase socket-outlet circuits up to 32 A in all other premises.',
+  },
+  {
+    reg: 'Reg 531.3.4.201',
+    title: 'Adjustable RCDs need a key or tool',
+    detail:
+      'Where an RCD may be operated by an ordinary person, its rated residual operating current and time delay must not be adjustable without a deliberate act using a key or tool, and any change must give a visible indication of the new setting.',
+  },
+  {
+    reg: 'Chapter 82',
+    title: 'Prosumer electrical installations (PEIs)',
+    detail:
+      'An entirely new chapter covering low-voltage installations that both consume and produce energy locally — for example homes with solar PV, battery storage or EV export — designated Prosumer’s Electrical Installations.',
+  },
+];
+
 const tocItems = [
   { id: 'history-overview', label: 'Overview' },
+  { id: 'editions-timeline', label: 'Every Edition at a Glance' },
   { id: 'early-editions', label: 'Early Editions (1882 — 1950)' },
   { id: 'post-war-editions', label: 'Post-War Editions (1950 — 1981)' },
   { id: 'modern-era', label: 'Modern Era (1981 — 2008)' },
@@ -160,6 +210,58 @@ const sections = [
           gas lighting circuits to solar PV and battery storage. Understanding where the regulations
           came from helps you appreciate why they are structured the way they are — and why they
           continue to evolve.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'editions-timeline',
+    heading: 'Every Edition at a Glance',
+    content: (
+      <>
+        <p>
+          From the first rules in 1882 to the current{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
+            BS 7671:2018+A4:2026
+          </SEOInternalLink>
+          , there have been 18 editions. This timeline shows each edition, the year it was published,
+          the publishing body, and its defining milestone.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="p-4 text-sm font-semibold text-white">Edition</th>
+                  <th className="p-4 text-sm font-semibold text-yellow-400">Year</th>
+                  <th className="p-4 text-sm font-semibold text-white">Published by</th>
+                  <th className="p-4 text-sm font-semibold text-white">Milestone</th>
+                </tr>
+              </thead>
+              <tbody>
+                {editionTimeline.map((row, i) => (
+                  <tr
+                    key={row.edition}
+                    className={i < editionTimeline.length - 1 ? 'border-b border-white/5' : ''}
+                  >
+                    <td className="p-4 text-sm text-white font-semibold whitespace-nowrap">
+                      {row.edition}
+                    </td>
+                    <td className="p-4 text-sm text-yellow-400 font-semibold whitespace-nowrap">
+                      {row.year}
+                    </td>
+                    <td className="p-4 text-sm text-white whitespace-nowrap">{row.body}</td>
+                    <td className="p-4 text-sm text-white">{row.milestone}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p>
+          The 18th Edition has itself been revised four times — A1:2020, A2:2022, A3:2024 and
+          A4:2026 — so the document on your shelf today carries far more than its 2018 publication
+          date suggests.
         </p>
       </>
     ),
@@ -330,9 +432,9 @@ const sections = [
         <div className="space-y-4 my-4">
           {[
             {
-              title: 'Key changes in the 18th Edition (2018)',
+              title: 'Key changes in the original 18th Edition (2018)',
               description:
-                'Regulation 421.1.7 (Chapter 42) recommends the installation of AFDDs (Arc Fault Detection Devices) to mitigate fire risk in AC final circuits. Note: the wording is recommendatory ("recommends"), not mandatory — a common point of confusion. Energy efficiency requirements were introduced in a new Section 801.',
+                'On publication in 2018, Regulation 421.1.7 (Chapter 42) recommended the installation of AFDDs (Arc Fault Detection Devices) to mitigate fire risk in AC final circuits — recommendatory rather than mandatory, a common point of confusion. Amendment 4 has since strengthened this (see Amendment 4 below). Energy efficiency guidance was introduced in Appendix 17; under Amendment 4 this has been deleted and replaced by a new Chapter 81 on the functional aspects of energy efficiency.',
             },
             {
               title: 'Amendment 1 (A1:2020)',
@@ -366,6 +468,26 @@ const sections = [
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
+            </div>
+          ))}
+        </div>
+        <h4 className="font-bold text-white mt-6 mb-3">
+          The four headline changes in Amendment 4 (A4:2026)
+        </h4>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          {a4Changes.map((item) => (
+            <div
+              key={item.reg}
+              className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <FileCheck2 className="w-4 h-4 text-blue-300 shrink-0" />
+                <span className="text-xs font-semibold text-blue-300 uppercase tracking-wide">
+                  {item.reg}
+                </span>
+              </div>
+              <h5 className="font-bold text-white mb-1">{item.title}</h5>
+              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
             </div>
           ))}
         </div>
@@ -579,6 +701,7 @@ export default function ElectricalWiringRegulationsHistoryPage() {
       tocItems={tocItems}
       badge="Regulation History"
       badgeIcon={BookOpen}
+      answerBox={answerBox}
       heroTitle={
         <>
           History of UK <span className="text-yellow-400">Wiring Regulations</span>

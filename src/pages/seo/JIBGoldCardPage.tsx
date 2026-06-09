@@ -32,6 +32,7 @@ const tocItems = [
   { id: 'ecs-relationship', label: 'JIB and the ECS Card Scheme' },
   { id: 'why-employers-require-it', label: 'Why Employers Require It' },
   { id: 'cscs-comparison', label: 'JIB Card vs CSCS Card' },
+  { id: 'cost-validity', label: 'Cost and Renewal' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -39,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'The JIB (Joint Industry Board) Gold Card is the benchmark qualification card for fully qualified electricians in the UK, demonstrating completion of an approved apprenticeship and Level 3 electrotechnical qualifications.',
-  'To obtain a JIB Gold Card, you must pass the AM2 practical assessment and hold a Level 3 NVQ/SVQ in Electrotechnical Technology (or equivalent), plus the 18th Edition BS 7671 wiring regulations qualification.',
+  'To obtain a JIB Gold Card, you must pass the AM2 practical assessment and hold a Level 3 NVQ/SVQ in Electrotechnical Technology (or equivalent), plus a current BS 7671 wiring regulations qualification.',
   'The JIB Gold Card is administered through the Electrotechnical Certification Scheme (ECS), which is the card scheme for the electrotechnical industry. JIB Gold is the highest standard ECS card.',
   'Most commercial and industrial electrical contractors, principal contractors, and main contractors on larger sites require operatives to hold a valid ECS card (JIB Gold Card for qualified electricians).',
   'The JIB Gold Card is distinct from the general CSCS (Construction Skills Certification Scheme) card — it specifically demonstrates electrotechnical competency, which CSCS cards do not.',
@@ -59,7 +60,7 @@ const faqs = [
   {
     question: 'How do I get a JIB Gold Card?',
     answer:
-      'To obtain a JIB Gold Card, you must: (1) Hold a Level 3 NVQ/SVQ in Electrotechnical Technology (or an equivalent recognised qualification); (2) Pass the AM2 practical assessment (or hold an equivalent approved practical assessment); (3) Hold a current BS 7671 18th Edition qualification (e.g., City and Guilds 2382); (4) Apply through the ECS portal (ecscard.org.uk) with evidence of all qualifications. The JIB assesses your application and, if approved, issues the Gold Card. The card is valid for five years and must be renewed.',
+      'To obtain a JIB Gold Card, you must: (1) Hold a Level 3 NVQ/SVQ in Electrotechnical Technology (or an equivalent recognised qualification); (2) Pass the AM2 practical assessment (or hold an equivalent approved practical assessment); (3) Hold a current BS 7671 wiring regulations qualification (e.g., City and Guilds 2382); (4) Apply through the ECS portal (ecscard.org.uk) with evidence of all qualifications. The JIB assesses your application and, if approved, issues the Gold Card. The card is valid for five years and must be renewed.',
   },
   {
     question: 'How much does a JIB Gold Card cost?',
@@ -84,7 +85,7 @@ const faqs = [
   {
     question: 'How long is the JIB Gold Card valid?',
     answer:
-      'The JIB Gold Card (ECS card) is valid for five years. Before it expires, you must renew it through the ECS portal. Renewal requires you to hold a current BS 7671 qualification (18th Edition, or whichever edition is current at renewal) and current First Aid at Work or Emergency First Aid at Work certificate (for some card grades). You should start the renewal process at least three months before expiry to avoid a lapse in card validity.',
+      'The JIB Gold Card (ECS card) is valid for five years. Before it expires, you must renew it through the ECS portal. Renewal requires you to hold a current BS 7671 wiring regulations qualification (the edition or amendment current at the time of renewal) and current First Aid at Work or Emergency First Aid at Work certificate (for some card grades). You should start the renewal process at least three months before expiry to avoid a lapse in card validity.',
   },
 ];
 
@@ -197,7 +198,7 @@ const sections = [
               <span>
                 <strong>What it demonstrates</strong> — the Gold Card confirms that you hold a Level
                 3 NVQ/SVQ in Electrotechnical Technology (or equivalent), have passed the AM2
-                practical assessment, and hold a current BS 7671 18th Edition qualification. It is
+                practical assessment, and hold a current BS 7671 wiring regulations qualification. It is
                 the electrotechnical industry's equivalent of a professional licence.
               </span>
             </li>
@@ -231,49 +232,90 @@ const sections = [
       <>
         <p>
           There are two main routes to the JIB Gold Card — the apprenticeship route and the
-          experienced worker route. Both require the same core qualifications but differ in how you
+          experienced-worker route. Both require the same core qualifications but differ in how you
           demonstrate them.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Route 1 — Apprenticeship</strong> — complete an Electrotechnical
-                apprenticeship (typically 4 years), achieving a Level 3 NVQ/SVQ in Electrotechnical
-                Technology and passing the AM2 end-point assessment. Apprentices hold an ECS
-                Apprentice card during training and upgrade to Gold Card on successful completion.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Route 2 — Experienced worker</strong> — if you are an experienced
-                electrician who did not complete a formal apprenticeship, you can obtain a Level 3
-                NVQ/SVQ through on-the-job assessment (Portfolio of Evidence) and sit the AM2S
-                (experienced worker practical assessment, equivalent to AM2). Combined with a
-                current BS 7671 qualification, this qualifies you for the Gold Card.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Required qualifications summary</strong> — Level 3 NVQ/SVQ Electrotechnical
-                Technology (or equivalent such as City and Guilds 2365 Level 3); AM2 or AM2S pass;
-                City and Guilds 2382 (18th Edition BS 7671) or equivalent current wiring regulations
-                qualification.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Application</strong> — apply online through the ECS portal at
-                ecscard.org.uk. Upload evidence of all qualifications. The JIB will verify your
-                qualifications and issue the card if everything is in order. The physical card is
-                posted to your registered address.
-              </span>
-            </li>
-          </ul>
+        <div className="grid sm:grid-cols-2 gap-4 my-6">
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <h3 className="font-bold text-yellow-400 text-lg mb-3">Route 1 — Apprenticeship</h3>
+            <ul className="space-y-2 text-white text-sm">
+              <li>
+                <strong>Who it suits:</strong> new entrants and current apprentices
+              </li>
+              <li>
+                <strong>Programme:</strong> Electrotechnical apprenticeship, typically around 4
+                years
+              </li>
+              <li>
+                <strong>Achieve:</strong> Level 3 NVQ/SVQ in Electrotechnical Technology
+              </li>
+              <li>
+                <strong>Assessment:</strong> AM2 end-point assessment
+              </li>
+              <li>
+                <strong>Card:</strong> hold ECS Apprentice card, upgrade to Gold on completion
+              </li>
+            </ul>
+          </div>
+          <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+            <h3 className="font-bold text-white text-lg mb-3">Route 2 — Experienced Worker</h3>
+            <ul className="space-y-2 text-white text-sm">
+              <li>
+                <strong>Who it suits:</strong> working electricians without a formal apprenticeship
+              </li>
+              <li>
+                <strong>Programme:</strong> Experienced Worker Assessment / on-site NVQ route
+              </li>
+              <li>
+                <strong>Achieve:</strong> Level 3 NVQ via a Portfolio of Evidence
+              </li>
+              <li>
+                <strong>Assessment:</strong> AM2S (experienced-worker practical, equivalent to AM2)
+              </li>
+              <li>
+                <strong>Card:</strong> apply for Gold once all evidence is in place
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">
+            Required qualifications — the Gold Card checklist
+          </h3>
+          <div className="space-y-3">
+            {[
+              {
+                title: 'Level 3 NVQ/SVQ in Electrotechnical Technology',
+                note: 'Or an equivalent recognised qualification. The Level 3 diploma route (e.g. City & Guilds 2365 Level 3) supports this but the NVQ itself is the competence qualification.',
+              },
+              {
+                title: 'AM2 or AM2S practical assessment pass',
+                note: 'AM2 for the apprenticeship route; AM2S for the experienced-worker route.',
+              },
+              {
+                title: 'Current BS 7671 wiring regulations qualification',
+                note: 'For example City & Guilds 2382 in the current edition of the IET Wiring Regulations.',
+              },
+              {
+                title: 'ECS application with evidence uploaded',
+                note: 'Apply through the ECS portal (ecscard.org.uk). Once verified, the physical card is posted to your registered address.',
+              },
+            ].map((item, i) => (
+              <div
+                key={item.title}
+                className="flex items-start gap-3 p-4 rounded-xl bg-green-900/20 border border-green-700/30"
+              >
+                <span className="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/40 text-green-300 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                  {i + 1}
+                </span>
+                <span className="text-white text-sm leading-relaxed">
+                  <strong className="text-white">{item.title}</strong>
+                  <br />
+                  <span className="text-white/75">{item.note}</span>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </>
     ),
@@ -286,62 +328,85 @@ const sections = [
         <p>
           The JIB grading system includes several card types that reflect different stages of
           qualification and experience. Each card type corresponds to a different ECS card grade and
-          a different JIB pay scale.
+          a different JIB pay scale. The table below summarises the ladder from trainee to
+          management.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Trainee card</strong> — for individuals starting out in the industry who
-                are enrolled in an electrical training programme but have not yet begun a formal
-                apprenticeship. Limited site access.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Apprentice card (JIB grade: Apprentice)</strong> — for registered
-                electrical apprentices. Held during the apprenticeship period. Pay is graded by year
-                of apprenticeship. Upgraded to Gold Card on successful completion of Level 3 NVQ and
-                AM2.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Provisional Operative card (JIB grade: Improver)</strong> — for
-                electricians who hold Level 2 qualifications and are working towards Level 3.
-                Recognised as an intermediate grade between apprentice and fully qualified.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Gold Card (JIB grade: Electrician)</strong> — the benchmark qualified
-                operative card. Requires Level 3 NVQ/SVQ, AM2 pass, and current 18th Edition BS 7671
-                qualification. This is the "JIB Gold Card".
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Technician card (JIB grade: Approved Electrician / Technician)</strong>—
-                for qualified electricians with additional responsibilities or specialisms.
-                Typically requires additional qualifications such as inspection and testing (C&G
-                2391), design qualifications, or equivalent experience.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Manager/Professional card</strong> — for those in supervisory,
-                management, or engineering roles. Requires degree-level or equivalent engineering
-                qualifications.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-6 overflow-hidden">
+          {/* Header row — hidden on mobile, cards stack instead */}
+          <div className="hidden sm:grid grid-cols-12 gap-3 px-3 pb-3 mb-1 border-b border-white/10 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+            <div className="col-span-4">ECS Card</div>
+            <div className="col-span-3">JIB Grade</div>
+            <div className="col-span-5">Typical Requirement</div>
+          </div>
+          <div className="space-y-2">
+            {[
+              {
+                card: 'ECS Trainee',
+                grade: 'Trainee',
+                req: 'Enrolled on an electrical training programme; not yet a formal apprentice. Limited site access.',
+                highlight: false,
+              },
+              {
+                card: 'ECS Apprentice',
+                grade: 'Apprentice',
+                req: 'Registered electrical apprentice. Pay graded by year of apprenticeship; upgrades to Gold on completing the Level 3 NVQ and AM2.',
+                highlight: false,
+              },
+              {
+                card: 'ECS Provisional / Labourer',
+                grade: 'Improver',
+                req: 'Holds Level 2 qualifications and is working towards Level 3. Intermediate grade between apprentice and fully qualified.',
+                highlight: false,
+              },
+              {
+                card: 'ECS Gold Card',
+                grade: 'Electrician',
+                req: 'Level 3 NVQ/SVQ, AM2 (or AM2S) pass, and a current BS 7671 qualification. The benchmark qualified-operative card.',
+                highlight: true,
+              },
+              {
+                card: 'ECS Gold Card',
+                grade: 'Approved Electrician / Technician',
+                req: 'Qualified electrician with extra responsibility or specialism — for example inspection and testing (City & Guilds 2391) or design qualifications.',
+                highlight: false,
+              },
+              {
+                card: 'ECS Manager / Professional',
+                grade: 'Manager / Professional',
+                req: 'Supervisory, management or engineering roles; typically degree-level or equivalent engineering qualifications.',
+                highlight: false,
+              },
+            ].map((row) => (
+              <div
+                key={`${row.card}-${row.grade}`}
+                className={`grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 p-3 rounded-xl border ${
+                  row.highlight
+                    ? 'bg-yellow-500/10 border-yellow-500/30'
+                    : 'bg-white/[0.03] border-white/10'
+                }`}
+              >
+                <div
+                  className={`sm:col-span-4 font-bold flex items-center gap-2 ${
+                    row.highlight ? 'text-yellow-400' : 'text-white'
+                  }`}
+                >
+                  {row.highlight && <Star className="w-4 h-4 shrink-0" />}
+                  {row.card}
+                </div>
+                <div className="sm:col-span-3 text-white/90 text-sm">
+                  <span className="sm:hidden text-white/50">JIB grade: </span>
+                  {row.grade}
+                </div>
+                <div className="sm:col-span-5 text-white/80 text-sm leading-relaxed">{row.req}</div>
+              </div>
+            ))}
+          </div>
         </div>
+        <p className="text-white/70 text-sm">
+          The "JIB Gold Card" most people mean is the <strong>Electrician</strong> grade. Both the
+          Electrician and Approved Electrician / Technician grades carry a gold ECS card — the
+          difference is the additional qualifications behind it.
+        </p>
       </>
     ),
   },
@@ -449,36 +514,145 @@ const sections = [
         <p>
           The JIB Gold Card and CSCS cards serve similar purposes — proving competency on
           construction sites — but operate in different ways and carry different levels of
-          sector-specific evidence.
+          sector-specific evidence. The comparison below shows where they differ.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-6 overflow-hidden">
+          <div className="hidden sm:grid grid-cols-3 gap-3 px-3 pb-3 mb-1 border-b border-white/10 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+            <div>Feature</div>
+            <div className="text-yellow-400/80">JIB Gold Card (ECS)</div>
+            <div>CSCS card</div>
+          </div>
+          <div className="space-y-2">
+            {[
+              {
+                feature: 'Scheme scope',
+                jib: 'Electrotechnical industry only',
+                cscs: 'All construction trades',
+              },
+              {
+                feature: 'AM2 practical required',
+                jib: 'Yes (AM2 or AM2S)',
+                cscs: 'No',
+              },
+              {
+                feature: 'Current BS 7671 qualification required',
+                jib: 'Yes',
+                cscs: 'No',
+              },
+              {
+                feature: 'Evidence of electrical competency',
+                jib: 'Specific and rigorous',
+                cscs: 'General; trade-level only',
+              },
+              {
+                feature: 'Accepted for electrical work on most sites',
+                jib: 'Yes — often specified by name',
+                cscs: 'Sometimes; not where ECS is mandated',
+              },
+            ].map((row) => (
+              <div
+                key={row.feature}
+                className="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10"
+              >
+                <div className="font-bold text-white text-sm">{row.feature}</div>
+                <div className="text-sm text-yellow-300/90">
+                  <span className="sm:hidden text-white/50">JIB Gold: </span>
+                  {row.jib}
+                </div>
+                <div className="text-sm text-white/80">
+                  <span className="sm:hidden text-white/50">CSCS: </span>
+                  {row.cscs}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
+          <h4 className="font-bold text-white mb-2">Which one does a site accept?</h4>
+          <p className="text-white text-sm leading-relaxed">
+            Most sites that accept CSCS cards will also accept a JIB/ECS card for electrical
+            operatives — but sites that specifically mandate ECS will not accept a standard CSCS
+            skilled-worker card in its place. The JIB Gold Card effectively offers a superset of the
+            access a CSCS card provides for electrical work, so it is the safer credential to hold.
+            Always check the individual site's stated requirement before turning up.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'cost-validity',
+    heading: 'Cost, Validity and Renewal',
+    content: (
+      <>
+        <p>
+          The ECS card itself is inexpensive — the real investment is the qualifications behind it.
+          The figures below are indicative UK market guidance to help you budget, not a quote;
+          assessment-centre and college fees vary, so confirm current prices directly with your
+          provider.
+        </p>
+        <div className="grid sm:grid-cols-3 gap-4 my-6">
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
+              The ECS card
+            </div>
+            <div className="text-2xl font-bold text-yellow-400 mb-2">~£30–£40</div>
+            <p className="text-white/75 text-sm leading-relaxed">
+              For a five-year card. The modest part of the total cost.
+            </p>
+          </div>
+          <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+            <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
+              AM2 / AM2S assessment
+            </div>
+            <div className="text-2xl font-bold text-white mb-2">~£400–£600</div>
+            <p className="text-white/75 text-sm leading-relaxed">
+              Indicative, depending on the assessment centre.
+            </p>
+          </div>
+          <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+            <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
+              Level 3 NVQ
+            </div>
+            <div className="text-2xl font-bold text-white mb-2">Varies</div>
+            <p className="text-white/75 text-sm leading-relaxed">
+              Set by college or training provider; often funded if completed through an
+              apprenticeship.
+            </p>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <h4 className="font-bold text-white mb-3">Renewal — what to know</h4>
+          <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CSCS</strong> — the Construction Skills Certification Scheme covers all
-                construction trades. A CSCS skilled worker card for electrical work demonstrates
-                that you hold a relevant Level 3 qualification, but does not require the AM2
-                practical assessment or a current BS 7671 qualification. It is less sector-specific
-                than the JIB Gold Card.
+                <strong>Five-year cycle.</strong> The Gold Card is valid for five years and must be
+                renewed through the ECS portal before it expires.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>JIB Gold Card (ECS)</strong> — the electrotechnical industry's own card
-                scheme, requiring AM2 pass and current 18th Edition qualification. More rigorous and
-                sector-specific than CSCS. Most electrical contractors and sites specify ECS rather
-                than generic CSCS for electrical operatives.
+                <strong>Keep your BS 7671 qualification current.</strong> Renewal expects a current
+                wiring regulations qualification — if a new amendment has been published, you may
+                need the update qualification. Elec-Mate's{' '}
+                <SEOInternalLink href="/study-centre">study tools</SEOInternalLink> cover the current
+                BS 7671 amendment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Site acceptance</strong> — most sites that accept CSCS cards will also
-                accept JIB/ECS cards for electrical operatives. However, sites that specify ECS
-                cards will not accept a standard CSCS card in its place. The JIB Gold Card offers a
-                superset of the access provided by CSCS.
+                <strong>First aid for some grades.</strong> Certain card grades also require a
+                current first aid certificate at renewal.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Start early.</strong> Begin the renewal at least three months before expiry
+                to avoid a lapse that could keep you off site.
               </span>
             </li>
           </ul>
@@ -530,6 +704,13 @@ export default function JIBGoldCardPage() {
       }
       heroSubtitle="Everything UK electricians need to know about the JIB Gold Card — what it is, how to get it (AM2 pass + Level 3 NVQ), all ECS card types, why employers require it, and how it compares to the CSCS card."
       readingTime={12}
+      answerBox={{
+        question: 'What is the JIB Gold Card and how do you get one?',
+        answer:
+          'The JIB Gold Card is the benchmark Electrotechnical Certification Scheme (ECS) card for fully qualified UK electricians, graded "Electrician" by the Joint Industry Board. To get one you need a Level 3 NVQ/SVQ in Electrotechnical Technology, a pass in the AM2 (or AM2S) practical assessment, and a current BS 7671 wiring regulations qualification. Apply through the ECS portal; the card lasts five years.',
+        detail:
+          'It is not a legal requirement, but most commercial, industrial and public-sector sites will not let you work without a valid ECS card of the right grade.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

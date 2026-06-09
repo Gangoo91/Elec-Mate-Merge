@@ -189,8 +189,34 @@ const sections = [
       <>
         <p>
           Understanding what the markings on insulated tools mean helps you select the right tool
-          and recognise when a tool's insulation has been compromised.
+          and recognise when a tool's insulation has been compromised. Use the quick reference below
+          to decode the symbols stamped on the handle.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">Insulated Tool Marking Reference</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
+              <span className="text-white font-bold">Double triangle (two overlapping triangles)</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Compliant with BS EN IEC 60900</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+              <span className="text-white font-bold">1000V</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Rated for use up to 1000V AC / 1500V DC</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <span className="text-white font-bold">VDE oval mark</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Independently tested &amp; certified (Germany)</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <span className="text-white font-bold">GS mark (Geprüfte Sicherheit)</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">German "tested safety" mark</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-white font-bold">Inner contrasting layer visible</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Damaged — remove from service</span>
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -371,6 +397,48 @@ const sections = [
             </li>
           </ul>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-1">Insulating Glove Classes (BS EN IEC 60903)</h3>
+          <p className="text-white/60 text-sm mb-4">
+            Rubber insulating gloves are classed by maximum working voltage. Select the class for
+            the system voltage you are working on — for typical 230V / 400V LV work, Class 00 or
+            Class 0 is used.
+          </p>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <div>
+                <span className="text-white font-bold">Class 00</span>
+                <span className="text-white/60 text-sm block">Max use 500V AC</span>
+              </div>
+              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 2,500V AC</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <div>
+                <span className="text-white font-bold">Class 0</span>
+                <span className="text-white/60 text-sm block">Max use 1,000V AC</span>
+              </div>
+              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 5,000V AC</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+              <div>
+                <span className="text-white font-bold">Class 1</span>
+                <span className="text-white/60 text-sm block">Max use 7,500V AC</span>
+              </div>
+              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 10,000V AC</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <div>
+                <span className="text-white font-bold">Class 2</span>
+                <span className="text-white/60 text-sm block">Max use 17,000V AC</span>
+              </div>
+              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 20,000V AC</span>
+            </div>
+          </div>
+          <p className="text-white/50 text-xs mt-4">
+            Insulating gloves are normally worn with leather over-gloves for mechanical protection
+            and must be air-tested for pinholes before each use.
+          </p>
+        </div>
         <p>
           For the authoritative HSE guidance on live and dead working procedures, see{' '}
           <a
@@ -396,8 +464,55 @@ const sections = [
         <p>
           The German tool industry dominates the insulated hand tool market, with several brands
           offering VDE-certified insulated ranges that are trusted by professional electricians
-          across the UK.
+          across the UK. The grid below compares them at a glance; detailed notes follow.
         </p>
+        <div className="grid sm:grid-cols-2 gap-4 my-6">
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <h3 className="font-bold text-yellow-400 text-lg mb-1">Knipex</h3>
+            <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
+            <ul className="space-y-1 text-white text-sm">
+              <li><strong>Best for:</strong> Pliers &amp; cutters</li>
+              <li><strong>Price tier:</strong> Premium</li>
+              <li><strong>Notable:</strong> 98-series, market leader</li>
+            </ul>
+          </div>
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <h3 className="font-bold text-yellow-400 text-lg mb-1">Wiha</h3>
+            <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
+            <ul className="space-y-1 text-white text-sm">
+              <li><strong>Best for:</strong> Screwdrivers &amp; nut drivers</li>
+              <li><strong>Price tier:</strong> Premium</li>
+              <li><strong>Notable:</strong> SlimBit / SlimLine ranges</li>
+            </ul>
+          </div>
+          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <h3 className="font-bold text-yellow-400 text-lg mb-1">Wera</h3>
+            <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
+            <ul className="space-y-1 text-white text-sm">
+              <li><strong>Best for:</strong> Torx / Pozidriv screwdrivers</li>
+              <li><strong>Price tier:</strong> Premium</li>
+              <li><strong>Notable:</strong> Kraftform ergonomic handles</li>
+            </ul>
+          </div>
+          <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+            <h3 className="font-bold text-white text-lg mb-1">Bahco</h3>
+            <p className="text-white/60 text-xs mb-3">Sweden (Snap-on) · VDE-certified · Mid-range</p>
+            <ul className="space-y-1 text-white text-sm">
+              <li><strong>Best for:</strong> Pliers &amp; cutters</li>
+              <li><strong>Price tier:</strong> Mid-range</li>
+              <li><strong>Notable:</strong> VDE without premium pricing</li>
+            </ul>
+          </div>
+          <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 sm:col-span-2">
+            <h3 className="font-bold text-white text-lg mb-1">CK Tools (Carl Kammerling)</h3>
+            <p className="text-white/60 text-xs mb-3">UK-focused · IEC 60900 compliant · Budget-friendly</p>
+            <ul className="space-y-1 text-white text-sm sm:grid sm:grid-cols-3 sm:gap-2 sm:space-y-0">
+              <li><strong>Best for:</strong> Broad general kit</li>
+              <li><strong>Price tier:</strong> Budget-friendly</li>
+              <li><strong>Notable:</strong> Popular in UK trade market</li>
+            </ul>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -460,7 +575,10 @@ const sections = [
       <>
         <p>
           A full insulated tool kit for an electrician carries insulated versions of every tool that
-          might contact a live conductor during the course of work.
+          might contact a live conductor during the course of work. Even with a full insulated kit,{' '}
+          <SEOInternalLink href="/lockout-tagout-guide">safe isolation</SEOInternalLink> remains the
+          first line of defence — the kit below is for the controlled situations where live work is
+          justified.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -518,6 +636,27 @@ const sections = [
           inspected regularly. The Provision and Use of Work Equipment Regulations 1998 (PUWER) also
           applies to tools used at work.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">Inspection &amp; Test Triggers at a Glance</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
+              <span className="text-white font-bold">Visual inspection</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Before every use</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+              <span className="text-white font-bold">Periodic dielectric test</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Interval set by risk assessment (UK practice often 6–12 months)</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-white font-bold">After suspected live contact</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Withdraw &amp; test before reuse</span>
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
+              <span className="text-white font-bold">Any visible insulation damage</span>
+              <span className="text-yellow-400 font-bold text-right text-sm">Remove from service — no field repair</span>
+            </div>
+          </div>
+        </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -634,6 +773,11 @@ export default function InsulatedToolsGuidePage() {
       }
       heroSubtitle="Everything UK electricians need to know about insulated hand tools — IEC 60900 standard, VDE certification, when insulated tools are legally required under the Electricity at Work Regulations 1989, top brands, and inspection requirements."
       readingTime={11}
+      answerBox={{
+        question: 'Do electricians legally have to use insulated tools in the UK?',
+        answer:
+          'There is no blanket law requiring insulated tools for all electrical work. They become mandatory only when live working is justified under Regulation 14 of the Electricity at Work Regulations 1989, where suitable precautions must be taken. For live work, use BS EN IEC 60900 tools rated 1000V AC / 1500V DC — ideally VDE-certified. For dead work after safe isolation, standard tools are acceptable.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

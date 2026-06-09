@@ -31,6 +31,7 @@ const tocItems = [
   { id: 'eic-requirement', label: 'Electrical Installation Certificate' },
   { id: 'mcs-certificate', label: 'MCS Certificate' },
   { id: 'dno-notification', label: 'DNO Notification (G98/G99)' },
+  { id: 'commissioning-tests', label: 'Commissioning Tests (DC and AC)' },
   { id: 'handover-documentation', label: 'Handover Documentation' },
   { id: 'building-regulations', label: 'Building Regulations Compliance' },
   { id: 'warranty-insurance', label: 'Warranty and Insurance-Backed Guarantee' },
@@ -38,6 +39,12 @@ const tocItems = [
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
+
+const answerBox = {
+  question: 'What certificates do you need for a solar PV installation in the UK?',
+  answer:
+    'A UK solar PV install needs four things: an Electrical Installation Certificate (EIC) to BS 7671:2018+A4:2026 covering the AC and DC work; an MCS certificate (required for the customer to claim Smart Export Guarantee payments); a DNO notification (G98 up to 16A per phase, G99 above); and a handover pack with commissioning results and warranties. Building Regulations are met via Part P self-certification.',
+};
 
 const keyTakeaways = [
   'Every solar PV installation requires an Electrical Installation Certificate (EIC) to BS 7671, covering the AC and DC wiring, protective devices, and earthing arrangements.',
@@ -298,6 +305,75 @@ const sections = [
             dead by AC isolation alone.
           </p>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-4 py-3 bg-white/[0.06]">
+            <h3 className="font-bold text-white text-base">
+              BS 7671 Section 712 — DC-side requirements to evidence on the EIC
+            </h3>
+          </div>
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.03] text-left">
+                <th className="px-4 py-3 font-semibold">Regulation</th>
+                <th className="px-4 py-3 font-semibold">Requirement</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.410.101</td>
+                <td className="px-4 py-3">
+                  DC-side equipment shall be considered energised even when the AC side is
+                  disconnected from the grid and the inverter is disconnected from the DC side.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.410.102</td>
+                <td className="px-4 py-3">
+                  Apply one DC-side protective measure: double or reinforced insulation (Section 412)
+                  or extra-low voltage SELV/PELV (Section 414). Record which is used.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.514.102</td>
+                <td className="px-4 py-3">
+                  Permanent warning notice at each point of access to DC live parts (distribution
+                  boards, combiner boxes), e.g. &lsquo;SOLAR DC — Live parts can remain energised
+                  after isolation&rsquo;.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.514.103</td>
+                <td className="px-4 py-3">
+                  Warning notice fixed to all inverters: &lsquo;WARNING — Isolate both AC and DC
+                  sides before servicing&rsquo;.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.521.1041</td>
+                <td className="px-4 py-3">
+                  DC cables selected and erected to minimise earth-fault and short-circuit risk —
+                  e.g. single-core non-metallic-sheathed H1Z2Z2-K to BS EN 50618; cables not laid
+                  directly on the roof surface.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.523.101</td>
+                <td className="px-4 py-3">
+                  For cables subject to direct heating under the module, design ambient temperature
+                  shall be taken as at least 70&deg;C.
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.526.101</td>
+                <td className="px-4 py-3">
+                  DC connectors selected to BS EN 62852:2015+A1:2020. Where accessible to ordinary
+                  persons, they must require a key or tool to disconnect (or sit in a key/tool-only
+                  enclosure).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
           The EIC should be issued in accordance with the model forms in BS 7671 Appendix 6. The
           A4:2026 update to Appendix 6 adds fields for recording surge protective devices (SPDs) and
@@ -373,6 +449,49 @@ const sections = [
           Distribution Network Operator (DNO). The type of notification depends on the size of the
           installation.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold"> </th>
+                <th className="px-4 py-3 font-semibold text-green-300">G98</th>
+                <th className="px-4 py-3 font-semibold text-blue-300">G99</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Type</td>
+                <td className="px-4 py-3">Notification (connect-and-notify)</td>
+                <td className="px-4 py-3">Application (approval before connection)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Threshold</td>
+                <td className="px-4 py-3">Up to 16A per phase</td>
+                <td className="px-4 py-3">Above 16A per phase</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Single-phase</td>
+                <td className="px-4 py-3">Up to approx. 3.68kW</td>
+                <td className="px-4 py-3">Above approx. 3.68kW</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Three-phase</td>
+                <td className="px-4 py-3">Up to approx. 11.04kW</td>
+                <td className="px-4 py-3">Above approx. 11.04kW</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">DNO timescale</td>
+                <td className="px-4 py-3">10 working days to object</td>
+                <td className="px-4 py-3">Several weeks for assessment</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium text-white/70">Typical use</td>
+                <td className="px-4 py-3">Most domestic (3–4kW) systems</td>
+                <td className="px-4 py-3">Large domestic, commercial, multi-string</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-3">G98 — Small Systems</h3>
@@ -415,6 +534,88 @@ const sections = [
           The DNO notification or application must be submitted by the installer. A copy of the G98
           notification or G99 approval letter should be included in the handover documentation
           provided to the customer.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'commissioning-tests',
+    heading: 'Commissioning Tests: DC and AC Sides',
+    content: (
+      <>
+        <p>
+          Commissioning a solar PV system involves two distinct sets of tests: the standard BS 7671
+          inspection and testing for the AC installation, plus DC-side checks specific to the PV
+          array. Under BS 7671 Reg 712.6.101, once the relevant Part 6 requirements are met, the
+          additional system documentation, commissioning tests and inspection follow the{' '}
+          <strong>BS EN 62446 series</strong>. Both sets of results belong on the certificate and in
+          the handover pack.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Side</th>
+                <th className="px-4 py-3 font-semibold">Test / check</th>
+                <th className="px-4 py-3 font-semibold">Notes</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr className="bg-orange-500/[0.06]">
+                <td className="px-4 py-3 font-medium text-orange-300 align-top" rowSpan={4}>
+                  DC side
+                </td>
+                <td className="px-4 py-3">Open-circuit voltage (V<sub>oc</sub>) per string</td>
+                <td className="px-4 py-3">Compare against expected value for the string and temperature</td>
+              </tr>
+              <tr className="bg-orange-500/[0.06]">
+                <td className="px-4 py-3">Short-circuit current (I<sub>sc</sub>) per string</td>
+                <td className="px-4 py-3">Or operational current; confirms string is producing correctly</td>
+              </tr>
+              <tr className="bg-orange-500/[0.06]">
+                <td className="px-4 py-3">DC insulation resistance</td>
+                <td className="px-4 py-3">Treat DC as live at all times (Reg 712.410.101) — test per BS EN 62446 method</td>
+              </tr>
+              <tr className="bg-orange-500/[0.06]">
+                <td className="px-4 py-3">Polarity</td>
+                <td className="px-4 py-3">Verify before connecting strings to the inverter</td>
+              </tr>
+              <tr className="bg-blue-900/20">
+                <td className="px-4 py-3 font-medium text-blue-300 align-top" rowSpan={3}>
+                  AC side
+                </td>
+                <td className="px-4 py-3">Continuity, insulation resistance, polarity</td>
+                <td className="px-4 py-3">Standard BS 7671 dead tests for the new AC circuit</td>
+              </tr>
+              <tr className="bg-blue-900/20">
+                <td className="px-4 py-3">Earth fault loop impedance &amp; RCD operation</td>
+                <td className="px-4 py-3">Live tests on the inverter-to-consumer-unit circuit</td>
+              </tr>
+              <tr className="bg-blue-900/20">
+                <td className="px-4 py-3">Earthing &amp; bonding verification</td>
+                <td className="px-4 py-3">Main earthing terminal; bonding of metallic mounting frame where required</td>
+              </tr>
+              <tr className="bg-yellow-500/[0.06]">
+                <td className="px-4 py-3 font-medium text-yellow-300 align-top" rowSpan={2}>
+                  Inverter
+                </td>
+                <td className="px-4 py-3">Grid protection settings</td>
+                <td className="px-4 py-3">Verify voltage/frequency trip limits and anti-islanding; factory defaults may not match UK requirements</td>
+              </tr>
+              <tr className="bg-yellow-500/[0.06]">
+                <td className="px-4 py-3">Record serial number &amp; firmware</td>
+                <td className="px-4 py-3">For warranty, traceability and future settings audits</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          A common audit finding is incomplete or missing DC results — every string needs its own
+          V<sub>oc</sub> and current reading recorded. See the{' '}
+          <SEOInternalLink href="/guides/rams-for-solar-pv-installation">
+            solar PV RAMS guide
+          </SEOInternalLink>{' '}
+          for the safe-working method behind these DC checks.
         </p>
       </>
     ),
@@ -533,42 +734,46 @@ const sections = [
       <>
         <p>
           Solar PV installations come with multiple warranties that the installer must document and
-          hand over to the customer.
+          hand over to the customer. Typical durations vary by component and manufacturer, so always
+          confirm against the actual product documentation:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Panel warranty</strong> — most solar panels carry a 25-year performance
-                warranty guaranteeing a minimum output (typically 80% of rated output at 25 years)
-                and a 10-12 year product warranty covering manufacturing defects.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Inverter warranty</strong> — most inverters carry a 5-12 year product
-                warranty, with extended warranties available. The inverter is the component most
-                likely to require replacement during the system lifetime.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Workmanship warranty</strong> — the installer provides a warranty covering
-                the installation work, typically 2-10 years depending on the company.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Insurance-backed guarantee (IBG)</strong> — MCS-certified installations
-                include an IBG that protects the customer if the installer ceases to trade during
-                the warranty period. This is a key benefit of MCS certification.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold">Warranty</th>
+                <th className="px-4 py-3 font-semibold">Typical duration</th>
+                <th className="px-4 py-3 font-semibold">What it covers</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className="px-4 py-3 font-medium">Panel performance</td>
+                <td className="px-4 py-3">25 years (often 30)</td>
+                <td className="px-4 py-3">Guaranteed minimum output (commonly ~80–87% at year 25)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Panel product</td>
+                <td className="px-4 py-3">10–25 years</td>
+                <td className="px-4 py-3">Manufacturing defects in the module itself</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Inverter</td>
+                <td className="px-4 py-3">5–12 years</td>
+                <td className="px-4 py-3">Most likely component to need replacement; extensions common</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 font-medium">Workmanship</td>
+                <td className="px-4 py-3">2–10 years</td>
+                <td className="px-4 py-3">The installation work, set by the installer</td>
+              </tr>
+              <tr className="bg-yellow-500/[0.06]">
+                <td className="px-4 py-3 font-medium">Insurance-backed guarantee (IBG)</td>
+                <td className="px-4 py-3">Matches workmanship term</td>
+                <td className="px-4 py-3">Honours the workmanship warranty if the installer ceases to trade — an MCS benefit</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           All warranty documents should be included in the handover pack and the customer should be
@@ -701,6 +906,7 @@ export default function SolarPVCertificateRequirementsPage() {
       heroSubtitle="Every solar PV installation requires an EIC, MCS certificate, DNO notification, and handover documentation. This guide explains each certificate requirement in detail, covering what must be included, who issues it, and the consequences of missing documentation."
       readingTime={13}
       keyTakeaways={keyTakeaways}
+      answerBox={answerBox}
       sections={sections}
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Solar PV Certificates"

@@ -24,6 +24,11 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
   heroSuffix: '— C2 or C3?',
   heroSubtitle:
     'Plastic consumer units are everywhere in older UK installations. In an HMO escape route the same fitting can be a C2 ("potentially dangerous", makes the EICR unsatisfactory, 28-day remedial deadline under PRS Regs 2020). Elsewhere it might be a C3. This guide explains the decision boundary, the regulation context, and what every HMO landlord needs to know.',
+  answerBox: {
+    question: 'Is a plastic consumer unit in an HMO a C2 or C3 on an EICR?',
+    answer:
+      'It depends on the fire-spread context, not on the HMO label alone. A plastic consumer unit in an HMO escape route — under a wooden staircase, in a shared corridor near combustibles, or in a fire-resisting compartment wall — is typically a C2 ("potentially dangerous"), which makes the EICR unsatisfactory. Away from any escape route with no combustible surroundings it is usually a C3. Visible heat damage or arcing pushes it to C1.',
+  },
   keyTakeaways: [
     'Regulation 421.1.201 of BS 7671 (introduced January 2016 in BS 7671:2008+A3 and retained through A4:2026) requires consumer units and similar switchgear assemblies in domestic premises to comply with BS EN 61439-3 and to have a non-combustible enclosure.',
     'For consumer units installed before January 2016: the original installation was compliant at the time. A plastic CU in a normal domestic setting is typically a C3 ("Improvement recommended").',
@@ -31,7 +36,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     'HMO classification under the Housing Act 2004 + Management of HMOs (England) Regs 2006 makes the property subject to additional fire-safety duties on the landlord — a plastic CU in a designated escape route or near a fire-resisting partition is materially different from a domestic dwelling.',
     "Remedial options: full consumer unit replacement to a metal-enclosed all-RCBO unit (most common); retrofit a metal enclosure around the existing CU (rare, manufacturer-specific); upgrade to RCBOs in a metal-clad replacement (best practice combining 421.1.201 + 411.3.4 A4 compliance). Any replacement CU must comply with BS EN 61439-3 — verify the manufacturer's declaration before supply.",
     'For HMOs under PRS Regs 2020 (England), a C2 on the EICR triggers a 28-day remedial deadline with mandatory written confirmation to tenants + local authority on request.',
-    'Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends installation of arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents — a CU replacement is the right opportunity to consider AFDD-equipped circuits, particularly relevant in multi-occupancy settings.',
+    'Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices (AFDDs) conforming to BS EN 62606 are now MANDATORY for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation (HMOs) — alongside high rise residential buildings, purpose-built student accommodation and care homes. A consumer unit replacement in an HMO is the moment this requirement is engaged.',
   ],
   sections: [
     {
@@ -68,15 +73,25 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'For a plastic consumer unit installed pre-2016, the classification on the EICR depends on the physical context — particularly the fire-spread implications. Three typical scenarios:',
+          text: 'For a plastic consumer unit installed pre-2016, the classification on the EICR depends on the physical context — particularly the fire-spread implications. The same physical fitting can earn a [C2](/guides/eicr-code-c2-potentially-dangerous) or a [C3](/guides/eicr-code-c3-improvement-recommended) depending on where it sits. Three typical scenarios:',
         },
         {
-          type: 'list',
-          items: [
-            '**Standard domestic owner-occupied — not in an escape route** — typically C3 ("Improvement recommended"). The CU does not comply with current standards but its location does not create a heightened potential-danger scenario.',
-            '**HMO escape route — under wooden staircase, in shared corridor near combustibles, in a fire-resisting compartment wall** — typically C2 ("Potentially dangerous"). A fire in the CU could spread to escape-route materials and impede tenant evacuation. The combustibility creates potential danger that the metal-enclosure requirement was specifically designed to prevent.',
-            '**Plastic CU with visible heat damage, signs of arcing, or melted enclosure** — typically C1 ("Danger present"). The CU is actively failing and the inspector cannot leave it in service.',
-          ],
+          type: 'callout',
+          tone: 'info',
+          title: 'C3 — Improvement recommended',
+          text: '**Standard domestic, owner-occupied, not in an escape route.** The plastic CU does not meet the current non-combustible-enclosure standard, but its location does not create a heightened potential-danger scenario. A C3 does not, on its own, make the EICR unsatisfactory — but it should still be acted on at the next reasonable opportunity.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'C2 — Potentially dangerous (makes the EICR unsatisfactory)',
+          text: '**HMO escape route — under a wooden staircase, in a shared corridor near combustibles, or in a fire-resisting compartment wall.** A fire originating in the CU could spread to escape-route materials and impede tenant evacuation. The combustibility creates the potential danger that the non-combustible-enclosure requirement was specifically introduced to prevent. A C2 makes the overall EICR unsatisfactory.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'C1 — Danger present (immediate action required)',
+          text: '**Plastic CU with visible heat damage, signs of arcing, scorching, or a melted enclosure.** The CU is actively failing and the inspector cannot leave it in service. A C1 is recorded regardless of HMO status and warrants immediate remedial action or making-safe before the inspector leaves site.',
         },
         {
           type: 'callout',
@@ -122,10 +137,46 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
           type: 'list',
           ordered: true,
           items: [
-            '**Full consumer unit replacement to metal-enclosed all-RCBO unit** — the most thorough option. The new CU must comply with BS EN 61439-3 (Regulation 421.1.201). It also addresses A4:2026 requirements: Regulation 411.3.4 luminaire RCD protection — additional protection by an RCD not exceeding 30 mA shall be provided for AC final circuits supplying luminaires in domestic premises — achieved by fitting each lighting circuit on its own 30 mA RCBO. Regulation 421.1.7 recommends AFDDs on AC final circuits to mitigate fire risk from arc fault currents; a CU replacement is the right opportunity to fit AFDD-equipped devices. SPD where the risk assessment indicates. Typical UK trade cost £700–£1,500 depending on board size, complexity, and any associated remedial work.',
+            '**Full consumer unit replacement to metal-enclosed all-RCBO unit** — the most thorough option. The new CU must comply with BS EN 61439-3 (Regulation 421.1.201). It also engages A4:2026 requirements: Regulation 411.3.4 luminaire RCD protection — additional protection by an RCD not exceeding 30 mA shall be provided for AC final circuits supplying luminaires in domestic premises — achieved by fitting each lighting circuit on its own 30 mA RCBO. Because the property is an HMO, Regulation 421.1.7 also makes AFDDs mandatory on the single-phase socket-outlet final circuits (≤ 32 A) — best delivered as combined AFDD/RCBO devices at the board. Add an SPD where the risk assessment indicates. Indicative UK trade figures are given below.',
             '**Replacement to metal-enclosed unit retaining existing MCB protection** — cheaper than full RCBO replacement but loses the A4 luminaire-RCD benefit. Some inspectors flag this as inadequate where the EICR also has C2/C3 observations on missing luminaire RCD protection (Regulation 411.3.4 — additional protection by an RCD not exceeding 30 mA for AC luminaire circuits in domestic premises). The replacement unit must still comply with BS EN 61439-3.',
             "**Metal-enclosing retrofit (rare)** — some manufacturers offer steel retrofit cabinets that go around an existing plastic CU. Under Regulation 421.1.201, the cabinet or enclosure must comply with Regulation 132.12 (adequate working space and accessibility) in addition to satisfying the non-combustibility requirement. Verify against the manufacturer's installation instructions and the BS EN 61439-3 declaration for the original unit. Less common than full replacement.",
           ],
+        },
+        {
+          type: 'callout',
+          tone: 'pricing',
+          title: 'Indicative cost — not a quote',
+          text: 'As a rough market guide only, full replacement to a metal-enclosed all-RCBO unit in a typical 4–6 bed HMO sits around £900–£1,800 at trade prices, with the EIC usually included. Adding combined AFDD/RCBO devices on the socket circuits (now mandatory in HMOs) increases the per-way device cost over plain RCBOs. Larger HMOs or boards needing associated remedial work — main bonding, supplementary bonding, recabling — can run to £2,500+. Always price the specific installation.',
+        },
+      ],
+    },
+    {
+      id: 'afdd-hmo',
+      heading: 'AFDDs Are Now Mandatory in HMOs (A4:2026)',
+      tocLabel: 'AFDDs in HMOs',
+      blocks: [
+        {
+          type: 'paragraph',
+          text: 'This is the change most often missed on HMO consumer unit replacements. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices are no longer merely "recommended" in HMOs — they are required. When you replace the plastic CU, the new arrangement has to satisfy this.',
+        },
+        {
+          type: 'callout',
+          tone: 'warning',
+          title: 'Regulation 421.1.7 — the HMO requirement',
+          text: 'Arc fault detection devices (AFDDs) conforming to BS EN 62606 SHALL be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in houses in multiple occupation (HMOs). The same mandatory requirement applies to high rise residential buildings, purpose-built student accommodation and care homes. For all other premises the use of AFDDs is recommended, not required.',
+        },
+        {
+          type: 'list',
+          items: [
+            '**Scope is the socket-outlet final circuits** — the mandatory requirement targets single-phase AC final circuits supplying socket-outlets rated not more than 32 A. It is the socket circuits, not every circuit in the board, that trigger the obligation.',
+            '**Placement** — where AFDDs are used they shall be placed at the origin of the circuit to be protected. In a consumer unit replacement that means an AFDD (or combined AFDD/RCBO device) at the board for each affected socket circuit.',
+            '**High rise definition** — for the HRRB category, BS 7671 treats a high rise residential building as one over 18 m in height or in excess of six storeys, whichever is met first. HMOs qualify on the building-type basis regardless of height.',
+            '**It does not replace other measures** — fitting an AFDD does not remove the need for the other protective measures in BS 7671, including RCD additional protection. An AFDD/RCBO device covers both where specified.',
+          ],
+        },
+        {
+          type: 'paragraph',
+          text: 'In practice this means a plastic-CU replacement in an HMO should be specified as a metal-enclosed unit with AFDD protection on the socket-outlet final circuits and 30 mA RCD additional protection across the board. See the [A4:2026 luminaire RCD requirement](/guides/bs-7671-a4-2026-luminaire-rcd-protection) for the parallel obligation on lighting circuits.',
         },
       ],
     },
@@ -192,6 +243,11 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
         'Regulation 421.1.201 of BS 7671:2018+A4:2026 requires consumer units and similar switchgear assemblies in domestic (household) premises to: (a) comply with BS EN 61439-3; and (b) either be enclosed in a non-combustible enclosure, or have measures to ensure that any fire originating within the assembly cannot spread to combustible surrounding materials. In practice this means a steel-enclosed consumer unit that carries a BS EN 61439-3 declaration from the manufacturer — both requirements apply regardless of which enclosure route is chosen. The regulation was introduced in BS 7671:2008+A3 (effective January 2016) and is retained in A4:2026.',
     },
     {
+      question: 'Do I have to fit AFDDs when I replace a consumer unit in an HMO?',
+      answer:
+        'Yes, for the socket circuits. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation — the requirement is mandatory for HMOs (as well as high rise residential buildings, purpose-built student accommodation and care homes). Where AFDDs are used they must sit at the origin of the circuit, so they are fitted at the board, commonly as combined AFDD/RCBO devices. For all other premises types AFDDs are recommended rather than required.',
+    },
+    {
       question: "Is my plastic CU automatically dangerous if it's in any HMO?",
       answer:
         "No — automatic classification rules aren't how BS 7671 / GN3 works. The inspector evaluates each plastic CU in context: location relative to escape routes, fire-resisting compartmentation, combustibility of surroundings, condition of the unit, and the property's HMO classification. A plastic CU in a 3-bed shared house with the CU in a non-escape-route utility room may be C3. The same unit in a 6-bed licensable HMO under the wooden staircase of the only escape route is C2.",
@@ -204,7 +260,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need to upgrade ALL the circuits to A4:2026 standard when replacing the CU?',
       answer:
-        "Strictly, no — A4 is not retrospective. The new CU and the work done IN the new CU must comply with current A4 standards. The existing circuits downstream remain as they were unless you're actively modifying them. In practice, electricians typically take the opportunity to install all-RCBO protection, addressing both Regulation 411.3.3 socket-outlet RCD and Regulation 411.3.4 luminaire RCD requirements — the latter requires additional protection by an RCD whose rated residual operating current does not exceed 30 mA for AC final circuits supplying luminaires in domestic (household) premises. Every existing circuit is tested and an EIC issued for the alteration. Where existing circuits fail current testing (e.g. high Zs, low insulation resistance), separate remedial work is needed.",
+        "Strictly, the existing downstream circuits are not retrospectively upgraded — but the new CU and the work done IN it must comply with current A4 standards, and in an HMO that now includes AFDDs. The new board must address Regulation 411.3.3 socket-outlet RCD protection, Regulation 411.3.4 luminaire RCD protection (additional protection by an RCD not exceeding 30 mA for AC final circuits supplying luminaires in domestic premises), and Regulation 421.1.7 AFDD protection — mandatory on the single-phase socket-outlet final circuits not exceeding 32 A in an HMO. In practice electricians fit combined AFDD/RCBO devices on the socket ways and RCBOs elsewhere. Every existing circuit is tested and an EIC issued for the alteration; where circuits fail current testing (e.g. high Zs, low insulation resistance) separate remedial work is needed.",
     },
     {
       question: "What if the tenant won't agree to consumer unit replacement access?",

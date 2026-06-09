@@ -13,7 +13,6 @@ import {
   Building2,
   Zap,
   Users,
-  BellRing,
   Flame,
 } from 'lucide-react';
 
@@ -40,6 +39,12 @@ const tocItems = [
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
+
+const answerBox = {
+  question: 'What are the electrical requirements for an HMO in the UK?',
+  answer:
+    'An HMO needs a satisfactory EICR (at least every five years under the 2020 Regulations, often three under licence conditions), interlinked fire detection to BS 5839-6, emergency lighting to BS 5266-1 in escape routes, 30mA RCD protection on socket and lighting circuits under BS 7671, and AFDDs on socket-outlet circuits up to 32A under Regulation 421.1.7.',
+};
 
 const keyTakeaways = [
   'Mandatory HMO licensing applies to properties with five or more occupants from two or more households. A valid EICR is a mandatory licence condition — without one the property cannot legally operate as an HMO.',
@@ -320,8 +325,51 @@ const sections = [
         <p>
           BS 5839-6:2019 is the British Standard for fire detection and fire alarm systems in
           domestic premises including HMOs. The standard uses a two-part classification: Grade
-          (equipment quality) and Category (extent of coverage).
+          (equipment quality) and Category (extent of coverage). The table below shows the most
+          common combinations and where each typically applies.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.03]">
+                  <th className="text-left font-semibold px-4 py-3">Grade &amp; Category</th>
+                  <th className="text-left font-semibold px-4 py-3">Equipment</th>
+                  <th className="text-left font-semibold px-4 py-3">Coverage</th>
+                  <th className="text-left font-semibold px-4 py-3">Typical HMO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5 bg-red-900/20">
+                  <td className="px-4 py-3 font-semibold text-red-300">Grade D1, LD2</td>
+                  <td className="px-4 py-3">
+                    Mains detectors, interlinked, with sealed (non-replaceable) back-up battery
+                  </td>
+                  <td className="px-4 py-3">Escape routes plus high-risk rooms (kitchens)</td>
+                  <td className="px-4 py-3">Common minimum for many HMOs</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold text-yellow-300">Grade D1, LD1</td>
+                  <td className="px-4 py-3">
+                    Mains detectors, interlinked, with sealed back-up battery
+                  </td>
+                  <td className="px-4 py-3">All rooms including every bedroom</td>
+                  <td className="px-4 py-3">Higher-risk or larger HMOs</td>
+                </tr>
+                <tr className="bg-blue-900/20">
+                  <td className="px-4 py-3 font-semibold text-blue-300">Grade A, LD1 / LD2</td>
+                  <td className="px-4 py-3">Central panel, addressable detectors, sounders</td>
+                  <td className="px-4 py-3">Per fire risk assessment</td>
+                  <td className="px-4 py-3">Large / multi-storey HMOs and blocks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+            The correct grade and category for a specific property is set by its fire risk
+            assessment and the local housing authority. Confirm with your council before installing.
+          </p>
+        </div>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -525,51 +573,57 @@ const sections = [
           authority. The following guidance applies to a typical Grade D, LD2 system in a
           five-bedroom three-storey HMO.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Hallways and landings</strong> — optical smoke detector on each floor level.
-                Position within 1.5m of each bedroom door, and within 7.5m of any other point on the
-                escape route. Must be interlinked with all other detectors in the property.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Stairwells</strong> — optical smoke detector at the top of each stairwell.
-                In properties of four or more storeys, a detector on each intermediate landing is
-                recommended. The stairwell detector protects the main vertical escape route.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Kitchens</strong> — heat detector only (not smoke, to avoid false alarms
-                from cooking). A fixed-temperature heat detector at 58°C, or a combined
-                fixed-temperature and rate-of-rise type, is standard. The heat detector must be
-                interlinked with the full smoke detector network.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Communal lounges and living rooms</strong> — optical smoke detector required
-                under LD1, and recommended under LD2. Many local authority licence conditions
-                require detectors in all communal rooms regardless of the LD2 category minimum.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Individual bedrooms</strong> — required under LD1 but not under LD2. Many
-                councils now specify LD1 category for all HMOs, meaning a detector in every sleeping
-                room. Where provided, optical detectors are preferred over ionisation types in
-                sleeping areas.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.03]">
+                  <th className="text-left font-semibold px-4 py-3">Location</th>
+                  <th className="text-left font-semibold px-4 py-3">Detector type</th>
+                  <th className="text-left font-semibold px-4 py-3">LD2</th>
+                  <th className="text-left font-semibold px-4 py-3">LD1</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">Hallways &amp; landings</td>
+                  <td className="px-4 py-3">Optical smoke</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">Top of each stairwell</td>
+                  <td className="px-4 py-3">Optical smoke</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                </tr>
+                <tr className="border-b border-white/5 bg-red-900/20">
+                  <td className="px-4 py-3 font-semibold text-red-300">Kitchens</td>
+                  <td className="px-4 py-3">Heat detector (not smoke)</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">Communal lounges</td>
+                  <td className="px-4 py-3">Optical smoke</td>
+                  <td className="px-4 py-3 text-white/60">Recommended</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold">Individual bedrooms</td>
+                  <td className="px-4 py-3">Optical smoke (preferred)</td>
+                  <td className="px-4 py-3 text-white/60">Not required</td>
+                  <td className="px-4 py-3 text-green-300">Required</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+            Kitchen heat detectors are typically a fixed-temperature 58°C type, or a combined
+            fixed-temperature and rate-of-rise detector, interlinked with the smoke detector
+            network. Many councils now apply LD1 to all HMOs regardless of size — always confirm the
+            category required by your licence conditions.
+          </p>
         </div>
         <p>
           All detectors must be mains-powered with tamper-proof battery back-up (Grade D minimum).
@@ -614,7 +668,11 @@ const sections = [
                 <strong>Complete C1 and C2 remedial works within 28 days</strong> — C1 observations
                 (danger present) may require immediate action including disconnection of the
                 affected circuit before remedial work can be arranged. Do not wait the full 28 days
-                for C1 findings.
+                for C1 findings. See our guide to{' '}
+                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+                  EICR observation codes
+                </SEOInternalLink>{' '}
+                for what each code means and the action required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -651,51 +709,66 @@ const sections = [
           interlinked detectors, and no significant defects will cost far less than a property
           requiring a full rewire and complete fire alarm installation.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>EICR — 5-bedroom HMO</strong> — £400 to £800. Multiple consumer units, fire
-                alarm wiring, and emergency lighting circuits increase the inspection scope compared
-                to a standard rental property.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Consumer unit replacement with RCBOs</strong> — £800 to £1,500 per consumer
-                unit. A five-bedroom HMO may require two or three consumer units. RCBO-equipped
-                boards suitable for HMOs cost more than standard split-load units but provide
-                essential individual circuit discrimination.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Grade D, LD2 fire alarm installation</strong> — £500 to £1,500 for a
-                five-bedroom HMO, covering all detectors, sounders, wiring, and commissioning. A
-                Grade A system with a central panel costs £2,000 to £6,000 or more.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting installation</strong> — £600 to £2,000 for a three-storey
-                five-bedroom HMO, covering hallways, landings, stairwell, and final exit. Includes
-                supply, fixing, and commissioning of non-maintained luminaires.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Full rewire — worst case</strong> — £8,000 to £20,000 for a five-bedroom
-                three-storey HMO requiring complete rewiring. Necessary for properties still on
-                rubber-insulated, cloth-covered, or aluminium wiring with fundamental installation
-                deficiencies.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.03]">
+                  <th className="text-left font-semibold px-4 py-3">Work item</th>
+                  <th className="text-left font-semibold px-4 py-3">Indicative cost</th>
+                  <th className="text-left font-semibold px-4 py-3">What it covers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">EICR — 5-bedroom HMO</td>
+                  <td className="px-4 py-3 text-yellow-300 whitespace-nowrap">£400 – £800</td>
+                  <td className="px-4 py-3">
+                    Multiple consumer units, fire alarm and emergency lighting circuits widen the
+                    inspection scope versus a standard rental.
+                  </td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">Consumer unit with RCBOs</td>
+                  <td className="px-4 py-3 text-yellow-300 whitespace-nowrap">
+                    £800 – £1,500 each
+                  </td>
+                  <td className="px-4 py-3">
+                    Per board. A five-bedroom HMO may need two or three. RCBO boards give
+                    per-circuit discrimination.
+                  </td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">Grade D, LD2 fire alarm</td>
+                  <td className="px-4 py-3 text-yellow-300 whitespace-nowrap">£500 – £1,500</td>
+                  <td className="px-4 py-3">
+                    All detectors, sounders, wiring and commissioning. A Grade A central-panel
+                    system runs £2,000 – £6,000+.
+                  </td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-4 py-3 font-semibold">Emergency lighting</td>
+                  <td className="px-4 py-3 text-yellow-300 whitespace-nowrap">£600 – £2,000</td>
+                  <td className="px-4 py-3">
+                    Hallways, landings, stairwell and final exit — supply, fixing and commissioning
+                    of non-maintained luminaires.
+                  </td>
+                </tr>
+                <tr className="bg-red-900/20">
+                  <td className="px-4 py-3 font-semibold text-red-300">Full rewire (worst case)</td>
+                  <td className="px-4 py-3 text-red-300 whitespace-nowrap">£8,000 – £20,000</td>
+                  <td className="px-4 py-3">
+                    Properties on rubber, cloth-covered or aluminium wiring with fundamental
+                    installation deficiencies.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+            Figures are indicative UK market guidance for 2026, not a quote. Actual prices vary by
+            region, property condition and contractor.
+          </p>
         </div>
         <p>
           Landlords acquiring an HMO should commission a full electrical survey before exchange and
@@ -785,6 +858,7 @@ export default function HMOElectricalRequirementsPage() {
       }
       heroSubtitle="Everything HMO landlords and electricians need to know — mandatory licensing conditions, EICR frequency, fire detection to BS 5839-6, emergency lighting to BS 5266-1, RCD protection under Regulation 411.3.3, room-by-room detector placement, and typical costs for full HMO electrical compliance."
       readingTime={16}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

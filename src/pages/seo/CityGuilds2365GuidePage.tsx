@@ -152,10 +152,15 @@ const sections = [
         </p>
         <p>
           The 2365 is one of three components needed to become a qualified electrician. The other
-          two are the NVQ (proving you can do the work in a real workplace) and the AM2 (a practical
-          assessment of your installation, testing, and fault diagnosis skills). Together, these
-          three components — plus the End-Point Assessment — form the Level 3 Electrotechnical
-          Apprenticeship.
+          two are the NVQ (proving you can do the work in a real workplace) and the{' '}
+          <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> (a practical assessment
+          of your installation, testing, and fault diagnosis skills). Together, these three
+          components — plus the End-Point Assessment — form the Level 3 Electrotechnical
+          Apprenticeship. See the full{' '}
+          <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
+            electrical apprenticeship guide
+          </SEOInternalLink>{' '}
+          for how the stages fit together.
         </p>
         <p>
           If you are starting an apprenticeship, you will study the 2365 at college (typically one
@@ -208,18 +213,20 @@ const sections = [
               detail.
             </p>
             <p className="text-white/80 text-xs leading-relaxed">
-              <strong className="text-white">Cable sizing correction factors</strong> (Appendix 4) —
-              the tabulated current-carrying capacity of a cable must be derated by all applicable
-              factors before comparison with the design current. The three most examined are:{' '}
-              <strong>grouping</strong> (cables sharing a route lose their ability to dissipate heat
-              — the more cables grouped together, the greater the derating);{' '}
-              <strong>ambient temperature</strong> (cables rated at a reference temperature, e.g. 30
-              °C — higher ambient means a lower correction factor and reduced rated current); and{' '}
+              <strong className="text-white">Cable sizing rating factors</strong> (Appendix 4) — the
+              tabulated current-carrying capacity of a cable must be derated by all applicable rating
+              factors before comparison with the design current. Under BS 7671 Reg 523.2, the
+              requirement of Reg 523.1 (conductor temperature limits) is satisfied where the current
+              does not exceed the Appendix 4 tabulated value &quot;subject to any necessary rating
+              factors&quot;. The three most examined are: <strong>grouping</strong> (Reg 523.5,
+              group rating factors in Tables 4C1 to 4C6 — cables sharing a route lose their ability
+              to dissipate heat, so the more cables grouped, the greater the derating);{' '}
+              <strong>ambient temperature</strong> (Reg 523.4 — Appendix 4 capacities use a
+              reference ambient of 30 °C for cables in air; a higher ambient applies a lower rating
+              factor Ca from Table 4B1 and reduces the rated current); and{' '}
               <strong>thermal insulation</strong> (a cable surrounded by insulating material cannot
-              shed heat, requiring significant derating or rerouting). Additional factors cover the
-              type of protective device and installation method. BS 7671 Reg 622.85 requires
-              verification that conductor sizing accounts for all applicable correction and grouping
-              factors.
+              shed heat, requiring significant derating or rerouting — A4:2026 revised the Appendix 4
+              guidance on cables surrounded by thermal insulation).
             </p>
           </div>
         </div>
@@ -233,12 +240,14 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed list-none">
             <li>
-              <strong>Reg 421.1.7 — AFDD recommendation.</strong> This regulation, inserted by
-              A4:2026 under Chapter 42 (Protection against fire), recommends the installation of arc
-              fault detection devices (AFDDs) in AC final circuits of a fixed installation to
-              mitigate the risk of fire due to arc fault currents. The wording is recommendatory
-              (not a &#39;shall&#39; requirement), so you need to understand both what an AFDD does
-              and the advisory nature of the regulation.
+              <strong>Reg 421.1.7 — AFDDs.</strong> This regulation, in Chapter 42 (Protection
+              against thermal effects), addresses arc fault detection devices (AFDDs), which mitigate
+              the risk of fire from arc fault currents. As redrafted, it is a <strong>requirement</strong>{' '}
+              to protect final circuits supplying socket-outlets rated up to 32 A with AFDDs in
+              Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student
+              accommodation and care homes; for all other premises it <strong>recommends</strong>{' '}
+              AFDDs on single-phase AC final circuits supplying socket-outlets up to 32 A. Know both
+              the device function and where AFDDs are required versus recommended.
             </li>
             <li>
               <strong>Reg 411.3.4 — Mandatory 30 mA RCD on domestic lighting circuits.</strong>{' '}
@@ -316,43 +325,56 @@ const sections = [
           The 2365 is assessed through a combination of written exams and practical assessments. The
           format varies by unit, but here is what to expect:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Multiple-choice exams</strong> — timed written exams with multiple-choice
-                questions. Typically 40 to 60 questions per exam, with a time limit of 1 to 2 hours.
-                Pass mark is usually 60% to 65%. These test your theoretical knowledge of
-                regulations, science, and installation principles.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Short-answer exams</strong> — some units include short-answer questions
-                where you write a brief response rather than selecting from options. These test your
-                ability to explain concepts, describe procedures, and show working for calculations.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Practical assessments</strong> — assessed in the college workshop by your
-                tutor or an internal assessor. You complete a practical task (for example, wiring an
-                installation, carrying out tests, or diagnosing a fault) within a time limit and are
-                assessed on safety, quality, accuracy, and completion.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Online vs paper exams</strong> — many centres now deliver exams online. The
-                format is the same, but you answer on a computer instead of a paper answer sheet.
-                Results are often available immediately for online exams.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 bg-white/[0.06] text-white/70 text-xs font-semibold uppercase tracking-wide px-4 py-3">
+            <span className="col-span-4">Assessment</span>
+            <span className="col-span-4 sm:col-span-3">Typical format</span>
+            <span className="col-span-4 sm:col-span-5">What it tests</span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 font-semibold flex items-center gap-2">
+              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Multiple-choice
+            </span>
+            <span className="col-span-4 sm:col-span-3 text-white/80">
+              ~40–60 questions, 1–2 hours, pass mark usually 60–65%
+            </span>
+            <span className="col-span-4 sm:col-span-5 text-white/80">
+              Theory of regulations, electrical science and installation principles.
+            </span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 font-semibold flex items-center gap-2">
+              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Short-answer
+            </span>
+            <span className="col-span-4 sm:col-span-3 text-white/80">
+              Written responses, some units only
+            </span>
+            <span className="col-span-4 sm:col-span-5 text-white/80">
+              Explaining concepts, describing procedures and showing working for calculations.
+            </span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 font-semibold flex items-center gap-2">
+              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Practical assessment
+            </span>
+            <span className="col-span-4 sm:col-span-3 text-white/80">
+              Timed workshop task, assessed by tutor/internal assessor
+            </span>
+            <span className="col-span-4 sm:col-span-5 text-white/80">
+              Wiring, testing or fault diagnosis judged on safety, quality, accuracy and completion.
+            </span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 font-semibold flex items-center gap-2">
+              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Delivery mode
+            </span>
+            <span className="col-span-4 sm:col-span-3 text-white/80">
+              Online or paper — same content
+            </span>
+            <span className="col-span-4 sm:col-span-5 text-white/80">
+              Many centres now use on-screen exams; results are often available immediately.
+            </span>
+          </div>
         </div>
         <p>
           Exam technique matters. Read the question carefully, eliminate obviously wrong answers,
@@ -419,36 +441,44 @@ const sections = [
           The Level 3 Electrotechnical Apprenticeship has three main components, and the 2365 is one
           of them:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>2365 Diploma (or 5357 equivalent)</strong> — the technical knowledge
-                qualification. Studied at college, assessed through exams and practical assessments.
-                This is the "theory" component.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>2357 NVQ Diploma (or equivalent)</strong> — the workplace competence
-                qualification. Assessed through{' '}
-                <SEOInternalLink href="/guides/nvq-level-2-electrical-portfolio">
-                  portfolio evidence
-                </SEOInternalLink>{' '}
-                gathered from your employer. This is the "practical" component.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>AM2</strong> — the practical assessment at a JIB-approved centre. This is
-                the "test" that proves you can install, test, and diagnose faults to a competent
-                standard.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-12 bg-white/[0.06] text-white/70 text-xs font-semibold uppercase tracking-wide px-4 py-3">
+            <span className="col-span-4 sm:col-span-3">Component</span>
+            <span className="col-span-3 sm:col-span-2">Type</span>
+            <span className="col-span-5 sm:col-span-7">How it is assessed</span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 sm:col-span-3 font-semibold flex items-center gap-2">
+              <Award className="w-4 h-4 text-yellow-400 shrink-0" /> 2365 Diploma (or 5357)
+            </span>
+            <span className="col-span-3 sm:col-span-2 text-blue-300">Knowledge</span>
+            <span className="col-span-5 sm:col-span-7 text-white/80">
+              College-based exams and practical workshop assessments.
+            </span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 sm:col-span-3 font-semibold flex items-center gap-2">
+              <Award className="w-4 h-4 text-yellow-400 shrink-0" /> 2357 NVQ Diploma
+            </span>
+            <span className="col-span-3 sm:col-span-2 text-green-300">Competence</span>
+            <span className="col-span-5 sm:col-span-7 text-white/80">
+              Workplace{' '}
+              <SEOInternalLink href="/guides/nvq-level-2-electrical-portfolio">
+                portfolio evidence
+              </SEOInternalLink>{' '}
+              and assessor observations with your employer.
+            </span>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-4 sm:col-span-3 font-semibold flex items-center gap-2">
+              <Award className="w-4 h-4 text-yellow-400 shrink-0" /> AM2
+            </span>
+            <span className="col-span-3 sm:col-span-2 text-purple-300">Practical test</span>
+            <span className="col-span-5 sm:col-span-7 text-white/80">
+              Timed independent assessment at a JIB-approved centre covering installation, testing
+              and fault diagnosis.
+            </span>
+          </div>
         </div>
         <p>
           All three must be completed to pass through the EPA gateway and complete the
@@ -456,6 +486,19 @@ const sections = [
           workplace, and the AM2 tests it all under controlled conditions. They are designed to work
           together — what you learn in college should directly relate to what you do on site.
         </p>
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+          <h3 className="font-bold text-amber-300 text-base mb-2">
+            Off-the-job training hours
+          </h3>
+          <p className="text-white text-sm leading-relaxed">
+            Since 1 August 2025, off-the-job (OTJ) training on an apprenticeship is set as a fixed
+            number of hours per standard — not the old &quot;20% of paid hours&quot; rule. For the
+            Installation and Maintenance Electrician standard (ST0152), the OTJ requirement is{' '}
+            <strong>1,066 hours</strong>. Your day-release study towards the 2365, plus other
+            structured learning that takes place during paid working hours, counts towards this
+            total.
+          </p>
+        </div>
       </>
     ),
   },
@@ -513,47 +556,50 @@ const sections = [
           If you are studying the 2365 outside an employer-funded apprenticeship, you will need to
           pay course fees. Costs vary significantly by provider, location, and study mode:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Level 2 (full-time)</strong> — £1,500 to £3,000 depending on the provider.
-                This typically includes tuition, workshop access, course materials, and exam fees.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Level 3 (full-time)</strong> — £2,000 to £4,000. Level 3 is longer and more
-                demanding, which is reflected in the higher fees.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Combined Level 2 and 3</strong> — some providers offer a combined package
-                for £3,000 to £6,000, which can be cheaper than paying separately.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Additional costs</strong> — textbooks (BS 7671 and the On-Site Guide cost
-                approximately £80 together), PPE, hand tools for practical sessions, and travel to
-                the training centre. Some providers include these; others do not.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Funding options</strong> — Advanced Learner Loans are available for adults
-                aged 19+ studying Level 3 qualifications. Some local authorities offer grants or
-                bursaries for career changers. Check with your local college or training provider
-                for available funding.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="grid grid-cols-3 bg-white/[0.06] text-white/70 text-xs font-semibold uppercase tracking-wide px-4 py-3">
+            <span className="col-span-2">Programme</span>
+            <span className="text-right">Indicative fee</span>
+          </div>
+          <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-2 flex items-center gap-2">
+              <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" /> Level 2 (full-time)
+            </span>
+            <span className="text-right font-semibold text-yellow-300">£1,500 – £3,000</span>
+          </div>
+          <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-2 flex items-center gap-2">
+              <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" /> Level 3 (full-time)
+            </span>
+            <span className="text-right font-semibold text-yellow-300">£2,000 – £4,000</span>
+          </div>
+          <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm bg-green-900/20">
+            <span className="col-span-2 flex items-center gap-2">
+              <PoundSterling className="w-4 h-4 text-green-400 shrink-0" /> Combined Level 2 + 3
+              package
+            </span>
+            <span className="text-right font-semibold text-green-300">£3,000 – £6,000</span>
+          </div>
+          <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm">
+            <span className="col-span-2 flex items-center gap-2">
+              <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" /> BS 7671 + On-Site Guide
+              (books)
+            </span>
+            <span className="text-right font-semibold text-yellow-300">~£80</span>
+          </div>
+          <p className="px-4 py-3 border-t border-white/10 text-white/50 text-xs">
+            Indicative market guidance only, not a quote. Fees vary by provider, location and study
+            mode; full-time fees usually include tuition, workshop access, materials and exam
+            entries. Budget separately for PPE, hand tools and travel.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-blue-900/20 border border-blue-700/40 p-5 my-4">
+          <h3 className="font-bold text-white text-base mb-2">Funding options</h3>
+          <p className="text-white text-sm leading-relaxed">
+            Advanced Learner Loans are available for adults aged 19 and over studying eligible Level
+            3 qualifications. Some local authorities offer grants or bursaries for career changers.
+            Check with your chosen college or training provider for the funding available to you.
+          </p>
         </div>
         <p>
           Compare at least three training providers before committing. Check their pass rates, the
@@ -699,6 +745,11 @@ export default function CityGuilds2365GuidePage() {
       }
       heroSubtitle="The 2365 is the knowledge qualification every electrician needs. This guide covers Level 2 and Level 3 content, exam format, practical assessments, costs, and how it fits into the apprenticeship pathway."
       readingTime={15}
+      answerBox={{
+        question: 'What is the City & Guilds 2365?',
+        answer:
+          'The City & Guilds 2365 (Diploma in Electrical Installations) is the technical knowledge qualification for trainee electricians in the UK. Delivered at Level 2 (foundation) then Level 3 (advanced), it covers electrical science, installation methods, BS 7671 and inspection and testing through exams and college practical assessments. It is the knowledge component only — you also need the NVQ and AM2 to qualify.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

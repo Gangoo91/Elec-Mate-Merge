@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'Why does prospective fault current matter for protective device selection?',
     answer:
-      'Every protective device (MCB, RCBO, fuse, MCCB) has a rated breaking capacity — the maximum fault current it can safely interrupt. If the prospective fault current at the point where the device is installed exceeds its breaking capacity, the device may fail catastrophically during a fault, potentially causing an arc flash, fire, or explosion. BS 7671 Reg 434.5.1 requires that every protective device capable of protecting against both overload and fault current has a breaking capacity not less than the prospective fault current at its point of installation. For example, a standard domestic MCB typically has a breaking capacity of 6 kA. If the prospective fault current at the consumer unit is 4.5 kA, the MCB is suitable. If the PFC is 8 kA, a device with a higher breaking capacity (10 kA or 16 kA) must be used, or the arrangement must comply with Reg 533.2.2, Reg 536.1, and Reg 536.5 (backup protection coordination with an upstream device of adequate breaking capacity).',
+      'Every protective device (MCB, RCBO, fuse, MCCB) has a rated breaking capacity — the maximum fault current it can safely interrupt. If the prospective fault current at the point where the device is installed exceeds its breaking capacity, the device may fail catastrophically during a fault, potentially causing an arc flash, fire, or explosion. BS 7671 Reg 434.5.1 requires that every protective device capable of protecting against both overload and fault current is able to break any overcurrent up to and including the maximum prospective fault current at its point of installation. For example, a standard domestic MCB typically has a breaking capacity of 6 kA. If the prospective fault current at the consumer unit is 4.5 kA, the MCB is suitable. If the PFC is 8 kA, a device with a higher breaking capacity (10 kA or 16 kA) must be used, or the combined short-circuit protection permitted by Reg 434.5.1 must be applied — an upstream device of adequate breaking capacity, with the coordination between the two devices demonstrated to the manufacturers’ instructions in line with Section 536.',
   },
   {
     question: 'What is a typical prospective fault current in a domestic installation?',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What if the prospective fault current exceeds the MCB breaking capacity?',
     answer:
-      'If the prospective fault current at a distribution board exceeds the breaking capacity of the MCBs installed in it, there are several options. First, you can replace the MCBs with devices that have a higher breaking capacity — some manufacturers offer MCBs rated at 10 kA or 16 kA instead of the standard 6 kA. Second, BS 7671 Reg 533.2.2 permits a downstream device with a lower breaking capacity provided the arrangement complies with the last paragraph of Reg 536.1 and Reg 536.5 — in practice this means the upstream device must have adequate breaking capacity to clear the full prospective fault current and the energy let-through coordination between the two devices must be demonstrated (for example, using manufacturer coordination tables or calculated fault level evidence). Third, you can install a current-limiting device upstream to reduce the fault current reaching the board. The electrician must verify the coordination and document it.',
+      'If the prospective fault current at a distribution board exceeds the breaking capacity of the MCBs installed in it, there are several options. First, you can replace the MCBs with devices that have a higher breaking capacity — some manufacturers offer MCBs rated at 10 kA or 16 kA instead of the standard 6 kA. Second, BS 7671 Reg 434.5.1 permits a downstream device with a lower rated breaking capacity than the prospective short-circuit current at its point of installation under specific conditions — combined short-circuit protection — provided an upstream device has adequate breaking capacity and the coordination between the two devices is demonstrated using the instructions of the manufacturer of the downstream device (derived from tests to the relevant product standards such as BS EN 60898-1 and BS EN 60947-2). Where no such manufacturer information is available, combined short-circuit protection must not be used and each device must have the full breaking capability at its point of installation. Third, you can install a current-limiting device upstream to reduce the fault current reaching the board. The electrician must verify the coordination and document it.',
   },
 ];
 
@@ -289,9 +289,11 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               prospective fault current.
             </p>
             <p>
-              BS&nbsp;7671 Reg&nbsp;643.7.3.201 requires that prospective fault current is measured,
-              calculated or determined at the origin of every installation and at every other
-              relevant point. Reg&nbsp;434.5.1 separately requires that the breaking capacity of
+              BS&nbsp;7671 Reg&nbsp;643.7.3.201 requires that the prospective short-circuit current
+              and prospective earth fault current are measured, calculated or determined by another
+              method at the origin of every installation and at every other relevant point, with
+              further guidance on determination given in Appendix&nbsp;14. Reg&nbsp;434.5.1
+              separately requires that the breaking capacity of
               every protective device is not less than the prospective fault current at its point of
               installation. Both measurements and device checks are mandatory parts of initial
               verification and periodic inspection, and the values must be recorded on the
@@ -368,41 +370,52 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           <h3 className="text-xl font-bold text-white mt-8 mb-4">Worked Examples</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <h4 className="font-bold text-white mb-3">Domestic TN-C-S Supply</h4>
-              <div className="space-y-2 text-white text-sm leading-relaxed">
-                <p>A typical domestic property with a TN-C-S (PME) supply:</p>
-                <p>Ze (external earth fault loop impedance) = 0.20 ohms</p>
-                <p>Ze measured at the consumer unit.</p>
-                <p>
-                  <strong>PEFC = 230 V / 0.20 ohms = 1,150 A (1.15 kA)</strong>
-                </p>
-                <p>
-                  The line-neutral impedance is typically lower. If the supply impedance
-                  line-neutral is 0.12 ohms:
-                </p>
-                <p>
-                  <strong>PSCC = 230 V / 0.12 ohms = 1,917 A (1.92 kA)</strong>
-                </p>
-                <p>A standard 6 kA MCB is more than adequate for this installation.</p>
+              <h4 className="font-bold text-white mb-3">Domestic TN-C-S (PME) Supply</h4>
+              <div className="space-y-1.5 text-white text-sm">
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">Ze (earth loop, at origin)</span>
+                  <span className="font-mono">0.20 Ω</span>
+                </div>
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">Line-neutral impedance</span>
+                  <span className="font-mono">0.12 Ω</span>
+                </div>
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">PEFC = 230 ÷ 0.20</span>
+                  <span className="font-mono font-bold text-yellow-400">1,150 A (1.15 kA)</span>
+                </div>
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">PSCC = 230 ÷ 0.12</span>
+                  <span className="font-mono font-bold text-yellow-400">1,917 A (1.92 kA)</span>
+                </div>
+              </div>
+              <div className="mt-3 rounded-lg bg-green-900/30 border border-green-700/40 px-3 py-2 text-sm text-white">
+                A standard 6 kA MCB is more than adequate for this installation.
               </div>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <h4 className="font-bold text-white mb-3">Urban Commercial Property</h4>
-              <div className="space-y-2 text-white text-sm leading-relaxed">
-                <p>A commercial unit close to a distribution transformer:</p>
-                <p>Ze (external earth fault loop impedance) = 0.08 ohms</p>
-                <p>This is a stiffer supply with lower impedance.</p>
-                <p>
-                  <strong>PEFC = 230 V / 0.08 ohms = 2,875 A (2.88 kA)</strong>
-                </p>
-                <p>If the line-neutral impedance is 0.03 ohms:</p>
-                <p>
-                  <strong>PSCC = 230 V / 0.03 ohms = 7,667 A (7.67 kA)</strong>
-                </p>
-                <p>
-                  A standard 6 kA MCB would NOT be adequate. 10 kA rated devices are required, or
-                  backup protection must be verified.
-                </p>
+              <h4 className="font-bold text-white mb-3">Commercial Unit Near a Transformer</h4>
+              <div className="space-y-1.5 text-white text-sm">
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">Ze (earth loop, at origin)</span>
+                  <span className="font-mono">0.08 Ω</span>
+                </div>
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">Line-neutral impedance</span>
+                  <span className="font-mono">0.03 Ω</span>
+                </div>
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">PEFC = 230 ÷ 0.08</span>
+                  <span className="font-mono font-bold text-yellow-400">2,875 A (2.88 kA)</span>
+                </div>
+                <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
+                  <span className="text-white/70">PSCC = 230 ÷ 0.03</span>
+                  <span className="font-mono font-bold text-yellow-400">7,667 A (7.67 kA)</span>
+                </div>
+              </div>
+              <div className="mt-3 rounded-lg bg-orange-900/30 border border-orange-700/40 px-3 py-2 text-sm text-white">
+                A 6 kA MCB is NOT adequate. Use 10 kA devices, or verify combined short-circuit
+                protection under Reg&nbsp;434.5.1.
               </div>
             </div>
           </div>
@@ -412,14 +425,16 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
               <div className="space-y-2 text-white text-sm leading-relaxed">
                 <p className="font-semibold text-yellow-400">
-                  Important: The 0.8 Temperature Correction Factor (GN3 Reg&nbsp;1.16.9)
+                  Important: The 0.8 Temperature Correction Factor
                 </p>
                 <p>
                   The worked examples above show Ipf calculated from a measured impedance. When
                   comparing a measured Zs (taken at ambient temperature) against the maximum
                   tabulated Zs values in BS&nbsp;7671, the conductor resistance will be higher at
-                  full operating temperature than when measured cold on site. To account for this,
-                  BS&nbsp;7671 Appendix&nbsp;3 and GN3 require that the measured Zs satisfies:
+                  full operating temperature than when measured cold on site. Appendix&nbsp;3 of
+                  BS&nbsp;7671 covers measurement of earth fault loop impedance, and the widely used
+                  industry rule of thumb (set out in IET Guidance Note&nbsp;3) is that the measured Zs
+                  satisfies:
                 </p>
                 <p className="font-mono font-bold text-yellow-300">
                   Zs(measured) &le; 0.8 &times; Zs(table)
@@ -479,6 +494,55 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               capacities (10 kA, 16 kA, or even 25 kA) or moulded-case circuit breakers (MCCBs) are
               required.
             </p>
+          </div>
+
+          {/* Breaking capacity reference — visual table */}
+          <h3 className="text-xl font-bold text-white mt-8 mb-4">
+            Common Device Breaking Capacities
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-4">
+            The rated breaking capacity (Icn for circuit-breakers to BS&nbsp;EN&nbsp;60898, or the
+            breaking capacity for fuses to BS&nbsp;88) must be at least equal to the prospective
+            fault current at the device’s point of installation. Common values you will meet on UK
+            jobs:
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+              <p className="font-mono font-bold text-yellow-400 text-lg">6 kA</p>
+              <p className="text-white text-sm mt-1">
+                Standard domestic MCB / RCBO. Adequate for most dwellings.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+              <p className="font-mono font-bold text-yellow-400 text-lg">10 kA</p>
+              <p className="text-white text-sm mt-1">
+                Used where PFC exceeds 6 kA — properties near substations, light commercial.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+              <p className="font-mono font-bold text-yellow-400 text-lg">16 / 25 kA</p>
+              <p className="text-white text-sm mt-1">
+                Commercial distribution boards and higher fault-level locations.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+              <p className="font-mono font-bold text-yellow-400 text-lg">36–50 kA+</p>
+              <p className="text-white text-sm mt-1">
+                MCCBs and ACBs at industrial main boards and dedicated transformer supplies.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
+              <p className="font-mono font-bold text-yellow-400 text-lg">80 kA+</p>
+              <p className="text-white text-sm mt-1">
+                HRC fuses to BS&nbsp;88, often used as the high-rupturing protection at the origin.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-yellow-500/[0.06] border border-yellow-500/20 p-4">
+              <p className="font-semibold text-yellow-400 text-sm">Rule</p>
+              <p className="text-white text-sm mt-1">
+                Always: device breaking capacity ≥ measured PFC at that point (Reg&nbsp;434.5.1).
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -559,8 +623,53 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             <p>
               The prospective fault current varies enormously between different types of
               installation, and this variation has direct implications for protective device
-              selection and installation design.
+              selection and installation design. The table below shows indicative ranges only —
+              actual values depend on the supply, the cable run and the distribution network, and
+              must be measured or determined on site, never assumed.
             </p>
+          </div>
+
+          {/* Typical PFC by installation type — visual table */}
+          <div className="overflow-hidden rounded-2xl border border-white/10 mt-6 mb-6">
+            <table className="w-full text-sm text-white">
+              <thead>
+                <tr className="bg-white/[0.06] text-left">
+                  <th className="p-3 font-semibold">Installation type</th>
+                  <th className="p-3 font-semibold">Typical PFC at the board</th>
+                  <th className="p-3 font-semibold">Usual device rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-white/10 bg-green-900/20">
+                  <td className="p-3">Rural domestic, long service cable</td>
+                  <td className="p-3 font-mono">~0.5 kA – 1.5 kA</td>
+                  <td className="p-3">6 kA MCB</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="p-3">Typical domestic (TN-C-S / TN-S)</td>
+                  <td className="p-3 font-mono">~2 kA – 6 kA</td>
+                  <td className="p-3">6 kA MCB</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-yellow-900/20">
+                  <td className="p-3">Domestic close to substation</td>
+                  <td className="p-3 font-mono">may exceed 6 kA</td>
+                  <td className="p-3">10 kA device, or verify</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-orange-900/20">
+                  <td className="p-3">Commercial, three-phase main board</td>
+                  <td className="p-3 font-mono">~10 kA – 25 kA+</td>
+                  <td className="p-3">10–25 kA MCB / MCCB</td>
+                </tr>
+                <tr className="border-t border-white/10 bg-red-900/30">
+                  <td className="p-3">Industrial / dedicated transformer</td>
+                  <td className="p-3 font-mono">up to 50 kA+</td>
+                  <td className="p-3">MCCB / ACB / HRC fuse</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               In <strong>domestic installations</strong>, the supply is typically a 100 A
               single-phase supply via a service cable from the nearest substation. The impedance of

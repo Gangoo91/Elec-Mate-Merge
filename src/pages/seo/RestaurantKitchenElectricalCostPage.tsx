@@ -46,8 +46,8 @@ const keyTakeaways = [
   'Extraction interlock systems — which prevent gas cooking appliances from operating unless the extraction system is running — are a legal requirement under the Gas Safety (Installation and Use) Regulations 1998 and IGEM/UP/19.',
   'All socket outlets and equipment connections in a commercial kitchen must be appropriately rated for the environment. IP44 minimum is required in wet areas, with IP65 recommended near wash-down zones.',
   'An emergency stop button (large red mushroom-head type) must be provided to isolate the gas supply and extraction system in an emergency, typically positioned near the kitchen exit.',
-  'BS 7671:2018+A4:2026 Regulation 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits in high fire-risk locations — commercial kitchens are a prime candidate given the combination of heat, grease, and concealed wiring.',
-  'Surge protective devices (SPDs) are required under Regulation 443.4(c) where a transient overvoltage could interrupt commercial or industrial activity — a commercial kitchen with refrigeration, POS systems, and BMS controls meets this criterion.',
+  'Under BS 7671:2018+A4:2026 Regulation 421.1.7, AFDDs are mandatory for socket-outlet final circuits up to 32 A only in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes. For all other premises — including commercial kitchens — they are recommended for single-phase socket-outlet final circuits up to 32 A, and the heat, grease and concealed wiring of a kitchen make a strong best-practice case.',
+  'Surge protective devices (SPDs): Regulation 443.4.1 (redrafted in A4:2026) requires protection against transient overvoltages where the consequence could cause significant financial or data loss — a commercial kitchen with refrigeration, POS systems, and BMS controls meets that criterion.',
 ];
 
 const faqs = [
@@ -196,46 +196,63 @@ const sections = [
           commercial cooking equipment, dishwashers, and refrigeration typically exceeds the
           capacity of a single-phase supply.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Typical Equipment Loads</h3>
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Combi oven (6 to 20 tray)</strong> — 10 to 30kW, 3-phase. The single largest
-                electrical load in most commercial kitchens. Requires a dedicated circuit with an
-                isolator adjacent to the appliance.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Commercial dishwasher</strong> — 8 to 20kW, typically 3-phase for
-                pass-through and conveyor types. Single-phase under-counter dishwashers draw 3 to
-                6kW.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Walk-in cold room</strong> — 2 to 8kW depending on size and temperature.
-                Dedicated circuit with isolator. Compressor starting current can be 3 to 5 times the
-                running current.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Extraction fan motor</strong> — 1.5 to 7.5kW depending on kitchen size.
-                Often 3-phase for larger systems. Must be interlocked with the gas supply.
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto -mx-2 px-2">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="text-left text-white/60">
+                  <th className="py-2 pr-3 font-semibold">Equipment</th>
+                  <th className="py-2 px-3 font-semibold">Load</th>
+                  <th className="py-2 px-3 font-semibold">Supply</th>
+                  <th className="py-2 pl-3 font-semibold">Connection notes</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Combi oven (6 to 20 tray)</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">10–30 kW</td>
+                  <td className="py-3 px-3 whitespace-nowrap">3-phase</td>
+                  <td className="py-3 pl-3 text-white/80">Largest single load; dedicated circuit with adjacent isolator</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Commercial dishwasher</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">8–20 kW</td>
+                  <td className="py-3 px-3 whitespace-nowrap">3-phase</td>
+                  <td className="py-3 pl-3 text-white/80">Pass-through/conveyor; under-counter types are 3–6 kW single-phase</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Walk-in cold room</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">2–8 kW</td>
+                  <td className="py-3 px-3 whitespace-nowrap">1 or 3-phase</td>
+                  <td className="py-3 pl-3 text-white/80">Compressor starting current 3–5× running current; dedicated circuit + isolator</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Extraction fan motor</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">1.5–7.5 kW</td>
+                  <td className="py-3 px-3 whitespace-nowrap">1 or 3-phase</td>
+                  <td className="py-3 pl-3 text-white/80">Interlocked with the gas supply (see extraction interlock)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-amber-900/30 border border-amber-700/40 p-5 my-4">
+          <p className="text-white text-sm leading-relaxed m-0">
+            <strong>Load threshold:</strong> a 63 A single-phase supply delivers roughly 14–15 kW.
+            Once the diversified connected load of cooking, washing and refrigeration exceeds this,
+            3-phase becomes necessary. See the{' '}
+            <SEOInternalLink href="/guides/single-phase-vs-three-phase">
+              single phase vs three phase guide
+            </SEOInternalLink>{' '}
+            for the full load-threshold and DNO application detail.
+          </p>
         </div>
         <p>
           A 3-phase TPN distribution board with MCCB incomer costs £2,000 to £4,000 installed for a
           typical restaurant kitchen. If the premises does not have an existing 3-phase supply, a
-          DNO application and upgrade costs £1,500 to £5,000 additional.
+          DNO application and upgrade costs £1,500 to £5,000 additional. These are indicative market
+          figures, not a quote.
         </p>
       </>
     ),
@@ -326,6 +343,51 @@ const sections = [
             </p>
           </div>
         </div>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">What the IP Code Means</h3>
+          <div className="overflow-x-auto -mx-2 px-2">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="text-left text-white/60">
+                  <th className="py-2 pr-3 font-semibold">Rating</th>
+                  <th className="py-2 px-3 font-semibold">Solids (1st digit)</th>
+                  <th className="py-2 px-3 font-semibold">Water (2nd digit)</th>
+                  <th className="py-2 pl-3 font-semibold">Where it is used</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold text-red-300">IP20</td>
+                  <td className="py-3 px-3 text-white/80">Objects &gt;12.5 mm (fingers)</td>
+                  <td className="py-3 px-3 text-white/80">No water protection</td>
+                  <td className="py-3 pl-3 text-white/80">Standard domestic accessories — not suitable for kitchens</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold text-blue-300">IP44</td>
+                  <td className="py-3 px-3 text-white/80">Objects &gt;1 mm</td>
+                  <td className="py-3 px-3 text-white/80">Splashing water from any direction</td>
+                  <td className="py-3 pl-3 text-white/80">General cooking, prep and serving areas</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold text-blue-300">IP55</td>
+                  <td className="py-3 px-3 text-white/80">Dust-protected</td>
+                  <td className="py-3 px-3 text-white/80">Low-pressure water jets</td>
+                  <td className="py-3 pl-3 text-white/80">Isolators behind ranges; damp plant areas</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold text-green-300">IP65</td>
+                  <td className="py-3 px-3 text-white/80">Dust-tight</td>
+                  <td className="py-3 px-3 text-white/80">Low-pressure water jets from any direction</td>
+                  <td className="py-3 pl-3 text-white/80">Pot wash, dishwasher stations, wash-down zones</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/60 text-xs mt-4 mb-0">
+            IP ratings are defined in BS EN 60529. The first digit is protection against solid
+            objects; the second is protection against water.
+          </p>
+        </div>
       </>
     ),
   },
@@ -379,34 +441,46 @@ const sections = [
           Here is a realistic cost breakdown for restaurant kitchen electrical installation in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-5 text-white">
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Small cafe kitchen (£5,000 to £7,000)</strong> — Single-phase supply, 4 to 6
-                equipment connections, basic extraction interlock, IP44 accessories, emergency
-                lighting, 8 to 10 socket outlets. 3 to 5 days installation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Medium restaurant kitchen (£8,000 to £12,000)</strong> — 3-phase supply, 8
-                to 12 equipment connections including combi oven and dishwasher, full extraction
-                interlock, IP44/IP65 accessories, emergency stop, emergency lighting, 15 to 20
-                socket outlets. 1 to 2 weeks installation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Large commercial kitchen (£12,000 to £15,000+)</strong> — 3-phase supply
-                with multiple sub-boards, 15+ equipment connections, walk-in cold rooms, extensive
-                extraction interlock with multiple zones, full IP65 throughout, BMS integration,
-                comprehensive emergency provisions. 2 to 3 weeks installation.
-              </span>
-            </li>
-          </ul>
+          <div className="overflow-x-auto -mx-2 px-2">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="text-left text-white/60">
+                  <th className="py-2 pr-3 font-semibold">Kitchen</th>
+                  <th className="py-2 px-3 font-semibold">Indicative cost</th>
+                  <th className="py-2 px-3 font-semibold">Supply</th>
+                  <th className="py-2 px-3 font-semibold">Duration</th>
+                  <th className="py-2 pl-3 font-semibold">Typical scope</th>
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Small cafe</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">£5,000–£7,000</td>
+                  <td className="py-3 px-3 whitespace-nowrap">Single-phase</td>
+                  <td className="py-3 px-3 whitespace-nowrap">3–5 days</td>
+                  <td className="py-3 pl-3 text-white/80">4–6 equipment connections, basic extraction interlock, IP44 accessories, emergency lighting, 8–10 sockets</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Medium restaurant</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">£8,000–£12,000</td>
+                  <td className="py-3 px-3 whitespace-nowrap">3-phase</td>
+                  <td className="py-3 px-3 whitespace-nowrap">1–2 weeks</td>
+                  <td className="py-3 pl-3 text-white/80">8–12 connections incl. combi oven + dishwasher, full extraction interlock, IP44/IP65, emergency stop, 15–20 sockets</td>
+                </tr>
+                <tr className="border-t border-white/10">
+                  <td className="py-3 pr-3 font-bold">Large commercial</td>
+                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">£12,000–£15,000+</td>
+                  <td className="py-3 px-3 whitespace-nowrap">3-phase + sub-boards</td>
+                  <td className="py-3 px-3 whitespace-nowrap">2–3 weeks</td>
+                  <td className="py-3 pl-3 text-white/80">15+ connections, walk-in cold rooms, multi-zone interlock, full IP65, BMS integration, comprehensive emergency provisions</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/60 text-xs mt-4 mb-0">
+            Indicative 2026 UK market guidance — not a quote. Add £1,500–£5,000 if a DNO 3-phase
+            supply upgrade is required.
+          </p>
         </div>
         <SEOAppBridge
           title="Quote restaurant kitchen electrical accurately"
@@ -462,23 +536,29 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)</strong> —
-                BS&nbsp;7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of AFDDs on
-                AC final circuits to mitigate the risk of fire due to arc fault currents. The
-                wording is recommendatory rather than mandatory, but the combination of concealed
-                wiring, heat, and grease in a commercial kitchen makes this a strong best-practice
-                case. Where AFDDs are fitted, they should comply with BS&nbsp;EN&nbsp;62606 and be
-                installed in the distribution board protecting the kitchen final circuits.
+                Redrafted in BS&nbsp;7671:2018+A4:2026. AFDDs are now a <em>requirement</em> for
+                final circuits supplying socket-outlets rated up to 32&nbsp;A in higher-risk
+                residential buildings, houses in multiple occupation, purpose-built student
+                accommodation and care homes. For all other premises — including commercial kitchens
+                — the regulation <em>recommends</em> AFDDs for single-phase AC final circuits
+                supplying socket-outlets up to 32&nbsp;A. The combination of concealed wiring, heat
+                and grease in a commercial kitchen makes this a strong best-practice case. Where
+                fitted, AFDDs should comply with BS&nbsp;EN&nbsp;62606 and be installed in the
+                distribution board protecting the kitchen final circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 443.4(c) — Surge Protective Devices (SPDs)</strong> — Where a
-                transient overvoltage could result in interruption of commercial or industrial
-                activity, Regulation 443.4(c) requires protection against transient overvoltages. A
-                commercial kitchen with refrigeration, BMS controls, POS systems, and extraction
-                interlock panels meets this criterion. An SPD rated to the equipment category should
-                be installed at the origin of the installation or at the kitchen distribution board.
+                <strong>Regulation 443.4.1 — Surge Protective Devices (SPDs)</strong> — Redrafted in
+                BS&nbsp;7671:2018+A4:2026. Protection against transient overvoltages must be provided
+                where the consequence of an overvoltage could cause serious injury or loss of life,
+                failure of a safety service, or significant financial or data loss. A commercial
+                kitchen with refrigeration, BMS controls, POS systems and extraction interlock
+                panels meets the significant-financial-or-data-loss criterion. For all other cases,
+                protection must be provided unless the owner declares in writing that the risk is
+                tolerable. An SPD rated to the equipment overvoltage category should be installed at
+                the origin of the installation or at the kitchen distribution board.
               </span>
             </li>
           </ul>
@@ -553,13 +633,15 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   During commissioning of the 3-phase distribution board, measure prospective fault
-                  current (PFC) both live-to-live and live-to-earth at the board, in accordance with
-                  OSG Regulation 10.3.7. Ensure all main bonding is connected before taking
-                  readings. Record both values on the{' '}
+                  current (PFC) both line-to-line and line-to-earth at the board. BS&nbsp;7671
+                  Regulation 643.7.3.201 requires the prospective fault current to be measured,
+                  calculated or otherwise determined at the origin and at relevant points of the
+                  installation. Ensure all main bonding is connected before taking readings. Record
+                  both values on the{' '}
                   <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> schedule — the
                   higher of the two values determines the required breaking capacity of the MCCB
                   incomer and outgoing MCBs. For a typical commercial premises TN-S or TN-C-S
-                  supply, live-to-live PFC is usually the higher figure.
+                  supply, line-to-line PFC is usually the higher figure.
                 </p>
               </div>
             </div>
@@ -598,6 +680,11 @@ export default function RestaurantKitchenElectricalCostPage() {
       }
       heroSubtitle="What does restaurant kitchen electrical installation cost? This guide covers 3-phase supply, extraction interlock systems, IP ratings, emergency stop provisions, and realistic pricing from £5,000 to £15,000 — for restaurant owners and electrical contractors."
       readingTime={13}
+      answerBox={{
+        question: 'How much does restaurant kitchen electrical installation cost in the UK?',
+        answer:
+          'A UK restaurant kitchen electrical installation typically costs £5,000 to £15,000 in 2026. A small cafe kitchen runs £5,000 to £7,000, a medium restaurant with 3-phase supply and extraction interlock £8,000 to £12,000, and a large multi-station kitchen £12,000 to £15,000 or more. A separate DNO 3-phase supply upgrade adds £1,500 to £5,000. Figures are indicative market guidance, not a quote.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

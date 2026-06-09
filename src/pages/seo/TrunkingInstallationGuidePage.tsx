@@ -50,6 +50,11 @@ export default function TrunkingInstallationGuidePage() {
       }
       heroSubtitle="Electrical trunking provides a versatile, accessible cable containment system for commercial, industrial, and domestic installations. This guide covers PVC trunking, metal trunking, dado and skirting systems, mini trunking, compartmental trunking for cable segregation, sizing calculations, and installation best practice to BS 7671."
       readingTime={12}
+      answerBox={{
+        question: 'How do you size and install electrical trunking to BS 7671?',
+        answer:
+          'Select trunking so the total cross-sectional area of all cables does not exceed 45% of the usable internal space (IET On-Site Guide space factor), then segregate voltage bands per BS 7671 Regulation 528.1 — Band I and Band II cables either share insulation rated for the highest voltage or run in separate compartments. Metal trunking may act as the circuit protective conductor under Section 543 where continuity is verified.',
+      }}
       keyTakeaways={[
         'Trunking fill calculation uses the 45% space factor rule — the total cross-sectional area of all cables must not exceed 45% of the trunking internal usable space, ensuring cables can be laid in and withdrawn without damage.',
         'BS 7671 Regulation 528.1 requires segregation of circuits at different voltages or from different sources. Compartmental trunking provides physical barriers between cable categories without needing separate containment systems.',
@@ -231,11 +236,21 @@ export default function TrunkingInstallationGuidePage() {
                 </div>
               </div>
               <p>
-                When using metal trunking as the CPC, every joint, bend, and tee must provide
-                verified electrical continuity. Many trunking manufacturers supply pre-galvanised
-                trunking with integral earth bonding straps at joints. Where this is not provided,
+                BS 7671 Regulation 543.2.1 lists a metallic cable management system or other
+                enclosure among the permitted types of protective conductor, so metal trunking is
+                allowed to act as the CPC. When you rely on it, every joint, bend, and tee must
+                provide verified electrical continuity. Many manufacturers supply pre-galvanised
+                trunking with integral earth bonding straps at joints; where these are not provided,
                 separate earth continuity straps or bonding conductors must be installed across each
-                joint. The continuity of the trunking CPC must be verified during initial testing.
+                joint. Regulation 543.2.7 also requires the earthing terminal of each accessory to be
+                connected by a separate protective conductor to an earthing terminal in the
+                associated box or enclosure — the trunking metalwork alone is not enough at the
+                accessory. The continuity of the trunking CPC must be verified during initial
+                verification. See the{' '}
+                <SEOInternalLink href="/guides/continuity-testing-r1-r2">
+                  continuity testing (R1 + R2)
+                </SEOInternalLink>{' '}
+                guide for the test method.
               </p>
               <p>
                 Metal trunking with lid access from the top or front is used for cable distribution
@@ -463,12 +478,63 @@ export default function TrunkingInstallationGuidePage() {
                   </li>
                 </ul>
               </div>
+              <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-6 my-6">
+                <h3 className="font-bold text-white text-lg mb-2">
+                  Permitted Methods Under Regulation 528.1
+                </h3>
+                <p className="text-white/70 text-sm mb-4">
+                  Regulation 528.1 prohibits a Band I and a Band II circuit sharing the same wiring
+                  system unless one of the following methods is adopted. Compartmental trunking
+                  satisfies the third method below.
+                </p>
+                <div className="space-y-2 text-white text-sm leading-relaxed">
+                  <div className="flex items-start gap-3 rounded-lg bg-white/[0.03] border border-white/10 px-3 py-2">
+                    <span className="text-blue-300 font-bold flex-shrink-0">(a)</span>
+                    <span>Every cable or conductor is insulated for the highest voltage present.</span>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg bg-white/[0.03] border border-white/10 px-3 py-2">
+                    <span className="text-blue-300 font-bold flex-shrink-0">(b)</span>
+                    <span>
+                      Each conductor of a multicore cable is insulated for the highest voltage
+                      present in the cable.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg bg-white/[0.03] border border-white/10 px-3 py-2">
+                    <span className="text-blue-300 font-bold flex-shrink-0">(c)</span>
+                    <span>
+                      The cables are insulated for their system voltage and installed in a separate
+                      compartment of a cable ducting or cable trunking system.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg bg-white/[0.03] border border-white/10 px-3 py-2">
+                    <span className="text-blue-300 font-bold flex-shrink-0">(d)</span>
+                    <span>
+                      The cables are installed on a cable tray system where physical separation is
+                      provided by a partition.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg bg-white/[0.03] border border-white/10 px-3 py-2">
+                    <span className="text-blue-300 font-bold flex-shrink-0">(e)</span>
+                    <span>A separate conduit, trunking, or ducting system is employed.</span>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg bg-white/[0.03] border border-white/10 px-3 py-2">
+                    <span className="text-blue-300 font-bold flex-shrink-0">(f)</span>
+                    <span>
+                      For a multicore cable, the Band I cores are separated from the Band II cores by
+                      an earthed metal screen of current-carrying capacity equivalent to the largest
+                      Band II core.
+                    </span>
+                  </div>
+                </div>
+                <p className="text-white/60 text-xs mt-4">
+                  For SELV and PELV systems the requirements of Regulation 414.4 also apply.
+                </p>
+              </div>
               <p>
                 Compartmental trunking solves the segregation problem elegantly — a single trunking
                 profile with 2 or 3 internal compartments provides separate cable channels with
-                physical barriers meeting the segregation requirements of BS 7671. This is
-                significantly more cost-effective than running separate trunking systems for each
-                cable category.
+                physical barriers meeting method (c) of Regulation 528.1. This is significantly more
+                cost-effective than running separate trunking systems for each cable category.
               </p>
               <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                 BS 7671 18th Edition guide

@@ -37,8 +37,8 @@ const keyTakeaways = [
   'A fused connection unit (FCU) is a fused spur outlet that provides a permanent, non-socket connection to a fixed appliance. It contains a cartridge fuse (typically 3A, 5A, or 13A) and can be switched or unswitched, with or without a flex outlet and indicator neon.',
   'FCUs are required where an appliance needs a permanent connection that cannot be unplugged — for example a dishwasher, washing machine, extractor fan, or immersion heater. They must not be positioned so the appliance blocks access for switching off.',
   'The fuse rating inside the FCU must match the rating of the appliance flex, not the ring main. A 3A fuse is appropriate for lighting loads and appliances up to 720W. A 5A fuse suits appliances up to 1,150W. A 13A fuse suits loads up to 3,000W.',
-  'Under BS 7671 Regulation 537.5, every fixed appliance must have a means of isolation. A switched FCU (double-pole) satisfies this requirement and provides overcurrent protection for the appliance flex in a single unit.',
-  'A spur from a ring main must be taken from a socket outlet or a junction box connected to the ring — not from another spur. Only one unfused spur is permitted per socket on a ring circuit under conventional ring main design rules.',
+  'Under BS 7671 Regulation 462.2, every circuit must be provided with a means of isolation of all live conductors. A switched FCU (double-pole) provides local isolation of both line and neutral plus overcurrent protection for the appliance flex in a single unit.',
+  'A spur from a ring final circuit must be taken from a socket-outlet on the ring, or from a junction box connected into the ring cable — not from another spur. Per Appendix 15, an unfused spur should feed only one single or one twin socket-outlet.',
 ];
 
 const faqs = [
@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'What is the difference between a switched and unswitched FCU?',
     answer:
-      'A switched FCU incorporates a double-pole switch that disconnects both line and neutral conductors, providing a local means of isolation for the appliance without going to the consumer unit. An unswitched FCU provides overcurrent protection via the cartridge fuse but no local switching. Switched FCUs are preferred for most applications because they satisfy BS 7671 Regulation 537.2.1 (means of isolation for fixed equipment) in a single unit. Unswitched FCUs are used where the appliance has its own integral on/off switch or where isolation is provided elsewhere.',
+      'A switched FCU incorporates a double-pole switch that disconnects both line and neutral conductors, providing a local means of isolation for the appliance without going to the consumer unit. An unswitched FCU provides overcurrent protection via the cartridge fuse but no local switching. Switched FCUs are preferred for most applications because the double-pole switch provides a local means of isolation for all live conductors (Regulation 462.2) in a single unit, right next to the appliance. Unswitched FCUs are used where the appliance has its own integral on/off switch or where isolation is provided elsewhere.',
   },
   {
     question: 'Can I take a spur from another spur?',
@@ -128,7 +128,7 @@ const howToSteps = [
   },
   {
     name: 'Run the spur cable',
-    text: 'Use 2.5mm\u00b2 twin and earth cable for standard FCU applications. Route the cable in accordance with BS 7671 Chapter 52 — either in prescribed zones at 150mm from the floor or ceiling, or in conduit or trunking. Protect the cable mechanically where required. Leave sufficient tail length at each end.',
+    text: 'Use 2.5mm\u00b2 twin and earth cable for standard FCU spurs. Route concealed cable in accordance with BS 7671 Section 522 and Table 52.1 — within a prescribed zone (within 150mm of the top of the wall or of an angle between walls, or running horizontally/vertically from the accessory), or provide additional protection by a 30mA RCD, or use a cable with an earthed metallic covering. Leave sufficient tail length at each end.',
   },
   {
     name: 'Connect the supply side of the FCU',
@@ -203,53 +203,49 @@ const sections = [
           FCUs are available in several configurations. Choosing the right type for the application
           is important for compliance, safety, and usability.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Switched FCU</strong> — incorporates a double-pole rocker switch.
-                Disconnects both line and neutral simultaneously. Provides a local means of
-                isolation per Regulation 537.2.1. Used for dishwashers, washing machines, extractor
-                fans, heated towel rails, and most kitchen appliances.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Unswitched FCU</strong> — no switch, fuse only. Used where the appliance has
-                its own integral switch or where isolation is provided by a separate DP switch. Less
-                common in practice since switched FCUs cost little more.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>FCU with neon indicator</strong> — includes an LED or neon lamp that
-                illuminates when the switch is on or when the supply is present. Useful for
-                appliances in concealed positions where it is important to know the appliance is
-                energised (e.g. immersion heater, frost protection heater).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>FCU with flex outlet</strong> — has a small rectangular aperture in the face
-                plate through which the appliance flex emerges. The flex is connected to the load
-                terminals inside the back box. Commonly used for cooker hood extractors and
-                appliances where the flex routing is tight.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>20A DP switch / connection unit</strong> — for higher-current applications
-                such as immersion heaters and some fixed heaters. Not a standard FCU (no cartridge
-                fuse), but a double-pole switch for fixed loads. The circuit protection is provided
-                by the MCB at the consumer unit.
-              </span>
-            </li>
-          </ul>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">Switched FCU</h3>
+            <p className="text-sm text-white/80">
+              Incorporates a double-pole rocker switch that disconnects both line and neutral
+              simultaneously, giving a local means of isolation (Regulation 462.2). The default
+              choice for dishwashers, washing machines, extractor fans, heated towel rails and most
+              kitchen appliances.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">Unswitched FCU</h3>
+            <p className="text-sm text-white/80">
+              Fuse only, no switch. Used where the appliance has its own integral switch or where
+              isolation is provided by a separate DP switch. Less common in practice since switched
+              FCUs cost little more.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">FCU with neon indicator</h3>
+            <p className="text-sm text-white/80">
+              Includes an LED or neon lamp that illuminates when the switch is on. Useful for
+              appliances in concealed positions where it matters that you can see the supply is live
+              (e.g. immersion heater, frost-protection heater).
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">FCU with flex outlet</h3>
+            <p className="text-sm text-white/80">
+              Has a small aperture in the face plate through which the appliance flex emerges,
+              connected to the load terminals inside the back box. Common for cooker-hood extractors
+              and where the flex routing is tight.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
+            <h3 className="font-semibold text-white mb-1.5">20&nbsp;A DP switch / connection unit</h3>
+            <p className="text-sm text-white/80">
+              For higher-current fixed loads such as immersion heaters and some fixed heaters. Not a
+              standard FCU — it has no cartridge fuse — but a double-pole switch for fixed equipment.
+              Circuit protection is provided by the MCB at the consumer unit, so the load is run as
+              its own dedicated radial rather than a spur.
+            </p>
+          </div>
         </div>
       </>
     ),
@@ -263,50 +259,51 @@ const sections = [
           The decision between a socket outlet and an FCU is not always obvious. These are the
           situations where an FCU is the appropriate choice:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Built-in dishwashers and washing machines</strong> — these appliances are
-                not moved in normal use. An FCU inside the adjacent cupboard provides an accessible
-                isolation point without requiring the appliance to be pulled out to reach a socket.
-                The 13A fuse matches the appliance flex rating.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Extractor fans (kitchen and bathroom)</strong> — wired as a 3A or 5A fused
-                spur from the lighting circuit or ring main. The FCU protects the fan flex and
-                provides isolation without entering the loft or void to access the consumer unit.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fixed electric heaters and towel rails</strong> — panel heaters and heated
-                towel rails installed as fixed equipment require a means of isolation. A switched
-                FCU satisfies this requirement and provides flex protection.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Outdoor socket spurs</strong> — where a weatherproof garden socket is added
-                as a spur from an indoor ring main, an FCU provides the fused connection point. The
-                garden socket (IP44 minimum) is then connected as a load from the FCU.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Underfloor heating thermostats</strong> — electric underfloor heating mats
-                are commonly connected via a 13A FCU to a spur from the ring main. The thermostat is
-                then wired between the FCU and the heating mat.
-              </span>
-            </li>
-          </ul>
+        <div className="grid gap-4 sm:grid-cols-2 my-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">Built-in dishwashers &amp; washing machines</h3>
+            <p className="text-sm text-white/80">
+              Not moved in normal use. An FCU inside the adjacent cupboard gives an accessible
+              isolation point without pulling the appliance out to reach a socket. A 13&nbsp;A fuse
+              matches the appliance flex rating.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">Extractor fans (kitchen &amp; bathroom)</h3>
+            <p className="text-sm text-white/80">
+              Wired as a 3&nbsp;A or 5&nbsp;A fused spur from the lighting circuit or ring final
+              circuit. The FCU protects the fan flex and provides isolation without going to the
+              consumer unit.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">Fixed electric heaters &amp; towel rails</h3>
+            <p className="text-sm text-white/80">
+              Panel heaters and heated towel rails installed as fixed equipment need a means of
+              isolation. A switched FCU provides local double-pole isolation plus flex protection.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-semibold text-white mb-1.5">Outdoor socket spurs</h3>
+            <p className="text-sm text-white/80">
+              Where a weatherproof garden socket is spurred from an indoor ring final circuit, an FCU
+              gives the fused connection point. The garden socket (IP44 minimum) connects as the load
+              and must have 30&nbsp;mA RCD protection.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
+            <h3 className="font-semibold text-white mb-1.5">Underfloor heating thermostats</h3>
+            <p className="text-sm text-white/80">
+              Electric underfloor heating mats are commonly fed via a 13&nbsp;A FCU spurred from the
+              ring final circuit, with the thermostat wired between the FCU and the heating mat. See
+              the{' '}
+              <SEOInternalLink
+                href="/kitchen-electrical-requirements"
+                label="kitchen electrical requirements guide"
+              />{' '}
+              for related circuit and RCD considerations.
+            </p>
+          </div>
         </div>
       </>
     ),
@@ -322,33 +319,47 @@ const sections = [
           the rated current of the appliance, not automatically set to 13A because that is the
           maximum.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">
-            BS 1362 Fuse Rating Quick Reference
-          </h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>3A fuse (red):</strong> appliances up to 720W — extractor fans, lamps, clock
-                radios, low-wattage appliances, doorbell transformers
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>5A fuse:</strong> appliances up to 1,150W — some extractor fans, small
-                fridges, low-wattage heaters
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>13A fuse (brown):</strong> appliances up to 3,000W — dishwashers, washing
-                machines, tumble dryers, electric heaters, microwave ovens
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <div className="px-6 pt-5 pb-3">
+            <h3 className="text-lg font-semibold text-white">BS 1362 Fuse Rating Quick Reference</h3>
+            <p className="text-sm text-white/60 mt-1">
+              Approximate wattage limits at 230&nbsp;V. Always confirm against the appliance rating
+              plate — the fuse protects the flex, not the ring.
+            </p>
+          </div>
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">Fuse</th>
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">Max load (approx.)</th>
+                <th className="px-4 py-3 font-semibold">Typical appliances</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10 bg-red-900/20">
+                <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">3&nbsp;A (red)</td>
+                <td className="px-4 py-3 align-top font-mono whitespace-nowrap">up to 720&nbsp;W</td>
+                <td className="px-4 py-3 align-top">
+                  Extractor fans, cooker hoods, lamps, clock radios, doorbell transformers, most
+                  low-wattage electronics
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">5&nbsp;A</td>
+                <td className="px-4 py-3 align-top font-mono whitespace-nowrap">up to 1,150&nbsp;W</td>
+                <td className="px-4 py-3 align-top">
+                  Larger fans with integral lighting, small fridges, low-wattage panel heaters
+                </td>
+              </tr>
+              <tr className="border-t border-white/10 bg-amber-900/20">
+                <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">13&nbsp;A (brown)</td>
+                <td className="px-4 py-3 align-top font-mono whitespace-nowrap">up to 3,000&nbsp;W</td>
+                <td className="px-4 py-3 align-top">
+                  Dishwashers, washing machines, tumble dryers, electric heaters, microwave ovens
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -377,44 +388,65 @@ const sections = [
           Standard for the accessory itself (BS 1363-4 for FCUs to BS 1363). Key regulatory
           requirements include:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 537.2.1 — Isolation:</strong> every fixed appliance must have a
-                means of isolation, preferably a local switch adjacent to the appliance. A switched
-                FCU satisfies this requirement.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 411.3.3 — RCD protection:</strong> circuits supplying socket
-                outlets and FCUs in domestic premises must have 30mA RCD protection. The spur
-                circuit feeding the FCU must be RCD-protected at the consumer unit or via an inline
-                30mA RCD.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 314.1 — Spur limitation:</strong> a spur from a ring circuit may
-                not be connected to another spur. The number of spurs must not exceed the number of
-                socket outlets and FCUs on the ring itself (for unfused spurs — fused spurs have no
-                specified numerical limit per BS 7671, but practical loading limits apply).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Conductor identification:</strong> Regulation 514.4.2 requires all
-                conductors to be correctly identified. Earth conductors must be sleeved in
-                green/yellow at termination points. Old red/black cable reused in a modification
-                must have cores re-identified with brown and blue sleeving or tape.
-              </span>
-            </li>
-          </ul>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
+          <table className="w-full text-sm text-white border-collapse">
+            <thead>
+              <tr className="bg-white/[0.06] text-left">
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">Regulation</th>
+                <th className="px-4 py-3 font-semibold">Requirement and what it means for an FCU</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">462.2</td>
+                <td className="px-4 py-3 align-top">
+                  Every circuit must be provided with isolation means for all live conductors. The
+                  double-pole switch of a switched FCU disconnects both line and neutral, providing
+                  local isolation adjacent to the appliance.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">464.1</td>
+                <td className="px-4 py-3 align-top">
+                  Means for switching off must be provided where mechanical maintenance may involve a
+                  risk of physical injury — relevant for fans, pumps and motorised appliances. A
+                  switched FCU provides this off-switch with disconnection of all live conductors.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">411.3.3</td>
+                <td className="px-4 py-3 align-top">
+                  Socket-outlets rated up to 32 A require 30 mA RCD additional protection (subject to
+                  the permitted exceptions). An FCU spur taken from a ring final circuit must be
+                  RCD-protected at the consumer unit or by an inline 30 mA RCD.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">433.1.204</td>
+                <td className="px-4 py-3 align-top">
+                  Ring final circuit rule: accessories to BS 1363 may be supplied through a ring final
+                  circuit (with or without unfused spurs) protected by a 30 A or 32 A device, wired in
+                  copper with line and neutral of at least 2.5 mm&sup2; (1.5 mm&sup2; for two-core MICC).
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">App 15</td>
+                <td className="px-4 py-3 align-top">
+                  Ring and radial arrangements (informative). An unfused spur should feed only one
+                  single or one twin socket-outlet; the number of socket-outlets fed from an FCU
+                  depends on the load, having taken diversity into account.
+                </td>
+              </tr>
+              <tr className="border-t border-white/10">
+                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">514.4.2</td>
+                <td className="px-4 py-3 align-top">
+                  The green-and-yellow combination is used exclusively for protective conductors.
+                  Earth cores must be sleeved green/yellow at terminations; old red/black cable reused
+                  in a modification must have line and neutral re-identified with brown and blue.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
           See the{' '}
@@ -474,7 +506,7 @@ const sections = [
 export default function FusedSpurInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="Fused Spur Installation Guide — UK FCU Wiring Guide 2024"
+      title="Fused Spur Installation Guide — UK FCU Wiring Guide 2026"
       description="Complete guide to installing fused connection units (FCUs): types, fuse ratings, when to use a fused spur, BS 7671 requirements…"
       datePublished="2024-06-01"
       dateModified="2026-05-18"
@@ -490,6 +522,13 @@ export default function FusedSpurInstallationGuidePage() {
       }
       heroSubtitle="A complete practical guide to fused connection units (FCUs): types, correct fuse ratings, when to use a spur instead of a socket, BS 7671 requirements, and step-by-step wiring instructions."
       readingTime={9}
+      answerBox={{
+        question: 'How do you wire a fused spur (FCU)?',
+        answer:
+          'Run a 2.5 mm² twin-and-earth spur from a socket on the ring final circuit (or a junction box in the ring cable) to the supply/IN terminals of the FCU. Connect the appliance flex — line, neutral and green/yellow earth — to the load/OUT terminals. Fit a BS 1362 cartridge fuse rated to the appliance flex (3 A, 5 A or 13 A), not 13 A by default. Then test polarity, earth continuity and insulation resistance before energising.',
+        detail:
+          'A switched FCU gives local double-pole isolation of all live conductors (Regulation 462.2). Where the spur supplies socket-outlets up to 32 A, the circuit needs 30 mA RCD protection (Regulation 411.3.3).',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       howToSteps={howToSteps}

@@ -39,6 +39,12 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'How much does it cost to rewire a house in Birmingham?',
+  answer:
+    'A full house rewire in Birmingham costs roughly £2,800–£4,500 for a 2-bed terrace, £4,000–£6,500 for a 3-bed semi, and £6,000–£9,500 for a 4-bed detached in 2026. Prices reflect Midlands day rates of £280–£380 and include the consumer unit, cabling, testing and the EIC. Making good (plastering) is usually quoted separately. Figures are indicative market guidance, not a quote.',
+};
+
 const keyTakeaways = [
   'A full house rewire in Birmingham costs between £2,800 and £12,000+ in 2026, broadly in line with the Midlands average. Electrician day rates in Birmingham typically run from £280 to £380 per day.',
   "Birmingham's housing stock includes large numbers of 1930s and 1950s semi-detached houses — particularly across Bournville, Stirchley, Kings Heath, and Erdington — where original VIR wiring is still encountered.",
@@ -143,8 +149,11 @@ const sections = [
       <>
         <p>
           Birmingham and the wider West Midlands region sit in the mid-range for UK rewire costs.
-          Electrician day rates in Birmingham are typically £280 to £380 — significantly below
-          London rates but comparable with Manchester, Leeds, and other major English cities.
+          Electrician day rates in Birmingham are typically £280 to £380 — significantly below{' '}
+          <SEOInternalLink href="/guides/rewire-cost-london">London rates</SEOInternalLink> but
+          comparable with Manchester, Leeds, and other major English cities. For national context,
+          see the{' '}
+          <SEOInternalLink href="/guides/rewire-cost-uk">UK rewire cost guide</SEOInternalLink>.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -325,6 +334,47 @@ const sections = [
           Older properties with lath-and-plaster walls take longer; modern plasterboard construction
           is significantly faster.
         </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
+          <h3 className="font-bold text-white text-lg mb-4">
+            Typical Rewire Duration by Property Type
+          </h3>
+          <div className="space-y-2">
+            <div className="grid grid-cols-3 gap-3 px-4 py-2 text-xs uppercase tracking-wide text-white/50">
+              <span>Property</span>
+              <span className="text-center">Working days</span>
+              <span className="text-right">Construction</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-green-900/30 border border-green-700/40 px-4 py-3 text-white">
+              <span className="font-semibold">2-bed terrace</span>
+              <span className="text-center">4–6 days</span>
+              <span className="text-right text-sm text-white/70">Plasterboard / render</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-blue-900/30 border border-blue-700/40 px-4 py-3 text-white">
+              <span className="font-semibold">3-bed semi</span>
+              <span className="text-center">5–8 days</span>
+              <span className="text-right text-sm text-white/70">1930s–50s semi</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-blue-900/30 border border-blue-700/40 px-4 py-3 text-white">
+              <span className="font-semibold">4-bed detached</span>
+              <span className="text-center">7–10 days</span>
+              <span className="text-right text-sm text-white/70">Larger floor area</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-yellow-900/30 border border-yellow-700/40 px-4 py-3 text-white">
+              <span className="font-semibold">Victorian terrace</span>
+              <span className="text-center">7–12 days</span>
+              <span className="text-right text-sm text-white/70">Lath-and-plaster, solid floors</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-yellow-900/30 border border-yellow-700/40 px-4 py-3 text-white">
+              <span className="font-semibold">Large period detached</span>
+              <span className="text-center">10–15 days</span>
+              <span className="text-right text-sm text-white/70">Multiple storeys</span>
+            </div>
+          </div>
+          <p className="text-white/50 text-xs mt-4">
+            Indicative durations for a single working team; lath-and-plaster chasing and making good
+            in inner-Birmingham terraces (Handsworth, Saltley, Sparkbrook) add time.
+          </p>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">First Fix</h3>
@@ -438,8 +488,9 @@ const sections = [
               <span>
                 <strong>Testing and certification</strong> — initial verification of every circuit,
                 the Electrical Installation Certificate (EIC), and Part P notification. The EIC is
-                not a single page: under BS 7671 Regulation 120.3, it is only valid when accompanied
-                by a completed Schedule of Inspections and Schedule(s) of Test Results. Confirm
+                not a single page: under BS 7671 Regulation 644.3, the certificate must include the
+                Schedule(s) of Inspection together with the Schedule(s) of Circuit Details and
+                Schedule(s) of Test Results, all based on the model forms in Appendix 6. Confirm
                 these schedules are included — incomplete documentation is one of the most common
                 failures identified during post-rewire checks.
               </span>
@@ -529,6 +580,7 @@ export default function RewireCostBirminghamPage() {
       }
       heroSubtitle="Birmingham rewire costs in 2026 across all property types — from Victorian back-to-backs in the inner ring to 1930s semis across Kings Heath and Bournville. Real prices, Part P guidance, and what to look for in a Birmingham electrician."
       readingTime={10}
+      answerBox={answerBox}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

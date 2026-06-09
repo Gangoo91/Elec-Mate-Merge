@@ -22,6 +22,11 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
   heroSuffix: '(With Diversity)',
   heroSubtitle:
     'Cooker circuits differ from showers and EV chargers in one critical way: BS 7671 permits diversity. A 10 kW cooker rated nameplate-current of 43 A typically only needs a 32 A protective device and 6 mm² cable after the diversity calculation. This guide explains the IET On-Site Guide diversity formula, cooker control unit selection, and the practical UK domestic sizing.',
+  answerBox: {
+    question: 'What size cable do I need for a cooker circuit?',
+    answer:
+      'For most UK domestic single-oven and four-burner-hob installations, 6 mm² twin-and-earth (6242Y) on a 32 A protective device is correct after applying BS 7671 / IET On-Site Guide diversity. A 10 kW cooker draws 43.5 A at nameplate but diversifies to about 25 A, so the circuit is sized for 25 A — not 50 A. Large Range cookers and double-oven setups may need 10 mm² on a 40 A or 45 A device.',
+  },
   keyTakeaways: [
     'Cooker circuits get DIVERSITY under BS 7671 / IET On-Site Guide — first 10 A taken at 100%, remainder at 30%, plus 5 A for any cooker control unit with a socket-outlet.',
     'Most UK domestic single-oven + 4-burner hob installations end up at a diversified design current around 25-30 A — easily served by a 32 A protective device and 6 mm² cable on a typical run.',
@@ -51,6 +56,19 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text: 'The diversified current is the design current Ib used for cable sizing and protective device selection — NOT the nameplate full-load current. This is why a 10 kW cooker that would seem to need a 50 A circuit ends up sized for a 32 A circuit in practice.',
         },
+        {
+          type: 'list',
+          items: [
+            '**Cooker / household cooking appliance** → diversity allowed. First 10 A at 100%, remainder at 30%, +5 A for a socket-outlet on the control unit. Size on the diversified current.',
+            '**[Electric shower](/guides/cable-size-for-electric-shower)** → NO diversity. A continuous load — size on the full nameplate current.',
+            '**[EV charger](/guides/cable-size-for-ev-charger)** → NO diversity. Treated as a continuous load — size on the full rated current.',
+            '**Immersion heater** → NO diversity on the dedicated circuit. Continuous thermostatic load — size on full load.',
+          ],
+        },
+        {
+          type: 'paragraph',
+          text: 'Confusing diversity rules between these loads is one of the most common cable-sizing errors. Diversity is for discontinuous, thermostatically-cycled cooking loads — not for the continuous heating loads they are often grouped with on a job.',
+        },
       ],
     },
     {
@@ -60,7 +78,13 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'For typical UK domestic cooker installations:',
+          text: 'Match the combined nameplate load to the cable and protective device. These are the typical UK domestic outcomes after the diversity calculation — always confirm with a full design for your specific run length, install method and the cooker manufacturer\'s instructions.',
+        },
+        {
+          type: 'callout',
+          tone: 'success',
+          title: 'Quick reference — combined load → cable → device',
+          text: 'Single oven + 4-burner hob (≈8–10 kW): 6 mm² T&E, 32 A. · Single oven + 5-burner hob / small Range (10–13 kW): 6 mm² short runs, 10 mm² beyond ≈15 m. · Double oven + 5-burner hob / large Range (14–18 kW): 10 mm², 40 A. · Very large or commercial-spec Range (20 kW+): 10 mm² minimum, sometimes 16 mm² — verify the design.',
         },
         {
           type: 'list',
@@ -71,6 +95,10 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
             '**Double oven + 5-burner hob, or large Range cooker (14-18 kW combined)** → 10 mm² with 40 A protective device.',
             '**Commercial-spec or very large Range (20+ kW)** → 10 mm² minimum, possibly 16 mm² depending on diversity calculation and run length. Verify.',
           ],
+        },
+        {
+          type: 'paragraph',
+          text: 'Run length matters: a 10 mm² choice for the "10–13 kW" band is usually driven by voltage drop on a long run, not by current-carrying capacity. Check it against the [voltage drop calculator](/tools/voltage-drop-calculator) and the [cable sizing calculator](/tools/cable-sizing-calculator) before committing.',
         },
       ],
     },
@@ -90,8 +118,8 @@ export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
             '**Full-load current** If = 10,000 / 230 = 43.5 A. (Would need a 50 A circuit if there were no diversity — but there is.)',
             '**Apply IET diversity** — first 10 A at 100% = 10 A. Remainder of full load = 43.5 - 10 = 33.5 A. Apply 30% = 33.5 × 0.30 = 10.05 A. Add the socket-outlet 5 A. Diversified current Id = 10 + 10.05 + 5 = 25.05 A.',
             '**Design current Ib = 25 A** (rounded). Select protective device: 32 A Type B MCB or 32 A 30 mA Type A RCBO (next standard rating at or above Ib).',
-            '**Cable selection** — 6 mm² twin-and-earth (6242Y), reference method C (clipped direct) — Iz = 41 A per BS 7671 Table 4D1A. Ib (25 A) << Iz (41 A) — passes comfortably with headroom.',
-            '**Voltage drop** — 6 mm² 6242Y at 7.3 mV/A/m. For 12 m at 25 A: 7.3 × 25 × 12 / 1000 = 2.19 V ≈ 0.95% of 230 V. Passes.',
+            '**Cable selection** — 6 mm² flat twin-and-earth (6242Y), reference method C (clipped direct). Its tabulated current-carrying capacity from BS 7671 Table 4D5 comfortably exceeds the 25 A design current, so the cable passes on current-carrying capacity with plenty of headroom.',
+            '**Voltage drop** — using the 6 mm² mV/A/m figure from BS 7671 Appendix 4, Section 6.4. For 12 m at 25 A: 7.3 × 25 × 12 / 1000 = 2.19 V ≈ 0.95% of 230 V — well inside the 5% (11.5 V) limit for a non-lighting final circuit. Passes.',
             '**Disconnection time** — 32 A Type B MCB: tabulated limit Zs ≤ 1.37 Ω (Table 41.3, Cmin = 0.95). When measuring at ambient on site, apply the GN3 0.80 correction factor — cold-measured site limit = 1.37 × 0.80 = 1.10 Ω. 12 m of 6 mm² with proper bonding will typically measure 0.4–0.6 Ω at the cooker. Passes.',
           ],
         },

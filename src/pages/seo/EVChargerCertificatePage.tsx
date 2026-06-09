@@ -34,7 +34,7 @@ const faqs = [
   {
     question: 'What earthing arrangement is required for an EV charger on a PME supply?',
     answer:
-      'Under Regulation 722.411.4 of BS 7671, where the installation is supplied by a PME (TN-C-S) earthing system, the protective conductor for the EV charging circuit must not be connected to the PME earth terminal. Instead, a separate earth electrode (TT earthing rod) must be installed, and the circuit must be protected by a 30mA RCD. This is because an open PEN conductor fault on the supply could put a dangerous voltage on the vehicle chassis through the charging cable. The earth electrode resistance must be low enough to ensure the RCD will operate within the required disconnection time. Elec-Mate includes a PME assessment checklist that walks you through this requirement step by step.',
+      'Under Regulation 722.411.4.1 of BS 7671, a PME (TN-C-S) earthing facility must not be used as the means of earthing for the protective conductor contact of a charging point located outdoors (or one that might reasonably be expected to charge a vehicle outdoors) unless one of the permitted alternative methods is used. The most common method is to install a separate installation earth electrode for the circuit, effectively creating a TT arrangement, alongside the required 30mA RCD. This guards against an open PEN conductor fault putting a dangerous potential on the vehicle body via the charging cable. Elec-Mate includes a PME assessment checklist that walks you through this requirement step by step.',
   },
   {
     question: 'What is the minimum cable size for a 32A EV charger circuit?',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'What type of RCD and circuit breaker is required for an EV charger?',
     answer:
-      'BS 7671 Section 722 requires that the EV charging circuit be protected by a Type A RCD (or Type B if the charger manufacturer specifies it) with a rated residual operating current not exceeding 30mA. The circuit breaker should be rated at 32A for a standard 7kW domestic charger. A Type A RCBO (combined RCD and MCB in one device) is the most common and practical solution, as it provides both overcurrent and earth fault protection in a single module. Some three-phase chargers or chargers with DC charging capability may require a Type B RCD, which detects DC fault currents that a Type A cannot. Always check the charger manufacturer installation manual for specific protection requirements.',
+      'The EV charging circuit must have 30mA RCD additional protection (Regulation 415.1), and Regulation 722.531.3.101 governs the type of RCD and the handling of DC fault currents. Where the charging equipment does not itself provide protection against DC fault current, a Type B RCD must be used, or a Type A RCD combined with a residual direct current detecting device (RDC-DD to BS IEC 62955). For a standard 7kW domestic charger the protective device is typically rated at 32A; a 32A Type A RCBO with an integral or upstream RDC-DD is a common solution. Always check the charger manufacturer installation manual for specific protection requirements.',
   },
   {
     question: 'Is a specific grant available to help with the cost of EV charger installation?',
@@ -61,7 +61,7 @@ const faqs = [
 const howToSteps = [
   {
     name: 'Assess the supply and earthing',
-    text: 'Before starting, assess the existing supply characteristics. Record the earthing arrangement (TN-C-S, TN-S, or TT), the supply fuse rating, and the current maximum demand. If the supply is PME (TN-C-S), you will need to install a separate TT earth electrode for the EV circuit as required by Regulation 722.411.4.',
+    text: 'Before starting, assess the existing supply characteristics. Record the earthing arrangement (TN-C-S, TN-S, or TT), the supply fuse rating, and the current maximum demand. If the supply is PME (TN-C-S), you will need to install a separate installation earth electrode for the EV circuit (unless a permitted alternative method is used) as required by Regulation 722.411.4.1.',
   },
   {
     name: 'Open a new EV charger certificate',
@@ -96,7 +96,7 @@ const features = [
     icon: Activity,
     title: 'PME Assessment Built In',
     description:
-      'The dedicated PME assessment section walks you through Regulation 722.411.4. Earth electrode requirements, protective conductor sizing…',
+      'The dedicated PME assessment section walks you through Regulation 722.411.4.1. Earth electrode requirements, protective conductor sizing…',
   },
   {
     icon: Gauge,
@@ -301,29 +301,36 @@ export default function EVChargerCertificatePage() {
               electrician installing EV chargers.
             </p>
             <p>
-              The section covers several critical areas. Regulation 722.411.4 addresses the earthing
-              arrangements where the supply is TN-C-S (PME). Because an open PEN conductor fault
-              could place a dangerous potential on the vehicle chassis via the charging cable, the
-              regulation requires that the EV charging circuit uses a separate TT earth electrode
-              rather than the PME earth. This is one of the most important and most commonly
-              misunderstood requirements in EV charger installation.
+              The section covers several critical areas. Regulation 722.411.4.1 addresses the
+              earthing arrangements where the supply is TN-C-S (PME). Because an open PEN conductor
+              fault could place a dangerous potential on the vehicle body via the charging cable,
+              the regulation prohibits using the PME earthing facility for the protective conductor
+              contact of an outdoor charging point unless one of the permitted alternative methods
+              is used. This is one of the most important and most commonly misunderstood
+              requirements in EV charger installation.
             </p>
             <p>
-              Every Mode 3 EV charging point must be supplied by its own dedicated circuit,
-              individually protected by an overcurrent protective device. The circuit must be
-              designed for continuous duty — that is, the cable and protective device must be rated
-              for the full load current drawn continuously. For a standard 7kW domestic charger,
-              this means a 32A circuit with no diversity applied. Regulation 722.531.3.101
-              separately requires that associated supply equipment be sited as close as practicable
-              to its supplying transformer, with only one charging point permitted per transformer.
+              The circuit must be designed for continuous duty — the cable and protective device
+              must be rated for the full load current drawn continuously. For a standard 7kW
+              domestic charger, this means a 32A circuit with no diversity applied. Under Regulation
+              722.312.2.1, a circuit supplying EV charging equipment in a TN system shall not include
+              a PEN conductor. Regulation 722.531.3.101 governs the selection of the RCD and the
+              detection of DC fault current for the charging circuit.
             </p>
             <p>
-              Regulation 722.411.3.2 requires that the circuit be protected by an RCD with a rated
-              residual operating current not exceeding 30mA. The type of RCD depends on the charger.
-              Most domestic Mode 3 chargers with built-in DC leakage detection require a minimum of
-              Type A RCD protection. However, some chargers — particularly three-phase units or
-              those without built-in DC detection — may require Type B RCD protection. Always check
-              the charger manufacturer installation instructions.
+              The circuit must have 30mA RCD additional protection in line with Regulation 415.1.
+              The type of RCD depends on the charger: where the charging equipment does not itself
+              provide protection against DC fault current, Regulation 722.531.3.101 requires a Type B
+              RCD, or a Type A RCD combined with a residual direct current detecting device (RDC-DD
+              to BS IEC 62955) that disconnects on a smooth DC residual current of 6mA or above.
+              Always check the charger manufacturer installation instructions.
+            </p>
+            <p className="text-white/80 text-sm">
+              Note: where the protective measure of electrical separation is used (Regulation
+              722.413.1.2), it is limited to the supply of one electric vehicle from one unearthed
+              source through a fixed isolating transformer. AFDDs are not required for circuits
+              supplying EV charging equipment conforming to the BS EN 61851 series that incorporate
+              socket-outlets or vehicle connectors to BS EN IEC 62196-2 (Regulation 722.421.1.7.201).
             </p>
           </div>
         </div>
@@ -338,11 +345,14 @@ export default function EVChargerCertificatePage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The majority of domestic properties in the UK are supplied with a TN-C-S (PME)
-              earthing system. Under Regulation 722.411.4, when an EV charger is installed on a PME
-              supply, the protective conductor of the EV charging circuit must not be connected to
-              the PME earthing terminal. Instead, a separate earth electrode must be installed to
-              provide the earth for the EV circuit, effectively creating a TT earthing arrangement
-              for that circuit alone.
+              earthing system. Under Regulation 722.411.4.1, where an EV charger is installed on a
+              PME supply, a PME earthing facility must not be used as the means of earthing for the
+              protective conductor contact of a charging point located outdoors (or one that might
+              reasonably be expected to charge a vehicle outdoors) unless one of the permitted
+              alternative methods applies. The most common method is to install a separate
+              installation earth electrode for the EV circuit, effectively creating a TT earthing
+              arrangement for that circuit alone. (Indent (a) of this regulation was deleted by
+              BS 7671:2018+A2:2022, and the A4:2026 amendment adds a further alternative method.)
             </p>
             <p>
               The reason for this requirement is safety. On a PME supply, the neutral and earth are
@@ -570,11 +580,12 @@ export default function EVChargerCertificatePage() {
             </p>
             <p>
               For longer cable runs — common when the charger is mounted on an external wall or in a
-              detached garage — 10mm² cable may be required to meet the voltage drop requirement.
-              For external underground runs, SWA (steel wire armoured) cable is typically used and
-              must be buried at the correct depth (minimum 500mm, or as specified by the
-              installation design). The SWA armour can be used as the circuit protective conductor
-              (CPC) but must be properly terminated with gland plates and earth tags.
+              detached garage — a larger conductor may be required to meet the voltage drop
+              requirement. For external underground runs, SWA (steel wire armoured) cable is
+              typically used and must be buried at the correct depth as specified by the installation
+              design. The SWA armour can be used as the circuit protective conductor (CPC) but must
+              be properly terminated with gland plates and earth tags. The table below gives
+              indicative starting points; always calculate each circuit for its actual conditions.
             </p>
           </div>
           <div className="mt-6 rounded-2xl bg-white/[0.04] border border-white/10 p-6">
@@ -606,8 +617,8 @@ export default function EVChargerCertificatePage() {
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Earthing:</strong> Separate TT earth electrode on PME supplies (Regulation
-                  722.411.4)
+                  <strong>Earthing:</strong> Separate installation earth electrode on PME supplies
+                  where an alternative method is not used (Regulation 722.411.4.1)
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -618,6 +629,113 @@ export default function EVChargerCertificatePage() {
                 </span>
               </li>
             </ul>
+          </div>
+
+          {/* RCD type selection table */}
+          <div className="mt-6">
+            <h3 className="font-bold text-white text-lg mb-4">
+              Choosing the RCD: DC Fault Current Protection (Regulation 722.531.3.101)
+            </h3>
+            <div className="overflow-hidden rounded-2xl border border-white/10">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-white/[0.06] text-white">
+                  <tr>
+                    <th className="px-4 py-3 font-semibold">Scenario</th>
+                    <th className="px-4 py-3 font-semibold">Acceptable protection</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/10 text-white/90">
+                  <tr>
+                    <td className="px-4 py-3 align-top">
+                      Charger does <strong>not</strong> provide its own DC fault current protection
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      Type B RCD, <em>or</em> Type A RCD plus a residual direct current detecting
+                      device (RDC-DD to BS IEC 62955) that disconnects at 6mA DC and above
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 align-top">
+                      Charger has built-in RDC-DD (6mA DC detection)
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      Type A RCD upstream, with the charger's integral RDC-DD handling smooth DC
+                      residual current
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 align-top">
+                      Additional protection (all scenarios)
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      30mA rated residual operating current required (Regulation 415.1)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-white/70 text-xs mt-3 leading-relaxed">
+              A plain Type AC RCD is not suitable for an EV charging circuit. Always confirm the
+              protection arrangement against the charger manufacturer's installation instructions and
+              BS 7671 Section 722.
+            </p>
+          </div>
+
+          {/* Cable sizing guidance table */}
+          <div className="mt-6">
+            <h3 className="font-bold text-white text-lg mb-2">
+              Cable Sizing Guidance for a 32A (7kW) Charging Circuit
+            </h3>
+            <p className="text-white/70 text-sm mb-4 leading-relaxed">
+              Indicative starting points only — the conductor must always be sized for the actual
+              installation method, ambient temperature, grouping and run length, then verified
+              against the voltage-drop limit. Calculate every circuit individually.
+            </p>
+            <div className="overflow-hidden rounded-2xl border border-white/10">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-white/[0.06] text-white">
+                  <tr>
+                    <th className="px-4 py-3 font-semibold">Scenario</th>
+                    <th className="px-4 py-3 font-semibold">Typical cable</th>
+                    <th className="px-4 py-3 font-semibold">Note</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/10 text-white/90">
+                  <tr>
+                    <td className="px-4 py-3 align-top">Short run, clipped direct (PVC twin &amp; earth)</td>
+                    <td className="px-4 py-3 align-top font-medium text-yellow-400">6mm&sup2;</td>
+                    <td className="px-4 py-3 align-top">Assumes favourable conditions and a short length</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 align-top">Longer run or warmer/grouped conditions</td>
+                    <td className="px-4 py-3 align-top font-medium text-yellow-400">10mm&sup2;</td>
+                    <td className="px-4 py-3 align-top">Often needed to stay within the voltage-drop limit</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 align-top">External / underground run to garage or outbuilding</td>
+                    <td className="px-4 py-3 align-top font-medium text-yellow-400">SWA (e.g. 4&ndash;10mm&sup2;)</td>
+                    <td className="px-4 py-3 align-top">Buried at correct depth; armour may serve as the CPC if correctly terminated</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl bg-blue-900/30 border border-blue-700/40 p-4">
+                <p className="text-xs uppercase tracking-wide text-blue-300 mb-1">Design current</p>
+                <p className="text-white text-sm">
+                  32A drawn continuously &mdash; <strong>no diversity</strong> applied to a single
+                  dedicated EV charging circuit.
+                </p>
+              </div>
+              <div className="rounded-xl bg-blue-900/30 border border-blue-700/40 p-4">
+                <p className="text-xs uppercase tracking-wide text-blue-300 mb-1">Voltage drop</p>
+                <p className="text-white text-sm">
+                  Keep within <strong>5%</strong> for &ldquo;other uses&rdquo; circuits supplied from
+                  a public LV network (about <strong>11.5V</strong> on 230V), per BS 7671 Appendix 4
+                  (Table 4Ab).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

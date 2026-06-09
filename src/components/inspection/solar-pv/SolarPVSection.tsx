@@ -6,6 +6,54 @@
 
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import {
+  FileText,
+  User,
+  MapPin,
+  Sun,
+  LayoutGrid,
+  Cpu,
+  Battery,
+  Zap,
+  Gauge,
+  FlaskConical,
+  ShieldCheck,
+  Activity,
+  ClipboardCheck,
+  AlertTriangle,
+  FileCheck,
+  PackageCheck,
+  FileSignature,
+  BadgeCheck,
+  type LucideIcon,
+} from 'lucide-react';
+
+// Section title → accent icon (keyed by the exact titles used across the Solar
+// PV tabs). Falls back to FileCheck for any unmapped title.
+const SECTION_ICONS: Record<string, LucideIcon> = {
+  'Certificate Details': FileText,
+  'Client Details': User,
+  'Installation Details': MapPin,
+  'System Overview': Sun,
+  'System Design': Sun,
+  'PV Arrays': LayoutGrid,
+  'PV Array Schedule': LayoutGrid,
+  Arrays: LayoutGrid,
+  Inverters: Cpu,
+  'Inverter(s)': Cpu,
+  'Battery Storage': Battery,
+  'Grid Connection': Zap,
+  Metering: Gauge,
+  'DC Array Tests': FlaskConical,
+  'Inverter Protection': ShieldCheck,
+  'AC Tests': Activity,
+  Commissioning: ClipboardCheck,
+  'Defects & Observations': AlertTriangle,
+  'Verification References': FileCheck,
+  'Handover Documentation': PackageCheck,
+  'Installer Declaration': FileSignature,
+  'Electrician Declaration': BadgeCheck,
+};
 
 // ============================================================================
 // CSS Constants
@@ -34,27 +82,33 @@ export const Section = ({
   accentColor?: string;
   count?: number;
   children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-amber-500/40 to-yellow-400/20'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-        {title}
-        {count !== undefined && (
-          <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-            {count}
+}) => {
+  const Icon = SECTION_ICONS[title] ?? FileCheck;
+  return (
+    <div className="space-y-4 sm:rounded-2xl sm:border sm:border-white/[0.07] sm:bg-white/[0.03] sm:p-5">
+      <div className="border-b border-white/[0.06] pb-1 mb-3">
+        <div
+          className={cn(
+            'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
+            accentColor || 'from-amber-500/40 to-yellow-400/20'
+          )}
+        />
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-amber-500/10 text-amber-400 flex-shrink-0">
+            <Icon className="h-3.5 w-3.5" />
           </span>
-        )}
-      </h2>
+          {title}
+          {count !== undefined && (
+            <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
+              {count}
+            </span>
+          )}
+        </h2>
+      </div>
+      {children}
     </div>
-    {children}
-  </div>
-);
+  );
+};
 
 // ============================================================================
 // Field Component — label + children

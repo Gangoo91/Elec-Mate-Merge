@@ -40,6 +40,7 @@ interface SolarPVFormTabsProps {
   onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  completedTabs?: Record<string, boolean>;
 }
 
 const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
@@ -53,8 +54,13 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
   onCreateInvoice,
   onSaveDraft,
   canGenerateCertificate = true,
+  completedTabs,
 }) => {
-  const contentWrapperClass = 'pb-24 sm:pb-8';
+  // Form tabs are width-capped + centred on desktop (matches the EICR/EV layout);
+  // the testing schedule stays full-width for the wide test tables.
+  const wrapBase = 'pb-24 sm:pb-8 sm:px-4';
+  const contentWrapperClass = `${wrapBase} mx-auto w-full lg:max-w-6xl xl:max-w-7xl`;
+  const testingWrapperClass = wrapBase;
 
   const smartTabs: SmartTab[] = [
     {
@@ -99,7 +105,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
       shortLabel: 'Test',
       icon: <TestTube className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
+        <div className={testingWrapperClass}>
           <SolarPVTestSchedule formData={formData} onUpdate={onUpdate} />
           <SolarPVTabNavigation {...tabNavigationProps} />
         </div>
@@ -131,7 +137,8 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
         value={currentTab}
         onValueChange={onTabChange}
         className="space-y-4"
-        breakpoint={3}
+        completedTabs={completedTabs}
+        showProgress
       />
     </div>
   );
