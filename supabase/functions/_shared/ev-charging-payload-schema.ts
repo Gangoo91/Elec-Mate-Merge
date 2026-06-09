@@ -109,6 +109,21 @@ const protectionDetailsSchema = z.object({
   rcd_integral_display: z.string().default(''),
 }).default({});
 
+// Protective devices & external influences (A4:2026)
+const protectiveDevicesSchema = z.object({
+  spd_fitted: z.string().default(''),
+  spd_fitted_display: z.string().default(''),
+  spd_type: z.string().default(''),
+  spd_location: z.string().default(''),
+  spd_status_ok: z.boolean().default(false),
+  spd_status_display: z.string().default(''),
+  afdd_fitted: z.string().default(''),
+  afdd_fitted_display: z.string().default(''),
+  afdd_type: z.string().default(''),
+  ip_rating: z.string().default(''),
+  ik_rating: z.string().default(''),
+}).default({});
+
 const testResultsSchema = z.object({
   r1r2: z.string().default(''),
   r2: z.string().default(''),
@@ -248,6 +263,7 @@ export const evChargingPayloadSchema = z.object({
   distribution_board: distributionBoardSchema,
   circuit_details: circuitDetailsSchema,
   protection_details: protectionDetailsSchema,
+  protective_devices: protectiveDevicesSchema,
   test_results: testResultsSchema,
   test_equipment: testEquipmentSchema,
   verification: verificationSchema,

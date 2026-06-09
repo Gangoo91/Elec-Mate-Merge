@@ -93,6 +93,21 @@ export interface EVChargingFormData {
   rcdRating: number; // mA
   rcdIntegral: boolean; // Built into charger
 
+  // SPD — surge protective device (A4:2026 Appendix 6 recording requirement)
+  spdFitted: 'yes' | 'no' | 'na' | '';
+  spdType: string; // e.g. Type 2, Type 1+2, Type 2+3
+  spdLocation: string; // e.g. at consumer unit / at charge point
+  spdStatusOk: boolean; // status indicator showing healthy
+
+  // AFDD — arc fault detection device (A4:2026 recording; per 722.421.1.7.201
+  // not required for EV equipment conforming to BS EN 61851 series)
+  afddFitted: 'yes' | 'no' | 'not-required' | '';
+  afddType: string; // BS EN standard / rating
+
+  // External influences (722.512.2) — enclosure protection ratings
+  ipRating: string; // e.g. IP54, IP65
+  ikRating: string; // e.g. IK08, IK10 (mechanical impact, optional)
+
   // Test results
   testResults: {
     r1r2: string;
@@ -240,6 +255,17 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
   rcdType: '',
   rcdRating: 30,
   rcdIntegral: false,
+
+  spdFitted: '',
+  spdType: '',
+  spdLocation: '',
+  spdStatusOk: false,
+
+  afddFitted: '',
+  afddType: '',
+
+  ipRating: '',
+  ikRating: '',
 
   testResults: {
     r1r2: '',

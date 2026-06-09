@@ -1014,6 +1014,61 @@
     </div>
 </div>
 
+<!-- SECTION G2: PROTECTIVE DEVICES & EXTERNAL INFLUENCES (A4:2026) -->
+<div class="section">
+    <div class="section-title">Section G2: Protective Devices &amp; External Influences (A4:2026)</div>
+    <div class="inline-form" style="margin-bottom: 3px;">
+        <div class="inline-group">
+            <span class="inline-label">SPD (Surge Protective Device):</span>
+            <span class="inline-value">{{ protective_devices.spd_fitted_display | default: "&mdash;" }}</span>
+        </div>
+        {% if protective_devices.spd_fitted == "yes" %}
+        <div class="inline-group">
+            <span class="inline-label">SPD Type:</span>
+            <span class="inline-value">{{ protective_devices.spd_type }}</span>
+        </div>
+        {% endif %}
+    </div>
+    {% if protective_devices.spd_fitted == "yes" %}
+    <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">SPD Location:</span>
+            <span class="inline-value">{{ protective_devices.spd_location }}</span>
+        </div>
+        {% if protective_devices.spd_status_display != "" %}
+        <div class="inline-group">
+            <span class="inline-label">Status Indicator:</span>
+            <span class="inline-value">{{ protective_devices.spd_status_display }}</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">AFDD (Arc Fault Detection):</span>
+            <span class="inline-value">{{ protective_devices.afdd_fitted_display | default: "&mdash;" }}</span>
+        </div>
+        {% if protective_devices.afdd_fitted == "yes" %}
+        <div class="inline-group">
+            <span class="inline-label">AFDD Standard:</span>
+            <span class="inline-value">{{ protective_devices.afdd_type }}</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Enclosure IP Rating (722.512.2):</span>
+            <span class="inline-value">{{ protective_devices.ip_rating | default: "&mdash;" }}</span>
+        </div>
+        {% if protective_devices.ik_rating != "" %}
+        <div class="inline-group">
+            <span class="inline-label">IK Rating:</span>
+            <span class="inline-value">{{ protective_devices.ik_rating }}</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
 <!-- SECTION H: SCHEDULE OF TEST RESULTS -->
 <div class="section">
     <div class="section-title">Section H: Schedule of Test Results</div>

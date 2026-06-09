@@ -159,6 +159,35 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       rcd_integral_display: getBool('rcdIntegral') ? 'Integral to Charger' : 'Separate RCD',
     },
 
+    // Protective devices & external influences (A4:2026)
+    protective_devices: {
+      spd_fitted: get('spdFitted'),
+      spd_fitted_display:
+        get('spdFitted') === 'yes'
+          ? 'Fitted'
+          : get('spdFitted') === 'no'
+            ? 'Not fitted'
+            : get('spdFitted') === 'na'
+              ? 'N/A'
+              : '',
+      spd_type: get('spdType'),
+      spd_location: get('spdLocation'),
+      spd_status_ok: getBool('spdStatusOk'),
+      spd_status_display: getBool('spdStatusOk') ? 'Healthy' : '',
+      afdd_fitted: get('afddFitted'),
+      afdd_fitted_display:
+        get('afddFitted') === 'yes'
+          ? 'Fitted'
+          : get('afddFitted') === 'no'
+            ? 'Not fitted'
+            : get('afddFitted') === 'not-required'
+              ? 'Not required (BS EN 61851)'
+              : '',
+      afdd_type: get('afddType'),
+      ip_rating: get('ipRating'),
+      ik_rating: get('ikRating'),
+    },
+
     // Test Results
     test_results: {
       r1r2: getTestResult('r1r2'),

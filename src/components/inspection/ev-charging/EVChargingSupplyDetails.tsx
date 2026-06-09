@@ -744,6 +744,146 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
         </div>
       </section>
 
+      {/* ========== Protective Devices & External Influences (A4:2026) ========== */}
+      <section>
+        <SectionHeading title="Protective Devices (A4:2026)" />
+
+        <div className="space-y-4">
+          {/* SPD — A4:2026 Appendix 6 recording requirement */}
+          <div>
+            <FieldLabel>Surge Protective Device (SPD)</FieldLabel>
+            <ToggleRow
+              options={[
+                { label: 'Fitted', value: 'yes' },
+                { label: 'Not fitted', value: 'no' },
+                { label: 'N/A', value: 'na' },
+              ]}
+              value={(formData.spdFitted as string) || ''}
+              onChange={(v) => onUpdate('spdFitted', v)}
+            />
+          </div>
+          {formData.spdFitted === 'yes' && (
+            <>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <FieldLabel htmlFor="spdType">SPD Type</FieldLabel>
+                  <MobileSelectPicker
+                    label="SPD Type"
+                    value={formData.spdType || ''}
+                    onValueChange={(v) => onUpdate('spdType', v)}
+                    options={[
+                      { value: 'Type 1', label: 'Type 1' },
+                      { value: 'Type 2', label: 'Type 2' },
+                      { value: 'Type 1+2', label: 'Type 1+2' },
+                      { value: 'Type 2+3', label: 'Type 2+3' },
+                      { value: 'Type 3', label: 'Type 3' },
+                    ]}
+                    placeholder="Select"
+                  />
+                </div>
+                <div>
+                  <FieldLabel htmlFor="spdLocation">SPD Location</FieldLabel>
+                  <Input
+                    id="spdLocation"
+                    placeholder="e.g., Consumer unit"
+                    value={formData.spdLocation || ''}
+                    onChange={(e) => onUpdate('spdLocation', e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+              <label
+                htmlFor="spdStatusOk"
+                className={cn(
+                  'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors touch-manipulation',
+                  formData.spdStatusOk
+                    ? 'border-green-500/40 bg-green-500/[0.06]'
+                    : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]'
+                )}
+              >
+                <Checkbox
+                  id="spdStatusOk"
+                  checked={formData.spdStatusOk || false}
+                  onCheckedChange={(checked) => onUpdate('spdStatusOk', checked)}
+                  className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
+                />
+                <span className="text-sm text-white">SPD status indicator shows healthy</span>
+              </label>
+            </>
+          )}
+
+          {/* AFDD — A4:2026 recording (722.421.1.7.201 EV exemption) */}
+          <div>
+            <FieldLabel>Arc Fault Detection Device (AFDD)</FieldLabel>
+            <ToggleRow
+              options={[
+                { label: 'Fitted', value: 'yes' },
+                { label: 'Not fitted', value: 'no' },
+                { label: 'Not required', value: 'not-required' },
+              ]}
+              value={(formData.afddFitted as string) || ''}
+              onChange={(v) => onUpdate('afddFitted', v)}
+            />
+            <p className="text-[10px] text-white/45 mt-1.5 leading-relaxed">
+              Reg 722.421.1.7.201: AFDDs are not required for circuits supplying EV charging
+              equipment conforming to the BS EN 61851 series.
+            </p>
+          </div>
+          {formData.afddFitted === 'yes' && (
+            <div>
+              <FieldLabel htmlFor="afddType">AFDD Standard / Rating</FieldLabel>
+              <Input
+                id="afddType"
+                placeholder="e.g., BS EN 62606"
+                value={formData.afddType || ''}
+                onChange={(e) => onUpdate('afddType', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          )}
+
+          {/* External influences — enclosure protection ratings (722.512.2) */}
+          <div className="border-b border-white/[0.06] pb-1 mb-1 mt-2">
+            <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-white/10 to-transparent mb-2" />
+            <h3 className="text-[11px] font-medium text-white uppercase tracking-wider">
+              External Influences (722.512.2)
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="ipRating">Enclosure IP Rating</FieldLabel>
+              <MobileSelectPicker
+                label="IP Rating"
+                value={formData.ipRating || ''}
+                onValueChange={(v) => onUpdate('ipRating', v)}
+                options={[
+                  { value: 'IP44', label: 'IP44' },
+                  { value: 'IP54', label: 'IP54' },
+                  { value: 'IP55', label: 'IP55' },
+                  { value: 'IP65', label: 'IP65' },
+                  { value: 'IP66', label: 'IP66' },
+                ]}
+                placeholder="Select"
+              />
+            </div>
+            <div>
+              <FieldLabel htmlFor="ikRating">IK Rating (impact)</FieldLabel>
+              <MobileSelectPicker
+                label="IK Rating"
+                value={formData.ikRating || ''}
+                onValueChange={(v) => onUpdate('ikRating', v)}
+                options={[
+                  { value: 'IK07', label: 'IK07' },
+                  { value: 'IK08', label: 'IK08' },
+                  { value: 'IK10', label: 'IK10' },
+                ]}
+                placeholder="Select"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ========== DNO Notification ========== */}
       <section>
         <SectionHeading title="DNO Notification" />
