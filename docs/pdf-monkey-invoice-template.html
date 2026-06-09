@@ -230,18 +230,39 @@
             <span>{{ calculations.discountLabel }}</span>
             <span class="amount" style="color: #dc2626;">-£{{ calculations.discountAmount | round: 2 }}</span>
           </div>
-          {% endif %} {% if useVat %}
+          {% endif %} {% if useVat and calculations.reverseCharge != true %}
           <div class="totals-row">
             <span>VAT ({{ vatRate }}%)</span>
             <span class="amount">£{{ calculations.vatAmount | round: 2 }}</span>
           </div>
+          {% endif %} {% if calculations.reverseCharge %}
+          <div class="totals-row">
+            <span>VAT &mdash; reverse charge</span>
+            <span class="amount">£0.00</span>
+          </div>
           {% endif %}
           <div class="totals-row total">
-            <span>Amount Due</span>
+            <span>{% if calculations.cisAmount > 0 %}Total{% else %}Amount Due{% endif %}</span>
             <span class="amount">£{{ calculations.total | round: 2 }}</span>
           </div>
+          {% if calculations.cisAmount > 0 %}
+          <div class="totals-row" style="color: #dc2626;">
+            <span>Less: CIS ({{ calculations.cisRate }}% on labour)</span>
+            <span class="amount" style="color: #dc2626;">-£{{ calculations.cisAmount | round: 2 }}</span>
+          </div>
+          <div class="totals-row total">
+            <span>Net Payable</span>
+            <span class="amount">£{{ calculations.netPayable | round: 2 }}</span>
+          </div>
+          {% endif %}
         </div>
       </div>
+      {% if calculations.reverseCharge %}
+      <div style="margin-top: 10px; font-size: 11px; color: #555; line-height: 1.5; max-width: 360px; margin-left: auto;">
+        <strong>Reverse charge:</strong> customer to account to HMRC for the VAT &mdash;
+        £{{ calculations.notionalVat | round: 2 }} @ {{ calculations.vatRate }}% (VAT Act 1994 s.55A).
+      </div>
+      {% endif %}
 
       <!-- Invoice Terms Bar - Uses editable settings -->
       <table

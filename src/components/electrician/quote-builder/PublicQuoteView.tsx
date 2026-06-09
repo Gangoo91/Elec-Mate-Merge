@@ -36,7 +36,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
 import { diffQuoteItems, formatDeltaCurrency, QuoteDiff } from '@/utils/quote-diff';
-import { buildCategoryBreakdowns, getDisplayItems } from '@/utils/quote-calculations';
+import { buildCategoryBreakdowns, computeQuoteTotals, getDisplayItems } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
 
 // Brand defaults match the shared email design system fallbacks.
@@ -107,6 +107,15 @@ const PublicQuoteView = () => {
 
   const categoryBreakdowns = useMemo(
     () => (quote ? buildCategoryBreakdowns(quote.items || [], quote.settings) : []),
+    [quote]
+  );
+  // CIS / VAT reverse charge. Quotes don't apply overhead/profit (see
+  // useQuoteBuilder), so match that so cisT.total === quote.total.
+  const cisT = useMemo(
+    () =>
+      quote
+        ? computeQuoteTotals(quote.items || [], quote.settings, { applyOverheadAndProfit: false })
+        : null,
     [quote]
   );
   const [loading, setLoading] = useState(true);
@@ -936,16 +945,39 @@ const PublicQuoteView = () => {
                   <span className="tabular-nums">{formatCurrency(quote.profit)}</span>
                 </div>
               )}
-              {quote.settings?.vatRegistered && quote.vatAmount > 0 && (
+              {quote.settings?.vatRegistered && quote.vatAmount > 0 && !cisT?.reverseCharge && (
                 <div className="flex justify-between text-slate-600">
                   <span>VAT ({quote.settings?.vatRate || 20}%)</span>
                   <span className="tabular-nums">{formatCurrency(quote.vatAmount)}</span>
+                </div>
+              )}
+              {cisT?.reverseCharge && (
+                <div className="flex justify-between text-slate-600">
+                  <span>VAT — reverse charge</span>
+                  <span className="tabular-nums">{formatCurrency(0)}</span>
                 </div>
               )}
               <div className="flex justify-between text-[15px] font-bold text-slate-900 pt-3 border-t border-slate-200 mt-2">
                 <span>Total</span>
                 <span className="tabular-nums">{formatCurrency(quote.total)}</span>
               </div>
+              {cisT && cisT.cisAmount > 0 && (
+                <>
+                  <div className="flex justify-between text-slate-600 pt-1">
+                    <span>Less: CIS ({cisT.cisRate}% on labour)</span>
+                    <span className="tabular-nums text-red-600">−{formatCurrency(cisT.cisAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-[15px] font-bold text-slate-900">
+                    <span>Net payable</span>
+                    <span className="tabular-nums">{formatCurrency(cisT.netPayable)}</span>
+                  </div>
+                </>
+              )}
+              {cisT?.reverseCharge && (
+                <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
+                  Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(cisT.notionalVat)} @ {quote.settings?.vatRate ?? 20}%.
+                </p>
+              )}
             </div>
           </div>
         </section>

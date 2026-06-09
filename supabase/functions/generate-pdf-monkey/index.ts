@@ -1216,12 +1216,39 @@ serve(async (req) => {
         : 0;
       const netAfterDiscount = subtotalWithMarkups - discountAmount;
 
-      const vatAmount = quoteSettings.vatRegistered
-        ? parseFloat(freshQuote?.vat_amount) ||
-          parseFloat(freshQuote?.vatAmount) ||
-          netAfterDiscount * ((quoteSettings.vatRate || 20) / 100)
-        : 0;
+      // VAT reverse charge (DRC): subcontractor charges £0 VAT; customer
+      // accounts to HMRC. We still expose the notional VAT below.
+      const qReverseCharge = !!quoteSettings.reverseCharge;
+      const vatAmount =
+        quoteSettings.vatRegistered && !qReverseCharge
+          ? parseFloat(freshQuote?.vat_amount) ||
+            parseFloat(freshQuote?.vatAmount) ||
+            netAfterDiscount * ((quoteSettings.vatRate || 20) / 100)
+          : 0;
       const total = parseFloat(freshQuote?.total) || netAfterDiscount + vatAmount;
+
+      // CIS deduction (labour only, ex-VAT) + reverse-charge notional VAT.
+      // Mirrors src/utils/quote-calculations.ts (quotes don't apply O&P) so the
+      // PDF matches the on-screen quote view. Net base = ex-VAT amount actually
+      // charged (= stored total under reverse charge, since VAT is £0).
+      const round2cis = (n: number) => Math.round(n * 100) / 100;
+      const qNetBase = total - vatAmount;
+      const qNotionalVat = qReverseCharge
+        ? round2cis(qNetBase * ((quoteSettings.vatRate || 20) / 100))
+        : 0;
+      const qLabourItemAdjusted = labourItems.reduce(
+        (s: number, i: any) => s + (i.totalPrice || 0),
+        0
+      );
+      const qLabourCatPct = hideMarkupFromCustomer
+        ? 0
+        : quoteSettings.categoryAdjustments?.labour || 0;
+      const qLabourFinal = qLabourItemAdjusted * (1 + qLabourCatPct / 100);
+      const qLabourNet = itemsSubtotal > 0 ? qNetBase * (qLabourFinal / itemsSubtotal) : 0;
+      const qCisEnabled = !!quoteSettings.cisEnabled;
+      const qCisRate = qCisEnabled ? Number(quoteSettings.cisRate) || 0 : 0;
+      const qCisAmount = qCisEnabled ? round2cis(qLabourNet * (qCisRate / 100)) : 0;
+      const qNetPayable = round2cis(total - qCisAmount);
 
       // Calculate valid until date
       const validUntilDate =
@@ -1394,6 +1421,14 @@ serve(async (req) => {
           vatAmount: vatAmount,
           vatRate: quoteSettings.vatRate || 20,
           total: total,
+          // Construction (CIS + VAT reverse charge)
+          reverseCharge: qReverseCharge,
+          notionalVat: qNotionalVat,
+          cisEnabled: qCisEnabled,
+          cisRate: qCisRate,
+          cisAmount: qCisAmount,
+          labourNet: qLabourNet,
+          netPayable: qNetPayable,
           // Formatted currency strings
           subtotalFormatted: `£${itemsSubtotal.toFixed(2)}`,
           overheadFormatted: overhead > 0 ? `£${overhead.toFixed(2)}` : null,
@@ -1401,6 +1436,9 @@ serve(async (req) => {
           discountFormatted: discountAmount > 0 ? `-£${discountAmount.toFixed(2)}` : null,
           vatFormatted: vatAmount > 0 ? `£${vatAmount.toFixed(2)}` : null,
           totalFormatted: `£${total.toFixed(2)}`,
+          cisFormatted: qCisAmount > 0 ? `-£${qCisAmount.toFixed(2)}` : null,
+          netPayableFormatted: qCisAmount > 0 ? `£${qNetPayable.toFixed(2)}` : null,
+          notionalVatFormatted: qReverseCharge ? `£${qNotionalVat.toFixed(2)}` : null,
         },
         // For backwards compatibility with existing templates
         subtotal: itemsSubtotal,

@@ -162,8 +162,8 @@ export const InvoiceSettingsStep = ({
       <div>
         <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
           <div>
-            <p className="text-[14px] font-medium text-white">Deduction / Discount</p>
-            <p className="text-[12px] text-white mt-0.5">CIS, OAP discount, etc.</p>
+            <p className="text-[14px] font-medium text-white">Discount</p>
+            <p className="text-[12px] text-white mt-0.5">Goodwill, retention, early-payment, etc.</p>
           </div>
           <Switch
             checked={settings?.discountEnabled || false}
@@ -180,31 +180,6 @@ export const InvoiceSettingsStep = ({
 
         {settings?.discountEnabled && (
           <div className="pt-4 space-y-4">
-            {/* CIS Presets */}
-            <div>
-              <label className={labelClass}>Quick Presets</label>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() =>
-                    onUpdateSettings({ discountEnabled: true, discountType: 'percentage', discountValue: 20, discountLabel: 'CIS Deduction (20%)' })
-                  }
-                  className="px-4 h-11 rounded-lg text-[13px] font-medium bg-white/[0.08] text-white border border-white/[0.12] touch-manipulation active:scale-[0.97]"
-                >
-                  CIS 20%
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    onUpdateSettings({ discountEnabled: true, discountType: 'percentage', discountValue: 30, discountLabel: 'CIS Deduction (30%)' })
-                  }
-                  className="px-4 h-11 rounded-lg text-[13px] font-medium bg-white/[0.08] text-white border border-white/[0.12] touch-manipulation active:scale-[0.97]"
-                >
-                  CIS 30%
-                </button>
-              </div>
-            </div>
-
             {/* Type */}
             <div>
               <label className={labelClass}>Type</label>
@@ -262,7 +237,7 @@ export const InvoiceSettingsStep = ({
                 <input
                   type="text"
                   style={darkStyle}
-                  placeholder="e.g. CIS Deduction"
+                  placeholder="e.g. Retention"
                   className={inputClass}
                   value={settings?.discountLabel || ''}
                   onChange={(e) => onUpdateSettings({ discountLabel: e.target.value })}
