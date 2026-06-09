@@ -16,6 +16,7 @@ type NavItem = { name: string; path: string };
 const primaryNavItems: NavItem[] = [
   { name: 'Dashboard', path: '/admin' },
   { name: 'Users', path: '/admin/users' },
+  { name: 'Bulk Create', path: '/admin/bulk-create' },
   { name: 'Mate', path: '/admin/mate' },
   { name: 'Trials', path: '/admin/trials' },
   { name: 'Revenue', path: '/admin/revenue' },
