@@ -171,6 +171,9 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
           invoice.invoice_status !== 'paid';
         const overdueInfo = getOverdueInfo(invoice);
         const isPaid = invoice.invoice_status === 'paid';
+        const cardTotalPaid = Number((invoice as { total_paid?: number | string | null }).total_paid ?? 0);
+        const cardOutstanding = Math.max(0, invoice.total - cardTotalPaid);
+        const isPartPaid = !isPaid && cardTotalPaid > 0.005;
         const canMarkPaid =
           invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue;
         const clientData = invoice.client;
@@ -257,7 +260,10 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                         'text-[15px] font-bold',
                         isPaid ? 'text-emerald-400' : isOverdue ? 'text-red-400' : 'text-elec-yellow'
                       )}>
-                        {formatCurrency(invoice.total)}
+                        {formatCurrency(isPartPaid ? cardOutstanding : invoice.total)}
+                        {isPartPaid && (
+                          <span className="ml-2 text-[10px] font-medium text-emerald-300">part-paid</span>
+                        )}
                       </span>
                     </div>
 

@@ -100,6 +100,13 @@ export interface QuoteSettings {
   // the breakdown so the electrician can see their margin. Opt-in;
   // default false preserves existing behaviour.
   hideMarkupFromCustomer?: boolean;
+  // Construction invoicing (CIS + VAT reverse charge). All opt-in; default
+  // off so existing quotes/invoices are unaffected.
+  // CIS: withheld from the labour element only (ex-VAT). 20% verified, 30% unverified.
+  cisEnabled?: boolean;
+  cisRate?: number;
+  // VAT domestic reverse charge (DRC): charge £0 VAT, customer accounts to HMRC.
+  reverseCharge?: boolean;
 }
 
 export interface Quote {

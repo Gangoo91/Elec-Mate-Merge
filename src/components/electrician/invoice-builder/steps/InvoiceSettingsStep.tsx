@@ -97,13 +97,73 @@ export const InvoiceSettingsStep = ({
         )}
       </div>
 
+      {/* Construction — CIS + VAT reverse charge */}
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+      <div>
+        <p className="text-[11px] text-white/60 uppercase tracking-wider mb-1">Construction (CIS &amp; VAT)</p>
+
+        {/* VAT reverse charge */}
+        <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+          <div className="pr-3">
+            <p className="text-[14px] font-medium text-white">VAT reverse charge</p>
+            <p className="text-[12px] text-white/70 mt-0.5">CIS supplies — charge £0 VAT; customer accounts to HMRC</p>
+          </div>
+          <Switch
+            checked={settings?.reverseCharge || false}
+            onCheckedChange={(checked) => onUpdateSettings({ reverseCharge: checked })}
+            className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+          />
+        </div>
+        {settings?.reverseCharge && (
+          <p className="text-[11px] text-white/60 mt-2 leading-relaxed">
+            Invoice shows £0 VAT with the statement <span className="text-white/80">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span> — the notional VAT is shown for their records.
+          </p>
+        )}
+
+        {/* CIS deduction */}
+        <div className="flex items-center justify-between py-3 border-b border-white/[0.12] mt-1">
+          <div className="pr-3">
+            <p className="text-[14px] font-medium text-white">CIS deduction</p>
+            <p className="text-[12px] text-white/70 mt-0.5">Deducted from labour only (ex-VAT)</p>
+          </div>
+          <Switch
+            checked={settings?.cisEnabled || false}
+            onCheckedChange={(checked) => onUpdateSettings({ cisEnabled: checked, cisRate: settings?.cisRate || 20 })}
+            className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+          />
+        </div>
+        {settings?.cisEnabled && (
+          <div className="pt-3">
+            <label className={labelClass}>CIS rate</label>
+            <div className="grid grid-cols-2 gap-2">
+              {[20, 30].map((rate) => (
+                <button
+                  key={rate}
+                  type="button"
+                  onClick={() => onUpdateSettings({ cisRate: rate })}
+                  className={cn(
+                    'h-11 rounded-lg text-[13px] font-semibold border transition-colors touch-manipulation',
+                    (settings?.cisRate ?? 20) === rate
+                      ? 'bg-elec-yellow text-black border-elec-yellow'
+                      : 'bg-white/[0.06] text-white border-white/[0.12]'
+                  )}
+                >
+                  {rate}% · {rate === 20 ? 'registered' : 'unverified'}
+                </button>
+              ))}
+            </div>
+            <p className="text-[11px] text-white/55 mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
+          </div>
+        )}
+      </div>
+
       {/* Deductions & Discounts */}
       <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
       <div>
         <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
           <div>
-            <p className="text-[14px] font-medium text-white">Deduction / Discount</p>
-            <p className="text-[12px] text-white mt-0.5">CIS, OAP discount, etc.</p>
+            <p className="text-[14px] font-medium text-white">Discount</p>
+            <p className="text-[12px] text-white mt-0.5">Goodwill, retention, early-payment, etc.</p>
           </div>
           <Switch
             checked={settings?.discountEnabled || false}
@@ -120,31 +180,6 @@ export const InvoiceSettingsStep = ({
 
         {settings?.discountEnabled && (
           <div className="pt-4 space-y-4">
-            {/* CIS Presets */}
-            <div>
-              <label className={labelClass}>Quick Presets</label>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() =>
-                    onUpdateSettings({ discountEnabled: true, discountType: 'percentage', discountValue: 20, discountLabel: 'CIS Deduction (20%)' })
-                  }
-                  className="px-4 h-11 rounded-lg text-[13px] font-medium bg-white/[0.08] text-white border border-white/[0.12] touch-manipulation active:scale-[0.97]"
-                >
-                  CIS 20%
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    onUpdateSettings({ discountEnabled: true, discountType: 'percentage', discountValue: 30, discountLabel: 'CIS Deduction (30%)' })
-                  }
-                  className="px-4 h-11 rounded-lg text-[13px] font-medium bg-white/[0.08] text-white border border-white/[0.12] touch-manipulation active:scale-[0.97]"
-                >
-                  CIS 30%
-                </button>
-              </div>
-            </div>
-
             {/* Type */}
             <div>
               <label className={labelClass}>Type</label>
@@ -202,7 +237,7 @@ export const InvoiceSettingsStep = ({
                 <input
                   type="text"
                   style={darkStyle}
-                  placeholder="e.g. CIS Deduction"
+                  placeholder="e.g. Retention"
                   className={inputClass}
                   value={settings?.discountLabel || ''}
                   onChange={(e) => onUpdateSettings({ discountLabel: e.target.value })}

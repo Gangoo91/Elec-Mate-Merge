@@ -29,6 +29,11 @@ const settingsSchema = z.object({
   // Bake category markup into displayed item totals on the customer-facing
   // quote + PDF, hide the explicit markup line.
   hideMarkupFromCustomer: z.boolean().optional(),
+  // Construction invoicing — CIS deduction (labour only, ex-VAT) + VAT
+  // domestic reverse charge. All opt-in; default off.
+  cisEnabled: z.boolean().optional(),
+  cisRate: z.number().optional(),
+  reverseCharge: z.boolean().optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -65,13 +70,8 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
   const isVatRegistered = form.watch('vatRegistered');
   const isDiscountEnabled = form.watch('discountEnabled');
   const discountType = form.watch('discountType');
-
-  const applyCisPreset = (rate: number) => {
-    form.setValue('discountEnabled', true);
-    form.setValue('discountType', 'percentage');
-    form.setValue('discountValue', rate);
-    form.setValue('discountLabel', `CIS Deduction (${rate}%)`);
-  };
+  const isReverseCharge = form.watch('reverseCharge');
+  const isCisEnabled = form.watch('cisEnabled');
 
   return (
     <Form {...form}>
@@ -125,6 +125,89 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
             )}
           />
         )}
+
+        {/* Construction — CIS + VAT reverse charge (matches InvoiceSettingsStep) */}
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+        <div>
+          <p className="text-[11px] text-white/60 uppercase tracking-wider mb-1">Construction (CIS &amp; VAT)</p>
+
+          {/* VAT reverse charge */}
+          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+            <div className="pr-3">
+              <p className="text-[14px] font-medium text-white">VAT reverse charge</p>
+              <p className="text-[12px] text-white/70 mt-0.5">CIS supplies — charge £0 VAT; customer accounts to HMRC</p>
+            </div>
+            <FormField
+              control={form.control}
+              name="reverseCharge"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value || false}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          {isReverseCharge && (
+            <p className="text-[11px] text-white/60 mt-2 leading-relaxed">
+              Invoice shows £0 VAT with the statement <span className="text-white/80">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span> — the notional VAT is shown for their records.
+            </p>
+          )}
+
+          {/* CIS deduction */}
+          <div className="flex items-center justify-between py-3 border-b border-white/[0.12] mt-1">
+            <div className="pr-3">
+              <p className="text-[14px] font-medium text-white">CIS deduction</p>
+              <p className="text-[12px] text-white/70 mt-0.5">Deducted from labour only (ex-VAT)</p>
+            </div>
+            <FormField
+              control={form.control}
+              name="cisEnabled"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value || false}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        if (checked && !form.getValues('cisRate')) form.setValue('cisRate', 20);
+                      }}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          {isCisEnabled && (
+            <div className="pt-3">
+              <label className="text-xs font-medium text-white mb-1.5 block">CIS rate</label>
+              <div className="grid grid-cols-2 gap-2">
+                {[20, 30].map((rate) => (
+                  <button
+                    key={rate}
+                    type="button"
+                    onClick={() => form.setValue('cisRate', rate)}
+                    className={cn(
+                      'h-11 rounded-lg text-[13px] font-semibold border transition-colors touch-manipulation',
+                      (form.watch('cisRate') ?? 20) === rate
+                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                        : 'bg-white/[0.06] text-white border-white/[0.12]'
+                    )}
+                  >
+                    {rate}% · {rate === 20 ? 'registered' : 'unverified'}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] text-white/55 mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
+            </div>
+          )}
+        </div>
 
         {/* Materials breakdown — section divider matches Invoice pattern */}
         <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
@@ -184,8 +267,8 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
         <div>
           <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
             <div>
-              <p className="text-[14px] font-medium text-white">Apply Deduction / Discount</p>
-              <p className="text-[12px] text-white mt-0.5">CIS, OAP discount, etc.</p>
+              <p className="text-[14px] font-medium text-white">Apply Discount</p>
+              <p className="text-[12px] text-white mt-0.5">Goodwill, retention, early-payment, etc.</p>
             </div>
             <FormField
               control={form.control}
@@ -207,16 +290,6 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
 
         {isDiscountEnabled && (
           <div className="space-y-4">
-            {/* CIS presets */}
-            <div className="flex gap-2">
-              <button type="button" onClick={() => applyCisPreset(20)} className="h-11 px-4 rounded-xl text-[13px] font-medium bg-white/[0.04] text-white border border-white/[0.08] touch-manipulation active:scale-[0.97]">
-                CIS 20%
-              </button>
-              <button type="button" onClick={() => applyCisPreset(30)} className="h-11 px-4 rounded-xl text-[13px] font-medium bg-white/[0.04] text-white border border-white/[0.08] touch-manipulation active:scale-[0.97]">
-                CIS 30%
-              </button>
-            </div>
-
             {/* Type */}
             <div className="flex gap-1.5">
               {(['percentage', 'fixed'] as const).map((type) => (
@@ -266,7 +339,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                   <FormItem>
                     <label className="text-xs font-medium text-white mb-1.5 block">Label (optional)</label>
                     <FormControl>
-                      <Input placeholder="e.g. CIS Deduction" className={inputClass} {...field} />
+                      <Input placeholder="e.g. Retention" className={inputClass} {...field} />
                     </FormControl>
                   </FormItem>
                 )}

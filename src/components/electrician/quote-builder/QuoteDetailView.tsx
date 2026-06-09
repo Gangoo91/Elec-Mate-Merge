@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Quote } from '@/types/quote';
-import { buildCategoryBreakdowns } from '@/utils/quote-calculations';
+import { buildCategoryBreakdowns, computeQuoteTotals } from '@/utils/quote-calculations';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -41,6 +41,13 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
   const categoryBreakdowns = useMemo(
     () => buildCategoryBreakdowns(quote.items || [], quote.settings),
+    [quote.items, quote.settings]
+  );
+
+  // CIS / VAT reverse charge figures. Quotes don't apply overhead/profit
+  // (see useQuoteBuilder), so match that here to keep cisT.total === quote.total.
+  const cisT = useMemo(
+    () => computeQuoteTotals(quote.items || [], quote.settings, { applyOverheadAndProfit: false }),
     [quote.items, quote.settings]
   );
 
@@ -563,10 +570,17 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             </div>
           )}
 
-          {quote.settings?.vatRegistered && (
+          {quote.settings?.vatRegistered && !cisT.reverseCharge && (
             <div className="flex justify-between text-white">
               <span>VAT ({quote.settings.vatRate}%)</span>
               <span className="font-medium">£{(quote.vatAmount || 0).toFixed(2)}</span>
+            </div>
+          )}
+
+          {cisT.reverseCharge && (
+            <div className="flex justify-between text-white">
+              <span>VAT — reverse charge</span>
+              <span className="font-medium">£0.00</span>
             </div>
           )}
 
@@ -576,6 +590,25 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <span className="text-white">Total</span>
             <span className="text-elec-yellow">£{(quote.total || 0).toFixed(2)}</span>
           </div>
+
+          {cisT.cisAmount > 0 && (
+            <>
+              <div className="flex justify-between text-white pt-1">
+                <span className="text-white/80">Less: CIS ({cisT.cisRate}% on labour)</span>
+                <span className="font-medium text-red-300 tabular-nums">−£{cisT.cisAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-lg font-bold">
+                <span className="text-white">Net payable</span>
+                <span className="text-elec-yellow">£{cisT.netPayable.toFixed(2)}</span>
+              </div>
+            </>
+          )}
+
+          {cisT.reverseCharge && (
+            <p className="text-[11px] text-white/55 mt-2 leading-relaxed">
+              Reverse charge: customer to account to HMRC for the VAT — £{cisT.notionalVat.toFixed(2)} @ {quote.settings?.vatRate ?? 20}%.
+            </p>
+          )}
         </div>
       </Card>
 

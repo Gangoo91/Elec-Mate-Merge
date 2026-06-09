@@ -316,6 +316,29 @@ Deno.serve(async (req: Request) => {
       const errorMsg = syncError instanceof Error ? syncError.message : String(syncError);
       const errorStack = syncError instanceof Error ? syncError.stack : undefined;
 
+      // Friendly, actionable message for well-known provider faults so the user
+      // sees what to do rather than a raw API error. QuickBooks fault 6190
+      // ("Invalid Company Status") means the connected company's subscription
+      // or trial has lapsed — QB blocks ALL data writes until it's reactivated.
+      const providerLabel =
+        provider === 'quickbooks'
+          ? 'QuickBooks'
+          : provider.charAt(0).toUpperCase() + provider.slice(1);
+      const lowerErr = errorMsg.toLowerCase();
+      if (
+        errorMsg.includes('6190') ||
+        lowerErr.includes('invalid company status') ||
+        (lowerErr.includes('subscription') && lowerErr.includes('ended'))
+      ) {
+        return errorResponse(
+          `Your ${providerLabel} subscription has ended`,
+          `${providerLabel} is blocking new data because the subscription or trial on the connected company has lapsed. Reactivate it in ${providerLabel}${
+            provider === 'quickbooks' ? ' (Settings ⚙️ → Subscriptions and billing)' : ''
+          }, then run the sync again.`,
+          402
+        );
+      }
+
       // Extract more details from ExternalAPIError
       let detailMsg = errorMsg;
       if (syncError instanceof ExternalAPIError && syncError.details) {
