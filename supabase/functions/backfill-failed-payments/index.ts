@@ -12,6 +12,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -264,6 +265,7 @@ serve(async (req: Request) => {
       }
     );
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'backfill-failed-payments', requestUrl: req.url, requestMethod: req.method });
     logger.error('Backfill error', { error: (error as Error).message });
     return new Response(JSON.stringify({ error: (error as Error).message }), {
       status: 500,

@@ -1,4 +1,5 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Convert ArrayBuffer to base64 using chunked approach (avoids stack overflow on large files)
 function arrayBufferToBase64(buffer: ArrayBuffer): string {
@@ -476,6 +477,7 @@ Respond with ONLY valid JSON in this exact format:
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'verify-document', requestUrl: req.url, requestMethod: req.method });
     console.error('[verify-document] Error:', error);
 
     // Error recovery: mark the document as needs_review + flagged so it doesn't stay stuck

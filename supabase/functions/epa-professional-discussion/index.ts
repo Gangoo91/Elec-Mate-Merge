@@ -12,6 +12,7 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // ---------- Tool schemas ----------
 const generateTool = {
@@ -168,6 +169,7 @@ serve(async (req: Request) => {
       );
     }
   } catch (err) {
+    await captureException(err, { functionName: 'epa-professional-discussion', requestUrl: req.url, requestMethod: req.method });
     console.error('[epa-professional-discussion] Error:', err);
     return new Response(
       JSON.stringify({

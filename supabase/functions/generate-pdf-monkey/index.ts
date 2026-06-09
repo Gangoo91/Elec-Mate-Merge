@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -1517,6 +1518,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-pdf-monkey', requestUrl: req.url, requestMethod: req.method });
     console.error('[PDF-MONKEY] Error:', error.message);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

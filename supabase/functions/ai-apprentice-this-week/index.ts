@@ -4,6 +4,7 @@
 //
 // Cached one-per-iso-week. POST with { force: true } to regenerate.
 
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import {
   loadLearnerContext,
@@ -387,6 +388,7 @@ Deno.serve(async (req) => {
       }),
     });
   } catch (e) {
+    await captureException(e, { functionName: 'ai-apprentice-this-week', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: 'openai_unreachable', detail: (e as Error).message }),
       {

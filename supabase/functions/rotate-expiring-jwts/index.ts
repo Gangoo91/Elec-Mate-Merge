@@ -15,6 +15,7 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, AuthenticationError } from '../_shared/errors.ts';
 import { encryptToken } from '../_shared/encryption.ts';
 import { signJwt, buildAgentJwtPayload } from '../_shared/jwt-signer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const JWT_EXPIRY_DAYS = 90;
 const ROTATION_WINDOW_DAYS = 7;
@@ -166,6 +167,7 @@ serve(async (req) => {
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'rotate-expiring-jwts', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

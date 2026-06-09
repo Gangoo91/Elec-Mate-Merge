@@ -3,6 +3,7 @@ import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Force redeployment - Version 2.3 - Stability improvements
 // Updated: 2025-10-10T12:05:00Z
@@ -841,6 +842,7 @@ serve(async (req) => {
       },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'fetch-metal-prices', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

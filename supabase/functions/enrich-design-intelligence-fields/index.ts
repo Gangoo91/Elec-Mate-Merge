@@ -8,6 +8,7 @@
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -233,6 +234,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'enrich-design-intelligence-fields', requestUrl: req.url, requestMethod: req.method });
     console.error('Handler error:', error);
     return new Response(
       JSON.stringify({

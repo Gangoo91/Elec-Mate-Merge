@@ -1,4 +1,5 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '2108C6B5-7CD8-4D9E-B134-41652D3A372B';
@@ -130,6 +131,7 @@ Deno.serve(async (req: Request) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-danger-notice-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-danger-notice-pdf] Error:', error);
 
     return new Response(

@@ -7,6 +7,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { sendEmail } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -212,6 +213,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'scope-signed-webhook', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ scope-signed-webhook error:', error);
     // Non-fatal — always return 200 so the client signing flow isn't disrupted
     return new Response(

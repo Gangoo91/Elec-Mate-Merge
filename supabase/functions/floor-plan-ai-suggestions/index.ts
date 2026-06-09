@@ -1,6 +1,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const SYSTEM_PROMPT = `You are a senior NICEIC-qualified electrical inspector reviewing floor plan drawings for UK domestic and commercial installations.
 
@@ -94,6 +95,7 @@ Be practical — focus on things that would actually fail an inspection or cause
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'floor-plan-ai-suggestions', requestUrl: req.url, requestMethod: req.method });
     console.error('AI suggestions error:', error);
     return new Response(
       JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Failed to analyse floor plan' }),

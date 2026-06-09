@@ -15,6 +15,7 @@
  */
 
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -109,6 +110,7 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
+    await captureException(err, { functionName: 'instantly-recon', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     return new Response(JSON.stringify({ ok: false, error: msg }), {
       status: 500,

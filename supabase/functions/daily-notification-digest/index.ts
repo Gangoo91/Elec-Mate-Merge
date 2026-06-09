@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 /**
  * daily-notification-digest — "Your Day" morning briefing
@@ -892,6 +893,7 @@ serve(async (req: Request): Promise<Response> => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'daily-notification-digest', requestUrl: req.url, requestMethod: req.method });
     console.error('[daily-digest] Fatal error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),

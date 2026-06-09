@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
@@ -128,6 +129,7 @@ Format as JSON with these exact keys: briefingTitle, briefingDescription, safety
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-briefing-from-near-miss', requestUrl: req.url, requestMethod: req.method });
     console.error('Error generating briefing:', error);
     return new Response(
       JSON.stringify({

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { captureException } from '../_shared/sentry.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
@@ -2380,6 +2381,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error: any) {
+    await captureException(error, { functionName: 'send-early-access-invite', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in send-early-access-invite:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

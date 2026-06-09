@@ -7,6 +7,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
 
@@ -228,6 +229,7 @@ Make it practical, engaging, and relevant to the work described.`;
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-toolbox-talk', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in generate-toolbox-talk function:', error);
     return new Response(
       JSON.stringify({

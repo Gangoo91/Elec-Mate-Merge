@@ -10,6 +10,7 @@
 // Output is ephemeral (computed on demand). No DB writes.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -418,6 +419,7 @@ Generate ${count} job ideas. Each idea must cover at least 2 ACs from the GAPS b
       { status: 200, headers: { ...corsHeaders, 'content-type': 'application/json' } }
     );
   } catch (e) {
+    await captureException(e, { functionName: 'ai-suggest-jobs-for-gaps', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: 'unhandled', detail: (e as Error).message }),
       { status: 500, headers: { ...corsHeaders, 'content-type': 'application/json' } }

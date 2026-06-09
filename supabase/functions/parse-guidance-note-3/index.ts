@@ -1,5 +1,6 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -140,6 +141,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'parse-guidance-note-3', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error processing Guidance Note 3:', error);
     return new Response(
       JSON.stringify({

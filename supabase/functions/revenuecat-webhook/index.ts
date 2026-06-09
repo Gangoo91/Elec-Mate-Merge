@@ -1,6 +1,7 @@
 import { serve, createClient } from '../_shared/deps.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { capturePostHogEvent } from '../_shared/posthog-server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -421,6 +422,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'revenuecat-webhook', requestUrl: req.url, requestMethod: req.method });
     console.error('Webhook error:', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),

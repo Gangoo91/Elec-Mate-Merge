@@ -16,6 +16,7 @@
 
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 import {
@@ -931,6 +932,7 @@ serve(async (req: Request) => {
       },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'conversational-search', requestUrl: req.url, requestMethod: req.method });
     console.error('[conversational-search] fatal error:', error);
     return new Response(
       JSON.stringify({

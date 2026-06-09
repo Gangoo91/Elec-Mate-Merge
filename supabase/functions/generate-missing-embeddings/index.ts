@@ -1,5 +1,6 @@
 // One-time utility to generate missing embeddings in design_knowledge table
 import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -104,6 +105,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-missing-embeddings', requestUrl: req.url, requestMethod: req.method });
     console.error('Error generating embeddings:', error);
     return new Response(
       JSON.stringify({

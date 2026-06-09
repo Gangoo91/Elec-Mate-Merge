@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -73,6 +74,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'admin-get-users', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     console.error('[admin-get-users] Uncaught error:', message);
     return new Response(JSON.stringify({ error: message }), {

@@ -1,4 +1,5 @@
 import { serve, createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -210,6 +211,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'regional-pricing', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in regional-pricing function:', error);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,

@@ -1,5 +1,6 @@
 // ENHANCE EICR OBSERVATION - AI-powered observation enhancement
 // Uses RAG (BS 7671 + practical work intelligence) to suggest code, description, regulation refs
+import { captureException } from '../_shared/sentry.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import {
   searchPracticalWorkIntelligence,
@@ -198,6 +199,7 @@ Use UK English only. Be concise but technically accurate.`;
       }
     );
   } catch (error: any) {
+    await captureException(error, { functionName: 'enhance-eicr-observation', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error in enhance-eicr-observation:', error);
     return new Response(
       JSON.stringify({

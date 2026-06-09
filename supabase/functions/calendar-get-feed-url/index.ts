@@ -6,6 +6,7 @@
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 
@@ -55,6 +56,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'calendar-get-feed-url', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

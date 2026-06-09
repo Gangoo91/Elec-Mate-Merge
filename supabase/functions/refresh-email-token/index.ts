@@ -8,6 +8,7 @@ import { handleError, ValidationError, ExternalAPIError } from '../_shared/error
 import { encryptToken, decryptToken } from '../_shared/encryption.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const GOOGLE_CLIENT_ID = Deno.env.get('GOOGLE_CLIENT_ID');
 const GOOGLE_CLIENT_SECRET = Deno.env.get('GOOGLE_CLIENT_SECRET');
@@ -116,6 +117,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'refresh-email-token', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

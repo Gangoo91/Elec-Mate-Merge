@@ -12,6 +12,7 @@
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -158,6 +159,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'generate-daily-affirmation', requestUrl: req.url, requestMethod: req.method });
     return handleError(err);
   }
 });

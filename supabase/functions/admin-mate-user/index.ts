@@ -15,6 +15,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { RAG_TOOL_NAMES, minutesSavedFor } from '../_shared/mate-metrics.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -222,6 +223,7 @@ Deno.serve(async (req) => {
       generated_at: new Date().toISOString(),
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'admin-mate-user', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     console.error('[admin-mate-user] Uncaught error:', message);
     return json({ error: message }, 500);

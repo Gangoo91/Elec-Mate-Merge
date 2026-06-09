@@ -9,6 +9,7 @@ import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { Resend } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface NotificationRequest {
   type: 'signup' | 'subscription' | 'tier_milestone';
@@ -141,6 +142,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'send-referral-notification', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

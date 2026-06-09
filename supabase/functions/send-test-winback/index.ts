@@ -23,6 +23,7 @@ import {
   WINBACK_REPLY_TO,
 } from '../_shared/winback-v12.ts';
 import { sendEmail } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -95,6 +96,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'send-test-winback', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     return new Response(JSON.stringify({ ok: false, error: message }), {
       status: 500,

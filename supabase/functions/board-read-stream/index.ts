@@ -1,6 +1,7 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
@@ -846,6 +847,7 @@ async function analyzeWithGemini(
   try {
     result = parseAIResponse(raw, 'Board analysis');
   } catch (err) {
+    await captureException(err, { functionName: 'board-read-stream', requestUrl: req.url, requestMethod: req.method });
     console.error('[board-read-stream] Parse failed.', {
       rawLength: raw.length,
       preview: raw.slice(0, 500),

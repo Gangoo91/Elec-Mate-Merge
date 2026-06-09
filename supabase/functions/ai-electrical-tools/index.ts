@@ -1,4 +1,5 @@
 const serve = Deno.serve;
+import { captureException } from '../_shared/sentry.ts';
 
 const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
 
@@ -480,6 +481,7 @@ Stock options: "In Stock", "Low Stock", "Out of Stock"`,
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'ai-electrical-tools', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in ai-electrical-tools function:', error);
 
     // Return fallback data instead of error for better UX

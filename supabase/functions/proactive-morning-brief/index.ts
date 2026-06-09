@@ -13,6 +13,7 @@
 
 import { createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const VPS_URL = Deno.env.get('VPS_MCP_URL') || 'http://89.167.69.251:3100';
 const VPS_API_KEY = Deno.env.get('VPS_API_KEY') || '';
@@ -132,6 +133,7 @@ Deno.serve(async (req) => {
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'proactive-morning-brief', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

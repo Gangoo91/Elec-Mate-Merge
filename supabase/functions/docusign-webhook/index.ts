@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -142,6 +143,7 @@ serve(async (req) => {
       headers: corsHeaders,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'docusign-webhook', requestUrl: req.url, requestMethod: req.method });
     console.error('Error processing DocuSign webhook:', error);
     return new Response('Internal server error', {
       status: 500,

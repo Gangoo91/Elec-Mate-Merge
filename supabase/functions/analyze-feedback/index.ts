@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -146,6 +147,7 @@ Your task:
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'analyze-feedback', requestUrl: req.url, requestMethod: req.method });
     console.error('[analyze-feedback] Error:', error);
     return new Response(
       JSON.stringify({

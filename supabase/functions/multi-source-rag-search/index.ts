@@ -5,6 +5,7 @@ import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Electrical term expansion for better RAG matching
 const expandElectricalTerms = (query: string): string => {
@@ -411,6 +412,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'multi-source-rag-search', requestUrl: req.url, requestMethod: req.method });
     logger.error('Multi-source RAG search error', { error: error.message });
     return handleError(error);
   }

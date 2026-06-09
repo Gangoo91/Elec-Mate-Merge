@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -277,6 +278,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'enhanced-regional-pricing', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in enhanced-regional-pricing function:', error);
     return new Response(
       JSON.stringify({

@@ -1,6 +1,7 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ingest-bs7671-pdf — pipeline for the BS 7671 v2 knowledge schema
@@ -2267,6 +2268,7 @@ serve(async (req) => {
       status: 200,
     });
   } catch (err) {
+    await captureException(err, { functionName: 'ingest-bs7671-pdf', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     console.error('ingest-bs7671-pdf error:', msg);
     return new Response(JSON.stringify({ error: msg }), {

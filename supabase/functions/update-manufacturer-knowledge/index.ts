@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -329,6 +330,7 @@ serve(async (req) => {
       );
     }
   } catch (error) {
+    await captureException(error, { functionName: 'update-manufacturer-knowledge', requestUrl: req.url, requestMethod: req.method });
     console.error('Error:', error);
 
     return new Response(

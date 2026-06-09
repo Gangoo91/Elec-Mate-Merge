@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -136,6 +137,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'parse-city-guilds-book-1', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error processing City & Guilds Book 1:', error);
     return new Response(
       JSON.stringify({

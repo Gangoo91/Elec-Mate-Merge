@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Get the Reed API key from environment variables
 const reedApiKey = Deno.env.get('REED_API_KEY');
@@ -107,6 +108,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'reed-job-listings', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in job-listings function:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error occurred' }),

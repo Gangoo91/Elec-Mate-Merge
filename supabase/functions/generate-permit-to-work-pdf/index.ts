@@ -1,4 +1,5 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '739FCCE3-8FCD-4B50-8AF4-16D430F0B0FB';
@@ -120,6 +121,7 @@ Deno.serve(async (req: Request) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-permit-to-work-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-permit-to-work-pdf] Error:', error);
     return new Response(
       JSON.stringify({

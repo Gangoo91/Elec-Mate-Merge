@@ -1,4 +1,5 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = 'C737834D-B859-46BF-AE2D-29C110E0B2C8';
@@ -121,6 +122,7 @@ Deno.serve(async (req: Request) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-isolation-cert-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-isolation-cert-pdf] Error:', error);
     return new Response(
       JSON.stringify({

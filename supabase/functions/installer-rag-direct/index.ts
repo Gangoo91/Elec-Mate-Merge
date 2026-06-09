@@ -5,6 +5,7 @@ import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { installerV3ToolSchema } from '../_shared/installer-v3-schema.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -367,6 +368,7 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
+    await captureException(error, { functionName: 'installer-rag-direct', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ installer-rag-direct error:', error);
 
     return new Response(

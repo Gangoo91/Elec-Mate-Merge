@@ -5,6 +5,7 @@
 // reviews, edits, and saves. Never auto-saves.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -292,6 +293,7 @@ Draft the assessor narrative.`;
       { status: 200, headers: { ...corsHeaders, 'content-type': 'application/json' } }
     );
   } catch (e) {
+    await captureException(e, { functionName: 'ai-draft-judgement', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: 'unhandled', detail: (e as Error).message }),
       { status: 500, headers: { ...corsHeaders, 'content-type': 'application/json' } }

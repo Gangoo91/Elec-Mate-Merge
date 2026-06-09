@@ -10,6 +10,7 @@
  */
 import { createClient } from '../_shared/deps.ts';
 import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface SparkTask {
   id: string;
@@ -220,6 +221,7 @@ Deno.serve(async (req: Request) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'task-reminders', requestUrl: req.url, requestMethod: req.method });
     console.error('Task reminders error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Internal server error' }),

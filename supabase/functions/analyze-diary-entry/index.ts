@@ -10,6 +10,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -465,6 +466,7 @@ ${ragContext}`;
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'analyze-diary-entry', requestUrl: req.url, requestMethod: req.method });
     console.error('[analyze-diary-entry] Error:', error);
     // Return 200 with success: false so supabase-js doesn't swallow the error message
     return new Response(

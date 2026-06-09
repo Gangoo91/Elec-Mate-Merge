@@ -1,4 +1,5 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const MAINTENANCE_METHOD_TEMPLATE_ID = '5B71875B-D774-448A-8DB6-841975B0564C';
@@ -117,6 +118,7 @@ serve(async (req: Request) => {
     );
 
   } catch (error) {
+    await captureException(error, { functionName: 'generate-maintenance-method-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[MAINTENANCE-PDF] Error:', (error as Error).message);
     return new Response(
       JSON.stringify({ error: (error as Error).message || 'Internal server error' }),

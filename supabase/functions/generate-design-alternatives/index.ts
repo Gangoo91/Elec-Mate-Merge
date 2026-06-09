@@ -1,4 +1,5 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -94,6 +95,7 @@ Respond with valid JSON:
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'generate-design-alternatives', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error generating alternatives:', error);
     return new Response(
       JSON.stringify({

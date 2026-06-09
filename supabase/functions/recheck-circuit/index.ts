@@ -22,6 +22,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -418,6 +419,7 @@ Deno.serve(async (req) => {
       200
     );
   } catch (err: any) {
+    await captureException(err, { functionName: 'recheck-circuit', requestUrl: req.url, requestMethod: req.method });
     console.error('[recheck-circuit] Unexpected error', err);
     return json({ error: err?.message ?? 'Unknown error' }, 500);
   }

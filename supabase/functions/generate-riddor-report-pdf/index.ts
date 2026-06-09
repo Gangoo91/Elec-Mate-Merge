@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { riddorTemplate } from '../_shared/safety-templates/riddor.ts';
 import { htmlToPdf } from '../_shared/safety-pdf-renderer.ts';
 import type { Branding } from '../_shared/safety-html-base.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -88,6 +89,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'generate-riddor-report-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('Error:', error);
     return new Response(JSON.stringify({ success: false, error: (error as Error).message }), {
       status: 400,

@@ -10,6 +10,7 @@
  * 5. Build provenance and overlap metadata
  */
 
+import { captureException } from '../_shared/sentry.ts';
 import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
 import {
   normalizeText,
@@ -103,6 +104,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'practical-work-unify', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Unification error:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

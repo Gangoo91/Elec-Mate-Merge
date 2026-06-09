@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -155,6 +156,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'comprehensive-tools-scraper', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error in comprehensive-tools-scraper:', error);
     return new Response(
       JSON.stringify({

@@ -5,6 +5,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -191,6 +192,7 @@ serve(async (req: Request): Promise<Response> => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'delete-own-account', requestUrl: req.url, requestMethod: req.method });
     console.error('Account deletion error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Deletion failed' }),

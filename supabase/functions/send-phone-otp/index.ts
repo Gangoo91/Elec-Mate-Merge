@@ -13,6 +13,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, AuthenticationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const OTP_EXPIRY_SECONDS = 300; // 5 minutes
 const MAX_CODES_PER_HOUR = 3;
@@ -135,6 +136,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'send-phone-otp', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

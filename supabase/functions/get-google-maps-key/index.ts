@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -28,6 +29,7 @@ serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'get-google-maps-key', requestUrl: req.url, requestMethod: req.method });
     console.error('Error fetching Google API key:', error);
     return new Response(JSON.stringify({ error: 'Failed to fetch API key' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

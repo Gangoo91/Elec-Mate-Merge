@@ -1,4 +1,5 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -126,6 +127,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'cancel-circuit-design-job', requestUrl: req.url, requestMethod: req.method });
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('[CANCEL-CIRCUIT-DESIGN] ERROR:', errorMessage);
 

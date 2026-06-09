@@ -10,6 +10,7 @@
 // stream in over the next minute or two.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -218,6 +219,7 @@ Deno.serve(async (req: Request) => {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
+    await captureException(e, { functionName: 'ai-generate-slide-image', requestUrl: req.url, requestMethod: req.method });
     return new Response(JSON.stringify({ error: 'unhandled', detail: (e as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

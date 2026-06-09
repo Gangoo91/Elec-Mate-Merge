@@ -1,5 +1,6 @@
 // ESTIMATE REMEDIAL COSTS - AI-powered defect-to-quote items via RAG
 // Batch processes EICR defects using pricing_embeddings + practical_work_intelligence
+import { captureException } from '../_shared/sentry.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import {
@@ -397,6 +398,7 @@ ${defectList}`;
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
+    await captureException(error, { functionName: 'estimate-remedial-costs', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error in estimate-remedial-costs:', error);
     return new Response(
       JSON.stringify({

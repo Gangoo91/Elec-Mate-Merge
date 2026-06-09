@@ -19,6 +19,7 @@
 import { serve } from '../_shared/deps.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -156,6 +157,7 @@ serve(async (req) => {
       subscription_status: updated.status,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'apply-retention-offer', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     log('ERROR', { message });
     return jsonResponse(

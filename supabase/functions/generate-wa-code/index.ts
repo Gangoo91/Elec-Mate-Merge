@@ -18,6 +18,7 @@
  * the Stripe webhook can call the same helper without going through HTTP.
  */
 
+import { captureException } from '../_shared/sentry.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, AuthenticationError } from '../_shared/errors.ts';
 import {
@@ -163,6 +164,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'generate-wa-code', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

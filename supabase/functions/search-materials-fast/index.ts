@@ -1,6 +1,7 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -116,6 +117,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'search-materials-fast', requestUrl: req.url, requestMethod: req.method });
     logger.error('Fuzzy search failed', { error });
     return handleError(error);
   }

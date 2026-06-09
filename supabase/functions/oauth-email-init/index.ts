@@ -5,6 +5,7 @@
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const GOOGLE_CLIENT_ID = Deno.env.get('GOOGLE_CLIENT_ID');
 const MICROSOFT_CLIENT_ID = Deno.env.get('MICROSOFT_CLIENT_ID');
@@ -104,6 +105,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'oauth-email-init', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

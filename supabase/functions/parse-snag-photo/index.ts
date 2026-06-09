@@ -22,6 +22,7 @@ import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ParseSnagRequest {
   image_base64: string;
@@ -358,6 +359,7 @@ Refine and return JSON only.`;
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'parse-snag-photo', requestUrl: req.url, requestMethod: req.method });
     return handleError(error, requestId, logger);
   }
 });

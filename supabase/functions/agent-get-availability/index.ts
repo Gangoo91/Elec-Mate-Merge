@@ -6,6 +6,7 @@
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
@@ -113,6 +114,7 @@ serve(async (req: Request) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'agent-get-availability', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

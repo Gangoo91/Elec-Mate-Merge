@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -90,6 +91,7 @@ serve(async (req: Request): Promise<Response> => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: any) {
+    await captureException(error, { functionName: 'generate-elec-id', requestUrl: req.url, requestMethod: req.method });
     console.error('Error generating Elec-ID:', error);
     return new Response(JSON.stringify({ error: error.message || 'Failed to generate Elec-ID' }), {
       status: 500,

@@ -19,6 +19,7 @@
 // — does NOT persist. Tutor sees it inline; if they verify or return, that
 // action is the canonical record.
 
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import {
   loadLearnerContext,
@@ -433,6 +434,7 @@ Deno.serve(async (req) => {
       }
     );
   } catch (e) {
+    await captureException(e, { functionName: 'ai-otj-verdict', requestUrl: req.url, requestMethod: req.method });
     return new Response(JSON.stringify({ error: (e as Error).message ?? 'unknown' }), {
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

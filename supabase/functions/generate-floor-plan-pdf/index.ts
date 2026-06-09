@@ -1,5 +1,6 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -150,6 +151,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-floor-plan-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('Floor plan PDF error:', error);
     return new Response(
       JSON.stringify({

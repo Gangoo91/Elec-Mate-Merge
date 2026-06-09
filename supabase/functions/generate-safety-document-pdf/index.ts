@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { SafetyPDFBuilder } from '../_shared/SafetyPDFBuilder.ts';
 import type { CompanyBranding, StatusColour } from '../_shared/SafetyPDFBuilder.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -545,6 +546,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'generate-safety-document-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('Error:', error);
     return new Response(JSON.stringify({ success: false, error: (error as Error).message }), {
       status: 400,

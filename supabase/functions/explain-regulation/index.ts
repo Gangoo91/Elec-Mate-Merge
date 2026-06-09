@@ -1,4 +1,5 @@
 import { serve } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -74,6 +75,7 @@ Be professional but approachable.`,
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'explain-regulation', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in explain-regulation function:', error);
     return new Response(
       JSON.stringify({

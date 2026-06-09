@@ -7,6 +7,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ParseMaterialsPhotoRequest {
   image_base64: string;
@@ -250,6 +251,7 @@ Return ONLY valid JSON:
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'parse-materials-photo', requestUrl: req.url, requestMethod: req.method });
     logger.error('Failed to parse materials photo', { error });
     return handleError(error);
   }

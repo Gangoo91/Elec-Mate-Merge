@@ -8,6 +8,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { getTestSequence } from '../shared/bs7671TestingRequirements.ts';
 import { getMaxZs } from '../shared/bs7671ProtectionData.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // corsHeaders imported from shared deps
 
@@ -300,6 +301,7 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'commissioning-agent', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

@@ -11,6 +11,7 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const quizTool = {
   type: 'function' as const,
@@ -265,6 +266,7 @@ ${regContext}`;
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'epa-knowledge-quiz', requestUrl: req.url, requestMethod: req.method });
     console.error('[epa-knowledge-quiz] Error:', err);
     return new Response(
       JSON.stringify({

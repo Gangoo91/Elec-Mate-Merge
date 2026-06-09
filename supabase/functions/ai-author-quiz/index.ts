@@ -19,6 +19,7 @@
 // }
 // →  { quiz_id, questions_count, citations_count, quiz, questions }
 
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import {
   loadLearnerContext,
@@ -955,6 +956,7 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'content-type': 'application/json' } }
     );
   } catch (e) {
+    await captureException(e, { functionName: 'ai-author-quiz', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: (e as Error).message ?? 'unknown' }),
       { status: 500, headers: { ...corsHeaders, 'content-type': 'application/json' } }

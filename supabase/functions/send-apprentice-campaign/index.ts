@@ -2,6 +2,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -1280,6 +1281,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error: any) {
+    await captureException(error, { functionName: 'send-apprentice-campaign', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in send-apprentice-campaign:', error.message);
     return new Response(
       JSON.stringify({

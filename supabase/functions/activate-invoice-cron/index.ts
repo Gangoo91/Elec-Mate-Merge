@@ -5,6 +5,7 @@
  */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import postgres from 'https://deno.land/x/postgresjs@v3.4.4/mod.js';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
@@ -56,6 +57,7 @@ serve(async (req: Request) => {
       { headers: { 'Content-Type': 'application/json' } }
     );
   } catch (err: any) {
+    await captureException(err, { functionName: 'activate-invoice-cron', requestUrl: req.url, requestMethod: req.method });
     await sql.end().catch(() => {});
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,

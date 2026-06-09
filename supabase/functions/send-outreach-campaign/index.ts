@@ -1,3 +1,4 @@
+import { captureException } from '../_shared/sentry.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
@@ -1552,6 +1553,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'send-outreach-campaign', requestUrl: req.url, requestMethod: req.method });
     const msg = error instanceof Error ? error.message : String(error);
     const stack = error instanceof Error ? error.stack : undefined;
     console.error('Error in send-outreach-campaign:', msg);

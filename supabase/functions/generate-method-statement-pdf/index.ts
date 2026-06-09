@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { emergencyProcedures } from '../_shared/emergencyProcedures.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -394,6 +395,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-method-statement-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in generate-method-statement-pdf function:', error);
     return new Response(
       JSON.stringify({

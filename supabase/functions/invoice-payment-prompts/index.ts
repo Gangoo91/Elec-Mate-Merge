@@ -20,6 +20,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -232,6 +233,7 @@ serve(async (req) => {
       dry_run: dryRun,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'invoice-payment-prompts', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     log('FATAL', { message });
     return jsonResponse({ ok: false, error: message }, 500);

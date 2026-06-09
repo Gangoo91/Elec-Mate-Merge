@@ -7,6 +7,7 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const am2Tool = {
   type: 'function' as const,
@@ -270,6 +271,7 @@ ${practicalContext}`;
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'am2-simulator', requestUrl: req.url, requestMethod: req.method });
     console.error('[am2-simulator] Error:', err);
     return new Response(
       JSON.stringify({

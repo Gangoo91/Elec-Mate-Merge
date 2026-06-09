@@ -13,6 +13,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, AuthenticationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface Check {
   id: string;
@@ -266,6 +267,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'admin-mate-regression', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

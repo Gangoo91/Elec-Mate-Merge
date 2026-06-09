@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 // 1x1 transparent GIF pixel
 const TRACKING_PIXEL = new Uint8Array([
@@ -61,6 +62,7 @@ Deno.serve(async (req) => {
       console.log(`Track email open: Already tracked for ${invite.email}`);
     }
   } catch (error) {
+    await captureException(error, { functionName: 'track-email-open', requestUrl: req.url, requestMethod: req.method });
     console.error('Track email open: Error', error);
   }
 

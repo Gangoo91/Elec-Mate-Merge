@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -126,6 +127,7 @@ Deno.serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'parse-bs7671-tables', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in parse-bs7671-tables:', error);
     return new Response(
       JSON.stringify({

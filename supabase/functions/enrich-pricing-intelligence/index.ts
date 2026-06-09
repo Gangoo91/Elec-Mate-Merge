@@ -7,6 +7,7 @@
  * Time: 16-20 hours (434 batches × 2-3 min/batch)
  */
 
+import { captureException } from '../_shared/sentry.ts';
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
@@ -239,6 +240,7 @@ Return valid JSON only.`;
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'enrich-pricing-intelligence', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Fatal error:', error);
     return new Response(
       JSON.stringify({

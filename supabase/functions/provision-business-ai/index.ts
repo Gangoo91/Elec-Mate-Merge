@@ -25,6 +25,7 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, AuthenticationError } from '../_shared/errors.ts';
 import { encryptToken } from '../_shared/encryption.ts';
 import { signJwt, buildAgentJwtPayload } from '../_shared/jwt-signer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // JWT expiry: 90 days
 const JWT_EXPIRY_DAYS = 90;
@@ -251,6 +252,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'provision-business-ai', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

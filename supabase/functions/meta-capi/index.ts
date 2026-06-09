@@ -14,6 +14,7 @@
 
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { sendCapiEvents, type CapiEvent } from '../_shared/meta-capi.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -62,6 +63,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'meta-capi', requestUrl: req.url, requestMethod: req.method });
     console.error('[meta-capi] Handler error', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),

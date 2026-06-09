@@ -7,6 +7,7 @@
 // POST body: { academic_year?: string, refresh?: boolean }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -372,6 +373,7 @@ Draft the SAR. Be honest about gaps where the snapshot is thin.`;
   try {
     args = JSON.parse(toolCall.function.arguments);
   } catch (e) {
+    await captureException(e, { functionName: 'ai-generate-sar', requestUrl: req.url, requestMethod: req.method });
     return new Response(JSON.stringify({ error: 'ai_bad_json', detail: String(e) }), {
       status: 502,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

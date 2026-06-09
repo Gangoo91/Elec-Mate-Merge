@@ -6,6 +6,7 @@
 // the apprentice edits + saves it client-side. No DB writes here.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -177,6 +178,7 @@ ${titles.map((t) => `  • ${t}`).join('\n')}`;
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
+    await captureException(e, { functionName: 'generate-portfolio-statement', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: 'unhandled', detail: (e as Error).message }),
       { status: 500, headers: { ...corsHeaders, 'content-type': 'application/json' } }

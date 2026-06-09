@@ -17,6 +17,7 @@
 // caller's college for on-demand refreshes.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -364,6 +365,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
+    await captureException(e, { functionName: 'compute-student-risk', requestUrl: req.url, requestMethod: req.method });
     console.error('[compute-risk] fatal', e);
     return new Response(
       JSON.stringify({ error: (e as Error).message ?? 'unknown' }),

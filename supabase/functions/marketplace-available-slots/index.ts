@@ -20,6 +20,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -209,6 +210,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
+    await captureException(err, { functionName: 'marketplace-available-slots', requestUrl: req.url, requestMethod: req.method });
     console.error('marketplace-available-slots error:', err);
     return new Response(JSON.stringify({ error: (err as Error).message || 'Server error' }), {
       status: 500,

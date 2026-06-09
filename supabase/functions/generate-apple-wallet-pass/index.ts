@@ -7,6 +7,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -144,6 +145,7 @@ serve(async (req) => {
       },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'generate-apple-wallet-pass', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     console.error('[generate-apple-wallet-pass] Error:', msg);
     return new Response(JSON.stringify({ error: msg }), {

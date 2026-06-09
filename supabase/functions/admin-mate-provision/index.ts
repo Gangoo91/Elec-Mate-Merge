@@ -15,6 +15,7 @@
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -217,6 +218,7 @@ Deno.serve(async (req) => {
 
     return json({ ok: true, steps, vps_response: vpsResponse });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'admin-mate-provision', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     console.error('[admin-mate-provision] Uncaught error:', message);
     return json({ ok: false, steps, error: message }, 500);

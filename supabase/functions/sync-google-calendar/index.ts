@@ -6,6 +6,7 @@
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { encryptToken, decryptToken } from '../_shared/encryption.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const GOOGLE_CLIENT_ID = Deno.env.get('GOOGLE_CLIENT_ID');
 const GOOGLE_CLIENT_SECRET = Deno.env.get('GOOGLE_CLIENT_SECRET');
@@ -296,6 +297,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'sync-google-calendar', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ParsedItem {
   id: string;
@@ -194,6 +195,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'parse-materials-list', requestUrl: req.url, requestMethod: req.method });
     console.error('parse-materials-list error:', err);
     return new Response(
       JSON.stringify({ error: 'Failed to parse materials list', details: String(err) }),

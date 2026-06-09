@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -60,6 +61,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'google-places-autocomplete', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in google-places-autocomplete:', error);
     return new Response(JSON.stringify({ error: 'Failed to fetch autocomplete suggestions' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

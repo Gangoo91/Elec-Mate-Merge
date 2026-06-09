@@ -1,6 +1,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const SYSTEM_PROMPT = `You are a chartered electrical engineer writing NBS-style electrical specifications for an NICEIC-registered contractor's design pack.
 
@@ -100,6 +101,7 @@ Return as JSON:
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'floor-plan-ai-spec', requestUrl: req.url, requestMethod: req.method });
     console.error('AI spec error:', error);
     return new Response(
       JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Failed to generate specification' }),

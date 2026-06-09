@@ -1,4 +1,5 @@
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 /**
  * Marketplace Deals
@@ -112,6 +113,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'marketplace-deals', requestUrl: req.url, requestMethod: req.method });
     console.error('Marketplace deals error:', error);
     return new Response(
       JSON.stringify({

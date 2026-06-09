@@ -1,4 +1,5 @@
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '575204BB-6BC8-4CC0-AA7C-242F707AE04F';
@@ -102,6 +103,7 @@ Deno.serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-project-management-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ PDF generation error:', error);
     return new Response(
       JSON.stringify({

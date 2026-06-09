@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -109,6 +110,7 @@ serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'google-place-details', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in google-place-details:', error);
     return new Response(JSON.stringify({ error: 'Failed to fetch place details' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

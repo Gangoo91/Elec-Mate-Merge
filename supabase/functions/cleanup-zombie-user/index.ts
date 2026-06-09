@@ -15,6 +15,7 @@
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -128,6 +129,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'cleanup-zombie-user', requestUrl: req.url, requestMethod: req.method });
     console.error('[cleanup-zombie-user] Error:', err);
     return new Response(JSON.stringify({ error: (err as Error).message }), {
       status: 500,

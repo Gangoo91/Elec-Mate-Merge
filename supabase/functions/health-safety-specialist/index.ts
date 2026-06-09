@@ -19,6 +19,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { runHealthSafetyMethod } from '../_shared/health-safety-specialist-core.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -118,6 +119,7 @@ Deno.serve(async (req) => {
 
     return json({ jobId: job.id, status: 'pending' }, 202);
   } catch (err: any) {
+    await captureException(err, { functionName: 'health-safety-specialist', requestUrl: req.url, requestMethod: req.method });
     console.error('[health-safety-specialist] fatal:', err);
     return json({ error: err?.message ?? 'Unknown error' }, 500);
   }

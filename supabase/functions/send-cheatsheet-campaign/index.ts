@@ -20,6 +20,7 @@
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY — read profiles + auth.users
  */
 
+import { captureException } from '../_shared/sentry.ts';
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import {
   sendCheatsheetCampaignEmail,
@@ -289,6 +290,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
+    await captureException(err, { functionName: 'send-cheatsheet-campaign', requestUrl: req.url, requestMethod: req.method });
     console.error('[send-cheatsheet-campaign] handler error', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),

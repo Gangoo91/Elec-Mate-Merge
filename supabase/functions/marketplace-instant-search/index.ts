@@ -1,4 +1,5 @@
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 /**
  * Marketplace Instant Search
@@ -116,6 +117,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'marketplace-instant-search', requestUrl: req.url, requestMethod: req.method });
     console.error('Instant search error:', error);
     return new Response(
       JSON.stringify({

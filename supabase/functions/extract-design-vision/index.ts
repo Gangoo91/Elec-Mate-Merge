@@ -20,6 +20,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -568,6 +569,7 @@ Deno.serve(async (req) => {
 
     return json(result, 200);
   } catch (err: any) {
+    await captureException(err, { functionName: 'extract-design-vision', requestUrl: req.url, requestMethod: req.method });
     console.error('[extract-design-vision] Unexpected error', err);
     return json({ error: err?.message ?? 'Unknown error' }, 500);
   }

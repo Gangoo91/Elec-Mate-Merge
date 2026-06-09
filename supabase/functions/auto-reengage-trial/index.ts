@@ -266,6 +266,12 @@ const handler = async (req: Request): Promise<Response> => {
       .or('role.eq.electrician,role.eq.apprentice')
       .eq('subscribed', false)
       .eq('free_access_granted', false)
+      // Abandoned checkout = never put card details in. Anyone who started a
+      // subscription or trial (carded) is winback's job, not this email.
+      .is('subscription_start', null)
+      .is('subscription_end', null)
+      .not('is_trial', 'is', true)
+      .not('is_trial_cancelled', 'is', true)
       .is('reengage_email_sent_at', null)
       .lte('created_at', createdBefore)
       .gte('created_at', createdAfter)

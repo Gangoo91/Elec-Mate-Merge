@@ -1,4 +1,5 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 /**
  * Guard Design Knowledge Intelligence Deletions
@@ -236,6 +237,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'guard-design-knowledge-intelligence', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Guard function error:', error);
     return new Response(
       JSON.stringify({

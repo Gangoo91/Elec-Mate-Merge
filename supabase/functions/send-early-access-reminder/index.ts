@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -489,6 +490,7 @@ Deno.serve(async (req) => {
 
     throw new Error(`Unknown action: ${action}`);
   } catch (error: any) {
+    await captureException(error, { functionName: 'send-early-access-reminder', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in send-early-access-reminder:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

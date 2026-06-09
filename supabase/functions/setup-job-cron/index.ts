@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.0';
+import { captureException } from '../_shared/sentry.ts';
 
 // Initialize Supabase client
 const supabaseUrl = 'https://jtwygbeceundfgnkirof.supabase.co';
@@ -50,6 +51,7 @@ Deno.serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'setup-job-cron', requestUrl: req.url, requestMethod: req.method });
     console.error('Error setting up cron job:', error);
     return new Response(
       JSON.stringify({

@@ -14,6 +14,7 @@ import {
   TERMINATION_GUIDANCE,
 } from '../shared/bs7671InstallationMethods.ts';
 import { ContextEnvelope, mergeContext } from '../_shared/agent-context.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // corsHeaders imported from shared deps
 
@@ -722,6 +723,7 @@ EXAMPLE PHASES:
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'installer-agent', requestUrl: req.url, requestMethod: req.method });
     logger.error('Installer agent error', { error: getErrorMessage(error) });
     return handleError(error);
   }

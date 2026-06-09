@@ -3,6 +3,7 @@ import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -135,6 +136,7 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'fetch-job-listings', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

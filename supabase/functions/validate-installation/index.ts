@@ -1,5 +1,6 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -137,6 +138,7 @@ Provide structured insights in JSON format.`,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'validate-installation', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in validate-installation function:', error);
     return new Response(
       JSON.stringify({

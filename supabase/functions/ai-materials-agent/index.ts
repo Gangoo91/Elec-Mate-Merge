@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { captureException } from '../_shared/sentry.ts';
 
 // CORS headers for cross-origin requests
 const corsHeaders = {
@@ -424,6 +425,7 @@ Return ONLY valid JSON in this format:
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
+    await captureException(error, { functionName: 'ai-materials-agent', requestUrl: req.url, requestMethod: req.method });
     console.error('[AI-MATERIALS-AGENT] Error:', error);
     return new Response(
       JSON.stringify({

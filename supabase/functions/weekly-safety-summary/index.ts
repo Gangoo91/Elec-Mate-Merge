@@ -29,6 +29,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface Deduction {
   category: 'compliance' | 'activity' | 'proactive' | 'quality' | 'outcomes';
@@ -677,6 +678,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'weekly-safety-summary', requestUrl: req.url, requestMethod: req.method });
     console.error('weekly-safety-summary error:', error);
     return new Response(
       JSON.stringify({ error: (error as Error).message ?? 'Internal server error' }),

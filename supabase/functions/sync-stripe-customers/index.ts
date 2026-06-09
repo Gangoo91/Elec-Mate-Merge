@@ -10,6 +10,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -319,6 +320,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'sync-stripe-customers', requestUrl: req.url, requestMethod: req.method });
     console.error('Sync error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),

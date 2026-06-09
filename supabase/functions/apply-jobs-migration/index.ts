@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import postgres from 'https://deno.land/x/postgresjs@v3.4.5/mod.js';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -60,6 +61,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (err: any) {
+    await captureException(err, { functionName: 'apply-jobs-migration', requestUrl: req.url, requestMethod: req.method });
     await sql.end();
     console.error('Migration error:', err);
     return new Response(

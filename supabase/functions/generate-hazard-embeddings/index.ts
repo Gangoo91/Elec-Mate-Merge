@@ -1,5 +1,6 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -120,6 +121,7 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-hazard-embeddings', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error generating hazard embeddings:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

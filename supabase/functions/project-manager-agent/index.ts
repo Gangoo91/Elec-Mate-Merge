@@ -4,6 +4,7 @@ import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ProjectPhase {
   phaseName: string;
@@ -314,6 +315,7 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'project-manager-agent', requestUrl: req.url, requestMethod: req.method });
     console.error('[PROJECT-MANAGER] Error:', error);
     return new Response(
       JSON.stringify({

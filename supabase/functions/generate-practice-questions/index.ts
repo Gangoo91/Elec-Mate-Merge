@@ -6,6 +6,7 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const practiceQuestionsTool = {
   type: 'function' as const,
@@ -218,6 +219,7 @@ ${practicalContext}${regContext}`;
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'generate-practice-questions', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-practice-questions] Error:', err);
     return new Response(
       JSON.stringify({

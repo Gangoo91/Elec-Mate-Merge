@@ -2,6 +2,7 @@ import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Type definitions
 interface MaintenanceRequest {
@@ -747,6 +748,7 @@ Also provide 8-12 detailed compliance checklist items with specific criteria.`,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'maintenance-plan-generator', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Maintenance plan error:', err);
 
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';

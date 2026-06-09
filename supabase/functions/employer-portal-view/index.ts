@@ -15,6 +15,7 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface StudentRow {
   id: string;
@@ -185,6 +186,7 @@ serve(async (req: Request) => {
       generated_at: new Date().toISOString(),
     });
   } catch (err) {
+    await captureException(err, { functionName: 'employer-portal-view', requestUrl: req.url, requestMethod: req.method });
     console.error('[employer-portal-view] error:', err);
     return json(
       { ok: false, error: err instanceof Error ? err.message : 'Internal error' },

@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -158,6 +159,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'docusign-create-envelope', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in docusign-create-envelope:', error);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,

@@ -7,6 +7,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ParseSerialRequest {
   image_base64: string;
@@ -210,6 +211,7 @@ Return ONLY valid JSON:
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'parse-serial-number', requestUrl: req.url, requestMethod: req.method });
     return handleError(error, requestId);
   }
 });

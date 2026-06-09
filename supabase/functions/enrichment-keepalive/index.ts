@@ -27,6 +27,7 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -112,6 +113,7 @@ serve(async (req) => {
       }
     );
   } catch (error: any) {
+    await captureException(error, { functionName: 'enrichment-keepalive', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Keepalive error:', error);
     return new Response(
       JSON.stringify({

@@ -7,6 +7,7 @@ import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -298,6 +299,7 @@ Use professional language with UK English spelling. Cite specific regulations an
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'inspector-agent', requestUrl: req.url, requestMethod: req.method });
     console.error('Inspector agent error:', error);
     return new Response(
       JSON.stringify({

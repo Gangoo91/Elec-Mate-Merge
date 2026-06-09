@@ -1,6 +1,7 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -233,6 +234,7 @@ Extract test procedures with acceptance criteria. Return JSON array:
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'enrich-inspection-procedures', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Fatal error:', error);
     return new Response(
       JSON.stringify({

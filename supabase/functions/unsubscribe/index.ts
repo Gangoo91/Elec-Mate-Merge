@@ -14,6 +14,7 @@
 // Env required: WINBACK_UNSUBSCRIBE_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -185,6 +186,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, Location: successUrl, 'Cache-Control': 'no-store' },
     });
   } catch (err: unknown) {
+    await captureException(err, { functionName: 'unsubscribe', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     console.error('unsubscribe error:', msg);
     return new Response(

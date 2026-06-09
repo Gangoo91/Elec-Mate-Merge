@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -81,6 +82,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
+    await captureException(error, { functionName: 'create-maintenance-method-job', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in create-maintenance-method-job:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

@@ -1,5 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -139,6 +140,7 @@ Return enhanced jobs as valid JSON array only.`,
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'ai-job-aggregator', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in AI job aggregator:', error);
     return new Response(
       JSON.stringify({

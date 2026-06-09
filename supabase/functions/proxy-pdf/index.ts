@@ -1,4 +1,5 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -55,6 +56,7 @@ Deno.serve(async (req: Request) => {
       },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'proxy-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[proxy-pdf] Error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),

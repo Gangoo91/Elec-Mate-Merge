@@ -17,6 +17,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, AuthenticationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -111,6 +112,7 @@ serve(async (req) => {
       mint_attempted: mintAttempted,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'verify-agent-active', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

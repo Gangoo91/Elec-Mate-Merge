@@ -6,6 +6,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
 import { retrieveRegulations } from '../_shared/rag-retrieval.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // JSON extraction and repair helpers to handle occasional malformed outputs
 function extractJSON(text: string): string | null {
@@ -612,6 +613,7 @@ Format:
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'wiring-diagram-generator-rag', requestUrl: req.url, requestMethod: req.method });
     logger.error('Wiring guidance generator failed', { error });
     return handleError(error);
   }

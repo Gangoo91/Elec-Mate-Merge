@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -147,6 +148,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'generate-circuit-diagrams', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Circuit diagram generation error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Failed to generate diagrams';
     const errorDetails = error instanceof Error ? error.stack : 'No stack trace';

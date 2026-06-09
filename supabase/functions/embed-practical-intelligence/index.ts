@@ -12,6 +12,7 @@
 //   5. Loop until max_batches or no more pending rows
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -210,6 +211,7 @@ Deno.serve(async (req) => {
       { status: 200, headers: { ...CORS, 'content-type': 'application/json' } }
     );
   } catch (err) {
+    await captureException(err, { functionName: 'embed-practical-intelligence', requestUrl: req.url, requestMethod: req.method });
     console.error('[embed-practical-intelligence] handler error', err);
     return new Response(
       JSON.stringify({

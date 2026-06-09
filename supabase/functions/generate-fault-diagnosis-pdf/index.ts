@@ -1,3 +1,4 @@
+import { captureException } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -242,6 +243,7 @@ Deno.serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-fault-diagnosis-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error in generate-fault-diagnosis-pdf function:', error);
     return new Response(
       JSON.stringify({

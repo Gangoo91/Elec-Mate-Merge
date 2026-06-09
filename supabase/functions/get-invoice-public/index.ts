@@ -6,6 +6,7 @@
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface PublicInvoiceData {
   invoice_number: string;
@@ -102,6 +103,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    await captureException(error, { functionName: 'get-invoice-public', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

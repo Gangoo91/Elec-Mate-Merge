@@ -10,6 +10,7 @@
 //   POST /functions/v1/preview-email
 //   Body: { template: 'quote-send' | ..., recipient: 'you@example.com', overrides?: {...} }
 
+import { captureException } from '../_shared/sentry.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
@@ -371,6 +372,7 @@ serve(async (req: Request) => {
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err: unknown) {
+    await captureException(err, { functionName: 'preview-email', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     console.error('preview-email error:', msg);
     return new Response(JSON.stringify({ error: msg }), {

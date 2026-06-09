@@ -11,6 +11,7 @@
  */
 
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const MODEL = 'gpt-5.4-mini-2026-03-17';
 
@@ -132,6 +133,7 @@ Date context (today): ${default_date || new Date().toISOString().slice(0, 10)}.`
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'ojt-parse-voice', requestUrl: req.url, requestMethod: req.method });
     console.error('[ojt-parse-voice] error:', err);
     return new Response(
       JSON.stringify({

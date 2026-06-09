@@ -3,6 +3,7 @@ import { ValidationError, handleError } from '../_shared/errors.ts';
 import { validateRequired } from '../_shared/validation.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // BS 7671 RAG search — queries bs7671_facets (A4:2026 BS 7671 + GN3 + OSG)
 // via the search_bs7671_v3 RPC. No embedding required (text-only BM25 + RRF).
@@ -172,6 +173,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'bs7671-rag-search', requestUrl: req.url, requestMethod: req.method });
     logger.error('BS 7671 RAG search error', {
       error: error instanceof Error ? error.message : String(error),
     });

@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -286,6 +287,7 @@ Deno.serve(async (req) => {
       );
     }
   } catch (error) {
+    await captureException(error, { functionName: 'admin-manage-subscription', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in admin-manage-subscription:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

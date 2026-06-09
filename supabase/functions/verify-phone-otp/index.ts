@@ -14,6 +14,7 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, AuthenticationError } from '../_shared/errors.ts';
 import { timingSafeEqual } from '../_shared/jwt-signer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -145,6 +146,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'verify-phone-otp', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

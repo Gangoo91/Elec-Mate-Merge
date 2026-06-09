@@ -1,4 +1,5 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '66F1AA91-1EC8-4180-8B7F-A9525D84C28C';
@@ -39,6 +40,7 @@ Deno.serve(async (req: Request) => {
     const completed = await waitForPDF(doc.id);
     return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
+    await captureException(error, { functionName: 'generate-g99-commissioning-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-g99-commissioning-pdf] Error:', error);
     return new Response(JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   }

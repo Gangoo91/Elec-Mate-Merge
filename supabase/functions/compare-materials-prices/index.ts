@@ -7,6 +7,7 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface InputItem {
   name: string;
@@ -442,6 +443,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'compare-materials-prices', requestUrl: req.url, requestMethod: req.method });
     logger.error('Failed to compare materials prices', { error });
     return handleError(error);
   }

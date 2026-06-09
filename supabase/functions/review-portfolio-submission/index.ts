@@ -7,6 +7,7 @@
  * Model: gpt-5.4-mini-2026-03-17 via tool calling for structured JSON output.
  */
 
+import { captureException } from '../_shared/sentry.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
 import {
@@ -491,6 +492,7 @@ ${portfolioSummary}`;
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'review-portfolio-submission', requestUrl: req.url, requestMethod: req.method });
     const duration = Date.now() - startTime;
     console.error(`[review-portfolio-submission] Error after ${duration}ms:`, error);
 

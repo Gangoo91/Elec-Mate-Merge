@@ -4,6 +4,7 @@
 // POST { text: string, source_kind, source_id?, student_id?, persist?: boolean }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -190,6 +191,7 @@ Deno.serve(async (req) => {
   try {
     parsed = JSON.parse(toolCall.function.arguments);
   } catch (e) {
+    await captureException(e, { functionName: 'ai-spag-check', requestUrl: req.url, requestMethod: req.method });
     return new Response(JSON.stringify({ error: 'ai_bad_json' }), {
       status: 502,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

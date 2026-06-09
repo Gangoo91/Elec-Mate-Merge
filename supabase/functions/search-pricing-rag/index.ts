@@ -3,6 +3,7 @@ import { ValidationError, ExternalAPIError, handleError } from '../_shared/error
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -202,6 +203,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'search-pricing-rag', requestUrl: req.url, requestMethod: req.method });
     logger.error('RAG search failed', { error });
     return handleError(error);
   }

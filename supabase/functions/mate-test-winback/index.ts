@@ -2,6 +2,7 @@
 // Auth: X-VPS-API-Key header (service-to-service, not user JWT).
 // Use only for staff test sends. NOT a customer-facing endpoint.
 
+import { captureException } from '../_shared/sentry.ts';
 import { Resend } from '../_shared/mailer.ts';
 import {
   generateV11HTML,
@@ -82,6 +83,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'mate-test-winback', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     return new Response(JSON.stringify({ ok: false, error: msg }), {
       status: 500,

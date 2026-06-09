@@ -33,6 +33,7 @@ import {
   type WinbackContext,
 } from '../_shared/winback-v12.ts';
 import { sendEmail } from '../_shared/mailer.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -47,6 +48,10 @@ const log = (step: string, details?: unknown) => {
 
 const BATCH_SIZE = 150;
 const SEND_GAP_MS = 150;
+// Anti-overwhelm: a user never gets more than one winback touch per run. Any
+// other touches that happen to be due for the same user get pushed out by this
+// gap so follow-ups stay spaced instead of landing together after a backlog.
+const PER_USER_DEFER_MS = 2 * 24 * 60 * 60 * 1000; // ~2 days
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -96,9 +101,37 @@ serve(async (req) => {
       return jsonResponse({ ok: true, processed: 0, message: 'Nothing due.' });
     }
 
+    // ── Anti-overwhelm guard ─────────────────────────────────────────────
+    // Send each user at most ONE touch per run. The pull is ordered by
+    // scheduled_for asc, so the first row we see for a user is their earliest
+    // due touch — keep that, and push any other due touches for the same user
+    // ~2 days out so a backlog spreads into a proper cadence instead of
+    // hitting someone with 2–3 emails at once.
+    const seenUser = new Set<string>();
+    const batch: QueueRow[] = [];
+    const deferred: QueueRow[] = [];
+    for (const row of queue) {
+      if (seenUser.has(row.user_id)) {
+        deferred.push(row);
+      } else {
+        seenUser.add(row.user_id);
+        batch.push(row);
+      }
+    }
+    if (deferred.length > 0 && !dryRun) {
+      const nextAt = new Date(Date.now() + PER_USER_DEFER_MS).toISOString();
+      for (const row of deferred) {
+        await supabase
+          .from('winback_queue')
+          .update({ scheduled_for: nextAt })
+          .eq('id', row.id);
+      }
+      log('Deferred extra touches to keep cadence', { count: deferred.length, nextAt });
+    }
+
     // 2. For each row, check the user hasn't quietly resubscribed since
     //    we queued them. Single batched profile read.
-    const userIds = [...new Set(queue.map((r) => r.user_id))];
+    const userIds = [...new Set(batch.map((r) => r.user_id))];
     const { data: profiles } = await supabase
       .from('profiles')
       .select('id, subscribed, subscription_tier')
@@ -111,7 +144,7 @@ serve(async (req) => {
     let skipped = 0;
     let failed = 0;
 
-    for (const row of queue) {
+    for (const row of batch) {
       // Skip — they came back to us, no point chasing
       if (subscribedAgain.has(row.user_id)) {
         await supabase
@@ -213,13 +246,15 @@ serve(async (req) => {
 
     return jsonResponse({
       ok: true,
-      processed: queue.length,
+      processed: batch.length,
+      deferred: deferred.length,
       sent,
       skipped,
       failed,
       dry_run: dryRun,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'winback-send', requestUrl: req.url, requestMethod: req.method });
     const message = error instanceof Error ? error.message : String(error);
     log('FATAL', { message });
     return jsonResponse({ ok: false, error: message }, 500);

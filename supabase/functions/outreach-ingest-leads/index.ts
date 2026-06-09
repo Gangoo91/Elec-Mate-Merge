@@ -9,6 +9,7 @@
 
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -459,6 +460,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'outreach-ingest-leads', requestUrl: req.url, requestMethod: req.method });
     const msg = error instanceof Error ? error.message : String(error);
     console.error('Error in outreach-ingest-leads:', msg);
     return new Response(JSON.stringify({ error: msg }), {

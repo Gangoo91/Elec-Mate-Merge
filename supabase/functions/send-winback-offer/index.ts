@@ -2,6 +2,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
 import { generateV11HTML, generateV11PlainText, v11Subject } from '../_shared/winback-v11.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -3274,6 +3275,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'send-winback-offer', requestUrl: req.url, requestMethod: req.method });
     const errMsg = error instanceof Error ? error.message : String(error);
     const errStack = error instanceof Error ? error.stack : undefined;
     console.error('Error in send-winback-offer:', errMsg, errStack);

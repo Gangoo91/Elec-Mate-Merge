@@ -10,6 +10,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -514,6 +515,7 @@ ${ragContext}`;
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'diary-coach', requestUrl: req.url, requestMethod: req.method });
     console.error('[diary-coach] Error:', error);
     return new Response(
       JSON.stringify({

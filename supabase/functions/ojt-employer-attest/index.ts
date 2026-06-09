@@ -26,6 +26,7 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface OtjRow {
   id: string;
@@ -180,6 +181,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'ojt-employer-attest', requestUrl: req.url, requestMethod: req.method });
     console.error('[ojt-employer-attest] error:', err);
     return new Response(
       JSON.stringify({

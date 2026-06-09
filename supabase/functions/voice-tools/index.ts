@@ -1,4 +1,5 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface VoiceToolRequest {
   tool?: string;
@@ -1237,6 +1238,7 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'voice-tools', requestUrl: req.url, requestMethod: req.method });
     console.error('Voice tools error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(JSON.stringify({ error: errorMessage, result: `Error: ${errorMessage}` }), {

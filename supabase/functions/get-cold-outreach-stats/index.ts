@@ -3,6 +3,7 @@
 
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -161,6 +162,7 @@ Deno.serve(async (req) => {
 
     throw new Error(`unknown action: ${action}`);
   } catch (err) {
+    await captureException(err, { functionName: 'get-cold-outreach-stats', requestUrl: req.url, requestMethod: req.method });
     const msg = err instanceof Error ? err.message : String(err);
     return new Response(JSON.stringify({ error: msg }), {
       status: 400,

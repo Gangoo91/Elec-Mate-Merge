@@ -6,6 +6,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ParseExpenseRequest {
   image_base64: string;
@@ -382,6 +383,7 @@ Rate your confidence (0.0 to 1.0) based on:
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'parse-expense-receipt', requestUrl: req.url, requestMethod: req.method });
     logger.error('Failed to parse expense receipt', { error });
     return handleError(error);
   }

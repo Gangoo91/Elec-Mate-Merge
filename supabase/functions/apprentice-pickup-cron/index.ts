@@ -18,6 +18,7 @@
 import { createClient, corsHeaders } from '../_shared/deps.ts';
 import { reengagementTemplates } from '../_shared/notification-templates.ts';
 import { sendSmartPush } from '../_shared/notification-engine.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -120,6 +121,7 @@ Deno.serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
+    await captureException(err, { functionName: 'apprentice-pickup-cron', requestUrl: req.url, requestMethod: req.method });
     console.error('[apprentice-pickup-cron] Error:', err);
     return new Response(JSON.stringify({ error: (err as Error)?.message || 'Internal error' }), {
       status: 500,

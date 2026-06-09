@@ -26,6 +26,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { searchFacets, formatFacetsForPrompt, type BS7671Facet } from './bs7671-facets-rag.ts';
+import { captureException } from './sentry.ts';
 import {
   searchSafetyFacets,
   formatSafetyFacetsForPrompt,
@@ -739,6 +740,39 @@ export async function runRAMSGeneration(supabase: any, jobId: string): Promise<v
     const finalStatus = both ? 'complete' : partial ? 'partial' : 'failed';
     const elapsedSeconds = Math.round((Date.now() - start) / 1000);
 
+    // Report any non-complete generation to Sentry so failures are visible
+    // (a partial = one agent down, a failed = both). Observability only.
+    if (finalStatus !== 'complete') {
+      const reason =
+        hsResult.status === 'rejected'
+          ? hsResult.reason
+          : methodResult.status === 'rejected'
+            ? methodResult.reason
+            : new Error('RAMS generation produced no usable output');
+      await captureException(reason, {
+        functionName: 'rams-generator/runRAMSGeneration',
+        userId: job.user_id,
+        tags: {
+          outcome: finalStatus,
+          job_scale: String(job.job_scale ?? 'unknown'),
+          hs_agent: hsResult.status === 'fulfilled' ? 'ok' : 'failed',
+          method_agent: methodResult.status === 'fulfilled' ? 'ok' : 'failed',
+        },
+        extra: {
+          jobId,
+          elapsedSeconds,
+          hsReason:
+            hsResult.status === 'rejected'
+              ? String(hsResult.reason?.message ?? hsResult.reason)
+              : null,
+          methodReason:
+            methodResult.status === 'rejected'
+              ? String(methodResult.reason?.message ?? methodResult.reason)
+              : null,
+        },
+      }).catch(() => {});
+    }
+
     await updateJob(supabase, jobId, {
       status: finalStatus,
       progress: 100,
@@ -770,6 +804,11 @@ export async function runRAMSGeneration(supabase: any, jobId: string): Promise<v
     });
   } catch (err: any) {
     console.error('[rams-core] worker fatal:', err);
+    await captureException(err, {
+      functionName: 'rams-generator/runRAMSGeneration',
+      tags: { outcome: 'worker-fatal' },
+      extra: { jobId },
+    }).catch(() => {});
     await updateJob(supabase, jobId, {
       status: 'failed',
       progress: 100,

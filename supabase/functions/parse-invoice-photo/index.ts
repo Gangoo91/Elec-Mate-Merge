@@ -6,6 +6,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface ParseInvoiceRequest {
   image_base64: string;
@@ -293,6 +294,7 @@ Line: "Milk 2L    £1.50"
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'parse-invoice-photo', requestUrl: req.url, requestMethod: req.method });
     logger.error('Failed to parse invoice photo', { error });
     return handleError(error);
   }

@@ -17,6 +17,7 @@
 //   - Ask gpt-5-mini to pick 3-8 most relevant ACs with confidence + rationale.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -332,6 +333,7 @@ Call submit_ac_suggestions with your picks.`;
       { headers: { ...corsHeaders, 'content-type': 'application/json' } }
     );
   } catch (e) {
+    await captureException(e, { functionName: 'ai-tag-resource', requestUrl: req.url, requestMethod: req.method });
     console.error('[ai-tag-resource] error', e);
     return new Response(
       JSON.stringify({ error: (e as Error).message ?? 'unknown' }),

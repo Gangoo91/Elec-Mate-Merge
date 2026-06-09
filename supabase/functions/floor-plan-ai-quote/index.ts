@@ -1,6 +1,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 const SYSTEM_PROMPT = `You are an experienced UK electrical contractor with 15+ years pricing domestic and light commercial installations.
 
@@ -120,6 +121,7 @@ Use realistic 2026 UK prices. A qualified electrician day rate is typically £25
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'floor-plan-ai-quote', requestUrl: req.url, requestMethod: req.method });
     console.error('AI quote error:', error);
     return new Response(
       JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Failed to generate quote' }),

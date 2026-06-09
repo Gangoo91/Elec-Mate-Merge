@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const reedApiKey = Deno.env.get('REEDJOB API');
 const adzunaAppId = Deno.env.get('ADZUNA_APP_ID');
@@ -100,6 +101,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'intelligent-job-search', requestUrl: req.url, requestMethod: req.method });
     console.error('💥 Error in job search:', error);
     return new Response(
       JSON.stringify({

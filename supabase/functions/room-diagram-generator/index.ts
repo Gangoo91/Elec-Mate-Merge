@@ -1,4 +1,5 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const VERSION = 'v1.0.0';
 
@@ -198,6 +199,7 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'room-diagram-generator', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Room generation error:', error);
     return new Response(
       JSON.stringify({

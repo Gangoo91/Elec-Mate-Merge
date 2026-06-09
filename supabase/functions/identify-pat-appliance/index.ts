@@ -6,6 +6,7 @@
  */
 
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface IdentifyRequest {
   image_base64: string;
@@ -182,6 +183,7 @@ Return ONLY valid JSON matching this schema:
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'identify-pat-appliance', requestUrl: req.url, requestMethod: req.method });
     console.error('Error identifying appliance:', error);
     return new Response(
       JSON.stringify({

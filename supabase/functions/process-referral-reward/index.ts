@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import Stripe from 'https://esm.sh/stripe@14.14.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -265,6 +266,7 @@ serve(async (req) => {
       });
     }
   } catch (err: unknown) {
+    await captureException(err, { functionName: 'process-referral-reward', requestUrl: req.url, requestMethod: req.method });
     console.error('[process-referral-reward] Error:', (err as Error)?.message);
     return new Response(JSON.stringify({ error: (err as Error)?.message || 'Internal error' }), {
       status: 500,

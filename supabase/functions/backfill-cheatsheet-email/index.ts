@@ -28,6 +28,7 @@
 
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { sendCheatSheetEmail } from '../_shared/cheatsheet-email.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 interface BrevoContact {
   email: string;
@@ -192,6 +193,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
+    await captureException(err, { functionName: 'backfill-cheatsheet-email', requestUrl: req.url, requestMethod: req.method });
     console.error('[backfill-cheatsheet-email] Handler error', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),

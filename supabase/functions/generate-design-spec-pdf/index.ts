@@ -1,4 +1,5 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -134,6 +135,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, { functionName: 'generate-design-spec-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error generating PDF:', error);
     return new Response(
       JSON.stringify({

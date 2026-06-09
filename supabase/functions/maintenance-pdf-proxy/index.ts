@@ -8,6 +8,7 @@
  * No auth required (verify_jwt = false) — the documentId UUID is unguessable.
  * GET /maintenance-pdf-proxy?id=<documentId>&filename=<name>
  */
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 
@@ -92,6 +93,7 @@ Deno.serve(async (req: Request) => {
     return new Response('PDF generation timed out — please try again', { status: 504 });
 
   } catch (error) {
+    await captureException(error, { functionName: 'maintenance-pdf-proxy', requestUrl: req.url, requestMethod: req.method });
     console.error('[MAINT-PROXY] Error:', (error as Error).message);
     return new Response('Internal error', { status: 500 });
   }

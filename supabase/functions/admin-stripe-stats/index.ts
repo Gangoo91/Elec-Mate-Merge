@@ -6,6 +6,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
+import { captureException } from '../_shared/sentry.ts';
 
 // Known price IDs and their tiers - ACTUAL STRIPE PRICES
 const PRICE_TIER_MAP: Record<string, { tier: string; amount: number }> = {
@@ -338,6 +339,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error: unknown) {
+    await captureException(error, { functionName: 'admin-stripe-stats', requestUrl: req.url, requestMethod: req.method });
     console.error('[ADMIN-STRIPE-STATS] Error:', error);
     const message = error instanceof Error ? error.message : String(error);
     return new Response(JSON.stringify({ error: message }), {
