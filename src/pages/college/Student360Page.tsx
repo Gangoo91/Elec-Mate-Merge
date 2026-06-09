@@ -1031,6 +1031,30 @@ function StatCell({
    Risk panel
    ========================================================================== */
 
+// Maps a risk-factor key to the Student 360 section it relates to, so a tutor
+// can jump straight from "why" to "where" (factor → action).
+const FACTOR_ANCHOR: Record<string, string> = {
+  attendance_low: 'attendance',
+  attendance_dropping: 'attendance',
+  attendance_unknown: 'attendance',
+  ac_velocity_zero: 'coverage',
+  behind_pace: 'coverage',
+  portfolio_stale: 'portfolio',
+  portfolio_empty: 'portfolio',
+  grade_drop: 'grades',
+  ilp_overdue: 'ilp',
+  open_flags: 'notes',
+  no_observations: 'observations',
+  observation_stale: 'observations',
+  observation_followup: 'observations',
+  otj_none: 'otj',
+  otj_gap: 'otj',
+  epa_gateway_risk: 'epa',
+};
+function scrollToStudentSection(anchor: string) {
+  document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function SectionRiskPanel({
   id,
   risk,
@@ -1110,8 +1134,10 @@ function SectionRiskPanel({
           </div>
           {risk.factors.length > 0 && (
             <div className="border-t border-white/[0.06] divide-y divide-white/[0.06]">
-              {risk.factors.slice(0, 5).map((f, i) => (
-                <div key={i} className="px-5 sm:px-6 py-4 flex items-start gap-4">
+              {risk.factors.slice(0, 5).map((f, i) => {
+                const fk = (f as { key?: string }).key;
+                const anchor = fk ? FACTOR_ANCHOR[fk] : undefined;
+                const dot = (
                   <span
                     className={cn(
                       'mt-1 inline-block h-2 w-2 rounded-full shrink-0',
@@ -1123,6 +1149,8 @@ function SectionRiskPanel({
                     )}
                     aria-hidden
                   />
+                );
+                const inner = (
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] text-white leading-relaxed">{f.label}</div>
                     {f.detail && (
@@ -1131,8 +1159,30 @@ function SectionRiskPanel({
                       </div>
                     )}
                   </div>
-                </div>
-              ))}
+                );
+                if (!anchor) {
+                  return (
+                    <div key={i} className="px-5 sm:px-6 py-4 flex items-start gap-4">
+                      {dot}
+                      {inner}
+                    </div>
+                  );
+                }
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => scrollToStudentSection(anchor)}
+                    className="w-full text-left px-5 sm:px-6 py-4 flex items-start gap-4 hover:bg-white/[0.03] transition-colors touch-manipulation"
+                  >
+                    {dot}
+                    {inner}
+                    <span className="mt-0.5 text-white/30 text-[13px] shrink-0" aria-hidden>
+                      →
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>

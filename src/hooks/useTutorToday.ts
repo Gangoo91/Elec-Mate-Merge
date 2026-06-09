@@ -68,6 +68,8 @@ export interface TodayAtRiskLearner {
   level: 'medium' | 'high' | 'critical';
   score: number;
   top_factor: string | null;
+  /** Top few risk reasons (severity-sorted), for a fuller at-a-glance picture. */
+  top_factors: string[];
 }
 
 export interface TodayUpcomingDate {
@@ -185,9 +187,7 @@ export function useTutorToday() {
       // OTJ queues to OUR college BEFORE the row limit. Filtering after a
       // global limit(30) silently drops our items past the window on a busy
       // multi-college instance, so the `.in(...)` has to run server-side.
-      const studentAuthUids = students
-        .map((s) => s.user_id)
-        .filter((u): u is string => Boolean(u));
+      const studentAuthUids = students.map((s) => s.user_id).filter((u): u is string => Boolean(u));
 
       // IQA plans for this college (for scoping pending samples)
       const { data: planRows } = await supabase
@@ -410,19 +410,23 @@ export function useTutorToday() {
         .map((r) => {
           const student = students.find((s) => s.id === r.student_id);
           if (!student) return null;
-          // factors is jsonb — could be array of {label} or {reasons:[]}.
-          // Keep it tolerant to both shapes seen in the codebase.
-          let topFactor: string | null = null;
-          if (Array.isArray(r.factors) && r.factors.length > 0) {
-            const f0 = r.factors[0] as { label?: string; key?: string };
-            topFactor = f0.label ?? f0.key ?? null;
+          // factors is jsonb — array of {label,key,severity} (current) or a
+          // legacy {reasons:[]} shape. Surface the top few (already severity-
+          // sorted by the risk engine) so the tutor sees the whole picture —
+          // e.g. "Low attendance · No OTJ · EPA blocked" — not just one reason.
+          let topFactors: string[] = [];
+          if (Array.isArray(r.factors)) {
+            topFactors = (r.factors as Array<{ label?: string; key?: string }>)
+              .map((f) => f.label ?? f.key)
+              .filter((x): x is string => !!x)
+              .slice(0, 3);
           } else if (
             r.factors &&
             typeof r.factors === 'object' &&
             'reasons' in (r.factors as Record<string, unknown>)
           ) {
             const reasons = (r.factors as { reasons?: string[] }).reasons;
-            if (Array.isArray(reasons) && reasons.length > 0) topFactor = reasons[0];
+            if (Array.isArray(reasons)) topFactors = reasons.slice(0, 3);
           }
           return {
             student_id: r.student_id,
@@ -430,7 +434,8 @@ export function useTutorToday() {
             cohort_name: student.cohort_id ? (cohortById.get(student.cohort_id) ?? null) : null,
             level: r.level,
             score: r.score,
-            top_factor: topFactor,
+            top_factor: topFactors[0] ?? null,
+            top_factors: topFactors,
           };
         })
         .filter((r): r is TodayAtRiskLearner => r !== null)
