@@ -5,6 +5,11 @@ import { LazyRoute } from '@/components/LazyRoute';
 // Lazy-loaded pages
 const TasksPage = lazy(() => import('@/pages/electrician/TasksPage'));
 const RenewablesHub = lazy(() => import('@/pages/electrician/RenewablesHub'));
+const RenewableCertificates = lazy(() => import('@/pages/electrician/RenewableCertificates'));
+const RenewableCalculators = lazy(
+  () => import('@/pages/electrician/renewables/RenewableCalculators')
+);
+const RenewableCalc = lazy(() => import('@/pages/electrician/renewables/RenewableCalc'));
 const ProjectsPage = lazy(() => import('@/pages/electrician/ProjectsPage'));
 const ProjectDetailPage = lazy(() => import('@/pages/electrician/ProjectDetailPage'));
 const BusinessAdmin = lazy(() => import('@/pages/electrician/BusinessAdmin'));
@@ -417,6 +422,30 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <RenewablesHub />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/certificates"
+      element={
+        <LazyRoute>
+          <RenewableCertificates />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/calculators"
+      element={
+        <LazyRoute>
+          <RenewableCalculators />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/calculators/:calcId"
+      element={
+        <LazyRoute>
+          <RenewableCalc />
         </LazyRoute>
       }
     />
