@@ -134,9 +134,9 @@ const faqSchema = {
 
 export default function ElectricalQuotingAppPage() {
   useSEO({
-    title: 'Electrical Quoting App | Smart Quotes for Electricians',
+    title: 'Electrical Quoting App for UK Electricians | Elec-Mate',
     description:
-      'AI-powered quoting app for UK electricians. Produce professional quotes with accurate material and labour costs.',
+      'AI quoting app built for UK electricians: real trade material prices, labour costs and instant PDF quotes for rewires, CU upgrades, EICRs and EV chargers. Free to start.',
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Electrical Quoting App', url: '/electrical-quoting-app' },

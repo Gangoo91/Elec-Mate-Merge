@@ -510,7 +510,7 @@ export const generateEnhancedElectricalPDF = async (
       doc.setFontSize(10);
       doc.setTextColor(255, 255, 255); // White text
       doc.setFillColor(16, 185, 129); // Emerald-500
-      const badgeText = 'BS 7671:2018+A3:2024 COMPLIANT';
+      const badgeText = 'BS 7671:2018+A4:2026 COMPLIANT';
       const badgeWidth = doc.getTextWidth(badgeText) + 12;
       const badgeX = (pageWidth - badgeWidth) / 2;
       doc.roundedRect(badgeX, yPosition - 4, badgeWidth, 9, 2, 2, 'F');
@@ -696,7 +696,7 @@ export const generateEnhancedElectricalPDF = async (
       doc.setFontSize(8);
       doc.setTextColor(100, 116, 139); // slate-500
       const footerText =
-        'Generated using Professional Electrical Reporting System — BS 7671:2018+A3:2024 Compliant';
+        'Generated using Professional Electrical Reporting System — BS 7671:2018+A4:2026 Compliant';
       doc.text(footerText, margin, footerY - 2);
 
       // Right: Page numbers
@@ -772,7 +772,7 @@ export const generateEnhancedElectricalPDF = async (
       doc.setFontSize(9);
       doc.setTextColor(100, 116, 139); // slate-500
       const complianceText =
-        'This electrical inspection report has been prepared in accordance with BS 7671:2018+A3:2024 ' +
+        'This electrical inspection report has been prepared in accordance with BS 7671:2018+A4:2026 ' +
         '(Requirements for Electrical Installations) and IET Guidance Note 3. The inspection has been ' +
         'carried out by a qualified and competent person.';
 

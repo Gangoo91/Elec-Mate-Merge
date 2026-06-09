@@ -76,7 +76,7 @@ serve(async (req) => {
     }
 
     if (bs7671Results && bs7671Results.length > 0) {
-      enrichedContext += `REGULATORY REQUIREMENTS (BS 7671:2018+A3:2024 - Intelligence Enhanced):\n`;
+      enrichedContext += `REGULATORY REQUIREMENTS (BS 7671:2018+A4:2026 - Intelligence Enhanced):\n`;
       bs7671Results.forEach((result: any, idx: number) => {
         enrichedContext += `\n${idx + 1}. Regulation ${result.regulation_number}\n`;
         enrichedContext += `Topic: ${result.primary_topic}\n`;
@@ -90,7 +90,7 @@ serve(async (req) => {
 
     // Step 4: Call OpenAI Vision API with enriched context
     const systemPrompts: Record<string, string> = {
-      fault_diagnosis: `You are an expert electrical fault diagnosis AI assistant trained on BS 7671:2018+A3:2024 and BS 7671 Guidance Note 3.
+      fault_diagnosis: `You are an expert electrical fault diagnosis AI assistant trained on BS 7671:2018+A4:2026 and BS 7671 Guidance Note 3.
 
 CRITICAL INSTRUCTIONS FOR ACCURACY:
 

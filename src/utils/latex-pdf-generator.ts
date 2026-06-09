@@ -62,7 +62,7 @@ async function generateHTMLToPDF(
             )}</p>
             ${options.author ? `<p style="color: #2d3748; margin: 5px 0; font-size: 14px;">Inspector: ${options.author}</p>` : ''}
             <p style="color: #2d3748; margin: 5px 0; font-size: 14px; font-weight: bold;">
-              <span class="bs-ref">${options.watermark || 'BS 7671:2018+A3:2024 COMPLIANT'}</span>
+              <span class="bs-ref">${options.watermark || 'BS 7671:2018+A4:2026 COMPLIANT'}</span>
             </p>
             <p style="color: #718096; margin: 5px 0; font-size: 12px;">
               Professional Electrical Installation Report
@@ -92,7 +92,7 @@ async function generateHTMLToPDF(
         }
         <div style="margin-top: 40px; padding-top: 25px; border-top: 2px solid #e2e8f0; text-align: center;">
           <p style="color: #718096; font-size: 12px; margin: 5px 0;">
-            This report has been generated using AI technology in compliance with BS 7671:2018+A3:2024
+            This report has been generated using AI technology in compliance with BS 7671:2018+A4:2026
           </p>
           <p style="color: #718096; font-size: 12px; margin: 5px 0;">
             Report ID: ${Date.now().toString(36).toUpperCase()}
@@ -163,7 +163,7 @@ export async function generateLatexPDFPreview(
               <p style="color: #4a5568; margin: 5px 0; font-weight: bold;">Preview Generated: ${new Date().toLocaleDateString('en-GB')}</p>
               ${options.author ? `<p style="color: #2d3748; margin: 5px 0; font-size: 14px;">Inspector: ${options.author}</p>` : ''}
               <p style="color: #2d3748; margin: 5px 0; font-size: 14px; font-weight: bold;">
-                <span class="bs-ref">${options.watermark || 'BS 7671:2018+A3:2024 COMPLIANT'}</span>
+                <span class="bs-ref">${options.watermark || 'BS 7671:2018+A4:2026 COMPLIANT'}</span>
               </p>
             </div>
           </div>

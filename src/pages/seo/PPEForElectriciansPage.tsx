@@ -750,6 +750,11 @@ export default function PPEForElectriciansPage() {
       }
       heroSubtitle="Insulated gloves, safety boots, arc flash PPE, voltage-rated tools, eye protection, and head protection. This guide covers every piece of PPE an electrician needs, the standards they must meet, and your legal duties under the 2022 Regulations."
       readingTime={10}
+      answerBox={{
+        question: 'What PPE do electricians need?',
+        answer:
+          'The core PPE for an electrician is: safety boots (with electrical-hazard/SB-E rating), safety glasses or a face shield, a flame-resistant or arc-rated coverall, insulating gloves rated for the working voltage when there is any risk of contact, and head protection on site. Test instruments and leads must comply with GS38. PPE is the last line of defence — under the Electricity at Work Regulations 1989 and the PPE at Work Regulations 1992 (amended 2022) you must first eliminate or isolate the hazard (work dead), and only rely on PPE for the residual risk.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

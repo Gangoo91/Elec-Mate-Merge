@@ -195,7 +195,7 @@ export const generateRiskAssessmentPDF = (data: RiskAssessmentData): jsPDF => {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
-  doc.text('BS 7671:2018+A3:2024 Compliant', pageWidth / 2, footerY - 2, { align: 'center' });
+  doc.text('BS 7671:2018+A4:2026 Compliant', pageWidth / 2, footerY - 2, { align: 'center' });
 
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');

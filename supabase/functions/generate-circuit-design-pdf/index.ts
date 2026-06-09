@@ -500,7 +500,7 @@ serve(async (req) => {
       installationGuidance: design.installationGuidance,
 
       // Compliance
-      complianceStatement: 'BS 7671:2018+A3:2024',
+      complianceStatement: 'BS 7671:2018+A4:2026',
       generationTimestamp: new Date().toISOString(),
     };
 

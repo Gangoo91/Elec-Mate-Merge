@@ -444,7 +444,7 @@ export const generateInstallationPlanPDF = async (
         <div class="disclaimer-box">
             <h3>⚠️ Important Disclaimer</h3>
             <p><strong>This installation plan is for guidance purposes only.</strong> All calculations and recommendations must be verified by a qualified electrician before any work commences. This document does not replace professional assessment or certification.</p>
-            <p>The installer is responsible for ensuring compliance with BS 7671:2018+A3:2024, Building Regulations Part P, and all relevant legislation. Electrical installation work must only be carried out by competent persons registered with an appropriate scheme (NICEIC, NAPIT, ELECSA, etc.).</p>
+            <p>The installer is responsible for ensuring compliance with BS 7671:2018+A4:2026, Building Regulations Part P, and all relevant legislation. Electrical installation work must only be carried out by competent persons registered with an appropriate scheme (NICEIC, NAPIT, ELECSA, etc.).</p>
         </div>
 
         <div class="main-title">
@@ -683,7 +683,7 @@ export const generateInstallationPlanPDF = async (
         <div class="section">
             <h2 class="section-title">Regulatory References</h2>
             <div class="calculation-box">
-                <div class="calc-row"><strong>BS 7671:2018+A3:2024</strong> - Requirements for Electrical Installations (18th Edition)</div>
+                <div class="calc-row"><strong>BS 7671:2018+A4:2026</strong> - Requirements for Electrical Installations (18th Edition)</div>
                 <div class="calc-row"><strong>Building Regulations Part P</strong> - Electrical safety in dwellings</div>
                 <div class="calc-row"><strong>IET Wiring Regulations</strong> - Design and verification compliance</div>
                 <div class="calc-row"><strong>BS 6004</strong> - PVC insulated cables specification</div>

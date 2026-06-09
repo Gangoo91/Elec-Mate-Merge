@@ -100,7 +100,7 @@ serve(async (req) => {
                 // Keep raw for backward compatibility
                 controlMeasuresRaw: rawControlMeasures,
                 residualRisk: hazard.residualRisk,
-                regulation: hazard.regulation || 'BS 7671:2018+A3:2024',
+                regulation: hazard.regulation || 'BS 7671:2018+A4:2026',
               };
             }),
           // PPE requirements

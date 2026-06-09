@@ -251,7 +251,7 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
   doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
   doc.text(
-    'All work completed to BS 7671:2018+A3:2024 standards.',
+    'All work completed to BS 7671:2018+A4:2026 standards.',
     pageWidth / 2,
     pageHeight - 20,
     { align: 'center' }

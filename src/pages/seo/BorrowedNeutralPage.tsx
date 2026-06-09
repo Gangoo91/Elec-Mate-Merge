@@ -678,6 +678,11 @@ export default function BorrowedNeutralPage() {
       }
       heroSubtitle="A borrowed neutral is a wiring fault where the neutral from one circuit is connected to another circuit's neutral. It causes unexplained RCD tripping, false test results, and safety risks. This guide covers what it is, how it happens, the telltale symptoms, how to find the crossover point, and how to fix it."
       readingTime={16}
+      answerBox={{
+        question: 'What is a borrowed neutral and why is it dangerous?',
+        answer:
+          'A borrowed neutral is a wiring fault where a circuit returns its current through the neutral of a different circuit, instead of its own. It is dangerous because the two circuits no longer balance: a 30 mA RCD (or RCBO) sees the imbalance and trips, and — more seriously — isolating one circuit can leave its neutral still live via the other, so a conductor you believe is dead is not. It also breaks the requirement to divide the installation into separate circuits to avoid danger (Reg 314.1). The fix is to trace the crossover and return every circuit’s neutral to its own way in the board.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

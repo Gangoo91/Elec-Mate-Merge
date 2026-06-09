@@ -48,7 +48,7 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
 
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
-    doc.text('BS 7671:2018+A3:2024 Compliant', pageWidth / 2, 20, { align: 'center' });
+    doc.text('BS 7671:2018+A4:2026 Compliant', pageWidth / 2, 20, { align: 'center' });
     doc.text(design.projectName, pageWidth / 2, 27, { align: 'center' });
 
     doc.setFontSize(7);
@@ -382,7 +382,7 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   const complianceText =
-    'This electrical installation design has been prepared in accordance with BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). All circuit designs comply with current UK electrical safety standards and regulations. Installation must be carried out by a competent person and tested in accordance with BS 7671 requirements.';
+    'This electrical installation design has been prepared in accordance with BS 7671:2018+A4:2026 (18th Edition IET Wiring Regulations). All circuit designs comply with current UK electrical safety standards and regulations. Installation must be carried out by a competent person and tested in accordance with BS 7671 requirements.';
   const splitCompliance = doc.splitTextToSize(complianceText, pageWidth - 50);
   doc.text(splitCompliance, pageWidth / 2, yPos + 22, { align: 'center' });
 

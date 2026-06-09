@@ -202,7 +202,7 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
     // Certificate metadata
     certificate_number: formData.certificateNumber || '',
     generated_at: today,
-    bs7671_amendment_date: 'A3:2024',
+    bs7671_amendment_date: 'A4:2026',
     work_date: formatDate(formData.workDate),
     date_of_completion: formatDate(formData.dateOfCompletion),
     next_inspection_due: formatDate(formData.nextInspectionDue),

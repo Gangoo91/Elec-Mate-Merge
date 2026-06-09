@@ -1,13 +1,19 @@
 /**
  * Formats EV Charging certificate form data for PDF generation
- * Compliant with BS 7671:2018+A3:2024 and IET CoP 5th Edition
+ * Compliant with BS 7671:2018+A4:2026 and IET CoP 5th Edition
  */
 
 import { EVChargingFormData } from '@/types/ev-charging';
 import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
+import { createAccessTracker, reportUnmappedFields } from './reportUnmappedFields';
 
 export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVChargingPayloadType => {
+  // Track which form-data keys we actually read, so reportUnmappedFields() can
+  // flag any field the user filled in that never made it into the payload.
+  const { keys: accessedKeys, track } = createAccessTracker();
+
   const get = (key: string, defaultValue: any = ''): string => {
+    track(key);
     const value = (formData as any)[key] ?? defaultValue;
     if (value === null || value === undefined) return '';
     if (typeof value === 'number') return String(value);
@@ -15,6 +21,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
   };
 
   const getNum = (key: string, defaultValue: number = 0): number => {
+    track(key);
     const value = (formData as any)[key];
     if (typeof value === 'number') return value;
     if (typeof value === 'string') {
@@ -25,13 +32,21 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
   };
 
   const getBool = (key: string): boolean => {
+    track(key);
     const value = (formData as any)[key];
     return value === true || value === 'true';
   };
 
   const getTestResult = (key: string): string => {
+    track(`testResults.${key}`);
     return formData.testResults?.[key as keyof typeof formData.testResults] ?? '';
   };
+
+  // Vehicle make: when "Other" is chosen the picker stores the sentinel
+  // '__other' in vehicleMake until the free-text is typed. Resolve to the
+  // custom value so the sentinel never leaks onto the PDF.
+  const vehicleMakeResolved =
+    get('vehicleMake') === '__other' ? get('vehicleMakeCustom') : get('vehicleMake');
 
   // Safe numeric comparison for test validation
   const safeCompare = (a: string, b: string, comparison: 'lte' | 'gte'): string => {
@@ -42,12 +57,12 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     return numA >= numB ? 'Yes' : 'No';
   };
 
-  return {
+  const payload: EVChargingPayloadType = {
     // Metadata
     metadata: {
       certificate_number: get('certificateNumber'),
       installation_date: get('installationDate'),
-      standard: 'BS 7671:2018+A3:2024',
+      standard: 'BS 7671:2018+A4:2026',
       code_of_practice:
         'IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition)',
       section_reference: 'Section 722',
@@ -63,7 +78,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
 
     // Vehicle Details
     vehicle_details: {
-      make: get('vehicleMake'),
+      make: vehicleMakeResolved,
       model: get('vehicleModel'),
       registration: get('vehicleRegistration'),
     },
@@ -361,7 +376,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
 
     // Declaration Text (hardcoded for PDF)
     declaration_text:
-      'I/We certify that this EV charging equipment has been designed, installed, inspected and tested in accordance with BS 7671:2018+A3:2024 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition).',
+      'I/We certify that this EV charging equipment has been designed, installed, inspected and tested in accordance with BS 7671:2018+A4:2026 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition).',
 
     // ============================================
     // FLAT COPIES FOR DIRECT TEMPLATE ACCESS
@@ -374,7 +389,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     client_email: get('clientEmail'),
 
     // Vehicle (flat)
-    vehicle_make: get('vehicleMake'),
+    vehicle_make: vehicleMakeResolved,
     vehicle_model: get('vehicleModel'),
     vehicle_registration: get('vehicleRegistration'),
 
@@ -497,4 +512,17 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     registration_number: get('registrationNumber'),
     registration_scheme_logo: get('registrationSchemeLogo'),
   };
+
+  // Safety net: warn (via Sentry) if any field the user filled in wasn't read by
+  // this formatter — i.e. it would be silently dropped from the PDF. The ignore
+  // list is the set of form-data keys that are deliberately not mapped: pure UI
+  // state, or values resolved through another key (vehicleMakeCustom →
+  // vehicleMake). companyName/etc. live on the merged settings object, not the
+  // form, so they never appear here as unmapped.
+  reportUnmappedFields('ev-charging', formData as Record<string, unknown>, accessedKeys, {
+    ignore: ['completedSections', 'status', 'sameAsClientAddress', 'vehicleMakeCustom'],
+    nestedKeys: ['testResults'],
+  });
+
+  return payload;
 };

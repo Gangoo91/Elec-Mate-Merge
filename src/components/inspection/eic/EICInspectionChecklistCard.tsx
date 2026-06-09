@@ -67,7 +67,7 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
     <div className="space-y-3">
       <SectionTitle title="Schedule of Inspections" />
       <p className="text-[10px] text-white">
-        BS 7671:18+A3:2024 — Residential and similar premises with up to 100 A supply
+        BS 7671:18+A4:2026 — Residential and similar premises with up to 100 A supply
       </p>
 
       {inspectionItems.length === 0 ? (

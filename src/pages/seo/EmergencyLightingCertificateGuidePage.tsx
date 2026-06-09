@@ -744,6 +744,11 @@ export default function EmergencyLightingCertificateGuidePage() {
       }
       heroSubtitle="BS 5266-1 requires completion certificates, monthly functional test records, and annual full-duration discharge test records for every emergency lighting installation. This guide explains what each document must contain, who is responsible, and how to keep compliant records."
       readingTime={11}
+      answerBox={{
+        question: 'How often must emergency lighting be tested?',
+        answer:
+          'Emergency lighting in the UK is installed, tested and certified to BS 5266-1. After installation you issue a completion certificate; thereafter the system needs a brief monthly functional test (operate the test switch and confirm every luminaire works) and a full-duration annual test — the complete rated discharge, normally 3 hours for most premises. Every test must be logged. Emergency lighting is also a fire-safety requirement under the Regulatory Reform (Fire Safety) Order 2005, so keeping the test records is a legal as well as a technical duty.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

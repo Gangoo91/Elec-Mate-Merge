@@ -233,7 +233,7 @@ export const generateLaTeXStylePDF = async (
       pdf.setFontSize(9);
       pdf.setTextColor(0, 0, 0);
       pdf.text(
-        '(Requirements for Electrical Installations - BS 7671:2018+A3:2024)',
+        '(Requirements for Electrical Installations - BS 7671:2018+A4:2026)',
         pageWidth / 2,
         yPos + 28,
         { align: 'center' }
@@ -671,9 +671,9 @@ export const generateLaTeXStylePDF = async (
       pdf.setFontSize(9);
       pdf.setTextColor(0, 0, 0);
       const complianceText =
-        'I/We being the person(s) responsible for the work detailed in this certificate, particulars of which are described above, having exercised reasonable skill and care when carrying out the work, hereby CERTIFY that the work for which I/we have been responsible is to the best of my/our knowledge and belief in accordance with BS 7671:2018+A3:2024, amended to ' +
+        'I/We being the person(s) responsible for the work detailed in this certificate, particulars of which are described above, having exercised reasonable skill and care when carrying out the work, hereby CERTIFY that the work for which I/we have been responsible is to the best of my/our knowledge and belief in accordance with BS 7671:2018+A4:2026, amended to ' +
         formatDate(new Date(), 'MMMM yyyy') +
-        '. The work has been designed, constructed, inspected and tested in accordance with BS 7671:2018+A3:2024 (Requirements for Electrical Installations).';
+        '. The work has been designed, constructed, inspected and tested in accordance with BS 7671:2018+A4:2026 (Requirements for Electrical Installations).';
 
       const wrappedComplianceText = pdf.splitTextToSize(
         complianceText,

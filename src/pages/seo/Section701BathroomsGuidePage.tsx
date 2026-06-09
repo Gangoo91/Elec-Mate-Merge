@@ -697,6 +697,11 @@ export default function Section701BathroomsGuidePage() {
       }
       heroSubtitle="Everything you need to know about bathroom electrical installations under BS 7671. Zone definitions, IP ratings, supplementary bonding under Regulation 701.415.2, RCD protection, SELV, switching, socket outlets, and electric shower circuits."
       readingTime={18}
+      answerBox={{
+        question: 'What are the electrical zones in a bathroom (BS 7671 Section 701)?',
+        answer:
+          'BS 7671 Section 701 divides a room with a bath or shower into Zone 0 (inside the bath/basin), Zone 1 (above it to 2.25 m) and Zone 2 (0.6 m beyond Zone 1). Equipment must meet a minimum IP rating for its zone — IPX7 in Zone 0, IPX4 in Zones 1 and 2 (IPX5 where water jets are used) per Reg 701.512.2. All circuits serving the location need 30 mA RCD additional protection (Reg 701.411.3.3), and supplementary equipotential bonding (Reg 701.415.2) is required unless the conditions for omitting it are met. Socket-outlets are not permitted within 3 m of Zone 1 (shaver units to BS EN 61558-2-5 excepted).',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

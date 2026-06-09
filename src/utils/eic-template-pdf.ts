@@ -22,7 +22,7 @@ export function generateEICTemplatePDF(data: EICData): jsPDF {
   doc.text('ELECTRICAL INSTALLATION CERTIFICATE', pageWidth / 2, 15, { align: 'center' });
 
   doc.setFontSize(9);
-  doc.text('BS 7671:2018+A3:2024 (18th Edition)', pageWidth / 2, 25, { align: 'center' });
+  doc.text('BS 7671:2018+A4:2026 (18th Edition)', pageWidth / 2, 25, { align: 'center' });
   doc.text('This certificate is to be completed by a qualified electrician', pageWidth / 2, 32, {
     align: 'center',
   });
@@ -65,7 +65,7 @@ export function generateEICTemplatePDF(data: EICData): jsPDF {
 
   const designFields = [
     [
-      'I/We being the person(s) responsible for the design of the electrical installation certify that the design work has been carried out in accordance with BS 7671:2018+A3:2024.',
+      'I/We being the person(s) responsible for the design of the electrical installation certify that the design work has been carried out in accordance with BS 7671:2018+A4:2026.',
     ],
     [''],
     [
@@ -95,7 +95,7 @@ export function generateEICTemplatePDF(data: EICData): jsPDF {
 
   const constructionFields = [
     [
-      'I/We being the person(s) responsible for the construction of the electrical installation certify that the installation has been carried out in accordance with BS 7671:2018+A3:2024.',
+      'I/We being the person(s) responsible for the construction of the electrical installation certify that the installation has been carried out in accordance with BS 7671:2018+A4:2026.',
     ],
     [''],
     [
@@ -125,7 +125,7 @@ export function generateEICTemplatePDF(data: EICData): jsPDF {
 
   const inspectionFields = [
     [
-      'I/We being the person(s) responsible for the inspection & testing of the electrical installation certify that the installation has been inspected and tested in accordance with BS 7671:2018+A3:2024.',
+      'I/We being the person(s) responsible for the inspection & testing of the electrical installation certify that the installation has been inspected and tested in accordance with BS 7671:2018+A4:2026.',
     ],
     [''],
     [

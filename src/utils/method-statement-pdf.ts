@@ -182,7 +182,7 @@ class MethodStatementPDFGenerator {
     this.doc.setTextColor(255, 255, 255);
     this.doc.setFontSize(8);
     this.doc.setFont('helvetica', 'bold');
-    this.doc.text('BS 7671:2018+A3:2024 COMPLIANT', this.pageWidth / 2, this.yPosition + 36, {
+    this.doc.text('BS 7671:2018+A4:2026 COMPLIANT', this.pageWidth / 2, this.yPosition + 36, {
       align: 'center',
     });
 
@@ -792,7 +792,7 @@ class MethodStatementPDFGenerator {
     this.doc.setFontSize(9);
     this.doc.setFont('helvetica', 'normal');
     const complianceText =
-      'This Method Statement has been prepared in accordance with the Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A3:2024. All personnel must read and understand this document before commencing work.';
+      'This Method Statement has been prepared in accordance with the Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A4:2026. All personnel must read and understand this document before commencing work.';
 
     const wrappedCompliance = this.doc.splitTextToSize(
       complianceText,

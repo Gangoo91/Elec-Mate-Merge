@@ -45,7 +45,7 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
               <SelectValue placeholder="Select standard" />
             </SelectTrigger>
             <SelectContent className="bg-white/[0.06] border-white/[0.08] text-white z-50">
-              <SelectItem value="BS7671">BS 7671:18+A3:2024</SelectItem>
+              <SelectItem value="BS7671">BS 7671:18+A4:2026</SelectItem>
               <SelectItem value="other">Other Standard</SelectItem>
             </SelectContent>
           </Select>

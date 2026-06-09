@@ -688,6 +688,11 @@ export default function ConstructionSiteTemporarySupplyPage() {
       }
       heroSubtitle="Construction site temporary installations must use 110V CTE for portable tools, IP-rated distribution boards, compliant protection on all socket-outlet circuits (Reg 704.410.3.10), and quarterly EICR inspections. This guide covers BS 7375, BS 7671:2018+A4:2026 Section 704, and everything electricians need to know about site electrics."
       readingTime={14}
+      answerBox={{
+        question: 'What voltage is used on construction sites in the UK?',
+        answer:
+          'Portable hand tools and handlamps on UK construction sites are supplied at 110 V reduced low voltage (RLV) — a 55-0-55 V centre-tapped-earth arrangement, so no live conductor exceeds 55 V to earth. BS 7671 Section 704 requires every socket-outlet circuit rated up to and including 32 A to be protected by reduced low voltage, by automatic disconnection with 30 mA RCD additional protection, or by electrical separation (Reg 704.410.3.10). Site installations also follow BS 7375 and need periodic inspection, commonly every 3 months.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

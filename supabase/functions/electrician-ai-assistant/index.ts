@@ -499,7 +499,7 @@ Amendment: ${reg.amendment || 'N/A'}
             : '';
 
         systemMessage = `${identityProtection}
-You are Elec-AI, an expert UK electrician's AI assistant with BS 7671:2018+A3:2024 expertise.
+You are Elec-AI, an expert UK electrician's AI assistant with BS 7671:2018+A4:2026 expertise.
 
 ${ragContext ? ragContext + '\n\n🚨 CRITICAL: These regulations are PRE-ANALYZED. DO NOT re-analyze. Copy regulation numbers and content directly.\n' : ''}
 

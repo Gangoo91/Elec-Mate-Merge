@@ -135,7 +135,7 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
       <div className="space-y-4">
         <SectionHeader title="Declaration & Signatures" />
         <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-          <p className="text-[11px] text-white leading-relaxed">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A3:2024, the IET Code of Practice for Electrical Energy Storage Systems (3rd Edition), MCS MIS 3012:2025, PAS 63100:2024 (where applicable), and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</p>
+          <p className="text-[11px] text-white leading-relaxed">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A4:2026, the IET Code of Practice for Electrical Energy Storage Systems (3rd Edition), MCS MIS 3012:2025, PAS 63100:2024 (where applicable), and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</p>
         </div>
 
         <Sub title="Installer" />

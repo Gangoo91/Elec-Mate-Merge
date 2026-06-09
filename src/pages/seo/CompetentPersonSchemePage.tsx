@@ -682,6 +682,11 @@ export default function CompetentPersonSchemePage() {
       }
       heroSubtitle="Everything you need to know about competent person schemes for electricians. NICEIC, NAPIT, ELECSA, STROMA, and BRE compared. Costs, qualifications needed, the assessment process, how to register, and how scheme membership benefits your business."
       readingTime={13}
+      answerBox={{
+        question: 'What is a competent person scheme for electricians?',
+        answer:
+          'A Competent Person Scheme lets a registered electrician self-certify that notifiable electrical work in a dwelling meets Part P of the Building Regulations, without a separate building-control inspection. The member notifies building control through the scheme and issues the householder a Building Regulations compliance certificate. The main schemes in England and Wales are NICEIC, NAPIT, ELECSA, STROMA and BRE; registration requires a qualified supervisor, BS 7671 competence and an annual assessment. Part P applies in England and Wales — Scotland and Northern Ireland have their own building standards.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

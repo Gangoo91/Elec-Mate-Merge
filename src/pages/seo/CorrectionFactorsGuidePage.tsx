@@ -733,6 +733,11 @@ export default function CorrectionFactorsGuidePage() {
       }
       heroSubtitle="The complete guide to cable sizing correction factors under BS 7671. Ambient temperature (Ca from Table 4B1), grouping (Cg from Table 4C1-4C5), thermal insulation (Ci from Regulation 523.9), and semi-enclosed fuse factor (Cf = 0.725). Worked examples, common mistakes, and how to apply the formula It = In / (Ca x Cg x Ci x Cf)."
       readingTime={14}
+      answerBox={{
+        question: 'What are correction factors in cable sizing (BS 7671)?',
+        answer:
+          'Correction factors reduce a cable’s tabulated current-carrying capacity to allow for the real installation conditions. The four BS 7671 factors are: Ca for ambient temperature (Table 4B1, 1.0 at 30°C), Cg for grouping with other cables (Tables 4C1–4C5), Ci for thermal insulation (Reg 523.9 — 0.5 if fully surrounded), and Cf for a BS 3036 semi-enclosed fuse (0.725). Apply them so the required tabulated rating It ≥ In ÷ (Ca × Cg × Ci × Cf) — the more onerous the conditions, the larger the cable you need.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

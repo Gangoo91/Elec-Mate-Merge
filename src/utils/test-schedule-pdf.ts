@@ -30,7 +30,7 @@ export function generateTestSchedulePDF(data: TestScheduleData): jsPDF {
   doc.text('TEST SCHEDULE TEMPLATE', pageWidth / 2, 12, { align: 'center' });
 
   doc.setFontSize(9);
-  doc.text('BS 7671:2018+A3:2024 Chapter 61 - Initial Verification', pageWidth / 2, 20, {
+  doc.text('BS 7671:2018+A4:2026 Chapter 61 - Initial Verification', pageWidth / 2, 20, {
     align: 'center',
   });
   doc.text(`Project: ${data.projectName} | ${data.location}`, pageWidth / 2, 27, {
@@ -113,7 +113,7 @@ export function generateTestSchedulePDF(data: TestScheduleData): jsPDF {
   // Test Criteria
   doc.setFontSize(10);
   doc.setFont('helvetica', 'bold');
-  doc.text('Test Acceptance Criteria (BS 7671:2018+A3:2024)', 15, yPos);
+  doc.text('Test Acceptance Criteria (BS 7671:2018+A4:2026)', 15, yPos);
   yPos += 8;
 
   doc.setFontSize(8);

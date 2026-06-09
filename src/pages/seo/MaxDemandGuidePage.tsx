@@ -624,6 +624,11 @@ export default function MaxDemandGuidePage() {
       }
       heroSubtitle="Max demand is the starting point for every installation design. Get it wrong and you undersize the supply or waste money on oversized equipment. This guide walks through diversity factors, worked examples for domestic and commercial installations, and the common mistakes that trip electricians up."
       readingTime={12}
+      answerBox={{
+        question: 'How do you calculate maximum demand?',
+        answer:
+          'Maximum demand is the largest current an installation draws at any one time, and BS 7671 Reg 311.1 requires it to be assessed — with diversity allowed — before sizing the supply, main cables and protective devices. Add the full connected load of every circuit, then apply a diversity factor to each load category (lighting, sockets, cooker, water heating, motors) from the IET On-Site Guide, because not everything runs together. A domestic cooker, for example, is commonly taken as the first 10 A plus 30% of the remaining rated current, plus 5 A if the control unit has a socket.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

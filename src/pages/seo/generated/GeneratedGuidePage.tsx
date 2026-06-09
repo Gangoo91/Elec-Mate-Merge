@@ -139,6 +139,7 @@ export interface GeneratedGuideConfig {
   heroHighlight?: string;
   heroSuffix?: string;
   heroSubtitle: string;
+  answerBox?: { question: string; answer: string };
   keyTakeaways?: string[];
   sections: GeneratedGuideSection[];
   howToSteps?: GeneratedGuideHowToStep[];
@@ -337,6 +338,7 @@ export default function GeneratedGuidePage({ config }: { config: GeneratedGuideC
       heroTitle={renderHeroTitle(config)}
       heroSubtitle={config.heroSubtitle}
       readingTime={config.readingTime}
+      answerBox={config.answerBox}
       keyTakeaways={config.keyTakeaways}
       sections={sections}
       howToSteps={config.howToSteps}

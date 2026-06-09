@@ -4,7 +4,7 @@
  * field names as the form, so this mainly merges branding and ensures defaults.
  *
  * IET Code of Practice for EESS (3rd Ed) + MCS MIS 3012:2025
- * BS 7671:2018+A3:2024 + PAS 63100:2024
+ * BS 7671:2018+A4:2026 + PAS 63100:2024
  */
 
 import { BESSFormData, getDefaultBESSFormData } from '@/types/bess';

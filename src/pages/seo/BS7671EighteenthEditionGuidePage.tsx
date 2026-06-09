@@ -639,6 +639,11 @@ export default function BS7671EighteenthEditionGuidePage() {
       }
       heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), and Amendment 4 (A4:2026) covering bidirectional device requirements (Reg 530.3.201), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), updated AFDD rules (Reg 421.1.7), and a revised Section 534 for SPDs."
       readingTime={18}
+      answerBox={{
+        question: 'What is the 18th Edition of BS 7671?',
+        answer:
+          'BS 7671 is the British Standard for electrical installations — the IET Wiring Regulations. The current version is the 18th Edition (BS 7671:2018), in force since 1 January 2019 and kept up to date by amendments, most recently Amendment 4 (A4:2026). It is not statutory in itself, but compliance is the accepted way to satisfy the Electricity at Work Regulations 1989 and Part P of the Building Regulations. It is organised into seven parts covering scope and definitions, fundamental principles, assessment, protection for safety, selection and erection, inspection and testing, and special installations and locations.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

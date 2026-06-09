@@ -679,6 +679,11 @@ export default function SpurSocketRegsPage() {
       }
       heroSubtitle="Spurs are the fastest way to add socket outlets and fixed equipment connections to existing circuits. But the rules for fused and unfused spurs are different, and getting them wrong is one of the most common EICR defects. This guide explains when to use each type, correct cable sizes, connection methods, and the mistakes that cost electricians time and money."
       readingTime={11}
+      answerBox={{
+        question: 'What are the rules for spurs off a ring final circuit?',
+        answer:
+          'An unfused spur may supply only one single or one double socket-outlet, or one item of fixed equipment, connected at a socket on the ring, at a junction box, or at the origin (IET On-Site Guide, ring final arrangements in Appendix 15). A fused spur runs from a fused connection unit (BS 1363-4, normally fused at 13 A) and can supply any number of outlets because the fuse protects the thinner spur cable. The ring itself is wired in 2.5 mm² copper and protected by a 30 A or 32 A device. Missing or oversized unfused spurs are one of the most common EICR coding defects.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

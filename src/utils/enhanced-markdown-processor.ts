@@ -39,7 +39,7 @@ export class EnhancedMarkdownProcessor {
     );
     html = html.replace(
       /BS\s+7671[:\s]*(\d{4})?/gi,
-      '<span class="bs-ref">BS 7671:2018+A3:2024</span>'
+      '<span class="bs-ref">BS 7671:2018+A4:2026</span>'
     );
 
     // Process headers with proper hierarchy

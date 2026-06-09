@@ -676,6 +676,11 @@ export default function HummingNoiseFromConsumerUnitPage() {
       }
       heroSubtitle="A hum or buzz from your consumer unit — is it normal? This guide explains the causes from harmless electromagnetic vibration to dangerous loose connections, covers the warning signs of overheating, and tells you when to call an electrician."
       readingTime={12}
+      answerBox={{
+        question: 'Why is my consumer unit humming or buzzing?',
+        answer:
+          'A faint 50 Hz hum from a consumer unit can be normal electromagnetic vibration, but a loud buzz — especially with a burning smell, warmth, or discoloured terminals — is a fault that needs investigating. The usual causes are a loose connection (which arcs and overheats), a device vibrating on the DIN rail, or an MCB, RCD or main switch starting to fail. Loose-connection arcing is a fire risk: switch the affected circuit off and call a qualified electrician, who will thermal-image and torque-check the terminals rather than ignore it.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

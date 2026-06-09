@@ -765,6 +765,11 @@ export default function BestThermalImagingCameraElectricianPage() {
       }
       heroSubtitle="Find loose connections, overloaded circuits, and hidden faults before they cause fires. Five thermal cameras compared for resolution, battery life, connectivity, and real-world value on site."
       readingTime={13}
+      answerBox={{
+        question: 'What thermal imaging camera is best for electricians?',
+        answer:
+          'For electrical work the specs that matter are detector resolution (aim for at least 160×120 pixels so hotspots are clear), temperature range and accuracy (around ±2°C), and a usable refresh rate. A thermal camera finds loose connections, overloaded circuits and failing devices inside consumer units and distribution boards before they fail — a non-contact survey carried out under load. FLIR and Hikmicro pocket cameras are the most popular with UK electricians; pick the resolution your budget allows, as it has the biggest effect on what you can actually see.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

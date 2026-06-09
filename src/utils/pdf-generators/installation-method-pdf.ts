@@ -126,7 +126,7 @@ export const generateInstallationMethodPDF = (data: InstallationMethodData): jsP
   doc.setFontSize(8);
   doc.setTextColor(128);
   doc.text(
-    `Generated: ${new Date().toLocaleString()} | BS 7671:2018+A3:2024 Compliant`,
+    `Generated: ${new Date().toLocaleString()} | BS 7671:2018+A4:2026 Compliant`,
     pageWidth / 2,
     pageHeight - 10,
     { align: 'center' }

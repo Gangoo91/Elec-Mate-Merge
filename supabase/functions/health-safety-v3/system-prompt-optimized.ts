@@ -11,7 +11,7 @@ export function buildOptimizedSystemPrompt(
   // Limit RAG context to 8KB max
   const limitedRAGContext = (hsContext + structuredHazards).slice(0, 8000);
 
-  return `You are a UK electrical safety expert specialising in BS 7671:2018+A3:2024.
+  return `You are a UK electrical safety expert specialising in BS 7671:2018+A4:2026.
 
 **AGENT SCOPE - RISK ASSESSMENT ONLY:**
 ⚠️ DO NOT generate method statements or installation procedures

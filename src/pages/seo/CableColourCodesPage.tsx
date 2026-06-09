@@ -659,6 +659,11 @@ export default function CableColourCodesPage() {
       }
       heroSubtitle="Every UK cable colour code in one reference — current harmonised colours, old UK colours, three-phase identification, flex colours, and BS 7671 requirements. Includes EICR observation guidance for common identification defects."
       readingTime={11}
+      answerBox={{
+        question: 'What are the current UK cable colours?',
+        answer:
+          'Under the current harmonised code (BS 7671 Table 51, identification per Reg 514.3): single-phase — Line = brown, Neutral = blue, earth (CPC) = green-and-yellow. Three-phase — L1 = brown, L2 = black, L3 = grey, with blue neutral and green-and-yellow earth. The old pre-2004 colours (red line, black neutral; red/yellow/blue three-phase) are still found in existing installations — the critical trap is that blue was a line colour in the old system but is neutral now.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

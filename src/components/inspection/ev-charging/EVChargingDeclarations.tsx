@@ -175,7 +175,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
 
           <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
             <p className="text-[11px] text-white leading-relaxed">
-              I certify this EV charging installation has been designed, constructed, inspected and tested per BS 7671:2018+A3:2024, IET CoP for EV Charging (5th Ed), and Building Regulations.
+              I certify this EV charging installation has been designed, constructed, inspected and tested per BS 7671:2018+A4:2026, IET CoP for EV Charging (5th Ed), and Building Regulations.
             </p>
           </div>
 
@@ -285,7 +285,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
           {[
             {
               id: 'bs7671Compliance',
-              label: 'BS 7671:2018+A3:2024',
+              label: 'BS 7671:2018+A4:2026',
               sub: '18th Edition Wiring Regulations',
             },
             { id: 'ietCopCompliance', label: 'IET CoP for EV Charging', sub: '5th Edition' },

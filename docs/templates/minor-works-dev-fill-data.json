@@ -2,7 +2,7 @@
   "_description": "Dev fill data for Minor Works Certificate - uses APP field names (camelCase)",
   "_usage": "Use this JSON to test the app form and PDF generation with realistic data",
   "_version": "3.0.0",
-  "_bs7671_reference": "BS 7671:2018+A3:2024",
+  "_bs7671_reference": "BS 7671:2018+A4:2026",
 
   "certificateNumber": "MW-2026-001234",
   "workDate": "2026-01-18",

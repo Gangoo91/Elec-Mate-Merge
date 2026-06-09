@@ -343,7 +343,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(9);
     this.doc.setFont('helvetica', 'normal');
     const purposeText =
-      'This document identifies hazards and establishes control measures for electrical work activities, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A3:2024.';
+      'This document identifies hazards and establishes control measures for electrical work activities, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A4:2026.';
 
     const wrappedPurpose = this.doc.splitTextToSize(
       purposeText,
@@ -366,7 +366,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(8);
     this.doc.setFont('helvetica', 'bold');
     this.doc.text(
-      'BS 7671:2018+A3:2024 COMPLIANT (Current as of September 2025)',
+      'BS 7671:2018+A4:2026 COMPLIANT (Current as of September 2025)',
       this.pageWidth / 2,
       this.yPosition + 43,
       { align: 'center' }
@@ -464,7 +464,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(9);
     this.doc.setFont('helvetica', 'normal');
     const scopeText =
-      'This Risk Assessment and Method Statement (RAMS) covers electrical installation, testing, and certification work in compliance with BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations), Health & Safety at Work Act 1974, and CDM Regulations 2015.';
+      'This Risk Assessment and Method Statement (RAMS) covers electrical installation, testing, and certification work in compliance with BS 7671:2018+A4:2026 (18th Edition IET Wiring Regulations), Health & Safety at Work Act 1974, and CDM Regulations 2015.';
 
     const wrappedScope = this.doc.splitTextToSize(scopeText, this.pageWidth - 2 * this.MARGIN - 12);
     wrappedScope.forEach((line: string, index: number) => {
@@ -494,7 +494,7 @@ class ProfessionalRAMSPDFGenerator {
         {
           title: 'Electrical Installation Work',
           description:
-            'Installation of new electrical circuits, outlets, and fixtures in compliance with BS 7671:2018+A3:2024',
+            'Installation of new electrical circuits, outlets, and fixtures in compliance with BS 7671:2018+A4:2026',
           category: 'Installation',
           duration: '4-6 hours',
           riskLevel: 'Medium',
@@ -1201,7 +1201,7 @@ class ProfessionalRAMSPDFGenerator {
       'Isolate and securely lock-off all relevant power supplies before work commences',
       'Use appropriate PPE including insulated gloves, safety footwear, and eye protection',
       'Test all circuits dead using properly calibrated voltage detection equipment',
-      'Maintain safe working distances from live conductors as per BS 7671:2018+A3:2024',
+      'Maintain safe working distances from live conductors as per BS 7671:2018+A4:2026',
       'Have emergency procedures and first aid readily available',
       'Report any unsafe conditions immediately to supervision',
       'Follow permit to work procedures where applicable',
@@ -1315,7 +1315,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont('helvetica', 'italic');
     this.doc.setTextColor(80, 80, 80);
     const note =
-      'All PPE must be in good condition, correctly fitted, and used in accordance with manufacturer instructions and BS 7671:2018+A3:2024 requirements.';
+      'All PPE must be in good condition, correctly fitted, and used in accordance with manufacturer instructions and BS 7671:2018+A4:2026 requirements.';
     const wrappedNote = this.doc.splitTextToSize(note, this.pageWidth - 2 * this.MARGIN);
     this.doc.text(wrappedNote, this.MARGIN, this.yPosition);
     this.yPosition += wrappedNote.length * 4 + 8;

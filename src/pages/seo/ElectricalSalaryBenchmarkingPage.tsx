@@ -605,6 +605,11 @@ export default function ElectricalSalaryBenchmarkingPage() {
       }
       heroSubtitle="JIB national grade rates for 2026, apprentice pay by year, London weighting, regional variations, shift allowances, hazard money, and a step-by-step guide to benchmarking your pay and negotiating a rise."
       readingTime={13}
+      answerBox={{
+        question: 'What is the average UK electrician salary in 2026?',
+        answer:
+          'A qualified electrician on the JIB Approved Electrician grade earns about £20.00 per hour in 2026 — roughly £37,000–£42,000 gross a year including typical overtime. The higher Technician grade is around £22.50–£23.00 per hour. Apprentices start near £8.00 per hour (40% of the Approved rate in Year 1), and self-employed Approved-equivalent day rates run £200–£280. London weighting adds about £1.50–£2.50 per hour under the JIB Working Rule Agreement.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

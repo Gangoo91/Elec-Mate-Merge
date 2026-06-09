@@ -72,7 +72,7 @@ export const generateMinorWorksPdf = async (formData: MinorWorksFormData): Promi
   doc.setFontSize(12);
   yPosition =
     addText(
-      'BS 7671:2018+A3:2024 - Requirements for Electrical Installations',
+      'BS 7671:2018+A4:2026 - Requirements for Electrical Installations',
       margin,
       yPosition,
       contentWidth
@@ -341,7 +341,7 @@ export const generateMinorWorksPdf = async (formData: MinorWorksFormData): Promi
 
   const certifications = [
     {
-      text: 'The work described has been designed, constructed, inspected and tested in accordance with BS 7671:2018+A3:2024',
+      text: 'The work described has been designed, constructed, inspected and tested in accordance with BS 7671:2018+A4:2026',
       checked: formData.bs7671Compliance,
     },
     {
@@ -383,7 +383,7 @@ export const generateMinorWorksPdf = async (formData: MinorWorksFormData): Promi
   doc.setFontSize(8);
   doc.setFont('helvetica', 'italic');
   yPosition = addText(
-    'This certificate is issued in accordance with BS 7671:2018+A3:2024',
+    'This certificate is issued in accordance with BS 7671:2018+A4:2026',
     margin,
     yPosition,
     contentWidth

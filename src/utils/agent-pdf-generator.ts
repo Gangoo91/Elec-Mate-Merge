@@ -72,7 +72,7 @@ export function generateDesignerPDF(
     ['Project Name', projectName],
     ['Company', companyName],
     ['Date', formatDate(new Date(), 'dd/MM/yyyy')],
-    ['Standard', 'BS 7671:2018+A3:2024'],
+    ['Standard', 'BS 7671:2018+A4:2026'],
   ];
 
   autoTable(doc, {

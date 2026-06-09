@@ -18,6 +18,11 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   heroHighlight: 'Common Causes',
   heroSubtitle:
     'A practical guide to the faults electricians see most often, the checks that save time on site, and the fixes that lead naturally into clear paperwork and proper handover.',
+  answerBox: {
+    question: 'Why does my RCBO keep tripping?',
+    answer:
+      'An RCBO trips when it detects either too much current (an overload or short circuit) or earth-leakage current above its residual rating, usually 30 mA. The most common causes are a faulty appliance leaking to earth, the combined leakage of several appliances on one circuit adding up past 30 mA, damaged or damp cable insulation, a genuine overload, or moisture ingress on outdoor circuits. To diagnose: unplug everything and reset — if it holds, reconnect loads one at a time to find the culprit; if it trips with nothing connected, the fault is in the fixed wiring.',
+  },
   keyTakeaways: [
     'An RCBO usually points you to one circuit, one load, or one damaged point rather than a whole board problem.',
     'The most common causes are overload, leakage to earth, damaged accessories, moisture ingress, and recent alteration work.',

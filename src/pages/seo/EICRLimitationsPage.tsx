@@ -633,6 +633,11 @@ export default function EICRLimitationsPage() {
       }
       heroSubtitle="Every EICR has an extent and limitations section. Understanding what falls inside and outside the scope of the inspection is essential — for electricians writing the report and for clients reading it. This guide explains what the EICR covers, what it does not, and how to record limitations correctly."
       readingTime={10}
+      answerBox={{
+        question: 'What are limitations on an EICR?',
+        answer:
+          'Limitations on an EICR are the parts of the installation the inspector did not or could not inspect and test, agreed with the client before work starts and recorded in the extent-and-limitations section (in line with IET Guidance Note 3). They fall into two types: operational limitations (e.g. equipment that cannot be switched off, occupied or inaccessible areas) and agreed limitations (a scope the client has chosen). Inspection and testing is carried out on a representative sample, so clearly recording what was and was not covered is essential for the report to be valid and meaningful.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

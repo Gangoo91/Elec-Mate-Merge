@@ -8,7 +8,7 @@ This document maps the **BS 7671:2018+A4:2026** Minor Electrical Installation Wo
 - The elec-mate React app form fields
 - The PDF Monkey template variables
 
-## A4:2026 changes from A3:2024
+## A4:2026 changes from A4:2026
 
 - **Earthing arrangements** split into 6 distinct values: TN-S, TN-C-S (PME), **TN-C-S (PNB)** [new], TT, TN-C, IT
 - **Reg 133.1.2** added to the cited departures list (Section A item 4)

@@ -49,6 +49,11 @@ export default function CableSizingGuideBS7671Page() {
       }
       heroSubtitle="Cable sizing to BS 7671 follows a five-step process: determine the design current, select the protective device, apply correction factors, choose the cable from Appendix 4, and verify voltage drop. This guide covers every step with worked examples, reference methods, and the adiabatic check."
       readingTime={18}
+      answerBox={{
+        question: 'How do you size a cable to BS 7671?',
+        answer:
+          'Five steps: (1) calculate the design current Ib; (2) select a protective device with In ≥ Ib; (3) apply the correction factors — ambient (Ca), grouping (Cg), thermal insulation (Ci) and BS 3036 fuse (Cf) — so the tabulated rating It ≥ In ÷ (Ca×Cg×Ci×Cf); (4) choose a cable whose current-carrying capacity from the Appendix 4 table for the correct reference method meets that figure; (5) verify voltage drop is within limits (3% for lighting, 5% for other uses per Appendix 4) and run the adiabatic check on the CPC (Reg 543.1.3).',
+      }}
       keyTakeaways={[
         'Cable sizing follows 5 steps: design current (Ib), protective device (In), correction factors (Ca, Cg, Ci, Cf), tabulated current (It = In / correction factors), and voltage drop check.',
         'Correction factors account for ambient temperature (Ca from Table 4B1), grouping (Cg from Table 4C1), thermal insulation (Ci = 0.5 if fully enclosed, 0.89 one side), and BS 3036 fuses (Cf = 0.725).',

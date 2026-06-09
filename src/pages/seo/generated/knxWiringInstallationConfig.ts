@@ -23,6 +23,11 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
   heroSuffix: 'for UK Electricians',
   heroSubtitle:
     'KNX is the global open standard (BS EN 50090 / ISO/IEC 14543-3) for home and building automation, used across lighting, HVAC, blinds, energy metering and security in UK commercial and high-end residential projects. This guide explains the bus topology, the wiring rules, segregation under BS 7671 Section 528, ETS commissioning, and how KNX compares with DALI, BACnet and Modbus.',
+  answerBox: {
+    question: 'What is KNX wiring?',
+    answer:
+      'KNX is the open, manufacturer-independent standard (BS EN 50090, ISO/IEC 14543-3) for home and building automation. Instead of switches being wired directly to their loads, every device — switches, sensors, dimmers, blind and heating actuators — connects to a shared two-core bus cable and communicates by sending telegrams. Actuators in the distribution board switch the actual mains loads, so functions can be reprogrammed in software (ETS) without rewiring. KNX scales from a single flat to a large commercial building, and certified devices from any manufacturer interoperate on the same bus.',
+  },
   keyTakeaways: [
     'KNX is a manufacturer-independent open standard (BS EN 50090, ISO/IEC 14543-3) supported by over 500 member companies — devices from any KNX-certified manufacturer interoperate on the same bus.',
     'The primary physical medium in UK installations is TP1 twisted pair — 9600 bit/s, 30V DC nominal bus voltage, decentralised intelligence with no single point of failure.',

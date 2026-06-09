@@ -13,7 +13,7 @@ export const STANDARD_NOTES = {
     { item: 'Shaver socket', height: '1500mm', notes: 'Bathrooms only — BS EN 61558-2-5' },
   ],
   generalNotes: [
-    'All work to comply with BS 7671:2018+A3:2024 (IET Wiring Regulations 18th Edition)',
+    'All work to comply with BS 7671:2018+A4:2026 (IET Wiring Regulations 18th Edition)',
     'All circuits to be tested and certified upon completion (EIC/EICR)',
     'Existing installation to be verified before connection of new work',
     'All bathroom circuits to be protected by 30mA RCD (Regulation 701)',

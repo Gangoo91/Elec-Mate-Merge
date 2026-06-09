@@ -840,6 +840,11 @@ export default function SafeIsolationProcedurePage() {
       }
       heroSubtitle="The complete guide to safe electrical isolation following HSE Guidance Note GS 38. Prove-test-prove method, lock-off and LOTO procedures, voltage indicator requirements, legal obligations under the Electricity at Work Regulations 1989, and common mistakes that kill electricians."
       readingTime={16}
+      answerBox={{
+        question: 'What is the safe isolation procedure?',
+        answer:
+          'Safe isolation is the prove–test–prove method for confirming a circuit is dead before work: (1) identify the circuit and switch it off; (2) lock it off and apply a caution notice (lock-off / LOTO) so it cannot be re-energised; (3) prove your voltage indicator works on a known live source or proving unit; (4) test the isolated circuit is dead between all conductors (L-N, L-E, N-E); (5) prove the indicator again on the known source to confirm it did not fail mid-test. The voltage indicator must comply with HSE Guidance Note GS 38, and isolation before live work is a legal duty under the Electricity at Work Regulations 1989.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       howToSteps={howToSteps}

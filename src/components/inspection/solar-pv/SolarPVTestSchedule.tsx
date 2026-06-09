@@ -2,7 +2,7 @@
 /**
  * Solar PV Test Schedule — Best-in-Class Mobile
  * DC array tests, inverter tests, AC tests, commissioning
- * BS EN 62446 + BS 7671:2018+A3:2024
+ * BS EN 62446 + BS 7671:2018+A4:2026
  */
 
 import { useEffect } from 'react';
@@ -526,7 +526,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
         {/* Bidirectional Device */}
         <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
           <p className="text-xs font-medium text-white">Bidirectional Protection</p>
-          <p className="text-[10px] text-white">BS 7671:2018+A3:2024 Reg. 530.3.201</p>
+          <p className="text-[10px] text-white">BS 7671:2018+A4:2026 Reg. 530.3.201</p>
           <CheckboxCard
             label="Bidirectional Device Installed"
             description="Required for hybrid/battery systems"

@@ -48,6 +48,11 @@ export default function AIToolsForElectriciansPage() {
       }
       heroSubtitle="Artificial intelligence is no longer a futuristic concept for the electrical trade. From scanning consumer units with your phone camera to generating compliant RAMS documents in seconds, AI tools are already saving electricians hours every week. This guide covers every practical AI application available to UK electricians in 2026 — what works, what does not, and how to choose the right tools for your business."
       readingTime={18}
+      answerBox={{
+        question: 'What AI tools can electricians use?',
+        answer:
+          'Practical AI tools for UK electricians automate the slow work: generating quotes and invoices, sizing cables and circuits to BS 7671, drafting risk assessments and method statements, interpreting consumer-unit and board photos, and answering regulation questions. The most useful ones are built specifically around UK standards rather than generic chatbots, so the output is grounded in BS 7671 instead of guessed — Elec-Mate combines all of these in one app for the trade.',
+      }}
       keyTakeaways={[
         'AI can now scan a consumer unit photo and extract circuit data, device ratings, and board layout in seconds — replacing manual data entry on site.',
         'Defect classification AI maps plain-English defect descriptions to the correct C1, C2, C3, or FI code with the supporting BS 7671 regulation reference.',

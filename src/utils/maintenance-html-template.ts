@@ -322,7 +322,7 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
 <body>
     <div class="header">
         <h1>MAINTENANCE INSTRUCTION</h1>
-        <div class="subtitle">Professional Electrical Maintenance Documentation - BS 7671:2018+A3:2024 Compliant</div>
+        <div class="subtitle">Professional Electrical Maintenance Documentation - BS 7671:2018+A4:2026 Compliant</div>
     </div>
 
     <div class="info-grid">
@@ -549,7 +549,7 @@ export const generateMaintenanceHTML = (data: MaintenanceTemplateData): string =
     }
 
     <div class="footer">
-        <p>This maintenance instruction was generated in accordance with BS 7671:2018+A3:2024</p>
+        <p>This maintenance instruction was generated in accordance with BS 7671:2018+A4:2026</p>
         <p style="margin-top: 5px;">Document generated: ${new Date().toLocaleString('en-GB')}</p>
     </div>
 </body>

@@ -766,6 +766,11 @@ export default function EarthFaultLoopImpedancePage() {
       }
       heroSubtitle="Zs determines whether the protective device will disconnect fast enough to prevent electric shock. If it is too high, the circuit is unsafe. This guide walks through the formula, Ze, R1+R2, temperature correction, the maximum Zs tables from BS 7671, and worked examples for real circuits."
       readingTime={15}
+      answerBox={{
+        question: 'How do you calculate earth fault loop impedance (Zs)?',
+        answer:
+          'Zs = Ze + (R1 + R2): the external loop impedance Ze (measured at the origin, or the DNO declared maximum — 0.35 Ω for TN-C-S/PME, 0.8 Ω for TN-S) plus the resistance of the circuit line and protective conductors (R1 + R2). The measured Zs must not exceed the maximum value for the protective device in BS 7671 Tables 41.2–41.6, and good practice applies the 80% rule to allow for conductors heating during a fault. If Zs is too high the device will not disconnect within the required 0.4 s (final circuits up to 63 A) or 5 s (distribution circuits) per Reg 411.3.2.2 and 411.3.2.3.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

@@ -671,6 +671,11 @@ export default function MarinaElectricalInstallationsPage() {
       }
       heroSubtitle="Marinas are classified as special installations under BS 7671. TT earthing is mandatory, every socket needs its own 30mA RCD, IP44 minimum on pontoons, and annual inspection is recommended. This guide covers every requirement for electricians working on marina shore power systems."
       readingTime={12}
+      answerBox={{
+        question: 'What are the BS 7671 rules for marina electrical installations?',
+        answer:
+          'Marinas and similar locations are covered by BS 7671 Section 709. Because a PME (TN-C-S) earth can become dangerous on a boat, PME must not be used for the supply to a berth — a TT arrangement with a local earth electrode, or an isolating transformer, is used instead. Each socket-outlet on a pontoon must have its own individual 30 mA RCD and be limited to supplying one or two boats, with enclosures rated at least IP44 (IP55/IP66 where exposed). Equipment selection must account for corrosion, mechanical damage and the movement of the floating structure.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

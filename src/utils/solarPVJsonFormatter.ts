@@ -2,7 +2,7 @@
  * Formats Solar PV Installation Certificate data for PDF generation
  *
  * Standards Compliance:
- * - BS 7671:2018+A3:2024 (18th Edition Amendment 3)
+ * - BS 7671:2018+A4:2026 (18th Edition Amendment 3)
  * - BS EN IEC 62446-1:2016+A1:2018
  * - MIS 3002:2025 V5.0 (MCS Solar PV Installation Standard)
  */
@@ -427,7 +427,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     });
   };
 
-  // Format AC Test Results for PDF (BS 7671:2018+A3:2024)
+  // Format AC Test Results for PDF (BS 7671:2018+A4:2026)
   const formatACTests = () => {
     const testResults = formData.testResults || {};
     const acTests = testResults.acTests || {};
@@ -452,7 +452,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       mcb_type: acTests.mcbType || '',
       mcb_location: acTests.mcbLocation || '',
       pfc: acTests.pfc || '',
-      // BS 7671:2018+A3:2024 Reg. 530.3.201 - Bidirectional protective devices
+      // BS 7671:2018+A4:2026 Reg. 530.3.201 - Bidirectional protective devices
       bidirectional_device_installed: acTests.bidirectionalDeviceInstalled || false,
       bidirectional_device_type: acTests.bidirectionalDeviceType || '',
       bidirectional_device_make: acTests.bidirectionalDeviceMake || '',

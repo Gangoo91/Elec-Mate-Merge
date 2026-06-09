@@ -521,6 +521,11 @@ export default function NewBuildElectricalCostPage() {
       }
       heroSubtitle="What does new build electrical installation cost per square metre? This guide covers first fix, second fix, specification levels from basic to premium, NHBC standards, and realistic pricing — for developers comparing tenders and electricians quoting new build contracts."
       readingTime={14}
+      answerBox={{
+        question: 'How much does new build electrical installation cost per m²?',
+        answer:
+          'New build electrical installation costs roughly £35–£85 per square metre in 2026, depending on specification. A basic builder-standard fit-out runs £35–£45/m², a mid-range spec (extra sockets, downlights, USB, outdoor lighting) £50–£65/m², and a premium spec (home automation, data wiring, EV charger, heating controls) £70–£85/m². For a typical 3-bedroom house of about 90 m², that is around £4,500–£8,000 for the full package — first fix, second fix, consumer unit, testing and the EIC.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}

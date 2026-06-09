@@ -39,7 +39,7 @@ const CATEGORY_COLORS: Record<string, [number, number, number]> = {
 
 // Compliance badges
 const COMPLIANCE_BADGES: Record<string, string> = {
-  Safety: 'BS 7671:2018+A3:2024 COMPLIANT',
+  Safety: 'BS 7671:2018+A4:2026 COMPLIANT',
   HR: 'UK EMPLOYMENT LAW COMPLIANT',
   Legal: 'UK GDPR COMPLIANT',
   Operations: 'COMPANY POLICY',

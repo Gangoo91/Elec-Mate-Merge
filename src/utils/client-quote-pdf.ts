@@ -162,7 +162,7 @@ export function generateClientQuotePDF(data: QuoteData): jsPDF {
   yPos += 5;
   doc.text('Payment terms: 50% deposit, 50% on completion.', 15, yPos);
   yPos += 5;
-  doc.text('All work completed to BS 7671:2018+A3:2024 standards.', 15, yPos);
+  doc.text('All work completed to BS 7671:2018+A4:2026 standards.', 15, yPos);
 
   // Footer
   const footerY = doc.internal.pageSize.height - 15;

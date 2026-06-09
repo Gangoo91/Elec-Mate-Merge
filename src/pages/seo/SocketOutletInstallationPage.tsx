@@ -565,6 +565,11 @@ export default function SocketOutletInstallationPage() {
       }
       heroSubtitle="Adding socket outlets is one of the most common domestic electrical jobs. Ring main vs radial, the one-socket-per-spur rule, outdoor IP ratings, USB sockets, Part P notification — this guide covers everything electricians and homeowners need to know."
       readingTime={10}
+      answerBox={{
+        question: 'What are the regulations for installing a socket outlet?',
+        answer:
+          'Socket-outlets rated up to 32 A for use by ordinary persons must have 30 mA RCD additional protection (BS 7671 Reg 411.3.3). On a ring final circuit an unfused spur can feed one single or one double socket; a 2.5 mm² radial is protected at 20 A and a 4 mm² radial at 32 A. Outdoor socket-outlets need a suitable weatherproof enclosure (minimum IP44) and 30 mA RCD protection. Adding a new circuit, or socket work in a room containing a bath or shower, is notifiable under Part P — adding a socket to an existing circuit elsewhere is not.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
