@@ -147,7 +147,13 @@ Use UK English only. Be concise but technically accurate.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        max_completion_tokens: 3000,
+        // gpt-5.x mini is a reasoning model — max_completion_tokens covers reasoning
+        // AND visible output. At 3000 the reasoning ate most of the budget and long
+        // observations truncated mid-sentence. Cap rewriting an observation needs
+        // little reasoning, so low effort frees the budget for the full JSON output
+        // (also faster + cheaper); 8000 is generous headroom on top.
+        reasoning_effort: 'low',
+        max_completion_tokens: 8000,
       }),
     });
 
