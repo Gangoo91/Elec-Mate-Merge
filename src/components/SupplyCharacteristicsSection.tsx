@@ -203,12 +203,16 @@ const SupplyCharacteristicsSectionInner = ({
     { value: 'MCB Type D', label: 'MCB Type D', group: 'MCBs' },
     // Moulded Case
     { value: 'MCCB', label: 'MCCB', group: 'Moulded Case' },
-    // Switches / Isolators
-    { value: 'Switch Disconnector', label: 'Switch Disconnector', group: 'Switches' },
-    { value: 'Isolator', label: 'Isolator', group: 'Switches' },
+    // Switches / Isolators (to BS EN 60947-3)
+    { value: 'Switch Disconnector', label: 'Switch-Disconnector (BS EN 60947-3)', group: 'Switches' },
+    { value: 'Isolator', label: 'Isolator (BS EN 60947-3)', group: 'Switches' },
     // RCDs
     { value: 'RCD Main Switch', label: 'RCD Main Switch', group: 'RCDs' },
     { value: 'RCBO', label: 'RCBO', group: 'RCDs' },
+    // Limitation / not-verified ('Other (specify)' free-text is added automatically
+    // by FormSelectSheet's allowCustom — don't duplicate it here).
+    { value: 'LIM', label: 'Limitation (LIM)', group: 'Other' },
+    { value: 'N/V', label: 'Not Verified (N/V)', group: 'Other' },
   ];
 
   const knownDeviceValues = mainProtectiveDeviceOptions.map((d) => d.value);

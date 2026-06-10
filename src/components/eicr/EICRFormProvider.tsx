@@ -624,13 +624,34 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             'seconds)'
           );
           const loadedData = localDraft.data;
+          // Cross-browser guard: a newer local draft that has ZERO observations
+          // while the cloud has some is almost always a stale-session artifact
+          // (e.g. another browser autosaved an empty draft) — not a deliberate
+          // "delete every observation". Keep the cloud observations in that one
+          // case so they don't vanish; every other local edit is preserved.
+          const localObs = loadedData.defectObservations || [];
+          const cloudObs = loadedCloudData.defectObservations || [];
+          const rescueObs = localObs.length === 0 && cloudObs.length > 0;
+          if (rescueObs) {
+            console.warn(
+              '[EICR] Local draft is newer but has no observations while cloud has',
+              cloudObs.length,
+              '— keeping cloud observations to avoid loss'
+            );
+            logIntegrityEvent('load_empty', {
+              reportType: 'eicr',
+              reportId: initialReportId,
+              fieldCount: cloudObs.length,
+              error: 'newer-local-draft-missing-observations; kept cloud observations',
+            });
+          }
           setFormData((prev) => ({
             ...prev,
             ...loadedData,
             inspectionItems: loadedData.inspectionItems || [],
             circuits: loadedData.circuits || [],
             scheduleOfTests: loadedData.scheduleOfTests || [],
-            defectObservations: loadedData.defectObservations || [],
+            defectObservations: rescueObs ? cloudObs : localObs,
             generalObservations: loadedData.generalObservations || [],
             observations: loadedData.observations || [],
             certificateNumber: loadedData.certificateNumber || prev.certificateNumber,

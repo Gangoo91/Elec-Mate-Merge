@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -212,11 +213,7 @@ const DefectObservationCard = ({
           <Input
             placeholder="e.g., Consumer unit, Kitchen socket"
             value={defect.item}
-            onChange={async (e) => {
-              const value = e.target.value;
-              const { sanitizeTextInput } = await import('@/utils/inputSanitization');
-              onUpdate(defect.id, 'item', sanitizeTextInput(value));
-            }}
+            onChange={(e) => onUpdate(defect.id, 'item', sanitizeTextInput(e.target.value))}
             className="h-11 text-sm bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500 placeholder:text-white/25 touch-manipulation"
           />
         </div>
@@ -239,11 +236,7 @@ const DefectObservationCard = ({
                   : 'Include the relevant schedule reference(s), as appropriate...'
             }
             value={defect.description}
-            onChange={async (e) => {
-              const value = e.target.value;
-              const { sanitizeTextInput } = await import('@/utils/inputSanitization');
-              onUpdate(defect.id, 'description', sanitizeTextInput(value));
-            }}
+            onChange={(e) => onUpdate(defect.id, 'description', sanitizeTextInput(e.target.value))}
             rows={2}
             className="text-base bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500
                        placeholder:text-white/25 resize-none min-h-[70px] touch-manipulation"
@@ -263,11 +256,7 @@ const DefectObservationCard = ({
                   : 'Recommended remedial action...'
               }
               value={defect.recommendation}
-              onChange={async (e) => {
-                const value = e.target.value;
-                const { sanitizeTextInput } = await import('@/utils/inputSanitization');
-                onUpdate(defect.id, 'recommendation', sanitizeTextInput(value));
-              }}
+              onChange={(e) => onUpdate(defect.id, 'recommendation', sanitizeTextInput(e.target.value))}
               rows={2}
               className="text-base bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500
                          placeholder:text-white/25 resize-none min-h-[60px] touch-manipulation"
